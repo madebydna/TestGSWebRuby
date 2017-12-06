@@ -227,17 +227,3 @@ module SchoolProfiles
     end
   end
 end
-
-# class Hash
-#   def find_by_key(key)
-#     result = []
-#     result << self[key]
-#     self.values.each do |hash_value|
-#       values = [hash_value] unless hash_value.is_a? Array
-#       values.each do |value|
-#         result += value.find_by_key(key) if value.is_a? Hash
-#       end
-#     end
-#     result.compact
-#   end
-# end

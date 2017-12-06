@@ -12,6 +12,10 @@ class GsdataCaching::GsDataValue
       max_by { |dv| dv.source_date_valid }
     end
 
+    def most_recent_source_year
+      most_recent.try(:source_year)
+    end
+
     def having_most_recent_date
       max_source_date_valid = map(&:source_date_valid).max
       select { |dv| dv.source_date_valid == max_source_date_valid }.extend(CollectionMethods)
@@ -73,7 +77,7 @@ class GsdataCaching::GsDataValue
         .tap { |a| a.extend(CollectionMethods) }
     end
 
-    def expect_only_one(message, other_helpful_vars)
+    def expect_only_one(message, other_helpful_vars = {})
       GSLogger.error(
         :misc,
         nil,
@@ -96,8 +100,19 @@ class GsdataCaching::GsDataValue
     :description,
     :methodology
 
+  def self.decorate_array_of_hashes(array)
+    array ||= []
+    array.map { |h| GsdataCaching::GsDataValue.from_hash(h) }
+      .extend(GsdataCaching::GsDataValue::CollectionMethods)
+  end
+
   def source_year
     source_date_valid ? source_date_valid[0..3] : @source_year
+  end
+
+  def school_value_as_int
+    # nil.to_i evaluates to 0 -- not usually what we want
+    school_value.present? ? school_value.to_i : nil
   end
 
   def remove_504_category_breakdown!

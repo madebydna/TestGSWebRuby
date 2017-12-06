@@ -16,9 +16,12 @@ module CachedRatingsMethods
     cache_data['ratings'] || []
   end
 
-  # this will return true if cached ratings data is old format and not gsdata
-  def ratings_cache_old?
-    ratings.instance_of?(Array)
+  def ratings_by_type
+    @_ratings_by_type ||= (
+      (cache_data['ratings'] || {}).each_with_object({}) do |(type, array), hash|
+        hash[type] = GsdataCaching::GsDataValue.decorate_array_of_hashes(array)
+      end
+    )
   end
 
   # ignore nil criteria
@@ -50,11 +53,11 @@ module CachedRatingsMethods
   end
 
   def test_scores_rating_hash
-    test_scores_rating_hash_map_to_old_format(rating_hash_for_key_and_breakdown('Test Score Rating'), 'Test Score Rating')
+    test_scores_rating_hash_map_to_old_format(rating_object_for_key('Test Score Rating'), 'Test Score Rating')
   end
 
   def test_scores_all_rating_hash
-    test_scores_rating_hash_loop_through_and_update(rating_hashes_for_key('Test Score Rating'), 'Test Score Rating')
+    test_scores_rating_hash_loop_through_and_update(ratings_by_type['Test Score Rating'], 'Test Score Rating')
   end
 
   def equity_overview_rating
@@ -62,7 +65,7 @@ module CachedRatingsMethods
   end
 
   def equity_overview_rating_hash
-    rating_hash_for_key_and_breakdown('Equity Rating')
+    rating_object_for_key('Equity Rating')
   end
 
   def equity_overview_rating_year
@@ -74,11 +77,11 @@ module CachedRatingsMethods
   end
 
   def courses_rating_array
-    course_subject_group = rating_hashes_for_key('Advanced Course Rating').select {|h| h['breakdown_tags'] == 'course_subject_group'}
+    course_subject_group = (ratings_by_type['Advanced Course Rating'] || []).select {|o| o.breakdown_tags == 'course_subject_group'}
     course_subject_group.each_with_object({}) do |dv, accum|
-      if dv['breakdowns'].present?
-        subject = dv['breakdowns'].downcase.gsub(' ', '_')
-        accum[subject] = dv['school_value'].to_i if dv['school_value'].present?
+      if dv.breakdowns.present?
+        subject = dv.breakdowns.downcase.gsub(' ', '_')
+        accum[subject] = dv.school_value_as_int
       end
     end
   end
@@ -88,7 +91,7 @@ module CachedRatingsMethods
   end
 
   def academic_progress_rating_hash
-    rating_hash_for_key_and_breakdown('Academic Progress Rating')
+    rating_object_for_key('Academic Progress Rating')
   end
 
   def academic_progress_rating_year
@@ -104,11 +107,11 @@ module CachedRatingsMethods
   end
 
   def student_growth_rating_hash
-    rating_hash_for_key_and_breakdown('Student Progress Rating')
+    rating_object_for_key('Student Progress Rating')
   end
 
   def college_readiness_rating_hash
-    rating_hash_for_key_and_breakdown('College Readiness Rating')
+    rating_object_for_key('College Readiness Rating')
   end
 
   def college_readiness_rating
@@ -126,39 +129,28 @@ module CachedRatingsMethods
   ####################################################################
 
   def rating_year_for_key(key)
-    hash = rating_hash_for_key_and_breakdown(key)
-    if hash.present?
-      year_for_date(hash['source_date_valid'])
-    end
+    return nil unless ratings_by_type[key].present?
+
+    ratings_by_type[key]
+      .having_no_breakdown
+      .most_recent_source_year
   end
 
-  def year_for_date(str_date)
-    DateTime.parse(str_date).strftime('%Y').to_i if str_date.present?
-  end
-
-  def rating_for_key_and_breakdown(key, breakdown)
-    hash = rating_hash_for_key_and_breakdown(key, breakdown)
-    hash['school_value'].to_i if hash.present? && hash['school_value'].present?
-  end
-
-  def rating_for_key(key)
-    hash = rating_hash_for_key_and_breakdown(key)
-    hash['school_value'].to_i if hash.present? && hash['school_value'].present?
-  end
-
-  def select_by_max_date(array_of_hashes)
-    max_date = array_of_hashes.map{|h| h['source_date_valid']}.max
-    array_of_hashes.select { |dv| dv['source_date_valid'] == max_date }.first
+  def rating_for_key(key, breakdown = nil)
+    rating_object_for_key(key, breakdown).try(:school_value_as_int)
   end
 
   # nil breakdown returns overall rating for key
-  # returns ratings hash for most recent year
-  def rating_hash_for_key_and_breakdown(key, breakdown = nil)
-    return nil unless ratings.present? && ratings.is_a?(Hash)
-    arr_of_h = ratings[key].select{ |h| h['breakdowns'] == breakdown } if ratings[key].present?
-    if arr_of_h.present?
-      select_by_max_date(arr_of_h)
-    end
+  # returns ratings for most recent year
+  def rating_object_for_key(key, breakdown = nil)
+    return nil unless ratings_by_type[key].present?
+    result = ratings_by_type[key].having_most_recent_date
+    result = breakdown.nil? ? result.having_no_breakdown : result.having_breakdown_in(breakdown)
+    result.having_school_value.expect_only_one(
+      'rating object for key',
+      rating_type: key,
+      breakdown: breakdown
+    )
   end
 
   # return array of ratings hashes for key
@@ -177,11 +169,14 @@ module CachedRatingsMethods
 
   def test_scores_rating_hash_map_to_old_format(hash, data_type)
     return nil if hash.nil?
-    hash['school_value_float'] = hash['school_value'].to_i
-    hash['year'] = year_for_date(hash['source_date_valid']).to_i
-    hash['test_data_type_display_name'] = data_type
-    hash['breakdown'] = hash['breakdowns']
-    hash
+    h = {}
+    h['school_value_float'] = hash.school_value.to_i
+    h['year'] = hash.source_year.to_i
+    h['test_data_type_display_name'] = data_type
+    h['breakdown'] = hash.breakdowns
+    h['methodology'] = hash.methodology
+    h['description'] = hash.description
+    h
   end
 
   ####################################################################

@@ -403,13 +403,11 @@ module SchoolProfiles
     end
 
     def rating_description
-      hash = @school_cache_data_reader.college_readiness_rating_hash
-      hash['description'] if hash
+      @school_cache_data_reader.college_readiness_rating_hash.try(:description)
     end
 
     def rating_methodology
-      hash = @school_cache_data_reader.college_readiness_rating_hash
-      hash['methodology'] if hash
+      @school_cache_data_reader.college_readiness_rating_hash.try(:methodology)
     end
 
     def sources

@@ -20,23 +20,23 @@ module SchoolProfiles
     end
 
     def academic_progress_rating
-      academic_progress_struct.academic_progress_rating if academic_progress_struct.present?
+      academic_progress_struct.try(:school_value_as_int)
     end
 
     def academic_progress_rating_description
-      academic_progress_struct.rating_description if academic_progress_struct.present?
+      academic_progress_struct.try(:rating_description)
     end
 
     def academic_progress_rating_methodology
-      academic_progress_struct.rating_methodology if academic_progress_struct.present?
+      academic_progress_struct.try(:rating_methodology) if academic_progress_struct.present?
     end
 
     def source_name
-      academic_progress_struct.source_name if academic_progress_struct.present?
+      academic_progress_struct.try(:source_name) if academic_progress_struct.present?
     end
 
     def source_year
-      academic_progress_struct.source_year if academic_progress_struct.present?
+      @school_cache_data_reader.academic_progress_rating_year
     end
 
     def test_scores_rating
@@ -122,47 +122,10 @@ module SchoolProfiles
     protected
 
     def academic_progress_struct
-      @_academic_progress_struct ||= (
-      academic_progress_data = nil
-      if @school_cache_data_reader.ratings_cache_old?
-        if @school_cache_data_reader.gsdata_data('Academic Progress Rating').present?
-          academic_progress_data = @school_cache_data_reader.gsdata_data('Academic Progress Rating')['Academic Progress Rating']
-
-          academic_progress_data = academic_progress_data.map do |hash|
-            GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: 'Academic Progress Rating'))
-          end.extend(GsdataCaching::GsDataValue::CollectionMethods)
-
-          academic_progress_data = academic_progress_data
-                                     .having_school_value
-                                     .having_no_breakdown
-                                     .having_most_recent_date
-                                     .expect_only_one(
-                                         'Academic Progress Rating',
-                                         school: {
-                                             state: @school.state,
-                                             id: @school.id
-                                         }
-                                     )
-        end
-        OpenStruct.new.tap do |ap|
-          ap.academic_progress_rating = academic_progress_data.try(:school_value)
-          ap.rating_description = academic_progress_data.try(:description)
-          ap.rating_methodology = academic_progress_data.try(:methodology)
-          ap.source_year = academic_progress_data.try(:source_year)
-          ap.source_name = academic_progress_data.try(:source_name)
-        end
-      else
-        # reads from new ratings cache
-        academic_progress_rating_hash = @school_cache_data_reader.academic_progress_rating_hash
-        OpenStruct.new.tap do |eo|
-          eo.academic_progress_rating = academic_progress_rating_hash['school_value']
-          eo.description = academic_progress_rating_hash['description']
-          eo.methodology = academic_progress_rating_hash['methodology']
-          eo.source_year = @school_cache_data_reader.academic_progress_rating_year
-          eo.source_name = academic_progress_rating_hash['source_name']
-        end if academic_progress_rating_hash.present?
+      if defined?(@_academic_progress_struct)
+        return @_academic_progress_struct
       end
-      )
+      @_academic_progress_struct = @school_cache_data_reader.academic_progress_rating_hash
     end
 
   end
