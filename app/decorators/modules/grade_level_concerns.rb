@@ -13,7 +13,7 @@ module GradeLevelConcerns
   def process_level_remove_ungraded
     level_human = GradeLevelConcerns.human_readable_level(level)
     return 'n/a' if level_human == 'Ungraded'
-    level_human.slice! ' & Ungraded'
+    level_human.slice! ' & Ungraded' if level_human.present?
     return level_human
   end
 
