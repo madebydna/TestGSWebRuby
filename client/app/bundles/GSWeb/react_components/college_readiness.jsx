@@ -36,6 +36,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
           anchor={anchor}
           graph={this.createDataComponent(values)}
           text={explanation}
+          showGraphColumnHeader={false}
         />
       )
     });

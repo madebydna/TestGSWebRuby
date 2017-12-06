@@ -48,6 +48,10 @@ const getTranslationsHash = function() {
   return translationsHash;
 };
 
+const capitalize = function(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 
 const preserveLanguageParam = function(url) {
   var current_url = getHref();
@@ -90,6 +94,7 @@ export {
   setTranslationsHash as _setTranslationsHash,
   getTranslationsHash as getTranslationsHash,
   translate as t,
+  capitalize as capitalize,
   currentLocale as currentLocale,
   preserveLanguageParam as preserveLanguageParam,
   initLanguageLinkListener as initLanguageLinkListener
