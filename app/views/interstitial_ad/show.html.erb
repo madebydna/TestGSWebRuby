@@ -13,11 +13,11 @@
     <div class="ad-inner-container">
       <p><%= t('.ad_header_text') %></p>
       <%= render 'shared/ad', slot: 'Interstitial',
-        size_mapping: "interstitial", width: 640, height: 480 %>
+        size_mapping: 'interstitial', width: 640, height: 480 %>
     </div>
   </div>
 </div>
 <% content_for :page_javascripts do %>
-  <%= webpack_javascript_include_tag "commons", defer: true %>
-  <%= webpack_javascript_include_tag "interstitial", defer: true %>
+  <%= webpack_javascript_include_tag 'commons', defer: true %>
+  <%= webpack_javascript_include_tag 'interstitial', defer: true %>
 <% end %>
