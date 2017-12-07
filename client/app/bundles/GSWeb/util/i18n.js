@@ -50,8 +50,7 @@ const getTranslationsHash = function() {
 
 const capitalize = function(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
+};
 
 const preserveLanguageParam = function(url) {
   var current_url = getHref();

@@ -236,7 +236,6 @@ export default class SchoolProfileComponent extends React.Component {
           anchor={anchor}
           graph={this.createDataComponent(type, values)}
           text={explanation}
-          showGraphColumnHeader={true}
         />
       )
     })

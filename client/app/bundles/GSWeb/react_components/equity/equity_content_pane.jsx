@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { t, capitalize } from '../../util/i18n';
 import ColumnHeader from '../school_profiles/column_header';
 
 export default class EquityContentPane extends React.Component {
@@ -7,7 +6,7 @@ export default class EquityContentPane extends React.Component {
   static propTypes = {
     graph: React.PropTypes.object.isRequired,
     text: React.PropTypes.element.isRequired,
-    anchor: React.PropTypes.string,
+    anchor: React.PropTypes.string
   };
 
   constructor(props) {
