@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { t, capitalize } from '../../util/i18n';
+import ColumnHeader from '../school_profiles/column_header';
 
 export default class EquityContentPane extends React.Component {
 
@@ -7,7 +8,6 @@ export default class EquityContentPane extends React.Component {
     graph: React.PropTypes.object.isRequired,
     text: React.PropTypes.element.isRequired,
     anchor: React.PropTypes.string,
-    showGraphColumnHeader: React.PropTypes.bool
   };
 
   constructor(props) {
@@ -17,25 +17,13 @@ export default class EquityContentPane extends React.Component {
     return this.props.text
   }
 
-  getGraphColumnHeader(){
-    if (this.props.showGraphColumnHeader && ['Math', 'English'].includes(this.props.anchor)) {
-      return <div className="row bar-graph-display">
-        <div className="test-score-container clearfix">
-          <div className="col-sm-5 header-text">{ capitalize(t('students')) }</div>
-          <div className="col-sm-1"></div>
-          <div className="col-sm-6 header-text">% {t('test_scores.proficient')}</div>
-        </div>
-      </div>
-    }
-  }
-
   render() {
     let hr_style = ''
     return(
       <div className={'tabs-panel tabs-panel_selected'}>
         <div className="row">
           <div className="top-content">{this.get_narrative()}<hr  /></div>
-          <div>{this.getGraphColumnHeader()}</div>
+          <div>{<ColumnHeader anchor={this.props.anchor} />}</div>
           <div>{this.props.graph}</div>
         </div>
       </div>

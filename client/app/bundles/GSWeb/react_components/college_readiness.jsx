@@ -33,7 +33,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
       let explanation = <div dangerouslySetInnerHTML={{__html: narration}} />
       return (
         <EquityContentPane
-          anchor={anchor}
+          anchor="College readiness"
           graph={this.createDataComponent(values)}
           text={explanation}
           showGraphColumnHeader={false}

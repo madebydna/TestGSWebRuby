@@ -40,6 +40,7 @@ es:
       advanced: Avanzado
       proficient: Competente
       proficient_or_better: Competente o mejor
+      at_grade_level: a nivel de grado
     This school: Esta escuela
     State average: Promedio estatal
     too_many_schools_error_html: '<strong>Ya ha seleccionado 4 escuelas para comparar.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspComparar las escuelas.</a>'
