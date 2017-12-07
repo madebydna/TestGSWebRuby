@@ -111,6 +111,7 @@
     .tab-container {
       display: inline-block;
       margin: 0px 0px 10px;
+      line-height: 2.2;
       .tab-title {
         font-family: opensans-semibold;
         font-size: 12px;
@@ -121,6 +122,7 @@
         text-decoration: none;
         text-align: center;
         border-radius: 2px;
+        display: inline-block;
 
         &.tab-selected {
           background: #fff;
