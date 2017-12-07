@@ -1,0 +1,40 @@
+<% ratings_types %>
+<% ratings_labels = ratings_types.reject{|s| s == 'GreatSchools rating'} || [] %>
+<% datapoints %>
+<% attendance_flag = @school.school_cache.attendance_flag? %>
+
+<table class="full-width">
+  <tr>
+    <td class="open-sans_sb">GreatSchools Rating</td>
+    <td>
+      <span style="font-family: 'RobotoSlab-Bold';">
+        <span class="gs-rating circle-rating--<%= datapoints['GreatSchools rating'] %> circle-rating--small">
+          <%= datapoints['GreatSchools rating'] %><span class="denominator">/10</span>
+        </span>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="color:grey; padding: 5px 0;">Rating components</td>
+  </tr>
+  <% ratings_labels.each do |label| %>
+    <tr style="border-top: 1px solid #f4f4f4;">
+      <td><%= truncate_with_popup(label, length: 26) %></td>
+      <% if label == 'Attendance flag' %>
+        <% if attendance_flag %>
+          <td class="tac open-sans_sb" style="width: 40px; padding: 5px 0;"><span class="icon-flag" style="color:red;"></span>
+        <% else %>
+          <td class="tac open-sans_sb" style="width: 40px; padding: 6px 0 8px 0; font-family: 'opensans-regular';">n/a
+        <% end %>
+      <% elsif datapoints[label] %>
+        <td class="tac open-sans_sb" style="width: 40px; padding: 5px 0;">
+          <span class="gs-rating circle-rating--<%= datapoints[label] %> circle-rating--xtra-small">
+            <%= datapoints[label] %><span class="denominator">/10</span>
+          </span>
+      <% else %>
+        <td class="tac open-sans_sb" style="width: 40px; padding: 6px 0 8px 0; font-family: 'opensans-regular';">n/a
+      <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

@@ -118,6 +118,10 @@ module CachedRatingsMethods
     rating_year_for_key('Advanced Course Rating')
   end
 
+  def academic_progress_rating
+    rating_for_key('Equity Rating')
+  end
+
   def academic_progress_rating_hash
     rating_hash_for_key_and_breakdown('Academic Progress Rating')
   end
@@ -417,7 +421,9 @@ module CachedRatingsMethods
        :'GreatSchools rating' => :great_schools_rating,
        :'Test score rating' => :test_scores_rating,
        :'Student progress rating' => :student_growth_rating,
+       :'Academic progress rating' => :academic_progress_rating,
        :'College readiness rating' => :college_readiness_rating,
+       :'Advanced courses rating' => :courses_rating,
        :'Equity rating' => :equity_overview_rating
       }.each_with_object({}) do |(name, method), accum|
         result = send(method)
