@@ -2,8 +2,8 @@
   <link rel="preload" href="<%= asset_path('school_profiles/hero_bg.jpg') %>" as="image">
 <% end %>
 <% content_for :page_javascripts do %>
-  <%= webpack_javascript_include_tag "commons", defer: true %>
-  <%= webpack_javascript_include_tag "school-profiles", defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'school-profiles', defer: true %>
 <% end %>
 <div class="overlay" style="display:none"></div>
 <div class="school-profile">

@@ -1,9 +1,9 @@
 <% content_for :page_javascripts do %>
-  <%= webpack_javascript_include_tag "commons", defer: true %>
-  <%= webpack_javascript_include_tag "widget", defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'widget', defer: true %>
 <% end %>
 <% content_for :page_stylesheets do %>
-  <%= stylesheet_link_tag "widget-form", async: true %>
+  <%= stylesheet_link_tag 'widget-form', async: true %>
 <% end %>
 
 <%= react_component('widget') %>
