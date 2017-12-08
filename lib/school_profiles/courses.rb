@@ -25,10 +25,6 @@ module SchoolProfiles
                         element_type: 'faq')
     end
 
-    def ratings_old?
-      @_ratings_old ||= @school_cache_data_reader.ratings_cache_old?
-    end
-
     def most_recent_rating_hash
       @_most_recent_rating_hash ||=
         advanced_course_ratings
@@ -38,21 +34,13 @@ module SchoolProfiles
 
     def rating_year
       @_rating_year ||= (
-        if ratings_old?
-          most_recent_rating_hash.try(:source_year)
-        else
-          @school_cache_data_reader.courses_rating_year
-        end
+        @school_cache_data_reader.courses_rating_year
       )
     end
 
     def rating
       @_rating ||= (
-        if ratings_old?
-          most_recent_rating_hash.try(:school_value)
-        else
-          @school_cache_data_reader.courses_rating
-        end
+        @school_cache_data_reader.courses_rating
       )
     end
 
@@ -94,14 +82,7 @@ module SchoolProfiles
     #   ]
     # }
     def course_enrollments_and_ratings
-      if ratings_old?
-        course_ratings_hash = course_subject_group_ratings.each_with_object({}) do |(readable_subject, rating), accum|
-          subject_key = readable_subject.downcase.gsub(' ', '_')
-          accum[subject_key] = rating
-        end
-      else
-        course_ratings_hash = @school_cache_data_reader.courses_rating_array
-      end
+      course_ratings_hash = @school_cache_data_reader.courses_rating_array
 
       SUBJECT_ORDER.each_with_object({}) do |snake_case_subject, accum|
         courses = courses_by_subject[snake_case_subject] || []

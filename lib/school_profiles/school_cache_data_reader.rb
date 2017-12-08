@@ -99,10 +99,6 @@ module SchoolProfiles
       decorated_school.test_scores_all_rating_hash
     end
 
-    def ratings_cache_old?
-      decorated_school.ratings_cache_old?
-    end
-
     def equity_overview_rating
       decorated_school.equity_overview_rating
     end

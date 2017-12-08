@@ -22,8 +22,11 @@ module SchoolProfiles
       end
 
       def cache_hash_to_standard_hash(hash)
-        hash['percentage'] =  breakdown_percentage(hash['breakdown'])
-        hash
+        # Dont mutate hash that is passed in
+        hash.merge(
+          'percentage' => breakdown_percentage(hash['breakdown']),
+          'breakdown' => hash['breakdown'].nil? ? 'All students' : hash['breakdown']
+        )
       end
       #
       def breakdown_percentage(breakdown)
