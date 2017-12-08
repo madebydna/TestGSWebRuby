@@ -56,6 +56,10 @@ module CachedRatingsMethods
     end
   end
 
+  def test_score_rating_only?
+    rating_for_key('Summary Rating').nil? && (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value'] == '1'
+  end
+
   def great_schools_rating_year
     if ratings_cache_old?
       school_rating_year_by_id(174)
@@ -419,7 +423,7 @@ module CachedRatingsMethods
     if rating_type.nil? || rating_type == 'gs_rating'
       {
        :'GreatSchools rating' => :great_schools_rating,
-       :'Test score rating' => :test_scores_rating,
+       :'Test scores rating' => :test_scores_rating,
        :'Student progress rating' => :student_growth_rating,
        :'Academic progress rating' => :academic_progress_rating,
        :'College readiness rating' => :college_readiness_rating,
