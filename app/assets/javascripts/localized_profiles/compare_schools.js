@@ -38,6 +38,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         adjustHeights('.js-comparePieChartTable');
         adjustHeights('.js-reviewSnapshot');
         adjustHeights('.js-reviewStars');
+        adjustHeights('.js-schoolQuality');
     };
 
     var setAccordianHandlerForCategories = function() {
