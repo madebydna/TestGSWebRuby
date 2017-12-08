@@ -10,7 +10,7 @@
 
 <% config.opt[:label] = config.opt[:ratings_type] %>
 <% if config.opt[:ratings_type] == 'GreatSchools Rating' %>
-  <div class="phm">
+  <div class="phm js-schoolQuality">
     <% if @school.school_cache.great_schools_rating != 'NR' && @school.school_cache.great_schools_rating.present? %>
       <%= render 'compare_schools/school_description_modules/quality/quality', ratings_types: ratings_types, datapoints: datapoints %>
     <% else %>
