@@ -34,6 +34,8 @@
           <% else %>
               <td class="tac open-sans_sb width na-padding-font">n/a
           <% end %>
+        <% elsif @school.level_code == 'h' && ['Academic progress rating', 'Student progress rating'].include?(label)%>
+            <td class="tac open-sans_sb width na-padding-font">n/a
         <% elsif datapoints[label] %>
           <td class="tac open-sans_sb rating-width-padding">
             <span class="gs-rating circle-rating--<%= datapoints[label] %> circle-rating--xtra-small">

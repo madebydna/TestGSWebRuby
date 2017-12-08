@@ -95,7 +95,7 @@ module CachedRatingsMethods
   end
 
   def academic_progress_rating
-    rating_for_key('Equity Rating')
+    rating_for_key('Academic Progress Rating')
   end
 
   def academic_progress_rating_hash
