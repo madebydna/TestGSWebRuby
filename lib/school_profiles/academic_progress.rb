@@ -24,15 +24,15 @@ module SchoolProfiles
     end
 
     def academic_progress_rating_description
-      academic_progress_struct.try(:rating_description)
+      academic_progress_struct.try(:description)
     end
 
     def academic_progress_rating_methodology
-      academic_progress_struct.try(:rating_methodology) if academic_progress_struct.present?
+      academic_progress_struct.try(:methodology)
     end
 
     def source_name
-      academic_progress_struct.try(:source_name) if academic_progress_struct.present?
+      academic_progress_struct.try(:source_name)
     end
 
     def source_year
