@@ -125,7 +125,11 @@ describe 'compare_schools/school_description_modules/_line_data.html.erb' do
         breakdown = ethnicity['breakdown']
         value = ethnicity['school_value'] || CachedCharacteristicsMethods::NO_ETHNICITY_SYMBOL
         value = "#{value.to_f.round}%" unless value == CachedCharacteristicsMethods::NO_ETHNICITY_SYMBOL
-        expect(rendered).to have_content "#{truncate(breakdown, length: 26)} #{value}"
+        if value != '0%'
+          expect(rendered).to have_content "#{truncate(breakdown, length: 26)} #{value}"
+        else
+          expect(rendered).to have_content "#{truncate(breakdown, length: 26)} <1%"
+        end
       end
     end
   end

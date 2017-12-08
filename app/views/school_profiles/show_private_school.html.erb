@@ -1,11 +1,11 @@
 <% content_for :page_javascripts do %>
-  <%= webpack_javascript_include_tag "commons", defer: true %>
-  <%= webpack_javascript_include_tag "school-profiles", defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'school-profiles', defer: true %>
 <% end %>
 <div class="school-profile">
   <%= render 'breadcrumbs', breadcrumbs: @private_school_profile.breadcrumbs %>
   <%= render 'hero', hero: @private_school_profile.hero %>
-  <%= render 'school_profile_sticky_cta_mobile', rating: ''  %>
+  <%= render 'school_profile_sticky_cta', rating: '' %>
   <!-- main content -->
   <div class="static-container">
     <div class="right_rail">
@@ -19,7 +19,7 @@
           claimed: @private_school_profile.claimed %>
       </div>
       <div>
-        <%= render 'school_profile_sticky_cta', rating: '' %>
+        <div id="js-ctaShow"></div>
       </div>
       <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
                  width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>

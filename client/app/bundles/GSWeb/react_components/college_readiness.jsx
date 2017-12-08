@@ -33,7 +33,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
       let explanation = <div dangerouslySetInnerHTML={{__html: narration}} />
       return (
         <EquityContentPane
-          anchor={anchor}
+          anchor="College readiness"
           graph={this.createDataComponent(values)}
           text={explanation}
         />
@@ -68,36 +68,33 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     window.analyticsEvent('Profile', 'College Readiness Tabs', tabTitle);
   }
 
+  wrapGraphComponent(graphComponent, value, index) {
+    return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+      {graphComponent}
+    </BasicDataModuleRow>;
+  }
+
   createDataComponent(values) {
     let customScoreRanges = ["Average SAT score", "Calificación media de los SAT", "Average ACT score", "Calificación media de ACT"];
     if (values) {
       if (values.length > 0) {
         // Build array of college readiness data rows
         let dataRows = values.map(function(value, index) {
-          if (value.display_type == "person") {
-            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <PersonBar {...value} />
-            </BasicDataModuleRow>;
-          } else if (value.display_type == "person_reversed"){
-            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <PersonBar {...value} invertedRatings={true} />
-            </BasicDataModuleRow>;
-          } else if (value.display_type == "rating") {
-            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <RatingWithBar {...value} />
-            </BasicDataModuleRow>;
-          } else if (customScoreRanges.includes(value.breakdown)) {
-            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <BarGraphCustomRanges {...value} is_percent={false} />
-            </BasicDataModuleRow>;
-          } else if (value.display_type == "person_gray") {
-            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <PersonBar {...value} use_gray={true} />
-            </BasicDataModuleRow>;
+          if (customScoreRanges.includes(value.breakdown)) {
+            return this.wrapGraphComponent(<BarGraphCustomRanges {...value} />, value, index);
           } else {
-            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <PersonBar {...value} />
-            </BasicDataModuleRow>;
+            switch (value.display_type) {
+              case 'plain':
+                return <PlainNumber values={values}/>;
+              case 'person':
+                return this.wrapGraphComponent(<PersonBar {...value}/>, value, index);
+              case 'person reversed':
+                return this.wrapGraphComponent(<PersonBar {...value} invertedRatings={true}/>, value, index);
+              case 'rating':
+                return this.wrapGraphComponent(<RatingWithBar {...value} />, value, index);
+              default:
+                return this.wrapGraphComponent(<BarGraphBase {...value} />, value, index)
+            }
           }
         }.bind(this));
         // Put rows in drawer if more than three
@@ -120,13 +117,6 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     }
   }
 
-  hasCSTab() {
-    let tabs = this.filteredData().map((pane,idx) => {
-      return pane.title
-    });
-    return (tabs.includes('College success') || tabs.includes('Éxito universitario'));
-  }
-
   render() {
     let analyticsId = this.props.analytics_id;
     if (!this.hasData()) {
@@ -145,7 +135,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
           no_data_cta={ !this.hasData() && this.noDataCta() }
           footer={ this.hasData() && this.footer() }
           body={ this.hasData() && this.activePane() }
-          tabs={ this.hasData() && this.hasCSTab() && this.tabsContainer() }
+          tabs={ this.hasData() && this.props.showTabs && this.tabsContainer() }
         />
       </div>
     )

@@ -1,19 +1,23 @@
 <%= render 'tour_modal' %>
 
-<div id="profile-sticky-container" class="js-profile-sticky dn blue-background mobile_dn">
+<div id="profile-sticky-container" class="js-profile-sticky dn blue-background js-profile-sticky-mobile">
   <div class="cta non-fixed-top cta-container ">
-    <%= render 'cta_buttons' %>
+    <div class="static-container_cta">
+      <div class="content">
+        <%= render 'cta_buttons' %>
 
-    <div class="cta-rating">
-      <% if rating != '' %>
-      <div class="circle-rating--<%= rating %> circle-rating--medium">
-        <%= rating %><span class="rating-circle-small">/10</span>
+        <div class="cta-rating">
+          <% if rating.present? && ((1..10).cover? rating) %>
+            <div class="circle-rating--<%= rating %> circle-rating--medium">
+              <%= rating %><span class="rating-circle-small">/10</span>
+            </div>
+          <% else %>
+            <%= image_tag('school_profiles/owl_in_light_blue_circle.png', style: 'width:50px;height:50px') %>
+          <% end %>
+        </div>
+
+        <div class="cta-title"><%= @school.name %></div>
       </div>
-      <% else %>
-        <%= image_tag('school_profiles/owl_in_light_blue_circle.png', style: 'width:50px;height:50px') %>
-      <% end %>
     </div>
-
-    <div class="cta-title"><%= @school.name %></div>
   </div>
 </div>

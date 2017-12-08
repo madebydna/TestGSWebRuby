@@ -14,6 +14,7 @@ class UserSubscriptionManager
   def unsubscribe
     begin
       delete_subscriptions(get_subscriptions)
+      delete_grade_levels
     rescue
       GSLogger.error(:unsubscribe, nil, message: 'User unsubscribe failed', vars: {
           member_id: @user.id
@@ -48,6 +49,10 @@ class UserSubscriptionManager
           member_id: @user.id
       })
     end
+  end
+
+  def delete_grade_levels
+    UserGradeManager.new(@user).delete_grades
   end
 
   def get_subscriptions

@@ -221,6 +221,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/find-a-school/slideshows/3446-choosing-a-high-school.gs', as: :choose_high_slideshow
     get '/gk/articles/insider-tricks-for-assessing-high-schools/', as: :assessing_high
     get '/gk/articles/like-a-sponge/', as: :podcasts
+    get '/gk/articles/cool-school-models/', as: :innovative_schools
     get '/gk/partners', as: :gk_partners
     get '/gk/licensing', as: :gk_licensing
     get '/gk/sponsorship', as: :sponsorship
@@ -342,6 +343,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/modals/school_user_modal',:to=> 'modals#school_user_modal', as: :school_user_modal
   get '/gsr/modals/dependencies', to: 'modals#dependencies'
   get '/gsr/modals/:modal', to: 'modals#show', as: :modal
+  get '/gsr/assets', to: 'assets#show'
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/gsr/session/register_email', to: 'signin#register_email_unless_exists', :as => :register_email, via: [:post]

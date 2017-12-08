@@ -3,7 +3,7 @@ module CompareSchoolsConcerns
 
   protected
 
-  SCHOOL_CACHE_KEYS = %w(characteristics ratings esp_responses reviews_snapshot)
+  SCHOOL_CACHE_KEYS = %w(characteristics ratings esp_responses reviews_snapshot gsdata)
   OVERALL_RATING_NAME = 'GreatSchools rating'
 
   def prep_school_ethnicity_data!
@@ -42,9 +42,11 @@ module CompareSchoolsConcerns
   def prep_school_ratings!
     @great_schools_ratings = [OVERALL_RATING_NAME]
     @non_great_schools_ratings = []
-    @schools.each do |school|
-      @great_schools_ratings += ratings_types(school.school_cache.formatted_greatschools_ratings)
-      @non_great_schools_ratings += ratings_types(school.school_cache.formatted_non_greatschools_ratings)
+    schools_with_caches.each do |school|
+      @great_schools_ratings += ratings_types(school.formatted_greatschools_ratings)
+      flags = discipline_and_attendance(school).select { |_,v| v }.keys
+      @great_schools_ratings += flags if flags.present?
+      @non_great_schools_ratings += ratings_types(school.formatted_non_greatschools_ratings)
     end
     @great_schools_ratings.uniq!
     @non_great_schools_ratings.uniq!
@@ -59,6 +61,13 @@ module CompareSchoolsConcerns
       end
     end
     rating_types
+  end
+
+  def discipline_and_attendance(school)
+    {
+        'Attendance flag' => school.attendance_flag?,
+        'Discipline flag' => school.discipline_flag?
+    }
   end
 
 
@@ -122,7 +131,7 @@ module CompareSchoolsConcerns
                 display_type: 'buttons',
                 opt: {
                     datapoints:[
-                        {method: :school_id, label: 'Follow this school', icon:'iconx16 i-16-heart', class:'btn btn-default tal clearfix js-save-this-school-button'},
+                        {method: :school_id, label: 'Save', icon:'iconx16 i-16-heart', class:'btn btn-default clearfix js-save-this-school-button'},
                     ]
                 }
             },
@@ -202,7 +211,7 @@ module CompareSchoolsConcerns
                 opt: {
                     datapoints:[
                         {method: :school_page_url, label: 'View full profile', class: 'btn btn-primary tac clearfix js-button-link'},
-                        {method: :school_id, label: 'Follow this school', icon:'iconx16 i-16-heart', class:'btn btn-default tal clearfix js-save-this-school-button' },
+                        {method: :school_id, label: 'Save', icon:'iconx16 i-16-heart', class:'btn btn-default clearfix js-save-this-school-button' },
                         {method: :zillow_formatted_url, label: 'Homes for sale', icon: 'iconx16 i-16-blue-home', class: 'btn btn-default tal clearfix js-button-link' , rel: 'nofollow', target: '_blank'},
                     ]
                 }

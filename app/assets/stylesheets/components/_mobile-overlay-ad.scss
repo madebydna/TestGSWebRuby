@@ -1,5 +1,4 @@
 .mobile-ad-sticky-bottom {
-  position: fixed;
   min-height: 80px;
   max-height: 160px;
   width: 100%;
@@ -9,7 +8,7 @@
   background: #fff;
   padding: 5px 0;
   border-top: 1px solid #eee;
-  position: absolute;
+  position: fixed;
   display: none;
 
   .close {

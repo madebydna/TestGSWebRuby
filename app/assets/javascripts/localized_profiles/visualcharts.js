@@ -25,7 +25,8 @@ GS.visualchart = GS.visualchart || function($) {
         // TODO: need to track omniture data?
     };
 
-    var colors = ['#69b684','#6cbfb5','#fcc769','#e7715d','#ef975b','#c4d66b','#836d93','#e4b4d4','#3c97d3','#db688c','#67499d','#aa5e5b'];
+    var colors = ['#69b684','#6cbfb5', '#fcc769','#e7715d', '#ef975b','#c4d66b', '#836d93','#e4b4d4', '#3c97d3','#db688c', '#67499d','#aa5e5b'];
+    var pieChartColors = ['#0f69c4', '#2bdc99', '#f1830f', '#f1e634', '#6f2eb4', '#ef60d0', '#ca3154', '#999EFF'];
     var colorsGreyScale = ['#555', '#b4b4b4'];
 
     var drawPieChart = function(dataIn, divId, selectHandler, options, chartname) {
@@ -53,7 +54,7 @@ GS.visualchart = GS.visualchart || function($) {
                 legend: GS.window.sizing.pieChartLegend(chartname),
 //                tooltip: { isHtml: true },
                 tooltip: { trigger: 'focus', text: 'value', showColorCode: 'true'},
-                colors: colors,
+                colors: pieChartColors,
                 pieSliceText: 'none',
                 chartArea:{left:15,top:15,bottom:10,right:10,width:"90%",height:"90%"},
                 pieSliceBorderColor:'white'
@@ -322,6 +323,7 @@ GS.visualchart = GS.visualchart || function($) {
 
     return {
         colors: colors,
+        pieChartColors: pieChartColors,
         pieSelectHandler: pieSelectHandler,
         drawPieChart: drawPieChart,
         drawBarChart: drawBarChart,

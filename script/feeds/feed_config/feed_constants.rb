@@ -67,7 +67,7 @@ module Feeds
       DIRECTORY_DISTRICT_KEYS_REQUIRED = %w(name description street city state county level level_code web_site)
 
       #  REQUIRED - universal_id zipcode home_page_url url
-      DIRECTORY_SCHOOL_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url universal_district_id census_info)
+      DIRECTORY_SCHOOL_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url universal_district_id census_info level)
       DIRECTORY_DISTRICT_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url census_info)
 
       # this is a white list of keys we are looking for - executes a method to handle type of data
