@@ -10,10 +10,14 @@
 
 <% config.opt[:label] = config.opt[:ratings_type] %>
 
-<% if ratings_types.present? %>
-    <%= render 'compare_schools/school_description_modules/section_dividing_bar' unless config.opt[:ratings_type] == 'GreatSchools Rating' %>
-<% end %>
-
 <div class="phm">
-  <%=  render('compare_schools/school_description_modules/quality/quality', ratings_types: ratings_types, datapoints: datapoints) if config.opt[:ratings_type] == 'GreatSchools Rating'%>
+<% if @school.school_cache.great_schools_rating.present? %>
+  <% if ratings_types.reject{ |rt| ['Test score rating', 'GreatSchools rating', 'Attendance flag'].include?(rt) }.empty? %>
+    <%= render('compare_schools/school_description_modules/quality/test_only_quality', ratings_types: ratings_types, datapoints: datapoints) if config.opt[:ratings_type] == 'GreatSchools Rating'%>
+  <% else %>
+    <%= render('compare_schools/school_description_modules/quality/quality', ratings_types: ratings_types, datapoints: datapoints) if config.opt[:ratings_type] == 'GreatSchools Rating'%>
+  <% end %>
+<% else %>
+  <%= render 'compare_schools/school_description_modules/quality/private_school_quality' %>
+<% end %>
 </div>

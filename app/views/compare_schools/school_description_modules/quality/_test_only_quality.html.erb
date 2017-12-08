@@ -1,0 +1,29 @@
+<% datapoints %>
+
+<table class="full-width">
+  <tr>
+    <td class="open-sans_sb">GreatSchools Rating</td>
+    <td>
+      <span style="font-family: 'RobotoSlab-Bold';">
+        <span class="gs-rating circle-rating--<%= datapoints['GreatSchools rating'] %> circle-rating--small">
+          <%= datapoints['GreatSchools rating'] %><span class="denominator">/10</span>
+        </span>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <td style="color:grey; padding: 5px 0;">Rating components</td>
+  </tr>
+    <tr style="border-top: 1px solid #f4f4f4;">
+      <td><%= truncate_with_popup('Test score rating', length: 26) %></td>
+      <td class="tac open-sans_sb" style="width: 40px; padding: 5px 0;">
+        <span class="gs-rating circle-rating--<%= datapoints['Test score rating'] %> circle-rating--xtra-small">
+          <%= datapoints['Test score rating'] %><span class="denominator">/10</span>
+        </span>
+      </td>
+    </tr>
+</table>
+<div style="border-top: 1px solid #f4f4f4; padding-top: 15px;">
+  This state does not provide enough data to calculate a Summary Rating,
+  so the rating reflected is based on each school's Test Score Rating.
+</div>

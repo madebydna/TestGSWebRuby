@@ -26,6 +26,7 @@
 @import "fonts/fonts-opensans-semibold";
 @import "gs/fonts/fonts-amaticsc";
 @import "fonts/fonts-robotoslab-light";
+@import "fonts/fonts-robotoslab-bold";
 @import "fonts/gs-icon-font";
 @import "base/deprecated_spacing";
 @import "base/deprecated_typography";
@@ -71,6 +72,8 @@
 @import "resources/remodal-default-theme";
 @import "components/circle-rating";
 @import "components/join-form";
+@import "components/gs-rating-with-label";
+@import "school_profiles/speech_bubbles";
 
 .button-group {
   @include button-group;
