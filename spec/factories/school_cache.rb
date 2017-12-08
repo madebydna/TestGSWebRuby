@@ -19,16 +19,14 @@ FactoryGirl.define do
         gs_rating_value 5.0
       end
       before(:create) do |cached_ratings, evaluator|
-        cached_ratings.value = [
-          {
-            'data_type_id' => 174,
-            'year' => 2014,
-            'school_value_text' => nil,
-            'school_value_float' => evaluator.gs_rating_value,
-            'name' => 'GreatSchools rating',
-            'breakdown' => 'All students'
-          }
-        ].to_json
+        cached_ratings.value = {
+            'Summary Rating' =>
+                [{
+                    'school_value' => evaluator.gs_rating_value,
+                    'source_date_valid' => '20171109 11:03:22',
+                    'source_name' => 'GreatSchools'
+                }]
+        }.to_json
       end
     end
 
@@ -37,16 +35,14 @@ FactoryGirl.define do
         test_score_rating_value 6.0
       end
       before(:create) do |cached_ratings, evaluator|
-        cached_ratings.value = [
-          {
-            'data_type_id' => 164,
-            'year' => 2015,
-            'school_value_text' => nil,
-            'school_value_float' => evaluator.test_score_rating_value,
-            'name' => 'Test score rating',
-            'breakdown' => 'All students'
-          }
-        ].to_json
+        cached_ratings.value = {
+            'Test Score Rating' =>
+                [{
+                     'school_value' => evaluator.test_score_rating_value,
+                     'source_date_valid' => '20171109 11:03:22',
+                     'source_name' => 'GreatSchools'
+                 }]
+        }.to_json
       end
     end
 
@@ -56,24 +52,20 @@ FactoryGirl.define do
         test_score_rating_value 6.0
       end
       before(:create) do |cached_ratings, evaluator|
-        cached_ratings.value = [
-          {
-            'data_type_id' => 174,
-            'year' => 2014,
-            'school_value_text' => nil,
-            'school_value_float' => evaluator.gs_rating_value,
-            'name' => 'GreatSchools rating',
-            'breakdown' => 'All students'
-          },
-          {
-            'data_type_id' => 164,
-            'year' => 2014,
-            'school_value_text' => nil,
-            'school_value_float' => evaluator.test_score_rating_value,
-            'name' => 'Test score rating',
-            'breakdown' => 'All students'
-          }
-        ].to_json
+        cached_ratings.value = {
+            'Summary Rating' =>
+                [{
+                     'school_value' => evaluator.gs_rating_value,
+                     'source_date_valid' => '20171109 11:03:22',
+                     'source_name' => 'GreatSchools'
+                 }],
+            'Test Score Rating' =>
+                [{
+                     'school_value' => evaluator.test_score_rating_value,
+                     'source_date_valid' => '20171109 11:03:22',
+                     'source_name' => 'GreatSchools'
+                 }]
+        }.to_json
       end
     end
   end
@@ -139,16 +131,14 @@ FactoryGirl.define do
     name 'ratings'
     sequence(:school_id) { |n| n }
     state 'ca'
-    value ([
-      {
-        'data_type_id' => 174,
-        'year' => 2014,
-        'school_value_text' => nil,
-        'school_value_float' => 5.0,
-        'name' => 'GreatSchools rating',
-        'breakdown' => 'All students'
-      }
-    ].to_json)
+    value ({
+        'Summary Rating' =>
+            [{
+                 'school_value' => 5,
+                 'source_date_valid' => '20171109 11:03:22',
+                 'source_name' => 'GreatSchools'
+             }]
+    }.to_json)
     updated Time.now
   end
 
@@ -604,9 +594,4 @@ FactoryGirl.define do
     )
     updated Time.now
   end
-
-
-
-
-
 end
