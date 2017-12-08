@@ -100,7 +100,7 @@ const getSizeMappings = function() {
     'box_desktop_not_tall':  googletag.sizeMapping().
             addSize([992, 300], [[300, 250]]).
             build(),
-    'box':  googletag.sizeMapping().
+    'box': googletag.sizeMapping().
             addSize([300, 600], [[300, 600], [300, 250]]).
             addSize([0, 0], [[300, 250]]).
             build(),
@@ -109,6 +109,25 @@ const getSizeMappings = function() {
             addSize([768, 120], [[728, 90]]).
             addSize([0, 0], [[300, 250]]).
             build(),
+    'banner_tall': googletag.sizeMapping().
+          addSize([1200, 300], [[1140, 250], [1140, 100],[728, 90]]).
+          addSize([1052, 300], [[970, 250], [970, 100],[728, 90]]).
+          addSize([865, 300], [[728, 90],[630, 250],[630, 100]]).
+          addSize([690, 300], [[630, 250],[630, 100],[300, 250],[320, 50]]).
+          addSize([0, 0], [[300, 250],[300, 100],[320, 50]]).
+          build(),
+    'banner_short': googletag.sizeMapping().
+          addSize([1200, 300], [[1140, 250], [1140, 100],[728, 90]]).
+          addSize([1052, 300], [[970, 250], [970, 100],[728, 90]]).
+          addSize([865, 300], [[728, 90],[630, 250],[630, 100]]).
+          addSize([690, 300], [[630, 250],[630, 100],[300, 250],[320, 50]]).
+          addSize([0, 0], [[300, 250],[300, 100],[320, 50]]).
+          build(),
+    'in_content': googletag.sizeMapping().
+          addSize([1200, 208], [[728,90], [630,250]]).
+          addSize([1080, 290], [[630, 250], [300,250]]).
+          addSize([0, 0], [300, 250]).
+          build(),
     'thin_banner': googletag.sizeMapping().
             addSize([768, 120], [[728, 90]]).
             addSize([0, 0], [[320, 50]]).
