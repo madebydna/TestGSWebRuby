@@ -84,11 +84,29 @@ describe 'while signed in as facebook user', type: :feature, remote: true do
   end
 end
 
+describe 'General information' do
+  before { visit '/california/alameda/1-Alameda-High-School/' }
+  let(:page_object) { SchoolProfilesPage.new }
+  subject { page_object.general_information_props }
+  it { is_expected.to include(
+    'config', 'has_non_osp_classes', 'has_osp_classes', 'is_claimed',
+    'mailto_end', 'osp_link', 'qualaroo_module_link', 'sources'
+  )}
+  its('has_non_osp_classes') { is_expected.to be(true) }
+  its('has_osp_classes') { is_expected.to be(true) }
+  its('is_claimed') { is_expected.to be(false) }
+  its('osp_link') { is_expected.to be_present }
+  its('sources.length') { is_expected.to eq(1) }
+  its('sources.first.heading') { is_expected.to eq('Classes') }
+  its('sources.first.names.length') { is_expected.to eq(1) }
+  its('sources.first.years.length') { is_expected.to eq(1) }
+end
+
 describe 'Advanced courses' do
   before { visit '/california/alameda/1-Alameda-High-School/' }
   subject(:page_object) { SchoolProfilesPage.new }
   its('advanced_courses_props') { is_expected.to include('rating', 'faq', 'sources', 'course_enrollments_and_ratings') }
-  its('advanced_courses_props.rating') { is_expected.to eq('9') }
+  its('advanced_courses_props.rating') { is_expected.to eq(9) }
   its('advanced_courses_props.course_enrollments_and_ratings') { is_expected.to include('English', 'STEM', 'Social sciences', 'Foreign language', 'Arts', 'Health', 'Career / Technical') }
   its('advanced_courses_props.sources') { is_expected.to include('Advanced courses', 'GreatSchools Advanced Courses Rating') }
   its('advanced_courses_props.faq') { is_expected.to be_present }

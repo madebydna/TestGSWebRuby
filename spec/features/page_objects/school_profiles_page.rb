@@ -143,6 +143,10 @@ class SchoolProfilesPage < SitePrism::Page
     props_for_react_component('Courses')
   end
 
+  def general_information_props
+    props_for_react_component('OspSchoolInfo')
+  end
+
   def set_school_profile_tour_cookie
     set_cookie('decline_school_profile_tour', true)
   end
