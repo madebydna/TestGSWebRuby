@@ -19,9 +19,9 @@ export default class EquityContentPane extends React.Component {
   // Column header labels (i.e. 'Students', '% Proficient') will be added to every pane unless included in this
   // blacklist, which references anchor props.
   hasColumnHeader() {
-    return !['Overview', 'UC/CSU eligibility', 'Graduation rates', 'Advanced_coursework', 'Advanced courses',
+    return ['Overview', 'UC/CSU eligibility', 'Graduation rates', 'Advanced_coursework', 'Advanced courses',
       'Percentage AP enrolled grades 9-12', 'Percentage of students suspended out of school', 'College readiness',
-      'Percentage of students chronically absent (15+ days)'].includes(this.props.anchor);
+      'Percentage of students chronically absent (15+ days)'].indexOf(this.props.anchor) == -1;
   }
 
   getColumnHeader() {

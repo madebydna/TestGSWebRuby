@@ -132,7 +132,7 @@ export const selectDistrict = (id, state) => dispatch => {
 export const toggleSchoolType = schoolType => (dispatch, getState) => {
   let { lat, lon, state, schoolTypes } = getState().districtBoundaries;
 
-  if(getState().districtBoundaries.schoolTypes.includes(schoolType)) {
+  if(getState().districtBoundaries.schoolTypes.indexOf(schoolType) >= 0) {
     dispatch(removeSchoolType(schoolType));
   } else {
     schoolTypes = schoolTypes.concat(schoolType);
