@@ -12,9 +12,9 @@ export const getSchools = state => {
   let school = getSchool(state);
 
   if(state.level) {
-    schools = schools.filter(s => s == school || (s.levelCode && s.levelCode.includes(state.level)));
+    schools = schools.filter(s => s == school || (s.levelCode && s.levelCode.indexOf(state.level) >= 0));
   }
-  schools = schools.filter(s => s == school || (s.districtId != 0 || state.schoolTypes.includes(s.schoolType)));
+  schools = schools.filter(s => s == school || (s.districtId != 0 || state.schoolTypes.indexOf(s.schoolType) >= 0));
 
 
   return schools;
