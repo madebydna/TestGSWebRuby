@@ -80,7 +80,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
       if (values.length > 0) {
         // Build array of college readiness data rows
         let dataRows = values.map(function(value, index) {
-          if (customScoreRanges.includes(value.breakdown)) {
+          if (customScoreRanges.indexOf(value.breakdown) >= 0) {
             return this.wrapGraphComponent(<BarGraphCustomRanges {...value} />, value, index);
           } else {
             switch (value.display_type) {
