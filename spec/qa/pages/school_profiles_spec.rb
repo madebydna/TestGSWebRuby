@@ -84,34 +84,6 @@ describe 'while signed in as facebook user', type: :feature, remote: true do
   end
 end
 
-describe 'General information' do
-  before { visit '/california/alameda/1-Alameda-High-School/' }
-  let(:page_object) { SchoolProfilesPage.new }
-  subject { page_object.general_information_props }
-  it { is_expected.to include(
-    'config', 'has_non_osp_classes', 'has_osp_classes', 'is_claimed',
-    'mailto_end', 'osp_link', 'qualaroo_module_link', 'sources'
-  )}
-  its('has_non_osp_classes') { is_expected.to be(true) }
-  its('has_osp_classes') { is_expected.to be(true) }
-  its('is_claimed') { is_expected.to be(false) }
-  its('osp_link') { is_expected.to be_present }
-  its('sources.length') { is_expected.to eq(1) }
-  its('sources.first.heading') { is_expected.to eq('Classes') }
-  its('sources.first.names.length') { is_expected.to eq(1) }
-  its('sources.first.years.length') { is_expected.to eq(1) }
-end
-
-describe 'Advanced courses' do
-  before { visit '/california/alameda/1-Alameda-High-School/' }
-  subject(:page_object) { SchoolProfilesPage.new }
-  its('advanced_courses_props') { is_expected.to include('rating', 'faq', 'sources', 'course_enrollments_and_ratings') }
-  its('advanced_courses_props.rating') { is_expected.to eq(9) }
-  its('advanced_courses_props.course_enrollments_and_ratings') { is_expected.to include('English', 'STEM', 'Social sciences', 'Foreign language', 'Arts', 'Health', 'Career / Technical') }
-  its('advanced_courses_props.sources') { is_expected.to include('Advanced courses', 'GreatSchools Advanced Courses Rating') }
-  its('advanced_courses_props.faq') { is_expected.to be_present }
-end
-
 describe 'follow a school while registering', type: :feature, remote: true do
   it 'when I save the school the right newsletters are saved and it is added to my school list' do
     visit('/california/alameda/1-Alameda-High-School/')
@@ -167,3 +139,332 @@ describe 'submit a review while registering', type: :feature, remote: true do
     expect(page).to have_text('Thank you! One more step - please click on the verification link')
   end
 end
+
+describe 'Advanced courses' do
+  let(:page_object) { SchoolProfilesPage.new }
+  before { visit '/california/alameda/1-Alameda-High-School/' }
+  subject { page_object.advanced_courses }
+  
+  describe 'react' do
+    before { visit '/california/alameda/1-Alameda-High-School/' }
+    subject { page_object }
+    its('advanced_courses_props') { is_expected.to include('rating', 'faq', 'sources', 'course_enrollments_and_ratings') }
+    its('advanced_courses_props.rating') { is_expected.to eq(9) }
+    its('advanced_courses_props.course_enrollments_and_ratings') { is_expected.to include('English', 'STEM', 'Social sciences', 'Foreign language', 'Arts', 'Health', 'Career / Technical') }
+    its('advanced_courses_props.sources') { is_expected.to include('Advanced courses', 'GreatSchools Advanced Courses Rating') }
+    its('advanced_courses_props.faq') { is_expected.to be_present }
+
+    it 'react component loaded' do
+      expect(page_object.wait_for_react_component("Courses").text).to be_present
+    end
+  end
+end
+
+describe 'General information' do
+  before { visit '/california/alameda/1-Alameda-High-School/' }
+  let(:page_object) { SchoolProfilesPage.new }
+  subject { page_object.general_information }
+
+  # TODO feels like this should actually be in a regular feature spec
+  describe 'React' do
+    subject { page_object.general_information_props }
+    it { is_expected.to include(
+      'config', 'has_non_osp_classes', 'has_osp_classes', 'is_claimed',
+      'mailto_end', 'osp_link', 'qualaroo_module_link', 'sources'
+    )}
+    its('has_non_osp_classes') { is_expected.to be(true) }
+    its('has_osp_classes') { is_expected.to be(true) }
+    its('is_claimed') { is_expected.to be(false) }
+    its('osp_link') { is_expected.to be_present }
+    its('sources.length') { is_expected.to eq(1) }
+    its('sources.first.heading') { is_expected.to eq('Classes') }
+    its('sources.first.names.length') { is_expected.to eq(1) }
+    its('sources.first.years.length') { is_expected.to eq(1) }
+    it 'react component loaded' do
+      expect(page_object.wait_for_react_component("OspSchoolInfo")).to be_present
+    end
+  end
+end
+
+
+
+describe 'Alameda High School' do
+  let(:uri) { '/california/alameda/1-Alameda-High-School/' }
+  before { visit uri }
+  let(:page_object) { SchoolProfilesPage.new }
+  subject { page_object }
+
+  with_subject :hero do
+    it { is_expected.to have_text('Unclaimed') }
+    # Capybara seems to have trouble, maybe because of block elements inside
+    # anchor tag? Or so much within data attributes? Not sure
+    # its(:rating_text) { is_expected.to have_text('GreatSchools Rating') }
+    # its(:rating_text) { is_expected.to_not have_text('GreatSchools Rating*') }
+  end
+
+  with_subject :test_scores do
+    it { is_expected.to have_text("Test scores") }
+  end
+
+  with_subject :college_readiness do
+    it { is_expected.to have_text('College readiness') }
+  end
+
+  with_subject :advanced_courses do
+    it { is_expected.to have_text('Advanced courses') }
+  end
+
+  with_subject :equity_overview do
+    it { is_expected.to have_text('Equity overview') }
+  end
+
+  with_subject :race_ethnicity do
+    it { is_expected.to have_text('Race/ethnicity') }
+  end
+
+  with_subject :low_income_students do
+    it { is_expected.to have_text('Low-income students') }
+  end
+
+  with_subject :students_with_disabilities do
+    it { is_expected.to have_text('Students with disabilities') }
+  end
+
+  with_subject :general_information do
+    it { is_expected.to have_text('General information') }
+  end
+
+  with_subject :students do
+    it { is_expected.to have_text('Students') }
+  end
+
+  with_subject :teachers_and_staff do
+    it { is_expected.to have_text('Teachers & staff') }
+  end
+
+  with_subject :review_form do
+    it { is_expected.to have_text('How would you rate your experience at this school?') }
+  end
+
+  with_subject :review_list do
+    its(:text) { is_expected.to be_present }
+  end
+
+  with_subject :homes_and_rentals do
+    it { is_expected.to be_present }
+  end
+
+  with_subject :neighborhood do
+    it { is_expected.to be_present }
+    it { is_expected.to have_button('See this school\'s attendance zone') }
+  end
+
+  with_subject :nearby_schools do
+    it { is_expected.to be_present }
+    its('schools.size') { is_expected.to eq(3) }
+  end
+end
+
+describe 'Bay Farm' do
+  let(:uri) { '/california/alameda/2-Bay-Farm/' }
+  before { visit uri }
+  let(:page_object) { SchoolProfilesPage.new }
+  subject { page_object }
+
+  with_subject :hero do
+    it { is_expected.to_not have_text('Unclaimed') }
+    it { is_expected.to have_text('Claimed') }
+  end
+
+  with_subject :test_scores do
+    it { is_expected.to have_text("Test scores") }
+  end
+
+  it { is_expected.to_not have_college_readiness }
+
+  it { is_expected.to_not have_advanced_courses }
+  with_subject :advanced_stem_courses do
+    it { is_expected.to have_text('Advanced STEM courses') }
+  end
+
+  with_subject :equity_overview do
+    it { is_expected.to have_text('Equity overview') }
+  end
+
+  with_subject :race_ethnicity do
+    it { is_expected.to have_text('Race/ethnicity') }
+  end
+
+  with_subject :low_income_students do
+    it { is_expected.to have_text('Low-income students') }
+  end
+
+  with_subject :students_with_disabilities do
+    it { is_expected.to have_text('Students with disabilities') }
+  end
+
+  with_subject :general_information do
+    it { is_expected.to have_text('General information') }
+  end
+
+  with_subject :students do
+    it { is_expected.to have_text('Students') }
+  end
+
+  with_subject :teachers_and_staff do
+    it { is_expected.to have_text('Teachers & staff') }
+  end
+
+  with_subject :review_form do
+    it { is_expected.to have_text('How would you rate your experience at this school?') }
+  end
+
+  with_subject :review_list do
+    its(:text) { is_expected.to be_present }
+  end
+
+  with_subject :homes_and_rentals do
+    it { is_expected.to be_present }
+  end
+
+  with_subject :neighborhood do
+    it { is_expected.to be_present }
+    it { is_expected.to have_button('See this school\'s attendance zone') }
+  end
+
+  with_subject :nearby_schools do
+    it { is_expected.to be_present }
+    its('schools.size') { is_expected.to eq(3) }
+  end
+end
+
+describe 'New York International School' do
+  let(:uri) { '/new-york/new-york/18097-New-York-International-School/' }
+  before { visit uri }
+  let(:page_object) { SchoolProfilesPage.new }
+  subject { page_object }
+
+  with_subject :hero do
+    it { is_expected.to_not have_text('Unclaimed') }
+    it { is_expected.to have_text('Claimed') }
+  end
+
+  it { is_expected.to_not have_test_scores }
+  it { is_expected.to_not have_college_readiness }
+  it { is_expected.to_not have_advanced_courses }
+  it { is_expected.to_not have_advanced_stem_courses }
+  it { is_expected.to_not have_equity_overview }
+  it { is_expected.to_not have_race_ethnicity }
+  it { is_expected.to_not have_low_income_students }
+  it { is_expected.to_not have_students_with_disabilities }
+
+  with_subject :general_information do
+    it { is_expected.to have_text('General information') }
+  end
+
+  with_subject :students do
+    it { is_expected.to have_text('Students') }
+  end
+
+  it { is_expected.to_not have_teachers_and_staff }
+
+  with_subject :review_form do
+    it { is_expected.to have_text('How would you rate your experience at this school?') }
+  end
+
+  with_subject :review_list do
+    its(:text) { is_expected.to be_present }
+  end
+
+  with_subject :homes_and_rentals do
+    it { is_expected.to be_present }
+  end
+
+  with_subject :neighborhood do
+    it { is_expected.to be_present }
+    it { is_expected.to have_button('See this school\'s attendance zone') }
+  end
+
+  with_subject :nearby_schools do
+    it { is_expected.to be_present }
+    its('schools.size') { is_expected.to eq(3) }
+  end
+end
+
+describe 'ME School Of Science & Mathematics' do
+  let(:uri) { '/maine/limestone/5-Me-School-Of-Science--Mathematics/' }
+  before { visit uri }
+  let(:page_object) { SchoolProfilesPage.new }
+  subject { page_object } 
+
+  with_subject :hero do
+    # Capybara seems to have trouble, maybe because of block elements inside
+    # anchor tag? Or so much within data attributes? Not sure
+    # its(:rating_text) { is_expected.to_not have_text('GreatSchools Rating') }
+    # its(:rating_text) { is_expected.to have_text('GreatSchools Rating*') }
+  end
+
+  with_subject :test_scores do
+    it { is_expected.to have_text("Test scores") }
+  end
+
+  with_subject :college_readiness do
+    it { is_expected.to have_text('College readiness') }
+  end
+
+  it { is_expected.to_not have_advanced_courses }
+
+  with_subject :advanced_stem_courses do
+    it { is_expected.to have_text('Advanced STEM courses') }
+  end
+
+  it { is_expected.to_not have_equity_overview }
+
+  with_subject :race_ethnicity do
+    it { is_expected.to have_text('Race/ethnicity') }
+  end
+
+  with_subject :low_income_students do
+    it { is_expected.to have_text('Low-income students') }
+  end
+
+  with_subject :students_with_disabilities do
+    it { is_expected.to have_text('Students with disabilities') }
+  end
+
+  with_subject :general_information do
+    it { is_expected.to have_text('General information') }
+  end
+
+  with_subject :students do
+    it { is_expected.to have_text('Students') }
+  end
+
+  with_subject :teachers_and_staff do
+    it { is_expected.to have_text('Teachers & staff') }
+  end
+
+  with_subject :review_form do
+    it { is_expected.to have_text('How would you rate your experience at this school?') }
+  end
+
+  with_subject :review_list do
+    its(:text) { is_expected.to be_present }
+  end
+
+  with_subject :homes_and_rentals do
+    it { is_expected.to be_present }
+  end
+
+  with_subject :neighborhood do
+    it { is_expected.to be_present }
+    it { is_expected.to have_button('See this school\'s attendance zone') }
+  end
+
+  with_subject :nearby_schools do
+    it { is_expected.to be_present }
+    its('schools.size') { is_expected.to eq(0) }
+    it { is_expected.to have_text('No schools found') }
+  end
+end
+

@@ -81,17 +81,42 @@ class SchoolProfilesPage < SitePrism::Page
   element :gs_rating, '.rs-gs-rating'
   element :five_star_rating, '.rs-five-star-rating'
   element :sign_in, '.account_nav_out > a'
+
+  section :hero, '#hero' do
+    element :rating_text, '.gsr-text'
+  end
+
   section :test_scores, RatingContainer, '.rs-test-scores'
-  section :college_readiness, RatingContainer, '.rs-college-readiness'
+  section :college_readiness, RatingContainer, '#College_readiness'
+  section :advanced_courses, RatingContainer, '#AdvancedCourses'
+  section :advanced_stem_courses, RatingContainer, '.stem-module'
+  section :equity_overview, RatingContainer, '#EquityOverview'
+  section :general_information, RatingContainer, '#General_info'
+  section :race_ethnicity, RatingContainer, '#Race_ethnicity'
+  section :low_income_students, RatingContainer, '#Low-income_students'
+  section :students_with_disabilities, RatingContainer, '#Students_with_Disabilities'
+  section :students, '.students-container' do
+
+  end
+  section :teachers_and_staff, RatingContainer, '#TeachersStaff'
+
   section :student_diversity, Students, '.students-container'
   section :review_summary, ReviewSummary, '.rs-review-summary'
   section :review_form, ReviewForm, '.review-form'
   section :review_list, ReviewList, '.review-list'
+  section :homes_and_rentals, '#homes-and-rentals' do
+    element :title_bar, '.title-bar'
+  end
+  section :neighborhood, '.neighborhood-module' do
+
+  end
+
   section :equity, '.rs-equity' do
     element :source_link, 'a', text: 'see notes'
   end
   section :nearby_schools, '.nearby-schools' do
     element :title, '.title'
+    elements :schools, '.nearby-school'
   end
 
   element :five_star_review_comment, ".five-star-review .comment"
@@ -137,6 +162,17 @@ class SchoolProfilesPage < SitePrism::Page
     props_as_string = node['data-props']
     return {} unless props_as_string.present?
     JSON.parse(props_as_string)
+  end
+
+  # This approach could work too
+  #   dom_id = page.evaluate_script("$('[data-component-name=#{component}]').data('dom-id')")
+  #   ::SitePrism::Waiter.wait_until_true do
+  #     page.evaluate_script("$('##{dom_id}').html().length > 0")
+  #   end
+  def wait_for_react_component(component)
+    dom_id = page.evaluate_script("$('[data-component-name=#{component}]').data('dom-id')")
+    singleton_class.send(:element, "#{component}_react", "##{dom_id}")
+    send("#{component}_react") if send("wait_for_#{component}_react")
   end
 
   def advanced_courses_props
