@@ -8,7 +8,7 @@ describe 'Visitor' do
   end
 
   scenario 'is redirected back to profile page after signing up for account', js: true do
-    school = create(:school_with_new_profile, id: 1)
+    school = create(:school_with_new_profile)
     visit school_path(school)
     page_object = SchoolProfilesPage.new
 
