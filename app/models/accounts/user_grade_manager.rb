@@ -25,9 +25,9 @@ class UserGradeManager
     end
   end
 
-  def delete_grades(grades_to_delete)
+  def delete_grades(grades_to_delete = :all)
     begin
-      user_grades = @user.student_grade_levels.where(grade: grades_to_delete)
+      user_grades = grades_to_delete == :all ? @user.student_grade_levels : @user.student_grade_levels.where(grade: grades_to_delete)
       user_grades.each { |g| StudentGradeLevelHistory.archive_student_grade_level(g) }
       user_grades.destroy_all
     rescue

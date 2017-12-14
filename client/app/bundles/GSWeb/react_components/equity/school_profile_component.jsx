@@ -49,6 +49,7 @@ export default class SchoolProfileComponent extends React.Component {
       flagged: PropTypes.bool
     })),
     analytics_id: PropTypes.string,
+    showTabs: PropTypes.bool,
     faq: PropTypes.shape({
       cta: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
@@ -121,6 +122,13 @@ export default class SchoolProfileComponent extends React.Component {
     return this.filteredData().length > 0
   }
 
+  wrapGraphComponent(graphComponent, value, index) {
+    return <div><BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+      {graphComponent}
+    </BasicDataModuleRow></div>;
+  }
+
+
   createDataComponent(type, values) {
     if (values) {
       // This is for titles in the test scores
@@ -129,37 +137,46 @@ export default class SchoolProfileComponent extends React.Component {
       }
 
       if (values.length > 0) {
-        let displayType = type || 'bar';
-        let component = null;
-        if (displayType == 'plain') {
+        let display_type = type || 'bar';
+        let component = [];
+        if (display_type == 'plain') {
           component = <PlainNumber values={values}/>
-        } else if (displayType == 'person') {
+        } else if (display_type == 'person') {
           component = <div>
-            {values.map((value, index) => 
+            {values.map((value, index) =>
               <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                 <PersonBar {...value} />
               </BasicDataModuleRow>)
             }
           </div>
-        } else if (displayType == 'person_reversed') {
+        } else if (display_type == 'person_reversed') {
           component = <div>
-            {values.map((value, index) => 
+            {values.map((value, index) =>
               <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                 <PersonBar {...value} invertedRatings={true} />
               </BasicDataModuleRow>)
             }
           </div>
-        } else if (displayType == 'rating') {
+        } else if (display_type == 'rating') {
           component = <div>
             {values.map((value, index) =>
-                <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-                  <RatingWithBar {...value} />
-                </BasicDataModuleRow>)
+              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                <RatingWithBar {...value} />
+              </BasicDataModuleRow>)
+            }
+          </div>
+        } else if (display_type == 'person_gray') {
+
+          component = <div>
+            {values.map((value, index) =>
+              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                <PersonBar {...value} use_gray={true}/>
+              </BasicDataModuleRow>)
             }
           </div>
         } else {
           component = <div>
-            {values.map((value, index) => 
+            {values.map((value, index) =>
               <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                 <BarGraphBase {...value} />
               </BasicDataModuleRow>)
@@ -194,7 +211,7 @@ export default class SchoolProfileComponent extends React.Component {
     return (
       <div  data-ga-click-label={this.props.title}>
         { this.props.title }&nbsp;
-        { this.props.info_text && 
+        { this.props.info_text &&
           <QuestionMarkTooltip content={this.props.info_text} element_type='toptooltip' /> }
       </div>
     )

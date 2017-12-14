@@ -26,12 +26,8 @@ module SchoolProfiles
       @school_cache_data_reader.test_scores_rating
     end
 
-    def historical_ratings
-      @school_cache_data_reader.historical_student_progress_ratings
-    end
-
     def show_historical_ratings?
-      historical_ratings.present? && historical_ratings.length > 1
+      false
     end
 
     def info_text
@@ -117,17 +113,15 @@ module SchoolProfiles
     end
 
     def rating_description
-      hash = @school_cache_data_reader.student_progress_rating_hash
-      hash['description'] if hash
+      @school_cache_data_reader.student_progress_rating_hash.try(:description)
     end
 
     def rating_methodology
-      hash = @school_cache_data_reader.student_progress_rating_hash
-      hash['methodology'] if hash
+      @school_cache_data_reader.student_progress_rating_hash.try(:methodology)
     end
 
     def rating_year
-      @school_cache_data_reader.student_progress_rating_year.to_s
+      @school_cache_data_reader.student_progress_rating_year
     end
 
     def visible?

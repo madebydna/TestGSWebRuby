@@ -3,11 +3,16 @@ export function scrollToElement(selector, doneCallback) {
     let y = $(selector).offset().top;
     let widthWithSearchBar = 767;
     let searchBarHeight = 48;
-    if(document.documentElement.clientWidth <= widthWithSearchBar) {
-      // html needed in selector because firefox overflows at html node
-      $('html,body').animate({scrollTop:y-searchBarHeight}, 500, 'swing', doneCallback);
-    } else {
-      $('html,body').animate({scrollTop:y}, 500, 'swing', doneCallback);
+
+    let fixedTopSelector = $('.js-profile-sticky,.js-profile-sticky-mobile,.menu_layout_mobile:visible');
+    var offset = Math.max(...$(fixedTopSelector).map((i, el) => $(el).height()));
+
+    if($('.js-profile-sticky:visible').length > 0) {
+      offset += 135;
+    } else if($('.js-profile-sticky-mobile:visible').length > 0) {
+      offset += 120;
     }
+    
+    $('html,body').animate({scrollTop:y - offset}, 500, 'swing', doneCallback);
   }
 }

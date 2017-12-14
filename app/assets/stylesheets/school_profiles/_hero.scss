@@ -133,10 +133,17 @@
 
   .school-contact__address,
   .school-contact__phone,
+  .school-contact__more,
   .school-contact__home-page-url {
     .badge {
       display: inline-block;
       padding-top: 3px;
+    }
+  }
+
+  .school-contact__phone, .school-contact__home-page-url {
+    @include media-breakpoint-up(md) {
+      display: none;
     }
   }
 

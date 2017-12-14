@@ -1,5 +1,4 @@
 //= require ./session
-//= require ./advertising
 //= require ./ajax
 //= require ./back_to_top
 //= require ./custom_carousel_control

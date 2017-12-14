@@ -1,5 +1,5 @@
 import BaseModal from './base_modal';
-import { sponsorsSignUp } from '../../util/newsletters';
+import { sponsorsSignUp, gradeByGradeSignUp } from '../../util/newsletters';
 import { create, assign, merge } from 'lodash';
 import { runValidations as runFormValidations } from 'components/validating_forms';
 
@@ -88,12 +88,26 @@ assign(EmailJoinModal.prototype, {
     }
   },
 
+  signUpForGradeByGrade: function signUpForGradeByGrade() {
+    var grades = this.getGrades();
+
+    if (grades.length > 0) {
+      return gradeByGradeSignUp(this.getModalData()).then(
+          (data) => data.responseJSON || data,
+          (data) => data.responseJSON || data
+      );
+    } else {
+      return $.when();
+    }
+  },
+
   submitSuccessHandler: function submitSuccessHandler(data) {
     var _this = this;
 
     $.when(
       this.signUpForSponsorsList(),
-      this.createStudents()
+      this.createStudents(),
+      this.signUpForGradeByGrade()
     ).done(function(data1, data2) {
       _this.getDeferred().resolve(merge({}, data, data1, data2, _this.getModalData()));
     }).fail(function(data1, data2) {

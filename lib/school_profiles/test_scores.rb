@@ -33,12 +33,8 @@ module SchoolProfiles
       @school_cache_data_reader.test_scores_rating
     end
 
-    def historical_ratings
-      @school_cache_data_reader.historical_test_scores_ratings
-    end
-
     def show_historical_ratings?
-      historical_ratings.present? && historical_ratings.length > 1
+      false
     end
 
     def narration
@@ -231,17 +227,3 @@ module SchoolProfiles
     end
   end
 end
-
-# class Hash
-#   def find_by_key(key)
-#     result = []
-#     result << self[key]
-#     self.values.each do |hash_value|
-#       values = [hash_value] unless hash_value.is_a? Array
-#       values.each do |value|
-#         result += value.find_by_key(key) if value.is_a? Hash
-#       end
-#     end
-#     result.compact
-#   end
-# end

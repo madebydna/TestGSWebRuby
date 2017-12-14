@@ -1,6 +1,6 @@
 <% content_for :page_javascripts do %>
-  <%= webpack_javascript_include_tag "commons", defer: true %>
-  <%= webpack_javascript_include_tag "district-boundaries", defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'district-boundaries', defer: true %>
 <% end %>
 <% content_for :page_stylesheets do %>
   <%= stylesheet_link_tag "district-boundaries", async: true %>

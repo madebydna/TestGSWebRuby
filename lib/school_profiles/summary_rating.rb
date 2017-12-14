@@ -109,8 +109,8 @@ module SchoolProfiles
     end
 
     def weights_within_range?
-      return false unless @school_cache_data_reader.rating_weights
-      @school_cache_data_reader.rating_weights.reduce(:+).between?(90, 110)
+      return false unless @school_cache_data_reader.rating_weight_values_array
+      @school_cache_data_reader.rating_weight_values_array.reduce(:+).between?(90, 110)
     end
 
     def gs_rating

@@ -10,7 +10,7 @@ es:
         sign_in: Ingresar
         sign_out: Desconectarse
         language: En Español
-        donate: Donate
+        donate: Donar
         about_us: Sobre nosotros
         featured:
           title: Featured
@@ -20,8 +20,10 @@ es:
           first_to_college: Primero a la universidad
           state_test_guide: Prueba de Guía Estado
           back_to_school: De regreso a la escuela
+          innovative_schools: Escuelas innovadoras
+          podcasts: Podcasts
         parenting:
-          title: Parenting
+          title: Crianza
           raising_kids: Raising kids
           parenting_dilemmas: Parenting dilemmas
           emotional_smarts: Emotional smarts

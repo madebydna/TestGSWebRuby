@@ -61,12 +61,14 @@
                 </div>
             <% end %>
             <div class="school-contact__item school-contact__more">
-              <%= link_to(t('.more_contact'), '#Neighborhood',
+              <%= link_to('#Neighborhood',
                           :class => 'js-gaClick',
                           :data => { 'ga-click-category'=>'Profile',
                                      'ga-click-action'=>'Hero links',
                                      'ga-click-label'=>'More Contact'}
-                  ) %>
+                  ) do %>
+                      <% render 'icon_and_content', icon: :phone, content: t('.contact_info') %>
+                    <% end %>
             </div>
           </div>
           <div class="vertical-items">
@@ -135,7 +137,7 @@
                      number_of_ratings: hero.num_ratings
           %>
         </div>
-        <div class="school-info__item">
+        <div class="school-info__item hidden-sm hidden-xs">
           <div class="label"><%= hero.grade_range_label %></div>
           <div><%= hero.grade_range %></div>
         </div>
@@ -146,6 +148,11 @@
         <div class="school-info__item">
           <div class="label"><%= t('.school_type') %></div>
           <div><%= t(hero.school_type.downcase, scope: 'school_profiles.hero', default: t(hero.school_type.downcase, default: hero.school_type)).capitalize %></div>
+        </div>
+        <div class="blue-background-hero" style="float: right">
+          <div class="cta non-fixed-top cta-container cta-hero">
+            <%= render 'cta_buttons', hide_owl: true %>
+          </div>
         </div>
       </div>
       <% if hero.has_school_address? %>
@@ -159,6 +166,7 @@
           </a>
         </div>
       <% end %>
+
     </div>
   </div>
 </div>

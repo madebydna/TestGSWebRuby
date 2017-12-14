@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+require_relative '../config/environment'
 require 'optparse'
 require_relative '../lib/i18n/manager.rb'
 

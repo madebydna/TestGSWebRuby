@@ -1,4 +1,20 @@
 FactoryGirl.define do
+  factory :data_value, class: DataValue do
+    sequence :id do |n|
+      n
+    end
+    value nil
+    state 'CA'
+    school_id nil
+    district_id nil
+    data_type_id nil
+    source_id 1
+    configuration 'web'
+    active 1
+    created Time.now
+    updated Time.now
+  end
+
   factory :school_data_value, class: OpenStruct do
     sequence :id do |n|
       n

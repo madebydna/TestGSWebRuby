@@ -40,6 +40,7 @@ es:
       advanced: Avanzado
       proficient: Competente
       proficient_or_better: Competente o mejor
+      at_grade_level: a nivel de grado
     This school: Esta escuela
     State average: Promedio estatal
     too_many_schools_error_html: '<strong>Ya ha seleccionado 4 escuelas para comparar.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspComparar las escuelas.</a>'
@@ -185,7 +186,7 @@ es:
       step8_p3:  Haga clic en “Fuentes”  para ver de dónde viene la información.
       step8_parent_tips: Consejos para padres
       step8_sources: Fuentes
-      step9_html: '<h1>¡Terminado!</h1><div>¿Tiene unos minutos más? Infórmese más en las secciones de Contenido Académico, Igualdad y Ambiente de la escuela.</div><br/><p><button class="tour-cta js-start-second-tour active">Continuar</button><div> <a id="close-school-tour" style="cursor: pointer;">No en este momento</a><p/><br/><p>¿Esto estuvo útil? <a href="https://s.qualaroo.com/45194/49372ef1-a8d5-47be-8507-f4a208ece19b" target="_blank">Danos tu opinion</a></p></div>'
+      step9_html: '<h1>¡Terminado!</h1><div>¿Tiene unos minutos más? Infórmese más en las secciones de Contenido Académico, Igualdad y Ambiente de la escuela.</div><br/><p><button class="tour-cta js-start-second-tour active">Continuar</button><div> <a class="js-close-school-tour" style="cursor: pointer;">No en este momento</a><p/><br/><p>¿Esto estuvo útil? <a href="https://s.qualaroo.com/45194/49372ef1-a8d5-47be-8507-f4a208ece19b" target="_blank">Danos tu opinion</a></p></div>'
     tour2:
       step1_title_html: '<div class="tutorial-header">Resultados de exámenes</div><br/>'
       step1: Aquí verá un resumen de los niveles de competencia de esta escuela en materias importantes, en base a resultados de exámenes y comparados con el promedio estatal, con “Consejos para Padres” que puede usar para informarse más.

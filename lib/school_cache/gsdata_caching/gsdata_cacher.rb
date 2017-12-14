@@ -35,6 +35,7 @@ class GsdataCaching::GsdataCacher < Cacher
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
 
   DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158, 159, 160, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186].freeze
+  # DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 152, 154, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186].freeze
 
   BREAKDOWN_TAG_NAMES = [
     'ethnicity',
@@ -54,6 +55,10 @@ class GsdataCaching::GsdataCacher < Cacher
     'health_index'
   ]
 
+  def data_type_ids
+    self.class::DATA_TYPE_IDS
+  end
+
   def build_hash_for_cache
     school_cache_hash = Hash.new { |h, k| h[k] = [] }
     r = school_results
@@ -71,14 +76,14 @@ class GsdataCaching::GsdataCacher < Cacher
   def school_results
     @_school_results ||=
       DataValue.find_by_school_and_data_types(school,
-                                              DATA_TYPE_IDS,
+                                              data_type_ids,
                                               BREAKDOWN_TAG_NAMES)
   end
 
   def state_results_hash
     @_state_results_hash ||= (
       DataValue.find_by_state_and_data_types(school.state,
-                                             DATA_TYPE_IDS,
+                                             data_type_ids,
                                              BREAKDOWN_TAG_NAMES)
       .each_with_object({}) do |r, h|
         state_key = r.datatype_breakdown_year
@@ -92,7 +97,7 @@ class GsdataCaching::GsdataCacher < Cacher
       district_values = DataValue
       .find_by_district_and_data_types(school.state,
                                        school.district_id,
-                                       DATA_TYPE_IDS,
+                                       data_type_ids,
                                        BREAKDOWN_TAG_NAMES)
       district_values.each_with_object({}) do |r, h|
         district_key = r.datatype_breakdown_year
@@ -127,6 +132,12 @@ class GsdataCaching::GsdataCacher < Cacher
       elsif [183, 184].include?(result.data_type_id) # discipline & attendance flag
         h[:description] = description('discipline_attendance')
         h[:methodology] = methodology('discipline_attendance')
+      elsif result.data_type_id == 155 # test score rating
+        h[:description] = description('test_scores')
+        h[:methodology] = methodology("test_scores")
+      elsif result.data_type_id == 156 # college readiness rating
+        h[:description] = description('psr')
+        h[:methodology] = methodology("psr")
       end
     end
   end
@@ -140,19 +151,21 @@ class GsdataCaching::GsdataCacher < Cacher
   end
 
   def validate_result_hash(result_hash, data_type_id)
+    result_hash = result_hash.reject { |_,v| v.blank? }
     required_keys = [:school_value, :source_date_valid, :source_name]
     missing_keys = required_keys - result_hash.keys
     if missing_keys.count > 0
       GSLogger.error(
         :school_cache,
-        message: "Gsdata cache missing required keys",
+        message: "#{self.class.name} cache missing required keys",
         vars: { school: school.id,
                 state: school.state,
                 data_type_id: data_type_id,
-                breakdowns: result_hash.breakdowns,
+                breakdowns: result_hash['breakdowns'],
         }
       )
     end
+    return missing_keys.count == 0
   end
 
 
