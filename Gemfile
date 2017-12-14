@@ -236,7 +236,7 @@ group :development, :test do
 
   # Ruby code style checking tool.
   # USED: Manually and by Jenkins
-  gem 'rubocop', '= 0.40.0', require: false
+  gem 'rubocop', '= 0.52.0', require: false
   # A formatter for rubocop that outputs in checkstyle format
   gem 'rubocop-checkstyle_formatter', require: false
 

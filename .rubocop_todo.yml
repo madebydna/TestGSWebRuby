@@ -599,7 +599,7 @@ Style/ConditionalAssignment:
 
 # Offense count: 20
 # Cop supports --auto-correct.
-Style/DeprecatedHashMethods:
+Style/PreferredHashMethods:
   Enabled: false
 
 # Offense count: 533
@@ -865,7 +865,7 @@ Style/LineEndConcatenation:
 
 # Offense count: 12
 # Cop supports --auto-correct.
-Style/MethodCallParentheses:
+Style/MethodCallWithoutArgsParentheses:
   Exclude:
     - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/models/district_cache.rb'
