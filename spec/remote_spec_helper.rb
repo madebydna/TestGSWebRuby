@@ -9,6 +9,7 @@ require 'capybara/rspec'
 require 'support/rspec_custom_masters'
 require 'support/rspec_its'
 require 'support/rspec_extensions'
+require 'pp'
 
 Capybara::RSpecMatchers::HaveText.class_eval do
   alias_method :failure_message, :failure_message_for_should
@@ -74,6 +75,11 @@ RSpec.configure do |config|
   Capybara.app_host = "http://qa.greatschools.org"
   Capybara.server_port = 80
   Capybara.run_server = false
+  config.after(:each) do
+    if page.driver.error_messages.present?
+      pp page.driver.error_messages
+    end
+  end
 end
 
 Capybara::Webkit.configure do |config|
