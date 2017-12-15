@@ -20,6 +20,7 @@ describe 'newsletters', type: :feature, remote: true do
   context 'on Alameda High School' do
     before { visit '/california/alameda/1-Alameda-High-School/' }
     feature 'I can click newsletter link in sticky CTA to sign up' do
+      pending 'CTA changed'
       before do
         within('.blue-background-hero') { click_link 'Save' }
       end
