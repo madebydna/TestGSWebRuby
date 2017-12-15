@@ -1,7 +1,13 @@
-#!/usr/bin/env rake
-# Add your own tasks in files placed in lib/tasks ending in .rake,
-# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
+# frozen_string_literal: true
 
-require File.expand_path('../config/application', __FILE__)
+begin
+  require 'rspec/core/rake_task'
 
-LocalizedProfiles::Application.load_tasks
+  # defines a rake task called gk_black_box and sets rspec flags appropriately
+  RSpec::Core::RakeTask.new(:gk_black_box, :host) do |t, task_args|
+    ENV['CAPYBARA_HOST'] = task_args[:host] if task_args[:host]
+    t.rspec_opts = '--require remote_spec_helper.rb --tag=remote --pattern="spec/qa/pages/gk/**{,/*/**}/*_spec.rb"'
+  end
+rescue LoadError
+  puts "No rspec rake library found"
+end

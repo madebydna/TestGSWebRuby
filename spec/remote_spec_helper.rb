@@ -71,9 +71,8 @@ RSpec.configure do |config|
   Capybara.default_driver = :webkit
 
   require 'socket'
-  Capybara.default_host = "http://qa.greatschools.org"
-  Capybara.app_host = "http://qa.greatschools.org"
-  Capybara.server_port = 80
+  Capybara.app_host = ENV['CAPYBARA_HOST'] || "http://qa.greatschools.org"
+  Capybara.server_port = ENV['CAPYBARA_PORT'] || 80
   Capybara.run_server = false
   config.after(:each) do
     if page.driver.error_messages.present?

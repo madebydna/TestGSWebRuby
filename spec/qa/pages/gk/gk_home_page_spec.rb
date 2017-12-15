@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'remote_spec_helper'
 require 'features/page_objects/gk_home_page'
 
 describe 'User visits GK home', type: :feature, remote: true, safe_for_prod: true do
