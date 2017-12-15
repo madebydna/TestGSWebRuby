@@ -12,7 +12,6 @@ gem_install_or_update() {
 
 configured_version=`cat .ruby-version`
 
-# rbenv install $configured_version
 if `rbenv versions 2> /dev/null | grep --quiet $configured_version`
 then
   echo ruby $configured_version already installed
