@@ -24,6 +24,7 @@ fi
 
 gem_install_or_update "bundler"
 gem_install_or_update "overcommit"
+gem_install_or_update "foreman"
 overcommit --sign
 
 bundle install
