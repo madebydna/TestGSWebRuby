@@ -1,4 +1,4 @@
-require 'remote_spec_helper'
+
 require 'features/page_objects/school_profiles_page'
 
 describe 'school name shows up on a preschool profile', type: :feature, remote: true, safe_for_prod: true do

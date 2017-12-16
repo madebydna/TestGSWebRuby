@@ -1,4 +1,4 @@
-require 'remote_spec_helper'
+
 
 describe 'newsletters', type: :feature, remote: true do
   context 'on the home page' do

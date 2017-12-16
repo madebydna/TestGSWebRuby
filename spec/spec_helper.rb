@@ -118,16 +118,17 @@ RSpec.configure do |config|
     Capybara.default_driver = :webkit
     Capybara.run_server = false
   else
-    ENV_GLOBAL['app_host'] = 'localhost'
-    ENV_GLOBAL['gsweb_host'] = 'localhost'
-    ENV_GLOBAL['app_port'] = '3001'
-    ENV_GLOBAL['gsweb_port'] = '3001'
     Capybara.default_driver = :rack_test
     Capybara.run_server = true
   end
   Capybara.javascript_driver = :webkit
-  Capybara.app_host = ENV['CAPYBARA_HOST'] || "http://localhost:3001"
-  Capybara.server_port = ENV['CAPYBARA_PORT'] || 3001
+  port = ENV['CAPYBARA_PORT'] || 3001
+  Capybara.app_host = ENV['CAPYBARA_HOST'] || "http://localhost:#{port}"
+  Capybara.server_port = port
+  ENV_GLOBAL['app_host'] = 'localhost'
+  ENV_GLOBAL['gsweb_host'] = 'localhost'
+  ENV_GLOBAL['app_port'] = '3001'
+  ENV_GLOBAL['gsweb_port'] = '3001'
 
   Capybara::Webkit.configure do |config|
     # config.debug = true

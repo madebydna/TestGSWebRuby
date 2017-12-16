@@ -1,4 +1,4 @@
-require 'remote_spec_helper'
+
 require 'features/page_objects/search_page'
 require 'features/page_objects/school_profiles_page'
 
