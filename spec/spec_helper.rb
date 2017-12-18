@@ -82,6 +82,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods unless ENV['BLACK_BOX']
   config.include WaitForAjax, type: :feature
   config.include CookieHelper
+  config.include SigninHelper
 
   config.order = "random" # you can specify order with --seed flag
   config.infer_spec_type_from_file_location!
