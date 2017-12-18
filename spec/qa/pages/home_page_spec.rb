@@ -1,4 +1,4 @@
-require 'remote_spec_helper'
+
 require 'features/page_objects/home_page'
 
 describe 'User visits Home Page', type: :feature, remote: true, safe_for_prod: true do
