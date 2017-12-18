@@ -10,27 +10,26 @@ class ReviewsCaching::ReviewsSnapshotCacher < Cacher
 
   def build_hash_for_cache
     {
-        avg_star_rating: school_reviews.five_star_rating_reviews.average_score.round,
-        num_ratings: school_reviews.five_star_rating_reviews.count_having_numeric_answer,
-        num_reviews: school_reviews.size
-    }.merge(reviews_hash)
+        avg_star_rating: school_reviews.reviews.five_star_rating_reviews.average_score.round,
+        num_ratings: school_reviews.reviews.five_star_rating_reviews.count_having_numeric_answer,
+        num_reviews: school_reviews.reviews.size,
+        reviews: reviews_array
+    }
   end
 
-  def reviews_hash
+  def reviews_array
     school_reviews.reviews_list.map do |review|
-      { :reviews =>
-        {
-          :avatar => review["avatar"],
-          :id => review["id"],
-          :topic_label => review["topic_label"],
-          :links => {
-            :flag => ""
-          },
-          :topical_reviews => [],
-          :most_recent_date => review["most_recent_date"],
-          :user_type_label => review["user_type_label"],
-          :comment => review["comment"]
-        }
+      {
+        :avatar => review["avatar"],
+        :id => review["id"],
+        :topic_label => review["topic_label"],
+        :links => {
+          :flag => ""
+        },
+        :topical_reviews => [],
+        :most_recent_date => review["most_recent_date"],
+        :user_type_label => review["user_type_label"],
+        :comment => review["comment"]
       }
     end
   end
