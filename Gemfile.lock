@@ -274,7 +274,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     ntlm-http (0.1.1)
-    oj (2.18.2)
+    oj (3.3.9)
     parallel (1.12.0)
     parser (2.4.0.2)
       ast (~> 2.3)
