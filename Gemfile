@@ -44,11 +44,9 @@ gem 'hashie'
 # TODO: Switch to OpenSSL::HMAC (See http://blog.nathanielbibler.com/post/63031273/opensslhmac-vs-ruby-hmac-benchmarks)
 gem 'ruby-hmac', '~> 0.4.0', :require => 'hmac-sha1'
 
-# Adds composite primary key support to ActiveRecord. Use minimally
-# No Rail 4:
-# gem 'composite_primary_keys'
-
 # Adds lodash JS to the project. Version of lodash added depends on environment
+# Can be removed after all pages no longer use deprecated_application js
+# or wordpress-modals.js
 gem 'lodash-rails'
 
 # for passing vars from ruby rails to javascript
