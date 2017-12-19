@@ -87,7 +87,7 @@ gem 'request_store', '~> 1.0.3'
 # Rails 4
 # Decorators/View-Models for Rails Applications
 # USED: everywhere. See app/decorators for many examples
-gem 'draper', '~> 1.3.1'
+gem 'draper', '~> 2.1.0'
 
 # Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
 # It more closely conforms to RFC 3986, RFC 3987, and RFC 6570 (level 4)
