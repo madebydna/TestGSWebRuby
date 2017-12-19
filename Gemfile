@@ -70,11 +70,6 @@ gem 'meta-tags', :require => 'meta_tags'
 # USED: See solr.rb
 gem 'rsolr'
 
-# Forms made easy for Rails!
-# USED: in lib/templates/haml/scaffold/_form.html.haml
-# TODO: Is this really used? Can we drop it?
-gem 'simple_form'
-
 # Maps controller filters to your model scopes
 # USED: controllers/admin/reviews_controller and schools_controller
 gem 'has_scope'
