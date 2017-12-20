@@ -96,7 +96,23 @@ export default class ReviewsList extends React.Component {
     return limit;
   }
 
+  fetchReviews() {
+    $.ajax({
+      type: 'GET',
+      url: "/gsr/api/reviews",
+      data: {
+        state: this.props.state,
+        school_id: this.props.schoolId
+      },
+      success: (payload) => {
+        console.log(payload);
+      }
+    })
+  }
+
+
   handleClick() {
+    this.fetchReviews();
     this.setState({limit: this.nextLimit()});
   }
 

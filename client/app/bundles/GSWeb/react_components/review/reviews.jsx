@@ -49,6 +49,9 @@ export default class Reviews extends React.Component {
     return(<ReviewsList
       reviews = { this.state.reviews }
       reviewSubmitMessage = { this.state.reviewSubmitMessage }
+      reviewsListCount = { this.props.reviews_list_count }
+      state = { this.props.state }
+      schoolId = { this.props.schoolId}
     />);
   }
 

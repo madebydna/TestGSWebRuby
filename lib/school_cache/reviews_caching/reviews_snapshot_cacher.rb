@@ -53,23 +53,6 @@ class ReviewsCaching::ReviewsSnapshotCacher < Cacher
   end
 end
 
-# Structure of reviews_list
-# {"school_user_digest"=>"CKdB87zIG/G4egr3P2k5wA==",
-#  "five_star_review"=>
-#    {:comment=>
-#       "This school a really nice community for kids, parents, and teachers.  It is now the designated elementary school, district-wide, for Berkeley's Dual Immersion Spanish/English program.  The new Principal is great and teachers love their kids and are responsive to parents.  I was skeptical about BUSD at first but really think they do a good job!",
-#     :topic_label=>"Overall experience",
-#     :answer=>"5",
-#     :answer_label=>nil,
-#     :answer_value=>"5",
-#     :date_published=>"June 03, 2013",
-#     :id=>1330329,
-#     :links=>{:flag=>"/gsr/reviews/1330329/flag"}},
-#  "topical_reviews"=>[],
-#  "most_recent_date"=>"June 03, 2013",
-#  "user_type_label"=>"Parent",
-#  "avatar"=>1,
-#  "id"=>4577713082488423709}
 
 # reviews [
 #   {
