@@ -50,7 +50,7 @@ module Feeds
       level_value = cache_value(@directory_hash,'level')
       if level_value == 'Ungraded'
         level_value =  'n/a'
-      elsif level.present?
+      elsif level_value.present?
         level_value.slice! ' & Ungraded'
       end
       single_data_object('level',level_value)
