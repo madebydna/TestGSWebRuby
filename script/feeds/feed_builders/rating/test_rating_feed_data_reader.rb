@@ -23,7 +23,7 @@ module Feeds
     end
 
     def get_rating_data_for_school_feed(ratings_cache_data, state)
-      hash = {'data_type_id'=>174, 'year'=>0, 'school_value_text'=>nil, 'school_value_float'=>'NR', 'test_data_type_display_name'=>'GreatSchools rating'}
+      hash = {'data_type_id'=>174, 'year'=>0, 'school_value_text'=>nil, 'school_value_float'=>nil, 'test_data_type_display_name'=>'GreatSchools rating'}
       summary = ratings_cache_data['Summary Rating']
       if summary.present?
         hash['school_value_float'] = summary.first['school_value'].to_f
@@ -34,7 +34,7 @@ module Feeds
         hash['school_value_float'] = overall_test_score.first['school_value'].to_f if overall_test_score.present?
         hash['year'] = date_to_year(overall_test_score.first['source_date_valid']) if overall_test_score.present?
       end
-      hash
+      hash['school_value_float'].present? || hash['school_value_text'].present? ? hash : nil
     end
 
     def test_score_rating_used?(state)
