@@ -57,9 +57,8 @@ export default class Reviews extends React.Component {
     return(<ReviewsList
       reviews = { this.state.reviews }
       reviewSubmitMessage = { this.state.reviewSubmitMessage }
-      reviewsListCount = { this.props.reviews_list_count }
-      state = { this.props.state }
-      schoolId = { this.props.schoolId}
+      limit = { this.state.limit }
+      offset = { this.state.offset }
     />);
   }
 
@@ -137,7 +136,7 @@ export default class Reviews extends React.Component {
 
   //returns a boolean
   isLastPage(){
-    return this.props.reviews.length <= this.state.limit;
+    return this.props.reviews_list_count <= this.state.limit;
   }
 
   startingLimit() {
@@ -152,12 +151,14 @@ export default class Reviews extends React.Component {
 
   nextLimit() {
     let limit = this.state.limit + this.REVIEW_CHUNK_SIZE;
-    if(limit > this.props.reviews.length) limit = this.props.reviews.length;
+    if(limit > this.props.reviews_list_length) limit = this.props_reviews_list_length;
     return limit;
   }
 
   handleClick() {
-    fetchReviews(this.props.state, this.props.schoolId).done((reviews) => this.setState({reviews: reviews}));
+    if(this.state.reviews.length < this.props.reviews_list_count) {
+      fetchReviews(this.props.state, this.props.schoolId).done((reviews) => this.setState({reviews: reviews}));
+    }
     this.setState({limit: this.nextLimit()});
   }
 

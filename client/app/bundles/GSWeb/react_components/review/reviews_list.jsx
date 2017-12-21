@@ -43,14 +43,10 @@ export default class ReviewsList extends React.Component {
   }
 
   displayReviews() {
-    return this.props.reviews.slice(this.state.offset, this.state.limit)
+    return this.props.reviews.slice(this.props.offset, this.props.limit)
       .map(this.renderOneUsersReviews.bind(this));
   }
 
-  //returns a boolean
-  isLastPage(){
-    return this.props.reviews.length <= this.state.limit;
-  }
 
   reviewReportedCallback(reviewId) {
     if (reviewId) {
@@ -72,8 +68,6 @@ export default class ReviewsList extends React.Component {
       review_reported_callback={this.reviewReportedCallback}
     />)
   }
-
-  //CLEAN UP IMPORTS, CONSTRUCTOR, AND FUNCTIONS!!
 
   render() {
     return (
