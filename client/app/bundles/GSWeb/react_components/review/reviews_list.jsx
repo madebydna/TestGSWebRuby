@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import UserReviews from './user_reviews';
-import { scrollToElement } from 'util/scrolling';
 import { t } from 'util/i18n';
-import { size as viewportSize } from 'util/viewport';
 
 export default class ReviewsList extends React.Component {
 
@@ -19,19 +17,14 @@ export default class ReviewsList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.REVIEW_CHUNK_SIZE = 5;
     let currentUserReportedReviews = [];
 
     // TODO: This needs to be hooked up somewhere. Maybe from props?
     this.state = {
-      currentUserReportedReviews: currentUserReportedReviews,
-      offset: 0,
-      limit: this.startingLimit()
+      currentUserReportedReviews: currentUserReportedReviews
     };
     this.reviewReportedCallback = this.reviewReportedCallback.bind(this);
     this.renderReviewSubmitMessage = this.renderReviewSubmitMessage.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleCloseAllClick = this.handleCloseAllClick.bind(this);
   }
 
 
@@ -80,71 +73,16 @@ export default class ReviewsList extends React.Component {
     />)
   }
 
-  startingLimit() {
-    let limit = this.REVIEW_CHUNK_SIZE;
-    if(viewportSize() == 'xs') {
-      limit = 2;
-    }
-
-    if(limit > this.props.reviews.length) limit = this.props.reviews.length;
-    return limit;
-  }
-
-  nextLimit() {
-    let limit = this.state.limit + this.REVIEW_CHUNK_SIZE;
-    if(limit > this.props.reviews.length) limit = this.props.reviews.length;
-    return limit;
-  }
-
-  fetchReviews() {
-    $.ajax({
-      type: 'GET',
-      url: "/gsr/api/reviews",
-      data: {
-        state: this.props.state,
-        school_id: this.props.schoolId
-      },
-      success: (payload) => {
-        console.log(payload);
-      }
-    })
-  }
-
-
-  handleClick() {
-    this.fetchReviews();
-    this.setState({limit: this.nextLimit()});
-  }
-
-  handleCloseAllClick() {
-    this.setState({limit: this.startingLimit()});
-    scrollToElement('.review-summary');
-  }
-
-  showMoreButton(){
-    if(!this.isLastPage()) {
-      return (<div className="show-more__button" onClick={this.handleClick}>
-        {t('Show more')}
-      </div>);
-    }
-  }
-
-  closeAllButton(){
-    if(this.state.limit > this.startingLimit()) {
-      return (<div className="tac ptm"><a onClick={this.handleCloseAllClick}>
-        {t('Close all')}
-      </a></div>);
-    }
-  }
+  //CLEAN UP IMPORTS, CONSTRUCTOR, AND FUNCTIONS!!
 
   render() {
     return (
       <div className="review-list">
         <div>{this.renderReviewSubmitMessage()}</div>
         <div>{this.displayReviews()}</div>
-        {this.showMoreButton()}
-        {this.closeAllButton()}
+
       </div>
     )
   }
 }
+

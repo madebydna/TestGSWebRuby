@@ -3,7 +3,7 @@ module ApiPagination
     base.class_eval do
       # cattr_accessor here will create class getter/setters and instance
       # methods too
-      cattr_accessor :pagination_max_limit, :pagination_default_limit, :pagination_items_proc
+      cattr_accessor :pagination_max_limit, :pagination_default_limit, :pagination_items_proc, :api_default_limit
       attr_writer :pagination_max_limit
     end
   end
@@ -24,6 +24,7 @@ module ApiPagination
   end
 
   def limit
+    return self.class.api_default_limit if params[:limit] == 'none'
     l = (params[:limit] || pagination_default_limit).to_i
     [l, pagination_max_limit].min
   end
