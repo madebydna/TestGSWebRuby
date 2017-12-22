@@ -1,4 +1,6 @@
 module StructuredMarkup
+  # number of reviews to be added to json-ld hash
+  REVIEW_COUNT = 5
 
   module ControllerConcerns
     extend ActiveSupport::Concern
@@ -56,7 +58,7 @@ module StructuredMarkup
   end
 
   def self.reviews_array(school_reviews)
-    school_reviews.having_comments.map do |review|
+    school_reviews.having_comments[0...REVIEW_COUNT].map do |review|
       review = SchoolProfileReviewDecorator.decorate(review)
       markup = {
           "@type" => "Review",

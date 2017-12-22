@@ -63,27 +63,16 @@ class Api::ReviewsController < ApplicationController
     Array.wrap(params[:fields]).presence || DEFAULT_FIELDS
   end
 
-  def all_commented_reviews
-    Review.
-      active.
-      where(school_id: params[:school_id], state: params[:state]).
-      eager_load(:school_user).
-      includes(:answers, :votes, question: :review_topic).
-      order(created: :desc).
-      to_a.
-      extend(ReviewScoping).
-      extend(ReviewCalculations).
-      having_comments
+  def school_profile_reviews
+    @_school_profile_reviews ||= (
+      school = School.on_db(params[:state].downcase).find(params[:school_id].to_i)
+      review_questions = SchoolProfiles::ReviewQuestions.new(school)
+      SchoolProfiles::Reviews.new(school, review_questions).reviews_list
+    )
   end
 
+  # All commented reviews for a school, formatted for the reviews.jsx react component
   def reviews_list
-    all_reviews = (
-    UserReviews.
-      make_instance_for_each_user(all_commented_reviews, School.on_db(params[:state].downcase).find(params[:school_id].to_i)).
-      sort_by { |r| r.most_recent_date }.
-      reverse.
-      map { |user_reviews| user_reviews.build_struct }
-    )
-    render json: all_reviews
+    render json: school_profile_reviews
   end
 end
