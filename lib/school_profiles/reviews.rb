@@ -7,7 +7,6 @@ module SchoolProfiles
     def initialize(school, review_questions)
       @school = school
       @reviews = school.reviews
-      # require 'pry'; binding.pry
       # review_questions is the ReviewQuestions class in lib
       # .questions is the hash of questions produced from the DB
       @review_questions = review_questions.questions
