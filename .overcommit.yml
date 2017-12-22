@@ -29,8 +29,12 @@
 PreCommit:
  RuboCop:
    enabled: true
-   # problem_on_unmodified_line: warn
+   required_executable: './bin/rubocop'
+   command: ['bundle', 'exec', 'rubocop']
+   install_command: 'bundle install'
+   flags: ['--format=emacs', '--force-exclusion', '--display-cop-names', '--fail-level=C']
    problem_on_unmodified_line: ignore
-   on_warn: pass
-
-
+   on_warn: fail
+   # levels:
+   # refactor convention warning error fatal
+   # R: :refactor, C: :convention, W: :warning, E: :error, F: :fatal

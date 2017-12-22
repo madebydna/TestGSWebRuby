@@ -17,7 +17,7 @@ describe 'Visitor' do
   end
 
   scenario 'views new school profile with valid school' do
-    school = create(:school_with_new_profile, id: 1)
+    school = create(:school_with_new_profile)
 
     visit school_path(school)
 

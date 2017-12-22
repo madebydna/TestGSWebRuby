@@ -2,9 +2,9 @@ source "https://rubygems.org"
 
 # WARNING: Before upgrading rails version check the following extension to the
 # Rails ActionDispatch::HTTP::URL.url_for 
-gem 'rails', '4.2.7'
+gem 'rails', '4.2.8'
 
-gem 'mysql2', '0.3.13'
+gem 'mysql2', '0.4.10'
 
 # This gem provides jQuery and the jQuery-ujs driver for your Rails 3+ application.
 gem 'jquery-rails'
@@ -44,11 +44,9 @@ gem 'hashie'
 # TODO: Switch to OpenSSL::HMAC (See http://blog.nathanielbibler.com/post/63031273/opensslhmac-vs-ruby-hmac-benchmarks)
 gem 'ruby-hmac', '~> 0.4.0', :require => 'hmac-sha1'
 
-# Adds composite primary key support to ActiveRecord. Use minimally
-# No Rail 4:
-# gem 'composite_primary_keys'
-
 # Adds lodash JS to the project. Version of lodash added depends on environment
+# Can be removed after all pages no longer use deprecated_application js
+# or wordpress-modals.js
 gem 'lodash-rails'
 
 # for passing vars from ruby rails to javascript
@@ -70,11 +68,6 @@ gem 'meta-tags', :require => 'meta_tags'
 # USED: See solr.rb
 gem 'rsolr'
 
-# Forms made easy for Rails!
-# USED: in lib/templates/haml/scaffold/_form.html.haml
-# TODO: Is this really used? Can we drop it?
-gem 'simple_form'
-
 # Maps controller filters to your model scopes
 # USED: controllers/admin/reviews_controller and schools_controller
 gem 'has_scope'
@@ -87,7 +80,7 @@ gem 'request_store', '~> 1.0.3'
 # Rails 4
 # Decorators/View-Models for Rails Applications
 # USED: everywhere. See app/decorators for many examples
-gem 'draper', '~> 1.3.1'
+gem 'draper', '~> 2.1.0'
 
 # Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
 # It more closely conforms to RFC 3986, RFC 3987, and RFC 6570 (level 4)
@@ -102,7 +95,7 @@ gem 'protected_attributes'
 # USED: Only by script/feeds/feed_scripts/validate_feed_files as far as I can tell
 # This was added back in the early days though
 # TODO: Verify not used outside of development environment and move there
-gem 'nokogiri', '= 1.6.7'
+gem 'nokogiri', '= 1.8.1'
 
 # SOAP client
 # USED: To communicate with ExactTarget. See exact_target.rb
@@ -130,6 +123,7 @@ gem 'binding_of_caller', '~> 0.7.2'
 # USED: Multiple places. Search for *.jbuilder for example
 gem 'jbuilder'
 
+# Used for parsing JSON, such as from school cache
 gem 'oj'
 
 gem 'stackprof'
@@ -236,7 +230,7 @@ group :development, :test do
 
   # Ruby code style checking tool.
   # USED: Manually and by Jenkins
-  gem 'rubocop', '= 0.40.0', require: false
+  gem 'rubocop', '= 0.52.0', require: false
   # A formatter for rubocop that outputs in checkstyle format
   gem 'rubocop-checkstyle_formatter', require: false
 

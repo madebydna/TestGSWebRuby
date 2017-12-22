@@ -36,7 +36,7 @@ mysql_gsdata: &mysql_gsdata
 
 development: &development
   <<: *mysql_rw_server
-  database: localized_profiles
+  database: gs_schooldb
   profile_config_rw:
     <<: *mysql_rw_server
     database: localized_profiles
@@ -115,7 +115,7 @@ test_db: &test_db
 
 test: &test
   <<: *test_db
-  database: localized_profiles_test
+  database: gs_schooldb_test
   profile_config_rw:
     <<: *test_db
     database: localized_profiles_test

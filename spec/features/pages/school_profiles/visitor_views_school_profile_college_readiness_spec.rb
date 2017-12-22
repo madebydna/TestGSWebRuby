@@ -3,7 +3,7 @@ require 'features/page_objects/school_profiles_page'
 
 describe 'Visitor' do
   let(:page_object) { SchoolProfilesPage.new }
-  let (:school) { create(:school_with_new_profile, id: 1) }
+  let (:school) { create(:school_with_new_profile) }
   after do
     clean_dbs(:gs_schooldb)
     clean_models(:ca, School)

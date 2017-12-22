@@ -1,4 +1,4 @@
-require 'remote_spec_helper'
+
 
 describe '#hub pages', remote:true, safe_for_prod: true  do
   {

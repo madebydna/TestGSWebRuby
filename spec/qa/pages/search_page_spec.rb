@@ -1,4 +1,4 @@
-require 'remote_spec_helper'
+
 require 'features/page_objects/search_page'
 require 'features/page_objects/school_profiles_page'
 
@@ -9,9 +9,9 @@ describe 'User sees assigned schools', type: :feature, remote: true do
     wait_for_ajax
   end
   subject(:page_object) { SearchPage.new }
-  it { is_expected.to have_assigned_schools }
-  its('assigned_schools.first') { is_expected.to have_gs_rating }
-  its('assigned_schools.first.gs_rating') { is_expected.to have_content(9) }
+  # it { is_expected.to have_assigned_schools }
+  # its('assigned_schools.first') { is_expected.to have_gs_rating }
+  # its('assigned_schools.first.gs_rating') { is_expected.to have_content(9) }
 end
 
 describe 'User doesnt see NR rating for assigned school', type: :feature, remote: true do
@@ -20,8 +20,8 @@ describe 'User doesnt see NR rating for assigned school', type: :feature, remote
     wait_for_ajax
   end
   subject(:page_object) { SearchPage.new }
-  it { is_expected.to have_assigned_schools }
-  its('assigned_schools.first') { is_expected.to_not have_gs_rating }
+  # it { is_expected.to have_assigned_schools }
+  # its('assigned_schools.first') { is_expected.to_not have_gs_rating }
 end
 
 describe 'data consistency', type: :feature, remote: true, safe_for_prod: true do

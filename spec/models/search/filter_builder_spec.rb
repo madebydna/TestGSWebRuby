@@ -326,7 +326,7 @@ describe FilterBuilder do
     context 'in Detroit, MI' do
       let (:filters) { FilterBuilder.new('MI', 'Detroit', false).filters }
       [ { panel: 1,
-          contains: [:gradeLevels, :distance, :st, :gs_rating, :cgr, :gstq_rating],
+          contains: %i(gradeLevels distance st gs_rating gstq_rating),
           does_not_contain: []
         },
         { panel: 2,
