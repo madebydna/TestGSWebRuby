@@ -30,8 +30,7 @@ export function fetchReviews(state,schoolId) {
     url: "/gsr/api/reviews_list",
     data: {
       state: state,
-      school_id: schoolId,
-      limit: 'none'
+      school_id: schoolId
     }
   }).then((payload) => payload);
 }

@@ -4,8 +4,6 @@ class Api::ReviewsController < ApplicationController
 
   self.pagination_max_limit = 10
   self.pagination_default_limit = 5
-  # Add limit=none to query params to set limit to api_default_limit (called in api_pagination#limit)
-  self.api_default_limit = 2000
   # tell the mixed-in pagination methods what code it can evaluate
   # to determine how many results were found for the current request.
   self.pagination_items_proc = proc { reviews }

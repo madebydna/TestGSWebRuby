@@ -24,7 +24,6 @@ module ApiPagination
   end
 
   def limit
-    return self.class.api_default_limit if params[:limit] == 'none'
     l = (params[:limit] || pagination_default_limit).to_i
     [l, pagination_max_limit].min
   end
