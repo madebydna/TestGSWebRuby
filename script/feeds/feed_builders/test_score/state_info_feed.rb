@@ -49,7 +49,8 @@ module Feeds
         end
         query = TestDataSet.on_db(state.downcase.to_sym).
           with_data_type(test_data_type).
-          latest_active_feed_data_set
+          latest_active_feed_data_set.
+          max_by(&:year)
         query = query.first if query.respond_to?(:first)
         @_test_data_set = query
       end
