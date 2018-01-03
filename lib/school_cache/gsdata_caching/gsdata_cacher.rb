@@ -138,6 +138,9 @@ class GsdataCaching::GsdataCacher < Cacher
       elsif result.data_type_id == 156 # college readiness rating
         h[:description] = description('psr')
         h[:methodology] = methodology("psr")
+      elsif result.data_type_id == 157 # student progress rating
+        h[:description] = description('growth')
+        h[:methodology] = methodology("growth")
       end
     end
   end
