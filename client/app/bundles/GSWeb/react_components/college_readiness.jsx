@@ -90,6 +90,8 @@ export default class CollegeReadiness extends SchoolProfileComponent {
                 return this.wrapGraphComponent(<PersonBar {...value}/>, value, index);
               case 'person reversed':
                 return this.wrapGraphComponent(<PersonBar {...value} invertedRatings={true}/>, value, index);
+              case 'person_gray':
+                return this.wrapGraphComponent(<PersonBar {...value} use_gray={true}/>, value, index);
               case 'rating':
                 return this.wrapGraphComponent(<RatingWithBar {...value} />, value, index);
               default:

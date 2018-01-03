@@ -10,9 +10,8 @@ module SchoolProfiles
 
       def included_data_types(cache = nil)
         # Required for the sort in data_type_hashes
-        remediation_subgroups = REMEDIATION_SUBGROUPS
         config_for_cache = cache_accessor.select { |c| cache.nil? || c[:cache] == cache }
-        config_for_cache.map { |mapping| mapping[:data_key] } + remediation_subgroups
+        config_for_cache.map { |mapping| mapping[:data_key] }
       end
 
       def data_type_formatting_map
