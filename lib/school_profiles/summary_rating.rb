@@ -99,9 +99,9 @@ module SchoolProfiles
         gsdata_obj = filter_rating('Test Score Rating') || filter_rating(RATING_WEIGHTS['Test Score Rating'][:weight])
         sdv_timestamp = gsdata_obj.source_date_valid
       else
-        sdv_timestamp = filter_rating('Summary Rating').source_date_valid
+        sdv_timestamp = @school_cache_data_reader.decorated_school.rating_object_for_key('Summary Rating').try(:source_date_valid)
       end
-      @school_cache_data_reader.format_date sdv_timestamp.to_date
+      @school_cache_data_reader.format_date sdv_timestamp.to_date if sdv_timestamp
     end
 
     def to_percent(decimal)
