@@ -58,6 +58,7 @@ class GsdataCaching::GsdataCacher < Cacher
   DATA_TYPE_IDS_TO_STRING = {
     155 => 'test_scores',
     156 => 'psr',
+    157 => 'growth',
     158 => 'equity',
     159 => 'academic_progress',
     183 => 'discipline_attendance',
