@@ -37,23 +37,32 @@ class GsdataCaching::GsdataCacher < Cacher
   DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158, 159, 160, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186].freeze
   # DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 152, 154, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186].freeze
 
-  BREAKDOWN_TAG_NAMES = [
-    'ethnicity',
-    'gender',
-    'language_learner',
-    'disability',
-    'course_subject_group',
-    'advanced',
-    'course',
-    'stem_index',
-    'arts_index',
-    'vocational_hands_on_index',
-    'ela_index',
-    'fl_index',
-    'hss_index',
-    'business_index',
-    'health_index'
-  ]
+  BREAKDOWN_TAG_NAMES = %w(
+    ethnicity
+    gender
+    language_learner
+    disability
+    course_subject_group
+    advanced
+    course
+    stem_index
+    arts_index
+    vocational_hands_on_index
+    ela_index
+    fl_index
+    hss_index
+    business_index
+    health_index
+  )
+
+  DATA_TYPE_IDS_TO_STRING = {
+    155 => 'test_scores',
+    156 => 'psr',
+    158 => 'equity',
+    159 => 'academic_progress',
+    183 => 'discipline_attendance',
+    184 => 'discipline_attendance'
+  }
 
   def data_type_ids
     self.class::DATA_TYPE_IDS
@@ -114,6 +123,7 @@ class GsdataCaching::GsdataCacher < Cacher
     state_value = state_value(result)
     district_value = district_value(result)
     display_range = display_range(result)
+
     {}.tap do |h|
       h[:breakdowns] = breakdowns if breakdowns
       h[:breakdown_tags] = breakdown_tags if breakdown_tags
@@ -123,21 +133,11 @@ class GsdataCaching::GsdataCacher < Cacher
       h[:district_value] = district_value if district_value
       h[:display_range] = district_value if display_range
       h[:source_name] = result.source_name
-      if result.data_type_id == 158 # equity rating
-        h[:description] = description('equity')
-        h[:methodology] = methodology('equity')
-      elsif result.data_type_id == 159 # academic progress rating
-        h[:description] = description('academic_progress')
-        h[:methodology] = methodology('academic_progress')
-      elsif [183, 184].include?(result.data_type_id) # discipline & attendance flag
-        h[:description] = description('discipline_attendance')
-        h[:methodology] = methodology('discipline_attendance')
-      elsif result.data_type_id == 155 # test score rating
-        h[:description] = description('test_scores')
-        h[:methodology] = methodology("test_scores")
-      elsif result.data_type_id == 156 # college readiness rating
-        h[:description] = description('psr')
-        h[:methodology] = methodology("psr")
+
+      d = DATA_TYPE_IDS_TO_STRING[result.data_type_id]
+      if d.present?
+        h[:description] = description(d)
+        h[:methodology] = methodology(d)
       end
     end
   end
