@@ -13,12 +13,13 @@ import AssetMapPlugin from 'asset-map-webpack-plugin';
 const config = {
   entry: {
     'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie'],
-    'commons': ['react', 'react-dom', 'redux', 'react-redux', './app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal', './app/bundles/GSWeb/header'],
+    'commons': ['./app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal', './app/bundles/GSWeb/header'],
+    'react-redux' : ['react', 'react-dom', 'redux', 'react-redux', 'react-addons-css-transition-group'],
     'widget': ['./app/bundles/GSWeb/widget'],
+    'mobile-overlay-ad': ['./app/bundles/GSWeb/components/ads/mobile_overlay'],
     'interstitial': ['./app/bundles/GSWeb/interstitial'],
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
     'school-profiles': [ './app/bundles/GSWeb/school_profiles' ],
-    'home': [ './app/bundles/GSWeb/home' ],
     'jquery': ['jquery'],
     'admin-tools': ['./app/bundles/GSWeb/admin_tools']
   },
@@ -47,11 +48,16 @@ const config = {
 
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons-blocking',
-      chunks: ['commons', 'school-profiles', 'district-boundaries', 'widget'],
+      chunks: ['commons', 'react-redux', 'school-profiles', 'district-boundaries', 'widget'],
       minChunks: Infinity,
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
+      chunks: ['react-redux', 'school-profiles', 'district-boundaries', 'widget'],
+      minChunks: Infinity,
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'react-redux',
       chunks: ['school-profiles', 'district-boundaries', 'widget'],
       minChunks: Infinity,
     }),

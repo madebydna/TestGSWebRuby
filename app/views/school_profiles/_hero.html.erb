@@ -137,7 +137,7 @@
                      number_of_ratings: hero.num_ratings
           %>
         </div>
-        <div class="school-info__item">
+        <div class="school-info__item hidden-sm hidden-xs">
           <div class="label"><%= hero.grade_range_label %></div>
           <div><%= hero.grade_range %></div>
         </div>
@@ -148,6 +148,11 @@
         <div class="school-info__item">
           <div class="label"><%= t('.school_type') %></div>
           <div><%= t(hero.school_type.downcase, scope: 'school_profiles.hero', default: t(hero.school_type.downcase, default: hero.school_type)).capitalize %></div>
+        </div>
+        <div class="blue-background-hero" style="float: right">
+          <div class="cta non-fixed-top cta-container cta-hero">
+            <%= render 'cta_buttons', hide_owl: true %>
+          </div>
         </div>
       </div>
       <% if hero.has_school_address? %>
@@ -161,6 +166,7 @@
           </a>
         </div>
       <% end %>
+
     </div>
   </div>
 </div>

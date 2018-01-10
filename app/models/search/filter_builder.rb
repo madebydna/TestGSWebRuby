@@ -309,14 +309,6 @@ class FilterBuilder
       callback_type: 'insert_after',
       options:
       {
-        cgr: {
-          label: t('College Readiness'),
-          display_type: :title,
-          name: :cgr,
-          filters: {
-            filter1: { label: t('70% or more attend college'), display_type: :basic_checkbox, name: :cgr, value: '70_TO_100' }
-          }
-        },
         gstq_rating: {
             label: t('Great Start to Quality (preschool only)'),
             display_type: :title,

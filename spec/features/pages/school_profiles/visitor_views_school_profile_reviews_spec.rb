@@ -11,8 +11,8 @@ describe "Visitor" do
 
   scenario "sees an overall review from community member", js: true do
     review_comment = "Smple riw cmnt with engh chars & wrds to be valid h s f s"
-    school = create(:school_with_new_profile, id: 1)
-    user = create(:verified_user, id: 1)
+    school = create(:school_with_new_profile)
+    user = create(:verified_user)
     community_member = create(:community_school_user,
                               member_id: user.id,
                               school_id: school.id,
@@ -28,8 +28,8 @@ describe "Visitor" do
                                            created: review_created_time,
                                            user: user,
                                            state: school.state,
-                                           school_id: school.id,
-                                           id: 1)
+                                           school_id: school.id
+                                          )
 
 
     visit school_path(school)
@@ -45,8 +45,8 @@ describe "Visitor" do
 
   scenario "sees the reviews section even if there are more than one five star review from a user", js: true do
     review_comment = "Smple riw cmnt with engh chars & wrds to be valid h s f s"
-    school = create(:school_with_new_profile, id: 1)
-    user = create(:verified_user, id: 1)
+    school = create(:school_with_new_profile)
+    user = create(:verified_user)
     create(
       :community_school_user,
       member_id: user.id,
@@ -64,8 +64,8 @@ describe "Visitor" do
       created: review_created_time,
       user: user,
       state: school.state,
-      school_id: school.id,
-      id: 1)
+      school_id: school.id
+    )
     five_star_review_with_comment = build(
       :five_star_review,
       review_question_id: five_star_review_question.id,
@@ -76,7 +76,7 @@ describe "Visitor" do
       user: user,
       state: school.state,
       school_id: school.id,
-      id: 1)
+    )
     five_star_review_with_comment.id = nil
     five_star_review_with_comment.save(validate: false)
 
@@ -116,8 +116,8 @@ describe "Visitor" do
 
   scenario "sees a review summary section", js:true do
     review_comment = "Smple riw cmnt with engh chars & wrds to be valid h s f s"
-    school = create(:school_with_new_profile, id: 1)
-    user = create(:verified_user, id: 1)
+    school = create(:school_with_new_profile)
+    user = create(:verified_user)
     community_member = create(:community_school_user,
                               member_id: user.id,
                               school_id: school.id,
@@ -132,7 +132,7 @@ describe "Visitor" do
                                            user: user,
                                            state: school.state,
                                            school_id: school.id,
-                                           id: 1)
+                                         )
     visit school_path(school)
     expect(page_object).to have_review_summary
     expect(page_object.review_summary.number_of_reviews.text).to eq('1')

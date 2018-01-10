@@ -37,7 +37,7 @@ export default class SingleBarViz extends React.Component {
     return (
       state_average != null && 
       state_average != undefined && 
-      parseInt(state_average) > lower_range &&
+      parseInt(state_average) >= lower_range &&
       parseInt(state_average) <= upper_range
     );
   }

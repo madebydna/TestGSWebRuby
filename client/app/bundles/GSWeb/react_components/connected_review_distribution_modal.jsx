@@ -30,7 +30,7 @@ class ConnectedReviewDistributionModal extends React.Component {
       distribution={{dist: this.state.distribution, question: this.props.question}}
       />
       <br/><a href="#Reviews"
-              className="js-gaClick"
+              className="js-gaClick js-swd-modal"
               style={{textAlign: 'center'}}
               data-ga-click-label="Students with disabilities - 11"
               data-ga-click-action="View subtopic comments"

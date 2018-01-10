@@ -3,7 +3,7 @@ en:
     equity:
       'title': 'GreatSchools profile data sources &amp; information'
       '4-year high school graduation rate': '4-year high school graduation rate'
-      'Percent of students who meet UC/CSU entrance requirements': 'Percent of graduates who meet UC/CSU eligibility requirements'
+      'Percent of students who meet UC/CSU entrance requirements': 'Percentage of graduates who meet UC/CSU eligibility requirements'
       'source': 'Source'
       'Great schools rating': 'GreatSchools Equity Overview Rating'
       discipline_attendance_flag: GreatSchools discipline & attendance flag

@@ -1,4 +1,4 @@
-require 'remote_spec_helper'
+
 
 describe 'legacy URLs', type: :feature, remote: true, safe_for_prod: true do
   subject { page }

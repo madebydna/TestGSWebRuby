@@ -3,6 +3,7 @@ import { showAd, enableAdCloseButtons } from 'util/advertising';
 const adDomId = 'Mobile_overlay_Ad';
 const containerSelector = '.mobile-ad-sticky-bottom';
 let deferred;
+let $ = window.jQuery;
 
 export function renderAd() {
   /*
@@ -19,6 +20,7 @@ export function renderAd() {
     onAdNotFilled();
   }
 }
+window.GS_renderMobileOverlayAd = renderAd; // TODO: remove after other pages use webpack
 
 export function revealContainer() {
   $(containerSelector).css('position', 'fixed');
@@ -40,12 +42,14 @@ export function onAdFilled() {
     }
   }, 1000 * 5);
 }
+window.GS_onMobileOverlayAdFilled = onAdFilled;
 
 export function onAdNotFilled() {
   if(deferred) {
     deferred.reject();
   }
 }
+window.GS_onMobileOverlayAdNotFilled = onAdNotFilled;
 
 export function setDeferred(_deferred) {
   deferred = _deferred;

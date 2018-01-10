@@ -66,3 +66,8 @@ db_connect_timeout: 5
 
 profiling_key: we<3performance
 profiling_output_path: /tmp
+
+# This is overwritten on the server via puppet.  Static values are in secret.yml for test and development
+# generate key by running "bundle exec rake secret"
+# We should have different keys on each server so logging in only will work for single environment
+secret_key_base:

@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   before_action :set_login_redirect
   before_action :set_no_index
 
-  layout "home"
+  layout "deprecated_application"
 
   def show
 
@@ -14,7 +14,7 @@ class HomeController < ApplicationController
 
     @canonical_url = home_url
     # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
-    set_meta_tags title: 'GreatSchools: School Ratings and Reviews for Public and Private Schools',
+    set_meta_tags title: 'School Ratings & Reviews for Public & Private Schools: GreatSchools',
                   og: {
                       title: "K-12 school quality information and parenting resources",
                       description: "We're an independent nonprofit that provides parenting resources and in-depth school quality information families can use to choose the right school and support their child's learning and development.",

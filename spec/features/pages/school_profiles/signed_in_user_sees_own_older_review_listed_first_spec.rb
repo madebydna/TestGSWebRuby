@@ -11,7 +11,7 @@ describe "Signed in and verified user" do
 
     scenario "user's older review listed above more recent reviews", js: true do
       page_object = SchoolProfilesPage.new
-      school = create(:school_with_new_profile, id: 1)
+      school = create(:school_with_new_profile)
       newer_reviews = create_list(:five_star_review, 4, school: school)
 
       user_old_comment = "User overall comment for an old review that should be on top"

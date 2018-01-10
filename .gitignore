@@ -18,6 +18,8 @@ atlassian-ide-plugin.xml
 .*un~
 tags
 
+# Emacs
+*~
 
 Vagrantfile
 profiling-results/

@@ -1,4 +1,4 @@
-require 'spec_helper'
+# require 'spec_helper'
 require 'features/page_objects/home_page'
 require 'features/page_objects/search_page'
 

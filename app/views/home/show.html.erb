@@ -4,18 +4,26 @@
     <meta name="google-site-verification" content="zOi8EZHiVs8q_pVV2RM11ic3q0hnJXTIphoISsEyUUw" />
 <% end %>
 
-<% content_for :page_javascripts do %>
-  <%= webpack_javascript_include_tag "commons", defer: true %>
-  <%= webpack_javascript_include_tag "home", defer: true %>
-<% end %>
-
-<% content_for :page_stylesheets do %>
-  <%= stylesheet_link_tag "post_load", media: "all", "data-turbolinks-track" => true %>
-  <%= stylesheet_link_tag "home_page", media: "all", "data-turbolinks-track" => true %>
-<% end %>
-
 <% content_for :javascript_includes do %>
     <script>
+        $(function() {
+          GS.util.setupImages(
+            {
+              selector: '.is-scaled',
+              desktopImage: '<%= image_path('home/slideshow/home_1600_6.jpg')%>',
+              mobileImage: '<%= image_path('home/slideshow/home_480_6.jpg')%>',
+              classes: 'scaling'
+            }
+          );
+          GS.util.setupImages(
+            {
+              selector: '.is-scaled-banner',
+              desktopImage: '<%= image_path('home/milestone_background-sm.jpg')%>',
+              mobileImage: '<%= image_path('home/milestone_background_mobile.jpg')%>',
+              classes: 'scaling'
+            }
+          );
+        });
     </script>
 <% end %>
 
@@ -25,7 +33,7 @@
       <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-2 col-lg-4 col-lg-offset-2">
         <div class="mtxl hidden-xs"></div>
         <div class="oa text_fff pal darken brs">
-          <h1 class="text_fff mtn" style="font-family: 'RobotoSlab-Light"><%= t('home.hero.heading') %></h1>
+          <h1 class="text_fff mtn" style="font-family: 'RobotoSlab-Light'"><%= t('home.hero.heading') %></h1>
           <div class="subtitle uc mtl"><%= t('home.hero.subheading') %></div>
           <%= render partial: 'home/search_form' %>
 
@@ -40,10 +48,10 @@
             <span class="phs">|</span>
             <%= link_to t('home.hero.math_html'), math_url %>
             <span class="phs">|</span>
-            <%= link_to t('home.hero.emotional_smarts_html'), emotional_smarts_url %>
-            <%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url %>
+            <%= link_to t('home.hero.emotional_smarts_html'), emotional_smarts_url(lang: nil) %>
+            <%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url(lang: nil) %>
             <span class="phs">|</span>
-            <%= link_to t('home.hero.back_to_school_html'), back_to_school_url %>
+            <%= link_to t('home.hero.innovative_schools_html'), innovative_schools_url(lang: nil) %>
 
           </div>
         </div>

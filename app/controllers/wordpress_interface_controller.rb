@@ -62,7 +62,8 @@ class WordpressInterfaceController < ApplicationController
     create_students(user_id, wp_params['grade'], state)
 
     # sign up for these lists
-    lists = wp_params['lists'] #['greatnews', 'greatkidsnews']
+    lists = wp_params['lists'] || [] #['greatnews', 'greatkidsnews']
+    lists << 'greatkidsnews' if wp_params['grade'].present? && !lists.include?('greatkidsnews')
     create_subscriptions(user_id, lists, state)
 
     # found_user.id

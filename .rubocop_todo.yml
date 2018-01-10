@@ -54,7 +54,7 @@ Lint/EndAlignment:
   Enabled: false
 
 # Offense count: 29
-Lint/Eval:
+Security/Eval:
   Exclude:
     - 'app/models/collection_config.rb'
     - 'spec/models/presenters/data_viz/data_display_point_spec.rb'
@@ -92,7 +92,7 @@ Lint/IneffectiveAccessModifier:
     - 'app/services/school_search_service.rb'
 
 # Offense count: 2
-Lint/LiteralInCondition:
+Lint/LiteralAsCondition:
   Exclude:
     - 'doc/examples_and_gotchas/single_line_conditionals.rb'
     - 'spec/factories/school.rb'
@@ -421,7 +421,7 @@ Rails/Validation:
     - 'app/models/user.rb'
 
 # Offense count: 55
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
 
 # Offense count: 23
@@ -433,7 +433,7 @@ Style/Alias:
 
 # Offense count: 47
 # Cop supports --auto-correct.
-Style/AlignArray:
+Layout/AlignArray:
   Exclude:
     - 'app/services/school_data_validator.rb'
     - 'lib/school_cache/progress_bar_caching/progress_bar_cacher.rb'
@@ -447,14 +447,14 @@ Style/AlignArray:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle, SupportedLastArgumentHashStyles.
 # SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Style/AlignHash:
+Layout/AlignHash:
   Enabled: false
 
 # Offense count: 61
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: with_first_parameter, with_fixed_indentation
-Style/AlignParameters:
+Layout/AlignParameters:
   Enabled: false
 
 # Offense count: 25
@@ -508,7 +508,7 @@ Style/BlockDelimiters:
 
 # Offense count: 22
 # Cop supports --auto-correct.
-Style/BlockEndNewline:
+Layout/BlockEndNewline:
   Exclude:
     - 'app/models/table_data.rb'
     - 'lib/district_cache/district_display_range.rb'
@@ -535,7 +535,7 @@ Style/BracesAroundHashParameters:
 # Cop supports --auto-correct.
 # Configuration parameters: IndentWhenRelativeTo, SupportedStyles, IndentOneStep, IndentationWidth.
 # SupportedStyles: case, end
-Style/CaseIndentation:
+Layout/CaseIndentation:
   Enabled: false
 
 # Offense count: 61
@@ -575,7 +575,7 @@ Style/ClassVars:
 
 # Offense count: 72
 # Cop supports --auto-correct.
-Style/ClosingParenthesisIndentation:
+Layout/ClosingParenthesisIndentation:
   Enabled: false
 
 # Offense count: 34
@@ -587,7 +587,7 @@ Style/CommentAnnotation:
 
 # Offense count: 41
 # Cop supports --auto-correct.
-Style/CommentIndentation:
+Layout/CommentIndentation:
   Enabled: false
 
 # Offense count: 26
@@ -599,7 +599,7 @@ Style/ConditionalAssignment:
 
 # Offense count: 20
 # Cop supports --auto-correct.
-Style/DeprecatedHashMethods:
+Style/PreferredHashMethods:
   Enabled: false
 
 # Offense count: 533
@@ -610,7 +610,7 @@ Style/Documentation:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: leading, trailing
-Style/DotPosition:
+Layout/DotPosition:
   Enabled: false
 
 # Offense count: 17
@@ -668,17 +668,17 @@ Style/EmptyElse:
 # Offense count: 29
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAdjacentOneLineDefs.
-Style/EmptyLineBetweenDefs:
+Layout/EmptyLineBetweenDefs:
   Enabled: false
 
 # Offense count: 350
 # Cop supports --auto-correct.
-Style/EmptyLines:
+Layout/EmptyLines:
   Enabled: false
 
 # Offense count: 4
 # Cop supports --auto-correct.
-Style/EmptyLinesAroundAccessModifier:
+Layout/EmptyLinesAroundAccessModifier:
   Exclude:
     - 'app/controllers/modules/advertising_concerns.rb'
     - 'app/controllers/modules/deferred_action_concerns.rb'
@@ -689,26 +689,26 @@ Style/EmptyLinesAroundAccessModifier:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: empty_lines, no_empty_lines
-Style/EmptyLinesAroundBlockBody:
+Layout/EmptyLinesAroundBlockBody:
   Enabled: false
 
 # Offense count: 388
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: empty_lines, no_empty_lines
-Style/EmptyLinesAroundClassBody:
+Layout/EmptyLinesAroundClassBody:
   Enabled: false
 
 # Offense count: 77
 # Cop supports --auto-correct.
-Style/EmptyLinesAroundMethodBody:
+Layout/EmptyLinesAroundMethodBody:
   Enabled: false
 
 # Offense count: 123
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: empty_lines, no_empty_lines
-Style/EmptyLinesAroundModuleBody:
+Layout/EmptyLinesAroundModuleBody:
   Enabled: false
 
 # Offense count: 6
@@ -725,14 +725,14 @@ Style/EmptyLiteral:
 # Offense count: 178
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment, ForceEqualSignAlignment.
-Style/ExtraSpacing:
+Layout/ExtraSpacing:
   Enabled: false
 
 # Offense count: 68
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
 # SupportedStyles: consistent, special_for_inner_method_call, special_for_inner_method_call_in_parentheses
-Style/FirstParameterIndentation:
+Layout/FirstParameterIndentation:
   Enabled: false
 
 # Offense count: 2
@@ -790,13 +790,13 @@ Style/IfUnlessModifier:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
 # SupportedStyles: special_inside_parentheses, consistent, align_brackets
-Style/IndentArray:
+Layout/IndentArray:
   Enabled: false
 
 # Offense count: 15
 # Cop supports --auto-correct.
 # Configuration parameters: IndentationWidth.
-Style/IndentAssignment:
+Layout/IndentAssignment:
   Exclude:
     - 'lib/data_loading/census_loading/update.rb'
     - 'lib/data_loading/esp_response_loading/update.rb'
@@ -811,20 +811,20 @@ Style/IndentAssignment:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
 # SupportedStyles: special_inside_parentheses, consistent, align_braces
-Style/IndentHash:
+Layout/IndentHash:
   Enabled: false
 
 # Offense count: 122
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: normal, rails
-Style/IndentationConsistency:
+Layout/IndentationConsistency:
   Enabled: false
 
 # Offense count: 139
 # Cop supports --auto-correct.
 # Configuration parameters: Width.
-Style/IndentationWidth:
+Layout/IndentationWidth:
   Enabled: false
 
 # Offense count: 39
@@ -844,7 +844,7 @@ Style/Lambda:
 
 # Offense count: 429
 # Cop supports --auto-correct.
-Style/LeadingCommentSpace:
+Layout/LeadingCommentSpace:
   Enabled: false
 
 # Offense count: 18
@@ -865,7 +865,7 @@ Style/LineEndConcatenation:
 
 # Offense count: 12
 # Cop supports --auto-correct.
-Style/MethodCallParentheses:
+Style/MethodCallWithoutArgsParentheses:
   Exclude:
     - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/models/district_cache.rb'
@@ -890,14 +890,14 @@ Style/MethodDefParentheses:
 # Offense count: 15
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: snake_case, camelCase
-Style/MethodName:
+Naming/MethodName:
   Enabled: false
 
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineArrayBraceLayout:
+Layout/MultilineArrayBraceLayout:
   Exclude:
     - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/services/school_data_validator.rb'
@@ -907,35 +907,35 @@ Style/MultilineArrayBraceLayout:
 
 # Offense count: 51
 # Cop supports --auto-correct.
-Style/MultilineBlockLayout:
+Layout/MultilineBlockLayout:
   Enabled: false
 
 # Offense count: 84
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineHashBraceLayout:
+Layout/MultilineHashBraceLayout:
   Enabled: false
 
 # Offense count: 65
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineMethodCallBraceLayout:
+Layout/MultilineMethodCallBraceLayout:
   Enabled: false
 
 # Offense count: 187
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
 # SupportedStyles: aligned, indented
-Style/MultilineMethodCallIndentation:
+Layout/MultilineMethodCallIndentation:
   Enabled: false
 
 # Offense count: 98
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
 # SupportedStyles: aligned, indented
-Style/MultilineOperationIndentation:
+Layout/MultilineOperationIndentation:
   Enabled: false
 
 # Offense count: 219
@@ -1044,7 +1044,7 @@ Style/PerlBackrefs:
 # NamePrefix: is_, has_, have_
 # NamePrefixBlacklist: is_, has_, have_
 # NameWhitelist: is_a?
-Style/PredicateName:
+Naming/PredicateName:
   Enabled: false
 
 # Offense count: 29
@@ -1135,17 +1135,17 @@ Style/SingleLineBlockParams:
 
 # Offense count: 688
 # Cop supports --auto-correct.
-Style/SpaceAfterColon:
+Layout/SpaceAfterColon:
   Enabled: false
 
 # Offense count: 1030
 # Cop supports --auto-correct.
-Style/SpaceAfterComma:
+Layout/SpaceAfterComma:
   Enabled: false
 
 # Offense count: 15
 # Cop supports --auto-correct.
-Style/SpaceAfterMethodName:
+Layout/SpaceAfterMethodName:
   Exclude:
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/modules/url_helper.rb'
@@ -1158,7 +1158,7 @@ Style/SpaceAfterMethodName:
 
 # Offense count: 20
 # Cop supports --auto-correct.
-Style/SpaceAfterNot:
+Layout/SpaceAfterNot:
   Exclude:
     - 'app/controllers/modules/javascript_i18n_concerns.rb'
     - 'app/controllers/modules/url_helper.rb'
@@ -1180,19 +1180,19 @@ Style/SpaceAfterNot:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleInsidePipes, SupportedStyles.
 # SupportedStyles: space, no_space
-Style/SpaceAroundBlockParameters:
+Layout/SpaceAroundBlockParameters:
   Enabled: false
 
 # Offense count: 68
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: space, no_space
-Style/SpaceAroundEqualsInParameterDefault:
+Layout/SpaceAroundEqualsInParameterDefault:
   Enabled: false
 
 # Offense count: 5
 # Cop supports --auto-correct.
-Style/SpaceAroundKeyword:
+Layout/SpaceAroundKeyword:
   Exclude:
     - 'app/controllers/modules/ab_test_concerns.rb'
     - 'app/controllers/modules/url_helper.rb'
@@ -1203,25 +1203,25 @@ Style/SpaceAroundKeyword:
 # Offense count: 1150
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.
-Style/SpaceAroundOperators:
+Layout/SpaceAroundOperators:
   Enabled: false
 
 # Offense count: 105
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: space, no_space
-Style/SpaceBeforeBlockBraces:
+Layout/SpaceBeforeBlockBraces:
   Enabled: false
 
 # Offense count: 54
 # Cop supports --auto-correct.
-Style/SpaceBeforeComma:
+Layout/SpaceBeforeComma:
   Enabled: false
 
 # Offense count: 10
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.
-Style/SpaceBeforeFirstArg:
+Layout/SpaceBeforeFirstArg:
   Exclude:
     - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'config/routes.rb'
@@ -1235,31 +1235,26 @@ Style/SpaceBeforeFirstArg:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
 # SupportedStyles: space, no_space
-Style/SpaceInsideBlockBraces:
-  Enabled: false
-
-# Offense count: 172
-# Cop supports --auto-correct.
-Style/SpaceInsideBrackets:
+Layout/SpaceInsideBlockBraces:
   Enabled: false
 
 # Offense count: 1828
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces, SupportedStyles.
 # SupportedStyles: space, no_space
-Style/SpaceInsideHashLiteralBraces:
+Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
 
 # Offense count: 181
 # Cop supports --auto-correct.
-Style/SpaceInsideParens:
+Layout/SpaceInsideParens:
   Enabled: false
 
 # Offense count: 10
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: space, no_space
-Style/SpaceInsideStringInterpolation:
+Layout/SpaceInsideStringInterpolation:
   Exclude:
     - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/decorators/review_topic_decorator.rb'
@@ -1315,7 +1310,7 @@ Style/SymbolProc:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: final_newline, final_blank_line
-Style/TrailingBlankLines:
+Layout/TrailingBlankLines:
   Enabled: false
 
 # Offense count: 8
@@ -1339,7 +1334,7 @@ Style/TrailingCommaInLiteral:
 
 # Offense count: 150
 # Cop supports --auto-correct.
-Style/TrailingWhitespace:
+Layout/TrailingWhitespace:
   Enabled: false
 
 # Offense count: 2
@@ -1374,7 +1369,7 @@ Style/UnneededPercentQ:
 # Offense count: 6
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: snake_case, camelCase
-Style/VariableName:
+Naming/VariableName:
   Enabled: false
 
 # Offense count: 183

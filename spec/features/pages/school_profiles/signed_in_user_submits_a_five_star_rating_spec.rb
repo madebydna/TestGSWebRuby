@@ -11,10 +11,10 @@ describe "Signed in and verified user" do
       end
 
       scenario "views five star review question call to action", js: true do
-        school = create(:school_with_new_profile, id: 1)
+        school = create(:school_with_new_profile)
         page_object = SchoolProfilesPage.new
         five_star_question_text = "How would you rate your experience at this school?"
-        five_star_review_question = create(:overall_rating_question, id: 1, active: 1)
+        five_star_review_question = create(:overall_rating_question, active: 1)
 
         visit school_path(school)
 
@@ -25,7 +25,7 @@ describe "Signed in and verified user" do
       end
 
       scenario "selects a five star cta star response", js: true do
-        school = create(:school_with_new_profile, id: 1)
+        school = create(:school_with_new_profile)
         page_object = SchoolProfilesPage.new
         five_star_review_question = create(:overall_rating_question, active: 1)
         topical_review_question = create(:review_question, active: 1)
@@ -38,7 +38,7 @@ describe "Signed in and verified user" do
       end
 
       scenario "submits a new five star rating with comment", js: true do
-        school = create(:school_with_new_profile, id: 1)
+        school = create(:school_with_new_profile)
         school_user = create(:school_user, user: user, school: school)
         page_object = SchoolProfilesPage.new
         page_object.set_school_profile_tour_cookie

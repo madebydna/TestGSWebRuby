@@ -24,7 +24,15 @@ module SchoolProfiles
     end
 
     def gs_rating
-      ((1..10).to_a & [decorated_school.great_schools_rating]).first
+      @_gs_rating ||= (
+        summary_rating = ((1..10).to_a & [decorated_school.great_schools_rating]).first
+        test_score_weight = (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value']
+        if summary_rating.nil? && test_score_weight == '1'
+          decorated_school.test_scores_rating
+        else
+          summary_rating
+        end
+      )
     end
 
     def gs_rating_year
@@ -89,10 +97,6 @@ module SchoolProfiles
 
     def test_scores_all_rating_hash
       decorated_school.test_scores_all_rating_hash
-    end
-
-    def ratings_cache_old?
-      decorated_school.ratings_cache_old?
     end
 
     def equity_overview_rating
@@ -226,6 +230,12 @@ module SchoolProfiles
     end
 
     def rating_weights
+      decorated_school.gsdata.select do |key, val|
+        key.include?('Summary Rating Weight')
+      end
+    end
+
+    def rating_weight_values_array
       rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating Weight')}
       return nil if rating_weight_hash.empty?
       rating_weight_hash.values.map  do |weight_data|

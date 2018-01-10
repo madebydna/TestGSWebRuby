@@ -1,4 +1,4 @@
-require 'remote_spec_helper'
+
 
 describe 'newsletters', type: :feature, remote: true do
   context 'on the home page' do
@@ -20,8 +20,9 @@ describe 'newsletters', type: :feature, remote: true do
   context 'on Alameda High School' do
     before { visit '/california/alameda/1-Alameda-High-School/' }
     feature 'I can click newsletter link in sticky CTA to sign up' do
+      pending 'CTA changed'
       before do
-        within('#profile-sticky-container') { click_link 'Save' }
+        within('.blue-background-hero') { click_link 'Save' }
       end
       it 'I should see the newsletter modal' do
         within('.remodal') do

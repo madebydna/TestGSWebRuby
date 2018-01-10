@@ -18,8 +18,8 @@ $space-between-profile-modules: $spacing-extra-large;
   @include media-breakpoint-down(xs) {
     .anchor-mobile-offset {
       display: block;
-      height: 50px; /*same height as header*/
-      margin-top: -50px; /*same height as header*/
+      height: 0px; /*same height as header*/
+      margin-top: 0px; /*same height as header*/
       visibility: hidden;
     }
   }

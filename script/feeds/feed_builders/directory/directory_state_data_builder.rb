@@ -22,7 +22,7 @@ module Feeds
     end
 
     def self.state_name
-      single_data_object('state-name',States.state_name(@state).capitalize)
+      single_data_object('state-name',States.labels_hash[@state.downcase])
     end
 
     def self.state
@@ -32,7 +32,7 @@ module Feeds
     def self.census_info
       characteristics_hash = state_data # need to build a pretty hash to feed into the monster
       char_data = CharacteristicsDataBuilder.characteristics_format(characteristics_hash, @universal_id, 'state')
-      single_data_object('census-info', char_data) if char_data.compact.present?
+      single_data_object('census-info', char_data) if char_data.try(:compact).present?
     end
 
     def self.single_data_object(name, value, attrs=nil)
