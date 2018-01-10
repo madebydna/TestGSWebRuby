@@ -4,6 +4,7 @@ class City < ActiveRecord::Base
   db_magic :connection => :us_geo
 
   attr_accessible :population, :bp_census_id, :name, :state
+  attr_reader :rating
 
   scope :active, -> { where(active: true) }
 
@@ -35,8 +36,6 @@ class City < ActiveRecord::Base
     @county ||= County.find_by(state: state, FIPS: fipsCounty)
   end
 
-
-
   def schools_by_rating_desc
     @schools_by_rating_desc ||= (
       schools = School.within_city(self.state, self.name)
@@ -57,5 +56,32 @@ class City < ActiveRecord::Base
         end
       end
     )
+  end
+
+  module CollectionMethods
+    def preload_ratings
+      return self unless present?
+
+      make_key = Proc.new { |state, city| "#{state}_#{city}" }
+      states = map(&:state)
+
+      key_to_city_rating_map = states.each_with_object({}) do |state, accum|
+        ratings = CityRating.having_max_year_in_state(state)
+        ratings.each do |city_rating|
+          accum[make_key.call(state, city_rating.city)] = city_rating.rating
+        end
+      end
+
+      each do |city|
+        city.instance_variable_set(
+          :@rating,
+          key_to_city_rating_map[
+            make_key.call(city.state, city.name)
+          ]
+        )
+      end
+
+      self
+    end
   end
 end
