@@ -16,7 +16,8 @@ module Feeds
           'test_rating' => 'local-gs-test-rating-feed',
           'official_overall' => 'local-gs-official-overall-rating-feed',
           'directory_feed' => 'local-greatschools-feed',
-          'google_feed' => 'local-google-feed'
+          'google_feed' => 'local-google-feed',
+          'city' => 'local-greatschools-city-feed'
 
       }
 
