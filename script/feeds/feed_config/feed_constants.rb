@@ -16,7 +16,8 @@ module Feeds
           'test_rating' => 'local-gs-test-rating-feed',
           'official_overall' => 'local-gs-official-overall-rating-feed',
           'directory_feed' => 'local-greatschools-feed',
-          'google_feed' => 'local-google-feed'
+          'google_feed' => 'local-google-feed',
+          'city' => 'local-greatschools-city-feed'
 
       }
 
@@ -37,7 +38,8 @@ module Feeds
           'test_rating' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
           'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
           'directory_feed' => 'https://www.greatschools.org/feeds/local-greatschools.xsd',
-          'google_feed' => 'https://www.gstatic.com/localfeed/local_feed.xsd'
+          'google_feed' => 'https://www.gstatic.com/localfeed/local_feed.xsd',
+          'city' => 'https://www.greatschools.org/feeds/greatschools-city2.xsd'
       }
       FEED_TO_ROOT_ELEMENT_MAPPING = {
           'test_scores' => 'gs-test-feed',
@@ -45,7 +47,8 @@ module Feeds
           'test_rating' => 'gs-test-rating-feed',
           'official_overall' => 'gs-official-overall-rating-feed',
           'directory_feed' => 'gs-local-feed',
-          'google_feed' => 'listings'
+          'google_feed' => 'listings',
+          'city' => 'greatschools-city-feed',
       }
 
       PROFICIENT_AND_ABOVE_BAND = 'proficient and above'
@@ -68,7 +71,7 @@ module Feeds
 
       #  REQUIRED - universal_id zipcode home_page_url url
       DIRECTORY_SCHOOL_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url universal_district_id census_info level)
-      DIRECTORY_DISTRICT_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url census_info)
+      DIRECTORY_DISTRICT_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url census_info level)
 
       # this is a white list of keys we are looking for - executes a method to handle type of data
       CHARACTERISTICS_MAPPING = [
@@ -249,7 +252,7 @@ module Feeds
       ].freeze
 
       def all_feeds
-        %w(test_scores test_subgroup test_rating official_overall directory_feed)
+        %w(test_scores test_subgroup test_rating official_overall directory_feed city)
       end
 
       def all_states

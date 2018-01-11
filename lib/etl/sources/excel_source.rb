@@ -1,7 +1,7 @@
 require 'csv'
 require_relative '../source'
-require 'roo'
-require 'roo-xls'
+#require 'roo'
+#require 'roo-xls'
 
 class ExcelSource < GS::ETL::Source
   attr_reader :columns

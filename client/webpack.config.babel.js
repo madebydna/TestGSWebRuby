@@ -12,7 +12,7 @@ import AssetMapPlugin from 'asset-map-webpack-plugin';
 
 const config = {
   entry: {
-    'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie'],
+    'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie', './app/bundles/GSWeb/misc_all_page_blocking'],
     'commons': ['./app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal', './app/bundles/GSWeb/header'],
     'react-redux' : ['react', 'react-dom', 'redux', 'react-redux', 'react-addons-css-transition-group'],
     'widget': ['./app/bundles/GSWeb/widget'],
