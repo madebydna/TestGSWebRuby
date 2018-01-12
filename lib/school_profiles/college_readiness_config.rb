@@ -35,6 +35,7 @@ module SchoolProfiles::CollegeReadinessConfig
 # Order matters - items display in configured order
 
 # characteristics cache accessors for college success pane
+# at the end of this constant we add on the remediation subgroups, which are currently set to be displayed as person_gray
   CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS = [
     {
       :cache => :characteristics,
@@ -93,7 +94,7 @@ module SchoolProfiles::CollegeReadinessConfig
     {
       :cache => :characteristics,
       :data_key => GRADUATES_REMEDIATION,
-      :visualization => 'person_reversed',
+      :visualization => 'person_gray',
       :formatting => [:round_unless_less_than_1, :percent]
     },
     {
@@ -102,7 +103,16 @@ module SchoolProfiles::CollegeReadinessConfig
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
     }
-  ]
+  ].concat(
+    REMEDIATION_SUBGROUPS.map do |data_key|
+      {
+        :cache => :characteristics,
+        :data_key => data_key,
+        :visualization => 'person_gray',
+        :formatting => [:round_unless_less_than_1, :percent]
+      }
+    end
+  )
 
 # characteristics cache accessors for college readiness pane
   CHAR_CACHE_ACCESSORS = [

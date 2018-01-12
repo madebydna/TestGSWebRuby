@@ -59,7 +59,6 @@ parsed_arguments.each do |args|
   cache_keys = args[:cache_keys]
   schools_where = args[:schools_where]
   states.each do |state|
-    puts
     puts "Working on: #{state}"
     cache_keys.each do |cache_key|
       puts "     doing #{cache_key}"

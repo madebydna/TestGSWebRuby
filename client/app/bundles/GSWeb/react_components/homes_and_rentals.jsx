@@ -5,7 +5,7 @@ import {
   decorateListing,
   addCampaignCode,
   nearbyHomesUrl,
-  pricingPageUrl
+  borrowingPageUrl
 } from '../api_clients/homes_and_rentals';
 import ButtonGroup from './buttongroup';
 import AnchorButton from './anchor_button';
@@ -141,7 +141,7 @@ export default class HomesAndRentals extends React.Component {
           { this.renderHomesAndRentals() }
         </div>
         <div className="cta-buttons">
-          <AnchorButton className="bold-anchor" rel="nofollow" target="_blank" href={pricingPageUrl()}><span className="icon-house prs"></span>{ t('Find out what your home is worth') }</AnchorButton>
+          <AnchorButton className="bold-anchor" rel="nofollow" target="_blank" href={borrowingPageUrl()}><span className="icon-house prs"></span>{ t('See how much you can afford to borrow') }</AnchorButton>
           <AnchorButton className="bold-anchor"  rel="nofollow" target="_blank" href={nearbyHomesUrl(this.props.city, this.props.state)}>{ t('See more listings near this school') }</AnchorButton>
           <img src={zillowLogo} />
         </div>

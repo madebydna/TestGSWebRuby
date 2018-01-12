@@ -10,9 +10,8 @@ module SchoolProfiles
 
       def included_data_types(cache = nil)
         # Required for the sort in data_type_hashes
-        remediation_subgroups = REMEDIATION_SUBGROUPS
         config_for_cache = cache_accessor.select { |c| cache.nil? || c[:cache] == cache }
-        config_for_cache.map { |mapping| mapping[:data_key] } + remediation_subgroups
+        config_for_cache.map { |mapping| mapping[:data_key] }
       end
 
       def data_type_formatting_map
@@ -116,8 +115,8 @@ module SchoolProfiles
           {label: score_item.score.format.to_s.chomp('%'),
            score: score_item.score.value.to_i,
            breakdown: score_item.label,
-           state_average: score_item.state_average.value.to_i,
-           state_average_label: score_item.state_average.value.to_f.round.to_s,
+           state_average: score_item.state_average.value.present? ? score_item.state_average.value.to_i : nil,
+           state_average_label: score_item.state_average.value.present? ? score_item.state_average.value.to_f.round.to_s : nil,
            display_type: score_item.visualization,
            lower_range: (score_item.range.first if score_item.range),
            upper_range: (score_item.range.last if score_item.range),

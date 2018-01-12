@@ -242,7 +242,7 @@ GS.googleMap = GS.googleMap || (function() {
               markup += '<div class="mts col-xs-5 col-sm-4 font-size-small ">'; //sprites
               //markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-';
               if (point.gsRating != '') {
-                  markup += '<div class="pbs"><div class="fl vam mrs gs-rating-sm ' + GS.rating.getRatingPerformanceLevel(point.gsRating) + '">';
+                  markup += '<div class="pbs"><div class="fl vam mrs gs-rating circle-rating--' + point.gsRating + ' circle-rating--xtra-small">';
                   markup += '<div>' + point.gsRating + '</div></div>' + mapPinRatingText() +  '</div>';
               }
 

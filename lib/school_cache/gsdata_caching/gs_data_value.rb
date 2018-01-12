@@ -63,7 +63,7 @@ class GsdataCaching::GsDataValue
           GSLogger.error(
             :misc,
             nil,
-            message: "Tried to group on comma separated breakdowns",
+            message: 'Tried to group on comma separated breakdowns',
             vars: dv
           )
           return self

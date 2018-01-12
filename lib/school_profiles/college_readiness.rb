@@ -177,7 +177,7 @@ module SchoolProfiles
     end
 
     def has_college_success?
-      props.any? {|component| component[:title].downcase == 'college success' if component[:title]}
+      props.any? {|component| component[:anchor] == 'College_success' }
     end
 
     def props

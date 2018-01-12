@@ -118,6 +118,6 @@ export function nearbyHomesUrl(city, state) {
   );
 };
 
-export function pricingPageUrl() {
-  return 'https://www.trulia.com/sell/?ts=greatschools&tscamp=mainlink'
+export function borrowingPageUrl() {
+  return 'https://www.zillow.com/home-loans/?utm_source=greatschools&utm_medium=referral&utm_campaign=LFPurchase#/purchase&source=LFPurchaseGS'
 };
