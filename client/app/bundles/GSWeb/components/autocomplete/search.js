@@ -62,7 +62,6 @@ const init = function() {
       isAddress(input.value);
     }
 
-    var searchType = searchType;
     // PT-903. We are now loading Google Maps API asynchronously.
     // If it does not come back by the time someone searches:
     // we wait 200ms, look again, and default to byName search if it still has not loaded.

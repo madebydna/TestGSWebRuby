@@ -40,7 +40,7 @@ export function onAdFilled() {
     if(deferred) {
       deferred.resolve();
     }
-  }, 1000 * 5);
+  }, 1000 * 2);
 }
 window.GS_onMobileOverlayAdFilled = onAdFilled;
 
