@@ -242,4 +242,14 @@ describe SchoolProfiles::OspSchoolInfo do
       end
     end
   end
+
+  describe '#data_label' do
+    subject(:data_label) { osp_school_info.data_label(str) }
+    before { expect(osp_school_info).to receive(:data_label).and_call_original }
+
+    describe 'when given just an ellipsis' do
+      let (:str) { '...' }
+      it { is_expected.to eq('Data not provided by the school') }
+    end
+  end
 end
