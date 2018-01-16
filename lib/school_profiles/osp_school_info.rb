@@ -201,10 +201,9 @@ module SchoolProfiles
                   )
               )
           )
-        rescue => e
-          GSLogger.error(:misc, e, message: 'Key is not found for translation - osp school info', vars: key)
-          raise e
-          Array(NO_DATA_TEXT)
+        rescue StandardError => e
+          GSLogger.error(:misc, e, message: 'Key is not found for translation - osp school info', vars: {key: str})
+          I18n.t(NO_DATA_TEXT, scope: 'lib.osp_school_info')
         end
       end
     end
