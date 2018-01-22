@@ -26,7 +26,7 @@ module Feeds
       feed_name = names.present? && names[index].present? ? names[index] : FEED_NAME_MAPPING[feed]
       #generated_feed_file_name = feed_name.present? ? feed_name+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
       generated_feed_file_name = if feed_name.present?
-                                   if feed_name.match?(/proficiency/)
+                                   if feed_name =~ /proficiency/
                                      feed_name+".xml"
                                    else
                                      feed_name+"-#{state.upcase}.xml"
