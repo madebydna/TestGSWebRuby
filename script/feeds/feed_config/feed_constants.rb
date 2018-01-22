@@ -17,7 +17,8 @@ module Feeds
           'official_overall' => 'local-gs-official-overall-rating-feed',
           'directory_feed' => 'local-greatschools-feed',
           'google_feed' => 'local-google-feed',
-          'city' => 'local-greatschools-city-feed'
+          'city' => 'local-greatschools-city-feed',
+          'proficiency_band' => 'gs-proficiency-band'
 
       }
 
@@ -39,7 +40,8 @@ module Feeds
           'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
           'directory_feed' => 'https://www.greatschools.org/feeds/local-greatschools.xsd',
           'google_feed' => 'https://www.gstatic.com/localfeed/local_feed.xsd',
-          'city' => 'https://www.greatschools.org/feeds/greatschools-city2.xsd'
+          'city' => 'https://www.greatschools.org/feeds/greatschools-city2.xsd',
+          'proficiency_band' => 'https://www.greatschools.org/feeds/gs-proficiency-band.xsd'
       }
       FEED_TO_ROOT_ELEMENT_MAPPING = {
           'test_scores' => 'gs-test-feed',
@@ -49,6 +51,7 @@ module Feeds
           'directory_feed' => 'gs-local-feed',
           'google_feed' => 'listings',
           'city' => 'greatschools-city-feed',
+          'proficiency_band' => 'proficiency-band-feed',
       }
 
       PROFICIENT_AND_ABOVE_BAND = 'proficient and above'
@@ -252,7 +255,7 @@ module Feeds
       ].freeze
 
       def all_feeds
-        %w(test_scores test_subgroup test_rating official_overall directory_feed city)
+        %w(test_scores test_subgroup test_rating official_overall directory_feed city proficiency_band)
       end
 
       def all_states
