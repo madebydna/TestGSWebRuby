@@ -18,6 +18,7 @@ module GS
 
       alias_method :transform, :add_step
       alias_method :destination, :add_step
+      alias_method :sql_writer, :add_step
 
       def log_and_process(row)
         return unless row
