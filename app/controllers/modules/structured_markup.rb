@@ -57,8 +57,9 @@ module StructuredMarkup
     }
   end
 
-  def self.reviews_array(school_reviews, last_review=-1)
-    school_reviews.having_comments[0..last_review].map do |review|
+  def self.reviews_array(school_reviews, on_demand=false)
+    reviews = on_demand ? school_reviews.having_comments.take(REVIEW_COUNT) : school_reviews.having_comments
+    reviews.map do |review|
       review = SchoolProfileReviewDecorator.decorate(review)
       markup = {
           "@type" => "Review",
@@ -170,7 +171,7 @@ module StructuredMarkup
     end
     if school_reviews && school_reviews.number_of_active_reviews > 0
       last_review = reviews_on_demand ? REVIEW_COUNT : -1
-      hash['review'] = reviews_array(school_reviews, last_review)
+      hash['review'] = reviews_array(school_reviews, reviews_on_demand)
     end
 
     hash
