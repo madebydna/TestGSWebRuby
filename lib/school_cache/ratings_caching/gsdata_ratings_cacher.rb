@@ -1,6 +1,6 @@
 class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   CACHE_KEY = 'ratings'.freeze
-  DATA_TYPE_IDS = [151,155,156,157,158,159,160].freeze
+  DATA_TYPE_IDS = [151,155,156,157,158,159,160,176].freeze
 
   def self.listens_to?(data_type)
     :ratings == data_type
@@ -33,8 +33,14 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
     )
   end
 
+  def test_score_only?
+    data_value = school_results.find { |dv| dv.data_type_id == 176 }
+    data_value.try(:value) == '1'
+  end
+
   def gs_rating_data_value
-    (build_hash_for_cache['Summary Rating'] || build_hash_for_cache['Test Score Rating'] || [])
+    rating_object = test_score_only? ? build_hash_for_cache['Test Score Rating'] : build_hash_for_cache['Summary Rating']
+    (rating_object || [])
       .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
       .extend(GsdataCaching::GsDataValue::CollectionMethods)
       .having_no_breakdown
