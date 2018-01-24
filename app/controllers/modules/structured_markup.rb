@@ -1,6 +1,6 @@
 module StructuredMarkup
   # number of reviews to be added to json-ld hash
-  REVIEW_COUNT = 5
+  REVIEW_COUNT = 4
 
   module ControllerConcerns
     extend ActiveSupport::Concern
@@ -57,8 +57,8 @@ module StructuredMarkup
     }
   end
 
-  def self.reviews_array(school_reviews)
-    school_reviews.having_comments[0...REVIEW_COUNT].map do |review|
+  def self.reviews_array(school_reviews, last_review=-1)
+    school_reviews.having_comments[0..last_review].map do |review|
       review = SchoolProfileReviewDecorator.decorate(review)
       markup = {
           "@type" => "Review",
@@ -149,7 +149,7 @@ module StructuredMarkup
     }
   end
 
-  def self.school_hash(school, school_reviews = nil)
+  def self.school_hash(school, school_reviews = nil, reviews_on_demand=false)
     hash = {}
     hash["@context"] = "https://schema.org"
     hash["@type"] = "School"
@@ -169,7 +169,8 @@ module StructuredMarkup
       hash['aggregateRating'] = aggregate_rating_hash(school_reviews)
     end
     if school_reviews && school_reviews.number_of_active_reviews > 0
-      hash['review'] = reviews_array(school_reviews)
+      last_review = reviews_on_demand ? REVIEW_COUNT : -1
+      hash['review'] = reviews_array(school_reviews, last_review)
     end
 
     hash

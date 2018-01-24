@@ -122,11 +122,10 @@
         </div>
 
         <div>
-          <% test_schools = [596,185,515,153,206,555,930,158,585,360,618,362,390,330,142,161,374,325,380] %>
           <%= render 'reviews',
             review_questions: @school_profile.review_questions,
             reviews: @school_profile.reviews,
-            on_demand: (@school.state.downcase == 'ak' && test_schools.include?(@school.id))
+            on_demand: @school_profile.reviews_on_demand
           %>
         </div>
       </div>
