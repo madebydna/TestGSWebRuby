@@ -119,5 +119,5 @@ export function nearbyHomesUrl(city, state) {
 };
 
 export function borrowingPageUrl() {
-  return 'https://www.zillow.com/home-loans/?utm_source=greatschools&utm_medium=referral&utm_campaign=LFPurchase#/purchase&source=LFPurchaseGS'
+  return 'https://www.zillow.com/home-loans/?utm_source=greatschools&utm_medium=referral&utm_campaign=LFPurchase#/purchase&source=LFPurchaseGS&mp=RD-DYNJYJG'
 };
