@@ -13,7 +13,7 @@ require 'ostruct'
 #
 # Examples:
 #
-# ruby pre_flight_checker.rb -f sample_source_file.csv -c 1,3,5
+# ruby pre_flight_checker.rb -f sample_source_file.csv -c n1,3,5
 # ruby pre_flight_checker.rb -f sample_source_file2.csv -c 2,4 -s i     [use the letter 'i' as a suppression value]
 
 class PreFlightChecker
@@ -52,7 +52,7 @@ class PreFlightChecker
     #after sorting, add in the headers with state_id column
     sorted_array.unshift headers.prepend("STATE_ID,")
     File.open('source_file_with_state_id.csv', 'w+') {|f| sorted_array.each {|row| f.puts row}}
-    puts 'Successfully sorted file. Moving on to dup checks...'
+    puts 'Successfully sorted file. Moving on to dup checks. This may take a while...'
   end
 
   def headers
@@ -124,7 +124,7 @@ class PreFlightChecker
     puts "Are these correct? (y,n)"
     response = gets.chomp.downcase until ['y', 'n'].include?(response)
     if response == 'y'
-      puts 'Working on state ids. This may take a while...'
+      puts 'Working on state ids...'
       return
     elsif response == 'n'
       puts "Ok. You can try again with different column numbers or consult pre_flight_checker.rb for examples. Exiting now."
