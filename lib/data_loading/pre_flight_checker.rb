@@ -32,7 +32,7 @@ class PreFlightChecker
     File.open('source_file_with_state_id.csv', 'w+') do |f|
       each_row do |row,idx|
         state_id = assemble_id_from_row(row)
-        row_with_state_id = row.to_s.prepend ("#{state_id.to_s},")
+        row_with_state_id = row.to_s.prepend("#{state_id.to_s},")
         f.puts row_with_state_id
       end
     end
