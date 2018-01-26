@@ -117,6 +117,7 @@ class SchoolProfilesController < ApplicationController
       psp.osp_school_info = osp_school_info
       psp.school = school
       psp.claimed = hero.school_claimed?
+      psp.reviews_on_demand = reviews_on_demand?
     end
     )
   end
