@@ -5,6 +5,59 @@ class UpdateQueue < ActiveRecord::Base
 
   scope :todo, -> { where(status: 'todo') }
 
+  def self.oldest_item_in_todo
+    UpdateQueue.where(status: 'todo').order(:created).first
+  end
+
+  def self.most_recent_failure
+    UpdateQueue.where(status: 'failed').order('updated desc').first
+  end
+
+  def self.created_in_last_week
+    UpdateQueue.where("created > ?", 1.weeks.ago).group(:source).count
+  end
+
+  def self.failed_within_24_hrs
+    UpdateQueue.where(status: 'failed').where("updated > ?", 1.days.ago).group(:source).count
+  end
+
+  def self.failed_within_2_weeks
+    UpdateQueue.where(status: 'failed').where("updated > ?", 2.weeks.ago).group(:source).count
+  end
+
+  def self.done_vs_todo_per_source
+    sql=%(
+      select todos.source, time_started, queued, IFNULL(done, 0) as done, (queued/(queued+done))*100 as percent_done from
+      (select source, count(*) as queued
+      from update_queue
+      where status = 'TODO'
+      and source is not null
+      and created > "#{2.weeks.ago}"
+      group by source) todos
+      left join
+      (select source, count(*) as done, min(created) as time_started
+      from update_queue
+      where status = 'DONE'
+      and source is not null
+      and created > "#{2.weeks.ago}"
+      group by source) dones
+      on todos.source = dones.source
+    )
+    results = UpdateQueue.connection.exec_query(sql).to_a
+    results.each do |entry|
+      if entry['time_started']
+        time_started = entry['time_started']
+        elapsed_seconds = Time.zone.now - time_started
+        average_seconds = elapsed_seconds / entry['done']
+        seconds_left = average_seconds * entry['queued']
+        est_completion_time = Time.zone.now + seconds_left
+        entry['average_seconds'] = average_seconds
+        entry['est_completion_time'] = est_completion_time
+      end
+    end
+    results
+  end
+
   def self.sample_data
     [
         {
