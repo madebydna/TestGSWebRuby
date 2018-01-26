@@ -27,7 +27,7 @@ class UpdateQueue < ActiveRecord::Base
 
   def self.done_vs_todo_per_source
     sql=%(
-      select todos.source, time_started, queued, IFNULL(done, 0) as done, (queued/(queued+done))*100 as percent_done from
+      select todos.source, time_started, queued, IFNULL(done, 0) as done, (done/(queued+done))*100 as percent_done from
       (select source, count(*) as queued
       from update_queue
       where status = 'TODO'
