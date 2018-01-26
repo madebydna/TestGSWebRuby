@@ -283,15 +283,13 @@ describe 'CollegeReadinessComponent' do
     end
   end
 
-  describe '#ordered_data_types' do
+  describe '#included_data_types' do
     it 'should return configured data types in correct order' do
       config = [
         { :data_key => 'a' }, { :data_key => 'b' }, { :data_key => 'c' }
       ].shuffle
       allow(subject).to receive(:cache_accessor).and_return config
-      # stub_const('cache_accessor', config)
-      remediation_subgroups = SchoolProfiles::CollegeReadinessConfig::REMEDIATION_SUBGROUPS
-      expect(subject.included_data_types).to eq(config.map { |o| o[:data_key] } + remediation_subgroups)
+      expect(subject.included_data_types).to eq(config.map { |o| o[:data_key] })
     end
   end
 

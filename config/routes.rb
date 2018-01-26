@@ -251,6 +251,7 @@ LocalizedProfiles::Application.routes.draw do
     resource :school_user_digest
     resource :nearby_schools
     resources :schools
+    get '/reviews_list', to: 'reviews#reviews_list', as: :reviews_list
     resources :reviews do
       get 'count', on: :collection
     end
@@ -317,6 +318,7 @@ LocalizedProfiles::Application.routes.draw do
 
     get '/duplicate-membership', to: 'osp_demigod#show'
     post '/duplicate-membership', to: 'osp_demigod#create'
+    get '/update_queue', to: 'update_queue#index'
   end
   post '/gsr/ajax/wordpress_submit', to: 'wordpress_interface#call_from_wordpress', as: :call_from_wordpress
   post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review

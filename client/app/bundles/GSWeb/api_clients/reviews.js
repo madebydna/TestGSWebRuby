@@ -23,3 +23,14 @@ export function postReview(data) {
     ({responseJSON = {}} = {}) => responseJSON.errors
   );
 }
+
+export function fetchReviews(state,schoolId) {
+  return $.ajax({
+    method: 'GET',
+    url: "/gsr/api/reviews_list",
+    data: {
+      state: state,
+      school_id: schoolId
+    }
+  }).then((payload) => payload);
+}

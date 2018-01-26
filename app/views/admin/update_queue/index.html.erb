@@ -1,0 +1,111 @@
+<style type="text/css">
+th {
+  background: #5B5B5B;
+  color: white;
+  font-size: 14px !important;
+}
+</style>
+
+<% time_format = "%Y-%m-%d %I:%M %p" %>
+
+<div style="max-width: 1200px; margin: auto; padding: 0 5px 0 5px;">
+  <h3>General stats</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Oldest item still queued</td><td><%= @oldest_item_in_todo.try(:created).try(:strftime, time_format) %></td>
+      </tr>
+      <tr>
+        <td>Most recent failure</td><td><%= @most_recent_failure_time.try(:strftime, time_format) %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Progress of queued items</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Time started</th>
+        <th>Queued</th>
+        <th>Done</th>
+        <th>Percent complete</th>
+        <th>Avg seconds each</th>
+        <th>Est completion time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @done_vs_todo.each do |entry| %>
+        <tr>
+          <td><%= entry['source'] %></td>
+          <td><%= entry['time_started'].try(:strftime,time_format) %></td>
+          <td><%= entry['queued'] %></td>
+          <td><%= entry['done'] %></td>
+          <td><%= entry['percent_done'].try(:round).try(:to_s).try(:+, '%') %></td>
+          <td><%= entry['average_seconds'].try(:round, 2) %></td>
+          <td><%= entry['est_completion_time'].try(:strftime,time_format) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h3>Created items (last one week)</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @created_in_last_week.each do |source, count| %>
+        <tr>
+          <td><%= source %></td>
+          <td><%= count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h3>Failed items (24 hrs)</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @failed_within_24_hrs.each do |source, count| %>
+        <tr>
+          <td><%= source %></td>
+          <td><%= count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h3>Failed items (two weeks)</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @failed_within_2_weeks.each do |source, count| %>
+        <tr>
+          <td><%= source %></td>
+          <td><%= count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

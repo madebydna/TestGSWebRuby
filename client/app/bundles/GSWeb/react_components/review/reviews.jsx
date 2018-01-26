@@ -3,6 +3,9 @@ import ReviewsList from './reviews_list';
 import ReviewForm from './form/review_form';
 import { t } from '../../util/i18n';
 import { isSignedIn, getSchoolUserDigest } from '../../util/session';
+import { size as viewportSize } from 'util/viewport';
+import { scrollToElement } from 'util/scrolling';
+import { fetchReviews } from '../../api_clients/reviews';
 
 export default class Reviews extends React.Component {
 
@@ -24,11 +27,16 @@ export default class Reviews extends React.Component {
   constructor(props) {
     super(props);
     var currentUserReportedMap = {};
+    this.REVIEW_CHUNK_SIZE = 5;
     // TODO: This needs to be hooked up somewhere. Maybe from props?
     this.state = {
       reviewSubmitMessage: {},
-      reviews: this.initializeReviewsList()
+      reviews: this.initializeReviewsList(),
+      offset: 0,
+      limit: this.startingLimit()
     };
+    this.handleCloseAllClick = this.handleCloseAllClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.renderReviewLayout = this.renderReviewLayout.bind(this);
     this.handleReviewSubmitMessage = this.handleReviewSubmitMessage.bind(this);
     this.renderReviewForm = this.renderReviewForm.bind(this);
@@ -49,6 +57,8 @@ export default class Reviews extends React.Component {
     return(<ReviewsList
       reviews = { this.state.reviews }
       reviewSubmitMessage = { this.state.reviewSubmitMessage }
+      limit = { this.state.limit }
+      offset = { this.state.offset }
     />);
   }
 
@@ -124,6 +134,55 @@ export default class Reviews extends React.Component {
     );
   }
 
+  //returns a boolean
+  isLastPage(){
+    return this.props.reviews_list_count <= this.state.limit;
+  }
+
+  startingLimit() {
+    let limit = this.REVIEW_CHUNK_SIZE;
+    if(viewportSize() == 'xs') {
+      limit = 2;
+    }
+
+    if(limit > this.props.reviews.length) limit = this.props.reviews.length;
+    return limit;
+  }
+
+  nextLimit() {
+    let limit = this.state.limit + this.REVIEW_CHUNK_SIZE;
+    if(limit > this.props.reviews_list_length) limit = this.props_reviews_list_length;
+    return limit;
+  }
+
+  handleClick() {
+    if(this.state.reviews.length < this.props.reviews_list_count) {
+      fetchReviews(this.props.state, this.props.schoolId).done((reviews) => this.setState({reviews: reviews}));
+    }
+    this.setState({limit: this.nextLimit()});
+  }
+
+  handleCloseAllClick() {
+    this.setState({limit: this.startingLimit()});
+    scrollToElement('.review-summary');
+  }
+
+  showMoreButton(){
+    if(!this.isLastPage()) {
+      return (<div className="show-more__button" onClick={this.handleClick}>
+        {t('Show more')}
+      </div>);
+    }
+  }
+
+  closeAllButton(){
+    if(this.state.limit > this.startingLimit()) {
+      return (<div className="tac ptm"><a onClick={this.handleCloseAllClick}>
+        {t('Close all')}
+      </a></div>);
+    }
+  }
+
   render() {
     let reviewFormContent = null;
     let recentComments = null;
@@ -138,6 +197,8 @@ export default class Reviews extends React.Component {
         <a className="anchor-mobile-offset" name="Reviews"></a>
         { reviewFormContent }
         { recentComments }
+        {this.showMoreButton()}
+        {this.closeAllButton()}
       </div>
     );
   }

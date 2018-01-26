@@ -2,9 +2,9 @@
 <% questions = review_questions.questions %>
 <% school_id = review_questions.school_id %>
 <% state = review_questions.state %>
-
 <%= react_component('Reviews', props: {
-                    reviews: reviews.reviews_list,
+                    reviews: (on_demand ? reviews.reviews_list.take(5) : reviews.reviews_list),
+                    reviews_list_count: reviews.reviews_list.length,
                     state: state,
                     schoolId: school_id,
                     questions: questions

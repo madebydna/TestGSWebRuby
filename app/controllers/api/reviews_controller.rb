@@ -60,4 +60,17 @@ class Api::ReviewsController < ApplicationController
   def fields
     Array.wrap(params[:fields]).presence || DEFAULT_FIELDS
   end
+
+  def school_profile_reviews
+    @_school_profile_reviews ||= (
+      school = School.on_db(params[:state].downcase).find(params[:school_id].to_i)
+      review_questions = SchoolProfiles::ReviewQuestions.new(school)
+      SchoolProfiles::Reviews.new(school, review_questions).reviews_list
+    )
+  end
+
+  # All commented reviews for a school, formatted for the reviews.jsx react component
+  def reviews_list
+    render json: school_profile_reviews
+  end
 end

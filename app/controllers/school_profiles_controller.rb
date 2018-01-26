@@ -44,7 +44,7 @@ class SchoolProfilesController < ApplicationController
   private
 
   def add_profile_structured_markup
-    add_json_ld(StructuredMarkup.school_hash(school, school.reviews_with_calculations))
+    add_json_ld(StructuredMarkup.school_hash(school, school.reviews_with_calculations, reviews_on_demand?))
     add_json_ld(StructuredMarkup.breadcrumbs_hash(school))
     add_json_ld({
       "@context" => "http://schema.org",
@@ -97,6 +97,7 @@ class SchoolProfilesController < ApplicationController
         sp.claimed = hero.school_claimed?
         sp.stem_courses = stem_courses
         sp.academic_progress = academic_progress
+        sp.reviews_on_demand = reviews_on_demand?
       end
     )
   end
@@ -233,6 +234,12 @@ class SchoolProfilesController < ApplicationController
   def reviews
     # This needs ReviewQuestions for the topical distribution popup
     @_reviews ||= SchoolProfiles::Reviews.new(school, review_questions)
+  end
+
+  # For testing reviews-on-demand feature
+  def reviews_on_demand?
+    test_schools_in_ak = [596,185,515,153,206,555,930,158,585,360,618,362,390,330,142,161,374,325,380]
+    @school.state.downcase == 'ak' &&  test_schools_in_ak.include?(@school.id)
   end
 
   def review_questions
