@@ -1,0 +1,148 @@
+<%= image_tag(image_path('home/icon_schools.png')) %>
+<h2>Add a School</h2>
+<p>GreatSchools currently collects data about 310,000+ schools in the United States. If you are unable to
+find your school using our search feature, please use the form below to add it.</p>
+
+
+<% select_options = [['Education', 'education'], ['Finance', 'finance'], ['Government', 'government'],
+                     ['Media - Journalism', 'media'], ['Real Estate', 'real estate'], ['Technology', 'technology'],
+                     ['Other', 'other']]%>
+
+<div class="api_account_form" style="margin-top: 30px;">
+  <%= form_for([:admin, @api_account], method: :post) do |f| %>
+      <%= render 'error_messages' %>
+      <div>
+        <%= f.label :name %>
+        <%= f.text_field :name, required: true %>
+      </div>
+
+      <div>
+        <%= f.label :organization %>
+        <%= f.text_field :organization, required: true %>
+      </div>
+
+      <div>
+        <%= f.label :email %>
+        <%= f.text_field :email, required: true %>
+      </div>
+
+      <div>
+        <%= f.label :website %>
+        <%= f.text_field :website, required: true %>
+      </div>
+
+      <div>
+        <%= f.label :phone %>
+        <%= f.text_field :phone, required: true %>
+      </div>
+
+      <div>
+        <%= f.label :industry %>
+        <%= f.select :industry, options_for_select(select_options, selected: @api_account.industry), include_blank: true, required: true %>
+      </div>
+
+      <% unless ['new', 'create'].include?(params[:action].downcase) %>
+          <div>
+            <%= f.label :account_added, disabled: true %>
+            <%= f.date_field :account_added %>
+          </div>
+
+          <div>
+            <%= f.label :account_updated, disabled: true %>
+            <%= f.date_field :account_updated %>
+          </div>
+
+          <div>
+            <%= f.label :api_key, disabled: true %>
+            <%= f.text_field :api_key %>
+          </div>
+      <% end %>
+
+      <div>
+        <%= f.radio_button :type, 'f' %>
+        <%= f.label :type_f, 'Free' %>
+        <%= f.radio_button :type, 'p' %>
+        <%= f.label :type_p, 'Premium' %>
+      </div>
+
+      <div class="api_checkbox_options" style="display: <%= @api_account.type == 'f' ? 'none' : 'block' %>;">
+        <label><input type="checkbox" value="gs_rating" id="gs_rating">GS Rating</label>
+        <label><input type="checkbox" value="community" id="community">Community</label>
+        <label><input type="checkbox" value="parent_rating" id="parent_rating">Parent rating</label>
+        <label><input type="checkbox" value="full_review" id="full_review">Full review</label>
+        <%= f.hidden_field :api_options, value: nil, id: 'api_options' %>
+      </div>
+
+      <div>
+        <%= f.label :intended_use %>
+        <%= f.text_area :intended_use, required: true %>
+      </div>
+
+      <div style="text-align: center;margin-top: 40px;">
+        <%= f.submit "Save", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;" %>
+        <% if params["action"].downcase == 'edit' %>
+            <a id="api" class="btn btn-warning" data-id="<%=@api_account.id%>" style="margin-left: 15px;width: 150px;">
+              Generate API Key</a>
+            <%= f.submit "Deactivate account", name: "delete_key",
+                         class: "btn btn-danger", style: "margin-left: 15px;width: 150px;" %>
+        <% end %>
+      </div>
+
+  <% end %>
+
+</div>
+
+<div style="text-align: left; margin-bottom: 40px;"><%= link_to 'Back to all accounts', admin_api_accounts_path %></div>
+
+
+<script type="text/javascript" charset="utf-8">
+
+  const checkboxVals = ['gs_rating', 'community', 'parent_rating', 'full_review', 'user'];
+  const savedApiOpts = '<%= @api_opts %>';
+
+  var checkSavedOptions = function() {
+    $.each(checkboxVals, function(idx, option) {
+      if (savedApiOpts.indexOf(option) >= 0) {
+        $(`#${option}`).prop('checked', true);
+      }
+    })
+  }
+
+  var collectApiOptions = function(){
+    var apiOptionsArray = []
+    $('input:checkbox').each(function(idx) {
+      var checkBox = $(this);
+      if ( checkBox.is(':checked') ) {
+        apiOptionsArray.push(checkBox.val());
+      }
+    })
+    $('#api_options').val(apiOptionsArray);
+  }
+
+  $('form').submit(function(){
+    collectApiOptions();
+    if ($('#api_options').val() <= 0 && $('#api_account_type_p').is(':checked')) {
+      alert('Cannot save "Premium" without adding at least one API option');
+      return false;
+    }
+    return true;
+  });
+
+  $('#api_account_type_p').on('click', function(){
+    $('.api_checkbox_options').css('display', 'block');
+    checkSavedOptions();
+  });
+
+  $('#api_account_type_f').on('click', function(){
+    $('.api_checkbox_options').css('display', 'none');
+    $('input:checkbox').each(function(idx) {
+      $(this).prop('checked', false)
+    });
+  });
+
+  $(document).ready(checkSavedOptions);
+
+
+
+
+</script>

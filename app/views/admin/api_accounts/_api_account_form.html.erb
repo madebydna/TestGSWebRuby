@@ -8,7 +8,7 @@
 
 
 <div class="api_account_form" style="margin-top: 30px;">
-  <%= form_for([:admin, @api_account], method: action) do |f| %>
+  <%= form_for(@new_school, method: action) do |f| %>
       <%= render 'error_messages' %>
     <div>
       <%= f.label :name %>
