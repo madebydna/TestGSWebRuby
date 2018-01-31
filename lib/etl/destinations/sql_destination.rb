@@ -12,7 +12,7 @@ class SqlDestination < GS::ETL::Step
   end
 
   def write(row)
-    json_str = TestScoreQueueDaemonJsonBlob.build(row, @source)
+    json_str = TestScoreQueueDaemonJsonBlob.new(row, @source).build
     @sql << QueueDaemonInsertStatement.build(@source[:source_name], json_str)
     row
   end
