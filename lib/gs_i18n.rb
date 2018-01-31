@@ -11,6 +11,7 @@ module GsI18n
       return default || key
     end
     cleansed_key = GsI18n.clean_key(key)
+    return default || key if cleansed_key.blank?
     self.t(cleansed_key, *args)
   end
 

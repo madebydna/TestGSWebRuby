@@ -194,10 +194,11 @@ module SchoolProfiles
     def data_label(str)
       if str.present?
         begin
+          return str if str.to_s.gsub('.', '').blank?
           I18n.db_t(str.to_s, default:
               I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_first, default:
                   I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_words, default:
-                      I18n.t(str.to_sym, scope: 'lib.osp_school_info', default: str)
+                      I18n.t(str.to_s.gsub('.', '').to_sym, scope: 'lib.osp_school_info', default: str)
                   )
               )
           )
