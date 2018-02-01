@@ -36,12 +36,12 @@ module XmlDiff
     end
 
     def attr(name, value)
-      started_elements_have_data if value && value.strip.to_s.length.positive?
+      started_elements_have_data if value && value.strip.to_s.length > 0
       @test_result[name] = value if @test_result
     end
 
     def text(value)
-      started_elements_have_data if value && value.strip.to_s.length.positive?
+      started_elements_have_data if value && value.strip.to_s.length > 0
       @test_result[current_element] = value if @test_result
     end
 
