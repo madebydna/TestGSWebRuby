@@ -17,7 +17,6 @@ module XmlDiff
 
     def compare(other_hash)
       @parser.parse.each_with_object({}) do |(name, count), memo|
-        name = name.to_s
         other_count = other_hash[name]
         if other_count
           memo[name] = (other_count - count).abs / other_count
@@ -30,7 +29,7 @@ module XmlDiff
     def self.hash_from_report(report)
       report.each_line.each_with_object({}) do |line, memo|
         element, count = line.strip.split("\t")
-        memo[element] = count.to_f
+        memo[element.to_sym] = count.to_f
       end
     end
   end
