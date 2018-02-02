@@ -1,0 +1,68 @@
+@import "./variables/colors";
+.add_school {
+  text-align: center;
+  h2 {
+    margin-top: 0;
+  }
+  .description {
+    line-height: 1.8;
+    width: 75%;
+    margin: 20px auto;
+    margin: auto;
+    //margin-top: 20px;
+  }
+  .form_selection {
+    margin: 15px;
+    label {
+      margin: 0 20px 0 8px;
+    }
+  }
+  .new_school_submission_form {
+    .field_with_errors { display: inline; }
+    width: 75%;
+    padding: 10px 0;
+    background: $gray-lighter;
+    margin: 15px auto;
+    padding: 20px;
+    border-radius: 6px;
+    text-align: left;
+    input:not([type='checkbox']):not([type='submit']), select {
+      margin-bottom: 8px;
+      height: 38px;
+      padding: 8px;
+      width: 70%;
+      border: 2px solid $gray-light;
+      border-radius: 4px;
+      &:focus{
+        outline: none;
+      }
+    }
+    label {
+      display: inline-block;
+      width: 100px;
+      margin-right: 5%;
+    }
+    input[type='checkbox'] {
+      margin: 0 12px;
+    }
+    .grade_levels {
+      line-height: 1.8;
+      padding: 10px 15px;
+      text-align: center;
+    }
+    .add_school_submit {
+      text-align: center;
+      margin: 20px 0px;
+      input {
+        border-radius: 4px;
+        padding: 12px 15px;
+        background: #0aa8e4;
+        color: white;
+        &:focus{
+          outline: none;
+        }
+      }
+    }
+
+  }
+}

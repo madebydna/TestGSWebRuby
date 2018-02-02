@@ -73,7 +73,9 @@ LocalizedProfiles::Application.routes.draw do
   get '/find-schools/', as: :default_search, to: 'search#default_search'
   # get '/find-schools/', as: :default_search, to: 'home#show'
 
-  get '/add_school', as: :new, to: 'schools#new'
+  get '/add_school', as: :add_school, to: 'schools#new'
+  post '/create_new_school_submission/', as: :create_new_school_submission, to: 'schools#create'
+  get '/add_school/success', as: :new_school_submission_success, to: 'schools#success'
 
   resources :user_preferences, only: [:edit]
 

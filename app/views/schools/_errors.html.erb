@@ -1,0 +1,13 @@
+<% if @new_school_submission.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        The form contains <%= pluralize(@new_school_submission.errors.count, "error") %>.
+      </div>
+      <ul>
+        <% @new_school_submission.errors.messages.each do |key, msg| %>
+            <% next if key == :level %>
+            <li><%= (key.to_s.capitalize + ' ' + msg[0]).humanize if msg[0] %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
