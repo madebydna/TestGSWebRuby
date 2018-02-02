@@ -278,6 +278,7 @@ GEM
       shellany (~> 0.0)
     ntlm-http (0.1.1)
     oj (3.3.9)
+    ox (2.8.2)
     parallel (1.12.0)
     parser (2.4.0.2)
       ast (~> 2.3)
@@ -553,6 +554,7 @@ DEPENDENCIES
   mysql2 (= 0.4.10)
   nokogiri (= 1.8.1)
   oj
+  ox
   pdf-reader
   prawn
   prawn-table (~> 0.1.2)

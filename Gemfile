@@ -128,6 +128,9 @@ gem 'oj'
 
 gem 'stackprof'
 
+# fast xml parsing library
+gem 'ox'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests
