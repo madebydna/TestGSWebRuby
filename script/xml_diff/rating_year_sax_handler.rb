@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ox'
+
 module XmlDiff
   class RatingYearSaxHandler < ::Ox::Sax
     attr_reader :elements

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ox'
+
 module XmlDiff
   class TestYearSaxHandler < ::Ox::Sax
     attr_reader :elements
