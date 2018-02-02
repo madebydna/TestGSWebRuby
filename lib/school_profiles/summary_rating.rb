@@ -93,7 +93,7 @@ module SchoolProfiles
       end
     end
 
-    def last_updated
+    def last_updated_date
       if test_scores_only?
         # Use date from the Test Score Rating. If that isn't present, fall back on the rating weight date.
         gsdata_obj = filter_rating(RATING_WEIGHTS['Test Score Rating'][:weight]) || @school_cache_data_reader.decorated_school.rating_object_for_key('Test Score Rating').try(:source_date_valid)
@@ -101,7 +101,12 @@ module SchoolProfiles
       else
         sdv_timestamp = @school_cache_data_reader.decorated_school.rating_object_for_key('Summary Rating').try(:source_date_valid)
       end
-      @school_cache_data_reader.format_date sdv_timestamp.to_date if sdv_timestamp
+      sdv_timestamp.to_date if sdv_timestamp
+    end
+
+    def last_updated
+      date = last_updated_date
+      @school_cache_data_reader.format_date date if date
     end
 
     def to_percent(decimal)
