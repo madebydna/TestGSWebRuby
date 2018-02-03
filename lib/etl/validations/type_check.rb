@@ -2,18 +2,21 @@
 
 require_relative '../step'
 
+# Example
+# .validate('check value is of a data type',TypeCheck,:math_45, Float)
+
 # Possible types to use
 # TrueClass
 # FalseClass
 # String
-# Fixnum
+# Integer
 # Float
 # Bignum
 # Symbol
 # Array
 # Hash
 
-class TypeChecker < GS::ETL::Step
+class TypeCheck < GS::ETL::Step
   def initialize(value_column, type)
     @value_column = value_column
     @type = type

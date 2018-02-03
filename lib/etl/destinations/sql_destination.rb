@@ -20,7 +20,7 @@ class SqlDestination < GS::ETL::Step
   end
 
   def has_error?(row)
-    row.has_key? 'error'
+    row.has_key? :error
   end
 
   alias_method :process, :write

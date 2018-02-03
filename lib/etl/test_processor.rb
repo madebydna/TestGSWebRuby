@@ -12,7 +12,7 @@ end
 require_all.call 'transforms'
 require_all.call 'sources'
 require_all.call 'destinations'
-require_all.call 'error_checkers'
+require_all.call 'validations'
 
 module GS
   module ETL
