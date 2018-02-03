@@ -35,6 +35,10 @@ class PropertyConfig < ActiveRecord::Base
     property_state_on?(facebook_property, state)
   end
 
+  def self.allow_new_school_submissions?
+    PropertyConfig.where(quay: 'new_school_submissions').take.value.to_i == 1
+  end
+
   #//////////////////////////////////////////////
   #
   # Compare the comma separated list of states(state_list_str) with the state you wish to compare to(current_state)

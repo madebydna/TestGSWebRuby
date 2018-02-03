@@ -1,3 +1,5 @@
+<head><script src='https://www.google.com/recaptcha/api.js'></script></head>
+
 <% content_for(:page_stylesheets) do %>
     <%= stylesheet_link_tag("post_load", async: true) %>
     <%= stylesheet_link_tag("add_school", async: true) %>
@@ -88,7 +90,8 @@
           </div>
 
           <%= f.hidden_field :grades, value: nil, id: 'grade-level-selections' %>
-
+          <!--RECAPTCHA-->
+          <div class="g-recaptcha" data-sitekey="6LeAEEQUAAAAAMn2--UDyRuHgQEEKbf3tOL6aNzQ"></div>
           <div class="add_school_submit">
             <%= f.submit "Submit new school", class: "blue-background" %>
           </div>
@@ -98,7 +101,6 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-
   var collectGradeLevels = function(){
     var gradeSelectionsArray = [];
     $('input:checkbox').each(function() {
