@@ -2,7 +2,6 @@
 
 require_relative '../../validations/white_list'
 
-# rubocop:disable BlockLength
 describe WhiteList do
   let(:subject) { WhiteList.new(value_column, *white_list) }
   let(:value_column) { :value }
@@ -34,4 +33,3 @@ describe WhiteList do
     end
   end
 end
-# rubocop:enable BlockLength

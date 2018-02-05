@@ -2,7 +2,6 @@
 
 require_relative '../../validations/range_check'
 
-# rubocop:disable BlockLength
 describe RangeCheck do
   let(:subject) { RangeCheck.new(value_column, hash) }
   let(:value_column) { :value }
@@ -27,11 +26,10 @@ describe RangeCheck do
 
     context 'with value not in range but part of exceptions' do
       let(:row) { { value: '<2' } }
-      it 'should return row unchanged' do
+      it 'should return the row unchanged' do
         output = subject.process(row)
         expect(output).to eq({ value: '<2' })
       end
     end
   end
 end
-# rubocop:enable BlockLength

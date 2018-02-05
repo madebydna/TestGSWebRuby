@@ -2,7 +2,6 @@
 
 require_relative '../../validations/minimum'
 
-# rubocop:disable BlockLength
 describe Minimum do
   let(:subject) { Minimum.new(value_column, minimum) }
   let(:value_column) { :value }
@@ -27,11 +26,10 @@ describe Minimum do
 
     context 'with value nil' do
       let(:row) { { value: nil } }
-      it 'should return ran error' do
+      it 'should return an error' do
         output = subject.process(row)
         expect(output).to eq({ value: nil, error: "Value:  is less than the minimum 23\n" })
       end
     end
   end
 end
-# rubocop:enable BlockLength

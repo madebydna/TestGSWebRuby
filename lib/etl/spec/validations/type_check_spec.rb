@@ -13,7 +13,6 @@ require_relative '../../validations/type_check'
 # Array
 # Hash
 
-# rubocop:disable BlockLength
 describe TypeCheck do
   let(:subject) { TypeCheck.new(value_column, type) }
   let(:value_column) { :value }
@@ -66,4 +65,3 @@ describe TypeCheck do
 
   end
 end
-# rubocop:enable BlockLength

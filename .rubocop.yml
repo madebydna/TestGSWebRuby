@@ -7,3 +7,4 @@ Metrics/BlockLength:
     - '**/*.rake'
     - 'spec/**/*.rb'
     - 'config/routes.rb'
+    - 'lib/etl/spec/**/*.rb'

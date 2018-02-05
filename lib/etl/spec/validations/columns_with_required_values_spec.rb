@@ -2,7 +2,6 @@
 
 require_relative '../../validations/columns_with_required_values'
 
-# rubocop:disable BlockLength
 describe ColumnsWithRequiredValues do
   let(:subject) { ColumnsWithRequiredValues.new(*input_columns) }
   let(:input_columns) { %i(column1 column2 column3) }
@@ -41,4 +40,3 @@ describe ColumnsWithRequiredValues do
     end
   end
 end
-# rubocop:enable BlockLength

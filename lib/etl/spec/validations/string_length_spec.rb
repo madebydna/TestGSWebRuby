@@ -2,7 +2,6 @@
 
 require_relative '../../validations/string_length'
 
-# rubocop:disable BlockLength
 describe StringLength do
   let(:subject) { StringLength.new(value_column, str_len) }
   let(:value_column) { :value }
@@ -50,4 +49,3 @@ describe StringLength do
     end
   end
 end
-# rubocop:enable BlockLength
