@@ -12,6 +12,7 @@ end
 require_all.call 'transforms'
 require_all.call 'sources'
 require_all.call 'destinations'
+require_all.call 'validations'
 
 module GS
   module ETL
@@ -23,7 +24,7 @@ module GS
 
       FILE_LOCATION = '/tmp/'
       SCHOOL_TYPE_STRING = 'public.charter'
-      ENTITIES = ['school', 'state', 'district']
+      ENTITIES = %w(school state district)
       COLUMN_ORDER = [ :year, :entity_type, :entity_level, :state_id, :school_id, :school_name,
                        :district_id, :district_name, :test_data_type, :test_data_type_id, :grade,
                        :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,

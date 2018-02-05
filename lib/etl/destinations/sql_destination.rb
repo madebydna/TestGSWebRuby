@@ -12,9 +12,15 @@ class SqlDestination < GS::ETL::Step
   end
 
   def write(row)
-    json_str = TestScoreQueueDaemonJsonBlob.new(row, @source).build
-    @sql << QueueDaemonInsertStatement.build(@source[:source_name], json_str)
+    unless has_error?(row)
+      json_str = TestScoreQueueDaemonJsonBlob.new(row, @source).build
+      @sql << QueueDaemonInsertStatement.build(@source[:source_name], json_str)
+    end
     row
+  end
+
+  def has_error?(row)
+    row.has_key? :error
   end
 
   alias_method :process, :write
