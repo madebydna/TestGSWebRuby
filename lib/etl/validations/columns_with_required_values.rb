@@ -12,7 +12,7 @@ class ColumnsWithRequiredValues < GS::ETL::Step
   end
 
   def process(row)
-    failed_columns = @input_columns.select{ |column| row[column].nil? || row[column].blank? }
+    failed_columns = @input_columns.select{ |column| row[column].nil? || row[column].empty? }
     if failed_columns.present?
       row[:error] = '' if row[:error].nil?
       row[:error] += "These columns do not have values: #{failed_columns.join(',')}\n"
