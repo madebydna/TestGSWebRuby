@@ -10,6 +10,7 @@ require_relative '../feed_builders/test_score/test_score_feed'
 require_relative '../feed_builders/rating/test_rating_feed'
 require_relative '../feed_builders/directory/directory_feed'
 require_relative '../feed_builders/city/feed_generator'
+require_relative '../feed_builders/proficiency-band/feed_generator'
 
 
 
@@ -69,6 +70,7 @@ module Feeds
           official_overall:  Feeds::TestRatingFeed,
           directory_feed:    Feeds::DirectoryFeed,
           city:              Feeds::City::FeedGenerator,
+          proficiency_band:  Feeds::ProficiencyBand::FeedGenerator,
       }[key.to_s.to_sym]
     end
   end
