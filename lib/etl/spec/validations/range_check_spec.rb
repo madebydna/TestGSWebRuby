@@ -24,6 +24,22 @@ describe RangeCheck do
       end
     end
 
+    context 'with value in range, check inclusion of bottom' do
+      let(:row) { { value: 0 } }
+      it 'should return the row unchanged' do
+        output = subject.process(row)
+        expect(output).to eq({ value: 0 })
+      end
+    end
+
+    context 'with value in range, check inclusion of top' do
+      let(:row) { { value: 100 } }
+      it 'should return the row unchanged' do
+        output = subject.process(row)
+        expect(output).to eq({ value: 100 })
+      end
+    end
+
     context 'with value not in range but part of exceptions' do
       let(:row) { { value: '<2' } }
       it 'should return the row unchanged' do
