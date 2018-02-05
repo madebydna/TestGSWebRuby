@@ -24,6 +24,7 @@ describe RangeCheck do
       end
     end
 
+<<<<<<< HEAD
     context 'with value in range, check inclusion of bottom' do
       let(:row) { { value: 0 } }
       it 'should return the row unchanged' do
@@ -43,6 +44,11 @@ describe RangeCheck do
     context 'with value not in range but part of exceptions' do
       let(:row) { { value: '<2' } }
       it 'should return the row unchanged' do
+=======
+    context 'with value not in range but part of exceptions' do
+      let(:row) { { value: '<2' } }
+      it 'should return row unchanged' do
+>>>>>>> merge
         output = subject.process(row)
         expect(output).to eq({ value: '<2' })
       end

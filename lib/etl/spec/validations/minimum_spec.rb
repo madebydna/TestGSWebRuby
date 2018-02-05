@@ -26,7 +26,11 @@ describe Minimum do
 
     context 'with value nil' do
       let(:row) { { value: nil } }
+<<<<<<< HEAD
       it 'should return an error' do
+=======
+      it 'should return ran error' do
+>>>>>>> merge
         output = subject.process(row)
         expect(output).to eq({ value: nil, error: "Value:  is less than the minimum 23\n" })
       end
