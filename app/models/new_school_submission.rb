@@ -3,9 +3,13 @@
 class NewSchoolSubmission < ActiveRecord::Base
   self.table_name = 'new_school_submissions'
   db_magic :connection => :gs_schooldb
+  validates :district_name, :county, presence: true
+  validates :school_name, presence: true, length: {maximum: 100 }
+  validates :zip_code, length: {is: 5}, numericality: { only_integer: true }
+  validates :state_school_id, presence: true, allow_blank: true
+  validate :valid_grades?, :valid_nces_code?, :valid_school_type?, :valid_state?
+
   before_save :add_level_code
-  validates :level, :school_name, :district_name, :county, :url, :state_school_id, presence: true
-  validate :valid_grades?, :valid_nces_code?, :valid_school_type?, :valid_zip_code?, :valid_state?
 
   SCHOOL_TYPE_TO_NCES_CODE = {
     'private' => 8,
@@ -13,11 +17,7 @@ class NewSchoolSubmission < ActiveRecord::Base
     'charter' => 12
   }
 
-  def add_level_code
-    self.level = LevelCode.from_all_grades(self.grades) unless grades.nil?
-  end
-
-  #--------- Validations ----------#
+  #--------- Custom validations ----------#
   def valid_grades?
     unless grades && grades.split(',').all? {|grade| LevelCode::GRADES_WHITELIST.include?(grade.downcase)}
       errors.add(:grades, 'must be pk, kg, or grades 1-12.')
@@ -25,7 +25,7 @@ class NewSchoolSubmission < ActiveRecord::Base
   end
 
   def valid_nces_code?
-    unless nces_code && nces_code.length == SCHOOL_TYPE_TO_NCES_CODE[school_type]
+    unless nces_code.blank? || nces_code.length == SCHOOL_TYPE_TO_NCES_CODE[school_type]
       errors.add(:nces_code, 'must be 8 characters for private schools and 12 characters for public/charter schools')
     end
   end
@@ -36,17 +36,15 @@ class NewSchoolSubmission < ActiveRecord::Base
     end
   end
 
-  def valid_zip_code?
-    unless zip_code && zip_code.length <= 5 && zip_code.to_f / 10000 > 1
-      errors.add(:zip_code, 'must be five-digit number')
-    end
-  end
-
   def valid_state?
     unless state && States.abbreviations.include?(state)
       errors.add(:state, 'must be valid two-letter abbreviation for one of the fifty U.S. states.')
     end
   end
-  #---------end validations-----------#
+  #---------end custom validations-----------#
+
+  def add_level_code
+    self.level = LevelCode.from_all_grades(self.grades) unless grades.nil?
+  end
 
 end
