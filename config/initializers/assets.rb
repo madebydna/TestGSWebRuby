@@ -31,7 +31,8 @@ Rails.application.config.assets.precompile += [
     'picturefill.min.js', #for style-guide
     'highcharts.js',
     'api_documentation.css',
-    'admin_tools.css'
+    'admin_tools.css',
+    'add_school.css'
 
 ]
 # Add client/assets/ folders to asset pipeline's search path.

@@ -7,7 +7,7 @@ class NewSchoolSubmission < ActiveRecord::Base
   validates :school_name, presence: true, length: {maximum: 100 }
   validates :zip_code, length: {is: 5}, numericality: { only_integer: true }
   validates :state_school_id, presence: true, allow_blank: true
-  validate :valid_grades?, :valid_nces_code?, :valid_school_type?, :valid_state?
+  validate :valid_grades?, :valid_nces_code?, :valid_school_type?, :valid_state?, :valid_state_school_id?
 
   before_save :add_level_code
 
@@ -25,8 +25,14 @@ class NewSchoolSubmission < ActiveRecord::Base
   end
 
   def valid_nces_code?
-    unless nces_code.blank? || nces_code.length == SCHOOL_TYPE_TO_NCES_CODE[school_type]
-      errors.add(:nces_code, 'must be 8 characters for private schools and 12 characters for public/charter schools')
+    unless pk_only? || well_formed_nces_code?
+      errors.add(:nces_code, 'must be 8 characters for private schools and 12 characters for public/charter schools.')
+    end
+  end
+
+  def valid_state_school_id?
+    unless pk_only?
+      errors.add(:state_school_id, 'is required.')
     end
   end
 
@@ -38,13 +44,21 @@ class NewSchoolSubmission < ActiveRecord::Base
 
   def valid_state?
     unless state && States.abbreviations.include?(state)
-      errors.add(:state, 'must be valid two-letter abbreviation for one of the fifty U.S. states.')
+      errors.add(:state, 'must be selected from the dropdown menu provided.')
     end
   end
   #---------end custom validations-----------#
 
   def add_level_code
     self.level = LevelCode.from_all_grades(self.grades) unless grades.nil?
+  end
+
+  def pk_only?
+    grades.strip.downcase == 'pk'
+  end
+
+  def well_formed_nces_code?
+    nces_code && nces_code.length == SCHOOL_TYPE_TO_NCES_CODE[school_type]
   end
 
 end

@@ -1,8 +1,10 @@
 <head><script src='https://www.google.com/recaptcha/api.js'></script></head>
-
+<% content_for(:javascript_includes) do %>
+    <%= webpack_javascript_include_tag("new-schools", "data-turbolinks-track" => true) %>
+<% end %>
 <% content_for(:page_stylesheets) do %>
     <%= stylesheet_link_tag("post_load", async: true) %>
-    <%= stylesheet_link_tag("add_school", async: true) %>
+    <%= stylesheet_link_tag("add_school", async: false) %>
 <% end %>
 
 <% select_options = States.labels_hash.map do |abbr, state| %>
@@ -28,10 +30,12 @@
           <div class="non_pre_k_fields">
             <%= f.label :nces_code, 'NCES code' %>
             <%= f.text_field :nces_code, {required: false, maxlength: 12} %>
+            <span class="input_required">* required</span>
           </div>
           <div>
             <%= f.label :school_name %>
             <%= f.text_field :school_name, {required: true, maxlength: 100 }%>
+            <span class="input_required">* required</span>
           </div>
           <div>
             <%= f.label :url, 'School website' %>
@@ -39,35 +43,43 @@
           </div>
           <div>
             <%= f.label :school_type %>
-            <%= f.select :school_type, options_for_select([['Private', 'private'], ['Public', 'public'], ['Charter', 'charter']], selected: 'Private'), required: true %>
+            <%= f.select :school_type, options_for_select([['Private', 'private'], ['Public', 'public'], ['Charter', 'charter']], selected: 'Private'), { required: true, include_blank: true } %>
+            <span class="input_required">* required</span>
           </div>
           <div>
-            <%= f.label :address %>
-            <%= f.text_field :address, {required: true, maxlength: 255} %>
+            <%= f.label :physical_address %>
+            <%= f.text_field :physical_address, {required: true, maxlength: 255} %>
+            <span class="input_required">* required</span>
           </div>
           <div>
             <%= f.label :zip_code %>
             <%= f.text_field :zip_code, {required: true, maxlength: 5} %>
+            <span class="input_required">* required</span>
           </div>
           <div>
             <%= f.label :phone_number %>
             <%= f.text_field :phone_number, {required: true, maxlength: 20} %>
+            <span class="input_required">* required</span>
           </div>
           <div>
-            <%= f.label :district_name, 'District' %>
+            <%= f.label :district_name, 'District name' %>
             <%= f.text_field :district_name, {required: true, maxlength: 100} %>
+            <span class="input_required">* required</span>
           </div>
           <div>
-            <%= f.label :county %>
+            <%= f.label :county, 'County name' %>
             <%= f.text_field :county, {required: true, maxlength: 100} %>
+            <span class="input_required">* required</span>
           </div>
           <div>
             <%= f.label :state %>
-            <%= f.select :state, options_for_select(select_options, selected: 'al'), include_blank: true, required: true %>
+            <%= f.select :state, options_for_select(select_options), { required: true, include_blank: true } %>
+            <span class="input_required">* required</span>
           </div>
           <div class="non_pre_k_fields">
             <%= f.label :state_school_id, 'State school id' %>
             <%= f.text_field :state_school_id, required: false %>
+            <span class="input_required">* required</span>
           </div>
           <div class="non_pre_k_fields">
             <div>Please select all grade levels offered at this school:</div>
@@ -95,50 +107,3 @@
     </div>
   </div>
 </div>
-
-
-
-<script type="text/javascript" charset="utf-8">
-  var collectGradeLevels = function(){
-    var gradeSelectionsArray = [];
-    $('input:checkbox').each(function() {
-      var checkBox = $(this);
-      if ( checkBox.is(':checked') ) {
-        gradeSelectionsArray.push(checkBox.attr('data-grade'));
-      }
-    });
-    $('#grade-level-selections').val(gradeSelectionsArray);
-  };
-
-  $('form').submit(function(){
-    collectGradeLevels();
-    if ($('#grade-level-selections').val() <= 0) {
-      alert('Please select the grade levels offered at this school before submitting.');
-      return false;
-    }
-    return true;
-  });
-
-  $('#pre-k-form').change(function() {
-    if(this.checked) {
-      $('.non_pre_k_fields').css('display', 'none');
-      $('#pk').prop('checked', true);
-      $('#pk-field').val(true)
-    }
-  });
-
-  $('#k-12-form').change(function() {
-    if(this.checked) {
-      $('#pk').prop('checked', false)
-      $('.non_pre_k_fields').css('display', 'block');
-      $('#pk-field').val(false)
-    }
-  })
-  var selectPreKForm = function(){
-    if( '<%= @pk %>' == 'true') {
-      $('#pk').prop('checked', true);
-      $('#pre-k-form').trigger('click');
-    }
-  };
-  window.onload = selectPreKForm();
-</script>
