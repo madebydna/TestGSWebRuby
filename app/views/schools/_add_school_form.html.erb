@@ -1,0 +1,100 @@
+<% select_options = States.labels_hash.map do |abbr, state| %>
+    <% [state, abbr]%>
+<% end %>
+
+<div class="row">
+  <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-12 add_school">
+    <%= image_tag(image_path('home/icon_schools.png')) %>
+    <h2>Add a School</h2>
+    <div class="description">GreatSchools currently collects data about 310,000+ schools in the United States. If you are unable to
+      find your school using our search feature, please use the form below to add it.</div>
+    <div class="form_selection">
+      <input type="radio" id="k-12-form" name="add_school_form" checked>
+      <label for="k-12-form">K-12</label>
+      <input type="radio" id="pre-k-form" name="add_school_form">
+      <label for="pre-k-form">Pre-K</label>
+    </div>
+
+    <div class="new_school_submission_form">
+      <%= form_for @new_school_submission, url: create_new_school_submission_path do |f| %>
+          <%= render 'errors' %>
+          <div class="non_pre_k_fields">
+            <%= f.label :nces_code, 'NCES code' %>
+            <%= f.text_field :nces_code, {required: false, maxlength: 12} %>
+            <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :school_name %>
+            <%= f.text_field :school_name, {required: true, maxlength: 100 }%>
+            <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :url, 'School website' %>
+            <%= f.text_field :url, {required: false, maxlength: 100} %>
+          </div>
+          <div>
+            <%= f.label :school_type %>
+            <%= f.select :school_type, options_for_select([['Private', 'private'], ['Public', 'public'], ['Charter', 'charter']], selected: 'Private'), { required: true, include_blank: true } %>
+            <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :physical_address %>
+            <%= f.text_field :physical_address, {required: true, maxlength: 255} %>
+            <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :zip_code %>
+            <%= f.text_field :zip_code, {required: true, maxlength: 5} %>
+            <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :phone_number %>
+            <%= f.text_field :phone_number, {required: true, maxlength: 20} %>
+            <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :district_name, 'District name' %>
+            <%= f.text_field :district_name, {required: true, maxlength: 100} %>
+            <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :county, 'County name' %>
+            <%= f.text_field :county, {required: true, maxlength: 100} %>
+            <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :state %>
+            <%= f.select :state, options_for_select(select_options), { required: true, include_blank: true } %>
+            <span class="input_required">* required</span>
+          </div>
+          <div class="non_pre_k_fields">
+            <%= f.label :state_school_id, 'State school id' %>
+            <%= f.text_field :state_school_id, required: false %>
+            <span class="input_required">* required</span>
+          </div>
+          <div class="non_pre_k_fields">
+            <div>Please select all grade levels offered at this school:</div>
+            <div class="grade_levels">
+              <input type="checkbox" id="pk" data-grade="pk" class="add_school_grades">Pre-K</input>
+              <input type="checkbox" data-grade="kg" class="add_school_grades">Kinder</input>
+              <% (1..12).each do |grade| %>
+                  <input type="checkbox" data-grade="<%=grade%>" class="add_school_grades"><%= grade.ordinalize%>
+                  <% if [4,10].include?(grade) %> <br> <% end %>
+              <% end %>
+            </div>
+          </div>
+
+          <%= f.hidden_field :pk, value: nil, id: 'pk-field' %>
+          <%= f.hidden_field :grades, value: nil, id: 'grade-level-selections' %>
+          <div class="recaptcha">
+            <div class="g-recaptcha" data-sitekey="6LeAEEQUAAAAAMn2--UDyRuHgQEEKbf3tOL6aNzQ"></div>
+          </div>
+
+          <div class="add_school_submit">
+            <%= f.submit "Submit new school", class: "blue-background" %>
+          </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
