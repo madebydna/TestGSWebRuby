@@ -14,7 +14,7 @@ class SchoolsController < ApplicationController
 
   def create
     @new_school_submission = NewSchoolSubmission.new(new_school_submission_params)
-    check_submission_status(@new_school_submission, 'new'); return if performed?
+    render_if_not_allowed(@new_school_submission, 'new'); return if performed?
     if @new_school_submission.save
       redirect_to new_remove_school_submission_success_path
     else
@@ -28,7 +28,7 @@ class SchoolsController < ApplicationController
 
   def create_remove_school_submission
     @remove_school_submission = RemoveSchoolSubmission.new(remove_school_submissions_params)
-    check_submission_status(@remove_school_submission, 'new_remove_school_submission'); return if performed?
+    render_if_not_allowed(@remove_school_submission, 'new_remove_school_submission'); return if performed?
     if @remove_school_submission.save
       redirect_to new_remove_school_submission_success_path
     else
@@ -40,7 +40,7 @@ class SchoolsController < ApplicationController
 
   private
 
-  def check_submission_status(obj,template)
+  def render_if_not_allowed(obj,template)
     unless submissions_allowed?
       obj.errors.add(:recaptcha, 'error, please try again later.')
       render template
