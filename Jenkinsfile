@@ -131,7 +131,7 @@ def makeJSBranch(branches, groups, branchNum) {
     }
 }
 
-int groups = 4
+int groups = 3
 def branches = [:]
 for (int i = 0; i < groups; i++) {
   makeBranch(branches, groups, i)
