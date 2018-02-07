@@ -1,5 +1,5 @@
 @import "./variables/colors";
-.add_school {
+.add_remove_school {
   text-align: center;
   h2 {
     margin-top: 0;
@@ -17,7 +17,7 @@
       margin: 0 20px 0 8px;
     }
   }
-  .new_school_submission_form {
+  .new_remove_school_submission_form {
     .field_with_errors { display: inline; }
     width: 75%;
     padding: 10px 0;
@@ -50,7 +50,7 @@
       padding: 10px 15px;
       text-align: center;
     }
-    .add_school_submit {
+    .add_remove_school_submit {
       text-align: center;
       margin: 20px 0px;
       input {
@@ -68,10 +68,15 @@
       color: #F06043;
       font-size: 11px;
     }
+    input::placeholder {
+      font-size: 11px;
+      font-style: italic;
+      color: #CECECE;
+    }
   }
 }
 
-.add_school_success {
+.add_remove_school_success {
   padding-top: 80px;
   padding-bottom: 300px;
   text-align: center;

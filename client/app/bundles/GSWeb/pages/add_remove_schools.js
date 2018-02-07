@@ -12,7 +12,7 @@ $(function(){
 
   $('form').submit(function(){
     collectGradeLevels();
-    if ($('#grade-level-selections').val() <= 0) {
+    if ($('#grade-level-selections').val() <= 0 && $('#k-12-form').prop('checked') == true) {
       alert('Please select the grade levels offered at this school before submitting.');
       return false;
     }
@@ -21,10 +21,10 @@ $(function(){
 
   $('#pre-k-form').change(function() {
     if(this.checked) {
-      $('input[type=checkbox]').prop('checked', false)
-      $('.non_pre_k_fields').css('display', 'none');
+      $('input[type=checkbox]').prop('checked', false);
       $('#pk').prop('checked', true);
-      $('#pk-field').val(true)
+      $('.non_pre_k_fields').css('display', 'none');
+      $('#pk-field').val('true')
     }
   });
 
@@ -32,15 +32,8 @@ $(function(){
     if(this.checked) {
       $('#pk').prop('checked', false);
       $('.non_pre_k_fields').css('display', 'block');
-      $('#pk-field').val(false)
+      $('#pk-field').val('');
     }
   })
-  var selectPreKForm = function(){
-    if( '<%= @pk %>' == 'true') {
-      $('#pk').prop('checked', true);
-      $('#pre-k-form').trigger('click');
-    }
-  };
-  selectPreKForm();
 });
 

@@ -75,8 +75,9 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/add_school', as: :add_school, to: 'schools#new'
   post '/create_new_school_submission/', as: :create_new_school_submission, to: 'schools#create'
-  get '/add_school/success', as: :new_school_submission_success, to: 'schools#success'
-
+  get '/school_change_request/success', as: :new_remove_school_submission_success, to: 'schools#success'
+  get '/remove_school', as: :remove_school_submission, to: 'schools#new_remove_school_submission'
+  post '/create_remove_school_submission/', as: :create_remove_school_submission, to: 'schools#create_remove_school_submission'
   resources :user_preferences, only: [:edit]
 
   get '/preferences/' => 'user_email_preferences#show', as: 'user_preferences'

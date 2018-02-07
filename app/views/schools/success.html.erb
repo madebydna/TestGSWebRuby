@@ -1,11 +1,11 @@
 <% content_for(:page_stylesheets) do %>
     <%= stylesheet_link_tag("post_load", async: true) %>
-    <%= stylesheet_link_tag("add_school", async: true) %>
+    <%= stylesheet_link_tag("add_remove_schools", async: false) %>
 <% end %>
 
 <div class="row">
-  <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-12 add_school_success">
+  <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-12 add_remove_school_success">
     <%= image_tag(image_path('school_profiles/owl.png')) %>
-    <h4>Success! Your new school request will be reviewed during the next 2-4 weeks.</h4>
+    <h4>Success! Your request will be reviewed during the next 2-4 weeks.</h4>
   </div>
 </div>
