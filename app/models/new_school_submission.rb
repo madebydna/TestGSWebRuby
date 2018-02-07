@@ -3,7 +3,8 @@
 class NewSchoolSubmission < ActiveRecord::Base
   self.table_name = 'new_school_submissions'
   db_magic :connection => :gs_schooldb
-  validates :district_name, :county, presence: true
+  validates :district_name, :county, :physical_address, :physical_city, :physical_zip_code, :mailing_address,
+            :mailing_city, :mailing_zip_code,  presence: true
   validates :school_name, presence: true, length: {maximum: 100 }
   validates :zip_code, length: {is: 5}, numericality: { only_integer: true }
   validates :state_school_id, presence: true, allow_blank: true

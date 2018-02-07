@@ -57,7 +57,9 @@ class SchoolsController < ApplicationController
 
   def new_school_submission_params
     params.require(:new_school_submission).permit(:nces_code, :state, :school_name, :district_name, :url,
-                    :school_type, :address, :county, :phone_number, :grades, :state_school_id, :zip_code)
+                    :school_type, :county, :phone_number, :grades, :state_school_id,
+                    :physical_address, :physical_city, :physical_zip_code, :mailing_address,
+                    :mailing_city, :mailing_zip_code)
   end
 
   def remove_school_submissions_params

@@ -38,13 +38,40 @@
             <span class="input_required">* required</span>
           </div>
           <div>
-            <%= f.label :physical_address %>
+            <%= f.label :physical_address, 'Address' %>
             <%= f.text_field :physical_address, {required: true, maxlength: 255} %>
             <span class="input_required">* required</span>
           </div>
           <div>
-            <%= f.label :zip_code %>
-            <%= f.text_field :zip_code, {required: true, maxlength: 5} %>
+            <%= f.label :physical_city, 'City' %>
+            <%= f.text_field :physical_city, {required: true, maxlength: 255} %>
+            <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :physical_zip_code, 'Zip code' %>
+            <%= f.text_field :physical_zip_code, {required: true, maxlength: 5} %>
+            <span class="input_required">* required</span>
+          </div>
+          <div class="address_selection">
+            Mailing address same as physical address?
+            <input type="radio" id="same-address" name="physical_mailing_address">
+            <label for="same-address">Yes</label>
+            <input type="radio" id="different-address" name="physical_mailing_address" checked>
+            <label for="different-address">No</label>
+          </div>
+          <div class="mailing">
+            <%= f.label :mailing_address, 'Mailing address' %>
+            <%= f.text_field :mailing_address, {maxlength: 255} %>
+            <span class="input_required">* required</span>
+          </div>
+          <div class="mailing">
+            <%= f.label :mailing_city, 'Mailing city' %>
+            <%= f.text_field :mailing_city, {maxlength: 255} %>
+            <span class="input_required">* required</span>
+          </div>
+          <div class="mailing">
+            <%= f.label :mailing_zip_code, 'Mailing zip code' %>
+            <%= f.text_field :mailing_zip_code, {maxlength: 5} %>
             <span class="input_required">* required</span>
           </div>
           <div>
