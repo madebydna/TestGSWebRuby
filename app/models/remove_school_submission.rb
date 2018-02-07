@@ -10,7 +10,7 @@ class RemoveSchoolSubmission < ActiveRecord::Base
   validate :well_formed_gs_url?
 
   def well_formed_gs_url?
-    unless /www.greatschools.org/.match?(gs_url) && gs_url.length <= 100
+    unless gs_url.include?('www.greatschools.org/') && gs_url.length <= 100
       errors.add(:greatschools, 'web link is not valid.')
     end
   end
