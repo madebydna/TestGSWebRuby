@@ -40,7 +40,7 @@ class PreFlightChecker
     File.open('source_file_with_state_id.csv', 'w+') do |f|
       each_row do |row,idx|
         state_id = assemble_id_from_row(row)
-        row_with_state_id = row.to_s.prepend("#{state_id.to_s},")
+        row_with_state_id = row.to_s.prepend("#{state_id.to_s}\t")
         f.puts row_with_state_id
       end
     end
@@ -48,15 +48,15 @@ class PreFlightChecker
   end
 
   def sort_by_state_id
-    sorted_array = source_file_with_state_id.sort_by {|line| line.split(',').first.to_i}
+    sorted_array = source_file_with_state_id.sort_by {|line| line.split("\t").first.to_i}
     #after sorting, add in the headers with state_id column
-    sorted_array.unshift headers.prepend("STATE_ID,")
+    sorted_array.unshift headers.prepend("STATE_ID\t")
     File.open('source_file_with_state_id.csv', 'w+') {|f| sorted_array.each {|row| f.puts row}}
     puts 'Successfully sorted file. Moving on to dup checks. This may take a while...'
   end
 
   def headers
-    CSV.read(@source_file, headers: true).headers.join(',')
+    CSV.read(@source_file, headers: true).headers.join("\t")
   end
 
   def source_file_with_state_id
@@ -103,7 +103,7 @@ class PreFlightChecker
     # Remove state_id data and see if there's anything else. Add 2 for readability in a csv viewer/editor
     indices_for_deletion = @state_id_column_array.map {|num| num + 1}.unshift(0)
     empty_rows = row_data.select do |row|
-      row.first.to_s.chomp.split(',')
+      row.first.to_s.chomp.split("\t")
         .delete_if.with_index {|_,index|indices_for_deletion.include? index}
         .map {|cell| cell.gsub(/[^0-9a-z]/i, '')}
         .all? {|val| val.empty? || val == @suppression_value}
@@ -116,7 +116,7 @@ class PreFlightChecker
   end
 
   def assemble_id_from_row(row)
-    @state_id_column_array.reduce('') {|accum, id| accum + row[id].to_f.to_s.gsub(/[.,]/,'')}
+    @state_id_column_array.reduce('') {|accum, id| accum + row[id].to_f.to_s.gsub("\t",'')}
   end
 
   def verify_well_formed_ids
@@ -168,6 +168,10 @@ end
 def read_command_line_input
   parser = OptionParser.new do |opts|
 
+    # for state id, maybe make the arg something like [col, desired length] for each component of the state_id... i.e.
+    # for zero padding
+    # ask user for example of state id - then print out to confirm with user that format is correct
+    # look for some of this in transforms in ETL directory / test processors
     opts.on('-c c', '--state-id-columns=c', Array, 'Columns for State Id') do |state_id_column_array|
       @options.state_id_columns = state_id_column_array
     end
