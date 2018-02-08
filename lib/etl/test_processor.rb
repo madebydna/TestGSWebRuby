@@ -18,6 +18,7 @@ module GS
   module ETL
     class TestProcessor
       include GS::ETL::Logging
+      GS::ETL::Logging.one_row
 
       attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
       attr_writer :source_columns
