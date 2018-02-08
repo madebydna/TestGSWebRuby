@@ -572,7 +572,5 @@ LocalizedProfiles::Application.routes.draw do
   match '/error/internal_error' => 'error#internal_error', :as => :internal_error, via: [:get, :post]
 
   # route not found catch-all
-  match '*path' => 'error#page_not_found', via: [:get, :post]
-
-
+  match '*path' => 'error#page_not_found', format: false, via: [:get, :post]
 end
