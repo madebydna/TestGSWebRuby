@@ -3,11 +3,10 @@
 class NewSchoolSubmission < ActiveRecord::Base
   self.table_name = 'new_school_submissions'
   db_magic :connection => :gs_schooldb
-  validates :district_name, :county, :physical_address, :physical_city, :physical_zip_code, :mailing_address,
-            :mailing_city, :mailing_zip_code,  presence: true
+  validates :district_name, :county, :physical_address, :physical_city, :mailing_address,
+            :mailing_city, presence: true
   validates :school_name, presence: true, length: {maximum: 100 }
-  validates :zip_code, length: {is: 5}, numericality: { only_integer: true }
-  validates :state_school_id, presence: true, allow_blank: true
+  validates :physical_zip_code, :mailing_zip_code, length: {is: 5}, numericality: { only_integer: true }
   validate :valid_grades?, :valid_nces_code?, :valid_school_type?, :valid_state?, :valid_state_school_id?
 
   before_save :add_level_code
@@ -32,7 +31,7 @@ class NewSchoolSubmission < ActiveRecord::Base
   end
 
   def valid_state_school_id?
-    unless pk_only?
+    unless pk_only? || state_school_id
       errors.add(:state_school_id, 'is required.')
     end
   end

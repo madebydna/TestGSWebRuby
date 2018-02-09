@@ -1,6 +1,8 @@
 <% select_options = States.labels_hash.map do |abbr, state| %>
     <% [state, abbr]%>
 <% end %>
+<% user_state_selection = params[:new_school_submission] ? params[:new_school_submission][:state] : "" %>
+<% user_school_type_selection = params[:new_school_submission] ? params[:new_school_submission][:school_type] : "" %>
 
 <div class="row">
   <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-12 add_remove_school">
@@ -16,7 +18,7 @@
     </div>
 
     <div class="new_remove_school_submission_form">
-      <%= form_for @new_school_submission, url: create_new_school_submission_path do |f| %>
+      <%= form_for @new_school_submission, url: add_school_path do |f| %>
           <%= render 'errors', object: @new_school_submission %>
           <div class="non_pre_k_fields">
             <%= f.label :nces_code, 'NCES code' %>
@@ -34,7 +36,7 @@
           </div>
           <div>
             <%= f.label :school_type %>
-            <%= f.select :school_type, options_for_select([['Private', 'private'], ['Public', 'public'], ['Charter', 'charter']], selected: 'Private'), { required: true, include_blank: true } %>
+            <%= f.select :school_type, options_for_select([['Private', 'private'], ['Public', 'public'], ['Charter', 'charter']], user_school_type_selection), { required: true, include_blank: true } %>
             <span class="input_required">* required</span>
           </div>
           <div>
@@ -91,7 +93,7 @@
           </div>
           <div>
             <%= f.label :state %>
-            <%= f.select :state, options_for_select(select_options), { required: true, include_blank: true } %>
+            <%= f.select :state, options_for_select(select_options, user_state_selection), { required: true, include_blank: true, } %>
             <span class="input_required">* required</span>
           </div>
           <div class="non_pre_k_fields">

@@ -73,8 +73,9 @@ LocalizedProfiles::Application.routes.draw do
   get '/find-schools/', as: :default_search, to: 'search#default_search'
   # get '/find-schools/', as: :default_search, to: 'home#show'
 
-  get '/add_school', as: :add_school, to: 'schools#new'
-  post '/create_new_school_submission/', as: :create_new_school_submission, to: 'schools#create'
+  match '/add_school', to: 'schools#new', via: :get
+  match '/add_school', to: 'schools#create', via: :post
+  # post '/add_school', as: :add_school, to: 'schools#create'
   get '/school_change_request/success', as: :new_remove_school_submission_success, to: 'schools#success'
   get '/remove_school', as: :remove_school_submission, to: 'schools#new_remove_school_submission'
   post '/create_remove_school_submission/', as: :create_remove_school_submission, to: 'schools#create_remove_school_submission'
