@@ -76,7 +76,9 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
   }
 
   .rr-add-spacer-between-ads {
-    padding-bottom: 40px;
+    @include media-breakpoint-up(md) {
+      padding-bottom: 40px;
+    }
   }
 
   @include media-breakpoint-down(sm) {
