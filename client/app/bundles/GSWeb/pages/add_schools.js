@@ -22,7 +22,7 @@ $(function(){
   };
 
   var checkPkFormSelection = function() {
-    if ($('#pre-k-form').is(':checked')) {
+    if ($('#pre-k-form').val == 'on') {
       $('#pk-field').val('true');
     }
   }
