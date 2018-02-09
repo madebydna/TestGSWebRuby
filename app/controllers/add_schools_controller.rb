@@ -5,10 +5,11 @@ require "net/http"
 
 class AddSchoolsController < ApplicationController
   layout "application"
-
+  PAGE_NAME = "GS:LandingPage:AddSchool"
   before_filter :set_pk, only: [:new, :create]
 
   def new
+    set_seo_meta_tags
     @new_school_submission = NewSchoolSubmission.new
   end
 
@@ -48,6 +49,11 @@ class AddSchoolsController < ApplicationController
                     :school_type, :county, :phone_number, :grades, :state_school_id,
                     :physical_address, :physical_city, :physical_zip_code, :mailing_address,
                     :mailing_city, :mailing_zip_code)
+  end
+
+  def set_seo_meta_tags
+    set_meta_tags title: 'Add your school to GreatSchools.',
+                  description: 'Use the form provided to let us know about a new school that is not currently represented on GreatSchools.'
   end
 
 end

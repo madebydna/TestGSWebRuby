@@ -5,8 +5,10 @@ require "net/http"
 
 class RemoveSchoolsController < ApplicationController
   layout "application"
+  PAGE_NAME = "GS:LandingPage:RemoveSchool"
 
   def new
+    set_seo_meta_tags
     @remove_school_submission = RemoveSchoolSubmission.new
   end
 
@@ -31,6 +33,11 @@ class RemoveSchoolsController < ApplicationController
 
   def remove_school_submissions_params
     params.require(:remove_school_submission).permit(:gs_url, :evidence_url, :submitter_role, :submitter_email)
+  end
+
+  def set_seo_meta_tags
+    set_meta_tags title: 'Remove a school from GreatSchools.',
+                  description: 'Use the form provided to let us know about a school that has permanently closed.'
   end
 
 end
