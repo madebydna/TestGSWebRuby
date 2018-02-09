@@ -6,8 +6,8 @@
     <div class="description">Use the form below to let us know about a school that has permanently closed.</div>
 
     <div class="new_remove_school_submission_form">
-      <%= form_for @remove_school_submission, url: create_remove_school_submission_path do |f| %>
-          <%= render 'errors', object: @remove_school_submission %>
+      <%= form_for @remove_school_submission, url: remove_school_path do |f| %>
+          <%= render partial: '/shared/errors', locals: {object: @remove_school_submission} %>
           <div>
             <%= f.label :gs_url, 'GreatSchools web link' %>
             <%= f.text_field :gs_url, {required: true, maxlength: 100} %>

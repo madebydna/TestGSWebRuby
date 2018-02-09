@@ -38,6 +38,8 @@ connection_pooling_enabled: false
 search_suggest_cache_time: 0 #in seconds ie. Cache-Control: 'max-age=300'
 district_city_list_cache_time: 86400 # in seconds (24 hrs)
 
+recaptcha: '6LeAEEQUAAAAAHuerLWHAGjCbq8nY2tQg90DuMZD'
+
 # Configs for scripts
 queue_daemon_sleep_time: 1 # in seconds or fractions thereof
 queue_daemon_updates_limit: 5

@@ -1,4 +1,6 @@
-<head><script src='https://www.google.com/recaptcha/api.js'></script></head>
+<% content_for(:head) do %>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+<% end %>
 <% content_for(:javascript_includes) do %>
     <%= webpack_javascript_include_tag("add-schools", "data-turbolinks-track" => true) %>
 <% end %>

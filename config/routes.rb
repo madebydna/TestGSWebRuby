@@ -73,12 +73,12 @@ LocalizedProfiles::Application.routes.draw do
   get '/find-schools/', as: :default_search, to: 'search#default_search'
   # get '/find-schools/', as: :default_search, to: 'home#show'
 
-  match '/add_school', to: 'schools#new', via: :get
-  match '/add_school', to: 'schools#create', via: :post
-  # post '/add_school', as: :add_school, to: 'schools#create'
-  get '/school_change_request/success', as: :new_remove_school_submission_success, to: 'schools#success'
-  get '/remove_school', as: :remove_school_submission, to: 'schools#new_remove_school_submission'
-  post '/create_remove_school_submission/', as: :create_remove_school_submission, to: 'schools#create_remove_school_submission'
+  match '/add_school', to: 'add_schools#new', via: :get
+  match '/add_school', to: 'add_schools#create', via: :post
+  match '/remove_school', to: 'remove_schools#new', via: :get
+  match '/remove_school', to: 'remove_schools#create', via: :post
+  get '/school_change_request/success', as: :new_remove_school_submission_success, to: 'add_schools#success'
+
   resources :user_preferences, only: [:edit]
 
   get '/preferences/' => 'user_email_preferences#show', as: 'user_preferences'

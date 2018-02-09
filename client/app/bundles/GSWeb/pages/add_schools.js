@@ -21,9 +21,16 @@ $(function(){
     }
   };
 
+  var checkPkFormSelection = function() {
+    if ($('#pre-k-form').is(':checked')) {
+      $('#pk-field').val('true');
+    }
+  }
+
   $('form').submit(function(){
     collectGradeLevels();
     handleMailingAddress();
+    checkPkFormSelection();
     if ($('#grade-level-selections').val() <= 0 && $('#k-12-form').prop('checked') == true) {
       alert('Please select the grade levels offered at this school before submitting.');
       return false;

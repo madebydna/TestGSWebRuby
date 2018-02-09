@@ -4,14 +4,20 @@ require 'active_support/concern'
 require "open-uri"
 require "net/http"
 
-module RecaptchaVerifier
+class RecaptchaVerifier
 
   GOOGLE_SITE_VERIFICATION_URL = 'https://www.google.com/recaptcha/api/siteverify'
   READ_TIMEOUT = 5
   OPEN_TIMEOUT = 3
 
-  def submissions_allowed?
-    PropertyConfig.allow_new_school_submissions? && valid_recaptcha?
+  attr_reader :recaptcha_response
+
+  def self.submissions_allowed?(recaptcha_response)
+    PropertyConfig.get_property('school_submissions') == '1' && new(recaptcha_response).valid_recaptcha?
+  end
+
+  def initialize(recaptcha_response)
+    @recaptcha_response = recaptcha_response
   end
 
   def valid_recaptcha?
@@ -21,15 +27,11 @@ module RecaptchaVerifier
   private
 
   def recaptcha_secret
-    '6LeAEEQUAAAAAHuerLWHAGjCbq8nY2tQg90DuMZD'
-  end
-
-  def captcha_response
-    @_captcha_response ||= params['g-recaptcha-response']
+    ENV_GLOBAL['recaptcha']
   end
 
   def recaptcha_data
-    "secret=#{recaptcha_secret}&response=#{captcha_response}"
+    "secret=#{recaptcha_secret}&response=#{recaptcha_response}"
   end
 
   def uri
