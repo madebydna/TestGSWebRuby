@@ -249,7 +249,7 @@ describe SchoolProfiles::OspSchoolInfo do
 
     describe 'when given just an ellipsis' do
       let (:str) { '...' }
-      it { is_expected.to eq('Data not provided by the school') }
+      it { is_expected.to eq('...') }
     end
   end
 end

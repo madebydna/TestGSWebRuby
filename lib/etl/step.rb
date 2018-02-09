@@ -18,6 +18,8 @@ module GS
 
       alias_method :transform, :add_step
       alias_method :destination, :add_step
+      alias_method :sql_writer, :add_step
+      alias_method :validate, :add_step
 
       def log_and_process(row)
         return unless row
@@ -90,6 +92,9 @@ module GS
 
       def record(row, value = 'success', key = event_key)
         row_num = row && row.respond_to?(:row_num) ? row.row_num : nil
+        if logger.one_row?
+          return if row_num.nil? || row_num > 0
+        end
         clone_num = row && row.respond_to?(:clone_num) ? row.clone_num : nil
         event = {
           id: id,

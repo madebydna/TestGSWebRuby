@@ -25,7 +25,7 @@ module CacheValidation
 
   def remove_empty_values!
     @cache.keep_if do | char_type, values |
-      values.present? or (log_data_rejection(@state,@school.id,char_type,"No value found") and false)
+      values.present? or (log_data_rejection(@school.state,@school.id,char_type,"No value found") and false)
     end
   end
 
@@ -46,7 +46,7 @@ module CacheValidation
     end
     if total_value < min_allowed || total_value > max_allowed
       @cache.except!('Ethnicity')
-      log_data_rejection(@state,@school.id,'Ethnicity',"Percent only added to #{total_value}")
+      log_data_rejection(@school.state,@school.id,'Ethnicity',"Percent only added to #{total_value}")
     end
   end
 

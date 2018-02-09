@@ -392,7 +392,13 @@ class SchoolProfilesController < ApplicationController
     reviews_list = reviews.reviews
     review_date = reviews_list.present? ? reviews_list.first.created : nil
     school_date = school.modified.present? ? school.modified.to_date : nil
-    [review_date, school_date, *(school_cache_data_reader.cache_updated_dates)].compact.max
+    rating_date = nil
+    unless @school.private_school?
+      rating_date = summary_rating.last_updated_date
+    end
+    max_gsdata_date = school_cache_data_reader.decorated_school.max_source_date_valid
+    max_gsdata_date = max_gsdata_date.to_date if max_gsdata_date
+    [review_date, school_date, rating_date, max_gsdata_date, *(school_cache_data_reader.cache_updated_dates)].compact.max
   end
 
   def add_dependencies_to_gon

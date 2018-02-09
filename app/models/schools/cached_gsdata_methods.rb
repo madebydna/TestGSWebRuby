@@ -33,4 +33,14 @@ module CachedGsdataMethods
     end
     )
   end
+
+  def max_source_date_valid
+    @_max_source_date_valid ||= begin
+      all_gsdata_objs = gsdata.values.map do |array_of_hashes|
+        array_of_hashes.map { |hash| GsdataCaching::GsDataValue.from_hash(hash) }
+      end.flatten.extend(GsdataCaching::GsDataValue::CollectionMethods)
+      most_recent = all_gsdata_objs.most_recent
+      most_recent.source_date_valid if most_recent
+    end
+  end
 end

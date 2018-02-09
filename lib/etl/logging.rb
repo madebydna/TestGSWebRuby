@@ -8,6 +8,10 @@ module GS
           ::GS::ETL::Logging.disabled?
         end
 
+        def one_row?
+          ::GS::ETL::Logging.one_row?
+        end
+
         def error(*args)
           @logger.error(*args)
         end
@@ -139,6 +143,10 @@ module GS
         def disabled?
           !!@disabled
         end
+
+        def one_row?
+          !!@one_row
+        end
         
         def disable
           @disabled = true
@@ -146,6 +154,16 @@ module GS
 
         def enable
           @disabled = false
+        end
+
+        def one_row
+          enable
+          @one_row = true
+        end
+
+        def all_rows
+          enable
+          @one_row = false
         end
 
         def logger=(logger)

@@ -73,6 +73,11 @@ LocalizedProfiles::Application.routes.draw do
   get '/find-schools/', as: :default_search, to: 'search#default_search'
   # get '/find-schools/', as: :default_search, to: 'home#show'
 
+  match '/add_school', to: 'add_schools#new', via: :get
+  match '/add_school', to: 'add_schools#create', via: :post
+  match '/remove_school', to: 'remove_schools#new', via: :get
+  match '/remove_school', to: 'remove_schools#create', via: :post
+  get '/school_change_request/success', as: :new_remove_school_submission_success, to: 'add_schools#success'
 
   resources :user_preferences, only: [:edit]
 
@@ -572,7 +577,5 @@ LocalizedProfiles::Application.routes.draw do
   match '/error/internal_error' => 'error#internal_error', :as => :internal_error, via: [:get, :post]
 
   # route not found catch-all
-  match '*path' => 'error#page_not_found', via: [:get, :post]
-
-
+  match '*path' => 'error#page_not_found', format: false, via: [:get, :post]
 end

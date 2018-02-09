@@ -2,7 +2,7 @@ require "spec_helper"
 require 'features/contexts/shared_contexts_for_signed_in_users'
 require "features/page_objects/school_profiles_page"
 
-describe "Signed in and verified user" do
+describe "Signed in and verified user", brittle: true do
   with_shared_context 'signed in verified user' do
     context "with community member role assigned" do
       after do

@@ -12,18 +12,20 @@ end
 require_all.call 'transforms'
 require_all.call 'sources'
 require_all.call 'destinations'
+require_all.call 'validations'
 
 module GS
   module ETL
     class TestProcessor
       include GS::ETL::Logging
+      GS::ETL::Logging.one_row
 
       attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
       attr_writer :source_columns
 
       FILE_LOCATION = '/tmp/'
       SCHOOL_TYPE_STRING = 'public.charter'
-      ENTITIES = ['school', 'state', 'district']
+      ENTITIES = %w(school state district)
       COLUMN_ORDER = [ :year, :entity_type, :entity_level, :state_id, :school_id, :school_name,
                        :district_id, :district_name, :test_data_type, :test_data_type_id, :grade,
                        :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
@@ -166,11 +168,17 @@ module GS
           define_method("#{entity}_output_file".to_sym) do
             FILE_LOCATION +  data_file_prefix + entity + ".txt"
           end
+          define_method("#{entity}_output_sql_file".to_sym) do
+            FILE_LOCATION +  data_file_prefix + entity + ".sql"
+          end
         end
       end
 
       def state_steps
         node = output_files_root_step.add_step('Keep only state rows', KeepRows, :entity_level, 'state')
+        node.sql_writer 'Output state rows to SQL file', SqlDestination,
+                         state_output_sql_file, config_hash,
+                        *COLUMN_ORDER
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           row[:state_id] = 'state'
           row[:school_id] = 'state'
@@ -191,6 +199,9 @@ module GS
           KeepRows,
           :entity_level, 'district'
         )
+        node.sql_writer 'Output district rows to SQL file', SqlDestination,
+                        district_output_sql_file,  config_hash,
+                        *COLUMN_ORDER
         node = node.transform 'Fill a couple columns with "district"', Fill,
           school_id: 'district',
           school_name: 'district'
@@ -205,6 +216,9 @@ module GS
 
       def school_steps
         node = output_files_root_step.add_step('Keep only school rows', KeepRows, :entity_level, 'school')
+        node.sql_writer 'Output school rows to SQL file', SqlDestination,
+                        school_output_sql_file, config_hash,
+                        *COLUMN_ORDER
         node.destination 'Output school rows to CSV', CsvDestination,
           school_output_file,
           *COLUMN_ORDER

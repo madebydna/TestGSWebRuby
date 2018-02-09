@@ -3,6 +3,8 @@ class LevelCode
 
   Level = Struct.new(:abbreviation, :long_name)
 
+  GRADES_WHITELIST = ['pk', 'kg'].concat((1..12).to_a.map(&:to_s))
+
   LEVEL_LOOKUP = {
     'p' => Level.new('p', 'Preschool'),
     'e' => Level.new('e', 'Elementary'),
@@ -51,5 +53,10 @@ class LevelCode
   def self.full_from_grade(grade)
     grade_levels = from_grade(grade.to_s) if grade.try(:to_s).is_a? String
     grade_levels.levels.first.long_name if grade_levels
+  end
+
+  def self.from_all_grades(grades_string)
+    grades = grades_string.split(',')
+    grades.map {|grade| from_grade(grade).to_s}.uniq.sort.join(',')
   end
 end

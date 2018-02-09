@@ -1,0 +1,12 @@
+<% content_for(:head) do %>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+<% end %>
+<% content_for(:javascript_includes) do %>
+    <%= webpack_javascript_include_tag("add-schools", "data-turbolinks-track" => true) %>
+<% end %>
+<% content_for(:page_stylesheets) do %>
+    <%= stylesheet_link_tag("post_load", async: true) %>
+    <%= stylesheet_link_tag("add_remove_schools", async: false) %>
+<% end %>
+
+<%= render partial: 'add_school_form' %>

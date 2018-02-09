@@ -35,7 +35,7 @@ class UpdateQueue < ActiveRecord::Base
       and created > "#{2.weeks.ago}"
       group by source) todos
       left join
-      (select source, count(*) as done, min(created) as time_started
+      (select source, count(*) as done, min(updated) as time_started
       from update_queue
       where status = 'DONE'
       and source is not null
