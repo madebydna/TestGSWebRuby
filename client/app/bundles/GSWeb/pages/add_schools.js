@@ -1,16 +1,16 @@
 $(function(){
-  var collectGradeLevels = function(){
-    var gradeSelectionsArray = [];
+  let collectGradeLevels = function(){
+    let gradeSelectionsArray = [];
     $('input:checkbox').each(function() {
-      var checkBox = $(this);
+      let checkBox = $(this);
       if ( checkBox.is(':checked') ) {
         gradeSelectionsArray.push(checkBox.attr('data-grade'));
       }
     });
-    $('#grade-level-selections').val(gradeSelectionsArray);
+    $('#grade-level-selections').val(gradeSelectionsArray.join());
   };
 
-  var handleMailingAddress = function() {
+  let handleMailingAddress = function() {
     if ($('#same-address').is(':checked')) {
       let physicalAddress = $('#new_school_submission_physical_address').val();
       let physicalCity = $('#new_school_submission_physical_city').val();
@@ -21,17 +21,23 @@ $(function(){
     }
   };
 
-  var checkPkFormSelection = function() {
-    if ($('#pre-k-form').val == 'on') {
-      $('#pk-field').val('true');
-    }
+  // Checks the pk box and sets the hidden field for persisting the user's selection of pre-k or k-12 forms.
+  let setPkToTrue = function() {
+    $('#pk').prop('checked', true);
+    $('#pk-field').val('true')
   }
 
+  let checkPkFormSelection = function() {
+    if ($('#pre-k-form').is(':checked')) {
+      setPkToTrue();
+    }
+  };
+
   $('form').submit(function(){
-    collectGradeLevels();
-    handleMailingAddress();
     checkPkFormSelection();
-    if ($('#grade-level-selections').val() <= 0 && $('#k-12-form').prop('checked') == true) {
+    handleMailingAddress();
+    collectGradeLevels();
+    if ($('#grade-level-selections').val().length <= 0 && $('#k-12-form').prop('checked') == true) {
       alert('Please select the grade levels offered at this school before submitting.');
       return false;
     }
@@ -41,9 +47,8 @@ $(function(){
   $('#pre-k-form').change(function() {
     if(this.checked) {
       $('input[type=checkbox]').prop('checked', false);
-      $('#pk').prop('checked', true);
       $('.non_pre_k_fields').css('display', 'none');
-      $('#pk-field').val('true')
+      setPkToTrue();
     }
   });
 
