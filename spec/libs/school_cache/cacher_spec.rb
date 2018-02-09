@@ -2,6 +2,57 @@ require 'spec_helper'
 
 describe Cacher do
   let(:school) { FactoryGirl.build(:alameda_high_school) }
+  let(:cacher) { Cacher.new(school) }
+
+  describe '#cache' do
+    let(:sample_json) do
+      {
+        foo: 'bar'
+      }
+    end
+    let(:school) { FactoryGirl.build(:school) }
+    let(:cache_key) { 'test_cache_key' }
+    subject { cacher }
+    after do
+      clean_dbs(:gs_schooldb)
+    end
+    before do
+      stub_const('Cacher::CACHE_KEY', cache_key)
+    end
+
+    context 'with a cache data for a school' do
+      before do
+        allow(subject).to receive(:build_hash_for_cache).and_return(sample_json)
+        allow(subject).to receive(:school).and_return(school)
+      end
+      it 'writes a single cache entry' do
+        expect(SchoolCache.count).to eq(0)
+        subject.cache
+        expect(SchoolCache.count).to eq(1)
+        subject.cache
+        expect(SchoolCache.count).to eq(1)
+        saved_cache_entry = SchoolCache.first
+        expect(saved_cache_entry.value).to eq(sample_json.to_json)
+        expect(saved_cache_entry.school_id).to eq(school.id)
+        expect(saved_cache_entry.state).to eq(school.state)
+        expect(saved_cache_entry.name).to eq(cache_key)
+      end
+    end
+
+    context 'with no cache data for a school and an existing entry' do
+      before do
+        allow(subject).to receive(:build_hash_for_cache).and_return(sample_json)
+        allow(subject).to receive(:school).and_return(school)
+        subject.cache
+        allow(subject).to receive(:build_hash_for_cache).and_return({})
+      end
+      it 'removes a cache entry if data for school no longer exists' do
+        expect(SchoolCache.count).to eq(1)
+        subject.cache
+        expect(SchoolCache.count).to eq(0)
+      end
+    end
+  end
 
   describe '#cachers_for_data_type' do
     {

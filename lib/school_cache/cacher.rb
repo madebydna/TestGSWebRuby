@@ -19,21 +19,28 @@ class Cacher
   end
 
   def cache
+    cache_key = self.class::CACHE_KEY
     final_hash = build_hash_for_cache
 
-    school_cache = SchoolCache.find_or_initialize_by(
+    if final_hash.present?
+      SchoolCache.connection.execute(
+        %Q(
+          REPLACE INTO #{SchoolCache.table_name} (school_id, state, name, value, updated)
+          VALUES (
+            #{school.id},
+            #{ActiveRecord::Base.connection.quote(school.state)},
+            #{ActiveRecord::Base.connection.quote(cache_key)},
+            #{ActiveRecord::Base.connection.quote(final_hash.to_json)},
+            #{ActiveRecord::Base.connection.quote(Time.now)}
+          )
+        )
+      )
+    else
+      SchoolCache.delete_all(
         school_id: school.id,
         state: school.state,
-        name:self.class::CACHE_KEY
-    )
-
-    if final_hash.present?
-      school_cache.update_attributes!(
-          value: final_hash.to_json,
-          updated: Time.now
+        name: cache_key
       )
-    elsif school_cache && school_cache.id.present?
-      SchoolCache.destroy(school_cache.id)
     end
   end
 
