@@ -22,7 +22,8 @@ const config = {
     'school-profiles': [ './app/bundles/GSWeb/school_profiles' ],
     'home': [ './app/bundles/GSWeb/home' ],
     'jquery': ['jquery'],
-    'admin-tools': ['./app/bundles/GSWeb/admin_tools']
+    'admin-tools': ['./app/bundles/GSWeb/admin_tools'],
+    'add-schools': ['./app/bundles/GSWeb/pages/add_schools']
   },
 
   output: {

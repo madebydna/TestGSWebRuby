@@ -1,0 +1,43 @@
+
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 add_remove_school">
+    <%= image_tag(image_path('home/icon_schools.png')) %>
+    <h2>Remove a School</h2>
+    <div class="description">Use the form below to let us know about a school that has permanently closed.</div>
+
+    <div class="new_remove_school_submission_form">
+      <%= form_for @remove_school_submission, url: remove_school_path do |f| %>
+          <%= render partial: '/shared/errors', locals: {object: @remove_school_submission} %>
+          <div>
+            <%= f.label :gs_url, 'GreatSchools web link' %>
+            <%= f.text_field :gs_url, {required: true, maxlength: 100} %>
+          <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :submitter_role, 'Your role' %>
+            <%= f.select :submitter_role, options_for_select([['Administrator', 'administrator'],['Teacher', 'teacher'],
+                                ['Parent', 'parent'],['Community member', 'community_member']]), { required: true } %>
+            <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :submitter_email, 'Your email' %>
+            <%= f.text_field :submitter_email, {required: true, maxlength: 50} %>
+            <span class="input_required">* required</span>
+          </div>
+          <div>
+            <%= f.label :evidence_url, 'Source' %>
+            <%= f.text_field :evidence_url, {required: false, maxlength: 100, placeholder: 'Link to webpage confirming school closure (copy/paste here).'} %>
+          </div>
+          <div class="recaptcha">
+            <div class="g-recaptcha" data-sitekey="6LeAEEQUAAAAAMn2--UDyRuHgQEEKbf3tOL6aNzQ"></div>
+          </div>
+
+          <div class="add_remove_school_submit">
+            <%= f.submit "Submit request", class: "blue-background" %>
+          </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
