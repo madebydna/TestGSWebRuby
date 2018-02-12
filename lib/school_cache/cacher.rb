@@ -23,24 +23,28 @@ class Cacher
     final_hash = build_hash_for_cache
 
     if final_hash.present?
-      SchoolCache.connection.execute(
-        %Q(
-          REPLACE INTO #{SchoolCache.table_name} (school_id, state, name, value, updated)
-          VALUES (
-            #{school.id},
-            #{ActiveRecord::Base.connection.quote(school.state)},
-            #{ActiveRecord::Base.connection.quote(cache_key)},
-            #{ActiveRecord::Base.connection.quote(final_hash.to_json)},
-            #{ActiveRecord::Base.connection.quote(Time.now)}
+      SchoolCache.on_rw_db do
+        SchoolCache.connection.execute(
+          %Q(
+            REPLACE INTO #{SchoolCache.table_name} (school_id, state, name, value, updated)
+            VALUES (
+              #{school.id},
+              #{ActiveRecord::Base.connection.quote(school.state)},
+              #{ActiveRecord::Base.connection.quote(cache_key)},
+              #{ActiveRecord::Base.connection.quote(final_hash.to_json)},
+              #{ActiveRecord::Base.connection.quote(Time.now)}
+            )
           )
         )
-      )
+      end
     else
-      SchoolCache.delete_all(
-        school_id: school.id,
-        state: school.state,
-        name: cache_key
-      )
+      SchoolCache.on_rw_db do
+        SchoolCache.delete_all(
+          school_id: school.id,
+          state: school.state,
+          name: cache_key
+        )
+      end
     end
   end
 

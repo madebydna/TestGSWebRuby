@@ -12,7 +12,9 @@ class SchoolCache < ActiveRecord::Base
     SchoolCache.where(name: name, school_id: school_id, state: state).first()
   end
 
-
+  def self.on_rw_db(&block)
+    on_db(:gs_schooldb_rw, &block)
+  end
 
   def self.for_schools_keys(keys, school_ids, state)
     school_data = Hash.new { |h,k| h[k] = {} }

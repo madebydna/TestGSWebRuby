@@ -21,4 +21,20 @@ describe SchoolCache do
       end
     end
   end
+
+  describe '.on_rw_db' do
+    context 'With read/write connection' do
+      before do
+        expect(SchoolCache.connection_config[:connection_name]).to eq('gs_schooldb')
+      end
+      after do
+        expect(SchoolCache.connection_config[:connection_name]).to eq('gs_schooldb')
+      end
+      it 'should have correct connection name' do
+        SchoolCache.on_rw_db do
+          expect(SchoolCache.connection_config[:connection_name]).to eq('gs_schooldb_rw')
+        end
+      end
+    end
+  end
 end
