@@ -22,12 +22,13 @@ class TestScoreQueueDaemonJsonBlob
         school_id: @row[:school_id],
         district_id: @row[:district_id],
         data_type_id: @row[:test_data_type_id],
-        subject_id: @row[:subject_id],
+        academic_id: @row[:academic_gsdata_id],
         proficiency_band_id: @row[:proficiency_band_id],
         cohort_count: @row[:number_tested],
         grade: @row[:grade],
         active: 1,
         breakdowns: breakdowns_hash,
+        academics: academics_hash,
         source: source_hash,
         year: @row[:year],
       }
@@ -36,18 +37,25 @@ class TestScoreQueueDaemonJsonBlob
 
   def source_hash
     {
-      source_name: @source[:source_name],
-      date_valid: @source[:date_valid],
-      notes: @source[:notes],
+        source_name: @source[:source_name],
+        date_valid: @source[:date_valid],
+        notes: @source[:notes],
     }
+  end
+
+  def academics_hash
+    [
+        {
+            id: @row[:academic_gsdata_id],
+        }
+    ]
   end
 
   def breakdowns_hash
     [
-      {
-        id: @row[:breakdown_id],
-        name: @row[:breakdown],
-      }
+        {
+            id: @row[:breakdown_gsdata_id],
+        }
     ]
   end
 
