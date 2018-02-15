@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'json-schema'
+# require 'json-schema'
 
 class GsdataLoading::Update
-  attr_accessor :data_type, :school_id, :state, :update_blob, :action, :source
+  attr_accessor :data_type, :school_id, :state, :update_blob, :action, :source, :entity_level, :state_id
 
   SCHEMA = {
       'type' => 'object',
@@ -80,14 +80,16 @@ class GsdataLoading::Update
   end
 
   def validate
-    JSON::Validator.validate!(SCHEMA, @update_blob)
+    # JSON::Validator.validate!(SCHEMA, @update_blob)
     raise 'Every gsdata update must have have a state specified' if state.blank?
     raise 'Every gsdata update must have have a school_id specified' if school_id.blank?
   end
 
   def source_replace_into_and_return_id
-    source = Source.from_hash(@update_blob['source']).replace_into
-    source.id
+    Gsdata::Source.on_db(:gsdata_rw) do
+      Gsdata::Source.from_hash(@update_blob['source']).replace_into
+      Gsdata::Source.from_hash(@update_blob['source']).get_source_id
+    end
   end
 
   def set_up_attr_accessors
@@ -113,90 +115,72 @@ class GsdataLoading::Update
     s.state = @state
     school_id = nil
     district_id = nil
-    if @school
+    if school
       school_id = school.id
       district_id = school.district_id
-    elsif @district
+    elsif district
       district_id = district.id
     end
     s.school_id = school_id
     s.district_id = district_id
+    s.configuration = @configuration
     s.data_type_id = @data_type_id
     s.proficiency_band_id = @proficiency_band_id
     s.cohort_count = @cohort_count
     s.grade = @grade
     s.active = @active
     s.source_id = @source_id
-    unless s.save!
-      GSLogger.error(:gsdata_load, nil, message: 'gsdata DataValue failed to save', vars: {
-          value: @value,
-          state: @state,
-          school_id: school_id,
-          district_id: district_id,
-          data_type_id: @data_type_id,
-          proficiency_band_id: @proficiency_band_id,
-          cohort_count: @cohort_count,
-          grade: @grade,
-          active: @active
-      })
+    DataValue.on_db(:gsdata_rw) do
+      unless s.save!
+        GSLogger.error(:gsdata_load, nil, message: 'gsdata DataValue failed to save', vars: {
+            value: @value,
+            state: @state,
+            school_id: school_id,
+            district_id: district_id,
+            data_type_id: @data_type_id,
+            proficiency_band_id: @proficiency_band_id,
+            cohort_count: @cohort_count,
+            grade: @grade,
+            active: @active
+        })
+      end
     end
+
     s.id
   end
 
   def insert_data_value_to_academics
-    return if @update.academics.blank?
-    @update.academics.each do |academic|
-      s = DataValueToAcademic.new
+    return if @academics.blank?
+    @academics.each do |academic|
+      s = DataValuesToAcademic.new
       s.data_value_id = @data_value_id
-      s.academic_id = academic.id
-      unless s.save!
-        GSLogger.error(:gsdata_load, nil, message: 'gsdata DataValueToAcademics failed to save', vars: {
-            academic_id: academic.id,
-            data_value_id: @data_value_id
-        })
+      s.academic_id = academic['id']
+      DataValuesToAcademic.on_db(:gsdata_rw) do
+        unless s.save!
+          GSLogger.error(:gsdata_load, nil, message: 'gsdata DataValueToAcademics failed to save', vars: {
+              academic_id: academic['id'],
+              data_value_id: @data_value_id
+          })
+        end
       end
     end
   end
 
   def insert_data_value_to_breakdowns
-    return if @update.breakdowns.blank?
-    @update.breakdowns.each do |breakdown|
-      s = DataValueToBreakdown.new
+    return if @breakdowns.blank?
+    @breakdowns.each do |breakdown|
+      s = DataValuesToBreakdown.new
       s.data_value_id = @data_value_id
-      s.breakdown_id = breakdown.id
-      unless s.save!
-        GSLogger.error(:gsdata_load, nil, message: 'gsdata DataValueToBreakdowns failed to save', vars: {
-            breakdown_id: breakdown.id,
-            data_value_id: @data_value_id
-        })
+      s.breakdown_id = breakdown['id']
+      DataValuesToBreakdown.on_db(:gsdata_rw) do
+        unless s.save!
+          GSLogger.error(:gsdata_load, nil, message: 'gsdata DataValueToBreakdowns failed to save', vars: {
+              breakdown_id: breakdown['id'],
+              data_value_id: @data_value_id
+          })
+        end
       end
     end
   end
-
-  # def data_value
-  #   now = Time.zone.now
-  #   @_data_value ||= (
-  #   DataValue.from_hash(update_hash).tap do |dv|
-  #     dv.breakdowns = matching_breakdowns if matching_breakdowns
-  #     dv.created = now
-  #     dv.updated = now
-  #     dv.source = Source.find_by(update_hash['source'])
-  #   end
-  #   )
-  # end
-
-  # def matching_breakdowns
-  #   if defined?(@_matching_breakdowns)
-  #     return @_matching_breakdowns
-  #   end
-  #   @_matching_breakdowns = (
-  #   update_hash['breakdowns'].map do |hash|
-  #     Breakdown.find_by_name_and_tags(
-  #         hash['name'],
-  #         hash['tags'].map { |h| h['tag'] }
-  #     )
-  #   end.compact
-  #   )
-  # end
 
 end

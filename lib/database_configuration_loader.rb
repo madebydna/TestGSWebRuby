@@ -72,6 +72,8 @@ class DatabaseConfigurationLoader
     gsdata_db_username = ENV['gsdata_db_username'] || ENV_GLOBAL['gsdata_db_username']
     gsdata_db_password = ENV['gsdata_db_password'] || ENV_GLOBAL['gsdata_db_password']
     gsdata_config = config['gsdata']
+    config['gsdata_rw'] = config['gsdata']
+
 
     if gsdata_db_host.present?
       gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
