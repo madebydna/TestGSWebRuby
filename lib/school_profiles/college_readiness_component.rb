@@ -1,6 +1,74 @@
 module SchoolProfiles
 
+
     class CollegeReadinessComponent < CollegeReadiness
+      class CharacteristicsValue
+        include FromHashMethod
+        module CollectionMethods
+          def having_all_students
+            select { |dv| dv.all_students? }.extend(CollectionMethods)
+          end
+          def having_school_value
+            select { |dv| dv.school_value.present? }.extend(CollectionMethods)
+          end
+          def no_subject_or_all_subjects
+            select { |h| h['subject'].nil? || h.all_subjects? }.extend(CollectionMethods)
+          end
+          def no_subject_or_all_subjects_or_graduates_remediation
+            select do |h|
+              h.subject.nil? || h.all_subjects? || h.is_a?(GradutesRemediationValue)
+            end.extend(CollectionMethods)
+          end
+          def expect_only_one(message, other_helpful_vars = {})
+            if size > 1
+              GSLogger.error(
+                :misc,
+                nil,
+                message: "Expected to find unique characteristics value: #{message}",
+                vars: other_helpful_vars
+              )
+            end
+            return first
+          end
+        end
+        attr_accessor :breakdown, :original_breakdown, :school_value,
+          :district_average, :state_average, :year, :subject, :data_type,
+          :performance_level, :source, :created, :narrative
+
+        def [](key)
+          send(key) if respond_to?(key)
+        end
+
+        def []=(key, val)
+          send("#{key}=", val)
+        end
+
+        def all_students?
+          breakdown == 'All students'
+        end
+
+        def all_subjects?
+          subject == 'All subjects'
+        end
+
+        (2008..2022).to_a.each do |year|
+          attr_accessor "school_value_#{year}"
+          attr_accessor "state_average_#{year}"
+          attr_accessor "district_average_#{year}"
+          attr_accessor "performance_level_#{year}"
+        end
+      end
+
+      class GradutesRemediationValue < CharacteristicsValue
+        def data_type
+          if subject
+            'Graduates needing ' + subject.capitalize + ' remediation in college'
+          else
+            @data_type
+          end
+        end
+      end
+
       attr_reader :tab
 
       def initialize(tab, school_cache_data_reader)
@@ -32,54 +100,42 @@ module SchoolProfiles
         end
       end
 
+      def characteristics_data
+        array_of_hashes = @school_cache_data_reader.characteristics_data(*included_data_types(:characteristics))
+        array_of_hashes.each_with_object({}) do |(data_type, array), accum|
+          accum[data_type] = 
+            array.map do |h|
+              klass = if data_type == GRADUATES_REMEDIATION
+                        GradutesRemediationValue
+                      else
+                        CharacteristicsValue
+                      end
+              klass.from_hash(h.merge('data_type' => data_type))
+            end
+            .extend(CharacteristicsValue::CollectionMethods)
+        end
+      end
+
       def data_type_hashes
         @_data_type_hashes ||= (
-        hashes = @school_cache_data_reader.characteristics_data(*included_data_types( :characteristics ))
-        hashes.merge!(@school_cache_data_reader.gsdata_data(*included_data_types(:gsdata )))
+        hashes = characteristics_data
+        hashes.merge!(@school_cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata )))
         return [] if hashes.blank?
         handle_ACT_SAT_to_display!(hashes)
         hashes = hashes.map do |key, array|
-          values = array.select do |h|
-            # If it has no breakdown keys, that's good (gsdata)
-            (!h.has_key?('breakdowns') && !h.has_key?('breakdown')) ||
-              # otherwise the breakdown better be 'All students' (characteristics)
-              h['breakdown'] == 'All students'
+          array = array.having_all_students.having_school_value
+          if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
+            # This is for characteristics
+            array = array.no_subject_or_all_subjects_or_graduates_remediation
           end
-          # This is for characteristics
-
-          unless key == GRADUATES_REMEDIATION
-            values = values.select { |h| !h.has_key?('subject') || h['subject'] == 'All subjects'}
-            GSLogger.error(:misc, nil,
-                           message:"Failed to find unique data point for data type #{key} in the characteristics/gsdata cache",
-                           vars: {school: {state: @school_cache_data_reader.school.state,
-                                           id: @school_cache_data_reader.school.id}
-                           }) if values.size > 1
-          end
-          add_data_type(key,values)
+          array
         end
-        data_values = hashes.flatten.compact.select(&with_school_values)
+        data_values = hashes.flatten.compact
         data_values.select! { |dv| included_data_types.include?(dv['data_type']) }
         data_values.sort_by { |o| included_data_types.index( o['data_type']) }
         )
       end
 
-      def add_data_type(key,values)
-        # Special handling for Remediation data, which is organized by subject
-        if key == CollegeReadiness::GRADUATES_REMEDIATION
-          arr = values.map do |hash|
-            if hash.has_key?('subject')
-              hash.merge('data_type' => 'Graduates needing ' + hash['subject'].capitalize + ' remediation in college')
-            else
-              hash.merge('data_type' => key)
-            end
-          end
-          arr
-        else
-          hash = values.first
-          hash['data_type'] = key if hash
-          hash
-        end
-      end
 
       def data_values
         @_data_values ||= Array.wrap(data_type_hashes).map do |hash|
@@ -159,7 +215,7 @@ module SchoolProfiles
       end
 
       def with_school_values
-        ->(h) { h.has_key?('school_value') && h['school_value'].present? }
+        ->(h) { h['school_value'].present? }
       end
     end
 end

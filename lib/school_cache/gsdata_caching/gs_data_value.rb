@@ -25,6 +25,8 @@ class GsdataCaching::GsDataValue
       select { |dv| dv.breakdowns.nil? }.extend(CollectionMethods)
     end
 
+    alias_method :having_all_students, :having_no_breakdown
+
     def having_one_breakdown
       select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.extend(CollectionMethods)
     end
@@ -100,6 +102,14 @@ class GsdataCaching::GsDataValue
     :description,
     :methodology
 
+  def [](key)
+    send(key) if respond_to?(key)
+  end
+
+  def []=(key, val)
+    send("#{key}=", val)
+  end
+
   def self.from_array_of_hashes(array)
     array ||= []
     array.map { |h| GsdataCaching::GsDataValue.from_hash(h) }
@@ -122,5 +132,9 @@ class GsdataCaching::GsDataValue
           .gsub('All students except 504 category,','')
           .gsub(/,All students except 504 category$/,'')
     end
+  end
+
+  def all_students?
+    breakdowns.blank?
   end
 end

@@ -219,9 +219,21 @@ module SchoolProfiles
       end
     end
 
+    def decorated_gsdata_datas(*keys)
+      decorated_school.gsdata.slice(*keys).each_with_object({}) do |(data_type, array), accum|
+        accum[data_type] = 
+          array.map do |h|
+            GsdataCaching::GsDataValue.from_hash(h).tap { |dv| dv.data_type = data_type }
+          end
+          .extend(GsdataCaching::GsDataValue::CollectionMethods)
+      end
+    end
+
     def decorated_gsdata_data(key)
       Array.wrap(decorated_school.gsdata.slice(key)[key])
-        .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
+        .map do |h|
+          GsdataCaching::GsDataValue.from_hash(h).tap { |dv| dv.data_type = key }
+        end
         .extend(GsdataCaching::GsDataValue::CollectionMethods)
     end
 
