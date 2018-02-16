@@ -31,7 +31,7 @@ module Feeds
       elsif test_score_rating_used? state
         rating_hashes = ratings_cache_data['Test Score Rating']
         value_objects = RatingsCaching::Value.from_array_of_hashes(rating_hashes)
-        overall_test_score = value_objects.having_school_value.having_all_students.expect_only_one(
+        overall_test_score = value_objects.having_school_value.for_all_students.expect_only_one(
           "Should only have found one Test Score Rating",
           state: state
         )
