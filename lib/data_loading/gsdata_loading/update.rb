@@ -106,8 +106,6 @@ class GsdataLoading::Update
             })
           end
         end
-
-
       end
       source_id
     end
