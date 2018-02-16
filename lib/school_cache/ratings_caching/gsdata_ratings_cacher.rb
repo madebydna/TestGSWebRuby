@@ -58,14 +58,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   end
 
   def cache
-    if build_hash_for_cache.present?
-      school_cache.update_attributes!(
-          value: build_hash_for_cache.to_json,
-          updated: Time.now
-      )
-    elsif school_cache && school_cache.id.present?
-      SchoolCache.destroy(school_cache.id)
-    end
+    super
 
     if gs_rating_data_value.present?
       replace_rating_into_school_metadata(

@@ -37,6 +37,15 @@ describe Cacher do
         expect(saved_cache_entry.state).to eq(school.state)
         expect(saved_cache_entry.name).to eq(cache_key)
       end
+      it 'maintains auto increment ID' do
+        expect(SchoolCache.count).to eq(0)
+        subject.cache
+        expect(SchoolCache.count).to eq(1)
+        id = SchoolCache.first.id
+        subject.cache
+        expect(SchoolCache.count).to eq(1)
+        expect(SchoolCache.first.id).to eq(id)
+      end
     end
 
     context 'with no cache data for a school and an existing entry' do

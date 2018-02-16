@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe RatingsCaching::GsdataRatingsCacher do
@@ -6,7 +8,10 @@ describe RatingsCaching::GsdataRatingsCacher do
   let(:cacher) { RatingsCaching::GsdataRatingsCacher.new(school) }
 
   describe '#cache' do
-    after(:each) { clean_models :gsdata, DataValue, Gsdata::Source, DataType }
+    after(:each) do
+      clean_models :gsdata, DataValue, Gsdata::Source, DataType
+      clean_dbs(:gs_schooldb)
+    end
     let(:source) { build(:source).tap { |obj| obj.on_db(:gsdata_rw).save } }
     let(:school_value) { (1..100).to_a.sample }
     let(:data_type_id) { RatingsCaching::GsdataRatingsCacher::DATA_TYPE_IDS.sample }
@@ -25,6 +30,60 @@ describe RatingsCaching::GsdataRatingsCacher do
     end
     let(:metadata) do
       SchoolMetadata.on_db(:ca).where(school_id: school.id, meta_key: 'overallRating')
+    end
+
+    context 'with a cache data for a school' do
+      let(:sample_json) do
+        {
+          foo: 'bar'
+        }
+      end
+      subject { cacher }
+      before do
+        allow(subject).to receive(:build_hash_for_cache).and_return(sample_json)
+        allow(subject).to receive(:school).and_return(school)
+      end
+      it 'writes a single cache entry' do
+        expect(SchoolCache.count).to eq(0)
+        subject.cache
+        expect(SchoolCache.count).to eq(1)
+        subject.cache
+        expect(SchoolCache.count).to eq(1)
+        saved_cache_entry = SchoolCache.first
+        expect(saved_cache_entry.value).to eq(sample_json.to_json)
+        expect(saved_cache_entry.school_id).to eq(school.id)
+        expect(saved_cache_entry.state).to eq(school.state)
+        expect(saved_cache_entry.name).to eq('ratings')
+      end
+      it 'maintains auto increment ID' do
+        expect(SchoolCache.count).to eq(0)
+        subject.cache
+        expect(SchoolCache.count).to eq(1)
+        id = SchoolCache.first.id
+        subject.cache
+        expect(SchoolCache.count).to eq(1)
+        expect(SchoolCache.first.id).to eq(id)
+      end
+    end
+
+    context 'with no cache data for a school and an existing entry' do
+      let(:sample_json) do
+        {
+          foo: 'bar'
+        }
+      end
+      subject { cacher }
+      before do
+        allow(subject).to receive(:build_hash_for_cache).and_return(sample_json)
+        allow(subject).to receive(:school).and_return(school)
+        subject.cache
+        allow(subject).to receive(:build_hash_for_cache).and_return({})
+      end
+      it 'removes a cache entry if data for school no longer exists' do
+        expect(SchoolCache.count).to eq(1)
+        subject.cache
+        expect(SchoolCache.count).to eq(0)
+      end
     end
 
     context 'when a school has actual ratings data' do
@@ -111,6 +170,7 @@ describe RatingsCaching::GsdataRatingsCacher do
       it { is_expected.to be_empty }
     end
   end
+
 
   describe '#build_hash_for_cache' do
     subject { cacher.build_hash_for_cache }
