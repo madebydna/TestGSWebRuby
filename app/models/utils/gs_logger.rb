@@ -14,7 +14,8 @@ class GSLogger
                                     gk_action: 'GK_ACTION',
                                     shared_cache: 'SHARED_CACHE',
                                     preferences: 'PREFERENCES',
-                                    unsubscribe: 'UNSUBSCRIBE'
+                                    unsubscribe: 'UNSUBSCRIBE',
+                                    gsdata_load: 'GSDATA_LOAD'
   })
 
   class << self
