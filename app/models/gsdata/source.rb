@@ -27,7 +27,7 @@ module Gsdata
       self.class.connection.execute(sql)
     end
 
-    def get_source_id
+    def find_id
       source = self.class.find_by(source_name: source_name, date_valid: date_valid, notes: notes)
       source ? source.id : nil
     end

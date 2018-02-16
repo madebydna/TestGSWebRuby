@@ -97,10 +97,6 @@ development: &development
     <<: *mysql_gsdata
     database: gsdata
     legacy: false
-  gsdata_rw:
-    <<: *mysql_gsdata
-    database: gsdata
-    legacy: false
   api_rw:
     <<: *mysql_rw_server
     database: api

@@ -87,21 +87,27 @@ class GsdataLoading::Update
 
   def source_replace_into_and_return_id
     Gsdata::Source.on_db(:gsdata_rw) do
-      source_id = Gsdata::Source.from_hash(@update_blob['source']).get_source_id
+      source_id = Gsdata::Source.from_hash(@update_blob['source']).find_id
       if source_id.nil?
         source_hash_obj = Gsdata::Source.from_hash(@update_blob['source'])
         s = Gsdata::Source.new
         s.source_name = source_hash_obj.source_name
         s.date_valid = source_hash_obj.date_valid
         s.notes = source_hash_obj.notes
-        unless s.save!
-          GSLogger.error(:gsdata_load, nil, message: 'gsdata Source failed to save', vars: {
-              source_name: source_hash_obj.source_name,
-              date_valid: source_hash_obj.source_name,
-              notes: source_hash_obj.source_name
-          })
+        begin s.save!
+          source_id = s.id
+        rescue ActiveRecord::RecordNotUnique
+          source_id = Gsdata::Source.from_hash(@update_blob['source']).find_id
+          if source_id.nil?
+            GSLogger.error(:gsdata_load, nil, message: 'gsdata Source failed to save', vars: {
+                source_name: source_hash_obj.source_name,
+                date_valid: source_hash_obj.source_name,
+                notes: source_hash_obj.source_name
+            })
+          end
         end
-        source_id = s.id
+
+
       end
       source_id
     end
