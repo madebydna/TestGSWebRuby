@@ -136,7 +136,7 @@ module SchoolProfiles
       end.extend(GsdataCaching::GsDataValue::CollectionMethods)
       rating_weight
         .having_school_value
-        .having_no_breakdown
+        .for_all_students
         .having_most_recent_date
         .expect_only_one(
           key,

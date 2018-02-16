@@ -301,7 +301,7 @@ module SchoolProfiles
           most_recent_all_students = array_of_hashes
             .map { |hash| GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: data_type_name)) }
             .extend(GsdataCaching::GsDataValue::CollectionMethods)
-            .having_no_breakdown
+            .for_all_students
             .most_recent
           output_hash[data_type_name] = most_recent_all_students if most_recent_all_students
         end

@@ -25,7 +25,7 @@ class GsdataCaching::GsDataValue
       select { |dv| dv.breakdowns.nil? }.extend(CollectionMethods)
     end
 
-    alias_method :having_all_students, :having_no_breakdown
+    alias_method :for_all_students, :having_no_breakdown
 
     def having_one_breakdown
       select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.extend(CollectionMethods)

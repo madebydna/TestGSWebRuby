@@ -43,7 +43,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
     (rating_object || [])
       .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
       .extend(GsdataCaching::GsDataValue::CollectionMethods)
-      .having_no_breakdown
+      .for_all_students
       .having_school_value
       .expect_only_one('Should only find one summary rating', id: school.id, state: school.state)
   end

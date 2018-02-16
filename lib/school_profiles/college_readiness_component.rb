@@ -5,7 +5,7 @@ module SchoolProfiles
       class CharacteristicsValue
         include FromHashMethod
         module CollectionMethods
-          def having_all_students
+          def for_all_students 
             select { |dv| dv.all_students? }.extend(CollectionMethods)
           end
           def having_school_value
@@ -123,7 +123,7 @@ module SchoolProfiles
         return [] if hashes.blank?
         handle_ACT_SAT_to_display!(hashes)
         hashes = hashes.map do |key, array|
-          array = array.having_all_students.having_school_value
+          array = array.for_all_students.having_school_value
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
             # This is for characteristics
             array = array.no_subject_or_all_subjects_or_graduates_remediation
