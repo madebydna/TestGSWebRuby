@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# require 'json-schema'
+require 'json-schema'
 
 class GsdataLoading::Update
   attr_accessor :data_type, :school_id, :state, :update_blob, :action, :source, :entity_level, :state_id
@@ -11,12 +11,12 @@ class GsdataLoading::Update
       'properties' => {
           'state' => {'type' => 'string'},
           'data_type_id' => {'type' => 'integer'},
-          'school_id' => {'type' => 'integer'},
-          'district_id' => {'type' => 'integer'},
-          'cohort_count' => {'type' => 'integer'},
+          'school_id' => {'type' => 'string'},
+          'district_id' => {'type' => 'string'},
+          'cohort_count' => {'type' => 'string'},
           'active' => {'type' => 'integer'},
           'grade' => {'type' => 'string'},
-          'proficiency_band_id' => {'type' => 'integer'},
+          'proficiency_band_id' => {'type' => 'string'},
           'breakdowns' => {
               'type' => 'array',
               'items' => {
@@ -80,7 +80,7 @@ class GsdataLoading::Update
   end
 
   def validate
-    # JSON::Validator.validate!(SCHEMA, @update_blob)
+    JSON::Validator.validate!(SCHEMA, @update_blob)
     raise 'Every gsdata update must have have a state specified' if state.blank?
     raise 'Every gsdata update must have have a school_id specified' if school_id.blank?
   end
