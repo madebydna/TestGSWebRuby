@@ -29,10 +29,14 @@ module Feeds
         hash['school_value_float'] = summary.first['school_value'].to_f
         hash['year'] = date_to_year(summary.first['source_date_valid'])
       elsif test_score_rating_used? state
-        test_score_rating = ratings_cache_data['Test Score Rating']
-        overall_test_score = test_score_rating.reject { |a| a.has_key? 'breakdowns' } if test_score_rating.present?
-        hash['school_value_float'] = overall_test_score.first['school_value'].to_f if overall_test_score.present?
-        hash['year'] = date_to_year(overall_test_score.first['source_date_valid']) if overall_test_score.present?
+        rating_hashes = ratings_cache_data['Test Score Rating']
+        value_objects = RatingsCaching::Value.from_array_of_hashes(rating_hashes)
+        overall_test_score = value_objects.having_school_value.having_all_students.expect_only_one(
+          "Should only have found one Test Score Rating",
+          state: state
+        )
+        hash['school_value_float'] = overall_test_score.school_value.to_f if overall_test_score.present?
+        hash['year'] = overall_test_score.source_year if overall_test_score.present?
       end
       hash['school_value_float'].present? || hash['school_value_text'].present? ? hash : nil
     end
