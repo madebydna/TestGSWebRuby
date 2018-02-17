@@ -3,7 +3,7 @@
 require 'json-schema'
 
 class GsdataLoading::Update
-  attr_accessor :data_type, :school_id, :state, :update_blob, :action, :source, :entity_level, :state_id
+  attr_accessor :data_type, :school_id, :state, :update_blob, :action, :source, :entity_level, :state_id, :district_id
 
   SCHEMA = {
       'type' => 'object',
@@ -82,7 +82,6 @@ class GsdataLoading::Update
   def validate
     JSON::Validator.validate!(SCHEMA, @update_blob)
     raise 'Every gsdata update must have have a state specified' if state.blank?
-    raise 'Every gsdata update must have have a school_id specified' if school_id.blank?
   end
 
   def source_replace_into_and_return_id
