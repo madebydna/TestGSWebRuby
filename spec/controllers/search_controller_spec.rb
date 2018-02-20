@@ -151,65 +151,6 @@ describe SearchController do
       end
     end
 
-    context 'When there is path to quality rating in filter params' do
-      path_to_quality_rating_allows = Proc.new {
-        allow(controller).to receive(:should_apply_filter?).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(true)
-      }
-
-      context 'with a few ratings' do
-        let(:params_hash) { {'ptq_rating' => ['level_2','level_3']} }
-        it "should set the right filter for ratings" do
-          instance_exec &path_to_quality_rating_allows
-          filters = controller.send(:parse_filters, params_hash)
-          expect(filters).to eq({:ptq_rating=>['Level 2','Level 3']})
-        end
-      end
-
-      context 'with a all ratings' do
-        let(:params_hash) { {'ptq_rating' => ['level_1','level_2','level_3','level_4']} }
-        it "should set all 4 ratings filters, so that only schools with ratings are displayed" do
-          instance_exec &path_to_quality_rating_allows
-          filters = controller.send(:parse_filters, params_hash)
-          expect(filters).to eq({:ptq_rating=>["Level 1", "Level 2", "Level 3", "Level 4"]})
-        end
-      end
-    end
-
-    context 'When there is great start to quality rating in filter params' do
-      gstq_rating_allows = Proc.new {
-        allow(controller).to receive(:should_apply_filter?).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:gstq_rating).and_return(true)
-      }
-
-      context 'with one rating' do
-        let(:params_hash) { {'gstq_rating' => '5'} }
-        it "should set the right filter for ratings" do
-          instance_exec &gstq_rating_allows
-          filters = controller.send(:parse_filters, params_hash)
-          expect(filters).to eq({:gstq_rating=> ['5']})
-        end
-      end
-
-      context 'with a few ratings' do
-        let(:params_hash) { {'gstq_rating' => %w(4 5)} }
-        it "should set the right filters for ratings" do
-          instance_exec &gstq_rating_allows
-          filters = controller.send(:parse_filters, params_hash)
-          expect(filters).to eq({:gstq_rating=> %w(4 5)})
-        end
-      end
-
-      context 'with all ratings' do
-        let(:params_hash) { {'gstq_rating' => %w(1 2 3 4 5)} }
-        it "should set all 5 ratings filters" do
-          instance_exec &gstq_rating_allows
-          filters = controller.send(:parse_filters, params_hash)
-          expect(filters).to eq({:gstq_rating=> %w(1 2 3 4 5)})
-        end
-      end
-    end
-
     context 'When there are Indianapolis PreK filters selected' do
       indypk_allows = Proc.new {
         allow(controller).to receive(:should_apply_filter?).and_return(false)
@@ -262,36 +203,6 @@ describe SearchController do
       end
     end
 
-  end
-
-  context 'When there is colorado_rating in filter params' do
-    before do
-      allow(controller).to receive(:should_apply_filter?).and_return(false)
-      allow(controller).to receive(:should_apply_filter?).
-        with(:colorado_rating).and_return(true)
-    end
-
-    context 'with a few ratings' do
-      let(:params_hash) do
-        {'colorado_rating' => %w[A B]}
-      end
-      it "should set the right filter for ratings" do
-        filters = controller.send(:parse_filters, params_hash)
-        expect(filters).to eq(colorado_rating: %w[A B])
-      end
-    end
-
-    context 'with a all ratings' do
-      let(:params_hash) do
-        {'colorado_rating' => %w[A B C D F]}
-      end
-      it "should set all 4 ratings filters, so that only schools with ratings are displayed" do
-        filters = controller.send(:parse_filters, params_hash)
-        expect(filters).to eq(
-          colorado_rating: %w[A B C D F]
-        )
-      end
-    end
   end
 
 

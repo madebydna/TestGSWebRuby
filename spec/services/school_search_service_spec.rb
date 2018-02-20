@@ -273,13 +273,6 @@ describe 'School Search Service' do
       let (:no_school_types) { {filters: {school_type: [] }} }
       let (:invalid_school_types) { {filters: {school_type: [:district, :montessori] }} }
       let (:invalid_and_valid) { {filters: {school_type: [:district, :public, :montessori] }} }
-      let(:colorado_rating_filters) do
-        {
-          filters: {
-            colorado_rating: [:A]
-          }
-        }
-      end
       it 'invalid mixed with valid' do
         rval = SchoolSearchService.extract_hard_filters invalid_and_valid
         expect(rval).to include('+school_type:(public)')
@@ -291,10 +284,6 @@ describe 'School Search Service' do
       it 'when empty' do
         rval = SchoolSearchService.extract_hard_filters no_school_types
         expect(rval).not_to include('+school_type:()')
-      end
-      it 'extracts colorado rating' do
-        rval = SchoolSearchService.extract_hard_filters(colorado_rating_filters)
-        expect(rval).to include('+state_overall_school_rating:(A+ A A-)')
       end
     end
     describe 'handles level code' do
@@ -390,22 +379,6 @@ describe 'School Search Service' do
       it 'should include the overall rating filters' do
         rval = SchoolSearchService.extract_hard_filters above_average
         expect(rval).to include('+overall_gs_rating:(8 9 10)')
-      end
-    end
-
-    describe 'handles path to progress rating' do
-      let (:level_2) { {filters: {ptq_rating: ['Level 2', 'Level 3'] }} }
-      it 'should include the path to progress rating filters' do
-        rval = SchoolSearchService.extract_hard_filters level_2
-        expect(rval).to include('+path_to_quality_rating:("Level 2" "Level 3")')
-      end
-    end
-
-    describe 'handles great start to quality rating' do
-      let (:ratings_4_5) { {filters: {gstq_rating: ['4', '5'] }} }
-      it 'should include the great start to quality rating filter' do
-        rval = SchoolSearchService.extract_hard_filters ratings_4_5
-        expect(rval).to include('+great_start_to_quality_rating:(4 5)')
       end
     end
 
