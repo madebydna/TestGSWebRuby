@@ -6,6 +6,5 @@ module Gsdata
     database_config = Rails.configuration.database_configuration[Rails.env]["gsdata"]
     self.establish_connection(database_config)
     belongs_to :source
-
   end
 end
