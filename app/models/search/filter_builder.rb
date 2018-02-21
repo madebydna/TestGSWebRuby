@@ -138,6 +138,13 @@ class FilterBuilder
 
   def indianapolis_callbacks
     [
+      {
+        callback_type: 'cache_key',
+        options: {
+          value: 'indy_extras',
+          version: 2
+        }
+      },
       indy_extras_callback
     ]
   end
