@@ -6,6 +6,7 @@ module Gsdata
 
     attr_accessible :source_name, :date_valid, :notes
     has_many :data_values
+    has_one :description, nil, as: :description_object
 
     def self.from_hash(hash)
       new.tap do |obj|
@@ -13,6 +14,10 @@ module Gsdata
         obj.date_valid = hash['date_valid']
         obj.notes = hash['notes']
       end
+    end
+
+    def description
+      description_object.description
     end
 
     def replace_into

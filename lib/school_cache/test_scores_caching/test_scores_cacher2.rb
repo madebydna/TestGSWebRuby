@@ -5,26 +5,12 @@ class TestScoresCaching::TestScoresCacher2 < Cacher
 
   DATA_TYPE_TAGS = ['rating'].freeze
 
-  BREAKDOWN_TAG_NAMES = %w(
-    ethnicity
-    gender
-    language_learner
-    disability
-    course_subject_group
-    advanced
-    course
-    stem_index
-    arts_index
-    vocational_hands_on_index
-    ela_index
-    fl_index
-    hss_index
-    business_index
-    health_index
-  )
-
   def data_type_tags
     self.class::DATA_TYPE_TAGS
+  end
+
+  def data_type_ids
+    @_data_type_ids ||= data_type_tags.reduce([]) {|ids, tag| ids + DataTypeTag.data_type_ids_for(tag)}
   end
 
   def build_hash_for_cache
@@ -44,15 +30,13 @@ class TestScoresCaching::TestScoresCacher2 < Cacher
   def school_results
     @_school_results ||=
       DataValue.find_by_school_and_data_types(school,
-                                              data_type_tags,
-                                              BREAKDOWN_TAG_NAMES)
+                                              data_type_ids)
   end
 
   def state_results_hash
     @_state_results_hash ||= (
     DataValue.find_by_state_and_data_types(school.state,
-                                           data_type_tags,
-                                           BREAKDOWN_TAG_NAMES)
+                                           data_type_ids)
       .each_with_object({}) do |r, h|
       state_key = r.datatype_breakdown_year
       h[state_key] = r.value
@@ -65,8 +49,7 @@ class TestScoresCaching::TestScoresCacher2 < Cacher
     district_values = DataValue
                         .find_by_district_and_data_types(school.state,
                                                          school.district_id,
-                                                         data_type_tags,
-                                                         BREAKDOWN_TAG_NAMES)
+                                                         data_type_ids)
     district_values.each_with_object({}) do |r, h|
       district_key = r.datatype_breakdown_year
       h[district_key] = r.value
@@ -81,8 +64,7 @@ class TestScoresCaching::TestScoresCacher2 < Cacher
     breakdown_tags = result.breakdown_tags
     state_value = state_value(result)
     district_value = district_value(result)
-    display_range = display_range(result)
-
+    # display_range = display_range(result)
     {}.tap do |h|
       h[:breakdowns] = breakdowns if breakdowns
       h[:breakdown_tags] = breakdown_tags if breakdown_tags
@@ -90,23 +72,10 @@ class TestScoresCaching::TestScoresCacher2 < Cacher
       h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
       h[:state_value] = state_value if state_value
       h[:district_value] = district_value if district_value
-      h[:display_range] = district_value if display_range
+      # h[:display_range] = district_value if display_range
       h[:source_name] = result.source_name
-
-      # d = DATA_TYPE_IDS_TO_STRING[result.data_type_id]
-      # if d.present?
-      #   h[:description] = description(d)
-      #   h[:methodology] = methodology(d)
-      # end
+      h[:description] = result.source.description if result.source
     end
-  end
-
-  def description(name)
-    data_description_value("whats_this_#{name}#{school.state}") || data_description_value("whats_this_#{name}")
-  end
-
-  def methodology(name)
-    data_description_value("footnote_#{name}#{school.state}") || data_description_value("footnote_#{name}")
   end
 
   def validate_result_hash(result_hash, data_type_id)
@@ -138,20 +107,5 @@ class TestScoresCaching::TestScoresCacher2 < Cacher
     state_results_hash[result.datatype_breakdown_year]
   end
 
-  def data_description_value(key)
-    dd = self.class.data_descriptions[key]
-    dd.value if dd
-  end
 
-  # after display range strategy is chosen will need to update method below
-  def display_range(_result)
-    nil
-    # DisplayRange.for({
-    #   data_type:    'gsdata',
-    #   data_type_id: result.data_type_id,
-    #   state:        result.state,
-    #   year:         year,
-    #   value:        result.value
-    # })
-  end
 end

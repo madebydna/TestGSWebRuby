@@ -2,6 +2,7 @@ class DataValue < ActiveRecord::Base
   self.table_name = 'data_values'
   database_config = Rails.configuration.database_configuration[Rails.env]["gsdata"]
   self.establish_connection(database_config)
+  belongs_to :source, class_name: '::Gsdata::Source', foreign_key: :source_id
 
   DATA_CONFIGURATION = 'web'
 
