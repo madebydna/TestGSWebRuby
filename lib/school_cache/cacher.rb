@@ -30,7 +30,9 @@ class Cacher
             #{ActiveRecord::Base.connection.quote(build_hash_for_cache.to_json)},
             #{ActiveRecord::Base.connection.quote(Time.now)}
           )
-          ON DUPLICATE KEY UPDATE id=id
+          ON DUPLICATE KEY UPDATE
+            value=#{ActiveRecord::Base.connection.quote(build_hash_for_cache.to_json)},
+            updated=#{ActiveRecord::Base.connection.quote(Time.now)}
         )
       )
     end
