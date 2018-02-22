@@ -7,7 +7,7 @@ class DataValue < ActiveRecord::Base
   has_many :data_values_to_breakdowns
   has_many :breakdowns, through: :data_values_to_breakdowns
   #CHANGE TO BREAKDOWN_TAGS?
-  has_many :tags, through: :breakdowns
+  has_many :breakdown_tags, through: :breakdowns
 
   DATA_CONFIGURATION = 'web'
 
