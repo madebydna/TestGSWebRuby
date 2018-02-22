@@ -174,7 +174,7 @@ feature 'Search filters submission', js: true do
   end
 
   context 'Indianapolis filters' do
-    filters = { 'ptq_rating[]' => :level_1, 'enrollment[]' => :vouchers }
+    filters = { 'enrollment[]' => :vouchers }
     [filters].each do |filter_name_value|
       filter_name_value.each do |name, value|
         context "clicking the #{name} filter" do
@@ -205,7 +205,7 @@ feature 'Search filters submission', js: true do
   end
 
   context 'Detroit filters' do
-    filters = { 'cgr[]' => :'70_TO_100', 'gstq_rating[]' => :'1' }
+    filters = { 'cgr[]' => :'70_TO_100'}
     [filters].each do |filter_name_value|
       filter_name_value.each do |name, value|
         context "clicking the #{name} filter" do

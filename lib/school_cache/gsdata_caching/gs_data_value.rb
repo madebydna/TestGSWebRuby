@@ -22,7 +22,7 @@ class GsdataCaching::GsDataValue
     end
 
     def having_no_breakdown
-      select { |dv| dv.breakdowns.nil? }.extend(CollectionMethods)
+      select { |dv| dv.breakdowns.blank? }.extend(CollectionMethods)
     end
 
     alias_method :for_all_students, :having_no_breakdown

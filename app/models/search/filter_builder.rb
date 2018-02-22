@@ -66,7 +66,7 @@ class FilterBuilder
             ga: [],
             ok: add_special_education_options_callbacks,
             oh: add_vouchers_callbacks_oh,
-            co: colorado_callbacks
+            co: []
         }
     ).stringify_keys!
   end
@@ -75,7 +75,7 @@ class FilterBuilder
     Hash.new{ |h,k| h[k] = {} }.merge(
         {
             mi: {
-                detroit: detroit_mi_callbacks
+                detroit: []
             }.stringify_keys!,
             wi: {
                 milwaukee: add_vouchers_callbacks
@@ -141,46 +141,11 @@ class FilterBuilder
       {
         callback_type: 'cache_key',
         options: {
-          value: 'ptq_rating_vouchers',
+          value: 'indy_extras',
           version: 2
         }
       },
-      ptq_rating_callback,
-      indy_extras_callback,
-    ]
-  end
-
-  def colorado_callbacks
-    [
-      {
-        callback_type: 'cache_key',
-        options: {
-          value: 'colorado_rating',
-          version: 1
-        }
-      },
-      {
-        conditions:
-        [
-          {
-            key: 'name',
-            match: 'gs_rating'
-          }
-        ],
-        callback_type: 'insert_after',
-        options:
-        {
-          a_filter: {
-            label: t('Colorado school grade'), display_type: :title, name: :colorado_rating, filters: {
-              colorado1: { label: 'A', display_type: :basic_checkbox, name: :colorado_rating, value: :'A'},
-              colorado2: { label: 'B', display_type: :basic_checkbox, name: :colorado_rating, value: :'B'},
-              colorado3: { label: 'C', display_type: :basic_checkbox, name: :colorado_rating, value: :'C'},
-              colorado4: { label: 'D', display_type: :basic_checkbox, name: :colorado_rating, value: :'D'},
-              colorado5: { label: 'F', display_type: :basic_checkbox, name: :colorado_rating, value: :'F'}
-            }
-          }
-        }
-      }
+      indy_extras_callback
     ]
   end
 
@@ -259,67 +224,6 @@ class FilterBuilder
             indypsp: { label: t('Indianapolis Preschool Scholarship Program (INDYPSP)'), display_type: :basic_checkbox, name: :indypk, value: :indypsp }
             #scholarships: { label: t('Offers Scholarships (based on provider reports)'), display_type: :basic_checkbox, name: :indypk, value: :scholarships }
           }
-        }
-      }
-    }
-  end
-
-  def ptq_rating_callback
-    # Note that this callback is different than the rest because it needs to be combined
-    # with another. Regular callbacks should all include a cache_key component.
-    {
-      conditions:
-      [
-        {key: 'name', match: 'gs_rating'}
-      ],
-      callback_type: 'insert_after',
-      options: {
-        ptq_rating: {
-          label: t('PTQ Rating (Preschool Only)'), display_type: :title, name: :ptq_rating, filters: {
-            ptq1: { label: t('Level 1'), display_type: :basic_checkbox, name: :ptq_rating, value: :level_1 },
-            ptq2: { label: t('Level 2'), display_type: :basic_checkbox, name: :ptq_rating, value: :level_2 },
-            ptq3: { label: t('Level 3'), display_type: :basic_checkbox, name: :ptq_rating, value: :level_3 },
-            ptq4: { label: t('Level 4'), display_type: :basic_checkbox, name: :ptq_rating, value: :level_4 },
-          }
-        }
-      }
-    }
-  end
-
-  def detroit_mi_callbacks
-    [
-      {
-        callback_type: 'cache_key',
-        options: {
-          value: 'college_readiness_gstq_rating',
-          version: 1
-        }
-      },
-      college_readiness_gstq_callback,
-      # gstq_rating_callback,
-    ]
-  end
-
-  def college_readiness_gstq_callback
-    {
-      conditions:
-      [
-        {key: 'name', match: 'gs_rating'}
-      ],
-      callback_type: 'insert_after',
-      options:
-      {
-        gstq_rating: {
-            label: t('Great Start to Quality (preschool only)'),
-            display_type: :title,
-            name: :gstq_rating,
-            filters: {
-              gstq5: { label: t('5 stars'), display_type: :basic_checkbox, name: :gstq_rating, value: :'5' },
-              gstq4: { label: t('4 stars'), display_type: :basic_checkbox, name: :gstq_rating, value: :'4' },
-              gstq3: { label: t('3 stars'), display_type: :basic_checkbox, name: :gstq_rating, value: :'3' },
-              gstq2: { label: t('2 stars'), display_type: :basic_checkbox, name: :gstq_rating, value: :'2' },
-              gstq1: { label: t('1 star'), display_type: :basic_checkbox, name: :gstq_rating, value: :'1' }
-            }
         }
       }
     }

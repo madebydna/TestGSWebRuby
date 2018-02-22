@@ -1,10 +1,35 @@
+# frozen_string_literal: true
+
 class DataValue < ActiveRecord::Base
   self.table_name = 'data_values'
   database_config = Rails.configuration.database_configuration[Rails.env]["gsdata"]
   self.establish_connection(database_config)
 
-  DATA_CONFIGURATION = 'web'
+  attr_accessible :value, :state, :school_id, :district_id, :data_type_id,
+    :configuration, :active, :breakdowns, :academics, :grade, :cohort_count, :proficiency_band_id
 
+  has_and_belongs_to_many :breakdowns, join_table: :data_values_to_breakdowns
+  has_and_belongs_to_many :academics, join_table: :data_values_to_academics
+  belongs_to :source, inverse_of: :data_values
+  belongs_to :proficiency_band, inverse_of: :data_values
+
+
+  def self.from_hash(hash)
+    new.tap do |obj|
+      obj.value = hash['value']
+      obj.state = hash['state']
+      obj.school_id = hash['school_id']
+      obj.district_id = hash['district_id']
+      obj.data_type_id = hash['data_type_id']
+      obj.configuration = hash['configuration']
+      obj.grade = hash['grade']
+      obj.cohort_count = hash['cohort_count']
+      obj.proficiency_band_id = hash['proficiency_band_id']
+      obj.active = hash['active']
+      obj.breakdowns = hash['breakdowns'].map { |h| Breakdown.new(h) }
+    end
+  end
+# rubocop:disable Style/FormatStringToken
   def self.find_by_school_and_data_types(school, data_types, breakdown_tag_names = [])
     school_values.
       from(
@@ -18,7 +43,7 @@ class DataValue < ActiveRecord::Base
           .group('data_values.id')
           .having("breakdown_count < 2 OR breakdowns like '%All students except 504 category%'")
   end
-
+# rubocop:enable Style/FormatStringToken
   def self.school_values
     school_values = <<-SQL
       data_values.id, data_values.value, data_values.state, data_values.school_id,

@@ -107,11 +107,11 @@ function validUri(uri) {
 }
 
 function uriRelative(uri) {
-  return uri.startsWith("/");
+  return uri.startsWith("/") && !uri.startsWith("//");
 }
 
 function uriAbsoluteToGsOrg(uri) {
-  let gsOrgMatch = /^http(?:s)?:\/\/(?:[^\\/]+\.)?greatschools\.org(?:\/|:|$).*/;
+  let gsOrgMatch = /^http(?:s)?:\/\/(?:[^\\/\\?]+\.)?greatschools\.org(?:\/|:|$).*/;
   return uri.match(gsOrgMatch);
 }
 
