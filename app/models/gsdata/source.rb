@@ -17,8 +17,9 @@ module Gsdata
 
     def replace_into
       sql_template = %(
-      REPLACE INTO #{self.class.table_name}(source_name, date_valid, notes)
+      INSERT INTO #{self.class.table_name}(source_name, date_valid, notes)
       VALUES (?,?,?)
+      ON DUPLICATE KEY UPDATE id=id
     )
       sql = self.class.send(
           :sanitize_sql_array,
@@ -27,9 +28,9 @@ module Gsdata
       self.class.connection.execute(sql)
     end
 
-    def find_id
-      source = self.class.find_by(source_name: source_name, date_valid: date_valid, notes: notes)
-      source ? source.id : nil
+    def replace_into_and_return_object
+      replace_into
+      self.class.find_by(attributes.except('id'))
     end
   end
 end
