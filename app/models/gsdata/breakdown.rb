@@ -4,7 +4,7 @@ class Breakdown < ActiveRecord::Base
   self.establish_connection(database_config)
 
   attr_accessible :name
-  has_many :breakdown_tags
+  has_many :breakdown_tags, inverse_of: :breakdown
   has_many :data_values_to_breakdowns
   has_many :data_values, through: :data_values_to_breakdowns
 
