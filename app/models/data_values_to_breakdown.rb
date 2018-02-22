@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-class DataTypeTag < ActiveRecord::Base
-  self.table_name = 'data_type_tags'
+class DataValuesToBreakdown < ActiveRecord::Base
+  self.table_name = 'data_values_to_breakdowns'
   database_config = Rails.configuration.database_configuration[Rails.env]["gsdata"]
   self.establish_connection(database_config)
-
-  belongs_to :data_type, class_name: 'DataType', foreign_key: :data_type_id
-
+  belongs_to :data_value
+  belongs_to :breakdown
 end

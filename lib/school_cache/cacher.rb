@@ -69,13 +69,14 @@ class Cacher
   def self.cacher_for(key)
     {
         test_scores:      TestScoresCaching::BreakdownsCacher,
-        test_scores2:     TestScoresCaching::TestScoresCacher2,
+        test_scores_gsdata:     TestScoresCaching::TestScoresCacherGsdata,
         performance:      PerformanceCaching::PerformanceCacher,
         characteristics:  CharacteristicsCaching::CharacteristicsCacher,
         esp_responses:    EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
-        feed_test_scores: FeedTestScoresCacher,
+        feed_test_scores: TestScoresCaching::FeedTestScoresCacher,
+        feed_test_scores_gsdata: TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
         gsdata:           GsdataCaching::GsdataCacher,
         ratings:         RatingsCaching::GsdataRatingsCacher,
         directory:        DirectoryCaching::DirectoryCacher,
@@ -100,12 +101,13 @@ class Cacher
   def self.registered_cachers
     @registered_cachers ||= [
       TestScoresCaching::BreakdownsCacher,
-      TestScoresCaching::TestScoresCacher2,
+      TestScoresCaching::TestScoresCacherGsdata,
       CharacteristicsCaching::CharacteristicsCacher,
       EspResponsesCaching::EspResponsesCacher,
       ReviewsCaching::ReviewsSnapshotCacher,
       ProgressBarCaching::ProgressBarCacher,
       FeedTestScoresCacher,
+      TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
       GsdataCaching::GsdataCacher,
       RatingsCaching::RatingsCacher,
       DirectoryCaching::DirectoryCacher,

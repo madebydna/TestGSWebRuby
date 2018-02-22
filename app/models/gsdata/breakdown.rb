@@ -5,6 +5,8 @@ class Breakdown < ActiveRecord::Base
 
   attr_accessible :name
   has_many :tags, inverse_of: :breakdown
+  has_many :data_values_to_breakdowns
+  has_many :data_values, through: :data_values_to_breakdowns
 
   def self.from_hash(hash)
     self.new.tap do |obj|

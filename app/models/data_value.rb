@@ -3,6 +3,11 @@ class DataValue < ActiveRecord::Base
   database_config = Rails.configuration.database_configuration[Rails.env]["gsdata"]
   self.establish_connection(database_config)
   belongs_to :source, class_name: '::Gsdata::Source', foreign_key: :source_id
+  belongs_to :data_type
+  has_many :data_values_to_breakdowns
+  has_many :breakdowns, through: :data_values_to_breakdowns
+  #CHANGE TO BREAKDOWN_TAGS?
+  has_many :tags, through: :breakdowns
 
   DATA_CONFIGURATION = 'web'
 
@@ -20,9 +25,30 @@ class DataValue < ActiveRecord::Base
           .having("breakdown_count < 2 OR breakdowns like '%All students except 504 category%'")
   end
 
+  def self.find_by_school_and_data_types_and_config(school, data_types, config, breakdown_tag_names=[])
+    find_by_school_and_data_types(school,data_types, breakdown_tag_names).where(configuration: "%#{config}%")
+  end
+
+  def self.with_configuration(config)
+    where(configuration: "%#{config}%")
+  end
+
+  def self.find_by_school_and_data_type_tags(school, tags, breakdown_tag_names = [])
+    school_values.
+      from(
+        DataValue.where(school_id: school.id, state: school.state, active: 1), :data_values)
+          .with_data_types
+          .with_data_type_tags(tags)
+          .with_sources
+          .with_breakdowns
+          .with_breakdown_tags(breakdown_tag_names)
+          .group('data_values.id')
+          .having("breakdown_count < 2 OR breakdowns like '%All students except 504 category%'")
+  end
+
   def self.school_values
     school_values = <<-SQL
-      data_values.id, data_values.value, data_values.state, data_values.school_id,
+      data_values.id, data_values.value, data_values.state, data_values.school_id, data_values.district_id,
       data_values.data_type_id, data_values.configuration, data_types.name,
       sources.source_name, sources.date_valid,
       group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdowns",
@@ -121,6 +147,10 @@ class DataValue < ActiveRecord::Base
       )
   end
 
+  def self.with_data_type_tags(tags)
+    joins("JOIN data_type_tags on data_type_tags.data_type_id = data_types.id").where("data_type_tags.tag = ?", tags)
+  end
+
   def self.with_breakdown_tags(breakdown_tag_names = [])
     if breakdown_tag_names.present?
       q = <<-SQL
@@ -140,4 +170,5 @@ class DataValue < ActiveRecord::Base
   def datatype_breakdown_year
     [data_type_id, breakdowns, date_valid]
   end
+
 end
