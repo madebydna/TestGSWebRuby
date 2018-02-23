@@ -1,3 +1,12 @@
+# frozen_string_literal: true
+
+require 'optparse'
+
+script_args = {}
+OptionParser.new do |opts|
+  opts.on("-l", "--[no-]log", "Log to stdout") { |b| script_args[:log] = b }
+end.parse!(ARGV)
+
 module ActiveRecord::ConnectionAdapters
   class Mysql2Adapter
     alias_method :execute_without_retry, :execute
@@ -24,4 +33,5 @@ end
 
 #Queue Daemon lives in lib/data_loading
 daemon = QueueDaemon.new
+daemon.should_log = script_args[:log] 
 daemon.run!
