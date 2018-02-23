@@ -31,4 +31,11 @@ FactoryGirl.define do
     school_type 'private'
   end
 
+  factory :remove_school_submission, class: RemoveSchoolSubmission do
+    submitter_email 'alex-anthony-derek-mitch-samson@gs-the-bes.com'
+    submitter_role 'coffee taster'
+    evidence_url 'www.really_good_gesha_coffee.com'
+    gs_url 'https://www.greatschools.org/california/alameda/1-Alameda-High-School'
+  end
+
 end
