@@ -10,6 +10,7 @@ class DataValue < ActiveRecord::Base
 
   has_and_belongs_to_many :breakdowns, join_table: :data_values_to_breakdowns
   has_and_belongs_to_many :academics, join_table: :data_values_to_academics
+  has_many :academic_tags, through: :academics
   belongs_to :source, inverse_of: :data_values
   belongs_to :proficiency_band, inverse_of: :data_values
 
