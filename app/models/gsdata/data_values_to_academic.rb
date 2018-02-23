@@ -6,6 +6,6 @@ class DataValuesToAcademic < ActiveRecord::Base
 
   attr_accessible :data_value_id, :academic_id
 
-  belongs_to :data_value
-  belongs_to :academic
+  belongs_to :data_value, inverse_of: :data_values_to_academics
+  belongs_to :academic, inverse_of: :data_values_to_academics
 end
