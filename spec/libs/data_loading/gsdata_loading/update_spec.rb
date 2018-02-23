@@ -96,8 +96,8 @@ describe GsdataLoading::Update do
     after do
       clean_dbs :gs_schooldb, :gsdata, :ca
     end
-    let(:update) do
-      GsdataLoading::Update.new({
+    let(:blob) do
+      {
         "value": "63",
         "state": school.state,
         "school_id": school.state_id,
@@ -108,13 +108,43 @@ describe GsdataLoading::Update do
           "date_valid": "2017-01-01 00:00:00",
           "notes": "DXT-2542 MI MSTEP 2017"
         }
-      })
+      }
     end
+    let(:update) { GsdataLoading::Update.new(blob) }
     subject { update.create }
+
     context 'with a valid school' do
       let(:school) { FactoryGirl.create(:alameda_high_school, state_id: '00001') }
       it "saves a data value" do
         expect { subject }.to change { DataValue.count }.from(0).to(1)
+      end
+
+      context 'with breakdowns' do
+        let(:breakdown) do
+          Breakdown.new(name: 'foo').tap(&:save)
+        end
+        let(:update) do
+          GsdataLoading::Update.new(blob.merge(breakdowns: [{'id' => breakdown.id}]))
+        end
+        it "saves a data_value_to_breakdown" do
+          expect { subject }.to change { DataValuesToBreakdown.count }.from(0).to(1)
+          expect(DataValuesToBreakdown.first.data_value).to be_present
+          expect(DataValuesToBreakdown.first.breakdown).to eq(breakdown)
+        end
+      end
+
+      context 'with academics' do
+        let(:academic) do
+          Academic.new(name: 'foo').tap(&:save)
+        end
+        let(:update) do
+          GsdataLoading::Update.new(blob.merge(academics: [{'id' => academic.id}]))
+        end
+        it "saves a data_value_to_academic" do
+          expect { subject }.to change { DataValuesToAcademic.count }.from(0).to(1)
+          expect(DataValuesToAcademic.first.data_value).to be_present
+          expect(DataValuesToAcademic.first.academic).to eq(academic)
+        end
       end
     end
   end
