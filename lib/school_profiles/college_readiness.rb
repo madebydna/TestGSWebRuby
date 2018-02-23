@@ -60,10 +60,10 @@ module SchoolProfiles
 
     def remove_crdc_breakdown!(hash, *data_types)
       data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
-        tds['breakdowns'].nil?
+        tds.all_students?
       end.flatten
       data_type_hashes.each do |h|
-        h['school_value'] = nil
+        h.school_value = nil
       end
     end
 
@@ -71,14 +71,14 @@ module SchoolProfiles
     def enforce_latest_year_school_value_for_data_types!(hash, *data_types)
       return_value = false
       data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
-        tds['subject'] == 'All subjects' && tds['breakdown'] == 'All students'
+        tds.all_subjects? && tds.all_students?
       end.flatten
-      max_year = data_type_hashes.map { |dts| dts['year'] }.max
+      max_year = data_type_hashes.map { |dts| dts.year }.max
       data_type_hashes.each do |h|
         if school_value_present?(h["school_value_#{max_year}"])
           return_value = true
         else
-          h['school_value'] = nil
+          h.school_value = nil
         end
       end
       return_value

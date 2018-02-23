@@ -43,7 +43,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
     (rating_object || [])
       .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
       .extend(GsdataCaching::GsDataValue::CollectionMethods)
-      .having_no_breakdown
+      .for_all_students
       .having_school_value
       .expect_only_one('Should only find one summary rating', id: school.id, state: school.state)
   end
@@ -58,14 +58,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   end
 
   def cache
-    if build_hash_for_cache.present?
-      school_cache.update_attributes!(
-          value: build_hash_for_cache.to_json,
-          updated: Time.now
-      )
-    elsif school_cache && school_cache.id.present?
-      SchoolCache.destroy(school_cache.id)
-    end
+    super
 
     if gs_rating_data_value.present?
       replace_rating_into_school_metadata(

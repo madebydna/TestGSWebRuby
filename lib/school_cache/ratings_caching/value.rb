@@ -1,19 +1,13 @@
+# frozen_string_literal: true
+
 # This class represents the inner-most flat hash that is stored
-# in the gsdata cache
-class GsdataCaching::GsDataValue
+# in the ratings cache document
+class RatingsCaching::Value
   include FromHashMethod
 
   module CollectionMethods
-    def year_of_most_recent
-      most_recent.try(:year)
-    end
-
     def most_recent
       max_by { |dv| dv.source_date_valid }
-    end
-
-    def most_recent_source_year
-      most_recent.try(:source_year)
     end
 
     def having_most_recent_date
@@ -22,14 +16,10 @@ class GsdataCaching::GsDataValue
     end
 
     def having_no_breakdown
-      select { |dv| dv.breakdowns.blank? }.extend(CollectionMethods)
+      select { |dv| dv.breakdowns.nil? }.extend(CollectionMethods)
     end
 
     alias_method :for_all_students, :having_no_breakdown
-
-    def having_one_breakdown
-      select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.extend(CollectionMethods)
-    end
 
     def having_school_value
       select { |dv| dv.school_value.present? }.extend(CollectionMethods)
@@ -53,7 +43,7 @@ class GsdataCaching::GsDataValue
       reduce([]) do |array, dv|
         array.concat(
           dv.breakdown_tags.split(',').map do |tag|
-            dv.clone.tap { |_dv| _dv.breakdown_tags = tag }
+            dv.clone.tap { |o| o.breakdown_tags = tag }
           end
         )
       end.extend(CollectionMethods)
@@ -74,18 +64,15 @@ class GsdataCaching::GsDataValue
       end
     end
 
-    def remove_504_category_breakdown_from_each!
-      each(&:remove_504_category_breakdown!)
-        .tap { |a| a.extend(CollectionMethods) }
-    end
-
     def expect_only_one(message, other_helpful_vars = {})
-      GSLogger.error(
-        :misc,
-        nil,
-        message: "Expected to find unique gsdata value: #{message}",
-        vars: other_helpful_vars
-      ) if size > 1
+      if size > 1
+        GSLogger.error(
+          :misc,
+          nil,
+          message: "Expected to find unique gsdata value: #{message}",
+          vars: other_helpful_vars
+        )
+      end
       return first
     end
   end
@@ -93,22 +80,10 @@ class GsdataCaching::GsDataValue
   attr_accessor :breakdowns,
     :breakdown_tags,
     :school_value,
-    :state_value,
-    :district_value,
-    :source_year,
     :source_date_valid,
     :source_name,
-    :data_type,
     :description,
     :methodology
-
-  def [](key)
-    send(key) if respond_to?(key)
-  end
-
-  def []=(key, val)
-    send("#{key}=", val)
-  end
 
   def self.from_array_of_hashes(array)
     array ||= []
@@ -123,15 +98,6 @@ class GsdataCaching::GsDataValue
   def school_value_as_int
     # nil.to_i evaluates to 0 -- not usually what we want
     school_value.present? ? school_value.to_i : nil
-  end
-
-  def remove_504_category_breakdown!
-    if self.breakdowns.present?
-      self.breakdowns = 
-        breakdowns
-          .gsub('All students except 504 category,','')
-          .gsub(/,All students except 504 category$/,'')
-    end
   end
 
   def all_students?

@@ -38,6 +38,7 @@ describe 'CollegeReadinessComponent' do
       allow(school_cache_data_reader).to receive(:school).and_return(school)
       allow(school).to receive(:state).and_return(:ca)
       allow(school).to receive(:id).and_return(1)
+      allow(school_cache_data_reader).to receive(:decorated_gsdata_datas).and_return({})
     end
 
     describe 'With sample data' do
@@ -96,8 +97,9 @@ describe 'CollegeReadinessComponent' do
 
       let (:gsdata_sample_data) do
         {
-            'Percentage of students passing 1 or more AP exams grades 9-12' => [
+          'Percentage of students passing 1 or more AP exams grades 9-12' => GsdataCaching::GsDataValue.from_array_of_hashes([
                 {
+                    'data_type' => 'Percentage of students passing 1 or more AP exams grades 9-12',
                     'breakdowns' => 'Hispanic,Male',
                     'district_value' => '47.62',
                     'school_value' => '58',
@@ -105,19 +107,20 @@ describe 'CollegeReadinessComponent' do
                     'source_year' => 2014,
                     'state_value' => '49.78'
                 }, {
+                    'data_type' => 'Percentage of students passing 1 or more AP exams grades 9-12',
                     'district_value' => '58.47',
                     'school_value' => '61',
                     'source_name' => 'Civil Rights Data Collection',
                     'source_year' => 2014,
                     'state_value' => '60.32'
                 }
-            ]
+            ])
         }
       end
 
       before do
         expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
-        expect(school_cache_data_reader).to receive(:gsdata_data).and_return(gsdata_sample_data)
+        allow(school_cache_data_reader).to receive(:decorated_gsdata_datas).and_return(gsdata_sample_data)
         allow(subject).to receive(:new_sat?).and_return(false)
       end
 
@@ -191,7 +194,7 @@ describe 'CollegeReadinessComponent' do
 
       before do
         expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
-        expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+        allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
       end
 
       it 'should set school SAT score to nil' do
@@ -203,7 +206,7 @@ describe 'CollegeReadinessComponent' do
 
     it 'should return empty array if no data' do
       expect(school_cache_data_reader).to receive(:characteristics_data).and_return({})
-      expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+      allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
       expect(subject.data_values).to be_empty
     end
 
@@ -226,7 +229,7 @@ describe 'CollegeReadinessComponent' do
 
       before do
         expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
-        expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+        allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
       end
 
       describe 'In states with new ranges' do
@@ -380,7 +383,8 @@ describe 'CollegeSuccessComponent' do
     allow(school).to receive(:state).and_return(:ca)
     allow(school).to receive(:id).and_return(1)
     expect(school_cache_data_reader).to receive(:characteristics_data).and_return(remediation_sample_data)
-    expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+    allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+    allow(school_cache_data_reader).to receive(:decorated_gsdata_datas).and_return({})
   end
 
   let(:data_points) {subject.data_values}
