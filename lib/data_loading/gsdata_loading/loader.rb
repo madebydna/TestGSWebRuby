@@ -8,17 +8,10 @@ class GsdataLoading::Loader < GsdataLoading::Base
       next if update.blank?
       @update = GsdataLoading::Update.new(update)
 
-      school, district = nil
-      if @update.entity_level == 'school'
-        school = School.on_db(@update.state_db).find_by(state_id: @update.school_id)
-      elsif @update.entity_level == 'district'
-        district = District.on_db(@update.state_db).find_by(state_id: @update.district_id)
-      end
-
       if @update.action.nil? || @update.action == ACTION_NO_CACHE_BUILD
-        @update.create( school, district )
+        @update.create
       elsif @update.action == ACTION_BUILD_CACHE
-        Cacher.create_caches_for_data_type(school, DATA_TYPE)
+        Cacher.create_caches_for_data_type(@update.school, DATA_TYPE)
       end
     end
   end

@@ -55,7 +55,8 @@ class QueueDaemon
           end
           scheduled_update.update_attributes(status: SUCCESS_STATUS, updated: Time.now)
         rescue Exception => e
-          scheduled_update.update_attributes(status: FAILURE_STATUS, notes: e.message, updated: Time.now)
+          backtrace = e.backtrace.reject { |t| t['/gems/'] }
+          scheduled_update.update_attributes(status: FAILURE_STATUS, notes: e.message + backtrace.join(" "), updated: Time.now)
         end
       end
     end

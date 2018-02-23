@@ -1,10 +1,14 @@
+# frozen_string_literal: true
+
 class Breakdown < ActiveRecord::Base
   self.table_name = 'breakdowns'
-  database_config = Rails.configuration.database_configuration[Rails.env]["gsdata"]
-  self.establish_connection(database_config)
+  db_magic connection: :gsdata
 
   attr_accessible :name
   has_many :tags, inverse_of: :breakdown
+
+  has_many :data_values_to_breakdowns, inverse_of: :breakdown
+  has_many :data_values, through: :data_values_to_breakdowns, inverse_of: :breakdowns
 
   def self.from_hash(hash)
     self.new.tap do |obj|

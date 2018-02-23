@@ -2,8 +2,7 @@
 
 class ProficiencyBand < ActiveRecord::Base
   self.table_name = 'proficiency_bands'
-  database_config = Rails.configuration.database_configuration[Rails.env]["gsdata"]
-  self.establish_connection(database_config)
+  db_magic connection: :gsdata
 
   has_many :data_values, inverse_of: :proficiency_band
 

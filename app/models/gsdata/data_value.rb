@@ -2,15 +2,16 @@
 
 class DataValue < ActiveRecord::Base
   self.table_name = 'data_values'
-  database_config = Rails.configuration.database_configuration[Rails.env]["gsdata"]
-  self.establish_connection(database_config)
+  db_magic connection: :gsdata
 
   attr_accessible :value, :state, :school_id, :district_id, :data_type_id,
     :configuration, :active, :breakdowns, :academics, :grade, :cohort_count, :proficiency_band_id
 
-  has_and_belongs_to_many :breakdowns, join_table: :data_values_to_breakdowns
-  has_and_belongs_to_many :academics, join_table: :data_values_to_academics
-  belongs_to :source, inverse_of: :data_values
+  has_many :data_values_to_breakdowns, inverse_of: :data_value
+  has_many :breakdowns, through: :data_values_to_breakdowns, inverse_of: :data_values
+  has_many :data_values_to_academics, inverse_of: :data_value
+  has_many :academics, through: :data_values_to_academics, inverse_of: :data_values
+  belongs_to :source, class_name: '::Gsdata::Source', inverse_of: :data_values
   belongs_to :proficiency_band, inverse_of: :data_values
 
 
@@ -26,7 +27,9 @@ class DataValue < ActiveRecord::Base
       obj.cohort_count = hash['cohort_count']
       obj.proficiency_band_id = hash['proficiency_band_id']
       obj.active = hash['active']
-      obj.breakdowns = hash['breakdowns'].map { |h| Breakdown.new(h) }
+      obj.source = hash['source']
+      obj.data_values_to_breakdowns = hash['data_values_to_breakdowns']
+      obj.data_values_to_academics = hash['data_values_to_academics']
     end
   end
 # rubocop:disable Style/FormatStringToken
