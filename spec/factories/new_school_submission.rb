@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 FactoryGirl.define do
-  sequence :id do |n|
-    n
-  end
 
-  factory :new_school_submission do
+  factory :new_school_submission, class: NewSchoolSubmission do
+    sequence :id do |n|
+      n
+    end
     state 'wy'
     state_school_id '123456789'
     school_name 'Magnatar'
