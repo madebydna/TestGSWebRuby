@@ -18,33 +18,41 @@ class Cacher
     @school = school
   end
 
-  def cache
-    cache_key = self.class::CACHE_KEY
-    final_hash = build_hash_for_cache
-
-    if final_hash.present?
-      SchoolCache.on_rw_db do
-        SchoolCache.connection.execute(
-          %Q(
-            REPLACE INTO #{SchoolCache.table_name} (school_id, state, name, value, updated)
-            VALUES (
-              #{school.id},
-              #{ActiveRecord::Base.connection.quote(school.state)},
-              #{ActiveRecord::Base.connection.quote(cache_key)},
-              #{ActiveRecord::Base.connection.quote(final_hash.to_json)},
-              #{ActiveRecord::Base.connection.quote(Time.now)}
-            )
+  def write_cache_entry
+    SchoolCache.on_rw_db do
+      SchoolCache.connection.execute(
+        %Q(
+          INSERT INTO #{SchoolCache.table_name} (school_id, state, name, value, updated)
+          VALUES (
+            #{school.id},
+            #{ActiveRecord::Base.connection.quote(school.state)},
+            #{ActiveRecord::Base.connection.quote(self.class::CACHE_KEY)},
+            #{ActiveRecord::Base.connection.quote(build_hash_for_cache.to_json)},
+            #{ActiveRecord::Base.connection.quote(Time.now)}
           )
+          ON DUPLICATE KEY UPDATE
+            value=#{ActiveRecord::Base.connection.quote(build_hash_for_cache.to_json)},
+            updated=#{ActiveRecord::Base.connection.quote(Time.now)}
         )
-      end
+      )
+    end
+  end
+
+  def delete_cache_entry
+    SchoolCache.on_rw_db do
+      SchoolCache.delete_all(
+        school_id: school.id,
+        state: school.state,
+        name: self.class::CACHE_KEY
+      )
+    end
+  end
+
+  def cache
+    if build_hash_for_cache.present?
+      write_cache_entry
     else
-      SchoolCache.on_rw_db do
-        SchoolCache.delete_all(
-          school_id: school.id,
-          state: school.state,
-          name: cache_key
-        )
-      end
+      delete_cache_entry
     end
   end
 
@@ -105,7 +113,7 @@ class Cacher
       ProgressBarCaching::ProgressBarCacher,
       FeedTestScoresCacher,
       GsdataCaching::GsdataCacher,
-      RatingsCaching::RatingsCacher,
+      RatingsCaching::GsdataRatingsCacher,
       DirectoryCaching::DirectoryCacher,
       FeedCharacteristicsCaching::FeedCharacteristicsCacher
     ]

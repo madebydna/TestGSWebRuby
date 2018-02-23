@@ -6,5 +6,6 @@ class Academic < ActiveRecord::Base
   self.inheritance_column = nil
 
   has_many :data_values_to_academics, inverse_of: :academic
+  has_many :academic_tags
   has_many :data_values, through: :data_values_to_academics, inverse_of: :academics
 end
