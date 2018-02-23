@@ -484,8 +484,8 @@ describe FilterBuilder do
       context 'in Detroit' do
         let (:detroit_cache_key) { FilterBuilder.new('mi', 'Detroit', false).filters.cache_key }
         let (:forced_simple) { FilterBuilder.new('mi', 'Detroit', true).filters.cache_key }
-        it 'should represent a college readiness configuration' do
-          expect(detroit_cache_key).to start_with('college_readiness')
+        it 'should represent a simple configuration by default' do
+          expect(detroit_cache_key).to start_with('simple')
         end
         it 'should represent a simple configuration if forced' do
           expect(forced_simple).to start_with('simple')
