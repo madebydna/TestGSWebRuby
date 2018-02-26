@@ -118,7 +118,7 @@ class GsdataCaching::GsdataCacher < Cacher
   private
 
   def result_to_hash(result)
-    breakdowns = result.breakdowns
+    breakdowns = result.breakdown_names
     breakdown_tags = result.breakdown_tags
     state_value = state_value(result)
     district_value = district_value(result)

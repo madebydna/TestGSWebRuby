@@ -42,7 +42,7 @@ class DataValue < ActiveRecord::Base
           .with_breakdowns
           .with_breakdown_tags(breakdown_tag_names)
           .group('data_values.id')
-          .having("breakdown_count < 2 OR breakdowns like '%All students except 504 category%'")
+          .having("breakdown_count < 2 OR breakdown_names like '%All students except 504 category%'")
   end
 # rubocop:enable Style/FormatStringToken
   def self.school_values
@@ -50,7 +50,7 @@ class DataValue < ActiveRecord::Base
       data_values.id, data_values.value, data_values.state, data_values.school_id,
       data_values.data_type_id, data_values.configuration, data_types.name,
       sources.source_name, sources.date_valid,
-      group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdowns",
+      group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",
       count(distinct(breakdowns.name)) as "breakdown_count"
     SQL
@@ -87,7 +87,7 @@ class DataValue < ActiveRecord::Base
   def self.state_and_district_values
     state_and_district_values = <<-SQL
       data_values.id, data_type_id, data_values.value, date_valid,
-      group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdowns"
+      group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names"
     SQL
     select(state_and_district_values)
   end
