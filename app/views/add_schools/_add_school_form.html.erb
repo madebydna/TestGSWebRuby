@@ -20,6 +20,7 @@
     <div class="new_remove_school_submission_form">
       <%= form_for @new_school_submission, url: add_school_path do |f| %>
           <%= render partial: '/shared/errors', locals: {object: @new_school_submission} %>
+          <%= render partial: 'shared/recaptcha_error' if @recaptcha_error %>
           <div class="non_pre_k_fields">
             <%= f.label :nces_code, 'NCES code' %>
             <%= f.text_field :nces_code, {required: false, maxlength: 12} %>
