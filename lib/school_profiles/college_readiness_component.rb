@@ -33,7 +33,7 @@ module SchoolProfiles
         end
         attr_accessor :breakdown, :original_breakdown, :school_value,
           :district_average, :state_average, :year, :subject, :data_type,
-          :performance_level, :source, :created, :narrative
+          :performance_level, :source, :created, :narrative, :grade
 
         def [](key)
           send(key) if respond_to?(key)
@@ -51,7 +51,7 @@ module SchoolProfiles
           subject == 'All subjects'
         end
 
-        (2008..2022).to_a.each do |year|
+        (2000..2022).to_a.each do |year|
           attr_accessor "school_value_#{year}"
           attr_accessor "state_average_#{year}"
           attr_accessor "district_average_#{year}"
