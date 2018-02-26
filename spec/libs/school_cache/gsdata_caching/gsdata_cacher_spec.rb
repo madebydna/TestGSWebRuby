@@ -75,6 +75,7 @@ describe GsdataCaching::GsdataCacher do
                          breakdown_tags: breakdown_tags,
                          data_type_id: data_type_id,
                          name: name)
+      allow(data_value).to receive(:breakdown_names).and_return(bd)
       allow(data_value).to receive(:datatype_breakdown_year)
         .and_return([data_type_id, bd, date_valid])
       data_value
