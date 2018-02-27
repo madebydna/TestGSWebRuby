@@ -17,7 +17,7 @@ class NewSchoolSubmission < ActiveRecord::Base
 
   #--------- Custom validations ----------#
   def valid_grades
-    unless grades.present? && grades.split(',').all? {|grade| LevelCode::GRADES_WHITELIST.include?(grade.downcase)}
+    unless grades.present? && grades.split(',').all? {|grade| LevelCode::GRADES_WHITELIST.include?(grade.strip.downcase)}
       errors.add(:grades, 'must be pk, kg, or grades 1-12.')
     end
   end
