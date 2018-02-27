@@ -1,26 +1,35 @@
 # frozen_string_literal: true
 
 describe RemoveSchoolSubmission do
+  context '#valid?' do
+    subject {remove_school_submission.valid?}
+    let(:remove_school_submission) { FactoryGirl.build(:remove_school_submission)}
 
-  let(:remove_school_submission) { FactoryGirl.build(:remove_school_submission)}
+    non_gs_domain = 'my-favorite_astronomy-site.org'
+    context "with non-gs domain: #{non_gs_domain}" do
+      before {remove_school_submission.gs_url = non_gs_domain }
+      it {is_expected.to be false}
+    end
 
-  it 'must include the greatschools domain' do
-    remove_school_submission.gs_url = 'my-favorite_astronomy-site.org'
-    expect(remove_school_submission.valid?).to be(false)
-  end
+    gs_profile_page_url = 'https://www.greatschools.org/california/oakland/11314-Northern-Light-School/'
+    context "with gs_url == #{gs_profile_page_url}" do
+      before {remove_school_submission.gs_url = gs_profile_page_url}
+      it {is_expected.to be true}
+    end
 
-  it 'accepts gs profile page urls' do
-    remove_school_submission.gs_url = 'https://www.greatschools.org/california/oakland/11314-Northern-Light-School/'
-    expect(remove_school_submission.valid?).to be(true)
-  end
+    context 'without submitter role' do
+      before {remove_school_submission.submitter_role = nil}
+      it {is_expected.to be false}
+    end
 
-  it 'must include submitter\'s role' do
-    remove_school_submission.submitter_role = nil
-    expect(remove_school_submission.valid?).to be(false)
-  end
+    context 'with email exceeding 100 chars' do
+      before {remove_school_submission.submitter_email = 'a' * 91 + '@yahoo.com'}
+      it {is_expected.to be false}
+    end
 
-  it 'email cannot exceed 100 chars' do
-    remove_school_submission.submitter_email = 'a' * 91 + '@yahoo.com'
-    expect(remove_school_submission.valid?).to be(false)
+    context 'without evidence_url' do
+      before {remove_school_submission.evidence_url = nil}
+      it {is_expected.to be true}
+    end
   end
 end
