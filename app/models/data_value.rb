@@ -49,7 +49,7 @@ class DataValue < ActiveRecord::Base
   def self.school_values
     school_values = <<-SQL
       data_values.id, data_values.value, data_values.state, data_values.school_id, data_values.district_id,
-      data_values.data_type_id, data_values.configuration, data_types.name,
+      data_values.data_type_id, data_values.configuration, data_values.cohort_count, data_types.name,
       sources.source_name, sources.date_valid,
       group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdowns",
       group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",

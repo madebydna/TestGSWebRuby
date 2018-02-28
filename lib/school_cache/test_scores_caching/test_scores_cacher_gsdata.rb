@@ -14,21 +14,19 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   end
 
   def build_hash_for_cache
+    hashes = school_results.map { |r| result_to_hash(r) }
+    inject_grade_all(hashes)
+
     school_cache_hash = Hash.new { |h, k| h[k] = [] }
-    school_results.each_with_object(school_cache_hash) do |result, cache_hash|
-      result_hash = result_to_hash(result)
-      if valid_result_hash?(result_hash, result.data_type_id)
-        cache_hash[result.name] << result_hash
+    hashes.each_with_object(school_cache_hash) do |result_hash, cache_hash|
+      if valid_result_hash?(result_hash)
+        cache_hash[result[:data_type]] << result_hash
       end
     end
   end
 
   def school_results
-    @_school_results ||=
-      begin
-        results = query_results.extend(TestScoreCalculations).select_items_with_max_year!
-        # inject_grade_all(results)
-      end
+    @_school_results ||= query_results.extend(TestScoreCalculations).select_items_with_max_year!
   end
 
   def query_results
@@ -36,7 +34,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
       begin
         DataValue
           .find_by_school_and_data_type_tags(school, data_type_tags)
-          .reject {|result| result.district_id.blank?}
+          .reject {|result| result.district_id.present?}
       end
   end
 
@@ -63,9 +61,11 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     end
   end
 
-  def inject_grade_all(data_sets_and_values)
+  def inject_grade_all(hashes)
     # Stub for TestScoresCaching::GradeAllCalculatorGsdata, which should reference the new gsdata schema columns
-    # Old GradeAllCalculator: TestScoresCaching::GradeAllCalculator.new(data_sets_and_values).inject_grade_all
+    TestScoresCaching::GradeAllCalculator.new(
+      hashes.extend(GsdataCaching::GsDataValue::CollectionMethods)
+    ).inject_grade_all
   end
 
   def self.listens_to?(data_type)
@@ -88,17 +88,17 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
       h[:district_value] = district_value.value if district_value
       h[:source_name] = result.source_name
       h[:description] = result.source.description if result.source
-      h[:number_students_tests] = result.cohort_count if result.cohort_count
+      h[:school_cohort_count] = result.cohort_count if result.cohort_count
       h[:academics] = result.academics if result.academics
       h[:academic_tags] = result.academics.tags
       h[:grades] = result.grades if result.grades
-      h[:state_number_tested] = state_value.cohort_count if state_value
+      h[:state_cohort_count] = state_value.cohort_count if state_value
       # h[:flags] = result.flags
       h[:test_label] = result.data_type.name
     end
   end
 
-  def valid_result_hash?(result_hash, data_type_id)
+  def valid_result_hash?(result_hash)
     result_hash = result_hash.reject { |_,v| v.blank? }
     required_keys = %i(school_value source_date_valid source_name)
     missing_keys = required_keys - result_hash.keys
@@ -108,8 +108,8 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
         message: "#{self.class.name} cache missing required keys",
         vars: { school: school.id,
                 state: school.state,
-                data_type_id: data_type_id,
-                breakdowns: result_hash['breakdowns'],
+                data_type: result_hash[:data_type],
+                breakdowns: result_hash[:breakdowns],
         }
       )
     end
