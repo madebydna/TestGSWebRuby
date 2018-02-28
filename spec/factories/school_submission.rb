@@ -18,7 +18,6 @@ FactoryGirl.define do
     mailing_city 'Via Lactea'
     mailing_zip_code 12345
     grades 'kg,6,11'
-    level 'e,h,m'
   end
 
   trait :public_school do
