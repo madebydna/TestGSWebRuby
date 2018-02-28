@@ -123,6 +123,8 @@ gem 'binding_of_caller', '~> 0.7.2'
 # USED: Multiple places. Search for *.jbuilder for example
 gem 'jbuilder'
 
+gem 'json-schema'
+
 # Used for parsing JSON, such as from school cache
 gem 'oj'
 

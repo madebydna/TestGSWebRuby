@@ -219,9 +219,21 @@ module SchoolProfiles
       end
     end
 
+    def decorated_gsdata_datas(*keys)
+      decorated_school.gsdata.slice(*keys).each_with_object({}) do |(data_type, array), accum|
+        accum[data_type] = 
+          array.map do |h|
+            GsdataCaching::GsDataValue.from_hash(h).tap { |dv| dv.data_type = data_type }
+          end
+          .extend(GsdataCaching::GsDataValue::CollectionMethods)
+      end
+    end
+
     def decorated_gsdata_data(key)
       Array.wrap(decorated_school.gsdata.slice(key)[key])
-        .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
+        .map do |h|
+          GsdataCaching::GsDataValue.from_hash(h).tap { |dv| dv.data_type = key }
+        end
         .extend(GsdataCaching::GsDataValue::CollectionMethods)
     end
 
@@ -289,7 +301,7 @@ module SchoolProfiles
           most_recent_all_students = array_of_hashes
             .map { |hash| GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: data_type_name)) }
             .extend(GsdataCaching::GsDataValue::CollectionMethods)
-            .having_no_breakdown
+            .for_all_students
             .most_recent
           output_hash[data_type_name] = most_recent_all_students if most_recent_all_students
         end

@@ -408,16 +408,6 @@ class SearchController < ApplicationController
       filters[:overall_gs_rating] = gs_ratings unless gs_ratings.empty?
     end
 
-    if should_apply_filter?(:ptq_rating) || params_hash.include?('ptq_rating')
-      path_to_quality_rating_params = params_hash['ptq_rating']
-      path_to_quality_rating_params = [path_to_quality_rating_params] unless path_to_quality_rating_params.instance_of?(Array)
-      all_ratings = %w[level_1 level_2 level_3 level_4]
-      path_to_quality_ratings = path_to_quality_rating_params.select { |rating_param| all_ratings.include?(rating_param) }
-      path_to_quality_ratings.collect! { |rating| rating.gsub('_',' ').humanize } if path_to_quality_ratings.present?
-
-      filters[:ptq_rating] = path_to_quality_ratings unless path_to_quality_ratings.empty?
-    end
-
     if should_apply_filter?(:indypk) || params_hash.include?('indypk')
       indypk_params = params_hash['indypk']
       indypk_params = [*indypk_params]
@@ -425,21 +415,6 @@ class SearchController < ApplicationController
       filters[:indy_ccdf] = true if indypk_params.include?('ccdf')
       filters[:indy_indypsp] = true if indypk_params.include?('indypsp')
       filters[:indy_scholarships] = true if indypk_params.include?('scholarships')
-    end
-
-    if should_apply_filter?(:gstq_rating) || params_hash.include?('gstq_rating')
-      gstq_rating_params = [*params_hash['gstq_rating']]
-      all_ratings = %w[1 2 3 4 5]
-      gstq_rating_params = gstq_rating_params.select { |rating_param| all_ratings.include?(rating_param) }
-
-      filters[:gstq_rating] = gstq_rating_params unless gstq_rating_params.empty?
-    end
-
-    if should_apply_filter?(:colorado_rating) || params_hash.include?('colorado_rating')
-      colorado_rating_params = Array.wrap(params_hash['colorado_rating'])
-      all_ratings = %w[A B C D F]
-      colorado_ratings = colorado_rating_params & all_ratings
-      filters[:colorado_rating] = colorado_ratings unless colorado_ratings.empty?
     end
 
     if should_apply_filter?(:cgr)

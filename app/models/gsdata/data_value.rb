@@ -1,16 +1,40 @@
+# frozen_string_literal: true
+
 class DataValue < ActiveRecord::Base
   self.table_name = 'data_values'
-  database_config = Rails.configuration.database_configuration[Rails.env]["gsdata"]
-  self.establish_connection(database_config)
-  belongs_to :source, class_name: '::Gsdata::Source', foreign_key: :source_id
+
+  db_magic connection: :gsdata
+
+  attr_accessible :value, :state, :school_id, :district_id, :data_type_id,
+    :configuration, :active, :breakdowns, :academics, :grade, :cohort_count, :proficiency_band_id
+
   belongs_to :data_type
-  has_many :data_values_to_breakdowns
-  has_many :breakdowns, through: :data_values_to_breakdowns
-  #CHANGE TO BREAKDOWN_TAGS?
-  has_many :breakdown_tags, through: :breakdowns
+  has_many :data_values_to_breakdowns, inverse_of: :data_value
+  has_many :breakdowns, through: :data_values_to_breakdowns, inverse_of: :data_values
+  has_many :data_values_to_academics, inverse_of: :data_value
+  has_many :academics, through: :data_values_to_academics, inverse_of: :data_values
+  belongs_to :source, class_name: '::Gsdata::Source', inverse_of: :data_values
+  belongs_to :proficiency_band, inverse_of: :data_values
 
-  DATA_CONFIGURATION = 'web'
 
+  def self.from_hash(hash)
+    new.tap do |obj|
+      obj.value = hash['value']
+      obj.state = hash['state']
+      obj.school_id = hash['school_id']
+      obj.district_id = hash['district_id']
+      obj.data_type_id = hash['data_type_id']
+      obj.configuration = hash['configuration']
+      obj.grade = hash['grade']
+      obj.cohort_count = hash['cohort_count']
+      obj.proficiency_band_id = hash['proficiency_band_id']
+      obj.active = hash['active']
+      obj.source = hash['source']
+      obj.data_values_to_breakdowns = hash['data_values_to_breakdowns']
+      obj.data_values_to_academics = hash['data_values_to_academics']
+    end
+  end
+# rubocop:disable Style/FormatStringToken
   def self.find_by_school_and_data_types(school, data_types, breakdown_tag_names = [])
     school_values.
       from(
@@ -22,7 +46,7 @@ class DataValue < ActiveRecord::Base
           .with_breakdowns
           .with_breakdown_tags(breakdown_tag_names)
           .group('data_values.id')
-          .having("breakdown_count < 2 OR breakdowns like '%All students except 504 category%'")
+          .having("breakdown_count < 2 OR breakdown_names like '%All students except 504 category%'")
   end
 
   def self.find_by_school_and_data_types_and_config(school, data_types, config, breakdown_tag_names=[])
@@ -43,15 +67,16 @@ class DataValue < ActiveRecord::Base
           .with_breakdowns
           .with_breakdown_tags(breakdown_tag_names)
           .group('data_values.id')
-          .having("breakdown_count < 2 OR breakdowns like '%All students except 504 category%'")
+          .having("breakdown_count < 2 OR breakdown_names like '%All students except 504 category%'")
   end
 
+# rubocop:enable Style/FormatStringToken
   def self.school_values
     school_values = <<-SQL
       data_values.id, data_values.value, data_values.state, data_values.school_id, data_values.district_id,
-      data_values.data_type_id, data_values.configuration, data_values.cohort_count, data_types.name,
+      data_values.data_type_id, data_values.configuration, data_values.cohort_count, data_values.grade, data_types.name,
       sources.source_name, sources.date_valid,
-      group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdowns",
+      group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",
       count(distinct(breakdowns.name)) as "breakdown_count"
     SQL
@@ -88,7 +113,7 @@ class DataValue < ActiveRecord::Base
   def self.state_and_district_values
     state_and_district_values = <<-SQL
       data_values.id, data_type_id, data_values.value, date_valid,
-      group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdowns"
+      group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names"
     SQL
     select(state_and_district_values)
   end

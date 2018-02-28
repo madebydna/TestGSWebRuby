@@ -28,7 +28,7 @@ module SchoolProfiles
     def most_recent_rating_hash
       @_most_recent_rating_hash ||=
         advanced_course_ratings
-            .having_no_breakdown
+            .for_all_students
             .most_recent
     end
 

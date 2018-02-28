@@ -7,6 +7,8 @@ class QueueDaemon
   MAX_FAIL_COUNTER = 10
   FAIL_SLEEP_TIME = 10
 
+  attr_accessor :should_log
+
   def run!
     fail_counter = 0
     if ENV['RAILS_ENV'] == 'production'
@@ -55,11 +57,27 @@ class QueueDaemon
           end
           scheduled_update.update_attributes(status: SUCCESS_STATUS, updated: Time.now)
         rescue Exception => e
-          scheduled_update.update_attributes(status: FAILURE_STATUS, notes: e.message, updated: Time.now)
+          backtrace = e.backtrace.reject { |t| t['/gems/'] }
+          Rails.logger.error(e.message + backtrace.join(" ")) if should_log?
+          scheduled_update.update_attributes(status: FAILURE_STATUS, notes: e.message + backtrace.join(" "), updated: Time.now)
+        ensure
+          print_status_summary
         end
       end
     end
     updates.size
+  end
+
+  def print_status_summary
+    return unless should_log?
+    hash = UpdateQueue.group(:status).count.symbolize_keys
+    hash.reverse_merge!(todo: 0, failed: 0, done: 0)
+    print hash.map { |status, count|  "#{status}: #{count.to_s.ljust(10)}" }.join(' ') + "\r"
+    $stdout.flush
+  end
+
+  def should_log?
+    @should_log
   end
 
   def get_updates

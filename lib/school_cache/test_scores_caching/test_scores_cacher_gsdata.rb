@@ -20,7 +20,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     school_cache_hash = Hash.new { |h, k| h[k] = [] }
     hashes.each_with_object(school_cache_hash) do |result_hash, cache_hash|
       if valid_result_hash?(result_hash)
-        cache_hash[result[:data_type]] << result_hash
+        cache_hash[result_hash[:data_type]] << result_hash
       end
     end
   end
@@ -64,7 +64,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   def inject_grade_all(hashes)
     # Stub for TestScoresCaching::GradeAllCalculatorGsdata, which should reference the new gsdata schema columns
     TestScoresCaching::GradeAllCalculator.new(
-      hashes.extend(GsdataCaching::GsDataValue::CollectionMethods)
+      GsdataCaching::GsDataValue.from_array_of_hashes(hashes)
     ).inject_grade_all
   end
 
@@ -75,7 +75,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   private
 
   def result_to_hash(result)
-    breakdowns = result.breakdowns
+    breakdowns = result.breakdown_names
     breakdown_tags = result.breakdown_tags
     state_value = state_value(result)
     district_value = district_value(result)
@@ -89,9 +89,10 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
       h[:source_name] = result.source_name
       h[:description] = result.source.description if result.source
       h[:school_cohort_count] = result.cohort_count if result.cohort_count
-      h[:academics] = result.academics if result.academics
-      h[:academic_tags] = result.academics.tags
-      h[:grades] = result.grades if result.grades
+      # TODO
+      h[:academics] = '' # result.academic_names if result.academic_names
+      h[:academic_tags] = '' # academic_tags if academic_tags
+      h[:grades] = result.grade if result.grade
       h[:state_cohort_count] = state_value.cohort_count if state_value
       # h[:flags] = result.flags
       h[:test_label] = result.data_type.name

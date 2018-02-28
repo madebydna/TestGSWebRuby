@@ -282,7 +282,7 @@ describe FilterBuilder do
     context 'in Indianapolis, IN' do
       let (:filters) { FilterBuilder.new('IN', 'Indianapolis', false).filters }
       [ { panel: 1,
-          contains: [:gradeLevels, :distance, :st, :gs_rating, :ptq_rating],
+          contains: [:gradeLevels, :distance, :st, :gs_rating],
           does_not_contain: [:cgr]
         },
         { panel: 2,
@@ -326,7 +326,7 @@ describe FilterBuilder do
     context 'in Detroit, MI' do
       let (:filters) { FilterBuilder.new('MI', 'Detroit', false).filters }
       [ { panel: 1,
-          contains: %i(gradeLevels distance st gs_rating gstq_rating),
+          contains: %i(gradeLevels distance st gs_rating),
           does_not_contain: []
         },
         { panel: 2,
@@ -463,12 +463,6 @@ describe FilterBuilder do
     context 'in Indiana' do
       let (:in_cache_key) { FilterBuilder.new('in', nil, false).filters.cache_key }
       let (:forced_simple) { FilterBuilder.new('in', nil, true).filters.cache_key }
-      context 'in Indianapolis' do
-        let (:indy_cache_key) { FilterBuilder.new('in', 'Indianapolis', false).filters.cache_key }
-        it 'should represent a ptq_rating and vouchers configuration' do
-          expect(indy_cache_key).to start_with('ptq_rating_vouchers')
-        end
-      end
       it 'should represent a vouchers configuration' do
         expect(in_cache_key).to start_with('vouchers')
       end
@@ -480,9 +474,6 @@ describe FilterBuilder do
     context 'In Colorado' do
       let (:colorado_cache_key) { FilterBuilder.new('co', nil, false).filters.cache_key }
       let (:forced_simple) { FilterBuilder.new('co', nil, true).filters.cache_key }
-      it 'should represent a colorado_rating' do
-        expect(colorado_cache_key).to start_with('colorado_rating')
-      end
       it 'should represent a simple configuration if forced' do
         expect(forced_simple).to start_with('simple')
       end
@@ -493,8 +484,8 @@ describe FilterBuilder do
       context 'in Detroit' do
         let (:detroit_cache_key) { FilterBuilder.new('mi', 'Detroit', false).filters.cache_key }
         let (:forced_simple) { FilterBuilder.new('mi', 'Detroit', true).filters.cache_key }
-        it 'should represent a college readiness configuration' do
-          expect(detroit_cache_key).to start_with('college_readiness')
+        it 'should represent a simple configuration by default' do
+          expect(detroit_cache_key).to start_with('simple')
         end
         it 'should represent a simple configuration if forced' do
           expect(forced_simple).to start_with('simple')

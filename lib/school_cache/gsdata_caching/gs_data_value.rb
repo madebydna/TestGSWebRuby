@@ -23,8 +23,10 @@ class GsdataCaching::GsDataValue
     end
 
     def having_no_breakdown
-      select { |dv| dv.breakdowns.nil? }.extend(CollectionMethods)
+      select { |dv| dv.breakdowns.blank? }.extend(CollectionMethods)
     end
+
+    alias_method :for_all_students, :having_no_breakdown
 
     def having_one_breakdown
       select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.extend(CollectionMethods)
@@ -170,6 +172,14 @@ class GsdataCaching::GsDataValue
     :grade
   attr_reader :school_cohort_count, :state_cohort_count
 
+  def [](key)
+    send(key) if respond_to?(key)
+  end
+
+  def []=(key, val)
+    send("#{key}=", val)
+  end
+
   def self.from_array_of_hashes(array)
     array ||= []
     array.map { |h| GsdataCaching::GsDataValue.from_hash(h) }
@@ -243,6 +253,10 @@ class GsdataCaching::GsDataValue
       methodology: methodology,
       grade: grade
     }
+  end
+
+  def all_students?
+    breakdowns.blank?
   end
 
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative '../step'
+require_relative './output_lib/queue_daemon_insert_statement'
+require_relative './output_lib/test_score_queue_daemon_json_blob'
 
 class SqlDestination < GS::ETL::Step
 
