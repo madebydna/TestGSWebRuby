@@ -92,7 +92,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
       # TODO
       h[:academics] = '' # result.academic_names if result.academic_names
       h[:academic_tags] = '' # academic_tags if academic_tags
-      h[:grades] = result.grade if result.grade
+      h[:grade] = result.grade if result.grade
       h[:state_cohort_count] = state_value.cohort_count if state_value
       # h[:flags] = result.flags
       h[:test_label] = result.data_type.name

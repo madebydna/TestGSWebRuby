@@ -4,7 +4,7 @@ module SchoolProfiles
     # characteristics - for enrollment
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
-    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance gsdata esp_responses)
+    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores_gsdata nearby_schools performance gsdata esp_responses)
     DISCIPLINE_FLAG = 'Discipline Flag'
     ABSENCE_FLAG = 'Absence Flag'
 
@@ -170,31 +170,29 @@ module SchoolProfiles
     end
 
     def flat_test_scores_for_latest_year
-      output_array = []
-      test_scores.values.each do |test_hash|
-        test_hash.each do | breakdown_name, breakdown_hash|
-          breakdown_hash['grades'].each { | grade |
-            grade_value = grade.first
-            level_code = grade.second['level_code']
-            level_code.first[1].each do |subject, year_hash|
-              max_year = year_hash.keys.max_by { |year| year.to_i }
-              output_array << year_hash[max_year].merge(
-                {
-                  test_label: breakdown_hash['test_label'],
-                  test_description: breakdown_hash['test_description'],
-                  test_source: breakdown_hash['test_source'],
-                  breakdown: breakdown_name,
-                  year: max_year,
-                  subject: subject,
-                  grade: grade_value,
-                  flags: year_hash[max_year]['flags']
-                }
-              ).symbolize_keys
-            end if level_code
-          }
-        end
+      # require 'pry'; binding.pry
+      test_scores.each_with_object([]) do |(data_type, array_of_hashes), array|
+        array.concat(
+          array_of_hashes.map do |test_scores_hash|
+            {
+              data_type: data_type,
+              test_label: test_scores_hash['test_label'],
+              test_description: test_scores_hash['description'],
+              test_source: test_scores_hash['source_name'],
+              breakdown: test_scores_hash['breakdowns'],
+              year: test_scores_hash['source_date_valid'][0..3],
+              subject: test_scores_hash['academics'],
+              grade: test_scores_hash['grade'],
+              flags: test_scores_hash['flags'],
+              score: test_scores_hash['school_value'],
+              number_students_tested: test_scores_hash['school_cohort_count'],
+              state_number_tested: test_scores_hash['state_cohort_count'],
+              state_average: test_scores_hash['state_value']
+            }
+          end
+        )
       end
-      output_array
+
     end
 
     def graduation_rate_data

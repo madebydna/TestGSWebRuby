@@ -65,7 +65,7 @@ module SchoolProfiles
     # end
 
     def subject_scores
-      scores = @school_cache_data_reader.flat_test_scores_for_latest_year.select { |h| h[:breakdown] == 'All' }
+      scores = @school_cache_data_reader.flat_test_scores_for_latest_year.select { |h|  h[:breakdown].casecmp('All Students') }
       scores_grade_all = scores.select { | score | score[:grade] == 'All' }
       scores_grade_not_all = scores.select { | score | score[:grade] != 'All' }
       subjects = scores_grade_all.map { |h| data_label(h[:subject]) }
