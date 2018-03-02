@@ -171,28 +171,27 @@ module SchoolProfiles
 
     def flat_test_scores_for_latest_year
       # require 'pry'; binding.pry
-      test_scores.each_with_object([]) do |(data_type, array_of_hashes), array|
+      hashes = test_scores.each_with_object([]) do |(data_type, array_of_hashes), array|
         array.concat(
           array_of_hashes.map do |test_scores_hash|
             {
               data_type: data_type,
-              test_label: test_scores_hash['test_label'],
-              test_description: test_scores_hash['description'],
-              test_source: test_scores_hash['source_name'],
-              breakdown: test_scores_hash['breakdowns'],
-              year: test_scores_hash['source_date_valid'][0..3],
-              subject: test_scores_hash['academics'],
+              description: test_scores_hash['description'],
+              source_name: test_scores_hash['source_name'],
+              breakdowns: nil, # TODO fix
+              source_date_valid: test_scores_hash['source_date_valid'],
+              academics: test_scores_hash['academics'],
               grade: test_scores_hash['grade'],
               flags: test_scores_hash['flags'],
-              score: test_scores_hash['school_value'],
-              number_students_tested: test_scores_hash['school_cohort_count'],
-              state_number_tested: test_scores_hash['state_cohort_count'],
-              state_average: test_scores_hash['state_value']
+              school_value: test_scores_hash['school_value'],
+              school_cohort_count: test_scores_hash['school_cohort_count'],
+              state_cohort_count: test_scores_hash['state_cohort_count'],
+              state_value: test_scores_hash['state_value']
             }
           end
         )
       end
-
+      GsdataCaching::GsDataValue.from_array_of_hashes(hashes)
     end
 
     def graduation_rate_data

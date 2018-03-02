@@ -100,6 +100,14 @@ class GsdataCaching::GsDataValue
       end
     end
 
+    def having_grade_all
+      select(&:grade_all?).extend(CollectionMethods)
+    end
+
+    def not_grade_all
+      reject(&:grade_all?).extend(CollectionMethods)
+    end
+
     def any_grade_all?
       any?(&:grade_all?)
     end
@@ -156,6 +164,10 @@ class GsdataCaching::GsDataValue
       all?(&:has_state_cohort_count?)
     end
 
+    def sort_by_test_label_and_cohort_count
+      sort_by { |h| [h.data_type, (h.school_cohort_count || 0) * -1] }
+    end
+
   end
 
   attr_accessor :breakdowns,
@@ -169,7 +181,10 @@ class GsdataCaching::GsDataValue
     :data_type,
     :description,
     :methodology,
-    :grade
+    :grade,
+    :academics,
+    :flags
+
   attr_reader :school_cohort_count, :state_cohort_count
 
   def [](key)
@@ -251,7 +266,8 @@ class GsdataCaching::GsDataValue
       data_type: data_type,
       description: description,
       methodology: methodology,
-      grade: grade
+      grade: grade,
+      academics: academics
     }
   end
 

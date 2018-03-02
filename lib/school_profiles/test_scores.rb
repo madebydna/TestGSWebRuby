@@ -65,35 +65,32 @@ module SchoolProfiles
     # end
 
     def subject_scores
-      scores = @school_cache_data_reader.flat_test_scores_for_latest_year.select { |h|  h[:breakdown].casecmp('All Students') }
-      scores_grade_all = scores.select { | score | score[:grade] == 'All' }
-      scores_grade_not_all = scores.select { | score | score[:grade] != 'All' }
-      subjects = scores_grade_all.map { |h| data_label(h[:subject]) }
-      if subjects.uniq.size < subjects.size
-        scores_grade_all = sort_by_test_label_and_number_tested_descending(scores_grade_all)
-      else
-        scores_grade_all = sort_by_number_tested_descending(scores_grade_all)
-      end
+      scores = @school_cache_data_reader
+                 .flat_test_scores_for_latest_year
+                 .for_all_students
+      scores_grade_all = scores.having_grade_all
+      scores_grade_not_all = scores.not_grade_all
+      scores_grade_all = scores_grade_all.sort_by_test_label_and_cohort_count
       build_rating_score_hash(scores_grade_all, scores_grade_not_all)
     end
 
     def build_rating_score_hash(scores, grades_hash)
-      scores = scores.map do |hash|
-        grades_from_hash = grades_hash.select { | score | score[:test_label] == hash[:test_label] && score[:subject] == hash[:subject] } if grades_hash
+      scores = scores.map do |gs_data_value|
+        grades_from_hash = grades_hash.select { | score | score.data_type == gs_data_value.data_type && score.academics == gs_data_value.academics } if grades_hash
         grades = build_rating_score_hash(grades_from_hash, nil) if grades_from_hash && grades_from_hash.count >= GRADES_DISPLAY_MINIMUM
         grades = sort_by_grades_ascending(grades) if grades.present?
 
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
-          rating_score_item.label = data_label(hash[:subject])
-          rating_score_item.score = SchoolProfiles::DataPoint.new(hash[:score]).apply_formatting(:round, :percent)
-          rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash[:state_average]).apply_formatting(:round, :percent)
-          rating_score_item.description = hash[:test_description]
-          rating_score_item.test_label = hash[:test_label]
-          rating_score_item.source = hash[:test_source]
-          rating_score_item.year = hash[:year]
-          rating_score_item.grade = hash[:grade]
+          rating_score_item.label = data_label(gs_data_value.academics)
+          rating_score_item.score = SchoolProfiles::DataPoint.new(gs_data_value.school_value).apply_formatting(:round, :percent)
+          rating_score_item.state_average = SchoolProfiles::DataPoint.new(gs_data_value.state_value).apply_formatting(:round, :percent)
+          rating_score_item.description = gs_data_value.description
+          rating_score_item.test_label = gs_data_value.data_type
+          rating_score_item.source = gs_data_value.source_name
+          rating_score_item.year = gs_data_value.source_year
+          rating_score_item.grade = gs_data_value.grade
           rating_score_item.grades = grades
-          rating_score_item.flags = hash[:flags]
+          rating_score_item.flags = gs_data_value.flags
         end
       end if scores.present?
       scores
