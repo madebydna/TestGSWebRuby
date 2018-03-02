@@ -106,15 +106,13 @@ describe NewSchoolSubmission do
 
       context "with names #{valid_states.join(',')}" do
         it 'should be true' do
-          validations_array = valid_states.map {|abb| new_school_submission.state = abb; new_school_submission.valid?}
-          expect(validations_array.uniq.first).to be(true)
+          expect(valid_states.all? {|abbr| new_school_submission.state = abbr; new_school_submission.valid?}).to be(true)
         end
       end
 
       context "with names #{invalid_states.join(',')}" do
         it 'should be false' do
-          validations_array = invalid_states.map {|abb| new_school_submission.state = abb; new_school_submission.valid?}
-          expect(validations_array.uniq.first).to be(false)
+          expect(invalid_states.any? {|abbr| new_school_submission.state = abbr; new_school_submission.valid?}).to be(false)
         end
       end
 
@@ -150,7 +148,6 @@ describe NewSchoolSubmission do
 
   context '#add_level_code' do
     subject {new_school_submission}
-    before {clean_dbs :gs_schooldb}
     after {clean_dbs :gs_schooldb}
     let(:new_school_submission) {FactoryGirl.build(:new_school_submission, :private_school)}
 
@@ -199,6 +196,11 @@ describe NewSchoolSubmission do
       it {is_expected.to be(false)}
     end
 
+    context 'with pk and non pre-k grade' do
+      before {new_school_submission.grades = 'pk,kg'}
+      it {is_expected.to be(false)}
+    end
+
     context 'with no grade' do
       before {new_school_submission.grades = ''}
       it {is_expected.to be(false)}
@@ -208,6 +210,7 @@ describe NewSchoolSubmission do
       before {new_school_submission.grades = 'pk'}
       it {is_expected.to be(true)}
     end
+
   end
 end
 

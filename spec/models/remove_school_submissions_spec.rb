@@ -5,9 +5,15 @@ describe RemoveSchoolSubmission do
     subject {remove_school_submission.valid?}
     let(:remove_school_submission) { FactoryGirl.build(:remove_school_submission)}
 
-    non_gs_domain = 'my-favorite_astronomy-site.org'
+    non_gs_domain = 'http://my-favorite_astronomy-site.org'
     context "with non-gs domain: #{non_gs_domain}" do
       before {remove_school_submission.gs_url = non_gs_domain }
+      it {is_expected.to be false}
+    end
+
+    evil_non_gs_domain = 'http://dont_be_evil.com/www.greatschools.org/id?sucker=5'
+    context "with non-gs domain: #{evil_non_gs_domain}" do
+      before {remove_school_submission.gs_url = evil_non_gs_domain }
       it {is_expected.to be false}
     end
 
