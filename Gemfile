@@ -116,7 +116,7 @@ gem 'prawn-table', '~> 0.1.2'
 gem 'rest-client', '2.0.2'
 
 # Retrieve the binding of a method's caller.
-# USED: By GsLogger
+# USED: By GsLogger. See AT-873
 gem 'binding_of_caller', '~> 0.7.2'
 
 # Create JSON structures via a Builder-style DSL
@@ -134,11 +134,7 @@ gem 'stackprof'
 gem 'ox'
 
 group :development do
-  # better_errors and binding_of_caller work together as in-browser debugging tools
-  # these cannot be in the test group, or a segmentation fault will occur when running tests
-  # https://github.com/banister/binding_of_caller/issues/14
-  gem 'better_errors', '~> 0.9.0'
-  #gem 'binding_of_caller', '~> 0.7.2' #moved up into production. AT-873 GSLogger code
+  gem 'web-console' # Add repl to error pages on localhost, replaces better_errors
 
   # Use the Thin server in development for speed and other improvements
   gem 'thin'
