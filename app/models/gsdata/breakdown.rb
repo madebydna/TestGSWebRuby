@@ -5,7 +5,9 @@ class Breakdown < ActiveRecord::Base
   db_magic connection: :gsdata
 
   attr_accessible :name
-  has_many :tags, inverse_of: :breakdown
+  has_many :breakdown_tags, inverse_of: :breakdown
+  has_many :data_values_to_breakdowns
+  has_many :data_values, through: :data_values_to_breakdowns
 
   has_many :data_values_to_breakdowns, inverse_of: :breakdown
   has_many :data_values, through: :data_values_to_breakdowns, inverse_of: :breakdowns
