@@ -81,6 +81,21 @@ class GsdataCaching::GsDataValue
       end
     end
 
+    def group_by_academics
+      group_by do |dv|
+        if dv.academics.include?(',')
+          GSLogger.error(
+            :misc,
+            nil,
+            message: 'Tried to group on comma separated academics',
+            vars: dv
+          )
+          return self
+        end
+        dv.academics
+      end
+    end
+
     def remove_504_category_breakdown_from_each!
       each(&:remove_504_category_breakdown!)
         .tap { |a| a.extend(CollectionMethods) }
@@ -185,7 +200,8 @@ class GsdataCaching::GsDataValue
     :methodology,
     :grade,
     :academics,
-    :flags
+    :flags,
+    :narrative
 
   attr_reader :school_cohort_count, :state_cohort_count
 
@@ -269,8 +285,11 @@ class GsdataCaching::GsDataValue
       description: description,
       methodology: methodology,
       grade: grade,
-      academics: academics
-    }
+      academics: academics,
+      narrative: narrative
+    }.tap do |hash|
+      hash[:narrative] = narrative if narrative
+    end
   end
 
   def all_students?
