@@ -9,9 +9,8 @@ module SchoolProfiles
 
       def normalized_values
         @_normalized_values ||= (
-          scores = school_cache_data_reader
-            .flat_test_scores_for_latest_year
-          (scores_grade_all, scores_grade_not_all) = scores.select { |h| h[:subject] == data_type }.partition { |score| score[:grade] == 'All' }
+          scores = school_cache_data_reader.flat_test_scores_for_latest_year
+          scores_grade_all, scores_grade_not_all = scores.having_grade_all, scores.not_grade_all
           scores_grade_all.map { |h| cache_hash_to_standard_hash(h, scores_grade_not_all) }
         )
       end
@@ -34,14 +33,14 @@ module SchoolProfiles
         )
       end
       
-      def cache_hash_to_standard_hash(hash, grades)
-        breakdown = hash[:breakdown]
-        grades_for_breakdown = grades.select{|grade| grade[:breakdown] == breakdown && grade[:test_label] == hash[:test_label]}
-        normalized_breakdown = breakdown == 'All' ? 'All students' : breakdown
-        hash.merge(
-          breakdown: normalized_breakdown,
+      def cache_hash_to_standard_hash(gs_dv, grades)
+        breakdown = gs_dv.breakdowns
+        grades_for_breakdown = grades.select{|grade| grade.breakdowns.include? breakdown && grade.data_type == gs_dv.data_type}
+        normalized_breakdown = gs_dv.all_students? ? 'All students' : breakdown
+        gs_dv.to_hash.merge(
+          breakdowns: normalized_breakdown,
           percentage: breakdown_percentage(normalized_breakdown),
-          grades: manage_grades_hash(grades_for_breakdown)
+          grade: manage_grades_hash(grades_for_breakdown)
         )
       end
 

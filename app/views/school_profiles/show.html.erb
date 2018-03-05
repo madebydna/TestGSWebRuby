@@ -88,7 +88,7 @@
         <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
                    width: 320, height: 50, css_class: 'mbl' %>
         <div>
-          <%#= render 'equity', equity: @school_profile.equity, equity_overview: @school_profile.equity_overview %>
+          <%= render 'equity', equity: @school_profile.equity, equity_overview: @school_profile.equity_overview %>
         </div>
 
         <div class="profile-section">
@@ -102,7 +102,7 @@
               <% osp_link = osp_register_path(city: @school.city, school_id: @school.id.to_s, state: @school.state).gsub(/\/$/, '') %>
 
               <div class="profile-section-slot">
-                <%#= render 'osp_school_info', osp_link: osp_link, osp_school_info: @school_profile.osp_school_info %>
+                <%= render 'osp_school_info', osp_link: osp_link, osp_school_info: @school_profile.osp_school_info %>
               </div>
               <div class="profile-section-slot">
                 <%= render 'students', students: @school_profile.students %>

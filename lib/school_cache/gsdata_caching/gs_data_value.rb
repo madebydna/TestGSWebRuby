@@ -185,7 +185,8 @@ class GsdataCaching::GsDataValue
     :methodology,
     :grade,
     :academics,
-    :flags
+    :flags,
+    :percentage
 
   attr_reader :school_cohort_count, :state_cohort_count
 
@@ -269,7 +270,8 @@ class GsdataCaching::GsDataValue
       description: description,
       methodology: methodology,
       grade: grade,
-      academics: academics
+      academics: academics,
+      percentage: percentage
     }
   end
 
