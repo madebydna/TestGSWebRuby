@@ -182,7 +182,14 @@ const setPageLevelTargeting = function () {
   // being set in localized_profile_controller - ad_setTargeting_through_gon
   // sets all targeting based on what is set in the controller
   if ($.isEmptyObject(gon.ad_set_targeting)) {
-    log("gon setTargeting is empty for advertising");
+    if ($.isEmptyObject(GS.ad.adSetTargeting)) {
+      log("gon setTargeting and GS.ad.adSetTargeting are empty for advertising");
+    } else {
+      // This is for WordPress which uses GS.ad.adSetTargeting (not having access to gon)
+      $.each(GS.ad.adSetTargeting, function (key, value) {
+        googletag.pubads().setTargeting(key, value);
+      });
+    }
   }
   else {
     $.each(gon.ad_set_targeting, function (key, value) {
