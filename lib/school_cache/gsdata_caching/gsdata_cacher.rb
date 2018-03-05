@@ -41,9 +41,11 @@ class GsdataCaching::GsdataCacher < Cacher
     gender
     language_learner
     disability
+  )
+
+  ACADEMIC_TAG_NAMES = %w(
     course_subject_group
     advanced
-    course
     stem_index
     arts_index
     vocational_hands_on_index
@@ -86,14 +88,16 @@ class GsdataCaching::GsdataCacher < Cacher
     @_school_results ||=
       DataValue.find_by_school_and_data_types(school,
                                               data_type_ids,
-                                              BREAKDOWN_TAG_NAMES)
+                                              BREAKDOWN_TAG_NAMES,
+                                              ACADEMIC_TAG_NAMES)
   end
 
   def state_results_hash
     @_state_results_hash ||= (
       DataValue.find_by_state_and_data_types(school.state,
                                              data_type_ids,
-                                             BREAKDOWN_TAG_NAMES)
+                                             BREAKDOWN_TAG_NAMES,
+                                             ACADEMIC_TAG_NAMES)
       .each_with_object({}) do |r, h|
         state_key = r.datatype_breakdown_year
         h[state_key] = r.value
@@ -107,7 +111,8 @@ class GsdataCaching::GsdataCacher < Cacher
       .find_by_district_and_data_types(school.state,
                                        school.district_id,
                                        data_type_ids,
-                                       BREAKDOWN_TAG_NAMES)
+                                       BREAKDOWN_TAG_NAMES,
+                                       ACADEMIC_TAG_NAMES)
       district_values.each_with_object({}) do |r, h|
         district_key = r.datatype_breakdown_year
         h[district_key] = r.value
@@ -119,20 +124,32 @@ class GsdataCaching::GsdataCacher < Cacher
 
   def result_to_hash(result)
     breakdowns = result.breakdown_names
-    breakdown_tags = result.breakdown_tags
+    breakdown_tags = result.breakdown_t_names
+    academics = result.academic_names
+    academic_tags = result.academic_t_names
+    academic_types = result.academic_types
     state_value = state_value(result)
     district_value = district_value(result)
     display_range = display_range(result)
+    b_and_a = [breakdowns, academics].join(',')
+    b_and_a_tags = [breakdown_tags, academic_tags].join(',')
 
     {}.tap do |h|
-      h[:breakdowns] = breakdowns if breakdowns
-      h[:breakdown_tags] = breakdown_tags if breakdown_tags
+      # switch back to only breakdowns when the code down stream can handle academics
+      h[:breakdowns] = b_and_a if b_and_a
+      h[:breakdown_tags] = b_and_a_tags if b_and_a_tags
+      h[:academics] = academics if academics
+      h[:academic_tags] = academic_tags if academic_tags
+      h[:academic_types] = academic_types if academic_types
       h[:school_value] = result.value
       h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
       h[:state_value] = state_value if state_value
       h[:district_value] = district_value if district_value
       h[:display_range] = district_value if display_range
       h[:source_name] = result.source_name
+      h[:grade] = result.grade
+      h[:cohort_count] = result.cohort_count
+      h[:proficiency_band_id] = result.proficiency_band_id
 
       d = DATA_TYPE_IDS_TO_STRING[result.data_type_id]
       if d.present?
