@@ -5,7 +5,7 @@ module SchoolProfiles
         low_income_hash = normalized_values.find { |h| h[:breakdown] == 'Economically disadvantaged' } || {}
         all_hash = normalized_values.find { |h| h[:breakdown] == 'All students' } || {}
 
-        yml_key = NarrativeLowIncomeTestScores.new(school_cache_data_reader: school_cache_data_reader).yml_key(
+        yml_key = NarrativeLowIncomeTestScores.yml_key(
           low_income_hash[:score],
           low_income_hash[:state_average],
           all_hash[:state_average]

@@ -14,9 +14,6 @@ module SchoolProfiles
     def initialize(school, school_cache_data_reader:)
       @school = school
       @school_cache_data_reader = school_cache_data_reader
-      SchoolProfiles::NarrativeLowIncomeTestScores.new(
-          school_cache_data_reader: school_cache_data_reader
-      ).auto_narrative_calculate_and_add
     end
 
     def qualaroo_module_link
@@ -68,6 +65,11 @@ module SchoolProfiles
       scores = @school_cache_data_reader
                  .flat_test_scores_for_latest_year
                  .for_all_students
+
+      scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(
+          school_cache_data_reader: school_cache_data_reader
+      ).auto_narrative_calculate_and_add
+
       scores_grade_all = scores.having_grade_all
       scores_grade_not_all = scores.not_grade_all
       scores_grade_all = scores_grade_all.sort_by_test_label_and_cohort_count

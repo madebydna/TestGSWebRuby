@@ -51,6 +51,7 @@ class GsdataCaching::GsDataValue
       select { |dv| Array.wrap(breakdowns).include?(dv.breakdowns) }
         .extend(CollectionMethods)
     end
+    alias_method :having_breakdown, :having_breakdown_in
 
     def having_breakdown_tag_matching(regex)
       select { |dv| dv.breakdown_tags =~ regex unless dv.breakdown_tags.blank? }.extend(CollectionMethods)
@@ -78,6 +79,21 @@ class GsdataCaching::GsDataValue
           return self
         end
         dv.breakdown_tags
+      end
+    end
+
+    def group_by_academics
+      group_by do |dv|
+        if dv.academics.include?(',')
+          GSLogger.error(
+            :misc,
+            nil,
+            message: 'Tried to group on comma separated academics',
+            vars: dv
+          )
+          return self
+        end
+        dv.academics
       end
     end
 
@@ -186,7 +202,8 @@ class GsdataCaching::GsDataValue
     :grade,
     :academics,
     :flags,
-    :percentage
+    :percentage,
+    :narrative
 
   attr_reader :school_cohort_count, :state_cohort_count
 
@@ -271,8 +288,11 @@ class GsdataCaching::GsDataValue
       methodology: methodology,
       grade: grade,
       academics: academics,
-      percentage: percentage
-    }
+      percentage: percentage,
+      narrative: narrative
+    }.tap do |hash|
+      hash[:narrative] = narrative if narrative
+    end
   end
 
   def all_students?
