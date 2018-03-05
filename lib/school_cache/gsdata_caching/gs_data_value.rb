@@ -51,7 +51,7 @@ class GsdataCaching::GsDataValue
     end
 
     def having_breakdown_tag_matching(regex)
-      select { |dv| dv.breakdown_tags =~ regex }.extend(CollectionMethods)
+      select { |dv| dv.breakdown_tags =~ regex unless dv.breakdown_tags.blank? }.extend(CollectionMethods)
     end
 
     def expand_on_breakdown_tags

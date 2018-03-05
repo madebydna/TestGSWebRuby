@@ -58,6 +58,7 @@ module SchoolProfiles
 
     def equity_test_score_hash(inclusion_hash=low_income_breakdowns)
       output_hash = {}
+      return output_hash
       # for each test data_type_id
       @school_cache_data_reader.test_scores.values.each do |test_hash|
         breakdowns = test_hash.select{ |breakdown| inclusion_hash.keys.include? breakdown }

@@ -178,7 +178,8 @@ module SchoolProfiles
               data_type: data_type,
               description: test_scores_hash['description'],
               source_name: test_scores_hash['source_name'],
-              breakdowns: nil, # TODO fix
+              breakdowns: test_scores_hash['breakdowns'],
+              breakdown_tags: test_scores_hash['breakdown_tags'],
               source_date_valid: test_scores_hash['source_date_valid'],
               academics: test_scores_hash['academics'],
               grade: test_scores_hash['grade'],

@@ -369,10 +369,12 @@ module SchoolProfiles
     end
 
     def race_ethnicity_visible?
+      return false
       race_ethnicity_props.map { |h| h[:data] }.any?(&:present?)
     end
 
     def low_income_visible?
+      return false
       low_income_section_props.map { |h| h[:data] }.any?(&:present?)
     end
 
@@ -395,6 +397,7 @@ module SchoolProfiles
     end
 
     def race_ethnicity_discipline_and_attendance_visible?
+      return false
       (race_ethnicity_props.find { |h| h[:anchor] == 'Discipline_and_attendance' })[:data].present?
     end
 

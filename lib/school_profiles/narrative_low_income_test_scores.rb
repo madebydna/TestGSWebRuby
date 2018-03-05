@@ -6,6 +6,7 @@ module SchoolProfiles
     end
 
     def auto_narrative_calculate_and_add
+      return
       return unless valid_school_cache_data_reader?
 
       @school_cache_data_reader.test_scores.each do |data_type_id, breakdown_hash|
