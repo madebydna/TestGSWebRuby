@@ -62,14 +62,12 @@ module SchoolProfiles
     # end
 
     def subject_scores
-      scores = @school_cache_data_reader
-                 .flat_test_scores_for_latest_year
-                 .for_all_students
+      scores = @school_cache_data_reader.flat_test_scores_for_latest_year
 
-      scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(
-          school_cache_data_reader: school_cache_data_reader
-      ).auto_narrative_calculate_and_add
+      scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(test_scores_hashes: nil)
+        .add_to_array_of_hashes(scores)
 
+      scores = scores.for_all_students
       scores_grade_all = scores.having_grade_all
       scores_grade_not_all = scores.not_grade_all
       scores_grade_all = scores_grade_all.sort_by_test_label_and_cohort_count

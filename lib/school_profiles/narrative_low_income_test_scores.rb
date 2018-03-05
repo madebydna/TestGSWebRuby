@@ -6,7 +6,7 @@ module SchoolProfiles
 
     def auto_narrative_calculate_and_add
       @test_scores_hashes.each_with_object({}) do |(data_type, array_of_gs_data_values), hash|
-        hash[data_type] = add_to_array_of_hashes(array_of_gs_data_values)
+        hash[data_type] = add_to_array_of_hashes(array_of_gs_data_values) if array_of_gs_data_values.present?
       end
     end
 
