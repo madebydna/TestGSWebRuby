@@ -51,6 +51,7 @@ class GsdataCaching::GsDataValue
       select { |dv| Array.wrap(breakdowns).include?(dv.breakdowns) }
         .extend(CollectionMethods)
     end
+    alias_method :having_breakdown, :having_breakdown_in
 
     def having_breakdown_tag_matching(regex)
       select { |dv| dv.breakdown_tags =~ regex unless dv.breakdown_tags.blank? }.extend(CollectionMethods)
