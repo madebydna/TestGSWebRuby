@@ -203,7 +203,9 @@ class GsdataCaching::GsDataValue
     :academics,
     :flags,
     :percentage,
-    :narrative
+    :narrative,
+    :test_label,
+    :label
 
   attr_reader :school_cohort_count, :state_cohort_count
 
@@ -289,7 +291,9 @@ class GsdataCaching::GsDataValue
       grade: grade,
       academics: academics,
       percentage: percentage,
-      narrative: narrative
+      narrative: narrative,
+      label: label,
+      test_label: test_label
     }.tap do |hash|
       hash[:narrative] = narrative if narrative
     end

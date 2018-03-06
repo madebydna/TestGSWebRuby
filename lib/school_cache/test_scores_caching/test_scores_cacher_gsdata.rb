@@ -80,6 +80,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     state_value = state_value(result)
     district_value = district_value(result)
     {}.tap do |h|
+      h[:data_type] = result.data_type.name
       h[:breakdowns] = breakdowns if breakdowns
       h[:breakdown_tags] = breakdown_tags if breakdown_tags
       h[:school_value] = result.value
@@ -89,11 +90,11 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
       h[:source_name] = result.source_name
       h[:description] = result.source.description if result.source
       h[:school_cohort_count] = result.cohort_count if result.cohort_count
-      h[:academics] = '' # result.academics if result.academic_names
-      h[:academic_tags] = '' # academic_tags if academic_tags
+      h[:academics] = result.academics if result.academics
+      # h[:academic_tags] = result.academics_tags   TODO
       h[:grade] = result.grade if result.grade
       h[:state_cohort_count] = state_value.cohort_count if state_value
-      # h[:flags] = result.flags
+      # h[:flags] = result.flags TODO
       h[:test_label] = result.data_type.name
     end
   end

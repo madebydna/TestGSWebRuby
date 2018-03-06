@@ -83,7 +83,7 @@ class Cacher
         esp_responses:    EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
-        feed_test_scores: TestScoresCaching::FeedTestScoresCacher,
+        feed_test_scores: FeedTestScoresCacher,
         feed_test_scores_gsdata: TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
         gsdata:           GsdataCaching::GsdataCacher,
         ratings:         RatingsCaching::GsdataRatingsCacher,
