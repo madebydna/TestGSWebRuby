@@ -170,7 +170,6 @@ module SchoolProfiles
     end
 
     def flat_test_scores_for_latest_year
-      # require 'pry'; binding.pry
       hashes = test_scores.each_with_object([]) do |(data_type, array_of_hashes), array|
         array.concat(
           array_of_hashes.map do |test_scores_hash|
