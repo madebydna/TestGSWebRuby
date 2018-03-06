@@ -43,6 +43,8 @@ class GsdataCaching::GsdataCacher < Cacher
     disability
   )
 
+  COURSE_ENROLLMENT_DATA_TYPE_ID = 150
+
   ACADEMIC_TAG_NAMES = %w(
     course_subject_group
     advanced
@@ -76,7 +78,15 @@ class GsdataCaching::GsdataCacher < Cacher
     r.each_with_object(school_cache_hash) do |result, cache_hash|
       result_hash = result_to_hash(result)
       validate_result_hash(result_hash, result.data_type_id)
-      cache_hash[result.name] << result_hash
+      cache_hash[result.name] << result_hash if course_enrollment_filter_on_all_students(result_hash, result.data_type_id)
+    end
+  end
+
+  def course_enrollment_filter_on_all_students(hash, id)
+    if id == COURSE_ENROLLMENT_DATA_TYPE_ID && !(hash[:breakdowns].split(',').include?('All Students') && hash[:grade] == 'All')
+      false
+    else
+      true
     end
   end
 
@@ -131,8 +141,8 @@ class GsdataCaching::GsdataCacher < Cacher
     state_value = state_value(result)
     district_value = district_value(result)
     display_range = display_range(result)
-    b_and_a = [breakdowns, academics].join(',')
-    b_and_a_tags = [breakdown_tags, academic_tags].join(',')
+    b_and_a = [breakdowns, academics].reject { |item| item.blank? }.join(',')
+    b_and_a_tags = [breakdown_tags, academic_tags].reject { |item| item.blank? }.join(',')
 
     {}.tap do |h|
       # switch back to only breakdowns when the code down stream can handle academics
@@ -147,9 +157,9 @@ class GsdataCaching::GsdataCacher < Cacher
       h[:district_value] = district_value if district_value
       h[:display_range] = district_value if display_range
       h[:source_name] = result.source_name
-      h[:grade] = result.grade
-      h[:cohort_count] = result.cohort_count
-      h[:proficiency_band_id] = result.proficiency_band_id
+      h[:grade] = result.grade if result.grade
+      h[:cohort_count] = result.cohort_count if result.cohort_count
+      h[:proficiency_band_id] = result.proficiency_band_id if result.proficiency_band_id
 
       d = DATA_TYPE_IDS_TO_STRING[result.data_type_id]
       if d.present?
