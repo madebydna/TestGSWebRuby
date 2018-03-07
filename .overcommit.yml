@@ -42,3 +42,7 @@ PostCheckout:
   ShouldBundleInstall:
     enabled: true
     quiet: false
+PostMerge:
+  ShouldBundleInstall:
+    enabled: true
+    quiet: false

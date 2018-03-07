@@ -1,4 +1,4 @@
-module Overcommit::Hook::PostCheckout
+module Overcommit::Hook::PostMerge
   class ShouldBundleInstall < ::Overcommit::Hook::Base
     def run
       warning = nil
