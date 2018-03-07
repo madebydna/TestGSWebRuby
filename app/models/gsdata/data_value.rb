@@ -12,8 +12,6 @@ class DataValue < ActiveRecord::Base
   has_many :data_values_to_academics, inverse_of: :data_value
   has_many :academics, through: :data_values_to_academics, inverse_of: :data_values
   belongs_to :source, class_name: '::Gsdata::Source', inverse_of: :data_values
-  has_many :academic_tags, through: :academics
-  has_many :breakdown_tags, through: :breakdowns
   belongs_to :proficiency_band, inverse_of: :data_values
 
 
@@ -60,10 +58,10 @@ class DataValue < ActiveRecord::Base
       data_values.proficiency_band_id, data_types.name,
       sources.source_name, sources.date_valid,
       group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
-      group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_t_names",
+      group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",
       count(distinct(breakdowns.name)) as "breakdown_count",
       group_concat(distinct academics.name ORDER BY academics.name) as "academic_names",
-      group_concat(distinct act.tag ORDER BY act.tag) as "academic_t_names",
+      group_concat(distinct act.tag ORDER BY act.tag) as "academic_tags",
       count(distinct(academics.name)) as "academic_count",
       group_concat(distinct academics.type ORDER BY academics.type) as "academic_types"
     SQL

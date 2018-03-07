@@ -134,15 +134,15 @@ class GsdataCaching::GsdataCacher < Cacher
 
   def result_to_hash(result)
     breakdowns = result.breakdown_names
-    breakdown_tags = result.breakdown_t_names
+    breakdown_tags = result.breakdown_tags
     academics = result.academic_names
-    academic_tags = result.academic_t_names
+    academic_tags = result.academic_tags
     academic_types = result.academic_types
     state_value = state_value(result)
     district_value = district_value(result)
     display_range = display_range(result)
-    b_and_a = [breakdowns, academics].reject { |item| item.blank? }.join(',')
-    b_and_a_tags = [breakdown_tags, academic_tags].reject { |item| item.blank? }.join(',')
+    b_and_a = [breakdowns, academics].reject(&:blank?).join(',')
+    b_and_a_tags = [breakdown_tags, academic_tags].reject(&:blank?).join(',')
 
     {}.tap do |h|
       # switch back to only breakdowns when the code down stream can handle academics
