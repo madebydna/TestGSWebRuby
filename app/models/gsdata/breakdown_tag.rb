@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Tag < ActiveRecord::Base
+class BreakdownTag < ActiveRecord::Base
   self.table_name = 'breakdown_tags'
   db_magic connection: :gsdata
 

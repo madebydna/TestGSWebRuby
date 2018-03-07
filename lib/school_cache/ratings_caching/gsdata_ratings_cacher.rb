@@ -19,7 +19,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
         # select correct advanced coursework data values
         if data_type_id == 151
           data_values.select! do |dv|
-            dv.breakdown_tags.blank? || dv.breakdown_tags == 'course_subject_group'
+            ((dv['breakdown_names'] || '').split(',').include?('All Students') && (dv['academic_tags'] || '').split(',').include?('course_subject_group')) || (dv['breakdown_names'] == 'All Students' && dv['academic_tags'].blank?)
           end
         end
         accum.concat(data_values)
