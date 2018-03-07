@@ -17,7 +17,7 @@ class SchoolProfilesController < ApplicationController
     add_profile_structured_markup
     set_seo_meta_tags
     build_gon_object
-    if @school.private_school?
+    if @school.private_school? && !(test_scores.visible? || college_readiness.visible?)
       @private_school_profile = private_school_profile
       render 'show_private_school'
     else
