@@ -119,6 +119,10 @@ module SchoolProfiles
       decorated_school.courses_rating_array
     end
 
+    def courses_academics_rating_array
+      decorated_school.courses_academics_rating_array
+    end
+
     def courses_rating_year
       decorated_school.courses_rating_year
     end

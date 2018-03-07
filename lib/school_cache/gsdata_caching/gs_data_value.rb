@@ -94,6 +94,12 @@ class GsdataCaching::GsDataValue
 
   attr_accessor :breakdowns,
     :breakdown_tags,
+    :academics,
+    :academic_tags,
+    :academic_types,
+    :grade,
+    :proficiency_band_id,
+    :cohort_count,
     :school_value,
     :state_value,
     :district_value,
