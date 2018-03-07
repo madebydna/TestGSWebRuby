@@ -38,3 +38,7 @@ PreCommit:
    # levels:
    # refactor convention warning error fatal
    # R: :refactor, C: :convention, W: :warning, E: :error, F: :fatal
+PostCheckout:
+  ShouldBundleInstall:
+    enabled: true
+    quiet: false
