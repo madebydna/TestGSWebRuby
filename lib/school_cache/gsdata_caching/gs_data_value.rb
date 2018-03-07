@@ -25,7 +25,9 @@ class GsdataCaching::GsDataValue
       select { |dv| dv.breakdowns.blank? }.extend(CollectionMethods)
     end
 
-    alias_method :for_all_students, :having_no_breakdown
+    def for_all_students
+      select(&:all_students?).extend(CollectionMethods)
+    end
 
     def having_one_breakdown
       select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.extend(CollectionMethods)
@@ -52,7 +54,7 @@ class GsdataCaching::GsDataValue
     def expand_on_breakdown_tags
       reduce([]) do |array, dv|
         array.concat(
-          dv.breakdown_tags.split(',').map do |tag|
+          (dv.breakdown_tags || '').split(',').map do |tag|
             dv.clone.tap { |_dv| _dv.breakdown_tags = tag }
           end
         )
@@ -135,6 +137,6 @@ class GsdataCaching::GsDataValue
   end
 
   def all_students?
-    breakdowns.blank?
+    breakdowns.blank? || 'All Students'.casecmp(breakdowns) == 0
   end
 end
