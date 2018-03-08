@@ -187,7 +187,6 @@ module SchoolProfiles
               school_cohort_count: test_scores_hash['school_cohort_count'],
               state_cohort_count: test_scores_hash['state_cohort_count'],
               state_value: test_scores_hash['state_value'],
-              test_label: test_scores_hash['test_label']
             }
           end
         )

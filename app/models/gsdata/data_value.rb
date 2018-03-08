@@ -60,36 +60,33 @@ class DataValue < ActiveRecord::Base
     where(configuration: "%#{config}%")
   end
 
-  def self.find_by_school_and_data_type_tags(school, tags, breakdown_tag_names = [])
+  def self.find_by_school_and_data_type_tags(school, tags, breakdown_tag_names = [], academic_tag_names = [])
     school_values.
       from(
         DataValue.where(school_id: school.id, state: school.state, active: 1), :data_values)
           .with_data_types
           .with_data_type_tags(tags)
           .with_sources
+          .with_academics
+          .with_academic_tags(academic_tag_names)
           .with_breakdowns
           .with_breakdown_tags(breakdown_tag_names)
           .group('data_values.id')
-          .having("breakdown_count < 2 OR breakdown_names like '%All students except 504 category%'")
+          .having("(breakdown_count + academic_count) < 3 OR breakdown_names like '%All students except 504 category%'")
   end
 
 # rubocop:enable Style/FormatStringToken
   def self.school_values
     school_values = <<-SQL
-      data_values.id, data_values.value, data_values.state, data_values.school_id, data_values.district_id,
-      data_values.data_type_id, data_values.configuration, data_values.cohort_count, data_values.grade, data_types.name,
-
-  def self.school_values
-    school_values = <<-SQL
       data_values.id, data_values.value, data_values.state, data_values.school_id,
       data_values.data_type_id, data_values.configuration, data_values.grade, data_values.cohort_count,
-      data_values.proficiency_band_id, data_types.name,
-      sources.source_name, sources.date_valid,
+      data_values.proficiency_band_id, data_types.name, data_types.short_name,
+      sources.source_name, sources.date_valid, sources.description,
       group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
-      group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_t_names",
+      group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tag_names",
       count(distinct(breakdowns.name)) as "breakdown_count",
       group_concat(distinct academics.name ORDER BY academics.name) as "academic_names",
-      group_concat(distinct act.tag ORDER BY act.tag) as "academic_t_names",
+      group_concat(distinct act.tag ORDER BY act.tag) as "academic_tags",
       count(distinct(academics.name)) as "academic_count",
       group_concat(distinct academics.type ORDER BY academics.type) as "academic_types"
     SQL
@@ -237,7 +234,7 @@ class DataValue < ActiveRecord::Base
   end
 
   def datatype_breakdown_year
-    [data_type_id, breakdowns, date_valid]
+    [data_type_id, breakdown_names, date_valid]
   end
 
 end

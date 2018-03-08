@@ -167,11 +167,11 @@ class GsdataCaching::GsDataValue
     end
 
     def all_school_values_are_numeric?
-      map(&:school_value).all? { |v| v.to_s.to_f == v }
+      map(&:school_value).all?(&:numeric?)
     end
 
     def all_state_values_are_numeric?
-      map(&:state_value).all? { |v| v.to_s.to_f == v }
+      map(&:state_value).all?(&:numeric?)
     end
 
     def all_have_school_cohort_count?
@@ -204,7 +204,6 @@ class GsdataCaching::GsDataValue
     :flags,
     :percentage,
     :narrative,
-    :test_label,
     :label
 
   attr_reader :school_cohort_count, :state_cohort_count
@@ -293,14 +292,13 @@ class GsdataCaching::GsDataValue
       percentage: percentage,
       narrative: narrative,
       label: label,
-      test_label: test_label
     }.tap do |hash|
       hash[:narrative] = narrative if narrative
     end
   end
 
   def all_students?
-    breakdowns.blank? || 'All Students'.casecmp(breakdowns) == 0
+    breakdowns.blank? || breakdowns['All Students']
   end
 
 end

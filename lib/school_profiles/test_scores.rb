@@ -63,7 +63,6 @@ module SchoolProfiles
 
     def subject_scores
       scores = @school_cache_data_reader.flat_test_scores_for_latest_year
-
       scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(test_scores_hashes: nil)
         .add_to_array_of_hashes(scores)
 
