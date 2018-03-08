@@ -2,6 +2,10 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   CACHE_KEY = 'ratings'.freeze
   DATA_TYPE_IDS = [151,155,156,157,158,159,160,176].freeze
 
+  ADVANCED_COURSEWORK_DATA_TYPE_ID = 151
+  ALL_STUDENTS = 'All Students'
+  COURSE_SUBJECT_GROUP = 'course_subject_group'
+
   def self.listens_to?(data_type)
     :ratings == data_type
   end
@@ -17,9 +21,9 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
         # remove all data values except those with most recent date
         data_values.select! { |dv| dv.date_valid == most_recent_date }
         # select correct advanced coursework data values
-        if data_type_id == 151
+        if data_type_id == ADVANCED_COURSEWORK_DATA_TYPE_ID
           data_values.select! do |dv|
-            ((dv['breakdown_names'] || '').split(',').include?('All Students') && (dv['academic_tags'] || '').split(',').include?('course_subject_group')) || (dv['breakdown_names'] == 'All Students' && dv['academic_tags'].blank?)
+            advanced_coursework_select_logic?(dv)
           end
         end
         accum.concat(data_values)
@@ -31,6 +35,19 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
         cache_hash[result.name] << result_hash
       end
     )
+  end
+
+  def advanced_coursework_select_logic?(dv)
+     (
+      (
+        (dv['breakdown_names'] || '').split(',').include?(ALL_STUDENTS) &&
+            (dv['academic_tags'] || '').split(',').include?(COURSE_SUBJECT_GROUP)
+      ) ||
+      (
+        dv['breakdown_names'] == ALL_STUDENTS &&
+            dv['academic_tags'].blank?
+      )
+     )
   end
 
   def test_score_only?
