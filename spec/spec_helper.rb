@@ -6,8 +6,6 @@ require 'rubygems'
 require 'capybara-screenshot/rspec'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'database_cleaner' unless ENV['BLACK_BOX']
-require 'support/database_cleaner_extensions' unless ENV['BLACK_BOX']
 require 'capybara/rspec'
 require 'factory_girl' unless ENV['BLACK_BOX']
 require 'support/factory_girl_extensions' unless ENV['BLACK_BOX']
@@ -112,10 +110,6 @@ RSpec.configure do |config|
       clean_chosen_dbs
       disconnect_all_connection_pools
     end
-
-    DatabaseCleaner.strategy = :truncation
-    # This needs to be done after we've loaded an ActiveRecord strategy above
-    monkey_patch_database_cleaner
   end
 
 

@@ -1,17 +1,3 @@
-def monkey_patch_database_cleaner
-  DatabaseCleaner::ActiveRecord::Base.module_eval do
-    # For some reason, by default database_cleaner will re-load the database.yml file, but we modify
-    # Rails' db configuration after database.yml is loaded by the Rails environment.
-    #
-    # Instead of letting database_cleaner reload database.yml, just tell it to use the config that is already loaded
-    def load_config
-      if self.db != :default && self.db.is_a?(Symbol)
-        @connection_hash = ::ActiveRecord::Base.configurations['test'][self.db.to_s]
-      end
-    end
-  end
-end
-
 def clean_chosen_models
   @db_clean_commands ||= Hash.new { |h, k| h[k] = [] }
   @db_clean_commands[:clean_models].each do |command|
