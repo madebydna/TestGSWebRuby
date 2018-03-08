@@ -191,7 +191,7 @@ module SchoolProfiles
           end
         )
       end
-      GsdataCaching::GsDataValue.from_array_of_hashes(hashes)
+      GsdataCaching::GsDataValue.from_array_of_hashes(hashes).having_most_recent_date
     end
 
     def graduation_rate_data
