@@ -105,9 +105,13 @@ RSpec.configure do |config|
     config.after(:each) do
       Rails.cache.clear
       Gon.clear
-      disconnect_all_connection_pools
     end
 
+    config.append_after(:each) do
+      clean_chosen_models
+      clean_chosen_dbs
+      disconnect_all_connection_pools
+    end
 
     DatabaseCleaner.strategy = :truncation
     # This needs to be done after we've loaded an ActiveRecord strategy above
