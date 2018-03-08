@@ -92,7 +92,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
       h[:state_value] = state_value if state_value  #data_type.value
       h[:district_value] = district_value if district_value   #data_type.value
       h[:source_name] = result.source_name    #source.name
-      h[:description] = result.description if result.description    #source.description#################
+      h[:description] = result.description if result.description    #source.description
       h[:school_cohort_count] = result.cohort_count if result.cohort_count #data_value.cohort_count
       h[:academics] = academics if academics   #data_value.academics.pluck(:name).join(',')
       h[:academic_tags] = result.academic_tags  #academic_tags.tag...comma separated string for all records associated with data value
