@@ -186,4 +186,15 @@ class SchoolProfilesPage < SitePrism::Page
   def set_school_profile_tour_cookie
     set_cookie('decline_school_profile_tour', true)
   end
+
+  def submit_a_valid_5_star_rating_comment
+    choose_five_star_cta_response(5)
+    fill_in_five_star_rating_comment(valid_comment)
+    review_form.submit_form
+  end
+
+  def valid_comment
+    'A valid and wonderful comment on a school yeah!'
+  end
+
 end
