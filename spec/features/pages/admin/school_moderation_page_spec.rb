@@ -88,7 +88,7 @@ describe 'School moderate page' do
       # end
 
       with_shared_context 'visit page', SchoolModerationPage, state: state_name, school_id: school_id do
-        when_I 'search for school', state, school_id do
+        when_I :search_for_school, state, school_id do
           it { is_expected.to have_content school.name }
           it { is_expected.to have_reviews }
           # it { is_expected.to have_reviews_topic_filter_button }
