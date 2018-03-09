@@ -41,11 +41,11 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
      (
       (
         (dv['breakdown_names'] || '').split(',').include?(ALL_STUDENTS) &&
-            (dv['academic_tags'] || '').split(',').include?(COURSE_SUBJECT_GROUP)
+            (dv['breakdown_tags'] || '').split(',').include?(COURSE_SUBJECT_GROUP)
       ) ||
       (
         dv['breakdown_names'] == ALL_STUDENTS &&
-            dv['academic_tags'].blank?
+            dv['breakdown_tags'].blank?
       )
      )
   end
