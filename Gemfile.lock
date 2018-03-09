@@ -61,9 +61,6 @@ GEM
     arel (6.0.4)
     ast (2.3.0)
     awesome_print (1.2.0)
-    better_errors (0.9.0)
-      coderay (>= 1.0.0)
-      erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.3)
@@ -500,6 +497,10 @@ GEM
       httpi (~> 2.0)
       mime-types (< 2.0.0)
       nokogiri (>= 1.4.0)
+    web-console (3.3.0)
+      activemodel (>= 4.2)
+      debug_inspector
+      railties (>= 4.2)
     webmock (3.1.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -516,7 +517,6 @@ PLATFORMS
 
 DEPENDENCIES
   addressable
-  better_errors (~> 0.9.0)
   binding_of_caller (~> 0.7.2)
   byebug
   capybara
@@ -597,6 +597,7 @@ DEPENDENCIES
   timecop
   to_regexp
   uglifier (>= 1.0.3)
+  web-console
   webmock
   wiselinks
   yard

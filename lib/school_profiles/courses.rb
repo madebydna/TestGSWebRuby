@@ -82,7 +82,7 @@ module SchoolProfiles
     #   ]
     # }
     def course_enrollments_and_ratings
-      course_ratings_hash = @school_cache_data_reader.courses_rating_array
+      course_ratings_hash = @school_cache_data_reader.courses_academics_rating_array
 
       SUBJECT_ORDER.each_with_object({}) do |snake_case_subject, accum|
         courses = courses_by_subject[snake_case_subject] || []
@@ -159,13 +159,17 @@ module SchoolProfiles
           subjects.each do |subject|
             accum[subject] ||= []
             accum[subject] << {
-              'name' => dv.breakdowns,
+              'name' => dv.academics || remove_all_students_from_breakdowns(dv),
               'source' => dv.source_name,
               'year' => dv.source_year
             }
           end
         end
       )
+    end
+
+    def remove_all_students_from_breakdowns(dv)
+      dv.breakdowns.split(',').reject{ |bd| bd == 'All students'}.join(',') if dv.breakdowns.present?
     end
 
     # Input data format:

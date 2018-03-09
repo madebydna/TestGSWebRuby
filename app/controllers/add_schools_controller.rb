@@ -31,7 +31,7 @@ class AddSchoolsController < ApplicationController
 
   def render_if_not_allowed(obj,template)
     unless RecaptchaVerifier.submissions_allowed?(params['g-recaptcha-response'])
-      obj.errors.add(:recaptcha, 'error, please try again later.')
+      @recaptcha_error = true
       render template
     end
   end
