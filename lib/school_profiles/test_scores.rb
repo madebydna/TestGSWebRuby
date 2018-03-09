@@ -81,8 +81,8 @@ module SchoolProfiles
 
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
           rating_score_item.label = data_label(gs_data_value.academics)
-          rating_score_item.score = SchoolProfiles::DataPoint.new(gs_data_value.school_value).apply_formatting(:round, :percent)
-          rating_score_item.state_average = SchoolProfiles::DataPoint.new(gs_data_value.state_value).apply_formatting(:round, :percent)
+          rating_score_item.score = SchoolProfiles::DataPoint.new(gs_data_value.school_value.to_f).apply_formatting(:round, :percent)
+          rating_score_item.state_average = SchoolProfiles::DataPoint.new(gs_data_value.state_value.to_f).apply_formatting(:round, :percent)
           rating_score_item.description = gs_data_value.description
           rating_score_item.test_label = gs_data_value.data_type
           rating_score_item.source = gs_data_value.source_name
