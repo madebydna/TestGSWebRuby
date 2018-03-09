@@ -298,7 +298,7 @@ class GsdataCaching::GsDataValue
   end
 
   def all_students?
-    breakdowns.blank? || breakdowns['All Students']
+    breakdowns.blank? || breakdowns.downcase['all students']
   end
 
 end

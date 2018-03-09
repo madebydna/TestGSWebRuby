@@ -32,7 +32,7 @@ module SchoolProfiles
           values_by_test_label
         )
       end
-      
+
       def cache_hash_to_standard_hash(gs_dv, grades)
         breakdown = gs_dv.breakdowns
         grades_for_breakdown = grades.select{|grade| grade.breakdowns.include?(breakdown) && grade.data_type == gs_dv.data_type}
@@ -40,7 +40,7 @@ module SchoolProfiles
         gs_dv.to_hash.merge(
           breakdowns: normalized_breakdown,
           percentage: breakdown_percentage(normalized_breakdown),
-          grade: manage_grades_hash(grades_for_breakdown)
+          grades: manage_grades_hash(grades_for_breakdown)
         )
       end
 
