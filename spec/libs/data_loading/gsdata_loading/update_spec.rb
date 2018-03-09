@@ -3,47 +3,47 @@ require "spec_helper"
 describe GsdataLoading::Update do
   let(:valid_blob) do
     {
-      "value": "63",
-      "state": "mi",
-      "entity_level": "school",
-      "school_id": "00790",
-      "district_id": "03010",
-      "data_type_id": 245,
-      "proficiency_band_id": "null",
-      "cohort_count": "54",
-      "grade": "3",
-      "active": 1,
-      "breakdowns": [
+      :"value" => "63",
+      :"state" => "mi",
+      :"entity_level" => "school",
+      :"school_id" => "00790",
+      :"district_id" => "03010",
+      :"data_type_id" => 245,
+      :"proficiency_band_id" => "null",
+      :"cohort_count" => "54",
+      :"grade" => "3",
+      :"active" => 1,
+      :"breakdowns" => [
         {
-          "id": 1
+          :"id" => 1
         }
       ],
-      "academics": [
+      :"academics" => [
         {
-          "id": 1
+          :"id" => 1
         }
       ],
-      "source": {
-        "source_name": "MI DOE",
-        "date_valid": "2017-01-01 00:00:00",
-        "notes": "DXT-2542 MI MSTEP 2017"
+      :"source" => {
+        :"source_name" => "MI DOE",
+        :"date_valid" => "2017-01-01 00:00:00",
+        :"notes" => "DXT-2542 MI MSTEP 2017"
       },
-      "year": 2017,
-      "configuration": "feeds"
+      :"year" => 2017,
+      :"configuration" => "feeds"
     }
   end
 
   describe '#validate' do
     @valid_blob = {
-      "value": "63",
-      "state": "mi",
-      "school_id": "00790",
-      "data_type_id": 245,
-      "active": 1,
-      "source": {
-        "source_name": "MI DOE",
-        "date_valid": "2017-01-01 00:00:00",
-        "notes": "DXT-2542 MI MSTEP 2017"
+      :"value" => "63",
+      :"state" => "mi",
+      :"school_id" => "00790",
+      :"data_type_id" => 245,
+      :"active" => 1,
+      :"source" => {
+        :"source_name" => "MI DOE",
+        :"date_valid" => "2017-01-01 00:00:00",
+        :"notes" => "DXT-2542 MI MSTEP 2017"
       }
     }
 
@@ -51,27 +51,27 @@ describe GsdataLoading::Update do
       nil => false,
       {} => false,
       {
-        "value": "63",
-        "state": "mi",
-        "school_id": "00001",
-        "data_type_id": 245,
-        "active": 1,
-        "source": {
-          "source_name": "MI DOE",
-          "date_valid": "2017-01-01 00:00:00",
-          "notes": "DXT-2542 MI MSTEP 2017"
+        :"value" => "63",
+        :"state" => "mi",
+        :"school_id" => "00001",
+        :"data_type_id" => 245,
+        :"active" => 1,
+        :"source" => {
+          :"source_name" => "MI DOE",
+          :"date_valid" => "2017-01-01 00:00:00",
+          :"notes" => "DXT-2542 MI MSTEP 2017"
         }
       } => true,
       {
-        "value": "63",
-        "state": "mi",
-        "district_id": "00001",
-        "data_type_id": 245,
-        "active": 1,
-        "source": {
-          "source_name": "MI DOE",
-          "date_valid": "2017-01-01 00:00:00",
-          "notes": "DXT-2542 MI MSTEP 2017"
+        :"value" => "63",
+        :"state" => "mi",
+        :"district_id" => "00001",
+        :"data_type_id" => 245,
+        :"active" => 1,
+        :"source" => {
+          :"source_name" => "MI DOE",
+          :"date_valid" => "2017-01-01 00:00:00",
+          :"notes" => "DXT-2542 MI MSTEP 2017"
         }
       } => true,
       @valid_blob.except(:source) => false,
@@ -98,15 +98,15 @@ describe GsdataLoading::Update do
     end
     let(:blob) do
       {
-        "value": "63",
-        "state": school.state,
-        "school_id": school.state_id,
-        "data_type_id": 245,
-        "active": 1,
-        "source": {
-          "source_name": "MI DOE",
-          "date_valid": "2017-01-01 00:00:00",
-          "notes": "DXT-2542 MI MSTEP 2017"
+        :"value" => "63",
+        :"state" => school.state,
+        :"school_id" => school.state_id,
+        :"data_type_id" => 245,
+        :"active" => 1,
+        :"source" => {
+          :"source_name" => "MI DOE",
+          :"date_valid" => "2017-01-01 00:00:00",
+          :"notes" => "DXT-2542 MI MSTEP 2017"
         }
       }
     end
