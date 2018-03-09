@@ -216,6 +216,7 @@ module SchoolProfiles
           if h['breakdowns']
             h['breakdowns'] = h['breakdowns'].gsub('All students except 504 category,','')
             h['breakdowns'] = h['breakdowns'].gsub(/,All students except 504 category$/,'')
+            h['breakdowns'] = h['breakdowns'].gsub('All Students','All students')
           end
           h
         end

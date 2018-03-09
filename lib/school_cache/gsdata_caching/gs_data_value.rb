@@ -92,8 +92,7 @@ class GsdataCaching::GsDataValue
     end
   end
 
-  attr_accessor :breakdowns,
-    :breakdown_tags,
+  attr_accessor :breakdown_tags,
     :academics,
     :academic_tags,
     :academic_types,
@@ -140,6 +139,17 @@ class GsdataCaching::GsDataValue
           .gsub('All students except 504 category,','')
           .gsub(/,All students except 504 category$/,'')
     end
+  end
+
+  def breakdowns=(breakdowns)
+    if breakdowns.is_a?(String)
+      breakdowns = breakdowns.gsub('All Students', 'All students')
+    end
+    @breakdowns = breakdowns
+  end
+
+  def breakdowns
+    @breakdowns
   end
 
   def all_students?

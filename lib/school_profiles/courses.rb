@@ -169,7 +169,7 @@ module SchoolProfiles
     end
 
     def remove_all_students_from_breakdowns(dv)
-      dv.breakdowns.split(',').reject{ |bd| bd == 'All Students'}.join(',') if dv.breakdowns.present?
+      dv.breakdowns.split(',').reject{ |bd| bd == 'All students'}.join(',') if dv.breakdowns.present?
     end
 
     # Input data format:
