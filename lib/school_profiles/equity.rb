@@ -188,9 +188,7 @@ module SchoolProfiles
     end
 
     def race_ethnicity_sources
-      rval = sources_html((test_source_data.source_rating_text + test_source_data.sources_without_rating_text)) + sources
-      console
-      rval
+      sources_html((test_source_data.source_rating_text + test_source_data.sources_without_rating_text)) + sources
     end
 
     def students_with_disabilities_sources

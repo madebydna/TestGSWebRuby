@@ -4,6 +4,9 @@ class GsdataCaching::GsDataValue
   include FromHashMethod
   GRADE_ALL = 'All'
 
+  STUDENTS_WITH_DISABILITIES = 'Students with disabilities'
+  STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES = 'Students with IDEA catagory disabilities'
+
   module CollectionMethods
     def year_of_most_recent
       most_recent.try(:year)
@@ -43,13 +46,26 @@ class GsdataCaching::GsDataValue
     end
 
     def having_no_breakdown_or_breakdown_in(breakdowns)
-      select { |dv| dv.breakdowns.blank? || Array.wrap(breakdowns).include?(dv.breakdowns) }
-        .extend(CollectionMethods)
+      breakdowns = Array.wrap(breakdowns)
+      select do |dv|
+        # data value selected if it has no breakdown or all its breakdowns
+        # are contained within the given list
+        dv.breakdowns.blank? || (breakdowns & dv.breakdowns) == dv.breakdowns
+      end.extend(CollectionMethods)
+    end
+    
+    # any breakdowns besides All Students?
+    def any_subgroups?
+      any? { |dv| !dv.all_students? }
     end
 
     def having_breakdown_in(breakdowns)
-      select { |dv| Array.wrap(breakdowns).include?(dv.breakdowns) }
-        .extend(CollectionMethods)
+      breakdowns = Array.wrap(breakdowns)
+      select do |dv|
+        # data value selected if all its breakdowns
+        # are contained within the given list
+        (breakdowns & Array.wrap(dv.breakdowns)) == dv.breakdowns
+      end.extend(CollectionMethods)
     end
     alias_method :having_breakdown, :having_breakdown_in
 
@@ -82,6 +98,13 @@ class GsdataCaching::GsDataValue
       end
     end
 
+    # To get values for same test but different grades
+    def group_by_test
+      group_by do |dv|
+        [dv.data_type, dv.academics]
+      end
+    end
+
     def group_by_academics
       group_by do |dv|
         if dv.academics.include?(',')
@@ -102,13 +125,22 @@ class GsdataCaching::GsDataValue
         .tap { |a| a.extend(CollectionMethods) }
     end
 
-    def expect_only_one(message, other_helpful_vars = {})
-      GSLogger.error(
-        :misc,
-        nil,
-        message: "Expected to find unique gsdata value: #{message}",
-        vars: other_helpful_vars
-      ) if size > 1
+    def expect_only_one(message, other_helpful_vars = nil)
+      if size > 1
+        other_helpful_vars ||= {
+          school_ids: map(&:school_id),
+          data_types: map(&:data_type),
+          breakdowns: map(&:breakdowns),
+          academics: map(&:academics),
+          grades: map(&:grade)
+        }
+        GSLogger.error(
+          :misc,
+          nil,
+          message: "Expected to find unique gsdata value: #{message}",
+          vars: other_helpful_vars
+        )
+      end
       return first
     end
 
@@ -128,6 +160,10 @@ class GsdataCaching::GsDataValue
 
     def any_grade_all?
       any?(&:grade_all?)
+    end
+
+    def sort_by_grade
+      sort_by(&:grade)
     end
 
     def total_school_cohort_count
@@ -183,7 +219,7 @@ class GsdataCaching::GsDataValue
     end
 
     def sort_by_test_label_and_cohort_count
-      sort_by { |h| [h.data_type, (h.school_cohort_count || 0) * -1] }
+      sort_by { |h| [h.data_type, (h.school_cohort_count || 0) * -1] }.extend(CollectionMethods)
     end
 
     %i[year data_type description source_name].each do |method|
@@ -209,6 +245,24 @@ class GsdataCaching::GsDataValue
 
     def all_academics
       reduce([]) { |accum, dv| accum.concat(dv.academics.split(',')) }.uniq
+    end
+
+    def recent_students_with_disabilities_school_values
+      students_with_disabilities_breakdowns = [
+        STUDENTS_WITH_DISABILITIES,
+        STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES
+      ]
+
+      self.having_most_recent_date
+        .having_school_value
+        .having_breakdown_in(students_with_disabilities_breakdowns)
+    end
+
+    def recent_ethnicity_school_values
+      self.having_most_recent_date
+        .having_school_value
+        .select(&:has_ethnicity_tag?)
+        .extend(CollectionMethods)
     end
 
   end
@@ -275,10 +329,7 @@ class GsdataCaching::GsDataValue
 
   def remove_504_category_breakdown!
     if self.breakdowns.present?
-      self.breakdowns = 
-        breakdowns
-          .gsub('All students except 504 category,','')
-          .gsub(/,All students except 504 category$/,'')
+      self.breakdowns = self.breakdowns - ['All students except 504 category']
     end
   end
 
@@ -329,7 +380,9 @@ class GsdataCaching::GsDataValue
 
   def breakdowns=(breakdowns)
     if breakdowns.is_a?(String)
-      breakdowns = breakdowns.gsub('All Students', 'All students')
+      breakdowns = breakdowns
+        .gsub('All Students', 'All students')
+        .split(',')
     end
     @breakdowns = breakdowns
   end
@@ -339,7 +392,11 @@ class GsdataCaching::GsDataValue
   end
 
   def all_students?
-    breakdowns.blank? || breakdowns.downcase['all students']
+    breakdowns.blank? || breakdowns.include?('All students')
+  end
+
+  def has_ethnicity_tag?
+    breakdown_tags.present? && breakdown_tags.include?('ethnicity')
   end
 
 end

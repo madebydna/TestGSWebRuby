@@ -198,6 +198,18 @@ module SchoolProfiles
       GsdataCaching::GsDataValue.from_array_of_hashes(hashes).having_most_recent_date
     end
 
+    def recent_test_scores_with_subgroups
+      flat_test_scores_for_latest_year
+        .for_all_students
+        .sort_by_test_label_and_cohort_count
+    end
+
+    def recent_test_scores_without_subgroups
+      flat_test_scores_for_latest_year
+        .for_all_students
+        .sort_by_test_label_and_cohort_count
+    end
+
     def graduation_rate_data
       decorated_school.characteristics['4-year high school graduation rate']
     end

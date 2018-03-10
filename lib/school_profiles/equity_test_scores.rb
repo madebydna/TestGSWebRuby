@@ -36,16 +36,18 @@ module SchoolProfiles
     end
 
     def low_income_hash
-      # TODO: sort subjects by total number tested within each
-      # TODO: reject all with no other breakdowns
       # TODO: sort breakdowns
       @_low_income_hash ||=(
-        @school_cache_data_reader
-          .flat_test_scores_for_latest_year
-          .having_most_recent_date
+        results = @school_cache_data_reader
+          .recent_test_scores_with_subgroups
           .having_breakdown_in(low_income_breakdowns.keys)
-          .group_by_academics
-          .first(SUBJECTS_TO_RETURN)
+        if results.any_subgroups?
+          results
+            .group_by_test
+            .first(SUBJECTS_TO_RETURN)
+        else
+          nil
+        end
       )
     end
 

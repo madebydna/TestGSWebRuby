@@ -50,49 +50,39 @@ module SchoolProfiles
     end
 
     def subject_scores
-      scores = @school_cache_data_reader.flat_test_scores_for_latest_year
-      scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(test_scores_hashes: nil)
-        .add_to_array_of_hashes(scores)
+      scores = @school_cache_data_reader.recent_test_scores_without_subgroups
+      scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(test_scores_hashes: nil).add_to_array_of_hashes(scores)
 
-      scores = scores.for_all_students
-      scores_grade_all = scores.having_grade_all
-      scores_grade_not_all = scores.not_grade_all
-      scores_grade_all = scores_grade_all.sort_by_test_label_and_cohort_count
-      build_rating_score_hash(scores_grade_all, scores_grade_not_all)
-    end
+      scores.group_by_test.values.map do |gs_data_values|
+        grade_all_rating_score_item = rating_score_item_from_gs_data_value(
+          gs_data_values
+          .having_grade_all
+          .expect_only_one('Expect only one value for all students grade all per test')
+        )
+        other_grades = gs_data_values.not_grade_all.sort_by_grade
 
-    def build_rating_score_hash(scores, grades_hash)
-      scores = scores.map do |gs_data_value|
-        grades_from_hash = grades_hash.select { | score | score.data_type == gs_data_value.data_type && score.academics == gs_data_value.academics } if grades_hash
-        grades = build_rating_score_hash(grades_from_hash, nil) if grades_from_hash && grades_from_hash.count >= GRADES_DISPLAY_MINIMUM
-        grades = sort_by_grades_ascending(grades) if grades.present?
-
-        SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
-          rating_score_item.label = data_label(gs_data_value.academics)
-          rating_score_item.score = SchoolProfiles::DataPoint.new(gs_data_value.school_value.to_f).apply_formatting(:round, :percent)
-          rating_score_item.state_average = SchoolProfiles::DataPoint.new(gs_data_value.state_value.to_f).apply_formatting(:round, :percent)
-          rating_score_item.description = gs_data_value.description
-          rating_score_item.test_label = gs_data_value.data_type
-          rating_score_item.source = gs_data_value.source_name
-          rating_score_item.year = gs_data_value.source_year
-          rating_score_item.grade = gs_data_value.grade
-          rating_score_item.grades = grades
-          rating_score_item.flags = gs_data_value.flags
+        if other_grades.present? #&& other_grades.size > GRADES_DISPLAY_MINIMUM
+          grade_all_rating_score_item.grades = other_grades.map do |gs_data_value|
+            rating_score_item_from_gs_data_value(gs_data_value)
+          end
         end
-      end if scores.present?
-      scores
+
+        grade_all_rating_score_item
+      end
     end
 
-    def sort_by_grades_ascending(grades)
-      grades.sort_by { |h| h.grade }
-    end
-
-    def sort_by_test_label_and_number_tested_descending(scores)
-      scores.sort_by { |h| [h[:test_label], (h[:number_students_tested] || 0) * -1] }
-    end
-
-    def sort_by_number_tested_descending(scores)
-      scores.sort_by { |k| k[:number_students_tested] || 0 }.reverse if scores.present?
+    def rating_score_item_from_gs_data_value(gs_data_value)
+      SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
+        rating_score_item.label = data_label(gs_data_value.academics)
+        rating_score_item.score = SchoolProfiles::DataPoint.new(gs_data_value.school_value.to_f).apply_formatting(:round, :percent)
+        rating_score_item.state_average = SchoolProfiles::DataPoint.new(gs_data_value.state_value.to_f).apply_formatting(:round, :percent)
+        rating_score_item.description = gs_data_value.description
+        rating_score_item.test_label = gs_data_value.data_type
+        rating_score_item.source = gs_data_value.source_name
+        rating_score_item.year = gs_data_value.source_year
+        rating_score_item.grade = gs_data_value.grade
+        rating_score_item.flags = gs_data_value.flags
+      end
     end
 
     def share_content
