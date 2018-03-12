@@ -188,8 +188,13 @@ class GsdataCaching::GsDataValue
 
   end
 
-  attr_accessor :breakdowns,
-    :breakdown_tags,
+  attr_accessor :breakdown_tags,
+    :academics,
+    :academic_tags,
+    :academic_types,
+    :grade,
+    :proficiency_band_id,
+    :cohort_count,
     :school_value,
     :state_value,
     :district_value,
@@ -295,6 +300,17 @@ class GsdataCaching::GsDataValue
     }.tap do |hash|
       hash[:narrative] = narrative if narrative
     end
+  end
+
+  def breakdowns=(breakdowns)
+    if breakdowns.is_a?(String)
+      breakdowns = breakdowns.gsub('All Students', 'All students')
+    end
+    @breakdowns = breakdowns
+  end
+
+  def breakdowns
+    @breakdowns
   end
 
   def all_students?

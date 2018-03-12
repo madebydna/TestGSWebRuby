@@ -90,6 +90,19 @@ module CachedRatingsMethods
     end
   end
 
+  def courses_academics_rating_array
+    course_subject_group = ratings_by_type['Advanced Course Rating']
+    Array.wrap(course_subject_group).each_with_object({}) do |dv, accum|
+      if dv.academics.present?
+        subject = dv.academics.downcase.gsub(' ', '_')
+        accum[subject] = dv.school_value_as_int
+      elsif dv.breakdowns.present?
+        subject = dv.breakdowns.split(',').reject{ |bd| bd == 'All Students'}.join(',').downcase.gsub(' ', '_')
+        accum[subject] = dv.school_value_as_int
+      end
+    end
+  end
+
   def courses_rating_year
     rating_year_for_key('Advanced Course Rating')
   end

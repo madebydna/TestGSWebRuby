@@ -119,6 +119,10 @@ module SchoolProfiles
       decorated_school.courses_rating_array
     end
 
+    def courses_academics_rating_array
+      decorated_school.courses_academics_rating_array
+    end
+
     def courses_rating_year
       decorated_school.courses_rating_year
     end
@@ -209,6 +213,7 @@ module SchoolProfiles
           if h['breakdowns']
             h['breakdowns'] = h['breakdowns'].gsub('All students except 504 category,','')
             h['breakdowns'] = h['breakdowns'].gsub(/,All students except 504 category$/,'')
+            h['breakdowns'] = h['breakdowns'].gsub('All Students','All students')
           end
           h
         end

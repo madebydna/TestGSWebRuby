@@ -34,7 +34,7 @@ class GsdataCaching::GsdataCacher < Cacher
 
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
 
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 152, 154, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186].freeze
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186].freeze
 
   BREAKDOWN_TAG_NAMES = %w(
     ethnicity
@@ -78,11 +78,11 @@ class GsdataCaching::GsdataCacher < Cacher
     r.each_with_object(school_cache_hash) do |result, cache_hash|
       result_hash = result_to_hash(result)
       validate_result_hash(result_hash, result.data_type_id)
-      cache_hash[result.name] << result_hash if course_enrollment_filter_on_all_students(result_hash, result.data_type_id)
+      cache_hash[result.name] << result_hash if course_enrollment_filter_on_all_students?(result_hash, result.data_type_id)
     end
   end
 
-  def course_enrollment_filter_on_all_students(hash, id)
+  def course_enrollment_filter_on_all_students?(hash, id)
     if id == COURSE_ENROLLMENT_DATA_TYPE_ID && !(hash[:breakdowns].split(',').include?('All Students') && hash[:grade] == 'All')
       false
     else
@@ -135,14 +135,14 @@ class GsdataCaching::GsdataCacher < Cacher
   def result_to_hash(result)
     breakdowns = result.breakdown_names
     breakdown_tags = result.breakdown_tag_names
-    academics = result.academic_names
+    breakdown_tags = result.breakdown_tags
     academic_tags = result.academic_tag_names
     academic_types = result.academic_types
     state_value = state_value(result)
     district_value = district_value(result)
     display_range = display_range(result)
-    b_and_a = [breakdowns, academics].reject { |item| item.blank? }.join(',')
-    b_and_a_tags = [breakdown_tags, academic_tags].reject { |item| item.blank? }.join(',')
+    b_and_a = [breakdowns, academics].reject(&:blank?).join(',')
+    b_and_a_tags = [breakdown_tags, academic_tags].reject(&:blank?).join(',')
 
     {}.tap do |h|
       # switch back to only breakdowns when the code down stream can handle academics
