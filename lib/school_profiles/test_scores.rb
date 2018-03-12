@@ -49,18 +49,6 @@ module SchoolProfiles
       I18n.t(key, scope: 'lib.test_scores', default: I18n.db_t(key, default: key))
     end
 
-    # def subject_scores_equity
-    #   scores = @school_cache_data_reader.subject_scores_by_latest_year
-    #   scores = sort_by_number_tested_descending scores
-    #   scores.map do |hash|
-    #     SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
-    #       rating_score_item.label = data_label(hash.subject)
-    #       rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
-    #       rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
-    #     end
-    #   end if scores.present?
-    # end
-
     def subject_scores
       scores = @school_cache_data_reader.flat_test_scores_for_latest_year
       scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(test_scores_hashes: nil)
@@ -121,20 +109,16 @@ module SchoolProfiles
                                    description: rating_description, methodology: rating_methodology,
                                    more_anchor: 'testscorerating')
         end
-        data = subject_scores.each_with_object({}) do |rsi, output|
-          output[rsi.test_label] ||= {}
-          output[rsi.test_label][:test_label] = rsi.test_label
-          output[rsi.test_label][:subject] ||= []
-          output[rsi.test_label][:subject] << rsi.label
-          output[rsi.test_label][:test_description] = rsi.description
-          output[rsi.test_label][:source] = rsi.source
-          output[rsi.test_label][:year] = rsi.year
-          output[rsi.test_label][:flags] ||= []
-          output[rsi.test_label][:flags] << rsi.flags
-        end
-        content << data.reduce('') do |string, array|
-          string << sources_for_view(array)
-        end
+
+        content << @school_cache_data_reader
+          .flat_test_scores_for_latest_year
+          .for_all_students
+          .group_by(&:data_type)
+          .values
+          .each_with_object('') do |array, c|
+            c << sources_for_view(array)
+          end
+
         content << '</div>'
       end
       content
@@ -151,40 +135,30 @@ module SchoolProfiles
     end
 
     def sources_without_rating_text
-      content = ''
-      if subject_scores.present?
-        data = subject_scores.each_with_object({}) do |rsi, output|
-          output[rsi.test_label] ||= {}
-          output[rsi.test_label][:test_label] = rsi.test_label
-          output[rsi.test_label][:subject] ||= []
-          output[rsi.test_label][:subject] << rsi.label
-          output[rsi.test_label][:test_description] = rsi.description
-          output[rsi.test_label][:source] = rsi.source
-          output[rsi.test_label][:year] = rsi.year
-          output[rsi.test_label][:flags] ||= []
-          output[rsi.test_label][:flags] << rsi.flags
+      @school_cache_data_reader
+        .flat_test_scores_for_latest_year
+        .for_all_students
+        .group_by(&:data_type)
+        .values
+        .each_with_object('') do |array, content|
+          content << sources_for_view(array)
         end
-        content << data.reduce('') do |string, array|
-          string << sources_for_view(array)
-        end
-      end
-      content
     end
 
     def sources_for_view(array)
-      year = array.last[:year]
-      source = array.last[:source]
-      flags = flags_for_sources(array.last[:flags].flatten.compact.uniq)
+      # TODO: test flags
+      source = array.source_name
+      flags = flags_for_sources(Array.wrap(array.last.flags).flatten.compact.uniq)
       source_content = I18n.db_t(source, default: source)
       if source_content.present?
         str = '<div>'
-        str << '<h4>' + data_label(array.last[:test_label]) + '</h4>'
-        str << "<p>#{array.last[:subject].join(', ')}</p>"
-        str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
+        str << '<h4>' + data_label(array.data_type) + '</h4>'
+        str << "<p>#{Array.wrap(array.all_academics).join(', ')}</p>"
+        str << "<p>#{I18n.db_t(array.description)}</p>"
         if flags.present?
           str << "<p><span class='emphasis'>#{data_label('note')}</span>: #{data_label(flags)}</p>"
         end
-        str << "<p><span class='emphasis'>#{data_label('source')}</span>: #{source_content}, #{year.to_s}</p>"
+        str << "<p><span class='emphasis'>#{data_label('source')}</span>: #{source_content}, #{array.year}</p>"
         str << '</div>'
         str
       else

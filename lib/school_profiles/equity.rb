@@ -23,13 +23,6 @@ module SchoolProfiles
       @students_with_disabilities_test_scores_component_group = ::SchoolProfiles::Components::StudentsWithDisabilitiesTestScoresComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
       @students_with_disabilities_discipline_and_attendance_group= ::SchoolProfiles::Components::StudentsWithDisabilitiesDisciplineAndAttendanceComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
 
-      test_scores
-    end
-
-    def test_scores
-        @_test_scores ||=(
-          equity_test_scores.generate_equity_test_score_hash
-        )
     end
 
     def qualaroo_module_link(module_sym)
@@ -123,10 +116,6 @@ module SchoolProfiles
       return enrollment_string.gsub(',','').to_i if enrollment_string
     end
 
-    def get_test_source_data
-      @_get_test_source_data ||= (TestScores.new(@school, school_cache_data_reader: @school_cache_data_reader).sources)
-    end
-
     def characteristics_sources_ethnicity
       data = @school_cache_data_reader.characteristics_data(*(characteristics.keys))
       data.each_with_object({}) do |(label, bd_hashes), output|
@@ -160,9 +149,11 @@ module SchoolProfiles
     end
 
     def low_income_rating_year
-      low_income_results = @school_cache_data_reader.test_scores_all_rating_hash.select { |bd|
-        bd['breakdown'] == 'Economically disadvantaged'
-      }
+      low_income_results = 
+        @school_cache_data_reader
+        .test_scores_all_rating_hash.select do |bd|
+          bd['breakdown'] == 'Economically disadvantaged'
+        end
       if low_income_results.is_a?(Array) && !low_income_results.empty?
         low_income_results.first['year']
       end
@@ -179,13 +170,17 @@ module SchoolProfiles
     end
 
     def li_rating_sources
-      content = ''
       if equity_test_scores.low_income_test_scores_visible?
-        content = rating_source(year: low_income_rating_year, label: static_label('li_GreatSchools_Rating'),
-                                 description: static_label('li_description'), methodology: rating_methodology,
-                                 more_anchor: 'lowincomerating')
+        rating_source(
+          year: low_income_rating_year,
+          label: static_label('li_GreatSchools_Rating'),
+          description: static_label('li_description'),
+          methodology: rating_methodology,
+          more_anchor: 'lowincomerating'
+        )
+      else
+        ''
       end
-      content
     end
 
     def test_source_data
@@ -193,13 +188,16 @@ module SchoolProfiles
     end
 
     def race_ethnicity_sources
-      sources_html((test_source_data.source_rating_text + test_source_data.sources_without_rating_text)) + sources
+      rval = sources_html((test_source_data.source_rating_text + test_source_data.sources_without_rating_text)) + sources
+      console
+      rval
     end
 
     def students_with_disabilities_sources
       sources_html(test_source_data.sources_without_rating_text) + sources
     end
 
+    # TODO used
     def low_income_sources
       sources_html((li_rating_sources + test_source_data.sources_without_rating_text)) + sources
     end

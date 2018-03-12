@@ -186,6 +186,31 @@ class GsdataCaching::GsDataValue
       sort_by { |h| [h.data_type, (h.school_cohort_count || 0) * -1] }
     end
 
+    %i[year data_type description source_name].each do |method|
+      define_method(method) do
+        uniqued_list = map(&method.to_proc).uniq
+        if uniqued_list.size > 1
+          GSLogger.error(
+            :misc,
+            nil,
+            message: "Asked a collection of GsDataValues for #{method} but there was more than one unique value. Using first one",
+            vars: {
+              data_type: first.data_type,
+              state: first.state,
+              school_id: first.school_id,
+              district_id: first.district_id
+            }
+          )
+        end
+
+        return uniqued_list.first
+      end
+    end
+
+    def all_academics
+      reduce([]) { |accum, dv| accum.concat(dv.academics.split(',')) }.uniq
+    end
+
   end
 
   attr_accessor :breakdown_tags,
