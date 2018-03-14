@@ -239,8 +239,7 @@ class SchoolProfilesController < ApplicationController
 
   # For testing reviews-on-demand feature
   def reviews_on_demand?
-    test_schools_in_ak = [596,185,515,153,206,555,930,158,585,360,618,362,390,330,142,161,374,325,380]
-    @school.state.downcase == 'ak' &&  test_schools_in_ak.include?(@school.id)
+    ['ak','ga','il','pa','wa'].include?(@school.state.downcase)
   end
 
   def review_questions
