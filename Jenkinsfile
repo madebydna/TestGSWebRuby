@@ -200,7 +200,9 @@ node('slave') {
         currentBuild.result = 'SUCCESS';
     }
                 
-    notifyBuild(currentBuild.result)
+    if (currentBuild.getPreviousBuild() == null || currentBuild.result != currentBuild.getPreviousBuild().result) {
+      notifyBuild(currentBuild.result)
+    }
     step([$class: 'Mailer',
            notifyEveryUnstableBuild: true,
            recipients: "programmers@greatschools.org",
