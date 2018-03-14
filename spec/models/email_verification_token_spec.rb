@@ -31,7 +31,7 @@ describe EmailVerificationToken do
 
     context 'with invalid arguments' do
       it 'should throw an error' do
-        expect{ subject }.to raise_error
+        expect{ subject }.to raise_error('Must initialize EmailVerificationToken with a user or user ID')
       end
     end
   end
@@ -62,7 +62,7 @@ describe EmailVerificationToken do
 
       it 'should generate a valid token' do
         expect { EmailVerificationToken.parse(token_with_user_id, nil) }
-          .to raise_error
+          .to raise_error(Exception)
       end
     end
   end
