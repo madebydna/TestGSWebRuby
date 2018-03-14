@@ -89,7 +89,8 @@ describe User do
           ]
         end
         after do
-          clean_models User, School, Review
+          clean_models User, Review
+          clean_models :ca, School
         end
 
         it 'should return only active reviews' do
@@ -190,7 +191,7 @@ describe User do
         reviews
       end
       after do
-        clean_models School
+        clean_models :ca, School
         clean_dbs :gs_schooldb
       end
       subject { user }

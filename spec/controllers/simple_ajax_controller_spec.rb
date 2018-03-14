@@ -3,7 +3,8 @@ require 'spec_helper'
 
 describe SimpleAjaxController do
   after do
-    clean_models City,School
+    clean_models City
+    clean_models :ca, School
   end
 
   describe '#get_cities' do

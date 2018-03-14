@@ -26,7 +26,7 @@ end
 shared_context 'alameda high school' do |state, school_id|
   let!(:school) { FactoryGirl.create(:alameda_high_school, state: state, id: school_id) }
   after do
-    clean_models School
+    clean_models :ca, School
   end
 end
 

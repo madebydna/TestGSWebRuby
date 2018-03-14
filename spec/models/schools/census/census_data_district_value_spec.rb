@@ -9,7 +9,7 @@ describe CensusDataDistrictValue do
     }
   }
 
-  after { clean_models CensusDataDistrictValue }
+  after { clean_models :ca, CensusDataDistrictValue }
 
   it 'should not be read only' do
     expect{ CensusDataDistrictValue.on_db(:ca).create(valid_attributes) }.not_to raise_error
