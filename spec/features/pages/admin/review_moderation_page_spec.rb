@@ -14,7 +14,7 @@ shared_context 'with a review flagged because of' do |reason|
   end
   after do
     clean_dbs :gs_schooldb
-    clean_models School
+    clean_models :ca, School
   end
 end
 
@@ -38,7 +38,7 @@ shared_context 'with three inactive reviews' do
   end
   after do
     clean_dbs :surveys, :gs_schooldb, :community
-    clean_models School
+    clean_models :ca, School
   end
 end
 
@@ -63,7 +63,7 @@ describe 'Review moderation page' do
     let!(:reviews) { FactoryGirl.create_list(:review, 3, :flagged, school: school, user: user) }
     after do
       clean_dbs :surveys, :gs_schooldb, :community
-      clean_models School
+      clean_models :ca, School
     end
 
     with_shared_context 'visit the review moderation page' do

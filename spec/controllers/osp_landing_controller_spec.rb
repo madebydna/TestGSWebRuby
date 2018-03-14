@@ -149,7 +149,8 @@ describe OspLandingController do
     end
 
     after do
-      clean_models User, EspMembership, School
+      clean_models User, EspMembership
+      clean_models :ca, School
     end
 
     it 'Orders schools by name' do

@@ -21,16 +21,10 @@ class DatabaseConfigurationHelper
     database_config
   end
 
-  def self.all_connections_for(rails_environment)
-    database_config_hashes = database_config[rails_environment].select do |key, value|
-      value.is_a?(Hash) && value['database']
+  def self.all_dbs_for_rw_connections(rails_environment)
+    database_config[rails_environment].each_with_object([]) do |(key, value), dbs|
+      dbs << value['database'] if key['_rw'] && value.is_a?(Hash) && value['database']
     end
-
-    database_config_hashes.map { |key, _| key }
-  end
-
-  def self.all_rw_connections_for(rails_environment)
-    all_connections_for(rails_environment).select { |connection| connection[-3..-1] == '_rw' }
   end
 
   def self.legacy_database_names(rails_environment)

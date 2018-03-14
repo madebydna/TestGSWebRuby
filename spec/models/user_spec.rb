@@ -18,8 +18,8 @@ describe User do
 
   context 'new user with valid password' do
     let!(:user) { FactoryGirl.build(:new_user) }
-    before(:each) { clean_dbs :gs_schooldb }
-    before(:each) { user.encrypt_plain_text_password }
+    after(:each) { clean_dbs :gs_schooldb }
+    before { user.encrypt_plain_text_password }
 
     it 'should be provisional after being saved' do
       user.save!
@@ -62,7 +62,7 @@ describe User do
 
       it 'should raise error for invalid arguments' do
         expect(SchoolRating).to_not receive(:where)
-        expect{ subject.active_reviews_for_school(nil) }.to raise_error
+        expect{ subject.active_reviews_for_school(nil) }.to raise_error(ArgumentError)
       end
 
       context 'with saved school and an active and inactive review' do
@@ -89,7 +89,8 @@ describe User do
           ]
         end
         after do
-          clean_models User, School, Review
+          clean_models User, Review
+          clean_models :ca, School
         end
 
         it 'should return only active reviews' do
@@ -190,7 +191,7 @@ describe User do
         reviews
       end
       after do
-        clean_models School
+        clean_models :ca, School
         clean_dbs :gs_schooldb
       end
       subject { user }

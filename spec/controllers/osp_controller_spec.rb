@@ -11,7 +11,7 @@ describe OspController do
         controller.instance_variable_set(:@current_user, current_user)
         allow(School).to receive(:find_by_state_and_id).and_return school
       end
-      after { clean_models School }
+      after { clean_models :ca, School }
   
       it 'should redirect user to account page if user does not have access to osp' do
         get :show, state: school.state, schoolId: school.id
@@ -62,7 +62,7 @@ describe OspController do
         controller.instance_variable_set(:@current_user, current_user)
         allow(School).to receive(:find_by_state_and_id).and_return school
       end
-      after { clean_models School }
+      after { clean_models :ca, School }
  
       it 'should have called flash_notice' do
         expect(controller).to receive(:flash_notice)

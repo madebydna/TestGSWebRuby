@@ -95,13 +95,13 @@ end
 shared_context 'with Cesar Chavez Academy Denver' do
   let!(:school) { FactoryGirl.create(:cesar_chavez_academy_denver) }
   after do
-    clean_models School
+    clean_models :co, School
   end
 end
 shared_context 'with Alameda High School' do
   let!(:school) { FactoryGirl.create(:alameda_high_school) }
   after do
-    clean_models School
+    clean_models :ca, School
   end
 end
 
@@ -119,7 +119,7 @@ end
 shared_context 'with elementary school in CA' do
   let!(:school) { FactoryGirl.create(:bay_farm_elementary_school) }
   after do
-    clean_models School
+    clean_models :ca, School
   end
 end
 
@@ -130,8 +130,7 @@ shared_context 'with Cristo Rey New York High School' do
     new_york_school
   end
   after do
-    clean_models School
-    clean_dbs(:ny)
+    clean_models :ny, School
   end
 end
 
@@ -142,8 +141,7 @@ shared_context 'with Cesar Chavez Academy Denver' do
     colorado_school 
   end
   after do
-    clean_models School
-    clean_dbs(:co)
+    clean_models :co, School
   end
 end
 shared_context 'Given school profile page with Contact this school section' do |page_name|

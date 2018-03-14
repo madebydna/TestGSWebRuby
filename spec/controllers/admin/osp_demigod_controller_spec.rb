@@ -35,7 +35,6 @@ describe Admin::OspDemigodController do
         end
 
         after do
-          clean_models School
           clean_dbs :ca
         end
 
@@ -63,7 +62,6 @@ describe Admin::OspDemigodController do
         end
 
         after do
-          clean_models School
           clean_dbs :ca
         end
 
@@ -134,7 +132,6 @@ describe Admin::OspDemigodController do
       end
 
       after do
-        clean_models(User, School)
         clean_dbs :gs_schooldb, :ca
       end
 

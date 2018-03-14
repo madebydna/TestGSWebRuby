@@ -36,11 +36,6 @@ module ReviewModerationMigrator
       puts final_message
     end
 
-    def truncate_school_notes
-      # DatabaseCleaner[:active_record, connection: :gs_schooldb_rw].strategy = :truncation, {only: %w(school_notes)}
-      # DatabaseCleaner[:active_record, connection: :gs_schooldb_rw].clean
-      # ActiveRecord::Base.connection.execute("TRUNCATE school_notes")
-    end
 
     def migrate
       HeldSchool.where('created < ?', @date).find_each do |held_school|

@@ -25,7 +25,7 @@ describe 'Solr' do
         expect {
           result = Solr.new({:state=>'mi', :collection_id=>1}).breakdown_results(grade_level: 'p')
           expect(result).to be_nil
-        }.to raise_error
+        }.to raise_error(Exception)
       end
     end
   end

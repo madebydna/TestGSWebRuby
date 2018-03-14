@@ -200,7 +200,8 @@ describe SchoolUser do
       end
     end
     after do
-      clean_models User, School, Review, ReviewQuestion, ReviewTopic
+      clean_models User, Review, ReviewQuestion, ReviewTopic
+      clean_models :ca, School
     end
     it 'should return only the review for current user, given school, matching review question' do
       expect(subject.find_active_review_by_question_id(review_questions[3].id))

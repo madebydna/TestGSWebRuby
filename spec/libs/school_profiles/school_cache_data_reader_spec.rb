@@ -86,7 +86,7 @@ describe SchoolProfiles::SchoolCacheDataReader do
     describe '.new' do 
       subject { SchoolProfiles::SchoolCacheDataReader }
       it 'should raise an error' do
-        expect { subject.new(nil) }.to raise_error
+        expect { subject.new(nil) }.to raise_error(ArgumentError)
       end
     end
   end

@@ -63,7 +63,7 @@ shared_examples_for 'model with subscriptions association' do
     end
 
     it 'raises an exception if it can\'t find subscription_product' do
-      expect{ subject.new_subscription 'bogus' }.to raise_error
+      expect{ subject.new_subscription 'bogus' }.to raise_error(Exception)
     end
   end
 

@@ -174,7 +174,6 @@ group :test do
   # DSL for page object pattern, used for cucumber testing
   gem 'site_prism'
 
-  gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'mechanize'
   gem 'capybara'

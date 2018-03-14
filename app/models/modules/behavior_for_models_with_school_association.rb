@@ -5,6 +5,7 @@ module BehaviorForModelsWithSchoolAssociation
   included do
     # find_by_school(school: my_school) or find_by_school(school_id: 1, state: 'ca')
     def self.find_by_school(school_or_hash)
+      raise ArgumentError.new('A School or Hash must be given but was nil') if school_or_hash.nil?
       hash = {}
       school_id = nil
       school_state = nil

@@ -21,7 +21,7 @@ describe GSLogger do
         end
         it 'logs the attributes and re-raises the error' do
           expect(GSLogger).to receive(:error).with(tag, be_a(RuntimeError), vars: vars, message: message)
-          expect { subject }.to raise_error
+          expect { subject }.to raise_error(Exception)
         end
       end
 

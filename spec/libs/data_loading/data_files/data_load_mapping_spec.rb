@@ -82,7 +82,7 @@ describe DataLoadMapping do
       let(:data_configs) { { name: '2014 DC Test Load for grade 9 and 10', source: 'From the DC education board',
                              files: invalid_file_configs} }
       it 'should raise an error, since DataFileMapping throws error' do
-        expect { DataLoadMapping.new(data_configs) }.to raise_error
+        expect { DataLoadMapping.new(data_configs) }.to raise_error(Exception)
       end
 
       it 'should not validate, since files is not an array' do
