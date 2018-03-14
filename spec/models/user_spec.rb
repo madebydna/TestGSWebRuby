@@ -62,7 +62,7 @@ describe User do
 
       it 'should raise error for invalid arguments' do
         expect(SchoolRating).to_not receive(:where)
-        expect{ subject.active_reviews_for_school(nil) }.to raise_error
+        expect{ subject.active_reviews_for_school(nil) }.to raise_error(ArgumentError)
       end
 
       context 'with saved school and an active and inactive review' do
