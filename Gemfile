@@ -168,13 +168,12 @@ group :test do
   # testing frameworks
   gem 'rspec', '~> 3.5.0'
   gem 'rspec-rails', '~> 3.5.0'
-  gem 'cucumber', '~> 1.3.8'
-  gem 'cucumber-rails', '~> 1.4.0', :require => false
+  gem 'cucumber', '~> 3.1.0'
+  gem 'cucumber-rails', '~> 1.4.5', :require => false
 
   # DSL for page object pattern, used for cucumber testing
   gem 'site_prism'
 
-  gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'mechanize'
   gem 'capybara'

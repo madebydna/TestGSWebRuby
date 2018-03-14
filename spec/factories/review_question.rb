@@ -3,7 +3,7 @@ FactoryGirl.define do
   factory :review_question, class: ReviewQuestion do
     sequence(:id) { |n| n }
     association :review_topic, factory: :review_topic, strategy: :build
-    question 'Tell parents a message about the food at this schools'
+    question 'How would you rate your experience at this school?'
     principal_question 'Tell me about food'
     responses 'dislike like love'
     layout 'checkbox'
