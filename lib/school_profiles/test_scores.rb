@@ -6,7 +6,6 @@ module SchoolProfiles
     include SharingTooltipModal
     include RatingSourceConcerns
 
-    GRADES_DISPLAY_MINIMUM = 1
     N_TESTED = 'n_tested'
     STRAIGHT_AVG = 'straight_avg'
     N_TESTED_AND_STRAIGHT_AVG = 'n_tested_and_straight_avg'
@@ -61,7 +60,7 @@ module SchoolProfiles
         )
         other_grades = gs_data_values.not_grade_all.sort_by_grade
 
-        if other_grades.present? #&& other_grades.size > GRADES_DISPLAY_MINIMUM
+        if other_grades.present?
           grade_all_rating_score_item.grades = other_grades.map do |gs_data_value|
             rating_score_item_from_gs_data_value(gs_data_value)
           end

@@ -86,7 +86,7 @@ class DataValue < ActiveRecord::Base
       group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tag_names",
       count(distinct(breakdowns.name)) as "breakdown_count",
       group_concat(distinct academics.name ORDER BY academics.name) as "academic_names",
-      group_concat(distinct act.tag ORDER BY act.tag) as "academic_tags",
+      group_concat(distinct act.tag ORDER BY act.tag) as "academic_tag_names",
       count(distinct(academics.name)) as "academic_count",
       group_concat(distinct academics.type ORDER BY academics.type) as "academic_types"
     SQL
