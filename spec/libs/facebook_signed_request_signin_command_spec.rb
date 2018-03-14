@@ -19,7 +19,7 @@ describe FacebookSignedRequestSigninCommand do
           and_return(false)
     end
     it 'raises an exception' do
-      expect { FacebookSignedRequestSigninCommand.new_from_request_params(params) }.to raise_error
+      expect { FacebookSignedRequestSigninCommand.new_from_request_params(params) }.to raise_error(Exception)
     end
   end
 
