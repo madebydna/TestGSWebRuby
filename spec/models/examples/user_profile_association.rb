@@ -12,7 +12,7 @@ shared_examples_for 'user with user profile association' do
       expect(user.has_active_profile?).to be_truthy
     end
     it 'should return false if there is no profile' do
-      clean_models :gs_schooldb, UserProfile
+      UserProfile.destroy_all
       expect(user.has_active_profile?).to be_falsey
     end
     it 'should return false if there is an inactive profile' do

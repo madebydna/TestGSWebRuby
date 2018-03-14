@@ -18,8 +18,8 @@ describe User do
 
   context 'new user with valid password' do
     let!(:user) { FactoryGirl.build(:new_user) }
-    before(:each) { clean_dbs :gs_schooldb }
-    before(:each) { user.encrypt_plain_text_password }
+    after(:each) { clean_dbs :gs_schooldb }
+    before { user.encrypt_plain_text_password }
 
     it 'should be provisional after being saved' do
       user.save!
