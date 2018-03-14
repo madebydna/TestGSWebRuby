@@ -14,7 +14,6 @@ shared_context 'Visit Review School Chooser Page for topic 1' do
 
   after do
     clean_models :gs_schooldb, ReviewTopic, ReviewQuestion, Review, ReviewAnswer
-    clean_dbs :profile_config
     clean_models :ca, School
     clean_models :ut, School
   end
