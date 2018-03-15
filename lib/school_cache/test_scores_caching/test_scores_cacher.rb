@@ -23,7 +23,7 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
   end
 
   def inject_grade_all(data_sets_and_values)
-    TestScoresCaching::GradeAllCalculator.new(data_sets_and_values).inject_grade_all
+    TestScoresCaching::OldGradeAllCalculator.new(data_sets_and_values).inject_grade_all
   end
 
   def add_lowest_grade_to_hash(data_type_hash)
