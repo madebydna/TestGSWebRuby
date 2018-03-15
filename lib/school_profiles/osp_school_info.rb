@@ -299,7 +299,7 @@ module SchoolProfiles
       courses_by_subject.reduce([]) do |array, (subject, courses)|
         array << {
           response_key: I18n.t(subject, scope: 'lib.advanced_courses'),
-          response_value: courses.map  { |h| h.breakdowns }
+          response_value: courses.map  { |h| h.academics }
         }
       end
     end
