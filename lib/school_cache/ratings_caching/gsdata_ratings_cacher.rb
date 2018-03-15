@@ -39,27 +39,26 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   end
 
   def advanced_coursework_select_logic?(dv)
-    bdn = dv['breakdown_names'] || ''
-    bdt = dv['breakdown_tags'] || ''
-    bdn_arr = bdn.split(',')
-    bdt_arr = bdt.split(',')
-    acn_arr = (dv['academic_names'] || '').split(',')
-    act_arr = (dv['academic_tags'] || '').split(',')
+    breakdown_names = dv['breakdown_names'] || ''
+    breakdown_tags = dv['breakdown_tags'] || ''
+    breakdown_names_arr = breakdown_names.split(',')
+    breakdown_tags_arr = breakdown_tags.split(',')
+    academic_names_arr = (dv['academic_names'] || '').split(',')
+    academic_tags_arr = (dv['academic_tags'] || '').split(',')
      (
       ( # this selects coursework for all students
-          bdn_arr.include?(ALL_STUDENTS) &&
-          act_arr.include?(COURSE_SUBJECT_GROUP)
+          breakdown_names_arr.include?(ALL_STUDENTS) &&
+          academic_tags_arr.include?(COURSE_SUBJECT_GROUP)
       ) ||
       ( # this selects all students overall data
-          bdn == ALL_STUDENTS &&
-          bdt.blank?
+          breakdown_names == ALL_STUDENTS &&
+          breakdown_tags.blank?
       ) ||
       ( # this is to select ethnicity data
-          bdn_arr.length == 1 &&
-          acn_arr.length.zero? &&
-          act_arr.length.zero? &&
-          bdt_arr.include?(BREAKDOWN_TAG_ETHNICITY) &&
-          bdt_arr.length.zero?
+          breakdown_names_arr.length == 1 &&
+          breakdown_tags_arr.include?(BREAKDOWN_TAG_ETHNICITY) &&
+          academic_names_arr.length.zero? &&
+          academic_tags_arr.length.zero?
       )
      )
   end
