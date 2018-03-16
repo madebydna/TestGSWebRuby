@@ -87,10 +87,10 @@ class GsdataCaching::GsDataValue
       group_by do |dv|
         if dv.breakdown_tags.include?(',')
           GSLogger.error(
-            :misc,
-            nil,
-            message: 'Tried to group on comma separated breakdowns',
-            vars: dv
+              :misc,
+              nil,
+              message: 'Tried to group on comma separated breakdowns',
+              vars: dv
           )
           return self
         end
@@ -117,6 +117,35 @@ class GsdataCaching::GsDataValue
           return self
         end
         dv.academics
+      end
+    end
+
+    def having_academic_tag_matching(regex)
+      select { |dv| dv.academic_tags =~ regex }.extend(CollectionMethods)
+    end
+
+    def expand_on_academic_tags
+      reduce([]) do |array, dv|
+        array.concat(
+            (dv.academic_tags || '').split(',').map do |tag|
+              dv.clone.tap { |sub_dv| sub_dv.academic_tags = tag }
+            end
+        )
+      end.extend(CollectionMethods)
+    end
+
+    def group_by_academic_tag
+      group_by do |dv|
+        if dv.academic_tags.include?(',')
+          GSLogger.error(
+              :misc,
+              nil,
+              message: 'Tried to group on comma separated academics',
+              vars: dv
+          )
+          return self
+        end
+        dv.academic_tags
       end
     end
 

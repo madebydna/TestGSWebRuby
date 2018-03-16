@@ -271,9 +271,9 @@ module SchoolProfiles
     def courses_by_subject
       @_courses_by_subject ||= school_cache_data_reader
         .course_enrollment
-        .expand_on_breakdown_tags
-        .having_breakdown_tag_matching(/_index$/)
-        .group_by_breakdown_tag
+        .expand_on_academic_tags
+        .having_academic_tag_matching(/_index$/)
+        .group_by_academic_tag
     end
 
     def sources
@@ -299,7 +299,7 @@ module SchoolProfiles
       courses_by_subject.reduce([]) do |array, (subject, courses)|
         array << {
           response_key: I18n.t(subject, scope: 'lib.advanced_courses'),
-          response_value: courses.map  { |h| h.breakdowns }
+          response_value: courses.map  { |h| h.academics }
         }
       end
     end

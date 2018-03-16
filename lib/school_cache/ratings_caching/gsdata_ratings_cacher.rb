@@ -5,6 +5,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   ADVANCED_COURSEWORK_DATA_TYPE_ID = 151
   ALL_STUDENTS = 'All Students'
   COURSE_SUBJECT_GROUP = 'course_subject_group'
+  BREAKDOWN_TAG_ETHNICITY = 'ethnicity'
 
   def self.listens_to?(data_type)
     :ratings == data_type
@@ -38,14 +39,26 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   end
 
   def advanced_coursework_select_logic?(dv)
+    breakdown_names = dv['breakdown_names'] || ''
+    breakdown_tags = dv['breakdown_tags'] || ''
+    breakdown_names_arr = breakdown_names.split(',')
+    breakdown_tags_arr = breakdown_tags.split(',')
+    academic_names_arr = (dv['academic_names'] || '').split(',')
+    academic_tags_arr = (dv['academic_tags'] || '').split(',')
      (
-      (
-        (dv['breakdown_names'] || '').split(',').include?(ALL_STUDENTS) &&
-            (dv['breakdown_tags'] || '').split(',').include?(COURSE_SUBJECT_GROUP)
+      ( # this selects coursework for all students
+          breakdown_names_arr.include?(ALL_STUDENTS) &&
+          academic_tags_arr.include?(COURSE_SUBJECT_GROUP)
       ) ||
-      (
-        dv['breakdown_names'] == ALL_STUDENTS &&
-            dv['breakdown_tags'].blank?
+      ( # this selects all students overall data
+          breakdown_names == ALL_STUDENTS &&
+          breakdown_tags.blank?
+      ) ||
+      ( # this is to select ethnicity data
+          breakdown_names_arr.length == 1 &&
+          breakdown_tags_arr.include?(BREAKDOWN_TAG_ETHNICITY) &&
+          academic_names_arr.length.zero? &&
+          academic_tags_arr.length.zero?
       )
      )
   end

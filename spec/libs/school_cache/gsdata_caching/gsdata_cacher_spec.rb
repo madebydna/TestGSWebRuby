@@ -6,7 +6,7 @@ describe GsdataCaching::GsdataCacher do
   end
   describe '#build_hash_for_cache' do
     it 'should return correct hash' do
-      tags = ['a', 'b']
+      tags = %w(a b)
       school = build(:alameda_high_school)
       gsdb_cacher = GsdataCaching::GsdataCacher.new(school)
       breakdowns = ['AA', 'BB', 1]
@@ -58,8 +58,8 @@ describe GsdataCaching::GsdataCacher do
 
   def build_result_hash(breakdown, breakdown_tags)
     {
-      breakdowns: breakdown.to_s,
-      breakdown_tags: breakdown_tags.join(','),
+      breakdowns: breakdown,
+      breakdown_tags: breakdown_tags,
       school_value: 1,
       source_date_valid: '20140101 00:00:00',
       state_value: 1,
