@@ -11,6 +11,7 @@ class Cacher
   # :esp_response
   # :feed_test_scores
   # :gsdata
+  # :courses
   # :directory
   # :feed_characteristics
 
@@ -76,16 +77,17 @@ class Cacher
 
   def self.cacher_for(key)
     {
-        test_scores:      TestScoresCaching::BreakdownsCacher,
-        performance:      PerformanceCaching::PerformanceCacher,
-        characteristics:  CharacteristicsCaching::CharacteristicsCacher,
-        esp_responses:    EspResponsesCaching::EspResponsesCacher,
-        reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
-        progress_bar:     ProgressBarCaching::ProgressBarCacher,
-        feed_test_scores: FeedTestScoresCacher,
-        gsdata:           GsdataCaching::GsdataCacher,
-        ratings:         RatingsCaching::GsdataRatingsCacher,
-        directory:        DirectoryCaching::DirectoryCacher,
+        test_scores:          TestScoresCaching::BreakdownsCacher,
+        performance:          PerformanceCaching::PerformanceCacher,
+        characteristics:      CharacteristicsCaching::CharacteristicsCacher,
+        esp_responses:        EspResponsesCaching::EspResponsesCacher,
+        reviews_snapshot:     ReviewsCaching::ReviewsSnapshotCacher,
+        progress_bar:         ProgressBarCaching::ProgressBarCacher,
+        feed_test_scores:     FeedTestScoresCacher,
+        gsdata:               GsdataCaching::GsdataCacher,
+        ratings:              RatingsCaching::GsdataRatingsCacher,
+        courses:              CoursesCaching::GsdataCoursesCacher,
+        directory:            DirectoryCaching::DirectoryCacher,
         feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
     }[key.to_s.to_sym]
   end
@@ -114,6 +116,7 @@ class Cacher
       FeedTestScoresCacher,
       GsdataCaching::GsdataCacher,
       RatingsCaching::GsdataRatingsCacher,
+      CoursesCaching::GsdataCoursesCacher,
       DirectoryCaching::DirectoryCacher,
       FeedCharacteristicsCaching::FeedCharacteristicsCacher
     ]
