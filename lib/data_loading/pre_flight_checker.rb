@@ -4,30 +4,34 @@ require 'csv'
 require 'optparse'
 require 'ostruct'
 
-# This script runs some basic checks on source files prior to running it through a test processor. The main check is for
-# problems related to duplicate state ids.  You'll need to tell it which columns should be concatenated to create the
-# state id.  It will then attempt to concatenate the first five rows and display them to you for approval before running
-# the rest of the script.
+# This script runs some basic checks on source files prior to running it through a test processor. You'll need to tell
+# it which columns should be concatenated to create the state id using the -c flag.  It will then attempt to concatenate
+# the first five rows and display them to you for approval before running the rest of the script.
+#
+# The script will calculate the percentage of empty rows and will identify any duplicate rows. You can tell it to
+# disregard certain columns in each row in its empty row analysis by using the -d flag.
 #
 # NOTE: If the file uses a letter or number as a suppression value, add that using the -s flag.
 #
 # Examples:
 #
-# ruby pre_flight_checker.rb -f sample_source_file.csv -c n1,3,5
-# ruby pre_flight_checker.rb -f sample_source_file2.csv -c 2,4 -s i     [use the letter 'i' as a suppression value]
+# ruby pre_flight_checker.rb -f sample_source_file.csv -c 1,3,5   [use columns 1,3, and 5 for state id]
+# ruby pre_flight_checker.rb -f sample_source_file2.csv -c 2,4 -s i  [use columns 2 and 4 for state id; use the letter 'i' as a suppression value]
+# ruby pre_flight_checker.rb -f sample_source_file.csv -c 1 -d 1,2,3,4,5,6,7  [use first column for state it, disregard columns 1-7 for empty row calculation]
 
 class PreFlightChecker
   attr_reader :source_file
 
   def self.run(opts)
     new(source_file: opts[:source_file], suppression_value: opts[:suppression_value],
-        state_id_column_array: opts[:state_id_columns]).orchestrate_script
+        state_id_column_array: opts[:state_id_columns], data_columns: opts[:non_data_columns]).orchestrate_script
   end
 
-  def initialize(source_file:, suppression_value: nil, state_id_column_array:)
+  def initialize(source_file:, suppression_value: nil, state_id_column_array:, data_columns: [])
     @source_file = source_file
     @state_id_column_array = state_id_column_array.map(&:to_i)
     @suppression_value = suppression_value
+    @non_data_columns = data_columns.map(&:to_i)
   end
 
   def each_row(file=@source_file, &block)
@@ -40,7 +44,7 @@ class PreFlightChecker
     File.open('source_file_with_state_id.csv', 'w+') do |f|
       each_row do |row,idx|
         state_id = assemble_id_from_row(row)
-        row_with_state_id = row.to_s.prepend("#{state_id.to_s}\t")
+        row_with_state_id = row.to_s.prepend("#{state_id.to_s},")
         f.puts row_with_state_id
       end
     end
@@ -101,14 +105,14 @@ class PreFlightChecker
 
   def find_rows_with_empty_data(row_data)
     # Remove state_id data and see if there's anything else. Add 2 for readability in a csv viewer/editor
-    indices_for_deletion = @state_id_column_array.map {|num| num + 1}.unshift(0)
+    indices_for_deletion = (@state_id_column_array.map {|num| num + 1}.unshift(0) + @non_data_columns).uniq
     empty_rows = row_data.select do |row|
-      row.first.to_s.chomp.split("\t")
-        .delete_if.with_index {|_,index|indices_for_deletion.include? index}
+      row.first.to_s.chomp.split(",")
+        .delete_if.with_index {|_,index|indices_for_deletion.include?(index)}
         .map {|cell| cell.gsub(/[^0-9a-z]/i, '')}
         .all? {|val| val.empty? || val == @suppression_value}
     end
-    empty_rows.map{|array| array.last + 2}
+    empty_rows.map{|array| array.last + 1}
   end
 
   def find_rows_with_identical_data(row_data)
@@ -116,7 +120,7 @@ class PreFlightChecker
   end
 
   def assemble_id_from_row(row)
-    @state_id_column_array.reduce('') {|accum, id| accum + row[id].to_f.to_s.gsub("\t",'')}
+    @state_id_column_array.reduce('') {|accum, id| accum + row[id].to_f.to_s.gsub(/[.,]/,'')}
   end
 
   def verify_well_formed_ids
@@ -138,13 +142,29 @@ class PreFlightChecker
   end
 
   def print_results(results_hash)
-    base_msg = "The pre-flight test load checker has completed. "
+    base_msg = "The pre-flight test load checker has completed.\n"
+    puts data_heroes
     if results_hash.empty?
       base_msg += "No dup violations were found."
     else
-      base_msg += "Here are the results: #{p results_hash}"
+      base_msg += results_msg(results_hash)
     end
     puts base_msg
+  end
+
+  def results_msg(results_hash)
+    empty_rows_msg = "#{percentage_empty_rows(results_hash)}% of rows were empty."
+    duplicate_rows_msg = "Duplicate row count: #{duplicate_rows(results_hash).length}. #{duplicate_rows(results_hash).empty? ? '' : 'Row numbers:' + duplicate_rows(results_hash).to_s}"
+    empty_rows_msg + "\n" + duplicate_rows_msg + "\n\n"
+  end
+
+  def percentage_empty_rows(results_hash)
+    number_empty_rows = results_hash.reduce(0) {|accum, hash| hash.values.length + accum}
+    ((number_empty_rows.to_f/line_count)*100).round(2)
+  end
+
+  def duplicate_rows(results_hash)
+    @_duplicate_rows ||= results_hash.reduce([]) {|accum, hash| accum + hash[:identical_rows]}.first
   end
 
   def first_five_ids
@@ -160,6 +180,22 @@ class PreFlightChecker
     print_results processed_dups
   end
 
+  def data_heroes
+    <<-'DH'
+         _              _        
+        /\ \           / /\      
+       /  \ \         / /  \     
+      / /\ \_\       / / /\ \__  
+     / / /\/_/      / / /\ \___\ 
+    / / / ______    \ \ \ \/___/ 
+   / / / /\_____\    \ \ \       
+  / / /  \/____ /_    \ \ \      
+ / / /_____/ / //_/\__/ / /      
+/ / /______\/ / \ \/___/ /       
+\/___________/   \_____\/    (another GS! script)
+
+    DH
+  end
 end
 
 
@@ -167,7 +203,6 @@ end
 
 def read_command_line_input
   parser = OptionParser.new do |opts|
-
     # for state id, maybe make the arg something like [col, desired length] for each component of the state_id... i.e.
     # for zero padding
     # ask user for example of state id - then print out to confirm with user that format is correct
@@ -182,6 +217,10 @@ def read_command_line_input
 
     opts.on('-s s', '--suppression_value=s', 'Suppression Value') do |suppression_value|
       @options.suppression_value = suppression_value
+      end
+
+    opts.on('-d d', '--data_columns=dc', Array, 'Data Columns') do |non_data_columns|
+      @options.non_data_columns = non_data_columns
     end
   end
 
