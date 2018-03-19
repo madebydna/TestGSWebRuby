@@ -76,7 +76,7 @@ en:
           higher: <span class="emphasis">higher</span>
           lower: <span class="emphasis">lower</span>
           intro: >
-            <div class="auto-narration">Compared to state averages, students who graduate from this school have: %{more}
+            <div class="auto-narration"><span class="content">Compared to state averages, students who graduate from this school have: </span>%{more}
             <ul>
           outro: </ul>%{end_more}</div>
           'Percent Enrolled in College Immediately Following High School': college enrollment rates
