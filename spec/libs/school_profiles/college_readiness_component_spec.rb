@@ -420,13 +420,13 @@ describe 'CollegeSuccessComponent' do
 
     context 'when no rating' do
       let(:cr_rating) { nil }
-      it 'should not delegate to college_success_narration' do
-        expect(college_readiness).to_not receive(:college_success_narration)
+      it 'should still delegate to college_success_narration' do
+        expect(college_readiness).to receive(:college_success_narration)
         subject
       end
     end
 
-    it 'should call the appropriate method' do
+    it 'should delegate to college_success_narration' do
       expect(college_readiness).to receive(:college_success_narration)
       subject
     end

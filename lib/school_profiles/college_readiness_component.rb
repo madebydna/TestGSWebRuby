@@ -185,16 +185,17 @@ module SchoolProfiles
       end
 
       def narration
-        if !rating.present? && !(1..10).cover?(rating.to_i) && visible?
-          key = '_parent_tip_html'
-        elsif !visible?
-          return nil
-        elsif @tab.to_sym == :college_success
-          return college_success_narration
-        elsif @tab.to_sym == :college_readiness
-          key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
+        return nil unless visible?
+        if @tab.to_sym == :college_success
+          college_success_narration
+        else
+          if !rating.present? && !(1..10).cover?(rating.to_i)
+            key = '_parent_tip_html'
+          else
+            key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
+          end
+          I18n.t(key, scope: 'lib.college_readiness.narration', default: key).html_safe if key
         end
-        I18n.t(key, scope: 'lib.college_readiness.narration', default: I18n.db_t(key, default: key)).html_safe
       end
 
       def default_college_success_narration
