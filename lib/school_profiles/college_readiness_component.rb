@@ -117,29 +117,28 @@ module SchoolProfiles
       end
 
       def data_type_hashes
-        @_data_type_hashes ||= (
-        hashes = characteristics_data
-        hashes.merge!(@school_cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata )))
-        return [] if hashes.blank?
-        handle_ACT_SAT_to_display!(hashes)
-        hashes = hashes.map do |key, array|
-          array = array.for_all_students.having_school_value
-          if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
-            # This is for characteristics
-            array = array.no_subject_or_all_subjects_or_graduates_remediation
+        @_data_type_hashes ||= begin
+          hashes = characteristics_data
+          hashes.merge!(@school_cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata)))
+          return [] if hashes.blank?
+          handle_ACT_SAT_to_display!(hashes)
+          hashes = hashes.map do |key, array|
+            array = array.for_all_students.having_school_value
+            if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
+              # This is for characteristics
+              array = array.no_subject_or_all_subjects_or_graduates_remediation
+            end
+            array
           end
-          array
+          data_values = hashes.flatten.compact
+          data_values.select! {|dv| included_data_types.include?(dv['data_type'])}
+          data_values.reject! {|dv| dv['year'].to_i < DATA_CUTOFF_YEAR} if cache_accessor == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS
+          data_values.sort_by {|o| included_data_types.index(o['data_type'])}
         end
-        data_values = hashes.flatten.compact
-        data_values.select! { |dv| included_data_types.include?(dv['data_type']) }
-        data_values.sort_by { |o| included_data_types.index( o['data_type']) }
-        )
       end
-
 
       def data_values
         @_data_values ||= Array.wrap(data_type_hashes).map do |hash|
-          next if cache_accessor == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS && hash['year'].to_i < DATA_CUTOFF_YEAR
           data_type = hash['data_type']
           formatting = data_type_formatting_map[data_type] || [:round_unless_less_than_1, :percent]
           visualization = data_type_visualization_map[data_type]
@@ -182,7 +181,7 @@ module SchoolProfiles
       end
 
       def college_data_array
-        [{narration: narration, title: @tab.humanize, values: data_value_hash}]
+        @_college_data_array ||= [{narration: narration, title: @tab.humanize, values: data_value_hash}]
       end
 
       def narration
@@ -191,11 +190,51 @@ module SchoolProfiles
         elsif !visible?
           return nil
         elsif @tab.to_sym == :college_success
-          key = '_college_success'
+          return college_success_narration
         elsif @tab.to_sym == :college_readiness
           key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
         end
         I18n.t(key, scope: 'lib.college_readiness.narration', default: I18n.db_t(key, default: key)).html_safe
+      end
+
+      def default_college_success_narration
+        I18n.t('_college_success', scope: 'lib.college_readiness.narration', default: '').html_safe
+      end
+
+      def college_success_narration
+        return default_college_success_narration unless data_type_hashes.all? { |c| c.state_average.present? }
+
+        narratives = data_type_hashes.map(&narration_for_value).compact
+
+        return default_college_success_narration unless narratives.present?
+
+        intro = I18n.t(:intro, scope: 'lib.college_readiness.narration.college_success', default: '',
+                       more: SchoolProfilesController.show_more('College Success')).html_safe
+        outro = I18n.t(:outro, scope: 'lib.college_readiness.narration.college_success', default: '',
+                       end_more: SchoolProfilesController.show_more_end).html_safe
+        "#{intro}#{narratives.join}#{outro}"
+      end
+
+      def narration_for_value
+        lambda do |c|
+          translation = I18n.t(c.data_type, scope: 'lib.college_readiness.narration.college_success', default: nil).html_safe
+          if translation.present? && c.school_value.present? && c.state_average.present?
+            "<li>#{comparison_word(c.data_type, c.school_value, c.state_average)} #{translation}</li>"
+          end
+        end
+      end
+
+      def comparison_word(data_type, school_value, state_value)
+        is_persistence = data_type == GRADUATES_PERSISTENCE
+        diff = school_value - state_value
+        if (diff).abs <= 2.0
+          key = is_persistence ? :about : :average
+        elsif diff > 0
+          key = is_persistence ? :higher : :above_average
+        else
+          key = is_persistence ? :lower : :below_average
+        end
+        I18n.t(key, scope: 'lib.college_readiness.narration.college_success', default: key.to_s).html_safe
       end
 
       def empty_data?

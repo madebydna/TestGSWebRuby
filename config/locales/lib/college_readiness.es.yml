@@ -69,6 +69,33 @@ es:
         'Percent of students who will attend out-of-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades fuera del estado.'
         'Percent of students who will attend in-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades estatales.'
       narration:
+        college_success:
+          average: <span class="emphasis">a la altura del promedio</span>
+          above_average: <span class="emphasis">por encima del promedio</span>
+          below_average: <span class="emphasis">por debajo del promedio</span>
+          about: <span class="emphasis">a la altura del promedio</span>
+          higher: <span class="emphasis">por encima</span>
+          lower: <span class="emphasis">por debajo</span>
+          intro: >
+            <div class="auto-narration">En comparación con los promedios estatales, los estudiantes que se gradúan de esta escuela tienen: %{more}
+            <ul>
+          outro: </ul>%{end_more}</div>
+          'Percent Enrolled in College Immediately Following High School': de los índices de matriculación universitaria
+          'Percent enrolled in any institution of higher learning in the last 0-16 months': de los índices de matriculación universitaria
+          'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': de los índices de matriculación en la universidad de 4 años
+          'Graduating seniors pursuing 4 year college/university': de los índices de matriculación en la universidad de 4 años
+          'Percent of students who will attend out-of-state colleges': en matriculación en la universidad fuera del estado
+          'Percent of students who will attend in-state colleges': en matriculación en la universidad dentro del estado
+          'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': de los índices de matriculación en la universidad de 2 años
+          'Graduating seniors pursuing 2 year college/university': de los índices de matriculación en la universidad de 2 años
+          'Graduating seniors pursuing other college': de los índices de matriculación en otros programas universitarios
+          'Percent Enrolled in College and Returned for a Second Year': de los índices de rendimiento para un segundo año de universidad
+          'Percent Needing Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas antes de comenzar cursos universitarios
+          'Graduates needing Reading remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de lectura antes de comenzar cursos universitarios
+          'Graduates needing Writing remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de escritura antes de comenzar cursos universitarios
+          'Graduates needing English remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de inglés antes de comenzar cursos universitarios
+          'Graduates needing Science remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de ciencias antes de comenzar cursos universitarios
+          'Graduates needing Math remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de matemáticas antes de comenzar cursos universitarios
         _1_html: >
           <div class="auto-narration">
           <h3 class="negative">Muy preocupante:</h3>
