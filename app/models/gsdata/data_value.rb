@@ -72,7 +72,6 @@ class DataValue < ActiveRecord::Base
           .with_breakdowns
           .with_breakdown_tags(breakdown_tag_names)
           .group('data_values.id')
-          .having("(breakdown_count + academic_count) < 3 OR breakdown_names like '%All students except 504 category%'")
   end
 
 # rubocop:enable Style/FormatStringToken
@@ -83,10 +82,10 @@ class DataValue < ActiveRecord::Base
       data_values.proficiency_band_id, data_types.name, data_types.short_name,
       sources.source_name, sources.date_valid, sources.description,
       group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
-      group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tag_names",
+      group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",
       count(distinct(breakdowns.name)) as "breakdown_count",
       group_concat(distinct academics.name ORDER BY academics.name) as "academic_names",
-      group_concat(distinct act.tag ORDER BY act.tag) as "academic_tag_names",
+      group_concat(distinct act.tag ORDER BY act.tag) as "academic_tags",
       count(distinct(academics.name)) as "academic_count",
       group_concat(distinct academics.type ORDER BY academics.type) as "academic_types"
     SQL

@@ -43,7 +43,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
                                                             data_type_ids)
       state_values.each_with_object({}) do |result, hash|
         state_key = result.datatype_breakdown_year
-        hash[state_key] = result.value
+        hash[state_key] = result
       end
     end
   end
@@ -74,30 +74,28 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   # private
   def result_to_hash(result)
     breakdowns = result.breakdown_names
-    breakdown_tags = result.breakdown_tag_names
+    breakdown_tags = result.breakdown_tags
     academics = result.academic_names
     academic_tags = result.academic_tags
     # academic_types = result.academic_types
     # display_range = display_range(result)
-    b_and_a = [breakdowns, academics].reject { |item| item.blank? }.join(',')
-    b_and_a_tags = [breakdown_tags, academic_tags].reject { |item| item.blank? }.join(',')
-    state_value = state_value(result)
+    state_result = state_result(result)
     district_value = district_value(result)
     {}.tap do |h|
       h[:data_type] = result.name  #data_type.short_name
-      h[:breakdowns] = b_and_a if b_and_a
-      h[:breakdown_tags] = b_and_a_tags if b_and_a_tags
+      h[:breakdowns] = breakdowns# if breakdowns
+      h[:breakdown_tags] = breakdown_tags# if breakdown_tags
       h[:school_value] = result.value  #data_value.value
       h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')  #source.data_valid
-      h[:state_value] = state_value if state_value  #data_type.value
+      h[:state_value] = state_result.value if state_result && state_result.value #data_type.value
       h[:district_value] = district_value if district_value   #data_type.value
       h[:source_name] = result.source_name    #source.name
       h[:description] = result.description if result.description    #source.description
       h[:school_cohort_count] = result.cohort_count if result.cohort_count #data_value.cohort_count
-      h[:academics] = academics if academics   #data_value.academics.pluck(:name).join(',')
-      h[:academic_tags] = result.academic_tags  #academic_tags.tag...comma separated string for all records associated with data value
+      h[:academics] = academics# if academics   #data_value.academics.pluck(:name).join(',')
+      h[:academic_tags] = academic_tags# if academic_tags  #academic_tags.tag...comma separated string for all records associated with data value
       h[:grade] = result.grade if result.grade  #data_value.grade
-      h[:state_cohort_count] = result.cohort_count if state_value && result.cohort_count  #data_value.cohort_count
+      h[:state_cohort_count] = state_result.cohort_count if state_result && state_result.cohort_count  #data_value.cohort_count
       # h[:flags] = result.flags TODO
     end
   end
@@ -127,7 +125,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     district_results_hash[result.datatype_breakdown_year]
   end
 
-  def state_value(result)
+  def state_result(result)
     state_results_hash[result.datatype_breakdown_year]
   end
 

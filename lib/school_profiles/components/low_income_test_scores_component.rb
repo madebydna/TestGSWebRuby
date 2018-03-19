@@ -2,7 +2,7 @@ module SchoolProfiles
   module Components
     class LowIncomeTestScoresComponent < TestScoresComponent
       def narration
-        low_income_hash = normalized_values.find { |h| h[:breakdown] == 'Economically disadvantaged' } || {}
+        low_income_hash = normalized_values.find { |h| h[:breakdown] == 'Low-income' } || {}
         all_hash = normalized_values.find { |h| h[:breakdown] == 'All students' } || {}
 
         yml_key = NarrativeLowIncomeTestScores.yml_key(
@@ -27,8 +27,8 @@ module SchoolProfiles
         return h2[:percentage].to_f <=> h1[:percentage].to_f
       end
 
-      def breakdown_percentage(breakdown)
-        value_to_s(low_income_to_percentages[breakdown])
+      def ethnicities_to_percentages
+        low_income_to_percentages
       end
     end
   end

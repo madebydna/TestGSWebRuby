@@ -74,6 +74,21 @@ module SchoolProfiles
           display_percentages: true # TODO: true
         }
       end
+      
+      def gs_data_value_to_value_hash(dv)
+        {
+          breakdown: t(h[:breakdown]),
+          label: text_value(h[:score]),
+          score: float_value(h[:score]),
+          state_average: float_value(h[:state_average]),
+          state_average_label: text_value(h[:state_average]),
+          percentage: h[:percentage],
+          number_students_tested: h[:number_students_tested],
+          grade: h[:grade],
+          grades: h[:grades],
+          display_percentages: true # TODO: true
+        }
+      end
 
       def values
         @_values ||= (

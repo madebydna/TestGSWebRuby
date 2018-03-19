@@ -20,14 +20,16 @@ module SchoolProfiles
       end
 
       def components
-        scores = school_cache_data_reader.flat_test_scores_for_latest_year
-        scores_grade_all = scores.select { | score | score[:grade] == 'All' }
-        scores_grade_all = scores_grade_all.sort_by { |h| -1 * h[:number_students_tested].to_f }
-        build_test_component(scores_grade_all)
+        build_test_components(
+          school_cache_data_reader
+            .flat_test_scores_for_latest_year
+            .having_grade_all
+            .sort_by_cohort_count
+        )
       end
 
-      def build_test_component(scores)
-        scores.map { |h| h[:subject] }.uniq.map do |subject|
+      def build_test_components(gs_data_values)
+        gs_data_values.all_academics.map do |subject|
           TestScoresComponent.new.tap do |component|
             component.school_cache_data_reader = school_cache_data_reader
             component.data_type = subject

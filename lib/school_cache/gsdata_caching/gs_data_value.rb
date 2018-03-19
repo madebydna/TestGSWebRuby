@@ -41,19 +41,23 @@ class GsdataCaching::GsDataValue
       select { |dv| dv.school_value.present? }.extend(CollectionMethods)
     end
 
+    def having_non_zero_school_value
+      select { |dv| dv.school_value.present? && !dv.school_value_as_float.zero? }.extend(CollectionMethods)
+    end
+
     def having_state_value
       select { |dv| dv.state_value.present? }.extend(CollectionMethods)
     end
 
-    def having_no_breakdown_or_breakdown_in(breakdowns)
+    def having_all_students_or_breakdown_in(breakdowns)
       breakdowns = Array.wrap(breakdowns)
       select do |dv|
         # data value selected if it has no breakdown or all its breakdowns
         # are contained within the given list
-        dv.breakdowns.blank? || (breakdowns & dv.breakdowns) == dv.breakdowns
+        dv.all_students? || (breakdowns & dv.breakdowns) == dv.breakdowns
       end.extend(CollectionMethods)
     end
-    
+
     # any breakdowns besides All Students?
     def any_subgroups?
       any? { |dv| !dv.all_students? }
@@ -120,6 +124,12 @@ class GsdataCaching::GsDataValue
       end
     end
 
+    def group_by_breakdowns
+      group_by do |dv|
+        [dv.breakdowns]
+      end
+    end
+
     def having_academic_tag_matching(regex)
       select { |dv| dv.academic_tags =~ regex }.extend(CollectionMethods)
     end
@@ -157,7 +167,6 @@ class GsdataCaching::GsDataValue
     def expect_only_one(message, other_helpful_vars = nil)
       if size > 1
         other_helpful_vars ||= {
-          school_ids: map(&:school_id),
           data_types: map(&:data_type),
           breakdowns: map(&:breakdowns),
           academics: map(&:academics),
@@ -249,6 +258,14 @@ class GsdataCaching::GsDataValue
 
     def sort_by_test_label_and_cohort_count
       sort_by { |h| [h.data_type, (h.school_cohort_count || 0) * -1] }.extend(CollectionMethods)
+    end
+
+    def sort_by_cohort_count
+      sort_by { |h| (h.school_cohort_count || 0) * -1 }.extend(CollectionMethods)
+    end
+
+    def sort_by_breakdowns
+      sort_by { |dv| dv.breakdowns.first }.extend(CollectionMethods)
     end
 
     %i[year data_type description source_name].each do |method|
@@ -384,7 +401,7 @@ class GsdataCaching::GsDataValue
 
   def to_hash
     {
-      breakdowns: breakdowns,
+      breakdowns: breakdowns.join(','),
       breakdown_tags: breakdown_tags,
       school_value: school_value,
       state_value: state_value,
@@ -418,6 +435,10 @@ class GsdataCaching::GsDataValue
 
   def breakdowns
     @breakdowns
+  end
+
+  def breakdown
+    breakdowns.first
   end
 
   def all_students?
