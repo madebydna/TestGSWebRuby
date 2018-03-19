@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class CoursesCaching::GsdataCoursesCacher < GsdataCaching::GsdataCacher
+  # DATA_TYPES INCLUDED
+  # 150: Course Enrollment
+
+
   COURSE_ENROLLMENT_DATA_TYPE_ID = 150
   CACHE_KEY = 'courses'
   DATA_TYPE_IDS = [COURSE_ENROLLMENT_DATA_TYPE_ID]
