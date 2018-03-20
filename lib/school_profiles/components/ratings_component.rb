@@ -2,6 +2,7 @@
 
 module SchoolProfiles
   module Components
+    #Added a filter (not_having_academics) that is good for Advanced Coursework but may not work for all values in ratings cache
     class RatingsComponent < Component
       def normalized_values
         school_cache_data_reader
