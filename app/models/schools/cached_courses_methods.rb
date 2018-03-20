@@ -6,6 +6,7 @@ module CachedCoursesMethods
     cache_data['courses'] || {}
   end
 
+  #TODO - need to verify this is being used
   def max_source_date_valid
     @_max_source_date_valid ||= begin
       all_courses_objs = courses.values.map do |array_of_hashes|

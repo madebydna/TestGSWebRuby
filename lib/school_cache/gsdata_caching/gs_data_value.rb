@@ -3,6 +3,7 @@
 class GsdataCaching::GsDataValue
   include FromHashMethod
 
+  ETHNICITY_BREAKDOWN = 'ethnicity'
   module CollectionMethods
     def year_of_most_recent
       most_recent.try(:year)
@@ -31,6 +32,14 @@ class GsdataCaching::GsDataValue
 
     def having_one_breakdown
       select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.extend(CollectionMethods)
+    end
+
+    def not_having_academics
+      reject { |dv| dv.academics.present? }.extend(CollectionMethods)
+    end
+
+    def having_ethnicity_breakdown
+      select { |dv| dv.breakdowns.present? && dv.breakdowns == ETHNICITY_BREAKDOWN}.extend(CollectionMethods)
     end
 
     def having_school_value
