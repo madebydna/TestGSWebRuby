@@ -1,6 +1,6 @@
 class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   CACHE_KEY = 'ratings'.freeze
-  DATA_TYPE_IDS = [151,155,156,157,158,159,160,176].freeze
+  DATA_TYPE_IDS = %w(151 155 156 157 158 159 160 175 176 177 178 179 180 181 182 183 184 185 186).freeze
 
   ADVANCED_COURSEWORK_DATA_TYPE_ID = 151
   ALL_STUDENTS = 'All Students'
