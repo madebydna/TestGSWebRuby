@@ -25,11 +25,16 @@ export default class SelectBoxes extends React.Component {
     let boxes = [];
     for (var index= 0; index < this.props.responseValues.length; index++) {
       let selectionValue = this.props.responseValues[index];
+      let selectionLabel = this.props.responseLabels[index];
       let classNames = this.convertValueToClassName(selectionValue);
       if (value === selectionValue) {
         classNames += " active";
       }
-      boxes.push(<li key={index} className={classNames} onClick={this.handleBoxClick(selectionValue)}><span className={this.convertIndexToIconClass(index)}></span></li>);
+      boxes.push(
+        <div onClick={this.handleBoxClick(selectionValue)} className='review-selection-item'>
+          <li key={index} className={classNames}><span className={this.convertIndexToIconClass(index)}></span></li>
+          <label>{selectionLabel}</label>
+        </div>);
     }
 
     return(
@@ -55,23 +60,11 @@ export default class SelectBoxes extends React.Component {
    return value.replace(' ','-').toLowerCase();
   }
 
-  renderResponseLabels() {
-    let labels = [];
-    this.props.responseLabels.forEach(function(label, index) {
-      labels.push(<li key={index}>{t(label)}</li>);
-    });
-    return(
-      <ul className="review-select-name">
-        { labels }
-      </ul>
-    );
-  }
-
   render() {
     return (
       <div className="clearfix">
         {this.selectBoxes(this.props.value)}
-        {this.renderResponseLabels()}
+        {/*{this.renderResponseLabels()}*/}
       </div>
     )
   }

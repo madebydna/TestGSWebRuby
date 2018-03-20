@@ -4,7 +4,6 @@ import ReviewForm from './form/review_form';
 import { t } from '../../util/i18n';
 import { isSignedIn, getSchoolUserDigest } from '../../util/session';
 import { size as viewportSize } from 'util/viewport';
-import { scrollToElement } from 'util/scrolling';
 import { fetchReviews } from '../../api_clients/reviews';
 
 export default class Reviews extends React.Component {
