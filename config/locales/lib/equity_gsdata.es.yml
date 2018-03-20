@@ -3,6 +3,7 @@ es:
     equity_gsdata:
       Overview: Descripción general
       Graduation rates: Índices de Graduación
+      College readiness: Preparación universitaria
       Test scores: Resultados de exámenes
       RE Test scores narration: >
         Esto muestra resultados de diferentes razas y etnicidades en un examen de %{subject} dado a los estudiantes
