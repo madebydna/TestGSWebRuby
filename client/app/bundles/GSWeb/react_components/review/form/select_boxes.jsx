@@ -64,7 +64,6 @@ export default class SelectBoxes extends React.Component {
     return (
       <div className="clearfix">
         {this.selectBoxes(this.props.value)}
-        {/*{this.renderResponseLabels()}*/}
       </div>
     )
   }
