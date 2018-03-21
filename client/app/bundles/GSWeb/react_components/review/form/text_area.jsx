@@ -8,7 +8,8 @@ export default class TextArea extends React.Component {
     handleTextBlur: React.PropTypes.func,
     errorMessage: React.PropTypes.string,
     textValue: React.PropTypes.string,
-    autoFocus: React.PropTypes.bool
+    autoFocus: React.PropTypes.bool,
+    placeholder: React.PropTypes.string,
   }
 
   static defaultProps = {
@@ -42,6 +43,7 @@ export default class TextArea extends React.Component {
         <textarea value={ this.props.textValue }
           onBlur = {this.props.handleTextBlur }
           autoFocus = { this.props.autoFocus }
+          placeholder = { this.props.placeholder }
           onChange={this.handleTextBoxChange}/>
         { this.props.errorMessage ? this.renderErrorMessage() : null }
       </div>

@@ -253,22 +253,39 @@ export default class ReviewForm extends React.Component {
      return this.validateResponse(accum, selectedResponses[questionId], questionId)
    }, {});
    var formValid = isEmpty(errorMessages);
-    this.setState ({
-      errorMessages: errorMessages,
-      formErrors: !formValid
-    });
-    return formValid;
+   this.setState({errorMessages: errorMessages, formErrors: !formValid});
+   return errorMessages
   }
 
   validateAndSubmit(){
-    var formValid = this.validateForm();
+    let errorMessages = this.validateForm();
+    let formValid = isEmpty(errorMessages);
     if(!formValid) {
       analyticsEvent('Profile', 'Display Error Message', 'Review form validation failed');
-    }
-    if (formValid) {
+      this.scrollToFirstError(errorMessages);
+    } else if (formValid) {
       this.submitForm();
     }
     this.setState({submittingForm: false})
+  }
+
+  questionDisplayOrder(){
+    let orderedQuestionIds = [];
+    for (let question of this.props.questions) {
+      orderedQuestionIds.push(question.id)
+    }
+    return orderedQuestionIds;
+  }
+
+  scrollToFirstError(errorMessages) {
+    // this.state.errorMessages is in order, but the questions are not. Iterate through questions as displayed on screen
+    // until a matching questionId is found in errorMessages
+    let orderedQuestions = this.questionDisplayOrder();
+    let errorMessageKeys = Object.keys(errorMessages);
+    let errorId = orderedQuestions.find(function(questionId){
+      return errorMessageKeys.indexOf(questionId.toString()) >= 0
+    });
+    scrollToElement('#question_' + errorId)
   }
 
   onSubmit() {

@@ -11,6 +11,7 @@ class Cacher
   # :esp_response
   # :feed_test_scores
   # :gsdata
+  # :courses
   # :directory
   # :feed_characteristics
 
@@ -84,10 +85,11 @@ class Cacher
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
         feed_test_scores: FeedTestScoresCacher,
-        feed_test_scores_gsdata: TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
         gsdata:           GsdataCaching::GsdataCacher,
         ratings:         RatingsCaching::GsdataRatingsCacher,
         directory:        DirectoryCaching::DirectoryCacher,
+        courses:              CoursesCaching::GsdataCoursesCacher,
+        feed_test_scores_gsdata: TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
         feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
     }[key.to_s.to_sym]
   end
@@ -118,6 +120,7 @@ class Cacher
       TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
       GsdataCaching::GsdataCacher,
       RatingsCaching::GsdataRatingsCacher,
+      CoursesCaching::GsdataCoursesCacher,
       DirectoryCaching::DirectoryCacher,
       FeedCharacteristicsCaching::FeedCharacteristicsCacher
     ]

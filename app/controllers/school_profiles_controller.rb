@@ -338,8 +338,7 @@ class SchoolProfilesController < ApplicationController
 
   def set_seo_meta_tags
     meta_tags = SchoolProfileMetaTags.new(school)
-    md  = meta_description
-    description = md.present? ? md : meta_tags.description
+    description = meta_tags.description
     canonical_url = school_url(school)
     set_meta_tags title: meta_tags.title,
                   description: description,
