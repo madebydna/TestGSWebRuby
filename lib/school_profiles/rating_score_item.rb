@@ -10,18 +10,18 @@ module SchoolProfiles
       end
     end
 
-    def self.from_test_scores_hash(hash)
+    def self.from_test_scores_hash(gs_data_value)
       self.new.tap do |obj|
-        obj.label = hash.subject
-        obj.score = hash.score
-        obj.state_average = hash.state_average
-        obj.description = hash.description
-        obj.test_label = hash.test_label
-        obj.source = hash.source
-        obj.year = hash.year
-        obj.grade = hash.grade
-        obj.grades = hash.grades
-        obj.flags = hash.flags
+        obj.label = gs_data_value.subject
+        obj.score = gs_data_value.score
+        obj.state_average = gs_data_value.state_average
+        obj.description = gs_data_value.description
+        obj.test_label = gs_data_value.test_label
+        obj.source = gs_data_value.source
+        obj.year = gs_data_value.year
+        obj.grade = gs_data_value.grade
+        obj.grades = gs_data_value.grades
+        obj.flags = gs_data_value.flags
       end
     end
 

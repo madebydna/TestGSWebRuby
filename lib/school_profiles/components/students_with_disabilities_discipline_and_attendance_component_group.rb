@@ -12,7 +12,8 @@ module SchoolProfiles
             component.title = 'Percentage of students suspended out of school'
             component.type = 'person_gray'
             component.narration = t('narration.SD.Percentage of students suspended out of school')
-            component.valid_breakdowns = ['All students','Students with disabilities']
+            component.exact_breakdown_tags = ['disability']
+            component.valid_breakdowns = ['Students with disabilities']
           end,
           GsdataComponent.new.tap do |component|
             component.school_cache_data_reader = school_cache_data_reader
@@ -20,7 +21,8 @@ module SchoolProfiles
             component.title = 'Percentage of students chronically absent (15+ days)'
             component.type = 'person_gray'
             component.narration = t('narration.SD.Percentage of students chronically absent (15+ days)')
-            component.valid_breakdowns = ['All students','Students with IDEA catagory disabilities']
+            component.exact_breakdown_tags = ['disability']
+            component.valid_breakdowns = ['Students with IDEA catagory disabilities']
           end
         ]
       end

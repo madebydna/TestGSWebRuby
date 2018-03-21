@@ -53,12 +53,13 @@ module SchoolProfiles
       scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(test_scores_hashes: nil).add_to_array_of_hashes(scores)
 
       scores.group_by_test.values.map do |gs_data_values|
-        grade_all_rating_score_item = rating_score_item_from_gs_data_value(
-          gs_data_values
-          .having_grade_all
+        grade_all_data_value = gs_data_values.having_grade_all
           .expect_only_one('Expect only one value for all students grade all per test')
-        )
+        next unless grade_all_data_value.present?
+
         other_grades = gs_data_values.not_grade_all.sort_by_grade
+
+        grade_all_rating_score_item = rating_score_item_from_gs_data_value(grade_all_data_value)
 
         if other_grades.present?
           grade_all_rating_score_item.grades = other_grades.map do |gs_data_value|
@@ -67,7 +68,7 @@ module SchoolProfiles
         end
 
         grade_all_rating_score_item
-      end
+      end.compact
     end
 
     def rating_score_item_from_gs_data_value(gs_data_value)
@@ -104,8 +105,8 @@ module SchoolProfiles
           .for_all_students
           .group_by(&:data_type)
           .values
-          .each_with_object('') do |array, c|
-            c << sources_for_view(array)
+          .each_with_object('') do |array, text|
+            text << sources_text(array)
           end
 
         content << '</div>'
@@ -129,25 +130,25 @@ module SchoolProfiles
         .for_all_students
         .group_by(&:data_type)
         .values
-        .each_with_object('') do |array, content|
-          content << sources_for_view(array)
+        .each_with_object('') do |gs_data_values, text|
+          text << sources_text(gs_data_values)
         end
     end
 
-    def sources_for_view(array)
+    def sources_text(gs_data_values)
       # TODO: test flags
-      source = array.source_name
-      flags = flags_for_sources(Array.wrap(array.last.flags).flatten.compact.uniq)
+      source = gs_data_values.source_name
+      flags = flags_for_sources(gs_data_values.all_uniq_flags)
       source_content = I18n.db_t(source, default: source)
       if source_content.present?
         str = '<div>'
-        str << '<h4>' + data_label(array.data_type) + '</h4>'
-        str << "<p>#{Array.wrap(array.all_academics).join(', ')}</p>"
-        str << "<p>#{I18n.db_t(array.description)}</p>"
+        str << '<h4>' + data_label(gs_data_values.data_type) + '</h4>'
+        str << "<p>#{Array.wrap(gs_data_values.all_academics).map { |s| data_label(s) }.join(', ')}</p>"
+        str << "<p>#{I18n.db_t(gs_data_values.description)}</p>"
         if flags.present?
           str << "<p><span class='emphasis'>#{data_label('note')}</span>: #{data_label(flags)}</p>"
         end
-        str << "<p><span class='emphasis'>#{data_label('source')}</span>: #{source_content}, #{array.year}</p>"
+        str << "<p><span class='emphasis'>#{data_label('source')}</span>: #{source_content}, #{gs_data_values.year}</p>"
         str << '</div>'
         str
       else

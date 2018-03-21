@@ -129,12 +129,12 @@ module SchoolProfiles
 
       data_array = components.map {|component| component.tab == 'college_success' ? component.data_type_hashes.reject{|h| h['year'] < DATA_CUTOFF_YEAR} : component.data_type_hashes}.reduce(:+)
       content << data_array.reduce('') do |string, hash|
-        string << sources_for_view(hash)
+        string << sources_text(hash)
       end
       content << '</div>'
     end
 
-    def sources_for_view(hash)
+    def sources_text(hash)
       year = hash['year'] || ((hash['source_date_valid'] || '')[0..3]).presence || hash['source_year']
       source = hash['source'] || hash['source_name']
       str = '<div>'

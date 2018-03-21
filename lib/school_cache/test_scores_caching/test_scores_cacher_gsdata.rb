@@ -96,7 +96,6 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
       h[:academic_tags] = academic_tags# if academic_tags  #academic_tags.tag...comma separated string for all records associated with data value
       h[:grade] = result.grade if result.grade  #data_value.grade
       h[:state_cohort_count] = state_result.cohort_count if state_result && state_result.cohort_count  #data_value.cohort_count
-      # h[:flags] = result.flags TODO
     end
   end
 

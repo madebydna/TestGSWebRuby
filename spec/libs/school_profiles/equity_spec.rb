@@ -17,15 +17,15 @@ describe SchoolProfiles::Equity do
   end
 
   describe '#sources_for_view' do
-    subject { equity.sources_for_view(hash) }
+    subject { equity.sources_text(hash) }
     let(:hash) { valid_hash }
     let(:valid_hash) do
-      {
+      OpenStruct.new({
         label: 'foo',
         description: 'description',
         source: 'foo',
         year: 2014
-      }
+      })
     end
 
     it { is_expected.to be_a(String) }

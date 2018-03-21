@@ -198,16 +198,14 @@ module SchoolProfiles
       GsdataCaching::GsDataValue.from_array_of_hashes(hashes).having_most_recent_date
     end
 
-    def recent_test_scores_with_subgroups
+    def recent_test_scores
       flat_test_scores_for_latest_year
-        .for_all_students
+        .having_school_value
         .sort_by_test_label_and_cohort_count
     end
 
     def recent_test_scores_without_subgroups
-      flat_test_scores_for_latest_year
-        .for_all_students
-        .sort_by_test_label_and_cohort_count
+      recent_test_scores.for_all_students
     end
 
     def graduation_rate_data

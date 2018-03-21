@@ -1,7 +1,8 @@
 module SchoolProfiles
   module Components
     class Component
-      attr_accessor :school_cache_data_reader, :data_type, :title, :type, :precision, :valid_breakdowns, :flagged
+      attr_accessor :school_cache_data_reader, :data_type, :title, :type, :precision, :valid_breakdowns, :flagged,
+        :exact_breakdown_tags
       attr_writer :narration
 
       def initialize(precision: 0)

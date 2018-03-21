@@ -39,7 +39,7 @@ module SchoolProfiles
       # TODO: sort breakdowns
       @_low_income_hash ||=(
         results = @school_cache_data_reader
-          .recent_test_scores_with_subgroups
+          .recent_test_scores
           .having_breakdown_in(low_income_breakdowns.keys)
         if results.any_subgroups?
           results

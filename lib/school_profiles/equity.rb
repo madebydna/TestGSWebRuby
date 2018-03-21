@@ -234,20 +234,20 @@ module SchoolProfiles
       if characteristics_low_income_visible?
         content << '<div class="sourcing">'
         content << characteristics_sources_low_income.reduce('') do |string, (key, hash)|
-          string << sources_for_view(hash)
+          string << sources_text(hash)
         end
         content << '</div>'
       elsif characteristics_ethnicity_visible?
         content << '<div class="sourcing">'
         content << characteristics_sources_ethnicity.reduce('') do |string, (key, hash)|
-          string << sources_for_view(hash)
+          string << sources_text(hash)
         end
         content << '</div>'
       end
 
       if equity_data_sources.present?
         content << '<div class="sourcing">'
-        content << gsdata_sources_for_view(equity_data_sources)
+        content << gsdata_sources_text(equity_data_sources)
         content << '</div>'
       end
 
@@ -284,7 +284,7 @@ module SchoolProfiles
       content
     end
 
-    def gsdata_sources_for_view(hash)
+    def gsdata_sources_text(hash)
       str = ''
       hash.each do |subject, info|
         str << '<div>'
@@ -298,7 +298,7 @@ module SchoolProfiles
       str
     end
 
-    def sources_for_view(hash)
+    def sources_text(hash)
       str = '<div>'
       str << '<h4>' + data_label(hash[:label]) + '</h4>'
       str << "<p>#{data_label(hash[:description])}</p>"
@@ -365,12 +365,10 @@ module SchoolProfiles
     end
 
     def race_ethnicity_visible?
-      return false
       race_ethnicity_props.map { |h| h[:data] }.any?(&:present?)
     end
 
     def low_income_visible?
-      return false
       low_income_section_props.map { |h| h[:data] }.any?(&:present?)
     end
 

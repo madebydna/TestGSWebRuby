@@ -2,8 +2,8 @@ module SchoolProfiles
   module Components
     class LowIncomeTestScoresComponent < TestScoresComponent
       def narration
-        low_income_hash = normalized_values.find { |h| h[:breakdown] == 'Low-income' } || {}
-        all_hash = normalized_values.find { |h| h[:breakdown] == 'All students' } || {}
+        low_income_hash = normalized_values.values.flatten.find { |h| h[:breakdown] == 'Low-income' } || {}
+        all_hash = normalized_values.values.flatten.find { |h| h[:breakdown] == 'All students' } || {}
 
         yml_key = NarrativeLowIncomeTestScores.yml_key(
           low_income_hash[:score],

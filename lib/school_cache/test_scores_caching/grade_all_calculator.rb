@@ -48,7 +48,6 @@ class TestScoresCaching::GradeAllCalculator
     grade_all_dv.school_cohort_count = nil
     grade_all_dv.state_cohort_count = nil
     grade_all_dv.grade = GsdataCaching::GsDataValue::GRADE_ALL
-    # TODO handle flags
     flags = []
 
     if data_values.all_school_values_are_numeric?
@@ -72,6 +71,7 @@ class TestScoresCaching::GradeAllCalculator
     end
 
     return nil unless grade_all_dv.school_value || grade_all_dv.state_value
+    grade_all_dv.flags = flags
     grade_all_dv
   end
 

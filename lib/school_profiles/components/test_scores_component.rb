@@ -6,57 +6,43 @@ module SchoolProfiles
       end
 
       def normalized_values
-        @_normalized_values ||= (
-          values = school_cache_data_reader
-            .flat_test_scores_for_latest_year
-            .having_school_value
-            .having_all_students_or_breakdown_in(valid_breakdowns)
+        # @_normalized_values ||= (
+        # @foo = 123
+        # require 'byebug'
+        # byebug
+          school_cache_data_reader
+            .recent_test_scores
+            .having_academic(data_type) # data type attribute actually contains the subject here
+            .having_all_students_or_all_breakdowns_in(valid_breakdowns)
+            .apply_to_each_data_type_academic_group(&:keep_if_any_subgroups)
+            .apply_to_each_data_type_academic_breakdown_group(&:keep_if_any_grade_all)
+            .apply_to_each_data_type_academic_group(&:keep_if_any_non_zero_school_values)
+            .group_by_data_type
+            .each_with_object({}) do |(test, values_for_test), hash|
+              hash[test] = 
+                values_for_test
+                .sorted_subgroups # give us nested array. array for each breakdown incl All students
+                .map do |values_for_subgroup|
+                  grade_all, other_grades = values_for_subgroup.separate_single_grade_all_from_other
 
-          # By now only school values and breakdowns we're interested in remain
-          # Throw away everything unless there's at least one subgroup now
-          return [] unless values.any_subgroups?
-
-          values
-            .sort_by_breakdowns
-            .group_by_breakdowns
-            .values
-            .select { |gs_data_values| array_contains_any_valid_data?(gs_data_values) }
-            .map do |gs_data_values|
-              grade_all_rating_score_item = gs_data_value_to_hash(
-                gs_data_values
-                .having_grade_all
-                .expect_only_one('Expect only one value for all students grade all per test')
-              )
-              other_grades = gs_data_values.not_grade_all.sort_by_grade
-
-              if other_grades.present?
-                grade_all_rating_score_item[:grades] = other_grades.map do |gs_data_value|
-                  gs_data_value_to_hash(gs_data_value)
-                    .except(
-                      :breakdown,
-                      :subject,
-                      :test_description,
-                      :test_label,
-                      :test_source,
-                      :year,
-                      :state_number_tested
-                    )
+                  grade_all_rating_score_item = gs_data_value_to_hash(grade_all)
+                  if other_grades.present?
+                    grade_all_rating_score_item[:grades] = 
+                      other_grades.sort_by_grade.map do |gs_data_value|
+                        gs_data_value_to_grade_hash(gs_data_value)
+                      end
+                  end
+                  grade_all_rating_score_item
                 end
-              end
-              grade_all_rating_score_item
             end
-        )
-      end
-
-      def array_contains_any_valid_data?(gs_data_values)
-        gs_data_values.having_non_zero_school_value.present?
+        # )
       end
 
       def values
         @_values ||= (
-          normalized_values
-            .sort(&method(:comparator))
-            .group_by { |h| h[:test_label] }
+          normalized_values.each_with_object({}) do |(test_label, objects), hash|
+            hash[test_label] = objects.sort(&method(:comparator))
+          end
         )
       end
 
@@ -78,6 +64,19 @@ module SchoolProfiles
           year: dv.year,
           state_number_tested: dv.state_cohort_count
         }
+      end
+
+      def gs_data_value_to_grade_hash(gs_data_value)
+        gs_data_value_to_hash(gs_data_value)
+          .except(
+            :breakdown,
+            :subject,
+            :test_description,
+            :test_label,
+            :test_source,
+            :year,
+            :state_number_tested
+          )
       end
 
       def breakdown_percentage(dv)

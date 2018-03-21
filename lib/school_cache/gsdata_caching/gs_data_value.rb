@@ -45,11 +45,20 @@ class GsdataCaching::GsDataValue
       select { |dv| dv.school_value.present? && !dv.school_value_as_float.zero? }.extend(CollectionMethods)
     end
 
+    def any_non_zero_school_values?
+      having_non_zero_school_value.any?
+    end
+
+    def keep_if_any_non_zero_school_values
+      return [].extend(CollectionMethods) unless any_non_zero_school_values?
+      self
+    end
+
     def having_state_value
       select { |dv| dv.state_value.present? }.extend(CollectionMethods)
     end
 
-    def having_all_students_or_breakdown_in(breakdowns)
+    def having_all_students_or_all_breakdowns_in(breakdowns)
       breakdowns = Array.wrap(breakdowns)
       select do |dv|
         # data value selected if it has no breakdown or all its breakdowns
@@ -58,9 +67,31 @@ class GsdataCaching::GsDataValue
       end.extend(CollectionMethods)
     end
 
+    def having_all_students_or_breakdown_in(breakdowns)
+      breakdowns = Array.wrap(breakdowns)
+      select do |dv|
+        # data value selected if it has no breakdown or all its breakdowns
+        # are contained within the given list
+        dv.all_students? || (breakdowns & dv.breakdowns).any?
+      end.extend(CollectionMethods)
+    end
+
     # any breakdowns besides All Students?
     def any_subgroups?
       any? { |dv| !dv.all_students? }
+    end
+
+    def keep_if_any_subgroups
+      return [].extend(CollectionMethods) unless any_subgroups?
+      self
+    end
+
+    # sort and group by breakdowns,
+    # and then return the array of subgroups
+    def sorted_subgroups
+      sort_by_breakdowns
+        .group_by_breakdowns
+        .values
     end
 
     def having_breakdown_in(breakdowns)
@@ -75,6 +106,14 @@ class GsdataCaching::GsDataValue
 
     def having_breakdown_tag_matching(regex)
       select { |dv| dv.breakdown_tags =~ regex unless dv.breakdown_tags.blank? }.extend(CollectionMethods)
+    end
+
+    def having_exact_breakdown_tags(tags)
+      tags = Array.wrap(tags)
+      select do |dv|
+        breakdown_tags = (dv.breakdown_tags || '').split(',')
+        (tags - breakdown_tags).empty? && (breakdown_tags - tags).empty?
+      end.extend(CollectionMethods)
     end
 
     def expand_on_breakdown_tags
@@ -102,11 +141,22 @@ class GsdataCaching::GsDataValue
       end
     end
 
+    def group_by_data_type
+      group_by(&:data_type).each_with_object({}) do |(data_type, values), hash|
+        hash[data_type] = values.extend(CollectionMethods)
+      end
+    end
+
     # To get values for same test but different grades
     def group_by_test
       group_by do |dv|
         [dv.data_type, dv.academics]
       end
+    end
+
+    def having_academic(academic)
+      select { |dv| dv.academics.split(',').include?(academic) }
+        .extend(CollectionMethods)
     end
 
     def group_by_academics
@@ -128,6 +178,29 @@ class GsdataCaching::GsDataValue
       group_by do |dv|
         [dv.breakdowns]
       end
+    end
+
+    def apply_to_each_group(*attributes)
+      group_by { |dv| attributes.map { |attr| dv.send(attr) } }
+        .values
+        .each_with_object([]) do |values_for_group, collected_values|
+          block_rval = yield(values_for_group)
+          next unless block_rval.present?
+          if block_rval.is_a?(GsdataCaching::GsDataValue)
+            collected_values << block_rval
+          else
+            collected_values.concat(block_rval)
+          end
+        end
+        .extend(CollectionMethods)
+    end
+
+    def apply_to_each_data_type_academic_group(&block)
+      apply_to_each_group(:data_type, :academics, &block)
+    end
+
+    def apply_to_each_data_type_academic_breakdown_group(&block)
+      apply_to_each_group(:data_type, :academics, :breakdown, &block)
     end
 
     def having_academic_tag_matching(regex)
@@ -204,6 +277,21 @@ class GsdataCaching::GsDataValue
       sort_by(&:grade)
     end
 
+    def keep_if_any_grade_all
+      return [].extend(CollectionMethods) unless any_grade_all?
+      self
+    end
+
+    # assumes all values are for same test/year/subject, and no subgroups
+    # therefore should only have one grade all value
+    def separate_single_grade_all_from_other
+      [
+        having_grade_all
+          .expect_only_one('Expect only one grade all for this data set'),
+        not_grade_all
+      ]
+    end
+
     def total_school_cohort_count
       sum(&:school_cohort_count)
     end
@@ -265,7 +353,12 @@ class GsdataCaching::GsDataValue
     end
 
     def sort_by_breakdowns
-      sort_by { |dv| dv.breakdowns.first }.extend(CollectionMethods)
+      sort_by { |dv| dv.breakdowns.first || '' }.extend(CollectionMethods)
+    end
+
+    def all_uniq_flags
+      # get array of flag arrays, then union then all together
+      map(&:flags).reduce(&:|)
     end
 
     %i[year data_type description source_name].each do |method|
@@ -311,6 +404,9 @@ class GsdataCaching::GsDataValue
         .extend(CollectionMethods)
     end
 
+    def +(other)
+      super(other).extend(CollectionMethods)
+    end
   end
 
   attr_accessor :breakdown_tags,
@@ -331,11 +427,11 @@ class GsdataCaching::GsDataValue
     :methodology,
     :grade,
     :academics,
-    :flags,
     :percentage,
     :narrative,
     :label
 
+  attr_writer :flags
   attr_reader :school_cohort_count, :state_cohort_count
 
   def [](key)
@@ -419,12 +515,14 @@ class GsdataCaching::GsDataValue
       percentage: percentage,
       narrative: narrative,
       label: label,
+      flags: flags
     }.tap do |hash|
       hash[:narrative] = narrative if narrative
     end
   end
 
   def breakdowns=(breakdowns)
+    breakdowns ||= []
     if breakdowns.is_a?(String)
       breakdowns = breakdowns
         .gsub('All Students', 'All students')
@@ -434,7 +532,7 @@ class GsdataCaching::GsDataValue
   end
 
   def breakdowns
-    @breakdowns
+    @breakdowns || []
   end
 
   def breakdown
@@ -447,6 +545,10 @@ class GsdataCaching::GsDataValue
 
   def has_ethnicity_tag?
     breakdown_tags.present? && breakdown_tags.include?('ethnicity')
+  end
+
+  def flags
+    @flags || []
   end
 
 end
