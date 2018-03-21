@@ -7,11 +7,10 @@
     padding: 0;
     clear: both;
 
-    li {
+    li span {
       font-size: 13px;
       padding: 2px 4px;
       text-align: center;
-      border-right: 1px solid #c1d2d9;
 
       &:hover {
         background-color: #EEEEEE;
@@ -65,10 +64,11 @@
       text-align: center;
       margin-left: -1px;
       cursor: pointer;
-      li {
+      span {
         display: block;
         border: 1px solid #c1d2d9;
-        label {font-size: 13px;}
+        //label {font-size: 13px;}
+        span { border: none;}
 
       }
       label {
@@ -80,13 +80,37 @@
     }
   }
 
+  @include media-breakpoint-down(sm) {
+    .review-question {
+      > div:last-child {
+        > div:first-child {
+          font-size: 16px;
+        }
+      }
+    }
+    ul.review-selector .review-selection-item {
+      text-align: left;
+      display: block;
+      width: 100%;
+      margin: 0;
+      span {
+        display: inline-block;
+        padding: 5px 8px;
+        margin-bottom: 3px;
+      }
+      label {
+        margin-left: 20px;
+      }
+    }
+  }
+
   ul.review-select-name {
     font-family: opensans-semibold;
     list-style-type: none;
     margin: 0;
     padding: 0;
 
-    li {
+    span li {
       text-align: center;
       width: 20%;
       float: left;
@@ -174,31 +198,6 @@
       font-family: opensans-regular;
       color: #777777;
       margin-top: 5px;
-    }
-  }
-
-
-  @include media-breakpoint-down(sm) {
-    .review-question {
-      > div:last-child {
-        > div:first-child {
-          font-size: 16px;
-        }
-      }
-    }
-    ul.review-selector .review-selection-item {
-      text-align: left;
-      display: block;
-      width: 100%;
-      margin: 0;
-      li {
-        display: inline-block;
-        padding: 5px 8px;
-        margin-bottom: 3px;
-      }
-      label {
-        margin-left: 20px;
-      }
     }
   }
 

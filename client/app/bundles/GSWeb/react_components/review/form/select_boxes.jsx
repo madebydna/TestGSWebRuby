@@ -31,10 +31,10 @@ export default class SelectBoxes extends React.Component {
         classNames += " active";
       }
       boxes.push(
-        <div onClick={this.handleBoxClick(selectionValue)} className='review-selection-item'>
-          <li key={index} className={classNames}><span className={this.convertIndexToIconClass(index)}></span></li>
+        <li onClick={this.handleBoxClick(selectionValue)} className='review-selection-item'>
+          <span key={index} className={classNames}><span className={this.convertIndexToIconClass(index)}></span></span>
           <label>{selectionLabel}</label>
-        </div>);
+        </li>);
     }
 
     return(
