@@ -51,7 +51,7 @@ module SchoolProfiles
         },
         {
           title: I18n.t('College readiness', scope:'lib.equity_gsdata'),
-          anchor: 'Graduation_rates',
+          anchor: 'College_readiness',
           data: @graduation_rate.to_hash
         },
         {
