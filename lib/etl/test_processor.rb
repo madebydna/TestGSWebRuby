@@ -30,6 +30,7 @@ module GS
                        :district_id, :district_name, :test_data_type, :test_data_type_id, :grade,
                        :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
                        :proficiency_band_id, :level_code, :number_tested, :value_float]
+      SUMMARY_OUTPUT_FIELDS = %i[entity_level field value count]
 
       def initialize(input_dir, options = {})
         @input_dir = input_dir
@@ -65,6 +66,19 @@ module GS
 
       def config_step
         @config_step ||= LoadConfigFile.new config_output_file, config_hash
+      end
+
+      def summary_output_step
+        @summary_output_step ||= SummaryOutput.new(%i[
+                                                       entity_level
+                                                       year
+                                                       grade
+                                                       level_code
+                                                       subject_id
+                                                       breakdown_id
+                                                       proficiency_band_id
+                                                   ]
+        )
       end
 
       class << self
@@ -126,6 +140,7 @@ module GS
         column_value_report = build_column_value_report
         shared_leaf.add(column_value_report.build_graph)
         @runnable_steps += column_value_report.runnable_steps
+        @runnable_steps << summary_output_step
         shared_leaf.transform("Adds data_type_id column for config file", WithBlock) do |row|
          row[:data_type_id] = row[:test_data_type_id]
          row
@@ -174,7 +189,12 @@ module GS
         end
       end
 
+      def summary_output_file
+        FILE_LOCATION +  data_file_prefix + 'summary_report.csv'
+      end
+
       def state_steps
+        output_files_root_step.add(summary_output_step)
         node = output_files_root_step.add_step('Keep only state rows', KeepRows, :entity_level, 'state')
         node.sql_writer 'Output state rows to SQL file', SqlDestination,
                          state_output_sql_file, config_hash,
@@ -194,6 +214,7 @@ module GS
       end
 
       def district_steps
+        output_files_root_step.add(summary_output_step)
         node = output_files_root_step.add_step(
           'Keep only district rows',
           KeepRows,
@@ -215,13 +236,12 @@ module GS
       end
 
       def school_steps
+        output_files_root_step
+          .add(summary_output_step)
+          .destination('Output summary data to file', CsvDestination, summary_output_file, *SUMMARY_OUTPUT_FIELDS)
         node = output_files_root_step.add_step('Keep only school rows', KeepRows, :entity_level, 'school')
-        node.sql_writer 'Output school rows to SQL file', SqlDestination,
-                        school_output_sql_file, config_hash,
-                        *COLUMN_ORDER
-        node.destination 'Output school rows to CSV', CsvDestination,
-          school_output_file,
-          *COLUMN_ORDER
+        node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, *COLUMN_ORDER
+        node.destination 'Output school rows to CSV', CsvDestination, school_output_file, *COLUMN_ORDER
         node
       end
 
