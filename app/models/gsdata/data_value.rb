@@ -34,7 +34,39 @@ class DataValue < ActiveRecord::Base
   end
 
 # rubocop:disable Style/FormatStringToken
-  def self.find_by_school_and_data_types(school, data_types, breakdown_tag_names = [], academic_tag_names = [])
+  def self.find_by_school_and_data_types_with_academics(school, data_types)
+    school_values_with_academics.
+        from(
+            DataValue.school_and_data_types(school.state,
+                                            school.id,
+                                            data_types), :data_values)
+        .with_data_types
+        .with_sources
+        .with_academics
+        .with_academic_tags
+        .with_breakdowns
+        .with_breakdown_tags
+        .group('data_values.id')
+        .having("(breakdown_count + academic_count) < 3 OR breakdown_names like '%All students except 504 category%'")
+  end
+
+  def self.find_by_school_and_data_types_with_academics_all_students_and_grade_all(school, data_types)
+    school_values_with_academics.
+        from(
+            DataValue.school_and_data_types(school.state,
+                                            school.id,
+                                            data_types), :data_values)
+        .with_data_types
+        .with_sources
+        .with_academics
+        .with_academic_tags
+        .with_breakdowns_for_courses
+        .with_breakdown_tags
+        .group('data_values.id')
+        .having("((breakdown_count + academic_count) < 3 OR breakdown_names like '%All students except 504 category%') && grade='All'")
+  end
+
+  def self.find_by_school_and_data_types(school, data_types)
     school_values.
       from(
         DataValue.school_and_data_types(school.state,
@@ -42,17 +74,28 @@ class DataValue < ActiveRecord::Base
                                        data_types), :data_values)
           .with_data_types
           .with_sources
-          .with_academics
-          .with_academic_tags(academic_tag_names)
           .with_breakdowns
-          .with_breakdown_tags(breakdown_tag_names)
+          .with_breakdown_tags
           .group('data_values.id')
-          .having("(breakdown_count + academic_count) < 3 OR breakdown_names like '%All students except 504 category%'")
+          .having("breakdown_count < 2 OR breakdown_names like '%All students except 504 category%'")
   end
-
 # rubocop:enable Style/FormatStringToken
+
   def self.school_values
     school_values = <<-SQL
+      data_values.id, data_values.value, data_values.state, data_values.school_id,
+      data_values.data_type_id, data_values.configuration, data_values.grade, data_values.cohort_count,
+      data_values.proficiency_band_id, data_types.name,
+      sources.source_name, sources.date_valid,
+      group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
+      group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",
+      count(distinct(breakdowns.name)) as "breakdown_count"
+    SQL
+    select(school_values)
+  end
+
+  def self.school_values_with_academics
+    school_values_with_academics = <<-SQL
       data_values.id, data_values.value, data_values.state, data_values.school_id,
       data_values.data_type_id, data_values.configuration, data_values.grade, data_values.cohort_count,
       data_values.proficiency_band_id, data_types.name,
@@ -65,10 +108,10 @@ class DataValue < ActiveRecord::Base
       count(distinct(academics.name)) as "academic_count",
       group_concat(distinct academics.type ORDER BY academics.type) as "academic_types"
     SQL
-    select(school_values)
+    select(school_values_with_academics)
   end
 
-  def self.find_by_state_and_data_types(state, data_types, breakdown_tag_names = [], academic_tag_names = [])
+  def self.find_by_state_and_data_types(state, data_types)
     state_and_district_values.
       from(
         DataValue.state_and_data_types(
@@ -76,14 +119,14 @@ class DataValue < ActiveRecord::Base
           data_types
         ), :data_values)
           .with_breakdowns
-          .with_breakdown_tags(breakdown_tag_names)
+          .with_breakdown_tags
           .with_academics
-          .with_academic_tags(academic_tag_names)
+          .with_academic_tags
           .with_sources
           .group('data_values.id')
   end
 
-  def self.find_by_district_and_data_types(state, district_id, data_types, breakdown_tag_names = [], academic_tag_names = [])
+  def self.find_by_district_and_data_types(state, district_id, data_types)
     state_and_district_values.
       from(
         DataValue.state_and_district_data_types(
@@ -92,9 +135,9 @@ class DataValue < ActiveRecord::Base
           data_types
         ), :data_values)
           .with_breakdowns
-          .with_breakdown_tags(breakdown_tag_names)
+          .with_breakdown_tags
           .with_academics
-          .with_academic_tags(academic_tag_names)
+          .with_academic_tags
           .with_sources
           .group('data_values.id')
   end
@@ -162,20 +205,22 @@ class DataValue < ActiveRecord::Base
       )
   end
 
-  def self.with_breakdown_tags(breakdown_tag_names = [])
-    if breakdown_tag_names.present?
-      q = <<-SQL
-        LEFT JOIN (select breakdown_id, tag from breakdown_tags where tag in ('#{breakdown_tag_names.join('\',\'')}')) bt
-        ON bt.breakdown_id = breakdowns.id
-      SQL
-    else
-      q = <<-SQL
-        LEFT JOIN breakdown_tags bt
-        ON bt.breakdown_id = breakdowns.id
-      SQL
-    end
-    ar = joins(q)
-    ar
+  def self.with_breakdowns_for_courses
+    joins(<<-SQL
+      INNER JOIN data_values_to_breakdowns
+        ON data_values.id = data_values_to_breakdowns.data_value_id && data_values_to_breakdowns.breakdown_id=1 
+      LEFT JOIN breakdowns
+        ON breakdowns.id = data_values_to_breakdowns.breakdown_id
+    SQL
+    )
+  end
+
+  def self.with_breakdown_tags
+    joins(<<-SQL
+      LEFT JOIN breakdown_tags bt
+      ON bt.breakdown_id = breakdowns.id
+    SQL
+    )
   end
 
   def self.with_academics
@@ -188,20 +233,12 @@ class DataValue < ActiveRecord::Base
     )
   end
 
-  def self.with_academic_tags(academic_tag_names = [])
-    if academic_tag_names.present?
-      q = <<-SQL
-        LEFT JOIN (select academic_id, tag from academic_tags where tag in ('#{academic_tag_names.join('\',\'')}')) act
-        ON act.academic_id = academics.id
-      SQL
-    else
-      q = <<-SQL
-        LEFT JOIN academic_tags act
-        ON act.academic_id = academics.id
-      SQL
-    end
-    ar = joins(q)
-    ar
+  def self.with_academic_tags
+    joins(<<-SQL
+      LEFT JOIN academic_tags act
+      ON act.academic_id = academics.id
+    SQL
+    )
   end
 
   def datatype_breakdown_year

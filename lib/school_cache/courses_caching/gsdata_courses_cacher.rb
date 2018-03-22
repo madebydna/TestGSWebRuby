@@ -17,20 +17,20 @@ class CoursesCaching::GsdataCoursesCacher < GsdataCaching::GsdataCacher
 
   def build_hash_for_cache
     school_cache_hash = Hash.new { |h, k| h[k] = [] }
-    r = school_results
+    r = school_results_with_academics_for_courses
     r.each_with_object(school_cache_hash) do |result, cache_hash|
       result_hash = result_to_hash(result)
       validate_result_hash(result_hash, result.data_type_id)
-      cache_hash[result.name] << result_hash if course_enrollment_filter_on_all_students?(result_hash, result.data_type_id)
+      cache_hash[result.name] << result_hash #if course_enrollment_filter_on_all_students?(result_hash, result.data_type_id)
     end
   end
 
-  def course_enrollment_filter_on_all_students?(hash, id)
-    if id == COURSE_ENROLLMENT_DATA_TYPE_ID && !(hash[:breakdowns].split(',').include?(ALL_STUDENTS) && hash[:grade] == GRADE_ALL)
-      false
-    else
-      true
-    end
-  end
+  # def course_enrollment_filter_on_all_students?(hash, id)
+  #   if id == COURSE_ENROLLMENT_DATA_TYPE_ID && !(hash[:breakdowns].split(',').include?(ALL_STUDENTS) && hash[:grade] == GRADE_ALL)
+  #     false
+  #   else
+  #     true
+  #   end
+  # end
 
 end

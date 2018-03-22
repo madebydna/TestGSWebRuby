@@ -39,7 +39,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   def build_hash_for_cache
     @_build_hash_for_cache ||= (
       school_cache_hash = Hash.new { |h, k| h[k] = [] }
-      r = school_results
+      r = school_results_with_academics
 
       # filter out some data values
       r = r.group_by(&:data_type_id).reduce([]) do |accum, (data_type_id, data_values)|
