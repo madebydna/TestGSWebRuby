@@ -127,7 +127,7 @@ module SchoolProfiles
                                  more_anchor: 'collegereadinessrating')
       end
 
-      data_array = components.map {|component| component.tab == 'college_success' ? component.data_type_hashes.reject{|h| h['year'] < DATA_CUTOFF_YEAR} : component.data_type_hashes}.reduce(:+)
+      data_array = components.map(&:data_type_hashes).reduce(:+)
       content << data_array.reduce('') do |string, hash|
         string << sources_text(hash)
       end
