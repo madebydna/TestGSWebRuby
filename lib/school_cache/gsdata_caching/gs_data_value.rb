@@ -540,7 +540,7 @@ class GsdataCaching::GsDataValue
   end
 
   def breakdown
-    breakdowns.first
+    breakdowns.join(',')
   end
 
   def all_students?

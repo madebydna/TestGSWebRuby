@@ -391,7 +391,6 @@ module SchoolProfiles
     end
 
     def race_ethnicity_discipline_and_attendance_visible?
-      return false
       (race_ethnicity_props.find { |h| h[:anchor] == 'Discipline_and_attendance' })[:data].present?
     end
 

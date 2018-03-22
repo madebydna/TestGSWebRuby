@@ -27,7 +27,7 @@ class TestScoresCaching::GradeAllCalculator
 
   def group_data_values
     # TODO: need to add proficiency_band ?
-    key = proc { |dv| [dv.data_type, dv.year, dv.breakdowns] }
+    key = proc { |dv| [dv.data_type, dv.year, dv.breakdowns, dv.academics] }
     data_values.having_most_recent_date.group_by(&key)
   end
 

@@ -38,7 +38,7 @@ module SchoolProfiles
       end
 
       def gs_data_value_to_hash(dv)
-        breakdown = (dv.breakdowns - ['All students except 504 category', 'General-Education students']).first
+        breakdown = (dv.breakdowns - ['All students except 504 category', 'General-Education students']).join(',').presence
         {
           breakdown: t(breakdown),
           label: text_value(dv.school_value),
@@ -59,7 +59,7 @@ module SchoolProfiles
       end
 
       def breakdown_percentage(dv)
-        breakdown = (dv.breakdowns - ['All students except 504 category','General-Education students']).first
+        breakdown = (dv.breakdowns - ['All students except 504 category','General-Education students']).join(',')
         value_to_s(ethnicities_to_percentages[breakdown])
       end
 

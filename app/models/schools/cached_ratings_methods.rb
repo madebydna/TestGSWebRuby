@@ -194,7 +194,7 @@ module CachedRatingsMethods
     h['school_value_float'] = hash.school_value.to_i
     h['year'] = hash.source_year.to_i
     h['test_data_type_display_name'] = data_type
-    h['breakdown'] = hash.breakdowns
+    h['breakdown'] = hash.breakdown
     h['methodology'] = hash.methodology
     h['description'] = hash.description
     h
