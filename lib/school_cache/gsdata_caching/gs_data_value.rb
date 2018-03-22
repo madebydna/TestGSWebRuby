@@ -527,8 +527,12 @@ class GsdataCaching::GsDataValue
       breakdowns = breakdowns
         .gsub('All Students', 'All students')
         .split(',')
+      @breakdowns = breakdowns
+    elsif breakdowns.is_a?(Array)
+      @breakdowns = breakdowns
+    else
+      raise ArgumentError.new('breakdowns= only accepts String or Array')
     end
-    @breakdowns = breakdowns
   end
 
   def breakdowns

@@ -264,14 +264,14 @@ describe 'CollegeReadinessComponent' do
 
   describe '#sources_for_view' do
     subject { college_readiness.sources_text(hash) }
-    let(:hash) { valid_hash }
+    let(:hash) { OpenStruct.new(valid_hash) }
     let(:valid_hash) do
-      OpenStruct.new({
+      {
         'data_type' => 'foo',
         'description' => 'description',
         'source' => 'foo',
         'year' => 2014
-      })
+      }
     end
 
     it { is_expected.to be_a(String) }

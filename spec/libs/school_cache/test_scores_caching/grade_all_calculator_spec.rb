@@ -16,7 +16,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '9',
                                year: 2015,
-                               breakdowns: 4,
+                               breakdowns: '4',
                                school_value: 10,
                                state_value: 50,
                                school_cohort_count: 4,
@@ -26,7 +26,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '10',
                                year: 2015,
-                               breakdowns: 4,
+                               breakdowns: '4',
                                school_value: 20,
                                state_value: 100,
                                school_cohort_count: 8,
@@ -41,7 +41,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to eq(12) }
       its(:state_cohort_count) { is_expected.to eq(5) }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(4) }
+      its(:breakdowns) { is_expected.to eq(['4']) }
     end
 
     context 'with subgroup data sets that already include all grades' do
@@ -51,7 +51,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '9',
                                year: 2015,
-                               breakdowns: 4,
+                               breakdowns: '4',
                                school_value: 10,
                                state_value: 50,
                                school_cohort_count: 4,
@@ -61,7 +61,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '10',
                                year: 2015,
-                               breakdowns: 4,
+                               breakdowns: '4',
                                school_value: 20,
                                state_value: 100,
                                school_cohort_count: 8,
@@ -71,7 +71,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: 'All',
                                year: 2015,
-                               breakdowns: 4,
+                               breakdowns: '4',
                                school_value: 16.67,
                                state_value: 80,
                                school_cohort_count: 12,
@@ -86,8 +86,7 @@ describe 'GradeAllCalculator' do
 
   describe '#calculate_grade_all' do
     let(:grade_all_tds) do
-      grade_all_gs_data_value = TestScoresCaching::GradeAllCalculator.new.send(:calculate_grade_all, test_scores)
-      OpenStruct.new(grade_all_gs_data_value.try(:to_hash))
+      TestScoresCaching::GradeAllCalculator.new.send(:calculate_grade_all, test_scores)
     end
     subject { grade_all_tds }
 
@@ -98,7 +97,7 @@ describe 'GradeAllCalculator' do
             data_type: 1,
             grade: '9',
             year: 2015,
-            breakdowns: 0,
+            breakdowns: '0',
             school_value: 10,
             state_value: 50,
             school_cohort_count: 4,
@@ -108,7 +107,7 @@ describe 'GradeAllCalculator' do
             data_type: 1,
             grade: '10',
             year: 2015,
-            breakdowns: 0,
+            breakdowns: '0',
             school_value: 20,
             state_value: 100,
             school_cohort_count: 8,
@@ -123,7 +122,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to eq(12) }
       its(:state_cohort_count) { is_expected.to eq(5) }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(0) }
+      its(:breakdowns) { is_expected.to eq(['0']) }
     end
 
     context 'when a state_value is actually a string' do
@@ -133,7 +132,7 @@ describe 'GradeAllCalculator' do
             data_type: 1,
             grade: '9',
             year: 2015,
-            breakdowns: 0,
+            breakdowns: '0',
             school_value: 10,
             state_value: '<50%',
             school_cohort_count: 4,
@@ -143,7 +142,7 @@ describe 'GradeAllCalculator' do
             data_type: 1,
             grade: '10',
             year: 2015,
-            breakdowns: 0,
+            breakdowns: '0',
             school_value: 20,
             state_value: 100,
             school_cohort_count: 8,
@@ -158,7 +157,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to eq(12) }
       its(:state_cohort_count) { is_expected.to eq(nil) }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(0) }
+      its(:breakdowns) { is_expected.to eq(['0']) }
     end
 
     context 'with a data set that is missing number of students tested' do
@@ -384,8 +383,8 @@ describe 'GradeAllCalculator' do
       it { is_expected.to be_present }
       its(:school_value) { is_expected.to eq(15) }
       its(:state_value) { is_expected.to eq(75) }
-      its(:number_students_tested) { is_expected.to be_nil }
-      its(:state_number_tested) { is_expected.to be_nil }
+      its(:school_cohort_count) { is_expected.to be_nil }
+      its(:state_cohort_count) { is_expected.to be_nil }
     end
 
     context 'when there are nil number of students tested for any test' do
@@ -443,7 +442,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '9',
                                year: 2015,
-                               breakdowns: 0,
+                               breakdowns: '0',
                                school_value: 10,
                                state_value: 50,
                                school_cohort_count: false,
@@ -453,7 +452,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '10',
                                year: 2015,
-                               breakdowns: 0,
+                               breakdowns: '0',
                                school_value: 20,
                                state_value: 100,
                                school_cohort_count: -5,
@@ -468,7 +467,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to be_nil }
       its(:state_cohort_count) { is_expected.to be_nil }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(0) }
+      its(:breakdowns) { is_expected.to eq(['0']) }
     end
 
     context 'with just value_text values' do
@@ -478,7 +477,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '9',
                                year: 2015,
-                               breakdowns: 0,
+                               breakdowns: '0',
                                school_value_text: '<10',
                                state_value: 50,
                                school_cohort_count: 10,
@@ -488,7 +487,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '10',
                                year: 2015,
-                               breakdowns: 0,
+                               breakdowns: '0',
                                school_value_text: '<20',
                                state_value: 100,
                                school_cohort_count: 10,
@@ -503,7 +502,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to eq(nil) }
       its(:state_cohort_count) { is_expected.to eq(20) }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(0) }
+      its(:breakdowns) { is_expected.to eq(['0']) }
     end
 
     context 'with value_float and value_text values' do
@@ -513,7 +512,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '9',
                                year: 2015,
-                               breakdowns: 0,
+                               breakdowns: '0',
                                school_value: 10,
                                school_value_text: '<10',
                                state_value: 50,
@@ -524,7 +523,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '10',
                                year: 2015,
-                               breakdowns: 0,
+                               breakdowns: '0',
                                school_value: 20,
                                school_value_text: '<20',
                                state_value: 100,
@@ -540,7 +539,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to eq(20) }
       its(:state_cohort_count) { is_expected.to eq(20) }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(0) }
+      its(:breakdowns) { is_expected.to eq(['0']) }
     end
 
     context 'when test scores contain value_text' do
@@ -550,9 +549,8 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '9',
                                year: 2015,
-                               breakdowns: 0,
+                               breakdowns: '0',
                                school_value: 10,
-                               school_value_text: '>95',
                                state_value: 50,
                                school_cohort_count: false,
                                state_cohort_count: '<2',
@@ -561,9 +559,8 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '10',
                                year: 2015,
-                               breakdowns: 0,
+                               breakdowns: '0',
                                school_value: 20,
-                               school_value_text: '<2',
                                state_value: 100,
                                school_cohort_count: -5,
                                state_cohort_count: '0.3',
@@ -572,8 +569,8 @@ describe 'GradeAllCalculator' do
       end
 
       it { is_expected.to be_present }
-      its(:school_value_text) { is_expected.to be_nil }
-      its(:state_value_text) { is_expected.to be_nil }
+      its(:school_value) { is_expected.to eq(15) }
+      its(:state_value) { is_expected.to eq(75) }
     end
 
     context 'with invalid characters after the value_float' do
@@ -583,7 +580,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '9',
                                year: 2015,
-                               breakdowns: 0,
+                               breakdowns: '0',
                                school_value: '10.0e0',
                                state_value: '50.0e0',
                                school_cohort_count: 4,
@@ -593,7 +590,7 @@ describe 'GradeAllCalculator' do
                                data_type: 1,
                                grade: '10',
                                year: 2015,
-                               breakdowns: 0,
+                               breakdowns: '0',
                                school_value: '20.000x5fb',
                                state_value: '100.00qrx^5',
                                school_cohort_count: 8,
