@@ -68,6 +68,33 @@ en:
         'Percent of students who will attend out-of-state colleges': 'This reflects the percentage of graduates from this school who are enrolled in out-of-state colleges or universities.'
         'Percent of students who will attend in-state colleges': 'This reflects the percentage of graduates from this school who are enrolled in in-state colleges or universities.'
       narration:
+        college_success:
+          average: <span class="emphasis">about average</span>
+          above_average: <span class="emphasis">above average</span>
+          below_average: <span class="emphasis">below average</span>
+          about: <span class="emphasis">about average</span>
+          higher: <span class="emphasis">higher</span>
+          lower: <span class="emphasis">lower</span>
+          intro: >
+            <div class="auto-narration"><span class="content">Compared to state averages, students who graduate from this school have: </span>%{more}
+            <ul>
+          outro: </ul>%{end_more}</div>
+          'Percent Enrolled in College Immediately Following High School': college enrollment rates
+          'Percent enrolled in any institution of higher learning in the last 0-16 months': college enrollment rates
+          'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': enrollment rates in 4-year college
+          'Graduating seniors pursuing 4 year college/university': enrollment rates in 4-year college
+          'Percent of students who will attend out-of-state colleges': out-of-state college enrollment rates
+          'Percent of students who will attend in-state colleges': in-state college enrollment rates
+          'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': enrollment rates in 2-year college
+          'Graduating seniors pursuing 2 year college/university': enrollment rates in 2-year college
+          'Graduating seniors pursuing other college': enrollment rates in other college programs
+          'Percent Enrolled in College and Returned for a Second Year': rates of return for a second year of college
+          'Percent Needing Remediation for College': percentages of students who must take remedial classes before starting college coursework
+          'Graduates needing Reading remediation in college': percentages of students who must take remedial reading classes before starting college coursework
+          'Graduates needing Writing remediation in college': percentages of students who must take remedial writing classes before starting college coursework
+          'Graduates needing English remediation in college': percentages of students who must take remedial English classes before starting college coursework
+          'Graduates needing Science remediation in college': percentages of students who must take remedial science classes before starting college coursework
+          'Graduates needing Math remediation in college': percentages of students who must take remedial math classes before starting college coursework
         _1_html: >
           <div class="auto-narration">
           <h3 class="negative">Very concerning:</h3>
