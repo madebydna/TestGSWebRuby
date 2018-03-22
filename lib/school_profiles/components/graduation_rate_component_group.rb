@@ -11,8 +11,8 @@ module SchoolProfiles
             component.school_cache_data_reader = school_cache_data_reader
             component.data_type = 'College Readiness Rating'
             component.title = 'Overview'
-            component.type = 'bar'
-            component.narration = I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata')
+            component.type = 'rating'
+            component.narration = I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata')
           end,
           GraduationRateComponent.new.tap do |component|
             component.school_cache_data_reader = school_cache_data_reader

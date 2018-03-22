@@ -4,11 +4,8 @@ module SchoolProfiles
   module Components
     class CollegeReadinessOverall < Component
       def normalized_values
-        school_cache_data_reader
-          .decorated_school
-          .ratings_by_type['College Readiness Rating']
-          .having_most_recent_date
-          .map { |h| normalize_rating_value(h) }
+        cr_data = school_cache_data_reader.decorated_school.ratings_by_type['College Readiness Rating']
+        cr_data ? cr_data.having_most_recent_date.map { |h| normalize_rating_value(h) } : []
       end
 
       def normalize_rating_value(value)
