@@ -77,7 +77,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
       ) ||
       ( # this selects all students overall data
           breakdown_names == ALL_STUDENTS &&
-          breakdown_tags.blank?
+          breakdown_tags == 'all_students'
       ) ||
       ( # this is to select ethnicity data
           breakdown_names_arr.length == 1 &&
