@@ -325,7 +325,7 @@ describe RatingsCaching::GsdataRatingsCacher do
       context "with data for data type #{data_type_id}" do
         let(:school_value) { rand }
         before do
-          allow(cacher).to receive(:school_results).and_return(
+          allow(cacher).to receive(:school_results_with_academics).and_return(
             [
               json_data_value(data_type_id: data_type_id, value: school_value, source_name: 'Foo')
             ]
@@ -364,7 +364,7 @@ describe RatingsCaching::GsdataRatingsCacher do
 
     context "with data for several data types that include tags" do
       before do
-        allow(cacher).to receive(:school_results).and_return(
+        allow(cacher).to receive(:school_results_with_academics).and_return(
           [
             json_data_value(data_type_id: 151, value: 10, source_name: 'Foo', breakdown_tags: ['foo']),
             json_data_value(data_type_id: 152, value: 10, source_name: 'Foo', breakdown_tags: ['bar']),
