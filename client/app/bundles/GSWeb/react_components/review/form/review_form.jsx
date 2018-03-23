@@ -278,14 +278,28 @@ export default class ReviewForm extends React.Component {
   }
 
   scrollToFirstError(errorMessages) {
-    // this.state.errorMessages is in order, but the questions are not. Iterate through questions as displayed on screen
-    // until a matching questionId is found in errorMessages
+    var errorMessageKeys = Object.keys(errorMessages);
     let orderedQuestions = this.questionDisplayOrder();
-    let errorMessageKeys = Object.keys(errorMessages);
+    // Preserve display order of all questions except 1, which should be last error the user sees
+    this.sendOneToTheEnd(orderedQuestions);
+
     let errorId = orderedQuestions.find(function(questionId){
       return errorMessageKeys.indexOf(questionId.toString()) >= 0
     });
-    scrollToElement('#question_' + errorId)
+    // question_1 shows up twice on page (star rating and textarea), so scroll to lower one (where error is printed)
+    if (errorId == 1) {
+      scrollToElement('.question_1:last-of-type');
+    } else {
+      scrollToElement('.question_' + errorId);
+    }
+  }
+
+  sendOneToTheEnd(array) {
+    let indexOfOne = array.indexOf(1);
+    if (indexOfOne >= 0) {
+      array.splice(indexOfOne, 1);
+      array.push(1);
+    }
   }
 
   onSubmit() {
