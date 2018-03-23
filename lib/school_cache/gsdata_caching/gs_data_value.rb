@@ -502,7 +502,7 @@ class GsdataCaching::GsDataValue
 
   def to_hash
     {
-      breakdowns: breakdowns.join(','),
+      breakdowns: (breakdowns.is_a?(Array) ? breakdowns.join(',') : breakdowns),
       breakdown_tags: breakdown_tags,
       school_value: school_value,
       state_value: state_value,
