@@ -8,6 +8,9 @@ require 'ostruct'
 # it which columns should be concatenated to create the state id using the -c flag.  It will then attempt to concatenate
 # the first five rows and display them to you for approval before running the rest of the script.
 #
+# IMPORTANT NOTE: a new, sorted version of the input file is created called 'source_file_with_state_id.csv'; the
+# output of this script references the new file.
+#
 # The script will calculate the percentage of empty rows and will identify any duplicate rows. You can tell it to
 # disregard certain columns in each row in its empty row analysis by using the -d flag.
 #
@@ -153,14 +156,17 @@ class PreFlightChecker
   end
 
   def results_msg(results_hash)
-    empty_rows_msg = "#{percentage_empty_rows(results_hash)}% of rows were empty."
-    duplicate_rows_msg = "Duplicate row count: #{duplicate_rows(results_hash).length}. #{duplicate_rows(results_hash).empty? ? '' : 'Row numbers:' + duplicate_rows(results_hash).to_s}"
+    empty_rows_msg = "#{number_empty_rows(results_hash)} out of #{line_count} were empty (#{percentage_empty_rows(number_empty_rows)}%)"
+    duplicate_rows_msg = "Duplicate row count: #{duplicate_rows(results_hash).length}. #{duplicate_rows(results_hash).empty? ? '' : 'Row numbers:' + duplicate_rows(results_hash).to_s}. Please check source_file_with_state_id.csv for dups."
     empty_rows_msg + "\n" + duplicate_rows_msg + "\n\n"
   end
 
-  def percentage_empty_rows(results_hash)
-    number_empty_rows = results_hash.reduce(0) {|accum, hash| hash.values.length + accum}
-    ((number_empty_rows.to_f/line_count)*100).round(2)
+  def number_empty_rows(results_hash = nil)
+    @_number_empty_rows ||= results_hash.reduce(0) {|accum, hash| hash.values.length + accum}
+  end
+
+  def percentage_empty_rows(empty_row_count)
+    ((empty_row_count.to_f/line_count)*100).round(2)
   end
 
   def duplicate_rows(results_hash)
