@@ -64,11 +64,21 @@ parsed_arguments.each do |args|
       puts "     doing #{cache_key}"
       if schools_where
         School.on_db(state.downcase.to_sym).where(schools_where).each do |school|
+          begin
             Cacher.create_cache(school, cache_key)
+          rescue => error
+            had_any_errors = true
+            puts "School #{school.state}-#{school.id} : #{error}"
+          end
         end
       else
         School.on_db(state.downcase.to_sym).all.each do |school|
+          begin
             Cacher.create_cache(school, cache_key)
+          rescue => error
+            had_any_errors = true
+            puts "School #{school.state}-#{school.id} : #{error}"
+          end
         end
       end
     end
