@@ -117,7 +117,7 @@ export default class Question extends React.Component {
 
   render() {
     return (
-      <div className="review-question clearfix" id={'question_' + this.props.id}>
+      <div className={'review-question clearfix ' + 'question_' + this.props.id}>
         <div>
           <div className="review-counter"><span>{ this.props.questionCounter }</span></div>
         </div>
