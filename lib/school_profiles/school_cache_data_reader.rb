@@ -210,47 +210,33 @@ module SchoolProfiles
     end
 
     def gsdata_data(*keys)
-      decorated_school.gsdata.slice(*keys).each_with_object({}) do |(k, values), new_hash|
-        values = values.map do |h|
-          h = h.clone
-          if h['breakdowns']
-            h['breakdowns'] = h['breakdowns'].gsub('All students except 504 category,','')
-            h['breakdowns'] = h['breakdowns'].gsub(/,All students except 504 category$/,'')
-            h['breakdowns'] = h['breakdowns'].gsub('All Students','All students')
-          end
-          h
-        end
-        new_hash[k] = values
-      end
+      gs_data(decorated_school.gsdata, *keys)
     end
 
     def ratings_data(*keys)
-      decorated_school.ratings.slice(*keys).each_with_object({}) do |(k, values), new_hash|
-        values = values.map do |h|
-          h = h.clone
-          if h['breakdowns']
-            h['breakdowns'] = h['breakdowns'].gsub('All students except 504 category,','')
-            h['breakdowns'] = h['breakdowns'].gsub(/,All students except 504 category$/,'')
-            h['breakdowns'] = h['breakdowns'].gsub('All Students','All students')
-          end
-          h
-        end
+      gs_data(decorated_school.ratings, *keys)
+    end
+
+    def courses_data(*keys)
+      gs_data(decorated_school.courses, *keys)
+    end
+
+    def gs_data(obj, *keys)
+      obj.slice(*keys).each_with_object({}) do |(k, values), new_hash|
+        values = values.map(&consistify_breakdowns)
         new_hash[k] = values
       end
     end
 
-    def courses_data(*keys)
-      decorated_school.courses.slice(*keys).each_with_object({}) do |(k, values), new_hash|
-        values = values.map do |h|
-          h = h.clone
-          if h['breakdowns']
-            h['breakdowns'] = h['breakdowns'].gsub('All students except 504 category,','')
-            h['breakdowns'] = h['breakdowns'].gsub(/,All students except 504 category$/,'')
-            h['breakdowns'] = h['breakdowns'].gsub('All Students','All students')
-          end
-          h
+    def consistify_breakdowns
+      lambda do |h|
+        h = h.clone
+        if h['breakdowns']
+          h['breakdowns'] = h['breakdowns'].gsub('All students except 504 category,','')
+          h['breakdowns'] = h['breakdowns'].gsub(/,All students except 504 category$/,'')
+          h['breakdowns'] = h['breakdowns'].gsub('All Students','All students')
         end
-        new_hash[k] = values
+        h
       end
     end
 
