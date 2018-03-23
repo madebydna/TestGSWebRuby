@@ -172,6 +172,9 @@ describe RatingsCaching::GsdataRatingsCacher do
   end
 
   describe '#advanced_coursework_select_logic?' do
+
+    subject { cacher.advanced_coursework_select_logic?(dv) }
+
     context 'look for All Students breakdown with course subject academic tag' do
       let(:dv) do
         advanced_coursework(
@@ -181,10 +184,7 @@ describe RatingsCaching::GsdataRatingsCacher do
             }
         )
       end
-      it {
-        results = cacher.advanced_coursework_select_logic?(dv)
-        expect(results).to be(true)
-      }
+      it { is_expected.to be(true) }
     end
 
     context 'look for All Students breakdown with course subject academic tag - multi dimensional breakdown data' do
@@ -196,10 +196,7 @@ describe RatingsCaching::GsdataRatingsCacher do
             }
         )
       end
-      it {
-        results = cacher.advanced_coursework_select_logic?(dv)
-        expect(results).to be(true)
-      }
+      it { is_expected.to be(true) }
     end
 
     context 'look for All Students breakdown and all_students breakdown_tags' do
@@ -211,10 +208,7 @@ describe RatingsCaching::GsdataRatingsCacher do
           }
         )
       end
-      it {
-        results = cacher.advanced_coursework_select_logic?(dv)
-        expect(results).to be(true)
-      }
+      it { is_expected.to be(true) }
     end
 
     context 'look for ethnicity data single breakdown and ethnicity breakdown_tags' do
@@ -226,10 +220,7 @@ describe RatingsCaching::GsdataRatingsCacher do
             }
         )
       end
-      it {
-        results = cacher.advanced_coursework_select_logic?(dv)
-        expect(results).to be(true)
-      }
+      it { is_expected.to be(true) }
     end
 
     context 'look for ethnicity failing for multi dimensional breakdown data' do
@@ -243,10 +234,7 @@ describe RatingsCaching::GsdataRatingsCacher do
             }
         )
       end
-      it {
-        results = cacher.advanced_coursework_select_logic?(dv)
-        expect(results).to be(false)
-      }
+      it { is_expected.to be(false) }
     end
 
     context 'look for ethnicity failing for multi dimensional breakdown data' do
@@ -260,10 +248,7 @@ describe RatingsCaching::GsdataRatingsCacher do
             }
         )
       end
-      it {
-        results = cacher.advanced_coursework_select_logic?(dv)
-        expect(results).to be(false)
-      }
+      it { is_expected.to be(false) }
     end
 
     context 'look for ethnicity failing for multi dimensional breakdown data' do
@@ -275,10 +260,7 @@ describe RatingsCaching::GsdataRatingsCacher do
             }
         )
       end
-      it {
-        results = cacher.advanced_coursework_select_logic?(dv)
-        expect(results).to be(false)
-      }
+      it { is_expected.to be(false) }
     end
 
     context 'look for ethnicity failing for having academics data' do
@@ -291,10 +273,7 @@ describe RatingsCaching::GsdataRatingsCacher do
             }
         )
       end
-      it {
-        results = cacher.advanced_coursework_select_logic?(dv)
-        expect(results).to be(false)
-      }
+      it { is_expected.to be(false) }
     end
 
     context 'look for ethnicity failing for having academic_tags data' do
@@ -307,10 +286,7 @@ describe RatingsCaching::GsdataRatingsCacher do
             }
         )
       end
-      it {
-        results = cacher.advanced_coursework_select_logic?(dv)
-        expect(results).to be(false)
-      }
+      it { is_expected.to be(false) }
     end
   end
 
