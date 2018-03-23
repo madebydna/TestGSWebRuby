@@ -72,6 +72,7 @@ module GS
         @summary_output_step ||= SummaryOutput.new(%i[
                                                        entity_level
                                                        year
+                                                       test_data_type_id
                                                        grade
                                                        level_code
                                                        subject_id
