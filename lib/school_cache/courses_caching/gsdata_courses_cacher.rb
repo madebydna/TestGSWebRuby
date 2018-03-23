@@ -15,20 +15,9 @@ class CoursesCaching::GsdataCoursesCacher < GsdataCaching::GsdataCacher
     data_type == :courses
   end
 
-  def build_hash_for_cache
-    school_cache_hash = Hash.new { |h, k| h[k] = [] }
-    r = school_results_with_academics_for_courses
-    r.each_with_object(school_cache_hash) do |result, cache_hash|
-      result_hash = result_to_hash(result)
-      validate_result_hash(result_hash, result.data_type_id)
-      cache_hash[result.name] << result_hash
-    end
-  end
-
-  def school_results_with_academics_for_courses
-    @_school_results_with_academics_for_courses ||=
-      DataValue.find_by_school_and_data_types_with_academics_all_students_and_grade_all(school,
-                                                                                          data_type_ids)
+  def school_results
+    @_school_results ||=
+      DataValue.find_by_school_and_data_types_with_academics_all_students_and_grade_all(school,data_type_ids)
   end
 
 end
