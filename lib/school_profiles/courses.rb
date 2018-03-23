@@ -149,10 +149,10 @@ module SchoolProfiles
       @courses_by_subject ||= (
       (data['Course Enrollment'] || [])
         .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
-        .select { |dv| dv.breakdown_tags =~ /advanced/ }
+        .select { |dv| dv.academic_tags =~ /advanced/ }
         .each_with_object({}) do |dv, accum|
           # tags that match *_index
-          subjects = dv.breakdown_tags
+          subjects = dv.academic_tags
             .split(',')
             .select { |s| s[-6..-1] == '_index' } 
 
@@ -199,7 +199,7 @@ module SchoolProfiles
     def course_subject_group_ratings
       @_course_subject_group_ratings ||= (
         course_ratings_subjects.each_with_object({}) do |dv, accum|
-          subject = dv.breakdowns
+          subject = dv.academics
           accum[subject] = dv.school_value.to_i
         end
       )
@@ -234,7 +234,7 @@ module SchoolProfiles
     def course_ratings_subjects
       @_course_ratings_subjects ||= (
         max_year = rating_year || advanced_course_ratings.year_of_most_recent
-        advanced_course_ratings.select { |h| h.breakdown_tags == 'course_subject_group' && h.source_year == max_year }
+        advanced_course_ratings.select { |h| h.academic_tags == 'course_subject_group' && h.source_year == max_year }
       )
     end
 

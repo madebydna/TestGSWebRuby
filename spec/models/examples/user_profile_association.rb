@@ -12,7 +12,7 @@ shared_examples_for 'user with user profile association' do
       expect(user.has_active_profile?).to be_truthy
     end
     it 'should return false if there is no profile' do
-      clean_models :gs_schooldb, UserProfile
+      UserProfile.destroy_all
       expect(user.has_active_profile?).to be_falsey
     end
     it 'should return false if there is an inactive profile' do
@@ -50,7 +50,7 @@ shared_examples_for 'user with user profile association' do
 
       stub_const('UserProfile', user_profile_stub)
       expect(GSLogger).to receive(:error)
-      expect{ subject.send(:create_user_profile) }.to raise_error
+      expect{ subject.send(:create_user_profile) }.to raise_error(Exception)
     end
   end
 end

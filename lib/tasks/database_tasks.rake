@@ -11,16 +11,19 @@ namespace :db do
 
   namespace :test do
     desc "Truncates all the tables in all test databases"
-    task :clean => [:load_config, :rails_env] do
-      require Rails.root.join('spec', 'spec_helper.rb')
-      DatabaseConfigurationHelper.
-      all_rw_connections_for('test').each do |connection|
-        puts "Cleaning #{connection}_test db"
-        DatabaseCleaner[
-          :active_record,
-          connection: connection.to_sym
-        ].strategy = :truncation
-        DatabaseCleaner[:active_record, connection: connection.to_sym].clean
+    task :clean => [:load_config, :environment] do
+      if Rails.env.test?
+        require Rails.root.join('spec', 'support', 'database_cleaner_extensions.rb')
+        DatabaseConfigurationHelper.all_dbs_for_rw_connections('development').each do |db|
+          puts "Cleaning #{db} db"
+          begin
+            do_clean_dbs(db)
+          rescue => e
+            puts "Unable to clean db #{db}: #{e}"
+          end
+        end
+      else
+        puts "Must run this task with RAILS_ENV=test like so:\n  RAILS_ENV=test bundle exec rake db:test:clean"
       end
     end
   end

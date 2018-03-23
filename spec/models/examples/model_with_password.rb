@@ -63,7 +63,7 @@ shared_examples_for 'model with password' do |factory_for_valid_object|
         subject.send(:encrypted_password=, nil)
         allow(subject).to receive(:save!) { raise 'error' }
         expect(GSLogger).to receive(:error)
-        expect { subject.send(:encrypt_plain_text_password_after_first_save) }.to raise_error
+        expect { subject.send(:encrypt_plain_text_password_after_first_save) }.to raise_error(Exception)
       end
 
       it "should only get called once, at the time user is first saved" do

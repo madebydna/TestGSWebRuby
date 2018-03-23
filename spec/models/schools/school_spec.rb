@@ -2,7 +2,7 @@ require 'spec_helper'
 describe School do
 
   after do
-    clean_models School,SchoolMetadata
+    clean_models :ca, School,SchoolMetadata
   end
 
   after(:each) { clean_dbs :ca }

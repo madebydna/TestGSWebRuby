@@ -473,7 +473,7 @@ describe Review do
       FactoryGirl.create(:overall_rating_question)
     end
     after do
-      clean_models School
+      clean_models :ca, School
       clean_dbs :gs_schooldb
     end
 

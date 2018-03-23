@@ -389,7 +389,7 @@ module SchoolProfiles
     private
 
     def school=(school)
-      raise ArgumentError('School must be provided') if school.nil?
+      raise ArgumentError.new('School must be provided') if school.nil?
       @school = school
     end
   end

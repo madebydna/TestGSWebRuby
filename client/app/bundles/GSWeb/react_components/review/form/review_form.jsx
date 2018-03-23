@@ -253,22 +253,42 @@ export default class ReviewForm extends React.Component {
      return this.validateResponse(accum, selectedResponses[questionId], questionId)
    }, {});
    var formValid = isEmpty(errorMessages);
-    this.setState ({
-      errorMessages: errorMessages,
-      formErrors: !formValid
-    });
-    return formValid;
+   this.setState({errorMessages: errorMessages, formErrors: !formValid});
+   return errorMessages
   }
 
   validateAndSubmit(){
-    var formValid = this.validateForm();
+    let errorMessages = this.validateForm();
+    let formValid = isEmpty(errorMessages);
     if(!formValid) {
       analyticsEvent('Profile', 'Display Error Message', 'Review form validation failed');
-    }
-    if (formValid) {
+      this.scrollToFirstError(errorMessages);
+    } else if (formValid) {
       this.submitForm();
     }
     this.setState({submittingForm: false})
+  }
+
+  scrollToFirstError(errorMessages) {
+    let errorMessageKeys = Object.keys(errorMessages);
+    let orderedQuestions = this.reorderedQuestionIds();
+
+    let errorId=orderedQuestions.find(function(questionId){return errorMessageKeys.indexOf(questionId.toString())>=0});
+    // question_1 shows up twice on page (star rating and textarea), so scroll to lower one (where error is printed)
+    if (errorId == 1) {errorId += ':last-of-type'}
+    scrollToElement('.question_' + errorId);
+  }
+
+  reorderedQuestionIds() {
+    // this function preserves the order of review questions displayed on the page so scrollToFirstError can find
+    // and scroll to the first error, with the exception of question 1, which should always be last.
+    let idArray = this.props.questions.map(question => question.id);
+    let indexOfOne = idArray.indexOf(1);
+    if (indexOfOne >= 0) {
+      idArray.splice(indexOfOne, 1);
+      idArray.push(1);
+    }
+    return idArray
   }
 
   onSubmit() {

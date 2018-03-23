@@ -12,13 +12,13 @@ class EmailVerificationToken
       @user_id = options[:user_id]
     end
 
-    @time = options[:time] || Time.now
-    @token = options[:token] || generate
-    @user_searched = false
-
     if @user.nil? && @user_id.nil?
       raise 'Must initialize EmailVerificationToken with a user or user ID'
     end
+
+    @time = options[:time] || Time.now
+    @token = options[:token] || generate
+    @user_searched = false
   end
 
   def self.token_and_date(user, time = nil)

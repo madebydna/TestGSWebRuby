@@ -6,7 +6,7 @@ describe GsdataCaching::GsdataCacher do
   end
   describe '#build_hash_for_cache' do
     it 'should return correct hash' do
-      tags = ['a', 'b']
+      tags = %w(a b)
       school = build(:alameda_high_school)
       gsdb_cacher = GsdataCaching::GsdataCacher.new(school)
       breakdowns = ['AA', 'BB', 1]
@@ -61,10 +61,10 @@ describe GsdataCaching::GsdataCacher do
       breakdowns: breakdown,
       breakdown_tags: breakdown_tags,
       school_value: 1,
+      source_date_valid: '20140101 00:00:00',
       state_value: 1,
       district_value: 1,
-      source_name: 'Sample Source',
-      source_date_valid: '20140101 00:00:00'
+      source_name: 'Sample Source'
     }
   end
 
@@ -96,7 +96,8 @@ describe GsdataCaching::GsdataCacher do
         .with(
           school,
           GsdataCaching::GsdataCacher::DATA_TYPE_IDS,
-          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES
+          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES,
+          GsdataCaching::GsdataCacher::ACADEMIC_TAG_NAMES
         )
       gsdb_cacher.school_results
     end
@@ -123,7 +124,8 @@ describe GsdataCaching::GsdataCacher do
         .with(
           school.state,
           GsdataCaching::GsdataCacher::DATA_TYPE_IDS,
-          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES
+          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES,
+          GsdataCaching::GsdataCacher::ACADEMIC_TAG_NAMES
         )
         .and_return(state_values)
       results = {
@@ -158,7 +160,8 @@ describe GsdataCaching::GsdataCacher do
           school.state,
           school.district_id,
           GsdataCaching::GsdataCacher::DATA_TYPE_IDS,
-          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES
+          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES,
+          GsdataCaching::GsdataCacher::ACADEMIC_TAG_NAMES
         )
         .and_return(district_values)
       results = {

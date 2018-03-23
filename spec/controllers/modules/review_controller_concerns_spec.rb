@@ -53,7 +53,7 @@ describe ReviewControllerConcerns::ReviewParams do
       context 'only when the school is found in the database' do
         let(:school) { FactoryGirl.create(:alameda_high_school) }
         after do
-          clean_models School
+          clean_models :ca, School
         end
         it 'should set the school id and state on review' do
           review_params[:school_id] = school.id
