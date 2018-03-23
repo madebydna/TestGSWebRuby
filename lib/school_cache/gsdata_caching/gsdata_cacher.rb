@@ -71,16 +71,9 @@ class GsdataCaching::GsdataCacher < Cacher
     :gsdata == data_type
   end
 
-  def school_results_with_academics
-    @_school_results_with_academics ||=
-      DataValue.find_by_school_and_data_types_with_academics(school,
-                                                data_type_ids)
-  end
-
   def school_results
     @_school_results ||=
-      DataValue.find_by_school_and_data_types(school,
-                                              data_type_ids)
+      DataValue.find_by_school_and_data_types(school, data_type_ids)
   end
 
   def state_results_hash
