@@ -134,5 +134,11 @@
       $('#pre-k-form').trigger('click');
       $('.non_pre_k_fields').css('display', 'none');
     }
+    if ('<%= @grades.empty? %>' == 'false') {
+      gradesArray = '<%= @grades %>'.split(',');
+      gradesArray.forEach(function(grade) {
+        $('.add_school_grades[data-grade='+grade+']').prop('checked', true);
+      })
+    }
   })
 </script>
