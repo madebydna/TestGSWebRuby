@@ -19,12 +19,10 @@ if percent
       puts "decreased by #{percentage.abs.round(2)}%"
     end
   end
-else
-  if diff.abs > threshold
-    if diff > threshold
-      puts "increased by #{diff}"
-    else
-      puts "decreased by #{diff.abs}"
-    end
+elsif diff.abs > threshold
+  if diff > threshold
+    puts "increased by #{diff}"
+  else
+    puts "decreased by #{diff.abs}"
   end
 end

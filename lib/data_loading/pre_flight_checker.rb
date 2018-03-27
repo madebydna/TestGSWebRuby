@@ -185,7 +185,7 @@ class PreFlightChecker
     processed_dups = process_dups
     print_results processed_dups
   end
-
+# rubocop:disable Layout/IndentHeredoc
   def data_heroes
     <<-'DH'
          _              _        
@@ -203,7 +203,7 @@ class PreFlightChecker
     DH
   end
 end
-
+# rubocop:enable Layout/IndentHeredoc
 
 @options = OpenStruct.new
 

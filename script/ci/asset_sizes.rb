@@ -50,11 +50,9 @@ if has_stdin
       puts message
     end
   end
+elsif script_args[:csv]
+  puts sizes.keys.map { |f| File.basename(f) }.join(',')
+  puts sizes.values.join(',')
 else
-  if script_args[:csv]
-    puts sizes.keys.map { |f| File.basename(f) }.join(',')
-    puts sizes.values.join(',')
-  else
-    puts JSON.pretty_unparse(sizes)
-  end
+  puts JSON.pretty_unparse(sizes)
 end

@@ -247,7 +247,7 @@ class DataValue < ActiveRecord::Base
     SQL
     )
   end
-  
+
 
   def self.with_data_type_tags(tags)
     joins("JOIN data_type_tags on data_type_tags.data_type_id = data_types.id").where("data_type_tags.tag = ?", tags)
