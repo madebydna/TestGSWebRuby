@@ -1,23 +1,45 @@
-def getRSpecSeed(){
-    return Math.abs(new Random().nextInt() % 1000) + 1
-}
-rspecSeed = getRSpecSeed()
+rspecSeed = Math.abs(new Random().nextInt() % 1000) + 1
+int groups = 8
 
 def checkoutCode() {
-    checkout([$class: 'GitSCM', poll: true, branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'ffcc2432-1458-4cfa-a9f3-a1fc92f27349', url: 'git@githost.greatschools.org:GSWebRuby']]])
+    checkout scm
+    // checkout([$class: 'GitSCM', poll: true, branches: [[name: '*/jenkins']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'ffcc2432-1458-4cfa-a9f3-a1fc92f27349', url: 'git@githost.greatschools.org:GSWebRuby']]])
 }
 
-def bundleInstall() {
-    sh '''
-        export PATH="/usr/local/bin:/usr/bin:$PATH"
-        export QMAKE=/usr/local/lib/qt5/bin/qmake
-        export SPEC=freebsd-clang   # FreeBSD should use clang, not g++
-        export CAPYBARA_WEBKIT_INCLUDE_PATH=/usr/local/include
-        export CAPYBARA_WEBKIT_LIBS="-L/usr/local/lib/"
-        bundle check || bundle install --deployment --without development
-        npm install
-        npm run build:production
-    '''
+def buildHasntFailed() {
+    return (currentBuild.result == null || (currentBuild.result.toString != 'UNSTABLE' && currentBuild.result.toString != 'FAILURE'))
+}
+
+def alreadyWorkedOnThisBuild() {
+    sh 'mkdir -p tmp'
+    if(fileExists("tmp/build_${BUILD_NUMBER}")) {
+      return true
+    } else {
+      writeFile(file: "tmp/build_${BUILD_NUMBER}", text: "this slave worked on this build")
+      return false
+    }
+}
+
+def prepareWorkspace() {
+    if(!alreadyWorkedOnThisBuild()) {
+      // This node hasn't worked on this build for this job yet
+      // we care because we can do less work if we know we have already cleaned the db etc
+
+      checkoutCode()
+
+      sh 'rm -rf tmp/*'
+      sh '''
+              mysqldump -hdev.greatschools.org -d -u${env.DB_USER} -p${env.DB_PASS} --databases gs_schooldb localized_profiles gscms_pub us_geo community surveys api _ak _al _ar _az _ca _co _ct _dc _de _fl _ga _hi _ia _id _il _in _ks _ky _la _ma _md _me _mi _mn _mo _ms _mt _nc _nd _ne _nh _nj _nm _nv _ny _oh _ok _or _pa _ri _sc _sd _tn _tx _ut _va _vt _wa _wi _wv _wy | sed \'s/\\(.*DATABASE.*\\)`\\(.*\\)`/\\1`\\2_test`/;s/\\(.*USE \\)`\\(.*\\)`/\\1`\\2_test`/\' | mysql -f -uroot
+              mysqldump -hdev-gsdata.greatschools.org -d -u${env.DB_USER} -p${env.DB_PASS} --databases gsdata | sed \'s/\\(.*DATABASE.*\\)`\\(.*\\)`/\\1`\\2_test`/;s/\\(.*USE \\)`\\(.*\\)`/\\1`\\2_test`/\' | mysql -f -uroot
+      '''
+    }
+}
+
+def buildAssets() {
+  sh 'mkdir -p app/assets/webpack'
+  sh 'rm -f app/assets/webpack/*'
+  sh 'npm install'
+  sh 'npm run build:production'
 }
 
 def cleanDatabase() {
@@ -25,107 +47,97 @@ def cleanDatabase() {
     sh "mysqldump -hdev-gsdata.greatschools.org -d -u${env.DB_USER} -p${env.DB_PASS} --databases gsdata | sed \'s/\\(.*DATABASE.*\\)`\\(.*\\)`/\\1`\\2_test`/;s/\\(.*USE \\)`\\(.*\\)`/\\1`\\2_test`/\' | mysql -f -uroot"
 }
 
-def cleanTmp() {
-    sh '''
-        if [ ! -d tmp ]
-        then
-        mkdir tmp
-        fi
-        rm -rf tmp/*
-    '''
-}
-
-def runRSpecs(groups, branchNum) {
-    echo "my rspec group is ${branchNum}"
-    withEnv(["RSPEC_SEED=${rspecSeed}","SPEC_GROUPS=${groups}","SPEC_GROUP=${branchNum}"]) {
-        sh '''
-        export PATH="/usr/local/bin:/usr/bin:$PATH"
-
-        ln -sf /usr/local/bin/ruby21 bin/ruby
-        ln -sf /usr/local/bin/git bin/git
-        SPECS_LIST=`ruby -e 'specs=Dir.glob("spec/**/*_spec.rb"); puts specs.reject { |s| s.include?("features/") || s.include?("qa/") }.each_slice(specs.size/ENV["SPEC_GROUPS"].to_i+1).to_a[ENV["SPEC_GROUP"].to_i].join(" ")'`
-
-        RAILS_ENV=test coverage=false bundle exec rspec --seed "$RSPEC_SEED" \\
-        --no-color \\
-        --tag ~js --tag ~remote --tag ~brittle \\
-        --require ./spec/support/failures_html_formatter.rb \\
-        --format RSpec::Core::Formatters::FailuresHtmlFormatter --out ./tmp/spec_failures_html_report.html \\
-        --format RspecJunitFormatter --out "./tmp/rspec-$SPEC_GROUP.xml" \\
-        --failure-exit-code 0 \\
-        --deprecation-out ./tmp/rspec_deprecation_warnings.txt $SPECS_LIST
-        '''
-    }
-}
-
-def runJSRSpecs(groups, branchNum) {
-    echo "my rspec group is ${branchNum}"
+def reportOnAssetSizes() {
+    sh 'mkdir -p tmp'
+    sh 'script/ci/asset_sizes.rb > tmp/asset_sizes'
+    archiveArtifacts allowEmptyArchive: true, artifacts: 'tmp/asset_sizes'
+    sh 'rm -f tmp/asset_sizes'
+    
     try {
-        sh '''
-        killall -9 ruby21
-        '''
+        copyArtifacts filter: 'tmp/asset_sizes', projectName: "$JOB_NAME", selector: lastCompleted()
+        sh 'mv tmp/asset_sizes tmp/previous_asset_sizes'
+        def msg = sh script: 'cat tmp/previous_asset_sizes | script/ci/asset_sizes.rb', returnStdout: true
+        if(msg.trim().length() > 0) {
+            slackSend (color: '#00FF00', message: msg.trim())
+        }
     } catch(err) {
-    }
-    withEnv(["RSPEC_SEED=${rspecSeed}","SPEC_GROUPS=${groups}","SPEC_GROUP=${branchNum}"]) {
-        sh '''
-        export PATH="/usr/local/bin:/usr/bin:$PATH"
-
-        ln -sf /usr/local/bin/ruby21 bin/ruby
-        ln -sf /usr/local/bin/git bin/git
-        /usr/local/bin/restart_xvfb.sh
-        export DISPLAY=:99
-
-        SPECS_LIST=`ruby -e 'specs=Dir.glob("spec/features/**/*_spec.rb"); puts specs.each_slice(specs.size/ENV["SPEC_GROUPS"].to_i+1).to_a[ENV["SPEC_GROUP"].to_i].join(" ")'`
-
-        RAILS_ENV=test coverage=false bundle exec rspec --seed "$RSPEC_SEED" \\
-        --no-color \\
-        --tag ~remote --tag ~brittle \\
-        --require ./spec/support/failures_html_formatter.rb \\
-        --format RSpec::Core::Formatters::FailuresHtmlFormatter --out ./tmp/feature_spec_failures_html_report.html \\
-        --format RspecJunitFormatter --out ./tmp/features_rspec-$SPEC_GROUP.xml \\
-        --failure-exit-code 0 \\
-        --deprecation-out ./tmp/rspec_deprecation_warnings.txt $SPECS_LIST
-        '''
+        echo err.message
     }
 }
 
+def compareToPreviousBuild(fileContainingNumber, calculatePercentage, threshold) {
+    archiveArtifacts allowEmptyArchive: true, artifacts: fileContainingNumber
+    sh "mv ${fileContainingNumber} ${fileContainingNumber}_new"
+    
+    try {
+        copyArtifacts filter: fileContainingNumber, projectName: "$JOB_NAME", selector: lastCompleted()
+        sh "mv ${fileContainingNumber} ${fileContainingNumber}_last"
+        sh "mv ${fileContainingNumber}_new ${fileContainingNumber}"
+        
+        def lastNum = readFile("${fileContainingNumber}_last").trim()
+        def currentNum = readFile(fileContainingNumber).trim()
+        def msg = sh returnStdout: true, script:"script/ci/compare_numbers.rb $lastNum $currentNum $threshold $calculatePercentage"
+        return msg.trim()
+    } catch(err) {
+        echo err.message
+        return ''
+    }
+}
 
-def makeBranch(branches, groups, branchNum) {
-    branches["group${branchNum+1}"] = {
+def reportRubocopOffenses() {
+    sh 'bundle exec rubocop --fail-level fatal --format simple | tail -n1 | ruby -e "puts STDIN.read.match(/(\\d+) offenses/)[1]" > tmp/num_rubocop_offenses'
+    def msg = compareToPreviousBuild('tmp/num_rubocop_offenses', false, 0)
+    if(msg.length() > 0) {
+        echo "Rubocop offenses ${msg}"
+    }
+}
+
+def makeBranch(branchNum, groups) {
+    { ->
         node('slave') {
-            checkout scm
-            cleanTmp()
-            bundleInstall()
-            cleanDatabase()
+            prepareWorkspace()
+            sh 'script/ci/bundle_install.sh'
+            unstash 'assets'
             try {
-                runRSpecs(groups, branchNum)
+                sh "rm -f tmp/rspec-${branchNum}.xml"
+                sh "$WORKSPACE/script/ci/run_unit_specs.sh --out tmp/rspec-${branchNum}.xml --seed $rspecSeed `$WORKSPACE/script/ci/unit_rspec_group.rb $groups $branchNum`"
             } catch(err) {
+                echo err.message
                 if (currentBuild.result == 'UNSTABLE') {
                     currentBuild.result = 'FAILURE'
                     throw err
                 }
             } finally {
-                stash includes: 'tmp/*.xml', name: "rspec${branchNum}"
+                stash includes: 'tmp/rspec*.xml', name: "rspec${branchNum}"
+                sh 'rm -f tmp/rspec*.xml'
             }
         }
     }
 }
 
-def makeJSBranch(branches, groups, branchNum) {
-    branches["jsgroup${branchNum+1}"] = {
+def makeJSBranch(branchNum, groups) {
+    { ->
         node('slave') {
-            checkout scm
-            cleanTmp()
-            bundleInstall()
-            cleanDatabase()
+            prepareWorkspace()
+            sh 'script/ci/bundle_install.sh'
+            unstash 'assets'
             try {
-                runJSRSpecs(groups, branchNum)
+                retry(3) {
+                    timeout(time:5, unit:'MINUTES') {
+                        sh "rm -f tmp/features_rspec-${branchNum}.xml"
+                        sh 'killall -9 ruby || true'
+                        sh "$WORKSPACE/script/ci/run_feature_specs.sh --out tmp/features_rspec-${branchNum}.xml --seed $rspecSeed `$WORKSPACE/script/ci/feature_rspec_group.rb $groups $branchNum`"
+                    }
+                }
             } catch(err) {
+                echo err.message
                 if (currentBuild.result == 'UNSTABLE') {
                     currentBuild.result = 'FAILURE'
                     throw err
                 }
             } finally {
-                stash includes: 'tmp/features_rspec*.xml', name: "jsrspec${branchNum}"
+                stash includes: 'tmp/features_rspec*.xml', name: "features_rspec${branchNum}"
+                sh 'rm -f tmp/features_rspec*.xml'
             }
         }
     }
@@ -157,54 +169,55 @@ def notifyBuild(String buildStatus = 'STARTED') {
   slackSend (color: colorCode, message: summary)
 }
 
-int groups = 3
-def branches = [:]
-for (int i = 0; i < groups; i++) {
-  makeBranch(branches, groups, i)
-}
-branches['failFast'] = true
-stage "RSpecs"
-parallel branches
+// START
 
-stage "JS Tests"
 node('slave') {
-    sh '''
-        /usr/local/bin/restart_xvfb.sh
-        export DISPLAY=:99
-        RAILS_ENV=test bundle exec rake teaspoon FORMATTERS="junit>tmp/js_tests_results.xml"
-    '''
+  prepareWorkspace()
+  buildAssets()
+  reportOnAssetSizes()
+  stash includes: 'app/assets/webpack/*', name: 'assets'
+}
+
+stage "Test"
+
+def parallelTests = [1,2,3,4,5,6,7,8].collectEntries([:]) { ["_specs${it}", makeBranch(it, groups)] }
+parallelTests += [1,2,3,4,5,6,7,8].collectEntries([:]) { ["featurespecs${it}", makeJSBranch(it, groups)] }
+parallelTests['failFast'] = true
+parallel parallelTests
+
+node('slave') {
+    prepareWorkspace()
+    sh 'script/ci/run_js_unit_tests.sh'
     stash includes: 'tmp/js_tests_results.xml', name: "js_test_results"
 }
 
-if (currentBuild.result == null || (currentBuild.result.toString != 'UNSTABLE' && currentBuild.result.toString != 'FAILURE')) {
-    def jsBranches = [:]
-    for (int i = 0; i < groups; i++) {
-        makeJSBranch(jsBranches, groups, i)
+parallel test_report: {
+    node('slave') {
+        prepareWorkspace()
+        for (int j = 1; j <= groups; j++) {
+            unstash "rspec${j}"
+            unstash "features_rspec${j}"
+        }
+        unstash "js_test_results"
+        step([$class: 'JUnitResultArchiver', testResults: 'tmp/*.xml'])
     }
-    jsBranches['failFast'] = true
-    stage "JS Specs"
-    parallel jsBranches
+}, rubocop: {
+    node('slave') {
+        prepareWorkspace()
+        reportRubocopOffenses()
+    }
 }
-
 
 node('slave') {
-    for (int j = 0; j < groups; j++) {
-        unstash "rspec${j}"
-        unstash "jsrspec${j}"
-    }
-    unstash "js_test_results"
-    
-    step([$class: 'JUnitResultArchiver', testResults: 'tmp/*.xml'])
-    
-    if (currentBuild.result == null) {
-        currentBuild.result = 'SUCCESS';
-    }
-                
-    if (currentBuild.getPreviousBuild() == null || currentBuild.result != currentBuild.getPreviousBuild().result) {
-      notifyBuild(currentBuild.result)
-    }
-    step([$class: 'Mailer',
-           notifyEveryUnstableBuild: true,
-           recipients: "programmers@greatschools.org",
-           sendToIndividuals: false])
-}
+  if (currentBuild.result == null) {
+      currentBuild.result = 'SUCCESS';
+  }
+
+  if (currentBuild.getPreviousBuild() == null || currentBuild.result != currentBuild.getPreviousBuild().result) {
+    notifyBuild(currentBuild.result)
+  }
+  step([$class: 'Mailer',
+         notifyEveryUnstableBuild: true,
+         recipients: "programmers@greatschools.org",
+         sendToIndividuals: false])
+ }

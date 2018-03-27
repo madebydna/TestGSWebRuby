@@ -323,6 +323,7 @@ end
 describe 'CollegeSuccessComponent' do
   let(:school) { double("school") }
   let(:school_cache_data_reader) { double("school_cache_data_reader") }
+  let(:cr_rating) { 5 }
   subject(:college_readiness) do
     ::SchoolProfiles::CollegeReadinessComponent.new(
       'college_success', school_cache_data_reader
@@ -382,9 +383,10 @@ describe 'CollegeSuccessComponent' do
     allow(school_cache_data_reader).to receive(:school).and_return(school)
     allow(school).to receive(:state).and_return(:ca)
     allow(school).to receive(:id).and_return(1)
-    expect(school_cache_data_reader).to receive(:characteristics_data).and_return(remediation_sample_data)
+    allow(school_cache_data_reader).to receive(:characteristics_data).and_return(remediation_sample_data)
     allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
     allow(school_cache_data_reader).to receive(:decorated_gsdata_datas).and_return({})
+    allow(school_cache_data_reader).to receive(:college_readiness_rating).and_return(cr_rating)
   end
 
   let(:data_points) {subject.data_values}
@@ -410,6 +412,87 @@ describe 'CollegeSuccessComponent' do
     it 'should have a well-formatted label' do
       all_formatted = data_points.none? {|dp| dp.label.match(/Graduates needing (Math|English|Science|Reading) remediation in college/).nil?}
       expect(all_formatted).to be_truthy
+    end
+  end
+
+  describe '#narration' do
+    subject { college_readiness.narration }
+
+    context 'when no rating' do
+      let(:cr_rating) { nil }
+      it 'should still delegate to college_success_narration' do
+        expect(college_readiness).to receive(:college_success_narration)
+        subject
+      end
+    end
+
+    it 'should delegate to college_success_narration' do
+      expect(college_readiness).to receive(:college_success_narration)
+      subject
+    end
+  end
+
+  describe '#college_success_narration' do
+    subject { college_readiness.college_success_narration }
+
+    before { allow(college_readiness).to receive(:default_college_success_narration).and_return('default') }
+
+    context 'when missing a state average in any value' do
+      before do
+        remediation_sample_data['Percent Needing Remediation for College'].first.delete('state_average')
+      end
+
+      it 'returns the default narration' do
+        expect(subject).to eq('default')
+      end
+    end
+
+    it 'returns default narration if it cannot generate narrations' do
+      expect(college_readiness).to receive(:narration_for_value).and_return(->(_) { nil }).once
+      expect(subject).to eq('default')
+    end
+
+    it 'returns auto-narration if all goes well' do
+      expect(college_readiness).to receive(:narration_for_value).and_return(->(_) { 'narration' }).once
+      expect(subject).to_not eq('default')
+    end
+  end
+
+  describe '#narration_for_value' do
+    let(:value) { OpenStruct.new(data_type: SchoolProfiles::CollegeReadinessConfig::SENIORS_FOUR_YEAR, school_value: 38.5, state_average: 34.9) }
+    subject { college_readiness.narration_for_value.call(value) }
+
+    context 'for regular data' do
+      it 'should detect above average' do
+        expect(subject).to include('above average')
+      end
+
+      it 'should detect about average' do
+        value.school_value = 36.6
+        expect(subject).to include('about average')
+      end
+
+      it 'should detect below average' do
+        value.school_value = 32.5
+        expect(subject).to include('below average')
+      end
+    end
+
+    context 'for persistence data' do
+      before { value.data_type = SchoolProfiles::CollegeReadinessConfig::GRADUATES_PERSISTENCE }
+      it 'should detect higher' do
+        expect(subject).to include('higher')
+      end
+
+      it 'should detect about average' do
+        value.school_value = 36.6
+        expect(subject).to include('about average')
+      end
+
+      it 'should detect lower' do
+        value.school_value = 32.5
+        expect(subject).to include('lower')
+      end
     end
   end
 end

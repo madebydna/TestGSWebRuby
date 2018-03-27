@@ -77,17 +77,19 @@ class Cacher
 
   def self.cacher_for(key)
     {
-        test_scores:          TestScoresCaching::BreakdownsCacher,
-        performance:          PerformanceCaching::PerformanceCacher,
-        characteristics:      CharacteristicsCaching::CharacteristicsCacher,
-        esp_responses:        EspResponsesCaching::EspResponsesCacher,
-        reviews_snapshot:     ReviewsCaching::ReviewsSnapshotCacher,
-        progress_bar:         ProgressBarCaching::ProgressBarCacher,
-        feed_test_scores:     FeedTestScoresCacher,
-        gsdata:               GsdataCaching::GsdataCacher,
-        ratings:              RatingsCaching::GsdataRatingsCacher,
+        test_scores:      TestScoresCaching::BreakdownsCacher,
+        test_scores_gsdata:     TestScoresCaching::TestScoresCacherGsdata,
+        performance:      PerformanceCaching::PerformanceCacher,
+        characteristics:  CharacteristicsCaching::CharacteristicsCacher,
+        esp_responses:    EspResponsesCaching::EspResponsesCacher,
+        reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
+        progress_bar:     ProgressBarCaching::ProgressBarCacher,
+        feed_test_scores: FeedTestScoresCacher,
+        gsdata:           GsdataCaching::GsdataCacher,
+        ratings:         RatingsCaching::GsdataRatingsCacher,
+        directory:        DirectoryCaching::DirectoryCacher,
         courses:              CoursesCaching::GsdataCoursesCacher,
-        directory:            DirectoryCaching::DirectoryCacher,
+        feed_test_scores_gsdata: TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
         feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
     }[key.to_s.to_sym]
   end
@@ -109,11 +111,13 @@ class Cacher
   def self.registered_cachers
     @registered_cachers ||= [
       TestScoresCaching::BreakdownsCacher,
+      TestScoresCaching::TestScoresCacherGsdata,
       CharacteristicsCaching::CharacteristicsCacher,
       EspResponsesCaching::EspResponsesCacher,
       ReviewsCaching::ReviewsSnapshotCacher,
       ProgressBarCaching::ProgressBarCacher,
       FeedTestScoresCacher,
+      TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
       GsdataCaching::GsdataCacher,
       RatingsCaching::GsdataRatingsCacher,
       CoursesCaching::GsdataCoursesCacher,

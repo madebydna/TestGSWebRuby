@@ -25,7 +25,7 @@ export default class Question extends React.Component {
     this.state = {
       shouldDisplayTextArea: (this.props.textValue && this.props.textValue != ''),
       shouldDisplayTellUsLink: !(this.props.textValue && this.props.textValue != ''),
-      textFocus: false
+      textFocus: true
     };
   }
 
@@ -72,6 +72,7 @@ export default class Question extends React.Component {
       autoFocus = { this.state.textFocus }
       errorMessage = { this.props.errorMessage }
       textValue = { this.props.textValue }
+      placeholder = 'Tell us why...'
     />);
     this.setState({ textFocus: false});
   }
@@ -93,18 +94,13 @@ export default class Question extends React.Component {
   renderTellUsWhy() {
     return(
       <div className="tell-us-why">
-        <ReactCSSTransitionGroup
-          transitionName="tell-us-link"
-          transitionEnterTimeout={600}
-          transitionLeaveTimeout={100}>
-          { this.state.shouldDisplayTellUsLink ? this.renderTellUsLink() : false }
-        </ReactCSSTransitionGroup>
         <div className="tell-us-text">
           <ReactCSSTransitionGroup
             transitionName="textarea"
             transitionEnterTimeout={800}
             transitionLeaveTimeout={100}>
-            { this.state.shouldDisplayTextArea ? this.renderTextArea() : null }
+            {this.renderTextArea() }
+            <div className="required-or-optional">Optional</div>
           </ReactCSSTransitionGroup>
         </div>
       </div>
@@ -121,7 +117,7 @@ export default class Question extends React.Component {
 
   render() {
     return (
-      <div className="review-question clearfix">
+      <div className={'review-question clearfix ' + 'question_' + this.props.id}>
         <div>
           <div className="review-counter"><span>{ this.props.questionCounter }</span></div>
         </div>
