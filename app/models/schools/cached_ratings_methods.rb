@@ -166,7 +166,7 @@ module CachedRatingsMethods
   def rating_object_for_key(key, breakdown = nil)
     return nil unless ratings_by_type[key].present?
     result = ratings_by_type[key].having_most_recent_date
-    result = breakdown.nil? ? result.for_all_students : result.having_breakdown_in(breakdown)
+    result = breakdown.nil? ? result.for_all_students.academic_breakdowns_blank : result.having_breakdown_in(breakdown)
     result.having_school_value.expect_only_one(
       'rating object for key',
       rating_type: key,

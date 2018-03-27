@@ -33,6 +33,10 @@ class GsdataCaching::GsDataValue
       select(&:all_students?).extend(CollectionMethods)
     end
 
+    def academic_breakdowns_blank
+      select { |dv| dv.academics.blank? }.extend(CollectionMethods)
+    end
+
     def having_one_breakdown
       select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.extend(CollectionMethods)
     end
