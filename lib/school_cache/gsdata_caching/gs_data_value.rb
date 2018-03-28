@@ -7,6 +7,7 @@ class GsdataCaching::GsDataValue
   STUDENTS_WITH_DISABILITIES = 'Students with disabilities'
   STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES = 'Students with IDEA catagory disabilities'
 
+  ETHNICITY_BREAKDOWN = 'ethnicity'
   module CollectionMethods
     def year_of_most_recent
       most_recent.try(:year)
@@ -33,8 +34,20 @@ class GsdataCaching::GsDataValue
       select(&:all_students?).extend(CollectionMethods)
     end
 
+    def academic_breakdowns_blank
+      select { |dv| dv.academics.blank? }.extend(CollectionMethods)
+    end
+
     def having_one_breakdown
       select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.extend(CollectionMethods)
+    end
+
+    def not_having_academics
+      reject { |dv| dv.academics.present? }.extend(CollectionMethods)
+    end
+
+    def having_ethnicity_breakdown
+      select { |dv| dv.breakdowns.present? && dv.breakdowns == ETHNICITY_BREAKDOWN}.extend(CollectionMethods)
     end
 
     def having_school_value

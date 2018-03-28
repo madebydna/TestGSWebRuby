@@ -4,7 +4,7 @@ module SchoolProfiles
     # characteristics - for enrollment
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
-    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance gsdata esp_responses)
+    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance gsdata esp_responses courses)
     DISCIPLINE_FLAG = 'Discipline Flag'
     ABSENCE_FLAG = 'Absence Flag'
 
@@ -210,17 +210,33 @@ module SchoolProfiles
     end
 
     def gsdata_data(*keys)
-      decorated_school.gsdata.slice(*keys).each_with_object({}) do |(k, values), new_hash|
-        values = values.map do |h|
-          h = h.clone
-          if h['breakdowns']
-            h['breakdowns'] = h['breakdowns'].gsub('All students except 504 category,','')
-            h['breakdowns'] = h['breakdowns'].gsub(/,All students except 504 category$/,'')
-            h['breakdowns'] = h['breakdowns'].gsub('All Students','All students')
-          end
-          h
-        end
+      gs_data(decorated_school.gsdata, *keys)
+    end
+
+    def ratings_data(*keys)
+      gs_data(decorated_school.ratings, *keys)
+    end
+
+    def courses_data(*keys)
+      gs_data(decorated_school.courses, *keys)
+    end
+
+    def gs_data(obj, *keys)
+      obj.slice(*keys).each_with_object({}) do |(k, values), new_hash|
+        values = values.map(&consistify_breakdowns)
         new_hash[k] = values
+      end
+    end
+
+    def consistify_breakdowns
+      lambda do |h|
+        h = h.clone
+        if h['breakdowns']
+          h['breakdowns'] = h['breakdowns'].gsub('All students except 504 category,','')
+          h['breakdowns'] = h['breakdowns'].gsub(/,All students except 504 category$/,'')
+          h['breakdowns'] = h['breakdowns'].gsub('All Students','All students')
+        end
+        h
       end
     end
 
@@ -234,6 +250,7 @@ module SchoolProfiles
       end
     end
 
+
     def decorated_gsdata_data(key)
       Array.wrap(decorated_school.gsdata.slice(key)[key])
         .map do |h|
@@ -242,18 +259,26 @@ module SchoolProfiles
         .extend(GsdataCaching::GsDataValue::CollectionMethods)
     end
 
+    def decorated_courses_data(key)
+      Array.wrap(decorated_school.courses.slice(key)[key])
+          .map do |h|
+        GsdataCaching::GsDataValue.from_hash(h).tap { |dv| dv.data_type = key }
+      end
+          .extend(GsdataCaching::GsDataValue::CollectionMethods)
+    end
+
     def course_enrollment
-      decorated_gsdata_data('Course Enrollment')
+      decorated_courses_data('Course Enrollment')
     end
 
     def rating_weights
-      decorated_school.gsdata.select do |key, val|
+      decorated_school.ratings.select do |key, val|
         key.include?('Summary Rating Weight')
       end
     end
 
     def rating_weight_values_array
-      rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating Weight')}
+      rating_weight_hash = decorated_school.ratings.select {|key, val| key.include?('Summary Rating Weight')}
       return nil if rating_weight_hash.empty?
       rating_weight_hash.values.map  do |weight_data|
         return nil if (weight_data.all? {|hash| hash.nil? || hash['school_value'].nil?})

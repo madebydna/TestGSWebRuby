@@ -1,6 +1,9 @@
 require 'set'
 module SchoolProfiles
   class Courses
+
+
+
     include Qualaroo
     include SharingTooltipModal
 
@@ -99,8 +102,8 @@ module SchoolProfiles
       end
     end
 
-    def data
-      @school_cache_data_reader.gsdata_data(*@data_types)
+    def advanced_courses_data
+      @school_cache_data_reader.courses_data('Course Enrollment')
     end
 
     def courses_by_subject
@@ -147,7 +150,7 @@ module SchoolProfiles
       #   ]
       # }
       @courses_by_subject ||= (
-      (data['Course Enrollment'] || [])
+       (advanced_courses_data['Course Enrollment'] || [])
         .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
         .select { |dv| dv.academic_tags =~ /advanced/ }
         .each_with_object({}) do |dv, accum|

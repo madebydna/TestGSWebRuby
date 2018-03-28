@@ -171,6 +171,124 @@ describe RatingsCaching::GsdataRatingsCacher do
     end
   end
 
+  describe '#advanced_coursework_select_logic?' do
+
+    subject { cacher.advanced_coursework_select_logic?(dv) }
+
+    context 'look for All Students breakdown with course subject academic tag' do
+      let(:dv) do
+        advanced_coursework(
+            {
+                'breakdown_names' => 'All Students',
+                'academic_tags' => 'course_subject_group'
+            }
+        )
+      end
+      it { is_expected.to be(true) }
+    end
+
+    context 'look for All Students breakdown with course subject academic tag - multi dimensional breakdown data' do
+      let(:dv) do
+        advanced_coursework(
+            {
+                'breakdown_names' => 'All Students,Asian',
+                'academic_tags' => 'course_subject_group'
+            }
+        )
+      end
+      it { is_expected.to be(true) }
+    end
+
+    context 'look for All Students breakdown and all_students breakdown_tags' do
+      let!(:dv) do
+        advanced_coursework(
+          {
+            'breakdown_names' => 'All Students',
+            'breakdown_tags' => 'all_students',
+          }
+        )
+      end
+      it { is_expected.to be(true) }
+    end
+
+    context 'look for ethnicity data single breakdown and ethnicity breakdown_tags' do
+      let(:dv) do
+        advanced_coursework(
+            {
+                'breakdown_names' => 'Asian',
+                'breakdown_tags' => 'ethnicity',
+            }
+        )
+      end
+      it { is_expected.to be(true) }
+    end
+
+    context 'look for ethnicity failing for multi dimensional breakdown data' do
+      let(:dv) do
+        advanced_coursework(
+            {
+                'breakdown_names' => 'Asian,Math',
+                'breakdown_tags' => 'ethnicity',
+                'academic_names' => 'oranges',
+                'academic_tags' => 'apples'
+            }
+        )
+      end
+      it { is_expected.to be(false) }
+    end
+
+    context 'look for ethnicity failing for multi dimensional breakdown data' do
+      let(:dv) do
+        advanced_coursework(
+            {
+                'breakdown_names' => 'Asian,Math',
+                'breakdown_tags' => 'ethnicity',
+                'academic_names' => 'oranges',
+                'academic_tags' => 'apples'
+            }
+        )
+      end
+      it { is_expected.to be(false) }
+    end
+
+    context 'look for ethnicity failing for multi dimensional breakdown data' do
+      let(:dv) do
+        advanced_coursework(
+            {
+                'breakdown_names' => 'Asian,Math',
+                'breakdown_tags' => 'ethnicity',
+            }
+        )
+      end
+      it { is_expected.to be(false) }
+    end
+
+    context 'look for ethnicity failing for having academics data' do
+      let(:dv) do
+        advanced_coursework(
+            {
+                'breakdown_names' => 'Asian',
+                'breakdown_tags' => 'ethnicity',
+                'academic_names' => 'oranges',
+            }
+        )
+      end
+      it { is_expected.to be(false) }
+    end
+
+    context 'look for ethnicity failing for having academic_tags data' do
+      let(:dv) do
+        advanced_coursework(
+            {
+                'breakdown_names' => 'Asian',
+                'breakdown_tags' => 'ethnicity',
+                'academic_tags' => 'pickle',
+            }
+        )
+      end
+      it { is_expected.to be(false) }
+    end
+  end
 
   describe '#build_hash_for_cache' do
     subject { cacher.build_hash_for_cache }
@@ -183,7 +301,7 @@ describe RatingsCaching::GsdataRatingsCacher do
       context "with data for data type #{data_type_id}" do
         let(:school_value) { rand }
         before do
-          allow(cacher).to receive(:school_results).and_return(
+          allow(cacher).to receive(:school_results_with_academics).and_return(
             [
               json_data_value(data_type_id: data_type_id, value: school_value, source_name: 'Foo')
             ]
@@ -222,7 +340,7 @@ describe RatingsCaching::GsdataRatingsCacher do
 
     context "with data for several data types that include tags" do
       before do
-        allow(cacher).to receive(:school_results).and_return(
+        allow(cacher).to receive(:school_results_with_academics).and_return(
           [
             json_data_value(data_type_id: 151, value: 10, source_name: 'Foo', breakdown_tags: ['foo']),
             json_data_value(data_type_id: 152, value: 10, source_name: 'Foo', breakdown_tags: ['bar']),
@@ -262,6 +380,16 @@ describe RatingsCaching::GsdataRatingsCacher do
         props.slice(:value, :state, :school_id, :district_id, :data_type_id, :source_id, :configuration, :active, :created, :updated)
       ).on_db(:gsdata_rw).save
     end
+  end
+
+  def advanced_coursework(hash)
+    default_props = {
+        'breakdown_names' => nil,
+        'breakdown_tags' => nil,
+        'academic_names' => nil,
+        'academic_tags' => nil
+    }
+    default_props.merge(hash)
   end
 
   def json_data_value(hash)

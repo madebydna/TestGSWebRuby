@@ -125,13 +125,13 @@ module SchoolProfiles
     private
 
     def get_school_value_for(key)
-      if @school_cache_data_reader.gsdata_data(key).present?
+      if @school_cache_data_reader.ratings_data(key).present?
         filter_rating(key).school_value.to_f
       end
     end
 
     def filter_rating(key)
-      rating_weight = (@school_cache_data_reader.gsdata_data(key)[key] || []).map do |hash|
+      rating_weight = (@school_cache_data_reader.ratings_data(key)[key] || []).map do |hash|
         GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: key))
       end.extend(GsdataCaching::GsDataValue::CollectionMethods)
       rating_weight

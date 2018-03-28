@@ -269,37 +269,26 @@ export default class ReviewForm extends React.Component {
     this.setState({submittingForm: false})
   }
 
-  questionDisplayOrder(){
-    let orderedQuestionIds = [];
-    for (let question of this.props.questions) {
-      orderedQuestionIds.push(question.id)
-    }
-    return orderedQuestionIds;
-  }
-
   scrollToFirstError(errorMessages) {
-    var errorMessageKeys = Object.keys(errorMessages);
-    let orderedQuestions = this.questionDisplayOrder();
-    // Preserve display order of all questions except 1, which should be last error the user sees
-    this.sendOneToTheEnd(orderedQuestions);
+    let errorMessageKeys = Object.keys(errorMessages);
+    let orderedQuestions = this.reorderedQuestionIds();
 
-    let errorId = orderedQuestions.find(function(questionId){
-      return errorMessageKeys.indexOf(questionId.toString()) >= 0
-    });
+    let errorId=orderedQuestions.find(function(questionId){return errorMessageKeys.indexOf(questionId.toString())>=0});
     // question_1 shows up twice on page (star rating and textarea), so scroll to lower one (where error is printed)
-    if (errorId == 1) {
-      scrollToElement('.question_1:last-of-type');
-    } else {
-      scrollToElement('.question_' + errorId);
-    }
+    if (errorId == 1) {errorId += ':last-of-type'}
+    scrollToElement('.question_' + errorId);
   }
 
-  sendOneToTheEnd(array) {
-    let indexOfOne = array.indexOf(1);
+  reorderedQuestionIds() {
+    // this function preserves the order of review questions displayed on the page so scrollToFirstError can find
+    // and scroll to the first error, with the exception of question 1, which should always be last.
+    let idArray = this.props.questions.map(question => question.id);
+    let indexOfOne = idArray.indexOf(1);
     if (indexOfOne >= 0) {
-      array.splice(indexOfOne, 1);
-      array.push(1);
+      idArray.splice(indexOfOne, 1);
+      idArray.push(1);
     }
+    return idArray
   }
 
   onSubmit() {
