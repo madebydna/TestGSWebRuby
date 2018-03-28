@@ -1,10 +1,9 @@
 module DistrictsMetaTagsConcerns
 
   def districts_show_title
-    state = @state[:short].upcase
     city = @city.gs_capitalize_first
-    district = @district.name
-    "#{district} in #{city}, #{state} | GreatSchools"
+    return "#{@district.name}, #{@state[:long].gs_capitalize_words} School Rankings | Rate #{@district.name} Public Schools | GreatSchools" if %w(ca tx fl ny ga il nc nj vi pa).include?(@state[:short].downcase)
+    "#{@district.name} in #{city}, #{@state[:short].upcase} | GreatSchools"
   end
 
   def districts_show_description
