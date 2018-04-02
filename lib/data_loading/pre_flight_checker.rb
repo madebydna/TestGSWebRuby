@@ -225,7 +225,7 @@ def read_command_line_input
       @options.suppression_value = suppression_value
       end
 
-    opts.on('-d d', '--data_columns=dc', Array, 'Data Columns') do |non_data_columns|
+    opts.on('-d d', '--data_columns=d', Array, 'Data Columns') do |non_data_columns|
       @options.non_data_columns = non_data_columns
     end
   end
@@ -237,10 +237,11 @@ end
 
 read_command_line_input
 
-if @options.source_file.nil? || @options.state_id_columns.empty?
+if @options.source_file.nil? || @options.state_id_columns.nil?
   puts 'Please provide the source file and state id columns. If the suppression value is a number or letter, add that as well. For example, if the state_id is constructed from columns 1,3,5 and the suppression value is \'s\', run the script like this:
   ruby pre_flight_checker.rb -f source_file.csv -c 1,3,5 -s s'
 else
+  @options.non_data_columns = [] if @options.non_data_columns.nil?
   PreFlightChecker.run(@options)
 end
 
