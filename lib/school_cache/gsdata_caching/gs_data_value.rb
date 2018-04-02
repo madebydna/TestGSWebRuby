@@ -7,6 +7,7 @@ class GsdataCaching::GsDataValue
   STUDENTS_WITH_DISABILITIES = 'Students with disabilities'
   STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES = 'Students with IDEA catagory disabilities'
 
+  ETHNICITY_BREAKDOWN = 'ethnicity'
   module CollectionMethods
     def year_of_most_recent
       most_recent.try(:year)
@@ -33,8 +34,20 @@ class GsdataCaching::GsDataValue
       select(&:all_students?).extend(CollectionMethods)
     end
 
+    def academic_breakdowns_blank
+      select { |dv| dv.academics.blank? }.extend(CollectionMethods)
+    end
+
     def having_one_breakdown
       select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.extend(CollectionMethods)
+    end
+
+    def not_having_academics
+      reject { |dv| dv.academics.present? }.extend(CollectionMethods)
+    end
+
+    def having_ethnicity_breakdown
+      select { |dv| dv.breakdowns.present? && dv.breakdowns == ETHNICITY_BREAKDOWN}.extend(CollectionMethods)
     end
 
     def having_school_value
@@ -63,9 +76,11 @@ class GsdataCaching::GsDataValue
       select do |dv|
         # data value selected if it has no breakdown or all its breakdowns
         # are contained within the given list
-        dv.all_students? || (breakdowns & dv.breakdowns) == dv.breakdowns
+        dv.all_students? || (breakdowns & dv.breakdowns.split(',')) == dv.breakdowns
       end.extend(CollectionMethods)
     end
+
+    alias_method :having_no_breakdown_or_breakdown_in, :having_all_students_or_all_breakdowns_in
 
     def having_all_students_or_breakdown_in(breakdowns)
       breakdowns = Array.wrap(breakdowns)
@@ -497,7 +512,7 @@ class GsdataCaching::GsDataValue
 
   def to_hash
     {
-      breakdowns: breakdowns.join(','),
+      breakdowns: (breakdowns.is_a?(Array) ? breakdowns.join(',') : breakdowns),
       breakdown_tags: breakdown_tags,
       school_value: school_value,
       state_value: state_value,

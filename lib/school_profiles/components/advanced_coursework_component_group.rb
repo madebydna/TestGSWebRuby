@@ -7,7 +7,7 @@ module SchoolProfiles
         @school_cache_data_reader = school_cache_data_reader
 
         @components = [
-          GsdataComponent.new.tap do |component|
+          RatingsComponent.new.tap do |component|
             component.school_cache_data_reader = school_cache_data_reader
             component.data_type = 'Advanced Course Rating'
             component.title = 'Advanced courses'
