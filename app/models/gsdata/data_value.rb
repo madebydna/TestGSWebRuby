@@ -91,16 +91,16 @@ class DataValue < ActiveRecord::Base
   end
 
   def self.find_by_school_and_data_type_tags(school, tags, breakdown_tag_names = [], academic_tag_names = [])
-    school_values.
+    school_values_with_academics.
       from(
         DataValue.where(school_id: school.id, state: school.state, active: 1), :data_values)
           .with_data_types
           .with_data_type_tags(tags)
           .with_sources
           .with_academics
-          .with_academic_tags(academic_tag_names)
+          .with_academic_tags
           .with_breakdowns
-          .with_breakdown_tags(breakdown_tag_names)
+          .with_breakdown_tags
           .group('data_values.id')
   end
 
@@ -124,7 +124,7 @@ class DataValue < ActiveRecord::Base
       data_values.id, data_values.value, data_values.state, data_values.school_id,
       data_values.data_type_id, data_values.configuration, data_values.grade, data_values.cohort_count,
       data_values.proficiency_band_id, data_types.name,
-      sources.source_name, sources.date_valid,
+      sources.source_name, sources.date_valid, sources.description,
       group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",
       count(distinct(breakdowns.name)) as "breakdown_count",
