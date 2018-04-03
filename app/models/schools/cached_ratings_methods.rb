@@ -13,7 +13,7 @@ module CachedRatingsMethods
   # 160: Summary Rating
 
   def ratings
-    cache_data['ratings'] || []
+    cache_data['ratings'] || {}
   end
 
   def ratings_by_type
