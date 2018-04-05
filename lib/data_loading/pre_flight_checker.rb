@@ -123,12 +123,12 @@ class PreFlightChecker
   end
 
   def assemble_id_from_row(row)
-    @state_id_column_array.reduce('') {|accum, id| accum + row[id].to_f.to_s.gsub(/[.,]/,'')}
+    @state_id_column_array.reduce('') {|accum, id| accum + row[id].to_f.to_s.gsub(/[.,]/,'') + ','}
   end
 
   def verify_well_formed_ids
-    puts "Here are the first five state ids, based on the column numbers you fed into this script: #{first_five_ids}"
-    puts "Are these correct? (y,n)"
+    puts "Here's what happens when you add the state id columns together (comma-separated) for the first five rows: #{first_five_ids}"
+    puts "Does it look like you've entered the right columns? (y,n)"
     response = gets.chomp.downcase until ['y', 'n'].include?(response)
     if response == 'y'
       puts 'Working on state ids...'
