@@ -51,7 +51,7 @@ module SchoolProfiles
     def subject_scores
       scores = @school_cache_data_reader
         .recent_test_scores_without_subgroups
-        .having_academics
+        .sort_by_test_label_and_cohort_count
 
       scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(test_scores_hashes: nil).add_to_array_of_hashes(scores)
 

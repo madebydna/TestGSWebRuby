@@ -201,14 +201,13 @@ module SchoolProfiles
     def recent_test_scores
       flat_test_scores_for_latest_year
         .having_school_value
-        .sort_by_test_label_and_cohort_count
+        .sort_by_cohort_count
         .having_academics
     end
 
     def recent_test_scores_without_subgroups
       recent_test_scores
         .for_all_students
-        .having_academics
     end
 
     def graduation_rate_data
