@@ -9,8 +9,7 @@ module SchoolProfiles
 
       def components
         school_cache_data_reader
-          .flat_test_scores_for_latest_year
-          .sort_by_cohort_count
+          .recent_test_scores
           .all_academics.map do |subject|
             StudentsWithDisabilitiesTestScoresComponent.new.tap do |component|
               component.school_cache_data_reader = school_cache_data_reader

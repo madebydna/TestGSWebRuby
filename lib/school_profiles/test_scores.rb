@@ -49,7 +49,10 @@ module SchoolProfiles
     end
 
     def subject_scores
-      scores = @school_cache_data_reader.recent_test_scores_without_subgroups
+      scores = @school_cache_data_reader
+        .recent_test_scores_without_subgroups
+        .having_academics
+
       scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(test_scores_hashes: nil).add_to_array_of_hashes(scores)
 
       scores.group_by_test.values.map do |gs_data_values|
@@ -101,8 +104,7 @@ module SchoolProfiles
         end
 
         content << @school_cache_data_reader
-          .flat_test_scores_for_latest_year
-          .for_all_students
+          .recent_test_scores_without_subgroups
           .group_by(&:data_type)
           .values
           .each_with_object('') do |array, text|
@@ -126,8 +128,7 @@ module SchoolProfiles
 
     def sources_without_rating_text
       @school_cache_data_reader
-        .flat_test_scores_for_latest_year
-        .for_all_students
+        .recent_test_scores_without_subgroups
         .group_by(&:data_type)
         .values
         .each_with_object('') do |gs_data_values, text|

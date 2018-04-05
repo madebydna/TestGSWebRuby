@@ -174,9 +174,13 @@ class GsdataCaching::GsDataValue
         .extend(CollectionMethods)
     end
 
+    def having_academics
+      select { |dv| dv.academics.present? }.extend(CollectionMethods)
+    end
+
     def group_by_academics
       group_by do |dv|
-        if dv.academics.include?(',')
+        if dv.academics.present? && dv.academics.include?(',')
           GSLogger.error(
             :misc,
             nil,

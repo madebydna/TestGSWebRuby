@@ -22,9 +22,8 @@ module SchoolProfiles
       def components
         build_test_components(
           school_cache_data_reader
-            .flat_test_scores_for_latest_year
+            .recent_test_scores
             .having_grade_all
-            .sort_by_cohort_count
         )
       end
 
