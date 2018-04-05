@@ -76,7 +76,7 @@ class GsdataCaching::GsDataValue
       select do |dv|
         # data value selected if it has no breakdown or all its breakdowns
         # are contained within the given list
-        dv.all_students? || (breakdowns & dv.breakdowns.split(',')) == dv.breakdowns
+        dv.all_students? || (breakdowns & dv.breakdowns) == dv.breakdowns
       end.extend(CollectionMethods)
     end
 
