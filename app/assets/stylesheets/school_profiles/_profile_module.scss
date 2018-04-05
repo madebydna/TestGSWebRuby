@@ -1,5 +1,6 @@
 .profile-module {
   $flag-color: #ff3f2b;
+  $graduation-color: #155AA2;
   @include media-breakpoint-only(xs) {
     border-bottom: solid 1px #dbe6eb;
     border-top: solid 1px #dbe6eb;
@@ -200,6 +201,12 @@
     }
   }
 
+  .icon-graduation {
+    margin-left: 2px;
+    &.blue {
+      color: $graduation-color;
+    }
+  }
 
   .icon-flag {
     margin-left: 5px;

@@ -26,7 +26,7 @@ module SchoolProfiles
       arr = []
       arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
       if @school.level_code =~ /h/
-        arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
+        arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness', badge: @college_readiness.csa_badge?}
       end
 
       # NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):

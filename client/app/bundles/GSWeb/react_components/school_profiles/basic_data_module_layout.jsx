@@ -2,7 +2,7 @@ import React from 'react';
 import { t } from '../../util/i18n';
 
 const BasicDataModuleLayout = ({
-  id, className, icon, title, subtitle, body, feedback, footer, tabs, no_data_cta, sharing_modal
+  id, className, icon, title, subtitle, body, feedback, footer, tabs, no_data_cta, sharing_modal, csa_badge
 }) => {
   return (
     <div>
@@ -30,6 +30,8 @@ const BasicDataModuleLayout = ({
 
           { tabs }
 
+          {csa_badge}
+
           { body &&
             <div className="panel">
               {body}
@@ -54,7 +56,8 @@ BasicDataModuleLayout.PropTypes = {
   subtitle: React.PropTypes.object,
   body: React.PropTypes.object,
   feedback: React.PropTypes.object,
-  footer: React.PropTypes.object
+  footer: React.PropTypes.object,
+  csa_badge: React.PropTypes.bool
 }
 
 export default BasicDataModuleLayout;

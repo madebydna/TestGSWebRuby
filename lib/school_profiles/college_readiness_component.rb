@@ -184,6 +184,10 @@ module SchoolProfiles
         @_college_data_array ||= [{narration: narration, title: @tab.humanize, values: data_value_hash}]
       end
 
+      def csa_badge?
+        @_csa_badge ||= school_cache_data_reader.csa_badge?
+      end
+
       def narration
         return nil unless visible?
         if @tab.to_sym == :college_success

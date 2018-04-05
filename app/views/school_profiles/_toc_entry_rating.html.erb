@@ -18,4 +18,13 @@
       <%= rating %><span class="denominator">/10</span>
     </span>
   </a>
+  <% if badge.present? %>
+    <a class="js-gaClick"
+       data-ga-click-category='Profile'
+       data-ga-click-action='TOC Clicked'
+       data-ga-click-label="College success"
+       href="#<%= anchor %>">
+      <span class="icon-csa-badge-year toc-badge"></span>
+    </a>
+  <% end %>
 </div>

@@ -7,6 +7,7 @@ module SchoolProfiles
     SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance gsdata esp_responses courses)
     DISCIPLINE_FLAG = 'Discipline Flag'
     ABSENCE_FLAG = 'Absence Flag'
+    CSA_BADGE = 'CSA Badge'
 
     attr_reader :school, :school_cache_keys
 
@@ -336,6 +337,10 @@ module SchoolProfiles
           output_hash[data_type_name] = most_recent_all_students if most_recent_all_students
         end
       )
+    end
+
+    def csa_badge?
+      decorated_school.ratings.has_key?(CSA_BADGE)
     end
 
     # Returns a hash that includes the percentage and sourcing info

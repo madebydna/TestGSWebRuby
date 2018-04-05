@@ -58,6 +58,26 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     )
   }
 
+  csaBadge() {
+    let badge = this.filteredData()[this.state.active].csa_badge;
+    return ( badge &&
+      <div className="panel clearfix">
+        <div className="row">
+          <div className="col-xs-12 col-sm-4" style={{textAlign: 'center', margin: '-20px 0'}} >
+            <span className="icon-csa-badge-words" style={{color: 'blue', fontSize: '120px'}}/>
+          </div>
+          <div className="col-xs-12 col-sm-8" style={{paddingTop: '30px'}}>
+            <span>
+              This school has earned a College Success Award based on its success in preparing students for college and
+              ultimately career. The College Success Awards recognize public high schools that stand out in ​getting
+              students enrolled in - and staying with - college. Learn more.
+            </span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   hasData() {
     return this.filteredData().length > 0
   }
@@ -138,10 +158,9 @@ export default class CollegeReadiness extends SchoolProfileComponent {
           footer={ this.hasData() && this.footer() }
           body={ this.hasData() && this.activePane() }
           tabs={ this.hasData() && this.props.showTabs && this.tabsContainer() }
+          csa_badge={ this.csaBadge() }
         />
       </div>
     )
   }
 };
-
-

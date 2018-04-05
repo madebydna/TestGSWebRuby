@@ -11,6 +11,9 @@
      data-ga-click-label='<%= title %>'>
     <span><%= title %></span>
     <span class="icon-chevron-right"></span>
+    <% if badge.present? %>
+      <span class="icon-csa-badge-year toc-badge"></span>
+    <% end %>
   </a>
   <% if flagged %>
     <a class="js-gaClick flag"
