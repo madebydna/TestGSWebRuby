@@ -22,7 +22,7 @@ class TestScoreQueueDaemonJsonBlob
         school_id: @row[:school_id],
         district_id: @row[:district_id],
         data_type_id: @row[:test_data_type_id],
-        proficiency_band_id: @row[:proficiency_band_id],
+        proficiency_band_id: @row[:proficiency_band_gsdata_id],
         cohort_count: @row[:number_tested],
         grade: @row[:grade],
         active: 1,
@@ -40,6 +40,7 @@ class TestScoreQueueDaemonJsonBlob
         source_name: @source[:source_name],
         date_valid: @source[:date_valid],
         notes: @source[:notes],
+        description: @source[:description]
     }
   end
 
