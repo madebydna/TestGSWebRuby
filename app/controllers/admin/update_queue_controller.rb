@@ -9,6 +9,7 @@ class Admin::UpdateQueueController < ApplicationController
     @oldest_item_in_todo = UpdateQueue.oldest_item_in_todo
     @created_in_last_week = UpdateQueue.created_in_last_week
     @most_recent_failure_time = UpdateQueue.most_recent_failure.try(:updated)
+    @recent_error_message = UpdateQueue.recent_error_message
   end
 
 end

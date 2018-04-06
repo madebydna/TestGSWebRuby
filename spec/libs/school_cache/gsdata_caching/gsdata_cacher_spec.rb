@@ -95,9 +95,7 @@ describe GsdataCaching::GsdataCacher do
         .to receive(:find_by_school_and_data_types)
         .with(
           school,
-          GsdataCaching::GsdataCacher::DATA_TYPE_IDS,
-          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES,
-          GsdataCaching::GsdataCacher::ACADEMIC_TAG_NAMES
+          GsdataCaching::GsdataCacher::DATA_TYPE_IDS
         )
       gsdb_cacher.school_results
     end
@@ -123,9 +121,7 @@ describe GsdataCaching::GsdataCacher do
       allow(data_values).to receive(:find_by_state_and_data_types)
         .with(
           school.state,
-          GsdataCaching::GsdataCacher::DATA_TYPE_IDS,
-          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES,
-          GsdataCaching::GsdataCacher::ACADEMIC_TAG_NAMES
+          GsdataCaching::GsdataCacher::DATA_TYPE_IDS
         )
         .and_return(state_values)
       results = {
@@ -159,9 +155,7 @@ describe GsdataCaching::GsdataCacher do
         .with(
           school.state,
           school.district_id,
-          GsdataCaching::GsdataCacher::DATA_TYPE_IDS,
-          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES,
-          GsdataCaching::GsdataCacher::ACADEMIC_TAG_NAMES
+          GsdataCaching::GsdataCacher::DATA_TYPE_IDS
         )
         .and_return(district_values)
       results = {

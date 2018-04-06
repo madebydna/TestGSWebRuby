@@ -10,9 +10,9 @@ describe StatesMetaTagsConcerns do
 
   describe '#states_show_title' do
     context 'with a state instance var set' do
-      before { subject.instance_variable_set(:@state, {:short => 'ca', :long => 'california'}) }
+      before { subject.instance_variable_set(:@state, {:short => 'az', :long => 'arizona'}) }
       it 'should return the correct title string' do
-        expect(subject.send(:states_show_title)).to eql("California Schools - California State School Ratings - Public and Private")
+        expect(subject.send(:states_show_title)).to eql("Arizona Schools - Arizona State School Ratings - Public and Private")
       end
     end
   end

@@ -119,25 +119,28 @@ describe CitiesController do
   end
 
   describe '#set_city_home_meta_data' do
-    context 'Given Oakland, California' do
+    context 'Given Fargo, North Dakota' do
       before do
-        subject.instance_variable_set(:@city, 'Oakland')
-        subject.instance_variable_set(:@state, {:short => 'ca', :long => 'california'})
+        subject.instance_variable_set(:@city, 'Fargo')
+        subject.instance_variable_set(:@state, {:short => 'nd', :long => 'north dakota'})
+        subject.stub(:action_name) { 'show' }
       end
       it "should call set_meta_tags with title" do
-        expect(controller).to receive(:set_meta_tags).with(hash_including(:title => "Oakland Schools - Oakland California School Ratings - Public and Private"))
-        controller.send(:set_city_home_metadata)
+        expect(controller).to receive(:set_meta_tags).with(hash_including(:title => "Fargo Schools - Fargo North Dakota School Ratings - Public and Private"))
+        controller.send(:write_meta_tags)
       end
     end
 
+    #Covers current A/B test
     context 'Given Pennsylvania' do
       before do
         subject.instance_variable_set(:@city, 'Philadelphia')
         subject.instance_variable_set(:@state, {:short => 'pa', :long => 'pennsylvania'})
+        subject.stub(:action_name) { 'show' }
       end
       it "should call set_meta_tags with title with new title" do
-        expect(controller).to receive(:set_meta_tags).with(hash_including(:title => "View The Best Schools in Philadelphia, PA | School Ratings for Public & Private"))
-        controller.send(:set_city_home_metadata)
+        expect(controller).to receive(:set_meta_tags).with(hash_including(:title => "Best Schools in Philadelphia, PA | School Ratings in Philadelphia, Pennsylvania"))
+        controller.send(:write_meta_tags)
       end
     end
 

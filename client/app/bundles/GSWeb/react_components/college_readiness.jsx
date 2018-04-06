@@ -64,8 +64,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
 
   handleTabClick(index) {
     let tabTitle = this.filteredData()[this.state.active].title;
-    this.setState({active: index, activeInnerTab: 0});
-    window.analyticsEvent('Profile', 'College Readiness Tabs', tabTitle);
+    this.setState({active: index, activeInnerTab: 0, function: () => window.analyticsEvent('Profile', 'College Readiness Tabs', tabTitle)});
   }
 
   wrapGraphComponent(graphComponent, value, index) {
