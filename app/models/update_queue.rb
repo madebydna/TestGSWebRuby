@@ -21,6 +21,10 @@ class UpdateQueue < ActiveRecord::Base
     UpdateQueue.where(status: 'failed').where("updated > ?", 1.days.ago).group(:source).count
   end
 
+  def self.recent_error_message
+    UpdateQueue.where(status: 'failed').where("updated > ?", 1.days.ago).first.try(:notes)
+  end
+
   def self.failed_within_2_weeks
     UpdateQueue.where(status: 'failed').where("updated > ?", 2.weeks.ago).group(:source).count
   end
