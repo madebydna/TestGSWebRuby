@@ -49,5 +49,12 @@ FactoryGirl.define do
     name "Oakland Unified School District"
     state "CA"
     active 1
+    end
+
+  factory :sitka_school_district, class: District do
+    city "Sitka"
+    name "Sitka School District"
+    state "AL"
+    active 1
   end
 end
