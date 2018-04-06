@@ -15,7 +15,7 @@ class CitiesController < ApplicationController
   before_action :set_no_index
 
   def show
-    # write_meta_tags
+    write_meta_tags
     @cities = popular_cities
     @city_object = City.where(name: @city, state: @state[:short], active: 1).first
 
@@ -48,8 +48,6 @@ class CitiesController < ApplicationController
       ad_setTargeting_through_gon
       gon.pagename = 'GS:City:Home'
       data_layer_through_gon
-      #overwrites tags set by write_meta_tags above
-      set_city_home_metadata
     end
   end
 

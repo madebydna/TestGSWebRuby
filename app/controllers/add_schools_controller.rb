@@ -6,8 +6,9 @@ require "net/http"
 class AddSchoolsController < ApplicationController
   layout "application"
   PAGE_NAME = "GS:LandingPage:AddSchool"
-  before_filter :set_pk, only: [:new, :create]
-
+# rubocop:disable Style/SafeNavigation
+  before_filter :set_pk_and_grades, only: [:new, :create]
+# rubocop:enable Style/SafeNavigation
   def new
     set_seo_meta_tags
     @new_school_submission = NewSchoolSubmission.new
@@ -38,9 +39,10 @@ class AddSchoolsController < ApplicationController
 
   # The add new school form hides fields depending on whether user selects pk or k-12. This method sets
   # @pk to preserve user's selection on page re-render (i.e. if there are validation errors)
-  def set_pk
+  def set_pk_and_grades
     if params[:new_school_submission]
       @pk = params[:new_school_submission][:pk] == 'true'
+      @grades = params[:new_school_submission][:grades]
     end
   end
 

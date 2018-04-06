@@ -202,7 +202,6 @@ class SearchController < ApplicationController
   def setup_search_results!(search_method)
     setup_filter_display_map
     @params_hash = parse_array_query_string(request.query_string)
-
     set_page_instance_variables # @results_offset @page_size @page_number
 
 
@@ -467,6 +466,8 @@ class SearchController < ApplicationController
       page_view_metadata['City']        = targeted_city if targeted_city
       page_view_metadata['State']       = state_abbreviation.upcase if state_abbreviation
       page_view_metadata['county']      = county_object.try(:name) if county_object
+      page_view_metadata['gradeLevels'] = params[:gradeLevels] if params[:gradeLevels].present?
+      page_view_metadata['type']        = params[:st] if params[:st].present?
       if params[:grades].present?
         level_code = LevelCode.from_grade(params[:grades])
         page_view_metadata['level'] = level_code if level_code

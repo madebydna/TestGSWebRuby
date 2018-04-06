@@ -92,6 +92,8 @@ class SchoolCacheResults
         CachedFeedCharacteristicsMethods
       when 'directory'
         CachedDirectoryMethods
+      when 'courses'
+        CachedCoursesMethods
     end
   end
 

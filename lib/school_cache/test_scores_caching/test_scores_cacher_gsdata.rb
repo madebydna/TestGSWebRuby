@@ -83,19 +83,24 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     district_value = district_value(result)
     {}.tap do |h|
       h[:data_type] = result.name  #data_type.short_name
-      h[:breakdowns] = breakdowns# if breakdowns
-      h[:breakdown_tags] = breakdown_tags# if breakdown_tags
+      h[:breakdowns] = breakdowns # if breakdowns
+      h[:breakdown_tags] = breakdown_tags # if breakdown_tags
       h[:school_value] = result.value  #data_value.value
+# rubocop:disable Style/FormatStringToken
       h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')  #source.data_valid
+# rubocop:enable Style/FormatStringToken
+# rubocop:disable Style/SafeNavigation
       h[:state_value] = state_result.value if state_result && state_result.value #data_type.value
+
       h[:district_value] = district_value if district_value   #data_type.value
       h[:source_name] = result.source_name    #source.name
       h[:description] = result.description if result.description    #source.description
       h[:school_cohort_count] = result.cohort_count if result.cohort_count #data_value.cohort_count
-      h[:academics] = academics# if academics   #data_value.academics.pluck(:name).join(',')
-      h[:academic_tags] = academic_tags# if academic_tags  #academic_tags.tag...comma separated string for all records associated with data value
+      h[:academics] = academics # if academics   #data_value.academics.pluck(:name).join(',')
+      h[:academic_tags] = academic_tags # if academic_tags  #academic_tags.tag...comma separated string for all records associated with data value
       h[:grade] = result.grade if result.grade  #data_value.grade
       h[:state_cohort_count] = state_result.cohort_count if state_result && state_result.cohort_count  #data_value.cohort_count
+# rubocop:enable Style/SafeNavigation
     end
   end
 

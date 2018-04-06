@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TestScoresCaching::OldGradeAllCalculator
   attr_reader :data_sets_and_values
   PRECISION = 2
@@ -151,6 +153,8 @@ class TestScoresCaching::OldGradeAllCalculator
     test_data_sets.sum { |tds| tds[SCHOOL_NUM_TESTED] }
   end
 
+# rubocop:disable Style/SafeNavigation
+
   def average_school_value_float(test_data_sets)
     sum = test_data_sets.sum { |tds| float_value(tds[SCHOOL_VALUE]) }
     avg = sum.to_f / test_data_sets.size unless test_data_sets.empty?
@@ -176,6 +180,7 @@ class TestScoresCaching::OldGradeAllCalculator
     avg = weighted_sum.to_f / count unless count.zero?
     avg.round(PRECISION) if avg
   end
+# rubocop:enable Style/SafeNavigation
 
   def max_year
     @_max_year ||= data_sets_and_values.map { |tds| tds[YEAR] }.max
