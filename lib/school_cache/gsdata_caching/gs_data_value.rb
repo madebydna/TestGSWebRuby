@@ -554,6 +554,23 @@ class GsdataCaching::GsDataValue
     breakdowns.blank? || breakdowns.include?('All students')
   end
 
+  def academic
+    return nil unless academics.present?
+
+    if academics.split(',').length > 1
+      GSLogger.error(
+        :misc,
+        nil,
+        message: "Tried to access single academic but there were multiple. Returning first one",
+        vars: {
+          academics: academics
+        }
+      )
+    end
+
+    academics.split(',').first
+  end
+
   def has_ethnicity_tag?
     breakdown_tags.present? && breakdown_tags.include?('ethnicity')
   end
