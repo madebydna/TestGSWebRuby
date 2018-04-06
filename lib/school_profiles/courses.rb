@@ -162,17 +162,13 @@ module SchoolProfiles
           subjects.each do |subject|
             accum[subject] ||= []
             accum[subject] << {
-              'name' => dv.academics || remove_all_students_from_breakdowns(dv),
+              'name' => dv.academic,
               'source' => dv.source_name,
               'year' => dv.source_year
             }
           end
         end
       )
-    end
-
-    def remove_all_students_from_breakdowns(dv)
-      dv.breakdowns.split(',').reject{ |bd| bd == 'All students'}.join(',') if dv.breakdowns.present?
     end
 
     # Input data format:
