@@ -22,7 +22,12 @@ module Gsdata
       sql_template = %(
       INSERT INTO #{self.class.table_name}(source_name, date_valid, notes, description)
       VALUES (?,?,?,?)
-      ON DUPLICATE KEY UPDATE id=id
+      ON DUPLICATE KEY UPDATE
+        id=id,
+        source_name=#{ActiveRecord::Base.connection.quote(source_name)},
+        date_valid=#{ActiveRecord::Base.connection.quote(date_valid)},
+        notes=#{ActiveRecord::Base.connection.quote(notes)},
+        description=#{ActiveRecord::Base.connection.quote(description)}
     )
       sql = self.class.send(
           :sanitize_sql_array,
