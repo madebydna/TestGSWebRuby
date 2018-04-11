@@ -23,6 +23,22 @@ class DCTestProcessor2017PARCC < GS::ETL::TestProcessor
     'Active or Monitored Special Education' => 13
   }
 
+    key_map_gsdata_bd = {
+    'All' => 1,
+    'Male' => 25,
+    'Female' => 26, 
+    'American Indian/Alaskan Native' => 18,
+    'Asian' => 16,
+    'Black/African American' => 17,
+    'Hispanic/Latino' => 19,
+    'Two or More Races' => 22,
+    'Pacific Islander/Native Hawaiian' => 20,
+    'White/Caucasian' => 21,
+    'Economically Disadvantaged' => 23,
+    'Active or Monitored English Learner' => 32,
+    'Active or Monitored Special Education' => 27
+  }
+
   key_map_sub = {
     'ELA' => 4,
     'Math' => 5,
@@ -33,8 +49,22 @@ class DCTestProcessor2017PARCC < GS::ETL::TestProcessor
     'Integrated Math II' => 10 
   }
 
+    key_map_gsdata_sub = {
+    'ELA' => 4,
+    'Math' => 5,
+    'English II' => 21,
+    'Algebra I' => 6,
+    'Algebra II' => 10,
+    'Geometry' => 8,
+    'Integrated Math II' => 9 
+  }
+
   key_map_pro = {
     :percent_meeting_or_exceeding_expectations => 'null'
+  }
+
+  key_map_gsdata_pro = {
+    :percent_meeting_or_exceeding_expectations => 1
   }
 
   source("state.txt",[], col_sep: "\t") do |s|
@@ -93,10 +123,16 @@ class DCTestProcessor2017PARCC < GS::ETL::TestProcessor
        )
     .transform("Adding column breakdown_id from breadown",
       HashLookup, :breakdown, key_map_bd, to: :breakdown_id)
+    .transform("Adding column breakdown_gsdata_id from breadown",
+      HashLookup, :breakdown, key_map_gsdata_bd, to: :breakdown_gsdata_id)
     .transform("Adding column subject_id from subject",
       HashLookup, :subject, key_map_sub, to: :subject_id)
+    .transform("Adding column academic_gsdata_id from subject",
+      HashLookup, :subject, key_map_gsdata_sub, to: :academic_gsdata_id)
     .transform("Adding column _id from proficiency band",
       HashLookup, :proficiency_band, key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column _id from proficiency band",
+      HashLookup, :proficiency_band, key_map_gsdata_pro, to: :proficiency_band_gsdata_id)
     .transform("Remove special character in value_float", WithBlock) do |row|
       row[:value_float] = row[:value_float].gsub('%', '')
       row
@@ -120,6 +156,9 @@ class DCTestProcessor2017PARCC < GS::ETL::TestProcessor
   def config_hash
     {
         source_id: 76,
+        source_name: 'Office of the State Superintendent of Education',
+        description: 'In spring 2017, District of Columbia students took the Partnership for the Assessment of Readiness for College and Careers, or PARCC, assessments for the first time. The new assessment, which replaced the DC CAS annual assessment, is more rigorous and designed to measure students readiness for college and career.',
+        date_valid: '2017-01-01 00:00:00',
         state: 'dc',
         notes: 'DXT-2567: DC PARCC',
         url: 'http://osse.dc.gov/page/2016-17-parcc-results-and-resources',
