@@ -20,7 +20,7 @@ class GsdataLoading::Update
           'active' => {'type' => 'integer'},
           'grade' => {'type' => 'string'},
           'value' => {'type' => 'string'},
-          'proficiency_band_id' => {'type' => 'string'},
+          'proficiency_band_id' => {'type' => 'integer'},
           'breakdowns' => {
               'type' => 'array',
               'items' => {
