@@ -108,4 +108,10 @@ th {
       <% end %>
     </tbody>
   </table>
+
+  <% if @recent_error_message.present? %>
+    <h3>Recent error message</h3>
+    <div><%= @recent_error_message %></div>
+  <% end %>
+  
 </div>

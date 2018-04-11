@@ -13,7 +13,7 @@ module CachedRatingsMethods
   # 160: Summary Rating
 
   def ratings
-    cache_data['ratings'] || []
+    cache_data['ratings'] || {}
   end
 
   def ratings_by_type
@@ -93,11 +93,8 @@ module CachedRatingsMethods
   def courses_academics_rating_array
     course_subject_group = ratings_by_type['Advanced Course Rating']
     Array.wrap(course_subject_group).each_with_object({}) do |dv, accum|
-      if dv.academics.present?
-        subject = dv.academics.downcase.gsub(' ', '_')
-        accum[subject] = dv.school_value_as_int
-      elsif dv.breakdowns.present?
-        subject = dv.breakdowns.split(',').reject{ |bd| bd == 'All Students'}.join(',').downcase.gsub(' ', '_')
+      if dv.academic.present?
+        subject = dv.academic.downcase.gsub(' ', '_')
         accum[subject] = dv.school_value_as_int
       end
     end

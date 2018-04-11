@@ -41,7 +41,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to eq(12) }
       its(:state_cohort_count) { is_expected.to eq(5) }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(['4']) }
+      its(:breakdowns) { is_expected.to eq('4') }
     end
 
     context 'with subgroup data sets that already include all grades' do
@@ -122,7 +122,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to eq(12) }
       its(:state_cohort_count) { is_expected.to eq(5) }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(['0']) }
+      its(:breakdowns) { is_expected.to eq('0') }
     end
 
     context 'when a state_value is actually a string' do
@@ -157,7 +157,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to eq(12) }
       its(:state_cohort_count) { is_expected.to eq(nil) }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(['0']) }
+      its(:breakdowns) { is_expected.to eq('0') }
     end
 
     context 'with a data set that is missing number of students tested' do
@@ -467,7 +467,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to be_nil }
       its(:state_cohort_count) { is_expected.to be_nil }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(['0']) }
+      its(:breakdowns) { is_expected.to eq('0') }
     end
 
     context 'with just value_text values' do
@@ -502,7 +502,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to eq(nil) }
       its(:state_cohort_count) { is_expected.to eq(20) }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(['0']) }
+      its(:breakdowns) { is_expected.to eq('0') }
     end
 
     context 'with value_float and value_text values' do
@@ -539,7 +539,7 @@ describe 'GradeAllCalculator' do
       its(:school_cohort_count) { is_expected.to eq(20) }
       its(:state_cohort_count) { is_expected.to eq(20) }
       its(:data_type) { is_expected.to eq(1) }
-      its(:breakdowns) { is_expected.to eq(['0']) }
+      its(:breakdowns) { is_expected.to eq('0') }
     end
 
     context 'when test scores contain value_text' do
