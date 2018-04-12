@@ -6,15 +6,14 @@ import createInfoWindow from '../../components/map/info_window';
 import Map from '../../components/map/map';
 import MapMarker from '../../components/map/map_marker';
 import DefaultMapMarker from '../../components/map/default_map_marker';
-import Polygon from './polygon';
-import ConnectedSearchBar from './connected_search_bar';
+import Polygon from '../district_boundaries/polygon';
+import ConnectedSearchBar from '../district_boundaries/connected_search_bar';
 import * as markerTypes from '../../components/map/markers';
 import * as polygonTypes from '../../components/map/polygons';
-import SchoolList from './school_list';
+import SchoolList from '../district_boundaries/school_list';
 import jsxToString from 'jsx-to-string';
-import DistrictBoundariesLegend from './district_boundaries_legend';
 
-export default class DistrictBoundaries extends React.Component {
+export default class Search extends React.Component {
   static defaultProps = {
   }
 
@@ -67,38 +66,39 @@ export default class DistrictBoundaries extends React.Component {
   }
 
   renderMarkers() {
-    let anySchoolMarkerSelected = false;
-    let markers = this.props.schools.map(s => {
-      let props = {title: s.name, rating: s.rating, lat: s.lat, lon: s.lon};
-      props.key = 's' + s.state + s.id;
-      props.createInfoWindow = () => createInfoWindow(s);
-      props.onClick = () => this.props.selectSchool(s.id, s.state);
-      if(this.props.school && this.props.school.state == s.state && this.props.school.id == s.id) {
-        props.selected = true;
-        anySchoolMarkerSelected = true;
-      }
-      if(s.schoolType == 'private') {
-        return <MapMarker type={markerTypes.PRIVATE_SCHOOL} {...props} />
-      } else {
-        return <MapMarker type={markerTypes.PUBLIC_SCHOOL} {...props} />
-      }
-    });
-    markers = markers.concat(this.props.districts.map(d => {
-      let props = {title: d.name, rating: null, lat: d.lat, lon: d.lon};
-      props.key = 'd' + d.state + d.id;
-      props.createInfoWindow = () => createInfoWindow(d);
-      props.onClick = () => this.props.selectDistrict(d.id, d.state);
-      if(!anySchoolMarkerSelected && this.props.district && this.props.district.state == d.state && this.props.district.id == d.id) {
-        props.selected = true;
-      }
-      return <MapMarker type={markerTypes.DISTRICT} {...props} />
-    }));
-    if (this.props.lat && this.props.lon) {
-      let props = {lat: this.props.lat, lon: this.props.lon};
-      props.key = 'locationMarkerl' + this.props.lat + 'l' + this.props.lon;
-      markers = markers.concat(<DefaultMapMarker {...props} />);
-    }
-    return markers;
+    // let anySchoolMarkerSelected = false;
+    // let markers = this.props.schools.map(s => {
+    //   let props = {title: s.name, rating: s.rating, lat: s.lat, lon: s.lon};
+    //   props.key = 's' + s.state + s.id;
+    //   props.createInfoWindow = () => createInfoWindow(s);
+    //   props.onClick = () => this.props.selectSchool(s.id, s.state);
+    //   if(this.props.school && this.props.school.state == s.state && this.props.school.id == s.id) {
+    //     props.selected = true;
+    //     anySchoolMarkerSelected = true;
+    //   }
+    //   if(s.schoolType == 'private') {
+    //     return <MapMarker type={markerTypes.PRIVATE_SCHOOL} {...props} />
+    //   } else {
+    //     return <MapMarker type={markerTypes.PUBLIC_SCHOOL} {...props} />
+    //   }
+    // });
+    // markers = markers.concat(this.props.districts.map(d => {
+    //   let props = {title: d.name, rating: null, lat: d.lat, lon: d.lon};
+    //   props.key = 'd' + d.state + d.id;
+    //   props.createInfoWindow = () => createInfoWindow(d);
+    //   props.onClick = () => this.props.selectDistrict(d.id, d.state);
+    //   if(!anySchoolMarkerSelected && this.props.district && this.props.district.state == d.state && this.props.district.id == d.id) {
+    //     props.selected = true;
+    //   }
+    //   return <MapMarker type={markerTypes.DISTRICT} {...props} />
+    // }));
+    // if (this.props.lat && this.props.lon) {
+    //   let props = {lat: this.props.lat, lon: this.props.lon};
+    //   props.key = 'locationMarkerl' + this.props.lat + 'l' + this.props.lon;
+    //   markers = markers.concat(<DefaultMapMarker {...props} />);
+    // }
+    return [];
+    // return markers;
   }
 
   renderPolygons() {
@@ -113,7 +113,7 @@ export default class DistrictBoundaries extends React.Component {
     }
     return polygons;
   }
-  
+
   renderMap() {
     if(this.state.googleMapsInitialized) {
       return(
@@ -127,7 +127,7 @@ export default class DistrictBoundaries extends React.Component {
       );
     } else {
       let content = <div style={{height: '400px', width:'75%',display:'block'}}></div>
-      return (<div><SpinnyWheel content={content}/></div>);
+      return content;
     }
   };
 
@@ -141,24 +141,18 @@ export default class DistrictBoundaries extends React.Component {
   showListView() {
     this.setState({
       mapHidden: true,
-      listHidden: false 
+      listHidden: false
     });
   }
 
   render() {
     return (
       <div className="district-boundaries-component">
-        <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta" style={{display: 'none'}}/>
-        <ConnectedSearchBar onClickMapView={this.showMapView} onClickListView={this.showListView}
-                            googleMapsInitialized={this.state.googleMapsInitialized} mapSelected={this.state.listHidden}/>
-        { this.props.schools.length > 0 && 
-          <SchoolList showMapView={this.showMapView} className={ this.state.listHidden ? 'closed' : '' } />
-        }
-          <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
-            <SpinnyWheel active={this.props.loading}>
-              {this.renderMap()}
-            </SpinnyWheel>
-          </div>
+        <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
+          <SpinnyWheel active={this.state.googleMapsInitialized ? false : true}>
+            {this.renderMap()}
+          </SpinnyWheel>
+        </div>
       </div>
     );
   }

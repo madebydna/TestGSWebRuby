@@ -90,7 +90,8 @@ class SearchController < ApplicationController
     if bail_on_fit?
       redirect_to path_w_query_string 'sort', nil
     else
-      render 'search_page'
+      render 'enhanced_search', layout: 'application'
+      # render 'search_page'
     end
   end
 

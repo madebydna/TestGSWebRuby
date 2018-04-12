@@ -23,7 +23,8 @@ const config = {
     'home': [ './app/bundles/GSWeb/home' ],
     'jquery': ['jquery'],
     'admin-tools': ['./app/bundles/GSWeb/admin_tools'],
-    'add-schools': ['./app/bundles/GSWeb/pages/add_schools']
+    'add-schools': ['./app/bundles/GSWeb/pages/add_schools'],
+    'search': ['./app/bundles/GSWeb/search']
   },
 
   output: {
