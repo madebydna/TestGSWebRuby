@@ -41,7 +41,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   def state_results_hash
     @_state_results_hash ||= begin
       state_values = DataValue
-        .find_by_state_and_data_types(school.state, data_type_ids)
+        .find_by_state_and_data_type_tags(school.state, DATA_TYPE_TAGS)
         .where(proficiency_band_id: 1)
 
       state_values.each_with_object({}) do |result, hash|
@@ -54,7 +54,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   def district_results_hash
     @_district_results_hash ||= begin
       district_values = DataValue
-        .find_by_district_and_data_types(school.state, school.district_id, data_type_ids)
+        .find_by_district_and_data_type_tags(school.state, school.district_id, DATA_TYPE_TAGS)
         .where(proficiency_band_id: 1)
 
       district_values.each_with_object({}) do |result, hash|

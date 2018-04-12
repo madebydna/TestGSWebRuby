@@ -1,0 +1,109 @@
+# Logfile created on 2018-04-11 12:20:20 -0700 by logger.rb/56815
+[2018-04-11 12:20:20] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 12:20:20] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 12:20:20 -0700
+[2018-04-11 12:20:29] DEBUG  : --- Time taken to generate feed : FeedType: directory_feed  for state md --- 00:00:09:000
+[2018-04-11 12:20:29] DEBUG  : Ending Feed Generation for state md
+[2018-04-11 12:22:33] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 12:22:33] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 12:22:33 -0700
+[2018-04-11 12:22:38] DEBUG  : --- Time taken to generate feed : FeedType: directory_feed  for state md --- 00:00:05:000
+[2018-04-11 12:22:38] DEBUG  : Ending Feed Generation for state md
+[2018-04-11 12:23:18] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 12:23:18] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 12:23:18 -0700
+[2018-04-11 12:23:20] DEBUG  : --- Time taken to generate feed : FeedType: directory_feed  for state md --- 00:00:02:000
+[2018-04-11 12:23:20] DEBUG  : Ending Feed Generation for state md
+[2018-04-11 12:24:00] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 12:24:00] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 12:24:00 -0700
+[2018-04-11 12:25:28] DEBUG  : --- Time taken to generate feed : FeedType: directory_feed  for state md --- 00:01:27:000
+[2018-04-11 12:25:28] DEBUG  : Ending Feed Generation for state md
+[2018-04-11 12:33:40] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 12:33:40] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 12:33:40 -0700
+[2018-04-11 12:33:42] DEBUG  : --- Time taken to generate feed : FeedType: directory_feed  for state md --- 00:00:01:000
+[2018-04-11 12:33:42] DEBUG  : Ending Feed Generation for state md
+[2018-04-11 12:37:19] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 12:37:19] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 12:37:19 -0700
+[2018-04-11 12:37:21] DEBUG  : --- Time taken to generate feed : FeedType: directory_feed  for state md --- 00:00:01:000
+[2018-04-11 12:37:21] DEBUG  : Ending Feed Generation for state md
+[2018-04-11 12:37:34] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 12:37:34] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 12:37:34 -0700
+[2018-04-11 12:39:00] DEBUG  : --- Time taken to generate feed : FeedType: directory_feed  for state md --- 00:01:26:000
+[2018-04-11 12:39:00] DEBUG  : Ending Feed Generation for state md
+[2018-04-11 12:39:17] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 12:39:17] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 12:39:17 -0700
+[2018-04-11 12:39:18] ERROR  (script/feeds/feed_scripts/generate_feed_files.rb:43:in `block in generate_all_feeds'}): Permission denied @ rb_sysopen - /tmplocal-greatschools-feed-MD.xml
+ Backtrace:
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:25:in `initialize'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:25:in `open'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:25:in `file'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:30:in `xml_builder'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:37:in `within_root_node'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:12:in `generate_feed'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_feed.rb:41:in `generate_feed'
+	script/feeds/feed_scripts/generate_feed_files.rb:56:in `block in generate_all_feeds'
+	script/feeds/feed_scripts/generate_feed_files.rb:42:in `each'
+	script/feeds/feed_scripts/generate_feed_files.rb:42:in `each_with_index'
+	script/feeds/feed_scripts/generate_feed_files.rb:42:in `generate_all_feeds'
+	script/feeds/feed_scripts/generate_feed_files.rb:31:in `block in generate'
+	script/feeds/feed_scripts/generate_feed_files.rb:28:in `each'
+	script/feeds/feed_scripts/generate_feed_files.rb:28:in `generate'
+	script/feeds/feed_scripts/generate_feed_files.rb:23:in `generate'
+	script/feeds/feed_scripts/generate_feed_files.rb:77:in `<module:Feeds>'
+	script/feeds/feed_scripts/generate_feed_files.rb:17:in `<top (required)>'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/runner.rb:60:in `load'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/runner.rb:60:in `<top (required)>'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/commands_tasks.rb:123:in `require'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/commands_tasks.rb:123:in `require_command!'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/commands_tasks.rb:90:in `runner'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/commands_tasks.rb:39:in `run_command!'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands.rb:17:in `<top (required)>'
+	bin/rails:4:in `require'
+	bin/rails:4:in `<main>'
+[2018-04-11 12:39:18] ERROR  (script/feeds/feed_scripts/generate_feed_files.rb:29:in `block in generate'}): Permission denied @ rb_sysopen - /tmplocal-greatschools-feed-MD.xml
+ Backtrace:
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:25:in `initialize'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:25:in `open'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:25:in `file'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:30:in `xml_builder'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:37:in `within_root_node'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_xml_builder.rb:12:in `generate_feed'
+	/Users/samson/Development/GSWebRuby/script/feeds/feed_builders/directory/directory_feed.rb:41:in `generate_feed'
+	script/feeds/feed_scripts/generate_feed_files.rb:56:in `block in generate_all_feeds'
+	script/feeds/feed_scripts/generate_feed_files.rb:42:in `each'
+	script/feeds/feed_scripts/generate_feed_files.rb:42:in `each_with_index'
+	script/feeds/feed_scripts/generate_feed_files.rb:42:in `generate_all_feeds'
+	script/feeds/feed_scripts/generate_feed_files.rb:31:in `block in generate'
+	script/feeds/feed_scripts/generate_feed_files.rb:28:in `each'
+	script/feeds/feed_scripts/generate_feed_files.rb:28:in `generate'
+	script/feeds/feed_scripts/generate_feed_files.rb:23:in `generate'
+	script/feeds/feed_scripts/generate_feed_files.rb:77:in `<module:Feeds>'
+	script/feeds/feed_scripts/generate_feed_files.rb:17:in `<top (required)>'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/runner.rb:60:in `load'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/runner.rb:60:in `<top (required)>'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/commands_tasks.rb:123:in `require'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/commands_tasks.rb:123:in `require_command!'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/commands_tasks.rb:90:in `runner'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands/commands_tasks.rb:39:in `run_command!'
+	/Users/samson/.bundle/ruby/2.4.0/gems/railties-4.2.8/lib/rails/commands.rb:17:in `<top (required)>'
+	bin/rails:4:in `require'
+	bin/rails:4:in `<main>'
+[2018-04-11 12:39:30] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 12:39:30] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 12:39:30 -0700
+[2018-04-11 12:40:56] DEBUG  : --- Time taken to generate feed : FeedType: directory_feed  for state md --- 00:01:25:000
+[2018-04-11 12:40:56] DEBUG  : Ending Feed Generation for state md
+[2018-04-11 12:46:36] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 12:46:36] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 12:46:36 -0700
+[2018-04-11 12:48:03] DEBUG  : --- Time taken to generate feed : FeedType: directory_feed  for state md --- 00:01:27:000
+[2018-04-11 12:48:03] DEBUG  : Ending Feed Generation for state md
+[2018-04-11 12:53:46] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 12:53:46] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 12:53:46 -0700
+[2018-04-11 12:54:04] DEBUG  : --- Time taken to generate feed : FeedType: directory_feed  for state md --- 00:00:17:000
+[2018-04-11 12:54:04] DEBUG  : Ending Feed Generation for state md
+[2018-04-11 13:02:33] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 13:02:33] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 13:02:33 -0700
+[2018-04-11 13:02:42] DEBUG  : --- Time taken to generate feed : FeedType: directory_feed  for state md --- 00:00:08:000
+[2018-04-11 13:02:42] DEBUG  : Ending Feed Generation for state md
+[2018-04-11 13:05:11] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 13:05:11] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 13:05:11 -0700
+[2018-04-11 13:11:46] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 13:11:46] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 13:11:46 -0700
+[2018-04-11 13:26:02] DEBUG  : Starting Feed Generation for state md
+[2018-04-11 13:26:02] DEBUG  : --- Start Time for generating feed: FeedType: directory_feed  for state md --- 2018-04-11 13:26:02 -0700

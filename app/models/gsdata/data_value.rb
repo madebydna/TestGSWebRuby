@@ -151,6 +151,19 @@ class DataValue < ActiveRecord::Base
           .group('data_values.id')
   end
 
+  def self.find_by_state_and_data_type_tags(state, data_type_tags)
+    state_and_district_values.
+      from(DataValue.state(state), :data_values)
+        .with_data_types
+        .with_data_type_tags(data_type_tags)
+        .with_breakdowns
+        .with_breakdown_tags
+        .with_academics
+        .with_academic_tags
+        .with_sources
+        .group('data_values.id')
+  end
+
   def self.find_by_district_and_data_types(state, district_id, data_types)
     state_and_district_values.
       from(
@@ -167,9 +180,26 @@ class DataValue < ActiveRecord::Base
           .group('data_values.id')
   end
 
+  def self.find_by_district_and_data_type_tags(state, district_id, data_type_tags)
+    state_and_district_values.
+      from(
+        DataValue.state_and_district(
+          state,
+          district_id
+        ), :data_values)
+          .with_data_types
+          .with_data_type_tags(data_type_tags)
+          .with_breakdowns
+          .with_breakdown_tags
+          .with_academics
+          .with_academic_tags
+          .with_sources
+          .group('data_values.id')
+  end
+
   def self.state_and_district_values
     state_and_district_values = <<-SQL
-      data_values.id, data_type_id, data_values.value, date_valid, grade, proficiency_band_id, cohort_count,
+      data_values.id, data_values.data_type_id, data_values.value, date_valid, grade, proficiency_band_id, cohort_count,
       group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(academics.name ORDER BY academics.name) as "academic_names"
     SQL
@@ -198,6 +228,26 @@ class DataValue < ActiveRecord::Base
       AND active = 1
     SQL
     where(state_subquery_sql, state, data_types)
+  end
+
+  def self.state(state)
+    state_subquery_sql = <<-SQL
+      state = ?
+      AND district_id IS NULL
+      AND school_id IS NULL
+      AND active = 1
+    SQL
+    where(state_subquery_sql, state)
+  end
+
+  def self.state_and_district(state, district_id)
+    district_subquery = <<-SQL
+      state = ?
+      AND district_id = ?
+      AND school_id IS NULL
+      AND active = 1
+    SQL
+    where(district_subquery, state, district_id)
   end
 
   def self.state_and_district_data_types(state, district_id, data_type_ids)
