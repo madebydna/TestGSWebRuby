@@ -2,6 +2,7 @@ class School < ActiveRecord::Base
   include SchoolReviewConcerns
   include SchoolRouteConcerns
 
+
   LEVEL_CODES = {
     primary: 'p',
     preschool: 'p',
@@ -23,6 +24,7 @@ class School < ActiveRecord::Base
   has_many :school_metadatas
   belongs_to :district
 
+
   scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
 
   scope :not_preschool_only, -> { where.not(level_code: 'p') }
@@ -33,6 +35,10 @@ class School < ActiveRecord::Base
 
   def self.find_by_state_and_id(state, id)
     School.on_db(state.downcase.to_sym).find id rescue nil
+  end
+
+  def self.find_by_state_and_ids(state, ids)
+    School.on_db(state.downcase.to_sym).where(id: ids)
   end
 
   def self.ids_by_state(state)

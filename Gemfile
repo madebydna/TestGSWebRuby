@@ -133,6 +133,9 @@ gem 'stackprof'
 # fast xml parsing library
 gem 'ox'
 
+# Solr DSL on top of rsolr
+gem 'sunspot_rails', '~> 2.3.0'
+
 group :development do
   gem 'web-console' # Add repl to error pages on localhost, replaces better_errors
 

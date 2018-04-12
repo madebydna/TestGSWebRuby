@@ -1,0 +1,18 @@
+<% content_for :page_javascripts do %>
+    <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+    <%= webpack_javascript_include_tag 'search', defer: true %>
+<% end %>
+<% content_for :page_stylesheets do %>
+    <%= stylesheet_link_tag "district-boundaries", async: true %>
+<% end %>
+
+<% props = {
+      lat: @city.try(:lat),
+      lon: @city.try(:lon),
+      schools: @schools,
+} %>
+<div id="district-boundaries-page">
+  <%= react_component('Search', props: props) %>
+</div>
+<%= debug props %>
+

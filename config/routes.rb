@@ -27,7 +27,7 @@ LocalizedProfiles::Application.routes.draw do
   get ':state/:city/schools/', as: :search_city_browse,
     # This city regex allows for all characters except /
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
-    constraints: {state: States.any_state_name_regex, city: /[^\/]+/}, to: 'search#city_browse'
+    constraints: {state: States.any_state_name_regex, city: /[^\/]+/}, to: 'new_search#search'
 
   get ':state/:city/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/,
