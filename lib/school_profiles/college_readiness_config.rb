@@ -39,6 +39,18 @@ module SchoolProfiles::CollegeReadinessConfig
   CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS = [
     {
       :cache => :characteristics,
+      :data_key => SENIORS_ENROLLED,
+      :visualization => 'person',
+      :formatting => [:round_unless_less_than_1, :percent]
+    },
+    {
+      :cache => :characteristics,
+      :data_key => GRADUATES_COLLEGE_VOCATIONAL,
+      :visualization => 'person',
+      :formatting => [:round_unless_less_than_1, :percent]
+    },
+    {
+      :cache => :characteristics,
       :data_key => SENIORS_FOUR_YEAR,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
@@ -52,18 +64,6 @@ module SchoolProfiles::CollegeReadinessConfig
     {
       :cache => :characteristics,
       :data_key => SENIORS_ENROLLED_OTHER,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => SENIORS_ENROLLED,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => GRADUATES_COLLEGE_VOCATIONAL,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
     },
