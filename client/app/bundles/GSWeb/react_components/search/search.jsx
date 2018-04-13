@@ -73,7 +73,6 @@ export default class Search extends React.Component {
       props.key = 's' + s.state + s.id;
       props.createInfoWindow = () => createInfoWindow(s);
       // props.onClick = () => this.props.selectSchool(s.id, s.state);
-      debugger;
       if(this.props.school && this.props.school.state == s.state && this.props.school.id == s.id) {
         props.selected = true;
         anySchoolMarkerSelected = true;
