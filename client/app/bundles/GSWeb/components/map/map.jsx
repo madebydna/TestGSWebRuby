@@ -104,7 +104,7 @@ export default class Map extends React.Component {
       googleMaps: this.props.googleMaps,
       map: this.map,
       onClick: (m) => {
-        component.props.onClick();
+        // component.props.onClick();
         this.openInfoWindow(component.props.createInfoWindow(), m) 
       },
       openInfoWindow: (m) => {

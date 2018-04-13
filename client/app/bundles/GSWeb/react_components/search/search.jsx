@@ -72,7 +72,7 @@ export default class Search extends React.Component {
       let props = {title: s.name, rating: s.overall_gs_rating, lat: s.latitude, lon: s.longitude};
       props.key = 's' + s.state + s.id;
       props.createInfoWindow = () => createInfoWindow(s);
-      props.onClick = () => this.props.selectSchool(s.id, s.state);
+      // props.onClick = () => this.props.selectSchool(s.id, s.state);
       if(this.props.school && this.props.school.state == s.state && this.props.school.id == s.id) {
         props.selected = true;
         anySchoolMarkerSelected = true;
