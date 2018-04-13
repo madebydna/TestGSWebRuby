@@ -58,8 +58,6 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     )
   }
 
-  //style={{textAlign: 'center'}}
-
   csaBadge() {
     let badge = this.filteredData()[this.state.active].csa_badge;
     return ( badge &&
