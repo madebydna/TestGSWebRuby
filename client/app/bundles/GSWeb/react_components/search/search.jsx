@@ -69,10 +69,11 @@ export default class Search extends React.Component {
   renderMarkers() {
     let anySchoolMarkerSelected = false;
     let markers = this.props.schools.map(s => {
-      let props = {title: s.name, rating: s.overall_gs_rating, lat: s.latitude, lon: s.longitude};
+      let props = {title: s.name, rating: s.overall_gs_rating, lat: s.lat, lon: s.lon};
       props.key = 's' + s.state + s.id;
       props.createInfoWindow = () => createInfoWindow(s);
       // props.onClick = () => this.props.selectSchool(s.id, s.state);
+      debugger;
       if(this.props.school && this.props.school.state == s.state && this.props.school.id == s.id) {
         props.selected = true;
         anySchoolMarkerSelected = true;
