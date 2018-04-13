@@ -69,7 +69,7 @@ export default class Search extends React.Component {
   renderMarkers() {
     let anySchoolMarkerSelected = false;
     let markers = this.props.schools.map(s => {
-      let props = {title: s.name, rating: s.overall_gs_rating, lat: s.lat, lon: s.lon};
+      let props = {title: s.name, rating: s.rating, lat: s.lat, lon: s.lon};
       props.key = 's' + s.state + s.id;
       props.createInfoWindow = () => createInfoWindow(s);
       // props.onClick = () => this.props.selectSchool(s.id, s.state);
@@ -77,7 +77,7 @@ export default class Search extends React.Component {
         props.selected = true;
         anySchoolMarkerSelected = true;
       }
-      if(s.type == 'private') {
+      if(s.schoolType == 'private') {
         return <MapMarker type={markerTypes.PRIVATE_SCHOOL} map={this.props.map} {...props} />
       } else {
         return <MapMarker type={markerTypes.PUBLIC_SCHOOL} map={this.props.map} {...props} />
