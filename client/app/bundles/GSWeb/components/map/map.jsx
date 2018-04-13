@@ -13,6 +13,7 @@ export default class Map extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {};
   }
 
   createGoogleMap($elem) {
@@ -74,7 +75,7 @@ export default class Map extends React.Component {
     this.props.googleMaps.event.addDomListener(this.map, 'idle', this.onIdle.bind(this));
     this.props.googleMaps.event.addDomListener(window, 'resize', this.onResize.bind(this));
     this.map.addListener('click', this.onClick.bind(this));
-    this.setState({mapCenter: this.map.getCenter()});
+    this.setState({mapCenter: this.map.getCenter(), mounted: true});
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -111,7 +112,7 @@ export default class Map extends React.Component {
   render() {
     return (
       <div className="map" ref={(map) => { this.mapDiv = map; }}>
-        {this.renderMarkers()}
+        {this.state.mounted && this.renderMarkers()}
         {this.renderPolygons()}
       </div>
     );

@@ -35,7 +35,6 @@ export default class MapMarker extends DefaultMapMarker {
     );
     this.marker.setMap(this.props.map);
     google.maps.event.addListener( this.marker, 'click', () => this.props.onClick(this.marker));
-
     if(this.props.selected) {
       this.props.openInfoWindow(this.marker);
     }

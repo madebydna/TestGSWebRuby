@@ -15,10 +15,11 @@ import jsxToString from 'jsx-to-string';
 
 export default class Search extends React.Component {
   static defaultProps = {
-  }
+  };
 
   static propTypes = {
-  }
+    schools: React.PropTypes.array
+  };
 
   constructor(props) {
     super(props);
@@ -66,22 +67,22 @@ export default class Search extends React.Component {
   }
 
   renderMarkers() {
-    // let anySchoolMarkerSelected = false;
-    // let markers = this.props.schools.map(s => {
-    //   let props = {title: s.name, rating: s.rating, lat: s.lat, lon: s.lon};
-    //   props.key = 's' + s.state + s.id;
-    //   props.createInfoWindow = () => createInfoWindow(s);
-    //   props.onClick = () => this.props.selectSchool(s.id, s.state);
-    //   if(this.props.school && this.props.school.state == s.state && this.props.school.id == s.id) {
-    //     props.selected = true;
-    //     anySchoolMarkerSelected = true;
-    //   }
-    //   if(s.schoolType == 'private') {
-    //     return <MapMarker type={markerTypes.PRIVATE_SCHOOL} {...props} />
-    //   } else {
-    //     return <MapMarker type={markerTypes.PUBLIC_SCHOOL} {...props} />
-    //   }
-    // });
+    let anySchoolMarkerSelected = false;
+    let markers = this.props.schools.map(s => {
+      let props = {title: s.name, rating: s.overall_gs_rating, lat: s.latitude, lon: s.longitude};
+      props.key = 's' + s.state + s.id;
+      props.createInfoWindow = () => createInfoWindow(s);
+      // props.onClick = () => this.props.selectSchool(s.id, s.state);
+      if(this.props.school && this.props.school.state == s.state && this.props.school.id == s.id) {
+        props.selected = true;
+        anySchoolMarkerSelected = true;
+      }
+      if(s.type == 'private') {
+        return <MapMarker type={markerTypes.PRIVATE_SCHOOL} map={this.props.map} {...props} />
+      } else {
+        return <MapMarker type={markerTypes.PUBLIC_SCHOOL} map={this.props.map} {...props} />
+      }
+    });
     // markers = markers.concat(this.props.districts.map(d => {
     //   let props = {title: d.name, rating: null, lat: d.lat, lon: d.lon};
     //   props.key = 'd' + d.state + d.id;
@@ -92,13 +93,13 @@ export default class Search extends React.Component {
     //   }
     //   return <MapMarker type={markerTypes.DISTRICT} {...props} />
     // }));
+    //DEFAULT LOCATION PIN
     // if (this.props.lat && this.props.lon) {
     //   let props = {lat: this.props.lat, lon: this.props.lon};
     //   props.key = 'locationMarkerl' + this.props.lat + 'l' + this.props.lon;
     //   markers = markers.concat(<DefaultMapMarker {...props} />);
     // }
-    return [];
-    // return markers;
+    return markers;
   }
 
   renderPolygons() {
