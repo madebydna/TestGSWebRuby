@@ -17,7 +17,7 @@ class NewSearchController < ApplicationController
   end
 
   def school_search
-    @_school_search ||= SchoolSearch.new(city: nil, state: nil, q:q)
+    @_school_search ||= SchoolSearch.new(city: city, state: state, q:q)
   end
 
   def city

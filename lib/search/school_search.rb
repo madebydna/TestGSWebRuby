@@ -54,7 +54,7 @@ class SchoolSearch
     lambda do |search|
       # Must reference accessor methods, not instance variables!
       search.keywords(q || default_query_string)
-      # search.with(:citykeyword, city) if city
+      search.with(:citykeyword, city) if city
       search.adjust_solr_params do |params|
         params[:defType] = browse? ? 'lucene' : 'dismax'   
         params[:qt] = 'school-search' unless browse?
