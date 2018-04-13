@@ -17,9 +17,13 @@ export default class Map extends React.Component {
   }
 
   createGoogleMap($elem) {
+    let mapCenter = {
+      lat: this.props.lat || 37.77,
+      lon: this.props.lon || -122.419
+    };
     let mapOptions = {
-      center: new this.props.googleMaps.LatLng(37.77,-122.419),
-      zoom: 11,
+      center: new this.props.googleMaps.LatLng(mapCenter.lat,mapCenter.lon),
+      zoom: 12,
       mapTypeId: this.props.googleMaps.MapTypeId.ROADMAP,
       mapTypeControl: false,
       scrollwheel: false,
