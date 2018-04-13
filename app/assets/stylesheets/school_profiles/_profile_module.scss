@@ -213,7 +213,9 @@
   }
 
   .csa-text {
-    padding-top: 15px;
+    @include media-breakpoint-down(md) {
+      padding-top: 15px;
+    }
   }
 
   .icon-flag {
