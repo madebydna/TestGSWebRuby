@@ -1,0 +1,93 @@
+#search-page {
+  $list-and-map-height: 400px;
+  $list-width: 100%;
+  @include media-breakpoint-up(sm) {
+    $list-and-map-height: 650px;
+  }
+  @include media-breakpoint-up(md) {
+    $list-width: 320px;
+  }
+  @include media-breakpoint-up(lg) {
+    $list-width: 475px;
+  }
+
+  .school-list { 
+    float: left;
+    height: $list-and-map-height;
+    width: 100%;
+    background-color: #f6f9fa;
+
+    h3 {
+      margin-top: 0px;
+      padding: 0px 16px;
+    }
+    ol {
+      padding: 0px 0px;
+      height: $list-and-map-height;
+      li {
+        box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.09);
+        background-color: white;
+        padding: 16px 16px;
+        span {
+          display: inline-block;
+        }
+        span ~ span {
+          max-width: $list-width - 150px;
+          @include media-breakpoint-up(sm) {
+            max-width: $list-width - 90px;
+          }
+        }
+        a {
+          font-size: 12px;
+        }
+        a.name {
+          font-size: 14px;
+          font-family: 'opensans-semibold', sans-serif;
+        }
+      }
+    }
+    li + li {
+      margin-top: 7px;
+    }
+    @include media-breakpoint-up(md) {
+      width: $list-width;
+    }
+    @include media-breakpoint-up(lg) {
+      width: $list-width;
+    }
+  }
+
+
+  .map, .school-list {
+    .spinny-wheel-container {
+      overflow: hidden;
+    }
+    @include clearfix;
+    height: $list-and-map-height;
+    .spinny-wheel {
+      background-color: rgba(200,200,200,.5) !important;
+    }
+  }
+
+  .map {
+    float: left;
+    width: 627px;
+  }
+
+  .ad-bar {
+    float: left;
+    width: 160px;
+    height: 600px;
+    margin-left: 20px;
+    background-color: grey;
+  }
+
+  .school-list, .map {
+    // List and map can be hidden completely by tab on mobile. Other selectors have unwanted global styles
+    &.closed {
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
+    }
+  }
+}

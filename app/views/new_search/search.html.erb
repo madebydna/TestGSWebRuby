@@ -3,16 +3,10 @@
     <%= webpack_javascript_include_tag 'search', defer: true %>
 <% end %>
 <% content_for :page_stylesheets do %>
-    <%= stylesheet_link_tag "district-boundaries", async: true %>
+    <%= stylesheet_link_tag "search", async: true %>
 <% end %>
 
-<% props = {
-      lat: @city.try(:lat),
-      lon: @city.try(:lon),
-      schools: @schools,
-} %>
-<div id="district-boundaries-page">
-  <%= react_component('Search', props: props) %>
+<div id="search-page">
+  <%= react_component('Search', props: @props.to_h ) %>
 </div>
-<%= debug props %>
 

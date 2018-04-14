@@ -4,8 +4,21 @@ class NewSearchController < ApplicationController
   layout 'application'
 
   def search
-    @schools = schools
-    @city = City.get_city_by_name_and_state(city, state).first
+    c = City.get_city_by_name_and_state(city, state).first
+    @props = OpenStruct.new.tap do |o|
+      o.city = c.name
+      o.state = state.upcase
+      o.schools = schools
+      o.lat = c.lat
+      o.lon = c.lon
+      o.total = school_search.total
+      o.current_page = school_search.current_page
+      o.offset = school_search.offset
+      o.is_first_page = school_search.first_page?
+      o.is_last_page = school_search.last_page?
+      o.index_of_first_item = school_search.offset + 1
+      o.index_of_last_item = school_search.last_page? ? school_search.total : school_search.offset + school_search.per_page - 1
+    end
   end
 
   private
@@ -17,7 +30,7 @@ class NewSearchController < ApplicationController
   end
 
   def school_search
-    @_school_search ||= SchoolSearch.new(city: city, state: state, q:q)
+    @_school_search ||= SchoolSearch.new(city: city, state: state, q:q, page: page)
   end
 
   def city
@@ -33,13 +46,17 @@ class NewSearchController < ApplicationController
     params[:q]
   end
 
+  def page
+    params[:page] || 1
+  end
+
   def hack_in_school_gs_rating(schools)
-    query = SchoolCacheQuery.new.include_cache_keys(['ratings'])
+    query = SchoolCacheQuery.new.include_cache_keys(['ratings', 'characteristics'])
     schools.each do |school|
       query = query.include_schools(school.state, school.id)
     end
     query_results = query.query
-    school_cache_results = SchoolCacheResults.new(['ratings'], query_results)
+    school_cache_results = SchoolCacheResults.new(['ratings', 'characteristics'], query_results)
     school_cache_results.decorate_schools(schools)
   end
 end

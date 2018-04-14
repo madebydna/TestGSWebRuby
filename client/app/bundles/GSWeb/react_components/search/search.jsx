@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import SpinnyWheel from '../spinny_wheel';
 import * as google_maps from '../../components/map/google_maps';
 import * as google_map_extensions from '../../components/map/google_maps_extensions';
@@ -10,15 +11,24 @@ import Polygon from '../district_boundaries/polygon';
 import ConnectedSearchBar from '../district_boundaries/connected_search_bar';
 import * as markerTypes from '../../components/map/markers';
 import * as polygonTypes from '../../components/map/polygons';
-import SchoolList from '../district_boundaries/school_list';
 import jsxToString from 'jsx-to-string';
+import SchoolList from './school_list'
 
 export default class Search extends React.Component {
   static defaultProps = {
   };
 
   static propTypes = {
-    schools: React.PropTypes.array
+    city: PropTypes.string,
+    state: PropTypes.string,
+    schools: PropTypes.array,
+    total: PropTypes.number,
+    current_page: PropTypes.number,
+    offset: PropTypes.number,
+    is_first_page: PropTypes.number,
+    is_last_page: PropTypes.number,
+    index_of_first_item: PropTypes.number,
+    index_of_last_item: PropTypes.number
   };
 
   constructor(props) {
@@ -150,11 +160,19 @@ export default class Search extends React.Component {
   render() {
     return (
       <div className="district-boundaries-component">
+        <div>
+          <div>{this.props.total} schools found in {this.props.city}, {this.props.state}</div>
+          <div>Showing {this.props.index_of_first_item} to {this.props.index_of_last_item} of {this.props.total} schools</div>
+        </div>
+        <SchoolList schools={this.props.schools} />
+
         <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
           <SpinnyWheel active={this.state.googleMapsInitialized ? false : true}>
             {this.renderMap()}
           </SpinnyWheel>
         </div>
+
+        <div className='ad-bar'>Advertisement</div>
       </div>
     );
   }

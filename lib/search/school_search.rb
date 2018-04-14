@@ -9,17 +9,21 @@ end
 
 
 class SchoolSearch
-  attr_writer :q, :district_id, :city
-  attr_reader :q, :district_id, :city, :state
+  attr_writer :q, :district_id, :city, :page
+  attr_reader :q, :district_id, :city, :page, :state
 
   extend Forwardable
   def_delegators :response, :results, :total
+  def_delegators :results, :current_page, :total_pages, :per_page, :first_page?, :last_page?, :prev_page?, :next_page?, :offset, :out_of_bounds
 
-  def initialize(city:nil, state:nil, q:nil, district_id:nil)
+    # :offset, :current_page, :total_pages, :per_page, :limit_value, :first_page?, :prev_page, :last_page?, :next_page, :total_count, :offset_value, :num_pages, :total_entries, :total_entries=, :total_count=, :previous_page, :out_of_bounds?, 
+
+  def initialize(city:nil, state:nil, q:nil, district_id:nil, page:1)
     self.city = city
     self.state = state
     self.district_id = district_id
     self.q = q
+    self.page = page
   end
 
   def response
@@ -55,6 +59,7 @@ class SchoolSearch
       # Must reference accessor methods, not instance variables!
       search.keywords(q || default_query_string)
       search.with(:citykeyword, city) if city
+      search.paginate page: page, per_page: 25
       search.adjust_solr_params do |params|
         params[:defType] = browse? ? 'lucene' : 'dismax'   
         params[:qt] = 'school-search' unless browse?

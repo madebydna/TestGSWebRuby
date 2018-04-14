@@ -10,6 +10,7 @@ class Api::SchoolSerializer
 
   def to_hash
     rating = school.great_schools_rating if defined? school.great_schools_rating || school.respond_to?(great_schools_rating)
+    enrollment = school.students_enrolled if defined? school.students_enrolled || school.respond_to?(students_enrolled)
     h = {
       id: school.id,
       districtId: school.district_id,
@@ -33,6 +34,9 @@ class Api::SchoolSerializer
         profile: school_path(school)
       }
     }
+    if enrollment
+      h[:enrollment] = enrollment
+    end
     if school.respond_to?(:boundaries)
       h[:boundaries] = school.boundaries
     end
