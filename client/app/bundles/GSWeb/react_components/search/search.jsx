@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Provider } from 'react-redux';
 import SpinnyWheel from '../spinny_wheel';
 import * as google_maps from '../../components/map/google_maps';
 import * as google_map_extensions from '../../components/map/google_maps_extensions';
@@ -13,8 +15,9 @@ import * as markerTypes from '../../components/map/markers';
 import * as polygonTypes from '../../components/map/polygons';
 import jsxToString from 'jsx-to-string';
 import SchoolList from './school_list'
+import { getSchools } from 'reducers/search_reducer';
 
-export default class Search extends React.Component {
+class Search extends React.Component {
   static defaultProps = {
   };
 
@@ -182,3 +185,31 @@ export default class Search extends React.Component {
     );
   }
 }
+
+let ConnectedSearch = connect(
+  function(state, ownProps) {
+    state = state.search;
+    return {
+      schools: getSchools(state),
+      city: state.city,
+      state: state.state,
+      total: state.total,
+      current_page: state.current_page,
+      offset: state.offset,
+      is_first_page: state.is_first_page,
+      is_last_page: state.is_last_page,
+      index_of_first_item: state.index_of_first_item,
+      index_of_last_item: state.index_of_last_item,
+      result_summary: state.result_summary,
+      pagination_summary: state.pagination_summary
+    };
+  },
+)(Search);
+
+export default function() {
+  return (
+    <Provider store={window.store}>
+      <ConnectedSearch />
+    </Provider>
+  );
+};

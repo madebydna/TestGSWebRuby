@@ -5,7 +5,7 @@ class NewSearchController < ApplicationController
 
   def search
     c = City.get_city_by_name_and_state(city, state).first
-    @props = OpenStruct.new.tap do |o|
+    props = OpenStruct.new.tap do |o|
       o.city = c.name
       o.state = state.upcase
       o.schools = schools
@@ -21,6 +21,7 @@ class NewSearchController < ApplicationController
       o.result_summary = school_search.result_summary
       o.pagination_summary = school_search.pagination_summary
     end
+    gon.search = props.to_h
   end
 
   private
