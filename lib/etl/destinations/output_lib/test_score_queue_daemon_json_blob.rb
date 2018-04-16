@@ -31,7 +31,7 @@ class TestScoreQueueDaemonJsonBlob
         entity_level: @row[:entity_level],
         school_id: school_id,
         district_id: district_id,
-        data_type_id: @row[:test_data_type_id],
+        data_type_id: @row[:gsdata_test_data_type_id],
         proficiency_band_id: @row[:proficiency_band_gsdata_id],
         cohort_count: @row[:number_tested],
         grade: @row[:grade],
