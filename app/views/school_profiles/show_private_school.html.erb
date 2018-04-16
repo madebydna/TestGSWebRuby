@@ -18,6 +18,8 @@
           mailto: @private_school_profile.mailto,
           claimed: @private_school_profile.claimed %>
       </div>
+        <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
+                 width: 320, height: 50, css_class: 'hidden-xs hidden-sm', id_counter: 1 %>
       <div>
         <div id="js-ctaShow"></div>
       </div>
@@ -40,7 +42,7 @@
         </div>
       </div>
       <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
-                 width: 320, height: 50, css_class: 'mbl' %>
+                   width: 320, height: 50, css_class: 'hidden-md hidden-lg', id_counter: 2 %>
       <div class="profile-section">
         <div class="row">
           <div class="col-xs-12 col-lg-3">
