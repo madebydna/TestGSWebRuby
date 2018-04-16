@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 // import { getSchool, getSchools } from '../../reducers/district_boundaries_reducer';
 // import DistrictBoundariesLegend from './district_boundaries_legend';
 import SpinnyWheel from '../spinny_wheel';
+import { capitalize } from 'util/i18n';
 
 class SchoolList extends React.Component {
   static defaultProps = {
@@ -62,7 +63,7 @@ class SchoolList extends React.Component {
           <a href={school.links.profile} className="name" target="_blank">{school.name}</a>
           <br/>
           <div>{school.address.street1}, {school.address.city}, {school.state}, {school.address.zip}</div>
-          <div>{school.schoolType}, {school.gradeLevels} | {school.enrollment}</div>
+          <div>{capitalize(school.schoolType)}, {school.gradeLevels} | {school.enrollment} students</div>
           <div className="icon active icon-house"> <a href={this.homesForSaleHref(school)} target="_blank">Homes for sale</a></div>
         </span>
       </li>

@@ -16,8 +16,10 @@ class NewSearchController < ApplicationController
       o.offset = school_search.offset
       o.is_first_page = school_search.first_page?
       o.is_last_page = school_search.last_page?
-      o.index_of_first_item = school_search.offset + 1
-      o.index_of_last_item = school_search.last_page? ? school_search.total : school_search.offset + school_search.per_page - 1
+      o.index_of_first_result = school_search.index_of_first_result
+      o.index_of_last_result = school_search.index_of_last_result
+      o.result_summary = school_search.result_summary
+      o.pagination_summary = school_search.pagination_summary
     end
   end
 
@@ -34,7 +36,7 @@ class NewSearchController < ApplicationController
   end
 
   def city
-    params[:city].try(:gsub, '-', ' ')
+    params[:city].try(:gsub, '-', ' ').gs_capitalize_words
   end
 
   def state

@@ -9,8 +9,8 @@ class Api::SchoolSerializer
   end
 
   def to_hash
-    rating = school.great_schools_rating if defined? school.great_schools_rating || school.respond_to?(great_schools_rating)
-    enrollment = school.students_enrolled if defined? school.students_enrolled || school.respond_to?(students_enrolled)
+    rating = school.great_schools_rating if defined? school.great_schools_rating || school.respond_to?(:great_schools_rating)
+    enrollment = school.students_enrolled if school.respond_to?(:students_enrolled) || school.singleton_class.method_defined?(:students_enrolled)
     h = {
       id: school.id,
       districtId: school.district_id,

@@ -28,7 +28,9 @@ export default class Search extends React.Component {
     is_first_page: PropTypes.number,
     is_last_page: PropTypes.number,
     index_of_first_item: PropTypes.number,
-    index_of_last_item: PropTypes.number
+    index_of_last_item: PropTypes.number,
+    result_summary: PropTypes.string,
+    pagination_summary: PropTypes.string
   };
 
   constructor(props) {
@@ -159,20 +161,23 @@ export default class Search extends React.Component {
 
   render() {
     return (
-      <div className="district-boundaries-component">
-        <div>
-          <div>{this.props.total} schools found in {this.props.city}, {this.props.state}</div>
-          <div>Showing {this.props.index_of_first_item} to {this.props.index_of_last_item} of {this.props.total} schools</div>
+      <div className="search-component">
+        <h3>
+          <div>{this.props.result_summary}</div>
+          <div>{this.props.pagination_summary}</div>
+        </h3>
+        <div className="right-rail">
+          <div className='ad-bar'>Advertisement</div>
         </div>
-        <SchoolList schools={this.props.schools} />
+        <div className="list-and-map">
+          <SchoolList schools={this.props.schools} />
 
-        <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
-          <SpinnyWheel active={this.state.googleMapsInitialized ? false : true}>
-            {this.renderMap()}
-          </SpinnyWheel>
+          <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
+            <SpinnyWheel active={this.state.googleMapsInitialized ? false : true}>
+              {this.renderMap()}
+            </SpinnyWheel>
+          </div>
         </div>
-
-        <div className='ad-bar'>Advertisement</div>
       </div>
     );
   }
