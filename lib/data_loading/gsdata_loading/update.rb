@@ -14,8 +14,8 @@ class GsdataLoading::Update
       'properties' => {
           'state' => {'type' => 'string'},
           'data_type_id' => {'type' => 'integer'},
-          'school_id' => {'type' => ['integer', nil]},
-          'district_id' => {'type' => ['integer', nil]},
+          'school_id' => {'type' => ['string', nil]},
+          'district_id' => {'type' => ['string', nil]},
           'cohort_count' => {'type' => 'string'},
           'active' => {'type' => 'integer'},
           'grade' => {'type' => 'string'},
