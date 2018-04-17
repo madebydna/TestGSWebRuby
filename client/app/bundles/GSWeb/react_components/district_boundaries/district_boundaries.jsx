@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import SpinnyWheel from '../spinny_wheel';
 import * as google_maps from '../../components/map/google_maps';
 import * as google_map_extensions from '../../components/map/google_maps_extensions';

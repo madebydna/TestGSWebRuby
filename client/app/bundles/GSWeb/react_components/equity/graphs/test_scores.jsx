@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import TestScoreBarGraphWithGrades from './test_score_bar_graph_with_grades';
 import { uniq } from 'lodash';
 

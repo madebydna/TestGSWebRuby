@@ -1,18 +1,19 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class NearbySchool extends React.Component {
 
   static propTypes = {
-    GSRating: React.PropTypes.number,
-    averageRating: React.PropTypes.number,
-    schoolName: React.PropTypes.string,
-    schoolType: React.PropTypes.string,
-    gradeRange: React.PropTypes.string,
-    city: React.PropTypes.string,
-    state: React.PropTypes.string,
-    distance: React.PropTypes.number,
-    schoolUrl: React.PropTypes.string,
-    nearbySchoolsType: React.PropTypes.string
+    GSRating: PropTypes.number,
+    averageRating: PropTypes.number,
+    schoolName: PropTypes.string,
+    schoolType: PropTypes.string,
+    gradeRange: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    distance: PropTypes.number,
+    schoolUrl: PropTypes.string,
+    nearbySchoolsType: PropTypes.string
   }
 
   constructor(props) {

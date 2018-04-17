@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 
 export default class Map extends React.Component {
   static propTypes = {
-    googleMaps: React.PropTypes.object.isRequired,
-    markers: React.PropTypes.array
+    googleMaps: PropTypes.object.isRequired,
+    markers: PropTypes.array
   }
   
   static defaultProps = {

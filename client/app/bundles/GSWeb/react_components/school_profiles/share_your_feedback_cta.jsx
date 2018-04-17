@@ -30,7 +30,7 @@ const ShareYourFeedbackCta = ({questionText, buttonClicked, buttonText}) => {
   );
 };
 
-ShareYourFeedbackCta.PropTypes = {
+ShareYourFeedbackCta.propTypes = {
   questionText: PropTypes.string.isRequired,
   buttonClicked: PropTypes.func.isRequired,
   buttonText: PropTypes.string

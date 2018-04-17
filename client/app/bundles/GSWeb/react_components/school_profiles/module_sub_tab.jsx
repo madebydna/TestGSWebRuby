@@ -20,7 +20,7 @@ const ModuleSubTab = ({title, google_tracking=title, flagged = false, highlight 
   )
 };
 
-ModuleSubTab.PropTypes = {
+ModuleSubTab.propTypes = {
   title: PropTypes.string.isRequired,
   google_tracking: PropTypes.string.isRequired,
   flagged: PropTypes.bool,

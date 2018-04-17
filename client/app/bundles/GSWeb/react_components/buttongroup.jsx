@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class ButtonGroup extends React.Component {
   static propTypes = {
-    options: React.PropTypes.object.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
-    activeOption: React.PropTypes.string
+    options: PropTypes.object.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    activeOption: PropTypes.string
   }
 
   constructor(props) {

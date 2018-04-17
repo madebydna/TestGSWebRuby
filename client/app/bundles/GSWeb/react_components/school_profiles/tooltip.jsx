@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Tooltip = ({className='', content, children, element_type}) => {
   if (typeof element_type === 'undefined') { element_type = 'missed tooltip - '}
@@ -14,8 +15,8 @@ const Tooltip = ({className='', content, children, element_type}) => {
   );
 };
 
-Tooltip.PropTypes = {
-  content: React.PropTypes.string.isRequired
+Tooltip.propTypes = {
+  content: PropTypes.string.isRequired
 }
 
 export default Tooltip;

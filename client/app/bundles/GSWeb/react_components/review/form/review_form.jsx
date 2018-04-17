@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import FiveStarQuestionCTA from './five_star_question_cta';
 import Questions from './questions';
 import SpinnyWheel from '../../spinny_wheel';
@@ -13,17 +14,17 @@ import { postReview } from 'api_clients/reviews';
 export default class ReviewForm extends React.Component {
 
   static propTypes = {
-    state: React.PropTypes.string.isRequired,
-    schoolId: React.PropTypes.number.isRequired,
-    questions: React.PropTypes.arrayOf(React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      title: React.PropTypes.string.isRequired,
-      layout: React.PropTypes.string.isRequired,
-      response_values: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-      response_labels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+    state: PropTypes.string.isRequired,
+    schoolId: PropTypes.number.isRequired,
+    questions: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      layout: PropTypes.string.isRequired,
+      response_values: PropTypes.arrayOf(PropTypes.string).isRequired,
+      response_labels: PropTypes.arrayOf(PropTypes.string).isRequired
     })).isRequired,
-    handleReviewSubmitMessage: React.PropTypes.func.isRequired,
-    handleUpdateOfReviews: React.PropTypes.func.isRequired
+    handleReviewSubmitMessage: PropTypes.func.isRequired,
+    handleUpdateOfReviews: PropTypes.func.isRequired
   };
 
   constructor(props) {

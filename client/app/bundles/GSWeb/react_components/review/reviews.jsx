@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReviewsList from './reviews_list';
 import ReviewForm from './form/review_form';
 import { t } from '../../util/i18n';
@@ -10,18 +11,18 @@ import { fetchReviews } from '../../api_clients/reviews';
 export default class Reviews extends React.Component {
 
   static propTypes = {
-    reviews: React.PropTypes.arrayOf(React.PropTypes.shape({
-      five_star_review: React.PropTypes.object,
-      user_review_digest: React.PropTypes.string,
-      topical_reviews: React.PropTypes.array,
-      most_recent_date: React.PropTypes.string,
-      user_type_label: React.PropTypes.string,
-      avatar: React.PropTypes.number,
-      reviewSubmitMessage: React.PropTypes.object
+    reviews: PropTypes.arrayOf(PropTypes.shape({
+      five_star_review: PropTypes.object,
+      user_review_digest: PropTypes.string,
+      topical_reviews: PropTypes.array,
+      most_recent_date: PropTypes.string,
+      user_type_label: PropTypes.string,
+      avatar: PropTypes.number,
+      reviewSubmitMessage: PropTypes.object
     })),
-    state: React.PropTypes.string,
-    schoolId: React.PropTypes.number,
-    questions: React.PropTypes.arrayOf(React.PropTypes.object)
+    state: PropTypes.string,
+    schoolId: PropTypes.number,
+    questions: PropTypes.arrayOf(PropTypes.object)
   };
 
   constructor(props) {

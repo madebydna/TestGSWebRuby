@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Rating extends React.Component {
 
   static propTypes = {
-    score: React.PropTypes.number.isRequired,
+    score: PropTypes.number.isRequired,
   }
 
   constructor(props) {

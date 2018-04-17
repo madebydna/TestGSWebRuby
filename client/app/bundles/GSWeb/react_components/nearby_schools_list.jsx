@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import NearbySchool from './nearby_school';
 import SpinnyWheel from './spinny_wheel';
 import { t } from '../util/i18n';
@@ -6,15 +7,15 @@ import { t } from '../util/i18n';
 class NearbySchoolsList extends React.Component {
 
   static propTypes = {
-    visible: React.PropTypes.bool.isRequired,
-    school: React.PropTypes.shape({
-      state: React.PropTypes.string,
-      id: React.PropTypes.number
+    visible: PropTypes.bool.isRequired,
+    school: PropTypes.shape({
+      state: PropTypes.string,
+      id: PropTypes.number
     }).isRequired,
-    schools: React.PropTypes.array,
-    allSchoolsLoaded: React.PropTypes.bool.isRequired,
-    nearbySchoolsType: React.PropTypes.string.isRequired,
-    getSchools: React.PropTypes.func.isRequired
+    schools: PropTypes.array,
+    allSchoolsLoaded: PropTypes.bool.isRequired,
+    nearbySchoolsType: PropTypes.string.isRequired,
+    getSchools: PropTypes.func.isRequired
   };
 
   constructor(props) {

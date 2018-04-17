@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import SectionNavigation from './equity/tabs/section_navigation';
 import ResponseData from './response_data.jsx';
 import InfoCircle from './info_circle';
@@ -24,7 +25,7 @@ export default class OspSchoolInfo extends React.Component {
         response_value: PropTypes.arrayOf(PropTypes.string).isRequired
       })).isRequired
     })).isRequired,
-    sources: Sources.PropTypes.sources,
+    sources: Sources.propTypes.sources,
     qualaroo_module_link: PropTypes.string,
     is_claimed: PropTypes.bool.isRequired,
     has_osp_classes: PropTypes.bool.isRequired,

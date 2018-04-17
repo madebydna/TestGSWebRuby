@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { setVisibilityCallback } from '../util/visibility_hooks';
 import {
   fetchHomesAndRentals,
@@ -15,11 +16,11 @@ import { t } from '../util/i18n';
 export default class HomesAndRentals extends React.Component {
 
   static propTypes = {
-    city: React.PropTypes.string.isRequired,
-    state: React.PropTypes.string.isRequired,
-    zip: React.PropTypes.string.isRequired,
-    schoolName: React.PropTypes.string.isRequired,
-    domId: React.PropTypes.string
+    city: PropTypes.string.isRequired,
+    state: PropTypes.string.isRequired,
+    zip: PropTypes.string.isRequired,
+    schoolName: PropTypes.string.isRequired,
+    domId: PropTypes.string
   };
 
   static defaultProps = {

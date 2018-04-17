@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 const AnchorButton = ({className='', children, ...otherLinkAttributes}) => {
   return <a className={'anchor-button ' + className}
