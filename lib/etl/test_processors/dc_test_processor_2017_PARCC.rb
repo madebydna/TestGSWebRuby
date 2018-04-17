@@ -111,7 +111,8 @@ class DCTestProcessor2017PARCC < GS::ETL::TestProcessor
     end
     .transform('Fill missing default fields', Fill, {
       test_data_type: 'parcc',
-      test_data_type_id: 248, 
+      test_data_type_id: 248,
+      gsdata_test_data_type_id: 213, 
       entity_type: 'public_charter',
       level_code: 'e,m,h',
       year: 2017
