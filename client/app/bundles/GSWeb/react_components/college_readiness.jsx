@@ -67,11 +67,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
             <img src={require('school_profiles/csa-badge-module.png')} />
           </div>
           <div className="col-xs-12 col-sm-8 csa-text">
-            <span>
-              This school has earned a College Success Award based on its success in preparing students for college and
-              ultimately career. The College Success Awards recognize public high schools that stand out in ​getting
-              students enrolled in - and staying with - college. Learn more.
-            </span>
+            <span dangerouslySetInnerHTML={{__html: badge}} />
           </div>
         </div>
       </div>

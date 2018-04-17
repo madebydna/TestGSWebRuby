@@ -6,8 +6,7 @@ import { map } from 'lodash';
 export default class SectionNavigation extends React.Component {
   static propTypes = {
     active: PropTypes.number,
-    onTabClick: PropTypes.func,
-    csa_badge: PropTypes.bool
+    onTabClick: PropTypes.func
   };
 
   static defaultProps = {

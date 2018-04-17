@@ -166,10 +166,17 @@ module SchoolProfiles
       hash = {
           title: I18n.t('title', scope: component.scope),
           anchor: component.tab.capitalize,
-          data: component.college_data_array,
-          csa_badge: component.csa_badge?
+          data: component.college_data_array
       }
-      hash.delete_if { |k, _| k == :csa_badge && hash[:anchor] != 'College_success' }
+      hash.merge!(csa_props(component)) if component.tab == 'college_success' && component.csa_badge?
+      hash
+    end
+
+    def csa_props(component)
+      return nil unless component.csa_badge?
+      {
+        csa_badge: I18n.t(:csa_badge_html, scope: 'lib.college_readiness').html_safe
+      }
     end
 
     def components
@@ -186,8 +193,8 @@ module SchoolProfiles
       @_props ||= components.map {|component| get_props(component)}.reject(&:empty?)
     end
 
-    def csa_badge?
-      @_csa_badge ||= school_cache_data_reader.csa_badge?
+    def school_csa_badge?
+      school_cache_data_reader.csa_badge?
     end
 
     private

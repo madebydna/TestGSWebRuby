@@ -47,15 +47,14 @@ export default class SchoolProfileComponent extends React.Component {
       })),
       title: PropTypes.string,
       flagged: PropTypes.bool,
-      csa_badge: PropTypes.bool
+      csa_badge: PropTypes.string
     })),
     analytics_id: PropTypes.string,
     showTabs: PropTypes.bool,
     faq: PropTypes.shape({
       cta: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-      element_type: PropTypes.string.isRequired,
-      csa_badge: PropTypes.bool
+      element_type: PropTypes.string.isRequired
     }),
     feedback: PropTypes.object,
     qualaroo_module_link: PropTypes.string,

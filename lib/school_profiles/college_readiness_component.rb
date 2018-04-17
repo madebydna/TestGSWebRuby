@@ -185,7 +185,7 @@ module SchoolProfiles
       end
 
       def csa_badge?
-        @_csa_badge ||= school_cache_data_reader.csa_badge?
+        school_cache_data_reader.csa_badge?
       end
 
       def narration

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ModuleTab = ({title, google_tracking=title, flagged = false, badge = false, highlight = false, anchorLink='', onClick}) => {
+const ModuleTab = ({title, google_tracking=title, flagged = false, badge = null, highlight = false, anchorLink='', onClick}) => {
   let addJSHashUpdate = '';
   if(anchorLink.length > 0){
     addJSHashUpdate = ' js-updateLocationHash';
@@ -25,7 +25,7 @@ ModuleTab.PropTypes = {
   title: PropTypes.string.isRequired,
   google_tracking: PropTypes.string.isRequired,
   flagged: PropTypes.bool,
-  badge: PropTypes.bool,
+  badge: PropTypes.string,
   anchorLink: PropTypes.string,
   onClick: PropTypes.func
 }
