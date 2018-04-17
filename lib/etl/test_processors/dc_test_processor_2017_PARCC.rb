@@ -142,7 +142,8 @@ class DCTestProcessor2017PARCC < GS::ETL::TestProcessor
       if row[:entity_level]=='school' 
           row[:state_id] = row[:school_id]
       elsif row[:entity_level]=='district'
-          row[:state_id] = row[:district_id].rjust(3,'0')
+          row[:district_id] = row[:district_id].rjust(3,'0')
+          row[:state_id] = row[:district_id]
       end
       row
     end
