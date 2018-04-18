@@ -50,8 +50,6 @@
   },
   "devDependencies": {
     "asset-map-webpack-plugin": "^2.0.0",
-    "babel-core": "^6.25.0",
-    "babel-loader": "^6.4.1",
     "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.24.0",
@@ -60,7 +58,6 @@
     "babel-preset-stage-0": "^6.22.0",
     "chai": "^3.5.0",
     "enzyme": "^2.6.0",
-    "expose-loader": "^0.7.3",
     "file-loader": "^0.10.1",
     "jsdom": "^9.9.1",
     "lodash-webpack-plugin": "^0.11.4",
