@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 export default function(WrappedComponent, domEvent) {
-  return React.createClass({
+  return createReactClass({
     sendAnalyticsEvent: function() {
       if(this.props.gaLabel && this.props.gaLabel != '') {
         analyticsEvent(this.props.gaCategory, this.props.gaAction, this.props.gaLabel);
@@ -9,9 +11,9 @@ export default function(WrappedComponent, domEvent) {
     },
 
     propTypes: {
-      gaCategory: React.PropTypes.string,
-      gaAction: React.PropTypes.string,
-      gaLabel: React.PropTypes.string
+      gaCategory: PropTypes.string,
+      gaAction: PropTypes.string,
+      gaLabel: PropTypes.string
     },
 
     getDefaultProps: function() {

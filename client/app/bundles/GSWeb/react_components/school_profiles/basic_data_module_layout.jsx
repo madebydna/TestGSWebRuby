@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { t } from '../../util/i18n';
 
 const BasicDataModuleLayout = ({
@@ -45,16 +46,16 @@ const BasicDataModuleLayout = ({
   );
 };
 
-BasicDataModuleLayout.PropTypes = {
-  className: React.PropTypes.string,
-  sharing_modal: React.PropTypes.node,
-  icon: React.PropTypes.object,
-  title: React.PropTypes.object,
-  titleTooltip: React.PropTypes.object,
-  subtitle: React.PropTypes.object,
-  body: React.PropTypes.object,
-  feedback: React.PropTypes.object,
-  footer: React.PropTypes.object
+BasicDataModuleLayout.propTypes = {
+  className: PropTypes.string,
+  sharing_modal: PropTypes.node,
+  icon: PropTypes.object,
+  title: PropTypes.object,
+  titleTooltip: PropTypes.object,
+  subtitle: PropTypes.object,
+  body: PropTypes.object,
+  feedback: PropTypes.object,
+  footer: PropTypes.object
 }
 
 export default BasicDataModuleLayout;

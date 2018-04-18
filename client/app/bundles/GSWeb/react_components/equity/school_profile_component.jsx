@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import BarGraphBase from './graphs/bar_graph_base';
 import TestScores from './graphs/test_scores';
 import PersonBar from '../visualizations/person_bar';

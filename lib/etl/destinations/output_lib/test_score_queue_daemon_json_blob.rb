@@ -18,11 +18,11 @@ class TestScoreQueueDaemonJsonBlob
     school_id = @row[:school_id]
     if district_id == "state" || district_id.nil?
       district_id = nil
-    else district_id = district_id.to_i
+    else district_id = district_id.to_s
     end
     if school_id == "state" || school_id == "district" || school_id.nil?
       school_id = nil
-    else school_id = school_id.to_i
+    else school_id = school_id.to_s
     end
     [
       {
@@ -31,7 +31,7 @@ class TestScoreQueueDaemonJsonBlob
         entity_level: @row[:entity_level],
         school_id: school_id,
         district_id: district_id,
-        data_type_id: @row[:test_data_type_id],
+        data_type_id: @row[:gsdata_test_data_type_id],
         proficiency_band_id: @row[:proficiency_band_gsdata_id],
         cohort_count: @row[:number_tested],
         grade: @row[:grade],

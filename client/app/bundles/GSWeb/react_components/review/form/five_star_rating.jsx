@@ -1,13 +1,14 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class FiveStarRating extends React.Component {
 
   static propTypes = {
-    value: React.PropTypes.number,
-    responseValues: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    responseLabels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    questionId: React.PropTypes.number.isRequired,
-    onClick: React.PropTypes.func.isRequired
+    value: PropTypes.number,
+    responseValues: PropTypes.arrayOf(PropTypes.string).isRequired,
+    responseLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+    questionId: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired
   };
 
   constructor(props) {

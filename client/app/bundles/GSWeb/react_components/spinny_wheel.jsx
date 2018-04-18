@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class SpinnyWheel extends React.Component {
 
@@ -7,7 +8,7 @@ export default class SpinnyWheel extends React.Component {
   }
 
   static propTypes = {
-    backgroundPosition: React.PropTypes.string
+    backgroundPosition: PropTypes.string
   }
 
   constructor(props) {

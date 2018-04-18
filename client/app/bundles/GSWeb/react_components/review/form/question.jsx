@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import TextArea from './text_area';
 import { t } from '../../../util/i18n';
@@ -6,14 +7,14 @@ import { t } from '../../../util/i18n';
 export default class Question extends React.Component {
 
   static propTypes = {
-    id: React.PropTypes.number.isRequired,
-    questionCounter: React.PropTypes.number.isRequired,
-    title: React.PropTypes.string.isRequired,
-    subtext: React.PropTypes.string,
-    layout: React.PropTypes.object.isRequired,
-    shouldDisplayTextArea: React.PropTypes.bool,
-    textValueChanged: React.PropTypes.func,
-    errorMessage: React.PropTypes.string
+    id: PropTypes.number.isRequired,
+    questionCounter: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    subtext: PropTypes.string,
+    layout: PropTypes.object.isRequired,
+    shouldDisplayTextArea: PropTypes.bool,
+    textValueChanged: PropTypes.func,
+    errorMessage: PropTypes.string
   };
 
   constructor(props) {

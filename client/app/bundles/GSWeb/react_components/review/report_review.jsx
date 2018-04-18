@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import SpinnyWheel from '../spinny_wheel';
 import { isSignedIn } from '../../util/session';
 import modalManager from '../../components/modals/manager';
@@ -6,10 +7,10 @@ import modalManager from '../../components/modals/manager';
 export default class ReportReview extends React.Component {
 
   static propTypes = {
-    review: React.PropTypes.object.isRequired,
-    open: React.PropTypes.bool,
-    cancelCallback: React.PropTypes.func.isRequired,
-    reportedCallback: React.PropTypes.func.isRequired
+    review: PropTypes.object.isRequired,
+    open: PropTypes.bool,
+    cancelCallback: PropTypes.func.isRequired,
+    reportedCallback: PropTypes.func.isRequired
   };
 
   constructor(props) {

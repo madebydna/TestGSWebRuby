@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import jsxToString from 'jsx-to-string';
 
 export default function createInfoWindow(entity) {

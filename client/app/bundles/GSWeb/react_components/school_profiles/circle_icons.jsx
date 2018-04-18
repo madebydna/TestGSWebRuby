@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const CircleIcon = ({icon}) => {
   let iconClass = 'icon-' + icon;
@@ -7,8 +8,8 @@ const CircleIcon = ({icon}) => {
     <span className={iconClass}></span>
   </div>
 };
-CircleIcon.PropTypes = {
-  icon: React.PropTypes.string
+CircleIcon.propTypes = {
+  icon: PropTypes.string
 };
 export default CircleIcon;
 

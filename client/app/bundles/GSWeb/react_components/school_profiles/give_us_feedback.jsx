@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { t } from '../../util/i18n';
 import { qualarooLink } from 'util/qualaroo';
 
@@ -19,8 +20,8 @@ const GiveUsFeedback = ({className='', content, module=null, divider=true, child
   );
 };
 
-GiveUsFeedback.PropTypes = {
-  content: React.PropTypes.string.isRequired
+GiveUsFeedback.propTypes = {
+  content: PropTypes.string.isRequired
 }
 
 export default GiveUsFeedback;

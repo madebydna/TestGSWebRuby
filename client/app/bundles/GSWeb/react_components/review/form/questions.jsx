@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Question from './question';
 import FiveStarRating from './five_star_rating';
 import SelectBoxes from './select_boxes';
@@ -8,17 +9,17 @@ import { t } from '../../../util/i18n';
 export default class Questions extends React.Component {
 
   static propTypes = {
-    questions: React.PropTypes.arrayOf(React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      title: React.PropTypes.string.isRequired,
-      layout: React.PropTypes.string.isRequired,
-      response_values: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-      response_labels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+    questions: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      layout: PropTypes.string.isRequired,
+      response_values: PropTypes.arrayOf(PropTypes.string).isRequired,
+      response_labels: PropTypes.arrayOf(PropTypes.string).isRequired
     })).isRequired,
-    selectedResponses: React.PropTypes.object.isRequired,
-    responseSelected: React.PropTypes.func.isRequired,
-    errorMessages: React.PropTypes.object.isRequired,
-    textValueChanged: React.PropTypes.func
+    selectedResponses: PropTypes.object.isRequired,
+    responseSelected: PropTypes.func.isRequired,
+    errorMessages: PropTypes.object.isRequired,
+    textValueChanged: PropTypes.func
   };
 
   constructor(props) {

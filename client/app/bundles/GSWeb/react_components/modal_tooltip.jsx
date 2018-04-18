@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withAnalyticsTracking from 'util/with_analytics_tracking';
 
 class ModalTooltip extends React.Component {
   static propTypes = {
-    content: React.PropTypes.element,
-    className: React.PropTypes.string
+    content: PropTypes.element,
+    className: PropTypes.string
   }
 
   constructor(props) {

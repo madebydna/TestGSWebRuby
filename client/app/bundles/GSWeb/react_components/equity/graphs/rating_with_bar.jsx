@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Rating from './rating';
 import SingleBarViz from './single_bar_viz';
 

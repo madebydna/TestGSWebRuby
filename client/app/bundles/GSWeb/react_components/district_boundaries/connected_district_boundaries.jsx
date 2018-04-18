@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DistrictBoundaries from './district_boundaries';
 import { Provider } from 'react-redux';

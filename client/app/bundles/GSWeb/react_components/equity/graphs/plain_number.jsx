@@ -1,15 +1,16 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class PlainNumber extends React.Component {
   static propTypes = {
-    values: React.PropTypes.arrayOf(React.PropTypes.shape({
-      breakdown: React.PropTypes.string.isRequired,
-      score: React.PropTypes.number.isRequired,
-      percentage: React.PropTypes.string,
-      display_percentages: React.PropTypes.bool,
-      number_students_tested: React.PropTypes.string,
-      state_average: React.PropTypes.number,
-      precision: React.PropTypes.number
+    values: PropTypes.arrayOf(PropTypes.shape({
+      breakdown: PropTypes.string.isRequired,
+      score: PropTypes.number.isRequired,
+      percentage: PropTypes.string,
+      display_percentages: PropTypes.bool,
+      number_students_tested: PropTypes.string,
+      state_average: PropTypes.number,
+      precision: PropTypes.number
     })).isRequired
    };
 

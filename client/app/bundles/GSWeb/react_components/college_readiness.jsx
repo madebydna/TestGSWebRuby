@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import SchoolProfileComponent from 'react_components/equity/school_profile_component';
 import EquityContentPane from 'react_components/equity/equity_content_pane';
 import InfoTextAndCircle from 'react_components/info_text_and_circle';

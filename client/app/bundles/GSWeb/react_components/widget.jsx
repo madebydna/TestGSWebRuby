@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import SpinnyWheel from './spinny_wheel';
 import { geocode } from '../components/geocoding';
 import * as google_maps from '../components/map/google_maps';

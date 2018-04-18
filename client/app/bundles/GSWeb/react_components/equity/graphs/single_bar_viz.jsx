@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class SingleBarViz extends React.Component {
 
   static propTypes = {
-    score: React.PropTypes.number.isRequired,
-    state_average: React.PropTypes.number,
-    lower_range: React.PropTypes.number,
-    upper_range: React.PropTypes.number
+    score: PropTypes.number.isRequired,
+    state_average: PropTypes.number,
+    lower_range: PropTypes.number,
+    upper_range: PropTypes.number
   }
 
   constructor(props) {

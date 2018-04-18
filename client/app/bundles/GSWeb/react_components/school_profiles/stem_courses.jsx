@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import BasicDataModuleLayout from './basic_data_module_layout';
 import { MicroscopeCircleIcon } from './circle_icons';
 import Tooltip from './tooltip';
@@ -89,8 +90,8 @@ const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqCo
   </div>
 };
 
-StemModule.PropTypes = {
-  className: React.PropTypes.string
+StemModule.propTypes = {
+  className: PropTypes.string
 }
 
 export default StemModule;

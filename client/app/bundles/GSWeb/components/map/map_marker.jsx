@@ -1,18 +1,19 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import createMarkerFactory from '../../components/map/markers';
 import DefaultMapMarker from './default_map_marker';
 
 export default class MapMarker extends DefaultMapMarker {
   static propTypes = {
-    googleMaps: React.PropTypes.object,
-    map: React.PropTypes.object,
-    type: React.PropTypes.string.isRequired,
-    title: React.PropTypes.string.isRequired,
-    lat: React.PropTypes.number.isRequired,
-    lon: React.PropTypes.number.isRequired,
-    rating: React.PropTypes.string,
-    onClick: React.PropTypes.func,
-    selected: React.PropTypes.bool
+    googleMaps: PropTypes.object,
+    map: PropTypes.object,
+    type: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    lat: PropTypes.number.isRequired,
+    lon: PropTypes.number.isRequired,
+    rating: PropTypes.string,
+    onClick: PropTypes.func,
+    selected: PropTypes.bool
   };
 
   constructor(props) {

@@ -21,7 +21,7 @@ const ShareYourFeedbackCollegeReadiness = ({questionText, buttonClicked, buttonT
   );
 };
 
-ShareYourFeedbackCollegeReadiness.PropTypes = {
+ShareYourFeedbackCollegeReadiness.propTypes = {
   questionText: PropTypes.string.isRequired,
   buttonClicked: PropTypes.func.isRequired,
   buttonText: PropTypes.string.isRequired

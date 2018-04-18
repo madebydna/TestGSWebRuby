@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import CourseSubject from './course_subject';
 import Drawer from './drawer';
 import InfoTextAndCircle from './info_text_and_circle';
