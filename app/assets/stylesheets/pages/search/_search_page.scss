@@ -88,4 +88,40 @@ body {
     height: 600px;
     background-color: grey;
   }
+
+  .map-legend {
+    position: absolute;
+    bottom: 30px;
+    z-index: 9999;
+    display: inline-block;
+    background-color: white;
+    opacity: .7;
+    width: 145px;
+    height: 40px;
+    font-size: 16px;
+    vertical-align: center;
+    padding: 8px;
+    left: 15px;
+    border-radius: 2px;
+    font-family: 'opensans-semibold', sans-serif;
+    padding-left: 18px;
+    cursor: pointer;
+    -webkit-transition: width .1s, height .5s; /* For Safari 3.1 to 6.0 */
+    transition: width .1s, height .5s;
+    span {
+      margin-left: 10px;
+      display: inline-block;
+      font-size: 13px;
+    }
+  }
+  .legend-open {
+    width: 220px;
+    height: 120px;
+    span {
+      float: right;
+      margin-right: 5px;
+      transform: rotate(90deg);
+    }
+  }
 }
+

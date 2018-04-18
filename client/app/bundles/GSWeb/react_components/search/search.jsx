@@ -8,6 +8,7 @@ import * as google_map_extensions from '../../components/map/google_maps_extensi
 import createInfoWindow from '../../components/map/info_window';
 import Map from '../../components/map/map';
 import MapMarker from '../../components/map/map_marker';
+import Legend from '../../components/map/legend';
 import DefaultMapMarker from '../../components/map/default_map_marker';
 import Polygon from '../district_boundaries/polygon';
 import ConnectedSearchBar from '../district_boundaries/connected_search_bar';
@@ -178,6 +179,7 @@ class Search extends React.Component {
           <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
             <SpinnyWheel active={this.state.googleMapsInitialized ? false : true}>
               {this.renderMap()}
+              <Legend content={<div>ASSETS/COPY HERE!</div>}/>
             </SpinnyWheel>
           </div>
         </div>
