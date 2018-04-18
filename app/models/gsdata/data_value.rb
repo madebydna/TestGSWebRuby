@@ -288,7 +288,7 @@ class DataValue < ActiveRecord::Base
   end
 
   def datatype_breakdown_year
-    [data_type_id, breakdown_names, date_valid, academic_names, grade]
+    [data_type_id, breakdown_names, date_valid, try(:academic_names), grade]
   end
 
 end
