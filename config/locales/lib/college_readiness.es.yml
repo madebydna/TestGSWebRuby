@@ -37,11 +37,11 @@ es:
       'Percent of students who will attend out-of-state colleges': Graduados asistiendo la universidad fuera del estado
       'Percent of students who will attend in-state colleges': Graduados asistiendo la universidad estatal
       csa_badge_html: >
-                <p>Esta escuela ha ganado un College Success Award, un premio basado en su éxito en preparar a los estudiantes
-                para la universidad y finalmente para su carrera. Los College Success Awards reconocen a las escuelas
-                secundarias públicas que se sobresalen a lograr que los estudiantes se matriculen y permanezcan en la
-                universidad. <a href="/gk/csa-winners/">Obtenga más información. Nota: información solo está disponible en inglés.
-                </a>.</p>
+        <p>Esta escuela ha ganado un College Success Award, un premio basado en su éxito en preparar a los estudiantes
+        para la universidad y finalmente para su carrera. Los College Success Awards reconocen a las escuelas
+        secundarias públicas que se sobresalen a lograr que los estudiantes se matriculen y permanezcan en la
+        universidad. <a href="/gk/csa-winners/">Obtenga más información. Nota: información solo está disponible en inglés.
+        </a></p>
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
         'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
@@ -83,7 +83,7 @@ es:
           higher: <span class="emphasis">por encima</span>
           lower: <span class="emphasis">por debajo</span>
           intro: >
-            <div class="auto-narration"><span class="content">En comparación con los promedios estatales, los estudiantes que se gradúan de esta escuela tienen: </span>%{more}
+            <div class="auto-narration"><span class="content">En comparación con los promedios estatales, los estudiantes que se gradúan de esta escuela tienen: </span>
             <ul>
           outro: </ul>%{end_more}</div>
           'Percent Enrolled in College Immediately Following High School': de los índices de matriculación universitaria
