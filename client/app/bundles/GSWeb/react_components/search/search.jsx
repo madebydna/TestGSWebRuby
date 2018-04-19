@@ -34,7 +34,8 @@ class Search extends React.Component {
     index_of_first_item: PropTypes.number,
     index_of_last_item: PropTypes.number,
     result_summary: PropTypes.string,
-    pagination_summary: PropTypes.string
+    pagination_summary: PropTypes.string,
+    address_coordinates: PropTypes.array
   };
 
   constructor(props) {
