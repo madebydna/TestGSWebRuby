@@ -213,4 +213,4 @@ en:
     csa_callout_html: >
       <span class='icon-csa-badge-year'></span><span class='csa-modal-text'>This school has earned a College Success
       Award based on its success in preparing students for college and ultimately career.
-      <a href='/#College_readiness*College_success'>Learn more.</a></span>
+      <a href='#College_readiness*College_success'>Learn more.</a></span>
