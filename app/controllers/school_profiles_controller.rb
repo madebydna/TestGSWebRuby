@@ -17,7 +17,7 @@ class SchoolProfilesController < ApplicationController
     add_profile_structured_markup
     set_seo_meta_tags
     build_gon_object
-    if @school.private_school?
+    if @school.private_school? && !(test_scores.visible? || college_readiness.visible?) && show_public_template_for_private_school?
       @private_school_profile = private_school_profile
       render 'show_private_school'
     else
@@ -240,6 +240,10 @@ class SchoolProfilesController < ApplicationController
   # For testing reviews-on-demand feature
   def reviews_on_demand?
     ['ak','ga','il','pa','wa'].include?(@school.state.downcase)
+  end
+
+  def show_public_template_for_private_school?
+    ['in'].include?(@school.state.downcase)
   end
 
   def review_questions

@@ -154,7 +154,7 @@ module SchoolProfiles
     end
 
     def visible?
-      data_values(CHAR_CACHE_ACCESSORS).present? || data_values(CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS).present?
+      props.present?
     end
 
     def tabs
