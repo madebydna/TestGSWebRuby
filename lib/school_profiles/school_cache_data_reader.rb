@@ -320,7 +320,7 @@ module SchoolProfiles
 
     def equity_adjustment_factor?
       @_equity_adjustment_factor ||= (
-        gsdata_data('Equity Adjustment Factor').present?
+        ratings_data('Equity Adjustment Factor').present?
       )
     end
 
