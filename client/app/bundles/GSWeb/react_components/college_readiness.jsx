@@ -14,6 +14,7 @@ import BasicDataModuleLayout from 'react_components/school_profiles/basic_data_m
 import SharingModal from 'react_components/school_profiles/sharing_modal';
 import Drawer from './drawer';
 import { t } from '../util/i18n';
+import { showCsaCallout } from 'components/introJs';
 
 export default class CollegeReadiness extends SchoolProfileComponent {
 
@@ -72,6 +73,13 @@ export default class CollegeReadiness extends SchoolProfileComponent {
         </div>
       </div>
     )
+  }
+
+  componentDidMount() {
+    let badge = this.filteredData()[1].csa_badge;
+    if (badge && this.filteredData().length > 1) {
+      showCsaCallout();
+    }
   }
 
   hasData() {
