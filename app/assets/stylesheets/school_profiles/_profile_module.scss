@@ -224,4 +224,23 @@
       color: $flag-color;
     }
   }
+
+  .icon-csa-badge-year {
+    font-size: 32px;
+    margin-right: 5px;
+    color: #155aa2;
+  }
+
+  .csa-callout {
+    background-color: white;
+    padding: 8px;
+    margin: 5px 10px 0 0;
+    display: table;
+  }
+
+  .csa-callout-text {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
 }

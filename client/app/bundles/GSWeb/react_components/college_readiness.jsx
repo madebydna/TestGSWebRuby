@@ -74,6 +74,18 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     )
   }
 
+  csaCallout() {
+    let eligible = this.filteredData()[1].csa_badge;
+    return ( eligible &&
+      <div className="csa-callout">
+        <span className='icon-csa-badge-year'/>
+        <span className="csa-callout-text">This school is a College Success Award winner!
+          <a href='#College_readiness*College_success'> See details.</a>
+        </span>
+      </div>
+    )
+  }
+
   hasData() {
     return this.filteredData().length > 0
   }
@@ -155,6 +167,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
           body={ this.hasData() && this.activePane() }
           tabs={ this.hasData() && this.props.showTabs && this.tabsContainer() }
           csa_badge={ this.csaBadge() }
+          csaCallout = {this.csaCallout()}
         />
       </div>
     )

@@ -2,7 +2,7 @@ import React from 'react';
 import { t } from '../../util/i18n';
 
 const BasicDataModuleLayout = ({
-  id, className, icon, title, subtitle, body, feedback, footer, tabs, no_data_cta, sharing_modal, csa_badge
+  id, className, icon, title, subtitle, body, feedback, footer, tabs, no_data_cta, sharing_modal, csa_badge, csaCallout
 }) => {
   return (
     <div>
@@ -25,7 +25,7 @@ const BasicDataModuleLayout = ({
                 </div>
               }
             </div>
-
+            {csaCallout}
           </div>
 
           { tabs }
