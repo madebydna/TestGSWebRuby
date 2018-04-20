@@ -163,10 +163,19 @@ module SchoolProfiles
 
     def get_props(component)
       return {} if component.empty_data?
+      hash = {
+          title: I18n.t('title', scope: component.scope),
+          anchor: component.tab.capitalize,
+          data: component.college_data_array
+      }
+      hash.merge!(csa_props(component)) if component.tab == 'college_success' && component.csa_badge?
+      hash
+    end
+
+    def csa_props(component)
+      return nil unless component.csa_badge?
       {
-        title: I18n.t('title', scope: component.scope),
-        anchor: component.tab.capitalize,
-        data: component.college_data_array
+        csa_badge: I18n.t(:csa_badge_html, scope: 'lib.college_readiness').html_safe
       }
     end
 
@@ -182,6 +191,10 @@ module SchoolProfiles
 
     def props
       @_props ||= components.map {|component| get_props(component)}.reject(&:empty?)
+    end
+
+    def school_csa_badge?
+      school_cache_data_reader.csa_badge?
     end
 
     private
