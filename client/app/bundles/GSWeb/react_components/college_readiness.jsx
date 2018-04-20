@@ -79,9 +79,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     return ( eligible &&
       <div className="csa-callout">
         <span className='icon-csa-badge-year'/>
-        <span className="csa-callout-text">This school is a College Success Award winner!
-          <a href='#College_readiness*College_success'> See details.</a>
-        </span>
+        <span dangerouslySetInnerHTML={{__html: t('csa_callout_html')}}/>
       </div>
     )
   }
