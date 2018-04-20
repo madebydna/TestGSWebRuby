@@ -223,17 +223,6 @@ function exitLastTour(){
   });
 }
 
-let csaCallout = {
-  element: '#College_readiness .panel',
-  highlightClass: 'no-highlight-csa',
-  intro: t('csa_callout_html'),
-  position: 'top',
-  gaLabel: 'stem-courses',
-  tooltipClass: 'csa-tooltip',
-  scrollToElement: false,
-  showBullets: false
-};
-
 export function startFirstTutorial() {
   withCurrentSchool((state, id, { test_scores_only = false } = {}) => {
     if(test_scores_only) {
@@ -248,8 +237,4 @@ export function startSecondTutorial(){
   exitLastTour().then(function() {
       startTutorial(secondTutorial, secondTutorialLastStep);
   })
-}
-
-export function showCsaCallout() {
-  startTutorial([], csaCallout);
 }

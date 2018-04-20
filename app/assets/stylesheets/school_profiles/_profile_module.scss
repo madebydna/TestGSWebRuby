@@ -225,31 +225,3 @@
     }
   }
 }
-
-.icon-csa-badge-year {
-  font-size: 32px;
-  margin-right: 5px;
-  color: #155aa2;
-}
-
-.csa-modal-text {
-  position: absolute;
-  margin-bottom: 10px;
-}
-
-.no-highlight-csa {
-  display: none;
-}
-
-.csa-tooltip {
-  @include media-breakpoint-down(sm) {
-    bottom: 0px !important;
-    position: relative !important;
-  }
-  .introjs-button {
-    display: none;
-  }
-  .introjs-bullets {
-    opacity: 0;
-  }
-}
