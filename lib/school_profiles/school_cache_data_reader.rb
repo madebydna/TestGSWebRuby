@@ -7,6 +7,8 @@ module SchoolProfiles
     SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance gsdata esp_responses courses)
     DISCIPLINE_FLAG = 'Discipline Flag'
     ABSENCE_FLAG = 'Absence Flag'
+    EQUITY_ADJUSTMENT_FACTOR = 'Equity Adjustment Factor'
+    CSA_BADGE = 'CSA Badge'
 
     attr_reader :school, :school_cache_keys
 
@@ -320,13 +322,13 @@ module SchoolProfiles
 
     def equity_adjustment_factor?
       @_equity_adjustment_factor ||= (
-        gsdata_data('Equity Adjustment Factor').present?
+        ratings_data(EQUITY_ADJUSTMENT_FACTOR).present?
       )
     end
 
     def discipline_attendance_data_values
       @_discipline_attendance_data_values ||= (
-        data_hashes = gsdata_data(DISCIPLINE_FLAG, ABSENCE_FLAG)
+        data_hashes = ratings_data(DISCIPLINE_FLAG, ABSENCE_FLAG)
         data_hashes.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
           most_recent_all_students = array_of_hashes
             .map { |hash| GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: data_type_name)) }
@@ -336,6 +338,10 @@ module SchoolProfiles
           output_hash[data_type_name] = most_recent_all_students if most_recent_all_students
         end
       )
+    end
+
+    def csa_badge?
+      decorated_school.ratings.has_key?(CSA_BADGE)
     end
 
     # Returns a hash that includes the percentage and sourcing info

@@ -43,10 +43,11 @@ export default class SchoolProfileComponent extends React.Component {
           PropTypes.object
         ]),
         narration: PropTypes.string,
-        flagged: PropTypes.bool
+        flagged: PropTypes.bool,
       })),
       title: PropTypes.string,
-      flagged: PropTypes.bool
+      flagged: PropTypes.bool,
+      csa_badge: PropTypes.string
     })),
     analytics_id: PropTypes.string,
     showTabs: PropTypes.bool,
@@ -56,7 +57,7 @@ export default class SchoolProfileComponent extends React.Component {
       element_type: PropTypes.string.isRequired
     }),
     feedback: PropTypes.object,
-    qualaroo_module_link: PropTypes.string
+    qualaroo_module_link: PropTypes.string,
   };
 
   static defaultProps = {
@@ -261,14 +262,15 @@ export default class SchoolProfileComponent extends React.Component {
       if(item.anchor){
         anchorLink = formatAndJoinAnchors(this.props.anchor, item.anchor);
       }
-      return <ModuleTab {...item} key={index} anchorLink={anchorLink} />
+      let badge = item.csa_badge;
+      return <ModuleTab {...item} key={index} anchorLink={anchorLink} badge={badge} />
     }.bind(this))
   }
 
   tabsContainer() {
     return (
       <div className="tab-buttons">
-        <SectionNavigation active={this.state.active} onTabClick={this.handleTabClick} >
+        <SectionNavigation active={this.state.active} onTabClick={this.handleTabClick} badge={this.props.csa_badge} >
           { this.tabs() }
         </SectionNavigation>
       </div>
