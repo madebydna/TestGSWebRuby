@@ -5,6 +5,16 @@ class SchoolCacheQuery
     @school_ids_per_state = {}
   end
 
+  def self.decorate_schools(schools, *cache_names)
+    query = self.new.include_cache_keys(cache_names)
+    schools.each do |school|
+      query = query.include_schools(school.state, school.id)
+    end
+    query_results = query.query
+    school_cache_results = SchoolCacheResults.new(cache_names, query_results)
+    school_cache_results.decorate_schools(schools)
+  end
+
   def self.for_school(school)
     raise ArgumentError.new('School must not be nil') if school.nil?
     new.tap do |cache_query|

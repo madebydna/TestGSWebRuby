@@ -2,38 +2,44 @@
 
 class NewSearchController < ApplicationController
   layout 'application'
+  before_filter :redirect_unless_city_found
 
   def search
-    c = City.get_city_by_name_and_state(city, state).first
-    props = OpenStruct.new.tap do |o|
-      o.city = c.name
-      o.state = state.upcase
-      o.schools = schools
-      o.lat = c.lat
-      o.lon = c.lon
-      o.total = school_search.total
-      o.current_page = school_search.current_page
-      o.offset = school_search.offset
-      o.is_first_page = school_search.first_page?
-      o.is_last_page = school_search.last_page?
-      o.index_of_first_result = school_search.index_of_first_result
-      o.index_of_last_result = school_search.index_of_last_result
-      o.result_summary = school_search.result_summary
-      o.pagination_summary = school_search.pagination_summary
-    end
-    gon.search = props.to_h
+    gon.search = {
+      schools: schools.map { |s| Api::SchoolSerializer.new(s).to_hash },
+    }.merge(Api::CitySerializer.new(city_object).to_hash)
+     .merge(Api::PaginationSerializer.new(paginatable_results).to_hash)
+     .merge(Api::PaginationSummarySerializer.new(paginatable_results).to_hash)
   end
 
   private
 
+  def redirect_unless_city_found
+    redirect_to(state_path(States.state_path(state))) unless city_object
+  end
+
   def schools
-    array = school_search.results
-    array = hack_in_school_gs_rating(array)
-    array.map { |s| Api::SchoolSerializer.new(s).to_hash }
+    @_schools ||= begin
+      SchoolCacheQuery
+        .decorate_schools(
+          School.load_all_from_associates(paginatable_results),
+          'ratings',
+          'characteristics'
+        )
+    end
+  end
+
+  # paginatable school documents
+  def paginatable_results
+    @_paginatable_results ||= school_search.search
   end
 
   def school_search
-    @_school_search ||= SchoolSearch.new(city: city, state: state, q:q, page: page)
+    @_school_search ||= Search::SchoolQuery.new(city: city, state: state, q:q, page: page)
+  end
+
+  def city_object
+    @_city_object ||= City.get_city_by_name_and_state(city, state).first
   end
 
   def city
@@ -51,15 +57,5 @@ class NewSearchController < ApplicationController
 
   def page
     params[:page] || 1
-  end
-
-  def hack_in_school_gs_rating(schools)
-    query = SchoolCacheQuery.new.include_cache_keys(['ratings', 'characteristics'])
-    schools.each do |school|
-      query = query.include_schools(school.state, school.id)
-    end
-    query_results = query.query
-    school_cache_results = SchoolCacheResults.new(['ratings', 'characteristics'], query_results)
-    school_cache_results.decorate_schools(schools)
   end
 end

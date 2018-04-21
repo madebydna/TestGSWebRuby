@@ -269,6 +269,23 @@ class DataValue < ActiveRecord::Base
 #     ar
 #   end
 
+  # data type predicate methods
+  def summary_rating?
+    data_type_id == 160
+  end
+
+  def test_scores_rating?
+    data_type_id == 155
+  end
+
+  def summary_rating_test_score_weight?
+    data_type_id == 176
+  end
+
+  def source_date_valid
+    date_valid
+  end
+
   def self.with_academics
     joins(<<-SQL
       LEFT JOIN data_values_to_academics

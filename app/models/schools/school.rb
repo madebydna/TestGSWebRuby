@@ -45,6 +45,20 @@ class School < ActiveRecord::Base
     School.on_db(state.downcase.to_sym).active.not_preschool_only.order(:id).select(:id).map(&:id)
   end
 
+  # Given objects that have state and school_id, load school for each one
+  def self.load_all_from_associates(associate)
+    states_and_ids = 
+      associate
+        .map { |obj| [obj.state, obj.school_id] }
+        .each_with_object({}) do |(state,id), hash|
+          hash[state] ||= []
+          hash[state] << id
+      end
+    states_and_ids.flat_map do |(state, ids)|
+      find_by_state_and_ids(state, ids).to_a
+    end
+  end
+
   def self.within_district(district)
     on_db(district.shard).active.where(district_id: district.id)
   end
