@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { t } from '../../util/i18n';
 
 const BasicDataModuleLayout = ({
-  id, className, icon, title, subtitle, body, feedback, footer, tabs, no_data_cta, sharing_modal
+  id, className, icon, title, subtitle, body, feedback, footer, tabs, no_data_cta, sharing_modal, csa_badge, csaCallout
 }) => {
   return (
     <div>
@@ -26,10 +26,12 @@ const BasicDataModuleLayout = ({
                 </div>
               }
             </div>
-
+            {csaCallout}
           </div>
 
           { tabs }
+
+          {csa_badge}
 
           { body &&
             <div className="panel">
@@ -55,7 +57,8 @@ BasicDataModuleLayout.propTypes = {
   subtitle: PropTypes.object,
   body: PropTypes.object,
   feedback: PropTypes.object,
-  footer: PropTypes.object
+  footer: PropTypes.object,
+  csa_badge: PropTypes.bool
 }
 
 export default BasicDataModuleLayout;
