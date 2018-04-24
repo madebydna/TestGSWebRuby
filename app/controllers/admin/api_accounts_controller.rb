@@ -26,7 +26,7 @@ class Admin::ApiAccountsController < ApplicationController
 
   # Handles user-initiated api account creation
   def create_api_account
-    @api_account = ApiAccount.new(api_account_params)
+    @api_account = ApiAccount.new(api_account_params.merge(api_key: nil))
     if @api_account.save
       ApiRequestReceivedEmail.deliver_to_api_key_requester(@api_account)
       ApiRequestToModerateEmail.deliver_to_admin(@api_account)
