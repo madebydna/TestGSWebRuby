@@ -9,6 +9,11 @@ module Search
       string :state
       integer :summary_rating
       latlon(:latlon) { Sunspot::Util::Coordinates.new(lat, lon) }
+
+      # Remove these after we are totally on Solr 7
+      string :citykeyword
+      string :school_database_state
+      integer :overall_gs_rating
     end
     Sunspot::Adapters::DataAccessor.register(
       SchoolSunspotDataAccessor,

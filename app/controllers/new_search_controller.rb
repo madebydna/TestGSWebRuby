@@ -35,7 +35,13 @@ class NewSearchController < ApplicationController
   end
 
   def school_search
-    @_school_search ||= Search::SchoolQuery.new(city: city, state: state, q:q, page: page)
+    @_school_search ||= begin
+      if params[:solr7]
+        Search::SchoolQuery.new(city: city, state: state, q:q, page: page)
+      else
+        Search::LegacySchoolQuery.new(city: city, state: state, q:q, page: page)
+      end
+    end
   end
 
   def city_object
