@@ -17,6 +17,7 @@ import * as polygonTypes from '../../components/map/polygons';
 import jsxToString from 'jsx-to-string';
 import SchoolList from './school_list'
 import { getSchools } from 'reducers/search_reducer';
+import FilterBar from './filter_bar';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -167,6 +168,7 @@ class Search extends React.Component {
   render() {
     return (
       <div className="search-component">
+        <FilterBar/>
         <h3>
           <div>{this.props.result_summary}</div>
           <div>{this.props.pagination_summary}</div>

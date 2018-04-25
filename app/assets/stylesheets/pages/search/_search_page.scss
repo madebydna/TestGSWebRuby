@@ -44,6 +44,14 @@ body {
       }
     }
 
+    select {
+      @include select;
+    }
+
+    .button-group {
+      @include button-group;
+    }
+
     .right-rail {
       display: none;
       @include media-breakpoint-up(md) {
