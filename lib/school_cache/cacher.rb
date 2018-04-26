@@ -90,6 +90,8 @@ class Cacher
         directory:        DirectoryCaching::DirectoryCacher,
         courses:              CoursesCaching::GsdataCoursesCacher,
         feed_test_scores_gsdata: TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
+        feed_state_scores_gsdata: StateCache::FeedStateTestScoresCacherGsdata,
+        feed_district_scores_gsdata: StateCache::FeedDistrictTestScoresCacherGsdata,
         feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
     }[key.to_s.to_sym]
   end
@@ -122,7 +124,9 @@ class Cacher
       RatingsCaching::GsdataRatingsCacher,
       CoursesCaching::GsdataCoursesCacher,
       DirectoryCaching::DirectoryCacher,
-      FeedCharacteristicsCaching::FeedCharacteristicsCacher
+      FeedCharacteristicsCaching::FeedCharacteristicsCacher,
+      StateCache::FeedStateTestScoresCacherGsdata,
+      StateCache::FeedDistrictTestScoresCacherGsdata
     ]
   end
 
