@@ -3,14 +3,20 @@ class TestScoresCaching::DistrictTestScoresCacher < TestScoresCaching::DistrictB
   CACHE_KEY = 'feed_test_scores'
 
   def query_results
-    @query_results ||= (
-      results = TestDataSet.fetch_feed_test_scores_district(district).select do |result|
-        data_type_id = result.data_type_id
-        # skip this if no corresponding test data type
-        test_data_types && test_data_types[data_type_id].present?
+    # @query_results ||= (
+    #   results = TestDataSet.fetch_feed_test_scores_district(district).select do |result|
+    #     data_type_id = result.data_type_id
+    #     # skip this if no corresponding test data type
+    #     test_data_types && test_data_types[data_type_id].present?
+    #   end
+    #   results.map { |obj| TestScoresCaching::DistrictQueryResultDecorator.new(district.state, obj) }
+    # )
+    @query_results ||=
+      begin
+        DataValue.find_by_district_and_data_type_tags(district.state, district.id, 'state_test')
+          .with_configuration('feeds')
+          .map {|obj| TestScoresCaching::DistrictQueryResultDecorator.new(district.state, obj)}
       end
-      results.map { |obj| TestScoresCaching::DistrictQueryResultDecorator.new(district.state, obj) }
-    )
   end
 
   def build_hash_for_cache
