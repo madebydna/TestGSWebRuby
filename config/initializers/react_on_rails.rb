@@ -18,12 +18,12 @@ ReactOnRails.configure do |config|
   # If you are using the ReactOnRails::TestHelper.configure_rspec_to_compile_assets(config)
   # with rspec then this controls what npm command is run
   # to automatically refresh your webpack assets on every test run.
-  config.npm_build_test_command = "npm run rspec"
+  config.build_test_command = "npm run rspec"
 
   # This configures the script to run to build the production assets by webpack. Set this to nil
   # if you don't want react_on_rails building this file for you.
   # config.npm_build_production_command = "npm run build:production"
-  config.npm_build_production_command = nil
+  config.build_production_command = nil
 
   ################################################################################
   # CLIENT RENDERING OPTIONS
@@ -74,5 +74,7 @@ ReactOnRails.configure do |config|
   # For any asset matching this regex, non-digested symlink will be created (what webpack's css wants)
   # To disable symlinks set this parameter to nil.
   config.symlink_non_digested_assets_regex = /\.(png|jpg|jpeg|gif|tiff|woff|ttf|eot|svg|map)/
+
+  config.node_modules_location = "client" # per react_on_rails upgrade docs
 
 end

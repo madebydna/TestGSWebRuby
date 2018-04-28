@@ -21,7 +21,7 @@ gem 'kaminari', '0.16.1'
 
 # Provide various react builds to your asset bundle
 # Transform .jsx in the asset pipeline
-gem 'react_on_rails', '~> 6'
+gem 'react_on_rails', '~> 10.1.4'
 
 # Add database sharding support to Active Record
 # gem 'ar-octopus', '0.6.0' <-- evil
