@@ -10,6 +10,10 @@ body {
   max-width: 1282px;
   margin-left: auto;
   margin-right: auto;
+  @include media-breakpoint-down(sm) {
+    // handle the case that the top search bar currently overlaps 10px of content on the top of each page
+    margin-top: 10px;
+  }
 
   h3 {
     font-size: $font-size-l2;
@@ -50,6 +54,11 @@ body {
 
     .button-group {
       @include button-group;
+      display: inline-table;
+    }
+
+    input[type="checkbox"] {
+      @include checkbox;
     }
 
     .right-rail {
@@ -129,6 +138,68 @@ body {
       float: right;
       margin-right: 5px;
       transform: rotate(90deg);
+    }
+  }
+
+  .filter-container {
+    .panel-triggers {
+      padding: 10px;
+      height: 40px;
+      background-color: #e0e7eb;
+      @include media-breakpoint-up(sm) {
+        display: none;
+      }
+    }
+    .filter-panel {
+      padding: 20px;
+      .top-controls {
+        height: 20px;
+      }
+      .top-controls, .controls {
+        display: none;
+      }
+      .filter {
+        display: inline-block;
+        > label {
+          display: inline-block;
+        }
+        > label + div {
+          display: inline-block;
+          margin-left: 10px;
+        }
+        @include media-breakpoint-down(xs) {
+          display: block;
+          > label {
+            display: block;
+          }
+          > label + div {
+            display: block;
+            margin-left: 0px;
+            margin-top: 10px;
+          }
+        }
+      }
+      @include media-breakpoint-down(xs) {
+        background-color: white;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 5;
+        width: 100%;
+        height: 100%;
+
+        .top-controls, .controls {
+          display: block;
+        }
+        .label {
+          display: block;
+        }
+      }
+    }
+    .filter-panel.closed {
+      @include media-breakpoint-down(xs) {
+        display: none;
+      }
     }
   }
 }

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class NewSearchController < ApplicationController
+  include Pagination::PaginatableRequest
+
   layout 'application'
   before_filter :redirect_unless_city_found
 
@@ -22,7 +24,7 @@ class NewSearchController < ApplicationController
     @_schools ||= begin
       SchoolCacheQuery
         .decorate_schools(
-          School.load_all_from_associates(paginatable_results),
+          paginatable_results,
           'ratings',
           'characteristics'
         )
@@ -37,9 +39,9 @@ class NewSearchController < ApplicationController
   def school_search
     @_school_search ||= begin
       if params[:solr7]
-        Search::SchoolQuery.new(city: city, state: state, q:q, page: page)
+        Search::SchoolQuery.new(city: city, state: state, q:q, level_codes: level_codes, offset: offset, limit: limit)
       else
-        Search::LegacySchoolQuery.new(city: city, state: state, q:q, page: page)
+        Search::LegacySchoolQuery.new(city: city, state: state, q:q, level_codes: level_codes, offset: offset, limit: limit)
       end
     end
   end
@@ -61,7 +63,7 @@ class NewSearchController < ApplicationController
     params[:q]
   end
 
-  def page
-    params[:page] || 1
+  def level_codes
+    params[:level_code]&.split(',')
   end
 end

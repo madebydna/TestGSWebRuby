@@ -32,7 +32,7 @@ module Search
     def field_values
       return {} unless school
       {
-        name_s: school.name,
+        name_text: school.name,
         city_s: school.city.downcase,
         street_s: school.street&.downcase,
         zipcode_s: school.zipcode,

@@ -47,7 +47,8 @@ class Search extends React.Component {
     this.showListView = this.showListView.bind(this);
     this.state = {
       googleMapsInitialized: false,
-      listHidden: true
+      listHidden: true,
+      schools: props.schools
     }
     this.initGoogleMaps();
   }
@@ -86,7 +87,7 @@ class Search extends React.Component {
 
   renderMarkers() {
     let anySchoolMarkerSelected = false;
-    let markers = this.props.schools.map(s => {
+    let markers = this.state.schools.map(s => {
       let props = {title: s.name, rating: s.rating, lat: s.lat, lon: s.lon};
       props.key = 's' + s.state + s.id;
       props.createInfoWindow = () => createInfoWindow(s);
@@ -168,7 +169,7 @@ class Search extends React.Component {
   render() {
     return (
       <div className="search-component">
-        <FilterBar/>
+        <FilterBar selectSchoolType={this.selectSchoolType}/>
         <h3>
           <div>{this.props.result_summary}</div>
           <div>{this.props.pagination_summary}</div>
@@ -177,7 +178,7 @@ class Search extends React.Component {
           <div className='ad-bar'>Advertisement</div>
         </div>
         <div className="list-and-map">
-          <SchoolList schools={this.props.schools} />
+          <SchoolList schools={this.state.schools} />
 
           <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
             <SpinnyWheel active={this.state.googleMapsInitialized ? false : true}>

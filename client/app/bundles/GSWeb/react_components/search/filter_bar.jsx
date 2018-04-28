@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Select from '../select';
 import Checkbox from '../checkbox';
 import SchoolLevelFilter from './school_level_filter';
+import OpenableCloseable from 'react_components/openable_closeable';
 
 export default class FilterBar extends React.Component {
 
@@ -18,10 +19,34 @@ export default class FilterBar extends React.Component {
   }
 
   handleSchoolLevel(value) {
-    
+    console.log('level filter: ' + value);
   }
 
   render() {
-    return <SchoolLevelFilter handler={this.handleSchoolLevel} label='' />
+    return <OpenableCloseable openByDefault={false}>
+      {
+        (isOpen, {open, close}) =>
+          <div className="filter-container">
+            <span>Filter by</span>
+            <div className="panel-triggers" style={{display: isOpen? 'none' : ''}}>
+              <a onClick={open}>Filter</a>
+            </div>
+            <div className={"filter-panel " + (isOpen? '' : 'closed')}>
+              <div className="top-controls">
+                <div className="close" onClick={close}>X</div>
+              </div>
+              <div className="filters">
+                <div className="filter">
+                  <label>School type</label>
+                  <SchoolLevelFilter handler={this.handleSchoolLevel} label='' />
+                </div>
+              </div>
+              <div className="controls">
+                <button onClick={close}>Apply</button>
+              </div>
+            </div>
+          </div>
+      }
+    </OpenableCloseable>
   }
 }

@@ -11,6 +11,7 @@ class Api::SchoolSerializer
   def to_hash
     rating = school.great_schools_rating if defined? school.great_schools_rating || school.respond_to?(:great_schools_rating)
     enrollment = school.students_enrolled if school.respond_to?(:students_enrolled) || school.singleton_class.method_defined?(:students_enrolled)
+    distance = school.distance if school.respond_to?(:distance) || school.singleton_class.method_defined?(:distance)
     h = {
       id: school.id,
       districtId: school.district_id,
@@ -45,6 +46,9 @@ class Api::SchoolSerializer
     end
     if school.respond_to?(:num_reviews) || defined? school.num_reviews
       h[:numReviews] = school.num_reviews
+    end
+    if distance
+      h[:distance] = distance
     end
 
     h

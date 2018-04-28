@@ -1,12 +1,5 @@
 class Api::SchoolsController < ApplicationController
-  include ApiPagination
-  helper_method :next, :prev
-
-  self.pagination_max_limit = 2000
-  self.pagination_default_limit = 10
-  # tell the mixed-in pagination methods what code it can evaluate
-  # to determine how many results were found for the current request
-  self.pagination_items_proc = proc { schools }
+  include Pagination::PaginatableRequest
 
   AVAILABLE_EXTRAS = %w[boundaries]
 
@@ -18,11 +11,10 @@ class Api::SchoolsController < ApplicationController
   end
 
   def index
-    self.pagination_max_limit = 10 if criteria.blank?
     render json: {
       links: {
-        prev: self.prev,
-        next: self.next,
+        prev: self.prev_offset_url(page_of_results),
+        next: self.next_offset_url(page_of_results),
       },
       items: serialized_schools
     }
@@ -37,7 +29,6 @@ class Api::SchoolsController < ApplicationController
     schools.map do |school|
       Api::SchoolSerializer.new(school).to_hash.tap do |s|
         s.except(AVAILABLE_EXTRAS - extras)
-        add_distance(s)
       end
     end
   end
@@ -48,118 +39,133 @@ class Api::SchoolsController < ApplicationController
 
   def schools
     @_schools ||= (
-      if point_given?
-        geometries = school_geometries_containing_lat_lon
-        geometries_valid = geometries.present?
-        if geometries && geometries.size > 1 && geometries[0].area == geometries[1].area
-          # A geometry is not valid if it covers the same area as the next one
-          # This is because we can't really recommend one of those boundaries above the other
-          geometries_valid = false
-        end
-        items = geometries_valid ? SchoolGeometry.schools_for_geometries([geometries.first]) : []
-      else
-        items = get_schools
-      end
-      items = add_geometry(items)
-      items = add_rating(items)
-      items = add_review_summary(items)
-
-      items
+      decorate_schools(page_of_results)
     )
   end
 
-  def add_rating(schools)
-    q = SchoolCacheQuery.new.
-      include_objects(schools).
-      include_cache_keys('ratings')
-
-    school_cache_results = SchoolCacheResults.new('ratings', q.query_and_use_cache_keys)
-    school_cache_results.decorate_schools(schools)
+  def page_of_results
+    @_page_of_results ||= query.search
   end
 
-  def add_geometry(schools)
+  def query
+    if q
+      solr_query
+    elsif point_given?
+      attendance_zone_query
+    else
+      school_sql_query
+    end
+  end
+
+  def school_sql_query
+    Search::ActiveRecordSchoolQuery.new(
+      state: state,
+      id: params[:id],
+      district_id: params[:district_id],
+      type: type,
+      city: city,
+      lat: lat,
+      lon: lon,
+      radius: radius,
+      level_code: level_code,
+      offset: offset,
+      limit: limit
+    )
+  end
+
+  def attendance_zone_query
+    SchoolAttendanceZoneQuery.new(lat: lat, lon: lon, level: boundary_level)
+  end
+
+  def solr_query
+    if params[:solr7]
+      query_type = Search::SchoolQuery
+    else
+      query_type = Search::LegacySchoolQuery
+    end
+
+    query_type.new(
+      city: city,
+      state: state,
+      level_codes: level_codes,
+      q: q,
+      offset: offset,
+      limit: limit
+    )
+  end
+
+  def decorate_schools(schools)
+    extras.each do |extra|
+      method = "add_#{extra}"
+      schools = send(method, schools) if respond_to?(method)
+    end
+    if cache_keys.any?
+      schools = SchoolCacheQuery.decorate_schools(schools, *cache_keys)
+    end
+    schools
+  end
+
+  def cache_keys
+    @_cache_keys ||= []
+  end
+
+  # methods for adding extras
+  # method names prefixed with add_*
+  def add_summary_rating(schools)
+    cache_keys << 'ratings'
+    schools
+  end
+
+  def add_review_summary(schools)
+    cache_keys << 'review_summary'
+    schools
+  end
+
+  def add_boundaries(schools)
     schools = Array.wrap(schools)
-    if extras.include?('boundaries') && schools.length == 1
+    if schools.length == 1
       schools = schools.map { |s| Api::SchoolWithGeometry.apply_geometry_data!(s) }
     end
     schools
   end
 
-  def add_review_summary(schools)
-    if extras.include?('review_summary') && schools.present?
-      q = SchoolCacheQuery.new.
-          include_objects(schools).
-          include_cache_keys('reviews_snapshot')
+  def add_distance(schools)
+    return schools unless point_given?
 
-      school_cache_results = SchoolCacheResults.new('reviews_snapshot', q.query_and_use_cache_keys)
-      return school_cache_results.decorate_schools(schools)
+    schools.each do |school|
+      if school.lat && school.lon
+        distance = 
+          Geo::Point.new(hash[:lat], hash[:lon]).distance_to(
+            Geo::Point.new(lat.to_f, lon.to_f)
+          )
+        school.define_singleton_method(:distance) do
+          distance
+        end
+      end
     end
+
     schools
   end
 
-  def add_distance(hash)
-    if extras.include?('distance') && point_given? && hash.has_key?(:lat) && hash.has_key?(:lon)
-      hash['distance'] = distance_between(hash[:lat], hash[:lon], lat.to_f, lon.to_f)
-    end
-    hash
-  end
-
-  def distance_between(lat1, lon1, lat2, lon2)
-    rad_per_degree = Math::PI / 180
-    radius_miles = 3959 # Earth radius
-    lat1_rad = lat1 * rad_per_degree
-    lat2_rad = lat2 * rad_per_degree
-    lon1_rad = lon1 * rad_per_degree
-    lon2_rad = lon2 * rad_per_degree
-
-    a = Math.sin((lat2_rad - lat1_rad) / 2) ** 2 +
-        Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.sin((lon2_rad - lon1_rad) / 2) ** 2
-    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-
-    (radius_miles * c).round(2) # Delta in miles
-  rescue
-    nil
-  end
-
-  def get_schools
-    @_get_schools ||= (
-      schools = School.on_db(state.to_s.downcase.to_sym).
-        select("#{School.table_name}.*, #{District.table_name}.name as district_name").
-        joins("LEFT JOIN district on school.district_id = district.id").
-        where(criteria).
-        active.
-        limit(limit).
-        offset(offset)
-
-      if area_given?
-        schools = schools.
-          select("#{School.query_distance_function(lat,lon)} as distance").
-          having("distance < #{radius}").
-          order('distance asc')
-      else
-        schools = schools.order(:id)
-      end
-
-      if level_code
-        schools = schools.where('level_code LIKE ?', "%#{level_code}%")
-      end
-      schools
-    )
-  end
-
-  # criteria that will be used to query the school table
-  def criteria
-    params.slice(:id, :district_id, :type)
-  end
-
   def state
-    params[:state]
+    state_param = params[:state]
+    return nil unless state_param.present?
+
+    if States.is_abbreviation?(state_param)
+      state_param
+    else
+      States.abbreviation(state_param.gsub('-', ' ').downcase)
+    end
   end
 
   def school_geometries_containing_lat_lon
     @_school_geometries_containing_lat_lon ||= (
       SchoolGeometry.find_by_point_and_level(lat, lon, boundary_level)
     )
+  end
+
+  def q
+    params[:q]
   end
 
   def lat
@@ -186,14 +192,26 @@ class Api::SchoolsController < ApplicationController
     lat.present? && lon.present? && radius.present?
   end
 
+  def level_codes
+    params[:level_code]&.split(',')
+  end
+
   def level_code
-    params[:level_code]
+    level_codes&.first
   end
 
   def boundary_level
     (params[:boundary_level] || '').split(',').tap do |array|
       array << 'o' unless array.include?('o')
     end
+  end
+
+  def city_object
+    @_city_object ||= City.get_city_by_name_and_state(city, state).first
+  end
+
+  def city
+    params[:city].try(:gsub, '-', ' ').gs_capitalize_words
   end
 
   # reading about API design, I tend to agree that rather than make multiple
@@ -204,7 +222,7 @@ class Api::SchoolsController < ApplicationController
   # than have the client provide every field desires, just made an "extras"
   # for asking for data not in the default response
   def extras
-    (params[:extras] || '').split(',')
+    (params[:extras] || '').split(',') + ['summary_rating']
   end
 
 end

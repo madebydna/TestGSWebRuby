@@ -48,3 +48,20 @@ export function findNearLatLon(lat, lon, radius, options) {
     timeout: 6000
   });
 }
+
+export function find({q, city, state, level_codes, offset=0, limit=25} = {}) {
+  return $.ajax({
+    url: '/gsr/api/school/',
+    data: {
+      city: city,
+      state: state,
+      q: q,
+      level_codes: level_codes,
+      offset: offset,
+      limit: limit
+    },
+    type: 'GET',
+    dataType: 'json',
+    timeout: 6000
+  });
+}

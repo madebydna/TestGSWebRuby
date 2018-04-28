@@ -4,6 +4,8 @@ Sunspot.config.solr.url = ENV_GLOBAL['solr.ro.server.url']
 
 module Search
   class SchoolQuery
+    include Pagination::Paginatable
+
     Sunspot.setup(School) do
       string :city
       string :state
@@ -14,6 +16,7 @@ module Search
       string :citykeyword
       string :school_database_state
       integer :overall_gs_rating
+      string :school_grade_level
     end
     Sunspot::Adapters::DataAccessor.register(
       SchoolSunspotDataAccessor,
@@ -24,21 +27,34 @@ module Search
       SchoolDocument
     )
 
-    attr_writer :q, :district_id, :city, :page
-    attr_reader :q, :district_id, :city, :page, :state
+    attr_accessor :q, :district_id, :city, :level_codes
+    attr_reader :state
 
-    def initialize(city:nil, state:nil, q:nil, district_id:nil, page:1)
+    def initialize(city:nil, state:nil, q:nil, district_id:nil, level_codes: nil, offset: 0, limit: 25)
       self.city = city
       self.state = state
       self.district_id = district_id
       self.q = q
-      self.page = page
+      self.limit = limit
+      self.offset = offset
+      self.level_codes = level_codes
       @client = Sunspot
     end
 
+    def response
+      @_response ||= client.search(School, &sunspot_query)
+    end
+
     def search
-      response = client.search(School, &sunspot_query)
-      Results.new(response.results, self)
+      @_search ||= begin
+        PageOfResults.new(
+          School.load_all_from_associates(response.results),
+          query: self,
+          total: response.results.total_count,
+          offset: offset,
+          limit: limit
+        )
+      end
     end
 
     def result_summary(results)
@@ -92,7 +108,7 @@ module Search
         search.with(:city, city.downcase) if city
         search.with(:state, state.downcase) if state
         # search.with(:latlon).in_radius(32, -68, 100)
-        search.paginate(page: page, per_page: 25)
+        search.paginate(page: page, per_page: limit)
         search.order_by(:summary_rating, :desc)
         search.adjust_solr_params do |params|
           params[:defType] = browse? ? 'lucene' : 'dismax'   

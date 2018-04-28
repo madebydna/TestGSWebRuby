@@ -73,7 +73,9 @@ export default class MultiItemSelectable extends React.Component {
               this.props.options[option],
               this.isOptionActive(option) 
             ),
-            { onClick: this.handleSelect(option) } // extra props added to new element
+            {
+              onClick: this.handleSelect(option)
+            } // extra props added to new element
           )
         )
       }

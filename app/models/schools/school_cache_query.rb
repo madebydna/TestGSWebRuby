@@ -6,11 +6,10 @@ class SchoolCacheQuery
   end
 
   def self.decorate_schools(schools, *cache_names)
-    query = self.new.include_cache_keys(cache_names)
-    schools.each do |school|
-      query = query.include_schools(school.state, school.id)
-    end
-    query_results = query.query
+    query = self.new
+      .include_cache_keys(cache_names)
+      .include_objects(schools)
+    query_results = query.query_and_use_cache_keys
     school_cache_results = SchoolCacheResults.new(cache_names, query_results)
     school_cache_results.decorate_schools(schools)
   end
@@ -23,7 +22,6 @@ class SchoolCacheQuery
   end
 
   def include_objects(objects)
-    objects = Array.wrap(objects)
     objects_by_state = objects.group_by(&:state)
     objects_by_state.each_pair do |state, objects_for_state|
       include_schools(state, objects_for_state.map(&:id))

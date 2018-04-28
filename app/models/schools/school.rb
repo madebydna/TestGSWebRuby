@@ -1,6 +1,7 @@
 class School < ActiveRecord::Base
   include SchoolReviewConcerns
   include SchoolRouteConcerns
+  include GradeLevelConcerns
 
 
   LEVEL_CODES = {
@@ -30,6 +31,11 @@ class School < ActiveRecord::Base
   scope :not_preschool_only, -> { where.not(level_code: 'p') }
 
   scope :active, -> { where(active: true) }
+
+  scope :include_district_name, lambda {
+    select("#{School.table_name}.*, #{District.table_name}.name as district_name").
+    joins("LEFT JOIN district on school.district_id = district.id")
+  }
 
   self.inheritance_column = nil
 
@@ -65,6 +71,17 @@ class School < ActiveRecord::Base
 
   def self.within_city(state_abbreviation, city_name)
     on_db(state_abbreviation.downcase.to_sym).active.where(city: city_name).order(:name)
+  end
+
+  def self.having_point_in_attendance_zone(lat, lon, level_code)
+    geometries = SchoolGeometry.find_by_point_and_level(lat, lon, level_code)
+    geometries_valid = geometries.present?
+    if geometries && geometries.size > 1 && geometries[0].area == geometries[1].area
+      # A geometry is not valid if it covers the same area as the next one
+      # This is because we can't really recommend one of those boundaries above the other
+      geometries_valid = false
+    end
+    geometries_valid ? [geometries.first.school] : []
   end
 
   def census_data_for_data_types(data_types = [])

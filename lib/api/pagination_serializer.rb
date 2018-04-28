@@ -9,7 +9,7 @@ class Api::PaginationSerializer
   def to_hash
     {
       total: @paginatable_results.total,
-      current_page: @paginatable_results.current_page,
+      current_page: @paginatable_results.page,
       offset: @paginatable_results.offset,
       is_first_page: @paginatable_results.first_page?,
       is_last_page: @paginatable_results.last_page?,
