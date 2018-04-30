@@ -243,7 +243,13 @@ class SchoolProfilesController < ApplicationController
   end
 
   def show_private_school_template?
-    @school.private_school? && !(test_scores.visible? || college_readiness.visible?) && ['in'].include?(@school.state.downcase)
+    if @school.private_school?
+      if ['in'].include?(@school.state.downcase) && (test_scores.visible? || college_readiness.visible?)
+        false
+      else
+        true
+      end
+    end
   end
 
   def review_questions
