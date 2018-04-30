@@ -237,9 +237,13 @@ class SchoolProfilesController < ApplicationController
     @_reviews ||= SchoolProfiles::Reviews.new(school, review_questions)
   end
 
-  # For testing reviews-on-demand feature
+  # For configuring the reviews-on-demand feature. Must return a boolean.
   def reviews_on_demand?
-    ['ak','ga','il','pa','wa'].include?(@school.state.downcase)
+    # The following example shows one way to restrict reviews-on-demand to a set of states.
+    # ['ak','ga','il','pa','wa'].include?(@school.state.downcase)
+
+    # Returning true will apply reviews-on-demand to every school profile. False turns it off.
+    true
   end
 
   def show_private_school_template?
