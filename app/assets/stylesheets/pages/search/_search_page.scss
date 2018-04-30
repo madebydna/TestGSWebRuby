@@ -161,6 +161,7 @@ body {
       .filter {
         display: inline-block;
         > label {
+          margin-right: 10px;
           display: inline-block;
         }
         > label + div {

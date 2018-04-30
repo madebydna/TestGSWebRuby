@@ -27,7 +27,6 @@ export default class FilterBar extends React.Component {
       {
         (isOpen, {open, close}) =>
           <div className="filter-container">
-            <span>Filter by</span>
             <div className="panel-triggers" style={{display: isOpen? 'none' : ''}}>
               <a onClick={open}>Filter</a>
             </div>
