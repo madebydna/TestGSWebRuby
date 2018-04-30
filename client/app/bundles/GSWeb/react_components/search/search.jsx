@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import SpinnyWheel from '../spinny_wheel';
+import SpinnyOverlay from '../spinny_overlay';
 import * as google_maps from '../../components/map/google_maps';
 import * as google_map_extensions from '../../components/map/google_maps_extensions';
 import createInfoWindow from '../../components/map/info_window';
@@ -15,12 +16,14 @@ import ConnectedSearchBar from '../district_boundaries/connected_search_bar';
 import * as markerTypes from '../../components/map/markers';
 import * as polygonTypes from '../../components/map/polygons';
 import jsxToString from 'jsx-to-string';
-import SchoolList from './school_list'
 import { getSchools } from 'reducers/search_reducer';
 import FilterBar from './filter_bar';
+import SearchContext from './search_context';
+import School from './school';
 
 class Search extends React.Component {
   static defaultProps = {
+    loadingSchools: false
   };
 
   static propTypes = {
@@ -36,7 +39,8 @@ class Search extends React.Component {
     index_of_last_item: PropTypes.number,
     result_summary: PropTypes.string,
     pagination_summary: PropTypes.string,
-    address_coordinates: PropTypes.array
+    address_coordinates: PropTypes.array,
+    loadingSchools: PropTypes.bool
   };
 
   constructor(props) {
@@ -47,8 +51,7 @@ class Search extends React.Component {
     this.showListView = this.showListView.bind(this);
     this.state = {
       googleMapsInitialized: false,
-      listHidden: true,
-      schools: props.schools
+      listHidden: true
     }
     this.initGoogleMaps();
   }
@@ -87,7 +90,7 @@ class Search extends React.Component {
 
   renderMarkers() {
     let anySchoolMarkerSelected = false;
-    let markers = this.state.schools.map(s => {
+    let markers = this.props.schools.map(s => {
       let props = {title: s.name, rating: s.rating, lat: s.lat, lon: s.lon};
       props.key = 's' + s.state + s.id;
       props.createInfoWindow = () => createInfoWindow(s);
@@ -178,7 +181,20 @@ class Search extends React.Component {
           <div className='ad-bar'>Advertisement</div>
         </div>
         <div className="list-and-map">
-          <SchoolList schools={this.state.schools} />
+          <SpinnyOverlay spin={this.props.loadingSchools}>
+            {({createContainer, spinny}) =>
+              createContainer(
+                <section className='school-list'>
+                  {spinny}
+                  <ol>
+                    {this.props.schools.map(s => 
+                        <li className={s.active ? 'active' : ''}><School {...s} /></li>
+                    )}
+                  </ol>
+                </section>
+              )
+            }
+          </SpinnyOverlay>
 
           <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
             <SpinnyWheel active={this.state.googleMapsInitialized ? false : true}>
@@ -192,30 +208,16 @@ class Search extends React.Component {
   }
 }
 
-let ConnectedSearch = connect(
-  function(state, ownProps) {
-    state = state.search;
-    return {
-      schools: getSchools(state),
-      city: state.city,
-      state: state.state,
-      total: state.total,
-      current_page: state.current_page,
-      offset: state.offset,
-      is_first_page: state.is_first_page,
-      is_last_page: state.is_last_page,
-      index_of_first_item: state.index_of_first_item,
-      index_of_last_item: state.index_of_last_item,
-      result_summary: state.result_summary,
-      pagination_summary: state.pagination_summary
-    };
-  },
-)(Search);
-
 export default function() {
   return (
-    <Provider store={window.store}>
-      <ConnectedSearch />
-    </Provider>
+    <SearchContext.Provider>
+      <SearchContext.Consumer>
+        {
+          state => (
+            <Search {...state} />
+          )
+        }
+      </SearchContext.Consumer>
+    </SearchContext.Provider>
   );
 };
