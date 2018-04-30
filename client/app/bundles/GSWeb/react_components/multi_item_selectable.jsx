@@ -63,7 +63,7 @@ export default class MultiItemSelectable extends React.Component {
   }
 
   render() {
-    return <span className={this.props.className}>
+    return <React.Fragment>
       {
         Object.keys(this.props.options) // [e,m,h,p]
         .map(option => 
@@ -79,7 +79,7 @@ export default class MultiItemSelectable extends React.Component {
           )
         )
       }
-    </span>
+    </React.Fragment>
   }
 
 }

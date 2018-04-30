@@ -49,7 +49,15 @@ export function findNearLatLon(lat, lon, radius, options) {
   });
 }
 
-export function find({q, city, state, level_codes=[], page=0, limit=25} = {}) {
+export function find({
+  q,
+  city,
+  state,
+  level_codes=[],
+  entity_types=[],
+  page=0,
+  limit=25
+} = {}) {
   return $.ajax({
     url: '/gsr/api/schools/',
     data: {
@@ -57,6 +65,7 @@ export function find({q, city, state, level_codes=[], page=0, limit=25} = {}) {
       state: state,
       q: q,
       level_code: level_codes.join(','),
+      type: entity_types.join(','),
       page: page,
       limit: limit
     },

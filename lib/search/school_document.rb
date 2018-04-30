@@ -39,7 +39,8 @@ module Search
         county_s: school.county&.downcase,
         state_s: school.state.downcase,
         latlon_ll: latlon,
-        summary_rating_i: gsdata_query.summary_rating
+        summary_rating_i: gsdata_query.summary_rating,
+        level_codes: school.level_code&.split(',')
       }
     end
 

@@ -196,6 +196,10 @@ body {
           display: block;
         }
       }
+
+      .button-group + label {
+        margin-left: 10px;
+      }
     }
     .filter-panel.closed {
       @include media-breakpoint-down(xs) {

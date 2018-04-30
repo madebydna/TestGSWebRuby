@@ -1,18 +1,18 @@
 import React from 'react';
 import ButtonGroup from 'react_components/buttongroup';
 import MultiItemSelectable from 'react_components/multi_item_selectable';
-import GradeLevelContext from './grade_level_context';
+import EntityTypeContext from './entity_type_context';
 
-const options = {e: 'Elementary', m: 'Middle', h: 'High', p: 'Preschool'}
+const options = {public: 'Public', charter: 'Charter', private: 'Private'}
 
-const GradeLevelFilter = ({className='grade-filter', label='Grade level', ...otherLinkAttributes}) => {
+const EntityTypeFilter = ({className='entity-type-filter', label='Type', ...otherLinkAttributes}) => {
   return (
-    <GradeLevelContext.Consumer>
-      {({level_codes, onLevelCodesChanged}) => (
+    <EntityTypeContext.Consumer>
+      {({school_types, onEntityTypesChanged}) => (
         <React.Fragment>
           <span className='button-group hidden-xs'>
-            <MultiItemSelectable options={options} activeOptions={level_codes}
-              onSelect={onLevelCodesChanged}>
+            <MultiItemSelectable options={options} activeOptions={school_types}
+              onSelect={onEntityTypesChanged}>
               {
                 (key, label, active) =>
                   <label key={key} className={active ? 'active' : ''}>
@@ -22,8 +22,8 @@ const GradeLevelFilter = ({className='grade-filter', label='Grade level', ...oth
             </MultiItemSelectable>
           </span>
           <span className='button-group visible-xs'>
-            <MultiItemSelectable options={options} activeOptions={level_codes}
-              onSelect={onLevelCodesChanged}>
+            <MultiItemSelectable options={options} activeOptions={school_types}
+              onSelect={onEntityTypesChanged}>
               {
                 (key, label, active) => <div>
                   <input type="checkbox" key={key} checked={active} value={key} />
@@ -34,9 +34,9 @@ const GradeLevelFilter = ({className='grade-filter', label='Grade level', ...oth
           </span>
         </React.Fragment>
       )}
-    </GradeLevelContext.Consumer>
+    </EntityTypeContext.Consumer>
   )
 };
 
-export default GradeLevelFilter;
+export default EntityTypeFilter;
 

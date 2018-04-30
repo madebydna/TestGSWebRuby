@@ -10,7 +10,6 @@ class NewSearchController < ApplicationController
     gon.search = {
       schools: schools.map { |s| Api::SchoolSerializer.new(s).to_hash },
     }.merge(Api::CitySerializer.new(city_object).to_hash)
-     .merge(Api::PaginationSerializer.new(paginatable_results).to_hash)
      .merge(Api::PaginationSummarySerializer.new(paginatable_results).to_hash)
   end
 

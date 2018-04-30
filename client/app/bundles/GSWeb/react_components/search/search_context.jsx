@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import GradeLevelContext from './grade_level_context'; 
+import EntityTypeContext from './entity_type_context'; 
 import { find as findSchools } from 'api_clients/schools';
 import { debounce } from 'lodash';
 
@@ -43,6 +44,7 @@ class SearchProvider extends React.Component {
     super(props);
     this.state = {
       level_codes: props.level_codes,
+      entity_types: props.entity_types,
       city: props.city,
       state: props.state,
       schools: props.schools,
@@ -57,16 +59,23 @@ class SearchProvider extends React.Component {
       address_coordinates: props.address_coordinates,
       loadingSchools: false
     }
+    this.updateSchools = debounce(
+      this.updateSchools.bind(this),
+      500,
+      {leading: true}
+    );
     this.onLevelCodesChanged = this.onLevelCodesChanged.bind(this);
-    this.updateSchools = debounce(this.updateSchools.bind(this), 500, {leading: true}).bind(this);
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
+    this.onEntityTypesChanged = this.onEntityTypesChanged.bind(this);
     this.pageSize = 25;
   }
 
   render() {
     return <Provider value={this.state}>
       <GradeLevelContext.Provider value={{...this.state, onLevelCodesChanged: this.onLevelCodesChanged}}>
-        {this.props.children}
+        <EntityTypeContext.Provider value={{...this.state, onEntityTypesChanged: this.onEntityTypesChanged}}>
+          {this.props.children}
+        </EntityTypeContext.Provider>
       </GradeLevelContext.Provider>
     </Provider>
   }
@@ -79,13 +88,27 @@ class SearchProvider extends React.Component {
     )
   }
 
+  onEntityTypesChanged(newTypes) {
+    this.setState(
+      {
+        entity_types: newTypes,
+      }, this.updateSchools
+    )
+  }
+
   updateSchools() {
     this.setState({
       loadingSchools: true
     }, () => {
       this.findSchoolsWithReactState().done(
-        schools => this.setState({
-          schools: schools,
+        ({
+          items:schools,
+          pagination_summary,
+          result_summary
+        }) => this.setState({
+          schools,
+          pagination_summary,
+          result_summary,
           loadingSchools: false
         })
       )
@@ -100,9 +123,10 @@ class SearchProvider extends React.Component {
       state: this.state.state,
       q: this.state.q,
       level_codes: this.state.level_codes,
+      entity_types: this.state.entity_types,
       page: this.state.page,
       limit: this.pageSize
-    }, newState)).then(json => json.items);
+    }, newState));
   }
 }
 

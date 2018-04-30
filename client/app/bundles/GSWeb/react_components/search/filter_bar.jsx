@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Select from '../select';
 import Checkbox from '../checkbox';
 import GradeLevelFilter from './grade_level_filter';
+import EntityTypeFilter from './entity_type_filter';
 import OpenableCloseable from 'react_components/openable_closeable';
 
 export default class FilterBar extends React.Component {
@@ -37,6 +38,8 @@ export default class FilterBar extends React.Component {
               <div className="filters">
                 <div className="filter">
                   <label>School type</label>
+                  <EntityTypeFilter label='' />
+                  <label>Grade level</label>
                   <GradeLevelFilter label='' />
                 </div>
               </div>

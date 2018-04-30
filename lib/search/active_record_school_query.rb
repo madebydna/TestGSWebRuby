@@ -40,6 +40,24 @@ module Search
       end
     end
 
+    def result_summary(results)
+      if city
+        "#{t('number_of_schools_found', count: results.total)} #{t('in_city_state', city: city, state: state.upcase)}"
+      end
+    end
+
+    def pagination_summary(results)
+      # TODO: requires translation
+      total = results.total
+      if total == 0
+        "Showing 0 schools"
+      elsif total == 1
+        "Showing 1 school"
+      else
+        "Showing #{results.index_of_first_result} to #{results.index_of_last_result} of #{results.total} schools"
+      end
+    end
+
     private
 
     def sort_field
@@ -76,6 +94,10 @@ module Search
           relation = relation.where('school.level_code LIKE ?', "%#{level_code}%")
         end
 
+        if type
+          relation = relation.where('school.type LIKE ?', "%#{type}%")
+        end
+
         relation 
       end
     end
@@ -86,6 +108,10 @@ module Search
 
     def area_given?
       lat.present? && lon.present? && radius.present?
+    end
+
+    def t(key, **args)
+      I18n.t(key, scope: 'search.number_schools_found', **args)
     end
 
   end

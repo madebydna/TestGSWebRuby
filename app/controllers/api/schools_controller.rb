@@ -17,7 +17,7 @@ class Api::SchoolsController < ApplicationController
         next: self.next_offset_url(page_of_results),
       },
       items: serialized_schools
-    }
+    }.merge(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
   end
 
   def serialized_schools
@@ -180,8 +180,12 @@ class Api::SchoolsController < ApplicationController
     params[:radius]
   end
 
+  def types
+    params[:type]&.split(',')
+  end
+
   def type
-    params[:type]
+    types&.first
   end
 
   def point_given?

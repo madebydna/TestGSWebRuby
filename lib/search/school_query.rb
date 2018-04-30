@@ -14,6 +14,7 @@ module Search
 
       # Remove these after we are totally on Solr 7
       string :citykeyword
+      string :school_type
       string :school_database_state
       integer :overall_gs_rating
       string :school_grade_level
