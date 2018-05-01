@@ -14,8 +14,8 @@ class TestScoresCaching::FeedStateTestScoresCacherGsdata < StateCacher
 
   def build_hash_for_cache
     hashes = query_results.map { |r| result_to_hash(r) }.uniq
-    school_cache_hash = Hash.new { |h, k| h[k] = [] }
-    hashes.each_with_object(school_cache_hash) do |result_hash, cache_hash|
+    state_cache_hash = Hash.new { |h, k| h[k] = [] }
+    hashes.each_with_object(state_cache_hash) do |result_hash, cache_hash|
       result_hash = result_hash.to_hash
       if valid_result_hash?(result_hash)
         cache_hash[result_hash[:data_type]] << result_hash.except(:data_type, :percentage, :narrative, :label, :methodology)
@@ -37,7 +37,6 @@ class TestScoresCaching::FeedStateTestScoresCacherGsdata < StateCacher
     # academic_types = result.academic_types
     # display_range = display_range(result)
     state_result = state_result(result)
-    district_value = district_value(result)
     {}.tap do |h|
       h[:data_type] = result.name  #data_type.short_name
       h[:breakdowns] = breakdowns # if breakdowns
@@ -47,11 +46,8 @@ class TestScoresCaching::FeedStateTestScoresCacherGsdata < StateCacher
 # rubocop:enable Style/FormatStringToken
 # rubocop:disable Style/SafeNavigation
       h[:state_value] = state_result.value if state_result && state_result.value #data_type.value
-
-      h[:district_value] = district_value if district_value   #data_type.value
       h[:source_name] = result.source_name    #source.name
       h[:description] = result.description if result.description    #source.description
-      h[:school_cohort_count] = result.cohort_count if result.cohort_count #data_value.cohort_count
       h[:academics] = academics # if academics   #data_value.academics.pluck(:name).join(',')
       h[:academic_tags] = academic_tags # if academic_tags  #academic_tags.tag...comma separated string for all records associated with data value
       h[:grade] = result.grade if result.grade  #data_value.grade
