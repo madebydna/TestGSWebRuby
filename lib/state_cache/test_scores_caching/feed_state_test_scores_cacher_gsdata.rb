@@ -8,7 +8,7 @@ class TestScoresCaching::FeedStateTestScoresCacherGsdata < StateCacher
       begin
         DataValue.find_by_state_and_data_type_tags(state.state, 'state_test')
           .with_configuration('feeds')
-          .map {|obj| TestScoresCaching::DistrictQueryResultDecorator.new(district.state, obj)}
+          .map {|obj| TestScoresCaching::StateQueryResultDecorator.new(state.state, obj)}
       end
   end
 
@@ -28,7 +28,7 @@ class TestScoresCaching::FeedStateTestScoresCacherGsdata < StateCacher
   end
 
   private
-  
+
   def result_to_hash(result)
     breakdowns = result.breakdown_names
     breakdown_tags = result.breakdown_tags
