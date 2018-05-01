@@ -8,6 +8,7 @@ module SchoolProfiles
     DISCIPLINE_FLAG = 'Discipline Flag'
     ABSENCE_FLAG = 'Absence Flag'
     EQUITY_ADJUSTMENT_FACTOR = 'Equity Adjustment Factor'
+    CSA_BADGE = 'CSA Badge'
 
     attr_reader :school, :school_cache_keys
 
@@ -346,6 +347,10 @@ module SchoolProfiles
           output_hash[data_type_name] = most_recent_all_students if most_recent_all_students
         end
       )
+    end
+
+    def csa_badge?
+      decorated_school.ratings.has_key?(CSA_BADGE)
     end
 
     # Returns a hash that includes the percentage and sourcing info

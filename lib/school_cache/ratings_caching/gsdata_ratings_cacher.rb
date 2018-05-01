@@ -19,13 +19,14 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   # 184: Absence Flag
   # 185: Equity Adjustment Factor
   # 186: Summary Rating Weight: Equity Adjustment Factor
+  # 187: CSA Badge
 
 
 
 
 
 
-  DATA_TYPE_IDS = %w(151 155 156 157 158 159 160 175 176 177 178 179 180 181 182 183 184 185 186).freeze
+  DATA_TYPE_IDS = %w(151 155 156 157 158 159 160 175 176 177 178 179 180 181 182 183 184 185 186 187).freeze
 
   ADVANCED_COURSEWORK_DATA_TYPE_ID = 151
   ALL_STUDENTS = 'All Students'
@@ -57,6 +58,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
 
       r.each_with_object(school_cache_hash) do |result, cache_hash|
         result_hash = result_to_hash(result)
+        result_hash[:description] = result.description if result.description    #source.description
         next unless validate_result_hash(result_hash, result.data_type_id)
         cache_hash[result.name] << result_hash
       end

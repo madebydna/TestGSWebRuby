@@ -568,19 +568,7 @@ class GsdataCaching::GsDataValue
 
   def academic
     return nil unless academics.present?
-
-    if academics.split(',').length > 1
-      GSLogger.error(
-        :misc,
-        nil,
-        message: "Tried to access single academic but there were multiple. Returning first one",
-        vars: {
-          academics: academics
-        }
-      )
-    end
-
-    academics.split(',').first
+    academics
   end
 
   def has_ethnicity_tag?

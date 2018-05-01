@@ -1,5 +1,6 @@
 .profile-module {
   $flag-color: #ff3f2b;
+  $graduation-color: #155AA2;
   @include media-breakpoint-only(xs) {
     border-bottom: solid 1px #dbe6eb;
     border-top: solid 1px #dbe6eb;
@@ -200,6 +201,22 @@
     }
   }
 
+  .icon-graduation {
+    margin-left: 2px;
+    &.blue {
+      color: $graduation-color;
+    }
+  }
+
+  .csa-image {
+    text-align: center;
+  }
+
+  .csa-text {
+    @include media-breakpoint-down(md) {
+      padding-top: 15px;
+    }
+  }
 
   .icon-flag {
     margin-left: 5px;
@@ -207,4 +224,24 @@
       color: $flag-color;
     }
   }
+
+  .icon-csa-badge-year {
+    font-size: 32px;
+    color: #155aa2;
+    display: table-cell;
+    padding-right: 5px;
+  }
+
+  .csa-callout {
+    background-color: white;
+    padding: 8px;
+    margin: 5px 10px 0 0;
+    display: table;
+  }
+
+  .csa-callout-text {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
 }

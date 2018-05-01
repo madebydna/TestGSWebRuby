@@ -184,6 +184,10 @@ module SchoolProfiles
         @_college_data_array ||= [{narration: narration, title: @tab.humanize, values: data_value_hash}]
       end
 
+      def csa_badge?
+        school_cache_data_reader.csa_badge?
+      end
+
       def narration
         return nil unless visible?
         if @tab.to_sym == :college_success
@@ -209,11 +213,11 @@ module SchoolProfiles
 
         return default_college_success_narration unless narratives.present?
 
-        intro = I18n.t(:intro, scope: 'lib.college_readiness.narration.college_success', default: '',
-                       more: SchoolProfilesController.show_more('College Success')).html_safe
+        intro = I18n.t(:intro, scope: 'lib.college_readiness.narration.college_success', default: '').html_safe
         outro = I18n.t(:outro, scope: 'lib.college_readiness.narration.college_success', default: '',
                        end_more: SchoolProfilesController.show_more_end).html_safe
-        "#{intro}#{narratives.join}#{outro}"
+
+        "#{intro}#{narratives.first}#{SchoolProfilesController.show_more('College Success')}#{narratives.drop(1).join}#{outro}"
       end
 
       def narration_for_value
