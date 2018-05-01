@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GradeLevelContext from './grade_level_context'; 
 import EntityTypeContext from './entity_type_context'; 
+import SortContext from './sort_context'; 
 import { find as findSchools } from 'api_clients/schools';
 import { debounce } from 'lodash';
+import { addQueryParamToUrl } from 'util/uri';
 
 const {Provider, Consumer} = React.createContext();
 
@@ -12,13 +14,9 @@ class SearchProvider extends React.Component {
     city: gon.search.city,
     state: gon.search.state,
     schools: gon.search.schools,
-    total: gon.search.total,
-    current_page: gon.search.current_page,
-    offset: gon.search.offset,
-    is_first_page: gon.search.is_first_page,
-    is_last_page: gon.search.is_last_page,
-    index_of_first_item: gon.search.index_of_first_item,
-    index_of_last_item: gon.search.index_of_last_item,
+    sort: gon.search.sort,
+    level_codes: gon.search.level_codes || [],
+    entity_types: gon.search.entity_types || [],
     result_summary: gon.search.result_summary,
     pagination_summary: gon.search.pagination_summary,
     address_coordinates: gon.search.address_coordinates,
@@ -28,13 +26,9 @@ class SearchProvider extends React.Component {
     city: PropTypes.string,
     state: PropTypes.string,
     schools: PropTypes.array,
-    total: PropTypes.number,
-    current_page: PropTypes.number,
-    offset: PropTypes.number,
-    is_first_page: PropTypes.bool,
-    is_last_page: PropTypes.bool,
-    index_of_first_item: PropTypes.number,
-    index_of_last_item: PropTypes.number,
+    sort: PropTypes.string,
+    level_codes: PropTypes.string,
+    entity_types: PropTypes.string,
     result_summary: PropTypes.string,
     pagination_summary: PropTypes.string,
     address_coordinates: PropTypes.array,
@@ -43,17 +37,12 @@ class SearchProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      level_codes: props.level_codes,
-      entity_types: props.entity_types,
       city: props.city,
       state: props.state,
       schools: props.schools,
-      total: props.total,
-      offset: props.offset,
-      is_first_page: props.is_first_page,
-      is_last_page: props.is_last_page,
-      index_of_first_item: props.index_of_first_item,
-      index_of_last_item: props.index_of_last_item,
+      level_codes: props.level_codes,
+      entity_types: props.entity_types,
+      sort: props.sort,
       result_summary: props.result_summary,
       pagination_summary: props.pagination_summary,
       address_coordinates: props.address_coordinates,
@@ -67,24 +56,32 @@ class SearchProvider extends React.Component {
     this.onLevelCodesChanged = this.onLevelCodesChanged.bind(this);
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.onEntityTypesChanged = this.onEntityTypesChanged.bind(this);
+    this.onSortChanged = this.onSortChanged.bind(this);
     this.pageSize = 25;
   }
 
   render() {
     return <Provider value={this.state}>
-      <GradeLevelContext.Provider value={{...this.state, onLevelCodesChanged: this.onLevelCodesChanged}}>
+      <GradeLevelContext.Provider value={{level_codes: this.state.level_codes, onLevelCodesChanged: this.onLevelCodesChanged}}>
         <EntityTypeContext.Provider value={{...this.state, onEntityTypesChanged: this.onEntityTypesChanged}}>
-          {this.props.children}
+          <SortContext.Provider value={{sort: this.state.sort, onSortChanged: this.onSortChanged}}>
+            {this.props.children}
+          </SortContext.Provider>
         </EntityTypeContext.Provider>
       </GradeLevelContext.Provider>
     </Provider>
   }
 
+  // event handlers
+  
   onLevelCodesChanged(newLevelCodes) {
     this.setState(
       {
         level_codes: newLevelCodes,
-      }, this.updateSchools
+      }, () => {
+        this.updateLevelCodesFromReactState()
+        this.updateSchools()
+      }
     )
   }
 
@@ -92,9 +89,18 @@ class SearchProvider extends React.Component {
     this.setState(
       {
         entity_types: newTypes,
-      }, this.updateSchools
+      }, () => {
+        this.updateEntityTypesFromReactState()
+        this.updateSchools()
+      }
     )
   }
+
+  onSortChanged(sort) {
+    this.setState({ sort }, this.updateSchools)
+  }
+
+  // 
 
   updateSchools() {
     this.setState({
@@ -124,9 +130,44 @@ class SearchProvider extends React.Component {
       q: this.state.q,
       level_codes: this.state.level_codes,
       entity_types: this.state.entity_types,
+      sort: this.state.sort,
       page: this.state.page,
       limit: this.pageSize
     }, newState));
+  }
+
+  //
+  
+  updateLevelCodesFromReactState() {
+    let level_code_string = null;
+    if (this.state.level_codes.length > 0) {
+      level_code_string = this.state.level_codes.join(',')
+    }
+    window.history.pushState(
+      null,
+      null,
+      addQueryParamToUrl(
+        'level_code',
+        level_code_string,
+        window.location.href
+      )
+    );
+  }
+
+  updateEntityTypesFromReactState() {
+    let entity_types_string = null;
+    if (this.state.entity_types.length > 0) {
+      entity_types_string = this.state.entity_types.join(',')
+    }
+    window.history.pushState(
+      null,
+      null,
+      addQueryParamToUrl(
+        'type',
+        entity_types_string,
+        window.location.href
+      )
+    );
   }
 }
 

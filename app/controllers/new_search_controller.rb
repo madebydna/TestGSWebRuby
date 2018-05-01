@@ -9,6 +9,8 @@ class NewSearchController < ApplicationController
   def search
     gon.search = {
       schools: schools.map { |s| Api::SchoolSerializer.new(s).to_hash },
+      level_codes: level_codes,
+      entity_types: entity_types
     }.merge(Api::CitySerializer.new(city_object).to_hash)
      .merge(Api::PaginationSummarySerializer.new(paginatable_results).to_hash)
   end
@@ -38,9 +40,9 @@ class NewSearchController < ApplicationController
   def school_search
     @_school_search ||= begin
       if params[:solr7]
-        Search::SchoolQuery.new(city: city, state: state, q:q, level_codes: level_codes, offset: offset, limit: limit)
+        Search::SolrSchoolQuery.new(city: city, state: state, q:q, level_codes: level_codes, offset: offset, limit: limit)
       else
-        Search::LegacySchoolQuery.new(city: city, state: state, q:q, level_codes: level_codes, offset: offset, limit: limit)
+        Search::LegacySolrSchoolQuery.new(city: city, state: state, q:q, level_codes: level_codes, offset: offset, limit: limit)
       end
     end
   end
@@ -64,5 +66,9 @@ class NewSearchController < ApplicationController
 
   def level_codes
     params[:level_code]&.split(',')
+  end
+
+  def entity_types
+    params[:type]&.split(',')
   end
 end

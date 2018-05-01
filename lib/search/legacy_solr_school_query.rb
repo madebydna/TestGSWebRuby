@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Search
-  class LegacySchoolQuery < SchoolQuery
+  class LegacySolrSchoolQuery < SolrSchoolQuery
 
     def response
       @_response ||= begin
@@ -15,14 +15,27 @@ module Search
       end
     end
 
+    def map_sort_name_to_field(name, direction)
+      if name == 'rating' && direction == 'asc'
+        return 'sorted_gs_rating_asc'
+      elsif name == 'rating' && direction == 'desc' 
+        return 'overall_gs_rating'
+      else
+        {
+          'name' => 'school_sortable_name'
+        }[name]
+      end
+    end
+
     def sunspot_query
       lambda do |search|
         # Must reference accessor methods, not instance variables!
         search.with(:citykeyword, city.downcase) if city
         search.with(:school_database_state, state.downcase) if state
         search.with(:school_grade_level, level_codes.map(&:downcase)) if level_codes.present?
+        search.with(:school_type, entity_types.map(&:downcase)) if entity_types.present?
         search.paginate(page: page, per_page: limit)
-        search.order_by(:overall_gs_rating, :desc)
+        search.order_by(sort_field, sort_direction) if sort_field
         search.adjust_solr_params do |params|
           params[:defType] = browse? ? 'lucene' : 'dismax'
           params[:qt] = 'school-search' unless browse?
@@ -32,7 +45,8 @@ module Search
           params[:fq].map! do |param|
             param.sub(/_s(\W)/, '\1')
           end
-          params[:sort] = params[:sort].sub(/_i(\W)/, '\1')
+          params[:sort] = params[:sort].sub(/_i(\W)/, '\1') if params[:sort]
+          params[:sort] = params[:sort].sub(/_s(\W)/, '\1') if params[:sort]
         end
       end
     end

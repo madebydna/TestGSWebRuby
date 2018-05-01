@@ -25,7 +25,7 @@ export default class MultiItemSelectable extends React.Component {
   activeOptionsAsObject(activeOptions) {
     return Object.keys(this.props.options).reduce(
       (obj, option) => {
-        obj[option] = activeOptions.indexOf(option) >= 0
+        obj[option] = activeOptions && activeOptions.indexOf(option) >= 0
         return obj;
       }, {}
     )

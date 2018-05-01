@@ -55,19 +55,21 @@ export function find({
   state,
   level_codes=[],
   entity_types=[],
+  sort='rating',
   page=0,
   limit=25
 } = {}) {
   return $.ajax({
     url: '/gsr/api/schools/',
     data: {
-      city: city,
-      state: state,
-      q: q,
+      city,
+      state,
+      q,
       level_code: level_codes.join(','),
       type: entity_types.join(','),
-      page: page,
-      limit: limit
+      sort,
+      page,
+      limit
     },
     type: 'GET',
     dataType: 'json',

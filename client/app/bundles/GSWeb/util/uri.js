@@ -303,11 +303,8 @@ export function getQueryStringFromObject(obj) {
   for (var key in obj) {
     if (obj.hasOwnProperty(key)) {
       var value = obj[key];
-      if (typeof value === 'undefined') {
-        if (queryString.length > 0) {
-          queryString = queryString + '&';
-        }
-        queryString = queryString + key + '=';
+      if (typeof value === 'undefined' || value === null) {
+        // no op
       } else if (value instanceof Array) {
         for (var i = 0; i < value.length; i++) {
           if (queryString.length > 0) {

@@ -1,24 +1,8 @@
 # frozen_string_literal: true
 
 module Search
-  class ActiveRecordSchoolQuery
+  class ActiveRecordSchoolQuery < SchoolQuery
     include Pagination::Paginatable
-
-    attr_reader :state, :id, :district_id, :type, :city, :lat, :lon, :radius, :level_code
-
-    def initialize(state:, id: nil, district_id: nil, type: nil, city: nil, lat: nil, lon: nil, radius: nil, level_code: nil, offset: 0, limit: 0)
-      @state = state
-      @id = id
-      @district_id = district_id
-      @type = type
-      @city = city
-      @level_code = level_code
-      @lat = lat
-      @lon = lon
-      @radius = radius
-      @offset = offset
-      @limit = limit
-    end
 
     def max_limit
       return 10 if criteria.blank?
@@ -33,46 +17,40 @@ module Search
       @_search ||= begin
         paginated_relation = 
           criteria_relation
-            .order(sort_field)
+            .order(sort_field => sort_direction)
             .offset(offset)
             .limit(limit)
         PageOfResults.from_paginatable_query(paginated_relation, self)
       end
     end
 
-    def result_summary(results)
-      if city
-        "#{t('number_of_schools_found', count: results.total)} #{t('in_city_state', city: city, state: state.upcase)}"
-      end
+    def valid_sort_names
+      ['distance', 'name']
     end
 
-    def pagination_summary(results)
-      # TODO: requires translation
-      total = results.total
-      if total == 0
-        "Showing 0 schools"
-      elsif total == 1
-        "Showing 1 school"
-      else
-        "Showing #{results.index_of_first_result} to #{results.index_of_last_result} of #{results.total} schools"
-      end
+    def default_sort_name
+      'distance' if area_given?
+    end
+
+    def default_sort_direction
+      'asc'
+    end
+
+    def default_sort_field
+      'id'
     end
 
     private
 
-    def sort_field
-      if area_given?
-        :distance
-      else
-        :id
-      end
+    def map_sort_name_to_field(name, direction)
+      return name
     end
 
     def criteria
       {
         id: id,
         district_id: district_id,
-        type: type,
+        type: entity_types.presence,
         city: city
       }.select { |_,v| v }
     end
@@ -90,12 +68,14 @@ module Search
             having("distance < #{radius}")
         end
 
-        if level_code
-          relation = relation.where('school.level_code LIKE ?', "%#{level_code}%")
-        end
+        if level_codes
+          where_clause =
+            level_codes
+              .map { |code| 'school.level_code LIKE ?' }
+              .join(' OR ')
 
-        if type
-          relation = relation.where('school.type LIKE ?', "%#{type}%")
+           params = level_codes.map { |code| "%#{code}%" }
+           relation = relation.where(where_clause, *params)
         end
 
         relation 

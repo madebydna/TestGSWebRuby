@@ -48,7 +48,7 @@ class Api::SchoolsController < ApplicationController
   end
 
   def query
-    if q
+    if q || sort_name == 'rating'
       solr_query
     elsif point_given?
       attendance_zone_query
@@ -62,12 +62,13 @@ class Api::SchoolsController < ApplicationController
       state: state,
       id: params[:id],
       district_id: params[:district_id],
-      type: type,
+      entity_types: entity_types,
       city: city,
       lat: lat,
       lon: lon,
       radius: radius,
-      level_code: level_code,
+      level_codes: level_codes,
+      sort_name: sort_name,
       offset: offset,
       limit: limit
     )
@@ -79,18 +80,20 @@ class Api::SchoolsController < ApplicationController
 
   def solr_query
     if params[:solr7]
-      query_type = Search::SchoolQuery
+      query_type = Search::SolrSchoolQuery
     else
-      query_type = Search::LegacySchoolQuery
+      query_type = Search::LegacySolrSchoolQuery
     end
 
     query_type.new(
       city: city,
       state: state,
       level_codes: level_codes,
+      entity_types: entity_types,
       q: q,
       offset: offset,
-      limit: limit
+      limit: limit,
+      sort_name: sort_name
     )
   end
 
@@ -180,12 +183,8 @@ class Api::SchoolsController < ApplicationController
     params[:radius]
   end
 
-  def types
+  def entity_types
     params[:type]&.split(',')
-  end
-
-  def type
-    types&.first
   end
 
   def point_given?
@@ -212,6 +211,10 @@ class Api::SchoolsController < ApplicationController
 
   def city_object
     @_city_object ||= City.get_city_by_name_and_state(city, state).first
+  end
+
+  def sort_name
+    params[:sort]
   end
 
   def city

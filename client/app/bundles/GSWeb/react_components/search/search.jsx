@@ -20,6 +20,7 @@ import { getSchools } from 'reducers/search_reducer';
 import FilterBar from './filter_bar';
 import SearchContext from './search_context';
 import School from './school';
+import SortSelect from './sort_select';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -172,7 +173,8 @@ class Search extends React.Component {
   render() {
     return (
       <div className="search-component">
-        <FilterBar selectSchoolType={this.selectSchoolType}/>
+        <FilterBar/>
+        <SortSelect/>
         <h3>
           <div>{this.props.result_summary}</div>
           <div>{this.props.pagination_summary}</div>

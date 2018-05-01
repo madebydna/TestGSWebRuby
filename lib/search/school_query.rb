@@ -1,61 +1,47 @@
 # frozen_string_literal: true
 
-Sunspot.config.solr.url = ENV_GLOBAL['solr.ro.server.url']
-
 module Search
   class SchoolQuery
     include Pagination::Paginatable
+    include Sortable
 
-    Sunspot.setup(School) do
-      string :city
-      string :state
-      integer :summary_rating
-      latlon(:latlon) { Sunspot::Util::Coordinates.new(lat, lon) }
-
-      # Remove these after we are totally on Solr 7
-      string :citykeyword
-      string :school_type
-      string :school_database_state
-      integer :overall_gs_rating
-      string :school_grade_level
-    end
-    Sunspot::Adapters::DataAccessor.register(
-      SchoolSunspotDataAccessor,
-      School
-    )
-    Sunspot::Adapters::InstanceAdapter.register(
-      SchoolSunspotInstanceAdapter,
-      SchoolDocument
-    )
-
-    attr_accessor :q, :district_id, :city, :level_codes
+    attr_accessor :q, :district_id, :city, :level_codes, :entity_types, :id, :lat, :lon, :radius
     attr_reader :state
 
-    def initialize(city:nil, state:nil, q:nil, district_id:nil, level_codes: nil, offset: 0, limit: 25)
+    def initialize(
+      id: nil,
+      city: nil,
+      state: nil,
+      district_id: nil,
+      q: nil,
+      level_codes: nil,
+      entity_types: nil,
+      lat: nil,
+      lon: nil,
+      radius: nil,
+      sort_name: nil,
+      sort_direction: nil,
+      offset: -1,
+      limit: 25
+    )
+      self.id = id
       self.city = city
       self.state = state
       self.district_id = district_id
       self.q = q
+      self.level_codes = level_codes
+      self.entity_types = entity_types
+      self.lat = lat
+      self.lon = lon
+      self.radius = radius
+      self.sort_name = sort_name if self.sort_name_valid?(sort_name)
+      self.sort_direction = sort_direction
       self.limit = limit
       self.offset = offset
-      self.level_codes = level_codes
-      @client = Sunspot
-    end
-
-    def response
-      @_response ||= client.search(School, &sunspot_query)
     end
 
     def search
-      @_search ||= begin
-        PageOfResults.new(
-          School.load_all_from_associates(response.results),
-          query: self,
-          total: response.results.total_count,
-          offset: offset,
-          limit: limit
-        )
-      end
+      raise NotImplementedError
     end
 
     def result_summary(results)
@@ -86,9 +72,11 @@ module Search
       @state = abbreviation
     end
 
+
     private
 
     attr_reader :client
+
 
     def t(key, **args)
       I18n.t(key, scope: 'search.number_schools_found', **args)
@@ -100,22 +88,6 @@ module Search
 
     def default_query_string
       browse? ? '*:*' : 'school'
-    end
-
-    def sunspot_query
-      lambda do |search|
-        # Must reference accessor methods, not instance variables!
-        search.keywords(q || default_query_string)
-        search.with(:city, city.downcase) if city
-        search.with(:state, state.downcase) if state
-        # search.with(:latlon).in_radius(32, -68, 100)
-        search.paginate(page: page, per_page: limit)
-        search.order_by(:summary_rating, :desc)
-        search.adjust_solr_params do |params|
-          params[:defType] = browse? ? 'lucene' : 'dismax'   
-          params[:qt] = 'school-search' unless browse?
-        end
-      end
     end
   end
 end
