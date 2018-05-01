@@ -8,10 +8,10 @@ const options = {public: 'Public', charter: 'Charter', private: 'Private'}
 const EntityTypeFilter = ({className='entity-type-filter', label='Type', ...otherLinkAttributes}) => {
   return (
     <EntityTypeContext.Consumer>
-      {({school_types, onEntityTypesChanged}) => (
+      {({entity_types, onEntityTypesChanged}) => (
         <React.Fragment>
           <span className='button-group hidden-xs'>
-            <MultiItemSelectable options={options} activeOptions={school_types}
+            <MultiItemSelectable options={options} activeOptions={entity_types}
               onSelect={onEntityTypesChanged}>
               {
                 (key, label, active) =>
@@ -22,7 +22,7 @@ const EntityTypeFilter = ({className='entity-type-filter', label='Type', ...othe
             </MultiItemSelectable>
           </span>
           <span className='button-group visible-xs'>
-            <MultiItemSelectable options={options} activeOptions={school_types}
+            <MultiItemSelectable options={options} activeOptions={entity_types}
               onSelect={onEntityTypesChanged}>
               {
                 (key, label, active) => <div>

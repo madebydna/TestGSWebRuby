@@ -32,7 +32,7 @@ module Search
     end
 
     def sort_direction
-      map_sort_direction(sort_name, sort_direction) || default_sort_direction
+      map_sort_direction(sort_name, @sort_direction) || default_sort_direction
     end
 
     def sort_name_valid?(name)
