@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createMarkerFactory from '../../components/map/markers';
+import createMarkerFactory, * as Markers from '../../components/map/markers';
 import DefaultMapMarker from './default_map_marker';
+import createInfoWindow from '../../components/map/info_window';
 
 export default class MapMarker extends DefaultMapMarker {
   static propTypes = {
@@ -23,7 +24,6 @@ export default class MapMarker extends DefaultMapMarker {
   }
 
   componentDidMount() {
-
     // the reason we call createMarker() here and not pass in the marker as
     // a prop, is we want to wait until React mounts the component before
     // actually having to create a Google Maps marker
@@ -35,15 +35,42 @@ export default class MapMarker extends DefaultMapMarker {
       this.props.lon
     );
     this.marker.setMap(this.props.map);
-    google.maps.event.addListener( this.marker, 'click', () => this.props.onClick(this.marker));
-    if(this.props.selected) {
+    google.maps.event.addListener(this.marker, 'click', () =>
+      this.props.onClick(this.marker)
+    );
+    if (this.props.selected) {
       this.props.openInfoWindow(this.marker);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if(!this.props.selected && nextProps.selected && this.marker) {
+    if (!this.props.selected && nextProps.selected && this.marker) {
       this.props.openInfoWindow(this.marker);
     }
   }
 }
+
+const createMarkersFromSchools = (schools, selectedSchool, map) => {
+  const markers = schools.map(s => {
+    const props = {
+      title: s.name,
+      rating: s.rating,
+      lat: s.lat,
+      lon: s.lon,
+      map
+    };
+    props.key = `s${s.state}${s.id}`;
+    props.createInfoWindow = () => createInfoWindow(s);
+    if (selectedSchool && s === selectedSchool) {
+      props.selected = true;
+    }
+
+    if (s.schoolType === 'private') {
+      return <MapMarker type={Markers.PRIVATE_SCHOOL} {...props} />;
+    }
+    return <MapMarker type={Markers.PUBLIC_SCHOOL} {...props} />;
+  });
+  return markers;
+};
+
+export { createMarkersFromSchools };

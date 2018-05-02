@@ -4,15 +4,16 @@ import SpinnyWheel from '../spinny_wheel';
 import SpinnyOverlay from '../spinny_overlay';
 import * as googleMaps from '../../components/map/google_maps';
 import * as googleMapExtensions from '../../components/map/google_maps_extensions';
-import createInfoWindow from '../../components/map/info_window';
 import Map from '../../components/map/map';
-import MapMarker from '../../components/map/map_marker';
+import createMarkerFactory, {
+  createMarkersFromSchools
+} from '../../components/map/map_marker';
 import Legend from '../../components/map/legend';
-import * as markerTypes from '../../components/map/markers';
 import FilterBar from './filter_bar';
 import SearchContext from './search_context';
 import School from './school';
 import SortSelect from './sort_select';
+import SearchLayout from './search_layout';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -70,71 +71,24 @@ class Search extends React.Component {
     });
   }
 
-  renderMap() {
-    if (this.state.googleMapsInitialized) {
-      return (
-        <Map
-          googleMaps={google.maps}
-          markers={this.renderMarkers()}
-          polygons={this.renderPolygons()}
-          changeLocation={this.props.changeLocation}
-          hidden={this.state.mapHidden}
-          {...this.props}
-        />
-      );
-    }
-    const content = (
-      <div style={{ height: '400px', width: '75%', display: 'block' }} />
-    );
-    return content;
-  }
-
-  renderMarkers() {
-    const markers = this.props.schools.map(s => {
-      const props = { title: s.name, rating: s.rating, lat: s.lat, lon: s.lon };
-      props.key = `s${s.state}${s.id}`;
-      props.createInfoWindow = () => createInfoWindow(s);
-      // props.onClick = () => this.props.selectSchool(s.id, s.state);
-      if (
-        this.props.school &&
-        this.props.school.state == s.state &&
-        this.props.school.id == s.id
-      ) {
-        props.selected = true;
-      }
-      if (s.schoolType === 'private') {
-        return (
-          <MapMarker
-            type={markerTypes.PRIVATE_SCHOOL}
-            map={this.props.map}
-            {...props}
-          />
-        );
-      }
-      return (
-        <MapMarker
-          type={markerTypes.PUBLIC_SCHOOL}
-          map={this.props.map}
-          {...props}
-        />
-      );
-    });
-    return markers;
-  }
-
   render() {
     return (
-      <div className="search-component">
-        <FilterBar />
-        <SortSelect />
-        <h3>
-          <div>{this.props.result_summary}</div>
-          <div>{this.props.pagination_summary}</div>
-        </h3>
-        <div className="right-rail">
-          <div className="ad-bar">Advertisement</div>
-        </div>
-        <div className="list-and-map">
+      <SearchLayout
+        renderHeader={() => (
+          <React.Fragment>
+            <FilterBar />
+            <SortSelect />
+            <h3>
+              <div>{this.props.result_summary}</div>
+              <div>{this.props.pagination_summary}</div>
+            </h3>
+            <div className="right-rail">
+              <div className="ad-bar">Advertisement</div>
+            </div>
+          </React.Fragment>
+        )}
+        renderRightRail={() => <div className="ad-bar">Advertisement</div>}
+        renderList={() => (
           <SpinnyOverlay spin={this.props.loadingSchools}>
             {({ createContainer, spinny }) =>
               createContainer(
@@ -151,15 +105,33 @@ class Search extends React.Component {
               )
             }
           </SpinnyOverlay>
-
+        )}
+        renderMap={() => (
           <div className={this.state.mapHidden ? 'map closed' : 'map'}>
             <SpinnyWheel active={!this.state.googleMapsInitialized}>
-              {this.renderMap()}
+              {this.state.googleMapsInitialized && (
+                <Map
+                  googleMaps={google.maps}
+                  markers={createMarkersFromSchools(
+                    this.props.schools,
+                    this.props.school,
+                    this.map
+                  )}
+                  changeLocation={this.props.changeLocation}
+                  hidden={this.state.mapHidden}
+                  {...this.props}
+                />
+              )}
+              {!this.state.googleMapsInitialized && (
+                <div
+                  style={{ height: '400px', width: '75%', display: 'block' }}
+                />
+              )}
               <Legend content={<div>ASSETS/COPY HERE!</div>} />
             </SpinnyWheel>
           </div>
-        </div>
-      </div>
+        )}
+      />
     );
   }
 }
