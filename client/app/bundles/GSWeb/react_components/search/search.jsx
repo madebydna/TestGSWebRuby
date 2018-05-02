@@ -1,22 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Provider } from 'react-redux';
 import SpinnyWheel from '../spinny_wheel';
 import SpinnyOverlay from '../spinny_overlay';
-import * as google_maps from '../../components/map/google_maps';
-import * as google_map_extensions from '../../components/map/google_maps_extensions';
+import * as googleMaps from '../../components/map/google_maps';
+import * as googleMapExtensions from '../../components/map/google_maps_extensions';
 import createInfoWindow from '../../components/map/info_window';
 import Map from '../../components/map/map';
 import MapMarker from '../../components/map/map_marker';
 import Legend from '../../components/map/legend';
-import DefaultMapMarker from '../../components/map/default_map_marker';
-import Polygon from '../district_boundaries/polygon';
-import ConnectedSearchBar from '../district_boundaries/connected_search_bar';
 import * as markerTypes from '../../components/map/markers';
-import * as polygonTypes from '../../components/map/polygons';
-import jsxToString from 'jsx-to-string';
-import { getSchools } from 'reducers/search_reducer';
 import FilterBar from './filter_bar';
 import SearchContext from './search_context';
 import School from './school';
@@ -24,24 +16,22 @@ import SortSelect from './sort_select';
 
 class Search extends React.Component {
   static defaultProps = {
-    loadingSchools: false
+    city: null,
+    state: null,
+    schools: [],
+    loadingSchools: false,
+    changeLocation: () => {}
   };
 
   static propTypes = {
     city: PropTypes.string,
     state: PropTypes.string,
-    schools: PropTypes.array,
-    total: PropTypes.number,
-    current_page: PropTypes.number,
-    offset: PropTypes.number,
-    is_first_page: PropTypes.bool,
-    is_last_page: PropTypes.bool,
-    index_of_first_item: PropTypes.number,
-    index_of_last_item: PropTypes.number,
-    result_summary: PropTypes.string,
-    pagination_summary: PropTypes.string,
-    address_coordinates: PropTypes.array,
-    loadingSchools: PropTypes.bool
+    schools: PropTypes.arrayOf(PropTypes.object),
+    result_summary: PropTypes.string.isRequired,
+    pagination_summary: PropTypes.string.isRequired,
+    address_coordinates: PropTypes.arrayOf(PropTypes.object).isRequired,
+    loadingSchools: PropTypes.bool,
+    changeLocation: PropTypes.func
   };
 
   constructor(props) {
@@ -53,108 +43,18 @@ class Search extends React.Component {
     this.state = {
       googleMapsInitialized: false,
       listHidden: true
-    }
+    };
     this.initGoogleMaps();
   }
 
-  componentDidMount() {
-    if(this.props.schoolId && this.props.state) {
-      this.props.locateSchool(this.props.state, this.props.schoolId);
-    } else if(this.props.districtId && this.props.state) {
-      this.props.locateDistrict(this.props.state, this.props.districtId);
-    } else if(this.props.lat && this.props.lon) {
-      if(this.props.changeLocation) {this.props.changeLocation(this.props.lat, this.props.lon)};
-    } else {
-      // do nothing
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if(!prevProps.locationChangeFailure && this.props.locationChangeFailure) {
-      alert('No results found. Please try a different search.');
-      this.props.resetErrors();
-    }
-    if(!prevProps.apiFailure && this.props.apiFailure) {
-      alert('An error occurred. Please try again in a moment.');
-      this.props.resetErrors();
-    }
-  }
-
   initGoogleMaps() {
-    google_maps.init(function() {
-      google_map_extensions.init();
+    googleMaps.init(() => {
+      googleMapExtensions.init();
       this.setState({
         googleMapsInitialized: true
       });
-    }.bind(this));
-  }
-
-  renderMarkers() {
-    let anySchoolMarkerSelected = false;
-    let markers = this.props.schools.map(s => {
-      let props = {title: s.name, rating: s.rating, lat: s.lat, lon: s.lon};
-      props.key = 's' + s.state + s.id;
-      props.createInfoWindow = () => createInfoWindow(s);
-      // props.onClick = () => this.props.selectSchool(s.id, s.state);
-      if(this.props.school && this.props.school.state == s.state && this.props.school.id == s.id) {
-        props.selected = true;
-        anySchoolMarkerSelected = true;
-      }
-      if(s.schoolType == 'private') {
-        return <MapMarker type={markerTypes.PRIVATE_SCHOOL} map={this.props.map} {...props} />
-      } else {
-        return <MapMarker type={markerTypes.PUBLIC_SCHOOL} map={this.props.map} {...props} />
-      }
     });
-    // markers = markers.concat(this.props.districts.map(d => {
-    //   let props = {title: d.name, rating: null, lat: d.lat, lon: d.lon};
-    //   props.key = 'd' + d.state + d.id;
-    //   props.createInfoWindow = () => createInfoWindow(d);
-    //   props.onClick = () => this.props.selectDistrict(d.id, d.state);
-    //   if(!anySchoolMarkerSelected && this.props.district && this.props.district.state == d.state && this.props.district.id == d.id) {
-    //     props.selected = true;
-    //   }
-    //   return <MapMarker type={markerTypes.DISTRICT} {...props} />
-    // }));
-    //DEFAULT LOCATION PIN
-    // if (this.props.lat && this.props.lon) {
-    //   let props = {lat: this.props.lat, lon: this.props.lon};
-    //   props.key = 'locationMarkerl' + this.props.lat + 'l' + this.props.lon;
-    //   markers = markers.concat(<DefaultMapMarker {...props} />);
-    // }
-    return markers;
   }
-
-  renderPolygons() {
-    let polygons = [];
-    if(this.props.schoolBoundaryCoordinates) {
-      let key = 's'+ this.props.school.state + this.props.school.id;
-      polygons.push(<Polygon key={key} type={polygonTypes.SCHOOL} coordinates={this.props.schoolBoundaryCoordinates}/>);
-    }
-    if(this.props.districtBoundaryCoordinates) {
-      let key = 'd'+ this.props.district.state + this.props.district.id;
-      polygons.push(<Polygon key={key} type={polygonTypes.DISTRICT} coordinates={this.props.districtBoundaryCoordinates}/>);
-    }
-    return polygons;
-  }
-
-  renderMap() {
-    if(this.state.googleMapsInitialized) {
-      return(
-        <Map
-          googleMaps={google.maps}
-          markers={this.renderMarkers()}
-          polygons={this.renderPolygons()}
-          changeLocation={this.props.changeLocation}
-          hidden={this.state.mapHidden}
-          {...this.props}
-        />
-      );
-    } else {
-      let content = <div style={{height: '400px', width:'75%',display:'block'}}></div>
-      return content;
-    }
-  };
 
   showMapView() {
     this.setState({
@@ -170,38 +70,92 @@ class Search extends React.Component {
     });
   }
 
+  renderMap() {
+    if (this.state.googleMapsInitialized) {
+      return (
+        <Map
+          googleMaps={google.maps}
+          markers={this.renderMarkers()}
+          polygons={this.renderPolygons()}
+          changeLocation={this.props.changeLocation}
+          hidden={this.state.mapHidden}
+          {...this.props}
+        />
+      );
+    }
+    const content = (
+      <div style={{ height: '400px', width: '75%', display: 'block' }} />
+    );
+    return content;
+  }
+
+  renderMarkers() {
+    const markers = this.props.schools.map(s => {
+      const props = { title: s.name, rating: s.rating, lat: s.lat, lon: s.lon };
+      props.key = `s${s.state}${s.id}`;
+      props.createInfoWindow = () => createInfoWindow(s);
+      // props.onClick = () => this.props.selectSchool(s.id, s.state);
+      if (
+        this.props.school &&
+        this.props.school.state == s.state &&
+        this.props.school.id == s.id
+      ) {
+        props.selected = true;
+      }
+      if (s.schoolType === 'private') {
+        return (
+          <MapMarker
+            type={markerTypes.PRIVATE_SCHOOL}
+            map={this.props.map}
+            {...props}
+          />
+        );
+      }
+      return (
+        <MapMarker
+          type={markerTypes.PUBLIC_SCHOOL}
+          map={this.props.map}
+          {...props}
+        />
+      );
+    });
+    return markers;
+  }
+
   render() {
     return (
       <div className="search-component">
-        <FilterBar/>
-        <SortSelect/>
+        <FilterBar />
+        <SortSelect />
         <h3>
           <div>{this.props.result_summary}</div>
           <div>{this.props.pagination_summary}</div>
         </h3>
         <div className="right-rail">
-          <div className='ad-bar'>Advertisement</div>
+          <div className="ad-bar">Advertisement</div>
         </div>
         <div className="list-and-map">
           <SpinnyOverlay spin={this.props.loadingSchools}>
-            {({createContainer, spinny}) =>
+            {({ createContainer, spinny }) =>
               createContainer(
-                <section className='school-list'>
+                <section className="school-list">
                   {spinny}
                   <ol>
-                    {this.props.schools.map(s => 
-                        <li className={s.active ? 'active' : ''}><School {...s} /></li>
-                    )}
+                    {this.props.schools.map(s => (
+                      <li className={s.active ? 'active' : ''}>
+                        <School {...s} />
+                      </li>
+                    ))}
                   </ol>
                 </section>
               )
             }
           </SpinnyOverlay>
 
-          <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
-            <SpinnyWheel active={this.state.googleMapsInitialized ? false : true}>
+          <div className={this.state.mapHidden ? 'map closed' : 'map'}>
+            <SpinnyWheel active={!this.state.googleMapsInitialized}>
               {this.renderMap()}
-              <Legend content={<div>ASSETS/COPY HERE!</div>}/>
+              <Legend content={<div>ASSETS/COPY HERE!</div>} />
             </SpinnyWheel>
           </div>
         </div>
@@ -214,12 +168,8 @@ export default function() {
   return (
     <SearchContext.Provider>
       <SearchContext.Consumer>
-        {
-          state => (
-            <Search {...state} />
-          )
-        }
+        {state => <Search {...state} />}
       </SearchContext.Consumer>
     </SearchContext.Provider>
   );
-};
+}

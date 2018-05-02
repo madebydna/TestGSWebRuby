@@ -1,8 +1,22 @@
 {
-    "extends": "airbnb",
-    "plugins": [
-        "react",
-        "jsx-a11y",
-        "import"
-    ]
+  "extends": ["airbnb", "prettier"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["prettier"],
+  "settings": {
+    "import/resolver": {
+      "babel-module": {
+        "alias": {
+          "react_components": "./app/bundles/GSWeb/react_components",
+          "util": "./app/bundles/GSWeb/util",
+          "api_clients": "./app/bundles/GSWeb/api_clients"
+        }
+      }
+    }
+  }
 }
