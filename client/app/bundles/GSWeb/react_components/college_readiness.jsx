@@ -76,7 +76,11 @@ export default class CollegeReadiness extends SchoolProfileComponent {
   }
 
   csaCallout() {
-    let eligible = this.filteredData()[1].csa_badge;
+    let eligible = null;
+    if(this.filteredData()[1] !== undefined) {
+      eligible = this.filteredData()[1].csa_badge;
+    }
+
     return ( eligible &&
       <div className="csa-callout">
         <span className='icon-csa-badge-year'/>

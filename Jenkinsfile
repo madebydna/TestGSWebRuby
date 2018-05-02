@@ -180,8 +180,8 @@ node('slave') {
 
 stage "Test"
 
-def parallelTests = [1,2,3,4,5,6,7,8].collectEntries([:]) { ["_specs${it}", makeBranch(it, groups)] }
-parallelTests += [1,2,3,4,5,6,7,8].collectEntries([:]) { ["featurespecs${it}", makeJSBranch(it, groups)] }
+def parallelTests = [1,2].collectEntries([:]) { ["_specs${it}", makeBranch(it, groups)] }
+parallelTests += [1,2].collectEntries([:]) { ["featurespecs${it}", makeJSBranch(it, groups)] }
 parallelTests['failFast'] = true
 parallel parallelTests
 

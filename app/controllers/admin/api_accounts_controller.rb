@@ -26,7 +26,7 @@ class Admin::ApiAccountsController < ApplicationController
 
   # Handles user-initiated api account creation
   def create_api_account
-    @api_account = ApiAccount.new(api_account_params)
+    @api_account = ApiAccount.new(api_account_params.merge(api_key: nil))
     if @api_account.save
       ApiRequestReceivedEmail.deliver_to_api_key_requester(@api_account)
       ApiRequestToModerateEmail.deliver_to_admin(@api_account)
@@ -67,9 +67,8 @@ class Admin::ApiAccountsController < ApplicationController
   end
 
   def create_api_key
-    prior_key = @api_account.api_key
     @api_account.save_unique_api_key
-    NewApiKeyEmail.deliver_to_api_user(@api_account) if prior_key.nil?
+    NewApiKeyEmail.deliver_to_api_user(@api_account)
     render json: { apiKey: @api_account.api_key}
   end
 
