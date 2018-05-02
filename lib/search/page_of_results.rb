@@ -15,7 +15,7 @@ module Search
       )
     end
 
-    def initialize(results, query:nil, total: 0, offset:0, limit: 0)
+    def initialize(results, query:nil, total:, offset:, limit:)
       # by default delegate to results, by way of SimpleDelegator
       super(results) 
       @query = query
@@ -25,11 +25,11 @@ module Search
     end
 
     def pagination_summary
-      @query&.pagination_summary(self)
+      @query.try(:pagination_summary,self)
     end
 
     def result_summary
-      @query&.result_summary(self)
+      @query.try(:result_summary,self)
     end
   end
 end

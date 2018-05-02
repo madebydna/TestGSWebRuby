@@ -75,7 +75,13 @@ class Api::SchoolsController < ApplicationController
   end
 
   def attendance_zone_query
-    SchoolAttendanceZoneQuery.new(lat: lat, lon: lon, level: boundary_level)
+    ::Search::SchoolAttendanceZoneQuery.new(
+      lat: lat,
+      lon: lon,
+      level: boundary_level,
+      offset: offset,
+      limit: limit
+    )
   end
 
   def solr_query
