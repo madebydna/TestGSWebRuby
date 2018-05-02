@@ -218,7 +218,7 @@ class Api::SchoolsController < ApplicationController
   end
 
   def city
-    params[:city].try(:gsub, '-', ' ').gs_capitalize_words
+    params[:city]&.gsub('-', ' ')&.gs_capitalize_words
   end
 
   # reading about API design, I tend to agree that rather than make multiple

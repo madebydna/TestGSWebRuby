@@ -20,18 +20,13 @@ module ApiPagination
   end
 
   def offset
-    if params[:page]
-      (params[:page] * limit)
-    else
-      params[:offset].to_i
-    end
+    params[:offset].to_i
   end
 
   def limit
     l = (params[:limit] || pagination_default_limit).to_i
     [l, pagination_max_limit].min
   end
-  alias_method :page_size, :limit
 
   def first_page?
     offset.zero?
@@ -39,8 +34,7 @@ module ApiPagination
 
   def last_page?
     items = instance_exec(&pagination_items_proc)
-    # items.total < limit
-    items.last_page?
+    items.size < limit
   end
 
   def previous_offset
@@ -48,7 +42,8 @@ module ApiPagination
   end
 
   def next_offset
-    offset + limit unless last_page?
+    items = instance_exec(&pagination_items_proc)
+    offset + limit if items.size == limit
   end
 
   def prev
@@ -61,10 +56,6 @@ module ApiPagination
     unless last_page?
       url_for(request.params.merge(offset: next_offset, limit: limit))
     end
-  end
-
-  def page
-    (offset / page_size) + 1
   end
 
 end
