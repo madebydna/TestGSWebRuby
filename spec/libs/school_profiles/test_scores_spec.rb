@@ -31,14 +31,6 @@ describe SchoolProfiles::TestScores do
     )
   }
 
-  it 'sort array of openStructs correctly' do
-    expect(hero.sort_by_number_tested_descending([os_obj_1, os_obj_2, os_obj_3])).to eq([os_obj_3, os_obj_2, os_obj_1])
-  end
-
-  it 'sort array of openStructs correctly with missing data point' do
-    expect(hero.sort_by_number_tested_descending([os_obj_1, os_obj_4, os_obj_3])).to eq([os_obj_3, os_obj_1, os_obj_4])
-  end
-
 end
 
 

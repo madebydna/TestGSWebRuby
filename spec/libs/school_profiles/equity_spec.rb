@@ -17,8 +17,8 @@ describe SchoolProfiles::Equity do
   end
 
   describe '#sources_for_view' do
-    subject { equity.sources_for_view(hash) }
-    let(:hash) { valid_hash }
+    subject { equity.sources_text(hash) }
+    let(:hash) { OpenStruct.new(valid_hash) }
     let(:valid_hash) do
       {
         label: 'foo',

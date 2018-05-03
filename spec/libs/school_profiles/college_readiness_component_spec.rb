@@ -263,8 +263,8 @@ describe 'CollegeReadinessComponent' do
   end
 
   describe '#sources_for_view' do
-    subject { college_readiness.sources_for_view(hash) }
-    let(:hash) { valid_hash }
+    subject { college_readiness.sources_text(hash) }
+    let(:hash) { OpenStruct.new(valid_hash) }
     let(:valid_hash) do
       {
         'data_type' => 'foo',

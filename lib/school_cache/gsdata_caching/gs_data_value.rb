@@ -76,7 +76,7 @@ class GsdataCaching::GsDataValue
       select do |dv|
         # data value selected if it has no breakdown or all its breakdowns
         # are contained within the given list
-        dv.all_students? || (breakdowns & dv.breakdowns.split(',')) == dv.breakdowns
+        dv.all_students? || (breakdowns & dv.breakdowns) == dv.breakdowns
       end.extend(CollectionMethods)
     end
 
@@ -174,9 +174,13 @@ class GsdataCaching::GsDataValue
         .extend(CollectionMethods)
     end
 
+    def having_academics
+      select { |dv| dv.academics.present? }.extend(CollectionMethods)
+    end
+
     def group_by_academics
       group_by do |dv|
-        if dv.academics.include?(',')
+        if dv.academics.present? && dv.academics.include?(',')
           GSLogger.error(
             :misc,
             nil,
@@ -486,10 +490,7 @@ class GsdataCaching::GsDataValue
 
   def remove_504_category_breakdown!
     if self.breakdowns.present?
-      self.breakdowns = 
-        breakdowns
-          .gsub('All students except 504 category,','')
-          .gsub(/,All students except 504 category$/,'')
+      self.breakdowns = self.breakdowns - ['All students except 504 category']
     end
   end
 
@@ -540,14 +541,25 @@ class GsdataCaching::GsDataValue
   end
 
   def breakdowns=(breakdowns)
+    breakdowns ||= []
     if breakdowns.is_a?(String)
-      breakdowns = breakdowns.gsub('All Students', 'All students')
+      breakdowns = breakdowns
+        .gsub('All Students', 'All students')
+        .split(',')
+      @breakdowns = breakdowns
+    elsif breakdowns.is_a?(Array)
+      @breakdowns = breakdowns
+    else
+      raise ArgumentError.new('breakdowns= only accepts String or Array')
     end
-    @breakdowns = breakdowns
   end
 
   def breakdowns
-    @breakdowns
+    @breakdowns || []
+  end
+
+  def breakdown
+    breakdowns.join(',')
   end
 
   def all_students?

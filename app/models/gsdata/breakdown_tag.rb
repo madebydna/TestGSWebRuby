@@ -7,7 +7,7 @@ class BreakdownTag < ActiveRecord::Base
   attr_accessible :tag, :active, :breakdown
   alias_attribute :name, :tag
 
-  belongs_to :breakdown, inverse_of: :tags
+  belongs_to :breakdown, inverse_of: :breakdown_tags
 
   def self.from_hash(hash)
     self.name = hash['tag']

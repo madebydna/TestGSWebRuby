@@ -78,7 +78,7 @@ class SchoolCacheResults
         CachedProgramsMethods
       when 'progress_bar'
         CachedProgressBarMethods
-      when 'test_scores'
+      when 'test_scores_gsdata'
         CachedTestScoresMethods
       when 'feed_test_scores'
         CachedFeedTestScoresMethods
