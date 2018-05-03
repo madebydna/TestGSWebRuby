@@ -6,12 +6,12 @@ const options = { e: 'Elementary', m: 'Middle', h: 'High', p: 'Preschool' };
 
 const GradeLevelFilter = () => (
   <GradeLevelContext.Consumer>
-    {({ level_codes, onLevelCodesChanged }) => (
+    {({ levelCodes, onLevelCodesChanged }) => (
       <React.Fragment>
         <span className="button-group hidden-xs">
           <MultiItemSelectable
             options={options}
-            activeOptions={level_codes}
+            activeOptions={levelCodes}
             onSelect={onLevelCodesChanged}
           >
             {(key, label, active) => (
@@ -24,7 +24,7 @@ const GradeLevelFilter = () => (
         <span className="button-group visible-xs">
           <MultiItemSelectable
             options={options}
-            activeOptions={level_codes}
+            activeOptions={levelCodes}
             onSelect={onLevelCodesChanged}
           >
             {(key, label, active) => (

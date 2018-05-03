@@ -2,47 +2,49 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { find as findSchools } from 'api_clients/schools';
 import { debounce } from 'lodash';
-import { addQueryParamToUrl } from 'util/uri';
 import GradeLevelContext from './grade_level_context';
 import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
+import QueryParamSubscriber from 'query_param_subscriber';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
 
 class SearchProvider extends React.Component {
   static defaultProps = {
+    q: gon.search.q,
     city: gon.search.city,
     state: gon.search.state,
     schools: gon.search.schools,
+    levelCodes: gon.search.levelCodes || [],
+    entityTypes: gon.search.entityTypes || [],
     sort: gon.search.sort,
-    level_codes: gon.search.level_codes || [],
-    entity_types: gon.search.entity_types || [],
+    page: gon.search.page,
     result_summary: gon.search.result_summary,
     pagination_summary: gon.search.pagination_summary
   };
 
   static propTypes = {
+    q: PropTypes.string,
     city: PropTypes.string,
     state: PropTypes.string,
     schools: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
+    levelCodes: PropTypes.arrayOf(PropTypes.string),
+    entityTypes: PropTypes.arrayOf(PropTypes.string),
     sort: PropTypes.string,
-    level_codes: PropTypes.string,
-    entity_types: PropTypes.string,
+    page: PropTypes.string,
     result_summary: PropTypes.string,
     pagination_summary: PropTypes.string,
-    children: PropTypes.element.isRequired
+    children: PropTypes.element.isRequired,
+    onLevelCodesChanged: PropTypes.func.isRequired,
+    onEntityTypesChanged: PropTypes.func.isRequired,
+    onSortChanged: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      city: props.city,
-      state: props.state,
       schools: props.schools,
-      level_codes: props.level_codes,
-      entity_types: props.entity_types,
-      sort: props.sort,
       result_summary: props.result_summary,
       pagination_summary: props.pagination_summary,
       loadingSchools: false
@@ -50,44 +52,19 @@ class SearchProvider extends React.Component {
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
     });
-    this.onLevelCodesChanged = this.onLevelCodesChanged.bind(this);
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
-    this.onEntityTypesChanged = this.onEntityTypesChanged.bind(this);
-    this.onSortChanged = this.onSortChanged.bind(this);
     this.pageSize = 25;
   }
 
-  // event handlers
-
-  onLevelCodesChanged(newLevelCodes) {
-    this.setState(
-      {
-        level_codes: newLevelCodes
-      },
-      () => {
-        this.updateLevelCodesFromReactState();
-        this.updateSchools();
-      }
-    );
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      prevProps.levelCodes !== this.props.levelCodes ||
+      prevProps.entityTypes !== this.props.entityTypes ||
+      prevProps.sort !== this.props.sort
+    ) {
+      this.updateSchools();
+    }
   }
-
-  onEntityTypesChanged(newTypes) {
-    this.setState(
-      {
-        entity_types: newTypes
-      },
-      () => {
-        this.updateEntityTypesFromReactState();
-        this.updateSchools();
-      }
-    );
-  }
-
-  onSortChanged(sort) {
-    this.setState({ sort }, this.updateSchools);
-  }
-
-  //
 
   updateSchools() {
     this.setState(
@@ -114,13 +91,13 @@ class SearchProvider extends React.Component {
     return findSchools(
       Object.assign(
         {
-          city: this.state.city,
-          state: this.state.state,
-          q: this.state.q,
-          level_codes: this.state.level_codes,
-          entity_types: this.state.entity_types,
-          sort: this.state.sort,
-          page: this.state.page,
+          city: this.props.city,
+          state: this.props.state,
+          q: this.props.q,
+          levelCodes: this.props.levelCodes,
+          entityTypes: this.props.entityTypes,
+          sort: this.props.sort,
+          page: this.props.page,
           limit: this.pageSize
         },
         newState
@@ -130,51 +107,30 @@ class SearchProvider extends React.Component {
 
   //
 
-  updateLevelCodesFromReactState() {
-    let levelCodeString = null;
-    if (this.state.level_codes.length > 0) {
-      levelCodeString = this.state.level_codes.join(',');
-    }
-    window.history.pushState(
-      null,
-      null,
-      addQueryParamToUrl('level_code', levelCodeString, window.location.href)
-    );
-  }
-
-  updateEntityTypesFromReactState() {
-    let entityTypeString = null;
-    if (this.state.entity_types.length > 0) {
-      entityTypeString = this.state.entity_types.join(',');
-    }
-    window.history.pushState(
-      null,
-      null,
-      addQueryParamToUrl('type', entityTypeString, window.location.href)
-    );
-  }
-
-  //
-
   render() {
     return (
-      <Provider value={this.state}>
+      <Provider
+        value={{
+          loadingSchools: this.state.loadingSchools,
+          schools: this.state.schools
+        }}
+      >
         <GradeLevelContext.Provider
           value={{
-            level_codes: this.state.level_codes,
-            onLevelCodesChanged: this.onLevelCodesChanged
+            levelCodes: this.props.levelCodes,
+            onLevelCodesChanged: this.props.onLevelCodesChanged
           }}
         >
           <EntityTypeContext.Provider
             value={{
-              ...this.state,
-              onEntityTypesChanged: this.onEntityTypesChanged
+              entityTypes: this.props.entityTypes,
+              onEntityTypesChanged: this.props.onEntityTypesChanged
             }}
           >
             <SortContext.Provider
               value={{
-                sort: this.state.sort,
-                onSortChanged: this.onSortChanged
+                sort: this.props.sort,
+                onSortChanged: this.props.onSortChanged
               }}
             >
               {this.props.children}
@@ -186,4 +142,34 @@ class SearchProvider extends React.Component {
   }
 }
 
-export default { Consumer, Provider: SearchProvider };
+const SearchProviderWithQueryParams = props => (
+  <QueryParamSubscriber
+    paramConfigs={[
+      {
+        param: 'level',
+        newName: 'levelCodes',
+        funcName: 'onLevelCodesChanged',
+        readTransform: param => (param ? param.split(',') : []),
+        writeTransform: array =>
+          array && array.length > 0 ? array.join(',') : null
+      },
+      {
+        param: 'type',
+        newName: 'entityTypes',
+        funcName: 'onEntityTypesChanged',
+        readTransform: param => (param ? param.split(',') : []),
+        writeTransform: array =>
+          array && array.length > 0 ? array.join(',') : null
+      },
+      {
+        param: 'sort',
+        newName: 'sort',
+        funcName: 'onSortChanged'
+      }
+    ]}
+  >
+    {extraProps => <SearchProvider {...extraProps} {...props} />}
+  </QueryParamSubscriber>
+);
+
+export default { Consumer, Provider: SearchProviderWithQueryParams };

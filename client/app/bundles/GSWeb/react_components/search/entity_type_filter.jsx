@@ -6,12 +6,12 @@ const options = { public: 'Public', charter: 'Charter', private: 'Private' };
 
 const EntityTypeFilter = () => (
   <EntityTypeContext.Consumer>
-    {({ entity_types, onEntityTypesChanged }) => (
+    {({ entityTypes, onEntityTypesChanged }) => (
       <React.Fragment>
         <span className="button-group hidden-xs">
           <MultiItemSelectable
             options={options}
-            activeOptions={entity_types}
+            activeOptions={entityTypes}
             onSelect={onEntityTypesChanged}
           >
             {(key, label, active) => (
@@ -24,7 +24,7 @@ const EntityTypeFilter = () => (
         <span className="button-group visible-xs">
           <MultiItemSelectable
             options={options}
-            activeOptions={entity_types}
+            activeOptions={entityTypes}
             onSelect={onEntityTypesChanged}
           >
             {(key, label, active) => (

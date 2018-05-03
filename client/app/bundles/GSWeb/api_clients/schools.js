@@ -2,7 +2,7 @@
 
 export function findById(id, options) {
   return $.ajax({
-    url: '/gsr/api/schools/' + id.toString(),
+    url: `/gsr/api/schools/${id.toString()}`,
     data: options,
     type: 'GET',
     dataType: 'json',
@@ -13,9 +13,12 @@ export function findById(id, options) {
 export function findByDistrict(districtId, options) {
   return $.ajax({
     url: '/gsr/api/schools/',
-    data: Object.assign({
-      district_id: districtId
-    }, options),
+    data: Object.assign(
+      {
+        district_id: districtId
+      },
+      options
+    ),
     type: 'GET',
     dataType: 'json',
     timeout: 6000
@@ -25,10 +28,13 @@ export function findByDistrict(districtId, options) {
 export function findByLatLon(lat, lon, options) {
   return $.ajax({
     url: '/gsr/api/schools/',
-    data: Object.assign({
-      lat: lat,
-      lon: lon
-    }, options),
+    data: Object.assign(
+      {
+        lat,
+        lon
+      },
+      options
+    ),
     type: 'GET',
     dataType: 'json',
     timeout: 6000
@@ -38,11 +44,14 @@ export function findByLatLon(lat, lon, options) {
 export function findNearLatLon(lat, lon, radius, options) {
   return $.ajax({
     url: '/gsr/api/schools/',
-    data: Object.assign({
-      lat: lat,
-      lon: lon,
-      radius: radius
-    }, options),
+    data: Object.assign(
+      {
+        lat,
+        lon,
+        radius
+      },
+      options
+    ),
     type: 'GET',
     dataType: 'json',
     timeout: 6000
@@ -53,11 +62,11 @@ export function find({
   q,
   city,
   state,
-  level_codes=[],
-  entity_types=[],
-  sort='rating',
-  page=0,
-  limit=25
+  levelCodes = [],
+  entityTypes = [],
+  sort = 'rating',
+  page = 0,
+  limit = 25
 } = {}) {
   return $.ajax({
     url: '/gsr/api/schools/',
@@ -65,8 +74,8 @@ export function find({
       city,
       state,
       q,
-      level_code: level_codes.join(','),
-      type: entity_types.join(','),
+      level_code: levelCodes.join(','),
+      type: entityTypes.join(','),
       sort,
       page,
       limit
