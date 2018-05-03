@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getFromQueryString, addQueryParamToUrl } from 'util/uri';
+import { getFromQueryString, putIntoQueryString } from 'util/uri';
 import createHistory from 'history/createBrowserHistory';
 
 const history = createHistory();
@@ -32,12 +32,13 @@ class QueryParamSubscriber extends React.Component {
   }
 
   writeParamToUrl(param, newValue, writeTransform) {
-    const url = addQueryParamToUrl(
+    const query = putIntoQueryString(
+      history.location.search,
       param,
       writeTransform ? writeTransform(newValue) : newValue,
-      window.location.href
+      true
     );
-    window.history.pushState(null, null, url);
+    history.push({ search: query });
     this.forceUpdate();
   }
 
@@ -53,7 +54,10 @@ class QueryParamSubscriber extends React.Component {
         writeTransform
       } = config;
 
-      const paramValue = getFromQueryString(param);
+      const paramValue = getFromQueryString(
+        param,
+        history.location.search.substring(1)
+      );
       if (newName) {
         obj[newName] = readTransform ? readTransform(paramValue) : paramValue;
       } else {
