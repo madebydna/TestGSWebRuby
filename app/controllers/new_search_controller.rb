@@ -9,10 +9,15 @@ class NewSearchController < ApplicationController
   def search
     gon.search = {
       schools: schools.map { |s| Api::SchoolSerializer.new(s).to_hash },
-      level_codes: level_codes,
-      entity_types: entity_types
     }.merge(Api::CitySerializer.new(city_object).to_hash)
-     .merge(Api::PaginationSummarySerializer.new(paginatable_results).to_hash)
+     .merge(Api::PaginationSummarySerializer.new(paginated_results).to_hash)
+     .merge(Api::PaginationSerializer.new(paginated_results).to_hash)
+
+     prev_page = prev_page_url(paginated_results)
+     next_page = next_page_url(paginated_results)
+
+     set_meta_tags(prev: prev_page) if prev_page
+     set_meta_tags(next: next_page) if next_page
   end
 
   private
@@ -25,7 +30,7 @@ class NewSearchController < ApplicationController
     @_schools ||= begin
       SchoolCacheQuery
         .decorate_schools(
-          paginatable_results,
+          paginated_results,
           'ratings',
           'characteristics'
         )
@@ -33,8 +38,8 @@ class NewSearchController < ApplicationController
   end
 
   # paginatable school documents
-  def paginatable_results
-    @_paginatable_results ||= school_search.search
+  def paginated_results
+    @_paginated_results ||= school_search.search
   end
 
   def school_search

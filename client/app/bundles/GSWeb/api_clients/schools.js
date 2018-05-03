@@ -62,24 +62,31 @@ export function find({
   q,
   city,
   state,
-  levelCodes = [],
-  entityTypes = [],
+  levelCodes,
+  entityTypes,
   sort = 'rating',
-  page = 0,
+  page = 1,
   limit = 25
 } = {}) {
+  const data = {
+    city,
+    state,
+    q,
+    sort,
+    limit
+  };
+  if (levelCodes && levelCodes.length > 0) {
+    data.level_code = levelCodes.join(',');
+  }
+  if (entityTypes && entityTypes.length > 0) {
+    data.type = entityTypes.join(',');
+  }
+  if (page && page > 1) {
+    data.page = page;
+  }
   return $.ajax({
     url: '/gsr/api/schools/',
-    data: {
-      city,
-      state,
-      q,
-      level_code: levelCodes.join(','),
-      type: entityTypes.join(','),
-      sort,
-      page,
-      limit
-    },
+    data,
     type: 'GET',
     dataType: 'json',
     timeout: 6000

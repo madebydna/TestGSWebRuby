@@ -18,6 +18,7 @@ class Api::SchoolsController < ApplicationController
       },
       items: serialized_schools
     }.merge(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
+    .merge(Api::PaginationSerializer.new(page_of_results).to_hash)
   end
 
   def serialized_schools

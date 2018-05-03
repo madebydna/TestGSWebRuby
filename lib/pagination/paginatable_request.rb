@@ -36,7 +36,6 @@ module Pagination
         url_for(
           request.params.merge(
             offset_param_name => paginated.previous_offset,
-            limit_param_name => paginated.limit,
             page_param_name => nil
           )
         )
@@ -48,7 +47,6 @@ module Pagination
         url_for(
           request.params.merge(
             page_param_name => paginated.previous_page,
-            limit_param_name => paginated.limit,
             offset_param_name => nil
           )
         )
@@ -60,7 +58,6 @@ module Pagination
         url_for(
           request.params.merge(
             offset_param_name => paginated.next_offset,
-            limit_param_name => paginated.limit,
             page_param_name => nil
           )
         )
@@ -72,7 +69,6 @@ module Pagination
         url_for(
           request.params.merge(
             page_param_name => paginated.next_page,
-            limit_param_name => paginated.limit,
             offset_param_name => nil
           )
         )

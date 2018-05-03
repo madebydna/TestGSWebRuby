@@ -7,8 +7,8 @@ class Api::PaginationSummarySerializer
 
   def to_hash
     {
-      result_summary: @paginatable_results.result_summary,
-      pagination_summary: @paginatable_results.pagination_summary
+      resultSummary: @paginatable_results.result_summary,
+      paginationSummary: @paginatable_results.pagination_summary
     }
   end
 end

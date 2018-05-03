@@ -10,15 +10,20 @@ export default class ButtonGroup extends React.Component {
   };
 
   render() {
+    const newOpts = Object.keys(this.props.options).reduce((accum, key) => {
+      accum[key] = this.props.options[key];
+      return accum;
+    });
+
     return (
       <span className="button-group">
         <SingleItemSelectable
-          options={this.props.options}
-          activeOption={this.props.activeOption}
+          options={newOpts}
+          activeKeys={[this.props.activeOption]}
           onSelect={this.props.onSelect}
           className="button-group"
         >
-          {(key, label, active) => (
+          {({ key, label, active }) => (
             <label key={key} className={active ? 'active' : ''}>
               {label}
             </label>

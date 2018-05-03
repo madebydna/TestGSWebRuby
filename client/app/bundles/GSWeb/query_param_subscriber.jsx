@@ -10,7 +10,7 @@ class QueryParamSubscriber extends React.Component {
     paramConfigs: PropTypes.arrayOf(
       PropTypes.shape({
         param: PropTypes.string.isRequired,
-        newName: PropTypes.string,
+        propName: PropTypes.string,
         funcName: PropTypes.string.isRequired,
         readTransform: PropTypes.func,
         writeTransform: PropTypes.func
@@ -31,13 +31,22 @@ class QueryParamSubscriber extends React.Component {
     });
   }
 
-  writeParamToUrl(param, newValue, writeTransform) {
-    const query = putIntoQueryString(
+  writeParamToUrl(param, newValue, writeTransform, otherState = {}) {
+    newValue = writeTransform ? writeTransform(newValue) : newValue;
+    let query = putIntoQueryString(
       history.location.search,
       param,
-      writeTransform ? writeTransform(newValue) : newValue,
+      newValue,
       true
     );
+    for (const otherParam of Object.keys(otherState)) {
+      query = putIntoQueryString(
+        query,
+        otherParam,
+        otherState[otherParam],
+        true
+      );
+    }
     history.push({ search: query });
     this.forceUpdate();
   }
@@ -48,24 +57,25 @@ class QueryParamSubscriber extends React.Component {
     this.props.paramConfigs.forEach(config => {
       const {
         param,
-        newName,
+        propName,
         funcName,
         readTransform,
-        writeTransform
+        writeTransform,
+        otherState
       } = config;
 
       const paramValue = getFromQueryString(
         param,
         history.location.search.substring(1)
       );
-      if (newName) {
-        obj[newName] = readTransform ? readTransform(paramValue) : paramValue;
+      if (propName) {
+        obj[propName] = readTransform ? readTransform(paramValue) : paramValue;
       } else {
         obj[param] = readTransform ? readTransform(paramValue) : paramValue;
       }
 
       obj[funcName] = newValue =>
-        this.writeParamToUrl(param, newValue, writeTransform);
+        this.writeParamToUrl(param, newValue, writeTransform, otherState);
     });
     return this.props.children(obj);
   }

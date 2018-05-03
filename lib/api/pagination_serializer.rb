@@ -9,12 +9,8 @@ class Api::PaginationSerializer
   def to_hash
     {
       total: @paginatable_results.total,
-      current_page: @paginatable_results.page,
-      offset: @paginatable_results.offset,
-      is_first_page: @paginatable_results.first_page?,
-      is_last_page: @paginatable_results.last_page?,
-      index_of_first_result: @paginatable_results.index_of_first_result,
-      index_of_last_result: @paginatable_results.index_of_last_result
+      totalPages: @paginatable_results.total_pages,
+      pageSize: @paginatable_results.limit
     }
   end
 

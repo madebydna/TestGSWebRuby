@@ -2,27 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const createContainer = element => {
-  let className = element.props.className;
+  let { className } = element.props;
   if (className) {
-    className = className + ' spinny-wheel-container';
+    className += ' spinny-wheel-container';
   } else {
     className = 'spinny-wheel-container';
   }
-  return React.cloneElement(element, { className })
-}
+  return React.cloneElement(element, { className });
+};
 
-const SpinnyOverlay = ({backgroundPosition = 'center', spin = true, children}) => {
-  let spinny = <div/>
+const SpinnyOverlay = ({ backgroundPosition, spin, children }) => {
+  let spinny = <div />;
   if (spin) {
-    spinny = <div
-      className='spinny-wheel'
-      style={{
-        backgroundPosition: backgroundPosition,
-        'z-index': 0
-      }}
-    />
+    spinny = (
+      <div
+        className="spinny-wheel"
+        style={{
+          backgroundPosition,
+          zIndex: 0
+        }}
+      />
+    );
   }
-  return children({createContainer, spinny})
-}
+  return children({ createContainer, spinny });
+};
+
+SpinnyOverlay.propTypes = {
+  backgroundPosition: PropTypes.string,
+  spin: PropTypes.bool
+};
+
+SpinnyOverlay.defaultProps = {
+  children: PropTypes.func.isRequired,
+  backgroundPosition: 'center',
+  spin: true
+};
 
 export default SpinnyOverlay;

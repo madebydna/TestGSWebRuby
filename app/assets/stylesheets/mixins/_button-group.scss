@@ -1,21 +1,35 @@
 @mixin button-group(
   $height: $form-field-medium-height,
-  $active-background-color: #2ba3dc,
+  $active-background-color: #647981,
   $active-color: #fff
-  ) {
+) {
+  display: inline-block;
+  width: inherit;
 
-    display: inline-block;
-    width: inherit;
+  > a {
+    text-decoration: none;
+  }
 
-  > label:first-child {
+  > a:hover {
+    background-color: $active-background-color;
+    border-top: 1px solid $active-background-color;
+    border-bottom: 1px solid $active-background-color;
+    color: $active-color;
+    background-image: none;
+  }
+
+  > a:first-child,
+  label:first-child {
     border-radius: $form-field-border-radius 0 0 $form-field-border-radius;
     border-left: 1px solid $form-field-border-color;
   }
-  > label:last-child {
+  > a:last-child,
+  label:last-child {
     border-radius: 0 $form-field-border-radius $form-field-border-radius 0;
     border-right: 1px solid $form-field-border-color;
   }
-  > label {
+  > label,
+  a {
     background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
     border-top: 1px solid $form-field-border-color;
     border-bottom: 1px solid $form-field-border-color;
@@ -38,6 +52,9 @@
     }
   }
   label ~ label {
+    border-left: 1px solid $form-field-border-color;
+  }
+  > a ~ a {
     border-left: 1px solid $form-field-border-color;
   }
 }

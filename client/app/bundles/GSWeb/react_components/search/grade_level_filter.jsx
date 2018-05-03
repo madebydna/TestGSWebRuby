@@ -2,7 +2,12 @@ import React from 'react';
 import MultiItemSelectable from 'react_components/multi_item_selectable';
 import GradeLevelContext from './grade_level_context';
 
-const options = { e: 'Elementary', m: 'Middle', h: 'High', p: 'Preschool' };
+const options = [
+  { key: 'e', label: 'Elementary' },
+  { key: 'm', label: 'Middle' },
+  { key: 'h', label: 'High' },
+  { key: 'p', label: 'Preschool' }
+];
 
 const GradeLevelFilter = () => (
   <GradeLevelContext.Consumer>
@@ -11,10 +16,10 @@ const GradeLevelFilter = () => (
         <span className="button-group hidden-xs">
           <MultiItemSelectable
             options={options}
-            activeOptions={levelCodes}
+            activeKeys={levelCodes}
             onSelect={onLevelCodesChanged}
           >
-            {(key, label, active) => (
+            {({ key, label, active }) => (
               <label key={key} className={active ? 'active' : ''}>
                 {label}
               </label>
@@ -24,12 +29,17 @@ const GradeLevelFilter = () => (
         <span className="button-group visible-xs">
           <MultiItemSelectable
             options={options}
-            activeOptions={levelCodes}
+            activeKeys={levelCodes}
             onSelect={onLevelCodesChanged}
           >
-            {(key, label, active) => (
+            {({ key, label, active }) => (
               <div>
-                <input type="checkbox" key={key} checked={active} value={key} />
+                <input
+                  type="checkbox"
+                  key={key}
+                  defaultChecked={active}
+                  value={key}
+                />
                 <label>{label}</label>
               </div>
             )}

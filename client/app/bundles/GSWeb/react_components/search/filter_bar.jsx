@@ -40,7 +40,7 @@ export default class FilterBar extends React.Component {
                 </div>
               </div>
               <div className="controls">
-                <button onClick={close}>Apply</button>
+                <button onClick={close}>Done</button>
               </div>
             </div>
           </div>

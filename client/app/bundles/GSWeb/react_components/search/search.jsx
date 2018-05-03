@@ -1,38 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { addQueryParamToUrl } from 'util/uri';
 import SpinnyWheel from '../spinny_wheel';
 import SpinnyOverlay from '../spinny_overlay';
 import * as googleMaps from '../../components/map/google_maps';
 import * as googleMapExtensions from '../../components/map/google_maps_extensions';
 import Map from '../../components/map/map';
-import createMarkerFactory, {
-  createMarkersFromSchools
-} from '../../components/map/map_marker';
+import { createMarkersFromSchools } from '../../components/map/map_marker';
 import Legend from '../../components/map/legend';
 import FilterBar from './filter_bar';
 import SearchContext from './search_context';
 import School from './school';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
+import pageNumbers from 'util/pagination';
+import SingleItemSelectable from 'react_components/single_item_selectable';
 
 class Search extends React.Component {
   static defaultProps = {
     city: null,
     state: null,
     schools: [],
-    loadingSchools: false,
-    changeLocation: () => {}
+    loadingSchools: false
   };
 
   static propTypes = {
     city: PropTypes.string,
     state: PropTypes.string,
     schools: PropTypes.arrayOf(PropTypes.object),
-    result_summary: PropTypes.string.isRequired,
-    pagination_summary: PropTypes.string.isRequired,
+    resultSummary: PropTypes.string.isRequired,
+    paginationSummary: PropTypes.string.isRequired,
     address_coordinates: PropTypes.arrayOf(PropTypes.object).isRequired,
     loadingSchools: PropTypes.bool,
-    changeLocation: PropTypes.func
+    page: PropTypes.number.isRequired,
+    totalPages: PropTypes.number.isRequired,
+    onPageChanged: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -71,65 +73,136 @@ class Search extends React.Component {
     });
   }
 
+  renderPaginationButtons() {
+    const options = [];
+    pageNumbers(
+      this.props.page,
+      this.props.totalPages,
+      ({ prev, next, range }) => {
+        options.push({
+          key: '<',
+          value: prev,
+          label: '<',
+          allowSelect: !!prev
+        });
+        range.forEach(pageNum => {
+          options.push({
+            key: pageNum,
+            value: pageNum,
+            label: pageNum
+          });
+        });
+        options.push({
+          key: '>',
+          value: next,
+          label: '>',
+          allowSelect: !!next
+        });
+      }
+    );
+
+    // href={addQueryParamToUrl('page', value, window.location.href)}
+    return (
+      <SingleItemSelectable
+        options={options}
+        activeKeys={[this.props.page]}
+        onSelect={pageNum => {
+          if (pageNum && pageNum !== this.props.page) {
+            this.props.onPageChanged(pageNum);
+          }
+        }}
+      >
+        {({ value, label, active }) => (
+          <a
+            onClick={e => {
+              e.nativeEvent.stopImmediatePropagation();
+            }}
+            className={active ? 'active' : ''}
+            onKeyPress={e => {
+              e.nativeEvent.stopImmediatePropagation();
+            }}
+          >
+            {label}
+          </a>
+        )}
+      </SingleItemSelectable>
+    );
+  }
+
   render() {
     return (
       <SearchLayout
         renderHeader={() => (
           <React.Fragment>
             <FilterBar />
-            <SortSelect />
-            <h3>
-              <div>{this.props.result_summary}</div>
-              <div>{this.props.pagination_summary}</div>
-            </h3>
-            <div className="right-rail">
-              <div className="ad-bar">Advertisement</div>
-            </div>
           </React.Fragment>
         )}
-        renderRightRail={() => <div className="ad-bar">Advertisement</div>}
+        renderSubheader={() => (
+          <React.Fragment>
+            <div>{this.props.resultSummary}</div>
+            <SortSelect />
+          </React.Fragment>
+        )}
+        renderAd={() => <div className="ad-bar">Advertisement</div>}
         renderList={() => (
-          <SpinnyOverlay spin={this.props.loadingSchools}>
+          <React.Fragment>
+            <SpinnyOverlay spin={this.props.loadingSchools}>
+              {({ createContainer, spinny }) =>
+                createContainer(
+                  <section className="school-list">
+                    {spinny}
+                    <ol>
+                      {this.props.schools.map(s => (
+                        <li
+                          key={s.state + s.id}
+                          className={s.active ? 'active' : ''}
+                        >
+                          <School {...s} />
+                        </li>
+                      ))}
+                      {this.props.totalPages > 1 && (
+                        <li>
+                          <div className="pagination-buttons button-group">
+                            {this.renderPaginationButtons()}
+                          </div>
+                        </li>
+                      )}
+                    </ol>
+                  </section>
+                )
+              }
+            </SpinnyOverlay>
+          </React.Fragment>
+        )}
+        mapHidden={this.state.mapHidden}
+        renderMap={() => (
+          <SpinnyOverlay
+            spin={
+              !this.state.googleMapsInitialized || this.state.loadingSchools
+            }
+          >
             {({ createContainer, spinny }) =>
               createContainer(
-                <section className="school-list">
+                <div style={{ width: '100%', height: '100%' }}>
                   {spinny}
-                  <ol>
-                    {this.props.schools.map(s => (
-                      <li className={s.active ? 'active' : ''}>
-                        <School {...s} />
-                      </li>
-                    ))}
-                  </ol>
-                </section>
+                  {this.state.googleMapsInitialized && (
+                    <Map
+                      googleMaps={google.maps}
+                      markers={createMarkersFromSchools(
+                        this.props.schools,
+                        this.props.school,
+                        this.map
+                      )}
+                      changeLocation={() => {}}
+                      hidden={this.state.mapHidden}
+                      {...this.props}
+                    />
+                  )}
+                  <Legend content={<div>ASSETS/COPY HERE!</div>} />
+                </div>
               )
             }
           </SpinnyOverlay>
-        )}
-        renderMap={() => (
-          <div className={this.state.mapHidden ? 'map closed' : 'map'}>
-            <SpinnyWheel active={!this.state.googleMapsInitialized}>
-              {this.state.googleMapsInitialized && (
-                <Map
-                  googleMaps={google.maps}
-                  markers={createMarkersFromSchools(
-                    this.props.schools,
-                    this.props.school,
-                    this.map
-                  )}
-                  changeLocation={this.props.changeLocation}
-                  hidden={this.state.mapHidden}
-                  {...this.props}
-                />
-              )}
-              {!this.state.googleMapsInitialized && (
-                <div
-                  style={{ height: '400px', width: '75%', display: 'block' }}
-                />
-              )}
-              <Legend content={<div>ASSETS/COPY HERE!</div>} />
-            </SpinnyWheel>
-          </div>
         )}
       />
     );
