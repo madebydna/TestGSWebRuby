@@ -25,7 +25,7 @@ class AddSchoolsController < ApplicationController
   end
 
   def success
-    render '/shared/success'
+    render 'success'
   end
 
   private
