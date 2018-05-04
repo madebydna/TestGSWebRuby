@@ -1,5 +1,5 @@
 rspecSeed = Math.abs(new Random().nextInt() % 1000) + 1
-int groups = 8
+int groups = 2
 
 def checkoutCode() {
     checkout scm
