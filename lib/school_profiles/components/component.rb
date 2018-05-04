@@ -1,7 +1,8 @@
 module SchoolProfiles
   module Components
     class Component
-      attr_accessor :school_cache_data_reader, :data_type, :title, :type, :precision, :valid_breakdowns, :flagged
+      attr_accessor :school_cache_data_reader, :data_type, :title, :type, :precision, :valid_breakdowns, :flagged,
+        :exact_breakdown_tags
       attr_writer :narration
 
       def initialize(precision: 0)
@@ -61,6 +62,21 @@ module SchoolProfiles
 
       # formats and translates values in a hash before it goes to the view
       def standard_hash_to_value_hash(h)
+        {
+          breakdown: t(h[:breakdown]),
+          label: text_value(h[:score]),
+          score: float_value(h[:score]),
+          state_average: float_value(h[:state_average]),
+          state_average_label: text_value(h[:state_average]),
+          percentage: h[:percentage],
+          number_students_tested: h[:number_students_tested],
+          grade: h[:grade],
+          grades: h[:grades],
+          display_percentages: true # TODO: true
+        }
+      end
+      
+      def gs_data_value_to_value_hash(dv)
         {
           breakdown: t(h[:breakdown]),
           label: text_value(h[:score]),

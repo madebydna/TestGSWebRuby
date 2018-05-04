@@ -136,12 +136,12 @@ module SchoolProfiles
       content = '<div class="sourcing">'
       content << '<h1>' + static_label('title') + '</h1>'
       content << data_values_by_data_type.reduce('') do |string, data_value|
-        string << sources_for_view(data_value)
+        string << sources_text(data_value)
       end
       content << '</div>'
     end
 
-    def sources_for_view(data_value)
+    def sources_text(data_value)
       str = '<div>'
       str << '<h4>' + data_label(data_value.data_type) + '</h4>'
       str << "<p>#{data_label_info_text(data_value.data_type)}</p>"

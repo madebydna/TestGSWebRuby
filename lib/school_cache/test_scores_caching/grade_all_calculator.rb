@@ -16,7 +16,7 @@ class TestScoresCaching::GradeAllCalculator
     new_data_values = group_data_values.each_with_object([]) do |(_, data_values), accum|
       unless data_values.any_grade_all?
         grade_all_dv = calculate_grade_all(data_values)
-        accum << Array.wrap(grade_all_dv) if grade_all_dv
+        accum << Array.wrap(grade_all_dv) if grade_all_dv&.school_value
       end
     end
 

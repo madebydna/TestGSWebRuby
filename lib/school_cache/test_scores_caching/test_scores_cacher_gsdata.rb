@@ -115,7 +115,9 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     if missing_keys.count.positive?
       GSLogger.error(
         :school_cache,
+        nil,
         message: "#{self.class.name} cache missing required keys",
+
         vars: { school: school.id,
                 state: school.state,
                 data_type: result_hash[:data_type],

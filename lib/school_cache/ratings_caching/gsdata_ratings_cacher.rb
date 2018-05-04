@@ -58,6 +58,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
 
       r.each_with_object(school_cache_hash) do |result, cache_hash|
         result_hash = result_to_hash(result)
+        result_hash[:description] = result.description if result.description    #source.description
         next unless validate_result_hash(result_hash, result.data_type_id)
         cache_hash[result.name] << result_hash
       end

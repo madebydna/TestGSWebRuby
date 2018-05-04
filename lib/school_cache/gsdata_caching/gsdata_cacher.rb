@@ -43,16 +43,6 @@ class GsdataCaching::GsdataCacher < Cacher
   #   health_index
   # )
 
-  DATA_TYPE_IDS_TO_STRING = {
-    155 => 'test_scores',
-    156 => 'psr',
-    157 => 'growth',
-    158 => 'equity',
-    159 => 'academic_progress',
-    183 => 'discipline_attendance',
-    184 => 'discipline_attendance'
-  }
-
   def data_type_ids
     self.class::DATA_TYPE_IDS
   end
@@ -128,21 +118,7 @@ class GsdataCaching::GsdataCacher < Cacher
       h[:grade] = result.grade if result.grade
       h[:cohort_count] = result.cohort_count if result.cohort_count
       h[:proficiency_band_id] = result.proficiency_band_id if result.proficiency_band_id
-
-      d = DATA_TYPE_IDS_TO_STRING[result.data_type_id]
-      if d.present?
-        h[:description] = description(d)
-        h[:methodology] = methodology(d)
-      end
     end
-  end
-
-  def description(name)
-    data_description_value("whats_this_#{name}#{school.state}") || data_description_value("whats_this_#{name}")
-  end
-
-  def methodology(name)
-    data_description_value("footnote_#{name}#{school.state}") || data_description_value("footnote_#{name}")
   end
 
   def validate_result_hash(result_hash, data_type_id)
@@ -172,11 +148,6 @@ class GsdataCaching::GsdataCacher < Cacher
 
   def state_value(result)
     state_results_hash[result.datatype_breakdown_year]
-  end
-
-  def data_description_value(key)
-    dd = self.class.data_descriptions[key]
-    dd.value if dd
   end
 
   # after display range strategy is chosen will need to update method below
