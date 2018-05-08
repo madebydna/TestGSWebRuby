@@ -15,7 +15,7 @@ module ActiveRecord::ConnectionAdapters
       begin
         execute_without_retry(*args)
       rescue => e
-        if e.message =~ /server has gone away/i || e.message =~ /Lost connection to MySQL/i
+        if e.message =~ /server has gone away/i || e.message =~ /Lost connection to MySQL/i || e.message =~ /Timeout waiting/i || e.message =~ /client is not connected/i
           if active?
             raise e # if the connection is still active, nothing I can do here will help. re-raise the error
           else
