@@ -145,7 +145,7 @@ module SchoolProfiles
         str = '<div>'
         str << '<h4>' + data_label(gs_data_values.data_type) + '</h4>'
         str << "<p>#{Array.wrap(gs_data_values.all_academics).map { |s| data_label(s) }.join(', ')}</p>"
-        str << "<p>#{I18n.db_t(gs_data_values.description)}</p>"
+        str << "<p>#{I18n.db_t(gs_data_values.description, default: gs_data_values.description)}</p>"
         if flags.present?
           str << "<p><span class='emphasis'>#{data_label('note')}</span>: #{data_label(flags)}</p>"
         end
