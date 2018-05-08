@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe AdvertisingConcerns do
@@ -103,14 +105,14 @@ describe AdvertisingConcerns do
         it 'should return an array' do
           parameter = ['param1', 'param2']
           value = subject.format_ad_setTargeting(parameter)
-          expect(value).to be_an_instance_of Array
+          expect(value).to be_an_instance_of String
         end
 
         it 'should return an array with elements of length less than or equal to 10' do
           parameter = ['totally_more_than_ten_characters', 'yup_also_more_than_ten_characters']
           value = subject.format_ad_setTargeting(parameter)
-          expect(value).to be_an_instance_of Array
-          value.each do | val |
+          expect(value).to be_an_instance_of String
+          value.split(',').each do | val |
             expect(val.length <= 10).to be_truthy
           end
         end
