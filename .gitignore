@@ -63,3 +63,6 @@ app/assets/webpack/*
 
 # tmp output from mocha-webpack library
 client/.tmp/
+
+# ignore Visual Studio Code directory
+.vscode
