@@ -26,6 +26,7 @@ class QueueDaemon
         fail_counter += 1
         if fail_counter > MAX_FAIL_COUNTER || e.message != DEFAULT_FAIL_MSG
           puts "Too many errors, quitting"
+          GSLogger.error(:misc, e, message: 'Bubbling up exception from QueueDaemon#run!')
           raise e
         end
         puts "Can't connect to database to list updates. Will try again in #{FAIL_SLEEP_TIME} seconds"

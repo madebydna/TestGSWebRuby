@@ -50,7 +50,7 @@ class TestScoresCaching::GradeAllCalculator
     grade_all_dv.grade = GsdataCaching::GsDataValue::GRADE_ALL
     flags = []
 
-    if data_values.all_school_values_are_numeric?
+    if data_values.all_school_values_can_be_numeric?
       if school_data_values.all_have_school_cohort_count?
         grade_all_dv.school_value = school_data_values.weighted_average_school_value(precision: PRECISION)
         grade_all_dv.school_cohort_count = school_data_values.total_school_cohort_count

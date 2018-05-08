@@ -351,6 +351,12 @@ class GsdataCaching::GsDataValue
       map(&:school_value).all?(&:numeric?)
     end
 
+    def all_school_values_can_be_numeric?
+      map(&:school_value).all? do |v|
+        v.scan(/[0-9.]+/).first&.to_f
+      end
+    end
+
     def all_state_values_are_numeric?
       map(&:state_value).all?(&:numeric?)
     end
@@ -474,8 +480,7 @@ class GsdataCaching::GsDataValue
   alias_method :year, :source_year
 
   def school_value_as_int
-    # nil.to_i evaluates to 0 -- not usually what we want
-    school_value.present? ? school_value.to_i : nil
+    school_value.to_s.scan(/[0-9.]+/).first&.to_i
   end
 
   def school_value_as_float
