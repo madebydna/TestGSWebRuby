@@ -10,10 +10,10 @@ module SchoolProfiles
 
       def normalize_rating_value(value)
         {
-          breakdown: value.breakdowns,
+          breakdown: value.breakdown,
           score: value.school_value,
           state_average: value.state_value,
-          percentage: value_to_s(ethnicities_to_percentages[value.breakdowns])
+          percentage: value_to_s(ethnicities_to_percentages[value.breakdown])
         }
       end
     end

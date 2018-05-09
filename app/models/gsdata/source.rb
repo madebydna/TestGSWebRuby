@@ -41,7 +41,7 @@ module Gsdata
 
     def replace_into_and_return_object
       replace_into
-      self.class.find_by(attributes.except('id'))
+      self.class.find_by(attributes.except('id', 'description_object_id'))
     end
   end
 end

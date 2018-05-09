@@ -52,7 +52,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
       Facebook: {
@@ -88,7 +88,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,60],[320,50]]
+          dimensions:[[320,60],[320,50],[320,100]]
         }
       },
       Details_Adaptive: {
@@ -110,7 +110,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
       CTA: {
@@ -125,7 +125,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
       Review2: {
@@ -140,7 +140,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
       Contact_Info: {
@@ -158,7 +158,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,60],[320,50]]
+          dimensions:[[320,60],[320,50],[320,100]]
         }
       },
       Nearby_Schools: {
@@ -177,7 +177,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
       CMS: {
@@ -192,7 +192,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
       Test_Scores1: {
@@ -265,7 +265,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
       CMS: {
@@ -280,7 +280,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
       Programs: {
@@ -295,7 +295,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
       Teachers: {
@@ -310,7 +310,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
       Enrollment: {
@@ -356,7 +356,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
     }
@@ -375,7 +375,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
     }
@@ -399,7 +399,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,60],[320,50]]
+          dimensions:[[320,60],[320,50],[320,100]]
         }
       },
       Footer: {
@@ -408,7 +408,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
     }
@@ -442,7 +442,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,60],[320,50]]
+          dimensions:[[320,60],[320,50],[320,100]]
         }
       },
       Content_Top: {
@@ -457,7 +457,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-          dimensions:[320,50]
+          dimensions:[[320,50],[320,100]]
         }
       },
     }
@@ -470,7 +470,7 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
-            dimensions:[320,50]
+            dimensions:[[320,50],[320,100]]
         }
       },
       Footer: {
@@ -479,7 +479,7 @@ class Advertising
             dimensions:[728,90]
           },
           mobile:{
-            dimensions:[320,50]
+            dimensions:[[320,50],[320,100]]
           }
       },
       After4: {
@@ -497,7 +497,7 @@ class Advertising
             dimensions:[[728,60],[728,90]]
           },
           mobile:{
-            dimensions:[[320,60],[320,50]]
+            dimensions:[[320,60],[320,50],[320,100]]
           }
       },
       After12_Left: {
@@ -515,7 +515,7 @@ class Advertising
       After12: {
           name: "After12",
           mobile:{
-            dimensions:[320,50]
+            dimensions:[[320,50],[320,100]]
           }
       },
       After16: {
@@ -533,7 +533,7 @@ class Advertising
               dimensions:[728,90]
           },
           mobile:{
-              dimensions:[320,50]
+              dimensions:[[320,50],[320,100]]
           }
       }
     }
@@ -550,7 +550,7 @@ class Advertising
                 dimensions:[[728,60],[728,90]]
             },
             mobile:{
-                dimensions:[[320,60],[320,50]]
+                dimensions:[[320,60],[320,50],[320,100]]
             }
         },
         Footer: {
@@ -559,7 +559,7 @@ class Advertising
                 dimensions:[728,90]
             },
             mobile:{
-                dimensions:[320,50]
+                dimensions:[[320,50],[320,100]]
             }
         },
     }

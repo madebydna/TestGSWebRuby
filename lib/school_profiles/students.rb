@@ -46,7 +46,7 @@ module SchoolProfiles
       )
     end
 
-    def sources_for_view
+    def sources_text
       str = '<div class="sourcing">'
       str << '<h1>' + static_label('title') + '</h1>'
       if ethnicity_data_source.present?

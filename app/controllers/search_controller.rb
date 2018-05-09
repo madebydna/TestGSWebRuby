@@ -34,6 +34,13 @@ class SearchController < ApplicationController
     redirect_to "/", :status => 301
   end
 
+  def lat
+    Float(params[:lat]) rescue nil
+  end
+
+  def lon
+    Float(params[:lon]) rescue nil
+  end
 
   def search
     @state = {
@@ -44,7 +51,7 @@ class SearchController < ApplicationController
     @allow_compare = can_compare?
     gon.allow_compare = can_compare?
 
-    if params.include?(:lat) && params.include?(:lon) && @state.present?
+    if lat && lon && @state.present?
       self.by_location
     elsif params.include?(:city) && params.include?(:district_name) && @state.present?
       self.district_browse

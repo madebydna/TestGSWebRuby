@@ -24,9 +24,8 @@ module SchoolProfiles
 
       def components
         school_cache_data_reader
-          .flat_test_scores_for_latest_year
-          .sort_by { |h| -1 * h[:number_students_tested].to_f }
-          .map { |h| h[:subject] }.uniq.map do |subject|
+          .recent_test_scores
+          .all_academics.map do |subject|
             LowIncomeTestScoresComponent.new.tap do |component|
               component.school_cache_data_reader = school_cache_data_reader
               component.data_type = subject

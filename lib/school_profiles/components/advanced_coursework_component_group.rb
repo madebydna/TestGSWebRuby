@@ -18,6 +18,7 @@ module SchoolProfiles
             component.data_type = 'Percentage AP enrolled grades 9-12'
             component.title = 'Percentage AP enrolled grades 9-12'
             component.type = 'person'
+            component.exact_breakdown_tags = ['ethnicity']
           end
         ]
       end

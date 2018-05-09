@@ -60,19 +60,21 @@ export default class CollegeReadiness extends SchoolProfileComponent {
   }
 
   csaBadge() {
-    let badge = this.filteredData()[this.state.active].csa_badge;
-    return ( badge &&
-      <div className="panel clearfix">
-        <div className="row">
-          <div className="col-xs-12 col-sm-4 csa-image">
-            <img src={require('school_profiles/csa-badge-module.png')} />
-          </div>
-          <div className="col-xs-12 col-sm-8 csa-text">
-            <span dangerouslySetInnerHTML={{__html: badge}} />
+    if (this.filteredData().length > 0) {
+      let badge = this.filteredData()[this.state.active].csa_badge;
+      return ( badge &&
+        <div className="panel clearfix">
+          <div className="row">
+            <div className="col-xs-12 col-sm-4 csa-image">
+              <img src={require('school_profiles/csa-badge-module.png')}/>
+            </div>
+            <div className="col-xs-12 col-sm-8 csa-text">
+              <span dangerouslySetInnerHTML={{__html: badge}}/>
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 
   csaCallout() {

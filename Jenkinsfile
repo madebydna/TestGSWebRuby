@@ -1,5 +1,5 @@
 rspecSeed = Math.abs(new Random().nextInt() % 1000) + 1
-int groups = 8
+int groups = 2
 
 def checkoutCode() {
     checkout scm
@@ -123,7 +123,7 @@ def makeJSBranch(branchNum, groups) {
             unstash 'assets'
             try {
                 retry(3) {
-                    timeout(time:5, unit:'MINUTES') {
+                    timeout(time:30, unit:'MINUTES') {
                         sh "rm -f tmp/features_rspec-${branchNum}.xml"
                         sh 'killall -9 ruby || true'
                         sh "$WORKSPACE/script/ci/run_feature_specs.sh --out tmp/features_rspec-${branchNum}.xml --seed $rspecSeed `$WORKSPACE/script/ci/feature_rspec_group.rb $groups $branchNum`"

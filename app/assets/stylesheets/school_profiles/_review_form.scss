@@ -64,10 +64,11 @@
       text-align: center;
       margin-left: -1px;
       cursor: pointer;
+      vertical-align: top;
+      margin-top: 10px;
       span {
         display: block;
         border: 1px solid #c1d2d9;
-        //label {font-size: 13px;}
         span { border: none;}
 
       }
