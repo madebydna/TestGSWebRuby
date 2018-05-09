@@ -20,6 +20,7 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def build_hash_for_cache
+    return unless school.active?
     school.extend(GradeLevelConcerns)
 
     cache_hash = school_directory_keys.each_with_object({}) do |key, hash|
