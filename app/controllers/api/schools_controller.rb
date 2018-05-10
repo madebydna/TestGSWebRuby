@@ -1,5 +1,6 @@
 class Api::SchoolsController < ApplicationController
   include Pagination::PaginatableRequest
+  include SearchRequestParams
 
   AVAILABLE_EXTRAS = %w[boundaries]
 
@@ -145,8 +146,8 @@ class Api::SchoolsController < ApplicationController
     schools.each do |school|
       if school.lat && school.lon
         distance = 
-          Geo::Point.new(hash[:lat], hash[:lon]).distance_to(
-            Geo::Point.new(lat.to_f, lon.to_f)
+          Geo::Coordinate.new(school.lat, school.lon).distance_to(
+            Geo::Coordinate.new(lat.to_f, lon.to_f)
           )
         school.define_singleton_method(:distance) do
           distance
@@ -157,75 +158,10 @@ class Api::SchoolsController < ApplicationController
     schools
   end
 
-  def state
-    state_param = params[:state]
-    return nil unless state_param.present?
-
-    if States.is_abbreviation?(state_param)
-      state_param
-    else
-      States.abbreviation(state_param.gsub('-', ' ').downcase)
-    end
-  end
-
   def school_geometries_containing_lat_lon
     @_school_geometries_containing_lat_lon ||= (
       SchoolGeometry.find_by_point_and_level(lat, lon, boundary_level)
     )
-  end
-
-  def q
-    params[:q]
-  end
-
-  def lat
-    params[:lat]
-  end
-
-  def lon
-    params[:lon]
-  end
-
-  def radius
-    params[:radius]
-  end
-
-  def entity_types
-    params[:type]&.split(',')
-  end
-
-  def point_given?
-    lat.present? && lon.present? && radius.blank?
-  end
-
-  def area_given?
-    lat.present? && lon.present? && radius.present?
-  end
-
-  def level_codes
-    params[:level_code]&.split(',')
-  end
-
-  def level_code
-    level_codes&.first
-  end
-
-  def boundary_level
-    (params[:boundary_level] || '').split(',').tap do |array|
-      array << 'o' unless array.include?('o')
-    end
-  end
-
-  def city_object
-    @_city_object ||= City.get_city_by_name_and_state(city, state).first
-  end
-
-  def sort_name
-    params[:sort]
-  end
-
-  def city
-    params[:city]&.gsub('-', ' ')&.gs_capitalize_words
   end
 
   # reading about API design, I tend to agree that rather than make multiple
@@ -236,7 +172,7 @@ class Api::SchoolsController < ApplicationController
   # than have the client provide every field desires, just made an "extras"
   # for asking for data not in the default response
   def extras
-    (params[:extras] || '').split(',') + ['summary_rating']
+    (params[:extras] || '').split(',') + ['summary_rating', 'distance']
   end
 
 end

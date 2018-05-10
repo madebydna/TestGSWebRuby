@@ -2,6 +2,7 @@
 
 class NewSearchController < ApplicationController
   include Pagination::PaginatableRequest
+  include SearchRequestParams
 
   layout 'application'
   before_filter :redirect_unless_city_found
@@ -45,35 +46,11 @@ class NewSearchController < ApplicationController
   def school_search
     @_school_search ||= begin
       if params[:solr7]
-        Search::SolrSchoolQuery.new(city: city, state: state, q:q, level_codes: level_codes, offset: offset, limit: limit)
+        Search::SolrSchoolQuery.new(city: city, state: state, q:q, level_codes: level_codes, entity_types: entity_types, offset: offset, limit: limit)
       else
-        Search::LegacySolrSchoolQuery.new(city: city, state: state, q:q, level_codes: level_codes, offset: offset, limit: limit)
+        Search::LegacySolrSchoolQuery.new(city: city, state: state, q:q, level_codes: level_codes, entity_types: entity_types, offset: offset, limit: limit)
       end
     end
   end
 
-  def city_object
-    @_city_object ||= City.get_city_by_name_and_state(city, state).first
-  end
-
-  def city
-    params[:city].try(:gsub, '-', ' ').gs_capitalize_words
-  end
-
-  def state
-    return nil unless params[:state].present?
-    States.abbreviation(params[:state].gsub('-', ' '))
-  end
-
-  def q
-    params[:q]
-  end
-
-  def level_codes
-    params[:level_code]&.split(',')
-  end
-
-  def entity_types
-    params[:type]&.split(',')
-  end
 end

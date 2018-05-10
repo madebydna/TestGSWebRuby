@@ -10,10 +10,11 @@ export default class ButtonGroup extends React.Component {
   };
 
   render() {
-    const newOpts = Object.keys(this.props.options).reduce((accum, key) => {
-      accum[key] = this.props.options[key];
-      return accum;
-    });
+    const newOpts = Object.keys(this.props.options).map(key => ({
+      key,
+      value: key,
+      label: this.props.options[key]
+    }));
 
     return (
       <span className="button-group">

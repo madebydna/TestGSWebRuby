@@ -10,14 +10,14 @@ module Search
     end
 
     def total
-      criteria_relation.count(:id)
+      criteria_relation.select('count(*) as count').to_a.first.try(:count) || 0
     end
 
     def search
       @_search ||= begin
         paginated_relation = 
           criteria_relation
-            .order(sort_field => sort_direction)
+            .order("#{sort_field} #{sort_direction}")
             .offset(offset)
             .limit(limit)
         PageOfResults.from_paginatable_query(paginated_relation, self)
