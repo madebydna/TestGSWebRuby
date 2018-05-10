@@ -36,6 +36,9 @@ export default class MultiItemSelectable extends React.Component {
   }
 
   filterOutInvalidKeys(keys) {
+    if (!keys || !keys.filter) {
+      return [];
+    }
     return keys.filter(k => !!this.optionForKey(k));
   }
 

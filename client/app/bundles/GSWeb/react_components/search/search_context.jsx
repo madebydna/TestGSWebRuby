@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { find as findSchools } from 'api_clients/schools';
 import { isEqual, debounce } from 'lodash';
-import QueryParamSubscriber from 'query_param_subscriber';
+import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
 import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
@@ -155,43 +155,9 @@ class SearchProvider extends React.Component {
 }
 
 const SearchProviderWithQueryParams = props => (
-  <QueryParamSubscriber
-    paramConfigs={[
-      {
-        param: 'level',
-        propName: 'levelCodes',
-        funcName: 'updateLevelCodes',
-        readTransform: param => (param ? param.split(',') : []),
-        writeTransform: array =>
-          array && array.length > 0 ? array.join(',') : undefined,
-        otherState: { page: undefined }
-      },
-      {
-        param: 'type',
-        propName: 'entityTypes',
-        funcName: 'updateEntityTypes',
-        readTransform: param => (param ? param.split(',') : []),
-        writeTransform: array =>
-          array && array.length > 0 ? array.join(',') : undefined,
-        otherState: { page: undefined }
-      },
-      {
-        param: 'sort',
-        propName: 'sort',
-        funcName: 'updateSort',
-        otherState: { page: undefined }
-      },
-      {
-        param: 'page',
-        funcName: 'updatePage',
-        readTransform: param => (param ? parseInt(param, 10) : undefined),
-        writeTransform: param =>
-          param && parseInt(param, 10) > 1 ? parseInt(param, 10) : undefined
-      }
-    ]}
-  >
-    {extraProps => <SearchProvider {...extraProps} {...props} />}
-  </QueryParamSubscriber>
+  <SearchQueryParams>
+    {paramProps => <SearchProvider {...paramProps} {...props} />}
+  </SearchQueryParams>
 );
 
 export default { Consumer, Provider: SearchProviderWithQueryParams };
