@@ -1,6 +1,7 @@
 import React from 'react';
-import MultiItemSelectable from 'react_components/multi_item_selectable';
+import Selectable from 'react_components/selectable';
 import GradeLevelContext from './grade_level_context';
+import LabelButton from './label_button';
 
 const options = [
   { key: 'e', label: 'Elementary' },
@@ -12,40 +13,42 @@ const options = [
 const GradeLevelFilter = () => (
   <GradeLevelContext.Consumer>
     {({ levelCodes, onLevelCodesChanged }) => (
-      <React.Fragment>
-        <span className="button-group hidden-xs">
-          <MultiItemSelectable
-            options={options}
-            activeKeys={levelCodes}
-            onSelect={onLevelCodesChanged}
-          >
-            {({ key, label, active }) => (
-              <label key={key} className={active ? 'active' : ''}>
-                {label}
-              </label>
-            )}
-          </MultiItemSelectable>
-        </span>
-        <span className="button-group visible-xs">
-          <MultiItemSelectable
-            options={options}
-            activeKeys={levelCodes}
-            onSelect={onLevelCodesChanged}
-          >
-            {({ key, label, active }) => (
-              <div>
-                <input
-                  type="checkbox"
-                  key={key}
-                  defaultChecked={active}
-                  value={key}
+      <Selectable
+        multiple
+        options={options}
+        activeOptions={levelCodes}
+        onSelect={onLevelCodesChanged}
+        keyFunc={o => o.key}
+      >
+        {opts => (
+          <React.Fragment>
+            <span className="button-group hidden-xs">
+              {opts.map(({ select, active, option } = {}) => (
+                <LabelButton
+                  key={option.key}
+                  label={option.label}
+                  active={active}
+                  onClick={select}
+                  onKeyPress={select}
                 />
-                <label>{label}</label>
-              </div>
-            )}
-          </MultiItemSelectable>
-        </span>
-      </React.Fragment>
+              ))}
+            </span>
+            <span className="button-group visible-xs">
+              {opts.map(({ select, active, option } = {}) => (
+                <div onClick={select} onKeyPress={select} role="button">
+                  <input
+                    type="checkbox"
+                    key={option.key}
+                    defaultChecked={active}
+                    value={option.key}
+                  />
+                  <label>{option.label}</label>
+                </div>
+              ))}
+            </span>
+          </React.Fragment>
+        )}
+      </Selectable>
     )}
   </GradeLevelContext.Consumer>
 );

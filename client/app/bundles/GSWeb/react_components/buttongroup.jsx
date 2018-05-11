@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SingleItemSelectable from './single_item_selectable';
+import Selectable from './selectable';
 
 export default class ButtonGroup extends React.Component {
   static propTypes = {
@@ -18,18 +18,26 @@ export default class ButtonGroup extends React.Component {
 
     return (
       <span className="button-group">
-        <SingleItemSelectable
+        <Selectable
           options={newOpts}
-          activeKeys={[this.props.activeOption]}
-          onSelect={this.props.onSelect}
+          activeOptions={newOpts.filter(o => o.key === this.props.activeOption)}
+          onSelect={({ key }) => this.props.onSelect(key)}
           className="button-group"
         >
-          {({ key, label, active }) => (
-            <label key={key} className={active ? 'active' : ''}>
-              {label}
-            </label>
-          )}
-        </SingleItemSelectable>
+          {opts =>
+            opts.map(option => (
+              <label
+                key={option.key}
+                className={active ? 'active' : ''}
+                onClick={select}
+                onKeyPress={select}
+                role="button"
+              >
+                {option.label}
+              </label>
+            ))
+          }
+        </Selectable>
       </span>
     );
   }

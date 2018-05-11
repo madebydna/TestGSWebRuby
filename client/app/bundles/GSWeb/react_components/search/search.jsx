@@ -14,7 +14,8 @@ import School from './school';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
 import pageNumbers from 'util/pagination';
-import SingleItemSelectable from 'react_components/single_item_selectable';
+import Selectable from 'react_components/selectable';
+import AnchorButton from 'react_components/anchor_button';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -83,7 +84,7 @@ class Search extends React.Component {
           key: '<',
           value: prev,
           label: '<',
-          allowSelect: !!prev
+          preventSelect: !prev
         });
         range.forEach(pageNum => {
           options.push({
@@ -96,36 +97,35 @@ class Search extends React.Component {
           key: '>',
           value: next,
           label: '>',
-          allowSelect: !!next
+          preventSelect: !next
         });
       }
     );
 
     // href={addQueryParamToUrl('page', value, window.location.href)}
     return (
-      <SingleItemSelectable
+      <Selectable
         options={options}
-        activeKeys={[this.props.page]}
-        onSelect={pageNum => {
-          if (pageNum && pageNum !== this.props.page) {
-            this.props.onPageChanged(pageNum);
+        allowDeselect={false}
+        activeOptions={options.filter(o => o.value === this.props.page)}
+        onSelect={({ value } = {}) => {
+          if (value && value !== this.props.page) {
+            this.props.onPageChanged(value);
           }
         }}
       >
-        {({ value, label, active }) => (
-          <a
-            onClick={e => {
-              e.nativeEvent.stopImmediatePropagation();
-            }}
-            className={active ? 'active' : ''}
-            onKeyPress={e => {
-              e.nativeEvent.stopImmediatePropagation();
-            }}
-          >
-            {label}
-          </a>
-        )}
-      </SingleItemSelectable>
+        {opts =>
+          opts.map(({ option, active, select }) => (
+            <AnchorButton
+              enabled={!option.preventSelect}
+              active={active}
+              onClick={select}
+            >
+              {option.label}
+            </AnchorButton>
+          ))
+        }
+      </Selectable>
     );
   }
 

@@ -6,34 +6,26 @@ import MultiItemSelectable from './multi_item_selectable';
 // When an item is selected/unselected, onSelect is called with the active item
 export default class SingleItemSelectable extends MultiItemSelectable {
   static propTypes = {
-    options: PropTypes.arrayOf(
-      PropTypes.shape({
-        key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        allowDeselect: PropTypes.boolean // default true
-      })
-    ).isRequired,
-    activeKeys: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    ), // Options active by default. e.g. ['e','m']
+    options: PropTypes.arrayOf(PropTypes.object).isRequired,
+    activeOptions: PropTypes.arrayOf(PropTypes.object), // Options active by default. e.g. ['e','m']
     onSelect: PropTypes.func.isRequired, // called with active keys when option selected
     onDeselect: PropTypes.func, // called with active keys when option is deselected. Defaults to onSelect function
-    children: PropTypes.func.isRequired
+    children: PropTypes.func.isRequired,
+    allowDeselect: PropTypes.bool
   };
 
   // overrides parent class method
-  selectKey(key, func) {
+  selectOption(option, func) {
     this.setState(
       {
-        activeKeys: [key]
+        activeOptions: [option]
       },
       func
     );
   }
 
   // overrides parent class method
-  getSelectedValues() {
-    return super.getSelectedValues()[0];
+  getSelectedOptions() {
+    return super.getSelectedOptions()[0];
   }
 }
