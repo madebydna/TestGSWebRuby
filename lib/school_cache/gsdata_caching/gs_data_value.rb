@@ -7,7 +7,7 @@ class GsdataCaching::GsDataValue
   STUDENTS_WITH_DISABILITIES = 'Students with disabilities'
   STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES = 'Students with IDEA catagory disabilities'
   #TODO - finalize the order for the test score subjects
-  SUBJECT_ORDER = %w[English ELA Reading Math Science]
+  SUBJECT_ORDER = %w(English ELA English\ Language\ Arts Reading Math Science Civics)
 
   ETHNICITY_BREAKDOWN = 'ethnicity'
   module CollectionMethods
@@ -318,7 +318,7 @@ class GsdataCaching::GsDataValue
     end
 
     def school_cohort_count_exists?
-      inject(0){|sum, hash| sum + hash[:school_cohort_count].to_i} > 0
+      reduce(0){|sum, hash| sum + hash[:school_cohort_count].to_i} > 0
     end
 
     def total_state_cohort_count
