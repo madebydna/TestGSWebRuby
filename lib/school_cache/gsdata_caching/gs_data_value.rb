@@ -6,6 +6,8 @@ class GsdataCaching::GsDataValue
 
   STUDENTS_WITH_DISABILITIES = 'Students with disabilities'
   STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES = 'Students with IDEA catagory disabilities'
+  #TODO - finalize the order for the test score subjects
+  SUBJECT_ORDER = %w[English ELA Reading Math Science]
 
   ETHNICITY_BREAKDOWN = 'ethnicity'
   module CollectionMethods
@@ -315,6 +317,10 @@ class GsdataCaching::GsDataValue
       sum(&:school_cohort_count)
     end
 
+    def school_cohort_count_exists?
+      inject(0){|sum, hash| sum + hash[:school_cohort_count].to_i} > 0
+    end
+
     def total_state_cohort_count
       sum(&:state_cohort_count)
     end
@@ -370,11 +376,15 @@ class GsdataCaching::GsDataValue
     end
 
     def sort_by_test_label_and_cohort_count
-      sort_by { |h| [h.data_type, (h.school_cohort_count || 0) * -1] }.extend(CollectionMethods)
+      sort { |a,b| [b.data_type, (b.school_cohort_count || 0)] <=> [a.data_type, (a.school_cohort_count || 0)] }.extend(CollectionMethods)
+    end
+
+    def sort_by_test_label_and_subject_name
+      sort { |a,b| [a.data_type, (SUBJECT_ORDER.index(a[:academics]) || SUBJECT_ORDER.length+1)] <=> [b.data_type, (SUBJECT_ORDER.index(b[:academics]) || SUBJECT_ORDER.length+1)] }.extend(CollectionMethods)
     end
 
     def sort_by_cohort_count
-      sort_by { |h| (h.school_cohort_count || 0) * -1 }.extend(CollectionMethods)
+      sort { |a,b| (b.school_cohort_count || 0) <=> (a.school_cohort_count || 0) }.extend(CollectionMethods)
     end
 
     def sort_by_breakdowns
