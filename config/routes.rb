@@ -70,7 +70,10 @@ LocalizedProfiles::Application.routes.draw do
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
       to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}/#{params[:level]}", '/schools/')}?gradeLevels=#{params[:level][0]}&st=#{params[:type].split('-').last}" }
 
-  get '/search/search.page', as: :search, to: 'search#search'
+  scope '/search/search.page', as: :search do
+    get '', constraints: proc { |req| req.params.has_key?('newsearch') }, to: 'new_search#search'
+    get '', to: 'search#search'
+  end
 
   get '/search/nearbySearch.page', as: :search_by_zip, to: 'search#by_zip'
 

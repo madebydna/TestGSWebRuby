@@ -5,26 +5,33 @@ class NewSearchController < ApplicationController
   include SearchRequestParams
 
   layout 'application'
-  before_filter :redirect_unless_city_found
+  before_filter :redirect_unless_valid_search_criteria # we need at least a 'q' param or state and city/district
 
   def search
     gon.search = {
       schools: schools.map { |s| Api::SchoolSerializer.new(s).to_hash },
-    }.merge(Api::CitySerializer.new(city_object).to_hash)
-     .merge(Api::PaginationSummarySerializer.new(paginated_results).to_hash)
-     .merge(Api::PaginationSerializer.new(paginated_results).to_hash)
+    }.tap do |props|
+      props.merge!(Api::CitySerializer.new(city_object).to_hash) if city_object
+      props.merge!(Api::PaginationSummarySerializer.new(paginated_results).to_hash)
+      props.merge!(Api::PaginationSerializer.new(paginated_results).to_hash)
+    end
 
-     prev_page = prev_page_url(paginated_results)
-     next_page = next_page_url(paginated_results)
-
-     set_meta_tags(prev: prev_page) if prev_page
-     set_meta_tags(next: next_page) if next_page
+    prev_page = prev_page_url(paginated_results)
+    next_page = next_page_url(paginated_results)
+    set_meta_tags(prev: prev_page) if prev_page
+    set_meta_tags(next: next_page) if next_page
   end
 
   private
 
-  def redirect_unless_city_found
-    redirect_to(state_path(States.state_path(state))) unless city_object
+  def redirect_unless_valid_search_criteria
+    redirect_to(home_path) unless q || (state && (city || district))
+
+    if state && city
+      redirect_to(state_path(States.state_path(state))) unless city_object
+    elsif state && district
+      # TODO: implement. redirect_to(city_path(state, city) unless district_object
+    end
   end
 
   def schools

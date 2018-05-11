@@ -30,6 +30,7 @@ module Search
     def sunspot_query
       lambda do |search|
         # Must reference accessor methods, not instance variables!
+        search.keywords(q)
         search.with(:citykeyword, city.downcase) if city
         search.with(:school_database_state, state.downcase) if state
         search.with(:school_grade_level, level_codes.map(&:downcase)) if level_codes.present?

@@ -74,10 +74,18 @@ module Search
       }[name]
     end
 
+    def q
+      if @q.present?
+        Solr.require_non_optional_words(@q)
+      else
+        default_query_string
+      end
+    end
+
     def sunspot_query
       lambda do |search|
         # Must reference accessor methods, not instance variables!
-        search.keywords(q || default_query_string)
+        search.keywords(q)
         search.with(:city, city.downcase) if city
         search.with(:state, state.downcase) if state
         # search.with(:latlon).in_radius(32, -68, 100)
