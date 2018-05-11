@@ -4,7 +4,7 @@ class Api::SchoolsController < ApplicationController
 
   AVAILABLE_EXTRAS = %w[boundaries]
 
-  before_action :require_state, unless: :point_given?
+  before_action :require_valid_params
 
   def show
     hash = serialized_schools.first || {}
@@ -32,6 +32,12 @@ class Api::SchoolsController < ApplicationController
       Api::SchoolSerializer.new(school).to_hash.tap do |s|
         s.except(AVAILABLE_EXTRAS - extras)
       end
+    end
+  end
+
+  def require_valid_params
+    unless q
+      return require_state
     end
   end
 

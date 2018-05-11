@@ -21,6 +21,7 @@ export default class SearchQueryParams extends React.Component {
       entityTypes: queryParams.getEntityTypes(),
       sort: queryParams.getSort(),
       page: queryParams.getPage(),
+      q: queryParams.getQ(),
       updateLevelCodes: codes => {
         history.push({
           search: queryParams.queryStringWithNewGradeLevels(codes)

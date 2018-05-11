@@ -64,3 +64,8 @@ export function queryStringWithNewPage(pageArg) {
   }
   return getQueryStringWithUpdatedParam('page', page);
 }
+
+export function getQ() {
+  const { q } = parse(currentQueryString());
+  return q;
+}
