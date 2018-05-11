@@ -15,22 +15,32 @@ function getQueryStringWithUpdatedParam(param, value) {
 
 export function getGradeLevels() {
   const obj = parse(currentQueryString());
-  const val = obj['gradeLevels[]'];
+  const val = obj['gradeLevels[]'] || obj.gradeLevels;
   return val ? castArray(val) : undefined;
 }
 
 export function queryStringWithNewGradeLevels(levelCodes) {
-  return getQueryStringWithUpdatedParam('gradeLevels[]', levelCodes);
+  const existingParams = parse(currentQueryString());
+  const newParams = Object.assign(existingParams, {
+    gradeLevels: undefined,
+    'gradeLevels[]': levelCodes
+  });
+  return stringify(newParams);
 }
 
 export function getEntityTypes() {
   const obj = parse(currentQueryString());
-  const val = obj['st[]'];
+  const val = obj['st[]'] || obj.st;
   return val ? castArray(val) : undefined;
 }
 
 export function queryStringWithNewEntityTypes(entityTypes) {
-  return getQueryStringWithUpdatedParam('st[]', entityTypes);
+  const existingParams = parse(currentQueryString());
+  const newParams = Object.assign(existingParams, {
+    st: undefined,
+    'st[]': entityTypes
+  });
+  return stringify(newParams);
 }
 
 export function getSort() {

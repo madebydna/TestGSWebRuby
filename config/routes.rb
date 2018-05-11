@@ -23,11 +23,15 @@ LocalizedProfiles::Application.routes.draw do
 
   #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
-  # Routes for search pages
-  get ':state/:city/schools/', as: :search_city_browse,
     # This city regex allows for all characters except /
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
-    constraints: {state: States.any_state_name_regex, city: /[^\/]+/}, to: 'new_search#search'
+  city_regex = /[^\/]+/
+
+  # Routes for search pages
+  scope ':state/:city/schools/', constraints: {state: States.any_state_name_regex, city: city_regex}, as: :search_city_browse do
+    get '', constraints: proc { |req| req.params.has_key?('newsearch') }, to: 'new_search#search'
+    get '', to: 'search#city_browse'
+  end
 
   get ':state/:city/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/,
