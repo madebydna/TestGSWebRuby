@@ -2,7 +2,6 @@ module CitiesMetaTagsConcerns
   def cities_show_title
     state_text = @state[:short].downcase == 'dc' ? '' : "#{@city.titleize} #{@state[:long].titleize} "
     additional_city_text = @state[:short].downcase == 'dc' ? ', DC' : ''
-    return "Best Schools in #{@city.titleize}, #{@state[:short].upcase} | School Ratings in #{@city.titleize}, #{@state[:long].titleize}" if %w(ca tx fl ny ga il nc nj vi pa).include?(@state[:short].downcase)
     "#{@city.titleize}#{additional_city_text} Schools - #{state_text}School Ratings - Public and Private"
   end
 
