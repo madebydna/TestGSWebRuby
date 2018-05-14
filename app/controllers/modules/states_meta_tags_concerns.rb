@@ -9,8 +9,6 @@ module StatesMetaTagsConcerns
   end
 
   def states_show_title
-    # Testing different tag for 10 states
-    return "#{state_long_name_with_caps} School Rankings | Rank #{@state[:short].upcase} Public & Private Schools | GreatSchools" if %w(ca tx fl ny ga il nc nj vi pa).include?(@state[:short].downcase)
     "#{state_long_name_with_caps} Schools - #{state_long_name_with_caps} State School Ratings - Public and Private"
   end
 
