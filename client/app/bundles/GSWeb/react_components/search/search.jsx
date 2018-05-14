@@ -16,6 +16,7 @@ import SearchLayout from './search_layout';
 import pageNumbers from 'util/pagination';
 import Selectable from 'react_components/selectable';
 import AnchorButton from 'react_components/anchor_button';
+import ListMapDropdown from './list_map_dropdown';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -46,7 +47,8 @@ class Search extends React.Component {
     this.showListView = this.showListView.bind(this);
     this.state = {
       googleMapsInitialized: false,
-      listHidden: true
+      listHidden: true,
+      currentView: 'list'
     };
     this.initGoogleMaps();
   }
@@ -141,6 +143,12 @@ class Search extends React.Component {
           <React.Fragment>
             <div>{this.props.resultSummary}</div>
             <SortSelect />
+            <ListMapDropdown
+              currentView={this.state.currentView}
+              onSelect={currentView => {
+                this.setState({ currentView });
+              }}
+            />
           </React.Fragment>
         )}
         renderAd={() => <div className="ad-bar">Advertisement</div>}
