@@ -35,10 +35,14 @@ const GradeLevelFilter = () => (
             </span>
             <span className="button-group visible-xs">
               {opts.map(({ select, active, option } = {}) => (
-                <div onClick={select} onKeyPress={select} role="button">
+                <div
+                  onClick={select}
+                  key={option.key}
+                  onKeyPress={select}
+                  role="button"
+                >
                   <input
                     type="checkbox"
-                    key={option.key}
                     defaultChecked={active}
                     value={option.key}
                   />
