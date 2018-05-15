@@ -6,21 +6,14 @@ class TestScoresCaching::FeedStateTestScoresCacherGsdata < StateCacher
   def query_results
     @query_results ||=
       begin
-        DataValue.find_by_state_and_data_type_tags(state.state, 'state_test')
+        DataValue.find_by_state_and_data_type_tags(state, 'state_test')
           .with_configuration('feeds')
-          .map {|obj| TestScoresCaching::StateQueryResultDecorator.new(state.state, obj)}
       end
   end
 
   def build_hash_for_cache
     hashes = query_results.map { |r| result_to_hash(r) }.uniq
-    state_cache_hash = Hash.new { |h, k| h[k] = [] }
-    hashes.each_with_object(state_cache_hash) do |result_hash, cache_hash|
-      result_hash = result_hash.to_hash
-      if valid_result_hash?(result_hash)
-        cache_hash[result_hash[:data_type]] << result_hash.except(:data_type, :percentage, :narrative, :label, :methodology)
-      end
-    end
+    hashes.select {|hash| valid_result_hash? hash }
   end
 
   def self.active?
@@ -31,34 +24,27 @@ class TestScoresCaching::FeedStateTestScoresCacherGsdata < StateCacher
 
   def result_to_hash(result)
     breakdowns = result.breakdown_names
-    breakdown_tags = result.breakdown_tags
     academics = result.academic_names
-    academic_tags = result.academic_tags
-    # academic_types = result.academic_types
-    # display_range = display_range(result)
-    state_result = state_result(result)
     {}.tap do |h|
-      h[:data_type] = result.name  #data_type.short_name
-      h[:breakdowns] = breakdowns # if breakdowns
-      h[:breakdown_tags] = breakdown_tags # if breakdown_tags
+      h[:data_type] = result.name
+      h[:breakdowns] = breakdowns
 # rubocop:disable Style/FormatStringToken
-      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')  #source.data_valid
+      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
 # rubocop:enable Style/FormatStringToken
 # rubocop:disable Style/SafeNavigation
-      h[:state_value] = state_result.value if state_result && state_result.value #data_type.value
-      h[:source_name] = result.source_name    #source.name
-      h[:description] = result.description if result.description    #source.description
-      h[:academics] = academics # if academics   #data_value.academics.pluck(:name).join(',')
-      h[:academic_tags] = academic_tags # if academic_tags  #academic_tags.tag...comma separated string for all records associated with data value
-      h[:grade] = result.grade if result.grade  #data_value.grade
-      h[:state_cohort_count] = state_result.cohort_count if state_result && state_result.cohort_count  #data_value.cohort_count
+      h[:value] = result.value
+      h[:source_name] = result.source_name
+      h[:description] = result.description if result.description
+      h[:academics] = academics
+      h[:grade] = result.grade if result.grade
+      h[:cohort_count] = result.cohort_count
 # rubocop:enable Style/SafeNavigation
     end
   end
 
   def valid_result_hash?(result_hash)
     result_hash = result_hash.reject { |_,v| v.blank? }
-    required_keys = %i(source_name)
+    required_keys = %i(source_name data_type value)
     missing_keys = required_keys - result_hash.keys
     if missing_keys.count.positive?
       GSLogger.error(
