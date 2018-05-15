@@ -17,6 +17,7 @@ import pageNumbers from 'util/pagination';
 import Selectable from 'react_components/selectable';
 import AnchorButton from 'react_components/anchor_button';
 import ListMapDropdown from './list_map_dropdown';
+import { validSizes as validViewportSizes } from 'util/viewport';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -37,7 +38,7 @@ class Search extends React.Component {
     page: PropTypes.number.isRequired,
     totalPages: PropTypes.number.isRequired,
     onPageChanged: PropTypes.func.isRequired,
-    size: PropTypes.string.isRequired
+    size: PropTypes.oneOf(validViewportSizes).isRequired
   };
 
   constructor(props) {

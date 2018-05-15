@@ -12,7 +12,7 @@ export default class MapMarker extends DefaultMapMarker {
     title: PropTypes.string.isRequired,
     lat: PropTypes.number.isRequired,
     lon: PropTypes.number.isRequired,
-    rating: PropTypes.string,
+    rating: PropTypes.number,
     onClick: PropTypes.func,
     selected: PropTypes.bool
   };

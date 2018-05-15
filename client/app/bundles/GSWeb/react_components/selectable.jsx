@@ -8,7 +8,9 @@ export default class Selectable extends React.Component {
   static propTypes = {
     multiple: PropTypes.bool,
     options: PropTypes.arrayOf(PropTypes.object).isRequired,
-    activeOptions: PropTypes.arrayOf(PropTypes.object),
+    activeOptions: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+    ),
     onSelect: PropTypes.func.isRequired, // called with active keys when option selected
     onDeselect: PropTypes.func, // called with active keys when option is deselected. Defaults to onSelect function
     children: PropTypes.func.isRequired,
