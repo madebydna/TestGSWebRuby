@@ -36,7 +36,7 @@ class Api::SchoolsController < ApplicationController
   end
 
   def require_valid_params
-    unless q
+    unless q || point_given? || area_given?
       return require_state
     end
   end
