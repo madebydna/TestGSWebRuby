@@ -20,12 +20,13 @@ export default class ButtonGroup extends React.Component {
       <span className="button-group">
         <Selectable
           options={newOpts}
-          activeOptions={newOpts.filter(o => o.key === this.props.activeOption)}
-          onSelect={({ key }) => this.props.onSelect(key)}
+          activeOptions={[this.props.activeOption]}
+          onSelect={key => this.props.onSelect(key)}
           className="button-group"
+          keyFunc={o => o.key}
         >
           {opts =>
-            opts.map(option => (
+            opts.map(({ option, active, select }) => (
               <label
                 key={option.key}
                 className={active ? 'active' : ''}
