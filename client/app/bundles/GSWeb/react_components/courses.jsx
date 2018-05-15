@@ -13,7 +13,7 @@ export default class Courses extends React.Component {
   static propTypes = {
     course_enrollments_and_ratings: PropTypes.object,
     sources: PropTypes.object,
-    rating: PropTypes.string,
+    rating: PropTypes.number,
     share_content: PropTypes.string,
     narration: PropTypes.string,
     faq: PropTypes.shape({

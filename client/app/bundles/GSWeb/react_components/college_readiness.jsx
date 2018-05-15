@@ -160,18 +160,18 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     return (
       <div id={analyticsId}>
         <BasicDataModuleLayout
-          sharing_modal={ this.hasData() && <SharingModal content={this.props.share_content} /> }
+          sharing_modal={this.hasData() && <SharingModal content={this.props.share_content} />}
           id={this.props.anchor}
           className=''
-          icon={ this.icon() }
-          title={ this.title() }
-          subtitle={ this.props.subtitle }
-          no_data_cta={ !this.hasData() && this.noDataCta() }
-          footer={ this.hasData() && this.footer() }
-          body={ this.hasData() && this.activePane() }
-          tabs={ this.hasData() && this.props.showTabs && this.tabsContainer() }
-          csa_badge={ this.csaBadge() }
-          csaCallout = {this.csaCallout()}
+          icon={this.icon()}
+          title={this.title()}
+          subtitle={this.props.subtitle}
+          no_data_cta={!this.hasData() && this.noDataCta()}
+          footer={this.hasData() && this.footer()}
+          body={this.hasData() && this.activePane()}
+          tabs={(this.hasData() && this.props.showTabs) ? this.tabsContainer() : undefined}
+          csa_badge={this.csaBadge()}
+          csaCallout={this.csaCallout()}
         />
       </div>
     )
