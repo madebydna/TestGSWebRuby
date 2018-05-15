@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { find as findSchools } from 'api_clients/schools';
-import { isEqual, debounce } from 'lodash';
+import { isEqual, throttle, debounce } from 'lodash';
 import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
 import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
+import { size as viewportSize } from 'util/viewport';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -53,12 +54,28 @@ class SearchProvider extends React.Component {
       totalPages: props.totalPages,
       resultSummary: props.resultSummary,
       paginationSummary: props.paginationSummary,
-      loadingSchools: false
+      loadingSchools: false,
+      size: viewportSize()
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
     });
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
+    this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
+  }
+
+  componentDidMount() {
+    console.log('           DID MOUNT !!!!!!!!!!!!');
+    window.addEventListener('resize', this.handleWindowResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize);
+  }
+
+  handleWindowResize() {
+    console.log([`new viewport size is ${viewportSize()}`]);
+    this.setState({ size: viewportSize() });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -124,7 +141,8 @@ class SearchProvider extends React.Component {
           totalPages: this.state.totalPages,
           onPageChanged: this.props.updatePage,
           paginationSummary: this.state.paginationSummary,
-          resultSummary: this.state.resultSummary
+          resultSummary: this.state.resultSummary,
+          size: this.state.size
         }}
       >
         <GradeLevelContext.Provider

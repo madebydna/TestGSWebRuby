@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'lodash';
 import $ from 'jquery';
+import { viewport, SM, validSizes } from 'util/viewport';
 
 function keepInViewport(
-  $elem,
+  selector,
   {
     $elementsAbove = [],
     $elementsBelow = [],
@@ -12,9 +13,19 @@ function keepInViewport(
     setBottom = true
   } = {}
 ) {
-  const initialTop = $elem.position().top;
+  let initialTop = null;
+  if ($(selector).size > 0) {
+    initialTop = $(selector).position().top;
+  }
 
   const updateElementPosition = function updateElementPosition() {
+    const $elem = $(selector);
+    if ($elem.size === 0 || !$elem.position()) {
+      return;
+    }
+    if (initialTop === null) {
+      initialTop = $elem.position().top;
+    }
     if (setTop) {
       const YValueOfTopOfViewport = $(window).scrollTop();
       const minTop = $elementsAbove.reduce(
@@ -58,7 +69,9 @@ class SearchLayout extends React.Component {
     renderAd: PropTypes.func,
     renderList: PropTypes.func,
     renderMap: PropTypes.func,
-    mapHidden: PropTypes.bool
+    mapHidden: PropTypes.bool,
+    size: PropTypes.oneOf(validSizes).isRequired,
+    currentView: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -68,16 +81,47 @@ class SearchLayout extends React.Component {
   }
 
   componentDidMount() {
-    keepInViewport($(this.fixedYLayer.current), {
+    keepInViewport(this.fixedYLayer.current, {
       $elementsAbove: [$('.search-header')],
       $elementsBelow: [$('footer')],
       fixTop: true,
       fixBottom: true
     });
-    keepInViewport($(this.header.current), {
+    keepInViewport(this.header.current, {
       setTop: true,
       setBottom: false
     });
+  }
+
+  shouldRenderMap() {
+    console.log(['SHOULD RENDER MAP SIZE IS ', this.props.size]);
+    return this.props.size > SM || this.props.currentView === 'map';
+  }
+
+  shouldRenderList() {
+    return this.props.size > SM || this.props.currentView === 'list';
+  }
+
+  renderMapAndAdContainer(map, ad) {
+    console.log(['SIZE IS ', this.props.size]);
+    if (this.props.size > SM) {
+      console.log(['OK SIZE IS ', this.props.size]);
+      return (
+        <div className="fixed-y-layer" ref={this.fixedYLayer}>
+          <div className="fixed-y-centering">
+            <div className="right-column">
+              <div className="ad-column">{ad}</div>
+              <div className="map-column">{map}</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div style={{ height: `${viewport().height - 250}px`, color: 'red' }}>
+        {map}
+      </div>
+    );
   }
 
   render() {
@@ -90,25 +134,14 @@ class SearchLayout extends React.Component {
         </div>
         <div className="search-subheader">{this.props.renderSubheader()}</div>
         <div className="list-map-ad">
-          <div className="fixed-y-layer" ref={this.fixedYLayer}>
-            <div className="fixed-y-centering">
-              <div className="right-column">
-                <div className="ad-column">{this.props.renderAd()}</div>
-                <div className="map-column">
-                  <div
-                    className={
-                      this.props.mapHidden
-                        ? 'map-container closed'
-                        : 'map-container'
-                    }
-                  >
-                    <div className="map-fit">{this.props.renderMap()}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {this.props.renderList()}
+          {this.shouldRenderMap() &&
+            this.renderMapAndAdContainer(
+              <div className="map-container">
+                <div className="map-fit">{this.props.renderMap()}</div>
+              </div>,
+              this.props.renderAd()
+            )}
+          {this.shouldRenderList() && this.props.renderList()}
         </div>
       </div>
     );

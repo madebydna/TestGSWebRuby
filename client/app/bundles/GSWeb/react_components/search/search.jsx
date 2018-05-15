@@ -36,7 +36,8 @@ class Search extends React.Component {
     loadingSchools: PropTypes.bool,
     page: PropTypes.number.isRequired,
     totalPages: PropTypes.number.isRequired,
-    onPageChanged: PropTypes.func.isRequired
+    onPageChanged: PropTypes.func.isRequired,
+    size: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -134,6 +135,8 @@ class Search extends React.Component {
   render() {
     return (
       <SearchLayout
+        size={this.props.size}
+        currentView={this.state.currentView}
         renderHeader={() => (
           <React.Fragment>
             <FilterBar />

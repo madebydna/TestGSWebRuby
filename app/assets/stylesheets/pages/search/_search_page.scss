@@ -241,6 +241,9 @@ body {
       position: absolute;
       z-index: 1;
       cursor: pointer;
+      > div + div {
+        margin-top: 5px;
+      }
     }
   }
 }
