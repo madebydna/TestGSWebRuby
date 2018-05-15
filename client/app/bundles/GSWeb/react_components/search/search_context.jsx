@@ -65,7 +65,6 @@ class SearchProvider extends React.Component {
   }
 
   componentDidMount() {
-    console.log('           DID MOUNT !!!!!!!!!!!!');
     window.addEventListener('resize', this.handleWindowResize);
   }
 
@@ -74,7 +73,6 @@ class SearchProvider extends React.Component {
   }
 
   handleWindowResize() {
-    console.log([`new viewport size is ${viewportSize()}`]);
     this.setState({ size: viewportSize() });
   }
 
