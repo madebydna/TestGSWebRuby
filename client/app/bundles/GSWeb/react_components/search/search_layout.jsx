@@ -94,7 +94,6 @@ class SearchLayout extends React.Component {
   }
 
   shouldRenderMap() {
-    console.log(['SHOULD RENDER MAP SIZE IS ', this.props.size]);
     return this.props.size > SM || this.props.currentView === 'map';
   }
 
@@ -103,9 +102,7 @@ class SearchLayout extends React.Component {
   }
 
   renderMapAndAdContainer(map, ad) {
-    console.log(['SIZE IS ', this.props.size]);
     if (this.props.size > SM) {
-      console.log(['OK SIZE IS ', this.props.size]);
       return (
         <div className="fixed-y-layer" ref={this.fixedYLayer}>
           <div className="fixed-y-centering">
