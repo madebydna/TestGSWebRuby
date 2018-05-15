@@ -375,11 +375,11 @@ class GsdataCaching::GsDataValue
     end
 
     def group_by_test_label_and_sort_by_cohort_count
-      sort { |a,b| [a.data_type, (b.school_cohort_count || 0)] <=> [b.data_type, (a.school_cohort_count || 0)] }.extend(CollectionMethods)
+      sort { |a,b| [b.data_type, (b.school_cohort_count || 0)] <=> [a.data_type, (a.school_cohort_count || 0)]}.extend(CollectionMethods)
     end
 
     def sort_by_test_label_using_cohort_count
-      group_by(&:data_type).sort_by{|k,v| [k, v.extend(CollectionMethods).total_school_cohort_count]}.extend(CollectionMethods)
+      group_by(&:data_type).sort_by{|k,v| (-v.extend(CollectionMethods).total_school_cohort_count || 0) }.flatten.reject{|y| y.is_a?(String)}.extend(CollectionMethods)
     end
 
     def sort_by_test_label_and_subject_name
