@@ -26,39 +26,27 @@ export default class Selectable extends React.Component {
     keyFunc: null
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeOptions: props.activeOptions
-    };
-  }
-
   getSelectedOptions() {
     if (this.props.multiple) {
-      return this.state.activeOptions;
+      return this.props.activeOptions;
     }
-    return this.state.activeOptions[0];
+    return this.props.activeOptions[0];
   }
 
   isOptionSelected(option) {
-    return this.state.activeOptions.indexOf(option) > -1;
+    return this.props.activeOptions.indexOf(option) > -1;
   }
 
-  selectOption(option, func) {
+  selectOption(option) {
     let activeOptions = [option];
     if (this.props.multiple) {
-      activeOptions = this.state.activeOptions.concat(option);
+      activeOptions = this.props.activeOptions.concat(option);
     }
-    this.setState({ activeOptions }, func);
+    return activeOptions;
   }
 
-  deselectOption(option, func) {
-    this.setState(
-      {
-        activeOptions: this.state.activeOptions.filter(o => o !== option)
-      },
-      func
-    );
+  deselectOption(option) {
+    return this.props.activeOptions.filter(o => o !== option);
   }
 
   handleSelect(option) {
@@ -68,15 +56,11 @@ export default class Selectable extends React.Component {
     }
     if (this.isOptionSelected(k)) {
       if (this.props.allowDeselect !== false) {
-        this.deselectOption(k, () => {
-          const func = this.props.onDeselect || this.props.onSelect;
-          func(this.getSelectedOptions());
-        });
+        const func = this.props.onDeselect || this.props.onSelect;
+        func(this.deselectOption(k));
       }
     } else {
-      this.selectOption(k, () => {
-        this.props.onSelect(this.getSelectedOptions());
-      });
+      this.props.onSelect(this.selectOption(k));
     }
   }
 
