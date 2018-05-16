@@ -18,6 +18,7 @@ import Selectable from 'react_components/selectable';
 import AnchorButton from 'react_components/anchor_button';
 import ListMapDropdown from './list_map_dropdown';
 import { validSizes as validViewportSizes } from 'util/viewport';
+import PaginationButtons from './pagination_buttons';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -176,7 +177,11 @@ class Search extends React.Component {
                       {this.props.totalPages > 1 && (
                         <li>
                           <div className="pagination-buttons button-group">
-                            {this.renderPaginationButtons()}
+                            <PaginationButtons
+                              page={this.props.page}
+                              totalPages={this.props.totalPages}
+                              onPageChanged={this.props.onPageChanged}
+                            />
                           </div>
                         </li>
                       )}

@@ -1,4 +1,4 @@
-export default function pages(currentPage, totalPages, func) {
+export default function pages(currentPage, totalPages) {
   let pagesRemaining = Math.min(totalPages, 5);
 
   let prev = null;
@@ -48,5 +48,5 @@ export default function pages(currentPage, totalPages, func) {
 
   const pageArray = first.concat(middle).concat(last);
 
-  func({ prev, next, range: pageArray });
+  return { prev, next, range: pageArray };
 }
