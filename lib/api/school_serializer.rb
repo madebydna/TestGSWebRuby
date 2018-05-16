@@ -27,7 +27,7 @@ class Api::SchoolSerializer
         zip: school['zipcode'],
         city: school['city']
       },
-      rating: rating && rating != 'NR' ? rating : nil,
+      rating: rating && rating != 'NR' ? rating.to_i : nil,
       schoolType: school.type,
       state: school.state,
       type: 'school',
@@ -36,7 +36,7 @@ class Api::SchoolSerializer
       }
     }
     if enrollment
-      h[:enrollment] = enrollment
+      h[:enrollment] = enrollment&.to_i
     end
     if school.respond_to?(:boundaries)
       h[:boundaries] = school.boundaries

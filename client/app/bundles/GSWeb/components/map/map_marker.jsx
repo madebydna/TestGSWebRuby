@@ -54,7 +54,7 @@ const createMarkersFromSchools = (schools, selectedSchool, map) => {
   const markers = schools.map(s => {
     const props = {
       title: s.name,
-      rating: s.rating ? s.rating.toString() : s.rating,
+      rating: s.rating,
       lat: s.lat,
       lon: s.lon,
       map

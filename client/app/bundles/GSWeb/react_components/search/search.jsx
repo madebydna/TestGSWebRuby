@@ -121,6 +121,7 @@ class Search extends React.Component {
         {opts =>
           opts.map(({ option, active, select }) => (
             <AnchorButton
+              key={option.key}
               enabled={!option.preventSelect}
               active={active}
               onClick={select}
