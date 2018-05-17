@@ -1,21 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addQueryParamToUrl } from 'util/uri';
-import SpinnyWheel from '../spinny_wheel';
+import { validSizes as validViewportSizes } from 'util/viewport';
 import SpinnyOverlay from '../spinny_overlay';
-import * as googleMaps from '../../components/map/google_maps';
-import * as googleMapExtensions from '../../components/map/google_maps_extensions';
-import Map from '../../components/map/map';
-import { createMarkersFromSchools } from '../../components/map/map_marker';
-import Legend from '../../components/map/legend';
 import FilterBar from './filter_bar';
 import SearchContext from './search_context';
 import School from './school';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
 import ListMapDropdown from './list_map_dropdown';
-import { validSizes as validViewportSizes } from 'util/viewport';
 import PaginationButtons from './pagination_buttons';
+import Map from './map';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -41,22 +35,9 @@ class Search extends React.Component {
 
   constructor(props) {
     super(props);
-    this.map = null;
-    this.initGoogleMaps = this.initGoogleMaps.bind(this);
     this.state = {
-      googleMapsInitialized: false,
       currentView: 'list'
     };
-    this.initGoogleMaps();
-  }
-
-  initGoogleMaps() {
-    googleMaps.init(() => {
-      googleMapExtensions.init();
-      this.setState({
-        googleMapsInitialized: true
-      });
-    });
   }
 
   render() {
@@ -117,33 +98,11 @@ class Search extends React.Component {
           </React.Fragment>
         )}
         renderMap={() => (
-          <SpinnyOverlay
-            spin={
-              !this.state.googleMapsInitialized || this.state.loadingSchools
-            }
-          >
-            {({ createContainer, spinny }) =>
-              createContainer(
-                <div style={{ width: '100%', height: '100%' }}>
-                  {spinny}
-                  {this.state.googleMapsInitialized && (
-                    <Map
-                      googleMaps={google.maps}
-                      markers={createMarkersFromSchools(
-                        this.props.schools,
-                        this.props.school,
-                        this.map
-                      )}
-                      changeLocation={() => {}}
-                      hidden={this.state.mapHidden}
-                      {...this.props}
-                    />
-                  )}
-                  <Legend content={<div>ASSETS/COPY HERE!</div>} />
-                </div>
-              )
-            }
-          </SpinnyOverlay>
+          <Map
+            school={this.props.school}
+            schools={this.props.schools}
+            isLoading={this.props.loadingSchools}
+          />
         )}
       />
     );

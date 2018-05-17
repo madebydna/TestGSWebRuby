@@ -6,12 +6,18 @@ export default class Map extends React.Component {
   static propTypes = {
     googleMaps: PropTypes.object.isRequired,
     markers: PropTypes.arrayOf(PropTypes.element),
-    polygons: PropTypes.arrayOf(PropTypes.element)
+    polygons: PropTypes.arrayOf(PropTypes.element),
+    hidden: PropTypes.bool,
+    lat: PropTypes.number,
+    lon: PropTypes.number
   };
 
   static defaultProps = {
     markers: [],
-    polygons: []
+    polygons: [],
+    hidden: false,
+    lat: null,
+    lon: null
   };
 
   constructor(props) {
@@ -31,7 +37,7 @@ export default class Map extends React.Component {
       mapTypeControl: false,
       scrollwheel: false,
       zoomControlOptions: {
-        position: google.maps.ControlPosition.TOP_RIGHT
+        position: this.props.googleMaps.ControlPosition.TOP_RIGHT
       }
     };
     return new this.props.googleMaps.Map($elem, mapOptions);
