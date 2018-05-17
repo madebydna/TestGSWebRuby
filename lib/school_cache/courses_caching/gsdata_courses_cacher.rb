@@ -16,8 +16,13 @@ class CoursesCaching::GsdataCoursesCacher < GsdataCaching::GsdataCacher
   end
 
   def school_results
-    @_school_results ||=
-      DataValue.find_by_school_and_data_types_with_academics_all_students_and_grade_all(school,data_type_ids)
+    @_school_results ||= begin
+      results = DataValue.find_by_school_and_data_types_with_academics_all_students_and_grade_all(school,data_type_ids)
+      if results
+        max_source_date_valid = results.map(&:date_valid).max
+        results = results.select { |dv| dv.date_valid == max_source_date_valid }
+      end
+    end
   end
 
 end
