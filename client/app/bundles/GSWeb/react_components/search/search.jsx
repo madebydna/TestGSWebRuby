@@ -13,9 +13,6 @@ import SearchContext from './search_context';
 import School from './school';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
-import pageNumbers from 'util/pagination';
-import Selectable from 'react_components/selectable';
-import AnchorButton from 'react_components/anchor_button';
 import ListMapDropdown from './list_map_dropdown';
 import { validSizes as validViewportSizes } from 'util/viewport';
 import PaginationButtons from './pagination_buttons';
@@ -46,11 +43,8 @@ class Search extends React.Component {
     super(props);
     this.map = null;
     this.initGoogleMaps = this.initGoogleMaps.bind(this);
-    this.showMapView = this.showMapView.bind(this);
-    this.showListView = this.showListView.bind(this);
     this.state = {
       googleMapsInitialized: false,
-      listHidden: true,
       currentView: 'list'
     };
     this.initGoogleMaps();
@@ -63,76 +57,6 @@ class Search extends React.Component {
         googleMapsInitialized: true
       });
     });
-  }
-
-  showMapView() {
-    this.setState({
-      mapHidden: false,
-      listHidden: true
-    });
-  }
-
-  showListView() {
-    this.setState({
-      mapHidden: true,
-      listHidden: false
-    });
-  }
-
-  renderPaginationButtons() {
-    const options = [];
-    pageNumbers(
-      this.props.page,
-      this.props.totalPages,
-      ({ prev, next, range }) => {
-        options.push({
-          key: '<',
-          value: prev,
-          label: '<',
-          preventSelect: !prev
-        });
-        range.forEach(pageNum => {
-          options.push({
-            key: pageNum,
-            value: pageNum,
-            label: pageNum
-          });
-        });
-        options.push({
-          key: '>',
-          value: next,
-          label: '>',
-          preventSelect: !next
-        });
-      }
-    );
-
-    // href={addQueryParamToUrl('page', value, window.location.href)}
-    return (
-      <Selectable
-        options={options}
-        allowDeselect={false}
-        activeOptions={options.filter(o => o.value === this.props.page)}
-        onSelect={({ value } = {}) => {
-          if (value && value !== this.props.page) {
-            this.props.onPageChanged(value);
-          }
-        }}
-      >
-        {opts =>
-          opts.map(({ option, active, select }) => (
-            <AnchorButton
-              key={option.key}
-              enabled={!option.preventSelect}
-              active={active}
-              onClick={select}
-            >
-              {option.label}
-            </AnchorButton>
-          ))
-        }
-      </Selectable>
-    );
   }
 
   render() {
@@ -192,7 +116,6 @@ class Search extends React.Component {
             </SpinnyOverlay>
           </React.Fragment>
         )}
-        mapHidden={this.state.mapHidden}
         renderMap={() => (
           <SpinnyOverlay
             spin={
