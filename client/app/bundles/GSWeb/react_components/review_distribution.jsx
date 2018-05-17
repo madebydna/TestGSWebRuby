@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { t } from '../util/i18n';
 
 export default class ReviewDistribution extends React.Component {
 
   static propTypes = {
-    distribution: React.PropTypes.object.isRequired
+    distribution: PropTypes.object.isRequired
   };
 
   constructor(props) {

@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import createPolygonFactory from '../../components/map/polygons';
 
 export default class Polygon extends React.Component {
   static propTypes = {
-    googleMaps: React.PropTypes.object,
-    map: React.PropTypes.object,
-    type: React.PropTypes.string.isRequired,
-    coordinates: React.PropTypes.array.isRequired
+    googleMaps: PropTypes.object,
+    map: PropTypes.object,
+    type: PropTypes.string.isRequired,
+    coordinates: PropTypes.array.isRequired
   }
 
   constructor(props) {

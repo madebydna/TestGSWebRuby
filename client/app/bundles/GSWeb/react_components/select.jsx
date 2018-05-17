@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Select = ({objects, keyFunc, labelFunc, onChange, defaultValue, defaultLabel}) => {
   const options = () => {
@@ -18,12 +19,12 @@ const Select = ({objects, keyFunc, labelFunc, onChange, defaultValue, defaultLab
   return <select onChange={_onChange} defaultValue={defaultValue}>{options()}</select>;
 };
 
-Select.PropTypes = {
-  objects: React.PropTypes.array.isRequired,
-  keyFunc: React.PropTypes.func.isRequired,
-  labelFunc: React.PropTypes.func.isRequired,
-  onChange: React.PropTypes.func,
-  defaultValue: React.PropTypes.any
+Select.propTypes = {
+  objects: PropTypes.array.isRequired,
+  keyFunc: PropTypes.func.isRequired,
+  labelFunc: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
+  defaultValue: PropTypes.any
 }
 
 export default Select;

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import BarGraphBase from './bar_graph_base';
 import BasicDataModuleRow from '../../school_profiles/basic_data_module_row';
 import BasicDataModuleDrawerRow from '../../school_profiles/basic_data_module_drawer_row';
@@ -7,16 +8,16 @@ import { t } from '../../../util/i18n';
 export default class TestScoreBarGraphWithGrades extends React.Component {
 
   static propTypes = {
-    breakdown: React.PropTypes.string.isRequired,
-    score: React.PropTypes.number.isRequired,
-    label: React.PropTypes.string.isRequired,
-    percentage: React.PropTypes.number,
-    display_percentages: React.PropTypes.bool,
-    number_students_tested: React.PropTypes.number,
-    state_average: React.PropTypes.number,
-    state_average_label: React.PropTypes.string,
-    grades: React.PropTypes.array,
-    invertedRatings:  React.PropTypes.bool
+    breakdown: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
+    percentage: PropTypes.number,
+    display_percentages: PropTypes.bool,
+    number_students_tested: PropTypes.number,
+    state_average: PropTypes.number,
+    state_average_label: PropTypes.string,
+    grades: PropTypes.array,
+    invertedRatings:  PropTypes.bool
   }
 
   constructor(props) {

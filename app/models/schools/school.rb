@@ -1,6 +1,8 @@
 class School < ActiveRecord::Base
   include SchoolReviewConcerns
   include SchoolRouteConcerns
+  include GradeLevelConcerns
+
 
   LEVEL_CODES = {
     primary: 'p',
@@ -23,11 +25,17 @@ class School < ActiveRecord::Base
   has_many :school_metadatas
   belongs_to :district
 
+
   scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
 
   scope :not_preschool_only, -> { where.not(level_code: 'p') }
 
   scope :active, -> { where(active: true) }
+
+  scope :include_district_name, lambda {
+    select("#{School.table_name}.*, #{District.table_name}.name as district_name").
+    joins("LEFT JOIN district on school.district_id = district.id")
+  }
 
   self.inheritance_column = nil
 
@@ -35,8 +43,26 @@ class School < ActiveRecord::Base
     School.on_db(state.downcase.to_sym).find id rescue nil
   end
 
+  def self.find_by_state_and_ids(state, ids)
+    School.on_db(state.downcase.to_sym).where(id: ids)
+  end
+
   def self.ids_by_state(state)
     School.on_db(state.downcase.to_sym).active.not_preschool_only.order(:id).select(:id).map(&:id)
+  end
+
+  # Given objects that have state and school_id, load school for each one
+  def self.load_all_from_associates(associate)
+    states_and_ids = 
+      associate
+        .map { |obj| [obj.state, obj.school_id] }
+        .each_with_object({}) do |(state,id), hash|
+          hash[state] ||= []
+          hash[state] << id
+      end
+    states_and_ids.flat_map do |(state, ids)|
+      find_by_state_and_ids(state, ids).to_a
+    end
   end
 
   def self.within_district(district)
@@ -45,6 +71,17 @@ class School < ActiveRecord::Base
 
   def self.within_city(state_abbreviation, city_name)
     on_db(state_abbreviation.downcase.to_sym).active.where(city: city_name).order(:name)
+  end
+
+  def self.having_point_in_attendance_zone(lat, lon, level_code)
+    geometries = SchoolGeometry.find_by_point_and_level(lat, lon, level_code)
+    geometries_valid = geometries.present?
+    if geometries && geometries.size > 1 && geometries[0].area == geometries[1].area
+      # A geometry is not valid if it covers the same area as the next one
+      # This is because we can't really recommend one of those boundaries above the other
+      geometries_valid = false
+    end
+    geometries_valid ? [geometries.first.school] : []
   end
 
   def census_data_for_data_types(data_types = [])

@@ -1,31 +1,46 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 export default function(WrappedComponent, domEvent) {
-  return React.createClass({
-    sendAnalyticsEvent: function() {
-      if(this.props.gaLabel && this.props.gaLabel != '') {
-        analyticsEvent(this.props.gaCategory, this.props.gaAction, this.props.gaLabel);
+  return createReactClass({
+    sendAnalyticsEvent() {
+      if (this.props.gaLabel && this.props.gaLabel != '') {
+        analyticsEvent(
+          this.props.gaCategory,
+          this.props.gaAction,
+          this.getLabel()
+        );
       }
     },
 
     propTypes: {
-      gaCategory: React.PropTypes.string,
-      gaAction: React.PropTypes.string,
-      gaLabel: React.PropTypes.string
+      gaCategory: PropTypes.string,
+      gaAction: PropTypes.string,
+      gaLabel: PropTypes.string,
+      gaElementType: PropTypes.string
     },
 
-    getDefaultProps: function() {
+    getDefaultProps() {
       return {
         gaCategory: 'Profile',
-        gaAction: 'Infobox'
-      }
+        gaAction: 'Infobox',
+        gaElementType: null
+      };
     },
 
-    render: function() {
-      let props = {
+    getLabel() {
+      const elementDivider = ' - ';
+      const elementType = this.props.gaElementType;
+      const label = this.props.gaLabel;
+      return elementType ? elementType + elementDivider + label : label;
+    },
+
+    render() {
+      const props = {
         sendAnalyticsEvent: this.sendAnalyticsEvent
-      }
-      if(domEvent) {
+      };
+      if (domEvent) {
         props[domEvent] = this.sendAnalyticsEvent;
       }
 

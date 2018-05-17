@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Provider, connect } from 'react-redux';
 import TopPerformingNearbySchoolsList from './top_performing_nearby_schools_list';
 import NearbySchoolsByDistanceList from './nearby_schools_by_distance_list';
@@ -9,7 +10,7 @@ import GiveUsFeedback from 'react_components/school_profiles/give_us_feedback';
 class NearestHighPerformingSchools extends React.Component {
 
   static propTypes = {
-    tabIndex: React.PropTypes.number
+    tabIndex: PropTypes.number
   };
 
   constructor(props) {

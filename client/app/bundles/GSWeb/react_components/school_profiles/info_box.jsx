@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const InfoBox = ({className='', content, children, element_type}) => {
   var c = "noTextDecoration " + className;
@@ -15,8 +16,8 @@ const InfoBox = ({className='', content, children, element_type}) => {
   );
 };
 
-InfoBox.PropTypes = {
-  content: React.PropTypes.string.isRequired
+InfoBox.propTypes = {
+  content: PropTypes.string.isRequired
 }
 
 export default InfoBox;

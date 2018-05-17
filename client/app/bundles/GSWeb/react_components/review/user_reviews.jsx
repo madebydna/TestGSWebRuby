@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import TopicalReview from './topical_review';
 import ShortenText from '../shorten_text';
 import ReportReview from './report_review.jsx';
@@ -7,13 +8,13 @@ import { t } from '../../util/i18n';
 export default class UserReviews extends React.Component {
 
   static propTypes = {
-    five_star_review: React.PropTypes.object,
-    topical_reviews: React.PropTypes.array,
-    most_recent_date: React.PropTypes.string,
-    user_type_label: React.PropTypes.string,
-    avatar: React.PropTypes.number,
-    review_reported_callback: React.PropTypes.func,
-    current_user_reported_reviews: React.PropTypes.array,
+    five_star_review: PropTypes.object,
+    topical_reviews: PropTypes.array,
+    most_recent_date: PropTypes.string,
+    user_type_label: PropTypes.string,
+    avatar: PropTypes.number,
+    review_reported_callback: PropTypes.func,
+    current_user_reported_reviews: PropTypes.array,
   };
 
   constructor(props) {

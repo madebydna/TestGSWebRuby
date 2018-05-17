@@ -3,12 +3,17 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import Drawer from '../app/bundles/GSWeb/react_components/drawer.jsx';
+import Drawer from '../app/bundles/GSWeb/react_components/drawer';
 
-describe('<Drawer />', function() {
-  it('when given content it says "Show more"', function() {
+describe('<Drawer />', () => {
+  it('when given content it says "Show more"', () => {
     global.GS = global.GS || {};
-    const wrapper = shallow(<Drawer content="<div class='.some-class'></div>" />);
-    expect(wrapper.text()).to.have.contain('Show more');
+    const wrapper = shallow(
+      <Drawer
+        content="<div class='.some-class'></div>"
+        closedLabel="Show more"
+      />
+    );
+    expect(wrapper.text()).to.contain('Show more');
   });
 });

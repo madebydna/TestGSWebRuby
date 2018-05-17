@@ -1,27 +1,27 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import NearbySchool from './nearby_school';
 import SpinnyWheel from './spinny_wheel';
 import { t } from '../util/i18n';
 
 class NearbySchoolsList extends React.Component {
-
   static propTypes = {
-    visible: React.PropTypes.bool.isRequired,
-    school: React.PropTypes.shape({
-      state: React.PropTypes.string,
-      id: React.PropTypes.number
+    visible: PropTypes.bool.isRequired,
+    school: PropTypes.shape({
+      state: PropTypes.string,
+      id: PropTypes.number
     }).isRequired,
-    schools: React.PropTypes.array,
-    allSchoolsLoaded: React.PropTypes.bool.isRequired,
-    nearbySchoolsType: React.PropTypes.string.isRequired,
-    getSchools: React.PropTypes.func.isRequired
+    schools: PropTypes.array,
+    allSchoolsLoaded: PropTypes.bool.isRequired,
+    nearbySchoolsType: PropTypes.string.isRequired,
+    getSchools: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
     this.state = {
       offset: 0
-    }
+    };
     this.pageLeft = this.pageLeft.bind(this);
     this.pageRight = this.pageRight.bind(this);
     this.trackPagination = this.trackPagination.bind(this);
@@ -29,14 +29,14 @@ class NearbySchoolsList extends React.Component {
   }
 
   requestSchools(count) {
-    if(this.props.allSchoolsLoaded) {
+    if (this.props.allSchoolsLoaded) {
       return;
     }
     this.props.getSchools(
       this.props.school.state,
       this.props.school.id,
       (this.props.schools || []).length,
-      (count || this.pageSize)
+      count || this.pageSize
     );
   }
 
@@ -45,7 +45,7 @@ class NearbySchoolsList extends React.Component {
   }
 
   componentDidMount(nextProps) {
-    if(this.props.schools === undefined) {
+    if (this.props.schools === undefined) {
       this.getInitialSchools();
     }
   }
@@ -55,25 +55,28 @@ class NearbySchoolsList extends React.Component {
   }
 
   visibleSchools() {
-    return this.props.schools.slice(this.state.offset, this.state.offset + this.pageSize);
+    return this.props.schools.slice(
+      this.state.offset,
+      this.state.offset + this.pageSize
+    );
   }
 
   renderNearbySchools() {
-    return this.visibleSchools().map(function(school,i) {
-      return (<NearbySchool
+    return this.visibleSchools().map((school, i) => (
+      <NearbySchool
         key={i}
         GSRating={school.gs_rating}
         averageRating={school.average_rating}
         schoolName={school.name}
-        schoolType={t('school_types.' + school.type)}
+        schoolType={t(`school_types.${school.type}`)}
         gradeRange={school.level}
         city={school.city}
         state={school.state}
         distance={school.distance}
         schoolUrl={school.links.show}
         nearbySchoolsType={this.props.nearbySchoolsType}
-        />);
-    }.bind(this));
+      />
+    ));
   }
 
   pageLeft() {
@@ -84,7 +87,7 @@ class NearbySchoolsList extends React.Component {
   }
 
   pageRight() {
-    if(this.onPenultimateOrLastPage()) {
+    if (this.onPenultimateOrLastPage()) {
       this.requestSchools();
     }
     this.setState({
@@ -95,13 +98,14 @@ class NearbySchoolsList extends React.Component {
 
   // true if on 2nd-to-last OR last page
   onPenultimateOrLastPage() {
-    return this.state.offset >= (this.props.schools.length - (2 * this.pageSize));
+    return this.state.offset >= this.props.schools.length - 2 * this.pageSize;
   }
 
   shouldGetMoreSchools() {
     return (
-      this.props.schools !== undefined && 
-      (this.state.offset + this.pageSize >= this.props.schools.length - this.pageSize)
+      this.props.schools !== undefined &&
+      this.state.offset + this.pageSize >=
+        this.props.schools.length - this.pageSize
     );
   }
 
@@ -115,32 +119,41 @@ class NearbySchoolsList extends React.Component {
 
   pageLeftButton() {
     let className = '';
-    let onClick = '';
-    if(this.canPageLeft()) {
+    let onClick;
+    if (this.canPageLeft()) {
       className = 'active';
       onClick = this.pageLeft;
     }
-    return (<div className={"prev " + className} onClick={onClick}>
-      <div className="icon-chevron-right flip-horizontally"></div>
-    </div>);
+    return (
+      <div className={`prev ${className}`} onClick={onClick}>
+        <div className="icon-chevron-right flip-horizontally" />
+      </div>
+    );
   }
 
   pageRightButton() {
     let className = '';
     let onClick = '';
-    if(this.canPageRight()) {
+    if (this.canPageRight()) {
       className = 'active';
       onClick = this.pageRight;
     }
     return (
-      <div className={"next " + className} onClick={onClick}>
-        <div className="icon-chevron-right"></div>
-      </div>);
+      <div className={`next ${className}`} onClick={onClick}>
+        <div className="icon-chevron-right" />
+      </div>
+    );
   }
 
   renderSpinny() {
-    let content = <div style={{height: '80px', width:'100%',display:'block'}}></div>
-    return (<div><SpinnyWheel content={content}/></div>);
+    const content = (
+      <div style={{ height: '80px', width: '100%', display: 'block' }} />
+    );
+    return (
+      <div>
+        <SpinnyWheel content={content} />
+      </div>
+    );
   }
 
   waitingForInitialSchools() {
@@ -152,10 +165,10 @@ class NearbySchoolsList extends React.Component {
   }
 
   render() {
-    if(this.waitingForInitialSchools()) {
+    if (this.waitingForInitialSchools()) {
       return this.renderSpinny();
     } else if (this.noSchoolsFound()) {
-      return <div style={{'text-align':'center'}}>No schools found</div>
+      return <div style={{ 'text-align': 'center' }}>No schools found</div>;
     }
     return (
       <div className="slider">
@@ -163,7 +176,7 @@ class NearbySchoolsList extends React.Component {
         <div className="slider-body">{this.renderNearbySchools()}</div>
         {this.pageRightButton()}
       </div>
-    )
+    );
   }
 }
 

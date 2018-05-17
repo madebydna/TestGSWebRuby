@@ -14,7 +14,7 @@ const config = {
   entry: {
     'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie', './app/bundles/GSWeb/misc_all_page_blocking'],
     'commons': ['./app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal', './app/bundles/GSWeb/header'],
-    'react-redux' : ['react', 'react-dom', 'redux', 'react-redux', 'react-addons-css-transition-group'],
+    'react-redux' : ['react', 'react-dom', 'redux', 'react-redux', 'react-transition-group'],
     'widget': ['./app/bundles/GSWeb/widget'],
     'mobile-overlay-ad': ['./app/bundles/GSWeb/components/ads/mobile_overlay'],
     'interstitial': ['./app/bundles/GSWeb/interstitial'],
@@ -23,7 +23,8 @@ const config = {
     'home': [ './app/bundles/GSWeb/home' ],
     'jquery': ['jquery'],
     'admin-tools': ['./app/bundles/GSWeb/admin_tools'],
-    'add-schools': ['./app/bundles/GSWeb/pages/add_schools']
+    'add-schools': ['./app/bundles/GSWeb/pages/add_schools'],
+    'search': ['./app/bundles/GSWeb/search']
   },
 
   output: {

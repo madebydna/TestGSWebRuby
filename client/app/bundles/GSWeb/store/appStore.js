@@ -24,7 +24,8 @@ const configureStore = (initialState = {}) => {
 
 const getStore = function() {
   return configureStore({
-    school: gon.school
+    school: gon.school,
+    search: gon.search
   });
 }
 

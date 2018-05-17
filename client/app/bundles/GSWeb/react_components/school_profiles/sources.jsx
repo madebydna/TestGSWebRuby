@@ -30,7 +30,7 @@ const Sources = ({sources}) => {
   </div>
 };
 
-Sources.PropTypes = {
+Sources.propTypes = {
   sources: PropTypes.arrayOf(PropTypes.shape({
     heading: PropTypes.string.isRequired,
     subheadings: PropTypes.arrayOf(PropTypes.string),
