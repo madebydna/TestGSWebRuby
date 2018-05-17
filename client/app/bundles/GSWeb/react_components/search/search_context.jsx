@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { find as findSchools } from 'api_clients/schools';
 import { isEqual, throttle, debounce } from 'lodash';
+import { size as viewportSize } from 'util/viewport';
 import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
 import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
-import { size as viewportSize } from 'util/viewport';
+import DistanceContext from './distance_context';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -19,6 +20,9 @@ class SearchProvider extends React.Component {
     schools: gon.search.schools,
     levelCodes: gon.search.levelCodes || [],
     entityTypes: gon.search.entityTypes || [],
+    lat: null,
+    lon: null,
+    distance: gon.search.distance,
     sort: gon.search.sort,
     page: gon.search.page || 1,
     pageSize: gon.search.pageSize,
@@ -34,6 +38,9 @@ class SearchProvider extends React.Component {
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
+    lat: PropTypes.number,
+    lon: PropTypes.number,
+    distance: PropTypes.number,
     sort: PropTypes.string,
     page: PropTypes.number,
     pageSize: PropTypes.number,
@@ -44,7 +51,8 @@ class SearchProvider extends React.Component {
     updateLevelCodes: PropTypes.func.isRequired,
     updateEntityTypes: PropTypes.func.isRequired,
     updateSort: PropTypes.func.isRequired,
-    updatePage: PropTypes.func.isRequired
+    updatePage: PropTypes.func.isRequired,
+    updateDistance: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -68,6 +76,18 @@ class SearchProvider extends React.Component {
     window.addEventListener('resize', this.handleWindowResize);
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      !isEqual(prevProps.levelCodes, this.props.levelCodes) ||
+      !isEqual(prevProps.entityTypes, this.props.entityTypes) ||
+      !isEqual(prevProps.sort, this.props.sort) ||
+      !isEqual(prevProps.page, this.props.page) ||
+      !isEqual(prevProps.distance, this.props.distance)
+    ) {
+      this.updateSchools();
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
   }
@@ -76,15 +96,11 @@ class SearchProvider extends React.Component {
     this.setState({ size: viewportSize() });
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      !isEqual(prevProps.levelCodes, this.props.levelCodes) ||
-      !isEqual(prevProps.entityTypes, this.props.entityTypes) ||
-      !isEqual(prevProps.sort, this.props.sort) ||
-      !isEqual(prevProps.page, this.props.page)
-    ) {
-      this.updateSchools();
-    }
+  shouldIncludeDistance() {
+    return (
+      this.state.schools.filter(s => s.distance).length > 0 ||
+      (this.props.lat && this.props.lon)
+    );
   }
 
   updateSchools() {
@@ -118,6 +134,9 @@ class SearchProvider extends React.Component {
           q: this.props.q,
           levelCodes: this.props.levelCodes,
           entityTypes: this.props.entityTypes,
+          lat: this.props.lat,
+          lon: this.props.lon,
+          distance: this.props.distance,
           sort: this.props.sort,
           page: this.props.page,
           limit: this.props.pageSize
@@ -140,31 +159,39 @@ class SearchProvider extends React.Component {
           onPageChanged: this.props.updatePage,
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
-          size: this.state.size
+          size: this.state.size,
+          shouldIncludeDistance: this.shouldIncludeDistance()
         }}
       >
-        <GradeLevelContext.Provider
+        <DistanceContext.Provider
           value={{
-            levelCodes: this.props.levelCodes,
-            onLevelCodesChanged: this.props.updateLevelCodes
+            distance: this.props.distance,
+            onChange: this.props.updateDistance
           }}
         >
-          <EntityTypeContext.Provider
+          <GradeLevelContext.Provider
             value={{
-              entityTypes: this.props.entityTypes,
-              onEntityTypesChanged: this.props.updateEntityTypes
+              levelCodes: this.props.levelCodes,
+              onLevelCodesChanged: this.props.updateLevelCodes
             }}
           >
-            <SortContext.Provider
+            <EntityTypeContext.Provider
               value={{
-                sort: this.props.sort,
-                onSortChanged: this.props.updateSort
+                entityTypes: this.props.entityTypes,
+                onEntityTypesChanged: this.props.updateEntityTypes
               }}
             >
-              {this.props.children}
-            </SortContext.Provider>
-          </EntityTypeContext.Provider>
-        </GradeLevelContext.Provider>
+              <SortContext.Provider
+                value={{
+                  sort: this.props.sort,
+                  onSortChanged: this.props.updateSort
+                }}
+              >
+                {this.props.children}
+              </SortContext.Provider>
+            </EntityTypeContext.Provider>
+          </GradeLevelContext.Provider>
+        </DistanceContext.Provider>
       </Provider>
     );
   }

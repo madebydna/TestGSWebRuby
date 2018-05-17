@@ -20,6 +20,8 @@ module Search
       string :school_grade_level
       integer :overall_gs_rating
       integer :sorted_gs_rating_asc
+      string :school_sortable_name
+      float :distance
     end
     Sunspot::Adapters::DataAccessor.register(
       SchoolSunspotDataAccessor,
@@ -56,7 +58,7 @@ module Search
     attr_reader :client
 
     def valid_sort_names
-      ['rating', 'name']
+      ['rating', 'name', 'distance']
     end
 
     def default_sort_name
@@ -65,6 +67,14 @@ module Search
 
     def default_sort_direction
       'desc'
+    end
+
+    def map_sort_direction(name, _)
+      if name == 'distance'
+        'asc'
+      elsif name == 'name'
+        'asc'
+      end
     end
 
     def map_sort_name_to_field(name, _)

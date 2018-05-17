@@ -39,15 +39,15 @@ module SearchRequestParams
   end
 
   def lat
-    params[:lat]
+    params[:lat]&.to_f
   end
 
   def lon
-    params[:lon]
+    params[:lon]&.to_f
   end
 
   def radius
-    params[:radius]
+    params[:distance]&.to_i || params[:radius]&.to_i
   end
 
   def point_given?
@@ -73,7 +73,28 @@ module SearchRequestParams
   end
 
   def city_object
+    return nil unless city
     @_city_object ||= City.get_city_by_name_and_state(city, state).first
+  end
+
+  def district_id
+    params[:districtId]
+  end
+
+  def district
+    params[:district]&.gsub('-', ' ')&.gs_capitalize_words
+  end
+
+  def district_object
+    return nil unless state && (district_id || district)
+    
+    @_district_object ||= begin
+      if district_id
+        District.on_db(state).where(id: district_id).first
+      elsif district
+        District.on_db(state).where(name: district).first
+      end
+    end
   end
 
 end

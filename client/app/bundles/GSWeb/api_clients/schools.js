@@ -64,6 +64,9 @@ export function find({
   state,
   levelCodes,
   entityTypes,
+  lat,
+  lon,
+  distance,
   sort = 'rating',
   page = 1,
   limit = 25
@@ -80,6 +83,15 @@ export function find({
   }
   if (entityTypes && entityTypes.length > 0) {
     data.type = entityTypes.join(',');
+  }
+  if (lat) {
+    data.lat = lat;
+  }
+  if (lon) {
+    data.lon = lon;
+  }
+  if (distance) {
+    data.distance = distance;
   }
   if (page && page > 1) {
     data.page = page;

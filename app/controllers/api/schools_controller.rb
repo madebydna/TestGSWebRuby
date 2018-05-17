@@ -56,13 +56,12 @@ class Api::SchoolsController < ApplicationController
   end
 
   def query
-    if q || sort_name == 'rating'
+    # TODO: handle attendance zones with a specific param
+    # if point_given?
+    #   attendance_zone_query
+    # else
       solr_query
-    elsif point_given?
-      attendance_zone_query
-    else
-      school_sql_query
-    end
+    # end
   end
 
   def school_sql_query
@@ -104,6 +103,9 @@ class Api::SchoolsController < ApplicationController
       state: state,
       level_codes: level_codes,
       entity_types: entity_types,
+      lat: lat,
+      lon: lon,
+      radius: radius,
       q: q,
       offset: offset,
       limit: limit,
@@ -114,7 +116,7 @@ class Api::SchoolsController < ApplicationController
   def decorate_schools(schools)
     extras.each do |extra|
       method = "add_#{extra}"
-      schools = send(method, schools) if respond_to?(method)
+      schools = send(method, schools) if respond_to?(method, true)
     end
     if cache_keys.any?
       schools = SchoolCacheQuery.decorate_schools(schools, *cache_keys)
@@ -147,7 +149,7 @@ class Api::SchoolsController < ApplicationController
   end
 
   def add_distance(schools)
-    return schools unless point_given?
+    return schools unless point_given? || area_given?
 
     schools.each do |school|
       if school.lat && school.lon

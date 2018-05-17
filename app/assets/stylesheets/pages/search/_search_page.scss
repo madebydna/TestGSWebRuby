@@ -197,6 +197,9 @@ body {
             margin-top: 10px;
           }
         }
+        select {
+          vertical-align: top;
+        }
       }
       @include media-breakpoint-down(xs) {
         background-color: white;
@@ -245,5 +248,11 @@ body {
         margin-top: 5px;
       }
     }
+  }
+
+  .spinny-wheel {
+    background-color: #f6f9fa;
+    opacity: 0.5;
+    transition: background-color 1s ease-in;
   }
 }

@@ -16,7 +16,9 @@ module Search
     end
 
     def map_sort_name_to_field(name, direction)
-      if name == 'rating' && direction == 'asc'
+      if name == 'distance'
+        return 'distance'
+      elsif name == 'rating' && direction == 'asc'
         return 'sorted_gs_rating_asc'
       elsif name == 'rating' && direction == 'desc' 
         return 'overall_gs_rating'
@@ -28,9 +30,19 @@ module Search
     end
 
     def sunspot_query
+      spatial_query = nil
+      if lat && lon
+        radius_in_km = radius.to_f * 1.6 # convert to KM
+        spatial_query = "{!spatial circles=#{lat},#{lon},#{radius_in_km}}"
+      end
+
       lambda do |search|
         # Must reference accessor methods, not instance variables!
-        search.keywords(q)
+        if lat && lon
+          search.keywords(spatial_query)
+        else
+          search.keywords(q)
+        end
         search.with(:citykeyword, city.downcase) if city
         search.with(:school_database_state, state.downcase) if state
         search.with(:school_grade_level, level_codes.map(&:downcase)) if level_codes.present?
@@ -48,6 +60,7 @@ module Search
           end
           params[:sort] = params[:sort].sub(/_i(\W)/, '\1') if params[:sort]
           params[:sort] = params[:sort].sub(/_s(\W)/, '\1') if params[:sort]
+          params[:sort] = params[:sort].sub(/_f(\W)/, '\1') if params[:sort]
         end
       end
     end

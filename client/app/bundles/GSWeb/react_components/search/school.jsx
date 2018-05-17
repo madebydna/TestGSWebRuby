@@ -34,12 +34,13 @@ const School = ({
   id,
   state,
   name,
-  address = {},
+  address,
   schoolType,
   gradeLevels,
-  enrollment = null,
-  rating = null,
-  active = false,
+  enrollment,
+  rating,
+  active,
+  distance,
   links
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
@@ -62,6 +63,7 @@ const School = ({
         <div>
           {capitalize(schoolType)}, {gradeLevels} | {studentsPhrase(enrollment)}
         </div>
+        {distance && <div>Distance: {distance} miles</div>}
         {homesForSaleHref && (
           <div className="icon active icon-house">
             <a href={homesForSaleHref} target="_blank">

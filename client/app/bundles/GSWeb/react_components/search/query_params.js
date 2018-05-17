@@ -69,3 +69,22 @@ export function getQ() {
   const { q } = parse(currentQueryString());
   return q;
 }
+
+export function getLat() {
+  const { lat } = parse(currentQueryString());
+  return lat;
+}
+
+export function getLon() {
+  const { lon } = parse(currentQueryString());
+  return lon;
+}
+
+export function getDistance() {
+  const { distance } = parse(currentQueryString());
+  return distance ? parseInt(distance, 10) : undefined;
+}
+
+export function queryStringWithNewDistance(distance) {
+  return getQueryStringWithUpdatedParam('distance', distance);
+}

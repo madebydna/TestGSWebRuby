@@ -52,17 +52,30 @@ class School < ActiveRecord::Base
   end
 
   # Given objects that have state and school_id, load school for each one
-  def self.load_all_from_associates(associate)
-    states_and_ids = 
-      associate
-        .map { |obj| [obj.state, obj.school_id] }
-        .each_with_object({}) do |(state,id), hash|
-          hash[state] ||= []
-          hash[state] << id
+  def self.load_all_from_associates(associates)
+    # need a map so we can effeciently maintain order
+    associate_state_school_ids_hash = 
+      associates.each_with_object({}) do |obj, hash|
+        hash[[obj.state.downcase, obj.school_id.to_i]] = nil
       end
-    states_and_ids.flat_map do |(state, ids)|
-      find_by_state_and_ids(state, ids).to_a
+
+    state_to_id_map = 
+      associates
+        .each_with_object({}) do |obj, hash|
+          hash[obj.state] ||= []
+          hash[obj.state] << obj.school_id
+      end
+
+    schools = 
+      state_to_id_map.flat_map do |(state, ids)|
+        find_by_state_and_ids(state, ids).to_a
+      end
+
+    schools.each do |school|
+      associate_state_school_ids_hash[[school.state.downcase, school.id.to_i]] = school
     end
+
+    associate_state_school_ids_hash.values.compact
   end
 
   def self.within_district(district)

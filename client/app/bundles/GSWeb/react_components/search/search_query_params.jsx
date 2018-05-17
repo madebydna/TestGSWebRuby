@@ -4,6 +4,12 @@ import * as queryParams from './query_params';
 import createHistory from 'history/createBrowserHistory';
 
 const history = createHistory();
+const pushQueryString = qs => {
+  history.push({
+    search: qs
+  });
+};
+
 export default class SearchQueryParams extends React.Component {
   static propTypes = {
     children: PropTypes.func.isRequired
@@ -19,28 +25,26 @@ export default class SearchQueryParams extends React.Component {
     const extraProps = {
       levelCodes: queryParams.getGradeLevels(),
       entityTypes: queryParams.getEntityTypes(),
+      lat: queryParams.getLat(),
+      lon: queryParams.getLon(),
+      distance: queryParams.getDistance(),
       sort: queryParams.getSort(),
       page: queryParams.getPage(),
       q: queryParams.getQ(),
       updateLevelCodes: codes => {
-        history.push({
-          search: queryParams.queryStringWithNewGradeLevels(codes)
-        });
+        pushQueryString(queryParams.queryStringWithNewGradeLevels(codes));
       },
       updateEntityTypes: types => {
-        history.push({
-          search: queryParams.queryStringWithNewEntityTypes(types)
-        });
+        pushQueryString(queryParams.queryStringWithNewEntityTypes(types));
       },
       updateSort: sort => {
-        history.push({
-          search: queryParams.queryStringWithNewSort(sort)
-        });
+        pushQueryString(queryParams.queryStringWithNewSort(sort));
       },
       updatePage: page => {
-        history.push({
-          search: queryParams.queryStringWithNewPage(page)
-        });
+        pushQueryString(queryParams.queryStringWithNewPage(page));
+      },
+      updateDistance: distance => {
+        pushQueryString(queryParams.queryStringWithNewDistance(distance));
       }
     };
 

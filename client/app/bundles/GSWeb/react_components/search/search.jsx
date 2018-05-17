@@ -16,7 +16,8 @@ class Search extends React.Component {
     city: null,
     state: null,
     schools: [],
-    loadingSchools: false
+    loadingSchools: false,
+    shouldIncludeDistance: false
   };
 
   static propTypes = {
@@ -30,7 +31,8 @@ class Search extends React.Component {
     page: PropTypes.number.isRequired,
     totalPages: PropTypes.number.isRequired,
     onPageChanged: PropTypes.func.isRequired,
-    size: PropTypes.oneOf(validViewportSizes).isRequired
+    size: PropTypes.oneOf(validViewportSizes).isRequired,
+    shouldIncludeDistance: PropTypes.bool
   };
 
   constructor(props) {
@@ -47,13 +49,14 @@ class Search extends React.Component {
         currentView={this.state.currentView}
         renderHeader={() => (
           <React.Fragment>
-            <FilterBar />
+            <FilterBar includeDistance={this.props.shouldIncludeDistance} />
           </React.Fragment>
         )}
         renderSubheader={() => (
           <React.Fragment>
             <div>{this.props.resultSummary}</div>
-            <SortSelect />
+            <span>Sort by </span>
+            <SortSelect includeDistance={this.props.shouldIncludeDistance} />
             <ListMapDropdown
               currentView={this.state.currentView}
               onSelect={currentView => {
@@ -66,6 +69,7 @@ class Search extends React.Component {
         renderList={() => (
           <SchoolList
             schools={this.props.schools}
+            isLoading={this.props.loadingSchools}
             pagination={
               this.props.totalPages > 1 ? (
                 <PaginationButtons

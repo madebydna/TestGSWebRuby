@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import OpenableCloseable from 'react_components/openable_closeable';
 import GradeLevelFilter from './grade_level_filter';
 import EntityTypeFilter from './entity_type_filter';
+import DistanceFilter from './connected_distance_filter';
 
 export default class FilterBar extends React.Component {
-  static defaultProps = {};
+  static defaultProps = { includeDistance: false };
 
-  static propTypes = {};
+  static propTypes = { includeDistance: PropTypes.bool };
 
   constructor(props) {
     super(props);
@@ -37,6 +38,12 @@ export default class FilterBar extends React.Component {
                   <EntityTypeFilter label="" />
                   <label>Grade level</label>
                   <GradeLevelFilter label="" />
+                  {this.props.includeDistance ? (
+                    <React.Fragment>
+                      <label>Distance</label>
+                      <DistanceFilter />
+                    </React.Fragment>
+                  ) : null}
                 </div>
               </div>
               <div className="controls">
