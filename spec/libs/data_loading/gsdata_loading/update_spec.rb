@@ -11,7 +11,7 @@ describe GsdataLoading::Update do
       :"school_id" => "00790",
       :"district_id" => "03010",
       :"data_type_id" => 245,
-      :"proficiency_band_id" => "null",
+      :"proficiency_band_id" => nil,
       :"cohort_count" => "54",
       :"grade" => "3",
       :"active" => 1,

@@ -13,14 +13,13 @@ class DirectoryCensusParser < ::Ox::Sax
   def initialize(state)
     @state = state
     @elements = {}
-    @started_elements_with_data = {}
     @started_elements = []
     @directory_info = {}
   end
 
   def start_element(name)
     @started_elements << name
-    @directory_info = {} if name == :'school'
+    @directory_info = {} if name == :school
   end
 
   def current_element
@@ -28,7 +27,7 @@ class DirectoryCensusParser < ::Ox::Sax
   end
 
   def end_element(name)
-    if name == :'school'
+    if name == :school
       handle_result
     end
 
@@ -39,23 +38,14 @@ class DirectoryCensusParser < ::Ox::Sax
       exit 1
     end
 
-    @started_elements_with_data.delete(name)
   end
 
   def attr(name, value)
-    started_elements_have_data if value && value.strip.to_s.length > 0
     @directory_info[name] = value if @directory_info
   end
 
   def text(value)
-    started_elements_have_data if value && value.strip.to_s.length > 0
     @directory_info[current_element] = value if (@directory_info && !@directory_info[current_element].present?)
-  end
-
-  def started_elements_have_data
-    @started_elements.each do |element|
-      @started_elements_with_data[element] = true
-    end
   end
 
   private
@@ -95,4 +85,5 @@ states.each do |state|
   io = File.open("#{xml_path}")
   handler = DirectoryCensusParser.new(state)
   Ox.sax_parse(handler, io)
+  system("rm #{xml_path}")
 end

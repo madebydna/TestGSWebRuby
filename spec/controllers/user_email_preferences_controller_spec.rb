@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe UserEmailPreferencesController do
-
   describe '#update' do
     after do
       clean_dbs(:gs_schooldb)
@@ -13,8 +12,8 @@ describe UserEmailPreferencesController do
       end
 
       subject { post :update, grades: ['PK'], greatnews: 'true' }
-      it 'should redirect to the home page' do
-        expect(subject).to redirect_to(home_path)
+      it 'should redirect to the subscription preferences page' do
+        expect(subject).to redirect_to(user_preferences_path)
       end
     end
   end

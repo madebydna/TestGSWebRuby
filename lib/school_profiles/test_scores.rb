@@ -49,9 +49,10 @@ module SchoolProfiles
     end
 
     def subject_scores
-      scores = @school_cache_data_reader
-        .recent_test_scores_without_subgroups
-        .sort_by_test_label_and_cohort_count
+
+      scores = @school_cache_data_reader.recent_test_scores_without_subgroups
+
+      scores = scores.school_cohort_count_exists? ? scores.group_by_test_label_and_sort_by_cohort_count.sort_by_test_label_using_cohort_count : scores.sort_by_test_label_and_subject_name
 
       scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(test_scores_hashes: nil).add_to_array_of_hashes(scores)
 
