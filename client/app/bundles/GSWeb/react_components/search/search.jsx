@@ -16,7 +16,8 @@ class Search extends React.Component {
     city: null,
     state: null,
     schools: [],
-    loadingSchools: false
+    loadingSchools: false,
+    highlightSchool: false
   };
 
   static propTypes = {
@@ -30,7 +31,8 @@ class Search extends React.Component {
     page: PropTypes.number.isRequired,
     totalPages: PropTypes.number.isRequired,
     onPageChanged: PropTypes.func.isRequired,
-    size: PropTypes.oneOf(validViewportSizes).isRequired
+    size: PropTypes.oneOf(validViewportSizes).isRequired,
+    highlightSchool: PropTypes.func
   };
 
   constructor(props) {
@@ -39,6 +41,10 @@ class Search extends React.Component {
       currentView: 'list'
     };
   }
+
+  // handleSchoolMouseEnter(school){
+  //   console.log(school);
+  // }
 
   render() {
     return (
@@ -65,6 +71,8 @@ class Search extends React.Component {
         renderAd={() => <div className="ad-bar">Advertisement</div>}
         renderList={() => (
           <SchoolList
+            highlightSchool={this.props.highlightSchool}
+            unhighlightSchool={this.props.unhighlightSchool}
             schools={this.props.schools}
             pagination={
               this.props.totalPages > 1 ? (

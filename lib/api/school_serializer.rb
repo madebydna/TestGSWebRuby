@@ -33,7 +33,8 @@ class Api::SchoolSerializer
       type: 'school',
       links: {
         profile: school_path(school)
-      }
+      },
+      highlighted: false
     }
     if enrollment
       h[:enrollment] = enrollment&.to_i

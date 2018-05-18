@@ -62,6 +62,7 @@ class SearchProvider extends React.Component {
     });
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
+    this.highlightSchool = this.highlightSchool.bind(this);
   }
 
   componentDidMount() {
@@ -127,6 +128,17 @@ class SearchProvider extends React.Component {
     );
   }
 
+  highlightSchool(school){
+    let schools = this.state.schools.map((s) => {
+      if (s.id === school.id) {
+        s.highlighted = !s.highlighted;
+        return s;
+      } else
+      return s;
+    });
+    this.setState({schools: schools});
+  }
+
   //
 
   render() {
@@ -140,7 +152,8 @@ class SearchProvider extends React.Component {
           onPageChanged: this.props.updatePage,
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
-          size: this.state.size
+          size: this.state.size,
+          highlightSchool: this.highlightSchool
         }}
       >
         <GradeLevelContext.Provider

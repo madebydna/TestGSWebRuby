@@ -4,6 +4,7 @@ import createMarkerFactory, * as Markers from '../../components/map/markers';
 import DefaultMapMarker from './default_map_marker';
 import createInfoWindow from '../../components/map/info_window';
 
+
 export default class MapMarker extends DefaultMapMarker {
   static propTypes = {
     googleMaps: PropTypes.object,
@@ -32,7 +33,8 @@ export default class MapMarker extends DefaultMapMarker {
       this.props.title,
       this.props.rating,
       this.props.lat,
-      this.props.lon
+      this.props.lon,
+      this.props.highlighted
     );
     this.marker.setMap(this.props.map);
     google.maps.event.addListener(this.marker, 'click', () =>
@@ -43,8 +45,14 @@ export default class MapMarker extends DefaultMapMarker {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.selected && nextProps.selected && this.marker) {
+  // componentWillReceiveProps(nextProps) {
+  //   if (!this.props.selected && nextProps.selected && this.marker) {
+  //     this.props.openInfoWindow(this.marker);
+  //   }
+  // }
+
+  componentDidUpdate() {
+    if ((this.props.selected || this.props.highlighted) && this.marker) {
       this.props.openInfoWindow(this.marker);
     }
   }
@@ -57,6 +65,7 @@ const createMarkersFromSchools = (schools, selectedSchool, map) => {
       rating: s.rating,
       lat: s.lat,
       lon: s.lon,
+      highlighted: s.highlighted,
       map
     };
     props.key = `s${s.state}${s.id}`;

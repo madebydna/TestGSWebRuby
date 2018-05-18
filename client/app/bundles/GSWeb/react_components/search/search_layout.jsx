@@ -81,12 +81,12 @@ class SearchLayout extends React.Component {
   }
 
   componentDidMount() {
-    keepInViewport(this.fixedYLayer.current, {
-      $elementsAbove: [$('.search-header')],
-      $elementsBelow: [$('footer')],
-      fixTop: true,
-      fixBottom: true
-    });
+    // keepInViewport(this.fixedYLayer.current, {
+    //   $elementsAbove: [$('.search-header')],
+    //   $elementsBelow: [$('footer')],
+    //   fixTop: true,
+    //   fixBottom: true
+    // });
     keepInViewport(this.header.current, {
       setTop: true,
       setBottom: false
@@ -104,13 +104,9 @@ class SearchLayout extends React.Component {
   renderMapAndAdContainer(map, ad) {
     if (this.props.size > SM) {
       return (
-        <div className="fixed-y-layer" ref={this.fixedYLayer}>
-          <div className="fixed-y-centering">
-            <div className="right-column">
-              <div className="ad-column">{ad}</div>
-              <div className="map-column">{map}</div>
-            </div>
-          </div>
+        <div className="right-column">
+          <div className="ad-column">{ad}</div>
+          <div className="map-column">{map}</div>
         </div>
       );
     }
