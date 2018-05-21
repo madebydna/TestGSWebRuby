@@ -599,7 +599,7 @@ describe 'GradeAllCalculator' do
         ]).freeze
       end
 
-      its(:to_h) { is_expected.to_not be_present }
+      its(:to_hash) { is_expected.to_not be_present }
     end
 
     context 'with no data sets' do

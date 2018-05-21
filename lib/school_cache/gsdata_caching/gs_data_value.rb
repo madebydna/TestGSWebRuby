@@ -358,7 +358,7 @@ class GsdataCaching::GsDataValue
 
     def all_school_values_can_be_numeric?
       map(&:school_value).all? do |v|
-        v.scan(/[0-9.]+/).first&.to_f
+        v.is_a?(Numeric) || v.try(:scan, /[0-9.]+/)&.first&.to_f
       end
     end
 
