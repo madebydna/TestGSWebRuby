@@ -574,6 +574,10 @@ describe 'GradeAllCalculator' do
     end
 
     context 'with invalid characters after the value_float' do
+      before do
+        pending
+        fail
+      end
       let(:test_scores) do
         GsdataCaching::GsDataValue.from_array_of_hashes([
             OpenStruct.new({
