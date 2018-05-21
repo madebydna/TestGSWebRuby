@@ -87,7 +87,7 @@ class DataValue < ActiveRecord::Base
   end
 
   def self.with_configuration(config)
-    where(configuration: "%#{config}%")
+    where('configuration like ?', "%#{config}%")
   end
 
   def self.find_by_school_and_data_type_tags(school, tags, breakdown_tag_names = [], academic_tag_names = [])
@@ -199,7 +199,7 @@ class DataValue < ActiveRecord::Base
 
   def self.state_and_district_values
     state_and_district_values = <<-SQL
-      data_values.id, data_values.data_type_id, data_values.value, date_valid, grade, proficiency_band_id, cohort_count,
+      data_values.id, data_values.data_type_id, data_types.name, sources.source_name, sources.description, data_values.value, date_valid, grade, proficiency_band_id, cohort_count,
       group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(academics.name ORDER BY academics.name) as "academic_names"
     SQL

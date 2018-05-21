@@ -9,8 +9,6 @@ class TestScoresCaching::Feed::FeedTestScoresCacherGsdata < TestScoresCaching::T
          DataValue
           .find_by_school_and_data_type_tags(school, data_type_tags, 'feeds')
           .with_configuration('feeds')
-          .reject {|result| result.district_id.blank? || result.data_type_id.blank?}
-          .map {|obj| TestScoresCaching::QueryResultDecorator.new(school.state, obj)}
       end
   end
 

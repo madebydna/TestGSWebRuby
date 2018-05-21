@@ -5,9 +5,9 @@ class StateCacher
   # Known data types:
   # :state_characteristics
 
-  # def initialize(state)
-  #   @state = state
-  # end
+  def initialize(state)
+    @state = state
+  end
 
   def cache
     final_hash = build_hash_for_cache
@@ -31,7 +31,8 @@ class StateCacher
 
   def cacher_for(key)
     {
-        state_characteristics: StateCharacteristicsCacher
+        state_characteristics: StateCharacteristicsCacher,
+        test_scores_gsdata: TestScoresCaching::TestScoresCacherGsdata
     }[key.to_s.to_sym]
   end
 
@@ -52,7 +53,8 @@ class StateCacher
 
   def registered_cachers
     @registered_cachers ||= [
-       StateCharacteristicsCacher
+       StateCharacteristicsCacher,
+       TestScoresCaching::TestScoresCacherGsdata
     ]
   end
 
