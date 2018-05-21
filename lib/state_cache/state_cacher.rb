@@ -32,7 +32,7 @@ class StateCacher
   def cacher_for(key)
     {
         state_characteristics: StateCharacteristicsCacher,
-        feed_state_test_scores_gsdata: TestScoresCaching::FeedStateTestScoresCacherGsdata
+        test_scores_gsdata: TestScoresCaching::TestScoresCacherGsdata
     }[key.to_s.to_sym]
   end
 
@@ -54,7 +54,7 @@ class StateCacher
   def registered_cachers
     @registered_cachers ||= [
        StateCharacteristicsCacher,
-       TestScoresCaching::FeedStateTestScoresCacherGsdata
+       TestScoresCaching::TestScoresCacherGsdata
     ]
   end
 

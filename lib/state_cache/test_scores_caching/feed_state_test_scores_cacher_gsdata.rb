@@ -1,7 +1,7 @@
 # frozen_string_literal: trues
 
-class TestScoresCaching::FeedStateTestScoresCacherGsdata < StateCacher
-  CACHE_KEY = 'feed_state_test_scores_gsdata'
+class TestScoresCaching::TestScoresCacherGsdata < StateCacher
+  CACHE_KEY = 'test_scores_gsdata'
 
   def query_results
     @query_results ||=

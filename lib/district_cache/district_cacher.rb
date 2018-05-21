@@ -36,7 +36,7 @@ class DistrictCacher
 
   def self.cacher_for(key)
     {
-        feed_district_test_scores_gsdata: TestScoresCaching::FeedDistrictTestScoresCacherGsdata,
+        test_scores_gsdata: TestScoresCaching::TestScoresCacherGsdata,
         ratings: DistrictRatingsCacher,
         district_schools_summary: DistrictSchoolsSummary::DistrictSchoolsSummaryCacher,
         district_directory: DistrictDirectoryCacher,
@@ -61,7 +61,7 @@ class DistrictCacher
 
   def self.registered_cachers
     @registered_cachers ||= [
-        TestScoresCaching::FeedDistrictTestScoresCacherGsdata,
+        TestScoresCaching::TestScoresCacherGsdata,
         DistrictRatingsCacher,
         DistrictDirectoryCacher,
         FeedDistrictCharacteristicsCacher

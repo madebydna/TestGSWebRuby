@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class TestScoresCaching::FeedDistrictTestScoresCacherGsdata < TestScoresCaching::DistrictBase
+class TestScoresCaching::TestScoresCacherGsdata < TestScoresCaching::DistrictBase
 
-  CACHE_KEY = 'feed_district_test_scores_gsdata'
+  CACHE_KEY = 'test_scores_gsdata'
 
   def query_results
     @query_results ||=
@@ -47,7 +47,7 @@ class TestScoresCaching::FeedDistrictTestScoresCacherGsdata < TestScoresCaching:
 
   def valid_result_hash?(result_hash)
     result_hash = result_hash.reject { |_,v| v.blank? }
-    required_keys = %i(data_type source_date_valid source_name)
+    required_keys = %i(data_type source_date_valid source_name value)
     missing_keys = required_keys - result_hash.keys
     if missing_keys.count.positive?
       GSLogger.error(
