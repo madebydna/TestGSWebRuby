@@ -20,6 +20,8 @@ body {
     position: relative;
     margin: auto;
     max-width: 1282px;
+    padding: 70px 0px 0px 0px;
+
     @include media-breakpoint-down(sm) {
       padding: 0 15px 0 15px;
     }
@@ -135,7 +137,6 @@ body {
     }
 
     .list-map-ad {
-      margin-top: 50px;
       max-width: 1102px;
       @include media-breakpoint-up(md) {
         margin-right: 160px;

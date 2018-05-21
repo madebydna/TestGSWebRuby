@@ -207,7 +207,7 @@ class SearchLayout extends React.Component {
         {this.props.size > SM
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
-        <div className="result-summary">Some 333 results in Alameda, CA</div>
+        <div style={{ padding: '10px' }}>{this.props.sortSelect}</div>
         <div className="list-map-ad">
           {this.renderMapAndAdContainer(
             <div className="map-container">
