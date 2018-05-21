@@ -4,7 +4,13 @@ import { castArray } from 'lodash';
 import Selectable from './selectable';
 import Button from './button';
 
-const ButtonGroup = ({ options, onSelect, activeOption, multiple, label }) => {
+const CheckboxGroup = ({
+  options,
+  onSelect,
+  activeOption,
+  multiple,
+  label
+}) => {
   const newOpts = Object.keys(options).map(key => ({
     key,
     value: key,
@@ -12,7 +18,7 @@ const ButtonGroup = ({ options, onSelect, activeOption, multiple, label }) => {
   }));
 
   return (
-    <span className="button-group" role="group" aria-label={label}>
+    <span className="checkbox-group" role="group" aria-label={label}>
       <Selectable
         options={newOpts}
         activeOptions={castArray(activeOption)}
@@ -22,13 +28,15 @@ const ButtonGroup = ({ options, onSelect, activeOption, multiple, label }) => {
       >
         {opts =>
           opts.map(({ option, active, select }) => (
-            <Button
-              key={option.key}
-              label={option.label}
-              active={active}
-              onClick={select}
-              onKeyPress={select}
-            />
+            <span key={option.key} onClick={select} onKeyPress={select}>
+              <input
+                name={option.key}
+                type="checkbox"
+                value={option.value}
+                checked={active}
+              />
+              <label>{option.label}</label>
+            </span>
           ))
         }
       </Selectable>
@@ -36,7 +44,7 @@ const ButtonGroup = ({ options, onSelect, activeOption, multiple, label }) => {
   );
 };
 
-ButtonGroup.propTypes = {
+CheckboxGroup.propTypes = {
   options: PropTypes.object.isRequired,
   onSelect: PropTypes.func.isRequired,
   activeOption: PropTypes.string.isRequired,
@@ -44,9 +52,9 @@ ButtonGroup.propTypes = {
   label: PropTypes.string
 };
 
-ButtonGroup.defaultProps = {
+CheckboxGroup.defaultProps = {
   multiple: false,
   label: undefined
 };
 
-export default ButtonGroup;
+export default CheckboxGroup;

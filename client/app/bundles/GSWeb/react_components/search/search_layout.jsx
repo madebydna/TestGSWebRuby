@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { throttle, debounce } from 'lodash';
 import $ from 'jquery';
 import { viewport, SM, validSizes } from 'util/viewport';
+import OpenableCloseable from 'react_components/openable_closeable';
+// import EntityTypeFilter from './entity_type_filter';
 
 function keepInViewport(
   selector,
@@ -54,24 +56,21 @@ function keepInViewport(
 }
 
 class SearchLayout extends React.Component {
-  static defaultProps = {
-    renderHeader: () => {},
-    renderSubheader: () => {},
-    renderAd: () => {},
-    renderList: () => {},
-    renderMap: () => {},
-    mapHidden: true
-  };
+  static defaultProps = {};
 
   static propTypes = {
-    renderHeader: PropTypes.func,
-    renderSubheader: PropTypes.func,
-    renderAd: PropTypes.func,
-    renderList: PropTypes.func,
-    renderMap: PropTypes.func,
-    mapHidden: PropTypes.bool,
     size: PropTypes.oneOf(validSizes).isRequired,
-    currentView: PropTypes.string.isRequired
+    currentView: PropTypes.string.isRequired,
+    entityTypeButtons: PropTypes.element.isRequired,
+    gradeLevelButtons: PropTypes.element.isRequired,
+    entityTypeCheckboxes: PropTypes.element.isRequired,
+    gradeLevelCheckboxes: PropTypes.element.isRequired,
+    distanceFilter: PropTypes.element.isRequired,
+    sortSelect: PropTypes.element.isRequired,
+    listMapDropdown: PropTypes.element.isRequired,
+    schoolList: PropTypes.element.isRequired,
+    map: PropTypes.element.isRequired,
+    tallAd: PropTypes.element.isRequired
   };
 
   constructor(props) {
@@ -81,12 +80,6 @@ class SearchLayout extends React.Component {
   }
 
   componentDidMount() {
-    keepInViewport(this.fixedYLayer.current, {
-      $elementsAbove: [$('.search-header')],
-      $elementsBelow: [$('footer')],
-      fixTop: true,
-      fixBottom: true
-    });
     keepInViewport(this.header.current, {
       setTop: true,
       setBottom: false
@@ -115,30 +108,114 @@ class SearchLayout extends React.Component {
       );
     }
     return (
-      <div style={{ height: `${viewport().height - 250}px`, color: 'red' }}>
+      <div
+        style={{
+          height: `${viewport().height - 250}px`,
+          width: '400px',
+          height: '400px',
+          position: 'relative',
+          display: this.shouldRenderMap() ? 'block' : 'block'
+        }}
+      >
         {map}
       </div>
     );
   }
 
+  renderDesktopFilterBar() {
+    return (
+      <div className="menu-bar filters" ref={this.header}>
+        <div style={{ maxWidth: '1282px', margin: 'auto' }}>
+          <span className="menu-item">{this.props.entityTypeButtons}</span>
+          <span className="menu-item">{this.props.gradeLevelButtons}</span>
+          {this.props.distanceFilter ? (
+            <span className="menu-item">
+              <span className="label">Distance:</span>
+              <span>{this.props.distanceFilter}</span>
+            </span>
+          ) : null}
+        </div>
+      </div>
+    );
+  }
+
+  renderDesktopSortBar() {
+    return (
+      <div className="menu-bar sort">
+        <span className="menu-item">
+          <span>Sort by: </span>
+          <span>{this.props.sortSelect}</span>
+        </span>
+      </div>
+    );
+  }
+
+  renderMobileMenuBar() {
+    return (
+      <div className="menu-bar">
+        {this.renderMobileFilterPanel()}
+        <span className="menu-item">{this.props.listMapDropdown}</span>
+      </div>
+    );
+  }
+
+  renderMobileFilterPanel() {
+    return (
+      <OpenableCloseable>
+        {(isOpen, { toggle, close, open }) => (
+          <React.Fragment>
+            <span
+              className="menu-item"
+              onClick={toggle}
+              onKeyPress={toggle}
+              role="button"
+            >
+              Filter
+            </span>
+            {isOpen ? (
+              <div className="full-overlay">
+                <div className="filter-panel">
+                  <span
+                    className="icon-close"
+                    onClick={close}
+                    onKeyPress={close}
+                    role="button"
+                  />
+                  <div className="menu-bar">
+                    <span className="menu-item">
+                      {this.props.entityTypeCheckboxes}
+                    </span>
+                    <span className="menu-item">
+                      {this.props.gradeLevelCheckboxes}
+                    </span>
+                  </div>
+                  <div className="controls">
+                    <button onClick={close}>Done</button>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </React.Fragment>
+        )}
+      </OpenableCloseable>
+    );
+  }
+
   render() {
     return (
-      <div className="search-component">
-        <div className="search-header" ref={this.header}>
-          <div style={{ maxWidth: '1282px', margin: 'auto' }}>
-            {this.props.renderHeader()}
-          </div>
-        </div>
-        <div className="search-subheader">{this.props.renderSubheader()}</div>
+      <div className="search-body">
+        {this.props.size > SM
+          ? this.renderDesktopFilterBar()
+          : this.renderMobileMenuBar()}
+        <div className="result-summary">Some 333 results in Alameda, CA</div>
         <div className="list-map-ad">
-          {this.shouldRenderMap() &&
-            this.renderMapAndAdContainer(
-              <div className="map-container">
-                <div className="map-fit">{this.props.renderMap()}</div>
-              </div>,
-              this.props.renderAd()
-            )}
-          {this.shouldRenderList() && this.props.renderList()}
+          {this.renderMapAndAdContainer(
+            <div className="map-container">
+              <div className="map-fit">{this.props.map}</div>
+            </div>,
+            this.props.tallAd
+          )}
+          {this.shouldRenderList() && this.props.schoolList}
         </div>
       </div>
     );

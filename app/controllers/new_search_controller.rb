@@ -29,6 +29,11 @@ class NewSearchController < ApplicationController
 
   private
 
+  # Paginatable
+  def default_limit
+    25
+  end
+
   def redirect_unless_valid_search_criteria
     redirect_to(home_path) unless q || (lat && lon) || (state && (city_object || district_object))
 

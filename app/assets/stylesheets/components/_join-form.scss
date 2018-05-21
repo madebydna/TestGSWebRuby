@@ -27,7 +27,7 @@
     padding: 0;
   }
 
-  button {
+  fieldset > button {
     height: 55px;
     background-color: #2ba3dc;
     border: 1px solid white;
@@ -74,7 +74,8 @@
     a {
       font-size: $font-size-base;
     }
-    input, label {
+    input,
+    label {
       display: table-cell;
       vertical-align: middle;
     }
@@ -86,7 +87,7 @@
 
   .multi-select-button-group {
     @include button-group;
-    > label {
+    > button {
       border-radius: 0px !important;
       width: 50px;
       padding: 0;
@@ -133,11 +134,11 @@
   }
   .line span {
     display: inline-block;
-    position: relative;  
+    position: relative;
   }
   .line span:before,
   .line span:after {
-    content: "";
+    content: '';
     position: absolute;
     height: 5px;
     border-bottom: 1px solid #dbe6eb;
