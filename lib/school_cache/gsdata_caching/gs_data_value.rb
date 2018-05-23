@@ -313,7 +313,7 @@ class GsdataCaching::GsDataValue
     end
 
     def total_school_cohort_count
-      select { |h| h.school_cohort_count.present? }.sum(&:school_cohort_count)
+      select { |h| h.school_cohort_count.present? && h.grade=='All' }.sum(&:school_cohort_count)
     end
 
     def school_cohort_count_exists?
