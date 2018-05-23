@@ -14,6 +14,7 @@ class TestScoreQueueDaemonJsonBlob
   end
 
   def test_scores_hash
+    @source[:source_name] = %Q{@source[:source_name]}
     district_id = @row[:district_id]
     school_id = @row[:school_id]
     if district_id == "state" || district_id.nil?
@@ -47,7 +48,7 @@ class TestScoreQueueDaemonJsonBlob
 
   def source_hash
     {
-        source_name: @row[:source_name] || @source[:source_name].gsub("'","\\\\\\\'"),
+        source_name: @row[:source_name] || @source[:source_name],
         date_valid: @row[:date_valid] || @source[:date_valid],
         notes: @row[:notes] || @source[:notes],
         description: @row[:description] || @source[:description]
