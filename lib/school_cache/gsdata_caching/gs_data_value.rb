@@ -313,7 +313,7 @@ class GsdataCaching::GsDataValue
     end
 
     def total_school_cohort_count
-      select { |h| h.school_cohort_count.present? && h.grade=='All' }.sum(&:school_cohort_count)
+      select { |h| h.school_cohort_count.present? }.sum(&:school_cohort_count)
     end
 
     def school_cohort_count_exists?
@@ -379,7 +379,7 @@ class GsdataCaching::GsDataValue
     end
 
     def sort_by_test_label_using_cohort_count
-      group_by(&:data_type).sort_by{|k,v| (-v.extend(CollectionMethods).total_school_cohort_count || 0) }.flatten.reject{|y| y.is_a?(String)}.extend(CollectionMethods)
+      group_by(&:data_type).sort_by{|k,v| (-v.extend(CollectionMethods).having_grade_all.total_school_cohort_count || 0) }.flatten.reject{|y| y.is_a?(String)}.extend(CollectionMethods)
     end
 
     def sort_by_test_label_and_subject_name
