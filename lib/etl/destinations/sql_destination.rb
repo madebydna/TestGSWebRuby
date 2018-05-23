@@ -14,6 +14,9 @@ class SqlDestination < GS::ETL::Step
   end
 
   def write(row)
+    fix_quote = {"'s" => "\'s"}
+    fix_quote.default_proc = -> (h, k) {k}
+    @source = @source.gsub(/'s/,fix_quote)
     unless has_error?(row)
       json_str = TestScoreQueueDaemonJsonBlob.new(row, @source).build
       @sql << QueueDaemonInsertStatement.build(@source[:source_name], json_str)
