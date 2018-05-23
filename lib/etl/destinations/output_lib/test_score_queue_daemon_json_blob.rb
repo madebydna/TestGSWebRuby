@@ -14,7 +14,7 @@ class TestScoreQueueDaemonJsonBlob
   end
 
   def test_scores_hash
-    source[:source_name] = @source[:source_name].tr("'s","\'s")
+    @source[:source_name] = @source[:source_name].tr("'s","\'s")
     district_id = @row[:district_id]
     school_id = @row[:school_id]
     if district_id == "state" || district_id.nil?
