@@ -183,7 +183,7 @@ class GATestProcessor2017Milestones < GS::ETL::TestProcessor
 	def config_hash
 		{
 		source_id: 86,
-		source_name: "Georgia Governor\\'s Office of Student Achievement",
+		source_name: "Georgia Governor\'s Office of Student Achievement",
 		date_valid: '2017-01-01 00:00:00',
 		state: 'ga',
 		url: 'https://gosa.georgia.gov/downloadable-data',
