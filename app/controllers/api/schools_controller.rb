@@ -56,12 +56,13 @@ class Api::SchoolsController < ApplicationController
   end
 
   def query
-    # TODO: handle attendance zones with a specific param
-    # if point_given?
-    #   attendance_zone_query
-    # else
+    if (point_given? || area_given?) && extras.include?('boundaries')
+       attendance_zone_query
+    elsif district_id
+      school_sql_query
+    else
       solr_query
-    # end
+    end
   end
 
   def school_sql_query

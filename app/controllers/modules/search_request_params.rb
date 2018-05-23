@@ -78,7 +78,7 @@ module SearchRequestParams
   end
 
   def district_id
-    params[:districtId]
+    params[:districtId] || params[:district_id]
   end
 
   def district

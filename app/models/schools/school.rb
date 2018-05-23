@@ -94,7 +94,7 @@ class School < ActiveRecord::Base
       # This is because we can't really recommend one of those boundaries above the other
       geometries_valid = false
     end
-    geometries_valid ? [geometries.first.school] : []
+    geometries_valid ? [geometries.first.school].compact : []
   end
 
   def census_data_for_data_types(data_types = [])

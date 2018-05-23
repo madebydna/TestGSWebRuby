@@ -38,7 +38,7 @@ $(function() {
 
   // TODO: duplicated in school_profiles.js. needs new home
   let $body = $('body');
-  $body.on('click', '.multi-select-button-group label', function() {
+  $body.on('click', '.multi-select-button-group button', function() {
     var $label = $(this);
     var $hiddenField = $label.closest('fieldset').find('input[type=hidden]');
     var values = $hiddenField.val().split(',');
