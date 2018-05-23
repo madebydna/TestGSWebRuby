@@ -47,7 +47,7 @@ class TestScoreQueueDaemonJsonBlob
 
   def source_hash
     {
-        source_name: @row[:source_name] || @source[:source_name].gsub(/'/) {|x| "\\#{x}"}.gsub(/\\/) {|x| "#{x}"},
+        source_name: @row[:source_name] || @source[:source_name].gsub(/'/) {|x| "\\\\#{x}"},
         date_valid: @row[:date_valid] || @source[:date_valid],
         notes: @row[:notes] || @source[:notes],
         description: @row[:description] || @source[:description]
