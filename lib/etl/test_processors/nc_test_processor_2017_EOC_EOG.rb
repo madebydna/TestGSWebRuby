@@ -117,19 +117,19 @@ class NCTestProcessor2017EOCEOG < GS::ETL::TestProcessor
        row[:test_data_type] = 'EOG'
        row[:test_data_type_id] = 35
        row[:gsdata_test_data_type_id] = 274
-       row[:notes] = 'DXT-2556 NC EOG 2017',
+       row[:notes] = 'DXT-2556 NC EOG 2017'
        row[:description] = 'In 2016-2017 North Carolina used End-of-Grade (EOG) tests to assess students in grades 3 through 8 in reading and math, and grades 5 and 8 in science.  The EOG is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of North Carolina.  Students must pass the grade 8 EOG test in order to graduate from high school.  The goal is for all students to score at or above the proficient level on the tests.'
      elsif row[:subject] == 'EOC Biology' || row[:subject] == 'EOC English 2' || row[:subject] == 'EOC Math I'
        row[:test_data_type] = 'EOC'
        row[:test_data_type_id] = 34
        row[:gsdata_test_data_type_id] = 273
-       row[:notes] = 'DXT-2556 NC EOC 2017',
+       row[:notes] = 'DXT-2556 NC EOC 2017'
        row[:description] = 'In 2016-2017 North Carolina used End-of-Course (EOC) tests to assess high school students in Mathematics, English II, and Biology.  The EOC tests are standards-based, which means they measure how well students are mastering specific skills defined for each grade by the state of North Carolina.  The goal is for all students to score at or above the proficient level on the tests.'
      else 
        row[:test_data_type] = 'EOG'
        row[:test_data_type_id] = 35
        row[:gsdata_test_data_type_id] = 274
-       row[:notes] = 'DXT-2556 NC EOG 2017',
+       row[:notes] = 'DXT-2556 NC EOG 2017'
        row[:description] = 'In 2016-2017 North Carolina used End-of-Grade (EOG) tests to assess students in grades 3 through 8 in reading and math, and grades 5 and 8 in science.  The EOG is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of North Carolina.  Students must pass the grade 8 EOG test in order to graduate from high school.  The goal is for all students to score at or above the proficient level on the tests.'
      end
      row

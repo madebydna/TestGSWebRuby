@@ -6,6 +6,7 @@ class GsdataCaching::GsDataValue
 
   STUDENTS_WITH_DISABILITIES = 'Students with disabilities'
   STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES = 'Students with IDEA catagory disabilities'
+  SUBJECT_ORDER = %w(English ELA English\ Language\ Arts Reading Math Science Civics)
 
   ETHNICITY_BREAKDOWN = 'ethnicity'
   module CollectionMethods
@@ -312,7 +313,11 @@ class GsdataCaching::GsDataValue
     end
 
     def total_school_cohort_count
-      sum(&:school_cohort_count)
+      select { |h| h.school_cohort_count.present? }.sum(&:school_cohort_count)
+    end
+
+    def school_cohort_count_exists?
+      reduce(0){|sum, hash| sum + hash.school_cohort_count.to_i} > 0
     end
 
     def total_state_cohort_count
@@ -353,7 +358,7 @@ class GsdataCaching::GsDataValue
 
     def all_school_values_can_be_numeric?
       map(&:school_value).all? do |v|
-        v.scan(/[0-9.]+/).first&.to_f
+        v.is_a?(Numeric) || v.try(:scan, /[0-9.]+/)&.first&.to_f
       end
     end
 
@@ -369,12 +374,20 @@ class GsdataCaching::GsDataValue
       all?(&:has_state_cohort_count?)
     end
 
-    def sort_by_test_label_and_cohort_count
-      sort_by { |h| [h.data_type, (h.school_cohort_count || 0) * -1] }.extend(CollectionMethods)
+    def group_by_test_label_and_sort_by_cohort_count
+      sort { |a,b| [b.data_type, (b.school_cohort_count || 0)] <=> [a.data_type, (a.school_cohort_count || 0)]}.extend(CollectionMethods)
+    end
+
+    def sort_by_test_label_using_cohort_count
+      group_by(&:data_type).sort_by{|k,v| (-v.extend(CollectionMethods).having_grade_all.total_school_cohort_count || 0) }.flatten.reject{|y| y.is_a?(String)}.extend(CollectionMethods)
+    end
+
+    def sort_by_test_label_and_subject_name
+      sort { |a,b| [a.data_type, (SUBJECT_ORDER.index(a.academics) || SUBJECT_ORDER.length+1)] <=> [b.data_type, (SUBJECT_ORDER.index(b.academics) || SUBJECT_ORDER.length+1)] }.extend(CollectionMethods)
     end
 
     def sort_by_cohort_count
-      sort_by { |h| (h.school_cohort_count || 0) * -1 }.extend(CollectionMethods)
+      sort { |a,b| (b.school_cohort_count || 0) <=> (a.school_cohort_count || 0) }.extend(CollectionMethods)
     end
 
     def sort_by_breakdowns

@@ -131,18 +131,5 @@ describe CitiesController do
       end
     end
 
-    #Covers current A/B test
-    context 'Given Pennsylvania' do
-      before do
-        subject.instance_variable_set(:@city, 'Philadelphia')
-        subject.instance_variable_set(:@state, {:short => 'pa', :long => 'pennsylvania'})
-        subject.stub(:action_name) { 'show' }
-      end
-      it "should call set_meta_tags with title with new title" do
-        expect(controller).to receive(:set_meta_tags).with(hash_including(:title => "Best Schools in Philadelphia, PA | School Ratings in Philadelphia, Pennsylvania"))
-        controller.send(:write_meta_tags)
-      end
-    end
-
   end
 end

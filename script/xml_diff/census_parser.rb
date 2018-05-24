@@ -14,7 +14,6 @@ class CensusParser < ::Ox::Sax
 
   def initialize(state)
     @state = state
-    @started_elements_with_data = {}
     @started_elements = []
     @census_info = {}
   end
@@ -40,23 +39,14 @@ class CensusParser < ::Ox::Sax
       exit 1
     end
 
-    @started_elements_with_data.delete(name)
   end
 
   def attr(name, value)
-    started_elements_have_data if value && value.strip.to_s.length > 0
     @census_info[name] = value if @census_info
   end
 
   def text(value)
-    started_elements_have_data if value && value.strip.to_s.length > 0
     @census_info[current_element] = value if (@census_info && !@census_info[current_element].present?)
-  end
-
-  def started_elements_have_data
-    @started_elements.each do |element|
-      @started_elements_with_data[element] = true
-    end
   end
 
   private
@@ -104,4 +94,5 @@ states.each do |state|
   io = File.open("#{xml_path}")
   handler = CensusParser.new(state)
   Ox.sax_parse(handler, io)
+  system("rm #{xml_path}")
 end

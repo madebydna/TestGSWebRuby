@@ -29,7 +29,7 @@ class UserEmailPreferencesController < ApplicationController
     UserGradeManager.new(@current_user).update(param_grades)
     Subscription.where(id: subscription_ids_to_remove, member_id: current_user.id).destroy_all if subscription_ids_to_remove
     flash_notice t('controllers.user_email_preferences_controller.success')
-    redirect_to home_path
+    redirect_to user_preferences_path
   end
 
   def param_grades
