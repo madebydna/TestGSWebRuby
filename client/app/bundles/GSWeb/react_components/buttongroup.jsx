@@ -1,42 +1,52 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { castArray } from 'lodash';
+import Selectable from './selectable';
+import Button from './button';
 
-export default class ButtonGroup extends React.Component {
-  static propTypes = {
-    options: React.PropTypes.object.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
-    activeOption: React.PropTypes.string
-  }
+const ButtonGroup = ({ options, onSelect, activeOption, multiple, label }) => {
+  const newOpts = Object.keys(options).map(key => ({
+    key,
+    value: key,
+    label: options[key]
+  }));
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeOption: props.activeOption
-    }
-  }
+  return (
+    <span className="button-group" role="group" aria-label={label}>
+      <Selectable
+        options={newOpts}
+        activeOptions={castArray(activeOption)}
+        onSelect={key => onSelect(key)}
+        keyFunc={o => o.key}
+        multiple={multiple}
+      >
+        {opts =>
+          opts.map(({ option, active, select }) => (
+            <Button
+              key={option.key}
+              label={option.label}
+              active={active}
+              onClick={select}
+              onKeyPress={select}
+            />
+          ))
+        }
+      </Selectable>
+    </span>
+  );
+};
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.activeOption && nextProps.activeOption != this.props.activeOption) {
-      this.setState({ activeOption: nextProps.activeOption });
-    }
-  }
+ButtonGroup.propTypes = {
+  options: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  activeOption: PropTypes.string.isRequired,
+  multiple: PropTypes.bool,
+  label: PropTypes.string
+};
 
-  handleSelect(option) {
-    return () => {
-      this.setState({ activeOption: option });
-      this.props.onSelect(option);
-    }
-  }
+ButtonGroup.defaultProps = {
+  multiple: false,
+  label: undefined
+};
 
-  renderOptions() {
-    return Object.keys(this.props.options).map(key => 
-        <label key={key}
-          className={key == this.state.activeOption ? 'active' : ''}
-          onClick={this.handleSelect(key)}>
-          {this.props.options[key]}
-        </label>);
-  } 
-
-  render() {
-    return <span className="button-group">{this.renderOptions()}</span>
-  }
-}
+export default ButtonGroup;

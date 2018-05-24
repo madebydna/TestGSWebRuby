@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import SchoolProfileComponent from 'react_components/equity/school_profile_component';
 import { formatAndJoinAnchors } from '../../components/anchor_router';
 import ModuleTab from 'react_components/school_profiles/module_tab';

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const BasicDataModuleDrawerRow = ({ label, children }) => {
   return (
@@ -18,9 +19,9 @@ const BasicDataModuleDrawerRow = ({ label, children }) => {
   );
 };
 
-BasicDataModuleDrawerRow.PropTypes = {
-  label: React.PropTypes.element.isRequired,
-  children: React.PropTypes.element.isRequired
+BasicDataModuleDrawerRow.propTypes = {
+  label: PropTypes.element.isRequired,
+  children: PropTypes.element.isRequired
 }
 
 export default BasicDataModuleDrawerRow;

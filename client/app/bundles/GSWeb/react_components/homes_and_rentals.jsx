@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { setVisibilityCallback } from '../util/visibility_hooks';
 import {
   fetchHomesAndRentals,
@@ -13,18 +14,17 @@ import zillowLogo from 'ZG_Logo_82x22.png';
 import { t } from '../util/i18n';
 
 export default class HomesAndRentals extends React.Component {
-
   static propTypes = {
-    city: React.PropTypes.string.isRequired,
-    state: React.PropTypes.string.isRequired,
-    zip: React.PropTypes.string.isRequired,
-    schoolName: React.PropTypes.string.isRequired,
-    domId: React.PropTypes.string
+    city: PropTypes.string.isRequired,
+    state: PropTypes.string.isRequired,
+    zip: PropTypes.string.isRequired,
+    schoolName: PropTypes.string.isRequired,
+    domId: PropTypes.string
   };
 
   static defaultProps = {
     domId: 'homes-and-rentals'
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -36,14 +36,15 @@ export default class HomesAndRentals extends React.Component {
       initialized: false, // initialized once when components comes into view
       tabIndex: 0,
       listings: []
-    }
+    };
   }
 
   title() {
-    return [
-      t('Homes for sale near'),
-      t('Rentals near')
-    ][this.state.tabIndex] + ' ' + this.props.schoolName;
+    return (
+      `${[t('Homes for sale near'), t('Rentals near')][this.state.tabIndex] 
+      } ${ 
+      this.props.schoolName}`
+    );
   }
 
   forSaleOrForRent() {
@@ -52,7 +53,7 @@ export default class HomesAndRentals extends React.Component {
 
   componentDidMount() {
     setVisibilityCallback(
-      '#' + this.props.domId,
+      `#${  this.props.domId}`,
       () => this.setState({ initialized: true }),
       -1000
     );
@@ -66,18 +67,20 @@ export default class HomesAndRentals extends React.Component {
         this.props.state,
         this.props.zip,
         this.numberOfListings
-      ).done(data => {
-        if(data && data.response && data.response.results) {
+      )
+        .done(data => {
+          if (data && data.response && data.response.results) {
+            this.setState({
+              listings: data.response.results.map(decorateListing)
+            });
+          }
+        })
+        .fail(data => {
           this.setState({
-            listings: data.response.results.map(decorateListing)
-          })
-        }
-      }).fail(data => {
-        this.setState({
-          listings: []
+            listings: []
+          });
         });
-      });
-    } catch(e) {
+    } catch (e) {
       this.setState({
         listings: []
       });
@@ -85,29 +88,43 @@ export default class HomesAndRentals extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevState.initialized == false && this.state.initialized == true) {
+    if (prevState.initialized == false && this.state.initialized == true) {
       this.fetchData();
     }
   }
 
   tabSwitched(index) {
-    this.setState({
-      tabIndex: parseInt(index)
-    }, this.fetchData);
+    this.setState(
+      {
+        tabIndex: parseInt(index)
+      },
+      this.fetchData
+    );
   }
 
   renderTabs() {
-    let tabs = this.tabNames.reduce((accum, name, index) => ({...accum, [index]: name}), {});
-    return <ButtonGroup
-              activeOption={this.state.tabIndex.toString()}
-              options={tabs}
-              onSelect={this.tabSwitched.bind(this)} />
+    const tabs = this.tabNames.reduce(
+      (accum, name, index) => ({ ...accum, [index]: name }),
+      {}
+    );
+    return (
+      <ButtonGroup
+        activeOption={this.state.tabIndex.toString()}
+        options={tabs}
+        onSelect={this.tabSwitched.bind(this)}
+      />
+    );
   }
 
   renderHome(listing) {
     return (
       <div className="tile-container">
-        <a className="tile" href={listing.detailPageLink()} target="_blank" rel="nofollow">
+        <a
+          className="tile"
+          href={listing.detailPageLink()}
+          target="_blank"
+          rel="nofollow"
+        >
           <img src={listing.largerImageUrl()} />
           <div className="price">{listing.price()}</div>
           <div className="info">
@@ -116,36 +133,49 @@ export default class HomesAndRentals extends React.Component {
           </div>
         </a>
       </div>
-    )
+    );
   }
 
   renderHomesAndRentals() {
-    if(this.state.listings.length == 0) {
+    if (this.state.listings.length == 0) {
       return <div className="tile-container">No listings found</div>;
     }
     return this.state.listings.map(this.renderHome);
   }
 
   render() {
-    if(!this.state.initialized) {
-      return <div id={this.props.domId}></div>;
+    if (!this.state.initialized) {
+      return <div id={this.props.domId} />;
     }
 
-    return(
+    return (
       <div id={this.props.domId}>
         <div className="title-bar">
           <div className="title">{this.title()}</div>
-          { this.renderTabs() }
+          <div className="tabs">{this.renderTabs()}</div>
         </div>
-        <div className="tiles">
-          { this.renderHomesAndRentals() }
-        </div>
+        <div className="tiles">{this.renderHomesAndRentals()}</div>
         <div className="cta-buttons">
-          <AnchorButton className="bold-anchor" rel="nofollow" target="_blank" href={borrowingPageUrl()}><span className="icon-house prs"></span>{ t('See how much you can afford to borrow') }</AnchorButton>
-          <AnchorButton className="bold-anchor"  rel="nofollow" target="_blank" href={nearbyHomesUrl(this.props.city, this.props.state)}>{ t('See more listings near this school') }</AnchorButton>
+          <AnchorButton
+            className="bold-anchor"
+            rel="nofollow"
+            target="_blank"
+            href={borrowingPageUrl()}
+          >
+            <span className="icon-house prs" />
+            {t('See how much you can afford to borrow')}
+          </AnchorButton>
+          <AnchorButton
+            className="bold-anchor"
+            rel="nofollow"
+            target="_blank"
+            href={nearbyHomesUrl(this.props.city, this.props.state)}
+          >
+            {t('See more listings near this school')}
+          </AnchorButton>
           <img src={zillowLogo} />
         </div>
       </div>
     );
-  };
+  }
 }

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ButtonGroup from '../buttongroup';
 import Select from '../select';
 import * as Geocoding from '../../components/geocoding';
@@ -12,13 +13,13 @@ export default class SearchBar extends React.Component {
   }
 
   static propTypes = {
-    searchTerm: React.PropTypes.string,
-    districts: React.PropTypes.array,
-    level: React.PropTypes.string,
-    additionalSchoolType: React.PropTypes.string,
-    onClickMapView: React.PropTypes.func,
-    onClickListView: React.PropTypes.func,
-    mapSelected: React.PropTypes.bool
+    searchTerm: PropTypes.string,
+    districts: PropTypes.array,
+    level: PropTypes.string,
+    additionalSchoolType: PropTypes.string,
+    onClickMapView: PropTypes.func,
+    onClickListView: PropTypes.func,
+    mapSelected: PropTypes.bool
   }
 
   constructor(props) {

@@ -1,21 +1,28 @@
+export const XS = 0;
+export const SM = 1;
+export const MD = 2;
+export const LG = 3;
+
+export const validSizes = [XS, SM, MD, LG];
+
 export function viewport() {
-  var e = window, a = 'inner';
-  if (!('innerWidth' in window )) {
+  let e = window,
+    a = 'inner';
+  if (!('innerWidth' in window)) {
     a = 'client';
     e = document.documentElement || document.body;
   }
-  return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
+  return { width: e[`${a}Width`], height: e[`${a}Height`] };
 }
 
 export function size() {
-  let width = viewport().width;
+  const width = viewport().width;
   if (width < 768) {
-    return 'xs';
+    return XS;
   } else if (width < 992) {
-    return 'sm'
+    return SM;
   } else if (width < 1200) {
-    return 'md';
-  } else {
-    return 'lg';
+    return MD;
   }
+  return LG;
 }

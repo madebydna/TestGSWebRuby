@@ -1,0 +1,18 @@
+<% content_for :page_javascripts do %>
+    <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+    <%= webpack_javascript_include_tag 'search', defer: true %>
+<% end %>
+<% content_for :page_stylesheets do %>
+    <%= stylesheet_link_tag "district-boundaries", async: true %>
+<% end %>
+
+<div id="district-boundaries-page">
+  <!--Required for development in order to conform attributes to React component-->
+  <% map_schools = @map_schools.map {|school| school.class_eval {attr_reader :lat, :lon};  school.instance_eval {@lat = school.latitude; @lon = school.longitude}; school.overall_gs_rating = school.overall_gs_rating.to_s; school}%>
+  <%= react_component('Search', props: {
+      schools: map_schools,
+      lat: @city.try(:lat),
+      lon: @city.try(:lon)
+  }) %>
+</div>
+

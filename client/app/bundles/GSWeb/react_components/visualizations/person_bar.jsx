@@ -1,18 +1,19 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { t } from '../../util/i18n';
 
 export default class PersonBar extends React.Component {
   static propTypes = {
-    breakdown: React.PropTypes.string.isRequired,
-    score: React.PropTypes.number.isRequired,
-    label: React.PropTypes.string.isRequired,
-    percentage: React.PropTypes.string,
-    display_percentages: React.PropTypes.bool,
-    number_students_tested: React.PropTypes.string,
-    state_average: React.PropTypes.number,
-    state_average_label: React.PropTypes.string,
-    invertedRatings:  React.PropTypes.bool,
-    use_gray: React.PropTypes.bool
+    breakdown: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
+    percentage: PropTypes.string,
+    display_percentages: PropTypes.bool,
+    number_students_tested: PropTypes.string,
+    state_average: PropTypes.number,
+    state_average_label: PropTypes.string,
+    invertedRatings:  PropTypes.bool,
+    use_gray: PropTypes.bool
   };
 
   constructor(props) {

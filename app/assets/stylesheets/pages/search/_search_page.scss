@@ -1,0 +1,244 @@
+@import 'list-and-map';
+.featured {
+  display: none; // TODO: dont put this here
+}
+
+body {
+  background-color: #f6f9fa;
+}
+
+#search-page {
+  max-width: 1282px;
+  margin-left: auto;
+  margin-right: auto;
+  @include media-breakpoint-down(sm) {
+    // handle the case that the top search bar currently overlaps 10px of content on the top of each page
+    margin-top: 10px;
+  }
+
+  .search-body {
+    position: relative;
+    margin: auto;
+    max-width: 1282px;
+    padding: 70px 0px 0px 0px;
+
+    @include media-breakpoint-down(sm) {
+      padding: 0 15px 0 15px;
+    }
+
+    @include clearfix;
+
+    select {
+      @include select;
+    }
+
+    .button-group {
+      @include button-group;
+    }
+
+    input[type='checkbox'] {
+      @include checkbox(28px);
+    }
+
+    h3 {
+      font-size: $font-size-l2;
+      padding: 0 10px;
+    }
+
+    .diamond-rating--small {
+      margin-top: 10px;
+      div {
+        display: inline-block;
+      }
+    }
+
+    button {
+      border: 1px solid #c1d2d9;
+      background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+      border-radius: 2px;
+      padding: 7px 17px 7px 17px;
+    }
+
+    .icon-house {
+      color: #c1d2d9;
+      padding-top: 5px;
+      font-size: 14px;
+      > a {
+        font-size: 12px;
+      }
+    }
+
+    .spinny-wheel {
+      background-color: #f6f9fa;
+      opacity: 0.5;
+      transition: background-color 1s ease-in;
+    }
+
+    .dropdown {
+      display: inline-block;
+      .selection {
+        padding: 8px;
+      }
+      .panel {
+        display: inline-block;
+        padding: 8px;
+        border: 1px solid #b8b8b8;
+        border-radius: 3px;
+        background-color: #f6f9fa;
+        position: absolute;
+        z-index: 1;
+        cursor: pointer;
+        > div + div {
+          margin-top: 5px;
+        }
+      }
+    }
+
+    .ad-bar {
+      width: 160px;
+      height: 600px;
+      background-color: grey;
+    }
+
+    .map-legend {
+      position: absolute;
+      bottom: 30px;
+      z-index: 9999;
+      display: inline-block;
+      background-color: white;
+      opacity: 0.7;
+      width: 145px;
+      height: 40px;
+      font-size: 16px;
+      vertical-align: center;
+      padding: 8px;
+      left: 15px;
+      border-radius: 2px;
+      font-family: 'opensans-semibold', sans-serif;
+      padding-left: 18px;
+      cursor: pointer;
+      -webkit-transition: width 0.1s, height 0.5s; /* For Safari 3.1 to 6.0 */
+      transition: width 0.1s, height 0.5s;
+      span {
+        margin-left: 10px;
+        display: inline-block;
+        font-size: 13px;
+      }
+    }
+
+    .legend-open {
+      width: 220px;
+      height: 120px;
+      span {
+        float: right;
+        margin-right: 5px;
+        transform: rotate(90deg);
+      }
+    }
+
+    .list-map-ad {
+      max-width: 1102px;
+      @include media-breakpoint-up(md) {
+        margin-right: 160px;
+      }
+    }
+
+    .menu-bar {
+      .menu-item {
+        display: inline-block;
+        cursor: pointer;
+        > * + * {
+          margin-left: 5px;
+        }
+      }
+      .menu-item + .menu-item {
+        @include media-breakpoint-up(md) {
+          margin-left: 20px;
+        }
+      }
+    }
+
+    .menu-bar.filters {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      box-shadow: 0px 1px 1px #dddddd;
+      padding: 10px 15px 10px 15px;
+      z-index: 1;
+    }
+
+    .menu-bar.sort {
+    }
+
+    .result-summary {
+    }
+
+    .full-overlay {
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      position: fixed;
+      background: white;
+      z-index: 5;
+      padding: 30px 15px 10px 15px;
+    }
+
+    .filter-panel {
+      max-width: 395px;
+      margin: auto;
+
+      .menu-item {
+        display: block;
+
+        .label {
+          display: block;
+          height: 10px;
+          font-size: $font-size-l3;
+        }
+      }
+
+      button {
+        background: #2ba3dc;
+        color: #fff;
+        width: 100%;
+        max-width: 290px;
+      }
+
+      .icon-close {
+        font-size: 14px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+      }
+
+      .checkbox-group {
+        margin-top: 5px;
+        > span {
+          display: block;
+        }
+      }
+    }
+
+    // .icon {
+    //   font-size: 18px;
+    //   color: #c1d2d9;
+    //   margin-right: 5px;
+    //   &.active {
+    //     color: #2ba3dc;
+    //   }
+    // }
+
+    // .icontext {
+    //   display: none;
+    //   font-family: 'opensans-regular';
+    //   font-size: 12px;
+    //   @include media-breakpoint-only(sm) {
+    //     display: inline-block;
+    //   }
+    // }
+  }
+}

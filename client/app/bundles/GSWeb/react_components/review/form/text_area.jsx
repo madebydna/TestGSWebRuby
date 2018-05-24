@@ -1,15 +1,16 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class TextArea extends React.Component {
 
   static propTypes = {
-    questionId: React.PropTypes.number.isRequired,
-    onTextValueChanged: React.PropTypes.func.isRequired,
-    handleTextBlur: React.PropTypes.func,
-    errorMessage: React.PropTypes.string,
-    textValue: React.PropTypes.string,
-    autoFocus: React.PropTypes.bool,
-    placeholder: React.PropTypes.string,
+    questionId: PropTypes.number.isRequired,
+    onTextValueChanged: PropTypes.func.isRequired,
+    handleTextBlur: PropTypes.func,
+    errorMessage: PropTypes.string,
+    textValue: PropTypes.string,
+    autoFocus: PropTypes.bool,
+    placeholder: PropTypes.string,
   }
 
   static defaultProps = {

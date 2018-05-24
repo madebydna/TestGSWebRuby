@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import QuestionMarkTooltip from './question_mark_tooltip';
 import { t } from '../../util/i18n';
 
@@ -52,15 +53,15 @@ const BasicDataModuleRow = ({
   );
 };
 
-BasicDataModuleRow.PropTypes = {
-  breakdown: React.PropTypes.string.isRequired,
-  label: React.PropTypes.string,
-  percentage: React.PropTypes.string,
-  display_percentages: React.PropTypes.bool,
-  number_students_tested: React.PropTypes.number,
-  drawerTrigger: React.PropTypes.element,
-  tooltip_html: React.PropTypes.string,
-  children: React.PropTypes.element.isRequired
+BasicDataModuleRow.propTypes = {
+  breakdown: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  percentage: PropTypes.string,
+  display_percentages: PropTypes.bool,
+  number_students_tested: PropTypes.number,
+  drawerTrigger: PropTypes.element,
+  tooltip_html: PropTypes.string,
+  children: PropTypes.element.isRequired
 }
 
 BasicDataModuleRow.DefaultProps = {

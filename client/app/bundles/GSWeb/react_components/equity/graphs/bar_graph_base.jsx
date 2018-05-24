@@ -1,14 +1,15 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { t } from '../../../util/i18n';
 import SingleBarViz from './single_bar_viz';
 
 export default class BarGraphBase extends React.Component {
 
   static propTypes = {
-    score: React.PropTypes.number.isRequired,
-    label: React.PropTypes.string.isRequired,
-    state_average: React.PropTypes.number,
-    state_average_label: React.PropTypes.string
+    score: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
+    state_average: PropTypes.number,
+    state_average_label: PropTypes.string
   }
 
   constructor(props) {
