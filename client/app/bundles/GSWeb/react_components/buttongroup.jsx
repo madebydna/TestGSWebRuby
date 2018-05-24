@@ -4,7 +4,14 @@ import { castArray } from 'lodash';
 import Selectable from './selectable';
 import Button from './button';
 
-const ButtonGroup = ({ options, onSelect, activeOption, multiple, label }) => {
+const ButtonGroup = ({
+  options,
+  onSelect,
+  activeOption,
+  multiple,
+  label,
+  allowDeselect
+}) => {
   const newOpts = Object.keys(options).map(key => ({
     key,
     value: key,
@@ -19,6 +26,7 @@ const ButtonGroup = ({ options, onSelect, activeOption, multiple, label }) => {
         onSelect={key => onSelect(key)}
         keyFunc={o => o.key}
         multiple={multiple}
+        allowDeselect={allowDeselect}
       >
         {opts =>
           opts.map(({ option, active, select }) => (
@@ -41,12 +49,14 @@ ButtonGroup.propTypes = {
   onSelect: PropTypes.func.isRequired,
   activeOption: PropTypes.string.isRequired,
   multiple: PropTypes.bool,
-  label: PropTypes.string
+  label: PropTypes.string,
+  allowDeselect: PropTypes.bool
 };
 
 ButtonGroup.defaultProps = {
   multiple: false,
-  label: undefined
+  label: undefined,
+  allowDeselect: false
 };
 
 export default ButtonGroup;

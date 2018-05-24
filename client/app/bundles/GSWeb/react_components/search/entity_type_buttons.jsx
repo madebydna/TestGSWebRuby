@@ -13,6 +13,7 @@ const EntityTypeButtons = () => (
     {({ entityTypes, onEntityTypesChanged }) => (
       <LabeledButtonGroup
         multiple
+        allowDeselect
         label="Filter by:"
         options={options}
         activeOption={entityTypes}

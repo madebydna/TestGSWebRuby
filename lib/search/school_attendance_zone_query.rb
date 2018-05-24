@@ -16,7 +16,7 @@ module Search
 
     def search
       @_search = begin
-        results = School.having_point_in_attendance_zone(lat, lon, level)
+        results = SchoolGeometry.schools_having_point_in_attendance_zone(lat, lon, level)
         PageOfResults.new(
           results,
           query: self,

@@ -77,8 +77,12 @@ module SearchRequestParams
     @_city_object ||= City.get_city_by_name_and_state(city, state).first
   end
 
+  def school_id
+    params[:id]&.to_i
+  end
+
   def district_id
-    params[:districtId] || params[:district_id]
+    params[:districtId]&.to_i || params[:district_id]&.to_i
   end
 
   def district
