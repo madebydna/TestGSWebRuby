@@ -70,6 +70,7 @@ class SearchProvider extends React.Component {
     });
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
+    this.highlightSchool = this.highlightSchool.bind(this);
   }
 
   componentDidMount() {
@@ -146,6 +147,17 @@ class SearchProvider extends React.Component {
     );
   }
 
+  highlightSchool(school){
+    let schools = this.state.schools.map((s) => {
+      if (s.id === school.id) {
+        s.highlighted = !s.highlighted;
+        return s;
+      } else
+      return s;
+    });
+    this.setState({schools: schools});
+  }
+
   //
 
   render() {
@@ -160,33 +172,29 @@ class SearchProvider extends React.Component {
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
           size: this.state.size,
-          shouldIncludeDistance: this.shouldIncludeDistance()
-        }}
-      >
+          shouldIncludeDistance: this.shouldIncludeDistance(),
+          highlightSchool: this.highlightSchool
+        }}>
         <DistanceContext.Provider
           value={{
             distance: this.props.distance,
             onChange: this.props.updateDistance
-          }}
-        >
+          }}>
           <GradeLevelContext.Provider
             value={{
               levelCodes: this.props.levelCodes,
               onLevelCodesChanged: this.props.updateLevelCodes
-            }}
-          >
+            }}>
             <EntityTypeContext.Provider
               value={{
                 entityTypes: this.props.entityTypes,
                 onEntityTypesChanged: this.props.updateEntityTypes
-              }}
-            >
+              }}>
               <SortContext.Provider
                 value={{
                   sort: this.props.sort,
                   onSortChanged: this.props.updateSort
-                }}
-              >
+                }}>
                 {this.props.children}
               </SortContext.Provider>
             </EntityTypeContext.Provider>

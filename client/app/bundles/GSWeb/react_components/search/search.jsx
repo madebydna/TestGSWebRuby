@@ -21,7 +21,8 @@ class Search extends React.Component {
     state: null,
     schools: [],
     loadingSchools: false,
-    shouldIncludeDistance: false
+    shouldIncludeDistance: false,
+    highlightSchool: false
   };
 
   static propTypes = {
@@ -36,7 +37,8 @@ class Search extends React.Component {
     totalPages: PropTypes.number.isRequired,
     onPageChanged: PropTypes.func.isRequired,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
-    shouldIncludeDistance: PropTypes.bool
+    shouldIncludeDistance: PropTypes.bool,
+    highlightSchool: PropTypes.func
   };
 
   constructor(props) {
@@ -45,6 +47,10 @@ class Search extends React.Component {
       currentView: 'list'
     };
   }
+
+  // handleSchoolMouseEnter(school){
+  //   console.log(school);
+  // }
 
   render() {
     return (
@@ -77,6 +83,8 @@ class Search extends React.Component {
         tallAd={() => <div className="ad-bar">Advertisement</div>}
         schoolList={
           <SchoolList
+            highlightSchool={this.props.highlightSchool}
+            unhighlightSchool={this.props.unhighlightSchool}
             schools={this.props.schools}
             isLoading={this.props.loadingSchools}
             pagination={
