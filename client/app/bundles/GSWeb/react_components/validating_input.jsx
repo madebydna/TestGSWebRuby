@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import validations from '../components/validations';
 
 export default class ValidatingInput extends React.Component {
   static propTypes = {
-    validation: React.PropTypes.string
+    validation: PropTypes.string
   };
 
   constructor(props) {

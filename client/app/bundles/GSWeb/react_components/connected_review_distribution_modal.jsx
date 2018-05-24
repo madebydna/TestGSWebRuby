@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReviewDistribution from './review_distribution';
 import { getAnswerCountsForQuestion } from 'api_clients/reviews';
 import { withCurrentSchool }  from 'store/appStore';
@@ -8,8 +9,8 @@ import withAnalyticsTracking from 'util/with_analytics_tracking';
 class ConnectedReviewDistributionModal extends React.Component {
 
   static propTypes = {
-    questionId: React.PropTypes.number,
-    question: React.PropTypes.string.isRequired
+    questionId: PropTypes.number,
+    question: PropTypes.string.isRequired
   };
 
   constructor(props) {

@@ -1,17 +1,18 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import UserReviews from './user_reviews';
 import { t } from 'util/i18n';
 
 export default class ReviewsList extends React.Component {
 
   static propTypes = {
-    reviews: React.PropTypes.arrayOf(React.PropTypes.shape({
-      five_star_review: React.PropTypes.object,
-      topical_reviews: React.PropTypes.array,
-      most_recent_date: React.PropTypes.string,
-      user_type_label: React.PropTypes.string,
-      avatar: React.PropTypes.number,
-      reviewSubmitMessage: React.PropTypes.object
+    reviews: PropTypes.arrayOf(PropTypes.shape({
+      five_star_review: PropTypes.object,
+      topical_reviews: PropTypes.array,
+      most_recent_date: PropTypes.string,
+      user_type_label: PropTypes.string,
+      avatar: PropTypes.number,
+      reviewSubmitMessage: PropTypes.object
     }))
   };
 

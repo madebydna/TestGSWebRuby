@@ -66,9 +66,7 @@ module States
   def self.abbreviation(name_or_abbreviation)
     return if name_or_abbreviation.nil?
     str = name_or_abbreviation.downcase
-    if str.size == 2 && abbreviation_hash.include?(str)
-      return str
-    end
+    return str if is_abbreviation?(str)
 
     return state_hash[str]
   end
@@ -112,5 +110,9 @@ module States
       k == "dc" ? labels_hash[k] = "Washington DC" : labels_hash[k] = v.titleize
     end
     labels_hash
+  end
+
+  def self.is_abbreviation?(string)
+    abbreviation_hash.include?(string)
   end
 end

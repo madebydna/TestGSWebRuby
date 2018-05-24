@@ -1,14 +1,15 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { t } from '../../../util/i18n';
 
 export default class FiveStarQuestionCTA extends React.Component {
 
   static propTypes = {
-    responseValues: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    responseLabels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    id: React.PropTypes.number.isRequired,
-    title: React.PropTypes.string.isRequired,
-    fiveStarQuestionSelect: React.PropTypes.func.isRequired
+    responseValues: PropTypes.arrayOf(PropTypes.string).isRequired,
+    responseLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    fiveStarQuestionSelect: PropTypes.func.isRequired
   };
 
   constructor(props) {

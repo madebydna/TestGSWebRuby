@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import { selectSchool } from '../../actions/district_boundaries';
@@ -15,11 +16,11 @@ class SchoolList extends React.Component {
   }
 
   static propTypes = {
-    schools: React.PropTypes.array.isRequired,
-    school: React.PropTypes.object,
-    selectSchool: React.PropTypes.func.isRequired,
-    showMapView: React.PropTypes.func.isRequired,
-    className: React.PropTypes.string
+    schools: PropTypes.array.isRequired,
+    school: PropTypes.object,
+    selectSchool: PropTypes.func.isRequired,
+    showMapView: PropTypes.func.isRequired,
+    className: PropTypes.string
   }
 
   onClickSchool(school) {

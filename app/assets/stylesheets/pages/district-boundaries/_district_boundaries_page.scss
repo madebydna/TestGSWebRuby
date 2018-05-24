@@ -3,9 +3,7 @@
 @import 'toggle-bar';
 @import 'list-and-map';
 
-
 #district-boundaries-page {
-
   .header {
     @include clearfix;
     background-color: #184a7d;
@@ -18,11 +16,11 @@
       font-size: 18px;
       max-width: 170px;
       display: inline-block;
-      @include media-breakpoint-up(sm){
+      @include media-breakpoint-up(sm) {
         font-size: 26px;
         max-width: 470px;
       }
-      @include media-breakpoint-up(md){
+      @include media-breakpoint-up(md) {
         max-width: 100%;
       }
     }
@@ -30,7 +28,7 @@
     p {
       font-family: 'opensans-regular';
       font-size: 12px;
-      letter-spacing: .2px;
+      letter-spacing: 0.2px;
       @include media-breakpoint-only(xs) {
         display: none;
       }
@@ -66,7 +64,7 @@
       @include button-group;
     }
 
-    input[type="checkbox"] {
+    input[type='checkbox'] {
       @include checkbox;
     }
 
@@ -93,7 +91,7 @@
     text-align: right;
     float: right;
     margin-right: 10px;
-    > button {
+    button {
       background: transparent;
       color: #2ba3dc;
     }
@@ -127,9 +125,9 @@
 }
 
 #district-boundaries-page ~ footer {
-  display:none
+  display: none;
 }
-  
+
 .attribution {
   text-align: center;
   font-size: 10px;

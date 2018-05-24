@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import CourseSubject from './course_subject';
 import Drawer from './drawer';
 import InfoTextAndCircle from './info_text_and_circle';
@@ -12,7 +13,7 @@ export default class Courses extends React.Component {
   static propTypes = {
     course_enrollments_and_ratings: PropTypes.object,
     sources: PropTypes.object,
-    rating: PropTypes.string,
+    rating: PropTypes.number,
     share_content: PropTypes.string,
     narration: PropTypes.string,
     faq: PropTypes.shape({

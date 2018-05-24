@@ -1,7 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { t } from '../util/i18n';
+import createReactClass from 'create-react-class';
 
-const Drawer = React.createClass({
+const Drawer = createReactClass({
   getInitialState: function() {
     return {
       open: false
@@ -9,11 +11,11 @@ const Drawer = React.createClass({
   },
 
   propTypes: {
-    content: React.PropTypes.node.isRequired,
-    openLabel: React.PropTypes.string,
-    closedLabel: React.PropTypes.string,
-    trackingCategory: React.PropTypes.string,
-    trackingAction: React.PropTypes.string
+    content: PropTypes.node.isRequired,
+    openLabel: PropTypes.string,
+    closedLabel: PropTypes.string,
+    trackingCategory: PropTypes.string,
+    trackingAction: PropTypes.string
   },
 
   handleClick: function() {

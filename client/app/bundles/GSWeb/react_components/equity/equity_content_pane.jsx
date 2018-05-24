@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ColumnHeader from '../school_profiles/column_header';
 
 export default class EquityContentPane extends React.Component {
 
   static propTypes = {
-    graph: React.PropTypes.object.isRequired,
-    text: React.PropTypes.element.isRequired,
-    anchor: React.PropTypes.string
+    graph: PropTypes.object.isRequired,
+    text: PropTypes.element.isRequired,
+    anchor: PropTypes.string
   };
 
   constructor(props) {

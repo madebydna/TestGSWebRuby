@@ -237,7 +237,7 @@ $(function() {
 
   let $body = $('body');
 
-  $body.on('click', '.multi-select-button-group label', function() {
+  $body.on('click', '.multi-select-button-group button', function() {
     var $label = $(this);
     var $hiddenField = $label.closest('fieldset').find('input[type=hidden]');
     var values = $hiddenField.val().split(',');

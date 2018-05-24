@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { t } from '../../util/i18n';
 import owlPng from 'school_profiles/owl.png';
 
@@ -16,8 +17,8 @@ const ParentTip = ({children}) => {
   );
 };
 
-ParentTip.PropTypes = {
-  content: React.PropTypes.string.isRequired
+ParentTip.propTypes = {
+  content: PropTypes.string.isRequired
 }
 
 export default ParentTip;

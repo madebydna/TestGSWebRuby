@@ -1,6 +1,7 @@
 Rails.application.config.assets.precompile += [
     'widget_map.js',
     'district-boundaries.css',
+    'search.css',
     'widget.css',
     'widget-form.css',
     'wordpress-modals.js',

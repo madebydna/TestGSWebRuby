@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { t } from '../../../util/i18n';
 import SingleBarViz from './single_bar_viz';
 import BarGraphBase from './bar_graph_base';
@@ -6,12 +7,12 @@ import BarGraphBase from './bar_graph_base';
 export default class BarGraphCustomRanges extends BarGraphBase {
 
   static propTypes = {
-    score: React.PropTypes.number.isRequired,
-    label: React.PropTypes.string.isRequired,
-    state_average: React.PropTypes.number,
-    state_average_label: React.PropTypes.string,
-    lower_range: React.PropTypes.number,
-    upper_range: React.PropTypes.number
+    score: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
+    state_average: PropTypes.number,
+    state_average_label: PropTypes.string,
+    lower_range: PropTypes.number,
+    upper_range: PropTypes.number
   }
 
   constructor(props) {

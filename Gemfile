@@ -21,7 +21,7 @@ gem 'kaminari', '0.16.1'
 
 # Provide various react builds to your asset bundle
 # Transform .jsx in the asset pipeline
-gem 'react_on_rails', '~> 6'
+gem 'react_on_rails', '~> 10.1.4'
 
 # Add database sharding support to Active Record
 # gem 'ar-octopus', '0.6.0' <-- evil
@@ -132,6 +132,9 @@ gem 'stackprof'
 
 # fast xml parsing library
 gem 'ox'
+
+# Solr DSL on top of rsolr
+gem 'sunspot_rails', '~> 2.3.0'
 
 group :development do
   gem 'web-console' # Add repl to error pages on localhost, replaces better_errors
