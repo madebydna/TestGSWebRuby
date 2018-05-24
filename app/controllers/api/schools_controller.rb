@@ -58,10 +58,10 @@ class Api::SchoolsController < ApplicationController
   def query
     if (point_given? || area_given?) && extras.include?('boundaries')
        attendance_zone_query
-    elsif district_id || school_id
-      school_sql_query
-    else
+    elsif point_given? || area_given? || q.present?
       solr_query
+    else
+      school_sql_query
     end
   end
 
