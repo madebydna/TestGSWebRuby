@@ -153,43 +153,45 @@ class SearchLayout extends React.Component {
 
   renderMobileMenuBar() {
     return (
-      <OpenableCloseable>
+      <OpenableCloseable openByDefault>
         {(isOpen, { toggle, close }) => (
-          <CaptureOutsideClick callback={close}>
-            <div>
-              <div className="menu-bar mobile-filters">
-                <Button
-                  key="filter"
-                  label="Filter"
-                  active={isOpen}
-                  onClick={toggle}
-                  onKeyPress={toggle}
+          <div>
+            <div className="menu-bar mobile-filters">
+              <Button
+                key="filter"
+                label="Filter"
+                active={isOpen}
+                onClick={toggle}
+                onKeyPress={toggle}
+              />
+              <span className="menu-item">{this.props.listMapDropdown}</span>
+            </div>
+            {isOpen ? (
+              <div className="filter-panel">
+                <span
+                  className="icon-close"
+                  onClick={close}
+                  onKeyPress={close}
+                  role="button"
                 />
-                <span className="menu-item">{this.props.listMapDropdown}</span>
-              </div>
-              {isOpen ? (
-                <div className="filter-panel">
-                  <span
-                    className="icon-close"
-                    onClick={close}
-                    onKeyPress={close}
-                    role="button"
-                  />
-                  <div className="menu-bar">
-                    <span className="menu-item">
-                      {this.props.entityTypeCheckboxes}
-                    </span>
-                    <span className="menu-item">
-                      {this.props.gradeLevelCheckboxes}
-                    </span>
-                  </div>
-                  {/* <div className="controls">
+                <div className="menu-bar">
+                  <span className="menu-item">
+                    {this.props.entityTypeCheckboxes}
+                  </span>
+                  <span className="menu-item">
+                    {this.props.gradeLevelCheckboxes}
+                  </span>
+                  <span className="menu-item">
+                    <span className="label">Sort by:</span>
+                    {this.props.sortSelect}
+                  </span>
+                </div>
+                {/* <div className="controls">
                     <button onClick={close}>Done</button>
                   </div> */}
-                </div>
-              ) : null}
-            </div>
-          </CaptureOutsideClick>
+              </div>
+            ) : null}
+          </div>
         )}
       </OpenableCloseable>
     );
@@ -201,7 +203,9 @@ class SearchLayout extends React.Component {
         {this.props.size > SM
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
-        <div style={{ padding: '10px' }}>{this.props.sortSelect}</div>
+        {this.props.size > SM && (
+          <div style={{ padding: '10px' }}>{this.props.sortSelect}</div>
+        )}
         <div className="list-map-ad">
           {this.renderMapAndAdContainer(
             <div className="map-container">

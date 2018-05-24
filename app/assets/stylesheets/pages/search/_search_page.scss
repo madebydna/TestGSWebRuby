@@ -217,9 +217,13 @@ body {
         cursor: pointer;
       }
 
+      select,
+      .checkbox-group {
+        margin-left: 0px !important;
+      }
+
       .checkbox-group {
         display: inline-block;
-        margin-left: 0px;
         > span {
           display: block;
           @include media-breakpoint-up(sm) {
