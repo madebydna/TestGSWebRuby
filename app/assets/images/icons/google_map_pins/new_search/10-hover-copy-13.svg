@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="44" height="44" viewBox="0 0 44 44">
+    <defs>
+        <circle id="a" cx="21.8" cy="21.8" r="19.8"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <ellipse cx="21.865" cy="21.672" fill="#FFF" rx="21.658" ry="21.474"/>
+        <use fill="#FFF" xlink:href="#a"/>
+        <circle cx="21.8" cy="21.8" r="18.7" stroke="#87B31E" stroke-width="2.2"/>
+    </g>
+</svg>

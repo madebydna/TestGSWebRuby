@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="56" height="54" viewBox="0 0 56 54">
+    <defs>
+        <linearGradient id="a" x1="-24.711%" x2="38.258%" y1="100%" y2="27.492%">
+            <stop offset="0%"/>
+            <stop offset="100%" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="b" width="115.2%" height="110%" x="-7.6%" y="-5%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+        </filter>
+        <ellipse id="c" cx="19.957" cy="27.813" rx="16.957" ry="16.813"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <path fill="url(#a)" d="M20.455 60.107l39.379-35.592L28.153 0z" filter="url(#b)" opacity=".656" transform="translate(0 -8)"/>
+        <path fill="#FFF" d="M14.26 38.417C6.122 36.019.187 28.547.187 19.701.188 8.92 9.004.18 19.878.18S39.567 8.92 39.567 19.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>
+        <g transform="translate(0 -8)">
+            <use fill="#FFF" xlink:href="#c"/>
+            <ellipse cx="19.957" cy="27.813" stroke="#549E22" stroke-width="2" rx="15.957" ry="15.813"/>
+        </g>
+        <text fill="#549E22" font-family="RobotoSlab-Bold, Roboto Slab" font-size="18" font-weight="bold" transform="translate(0 -8)">
+            <tspan x="7.405" y="33">9</tspan> <tspan x="17.433" y="33" font-size="11">/10</tspan>
+        </text>
+    </g>
+</svg>

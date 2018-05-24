@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">
+    <g fill="none" fill-rule="evenodd">
+        <circle cx="22" cy="22" r="22" fill="#BEC022"/>
+        <text fill="#FFF" font-family="RobotoSlab-Bold, Roboto Slab" font-size="22" font-weight="bold">
+            <tspan x="8.364" y="29">5</tspan> <tspan x="20.095" y="29" font-size="12">/10</tspan>
+        </text>
+    </g>
+</svg>

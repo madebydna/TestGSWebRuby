@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="79" height="79" viewBox="0 0 79 79">
+    <defs>
+        <rect id="a" width="79" height="79" rx="6"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <use fill="#F8F8F8" xlink:href="#a"/>
+        <rect width="78" height="78" x=".5" y=".5" stroke="#CCC" rx="6"/>
+    </g>
+</svg>
