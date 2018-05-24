@@ -4,7 +4,8 @@ import { throttle, debounce } from 'lodash';
 import $ from 'jquery';
 import { viewport, SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
-// import EntityTypeFilter from './entity_type_filter';
+import CaptureOutsideClick from 'react_components/search/capture_outside_click';
+import Button from 'react_components/button';
 
 function keepInViewport(
   selector,
@@ -152,28 +153,21 @@ class SearchLayout extends React.Component {
 
   renderMobileMenuBar() {
     return (
-      <div className="menu-bar">
-        {this.renderMobileFilterPanel()}
-        <span className="menu-item">{this.props.listMapDropdown}</span>
-      </div>
-    );
-  }
-
-  renderMobileFilterPanel() {
-    return (
       <OpenableCloseable>
-        {(isOpen, { toggle, close, open }) => (
-          <React.Fragment>
-            <span
-              className="menu-item"
-              onClick={toggle}
-              onKeyPress={toggle}
-              role="button"
-            >
-              Filter
-            </span>
-            {isOpen ? (
-              <div className="full-overlay">
+        {(isOpen, { toggle, close }) => (
+          <CaptureOutsideClick callback={close}>
+            <div>
+              <div className="menu-bar mobile-filters">
+                <Button
+                  key="filter"
+                  label="Filter"
+                  active={isOpen}
+                  onClick={toggle}
+                  onKeyPress={toggle}
+                />
+                <span className="menu-item">{this.props.listMapDropdown}</span>
+              </div>
+              {isOpen ? (
                 <div className="filter-panel">
                   <span
                     className="icon-close"
@@ -189,13 +183,13 @@ class SearchLayout extends React.Component {
                       {this.props.gradeLevelCheckboxes}
                     </span>
                   </div>
-                  <div className="controls">
+                  {/* <div className="controls">
                     <button onClick={close}>Done</button>
-                  </div>
+                  </div> */}
                 </div>
-              </div>
-            ) : null}
-          </React.Fragment>
+              ) : null}
+            </div>
+          </CaptureOutsideClick>
         )}
       </OpenableCloseable>
     );

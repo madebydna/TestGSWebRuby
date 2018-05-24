@@ -11,7 +11,7 @@ body {
   max-width: 1282px;
   margin-left: auto;
   margin-right: auto;
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-only(xs) {
     // handle the case that the top search bar currently overlaps 10px of content on the top of each page
     margin-top: 10px;
   }
@@ -36,10 +36,6 @@ body {
       @include button-group;
     }
 
-    input[type='checkbox'] {
-      @include checkbox(28px);
-    }
-
     h3 {
       font-size: $font-size-l2;
       padding: 0 10px;
@@ -57,6 +53,10 @@ body {
       background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
       border-radius: 2px;
       padding: 7px 17px 7px 17px;
+      &.active {
+        background-image: linear-gradient(to bottom, #647981, #647981);
+        color: #fff;
+      }
     }
 
     .icon-house {
@@ -169,34 +169,36 @@ body {
       z-index: 1;
     }
 
+    .menu-bar.mobile-filters {
+      background-color: #e0e7eb;
+      margin: 0 -15px;
+      padding: 10px;
+    }
+
     .menu-bar.sort {
     }
 
     .result-summary {
     }
 
-    .full-overlay {
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      position: fixed;
-      background: white;
-      z-index: 5;
-      padding: 30px 15px 10px 15px;
-    }
-
     .filter-panel {
-      max-width: 395px;
-      margin: auto;
+      position: relative;
+      background: #cdd8dd;
+      padding: 15px;
+      margin: 5px -10px;
+      border-radius: $form-field-border-radius;
+
+      input[type='checkbox'] {
+        @include checkbox(28px, white);
+      }
 
       .menu-item {
         display: block;
+        margin-top: 5px;
 
         .label {
           display: block;
-          height: 10px;
-          font-size: $font-size-l3;
+          margin-bottom: 5px;
         }
       }
 
@@ -216,9 +218,13 @@ body {
       }
 
       .checkbox-group {
-        margin-top: 5px;
+        display: inline-block;
+        margin-left: 0px;
         > span {
           display: block;
+          @include media-breakpoint-up(sm) {
+            display: inline-block;
+          }
         }
       }
     }

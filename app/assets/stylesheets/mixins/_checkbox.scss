@@ -1,4 +1,7 @@
-@mixin checkbox($height: $form-field-medium-height) {
+@mixin checkbox(
+  $height: $form-field-medium-height,
+  $background-color: rgba(0, 0, 0, 0)
+) {
   $checkmark-color: #07c568;
   display: none;
 
@@ -12,9 +15,10 @@
       margin: 0 5px 0 0px;
       display: inline-block;
       content: '\00a0 ';
-      font-size: $height * .4;
+      font-size: $height * 0.4;
       width: ($height / 2) + 2;
       height: ($height / 2) + 2;
+      background-color: $background-color;
       border: 1px solid $form-field-border-color;
       border-radius: $form-field-border-radius;
     }
@@ -23,7 +27,7 @@
     &:before {
       padding-left: 3px;
       content: '\2713';
-      font-size: $height * .4;
+      font-size: $height * 0.4;
       color: $checkmark-color;
     }
   }
