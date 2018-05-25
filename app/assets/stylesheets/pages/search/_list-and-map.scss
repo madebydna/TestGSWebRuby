@@ -1,27 +1,6 @@
 #search-page {
-  // $list-and-map-height: 650px;
-  // overrides reused styles for list
   .school-list ol {
     overflow: visible;
-  }
-
-  .fixed-y-layer {
-    position: fixed;
-    width: 100%;
-    left: 0px;
-    right: 0px;
-    top: 187px;
-    bottom: 250px;
-    overflow: hidden;
-    z-index: -1;
-
-    .fixed-y-centering {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      max-width: 1170px;
-      margin: auto;
-    }
   }
 
   .map {
@@ -39,54 +18,65 @@
   }
 
   .right-column {
-    position: absolute;
-    right: 0px;
-    width: 570px;
+    float: left;
+    position: relative;
     height: 100%;
+    width: 60%;
+    @include media-breakpoint-down(sm) {
+      width: 100%;
+      &.closed {
+        display: none;
+      }
+    }
 
-    // .fixed-y {
-    //   position: fixed;
-    //   width: 680px;
-    // }
+    .right-column-fixed {
+      position: fixed;
+      width: inherit;
+      max-width: 769px;
+      top: 186px;
+      @include media-breakpoint-down(sm) {
+        position: initial;
+      }
+    }
 
     .map-column {
-      position: absolute;
-      right: 180px;
+      position: relative;
       height: 100%;
-      width: 100%;
+      min-height: 600px;
+      @include media-breakpoint-up(sm) {
+        margin-right: 180px;
+      }
     }
 
     .ad-column {
-      position: absolute;
-      width: 160px;
-      right: 0px;
+      position: relative;
+      float: right;
+      width: 170px;
+      background-color: lightgrey;
+      height: 600px;
+      @include media-breakpoint-only(xs) {
+        display: none;
+      }
     }
   }
 
   .list-map-ad {
-    // .map-container,
-    // .school-list {
-    //   .spinny-wheel-container {
-    //     overflow: hidden;
-    //   }
-    //   @include clearfix;
-    //   // height: $list-and-map-height;
-    //   .spinny-wheel {
-    //     background-color: rgba(200, 200, 200, 0.5) !important;
-    //   }
-    // }
-
-    .school-list {
+    .list-column {
       min-height: 600px;
-      // float: left;
-      // height: $list-and-map-height;
-      width: 100%;
-      // width: 50%;
+      float: left;
+      width: 40%;
+      min-width: 290px;
       @include media-breakpoint-up(md) {
-        width: 50%;
         max-width: 465px;
       }
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+        &.closed {
+          display: none;
+        }
+      }
     }
+
     .school-list-enter {
       opacity: 0.1;
       background-color: #e0e3e3;
@@ -105,28 +95,5 @@
       opacity: 0.1;
       transition: all 200ms ease-out;
     }
-
-    .closed {
-      @include media-breakpoint-down(sm) {
-        display: none;
-      }
-    }
-
-    // .map {
-    //   position: absolute;
-    //   width: 100%;
-    //   height: 100%;
-    //   z-index: 2;
-    // }
-
-    // > .school-list,
-    // > .map-container {
-    //   // List and map can be hidden completely by tab on mobile. Other selectors have unwanted global styles
-    //   &.closed {
-    //     @include media-breakpoint-down(sm) {
-    //       display: none;
-    //     }
-    //   }
-    // }
   }
 }

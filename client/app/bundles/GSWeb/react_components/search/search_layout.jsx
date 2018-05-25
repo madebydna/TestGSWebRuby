@@ -8,35 +8,36 @@ import CaptureOutsideClick from 'react_components/search/capture_outside_click';
 import Button from 'react_components/button';
 
 function keepInViewport(
-  selector,
+  ref,
   {
+    initialTop = null,
     $elementsAbove = [],
     $elementsBelow = [],
     setTop = true,
-    setBottom = true
+    setBottom = true,
+    shrink = false
   } = {}
 ) {
-  let initialTop = null;
-  if ($(selector).size > 0) {
-    initialTop = $(selector).position().top;
+  if (initialTop === null && $(ref.current).size > 0) {
+    initialTop = $(ref.current).position().top;
   }
 
   const updateElementPosition = function updateElementPosition() {
-    const $elem = $(selector);
+    const $elem = $(ref.current);
     if ($elem.size === 0 || !$elem.position()) {
       return;
     }
     if (initialTop === null) {
       initialTop = $elem.position().top;
     }
+    let top = null;
     if (setTop) {
       const YValueOfTopOfViewport = $(window).scrollTop();
       const minTop = $elementsAbove.reduce(
         (sum, $e) => sum + $e.outerHeight(),
         0
       );
-      const top = Math.max(initialTop - YValueOfTopOfViewport, minTop);
-      $elem.css({ top: `${top}px` });
+      top = Math.max(initialTop - YValueOfTopOfViewport, minTop);
     }
 
     if (setBottom) {
@@ -46,14 +47,29 @@ function keepInViewport(
         (minSoFar, e) => Math.min(minSoFar, e.position().top),
         $('html').height()
       );
-      const bottom = Math.max(YValueOfBottomOfViewport - minBottomY, 0);
-      $elem.css({ bottom: `${bottom}px` });
+      if (shrink) {
+        const bottom = Math.max(YValueOfBottomOfViewport - minBottomY, 0);
+        $elem.css({ bottom: `${bottom}px` });
+      } else {
+        let overlap = $elem.offset().top + $elem.height() - minBottomY;
+        if (top !== null) {
+          overlap += top - $elem.position().top;
+        }
+        if (overlap > 0) {
+          top -= overlap;
+        }
+      }
+    }
+
+    if (top !== null) {
+      $elem.css({ top: `${top}px` });
     }
   };
   $(() => {
     $(window).on('scroll', throttle(updateElementPosition, 40));
     $(window).on('resize', debounce(updateElementPosition, 80));
   });
+  updateElementPosition();
 }
 
 class SearchLayout extends React.Component {
@@ -81,9 +97,16 @@ class SearchLayout extends React.Component {
   }
 
   componentDidMount() {
-    keepInViewport(this.header.current, {
+    keepInViewport(this.header, {
+      initialTop: 60,
       setTop: true,
       setBottom: false
+    });
+    keepInViewport(this.fixedYLayer, {
+      $elementsAbove: [$('.header_un')],
+      $elementsBelow: [$('.footer')],
+      setTop: true,
+      setBottom: true
     });
   }
 
@@ -98,27 +121,22 @@ class SearchLayout extends React.Component {
   renderMapAndAdContainer(map, ad) {
     if (this.props.size > SM) {
       return (
-        <div className="fixed-y-layer" ref={this.fixedYLayer}>
-          <div className="fixed-y-centering">
-            <div className="right-column">
-              <div className="ad-column">{ad}</div>
-              <div className="map-column">{map}</div>
-            </div>
+        <div className="right-column">
+          <div className="right-column-fixed" ref={this.fixedYLayer}>
+            <div className="ad-column">{ad}</div>
+            <div className="map-column">{map}</div>
           </div>
         </div>
       );
     }
     return (
       <div
-        style={{
-          height: `${viewport().height - 250}px`,
-          width: '400px',
-          height: '400px',
-          position: 'relative',
-          display: this.shouldRenderMap() ? 'block' : 'block'
-        }}
+        className={`right-column ${this.shouldRenderMap() ? ' ' : 'closed'}`}
       >
-        {map}
+        <div className="right-column-fixed">
+          <div className="ad-column">{ad}</div>
+          <div className="map-column">{map}</div>
+        </div>
       </div>
     );
   }
@@ -206,14 +224,20 @@ class SearchLayout extends React.Component {
         {this.props.size > SM && (
           <div style={{ padding: '10px' }}>{this.props.sortSelect}</div>
         )}
-        <div className="list-map-ad">
+        <div className="list-map-ad clearfix">
+          <div
+            className={`list-column ${
+              this.shouldRenderList() ? ' ' : 'closed'
+            }`}
+          >
+            {this.props.schoolList}
+          </div>
           {this.renderMapAndAdContainer(
             <div className="map-container">
               <div className="map-fit">{this.props.map}</div>
             </div>,
             this.props.tallAd
           )}
-          {this.shouldRenderList() && this.props.schoolList}
         </div>
       </div>
     );

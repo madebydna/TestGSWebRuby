@@ -12,7 +12,11 @@ const SchoolList = ({ schools, isLoading, pagination }) => (
           {/* spinny */}
           <ol>
             {schools.map(s => (
-              <CSSTransition classNames="school-list" in={!isLoading}>
+              <CSSTransition
+                classNames="school-list"
+                in={!isLoading}
+                timeout={3000}
+              >
                 <li key={s.state + s.id} className={s.active ? 'active' : ''}>
                   <School {...s} />
                 </li>

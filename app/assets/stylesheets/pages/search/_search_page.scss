@@ -20,10 +20,10 @@ body {
     position: relative;
     margin: auto;
     max-width: 1282px;
-    padding: 70px 0px 0px 0px;
 
+    padding: 70px 0px 0px 0px;
     @include media-breakpoint-down(sm) {
-      padding: 0 15px 0 15px;
+      padding: 0;
     }
 
     @include clearfix;
@@ -67,12 +67,6 @@ body {
         font-size: 12px;
       }
     }
-
-    // .spinny-wheel {
-    //   background-color: #f6f9fa;
-    //   opacity: 0.5;
-    //   transition: background-color 1s ease-in;
-    // }
 
     .dropdown {
       display: inline-block;
@@ -137,10 +131,7 @@ body {
     }
 
     .list-map-ad {
-      max-width: 1102px;
-      @include media-breakpoint-up(md) {
-        margin-right: 160px;
-      }
+      // width: 100%;
     }
 
     .menu-bar {
@@ -158,6 +149,12 @@ body {
       }
     }
 
+    .school-list ol {
+      @include media-breakpoint-only(sm) {
+        padding: 0;
+      }
+    }
+
     .menu-bar.filters {
       position: fixed;
       top: 60px;
@@ -171,21 +168,14 @@ body {
 
     .menu-bar.mobile-filters {
       background-color: #e0e7eb;
-      margin: 0 -15px;
       padding: 10px;
-    }
-
-    .menu-bar.sort {
-    }
-
-    .result-summary {
     }
 
     .filter-panel {
       position: relative;
       background: #cdd8dd;
       padding: 15px;
-      margin: 5px -10px;
+      margin: 5px;
       border-radius: $form-field-border-radius;
 
       input[type='checkbox'] {
