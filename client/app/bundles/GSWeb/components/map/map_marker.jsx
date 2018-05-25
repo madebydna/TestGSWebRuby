@@ -50,7 +50,12 @@ export default class MapMarker extends DefaultMapMarker {
   }
 }
 
-const createMarkersFromSchools = (schools, selectedSchool, map) => {
+const createMarkersFromSchools = (
+  schools,
+  selectedSchool,
+  map,
+  selectSchool
+) => {
   const markers = schools.map(s => {
     const props = {
       title: s.name,
@@ -64,6 +69,8 @@ const createMarkersFromSchools = (schools, selectedSchool, map) => {
     if (selectedSchool && s === selectedSchool) {
       props.selected = true;
     }
+
+    props.onClick = () => selectSchool(s.id, s.state);
 
     if (s.schoolType === 'private') {
       return <MapMarker type={Markers.PRIVATE_SCHOOL} {...props} />;

@@ -13,7 +13,9 @@ const SearchMap = ({ schools, isLoading, ...other }) => (
         isInitialized && (
           <Map
             googleMaps={googleMaps}
-            markers={createMarkersFromSchools(schools, {}, null)}
+            markers={createMarkersFromSchools(schools, {}, null, (id, state) =>
+              console.log(['select school', id, state])
+            )}
             changeLocation={() => {}}
             {...other}
           />
