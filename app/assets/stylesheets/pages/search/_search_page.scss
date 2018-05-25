@@ -21,7 +21,8 @@ body {
     margin: auto;
     max-width: 1282px;
 
-    padding: 70px 0px 0px 0px;
+    padding: 70px 0 0 0;
+
     @include media-breakpoint-down(sm) {
       padding: 0;
     }
@@ -131,7 +132,9 @@ body {
     }
 
     .list-map-ad {
-      // width: 100%;
+      @include media-breakpoint-up(sm) {
+        padding: 0px 10px;
+      }
     }
 
     .menu-bar {
@@ -149,7 +152,15 @@ body {
       }
     }
 
+    .subheader {
+      padding: 5px 10px 10px 10px;
+      * + * {
+        margin-top: 5px;
+      }
+    }
+
     .school-list ol {
+      padding: 0 10px 0 0;
       @include media-breakpoint-only(sm) {
         padding: 0;
       }

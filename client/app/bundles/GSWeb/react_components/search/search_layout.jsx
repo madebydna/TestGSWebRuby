@@ -144,7 +144,7 @@ class SearchLayout extends React.Component {
   renderDesktopFilterBar() {
     return (
       <div className="menu-bar filters" ref={this.header}>
-        <div style={{ maxWidth: '1282px', margin: 'auto' }}>
+        <div style={{ maxWidth: '1282px', margin: 'auto', padding: '0 10px' }}>
           <span className="menu-item">{this.props.entityTypeButtons}</span>
           <span className="menu-item">{this.props.gradeLevelButtons}</span>
           {this.props.distanceFilter ? (
@@ -221,9 +221,10 @@ class SearchLayout extends React.Component {
         {this.props.size > SM
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
-        {this.props.size > SM && (
-          <div style={{ padding: '10px' }}>{this.props.sortSelect}</div>
-        )}
+        <div className="subheader">
+          <div>{this.props.resultSummary}</div>
+          {this.props.size > SM && <div>{this.props.sortSelect}</div>}
+        </div>
         <div className="list-map-ad clearfix">
           <div
             className={`list-column ${
