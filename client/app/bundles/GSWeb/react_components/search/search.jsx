@@ -19,6 +19,8 @@ class Search extends React.Component {
   static defaultProps = {
     city: null,
     state: null,
+    lat: null,
+    lon: null,
     schools: [],
     loadingSchools: false,
     shouldIncludeDistance: false
@@ -29,8 +31,10 @@ class Search extends React.Component {
     state: PropTypes.string,
     schools: PropTypes.arrayOf(PropTypes.object),
     resultSummary: PropTypes.string.isRequired,
-    paginationSummary: PropTypes.string.isRequired,
-    address_coordinates: PropTypes.arrayOf(PropTypes.object).isRequired,
+    defaultLat: PropTypes.number.isRequired,
+    defaultLon: PropTypes.number.isRequired,
+    lat: PropTypes.number,
+    lon: PropTypes.number,
     loadingSchools: PropTypes.bool,
     page: PropTypes.number.isRequired,
     totalPages: PropTypes.number.isRequired,
@@ -92,6 +96,8 @@ class Search extends React.Component {
         }
         map={
           <Map
+            lat={this.props.lat || this.props.defaultLat}
+            lon={this.props.lon || this.props.defaultLon}
             schools={this.props.schools}
             isLoading={this.props.loadingSchools}
           />

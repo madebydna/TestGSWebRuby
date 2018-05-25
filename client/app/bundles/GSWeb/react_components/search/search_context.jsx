@@ -20,8 +20,8 @@ class SearchProvider extends React.Component {
     schools: gon.search.schools,
     levelCodes: gon.search.levelCodes || [],
     entityTypes: gon.search.entityTypes || [],
-    lat: null,
-    lon: null,
+    defaultLat: gon.search.cityLat || 37.8078456,
+    defaultLon: gon.search.cityLon || -122.2672673,
     distance: gon.search.distance,
     sort: gon.search.sort,
     page: gon.search.page || 1,
@@ -38,6 +38,8 @@ class SearchProvider extends React.Component {
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
+    defaultLat: PropTypes.number,
+    defaultLon: PropTypes.number,
     lat: PropTypes.number,
     lon: PropTypes.number,
     distance: PropTypes.number,
@@ -160,6 +162,8 @@ class SearchProvider extends React.Component {
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
           size: this.state.size,
+          defaultLat: this.props.defaultLat,
+          defaultLon: this.props.defaultLon,
           shouldIncludeDistance: this.shouldIncludeDistance()
         }}
       >
