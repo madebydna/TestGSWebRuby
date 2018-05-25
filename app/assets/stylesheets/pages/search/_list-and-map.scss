@@ -87,6 +87,24 @@
         max-width: 465px;
       }
     }
+    .school-list-enter {
+      opacity: 0.1;
+      background-color: #e0e3e3;
+    }
+    .school-list-enter-active {
+      opacity: 1;
+      transition: all 200ms ease-out;
+      background-color: #fff;
+    }
+    .school-list-exit {
+      opacity: 1;
+      background-color: #fff;
+    }
+    .school-list-exit-active {
+      background-color: #e0e3e3;
+      opacity: 0.1;
+      transition: all 200ms ease-out;
+    }
 
     .closed {
       @include media-breakpoint-down(sm) {
