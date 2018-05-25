@@ -3,6 +3,14 @@ section.school-list {
   $hover-color: #f6f9fa;
   $border-color: #dbe6eb;
 
+  .scale {
+    margin-top: 5px;
+    font-size: $font-size-s2;
+    max-width: 45px;
+    color: #b9ccd4;
+    text-align: center;
+  }
+
   ol {
     margin: 0;
     padding: 0 10px;
@@ -32,6 +40,9 @@ section.school-list {
       }
       &.active {
         background-color: $active-color;
+      }
+      > span:first-of-type {
+        text-align: center;
       }
       > span {
         vertical-align: top;

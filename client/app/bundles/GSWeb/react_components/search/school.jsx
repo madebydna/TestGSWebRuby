@@ -5,10 +5,13 @@ import { capitalize } from 'util/i18n';
 const renderRating = rating => {
   const className = `circle-rating--small circle-rating--${rating}`;
   return (
-    <div className={className}>
-      {rating}
-      <span className="rating-circle-small">/10</span>
-    </div>
+    <React.Fragment>
+      <div className={className}>
+        {rating}
+        <span className="rating-circle-small">/10</span>
+      </div>
+      <div className="scale">Above average</div>
+    </React.Fragment>
   );
 };
 
@@ -53,7 +56,7 @@ const School = ({
 
   return (
     <React.Fragment key={state + id}>
-      {rating && <span>{renderRating(rating)}</span>}
+      <span>{rating && renderRating(rating)}</span>
       <span>
         <a href={links.profile} className="name" target="_blank">
           {name}
