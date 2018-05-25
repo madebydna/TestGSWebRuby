@@ -31,14 +31,12 @@ class TestScoresCaching::TestScoresCacherGsdata < StateCacher
 # rubocop:disable Style/FormatStringToken
       h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
 # rubocop:enable Style/FormatStringToken
-# rubocop:disable Style/SafeNavigation
       h[:value] = result.value
       h[:source_name] = result.source_name
       h[:description] = result.description if result.description
       h[:academics] = academics
       h[:grade] = result.grade if result.grade
       h[:cohort_count] = result.cohort_count
-# rubocop:enable Style/SafeNavigation
     end
   end
 
