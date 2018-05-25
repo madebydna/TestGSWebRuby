@@ -16,8 +16,9 @@ const SchoolList = ({ schools, isLoading, pagination }) => (
                 classNames="school-list"
                 in={!isLoading}
                 timeout={3000}
+                key={s.state + s.id}
               >
-                <li key={s.state + s.id} className={s.active ? 'active' : ''}>
+                <li className={s.active ? 'active' : ''}>
                   <School {...s} />
                 </li>
               </CSSTransition>
@@ -37,7 +38,7 @@ const SchoolList = ({ schools, isLoading, pagination }) => (
 );
 
 SchoolList.propTypes = {
-  schools: PropTypes.arrayOf(School.propTypes).isRequired,
+  schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
   isLoading: PropTypes.bool,
   pagination: PropTypes.element
 };

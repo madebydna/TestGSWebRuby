@@ -78,7 +78,7 @@ class Search extends React.Component {
             }}
           />
         }
-        tallAd={() => <div className="ad-bar">Advertisement</div>}
+        tallAd={<div className="ad-bar">Advertisement</div>}
         schoolList={
           <SchoolList
             schools={this.props.schools}
