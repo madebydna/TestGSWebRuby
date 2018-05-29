@@ -51,11 +51,22 @@ const getHomesForSaleHref = (state, address) => {
 };
 
 const studentsPhrase = enrollment => {
-  if (enrollment > 1) {
-    return `${enrollment} students`;
+  if (!enrollment) {
+    return null;
   }
-  return `${enrollment} student`;
+  return (
+    <span>
+      <span className="open-sans_semibold">{enrollment}</span>
+      {enrollment > 1 ? ' students' : ' student'}
+    </span>
+  );
 };
+
+const schoolTypePhrase = (schoolType, gradeLevels) => (
+  <span className="open-sans_semibold">
+    {capitalize(schoolType)}, {gradeLevels}
+  </span>
+);
 
 const School = ({
   id,
@@ -89,7 +100,24 @@ const School = ({
         <br />
         {addressPhrase && <div className="address">{addressPhrase}</div>}
         <div>
-          {capitalize(schoolType)}, {gradeLevels} | {studentsPhrase(enrollment)}
+          {[
+            schoolTypePhrase(schoolType, gradeLevels),
+            studentsPhrase(enrollment)
+          ].reduce((accum, el) => {
+            if (accum.length > 0) {
+              return el === null
+                ? accum
+                : [
+                    ...accum,
+                  <span style={{ color: '#bbc0ca', padding: '0 5px' }}>
+                    {' '}
+                      |{' '}
+                  </span>,
+                    el
+                  ];
+            }
+            return el === null ? accum : [...accum, el];
+          }, [])}
         </div>
         {distance && <div>Distance: {distance} miles</div>}
         {homesForSaleHref && (
