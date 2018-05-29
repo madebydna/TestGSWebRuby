@@ -122,6 +122,20 @@ module SchoolProfiles
       @school_cache_data_reader.gs_rating
     end
 
+    def self.scale(rating)
+      raise ArgumentError.new('Rating must be numeric') unless rating.is_a?(Numeric)
+      scope = 'school_profiles.summary_rating'
+      key = 
+        if rating <= 4
+          'Below average'
+        elsif rating <= 6
+          'Average'
+        elsif rating <= 10
+          'Above average'
+        end
+      I18n.t(key, scope: scope)
+    end
+
     private
 
     def get_school_value_for(key)
@@ -146,6 +160,5 @@ module SchoolProfiles
           }
         )
     end
-
   end
 end

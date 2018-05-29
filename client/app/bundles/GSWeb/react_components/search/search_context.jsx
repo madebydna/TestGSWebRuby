@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../../vendor/remodal';
+import * as remodal from 'util/remodal';
 import { find as findSchools } from 'api_clients/schools';
 import { isEqual, throttle, debounce } from 'lodash';
 import { size as viewportSize } from 'util/viewport';

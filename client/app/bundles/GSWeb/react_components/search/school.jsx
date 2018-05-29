@@ -1,16 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize } from 'util/i18n';
+import QuestionMarkTooltip from 'react_components/school_profiles/question_mark_tooltip';
 
-const renderRating = rating => {
+const renderRating = (rating, ratingScale) => {
   const className = `circle-rating--small circle-rating--${rating}`;
+  const content = (
+    <span>
+      <b>The GreatSchools Summary Rating</b> appears at the top of a school’s
+      profile and provides an overall snapshot of school quality based on how
+      well a school prepares all its students for postsecondary success—be it
+      college or career. The Summary Rating calculation is based on five of the
+      school’s themed ratings (the Test Score Rating, Student or Academic
+      Progress Rating, College Readiness Rating, Equity Rating and Advanced
+      Courses Rating) and flags for discipline and attendance disparities at a
+      school. The ratings we display for each school can vary based on data
+      availability or relevance to a school level (for example, high schools
+      will have a College Readiness Rating, but elementary schools will not). We
+      will not produce a Summary Rating for a school if we lack sufficient data
+      to calculate one. For more about how this rating is calculated, see the
+      Summary Rating inputs & weights section below. For more information about
+      how we calculate this rating, see the GreatSchools Ratings methodology
+      report.
+    </span>
+  );
   return (
     <React.Fragment>
       <div className={className}>
         {rating}
         <span className="rating-circle-small">/10</span>
       </div>
-      <div className="scale">Above average</div>
+      <div className="scale">
+        <QuestionMarkTooltip content={content}>
+          {ratingScale}
+        </QuestionMarkTooltip>
+      </div>
     </React.Fragment>
   );
 };
@@ -42,6 +66,7 @@ const School = ({
   gradeLevels,
   enrollment,
   rating,
+  ratingScale,
   active,
   distance,
   links
@@ -56,7 +81,7 @@ const School = ({
 
   return (
     <React.Fragment key={state + id}>
-      <span>{rating && renderRating(rating)}</span>
+      <span>{rating && renderRating(rating, ratingScale)}</span>
       <span>
         <a href={links.profile} className="name" target="_blank">
           {name}
@@ -88,6 +113,7 @@ School.propTypes = {
   gradeLevels: PropTypes.string.isRequired,
   enrollment: PropTypes.number,
   rating: PropTypes.number,
+  ratingScale: PropTypes.string,
   active: PropTypes.bool,
   links: PropTypes.shape({
     profile: PropTypes.string.isRequired
@@ -97,6 +123,7 @@ School.propTypes = {
 School.defaultProps = {
   enrollment: null,
   rating: null,
+  ratingScale: null,
   active: false
 };
 

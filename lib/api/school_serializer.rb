@@ -12,6 +12,7 @@ class Api::SchoolSerializer
     rating = school.great_schools_rating if defined? school.great_schools_rating || school.respond_to?(:great_schools_rating)
     enrollment = school.students_enrolled if school.respond_to?(:students_enrolled) || school.singleton_class.method_defined?(:students_enrolled)
     distance = school.distance if school.respond_to?(:distance) || school.singleton_class.method_defined?(:distance)
+    rating = rating && rating != 'NR' ? rating.to_i : nil
     h = {
       id: school.id,
       districtId: school.district_id,
@@ -27,7 +28,8 @@ class Api::SchoolSerializer
         zip: school['zipcode'],
         city: school['city']
       },
-      rating: rating && rating != 'NR' ? rating.to_i : nil,
+      rating: rating,
+      ratingScale: rating ? SchoolProfiles::SummaryRating.scale(rating) : nil,
       schoolType: school.type,
       state: school.state,
       type: 'school',
