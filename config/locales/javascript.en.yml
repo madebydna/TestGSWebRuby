@@ -1,6 +1,7 @@
 ---
 en:
   javascript:
+    assigned: ASSIGNED
     Share: Share
     'yes': 'Yes'
     'no': 'No'
