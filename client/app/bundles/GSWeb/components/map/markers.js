@@ -25,46 +25,69 @@ export default function createMarkerFactory(googleMaps) {
       }[rating]
     },
 
-    assignedBox: `<path fill="#176997" d="M32.968 19l-3.655 3.655L25.658 19H0V0h59v19H32.968z"/> <text fill="#FFF" font-family="OpenSans-Bold, Open Sans" font-size="10" font-weight="bold" letter-spacing=".002"> <tspan x="3.947" y="13">${t('assigned')}</tspan> </text>`,
-
-    createDefaultPinWithRating: function(rating, color, assigned=false) {
-      return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="56" height="70" viewBox="0 0 56 70">\
-        <defs><linearGradient id="a" x1="-24.711%" x2="38.258%" y1="100%" y2="27.492%"><stop offset="0%"/><stop offset="100%" stop-opacity="0"/>\
-        </linearGradient><filter id="b" width="115.2%" height="110%" x="-7.6%" y="-5%" filterUnits="objectBoundingBox"><feGaussianBlur in="SourceGraphic" stdDeviation="1"/>\
-        </filter></defs> <g fill="none" fill-rule="evenodd" transform="translate(8 12)"><path fill="url(#a)" d="M20.455 60.107l39.379-35.592L28.153 0z" filter="url(#b)" opacity=".656"/>\
-        <path fill="#FFF" d="M14.26 46.417C6.122 44.019.187 36.547.187 27.701.188 16.92 9.004 8.18 19.878 8.18S39.567 16.92 39.567 27.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
-        <ellipse cx="19.957" cy="27.813" fill="${color}" rx="16.957" ry="16.813"/><text fill="#FFF" font-family="RobotoSlab-Bold, Roboto Slab" font-size="18" font-weight="bold">\
-        <tspan x="8.442" y="33">${rating}</tspan> <tspan x="16.396" y="33" font-size="11">/10</tspan></text></g>${assigned ? this.assignedBox : ''}\
+    createDefaultPinWithRating: function(rating,color, assigned=false){
+      return(`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 40 50">\
+        <g fill="none" fill-rule="evenodd" transform="translate(0 -4)">\
+        <path fill="#FFF" d="M14.26 42.417C6.122 40.019.187 32.547.187 23.701.188 12.92 9.004 4.18 19.878 4.18S39.567 12.92 39.567 23.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
+        <ellipse cx="19.957" cy="23.813" fill="${color}" rx="16.957" ry="16.813"/>\
+        <text fill="#FFF" font-family="RobotoSlab-Bold, Roboto Slab" font-size="18" font-weight="bold">\
+        <tspan x="7.405" y="29">${rating}</tspan> <tspan x="17.433" y="29" font-size="11">/10</tspan>\
+        </text>\
+        </g>\
         </svg>`)
     },
 
-    createHoveredPinWithRating: function(rating, color, assigned=false) {
-      return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="56" height="54" viewBox="0 0 56 54">\
-        <defs> <linearGradient id="a" x1="-24.711%" x2="38.258%" y1="100%" y2="27.492%"> <stop offset="0%"/>\
-        <stop offset="100%" stop-opacity="0"/> </linearGradient> <filter id="b" width="115.2%" height="110%" x="-7.6%" y="-5%" filterUnits="objectBoundingBox">\
-        <feGaussianBlur in="SourceGraphic" stdDeviation="1"/> </filter> <circle id="c" cx="20" cy="28" r="18"/> </defs> <g fill="none" fill-rule="evenodd">\
-        <path fill="url(#a)" d="M20.455 60.107l39.379-35.592L28.153 0z" filter="url(#b)" opacity=".656" transform="translate(0 -8)"/>\
+    createHoveredPinWithRating: function(rating, color, assigned=false){
+      return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="50" viewBox="0 0 40 50">\
+        <defs>\
+        <circle id="a" cx="20" cy="24" r="18"/>\
+        </defs>\
+        <g fill="none" fill-rule="evenodd">\
         <path fill="#FFF" d="M14.26 38.417C6.122 36.019.187 28.547.187 19.701.188 8.92 9.004.18 19.878.18S39.567 8.92 39.567 19.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
-        <g transform="translate(0 -8)"> <use fill="#FFF" xlink:href="#c"/> <circle cx="20" cy="28" r="17" stroke="${color}" stroke-width="2"/> </g> <text fill="${color}" font-family="RobotoSlab-Bold, Roboto Slab" font-size="18" font-weight="bold" transform="translate(0 -8)">\
-        <tspan x="7.554" y="33">${rating}</tspan> <tspan x="17.283" y="33" font-size="11">/10</tspan>\
-        </text>${assigned ? this.assignedBox : ''}</g> </svg>`)
+        <g transform="translate(0 -4)">\
+        <use fill="#FFF" xlink:href="#a"/>\
+        <circle cx="20" cy="24" r="17" stroke="#549E22" stroke-width="2"/>\
+        </g>\
+        <text fill="#549E22" font-family="RobotoSlab-Bold, Roboto Slab" font-size="18" font-weight="bold" transform="translate(0 -4)">\
+        <tspan x="7.405" y="29">${rating}</tspan> <tspan x="17.433" y="29" font-size="11">/10</tspan>\
+        </text>\
+        </g>\
+        </svg>`)
+    },
+
+    createAssignedPinWithRating: function(rating, color){
+      return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="59" height="75" viewBox="0 0 59 75">\
+        <g fill="none" fill-rule="evenodd">\
+        <g transform="translate(10 21)">\
+        <path fill="#FFF" d="M14.26 42.417C6.122 40.019.187 32.547.187 23.701.188 12.92 9.004 4.18 19.878 4.18S39.567 12.92 39.567 23.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
+        <ellipse cx="19.957" cy="23.813" fill="#559E22" rx="16.957" ry="16.813"/>\
+        <text fill="#FFF" font-family="RobotoSlab-Bold, Roboto Slab" font-size="18" font-weight="bold">\
+        <tspan x="7.905" y="30">${rating}</tspan> <tspan x="17.933" y="30" font-size="11">/10</tspan>\
+        </text>\
+        </g>\
+        <path fill="#176997" d="M32.968 19l-3.655 3.655L25.658 19H0V0h59v19H32.968z"/>\
+        <text fill="#FFF" font-family="OpenSans-Bold, Open Sans" font-size="10" font-weight="bold" letter-spacing=".002">\
+        <tspan x="5.192" y="13">${t('assigned')}</tspan>\
+        </text>\
+        </g>\
+        </svg>`)
     },
 
     createPinWithoutRating: function(hovered){
-      return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">\
-        <defs><linearGradient id="a" x1="-24.711%" x2="38.258%" y1="100%" y2="27.492%"><stop offset="0%"/><stop offset="100%" stop-opacity="0"/></linearGradient>\
-        <filter id="b" width="119.8%" height="113%" x="-9.9%" y="-6.5%" filterUnits="objectBoundingBox"><feGaussianBlur in="SourceGraphic" stdDeviation=".85"/>\
-        </filter></defs><g fill="none" fill-rule="evenodd"><path fill="url(#a)" d="M13.375 39.3l25.747-23.27L18.408 0z" filter="url(#b)" opacity=".656"/>\
-        <path fill="#FFF" d="M9.323 30.35c-5.32-1.568-9.2-6.454-9.2-12.237 0-7.05 5.764-12.765 12.874-12.765S25.87 11.063 25.87 18.113c0 5.316-3.278 9.874-7.94 11.793l-4.424 7.569-4.183-7.125z"/>\
-        <circle cx="13.077" cy="17.692" r="10.769" stroke="${hovered ? '#707A80' : ''}" fill="${hovered ? '#fff' : '#707A80'}"/></g></svg>`)
+      return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="33" viewBox="0 0 26 33">\
+        <g fill="none" fill-rule="evenodd">\
+        <path fill="#FFF" d="M9.323 25.35c-5.32-1.568-9.2-6.454-9.2-12.237C.123 6.063 5.887.348 12.997.348S25.87 6.063 25.87 13.113c0 5.316-3.278 9.874-7.94 11.793l-4.424 7.569-4.183-7.125z"/>\
+        <circle cx="13.077" cy="12.692" r="10.769" stroke="${hovered ? '#707A80' : ''}" fill="${hovered ? '#fff' : '#707A80'}"/>\
+        </g>\
+        </svg>`)
     },
 
-    addressPin: '<svg xmlns="http://www.w3.org/2000/svg" width="44" height="41" viewBox="0 0 44 41">\
-      <defs><linearGradient id="a" x1="-24.711%" x2="38.258%" y1="100%" y2="27.492%"><stop offset="0%"/><stop offset="100%" stop-opacity="0"/></linearGradient>\
-      <filter id="b" width="115.2%" height="112.2%" x="-7.6%" y="-6.1%" filterUnits="objectBoundingBox"> <feGaussianBlur in="SourceGraphic" stdDeviation="1"/></filter> </defs><g fill="none" fill-rule="evenodd">\
-      <path fill="url(#a)" d="M12 49.273S25.574 43.84 37.288 32.46s14.09-19.503 14.09-19.503L25.574 0 12 49.273z" filter="url(#b)" opacity=".35" transform="translate(0 -10)"/> <g transform="translate(0 5)">\
-      <path fill="#323232" fill-rule="nonzero" d="M12.5 0C5.596 0 0 5.911 0 13.204c0 7.877 9.465 18.042 11.923 20.548.323.33.83.33 1.154 0C15.535 31.246 25 21.082 25 13.204 25 5.91 19.404 0 12.5 0z"/>\
-      <circle cx="12.5" cy="11.5" r="4.5" fill="#FFF"/> </g> </g></svg>',
+    addressPin:(`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="25" height="34" viewBox="0 0 25 34">\
+        <g fill="none" fill-rule="evenodd">\
+        <path fill="#323232" fill-rule="nonzero" d="M12.5 0C5.596 0 0 5.911 0 13.204c0 7.877 9.465 18.042 11.923 20.548.323.33.83.33 1.154 0C15.535 31.246 25 21.082 25 13.204 25 5.91 19.404 0 12.5 0z"/>\
+        <circle cx="12.5" cy="11.5" r="4.5" fill="#FFF"/>\
+        </g>\
+        </svg>`),
 
     iconOrigin: function(rating) {
       var offset = this.width * 10;
@@ -83,19 +106,21 @@ export default function createMarkerFactory(googleMaps) {
       );
     },
 
-    selectPinFunction: function(rating, color, hovered, assigned){
-      if (rating && hovered) {return this.createHoveredPinWithRating(rating, color, assigned)}
+    selectPinFunction: function(rating, color, hovered, assigned, address){
+      if (assigned && rating) {return this.createAssignedPinWithRating(rating)}
+      else if (rating && hovered) {return this.createHoveredPinWithRating(rating, color, assigned)}
       else if (rating) {return this.createDefaultPinWithRating(rating, color, assigned)}
+      else if (address) {return this.addressPin}
       else {return this.createPinWithoutRating(hovered)}
     },
 
-    createMarker: function(title, rating, lat, lon, hovered, assigned) {
+    createMarker: function(title, rating, lat, lon, hovered, assigned, address) {
       let position = new googleMaps.LatLng(lat, lon);
-      let color = this.mapPinColor(rating)
+      let color = this.mapPinColor(rating);
       return new googleMaps.Marker({
         position: position,
         title: title,
-        icon: {url: this.selectPinFunction(rating, color, false, true)},
+        icon: {url: this.selectPinFunction(rating, color, hovered, assigned, address)},
         zIndex: 1
       });
     }
