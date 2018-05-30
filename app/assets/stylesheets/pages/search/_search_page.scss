@@ -72,11 +72,16 @@ body {
     .dropdown {
       display: inline-block;
       .selection {
-        padding: 8px;
+        padding: 7px;
+        border: 1px solid #c1d2d9;
+        border-radius: 3px;
+        position: relative;
+        top: 1px;
+        background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
       }
       .panel {
         display: inline-block;
-        padding: 8px;
+        padding: 15px 15px 10px 15px;
         border: 1px solid #b8b8b8;
         border-radius: 3px;
         background-color: #f6f9fa;
@@ -183,6 +188,20 @@ body {
       padding: 10px;
     }
 
+    .checkbox-group {
+      input[type='checkbox'] {
+        @include checkbox(28px, white);
+      }
+    }
+
+    .entity-type-dropdown {
+      .checkbox-group {
+        > span {
+          display: block;
+        }
+      }
+    }
+
     .filter-panel {
       position: relative;
       background: #cdd8dd;
@@ -190,13 +209,9 @@ body {
       margin: 5px;
       border-radius: $form-field-border-radius;
 
-      input[type='checkbox'] {
-        @include checkbox(28px, white);
-      }
-
       .menu-item {
         display: block;
-        margin-top: 5px;
+        margin-top: 15px;
 
         .label {
           display: block;
@@ -220,11 +235,12 @@ body {
       }
 
       select,
-      .checkbox-group {
+      .checkbox-group,
+      .dropdown {
         margin-left: 0px !important;
       }
 
-      .checkbox-group {
+      .menu-item > .checkbox-group {
         display: inline-block;
         > span {
           display: block;

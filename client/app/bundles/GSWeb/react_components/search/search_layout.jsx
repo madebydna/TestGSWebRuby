@@ -194,7 +194,7 @@ class SearchLayout extends React.Component {
                 />
                 <div className="menu-bar">
                   <span className="menu-item">
-                    {this.props.entityTypeCheckboxes}
+                    {this.props.entityTypeButtons}
                   </span>
                   <span className="menu-item">
                     {this.props.gradeLevelCheckboxes}
