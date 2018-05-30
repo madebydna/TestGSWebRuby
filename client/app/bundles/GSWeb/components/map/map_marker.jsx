@@ -45,17 +45,12 @@ export default class MapMarker extends DefaultMapMarker {
     }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (!this.props.selected && nextProps.selected && this.marker) {
-  //     this.props.openInfoWindow(this.marker);
-  //   }
-  // }
-
-  componentDidUpdate() {
-    if ((this.props.selected || this.props.highlighted) && this.marker) {
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.selected && nextProps.selected && this.marker) {
       this.props.openInfoWindow(this.marker);
     }
   }
+
 }
 
 const createMarkersFromSchools = (schools, selectedSchool, map) => {
@@ -68,7 +63,7 @@ const createMarkersFromSchools = (schools, selectedSchool, map) => {
       highlighted: s.highlighted,
       map
     };
-    props.key = `s${s.state}${s.id}`;
+    props.key = `s${s.state}${s.id}${s.highlighted}`;
     props.createInfoWindow = () => createInfoWindow(s);
     if (selectedSchool && s === selectedSchool) {
       props.selected = true;

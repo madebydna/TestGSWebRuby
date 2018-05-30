@@ -37,7 +37,7 @@ export default function createMarkerFactory(googleMaps) {
         </svg>`)
     },
 
-    createHoveredPinWithRating: function(rating, color, assigned=false){
+    createHighlightedPinWithRating: function(rating, color, assigned=false){
       return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="50" viewBox="0 0 40 50">\
         <defs>\
         <circle id="a" cx="20" cy="24" r="18"/>\
@@ -73,11 +73,11 @@ export default function createMarkerFactory(googleMaps) {
         </svg>`)
     },
 
-    createPinWithoutRating: function(hovered){
+    createPinWithoutRating: function(highlighted){
       return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="33" viewBox="0 0 26 33">\
         <g fill="none" fill-rule="evenodd">\
         <path fill="#FFF" d="M9.323 25.35c-5.32-1.568-9.2-6.454-9.2-12.237C.123 6.063 5.887.348 12.997.348S25.87 6.063 25.87 13.113c0 5.316-3.278 9.874-7.94 11.793l-4.424 7.569-4.183-7.125z"/>\
-        <circle cx="13.077" cy="12.692" r="10.769" stroke="${hovered ? '#707A80' : ''}" fill="${hovered ? '#fff' : '#707A80'}"/>\
+        <circle cx="13.077" cy="12.692" r="10.769" stroke="${highlighted ? '#707A80' : ''}" fill="${highlighted ? '#fff' : '#707A80'}"/>\
         </g>\
         </svg>`)
     },
@@ -106,21 +106,21 @@ export default function createMarkerFactory(googleMaps) {
       );
     },
 
-    selectPinFunction: function(rating, color, hovered, assigned, address){
+    selectPinFunction: function(rating, color, highlighted, assigned, address){
       if (assigned && rating) {return this.createAssignedPinWithRating(rating)}
-      else if (rating && hovered) {return this.createHoveredPinWithRating(rating, color, assigned)}
+      else if (rating && highlighted) {return this.createHighlightedPinWithRating(rating, color, assigned)}
       else if (rating) {return this.createDefaultPinWithRating(rating, color, assigned)}
       else if (address) {return this.addressPin}
-      else {return this.createPinWithoutRating(hovered)}
+      else {return this.createPinWithoutRating(highlighted)}
     },
 
-    createMarker: function(title, rating, lat, lon, hovered, assigned, address) {
+    createMarker: function(title, rating, lat, lon, highlighted, assigned, address) {
       let position = new googleMaps.LatLng(lat, lon);
       let color = this.mapPinColor(rating);
       return new googleMaps.Marker({
         position: position,
         title: title,
-        icon: {url: this.selectPinFunction(rating, color, hovered, assigned, address)},
+        icon: {url: this.selectPinFunction(rating, color, highlighted, assigned, address)},
         zIndex: 1
       });
     }
