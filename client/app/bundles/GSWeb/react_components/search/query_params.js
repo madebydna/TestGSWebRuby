@@ -31,8 +31,8 @@ export function getGradeLevels() {
 export function queryStringWithNewGradeLevels(levelCodes) {
   const existingParams = parse(currentQueryString());
   const newParams = Object.assign(existingParams, {
-    gradeLevels: undefined,
-    'gradeLevels[]': levelCodes,
+    'gradeLevels[]': undefined,
+    gradeLevels: levelCodes,
     page: parsePage(1)
   });
   return stringify(newParams);
