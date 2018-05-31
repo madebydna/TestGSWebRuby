@@ -110,7 +110,7 @@ describe "Schools API" do
     end
 
     it "Doesn't require a state when lat/lon provided" do
-      get '/gsr/api/schools/?lat=1&lon=1', format: :json
+      get '/gsr/api/schools/?lat=1&lon=1&extras=boundaries', format: :json
       expect(status).to be(200)
       expect(errors).to be_blank
     end
@@ -226,7 +226,7 @@ describe "Schools API" do
       end
 
       it 'Finds school with boundary containing point' do
-        get '/gsr/api/schools/?state=ca&lat=5&lon=5'
+        get '/gsr/api/schools/?state=ca&lat=5&lon=5&extras=boundaries'
         expect(status).to eq(200)
         expect(errors).to be_blank
         expect(schools.length).to eq(1)

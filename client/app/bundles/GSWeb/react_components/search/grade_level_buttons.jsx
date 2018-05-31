@@ -14,6 +14,7 @@ const GradeLevelFilter = () => (
     {({ levelCodes, onLevelCodesChanged }) => (
       <ButtonGroup
         multiple
+        allowDeselect
         options={options}
         activeOption={levelCodes}
         onSelect={onLevelCodesChanged}

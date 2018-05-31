@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../../vendor/remodal';
+import * as remodal from 'util/remodal';
 import { find as findSchools } from 'api_clients/schools';
 import { isEqual, throttle, debounce } from 'lodash';
 import { size as viewportSize } from 'util/viewport';
@@ -20,8 +22,8 @@ class SearchProvider extends React.Component {
     schools: gon.search.schools,
     levelCodes: gon.search.levelCodes || [],
     entityTypes: gon.search.entityTypes || [],
-    lat: null,
-    lon: null,
+    defaultLat: gon.search.cityLat || 37.8078456,
+    defaultLon: gon.search.cityLon || -122.2672673,
     distance: gon.search.distance,
     sort: gon.search.sort,
     page: gon.search.page || 1,
@@ -38,6 +40,8 @@ class SearchProvider extends React.Component {
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
+    defaultLat: PropTypes.number,
+    defaultLon: PropTypes.number,
     lat: PropTypes.number,
     lon: PropTypes.number,
     distance: PropTypes.number,
@@ -147,15 +151,15 @@ class SearchProvider extends React.Component {
     );
   }
 
-  highlightSchool(school){
-    let schools = this.state.schools.map((s) => {
+  highlightSchool(school) {
+    const schools = this.state.schools.map(s => {
       if (s.id === school.id) {
         s.highlighted = !s.highlighted;
         return s;
-      } else
+      }
       return s;
     });
-    this.setState({schools: schools});
+    this.setState({ schools });
   }
 
   //
@@ -173,28 +177,35 @@ class SearchProvider extends React.Component {
           resultSummary: this.state.resultSummary,
           size: this.state.size,
           shouldIncludeDistance: this.shouldIncludeDistance(),
-          highlightSchool: this.highlightSchool
-        }}>
+          highlightSchool: this.highlightSchool,
+          defaultLat: this.props.defaultLat,
+          defaultLon: this.props.defaultLon
+        }}
+      >
         <DistanceContext.Provider
           value={{
             distance: this.props.distance,
             onChange: this.props.updateDistance
-          }}>
+          }}
+        >
           <GradeLevelContext.Provider
             value={{
               levelCodes: this.props.levelCodes,
               onLevelCodesChanged: this.props.updateLevelCodes
-            }}>
+            }}
+          >
             <EntityTypeContext.Provider
               value={{
                 entityTypes: this.props.entityTypes,
                 onEntityTypesChanged: this.props.updateEntityTypes
-              }}>
+              }}
+            >
               <SortContext.Provider
                 value={{
                   sort: this.props.sort,
                   onSortChanged: this.props.updateSort
-                }}>
+                }}
+              >
                 {this.props.children}
               </SortContext.Provider>
             </EntityTypeContext.Provider>

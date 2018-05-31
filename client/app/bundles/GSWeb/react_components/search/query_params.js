@@ -5,12 +5,21 @@ function currentQueryString() {
   return window.location.search;
 }
 
-function getQueryStringWithUpdatedParam(param, value) {
+function getQueryStringWithUpdatedParams(obj) {
   const existingParams = parse(currentQueryString());
-  const newParams = Object.assign(existingParams, {
-    [param]: value
-  });
+  const newParams = Object.assign(existingParams, obj);
   return stringify(newParams);
+}
+
+function parsePage(pageArg) {
+  let page = parseInt(pageArg, 10);
+  if (Number.isNaN(page) || page <= 1) {
+    page = 1;
+  }
+  if (page === 1) {
+    return undefined;
+  }
+  return page;
 }
 
 export function getGradeLevels() {
@@ -23,7 +32,8 @@ export function queryStringWithNewGradeLevels(levelCodes) {
   const existingParams = parse(currentQueryString());
   const newParams = Object.assign(existingParams, {
     gradeLevels: undefined,
-    'gradeLevels[]': levelCodes
+    'gradeLevels[]': levelCodes,
+    page: parsePage(1)
   });
   return stringify(newParams);
 }
@@ -37,8 +47,9 @@ export function getEntityTypes() {
 export function queryStringWithNewEntityTypes(entityTypes) {
   const existingParams = parse(currentQueryString());
   const newParams = Object.assign(existingParams, {
-    st: undefined,
-    'st[]': entityTypes
+    'st[]': undefined,
+    st: entityTypes,
+    page: parsePage(1)
   });
   return stringify(newParams);
 }
@@ -49,7 +60,8 @@ export function getSort() {
 }
 
 export function queryStringWithNewSort(sort) {
-  return getQueryStringWithUpdatedParam('sort', sort);
+  const page = parsePage(1);
+  return getQueryStringWithUpdatedParams({ sort, page });
 }
 
 export function getPage() {
@@ -58,11 +70,8 @@ export function getPage() {
 }
 
 export function queryStringWithNewPage(pageArg) {
-  let page = parseInt(pageArg, 10);
-  if (Number.isNaN(page) || page <= 1) {
-    page = 1;
-  }
-  return getQueryStringWithUpdatedParam('page', page);
+  const page = parsePage(pageArg);
+  return getQueryStringWithUpdatedParams({ page });
 }
 
 export function getQ() {
@@ -86,5 +95,9 @@ export function getDistance() {
 }
 
 export function queryStringWithNewDistance(distance) {
-  return getQueryStringWithUpdatedParam('distance', distance);
+  const page = parsePage(pageArg);
+  return getQueryStringWithUpdatedParams({
+    distance,
+    page
+  });
 }

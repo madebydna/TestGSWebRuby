@@ -96,7 +96,7 @@ class GATestProcessor2017Milestones < GS::ETL::TestProcessor
 	'Geometry' => 8
 	}
 
-	source('ga_eoc_2017.txt',[],col_sep:"\t") do |s|
+	source('ga_eoc_2017_test.txt',[],col_sep:"\t") do |s|
 		s.transform('data type',Fill,{
 		test_data_type: 'MileStonesEOC',
 		test_data_type_id: 241,
@@ -107,7 +107,7 @@ class GATestProcessor2017Milestones < GS::ETL::TestProcessor
 		})
 	end
 
-	source('ga_eog_2017.txt',[],col_sep:"\t") do |s|
+	source('ga_eog_2017_test.txt',[],col_sep:"\t") do |s|
 		s.transform('data type',Fill,{
 		test_data_type: 'MileStonesEOG',
 		test_data_type_id: 242,
@@ -183,7 +183,7 @@ class GATestProcessor2017Milestones < GS::ETL::TestProcessor
 	def config_hash
 		{
 		source_id: 86,
-		source_name: "Georgia Governor\'s Office of Student Achievement",
+		source_name: 'Georgia Governor\'s Office of Student Achievement',
 		date_valid: '2017-01-01 00:00:00',
 		state: 'ga',
 		url: 'https://gosa.georgia.gov/downloadable-data',

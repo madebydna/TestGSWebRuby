@@ -2,6 +2,16 @@
 es:
   javascript:
     assigned: ASIGNADA
+    Filter by: Filtrado por
+    Public schools: Escuelas públicas
+    Private schools: Escuelas privadas
+    Public & private schools: Escuelas públicas y privadas
+    Public charter schools: Escuelas públicas chárter
+    Public district schools: Escuelas públicas del distrito
+    Public district & private schools: Escuelas públicas del distrito y privadas
+    Public charter & private schools: Escuelas públicas chárter y privadas
+    Charter: Chárter
+    District: Distrito
     Share: Comparte
     'yes': 'Sí'
     'no': 'No'

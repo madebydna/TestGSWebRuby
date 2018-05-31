@@ -56,18 +56,19 @@ class Api::SchoolsController < ApplicationController
   end
 
   def query
-    # TODO: handle attendance zones with a specific param
-    # if point_given?
-    #   attendance_zone_query
-    # else
+    if (point_given? || area_given?) && extras.include?('boundaries')
+       attendance_zone_query
+    elsif point_given? || area_given? || q.present?
       solr_query
-    # end
+    else
+      school_sql_query
+    end
   end
 
   def school_sql_query
     Search::ActiveRecordSchoolQuery.new(
       state: state,
-      id: params[:id],
+      id: school_id,
       district_id: params[:district_id],
       entity_types: entity_types,
       city: city,
@@ -164,12 +165,6 @@ class Api::SchoolsController < ApplicationController
     end
 
     schools
-  end
-
-  def school_geometries_containing_lat_lon
-    @_school_geometries_containing_lat_lon ||= (
-      SchoolGeometry.find_by_point_and_level(lat, lon, boundary_level)
-    )
   end
 
   # reading about API design, I tend to agree that rather than make multiple

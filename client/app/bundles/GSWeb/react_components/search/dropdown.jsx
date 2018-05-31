@@ -12,8 +12,9 @@ const Dropdown = props => (
             onClick={toggle}
             onKeyPress={toggle}
             role="button"
+            tabIndex={0}
           >
-            <div role="button" tabIndex={0}>
+            <div>
               {selection.label}
               <span className="icon-caret-down" style={{ marginLeft: '8px' }} />
             </div>
