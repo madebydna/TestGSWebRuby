@@ -72,12 +72,17 @@ body {
     .dropdown {
       display: inline-block;
       .selection {
-        padding: 7px;
+        padding: 7px 27px 7px 7px;
         border: 1px solid #c1d2d9;
         border-radius: 3px;
         position: relative;
         top: 1px;
         background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+      }
+      .icon-caret-down {
+        position: absolute;
+        right: 10px;
+        top: calc(50% - 9px);
       }
       .panel {
         display: inline-block;
@@ -195,6 +200,7 @@ body {
     }
 
     .entity-type-dropdown {
+      min-width: 267px; // spanish
       .checkbox-group {
         > span {
           display: block;

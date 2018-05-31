@@ -55,9 +55,9 @@ const EntityTypeDropdown = () => (
     {({ entityTypes, onEntityTypesChanged }) => (
       <OpenableCloseable>
         {(isOpen, { toggle, open, close } = {}) => (
-          <CaptureOutsideClick callback={close}>
-            <React.Fragment>
-              <span className="label">Filter by:</span>
+          <React.Fragment>
+            <span className="label">Filter by:</span>
+            <CaptureOutsideClick callback={close}>
               <div className="dropdown entity-type-dropdown">
                 <div
                   className="selection"
@@ -107,8 +107,8 @@ const EntityTypeDropdown = () => (
                   </div>
                 )}
               </div>
-            </React.Fragment>
-          </CaptureOutsideClick>
+            </CaptureOutsideClick>
+          </React.Fragment>
         )}
       </OpenableCloseable>
     )}
