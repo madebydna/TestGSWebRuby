@@ -17,7 +17,7 @@ class SchoolGeometry < ActiveRecord::Base
     results = SchoolGeometry.select('*, AsText(geom) as geom, ST_area(geom) as area').
       containing_point(lat,lon).
       order_by_area
-    results = results.where(ed_level: level)
+    results = results.where(ed_level: level).where.not(school_id: nil)
     results
   end
 
