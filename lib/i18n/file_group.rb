@@ -35,7 +35,7 @@ module GsI18n
 
     def translate(lang, value)
       return value if lang == :en
-      EasyTranslate.translate(value, to: lang, key: 'AIzaSyAfk6ZdZ3-fqFyy6JwnX6HvKgWOtG2ljLo')
+      EasyTranslate.translate(value, to: lang, key: 'AIzaSyDhj9L6M-R-GiFUDk5-OnWG8oI8GYJMSho')
     end
 
     def find_translation(key)
