@@ -72,6 +72,9 @@ module Search
       @state = abbreviation
     end
 
+    def valid_sort_names
+      []
+    end
 
     private
 

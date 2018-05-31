@@ -1,13 +1,20 @@
 # frozen_string_literal: true
 
 describe Search::SchoolQuery do
-  let(:results) { [] }
+  let(:mock_results) do
+    Class.new(Array) do
+      def total_count
+        0
+      end
+    end
+  end
+  let(:results) { mock_results.new }
   let(:search_response_double) { double(results: results) }
   let(:search_client_double) { double(response: search_response_double) }
   subject { school_query_with_client_double }
 
   def school_query_with_client_double(*args)
-    Search::SchoolQuery.new(*args).tap do |query|
+    Search::SolrSchoolQuery.new(*args).tap do |query|
       allow(query).to receive(:client).and_return(search_client_double)
     end
   end
@@ -22,7 +29,7 @@ describe Search::SchoolQuery do
     it 'returns results' do
       allow(search_client_double)
         .to(receive(:search).and_return(search_response_double))
-      expect(subject.search).to be_a(Search::Results)
+      expect(subject.search).to be_a(Search::PageOfResults)
     end
   end
 
