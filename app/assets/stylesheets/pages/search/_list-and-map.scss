@@ -18,9 +18,12 @@
   }
 
   .right-column {
+    position: absolute;
+    right: 0px;
+    width: 570px;
+    height: 100%;
     float: left;
     position: relative;
-    height: 100%;
     width: 60%;
     @include media-breakpoint-down(sm) {
       width: 100%;

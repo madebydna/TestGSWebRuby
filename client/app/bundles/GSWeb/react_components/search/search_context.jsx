@@ -74,6 +74,7 @@ class SearchProvider extends React.Component {
     });
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
+    this.highlightSchool = this.highlightSchool.bind(this);
   }
 
   componentDidMount() {
@@ -150,6 +151,17 @@ class SearchProvider extends React.Component {
     );
   }
 
+  highlightSchool(school) {
+    const schools = this.state.schools.map(s => {
+      if (s.id === school.id) {
+        s.highlighted = !s.highlighted;
+        return s;
+      }
+      return s;
+    });
+    this.setState({ schools });
+  }
+
   //
 
   render() {
@@ -164,9 +176,10 @@ class SearchProvider extends React.Component {
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
           size: this.state.size,
+          shouldIncludeDistance: this.shouldIncludeDistance(),
+          highlightSchool: this.highlightSchool,
           defaultLat: this.props.defaultLat,
-          defaultLon: this.props.defaultLon,
-          shouldIncludeDistance: this.shouldIncludeDistance()
+          defaultLon: this.props.defaultLon
         }}
       >
         <DistanceContext.Provider

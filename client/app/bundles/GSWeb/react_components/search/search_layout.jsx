@@ -121,10 +121,8 @@ class SearchLayout extends React.Component {
     if (this.props.size > SM) {
       return (
         <div className="right-column">
-          <div className="right-column-fixed" ref={this.fixedYLayer}>
-            <div className="ad-column">{ad}</div>
-            <div className="map-column">{map}</div>
-          </div>
+          <div className="ad-column">{ad}</div>
+          <div className="map-column">{map}</div>
         </div>
       );
     }
