@@ -1,6 +1,16 @@
 ---
 en:
   javascript:
+    Filter by: Filter by
+    Public schools: Public schools
+    Private schools: Private schools
+    Public & private schools: Public & private schools
+    Public charter schools: Public charter schools
+    Public district schools: Public district schools
+    Public district & private schools: Public district & private schools
+    Public charter & private schools: Public charter & private schools
+    Charter: Charter
+    District: District
     Share: Share
     'yes': 'Yes'
     'no': 'No'

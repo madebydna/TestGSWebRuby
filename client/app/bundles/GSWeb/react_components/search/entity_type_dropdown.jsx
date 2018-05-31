@@ -4,7 +4,7 @@ import SelectableTree, { makeTree } from 'react_components/selectable_tree';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Checkbox from 'react_components/checkbox';
 import CaptureOutsideClick from 'react_components/search/capture_outside_click';
-import { capitalize } from 'util/i18n';
+import { t, capitalize } from 'util/i18n';
 
 const options = [
   {
@@ -56,7 +56,7 @@ const EntityTypeDropdown = () => (
       <OpenableCloseable>
         {(isOpen, { toggle, open, close } = {}) => (
           <React.Fragment>
-            <span className="label">Filter by:</span>
+            <span className="label">{t('Filter by')}:</span>
             <CaptureOutsideClick callback={close}>
               <div className="dropdown entity-type-dropdown">
                 <div
@@ -67,7 +67,7 @@ const EntityTypeDropdown = () => (
                   tabIndex={0}
                 >
                   <div>
-                    {calculateDropdownText(entityTypes)}
+                    {t(calculateDropdownText(entityTypes))}
                     <span
                       className="icon-caret-down"
                       style={{ marginLeft: '8px' }}
@@ -98,7 +98,7 @@ const EntityTypeDropdown = () => (
                                 value={option.value}
                                 checked={active}
                               />
-                              <label>{option.label}</label>
+                              <label>{t(option.label)}</label>
                             </span>
                           ))
                         }
