@@ -8,19 +8,17 @@
   },
   "scripts": {
     "build:test": "webpack --config webpack.config.babel.js",
-    "build:production":
-      "NODE_ENV=production webpack --config webpack.config.babel.js",
+    "build:production": "NODE_ENV=production webpack --config webpack.config.babel.js",
     "build:development": "webpack -w --config webpack.config.babel.js",
-    "analyze":
-      "NODE_ENV=production ANALYZE=true webpack --config webpack.config.babel.js",
-    "test":
-      "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/app/bundles/GSWeb ./node_modules/.bin/mocha --reporter spec test_setup.js tests/**/*.js*",
-    "test:one":
-      "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/app/bundles/GSWeb ./node_modules/.bin/mocha --reporter spec test_setup.js ",
-    "rspec":
-      "rm ../app/assets/webpack/* && NODE_ENV=production webpack -p --config webpack.config.babel.js"
+    "analyze": "NODE_ENV=production ANALYZE=true webpack --config webpack.config.babel.js",
+    "test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/app/bundles/GSWeb ./node_modules/.bin/mocha --reporter spec test_setup.js tests/**/*.js*",
+    "test:one": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/app/bundles/GSWeb ./node_modules/.bin/mocha --reporter spec test_setup.js ",
+    "rspec": "rm ../app/assets/webpack/* && NODE_ENV=production webpack -p --config webpack.config.babel.js"
   },
-  "cacheDirectories": ["node_modules", "client/node_modules"],
+  "cacheDirectories": [
+    "node_modules",
+    "client/node_modules"
+  ],
   "dependencies": {
     "3.0.0": "^3.0.0",
     "babel": "^6.5.2",

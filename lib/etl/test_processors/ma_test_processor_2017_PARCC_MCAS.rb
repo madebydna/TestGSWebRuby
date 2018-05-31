@@ -17,7 +17,7 @@ class MATestProcessor2017PARCCMCAS < GS::ETL::TestProcessor
 	'Hispanic/Latino' => 6,
 	'Students with Disabilities' => 13,
 	'Economically Disadvantaged' => 9,
-	'non-Economically Disadvantaged' => 10,
+	'Non-Economically Disadvantaged' => 10,
 	'Multi-Race (non-Hispanic/Latino)' => 21,
 	'Asian' => 2,
 	'English Language Learner (ELL)' => 15,
@@ -34,7 +34,7 @@ class MATestProcessor2017PARCCMCAS < GS::ETL::TestProcessor
 	'Hispanic/Latino' => 19,
 	'Students with Disabilities' => 27,
 	'Economically Disadvantaged' => 23,
-	'non-Economically Disadvantaged' => 24,
+	'Non-Economically Disadvantaged' => 24,
 	'Multi-Race (non-Hispanic/Latino)' => 22,
 	'Asian' => 16,
 	'English Language Learner (ELL)' => 32,
@@ -44,8 +44,8 @@ class MATestProcessor2017PARCCMCAS < GS::ETL::TestProcessor
 
 
 	map_subject_id = {
-	'English Language Arts' => 4,
-	'Mathematics' => 5,
+	'ELA' => 4,
+	'Math' => 5,
 	'Science' => 25,
 	'Introductory Physics' => 41,
 	'Technology/Engineering' => 61,
@@ -63,11 +63,11 @@ class MATestProcessor2017PARCCMCAS < GS::ETL::TestProcessor
 	'Chemistry' => 35
 	}
 
-	# source('ma_2017_MCAS_school.txt',[],col_sep:"\t") do |s|
-	# s.transform('Fill missing default fields', Fill, {
-	# 	entity_level: 'school',
-	# })
-	# end
+	source('ma_2017_MCAS_school.txt',[],col_sep:"\t") do |s|
+	s.transform('Fill missing default fields', Fill, {
+		entity_level: 'school',
+	})
+	end
 
 	source('ma_2017_MCAS_district.txt',[],col_sep:"\t") do |s|
 		s.transform('setting entity levels',WithBlock) do |row|
@@ -79,33 +79,33 @@ class MATestProcessor2017PARCCMCAS < GS::ETL::TestProcessor
 		end
 	end
 
-	# source('ma_2017_PARCC_school.txt',[],col_sep:"\t") do |s|
-	# 	s.transform("set data types",Fill,{
-	# 		entity_level: 'school',
-	# 		test_data_type: 'MA PARCC',
-	# 		test_data_type_id: 305,
-	# 		gsdata_test_data_type_id: 292,
-	# 		notes: 'DXT-2655: MA MA PARCC',
-	# 		description: 'In 2016-2017, students were tested with the PARCC assessment for grades 3-8 in English and Math.'
-	# 	})
-	# end
+	source('ma_2017_PARCC_school.txt',[],col_sep:"\t") do |s|
+		s.transform("set data types",Fill,{
+			entity_level: 'school',
+			test_data_type: 'MA PARCC',
+			test_data_type_id: 305,
+			gsdata_test_data_type_id: 292,
+			notes: 'DXT-2655: MA MA PARCC',
+			description: 'In 2016-2017, students were tested with the PARCC assessment for grades 3-8 in English and Math.'
+		})
+	end
 
-	# source('ma_2017_PARCC_district.txt',[],col_sep:"\t") do |s|
-	# 	s.transform('setting entity levels',WithBlock) do |row|
-	# 		if row[:district_name] == 'State'
-	# 			row[:entity_level] = 'state'
-	# 		else row[:entity_level] = 'district'
-	# 		end
-	# 		row
-	# 	end
-	# 	s.transform("set data types",Fill,{
-	# 		test_data_type: 'MA PARCC',
-	# 		test_data_type_id: 305,
-	# 		gsdata_test_data_type_id: 292,
-	# 		notes: 'DXT-2655: MA MA PARCC',
-	# 		description: 'In 2016-2017, students were tested with the PARCC assessment for grades 3-8 in English and Math.'
-	# 	})
-	# end
+	source('ma_2017_PARCC_district.txt',[],col_sep:"\t") do |s|
+		s.transform('setting entity levels',WithBlock) do |row|
+			if row[:districtname] == 'State'
+				row[:entity_level] = 'state'
+			else row[:entity_level] = 'district'
+			end
+			row
+		end
+		s.transform("set data types",Fill,{
+			test_data_type: 'MA PARCC',
+			test_data_type_id: 305,
+			gsdata_test_data_type_id: 292,
+			notes: 'DXT-2655: MA MA PARCC',
+			description: 'In 2016-2017, students were tested with the PARCC assessment for grades 3-8 in English and Math.'
+		})
+	end
 
 	shared do |s|
 		s.transform('rename columns',MultiFieldRenamer,{
@@ -115,9 +115,9 @@ class MATestProcessor2017PARCCMCAS < GS::ETL::TestProcessor
 			schoolname: :school_name,
 			subgroup: :breakdown
 		})
-		.transform('skip migrant subgroups',DeleteRows,:breakdown,'High Needs','migrant','Ever ELL','Former ELL','ELL and Former ELL','Non-Title I','Title I','Non-Binary')
+		.transform('skip migrant subgroups',DeleteRows,:breakdown,'"Middle Sch.(grd. 6,7,8)"','"Middle/High Sch.(grd. 6,7,8,10)"','High Sch.(grd. 10)','"Elem. Sch. (grd. 3,4,5)"','"Elem/Middle Sch.(grd. 3,4,5,6,7,8)"','High Needs','migrant','Ever ELL','Former ELL','ELL and Former ELL','Non-Title I','Title I','Non-Binary')
+		.transform('skip migrant subgroups',DeleteRows,:grade,'EM','ES','HH','MH','MS')
 		.transform('transpose proficiency band ids',Transposer,:subject,:value_float,:eadvpro_per,:madvpro_per,:sadvpro_per,:bioadvpro_per, :cheadvpro_per, :phyadvpro_per, :tecadvpro_per,:emeet_exceed_per,:mmeet_exceed_per)
-		.transform('n tested < 10',DeleteRows,:number_tested,'1','2','3','4','5','6','7','8','9')
 		.transform('delete blank rows',WithBlock) do |row|
 			if row[:value_float] == ' '
 				row[:value_float] = 'skip'
@@ -157,8 +157,9 @@ class MATestProcessor2017PARCCMCAS < GS::ETL::TestProcessor
 			end
 			row
 		end
+		.transform('n tested < 10',DeleteRows,:number_tested,'1','2','3','4','5','6','7','8','9')
 		.transform('assign MCAS tests',WithBlock) do |row|
-			if row[:test_data_type_id] != 129
+			if row[:test_data_type_id] != 305
 				if row[:subject] == 'ELA' || row[:subject] == 'Math' || row[:subject] == 'Science'
 					row[:test_data_type] = 'MCAS'
 					row[:test_data_type_id] = 39
@@ -180,23 +181,24 @@ class MATestProcessor2017PARCCMCAS < GS::ETL::TestProcessor
 		.transform('subject ids',HashLookup,:subject, map_subject_id,to: :subject_id)
 		.transform('academic ids',HashLookup,:subject, map_gsdata_academic_id,to: :academic_gsdata_id)
 		.transform('mapping grades',WithBlock) do |row|
-			if row[:grade] == '3-8'
-				row[:grade] = 'All'
-			elsif row[:grade] = 'AL'
-				row[:grade] = 'All'
-			elsif row[:grade] = 'HS'
-				row[:grade] = 'All'
-			else row[:grade] = row[:grade].tr('0','')
+			if row[:grade] == '03' || row[:grade] == '04' || row[:grade] == '05' || row[:grade] == '06' || row[:grade] == '07' || row[:grade] == '08'
+				row[:grade] = row[:grade].tr('0','')
+			elsif row[:grade] == '10'
+				row[:grade] = row[:grade]
+			else row[:grade] = 'All'
 			end
 			row
 		end
 		.transform('setting state id',WithBlock) do |row|
 			if row[:entity_level] == 'state'
 				row[:state_id] = 'state'
+				row[:district_id] = 'state'
 			elsif row[:entity_level] == 'district'
-				row[:state_id] = row[:district_id]
+				row[:state_id] = row[:district_id][0..3]
+				row[:district_id] = row[:state_id]
 			else
 				row[:state_id] = row[:school_id]
+				row[:district_id] = nil
 			end
 			row
 		end
@@ -207,6 +209,12 @@ class MATestProcessor2017PARCCMCAS < GS::ETL::TestProcessor
 			proficiency_band_id: 'null',
 			proficiency_band_gsdata_id: 1
 		})
+		.transform('fix values over 100', WithBlock) do |row|
+			if row[:value_float].to_f > 100
+				row[:value_float] = '100'
+			end
+			row
+		end
 	end
 
 	def config_hash
