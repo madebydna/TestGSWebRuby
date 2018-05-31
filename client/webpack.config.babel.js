@@ -12,6 +12,7 @@ const nodeEnv = devBuild ? 'development' : 'production';
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
   entry: {
@@ -100,9 +101,11 @@ const config = {
         NODE_ENV: JSON.stringify(nodeEnv)
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      output: {
-        comments: false
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        output: {
+          comments: false
+        }
       }
     }),
     new LodashModuleReplacementPlugin()
@@ -136,7 +139,7 @@ const config = {
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        exclude: /node_modules\/jsx-to-string/,
+        exclude: /node_modules/,
         options: {
           plugins: ['lodash', 'transform-runtime'],
           presets: [['es2015', { modules: false }], 'react', 'stage-0']
