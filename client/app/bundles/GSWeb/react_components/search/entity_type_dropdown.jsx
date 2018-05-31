@@ -1,6 +1,6 @@
 import React from 'react';
 import EntityTypeContext from './entity_type_context';
-import CheckboxTree, { makeTree } from 'react_components/checkbox_tree';
+import SelectableTree, { makeTree } from 'react_components/selectable_tree';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Checkbox from 'react_components/checkbox';
 import CaptureOutsideClick from 'react_components/search/capture_outside_click';
@@ -77,7 +77,7 @@ const EntityTypeDropdown = () => (
                 {isOpen && (
                   <div className="panel">
                     <span className="checkbox-group">
-                      <CheckboxTree
+                      <SelectableTree
                         options={options}
                         activeOptions={entityTypes}
                         onChange={onEntityTypesChanged}
@@ -102,7 +102,7 @@ const EntityTypeDropdown = () => (
                             </span>
                           ))
                         }
-                      </CheckboxTree>
+                      </SelectableTree>
                     </span>
                   </div>
                 )}

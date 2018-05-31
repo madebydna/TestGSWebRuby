@@ -72,12 +72,13 @@ body {
     .dropdown {
       display: inline-block;
       .selection {
-        padding: 7px 27px 7px 7px;
+        padding: 8px 27px 7px 7px;
         border: 1px solid #c1d2d9;
         border-radius: 3px;
         position: relative;
         top: 1px;
         background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+        outline: none;
       }
       .icon-caret-down {
         position: absolute;
@@ -87,7 +88,7 @@ body {
       .panel {
         display: inline-block;
         padding: 15px 15px 10px 15px;
-        border: 1px solid #b8b8b8;
+        border: 1px solid #c1d2d9;
         border-radius: 3px;
         background-color: #f6f9fa;
         position: absolute;

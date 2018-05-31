@@ -47,8 +47,8 @@ export function getEntityTypes() {
 export function queryStringWithNewEntityTypes(entityTypes) {
   const existingParams = parse(currentQueryString());
   const newParams = Object.assign(existingParams, {
-    st: undefined,
-    'st[]': entityTypes,
+    'st[]': undefined,
+    st: entityTypes,
     page: parsePage(1)
   });
   return stringify(newParams);

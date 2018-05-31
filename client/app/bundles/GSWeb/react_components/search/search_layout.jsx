@@ -78,9 +78,8 @@ class SearchLayout extends React.Component {
   static propTypes = {
     size: PropTypes.oneOf(validSizes).isRequired,
     currentView: PropTypes.string.isRequired,
-    entityTypeButtons: PropTypes.element.isRequired,
     gradeLevelButtons: PropTypes.element.isRequired,
-    entityTypeCheckboxes: PropTypes.element.isRequired,
+    entityTypeDropdown: PropTypes.element.isRequired,
     gradeLevelCheckboxes: PropTypes.element.isRequired,
     distanceFilter: PropTypes.element.isRequired,
     sortSelect: PropTypes.element.isRequired,
@@ -145,7 +144,7 @@ class SearchLayout extends React.Component {
     return (
       <div className="menu-bar filters" ref={this.header}>
         <div style={{ maxWidth: '1282px', margin: 'auto', padding: '0 10px' }}>
-          <span className="menu-item">{this.props.entityTypeButtons}</span>
+          <span className="menu-item">{this.props.entityTypeDropdown}</span>
           <span className="menu-item">{this.props.gradeLevelButtons}</span>
           {this.props.distanceFilter ? (
             <span className="menu-item">
@@ -194,7 +193,7 @@ class SearchLayout extends React.Component {
                 />
                 <div className="menu-bar">
                   <span className="menu-item">
-                    {this.props.entityTypeButtons}
+                    {this.props.entityTypeDropdown}
                   </span>
                   <span className="menu-item">
                     {this.props.gradeLevelCheckboxes}

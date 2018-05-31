@@ -56,8 +56,7 @@ class Search extends React.Component {
       <SearchLayout
         size={this.props.size}
         currentView={this.state.currentView}
-        entityTypeButtons={<EntityTypeDropdown />}
-        entityTypeCheckboxes={<EntityTypeCheckboxes />}
+        entityTypeDropdown={<EntityTypeDropdown />}
         gradeLevelButtons={<GradeLevelButtons />}
         gradeLevelCheckboxes={<GradeLevelCheckboxes />}
         distanceFilter={
