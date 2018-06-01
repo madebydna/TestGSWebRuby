@@ -2,28 +2,48 @@
   {"functions": "never", "arrays": "only-multiline", "objects":
 "only-multiline"} ] */
 
+import AssetMapPlugin from 'asset-map-webpack-plugin';
+
 const webpack = require('webpack');
 const path = require('path');
+
 const devBuild = process.env.NODE_ENV !== 'production';
 const nodeEnv = devBuild ? 'development' : 'production';
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-import AssetMapPlugin from 'asset-map-webpack-plugin';
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
   entry: {
-    'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie', './app/bundles/GSWeb/misc_all_page_blocking'],
-    'commons': ['./app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal', './app/bundles/GSWeb/header'],
-    'react-redux' : ['react', 'react-dom', 'redux', 'react-redux', 'react-addons-css-transition-group'],
-    'widget': ['./app/bundles/GSWeb/widget'],
+    'commons-blocking': [
+      'jquery',
+      'jquery-ujs',
+      'jquery.cookie',
+      './app/bundles/GSWeb/misc_all_page_blocking'
+    ],
+    commons: [
+      './app/bundles/GSWeb/vendor/tipso',
+      './app/bundles/GSWeb/vendor/remodal',
+      './app/bundles/GSWeb/header'
+    ],
+    'react-redux': [
+      'react',
+      'react-dom',
+      'redux',
+      'react-redux',
+      'react-transition-group'
+    ],
+    widget: ['./app/bundles/GSWeb/widget'],
     'mobile-overlay-ad': ['./app/bundles/GSWeb/components/ads/mobile_overlay'],
-    'interstitial': ['./app/bundles/GSWeb/interstitial'],
+    interstitial: ['./app/bundles/GSWeb/interstitial'],
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
-    'school-profiles': [ './app/bundles/GSWeb/school_profiles' ],
-    'home': [ './app/bundles/GSWeb/home' ],
-    'jquery': ['jquery'],
+    'school-profiles': ['./app/bundles/GSWeb/school_profiles'],
+    home: ['./app/bundles/GSWeb/home'],
+    jquery: ['jquery'],
     'admin-tools': ['./app/bundles/GSWeb/admin_tools'],
-    'add-schools': ['./app/bundles/GSWeb/pages/add_schools']
+    'add-schools': ['./app/bundles/GSWeb/pages/add_schools'],
+    search: ['./app/bundles/GSWeb/search']
   },
 
   output: {
@@ -37,7 +57,7 @@ const config = {
     extensions: ['.js', '.jsx', '.png'],
     alias: {
       react: path.resolve('./node_modules/react'),
-      'react-dom': path.resolve('./node_modules/react-dom'),
+      'react-dom': path.resolve('./node_modules/react-dom')
     },
     modules: [
       path.resolve('./app/bundles/GSWeb'),
@@ -50,36 +70,51 @@ const config = {
 
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons-blocking',
-      chunks: ['commons', 'react-redux', 'school-profiles', 'district-boundaries', 'widget'],
-      minChunks: Infinity,
+      chunks: [
+        'commons',
+        'react-redux',
+        'school-profiles',
+        'district-boundaries',
+        'widget',
+        'search'
+      ],
+      minChunks: Infinity
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
-      chunks: ['react-redux', 'school-profiles', 'district-boundaries', 'widget'],
-      minChunks: Infinity,
+      chunks: [
+        'react-redux',
+        'school-profiles',
+        'district-boundaries',
+        'widget',
+        'search'
+      ],
+      minChunks: Infinity
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'react-redux',
-      chunks: ['school-profiles', 'district-boundaries', 'widget'],
-      minChunks: Infinity,
+      chunks: ['school-profiles', 'district-boundaries', 'widget', 'search'],
+      minChunks: Infinity
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(nodeEnv),
-      },
+        NODE_ENV: JSON.stringify(nodeEnv)
+      }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      output: {
-        comments: false
-      } 
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        output: {
+          comments: false
+        }
+      }
     }),
     new LodashModuleReplacementPlugin()
   ],
   module: {
     rules: [
       {
-        test: require.resolve("jquery"),
-        loader: "expose-loader?$!expose-loader?jQuery"
+        test: require.resolve('jquery'),
+        loader: 'expose-loader?$!expose-loader?jQuery'
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -90,14 +125,14 @@ const config = {
               name: '[name]_[hash].[ext]'
             }
           }
-        ],
+        ]
       },
       {
         test: /\.handlebars$/,
         loader: 'handlebars-loader',
-        query: { 
+        query: {
           helperDirs: [
-            __dirname + "/app/bundles/GSWeb/components/autocomplete/handlebars_helpers"
+            `${__dirname}/app/bundles/GSWeb/components/autocomplete/handlebars_helpers`
           ]
         }
       },
@@ -107,20 +142,15 @@ const config = {
         exclude: /node_modules/,
         options: {
           plugins: ['lodash', 'transform-runtime'],
-          presets: [
-            [ 'es2015', { modules: false } ],
-            'react',
-            'stage-0'
-          ]
+          presets: [['es2015', { modules: false }], 'react', 'stage-0']
         }
-      },
-    ],
+      }
+    ]
   },
   node: {
-    fs: "empty"
+    fs: 'empty'
   }
 };
-
 
 if (devBuild) {
   console.log('Webpack dev build for Rails'); // eslint-disable-line no-console
@@ -132,5 +162,4 @@ if (devBuild) {
 if (process.env.ANALYZE) {
   config.plugins.push(new BundleAnalyzerPlugin());
 }
-
 module.exports = config;

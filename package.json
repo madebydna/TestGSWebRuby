@@ -16,5 +16,9 @@
     "build:production": "cd client && npm run build:production",
     "analyze": "cd client && npm run analyze",
     "rspec": "cd client && npm run rspec"
+  },
+  "dependencies": {
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "webpack": "^2.5.1"
   }
 }

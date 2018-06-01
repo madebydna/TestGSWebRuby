@@ -17,12 +17,23 @@ class SchoolGeometry < ActiveRecord::Base
     results = SchoolGeometry.select('*, AsText(geom) as geom, ST_area(geom) as area').
       containing_point(lat,lon).
       order_by_area
-    results = results.where(ed_level: level)
+    results = results.where(ed_level: level).where.not(school_id: nil)
     results
   end
 
   def self.schools_for_geometries(geometries)
     geometries.map { |geo| geo.school }.compact
+  end
+
+  def self.schools_having_point_in_attendance_zone(lat, lon, level_code)
+    geometries = find_by_point_and_level(lat, lon, level_code)
+    geometries_valid = geometries.present?
+    if geometries && geometries.size > 1 && geometries[0].area == geometries[1].area
+      # A geometry is not valid if it covers the same area as the next one
+      # This is because we can't really recommend one of those boundaries above the other
+      geometries_valid = false
+    end
+    geometries_valid ? [geometries.first.school].compact : []
   end
 
 end

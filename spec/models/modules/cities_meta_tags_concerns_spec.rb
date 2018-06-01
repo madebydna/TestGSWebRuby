@@ -18,7 +18,7 @@ describe CitiesMetaTagsConcerns do
 
     [ # method                  asserted_text
       ['cities_programs_title',       "#{city} programs"],
-      ['cities_show_title',   "Best Schools in #{city}, CA | School Ratings in #{city}, California"],
+      ['cities_show_title',   "#{city} Schools - #{city} California School Ratings - Public and Private"],
       ['cities_programs_description', "Resources and providers of programs in #{city}"],
     ].each do | (method, asserted_text) |
       it "should return '#{asserted_text}'" do

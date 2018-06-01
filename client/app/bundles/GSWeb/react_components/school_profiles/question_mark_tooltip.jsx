@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ModalTooltip from '../modal_tooltip';
 
 const QuestionMarkTooltip = ({children, ...rest}) => {
@@ -10,8 +11,8 @@ const QuestionMarkTooltip = ({children, ...rest}) => {
   );
 };
 
-QuestionMarkTooltip.PropTypes = {
-  content: React.PropTypes.string.isRequired
+QuestionMarkTooltip.propTypes = {
+  content: PropTypes.string.isRequired
 }
 
 export default QuestionMarkTooltip;

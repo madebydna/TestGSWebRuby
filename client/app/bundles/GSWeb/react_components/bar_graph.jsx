@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { getScript } from '../util/dependency';
 import { merge } from 'lodash';
 
@@ -8,9 +9,9 @@ export default class BarGraph extends React.Component {
   }
 
   static propTypes = {
-    graphId: React.PropTypes.string.isRequired,
-    categories: React.PropTypes.array.isRequired,
-    series: React.PropTypes.array.isRequired
+    graphId: PropTypes.string.isRequired,
+    categories: PropTypes.array.isRequired,
+    series: PropTypes.array.isRequired
   }
 
   constructor(props) {

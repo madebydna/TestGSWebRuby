@@ -152,11 +152,12 @@ class GATestProcessor2017Milestones < GS::ETL::TestProcessor
 				elsif row[:district_id].length == 7
 					row[:state_id] = row[:district_id]
 				end
+				row[:school_id] = row[:state_id]
 			end	
 			row	
 		end
 		.transform('prof null',WithBlock) do |row|
-			row[:prof_null] = (row[:proficient_pct].to_f + row[:distinguished_pct].to_f).round(4)
+			row[:prof_null] = ((row[:proficient_pct].to_f + row[:distinguished_pct].to_f).round(4)).to_s
 		row
 		end
 		.transform('transpose proficiency band ids',Transposer,:proficiency_band,:value_float,:begin_pct,:developing_pct,:proficient_pct,:distinguished_pct,:prof_null)
@@ -182,7 +183,7 @@ class GATestProcessor2017Milestones < GS::ETL::TestProcessor
 	def config_hash
 		{
 		source_id: 86,
-		source_name: "Georgia Governor\\'s Office of Student Achievement",
+		source_name: "Georgia Governor\'s Office of Student Achievement",
 		date_valid: '2017-01-01 00:00:00',
 		state: 'ga',
 		url: 'https://gosa.georgia.gov/downloadable-data',

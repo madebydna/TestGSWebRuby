@@ -1,7 +1,7 @@
 had_any_errors = false
 
 def all_cache_keys
-  ['ratings','feed_test_scores', 'district_schools_summary', 'directory_census', 'district_directory', 'feed_district_characteristics']
+  %w(ratings feed_test_scores district_schools_summary directory_census district_directory feed_district_characteristics test_scores_gsdata)
 end
 
 def all_states

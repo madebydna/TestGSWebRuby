@@ -4,16 +4,28 @@ section.school-list {
   $border-color: #dbe6eb;
 
   ol {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0 10px;
     overflow: scroll;
     list-style: none;
     width: 100%;
+    height: inherit;
 
     li {
       @include clearfix;
-      padding: 10px 0;
-      border-bottom: solid 1px $border-color;
+      padding: 10px 10px;
+      box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.09);
+      background-color: white;
+      span {
+        display: inline-block;
+      }
+      a {
+        font-size: 12px;
+      }
+      a.name {
+        font-size: 14px;
+        font-family: 'opensans-semibold', sans-serif;
+      }
 
       &:hover {
         background-color: $hover-color;
@@ -27,6 +39,10 @@ section.school-list {
       > span + span {
         margin-left: 10px;
       }
+    }
+
+    li + li {
+      margin-top: 7px;
     }
   }
 }

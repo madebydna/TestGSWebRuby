@@ -164,7 +164,7 @@ class GsdataCaching::GsDataValue
     end
 
     # To get values for same test but different grades
-    def group_by_test
+    def group_by_test_subject
       group_by do |dv|
         [dv.data_type, dv.academics]
       end
@@ -358,7 +358,7 @@ class GsdataCaching::GsDataValue
 
     def all_school_values_can_be_numeric?
       map(&:school_value).all? do |v|
-        v.scan(/[0-9.]+/).first&.to_f
+        v.is_a?(Numeric) || v.try(:scan, /[0-9.]+/)&.first&.to_f
       end
     end
 
@@ -379,7 +379,7 @@ class GsdataCaching::GsDataValue
     end
 
     def sort_by_test_label_using_cohort_count
-      group_by(&:data_type).sort_by{|k,v| (-v.extend(CollectionMethods).total_school_cohort_count || 0) }.flatten.reject{|y| y.is_a?(String)}.extend(CollectionMethods)
+      group_by(&:data_type).sort_by{|k,v| (-v.extend(CollectionMethods).having_grade_all.total_school_cohort_count || 0) }.flatten.reject{|y| y.is_a?(String)}.extend(CollectionMethods)
     end
 
     def sort_by_test_label_and_subject_name

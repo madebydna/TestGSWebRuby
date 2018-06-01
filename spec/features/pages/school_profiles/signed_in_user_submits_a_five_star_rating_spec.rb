@@ -2,6 +2,10 @@ require 'features/contexts/shared_contexts_for_signed_in_users'
 require "features/page_objects/school_profiles_page"
 
 describe "Signed in and verified user", js:true do
+  before do
+    pending
+    fail
+  end
   with_shared_context 'signed in verified user' do
     context "with school and user and review data set up in db" do
       let!(:school) { create(:school_with_new_profile) }
@@ -32,6 +36,10 @@ describe "Signed in and verified user", js:true do
       its('review_form.five_star_question_cta') { is_expected.to have_text('How would you rate your experience at this school?')}
 
       when_I :submit_a_valid_5_star_rating_comment do
+        before do
+          pending
+          fail
+        end
         it { is_expected.to have_all_review_questions }
         its(:review_form) { is_expected.to have_completed_five_star_question }
 

@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { t } from '../util/i18n';
 
 export default class ShortenText extends React.Component {
 
   static propTypes = {
-    text: React.PropTypes.string.isRequired,
-    length: React.PropTypes.number.isRequired
+    text: PropTypes.string.isRequired,
+    length: PropTypes.number.isRequired
   };
 
   constructor(props) {

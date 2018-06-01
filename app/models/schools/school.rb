@@ -1,6 +1,8 @@
 class School < ActiveRecord::Base
   include SchoolReviewConcerns
   include SchoolRouteConcerns
+  include GradeLevelConcerns
+
 
   LEVEL_CODES = {
     primary: 'p',
@@ -23,11 +25,17 @@ class School < ActiveRecord::Base
   has_many :school_metadatas
   belongs_to :district
 
+
   scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
 
   scope :not_preschool_only, -> { where.not(level_code: 'p') }
 
   scope :active, -> { where(active: true) }
+
+  scope :include_district_name, lambda {
+    select("#{School.table_name}.*, #{District.table_name}.name as district_name").
+    joins("LEFT JOIN district on school.district_id = district.id")
+  }
 
   self.inheritance_column = nil
 
@@ -35,8 +43,39 @@ class School < ActiveRecord::Base
     School.on_db(state.downcase.to_sym).find id rescue nil
   end
 
+  def self.find_by_state_and_ids(state, ids)
+    School.on_db(state.downcase.to_sym).where(id: ids)
+  end
+
   def self.ids_by_state(state)
     School.on_db(state.downcase.to_sym).active.not_preschool_only.order(:id).select(:id).map(&:id)
+  end
+
+  # Given objects that have state and school_id, load school for each one
+  def self.load_all_from_associates(associates)
+    # need a map so we can effeciently maintain order
+    associate_state_school_ids_hash = 
+      associates.each_with_object({}) do |obj, hash|
+        hash[[obj.state.downcase, obj.school_id.to_i]] = nil
+      end
+
+    state_to_id_map = 
+      associates
+        .each_with_object({}) do |obj, hash|
+          hash[obj.state] ||= []
+          hash[obj.state] << obj.school_id
+      end
+
+    schools = 
+      state_to_id_map.flat_map do |(state, ids)|
+        find_by_state_and_ids(state, ids).to_a
+      end
+
+    schools.each do |school|
+      associate_state_school_ids_hash[[school.state.downcase, school.id.to_i]] = school
+    end
+
+    associate_state_school_ids_hash.values.compact
   end
 
   def self.within_district(district)

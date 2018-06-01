@@ -1,10 +1,41 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const AnchorButton = ({className='', children, ...otherLinkAttributes}) => {
-  return <a className={'anchor-button ' + className}
-    {...otherLinkAttributes}>
+// can be active/inactive
+// can be enabled/disabled
+const AnchorButton = ({
+  enabled,
+  active,
+  onClick,
+  className = 'anchor-button',
+  children,
+  ...other
+}) => (
+  <a
+    onClick={enabled ? onClick : undefined}
+    className={active ? `active ${className}` : className}
+    onKeyPress={enabled ? onClick : undefined}
+    role="button"
+    {...other}
+  >
     <div>{children}</div>
-  </a>;
+  </a>
+);
+
+AnchorButton.propTypes = {
+  active: PropTypes.bool,
+  enabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  className: PropTypes.string,
+  children: PropTypes.node
+};
+
+AnchorButton.defaultProps = {
+  active: false,
+  enabled: true,
+  onClick: () => {},
+  className: 'anchor-button',
+  children: null
 };
 
 export default AnchorButton;

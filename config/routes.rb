@@ -23,11 +23,15 @@ LocalizedProfiles::Application.routes.draw do
 
   #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
-  # Routes for search pages
-  get ':state/:city/schools/', as: :search_city_browse,
     # This city regex allows for all characters except /
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
-    constraints: {state: States.any_state_name_regex, city: /[^\/]+/}, to: 'search#city_browse'
+  city_regex = /[^\/]+/
+
+  # Routes for search pages
+  scope ':state/:city/schools/', constraints: {state: States.any_state_name_regex, city: city_regex}, as: :search_city_browse do
+    get '', constraints: proc { |req| req.params.has_key?('newsearch') }, to: 'new_search#search'
+    get '', to: 'search#city_browse'
+  end
 
   get ':state/:city/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/,
@@ -66,7 +70,10 @@ LocalizedProfiles::Application.routes.draw do
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
       to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}/#{params[:level]}", '/schools/')}?gradeLevels=#{params[:level][0]}&st=#{params[:type].split('-').last}" }
 
-  get '/search/search.page', as: :search, to: 'search#search'
+  scope '/search/search.page', as: :search do
+    get '', constraints: proc { |req| req.params.has_key?('newsearch') }, to: 'new_search#search'
+    get '', to: 'search#search'
+  end
 
   get '/search/nearbySearch.page', as: :search_by_zip, to: 'search#by_zip'
 

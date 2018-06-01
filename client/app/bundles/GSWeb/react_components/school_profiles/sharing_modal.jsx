@@ -17,7 +17,7 @@ const SharingModal = ({content}) => {
   );
 };
 
-SharingModal.PropTypes = {
+SharingModal.propTypes = {
   content: PropTypes.string.isRequired
 }
 

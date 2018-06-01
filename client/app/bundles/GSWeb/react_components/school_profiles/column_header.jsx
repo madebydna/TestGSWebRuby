@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { t, capitalize } from 'util/i18n';
 
 export default class ColumnHeader extends React.Component {
 
   static propTypes = {
-    anchor: React.PropTypes.string,
-    leftLabel: React.PropTypes.string,
-    rightLabel: React.PropTypes.string,
+    anchor: PropTypes.string,
+    leftLabel: PropTypes.string,
+    rightLabel: PropTypes.string,
   };
 
   constructor(props) {

@@ -28,9 +28,9 @@ describe 'unsubscribe page' do
     include_examples 'should have a footer'
 
     when_I :unsubscribe_from_emails, js: true do
-      it 'should display home page' do
-        home_page = HomePage.new
-        expect(home_page).to be_displayed
+      it 'should display preferences page' do
+        preferences_page = UserEmailPreferencesPage.new
+        expect(preferences_page).to be_displayed
       end
     end
 

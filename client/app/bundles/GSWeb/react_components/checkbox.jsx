@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Checkbox extends React.Component {
 
   static propTypes = {
-    checked: React.PropTypes.bool
+    checked: PropTypes.bool
   }
 
   static defaultProps = {

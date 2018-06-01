@@ -14,6 +14,8 @@ class Cacher
   # :courses
   # :directory
   # :feed_characteristics
+  # :test_scores_gsdata
+  # :feed_test_scores_gsdata
 
   def initialize(school)
     @school = school
@@ -31,6 +33,7 @@ class Cacher
             #{ActiveRecord::Base.connection.quote(build_hash_for_cache.to_json)},
             #{ActiveRecord::Base.connection.quote(Time.now)}
           )
+
           ON DUPLICATE KEY UPDATE
             value=#{ActiveRecord::Base.connection.quote(build_hash_for_cache.to_json)},
             updated=#{ActiveRecord::Base.connection.quote(Time.now)}

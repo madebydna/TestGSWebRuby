@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReportReview from './report_review';
 import ShortenText from '../shorten_text';
 import { t } from '../../util/i18n';
@@ -6,9 +7,9 @@ import { t } from '../../util/i18n';
 export default class TopicalReview extends React.Component {
 
   static propTypes = {
-    review: React.PropTypes.object.isRequired,
-    reportedCallback: React.PropTypes.func,
-    userAlreadyReported: React.PropTypes.bool,
+    review: PropTypes.object.isRequired,
+    reportedCallback: PropTypes.func,
+    userAlreadyReported: PropTypes.bool,
   };
 
   constructor(props) {
