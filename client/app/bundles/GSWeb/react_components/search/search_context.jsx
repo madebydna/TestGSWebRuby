@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../../vendor/remodal';
+import * as remodal from 'util/remodal';
 import { find as findSchools } from 'api_clients/schools';
 import { isEqual, throttle, debounce } from 'lodash';
 import { size as viewportSize } from 'util/viewport';
@@ -20,8 +22,8 @@ class SearchProvider extends React.Component {
     schools: gon.search.schools,
     levelCodes: gon.search.levelCodes || [],
     entityTypes: gon.search.entityTypes || [],
-    lat: null,
-    lon: null,
+    defaultLat: gon.search.cityLat || 37.8078456,
+    defaultLon: gon.search.cityLon || -122.2672673,
     distance: gon.search.distance,
     sort: gon.search.sort,
     page: gon.search.page || 1,
@@ -38,6 +40,8 @@ class SearchProvider extends React.Component {
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
+    defaultLat: PropTypes.number,
+    defaultLon: PropTypes.number,
     lat: PropTypes.number,
     lon: PropTypes.number,
     distance: PropTypes.number,
@@ -70,6 +74,7 @@ class SearchProvider extends React.Component {
     });
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
+    this.highlightSchool = this.highlightSchool.bind(this);
   }
 
   componentDidMount() {
@@ -146,6 +151,17 @@ class SearchProvider extends React.Component {
     );
   }
 
+  highlightSchool(school) {
+    const schools = this.state.schools.map(s => {
+      if (s.id === school.id) {
+        s.highlighted = !s.highlighted;
+        return s;
+      }
+      return s;
+    });
+    this.setState({ schools });
+  }
+
   //
 
   render() {
@@ -160,7 +176,10 @@ class SearchProvider extends React.Component {
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
           size: this.state.size,
-          shouldIncludeDistance: this.shouldIncludeDistance()
+          shouldIncludeDistance: this.shouldIncludeDistance(),
+          highlightSchool: this.highlightSchool,
+          defaultLat: this.props.defaultLat,
+          defaultLon: this.props.defaultLon
         }}
       >
         <DistanceContext.Provider

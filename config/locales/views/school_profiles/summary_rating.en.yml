@@ -1,6 +1,9 @@
 en:
   school_profiles:
     summary_rating:
+      Above average: Above average
+      Average: Average
+      Below average: Below average
       header:
         title: GreatSchools Summary Rating
         subtext_html: >
