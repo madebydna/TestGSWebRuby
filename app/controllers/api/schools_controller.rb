@@ -69,7 +69,7 @@ class Api::SchoolsController < ApplicationController
     Search::ActiveRecordSchoolQuery.new(
       state: state,
       id: school_id,
-      district_id: params[:district_id],
+      district_id: district_id,
       entity_types: entity_types,
       city: city,
       lat: lat,
@@ -102,6 +102,7 @@ class Api::SchoolsController < ApplicationController
     query_type.new(
       city: city,
       state: state,
+      district_id: district_id,
       level_codes: level_codes,
       entity_types: entity_types,
       lat: lat,
