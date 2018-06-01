@@ -14,7 +14,8 @@ module SchoolProfiles
       array_of_gs_data_values
         .having_grade_all
         .having_most_recent_date
-        .group_by_academics.each_value do |gs_data_values|
+        .group_by_test_subject
+        .each_value do |gs_data_values|
 
           li_dv = gs_data_values
             .having_breakdown('Economically disadvantaged')

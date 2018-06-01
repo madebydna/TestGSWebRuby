@@ -164,7 +164,7 @@ class GsdataCaching::GsDataValue
     end
 
     # To get values for same test but different grades
-    def group_by_test
+    def group_by_test_subject
       group_by do |dv|
         [dv.data_type, dv.academics]
       end

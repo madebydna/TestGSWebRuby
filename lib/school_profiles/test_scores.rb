@@ -56,7 +56,7 @@ module SchoolProfiles
 
       scores = SchoolProfiles::NarrativeLowIncomeTestScores.new(test_scores_hashes: nil).add_to_array_of_hashes(scores)
 
-      scores.group_by_test.values.map do |gs_data_values|
+      scores.group_by_test_subject.values.map do |gs_data_values|
         grade_all_data_value = gs_data_values.having_grade_all
           .expect_only_one('Expect only one value for all students grade all per test')
         next unless grade_all_data_value.present?

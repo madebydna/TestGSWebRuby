@@ -43,7 +43,7 @@ module SchoolProfiles
           .having_breakdown_in(low_income_breakdowns.keys)
         if results.any_subgroups?
           results
-            .group_by_test
+            .group_by_test_subject
             .first(SUBJECTS_TO_RETURN)
         else
           nil
