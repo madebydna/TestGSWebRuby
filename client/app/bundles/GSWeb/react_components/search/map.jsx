@@ -22,7 +22,6 @@ const SearchMap = ({ schools, isLoading, ...other }) => (
         )
       }
     </GoogleMapsInitializer>
-    <Legend content={<div>ASSETS/COPY HERE!</div>} />
   </div>
 );
 
