@@ -70,7 +70,7 @@ export default class DistrictBoundaries extends React.Component {
   renderMarkers() {
     let anySchoolMarkerSelected = false;
     let markers = this.props.schools.map(s => {
-      const props = { title: s.name, rating: s.rating, lat: s.lat, lon: s.lon };
+      const props = { title: s.name, rating: s.rating, lat: s.lat, lon: s.lon, svg: false };
       props.key = `s${  s.state  }${s.id}`;
       props.createInfoWindow = () => createInfoWindow(s);
       props.onClick = () => this.props.selectSchool(s.id, s.state);
@@ -90,7 +90,7 @@ export default class DistrictBoundaries extends React.Component {
     });
     markers = markers.concat(
       this.props.districts.map(d => {
-        const props = { title: d.name, rating: null, lat: d.lat, lon: d.lon };
+        const props = { title: d.name, rating: null, lat: d.lat, lon: d.lon, svg: false };
         props.key = `d${  d.state  }${d.id}`;
         props.createInfoWindow = () => createInfoWindow(d);
         props.onClick = () => this.props.selectDistrict(d.id, d.state);
@@ -106,7 +106,7 @@ export default class DistrictBoundaries extends React.Component {
       })
     );
     if (this.props.lat && this.props.lon) {
-      const props = { lat: this.props.lat, lon: this.props.lon };
+      const props = { lat: this.props.lat, lon: this.props.lon, svg: false };
       props.key = `locationMarkerl${  this.props.lat  }l${  this.props.lon}`;
       markers = markers.concat(<DefaultMapMarker {...props} />);
     }
