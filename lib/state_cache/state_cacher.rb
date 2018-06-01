@@ -3,7 +3,7 @@ class StateCacher
   attr_accessor :state
 
   # Known data types:
-  # :state_characteristics
+  # :state_characteristics, :test_scores_gsdata
 
   def initialize(state)
     @state = state
@@ -29,36 +29,36 @@ class StateCacher
     raise NotImplementedError
   end
 
-  def cacher_for(key)
+  def self.cacher_for(key)
     {
         state_characteristics: StateCharacteristicsCacher,
-        test_scores_gsdata: TestScoresCaching::TestScoresCacherGsdata
+        test_scores_gsdata: TestScoresCaching::StateTestScoresCacherGsdata
     }[key.to_s.to_sym]
   end
 
 
-  def active?
+  def self.active?
     true
   end
 
   # Should return true if param is a data type cacher depends on. See top of class for known data type symbols
-  def listens_to?(_)
+  def self.listens_to?(_)
     raise NotImplementedError
   end
 
-  def cachers_for_data_type(data_type)
+  def self.cachers_for_data_type(data_type)
     data_type_sym = data_type.to_s.to_sym
     registered_cachers.select {|cacher| cacher.listens_to? data_type_sym }
   end
 
-  def registered_cachers
+  def self.registered_cachers
     @registered_cachers ||= [
        StateCharacteristicsCacher,
        TestScoresCaching::TestScoresCacherGsdata
     ]
   end
 
-  def create_cache(state, cache_key)
+  def self.create_cache(state, cache_key)
     begin
       cacher_class = cacher_for(cache_key)
       return unless cacher_class.active?

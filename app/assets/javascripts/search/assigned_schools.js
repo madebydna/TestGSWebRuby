@@ -78,7 +78,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
       var allPromises = [];
       for (var x = 0; x < gradeLevels.length; x++) {
         var options = {
-          state: state, lat: lat, lon: lon, boundary_level: gradeLevels[x], extras: 'review_summary,distance'
+          state: state, lat: lat, lon: lon, boundary_level: gradeLevels[x], extras: 'review_summary,distance,boundaries'
         };
         allPromises.push(assignedSchoolsAjaxCall(options, setAssignedSchoolCallbackFn));
       }

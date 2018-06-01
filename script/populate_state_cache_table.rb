@@ -1,7 +1,7 @@
 had_any_errors = false
 
 def all_cache_keys
-  ['state_characteristics']
+  %w(state_characteristics test_scores_gsdata)
 end
 
 
@@ -9,8 +9,8 @@ def usage
   abort "\n\nUSAGE: rails runner script/populate_state_cache_table (all | [state]:[cache_keys])
 
 
-Ex: rails runner script/populate_school_cache_table fl:characteristics
-Ex: rails runner script/populate_school_cache_table all
+Ex: rails runner script/populate_state_cache_table fl:characteristics
+Ex: rails runner script/populate_state_cache_table all
 
 Possible cache keys: #{all_cache_keys.join(', ')}\n\n"
 end
@@ -58,7 +58,7 @@ parsed_arguments.each do |args|
     puts "Working on: #{state}"
     cache_keys.each do |cache_key|
       puts "     doing #{cache_key}"
-      StateCacher.new.create_cache(state, cache_key)
+      StateCacher.create_cache(state, cache_key)
     end
   end
 end

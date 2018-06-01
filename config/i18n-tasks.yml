@@ -93,7 +93,7 @@ search:
 ## Google Translate
 translation:
 #   # Get an API key and set billing info at https://code.google.com/apis/console to use Google Translate
-   api_key: "AIzaSyAfk6ZdZ3-fqFyy6JwnX6HvKgWOtG2ljLo"
+   api_key: "AIzaSyDhj9L6M-R-GiFUDk5-OnWG8oI8GYJMSho"
 
 ## Do not consider these keys missing:
 # ignore_missing:

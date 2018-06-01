@@ -14,6 +14,8 @@ class Cacher
   # :courses
   # :directory
   # :feed_characteristics
+  # :test_scores_gsdata
+  # :feed_test_scores_gsdata
 
   def initialize(school)
     @school = school
