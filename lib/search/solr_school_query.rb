@@ -20,6 +20,7 @@ module Search
       string :school_grade_level
       integer :overall_gs_rating
       integer :sorted_gs_rating_asc
+      integer :school_district_id
       string :school_sortable_name
       float :distance
     end
@@ -62,11 +63,11 @@ module Search
     end
 
     def default_sort_name
-      'rating'
+      lat && lon ? 'distance' : 'rating'
     end
 
     def default_sort_direction
-      'desc'
+      lat && lon ? 'asc' : 'desc'
     end
 
     def map_sort_direction(name, _)

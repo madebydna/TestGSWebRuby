@@ -47,6 +47,9 @@ module Search
         search.with(:school_database_state, state.downcase) if state
         search.with(:school_grade_level, level_codes.map(&:downcase)) if level_codes.present?
         search.with(:school_type, entity_types.map(&:downcase)) if entity_types.present?
+        if district_id && district_id > 0
+          search.with(:school_district_id, district_id) if district_id
+        end
         search.paginate(page: page, per_page: limit)
         search.order_by(sort_field, sort_direction) if sort_field
         search.adjust_solr_params do |params|
@@ -56,11 +59,14 @@ module Search
           # replace it with the way we filter document types
           params[:fq][0] = 'document_type:school'
           params[:fq].map! do |param|
-            param.sub(/_s(\W)/, '\1')
+            param.sub(/_s(\W)/, '\1').sub(/_i(\W)/, '\1')
           end
           params[:sort] = params[:sort].sub(/_i(\W)/, '\1') if params[:sort]
           params[:sort] = params[:sort].sub(/_s(\W)/, '\1') if params[:sort]
           params[:sort] = params[:sort].sub(/_f(\W)/, '\1') if params[:sort]
+          if district_id == 0
+            params[:fq] << '-school_district_id:[1 TO 99999]'
+          end
         end
       end
     end
