@@ -34,7 +34,8 @@ export default class MapMarker extends DefaultMapMarker {
       this.props.rating,
       this.props.lat,
       this.props.lon,
-      this.props.highlighted
+      this.props.highlighted,
+      this.props.districtBoundary
     );
     this.marker.setMap(this.props.map);
     google.maps.event.addListener(this.marker, 'click', () =>

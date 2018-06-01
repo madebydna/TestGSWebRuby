@@ -37,21 +37,23 @@ export default function createMarkerFactory(googleMaps) {
       else {return createPinWithoutRating(highlighted)}
     },
 
-    createMarker: function(title, rating, lat, lon, highlighted, assigned, address) {
+    createMarker: function(title, rating, lat, lon, highlighted, svg=true, assigned, address,) {
+      // svg flag intended to permit backwards compatibility while we decide which assets to use for district boundaries tool
       let position = new googleMaps.LatLng(lat, lon);
       let color = mapPinColor(rating);
       return new googleMaps.Marker({
         position: position,
         title: title,
-        icon: {url: this.selectPinFunction(rating, color, highlighted, assigned, address)},
-        zIndex: 1
+        icon: svg ? {url: this.selectPinFunction(rating, color, highlighted, assigned, address)} : this.markerImage(rating),
+        zIndex: 1,
+        shape: this.shape
       });
     }
   };
 
   const markerFactories = {
     PUBLIC_SCHOOL: Object.assign(Object.create(markerFactory), {
-      // iconSheet: publicSchoolPng,
+      iconSheet: publicSchoolPng,
       width: 31,
       height: 40,
       shape: {
@@ -61,7 +63,7 @@ export default function createMarkerFactory(googleMaps) {
     }),
 
     PRIVATE_SCHOOL: Object.assign(Object.create(markerFactory), {
-      // iconSheet: privateSchoolPng,
+      iconSheet: privateSchoolPng,
       width: 31,
       height: 40,
       shape: {
@@ -71,7 +73,7 @@ export default function createMarkerFactory(googleMaps) {
     }),
 
     DISTRICT: Object.assign(Object.create(markerFactory), {
-      // iconSheet: districtPng,
+      iconSheet: districtPng,
       width: 31,
       height: 40,
       shape: {
