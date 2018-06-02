@@ -4,7 +4,7 @@ import SpinnyOverlay from '../spinny_overlay';
 import School from './school';
 import { CSSTransition } from 'react-transition-group';
 
-const SchoolList = ({ schools, isLoading, pagination, highlightSchool }) => (
+const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
   <SpinnyOverlay spin={isLoading}>
     {({ createContainer, spinny }) =>
       createContainer(
@@ -20,8 +20,8 @@ const SchoolList = ({ schools, isLoading, pagination, highlightSchool }) => (
               >
                 <li
                   key={s.state + s.id}
-                  onMouseEnter={() => highlightSchool(s)}
-                  onMouseLeave={() => highlightSchool(s)}
+                  onMouseEnter={() => toggleHighlight(s)}
+                  onMouseLeave={() => toggleHighlight(s)}
                   className={s.active ? 'active' : ''}
                 >
                   <School {...s} />
