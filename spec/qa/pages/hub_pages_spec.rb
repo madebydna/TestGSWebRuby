@@ -16,7 +16,6 @@ describe '#hub pages', remote:true, safe_for_prod: true  do
     describe "#{uri} hub page" do
       before { visit uri }
       it "shows title of #{hub_title}" do
-        pending 'See JT-3159' if uri == '/washington-dc/washington'
         expect(page).to have_css(:title, visible: false, text: hub_title)
       end
       it "has h1 of #{hub_title}" do
