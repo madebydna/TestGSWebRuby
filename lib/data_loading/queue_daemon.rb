@@ -9,6 +9,10 @@ class QueueDaemon
 
   attr_accessor :should_log
 
+  def initialize(concurrently: false)
+    @concurrently = concurrently
+  end
+
   def run!
     fail_counter = 0
     if ENV['RAILS_ENV'] == 'production'
@@ -81,10 +85,28 @@ class QueueDaemon
     @should_log
   end
 
+  def concurrently?
+    @concurrently == true
+  end
+
   def get_updates
     begin
-      UpdateQueue.where(status: unprocessed_status).order(priority: :asc, created: :asc).limit(update_limit)
-    rescue
+      if concurrently?
+        num_updated = UpdateQueue.where(status: unprocessed_status, concurrently: true, pid: nil).order(priority: :asc, created: :asc).limit(update_limit).update_all(pid: Process.pid)
+        if num_updated > 0
+          UpdateQueue.where(status: unprocessed_status, concurrently: true, pid: Process.pid).order(priority: :asc, created: :asc).limit(update_limit)
+        else
+          return []
+        end
+      else
+        num_updated = UpdateQueue.where(status: unprocessed_status, pid: nil).order(priority: :asc, created: :asc).limit(update_limit).update_all(pid: Process.pid)
+        if num_updated > 0
+          UpdateQueue.where(status: unprocessed_status, pid: Process.pid).order(priority: :asc, created: :asc).limit(update_limit)
+        else
+          return []
+        end
+      end
+    rescue => e
       raise 'Could Not Retrieve Updates'
     end
   end

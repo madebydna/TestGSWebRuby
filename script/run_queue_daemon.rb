@@ -5,6 +5,7 @@ require 'optparse'
 script_args = {}
 OptionParser.new do |opts|
   opts.on("-l", "--[no-]log", "Log to stdout") { |b| script_args[:log] = b }
+  opts.on("-c", "--[no-]concurrent", "Whether to select concurrent update_queue rows") { |c| script_args[:concurrently] = c }
 end.parse!(ARGV)
 
 module ActiveRecord::ConnectionAdapters
@@ -32,6 +33,7 @@ module ActiveRecord::ConnectionAdapters
 end
 
 #Queue Daemon lives in lib/data_loading
-daemon = QueueDaemon.new
+concurrently = script_args[:concurrently] == 'true' || script_args[:concurrently] == true
+daemon = QueueDaemon.new(concurrently: concurrently)
 daemon.should_log = script_args[:log] 
 daemon.run!
