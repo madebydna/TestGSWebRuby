@@ -143,6 +143,7 @@ class DataValue < ActiveRecord::Base
           state,
           data_types
         ), :data_values)
+          .with_data_types
           .with_breakdowns
           .with_breakdown_tags
           .with_academics
@@ -172,6 +173,7 @@ class DataValue < ActiveRecord::Base
           district_id,
           data_types
         ), :data_values)
+          .with_data_types
           .with_breakdowns
           .with_breakdown_tags
           .with_academics
