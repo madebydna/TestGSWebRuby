@@ -54,7 +54,7 @@ $(function() {
   });
 
   $(function() {
-    $('body').on('click', '.multi-select-button-group label', GS.multiSelectButtonGroup);
+    $('body').on('click', '.multi-select-button-group button', GS.multiSelectButtonGroup);
   });
 
   $('.js-clear-local-cookies-link').each(function() {
