@@ -1,8 +1,8 @@
 import publicSchoolPng from 'icons/google_map_pins/public_school_markers.png';
 import privateSchoolPng from 'icons/google_map_pins/private_school_markers.png';
 import districtPng from 'icons/google_map_pins/district_markers.png';
-import {mapPinColor,createDefaultPinWithRating,createHighlightedPinWithRating,createAssignedPinWithRating,createPinWithoutRating,addressPin} from './map_pin_assets';
 import { t } from '../../util/i18n';
+import {mapPinColor,createDefaultPinWithRating,createHighlightedPinWithRating,createAssignedPinWithRating,createPinWithoutRating,createAssignedPinWithoutRating,addressPin} from './map_pin_assets';
 
 export const PUBLIC_SCHOOL = 'PUBLIC_SCHOOL';
 export const PRIVATE_SCHOOL = 'PRIVATE_SCHOOL';
@@ -34,6 +34,7 @@ export default function createMarkerFactory(googleMaps) {
       else if (rating && highlighted) {return createHighlightedPinWithRating(rating, color, assigned)}
       else if (rating) {return createDefaultPinWithRating(rating, color, assigned)}
       else if (address) {return addressPin}
+      else if (assigned) {return createAssignedPinWithoutRating(highlighted)}
       else {return createPinWithoutRating(highlighted)}
     },
 
