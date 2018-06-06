@@ -1,3 +1,4 @@
+import { t } from '../../util/i18n';
 
 function mapPinColor(rating) {
   return {
@@ -71,6 +72,21 @@ function createPinWithoutRating(highlighted){
         </svg>`)
 }
 
+function createAssignedPinWithoutRating(highlighted){
+  return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="59" height="58" viewBox="0 0 59 58">\
+        <g fill="none" fill-rule="evenodd">\
+        <g transform="translate(16 25)">\
+        <path fill="#FFF" d="M9.323 25.35c-5.32-1.568-9.2-6.454-9.2-12.237C.123 6.063 5.887.348 12.997.348S25.87 6.063 25.87 13.113c0 5.316-3.278 9.874-7.94 11.793l-4.424 7.569-4.183-7.125z"/>\
+        <circle cx="13.077" cy="12.692" r="${highlighted ? '10.019' : '10.769'}" fill="${highlighted ? '' : '#707A80'}" stroke="${highlighted ? '#707A80' : ''}" stroke-width="${highlighted ? '1.5' : ''}"/>\
+        </g>\
+        <path fill="#176997" d="M32.968 19l-3.655 3.655L25.658 19H0V0h59v19H32.968z"/>\
+        <text fill="#FFF" font-family="OpenSans-Bold, Open Sans" font-size="10" font-weight="bold" letter-spacing=".002">\
+        <tspan x="5.192" y="13">${t('assigned')}</tspan>\
+        </text>\
+        </g>\
+        </svg>`)
+}
+
 const addressPin = (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="25" height="34" viewBox="0 0 25 34">\
         <g fill="none" fill-rule="evenodd">\
         <path fill="#323232" fill-rule="nonzero" d="M12.5 0C5.596 0 0 5.911 0 13.204c0 7.877 9.465 18.042 11.923 20.548.323.33.83.33 1.154 0C15.535 31.246 25 21.082 25 13.204 25 5.91 19.404 0 12.5 0z"/>\
@@ -78,4 +94,5 @@ const addressPin = (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000
         </g>\
         </svg>`)
 
-export {mapPinColor,createDefaultPinWithRating,createHighlightedPinWithRating,createAssignedPinWithRating,createPinWithoutRating,addressPin};
+export {mapPinColor,createDefaultPinWithRating,createHighlightedPinWithRating,createAssignedPinWithRating,
+  createPinWithoutRating,createAssignedPinWithoutRating,addressPin};
