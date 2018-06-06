@@ -140,7 +140,7 @@ module SearchMetaTagsConcerns
     {
         title: "GreatSchools.org Search#{pagination_text(false)}",
         canonical: canonical_url,
-        robots: 'noindex'
+        robots: 'noindex, nofollow'
     }
   end
 
@@ -161,7 +161,7 @@ module SearchMetaTagsConcerns
     {
         title: "GreatSchools.org Search: #{@params_hash['q']}#{pagination_text(false)}",
         canonical: canonical_url,
-        robots: 'noindex'
+        robots: 'noindex, nofollow'
     }
   end
 

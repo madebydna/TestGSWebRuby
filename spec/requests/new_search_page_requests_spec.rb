@@ -20,9 +20,9 @@ describe 'New search page' do
       it "the uri: #{path} should #{should_write_noindex ? '' : 'not'} include noindex tag" do
         get path
         if should_write_noindex
-          expect(response.body).to include('<meta name="robots" content="noindex" />')
+          expect(response.body).to include('<meta name="robots" content="noindex, nofollow" />')
         else
-          expect(response.body).to_not include('<meta name="robots" content="noindex" />')
+          expect(response.body).to_not include('<meta name="robots" content="noindex, nofollow" />')
         end
       end
     end
