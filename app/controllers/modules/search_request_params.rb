@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module SearchRequestParams
+  include UrlHelper
 
   def state
     state_param = params[:state]
@@ -18,24 +19,21 @@ module SearchRequestParams
   end
 
   def level_codes
-    if params[:gradeLevels].present? && params[:gradeLevels].is_a?(Array)
-      params[:gradeLevels]
-    else
-      params[:level_code]&.split(',')
-    end
+    params = parse_array_query_string(request.query_string)
+    codes = params['gradeLevels'] || params['level_code'] || []
+    codes = codes.split(',') unless codes.is_a?(Array)
+    codes
   end
+
   def level_code
     level_codes&.first
   end
 
   def entity_types
-    if params[:st].present? && params[:st].is_a?(Array)
-      params[:st]
-    elsif params[:type].present? && params[:type].is_a?(Array)
-      params[:type]
-    else
-      params[:type]&.split(',')
-    end
+    params = parse_array_query_string(request.query_string)
+    types = params['st'] || params['type'] || []
+    types = types.split(',') unless types.is_a?(Array)
+    types
   end
 
   def lat
