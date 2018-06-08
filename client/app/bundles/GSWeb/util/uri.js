@@ -21,11 +21,19 @@ export function reloadPageWithNewQuery(query) {
 export function copyParam(param, sourceUrl, targetUrl) {
   const queryString = getQueryStringFromGivenUrl(sourceUrl);
   const queryData = getQueryData(`?${queryString}`);
-  const value = queryData[param];
+  let value = queryData[param];
   if (value === undefined) {
-    return targetUrl;
+    value = ''
   }
   return addQueryParamToUrl(param, value, targetUrl);
+}
+
+export function copyParams(paramsArray, sourceUrl, targetUrl) {
+  let target = targetUrl;
+  paramsArray.forEach((param) =>{
+    target = copyParam(param, sourceUrl, target)
+  });
+  return target;
 }
 
 /**
