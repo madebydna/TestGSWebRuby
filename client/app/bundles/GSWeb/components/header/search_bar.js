@@ -1,8 +1,4 @@
 import { addClass, removeClass, hasClass } from './utils'
-import {
-  getPath, removeFromQueryString, putParamObjectIntoQueryString, goToPage,
-  addHiddenFieldsToForm, getQueryStringFromObject, getQueryData
-} from '../../util/uri';
 
 const schoolSearchSelector = 'js-school-search';
 const contentSearchSelector = 'js-content-search';
