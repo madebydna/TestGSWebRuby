@@ -13,10 +13,10 @@ const GiveUsFeedback = ({ className, content, module, divider }) => {
     <div className="module_feedback">
       {t('was_this_useful')}&nbsp;
       <span>
-        <a href={qualaroo_yes_url} className="anchor-button" target="_blank">
+        <a href={qualaroo_yes_url} className="anchor-button" target="_blank" rel="nofollow">
           {t('yes')}
         </a>
-        <a href={qualaroo_no_url} className="anchor-button" target="_blank">
+        <a href={qualaroo_no_url} className="anchor-button" target="_blank" rel="nofollow">
           {t('no')}
         </a>
       </span>

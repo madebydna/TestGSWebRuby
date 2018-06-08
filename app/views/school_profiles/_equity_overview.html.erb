@@ -1,8 +1,8 @@
 <% content_for(:profile_module_header, flush: true) do %>
   <% useful_url = equity_overview.qualaroo_module_link(:equity_overview_no_data) + '&a=0' %>
-  <% useful_link = link_to(I18n.db_t('Yes'), useful_url, class: 'anchor-button', target: '_blank') %>
+  <% useful_link = link_to(I18n.db_t('Yes'), useful_url, class: 'anchor-button', target: '_blank', rel: 'nofollow') %>
   <% not_useful_url = equity_overview.qualaroo_module_link(:equity_overview_no_data) + '&a=1' %>
-  <% not_useful_link = link_to(I18n.db_t('No'), not_useful_url, class: 'anchor-button', target: '_blank') %>
+  <% not_useful_link = link_to(I18n.db_t('No'), not_useful_url, class: 'anchor-button', target: '_blank', rel: 'nofollow') %>
   <%= render 'module_header',
     rating: equity_overview.equity_rating,
     title: t('lib.equity_overview.title'),
