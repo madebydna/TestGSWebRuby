@@ -1,6 +1,8 @@
 import publicSchoolPng from 'icons/google_map_pins/public_school_markers.png';
 import privateSchoolPng from 'icons/google_map_pins/private_school_markers.png';
 import districtPng from 'icons/google_map_pins/district_markers.png';
+import { t } from '../../util/i18n';
+import {mapPinColor,createDefaultPinWithRating,createHighlightedPinWithRating,createAssignedPinWithRating,createPinWithoutRating,createAssignedPinWithoutRating,addressPin} from './map_pin_assets';
 
 export const PUBLIC_SCHOOL = 'PUBLIC_SCHOOL';
 export const PRIVATE_SCHOOL = 'PRIVATE_SCHOOL';
@@ -9,6 +11,7 @@ export const DISTRICT = 'DISTRICT';
 export default function createMarkerFactory(googleMaps) {
 
   const markerFactory = {
+
     iconOrigin: function(rating) {
       var offset = this.width * 10;
       if (rating && rating > 0 && rating < 11) {
@@ -26,14 +29,25 @@ export default function createMarkerFactory(googleMaps) {
       );
     },
 
-    createMarker: function(title, rating, lat, lon) {
+    selectPinFunction: function(rating, color, highlighted, assigned, address){
+      if (assigned && rating) {return createAssignedPinWithRating(rating)}
+      else if (rating && highlighted) {return createHighlightedPinWithRating(rating, color, assigned)}
+      else if (rating) {return createDefaultPinWithRating(rating, color, assigned)}
+      else if (address) {return addressPin}
+      else if (assigned) {return createAssignedPinWithoutRating(highlighted)}
+      else {return createPinWithoutRating(highlighted)}
+    },
+
+    createMarker: function(title, rating, lat, lon, highlighted, svg=true, assigned, address,) {
+      // svg flag intended to permit backwards compatibility while we decide which assets to use for district boundaries tool
       let position = new googleMaps.LatLng(lat, lon);
+      let color = mapPinColor(rating);
       return new googleMaps.Marker({
         position: position,
         title: title,
-        icon: this.markerImage(rating),
-        shape: this.shape,
-        zIndex: 1
+        icon: svg ? {url: this.selectPinFunction(rating, color, highlighted, assigned, address)} : this.markerImage(rating),
+        zIndex: 1,
+        shape: this.shape
       });
     }
   };
@@ -71,7 +85,7 @@ export default function createMarkerFactory(googleMaps) {
   };
 
   return {
-    createMarker: (type, ...otherArgs) => { 
+    createMarker: (type, ...otherArgs) => {
       // ... captures remaining args so they can be passed through to method call below
       return markerFactories[type].createMarker(...otherArgs)
     }
