@@ -17,8 +17,10 @@ const SchoolList = ({ schools, isLoading, pagination }) => (
             ))}
             {pagination && (
               <li>
-                <div className="pagination-buttons button-group">
-                  {pagination}
+                <div className="pagination-container">
+                  <div className="pagination-buttons button-group">
+                    {pagination}
+                  </div>
                 </div>
               </li>
             )}

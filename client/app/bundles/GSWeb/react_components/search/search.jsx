@@ -14,6 +14,7 @@ import GradeLevelButtons from './grade_level_buttons';
 import GradeLevelCheckboxes from './grade_level_checkboxes';
 import DistanceFilter from './distance_filter';
 import DistanceContext from './distance_context';
+import { viewport, XS, validSizes } from 'util/viewport';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -81,10 +82,12 @@ class Search extends React.Component {
             isLoading={this.props.loadingSchools}
             pagination={
               this.props.totalPages > 1 ? (
+
                 <PaginationButtons
                   page={this.props.page}
                   totalPages={this.props.totalPages}
                   onPageChanged={this.props.onPageChanged}
+                  mobileView={this.props.size == XS}
                 />
               ) : null
             }
