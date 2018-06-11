@@ -161,7 +161,7 @@ const addInput = function(name, val, formElement) {
 }
 
 const submitSchoolSearch = function(e) {
-  includesParam('newsearch') && addInput('newsearch', true, schoolSearchForm)
+  includesParam('newsearch') && addInput('newsearch', 'true', schoolSearchForm)
   includesParam('lang=es') && addInput('lang', 'es', schoolSearchForm)
 }
 
