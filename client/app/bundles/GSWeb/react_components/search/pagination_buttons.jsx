@@ -13,13 +13,13 @@ const PaginationButtons = ({ page, totalPages, onPageChanged, mobileView }) => {
     options.push({
       key: '<',
       value: prev,
-      label: <span><span className="icon-arrow-left"></span> Previous 25</span>,
+      label: <span><span className="icon-caret-down rotate-text-90"></span> Previous 25</span>,
       preventSelect: !prev
     });
     options.push({
       key: '>',
       value: next,
-      label: <span>Next 25 <span className="icon-arrow-right"></span></span>,
+      label: <span>Next 25 <span className="icon-caret-down rotate-text-270"></span></span>,
       preventSelect: !next
     });
   }
@@ -27,7 +27,7 @@ const PaginationButtons = ({ page, totalPages, onPageChanged, mobileView }) => {
     options.push({
       key: '<',
       value: prev,
-      label: <span className="icon-arrow-left"></span>,
+      label: <span className="icon-caret-down rotate-text-90"></span>,
       preventSelect: !prev
     });
     range.forEach(pageNum => {
@@ -40,7 +40,7 @@ const PaginationButtons = ({ page, totalPages, onPageChanged, mobileView }) => {
     options.push({
       key: '>',
       value: next,
-      label: <span className="icon-arrow-right"></span>,
+      label: <span className="icon-caret-down rotate-text-270"></span>,
       preventSelect: !next
     });
   }
