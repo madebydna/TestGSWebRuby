@@ -86,7 +86,8 @@ class SearchLayout extends React.Component {
     listMapDropdown: PropTypes.element.isRequired,
     schoolList: PropTypes.element.isRequired,
     map: PropTypes.element.isRequired,
-    tallAd: PropTypes.element.isRequired
+    tallAd: PropTypes.element.isRequired,
+    mapAd: PropTypes.element.isRequired
   };
 
   constructor(props) {
