@@ -4,6 +4,7 @@ import { capitalize, t } from 'util/i18n';
 import {
   defineAdOnce,
   showAd,
+  destroyAd,
   onInitialize as onAdvertisingInitialize
 } from 'util/advertising.js';
 
@@ -28,7 +29,10 @@ class Ad extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      adRenderEnded: false,
+      adFilled: false
+    };
     this.onAdRenderEnded = this.onAdRenderEnded.bind(this);
   }
 
@@ -49,6 +53,10 @@ class Ad extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    destroyAd(this.slotId());
+  }
+
   onAdRenderEnded({ isEmpty }) {
     this.setState({
       adRenderEnded: true,
@@ -66,10 +74,12 @@ class Ad extends React.Component {
 
   render() {
     const { container } = this.props;
+    const givenContainerClassName = container.props.className;
+    const newContainerClassName = `${givenContainerClassName || ''} ${
+      this.shouldShowContainer() ? '' : 'dn'
+    }`;
     return React.cloneElement(container, {
-      className: `${container.props.className} ${
-        this.shouldShowContainer() ? '' : 'dn'
-      }`,
+      className: newContainerClassName,
       children: (
         <React.Fragment>
           <div className="tac" id={this.slotId()} />

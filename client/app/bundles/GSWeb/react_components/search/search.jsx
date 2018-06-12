@@ -88,7 +88,13 @@ class Search extends React.Component {
             <Ad slot="Search_160x600" dimensions={[160, 600]} />
           </div>
         }
-        mapAd={<Ad slot="Search_text" dimensions={[600, 100]} />}
+        mapAd={
+          <Ad
+            key="map-ad-Search_text"
+            slot="Search_text"
+            dimensions={[600, 100]}
+          />
+        }
         schoolList={
           <SchoolList
             toggleHighlight={this.props.toggleHighlight}

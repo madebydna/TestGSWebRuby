@@ -3,6 +3,7 @@ import {
   onAdNotFilled as onMobileOverlayAdNotFilled
 } from 'components/ads/mobile_overlay';
 import log from 'util/log';
+import { remove } from 'lodash';
 
 const $ = window.jQuery;
 window.googletag = window.googletag || {};
@@ -205,6 +206,7 @@ const defineAdOnce = ({
 }) => {
   if (slots[divId]) {
     // already defined
+    slots[divId].onRenderEnded = onRenderEnded;
     return;
   }
   const sizeMapping = getSizeMappings()[sizeName];
@@ -214,6 +216,16 @@ const defineAdOnce = ({
   }
   slot.onRenderEnded = onRenderEnded;
   slots[divId] = slot.addService(googletag.pubads());
+};
+
+const destroyAd = divId => {
+  if (slots[divId]) {
+    googletag.cmd.push(() => {
+      googletag.destroySlots([slots[divId]]);
+      delete slots[divId];
+      remove(shownArray, id => id === divId);
+    });
+  }
 };
 
 const getDivId = function(obj) {
@@ -353,4 +365,11 @@ GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
 GS.ad.showAd = showAd;
 GS.ad.slotRenderedHandler = slotRenderedHandler;
 GS.ad.init = init;
-export { init, onInitialize, showAd, enableAdCloseButtons, defineAdOnce };
+export {
+  init,
+  onInitialize,
+  showAd,
+  enableAdCloseButtons,
+  defineAdOnce,
+  destroyAd
+};

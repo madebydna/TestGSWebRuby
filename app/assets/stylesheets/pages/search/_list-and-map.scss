@@ -17,6 +17,9 @@
     right: 0;
     left: 0;
     position: absolute;
+    // @include media-breakpoint-up(lg) {
+    //   bottom: 115px;
+    // }
   }
 
   .right-column {
@@ -26,7 +29,7 @@
     height: 100%;
     float: left;
     position: relative;
-    width: 63%;
+    width: 65%;
     @include media-breakpoint-down(sm) {
       width: 100%;
       &.closed {
@@ -45,12 +48,26 @@
     }
 
     .map-column {
+      @include clearfix;
       position: relative;
       height: 100%;
       min-height: $map-column-min-height;
       @include media-breakpoint-up(sm) {
         margin-right: 170px;
       }
+      @include media-breakpoint-up(lg) {
+        min-height: $map-column-min-height;
+        // min-height: calc(#{$map-column-min-height} + 115px); // ad
+      }
+    }
+
+    .map-ad {
+      margin-top: 15px;
+      top: $map-column-min-height;
+      // top: calc(#{$map-column-min-height} + 15px);
+      text-align: center;
+      width: calc(100% - 170px);
+      min-width: 600px;
     }
 
     .ad-column {
@@ -68,10 +85,10 @@
     .list-column {
       min-height: $map-column-min-height;
       float: left;
-      width: 37%;
+      width: 35%;
       min-width: 290px;
       @include media-breakpoint-up(md) {
-        max-width: 455px;
+        max-width: 413px;
       }
       @include media-breakpoint-down(sm) {
         width: 100%;

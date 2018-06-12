@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'lodash';
 import $ from 'jquery';
-import { viewport, SM, validSizes } from 'util/viewport';
+import { SM, LG, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
-import CaptureOutsideClick from 'react_components/search/capture_outside_click';
 import Button from 'react_components/button';
 
 function keepInViewport(
@@ -121,17 +120,20 @@ class SearchLayout extends React.Component {
   renderMapAndAdContainer(map, ad) {
     if (this.props.size > SM) {
       return (
-        <div className="right-column">
+        <div key="right-column" className="right-column">
           <div className="right-column-fixed" ref={this.fixedYLayer}>
             <div className="ad-column">{ad}</div>
             <div className="map-column">{map}</div>
-            <div>{this.props.mapAd}</div>
+            {this.props.size >= LG && (
+              <div className="map-ad">{this.props.mapAd}</div>
+            )}
           </div>
         </div>
       );
     }
     return (
       <div
+        key="right-column"
         className={`right-column ${this.shouldRenderMap() ? ' ' : 'closed'}`}
       >
         <div className="right-column-fixed">
