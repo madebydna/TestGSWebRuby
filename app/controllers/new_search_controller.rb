@@ -3,6 +3,7 @@
 class NewSearchController < ApplicationController
   include Pagination::PaginatableRequest
   include SearchRequestParams
+  include AdvertisingConcerns
 
   layout 'application'
   before_filter :redirect_unless_valid_search_criteria # we need at least a 'q' param or state and city/district
@@ -25,9 +26,27 @@ class NewSearchController < ApplicationController
     next_page = next_page_url(page_of_results)
     set_meta_tags(prev: prev_page) if prev_page
     set_meta_tags(next: next_page) if next_page
+    set_ad_targeting_props
   end
 
   private
+
+  # AdvertisingConcerns
+  def ad_targeting_props
+    {
+      page_name: "GS:SchoolS",
+      template: "search",
+    }.tap do |hash|
+      hash[:district_id] = district_id if district_id
+      hash[:school_id] = school_id if school_id
+      hash[:city] = city.gs_capitalize_words if city
+      hash[:State] = state if state
+      hash[:level] = level_codes.map { |s| s[0] } if level_codes.present?
+      hash[:type] = entity_types.map(:capitalize) if entity_types.present?
+      hash[:county] = county_object&.name if county_object
+      # hash[:zipcode]
+    end
+  end
 
   # Paginatable
   def default_limit

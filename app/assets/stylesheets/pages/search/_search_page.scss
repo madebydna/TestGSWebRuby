@@ -103,7 +103,6 @@ body {
     .ad-bar {
       width: 160px;
       height: 600px;
-      background-color: grey;
     }
 
     .map-legend {
@@ -172,7 +171,7 @@ body {
 
     .school-list ol {
       padding: 0 10px 0 0;
-      @include media-breakpoint-only(sm) {
+      @include media-breakpoint-only(xs) {
         padding: 0;
       }
     }

@@ -54,6 +54,15 @@ section.school-list {
       > span + span {
         margin-left: 10px;
       }
+      &.ad {
+        background: none;
+        box-shadow: none;
+        padding: '0';
+        @include media-breakpoint-only(xs) {
+          margin-left: '-10px';
+          margin-right: '-10px';
+        }
+      }
     }
 
     li + li {

@@ -124,6 +124,7 @@ class SearchLayout extends React.Component {
           <div className="right-column-fixed" ref={this.fixedYLayer}>
             <div className="ad-column">{ad}</div>
             <div className="map-column">{map}</div>
+            <div>{this.props.mapAd}</div>
           </div>
         </div>
       );
@@ -233,9 +234,7 @@ class SearchLayout extends React.Component {
             {this.props.schoolList}
           </div>
           {this.renderMapAndAdContainer(
-            <div className="map-container">
-              <div className="map-fit">{this.props.map}</div>
-            </div>,
+            <div className="map-fit">{this.props.map}</div>,
             this.props.tallAd
           )}
         </div>

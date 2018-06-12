@@ -1,4 +1,6 @@
 #search-page {
+  $map-column-min-height: 605px;
+
   .school-list ol {
     overflow: visible;
   }
@@ -45,7 +47,7 @@
     .map-column {
       position: relative;
       height: 100%;
-      min-height: 600px;
+      min-height: $map-column-min-height;
       @include media-breakpoint-up(sm) {
         margin-right: 180px;
       }
@@ -54,9 +56,8 @@
     .ad-column {
       position: relative;
       float: right;
-      width: 170px;
-      background-color: lightgrey;
-      height: 600px;
+      width: 160px;
+      height: $map-column-min-height;
       @include media-breakpoint-only(xs) {
         display: none;
       }
@@ -65,7 +66,7 @@
 
   .list-map-ad {
     .list-column {
-      min-height: 600px;
+      min-height: $map-column-min-height;
       float: left;
       width: 40%;
       min-width: 290px;

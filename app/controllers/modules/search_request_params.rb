@@ -71,8 +71,18 @@ module SearchRequestParams
   end
 
   def city_object
-    return nil unless city
-    @_city_object ||= City.get_city_by_name_and_state(city, state).first
+    return nil unless city && state
+    if defined?(@_city_object)
+      return @_city_object
+    end
+    @_city_object = City.get_city_by_name_and_state(city, state).first
+  end
+
+  def county_object
+    if defined?(@_county_object)
+      return @_county_object 
+    end
+    @_county_object = city_object&.county
   end
 
   def school_id

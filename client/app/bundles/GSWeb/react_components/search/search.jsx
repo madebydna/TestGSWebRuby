@@ -8,13 +8,13 @@ import ListMapDropdown from './list_map_dropdown';
 import PaginationButtons from './pagination_buttons';
 import Map from './map';
 import SchoolList from './school_list';
-import EntityTypeButtons from './entity_type_buttons';
 import EntityTypeDropdown from './entity_type_dropdown';
-import EntityTypeCheckboxes from './entity_type_checkboxes';
 import GradeLevelButtons from './grade_level_buttons';
 import GradeLevelCheckboxes from './grade_level_checkboxes';
 import DistanceFilter from './distance_filter';
 import DistanceContext from './distance_context';
+import Ad from 'react_components/ad';
+import { init as initAdvertising } from 'util/advertising';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -52,6 +52,10 @@ class Search extends React.Component {
     };
   }
 
+  componentDidMount() {
+    initAdvertising();
+  }
+
   render() {
     return (
       <SearchLayout
@@ -79,7 +83,12 @@ class Search extends React.Component {
             }}
           />
         }
-        tallAd={<div className="ad-bar">Advertisement</div>}
+        tallAd={
+          <div className="ad-bar">
+            <Ad slot="Search_160x600" dimensions={[160, 600]} />
+          </div>
+        }
+        mapAd={<Ad slot="Search_text" dimensions={null} />}
         schoolList={
           <SchoolList
             toggleHighlight={this.props.toggleHighlight}
