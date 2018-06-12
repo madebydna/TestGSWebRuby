@@ -47,7 +47,10 @@ const ButtonGroup = ({
 ButtonGroup.propTypes = {
   options: PropTypes.object.isRequired,
   onSelect: PropTypes.func.isRequired,
-  activeOption: PropTypes.string.isRequired,
+  activeOption: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]).isRequired,
   multiple: PropTypes.bool,
   label: PropTypes.string,
   allowDeselect: PropTypes.bool

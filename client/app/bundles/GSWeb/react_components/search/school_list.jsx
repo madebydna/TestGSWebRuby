@@ -2,18 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SpinnyOverlay from '../spinny_overlay';
 import School from './school';
+import { CSSTransition } from 'react-transition-group';
 
-const SchoolList = ({ schools, isLoading, pagination }) => (
+const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
   <SpinnyOverlay spin={isLoading}>
     {({ createContainer, spinny }) =>
       createContainer(
-        <section className="school-list">
-          {spinny}
+        <section className={`school-list ${isLoading ? 'loading' : ''}`}>
+          {/* spinny */}
           <ol>
             {schools.map(s => (
-              <li key={s.state + s.id} className={s.active ? 'active' : ''}>
-                <School {...s} />
-              </li>
+              <CSSTransition
+                classNames="school-list"
+                in={!isLoading}
+                timeout={3000}
+                key={s.state + s.id}
+              >
+                <li
+                  key={s.state + s.id}
+                  onMouseEnter={() => toggleHighlight(s)}
+                  onMouseLeave={() => toggleHighlight(s)}
+                  className={s.active ? 'active' : ''}
+                >
+                  <School {...s} />
+                </li>
+              </CSSTransition>
             ))}
             {pagination && (
               <li>
@@ -32,9 +45,10 @@ const SchoolList = ({ schools, isLoading, pagination }) => (
 );
 
 SchoolList.propTypes = {
-  schools: PropTypes.arrayOf(School.propTypes).isRequired,
+  schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
   isLoading: PropTypes.bool,
-  pagination: PropTypes.element
+  pagination: PropTypes.element,
+  highlightSchool: PropTypes.func.isRequired
 };
 SchoolList.defaultProps = {
   isLoading: false,

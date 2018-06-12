@@ -20,10 +20,11 @@ body {
     position: relative;
     margin: auto;
     max-width: 1282px;
-    padding: 70px 0px 0px 0px;
+
+    padding: 70px 0 0 0;
 
     @include media-breakpoint-down(sm) {
-      padding: 0 15px 0 15px;
+      padding: 0;
     }
 
     @include clearfix;
@@ -82,21 +83,26 @@ body {
       }
     }
 
-    .spinny-wheel {
-      background-color: #f6f9fa;
-      opacity: 0.5;
-      transition: background-color 1s ease-in;
-    }
-
     .dropdown {
       display: inline-block;
       .selection {
-        padding: 8px;
+        padding: 8px 27px 7px 7px;
+        border: 1px solid #c1d2d9;
+        border-radius: 3px;
+        position: relative;
+        top: 1px;
+        background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+        outline: none;
+      }
+      .icon-caret-down {
+        position: absolute;
+        right: 10px;
+        top: calc(50% - 9px);
       }
       .panel {
         display: inline-block;
-        padding: 8px;
-        border: 1px solid #b8b8b8;
+        padding: 15px 15px 10px 15px;
+        border: 1px solid #c1d2d9;
         border-radius: 3px;
         background-color: #f6f9fa;
         position: absolute;
@@ -151,9 +157,8 @@ body {
     }
 
     .list-map-ad {
-      max-width: 1102px;
-      @include media-breakpoint-up(md) {
-        margin-right: 160px;
+      @include media-breakpoint-up(sm) {
+        padding: 0px 10px;
       }
     }
 
@@ -172,6 +177,20 @@ body {
       }
     }
 
+    .subheader {
+      padding: 5px 10px 10px 10px;
+      * + * {
+        margin-top: 5px;
+      }
+    }
+
+    .school-list ol {
+      padding: 0 10px 0 0;
+      @include media-breakpoint-only(sm) {
+        padding: 0;
+      }
+    }
+
     .menu-bar.filters {
       position: fixed;
       top: 60px;
@@ -179,36 +198,41 @@ body {
       right: 0;
       background-color: #fff;
       box-shadow: 0px 1px 1px #dddddd;
+      border-top: 1px solid #ebedee;
       padding: 10px 15px 10px 15px;
       z-index: 1;
     }
 
     .menu-bar.mobile-filters {
       background-color: #e0e7eb;
-      margin: 0 -15px;
       padding: 10px;
     }
 
-    .menu-bar.sort {
+    .checkbox-group {
+      input[type='checkbox'] {
+        @include checkbox(28px, white);
+      }
     }
 
-    .result-summary {
+    .entity-type-dropdown {
+      min-width: 267px; // spanish
+      .checkbox-group {
+        > span {
+          display: block;
+        }
+      }
     }
 
     .filter-panel {
       position: relative;
       background: #cdd8dd;
       padding: 15px;
-      margin: 5px -10px;
+      margin: 5px;
       border-radius: $form-field-border-radius;
-
-      input[type='checkbox'] {
-        @include checkbox(28px, white);
-      }
 
       .menu-item {
         display: block;
-        margin-top: 5px;
+        margin-top: 15px;
 
         .label {
           display: block;
@@ -232,11 +256,12 @@ body {
       }
 
       select,
-      .checkbox-group {
+      .checkbox-group,
+      .dropdown {
         margin-left: 0px !important;
       }
 
-      .checkbox-group {
+      .menu-item > .checkbox-group {
         display: inline-block;
         > span {
           display: block;

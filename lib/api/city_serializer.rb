@@ -9,8 +9,8 @@ class Api::CitySerializer
     {
       city: @city.name,
       state: @city.state.upcase,
-      lat: @city.lat,
-      lon: @city.lon,
+      cityLat: @city.lat,
+      cityLon: @city.lon,
     }
   end
 end
