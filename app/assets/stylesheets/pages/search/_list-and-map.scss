@@ -1,5 +1,5 @@
 #search-page {
-  $map-column-min-height: 605px;
+  $map-column-min-height: 615px;
 
   .school-list ol {
     overflow: visible;
@@ -26,7 +26,7 @@
     height: 100%;
     float: left;
     position: relative;
-    width: 60%;
+    width: 63%;
     @include media-breakpoint-down(sm) {
       width: 100%;
       &.closed {
@@ -37,7 +37,7 @@
     .right-column-fixed {
       position: fixed;
       width: inherit;
-      max-width: 769px;
+      max-width: 779px;
       top: 205px;
       @include media-breakpoint-down(sm) {
         position: initial;
@@ -49,7 +49,7 @@
       height: 100%;
       min-height: $map-column-min-height;
       @include media-breakpoint-up(sm) {
-        margin-right: 180px;
+        margin-right: 170px;
       }
     }
 
@@ -68,10 +68,10 @@
     .list-column {
       min-height: $map-column-min-height;
       float: left;
-      width: 40%;
+      width: 37%;
       min-width: 290px;
       @include media-breakpoint-up(md) {
-        max-width: 465px;
+        max-width: 455px;
       }
       @include media-breakpoint-down(sm) {
         width: 100%;
