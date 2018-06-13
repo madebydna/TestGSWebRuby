@@ -44,6 +44,7 @@ class TNTestProcessor2017TCAPEOC < GS::ETL::TestProcessor
     'Science' => 25,
     'Algebra I' => 7,
     'Algebra II' => 11,
+    'Geometry' => 9,
     'Biology I' => 29,
     'Chemistry' => 42,
     'English I' => 19,
@@ -60,6 +61,7 @@ class TNTestProcessor2017TCAPEOC < GS::ETL::TestProcessor
     'Science' => 19,
     'Algebra I' => 6,
     'Algebra II' => 10,
+    'Geometry' => 8,
     'Biology I' => 22,
     'Chemistry' => 35,
     'English I' => 17,
@@ -71,20 +73,20 @@ class TNTestProcessor2017TCAPEOC < GS::ETL::TestProcessor
     'US History' => 23
    }
 
-  map_prof_band_id = {
-    :"pct_below" => 78,
-    :"pct_approaching" => 79,
-    :"pct_on_track" => 80,
-    :"pct_mastered" => 81,
-    :"pct_on_mastered" => 'null'
-  }
-  map_gsdata_prof_band_id = {
-    :"pct_below" => 79,
-    :"pct_approaching" => 80,
-    :"pct_on_track" => 81,
-    :"pct_mastered" => 82,
-    :"pct_on_mastered" => 1
-  }
+  # map_prof_band_id = {
+  #   :"pct_below" => 78,
+  #   :"pct_approaching" => 79,
+  #   :"pct_on_track" => 80,
+  #   :"pct_mastered" => 81,
+  #   :"pct_on_mastered" => 'null'
+  # }
+  # map_gsdata_prof_band_id = {
+  #   :"pct_below" => 79,
+  #   :"pct_approaching" => 80,
+  #   :"pct_on_track" => 81,
+  #   :"pct_mastered" => 82,
+  #   :"pct_on_mastered" => 1
+  # }
 
   source("state_tn.txt",[], col_sep: "\t") do |s|
    s.transform('Fill missing default fields', Fill, {
@@ -110,15 +112,20 @@ class TNTestProcessor2017TCAPEOC < GS::ETL::TestProcessor
         testadministration: :test_data_type,
         gradelevel: :grade,
         subgroup: :breakdown,
-        valid_tests: :number_tested
+        valid_tests: :number_tested,
+        pct_on_mastered: :value_float
       })
       .transform('Fill missing default fields', Fill, {
         entity_type: 'public_charter',
         level_code: 'e,m,h',
-        year: 2017
+        year: 2017,
+        proficiency_band: 'null',
+        proficiency_band_id: 'null',
+        proficiency_band_gsdata_id: 1
       })
       .transform("delete breadkowns",DeleteRows, :breakdown, 'Non-Black/Hispanic/Native American','Black/Hispanic/Native American','English Learners with T1/T2','Non-English Learners/T1 or T2','Super Subgroup')
-      .transform("Removing * and ** values", DeleteRows,:pct_on_mastered,'*','**')
+      .transform("Removing * and ** values", DeleteRows,:value_float,'*','**')
+      .transform("Removing 0 school_id", DeleteRows,:school_id,'0')      
       .transform("source", WithBlock) do |row|
         if row[:subject] == 'ELA' or row[:subject] == 'Math' or row[:subject] == 'Science'
           row[:test_data_type] = 'tcap'
@@ -139,22 +146,11 @@ class TNTestProcessor2017TCAPEOC < GS::ETL::TestProcessor
         end
         row
       end 
-      .transform("Removing * and ** values", DeleteRows,:grade,'skip')
-      .transform("transpose prof bands", Transposer, 
-        :proficiency_band, 
-        :value_float, 
-        :pct_below,
-        :pct_approaching,
-        :pct_on_track,
-        :pct_mastered,
-        :pct_on_mastered
-      )
+      .transform("Removing non all grade for eoc", DeleteRows,:grade,'skip')
       .transform("map subject ids", HashLookup, :subject, map_subject, to: :subject_id)
       .transform("map breakdown id",HashLookup, :breakdown, map_breakdown, to: :breakdown_id)
-      .transform("map prof band id",HashLookup, :proficiency_band, map_prof_band_id, to: :proficiency_band_id)
       .transform('map breakdowns', HashLookup, :breakdown, map_gsdata_breakdown, to: :breakdown_gsdata_id)
       .transform('map subjects', HashLookup, :subject, map_gsdata_academic, to: :academic_gsdata_id) 
-      .transform("map prof band id",HashLookup, :proficiency_band, map_gsdata_prof_band_id, to: :proficiency_band_gsdata_id) 
       .transform("state_id", WithBlock) do |row|
        if row[:entity_level] == 'school'
          row[:district_id] = row[:district_id].rjust(3,'0')
