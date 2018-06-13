@@ -4,29 +4,52 @@ import Selectable from 'react_components/selectable';
 import pageNumbers from 'util/pagination';
 import AnchorButton from 'react_components/anchor_button';
 
-const PaginationButtons = ({ page, totalPages, onPageChanged }) => {
+const PaginationButtons = ({ page, totalPages, onPageChanged, mobileView }) => {
   const { prev, next, range } = pageNumbers(page, totalPages);
   const options = [];
 
-  options.push({
-    key: '<',
-    value: prev,
-    label: '<',
-    preventSelect: !prev
-  });
-  range.forEach(pageNum => {
+  if (mobileView) {
     options.push({
-      key: pageNum,
-      value: pageNum,
-      label: pageNum
+      key: '<',
+      value: prev,
+      label: (
+        <span>
+          <span className="icon-caret-down rotate-text-90" /> Previous 25
+        </span>
+      ),
+      preventSelect: !prev
     });
-  });
-  options.push({
-    key: '>',
-    value: next,
-    label: '>',
-    preventSelect: !next
-  });
+    options.push({
+      key: '>',
+      value: next,
+      label: (
+        <span>
+          Next 25 <span className="icon-caret-down rotate-text-270" />
+        </span>
+      ),
+      preventSelect: !next
+    });
+  } else {
+    options.push({
+      key: '<',
+      value: prev,
+      label: <span className="icon-caret-down rotate-text-90" />,
+      preventSelect: !prev
+    });
+    range.forEach(pageNum => {
+      options.push({
+        key: pageNum,
+        value: pageNum,
+        label: pageNum
+      });
+    });
+    options.push({
+      key: '>',
+      value: next,
+      label: <span className="icon-caret-down rotate-text-270" />,
+      preventSelect: !next
+    });
+  }
 
   return (
     <Selectable

@@ -32,9 +32,23 @@ body {
     select {
       @include select;
     }
+    .pagination-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
     .button-group {
       @include button-group;
+    }
+    .button-group {
+      > a {
+        color: $text-color;
+        font-weight: bold;
+        > div > span {
+          line-height: $form-field-medium-height - 4px;
+        }
+      }
     }
 
     h3 {

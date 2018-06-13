@@ -142,9 +142,28 @@ const shouldDisplayContentSearch = function(pathName) {
   });
 };
 
+const includesParam = function(param){
+  return document.location.search.includes(param)
+}
+
 const setContentSearchBarSubmitHandler = function () {
   contentSearchForm.addEventListener("submit", submitContentSearch, false);
 };
+
+const setSchoolSearchBarSubmitHandler = function() {
+  schoolSearchForm.addEventListener("submit", submitSchoolSearch, false)
+};
+
+const addInput = function(name, val, formElement) {
+  let newInput = document.createElement("input");
+  newInput.setAttribute("name", name); newInput.setAttribute("type", "hidden"); newInput.setAttribute("value", val);
+  formElement.appendChild(newInput);
+}
+
+const submitSchoolSearch = function(e) {
+  includesParam('newsearch') && addInput('newsearch', 'true', schoolSearchForm)
+  includesParam('lang=es') && addInput('lang', 'es', schoolSearchForm)
+}
 
 const submitContentSearch = function (e) {
   e.preventDefault();
@@ -205,6 +224,7 @@ const init = function() {
   setMobileChooseContentButtonHandler();
   setMobileChooseSearchButtonHandler();
   setContentSearchBarSubmitHandler();
+  setSchoolSearchBarSubmitHandler();
   initializeSearchBar();
 };
 

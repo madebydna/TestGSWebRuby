@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { validSizes as validViewportSizes } from 'util/viewport';
 import SearchContext from './search_context';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
@@ -15,6 +14,7 @@ import DistanceFilter from './distance_filter';
 import DistanceContext from './distance_context';
 import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
+import { XS, validSizes as validViewportSizes } from 'util/viewport';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -106,6 +106,7 @@ class Search extends React.Component {
                   page={this.props.page}
                   totalPages={this.props.totalPages}
                   onPageChanged={this.props.onPageChanged}
+                  mobileView={this.props.size == XS}
                 />
               ) : null
             }

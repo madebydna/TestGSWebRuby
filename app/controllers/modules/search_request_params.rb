@@ -14,6 +14,10 @@ module SearchRequestParams
     end
   end
 
+  def is_browse_url?
+    request.path.match? /\/schools/
+  end
+
   def q
     params[:q]
   end

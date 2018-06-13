@@ -35,15 +35,15 @@ describe Search::SchoolQuery do
 
   describe '#result_summary' do
     {
-      [0, 'Alameda', 'CA'] => '0 schools found in Alameda, CA',
-      [1, 'Alameda', 'CA'] => '1 school found in Alameda, CA',
-      [2, 'Alameda', 'CA'] => '2 schools found in Alameda, CA'
+      [0, 'Alameda', 'CA'] => 'No schools found in Alameda, CA',
+      [1, 'Alameda', 'CA'] => 'Showing 1 school in Alameda, CA',
+      [2, 'Alameda', 'CA'] => 'Showing 1 to 2 of 2 schools in Alameda, CA'
     }.each do |args, expected|
       context "given #{args.join(', ')} " do
         it "should return #{expected}" do
           total, city, state = *args
           query = school_query_with_client_double(city: city, state: state)
-          results_double = double(total: total)
+          results_double = double(total: total, index_of_first_result: 1, index_of_last_result: total)
           expect(query.result_summary(results_double)).to eq(expected)
         end
       end
@@ -52,7 +52,7 @@ describe Search::SchoolQuery do
 
   describe '#pagination_summary' do
     {
-      [0, 0, 0] => 'Showing 0 schools',
+      [0, 0, 0] => 'No schools found',
       [1, 1, 1] => 'Showing 1 school',
       [1, 2, 2] => 'Showing 1 to 2 of 2 schools',
       [1, 10, 100] => 'Showing 1 to 10 of 100 schools'
