@@ -2,6 +2,7 @@ require_relative './file_logger'
 require_relative '../states' # FIXME: This require is outside the etl directory
 require_relative './logging'
 require_relative './row'
+require_relative './gs_ids_fetcher'
 
 require_all = ->(dir) do
   dir_relative_to_this_file = File.dirname(__FILE__)
@@ -165,9 +166,10 @@ module GS
       private
 
       def build_file_output_steps
-        school_steps
+        source_steps
         state_steps
         district_steps
+        school_steps
         # unique_breakdown_mappings
       end
 
@@ -194,12 +196,28 @@ module GS
         FILE_LOCATION +  data_file_prefix + 'summary_report.csv'
       end
 
+      def source_output_sql_file
+        FILE_LOCATION +  data_file_prefix + "source.sql"
+      end
+
+      def source_steps
+        node = output_files_root_step.add_step('Keep only state rows for source', KeepRows, :entity_level, 'state')
+        sources = []
+        node = node.transform 'Find unique source', WithBlock do |row|
+            unless sources.include?("#{config_hash[:date_valid]}#{row[:notes]}#{row[:description]}")
+              row[:entity_level] = 'source' 
+              sources << "#{config_hash[:date_valid]}#{row[:notes]}#{row[:description]}"
+            end      
+          row
+        end
+        node = node.transform('Keep rows for source', KeepRows, :entity_level, 'source')
+        node.sql_writer 'Output source rows to SQL file', SqlDestination, source_output_sql_file, config_hash, *COLUMN_ORDER
+        node
+      end
+
       def state_steps
         output_files_root_step.add(summary_output_step)
         node = output_files_root_step.add_step('Keep only state rows', KeepRows, :entity_level, 'state')
-        node.sql_writer 'Output state rows to SQL file', SqlDestination,
-                         state_output_sql_file, config_hash,
-                        *COLUMN_ORDER
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           row[:state_id] = 'state'
           row[:school_id] = 'state'
@@ -208,41 +226,54 @@ module GS
           row[:district_id] = 'state'
           row
         end
-        node.destination 'Output state rows to CSV', CsvDestination,
-          state_output_file,
-          *COLUMN_ORDER
+        node.destination 'Output state rows to CSV', CsvDestination, state_output_file, *COLUMN_ORDER
+        node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
+          row[:school_id] = 'NULL'
+          row[:district_id] = 'NULL'
+          row
+        end
+        node.sql_writer 'Output state rows to SQL file', SqlDestination, state_output_sql_file, config_hash, *COLUMN_ORDER
         node
       end
 
+      def distirct_id_hash
+        GsIdsFetcher.new('ditto', config_hash[:state],'district').hash
+      end
+      
       def district_steps
         output_files_root_step.add(summary_output_step)
-        node = output_files_root_step.add_step(
-          'Keep only district rows',
-          KeepRows,
-          :entity_level, 'district'
-        )
-        node.sql_writer 'Output district rows to SQL file', SqlDestination,
-                        district_output_sql_file,  config_hash,
-                        *COLUMN_ORDER
+        distirct_ids = distirct_id_hash
+        node = output_files_root_step.add_step('Keep only district rows', KeepRows, :entity_level, 'district')
         node = node.transform 'Fill a couple columns with "district"', Fill,
           school_id: 'district',
           school_name: 'district'
-
-        node.destination 'Output district rows to CSV',
-          CsvDestination,
-          district_output_file,
-          *COLUMN_ORDER
-
+        node.destination 'Output district rows to CSV', CsvDestination, district_output_file, *COLUMN_ORDER
+        node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
+          row[:school_id] = 'NULL'
+          row[:district_id] = distirct_ids[row[:state_id]]
+          row
+        end
+        node.sql_writer 'Output district rows to SQL file', SqlDestination, district_output_sql_file, config_hash, *COLUMN_ORDER
         node
+      end
+
+      def school_id_hash
+        GsIdsFetcher.new('ditto', config_hash[:state],'school').hash
       end
 
       def school_steps
         output_files_root_step
           .add(summary_output_step)
           .destination('Output summary data to file', CsvDestination, summary_output_file, *SUMMARY_OUTPUT_FIELDS)
+        school_ids = school_id_hash
         node = output_files_root_step.add_step('Keep only school rows', KeepRows, :entity_level, 'school')
-        node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, *COLUMN_ORDER
         node.destination 'Output school rows to CSV', CsvDestination, school_output_file, *COLUMN_ORDER
+        node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
+          row[:district_id] = 'NULL'
+          row[:school_id] = school_ids[row[:state_id]]
+          row
+        end
+        node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, *COLUMN_ORDER
         node
       end
 
