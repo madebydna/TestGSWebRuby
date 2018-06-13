@@ -149,7 +149,7 @@ const includesParam = function(key,val=null){
     // If a query string has duplicate keys (i.e. lang=es&lang=en), a single key will be added to queryData with values
     // stored in an array. Otherwise the val is a string. The check below will return true if there are no duplicate
     // keys in the url and the val matches strictly, or if there are multiple keys and at least one of the vals matches.
-    return queryData[key] === val || queryData[key].includes(val);
+    return queryData[key] === val || (Array.isArray(queryData[key]) && queryData[key].includes(val));
   } else {
     return Object.keys(queryData).includes(key);
   }
