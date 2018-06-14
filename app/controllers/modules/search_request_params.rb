@@ -80,7 +80,7 @@ module SearchRequestParams
 
   def city_record
     return nil unless city
-    return @_city_object if defined? @_city_object
+    return @_city_record if defined? @_city_object
     @_city_object = City.get_city_by_name_and_state(city, state).first
   end
 
@@ -99,7 +99,7 @@ module SearchRequestParams
   def district_record
     return nil unless state && (district_id || district)
     
-    @_district_object ||= begin
+    @_district_record ||= begin
       if district_id
         District.on_db(state).where(id: district_id).first
       elsif district
