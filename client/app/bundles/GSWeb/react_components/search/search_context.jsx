@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import '../../vendor/remodal';
 import * as remodal from 'util/remodal';
 import { find as findSchools } from 'api_clients/schools';
-import { isEqual, throttle, debounce } from 'lodash';
+import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
+import { compose, curry } from 'lodash/fp';
 import { size as viewportSize } from 'util/viewport';
 import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
 import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
 import DistanceContext from './distance_context';
+import { analyticsEvent } from 'util/page_analytics';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -162,7 +164,13 @@ class SearchProvider extends React.Component {
     this.setState({ schools });
   }
 
-  //
+  trackParams = (name, oldParams, newParams) => {
+    const addedItems = difference(castArray(newParams), castArray(oldParams));
+    addedItems.forEach(filter =>
+      analyticsEvent('search', `${name} added`, filter)
+    );
+    return newParams;
+  };
 
   render() {
     return (
@@ -183,27 +191,41 @@ class SearchProvider extends React.Component {
         }}
       >
         <DistanceContext.Provider
+          // compose makes a new function that will call curried trackParams,
+          // followed by this.props.updateDistance (right to left)
           value={{
             distance: this.props.distance,
-            onChange: this.props.updateDistance
+            onChange: compose(
+              this.props.updateDistance,
+              curry(this.trackParams)('Distance', this.props.distance)
+            )
           }}
         >
           <GradeLevelContext.Provider
             value={{
               levelCodes: this.props.levelCodes,
-              onLevelCodesChanged: this.props.updateLevelCodes
+              onLevelCodesChanged: compose(
+                this.props.updateLevelCodes,
+                curry(this.trackParams)('Grade level', this.props.levelCodes)
+              )
             }}
           >
             <EntityTypeContext.Provider
               value={{
                 entityTypes: this.props.entityTypes,
-                onEntityTypesChanged: this.props.updateEntityTypes
+                onEntityTypesChanged: compose(
+                  this.props.updateEntityTypes,
+                  curry(this.trackParams)('School type', this.props.entityTypes)
+                )
               }}
             >
               <SortContext.Provider
                 value={{
                   sort: this.props.sort,
-                  onSortChanged: this.props.updateSort
+                  onSortChanged: compose(
+                    this.props.updateSort,
+                    curry(this.trackParams)('Sort', this.props.sort)
+                  )
                 }}
               >
                 {this.props.children}
