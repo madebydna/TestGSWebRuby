@@ -60,7 +60,7 @@ describe('<PaginationButtons />', () => {
       });
 
       it('should have correct sequence of page numbers', () => {
-        expect(buttons().map(b => b.text())).to.eql(['<', '1', '2', '>']);
+        expect(buttons().map(b => b.text())).to.eql(['', '1', '2', '']);
       });
 
       it('page 1 should be active', () => {
@@ -139,13 +139,13 @@ describe('<PaginationButtons />', () => {
 
       it('should have correct sequence of page numbers', () => {
         expect(buttons().map(b => b.text())).to.eql([
-          '<',
+          '',
           '1',
           '2',
           '3',
           '4',
           '10',
-          '>'
+          ''
         ]);
       });
     });
@@ -159,13 +159,13 @@ describe('<PaginationButtons />', () => {
 
       it('should have correct sequence of page numbers', () => {
         expect(buttons().map(b => b.text())).to.eql([
-          '<',
+          '',
           '1',
           '7',
           '8',
           '9',
           '10',
-          '>'
+          ''
         ]);
       });
     });
