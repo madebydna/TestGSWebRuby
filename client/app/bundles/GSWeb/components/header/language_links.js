@@ -1,5 +1,9 @@
 import { getQueryParam, updateUrlParameter } from './query_param_utils';
 
+const isSpanish = function() {
+  return getQueryParam('lang') === 'es';
+};
+
 const initLanguageLinkListener = function() {
   let changeLanguageLink = document.querySelector('.jsChangeLanguageLink');
   let locationLanguageLink =  window.location.href;
@@ -7,21 +11,19 @@ const initLanguageLinkListener = function() {
     locationLanguageLink = "/gk/";
   }
 
-  let lang = getQueryParam('lang');
-  if(lang == null || lang == 'en') {
-    changeLanguageLink.innerHTML = 'En Español';
-  } else {
+  if(isSpanish()) {
     changeLanguageLink.innerHTML = 'In English';
+  } else {
+    changeLanguageLink.innerHTML = 'En Español';
   }
 
   changeLanguageLink.onclick = function(e) {
-    let lang = getQueryParam('lang');
-    if(lang == null || lang == 'en') {
-      changeLanguageLink.href = updateUrlParameter(locationLanguageLink, 'lang', 'es');
-    } else {
+    if(isSpanish()) {
       changeLanguageLink.href = updateUrlParameter(locationLanguageLink, 'lang', '');
+    } else {
+      changeLanguageLink.href = updateUrlParameter(locationLanguageLink, 'lang', 'es');
     }
-    window.open(full_uri, '_self');
+    return true;
   }
 };
 
@@ -31,11 +33,8 @@ const addLangToLinks = function () {
   while (i--) {
     let anchor = navAnchors[i];
     let href = anchor.href;
-    if (href != '#') {
-      let currentLangParam = getQueryParam('lang');
-      if (currentLangParam != null && currentLangParam != '' && currentLangParam != 'en') {
-        anchor.href = updateUrlParameter(href, 'lang', getQueryParam('lang'));
-      }
+    if (href !== '#' && isSpanish()) {
+      anchor.href = updateUrlParameter(href, 'lang', getQueryParam('lang'));
     }
   }
 };

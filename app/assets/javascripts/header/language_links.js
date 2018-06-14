@@ -4,6 +4,10 @@ GS.nav = GS.nav || {};
 
 
 GS.nav.language = GS.nav.language || (function(){
+  var isSpanish = function() {
+    return GS.nav.queryParamsUtils.getQueryParam('lang') === 'es';
+  };
+
   var initLanguageLinkListener = function() {
 
 
@@ -13,21 +17,19 @@ GS.nav.language = GS.nav.language || (function(){
       locationLanguageLink = "/gk/";
     }
 
-    var lang = GS.nav.queryParamsUtils.getQueryParam('lang');
-    if(lang == null || lang == 'en') {
-      changeLanguageLink.innerHTML = 'En Español';
-    } else {
+    if (isSpanish()) {
       changeLanguageLink.innerHTML = 'In English';
+    } else {
+      changeLanguageLink.innerHTML = 'En Español';
     }
 
     changeLanguageLink.onclick = function(e) {
-      var lang = GS.nav.queryParamsUtils.getQueryParam('lang');
-      if(lang == null || lang == 'en') {
-        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(locationLanguageLink, 'lang', 'es');
-      } else {
+      if (isSpanish()) {
         changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(locationLanguageLink, 'lang', '');
+      } else {
+        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(locationLanguageLink, 'lang', 'es');
       }
-      window.open(full_uri, '_self');
+      return true;
     }
   };
 
@@ -37,11 +39,8 @@ GS.nav.language = GS.nav.language || (function(){
     while (i--) {
       var anchor = navAnchors[i];
       var href = anchor.href;
-      if (href != '#') {
-        var currentLangParam = GS.nav.queryParamsUtils.getQueryParam('lang');
-        if (currentLangParam != null && currentLangParam != '' && currentLangParam != 'en') {
-          anchor.href = GS.nav.queryParamsUtils.updateUrlParameter(href, 'lang', GS.nav.queryParamsUtils.getQueryParam('lang'));
-        }
+      if (href !== '#' && isSpanish()) {
+        anchor.href = GS.nav.queryParamsUtils.updateUrlParameter(href, 'lang', GS.nav.queryParamsUtils.getQueryParam('lang'));
       }
     }
   };
