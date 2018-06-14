@@ -40,7 +40,9 @@ class NewSearchController < ApplicationController
     }.tap do |hash|
       hash[:district_id] = district_id if district_id
       hash[:school_id] = school_id if school_id
-      hash[:city] = city.gs_capitalize_words if city
+      # these intentionally capitalized to match property names that have
+      # existed for a long time. Not sure if it matters
+      hash[:City] = city.gs_capitalize_words if city
       hash[:State] = state if state
       hash[:level] = level_codes.map { |s| s[0] } if level_codes.present?
       hash[:type] = entity_types.map(:capitalize) if entity_types.present?
