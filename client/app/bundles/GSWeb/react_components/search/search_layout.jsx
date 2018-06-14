@@ -5,6 +5,7 @@ import $ from 'jquery';
 import { SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
+import { t } from 'util/i18n';
 
 function keepInViewport(
   ref,
@@ -182,6 +183,7 @@ class SearchLayout extends React.Component {
                 />
                 <div className="menu-bar">
                   <span className="menu-item">
+                    <span className="label">{t('School type and level')}:</span>
                     {this.props.entityTypeDropdown}
                   </span>
                   <span className="menu-item">

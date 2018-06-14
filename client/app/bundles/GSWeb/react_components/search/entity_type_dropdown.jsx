@@ -56,7 +56,6 @@ const EntityTypeDropdown = () => (
       <OpenableCloseable>
         {(isOpen, { toggle, open, close } = {}) => (
           <React.Fragment>
-            <span className="label">{t('Filter by')}:</span>
             <CaptureOutsideClick callback={close}>
               <div className="dropdown entity-type-dropdown">
                 <div
