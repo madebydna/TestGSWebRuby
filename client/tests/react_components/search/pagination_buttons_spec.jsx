@@ -29,8 +29,12 @@ describe('<PaginationButtons />', () => {
     context('and we are on page 1', () => {
       before(() => (page = 1));
 
-      it('it shows only back and forward buttons', () => {
-        expect(buttons().length).to.eq(2);
+      it('shows back forward buttons, and page 1', () => {
+        expect(buttons().length).to.eq(3);
+      });
+
+      it('should have correct sequence of page numbers', () => {
+        expect(buttons().map(b => b.text())).to.eql(['', '1', '']);
       });
     });
   });
@@ -121,8 +125,8 @@ describe('<PaginationButtons />', () => {
         ).to.eq(true);
       });
 
-      it('it shows 7 buttons', () => {
-        expect(buttons().length).to.eq(7);
+      it('it shows 9 buttons', () => {
+        expect(buttons().length).to.eq(9);
       });
 
       it('page 1 should be active', () => {
@@ -144,7 +148,9 @@ describe('<PaginationButtons />', () => {
           '2',
           '3',
           '4',
-          '10',
+          '5',
+          '6',
+          '7',
           ''
         ]);
       });
@@ -153,14 +159,16 @@ describe('<PaginationButtons />', () => {
     context('and we are on page 10', () => {
       before(() => (page = 10));
 
-      it('it shows 7 buttons', () => {
-        expect(buttons().length).to.eq(7);
+      it('it shows 9 buttons', () => {
+        expect(buttons().length).to.eq(9);
       });
 
       it('should have correct sequence of page numbers', () => {
         expect(buttons().map(b => b.text())).to.eql([
           '',
-          '1',
+          '4',
+          '5',
+          '6',
           '7',
           '8',
           '9',

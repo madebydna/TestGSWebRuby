@@ -32,10 +32,16 @@ body {
     select {
       @include select;
     }
-    .pagination-container{
+    .pagination-container {
       display: flex;
       justify-content: center;
       align-items: center;
+      @include media-breakpoint-up(xs) {
+        .anchor-button {
+          min-width: 40px;
+          padding: 0;
+        }
+      }
     }
 
     .button-group {
