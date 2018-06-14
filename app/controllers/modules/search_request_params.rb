@@ -84,7 +84,7 @@ module SearchRequestParams
 
   def city_record
     return nil unless city
-    return @_city_record if defined? @_city_object
+    return @_city_record if defined? @_city_record
     @_city_object = City.get_city_by_name_and_state(city, state).first
   end
 
