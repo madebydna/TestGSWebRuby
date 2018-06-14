@@ -12,6 +12,11 @@
 
     <%= token_tag form_authenticity_token %>
 
+    <% if params['state'].present? && params['school_id'].present? %>
+      <input type="hidden" name="state" value="<%= params['state'] %>"/>
+      <input type="hidden" name="school_id" value="<%= params['school_id'] %>"/>
+    <% end %>
+
     <p class="<%= 'active' if @active_tab == 'login' %>"><%= t('already have an account', scope: 'forms') %>
       <a href="#login" data-toggle="tab" class="js_login_tab"><%= t('log in', scope: 'forms') %></a>
     </p>
