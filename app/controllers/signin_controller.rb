@@ -236,7 +236,7 @@ class SigninController < ApplicationController
         end
       end
 
-      EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
+      send_verification_email(user)
     end
 
     return user, error
@@ -249,6 +249,34 @@ class SigninController < ApplicationController
           delete_cookie :redirect_uri
         end
         (redirect_uri || overview_page_for_last_school || (joining? ? join_url : home_url))
+  end
+
+  def send_verification_email(user)
+    if school
+      ReviewEmailVerificationEmail.deliver_to_user(user, email_verification_url(user), school.name)
+    else
+      EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
+    end
+  end
+
+  def school
+    return @_school if defined?(@_school)
+
+    if state.present? && school_id.present?
+      school = School.find_by_state_and_id(state, school_id)
+      @_school = school.present? && school.active? ? school : nil
+    else
+      @_school = nil
+    end
+  end
+
+  def state
+    return @_state if defined?(@_state)
+    @_state = params[:state].present? && States.is_abbreviation?(params[:state].to_s.downcase) ? params[:state] : nil
+  end
+
+  def school_id
+    params[:school_id]&.to_i
   end
 
   def ajax?

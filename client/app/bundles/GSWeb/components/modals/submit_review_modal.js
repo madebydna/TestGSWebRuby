@@ -6,7 +6,9 @@ const SubmitReviewModal = function($, options) {
   options = options || {};
 
   this.cssClass = options.cssClass || 'js-submit-review-modal';
-  this.modalUrl = '/gsr/modals/submit_review_modal';
+  let schoolState = options['state'];
+  let schoolId = options['schoolId'];
+  this.modalUrl = `/gsr/modals/submit_review_modal?state=${schoolState}&school_id=${schoolId}`;
 };
 
 SubmitReviewModal.prototype = create(JoinModal.prototype, {
