@@ -37,9 +37,6 @@ describe 'search district browse routing' do
             it "should route a #{district_description}" do
               expect( get "/#{state}/#{city}/#{district}/schools/" ).to route_to('search#district_browse', state: state, city: city.sub('%23', '#'), district_name: district.sub('%23', '#'))
             end
-            it "should route a #{district_description} with newsearch in params" do
-              expect( get "/#{state}/#{city}/#{district}/schools?newsearch" ).to route_to('new_search#search', state: state, city: city.sub('%23', '#'), district_name: district.sub('%23', '#'), newsearch: nil)
-            end
           end
         end
       end
