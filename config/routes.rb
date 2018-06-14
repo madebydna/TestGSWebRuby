@@ -49,10 +49,13 @@ LocalizedProfiles::Application.routes.draw do
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
       to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}/#{params[:level]}", '/schools/')}?gradeLevels=#{params[:level][0]}&st=#{params[:type].split('-').last}" }
 
-  get ':state/:city/:district_name/schools/', as: :search_district_browse,
+  scope ':state/:city/:district_name/schools/', constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/}, as: :search_district_browse do
     # This city regex allows for all characters except /
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
-    constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/}, to: 'search#district_browse'
+    get '', constraints: proc { |req| req.params.has_key?('newsearch') },  to: 'new_search#search'
+    get '', to: 'search#district_browse'
+  end
+  
 
   get ':state/:city/:district_name/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/,
