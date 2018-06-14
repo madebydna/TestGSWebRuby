@@ -1,5 +1,5 @@
 export default function pages(currentPage, totalPages) {
-  let pagesRemaining = Math.min(totalPages, 5);
+  const pagesRemaining = Math.min(totalPages, 7);
 
   let prev = null;
   if (currentPage > 1) {
@@ -10,23 +10,11 @@ export default function pages(currentPage, totalPages) {
     next = currentPage + 1;
   }
 
-  const first = [];
-  if (totalPages > 1) {
-    first.push(1);
-    pagesRemaining -= 1;
-  }
-
-  const last = [];
-  if (totalPages > 1) {
-    last.push(totalPages);
-    pagesRemaining -= 1;
-  }
-
   const middle = [];
-  if (totalPages > 2) {
+  if (totalPages > 0) {
     const start = Math.max(
       1,
-      Math.min(totalPages - 1, Math.max(2, currentPage))
+      Math.min(totalPages - 1, Math.max(1, currentPage))
     );
     middle.push(start);
     let middleLength;
@@ -40,13 +28,13 @@ export default function pages(currentPage, totalPages) {
         break;
       }
       const max = middle[middle.length - 1];
-      if (max < totalPages - 1) {
+      if (max < totalPages) {
         middle.push(max + 1);
       }
     } while (middle.length < pagesRemaining && middleLength !== middle.length);
   }
 
-  const pageArray = first.concat(middle).concat(last);
+  const pageArray = middle;
 
   return { prev, next, range: pageArray };
 }
