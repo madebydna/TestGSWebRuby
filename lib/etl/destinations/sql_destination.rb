@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../step'
-require_relative './output_lib/queue_daemon_insert_statement'
+require_relative './output_lib/gsdata_insert_statement'
 require_relative './output_lib/test_score_queue_daemon_json_blob'
 
 class SqlDestination < GS::ETL::Step
@@ -10,13 +10,13 @@ class SqlDestination < GS::ETL::Step
     @output_file = output_file
     @sql = File.open(output_file, 'w')
     @fields = fields.empty? ? nil : fields
-    @source = config_hash
+    @source = config_hash 
   end
 
   def write(row)
     unless has_error?(row)
-      json_str = TestScoreQueueDaemonJsonBlob.new(row, @source).build
-      @sql << QueueDaemonInsertStatement.build(@source[:source_name], json_str)
+      #json_str = TestScoreQueueDaemonJsonBlob.new(row, @source).build
+      @sql << GSdataInsertStatement.build(row, @source)
     end
     row
   end

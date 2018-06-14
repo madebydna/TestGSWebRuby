@@ -1,4 +1,5 @@
 import { addClass, removeClass, hasClass } from './utils'
+import { getQueryData } from '../../util/uri'
 
 const schoolSearchSelector = 'js-school-search';
 const contentSearchSelector = 'js-content-search';
@@ -142,8 +143,16 @@ const shouldDisplayContentSearch = function(pathName) {
   });
 };
 
-const includesParam = function(param){
-  return document.location.search.includes(param)
+const includesParam = function(key,val=null){
+  let queryData = getQueryData(document.location.search);
+  if(val){
+    // If a query string has duplicate keys (i.e. lang=es&lang=en), a single key will be added to queryData with values
+    // stored in an array. Otherwise the val is a string. The check below will return true if there are no duplicate
+    // keys in the url and the val matches strictly, or if there are multiple keys and at least one of the vals matches.
+    return queryData[key] === val || (Array.isArray(queryData[key]) && queryData[key].includes(val));
+  } else {
+    return Object.keys(queryData).includes(key);
+  }
 }
 
 const setContentSearchBarSubmitHandler = function () {
@@ -161,8 +170,8 @@ const addInput = function(name, val, formElement) {
 }
 
 const submitSchoolSearch = function(e) {
+  includesParam('lang', 'es') && addInput('lang', 'es', schoolSearchForm)
   includesParam('newsearch') && addInput('newsearch', 'true', schoolSearchForm)
-  includesParam('lang=es') && addInput('lang', 'es', schoolSearchForm)
 }
 
 const submitContentSearch = function (e) {

@@ -7,7 +7,7 @@ class ShardedDatabaseColumnFetcher
     @table = table
     @column = column
     @where = where
-    @client = ::Mysql2::Client.new(:host => @host, :username=>'service', :password=>'service')
+    @client = ::Mysql2::Client.new(:host => @host, :username=>'developer', :password=>'devsare2cool')
   end
 
   def column
