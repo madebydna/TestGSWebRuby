@@ -82,6 +82,8 @@ describe SigninController do
   end
 
   describe '#create' do
+    # Getting inconsistent failures on duplicate key violation so I added this
+    before { clean_models(:gs_schooldb, User) }
 
     describe 'authenticate' do
       it 'should call authenticate if post contained password info' do
@@ -179,6 +181,8 @@ describe SigninController do
     end
 
     describe 'register' do
+      # Getting inconsistent failures on duplicate key violation so I added this
+      before { clean_models(:gs_schooldb, User) }
 
       after(:all) do
         clean_dbs :gs_schooldb
@@ -261,6 +265,7 @@ describe SigninController do
       controller.params[:email] = 'test@greatschools.org'
       allow(controller).to receive(:email_verification_url).and_return(nil)
       allow(EmailVerificationEmail).to receive(:deliver_to_user)
+      allow(ReviewEmailVerificationEmail).to receive(:deliver_to_user)
     end
     subject { controller.send(:register) }
 
@@ -268,9 +273,85 @@ describe SigninController do
       before do
         expect(controller).to receive(:register_user).and_return([user, nil])
       end
-      it 'should send an EmailVerificationEmail to the user' do
-        expect(EmailVerificationEmail).to receive(:deliver_to_user).and_return(true)
-        subject
+
+      RSpec.shared_examples 'sends EmailVerificationEmail' do
+        it 'should send an EmailVerificationEmail' do
+          expect(EmailVerificationEmail).to receive(:deliver_to_user).and_return(true)
+          expect(ReviewEmailVerificationEmail).to_not receive(:deliver_to_user)
+          subject
+        end
+      end
+
+      RSpec.shared_examples 'sends ReviewEmailVerificationEmail' do
+        it 'should send a ReviewEmailVerificationEmail' do
+          expect(EmailVerificationEmail).to_not receive(:deliver_to_user)
+          expect(ReviewEmailVerificationEmail).to receive(:deliver_to_user).and_return(true)
+          subject
+        end
+      end
+
+      include_examples 'sends EmailVerificationEmail'
+
+      context 'when a valid school is specified' do
+        before do
+          school = FactoryGirl.create(:school)
+          controller.params[:state] = school.state
+          controller.params[:school_id] = school.id
+        end
+
+        after do
+          clean_models(:ca, School)
+        end
+
+        include_examples 'sends ReviewEmailVerificationEmail'
+      end
+
+      context 'when an inactive school is specified' do
+        before do
+          school = FactoryGirl.create(:inactive_school)
+          controller.params[:state] = school.state
+          controller.params[:school_id] = school.id.to_s
+        end
+
+        after do
+          clean_models(:ca, School)
+        end
+
+        include_examples 'sends EmailVerificationEmail'
+      end
+
+      context 'when a school that does not exist is specified' do
+        before do
+          controller.params[:state] = 'wy'
+          controller.params[:school_id] = '1234'
+        end
+
+        include_examples 'sends EmailVerificationEmail'
+      end
+
+      context 'when an invalid state is specified' do
+        before do
+          controller.params[:state] = 'zz'
+          controller.params[:school_id] = '1'
+        end
+
+        include_examples 'sends EmailVerificationEmail'
+      end
+
+      context 'when only a state is specified' do
+        before do
+          controller.params[:state] = 'ca'
+        end
+
+        include_examples 'sends EmailVerificationEmail'
+      end
+
+      context 'when only a school id is specified' do
+        before do
+          controller.params[:school_id] = '1'
+        end
+
+        include_examples 'sends EmailVerificationEmail'
       end
 
       context 'and user has no profile' do
@@ -281,6 +362,101 @@ describe SigninController do
           expect { subject }.to_not raise_error
         end
       end
+    end
+  end
+
+  describe '#school' do
+    subject { controller.send(:school) }
+    let(:school) { instance_double(School) }
+    let(:state) { nil }
+    let(:school_id) { nil }
+
+    before do
+      controller.params[:state] = state
+      controller.params[:school_id] = school_id
+    end
+
+    it 'does nothing with no params' do
+      expect(School).to_not receive(:find_by_state_and_id)
+      subject
+    end
+
+    context 'with both params' do
+      let(:state) { 'ny' }
+      let(:school_id) { '1' }
+
+      context 'that map to an active school' do
+        before do
+          expect(School).to receive(:find_by_state_and_id).and_return(school)
+          expect(school).to receive(:active?).and_return true
+        end
+
+        it { is_expected.to be(school) }
+      end
+
+      context 'that map to an inactive school' do
+        before do
+          expect(School).to receive(:find_by_state_and_id).and_return(school)
+          expect(school).to receive(:active?).and_return false
+        end
+
+        it { is_expected.to be_nil }
+      end
+
+      context 'that do not map to a school' do
+        before { expect(School).to receive(:find_by_state_and_id).and_return(nil).once }
+
+        it { is_expected.to be_nil }
+
+        it 'only executes the find once even when called twice' do
+          subject
+          expect { controller.send(:school) }.to_not raise_error
+        end
+      end
+    end
+  end
+
+  describe '#state' do
+    subject { controller.send(:state) }
+    let(:state) { 'ca' }
+    let(:valid) { true }
+
+    before do
+      controller.params[:state] = state
+      expect(States).to receive(:is_abbreviation?).with(state).and_return(valid)
+    end
+
+    context 'when called with a valid state' do
+      it { is_expected.to eq(state) }
+    end
+
+    context 'when called with an invalid state' do
+      let(:valid) { false }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#school_id' do
+    subject { controller.send(:school_id) }
+    before { controller.params[:school_id] = school_id }
+
+    context 'with no parameter' do
+      let(:school_id) { nil }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'with garbage parameter' do
+      let(:school_id) { 'foo' }
+
+      it { is_expected.to eq(0) }
+    end
+
+    context 'with integer parameter' do
+      let(:school_id) { '15' }
+
+      it { is_expected.to eq(15) }
     end
   end
 

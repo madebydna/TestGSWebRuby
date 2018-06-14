@@ -325,7 +325,11 @@ export default class ReviewForm extends React.Component {
         .done(this.ensureSchoolUser)
         .fail(this.handleGetCurrentSessionFailure);
     } else {
-      modalManager.showModal('SubmitReviewModal')
+      let joinModalOptions =  {
+        state: this.props.state,
+        schoolId: this.props.schoolId.toString()
+      };
+      modalManager.showModal('SubmitReviewModal', joinModalOptions)
         .done(({user} = {}) => this.ensureSchoolUser(user))
         .fail(this.handleReviewJoinModalFailure);
     }
