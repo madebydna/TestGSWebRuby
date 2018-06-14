@@ -157,17 +157,6 @@ class SearchLayout extends React.Component {
     );
   }
 
-  renderDesktopSortBar() {
-    return (
-      <div className="menu-bar sort">
-        <span className="menu-item">
-          <span>Sort by: </span>
-          <span>{this.props.sortSelect}</span>
-        </span>
-      </div>
-    );
-  }
-
   renderMobileMenuBar() {
     return (
       <OpenableCloseable openByDefault>
@@ -220,9 +209,14 @@ class SearchLayout extends React.Component {
         {this.props.size > SM
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
-        <div className="subheader">
+        <div className="subheader menu-bar">
           <div>{this.props.resultSummary}</div>
-          {this.props.size > SM && <div>{this.props.sortSelect}</div>}
+          {this.props.size > SM && (
+            <div className="menu-item">
+              <span className="label">Sort by:</span>
+              {this.props.sortSelect}
+            </div>
+          )}
         </div>
         <div className="list-map-ad clearfix">
           <div
