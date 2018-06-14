@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'lodash';
 import $ from 'jquery';
-import { SM, LG, validSizes } from 'util/viewport';
+import { SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 
@@ -85,8 +85,7 @@ class SearchLayout extends React.Component {
     listMapDropdown: PropTypes.element.isRequired,
     schoolList: PropTypes.element.isRequired,
     map: PropTypes.element.isRequired,
-    tallAd: PropTypes.element.isRequired,
-    mapAd: PropTypes.element.isRequired
+    tallAd: PropTypes.element.isRequired
   };
 
   constructor(props) {
@@ -124,9 +123,6 @@ class SearchLayout extends React.Component {
           <div className="right-column-fixed" ref={this.fixedYLayer}>
             <div className="ad-column">{ad}</div>
             <div className="map-column">{map}</div>
-            {this.props.size >= LG && (
-              <div className="map-ad">{this.props.mapAd}</div>
-            )}
           </div>
         </div>
       );
