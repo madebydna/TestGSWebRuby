@@ -1,0 +1,22 @@
+column	value	count
+breakdown_id	1	28265
+breakdown_id	4	207
+breakdown_id	21	3311
+breakdown_id	8	25511
+breakdown_id	15	3345
+breakdown_id	13	12209
+breakdown_id		7270
+breakdown_id	9	17015
+breakdown_id	10	13314
+breakdown_id	14	19207
+breakdown_id	22	1853
+breakdown_id	3	7564
+breakdown_id	6	4880
+grade	 	35876
+grade	4	15618
+grade	5	22404
+grade	6	12284
+grade	7	11577
+grade	8	16141
+grade	All	14173
+grade	3	15878

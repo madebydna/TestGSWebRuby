@@ -1,4 +1,5 @@
 // TODO: import jQuery
+import { without } from 'lodash';
 
 export function findById(id, options) {
   return $.ajax({
@@ -82,7 +83,7 @@ export function find({
     data.level_code = levelCodes.join(',');
   }
   if (entityTypes && entityTypes.length > 0) {
-    data.type = entityTypes.join(',');
+    data.type = without(entityTypes, 'public_charter').join(',');
   }
   if (lat) {
     data.lat = lat;

@@ -16,7 +16,7 @@ class NewSearchController < ApplicationController
         props['lat'] = lat
         props['lon'] = lon
       end
-      props.merge!(Api::CitySerializer.new(city_object).to_hash) if city_object
+      props.merge!(Api::CitySerializer.new(city_record).to_hash) if city_record
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
     end
@@ -25,6 +25,7 @@ class NewSearchController < ApplicationController
     next_page = next_page_url(page_of_results)
     set_meta_tags(prev: prev_page) if prev_page
     set_meta_tags(next: next_page) if next_page
+    set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url?
   end
 
   private
@@ -35,12 +36,22 @@ class NewSearchController < ApplicationController
   end
 
   def redirect_unless_valid_search_criteria
-    redirect_to(home_path) unless q || (lat && lon) || (state && (city_object || district_object))
-
-    if state && city_object
-      redirect_to(state_path(States.state_path(state))) unless city_object
-    elsif state && district_object
-      # TODO: implement. redirect_to(city_path(state, city) unless district_object
+    if q || (lat && lon)
+      return
+    elsif state && district
+      unless district_record
+        if city_record
+          redirect_to city_path(city: city_param, state: state_param) && return
+        else
+          redirect_to(state_path(States.state_path(state))) && return
+        end
+      end
+    elsif state && city
+      redirect_to(state_path(States.state_path(state))) unless city_record
+    elsif state
+      redirect_to(state_path(States.state_path(state)))
+    else
+      redirect_to home_path
     end
   end
 
@@ -109,7 +120,8 @@ class NewSearchController < ApplicationController
       q: q,
       offset: offset,
       limit: limit,
-      sort_name: sort_name
+      sort_name: sort_name,
+      district_id: district_record&.id
     )
   end
 

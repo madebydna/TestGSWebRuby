@@ -7,9 +7,9 @@ module SchoolProfiles
     MIN_LONG_ADDRESS_CHAR_COUNT = 22
 
     MAP_SIZES = {
-      "sm" => [767, 450],
-      "md" => [991, 450],
-      "lg" => [1264, 480]
+      "sm" => [640, 375],
+      "md" => [640, 291],
+      "lg" => [640, 243]
     }.freeze
     attr_reader :school, :school_rating
 
@@ -52,7 +52,7 @@ module SchoolProfiles
         address = GoogleSignedImages.google_formatted_street_address(school)
         MAP_SIZES.each_with_object({}) do |(label, size), sized_maps|
           sized_maps[label] = GoogleSignedImages.sign_url(
-            "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{google_maps_icon_param}#{address}&sensor=false"
+            "#{google_apis_path}?size=#{size[0]}x#{size[1]}&scale=2&center=#{address}&markers=#{google_maps_icon_param}#{address}&sensor=false"
           )
         end
       end

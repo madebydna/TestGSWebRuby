@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module SearchRequestParams
+  include UrlHelper
 
   def state
     state_param = params[:state]
@@ -13,29 +14,34 @@ module SearchRequestParams
     end
   end
 
+  def is_browse_url?
+    request.path.match? /\/schools/
+  end
+
+  def state_param
+    params[:state]
+  end
+
   def q
     params[:q]
   end
 
   def level_codes
-    if params[:gradeLevels].present? && params[:gradeLevels].is_a?(Array)
-      params[:gradeLevels]
-    else
-      params[:level_code]&.split(',')
-    end
+    params = parse_array_query_string(request.query_string)
+    codes = params['gradeLevels'] || params['level_code'] || []
+    codes = codes.split(',') unless codes.is_a?(Array)
+    codes
   end
+
   def level_code
     level_codes&.first
   end
 
   def entity_types
-    if params[:st].present? && params[:st].is_a?(Array)
-      params[:st]
-    elsif params[:type].present? && params[:type].is_a?(Array)
-      params[:type]
-    else
-      params[:type]&.split(',')
-    end
+    params = parse_array_query_string(request.query_string)
+    types = params['st'] || params['type'] || []
+    types = types.split(',') unless types.is_a?(Array)
+    types
   end
 
   def lat
@@ -72,9 +78,14 @@ module SearchRequestParams
     params[:city]&.gsub('-', ' ')&.gs_capitalize_words
   end
 
-  def city_object
+  def city_param
+    params[:city]
+  end
+
+  def city_record
     return nil unless city
-    @_city_object ||= City.get_city_by_name_and_state(city, state).first
+    return @_city_record if defined? @_city_record
+    @_city_object = City.get_city_by_name_and_state(city, state).first
   end
 
   def school_id
@@ -86,13 +97,13 @@ module SearchRequestParams
   end
 
   def district
-    params[:district]&.gsub('-', ' ')&.gs_capitalize_words
+    params[:district_name]&.gsub('-', ' ')&.gs_capitalize_words
   end
 
-  def district_object
+  def district_record
     return nil unless state && (district_id || district)
     
-    @_district_object ||= begin
+    @_district_record ||= begin
       if district_id
         District.on_db(state).where(id: district_id).first
       elsif district

@@ -101,13 +101,6 @@ const config = {
         NODE_ENV: JSON.stringify(nodeEnv)
       }
     }),
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        output: {
-          comments: false
-        }
-      }
-    }),
     new LodashModuleReplacementPlugin()
   ],
   module: {
@@ -156,6 +149,15 @@ if (devBuild) {
   console.log('Webpack dev build for Rails'); // eslint-disable-line no-console
   config.devtool = 'eval-source-map';
 } else {
+  config.plugins.push(
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        output: {
+          comments: false
+        }
+      }
+    })
+  );
   console.log('Webpack production build for Rails'); // eslint-disable-line no-console
 }
 

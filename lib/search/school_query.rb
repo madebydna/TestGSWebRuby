@@ -45,8 +45,13 @@ module Search
     end
 
     def result_summary(results)
-      if city
-        "#{t('number_of_schools_found', count: results.total)} #{t('in_city_state', city: city, state: state.upcase)}"
+      # TODO: requires translation
+      prefix = pagination_summary(results)
+
+      if @q.present?
+        "#{prefix} for #{@q}"
+      elsif city
+        "#{prefix} #{t('in_city_state', city: city, state: state.upcase)}"
       end
     end
 
@@ -54,7 +59,7 @@ module Search
       # TODO: requires translation
       total = results.total
       if total == 0
-        "Showing 0 schools"
+        "No schools found"
       elsif total == 1
         "Showing 1 school"
       else
