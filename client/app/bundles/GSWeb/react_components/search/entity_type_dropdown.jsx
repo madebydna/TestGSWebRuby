@@ -68,7 +68,9 @@ const EntityTypeDropdown = () => (
                   <div>
                     {t(calculateDropdownText(entityTypes))}
                     <span
-                      className="icon-caret-down"
+                      className={`icon-caret-down ${
+                        isOpen ? 'rotate-text-180' : ''
+                      }`}
                       style={{ marginLeft: '8px' }}
                     />
                   </div>
