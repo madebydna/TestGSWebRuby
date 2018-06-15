@@ -82,7 +82,7 @@ module SearchRequestParams
     if defined?(@_county_object)
       return @_county_object 
     end
-    @_county_object = city_object&.county
+    @_county_object = city_record&.county
   end
 
   def city_param
