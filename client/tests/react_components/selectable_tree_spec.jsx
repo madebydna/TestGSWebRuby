@@ -43,7 +43,7 @@ describe('<SelectableTree/>', () => {
     );
   });
 
-  it('when not noneMeansAll, renders all options as active when non active', () => {
+  it('when not noneMeansAll, renders no options as active when non active', () => {
     let renderedOptions = [];
     shallow(
       <SelectableTree options={options} activeOptions={[]} onChange={() => {}}>
