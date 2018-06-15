@@ -82,6 +82,7 @@ const EntityTypeDropdown = () => (
                         options={options}
                         activeOptions={entityTypes}
                         onChange={onEntityTypesChanged}
+                        noneMeansAll
                       >
                         {opts =>
                           opts.map(({ option, active, select }) => (

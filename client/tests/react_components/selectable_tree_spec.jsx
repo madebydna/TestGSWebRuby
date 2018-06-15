@@ -43,6 +43,49 @@ describe('<SelectableTree/>', () => {
     );
   });
 
+  it('when not noneMeansAll, renders all options as active when non active', () => {
+    let renderedOptions = [];
+    shallow(
+      <SelectableTree options={options} activeOptions={[]} onChange={() => {}}>
+        {opts => {
+          renderedOptions = opts;
+        }}
+      </SelectableTree>
+    );
+
+    expect(
+      renderedOptions
+        .filter(o => o.active)
+        .map(o => o.option.label)
+        .join(',')
+    ).to.equal('');
+  });
+
+  it('when noneMeansAll, renders all options as active when non active', () => {
+    let renderedOptions = [];
+    shallow(
+      <SelectableTree
+        options={options}
+        activeOptions={[]}
+        onChange={() => {}}
+        noneMeansAll
+      >
+        {opts => {
+          renderedOptions = opts;
+        }}
+      </SelectableTree>
+    );
+
+    expect(
+      renderedOptions
+        .filter(o => o.active)
+        .map(o => o.option.label)
+        .join(',')
+    ).to.equal(
+      ['Public schools', 'District', 'Charter', 'Private schools'].join(',')
+    );
+  });
+
   it('correctly indicates whether an option is active', () => {
     let renderedOptions = [];
     const wrapper = shallow(
