@@ -18,6 +18,10 @@ module SearchRequestParams
     request.path.match? /\/schools/
   end
 
+  def state_param
+    params[:state]
+  end
+
   def q
     params[:q]
   end
@@ -74,19 +78,21 @@ module SearchRequestParams
     params[:city]&.gsub('-', ' ')&.gs_capitalize_words
   end
 
-  def city_object
-    return nil unless city && state
-    if defined?(@_city_object)
-      return @_city_object
-    end
-    @_city_object = City.get_city_by_name_and_state(city, state).first
-  end
-
   def county_object
     if defined?(@_county_object)
       return @_county_object 
     end
     @_county_object = city_object&.county
+  end
+
+  def city_param
+    params[:city]
+  end
+
+  def city_record
+    return nil unless city
+    return @_city_record if defined? @_city_record
+    @_city_object = City.get_city_by_name_and_state(city, state).first
   end
 
   def school_id
@@ -98,13 +104,13 @@ module SearchRequestParams
   end
 
   def district
-    params[:district]&.gsub('-', ' ')&.gs_capitalize_words
+    params[:district_name]&.gsub('-', ' ')&.gs_capitalize_words
   end
 
-  def district_object
+  def district_record
     return nil unless state && (district_id || district)
     
-    @_district_object ||= begin
+    @_district_record ||= begin
       if district_id
         District.on_db(state).where(id: district_id).first
       elsif district
