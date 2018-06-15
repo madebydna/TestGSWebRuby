@@ -53,12 +53,7 @@ describe('<SelectableTree/>', () => {
       </SelectableTree>
     );
 
-    expect(
-      renderedOptions
-        .filter(o => o.active)
-        .map(o => o.option.label)
-        .join(',')
-    ).to.equal('');
+    expect(renderedOptions.filter(o => o.active).length).to.eq(0);
   });
 
   it('when noneMeansAll, renders all options as active when non active', () => {
