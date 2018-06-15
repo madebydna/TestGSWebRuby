@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SearchContext from './search_context';
+import DistanceConsumer from './distance_context';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
 import ListMapDropdown from './list_map_dropdown';
@@ -58,62 +59,66 @@ class Search extends React.Component {
 
   render() {
     return (
-      <SearchLayout
-        size={this.props.size}
-        currentView={this.state.currentView}
-        entityTypeDropdown={<EntityTypeDropdown />}
-        gradeLevelButtons={<GradeLevelButtons />}
-        gradeLevelCheckboxes={<GradeLevelCheckboxes />}
-        distanceFilter={
-          <DistanceContext.Consumer>
-            {({ distance, onChange }) => (
-              <DistanceFilter distance={distance} onChange={onChange} />
-            )}
-          </DistanceContext.Consumer>
-        }
-        sortSelect={
-          <SortSelect includeDistance={this.props.shouldIncludeDistance} />
-        }
-        resultSummary={this.props.resultSummary}
-        listMapDropdown={
-          <ListMapDropdown
+      <DistanceContext.Consumer>
+        {({ distance, onChange }) => (
+          <SearchLayout
+            size={this.props.size}
             currentView={this.state.currentView}
-            onSelect={currentView => {
-              this.setState({ currentView });
-            }}
-          />
-        }
-        tallAd={
-          <div className="ad-bar">
-            <Ad slot="Search_160x600" dimensions={[160, 600]} />
-          </div>
-        }
-        schoolList={
-          <SchoolList
-            toggleHighlight={this.props.toggleHighlight}
-            schools={this.props.schools}
-            isLoading={this.props.loadingSchools}
-            pagination={
-              this.props.totalPages > 1 ? (
-                <PaginationButtons
-                  page={this.props.page}
-                  totalPages={this.props.totalPages}
-                  onPageChanged={this.props.onPageChanged}
-                  mobileView={this.props.size == XS}
-                />
+            entityTypeDropdown={<EntityTypeDropdown />}
+            gradeLevelButtons={<GradeLevelButtons />}
+            gradeLevelCheckboxes={<GradeLevelCheckboxes />}
+            distanceFilter={
+              distance ||
+              (this.props.schools[0] &&
+                this.props.schools[0].distance !== undefined) ? (
+                  <DistanceFilter distance={distance} onChange={onChange} />
               ) : null
             }
+            sortSelect={
+              <SortSelect includeDistance={this.props.shouldIncludeDistance} />
+            }
+            resultSummary={this.props.resultSummary}
+            listMapDropdown={
+              <ListMapDropdown
+                currentView={this.state.currentView}
+                onSelect={currentView => {
+                  this.setState({ currentView });
+                }}
+              />
+            }
+            tallAd={
+              <div className="ad-bar">
+                <Ad slot="Search_160x600" dimensions={[160, 600]} />
+              </div>
+            }
+            schoolList={
+              <SchoolList
+                toggleHighlight={this.props.toggleHighlight}
+                schools={this.props.schools}
+                isLoading={this.props.loadingSchools}
+                pagination={
+                  this.props.totalPages > 1 ? (
+                    <PaginationButtons
+                      page={this.props.page}
+                      totalPages={this.props.totalPages}
+                      onPageChanged={this.props.onPageChanged}
+                      mobileView={this.props.size == XS}
+                    />
+                  ) : null
+                }
+              />
+            }
+            map={
+              <Map
+                lat={this.props.lat || this.props.defaultLat}
+                lon={this.props.lon || this.props.defaultLon}
+                schools={this.props.schools}
+                isLoading={this.props.loadingSchools}
+              />
+            }
           />
-        }
-        map={
-          <Map
-            lat={this.props.lat || this.props.defaultLat}
-            lon={this.props.lon || this.props.defaultLon}
-            schools={this.props.schools}
-            isLoading={this.props.loadingSchools}
-          />
-        }
-      />
+        )}
+      </DistanceContext.Consumer>
     );
   }
 }
