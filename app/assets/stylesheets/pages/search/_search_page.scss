@@ -275,22 +275,32 @@ body {
       }
     }
 
-    // .icon {
-    //   font-size: 18px;
-    //   color: #c1d2d9;
-    //   margin-right: 5px;
-    //   &.active {
-    //     color: #2ba3dc;
-    //   }
-    // }
+    .school-list.loading ol {
+      opacity: 0.2;
+      filter: blur(4px);
+      li {
+        background-color: lightgray;
+      }
+    }
 
-    // .icontext {
-    //   display: none;
-    //   font-family: 'opensans-regular';
-    //   font-size: 12px;
-    //   @include media-breakpoint-only(sm) {
-    //     display: inline-block;
-    //   }
-    // }
+    .school-list-overlay {
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+      > .loader {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        top: 50%;
+        left: 50%;
+        margin: -30px 0 0 -30px;
+        border: 1px solid #c1d2d9;
+        border-radius: 3px;
+        background-image: image-url('search/owl-loader.gif');
+        background-repeat: no-repeat;
+        background-color: white;
+        background-position: center;
+      }
+    }
   }
 }
