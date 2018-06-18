@@ -27,7 +27,7 @@ $(function() {
 
   $.ajaxSetup({ cache: true });
 
-  var googleMapsScriptURL = '//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=';
+  var googleMapsScriptURL = '//maps.googleapis.com/maps/api/js?key=AIzaSyA2A9es1i_iP9joGhiV9Yhez1WjVoV37l4&amp;libraries=geometry&amp;sensor=false';
   var callbackFunction = 'GS.googleMap.applyAjaxInitCallbacks';
   $.getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
 

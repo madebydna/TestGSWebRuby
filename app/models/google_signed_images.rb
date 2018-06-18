@@ -30,14 +30,14 @@ class GoogleSignedImages
   end
 
   def self.sign_url(url)
-    google_private_key = ENV_GLOBAL['GOOGLE_PRIVATE_KEY']
-    google_client_id = ENV_GLOBAL['GOOGLE_CLIENT_ID']
+    google_api_key = ENV_GLOBAL['GOOGLE_MAPS_STATIC_API_KEY']
+    signing_key = ENV_GLOBAL['GOOGLE_MAPS_STATIC_SIGNING_KEY']
 
     parsed_url = URI.parse(URI.encode(url))
-    url_to_sign = parsed_url.path + '?' + parsed_url.query + '&client=' + google_client_id
+    url_to_sign = parsed_url.path + '?' + parsed_url.query + '&key=' + google_api_key
 
     # Decode the private key
-    raw_key = url_safe_base64_decode(google_private_key)
+    raw_key = url_safe_base64_decode(signing_key)
 
     # create a signature using the private key and the URL
     sha1 = HMAC::SHA1.new(raw_key)

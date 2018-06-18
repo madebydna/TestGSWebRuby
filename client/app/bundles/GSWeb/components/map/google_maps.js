@@ -1,6 +1,6 @@
 import { getScript } from '../../util/dependency';
 
-const scriptURL = '//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=';
+const scriptURL = '//maps.googleapis.com/maps/api/js?key=AIzaSyA2A9es1i_iP9joGhiV9Yhez1WjVoV37l4&amp;libraries=geometry&amp;sensor=false';
 const callbackFunctions = [];
 
 function callbackFunction() {
