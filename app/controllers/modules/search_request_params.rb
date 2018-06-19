@@ -119,4 +119,28 @@ module SearchRequestParams
     end
   end
 
+  def district_browse?
+    state && district
+  end
+
+  def city_browse?
+    state && city
+  end
+
+  def zip_code_search?
+    /^\d{5}+$/.match?(q)
+  end
+
+  def search_type
+    if district_browse?
+      :district_browse
+    elsif city_browse?
+      :city_browse
+    elsif zip_code_search?
+      :zip_code
+    else
+      :other
+    end
+  end
+
 end

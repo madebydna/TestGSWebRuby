@@ -4,6 +4,7 @@ class NewSearchController < ApplicationController
   include Pagination::PaginatableRequest
   include SearchRequestParams
   include AdvertisingConcerns
+  include PageAnalytics
 
   layout 'application'
   before_filter :redirect_unless_valid_search_criteria # we need at least a 'q' param or state and city/district
@@ -28,6 +29,7 @@ class NewSearchController < ApplicationController
     set_meta_tags(next: next_page) if next_page
     set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url?
     set_ad_targeting_props
+    set_page_analytics_data
   end
 
   private
@@ -48,6 +50,14 @@ class NewSearchController < ApplicationController
       hash[:type] = entity_types.map(&:capitalize) if entity_types.present?
       hash[:county] = county_object&.name if county_object
       # hash[:zipcode]
+    end
+  end
+
+  def page_analytics_data
+    {}.tap do |hash|
+      hash[PageAnalytics::SEARCH_TERM] = q if q
+      hash[PageAnalytics::SEARCH_TYPE] = search_type
+      hash[PageAnalytics::SEARCH_HAS_RESULTS] = page_of_results.any?
     end
   end
 
