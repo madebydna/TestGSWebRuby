@@ -144,7 +144,7 @@ class SearchLayout extends React.Component {
   renderDesktopFilterBar() {
     return (
       <div className="menu-bar filters" ref={this.header}>
-        <div style={{ maxWidth: '1282px', margin: 'auto', padding: '0 10px' }}>
+        <div style={{ margin: 'auto', padding: '0 10px' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
           <span className="menu-item">{this.props.gradeLevelButtons}</span>
           {this.props.distanceFilter ? (

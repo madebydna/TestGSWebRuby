@@ -1,4 +1,6 @@
+$page-side-padding: 15px;
 @import 'list-and-map';
+
 .featured {
   display: none; // TODO: dont put this here
 }
@@ -8,7 +10,6 @@ body {
 }
 
 #search-page {
-  max-width: 1282px;
   margin-left: auto;
   margin-right: auto;
   @include media-breakpoint-only(xs) {
@@ -19,7 +20,6 @@ body {
   .search-body {
     position: relative;
     margin: auto;
-    max-width: 1282px;
 
     padding: 70px 0 0 0;
 
@@ -169,7 +169,7 @@ body {
 
     .list-map-ad {
       @include media-breakpoint-up(sm) {
-        padding: 0px 10px;
+        padding: 0px $page-side-padding;
       }
     }
 
