@@ -36,7 +36,7 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
-      @include media-breakpoint-up(xs) {
+      @include media-breakpoint-up(sm) {
         .anchor-button {
           min-width: 40px;
           padding: 0;
