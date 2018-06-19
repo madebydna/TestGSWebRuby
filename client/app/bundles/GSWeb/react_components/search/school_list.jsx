@@ -37,13 +37,7 @@ const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
           </li>
         </React.Fragment>
       ))}
-      {pagination && (
-        <li>
-          <div className="pagination-container">
-            <div className="pagination-buttons button-group">{pagination}</div>
-          </div>
-        </li>
-      )}
+      {pagination && <li>{pagination}</li>}
     </ol>
   </section>
 );

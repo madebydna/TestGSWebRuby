@@ -96,17 +96,21 @@ class Search extends React.Component {
                 toggleHighlight={this.props.toggleHighlight}
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
-                pagination={
-                  this.props.totalPages > 1 ? (
+              />
+            }
+            pagination={
+              this.props.totalPages > 1 ? (
+                <div className="pagination-container">
+                  <div className="pagination-buttons button-group">
                     <PaginationButtons
                       page={this.props.page}
                       totalPages={this.props.totalPages}
                       onPageChanged={this.props.onPageChanged}
-                      mobileView={this.props.size == XS}
+                      mobileView={this.props.size === XS}
                     />
-                  ) : null
-                }
-              />
+                  </div>
+                </div>
+              ) : null
             }
             map={
               <Map

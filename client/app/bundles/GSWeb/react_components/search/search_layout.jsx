@@ -232,6 +232,7 @@ class SearchLayout extends React.Component {
             <div className="map-fit">{this.props.map}</div>,
             this.props.tallAd
           )}
+          {this.props.pagination}
         </div>
       </div>
     );

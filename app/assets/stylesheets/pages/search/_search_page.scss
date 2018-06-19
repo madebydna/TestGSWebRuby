@@ -33,9 +33,13 @@ body {
       @include select;
     }
     .pagination-container {
+      clear: both;
       display: flex;
-      justify-content: center;
       align-items: center;
+      padding: 20px 0 15px 0;
+      @include media-breakpoint-down(sm) {
+        justify-content: center;
+      }
       @include media-breakpoint-up(sm) {
         .anchor-button {
           min-width: 40px;
@@ -52,6 +56,9 @@ body {
         font-weight: bold;
         > div > span {
           line-height: $form-field-medium-height - 4px;
+        }
+        &.disabled {
+          color: $text-disabled-color;
         }
       }
     }
