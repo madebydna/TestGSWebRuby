@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../../vendor/remodal';
-import * as remodal from 'util/remodal';
 import { find as findSchools } from 'api_clients/schools';
 import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
 import { compose, curry } from 'lodash/fp';
-import { size as viewportSize } from 'util/viewport';
+import { size as viewportSize, XS } from 'util/viewport';
 import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
 import EntityTypeContext from './entity_type_context';
@@ -103,6 +102,12 @@ class SearchProvider extends React.Component {
     this.setState({ size: viewportSize() });
   }
 
+  // 62 = nav offset on non-mobile
+  scrollToTop = () =>
+    this.state.size > XS
+      ? document.querySelector('#search-page').scrollIntoView()
+      : window.scroll(0, 0);
+
   shouldIncludeDistance() {
     return (
       this.state.schools.filter(s => s.distance).length > 0 ||
@@ -185,7 +190,7 @@ class SearchProvider extends React.Component {
           schools: this.state.schools,
           page: this.props.page,
           totalPages: this.state.totalPages,
-          onPageChanged: this.props.updatePage,
+          onPageChanged: compose(this.scrollToTop, this.props.updatePage),
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
           size: this.state.size,
@@ -201,6 +206,7 @@ class SearchProvider extends React.Component {
           value={{
             distance: this.props.distance,
             onChange: compose(
+              this.scrollToTop,
               this.props.updateDistance,
               curry(this.trackParams)('Distance', this.props.distance)
             )
@@ -210,6 +216,7 @@ class SearchProvider extends React.Component {
             value={{
               levelCodes: this.props.levelCodes,
               onLevelCodesChanged: compose(
+                this.scrollToTop,
                 this.props.updateLevelCodes,
                 curry(this.trackParams)('Grade level', this.props.levelCodes)
               )
@@ -219,6 +226,7 @@ class SearchProvider extends React.Component {
               value={{
                 entityTypes: this.props.entityTypes,
                 onEntityTypesChanged: compose(
+                  this.scrollToTop,
                   this.props.updateEntityTypes,
                   curry(this.trackParams)('School type', this.props.entityTypes)
                 )
@@ -228,6 +236,7 @@ class SearchProvider extends React.Component {
                 value={{
                   sort: this.props.sort,
                   onSortChanged: compose(
+                    this.scrollToTop,
                     this.props.updateSort,
                     curry(this.trackParams)('Sort', this.props.sort)
                   )
