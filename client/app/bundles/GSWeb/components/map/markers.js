@@ -30,7 +30,7 @@ export default function createMarkerFactory(googleMaps) {
     },
 
     selectPinFunction: function(rating, color, highlighted, assigned, address){
-      if (assigned && rating) {return createAssignedPinWithRating(rating)}
+      if (assigned && rating && !highlighted) {return createAssignedPinWithRating(rating, color)}
       else if (rating && highlighted) {return createHighlightedPinWithRating(rating, color, assigned)}
       else if (rating) {return createDefaultPinWithRating(rating, color, assigned)}
       else if (address) {return addressPin}
