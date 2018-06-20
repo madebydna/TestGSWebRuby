@@ -61,7 +61,7 @@ class Api::SchoolsController < ApplicationController
     elsif point_given? || area_given? || q.present?
       solr_query
     else
-      school_sql_query
+      solr_query
     end
   end
 
