@@ -23,6 +23,7 @@ export default class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.openInfoWindow = this.openInfoWindow.bind(this);
   }
 
   createGoogleMap($elem) {
@@ -145,8 +146,12 @@ export default class Map extends React.Component {
           this.mapDiv = map;
         }}
       >
-        {this.state.mounted && this.renderMarkers()}
-        {this.renderPolygons()}
+        {this.state.mounted &&
+          this.props.children({
+            googleMaps: this.props.googleMaps,
+            map: this.map,
+            openInfoWindow: this.openInfoWindow
+          })}
       </div>
     );
   }

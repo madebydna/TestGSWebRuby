@@ -15,10 +15,65 @@ import SchoolList from './school_list';
 import jsxToString from 'jsx-to-string';
 import DistrictBoundariesLegend from './district_boundaries_legend';
 
-export default class DistrictBoundaries extends React.Component {
-  static defaultProps = {};
+const markerProps = entity => {
+  const props = {
+    title: entity.name,
+    lat: entity.lat,
+    lon: entity.lon,
+    svg: false
+  };
+  if (entity.rating) {
+    props.rating = entity.rating;
+  }
+  return props;
+};
 
-  static propTypes = {};
+export default class DistrictBoundaries extends React.Component {
+  static defaultProps = {
+    schools: [],
+    districts: [],
+    school: null,
+    district: null,
+    selectSchool: () => {},
+    selectDistrict: () => {},
+    state: null,
+    schoolId: null,
+    districtId: null,
+    locateSchool: () => {},
+    locateDistrict: () => {},
+    changeLocation: () => {},
+    lat: null,
+    lon: null,
+    resetErrors: () => {},
+    apiFailure: false,
+    locationChangeFailure: false,
+    schoolBoundaryCoordinates: null,
+    districtBoundaryCoordinates: null,
+    loading: false
+  };
+
+  static propTypes = {
+    schools: PropTypes.array,
+    districts: PropTypes.array,
+    school: PropTypes.object,
+    district: PropTypes.object,
+    selectSchool: PropTypes.func,
+    selectDistrict: PropTypes.func,
+    state: PropTypes.string,
+    schoolId: PropTypes.number,
+    districtId: PropTypes.number,
+    locateSchool: PropTypes.func,
+    locateDistrict: PropTypes.func,
+    changeLocation: PropTypes.func,
+    lat: PropTypes.number,
+    lon: PropTypes.number,
+    resetErrors: PropTypes.func,
+    apiFailure: PropTypes.bool,
+    locationChangeFailure: PropTypes.bool,
+    schoolBoundaryCoordinates: PropTypes.array,
+    districtBoundaryCoordinates: PropTypes.array,
+    loading: PropTypes.bool
+  };
 
   constructor(props) {
     super(props);
@@ -45,7 +100,7 @@ export default class DistrictBoundaries extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (!prevProps.locationChangeFailure && this.props.locationChangeFailure) {
       alert('No results found. Please try a different search.');
       this.props.resetErrors();
@@ -57,108 +112,12 @@ export default class DistrictBoundaries extends React.Component {
   }
 
   initGoogleMaps() {
-    google_maps.init(
-      () => {
-        google_map_extensions.init();
-        this.setState({
-          googleMapsInitialized: true
-        });
-      }
-    );
-  }
-
-  renderMarkers() {
-    let anySchoolMarkerSelected = false;
-    let markers = this.props.schools.map(s => {
-      const props = { title: s.name, rating: s.rating, lat: s.lat, lon: s.lon, svg: false };
-      props.key = `s${  s.state  }${s.id}`;
-      props.createInfoWindow = () => createInfoWindow(s);
-      props.onClick = () => this.props.selectSchool(s.id, s.state);
-      if (
-        this.props.school &&
-        this.props.school.state == s.state &&
-        this.props.school.id == s.id
-      ) {
-        props.selected = true;
-        anySchoolMarkerSelected = true;
-      }
-      if (s.schoolType == 'private') {
-        return <MapMarker type={markerTypes.PRIVATE_SCHOOL} {...props} />;
-      } 
-        return <MapMarker type={markerTypes.PUBLIC_SCHOOL} {...props} />;
-      
+    google_maps.init(() => {
+      google_map_extensions.init();
+      this.setState({
+        googleMapsInitialized: true
+      });
     });
-    markers = markers.concat(
-      this.props.districts.map(d => {
-        const props = { title: d.name, rating: null, lat: d.lat, lon: d.lon, svg: false };
-        props.key = `d${  d.state  }${d.id}`;
-        props.createInfoWindow = () => createInfoWindow(d);
-        props.onClick = () => this.props.selectDistrict(d.id, d.state);
-        if (
-          !anySchoolMarkerSelected &&
-          this.props.district &&
-          this.props.district.state == d.state &&
-          this.props.district.id == d.id
-        ) {
-          props.selected = true;
-        }
-        return <MapMarker type={markerTypes.DISTRICT} {...props} />;
-      })
-    );
-    if (this.props.lat && this.props.lon) {
-      const props = { lat: this.props.lat, lon: this.props.lon, svg: false };
-      props.key = `locationMarkerl${  this.props.lat  }l${  this.props.lon}`;
-      markers = markers.concat(<DefaultMapMarker {...props} />);
-    }
-    return markers;
-  }
-
-  renderPolygons() {
-    const polygons = [];
-    if (this.props.schoolBoundaryCoordinates) {
-      const key = `s${  this.props.school.state  }${this.props.school.id}`;
-      polygons.push(
-        <Polygon
-          key={key}
-          type={polygonTypes.SCHOOL}
-          coordinates={this.props.schoolBoundaryCoordinates}
-        />
-      );
-    }
-    if (this.props.districtBoundaryCoordinates) {
-      const key = `d${  this.props.district.state  }${this.props.district.id}`;
-      polygons.push(
-        <Polygon
-          key={key}
-          type={polygonTypes.DISTRICT}
-          coordinates={this.props.districtBoundaryCoordinates}
-        />
-      );
-    }
-    return polygons;
-  }
-
-  renderMap() {
-    if (this.state.googleMapsInitialized) {
-      return (
-        <Map
-          googleMaps={google.maps}
-          markers={this.renderMarkers()}
-          polygons={this.renderPolygons()}
-          changeLocation={this.props.changeLocation}
-          hidden={this.state.mapHidden}
-        />
-      );
-    } 
-      const content = (
-        <div style={{ height: '400px', width: '75%', display: 'block' }} />
-      );
-      return (
-        <div>
-          <SpinnyWheel content={content} />
-        </div>
-      );
-    
   }
 
   showMapView() {
@@ -173,6 +132,136 @@ export default class DistrictBoundaries extends React.Component {
       mapHidden: true,
       listHidden: false
     });
+  }
+
+  isSchoolSelected({ state, id }) {
+    return (
+      this.props.school &&
+      this.props.school.state === state &&
+      this.props.school.id === id
+    );
+  }
+
+  isAnySchoolSelected = () =>
+    this.props.schools.some(s => this.isSchoolSelected(s));
+
+  isDistrictSelected({ state, id }) {
+    return (
+      this.props.district &&
+      this.props.district.state === state &&
+      this.props.district.id === id
+    );
+  }
+
+  schoolPolygon(otherProps = {}) {
+    return this.props.schoolBoundaryCoordinates ? (
+      <Polygon
+        key={`s${this.props.school.state}${this.props.school.id}`}
+        type={polygonTypes.SCHOOL}
+        coordinates={this.props.schoolBoundaryCoordinates}
+        {...otherProps}
+      />
+    ) : null;
+  }
+
+  districtPolygon(otherProps = {}) {
+    return this.props.districtBoundaryCoordinates ? (
+      <Polygon
+        key={`d${this.props.district.state}${this.props.district.id}`}
+        type={polygonTypes.DISTRICT}
+        coordinates={this.props.districtBoundaryCoordinates}
+        {...otherProps}
+      />
+    ) : null;
+  }
+
+  schoolMarkers(otherProps = {}) {
+    return this.props.schools.map(s => (
+      <MapMarker
+        {...markerProps(s)}
+        {...otherProps}
+        {...{
+          key: `s${s.state}${s.id}`,
+          openInfoWindow: m =>
+            otherProps.openInfoWindow(createInfoWindow(s), m),
+          onClick: () => this.props.selectSchool(s.id, s.state),
+          selected: this.isSchoolSelected(s),
+          type:
+            s.schoolType === 'private'
+              ? markerTypes.PRIVATE_SCHOOL
+              : markerTypes.PUBLIC_SCHOOL
+        }}
+      />
+    ));
+  }
+
+  districtMarkers(otherProps = {}) {
+    return this.props.districts.map(d => (
+      <MapMarker
+        {...markerProps(d)}
+        {...otherProps}
+        {...{
+          key: `d${d.state}${d.id}`,
+          openInfoWindow: m =>
+            otherProps.openInfoWindow(createInfoWindow(d), m),
+          onClick: () => this.props.selectDistrict(d.id, d.state),
+          selected: !this.isAnySchoolSelected() && this.isDistrictSelected(d),
+          type: markerTypes.DISTRICT
+        }}
+      />
+    ));
+  }
+
+  locationMarker(otherProps = {}) {
+    return this.props.lat && this.props.lon ? (
+      <DefaultMapMarker
+        {...otherProps}
+        {...{
+          lat: this.props.lat,
+          lon: this.props.lon,
+          svg: false,
+          key: `locationMarkerl${this.props.lat}l${this.props.lon}`
+        }}
+      />
+    ) : null;
+  }
+
+  renderMarkers(otherProps = {}) {
+    let markers = this.schoolMarkers(otherProps);
+    markers = markers.concat(this.districtMarkers(otherProps));
+    if (this.props.lat && this.props.lon) {
+      markers = markers.concat(this.locationMarker(otherProps));
+    }
+    return markers;
+  }
+
+  renderMap() {
+    const google = window.google;
+    if (this.state.googleMapsInitialized) {
+      return (
+        <Map
+          googleMaps={google.maps}
+          changeLocation={this.props.changeLocation}
+          hidden={this.state.mapHidden}
+        >
+          {({ googleMaps, map, openInfoWindow }) => (
+            <React.Fragment>
+              {this.renderMarkers({ googleMaps, map, openInfoWindow })}
+              {this.schoolPolygon({ googleMaps, map })}
+              {this.districtPolygon({ googleMaps, map })}
+            </React.Fragment>
+          )}
+        </Map>
+      );
+    }
+    const content = (
+      <div style={{ height: '400px', width: '75%', display: 'block' }} />
+    );
+    return (
+      <div>
+        <SpinnyWheel content={content} />
+      </div>
+    );
   }
 
   render() {
