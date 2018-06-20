@@ -21,6 +21,7 @@ module Search
       integer :overall_gs_rating
       integer :sorted_gs_rating_asc
       integer :school_district_id
+      integer :school_id
       string :school_sortable_name
       float :distance
     end

@@ -60,6 +60,8 @@ class Api::SchoolsController < ApplicationController
        attendance_zone_query
     elsif point_given? || area_given? || q.present?
       solr_query
+    elsif state.present? && (school_id.present? || district_id.present?)
+      school_sql_query
     else
       solr_query
     end

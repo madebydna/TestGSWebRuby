@@ -47,8 +47,11 @@ module Search
         search.with(:school_database_state, state.downcase) if state
         search.with(:school_grade_level, level_codes.map(&:downcase)) if level_codes.present?
         search.with(:school_type, entity_types.map(&:downcase)) if entity_types.present?
-        if district_id
+        if district_id && district_id > 0
           search.with(:school_district_id, district_id) if district_id
+        end
+        if id
+          search.with(:school_id, id) if id
         end
         search.paginate(page: page, per_page: limit)
         search.order_by(sort_field, sort_direction) if sort_field
