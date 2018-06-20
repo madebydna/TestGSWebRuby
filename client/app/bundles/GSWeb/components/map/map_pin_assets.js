@@ -18,8 +18,8 @@ function mapPinColor(rating) {
 function createDefaultPinWithRating(rating,color, assigned=false){
   return(`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 40 50">\
         <g fill="none" fill-rule="evenodd" transform="translate(0 -4)">\
-        <path fill="#FFF" d="M14.26 42.417C6.122 40.019.187 32.547.187 23.701.188 12.92 9.004 4.18 19.878 4.18S39.567 12.92 39.567 23.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
-        <ellipse cx="19.957" cy="23.813" fill="${color}" rx="16.957" ry="16.813"/>\
+        <path fill="#999" d="M14.26 42.417C6.122 40.019.187 32.547.187 23.701.188 12.92 9.004 4.18 19.878 4.18S39.567 12.92 39.567 23.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
+        <ellipse cx="19.957" cy="23.813" fill="${color}" rx="18" ry="18"/>\
         <text fill="#FFF" font-family="RobotoSlab-Bold, Roboto Slab" font-size="18" font-weight="bold">\
         <tspan x="${ rating == 10 ? 6 : 11}" y="29">${rating}</tspan> <tspan x="${ rating == 10 ? 24 : 22}" y="29" font-size="8" font-weight="normal">/10</tspan>\
         </text>\
@@ -33,7 +33,7 @@ function createHighlightedPinWithRating(rating, color, assigned=false){
         <circle id="a" cx="20" cy="24" r="18"/>\
         </defs>\
         <g fill="none" fill-rule="evenodd">\
-        <path fill="#FFF" d="M14.26 38.417C6.122 36.019.187 28.547.187 19.701.188 8.92 9.004.18 19.878.18S39.567 8.92 39.567 19.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
+        <path fill="${color}" d="M14.26 38.417C6.122 36.019.187 28.547.187 19.701.188 8.92 9.004.18 19.878.18S39.567 8.92 39.567 19.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
         <g transform="translate(0 -4)">\
         <use fill="#FFF" xlink:href="#a"/>\
         <circle cx="20" cy="24" r="17" stroke="${color}" stroke-width="2"/>\
