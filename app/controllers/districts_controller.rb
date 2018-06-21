@@ -78,7 +78,7 @@ class DistrictsController < ApplicationController
         canonical_path,
         true,
         request.query_parameters
-      )
+      ), status: :moved_permanently
     end
   end
 
