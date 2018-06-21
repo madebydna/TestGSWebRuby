@@ -195,6 +195,11 @@ body {
       }
     }
 
+    .pagination-summary {
+      font-size: $font-size-l3;
+      font-family: 'opensans-semibold';
+    }
+
     .school-list ol {
       padding: 0 10px 0 0;
       @include media-breakpoint-only(xs) {

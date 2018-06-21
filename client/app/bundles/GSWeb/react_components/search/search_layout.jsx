@@ -212,7 +212,7 @@ class SearchLayout extends React.Component {
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
         <div className="subheader menu-bar">
-          <div>{this.props.resultSummary}</div>
+          <div className="pagination-summary">{this.props.resultSummary}</div>
           {this.props.size > SM && (
             <div className="menu-item">
               <span className="label">Sort by:</span>
