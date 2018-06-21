@@ -16,6 +16,7 @@ function mapPinColor(rating) {
 }
 
 function createDefaultPinWithRating(rating,color, assigned=false){
+
   return(`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 40 50">\
         <g fill="none" fill-rule="evenodd" transform="translate(0 -4)">\
         <path fill="#999" d="M14.26 42.417C6.122 40.019.187 32.547.187 23.701.188 12.92 9.004 4.18 19.878 4.18S39.567 12.92 39.567 23.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
@@ -66,7 +67,7 @@ function createAssignedPinWithRating(rating, color){
 function createPinWithoutRating(highlighted){
   return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="26" height="33" viewBox="0 0 26 33">\
         <g fill="none" fill-rule="evenodd">\
-        <path fill="#FFF" d="M9.323 25.35c-5.32-1.568-9.2-6.454-9.2-12.237C.123 6.063 5.887.348 12.997.348S25.87 6.063 25.87 13.113c0 5.316-3.278 9.874-7.94 11.793l-4.424 7.569-4.183-7.125z"/>\
+        <path fill="#999" d="M9.323 25.35c-5.32-1.568-9.2-6.454-9.2-12.237C.123 6.063 5.887.348 12.997.348S25.87 6.063 25.87 13.113c0 5.316-3.278 9.874-7.94 11.793l-4.424 7.569-4.183-7.125z"/>\
         <circle cx="13.077" cy="12.692" r="10.769" stroke="${highlighted ? '#707A80' : ''}" fill="${highlighted ? '#fff' : '#707A80'}"/>\
         </g>\
         </svg>`)
