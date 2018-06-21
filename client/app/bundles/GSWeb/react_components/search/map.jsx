@@ -11,16 +11,20 @@ const SearchMap = ({ schools, isLoading, ...other }) => (
       {(isInitialized, googleMaps) =>
         isInitialized && (
           <Map googleMaps={googleMaps} changeLocation={() => {}} {...other}>
-            {({ googleMaps, map, openInfoWindow }) =>
-              createMarkersFromSchools(
+            {({ googleMaps, map, openInfoWindow, fitBounds }) => {
+              const markers = createMarkersFromSchools(
                 schools,
                 {},
                 map,
                 null,
                 openInfoWindow,
                 googleMaps
-              )
-            }
+              );
+              if (fitBounds) {
+                fitBounds(markers);
+              }
+              return markers;
+            }}
           </Map>
         )
       }

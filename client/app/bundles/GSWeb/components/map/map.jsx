@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
+import { once } from 'lodash';
 
 export default class Map extends React.Component {
   static propTypes = {
@@ -24,6 +25,7 @@ export default class Map extends React.Component {
     super(props);
     this.state = {};
     this.openInfoWindow = this.openInfoWindow.bind(this);
+    this.fitBounds = once(this.fitBounds.bind(this));
   }
 
   createGoogleMap($elem) {
@@ -84,6 +86,7 @@ export default class Map extends React.Component {
   componentDidMount() {
     const $map = $(findDOMNode(this.mapDiv))[0];
     this.map = this.createGoogleMap($map);
+    this.bounds = new this.props.googleMaps.LatLngBounds();
     this.$map = $map;
     this.props.googleMaps.event.addDomListener(
       this.map,
@@ -138,6 +141,15 @@ export default class Map extends React.Component {
     );
   }
 
+  fitBounds(markers) {
+    markers.forEach(m => {
+      this.bounds.extend(
+        new this.props.googleMaps.LatLng(m.props.lat, m.props.lon)
+      );
+    });
+    this.map.fitBounds(this.bounds);
+  }
+
   render() {
     return (
       <div
@@ -150,7 +162,8 @@ export default class Map extends React.Component {
           this.props.children({
             googleMaps: this.props.googleMaps,
             map: this.map,
-            openInfoWindow: this.openInfoWindow
+            openInfoWindow: this.openInfoWindow,
+            fitBounds: this.fitBounds
           })}
       </div>
     );
