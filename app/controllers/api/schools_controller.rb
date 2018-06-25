@@ -55,6 +55,7 @@ class Api::SchoolsController < ApplicationController
     @_page_of_results ||= results_for_page
   end
 
+  # TODO when old search is put to rest, this can be removed and query.search can be put back in page_of_results
   def results_for_page
     if params['version'] == '1' && location_given? && extras.include?('boundaries')
       attendance_zone_query.search || []
@@ -180,9 +181,7 @@ class Api::SchoolsController < ApplicationController
     assigned_schools = location_given? ? attendance_zone_query.search_all_levels : []
     schools.each do | sr |
       assigned_schools.each do | as |
-        if sr.present? && as.present? && sr.id == as.id
-          sr.assigned = 'true'
-        end
+        sr.assigned ||= sr&.id == as&.id
       end
     end
 

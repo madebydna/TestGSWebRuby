@@ -201,9 +201,7 @@ class NewSearchController < ApplicationController
     assigned_schools = location_given? ? attendance_zone_query.search_all_levels : []
     schools.each do | sr |
       assigned_schools.each do | as |
-        if sr.present? && as.present? && sr.id == as.id
-          sr.assigned = 'true'
-        end
+        sr.assigned ||= sr&.id == as&.id
       end
     end
 

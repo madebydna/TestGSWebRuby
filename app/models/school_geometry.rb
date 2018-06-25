@@ -41,7 +41,7 @@ class SchoolGeometry < ActiveRecord::Base
   end
 
   def self.all_valid_schools_having_point_in_attendance_zone(lat, lon, levels=nil)
-    all_levels = levels ? levels : %w(o p m h)
+    all_levels = levels || %w(o p m h)
     geometries = find_by_point_and_level(lat, lon, all_levels)
     if geometries.present?
       all_levels.map do |level|
