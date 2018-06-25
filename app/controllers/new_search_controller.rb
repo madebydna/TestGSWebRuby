@@ -19,6 +19,7 @@ class NewSearchController < ApplicationController
         props['lon'] = lon
       end
       props.merge!(Api::CitySerializer.new(city_record).to_hash) if city_record
+      props[:district] = district_record.name if district_record
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
     end
@@ -110,7 +111,7 @@ class NewSearchController < ApplicationController
     Search::ActiveRecordSchoolQuery.new(
       state: state,
       id: params[:id],
-      district_id: params[:district_id],
+      district_id: district_record&.id,
       entity_types: entity_types,
       city: city,
       lat: lat,

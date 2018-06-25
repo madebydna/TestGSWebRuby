@@ -19,6 +19,7 @@ class SearchProvider extends React.Component {
   static defaultProps = {
     q: gon.search.q,
     city: gon.search.city,
+    district: gon.search.district,
     state: gon.search.state,
     schools: gon.search.schools,
     levelCodes: gon.search.levelCodes || [],
@@ -37,6 +38,7 @@ class SearchProvider extends React.Component {
   static propTypes = {
     q: PropTypes.string,
     city: PropTypes.string,
+    district: PropTypes.string,
     state: PropTypes.string,
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
@@ -147,6 +149,7 @@ class SearchProvider extends React.Component {
       Object.assign(
         {
           city: this.props.city,
+          district: this.props.district,
           state: this.props.state,
           q: this.props.q,
           levelCodes: this.props.levelCodes,

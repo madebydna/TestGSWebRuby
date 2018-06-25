@@ -93,6 +93,10 @@ module SearchRequestParams
     params[:city]
   end
 
+  def district_param
+    params[:district] || params[:district_name]
+  end
+
   def city_record
     return nil unless city
     return @_city_record if defined? @_city_record
@@ -108,7 +112,7 @@ module SearchRequestParams
   end
 
   def district
-    params[:district_name]&.gsub('-', ' ')&.gs_capitalize_words
+    district_param&.gsub('-', ' ')&.gs_capitalize_words
   end
 
   def district_record
