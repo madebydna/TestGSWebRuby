@@ -56,6 +56,10 @@ module SearchRequestParams
     params[:distance]&.to_i || params[:radius]&.to_i
   end
 
+  def location_given?
+    point_given? || area_given?
+  end
+
   def point_given?
     lat.present? && lon.present? && radius.blank?
   end

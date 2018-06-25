@@ -2,7 +2,7 @@ class Api::SchoolSerializer
   include Rails.application.routes.url_helpers
   include UrlHelper
 
-  attr_reader :school
+  attr_reader :school, :assigned
 
   def initialize(school)
     @school = school
@@ -52,6 +52,9 @@ class Api::SchoolSerializer
     end
     if distance
       h[:distance] = distance
+    end
+    if school.assigned == 'true'
+      h[:assigned] = school.assigned
     end
 
     h

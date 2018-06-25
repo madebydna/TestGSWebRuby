@@ -52,13 +52,19 @@ class Api::SchoolsController < ApplicationController
   end
 
   def page_of_results
-    @_page_of_results ||= query.search
+    @_page_of_results ||= results_for_page
+  end
+
+  def results_for_page
+    if params['version'] == '1' && location_given? && extras.include?('boundaries')
+      attendance_zone_query.search || []
+    else
+      query.search
+    end
   end
 
   def query
-    if (point_given? || area_given?) && extras.include?('boundaries')
-       attendance_zone_query
-    elsif point_given? || area_given? || q.present?
+    if point_given? || area_given? || q.present?
       solr_query
     elsif state.present? && (school_id.present? || district_id.present?)
       school_sql_query
@@ -170,6 +176,19 @@ class Api::SchoolsController < ApplicationController
     schools
   end
 
+  def add_assigned(schools)
+    assigned_schools = location_given? ? attendance_zone_query.search_all_levels : []
+    schools.each do | sr |
+      assigned_schools.each do | as |
+        if sr.present? && as.present? && sr.id == as.id
+          sr.assigned = 'true'
+        end
+      end
+    end
+
+    schools
+  end
+
   # reading about API design, I tend to agree that rather than make multiple
   # endpoints for different views on the same resource (school) we should allow
   # the client to say what data they want back. Felt like boundary data
@@ -178,7 +197,7 @@ class Api::SchoolsController < ApplicationController
   # than have the client provide every field desires, just made an "extras"
   # for asking for data not in the default response
   def extras
-    (params[:extras] || '').split(',') + ['summary_rating', 'distance']
+    (params[:extras] || '').split(',') + ['summary_rating', 'distance', 'assigned']
   end
 
 end

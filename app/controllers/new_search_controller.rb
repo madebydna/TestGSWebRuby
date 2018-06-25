@@ -196,8 +196,21 @@ class NewSearchController < ApplicationController
     schools
   end
 
+  def add_assigned(schools)
+    assigned_schools = location_given? ? attendance_zone_query.search_all_levels : []
+    schools.each do | sr |
+      assigned_schools.each do | as |
+        if sr.present? && as.present? && sr.id == as.id
+          sr.assigned = 'true'
+        end
+      end
+    end
+
+    schools
+  end
+
   def extras
-    ['summary_rating', 'distance']
+    ['summary_rating', 'distance', 'assigned']
   end
 
 end
