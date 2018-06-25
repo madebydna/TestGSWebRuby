@@ -236,13 +236,13 @@ module GS
         node
       end
 
-      def distirct_id_hash
+      def district_id_hash
         GsIdsFetcher.new('ditto', config_hash[:state],'district').hash
       end
       
       def district_steps
         output_files_root_step.add(summary_output_step)
-        distirct_ids = distirct_id_hash
+        district_ids = district_id_hash
         node = output_files_root_step.add_step('Keep only district rows', KeepRows, :entity_level, 'district')
         node = node.transform 'Fill a couple columns with "district"', Fill,
           school_id: 'district',
@@ -250,7 +250,7 @@ module GS
         node.destination 'Output district rows to CSV', CsvDestination, district_output_file, *COLUMN_ORDER
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           row[:school_id] = 'NULL'
-          row[:district_id] = distirct_ids[row[:state_id]]
+          row[:district_id] = district_ids[row[:state_id]]
           row
         end
         node.sql_writer 'Output district rows to SQL file', SqlDestination, district_output_sql_file, config_hash, *COLUMN_ORDER
