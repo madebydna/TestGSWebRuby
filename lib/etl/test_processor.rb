@@ -202,11 +202,12 @@ module GS
 
       def source_steps
         node = output_files_root_step.add_step('Keep only state rows for source', KeepRows, :entity_level, 'state')
-        sources = []
+        sources = {}
         node = node.transform 'Find unique source', WithBlock do |row|
-            unless sources.include?("#{config_hash[:date_valid]}#{row[:notes]}#{row[:description]}")
+            source_key = "#{config_hash[:date_valid]}#{row[:notes]}#{row[:description]}"
+            unless sources[source_key]
               row[:entity_level] = 'source' 
-              sources << "#{config_hash[:date_valid]}#{row[:notes]}#{row[:description]}"
+              sources[source_key] = TRUE
             end      
           row
         end
