@@ -1,12 +1,13 @@
 import React from 'react';
 import CheckboxGroup from 'react_components/checkbox_group';
 import GradeLevelContext from './grade_level_context';
+import { t } from 'util/i18n';
 
 const options = {
-  e: 'Elementary',
-  m: 'Middle',
-  h: 'High',
-  p: 'Preschool'
+  p: t('PreK'),
+  e: t('Elementary'),
+  m: t('Middle'),
+  h: t('High')
 };
 
 const GradeLevelFilter = () => (

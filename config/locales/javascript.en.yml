@@ -8,6 +8,10 @@ en:
       <li>ratings of 8-10 are “above average”</li></ul></p>
     advertisement: Advertisement
     assigned: ASSIGNED
+    PreK: PreK
+    Elementary: Elementary
+    Middle: Middle
+    High: High
     Filter by: Filter by
     School type and level: School type and level
     Public schools: Public schools

@@ -6,6 +6,10 @@ es:
       <ul style="text-align: left;"><li>calificaciones de 1-3 señalan "por debajo del promedio”</li>
       <li>calificaciones de 4-7 indican “al promedio”</li>
       <li>calificaciones de 8-10 indican “por encima del promedio”</li></ul></p>
+    PreK: Preescolar
+    Elementary: Primaria
+    Middle: Intermedia
+    High: Secundaria
     advertisement: Anuncio
     assigned: ASIGNADA
     Filter by: Filtrado por
