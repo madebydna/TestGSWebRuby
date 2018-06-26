@@ -22,6 +22,7 @@ class Api::SchoolSerializer
       lon: school.lon,
       name: school.name,
       gradeLevels: school.process_level,
+      assigned: school.assigned,
       address: {
         street1: school['street'],
         street2: school['street_line_2'],
@@ -52,9 +53,6 @@ class Api::SchoolSerializer
     end
     if distance
       h[:distance] = distance
-    end
-    if school.assigned == 'true'
-      h[:assigned] = school.assigned
     end
 
     h
