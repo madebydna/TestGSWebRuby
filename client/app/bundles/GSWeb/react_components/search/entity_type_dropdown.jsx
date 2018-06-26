@@ -56,7 +56,6 @@ const EntityTypeDropdown = () => (
       <OpenableCloseable>
         {(isOpen, { toggle, open, close } = {}) => (
           <React.Fragment>
-            <span className="label">{t('Filter by')}:</span>
             <CaptureOutsideClick callback={close}>
               <div className="dropdown entity-type-dropdown">
                 <div
@@ -69,7 +68,9 @@ const EntityTypeDropdown = () => (
                   <div>
                     {t(calculateDropdownText(entityTypes))}
                     <span
-                      className="icon-caret-down"
+                      className={`icon-caret-down ${
+                        isOpen ? 'rotate-text-180' : ''
+                      }`}
                       style={{ marginLeft: '8px' }}
                     />
                   </div>
@@ -81,6 +82,7 @@ const EntityTypeDropdown = () => (
                         options={options}
                         activeOptions={entityTypes}
                         onChange={onEntityTypesChanged}
+                        noneMeansAll
                       >
                         {opts =>
                           opts.map(({ option, active, select }) => (

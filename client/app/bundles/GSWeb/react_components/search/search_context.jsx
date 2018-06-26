@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../../vendor/remodal';
-import * as remodal from 'util/remodal';
 import { find as findSchools } from 'api_clients/schools';
-import { isEqual, throttle, debounce } from 'lodash';
-import { size as viewportSize } from 'util/viewport';
+import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
+import { compose, curry } from 'lodash/fp';
+import { size as viewportSize, XS } from 'util/viewport';
 import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
 import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
 import DistanceContext from './distance_context';
+import { analyticsEvent } from 'util/page_analytics';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -18,6 +19,7 @@ class SearchProvider extends React.Component {
   static defaultProps = {
     q: gon.search.q,
     city: gon.search.city,
+    district: gon.search.district,
     state: gon.search.state,
     schools: gon.search.schools,
     levelCodes: gon.search.levelCodes || [],
@@ -36,6 +38,7 @@ class SearchProvider extends React.Component {
   static propTypes = {
     q: PropTypes.string,
     city: PropTypes.string,
+    district: PropTypes.string,
     state: PropTypes.string,
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
@@ -101,6 +104,12 @@ class SearchProvider extends React.Component {
     this.setState({ size: viewportSize() });
   }
 
+  // 62 = nav offset on non-mobile
+  scrollToTop = () =>
+    this.state.size > XS
+      ? document.querySelector('#search-page').scrollIntoView()
+      : window.scroll(0, 0);
+
   shouldIncludeDistance() {
     return (
       this.state.schools.filter(s => s.distance).length > 0 ||
@@ -114,15 +123,20 @@ class SearchProvider extends React.Component {
         loadingSchools: true
       },
       () => {
+        const start = Date.now();
         this.findSchoolsWithReactState().done(
           ({ items: schools, totalPages, paginationSummary, resultSummary }) =>
-            this.setState({
-              schools,
-              totalPages,
-              paginationSummary,
-              resultSummary,
-              loadingSchools: false
-            })
+            setTimeout(
+              () =>
+                this.setState({
+                  schools,
+                  totalPages,
+                  paginationSummary,
+                  resultSummary,
+                  loadingSchools: false
+                }),
+              500 - (Date.now() - start)
+            )
         );
       }
     );
@@ -135,6 +149,7 @@ class SearchProvider extends React.Component {
       Object.assign(
         {
           city: this.props.city,
+          district: this.props.district,
           state: this.props.state,
           q: this.props.q,
           levelCodes: this.props.levelCodes,
@@ -162,7 +177,13 @@ class SearchProvider extends React.Component {
     this.setState({ schools });
   }
 
-  //
+  trackParams = (name, oldParams, newParams) => {
+    const addedItems = difference(castArray(newParams), castArray(oldParams));
+    addedItems.forEach(filter =>
+      analyticsEvent('search', `${name} added`, filter)
+    );
+    return newParams;
+  };
 
   render() {
     return (
@@ -172,7 +193,7 @@ class SearchProvider extends React.Component {
           schools: this.state.schools,
           page: this.props.page,
           totalPages: this.state.totalPages,
-          onPageChanged: this.props.updatePage,
+          onPageChanged: compose(this.scrollToTop, this.props.updatePage),
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
           size: this.state.size,
@@ -183,27 +204,45 @@ class SearchProvider extends React.Component {
         }}
       >
         <DistanceContext.Provider
+          // compose makes a new function that will call curried trackParams,
+          // followed by this.props.updateDistance (right to left)
           value={{
             distance: this.props.distance,
-            onChange: this.props.updateDistance
+            onChange: compose(
+              this.scrollToTop,
+              this.props.updateDistance,
+              curry(this.trackParams)('Distance', this.props.distance)
+            )
           }}
         >
           <GradeLevelContext.Provider
             value={{
               levelCodes: this.props.levelCodes,
-              onLevelCodesChanged: this.props.updateLevelCodes
+              onLevelCodesChanged: compose(
+                this.scrollToTop,
+                this.props.updateLevelCodes,
+                curry(this.trackParams)('Grade level', this.props.levelCodes)
+              )
             }}
           >
             <EntityTypeContext.Provider
               value={{
                 entityTypes: this.props.entityTypes,
-                onEntityTypesChanged: this.props.updateEntityTypes
+                onEntityTypesChanged: compose(
+                  this.scrollToTop,
+                  this.props.updateEntityTypes,
+                  curry(this.trackParams)('School type', this.props.entityTypes)
+                )
               }}
             >
               <SortContext.Provider
                 value={{
                   sort: this.props.sort,
-                  onSortChanged: this.props.updateSort
+                  onSortChanged: compose(
+                    this.scrollToTop,
+                    this.props.updateSort,
+                    curry(this.trackParams)('Sort', this.props.sort)
+                  )
                 }}
               >
                 {this.props.children}

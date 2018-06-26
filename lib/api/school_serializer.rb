@@ -2,7 +2,7 @@ class Api::SchoolSerializer
   include Rails.application.routes.url_helpers
   include UrlHelper
 
-  attr_reader :school
+  attr_reader :school, :assigned
 
   def initialize(school)
     @school = school
@@ -22,6 +22,7 @@ class Api::SchoolSerializer
       lon: school.lon,
       name: school.name,
       gradeLevels: school.process_level,
+      assigned: school.assigned,
       address: {
         street1: school['street'],
         street2: school['street_line_2'],

@@ -23,7 +23,7 @@ module SearchRequestParams
   end
 
   def q
-    params[:q]
+    params[:q] || params[:query]
   end
 
   def level_codes
@@ -56,6 +56,10 @@ module SearchRequestParams
     params[:distance]&.to_i || params[:radius]&.to_i
   end
 
+  def location_given?
+    point_given? || area_given?
+  end
+
   def point_given?
     lat.present? && lon.present? && radius.blank?
   end
@@ -78,8 +82,19 @@ module SearchRequestParams
     params[:city]&.gsub('-', ' ')&.gs_capitalize_words
   end
 
+  def county_object
+    if defined?(@_county_object)
+      return @_county_object 
+    end
+    @_county_object = city_record&.county
+  end
+
   def city_param
     params[:city]
+  end
+
+  def district_param
+    params[:district] || params[:district_name]
   end
 
   def city_record
@@ -97,7 +112,7 @@ module SearchRequestParams
   end
 
   def district
-    params[:district_name]&.gsub('-', ' ')&.gs_capitalize_words
+    district_param&.gsub('-', ' ')&.gs_capitalize_words
   end
 
   def district_record
@@ -109,6 +124,30 @@ module SearchRequestParams
       elsif district
         District.on_db(state).where(name: district).first
       end
+    end
+  end
+
+  def district_browse?
+    state && district
+  end
+
+  def city_browse?
+    state && city
+  end
+
+  def zip_code_search?
+    /^\d{5}+$/.match?(q)
+  end
+
+  def search_type
+    if district_browse?
+      :district_browse
+    elsif city_browse?
+      :city_browse
+    elsif zip_code_search?
+      :zip_code
+    else
+      :other
     end
   end
 

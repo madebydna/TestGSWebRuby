@@ -38,11 +38,22 @@ const makeTree = nodes => {
 };
 
 // A tree of Selectables
-const SelectableTree = ({ options, activeOptions, onChange, children }) => {
+const SelectableTree = ({
+  options,
+  activeOptions,
+  onChange,
+  children,
+  noneMeansAll
+}) => {
   const tree = makeTree(options);
 
+  const allOptionKeys = options.map(o => o.key);
+
+  const getActiveOptions = () =>
+    noneMeansAll && activeOptions.length === 0 ? allOptionKeys : activeOptions;
+
   // Whether an item is selected or not
-  const isSelected = option => activeOptions.indexOf(option.key) > -1;
+  const isSelected = option => getActiveOptions().indexOf(option.key) > -1;
   const notSelected = option => !isSelected(option);
 
   // Get array of option objects, given their keys
@@ -54,7 +65,7 @@ const SelectableTree = ({ options, activeOptions, onChange, children }) => {
   // Also deselect the target node, and all children
   const deselectOption = option =>
     difference(
-      optionsForKeys(activeOptions),
+      optionsForKeys(getActiveOptions()),
       tree
         .ancestors(option)
         .filter(ancestor =>
@@ -68,7 +79,7 @@ const SelectableTree = ({ options, activeOptions, onChange, children }) => {
   // and add all the target's nodes ancestors, the target node, and all of its
   // descendants
   const selectOption = option =>
-    optionsForKeys(activeOptions)
+    optionsForKeys(getActiveOptions())
       .concat(tree.ancestors(option))
       .concat([option])
       .concat(tree.descendants(option))

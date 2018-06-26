@@ -95,7 +95,7 @@ export function getDistance() {
 }
 
 export function queryStringWithNewDistance(distance) {
-  const page = parsePage(pageArg);
+  const page = parsePage(1);
   return getQueryStringWithUpdatedParams({
     distance,
     page

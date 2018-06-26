@@ -1,3 +1,5 @@
+$page-side-padding: 15px;
+$search-primary-blue-on-white: #1dace5;
 @import 'list-and-map';
 @import 'components/multi-item-dropdown';
 
@@ -10,7 +12,9 @@ body {
 }
 
 #search-page {
-  max-width: 1282px;
+  a {
+    color: $search-primary-blue-on-white;
+  }
   margin-left: auto;
   margin-right: auto;
   @include media-breakpoint-only(xs) {
@@ -21,7 +25,6 @@ body {
   .search-body {
     position: relative;
     margin: auto;
-    max-width: 1282px;
 
     padding: 70px 0 0 0;
 
@@ -35,10 +38,14 @@ body {
       @include select;
     }
     .pagination-container {
+      clear: both;
       display: flex;
-      justify-content: center;
       align-items: center;
-      @include media-breakpoint-up(xs) {
+      padding: 20px 0 15px 0;
+      @include media-breakpoint-down(sm) {
+        justify-content: center;
+      }
+      @include media-breakpoint-up(sm) {
         .anchor-button {
           min-width: 40px;
           padding: 0;
@@ -54,6 +61,9 @@ body {
         font-weight: bold;
         > div > span {
           line-height: $form-field-medium-height - 4px;
+        }
+        &.disabled {
+          color: $text-disabled-color;
         }
       }
     }
@@ -82,12 +92,9 @@ body {
     }
 
     .icon-house {
-      color: #c1d2d9;
+      color: $search-primary-blue-on-white;
       padding-top: 5px;
       font-size: 14px;
-      > a {
-        font-size: 12px;
-      }
     }
 
     .dropdown {
@@ -124,7 +131,6 @@ body {
     .ad-bar {
       width: 160px;
       height: 600px;
-      background-color: grey;
     }
 
     .map-legend {
@@ -165,7 +171,7 @@ body {
 
     .list-map-ad {
       @include media-breakpoint-up(sm) {
-        padding: 0px 10px;
+        padding: 0px $page-side-padding;
       }
     }
 
@@ -191,9 +197,14 @@ body {
       }
     }
 
+    .pagination-summary {
+      font-size: $font-size-l3;
+      font-family: 'opensans-semibold';
+    }
+
     .school-list ol {
       padding: 0 10px 0 0;
-      @include media-breakpoint-only(sm) {
+      @include media-breakpoint-only(xs) {
         padding: 0;
       }
     }
@@ -222,7 +233,6 @@ body {
     }
 
     .entity-type-dropdown {
-      min-width: 267px; // spanish
       .checkbox-group {
         > span {
           display: block;
@@ -248,7 +258,7 @@ body {
       }
 
       button {
-        background: #2ba3dc;
+        background: $search-primary-blue-on-white;
         color: #fff;
         width: 100%;
         max-width: 290px;
@@ -279,22 +289,32 @@ body {
       }
     }
 
-    // .icon {
-    //   font-size: 18px;
-    //   color: #c1d2d9;
-    //   margin-right: 5px;
-    //   &.active {
-    //     color: #2ba3dc;
-    //   }
-    // }
+    .school-list.loading ol {
+      opacity: 0.2;
+      filter: blur(4px);
+      li {
+        background-color: lightgray;
+      }
+    }
 
-    // .icontext {
-    //   display: none;
-    //   font-family: 'opensans-regular';
-    //   font-size: 12px;
-    //   @include media-breakpoint-only(sm) {
-    //     display: inline-block;
-    //   }
-    // }
+    .school-list-overlay {
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+      > .loader {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        top: 50%;
+        left: 50%;
+        margin: -30px 0 0 -30px;
+        border: 1px solid #c1d2d9;
+        border-radius: 3px;
+        background-image: image-url('search/owl-loader.gif');
+        background-repeat: no-repeat;
+        background-color: white;
+        background-position: center;
+      }
+    }
   }
 }

@@ -3,6 +3,8 @@
 class NewSearchController < ApplicationController
   include Pagination::PaginatableRequest
   include SearchRequestParams
+  include AdvertisingConcerns
+  include PageAnalytics
 
   layout 'application'
   before_filter :redirect_unless_valid_search_criteria # we need at least a 'q' param or state and city/district
@@ -17,6 +19,7 @@ class NewSearchController < ApplicationController
         props['lon'] = lon
       end
       props.merge!(Api::CitySerializer.new(city_record).to_hash) if city_record
+      props[:district] = district_record.name if district_record
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
     end
@@ -26,9 +29,38 @@ class NewSearchController < ApplicationController
     set_meta_tags(prev: prev_page) if prev_page
     set_meta_tags(next: next_page) if next_page
     set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url?
+    set_ad_targeting_props
+    set_page_analytics_data
   end
 
   private
+
+  # AdvertisingConcerns
+  def ad_targeting_props
+    {
+      page_name: "GS:SchoolS",
+      template: "search",
+    }.tap do |hash|
+      hash[:district_id] = district_id if district_id
+      hash[:school_id] = school_id if school_id
+      # these intentionally capitalized to match property names that have
+      # existed for a long time. Not sure if it matters
+      hash[:City] = city.gs_capitalize_words if city
+      hash[:State] = state if state
+      hash[:level] = level_codes.map { |s| s[0] } if level_codes.present?
+      hash[:type] = entity_types.map(&:capitalize) if entity_types.present?
+      hash[:county] = county_object&.name if county_object
+      # hash[:zipcode]
+    end
+  end
+
+  def page_analytics_data
+    {}.tap do |hash|
+      hash[PageAnalytics::SEARCH_TERM] = q if q
+      hash[PageAnalytics::SEARCH_TYPE] = search_type
+      hash[PageAnalytics::SEARCH_HAS_RESULTS] = page_of_results.any?
+    end
+  end
 
   # Paginatable
   def default_limit
@@ -79,7 +111,7 @@ class NewSearchController < ApplicationController
     Search::ActiveRecordSchoolQuery.new(
       state: state,
       id: params[:id],
-      district_id: params[:district_id],
+      district_id: district_record&.id,
       entity_types: entity_types,
       city: city,
       lat: lat,
@@ -165,8 +197,19 @@ class NewSearchController < ApplicationController
     schools
   end
 
+  def add_assigned(schools)
+    assigned_schools = location_given? ? attendance_zone_query.search_all_levels : []
+    schools.each do | sr |
+      assigned_schools.each do | as |
+        sr.assigned ||= sr&.id == as&.id
+      end
+    end
+
+    schools
+  end
+
   def extras
-    ['summary_rating', 'distance']
+    ['summary_rating', 'distance', 'assigned']
   end
 
 end

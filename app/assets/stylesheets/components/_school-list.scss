@@ -2,6 +2,7 @@ section.school-list {
   $active-color: #f6f9fa;
   $hover-color: #f6f9fa;
   $border-color: #dbe6eb;
+  position: relative;
 
   .scale {
     margin-top: 5px;
@@ -28,13 +29,12 @@ section.school-list {
         display: inline-block;
       }
       a {
-        font-size: 12px;
-      }
-      a.name {
-        font-size: 14px;
+        font-size: $font-size-l2;
         font-family: 'opensans-semibold', sans-serif;
       }
-
+      a.name {
+        font-size: $font-size-l3;
+      }
       &:hover {
         background-color: $hover-color;
       }
@@ -53,6 +53,15 @@ section.school-list {
       }
       > span + span {
         margin-left: 10px;
+      }
+      &.ad {
+        background: none;
+        box-shadow: none;
+        padding: '0';
+        @include media-breakpoint-only(xs) {
+          margin-left: '-10px';
+          margin-right: '-10px';
+        }
       }
     }
 
