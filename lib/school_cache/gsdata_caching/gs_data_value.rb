@@ -111,6 +111,7 @@ class GsdataCaching::GsDataValue
     end
 
     def having_breakdown_in(breakdowns)
+      return [].extend(CollectionMethods) if breakdowns.present? && self.breakdowns.empty?
       breakdowns = Array.wrap(breakdowns)
       select do |dv|
         # data value selected if all its breakdowns

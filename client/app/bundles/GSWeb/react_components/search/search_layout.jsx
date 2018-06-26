@@ -6,6 +6,8 @@ import { viewport, SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import CaptureOutsideClick from 'react_components/search/capture_outside_click';
 import Button from 'react_components/button';
+import MultiItemDropdown from '../multi_item_dropdown';
+import SearchBox from '../search_box';
 
 function keepInViewport(
   ref,
@@ -145,7 +147,7 @@ class SearchLayout extends React.Component {
       <div className="menu-bar filters" ref={this.header}>
         <div style={{ maxWidth: '1282px', margin: 'auto', padding: '0 10px' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
-          <span className="menu-item">{this.props.gradeLevelButtons}</span>
+          <span className="menu-item"><SearchBox /></span>
           {this.props.distanceFilter ? (
             <span className="menu-item">
               <span className="label">Distance:</span>
