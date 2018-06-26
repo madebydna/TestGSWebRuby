@@ -29,13 +29,12 @@ section.school-list {
         display: inline-block;
       }
       a {
-        font-size: 12px;
-      }
-      a.name {
-        font-size: 14px;
+        font-size: $font-size-l2;
         font-family: 'opensans-semibold', sans-serif;
       }
-
+      a.name {
+        font-size: $font-size-l3;
+      }
       &:hover {
         background-color: $hover-color;
       }

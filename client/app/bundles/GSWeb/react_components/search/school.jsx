@@ -106,9 +106,14 @@ const School = ({
         </div>
         {distance && <div>Distance: {distance} miles</div>}
         {homesForSaleHref && (
-          <div className="icon active icon-house">
-            <a href={homesForSaleHref} target="_blank">
-              Homes for sale
+          <div>
+            <span className="icon icon-house" />
+            <a
+              href={homesForSaleHref}
+              target="_blank"
+              className="homes-for-sale-link"
+            >
+              &nbsp; Homes for sale
             </a>
           </div>
         )}
