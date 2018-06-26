@@ -23,7 +23,7 @@ module SearchRequestParams
   end
 
   def q
-    params[:q]
+    params[:q] || params[:query]
   end
 
   def level_codes
