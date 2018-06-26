@@ -273,6 +273,7 @@ LocalizedProfiles::Application.routes.draw do
     resources :districts
     resource :widget_logs, only: [:create]
     resources :students
+    get '/autosuggest', to: 'autosuggest', action: 'show'
   end
 
   match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs
