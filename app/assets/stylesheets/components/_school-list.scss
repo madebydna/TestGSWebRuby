@@ -21,6 +21,16 @@ section.school-list {
     height: inherit;
 
     li {
+      &.assigned{
+        border-top: solid 17px #176997;
+        > .assigned-text{
+          color:white;
+          font-size: $font-size-l2;
+          margin-top: -28px;
+          padding-bottom: 10px;
+        }
+      }
+
       @include clearfix;
       padding: 10px 10px;
       box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.09);

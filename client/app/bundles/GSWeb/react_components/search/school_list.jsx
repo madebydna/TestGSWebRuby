@@ -31,7 +31,7 @@ const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
             key={s.state + s.id}
             onMouseEnter={() => toggleHighlight(s)}
             onMouseLeave={() => toggleHighlight(s)}
-            className={s.active ? 'active' : ''}
+            className={classNameGenerator(s)}
           >
             <School {...s} />
           </li>
@@ -41,6 +41,12 @@ const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
     </ol>
   </section>
 );
+
+var classNameGenerator = function(s){
+  let active = s.active ? 'active ' : '';
+  let assigned = s.assigned ? 'assigned' : '';
+  return active + assigned
+}
 
 SchoolList.propTypes = {
   schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,

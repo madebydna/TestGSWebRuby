@@ -2,7 +2,7 @@ import publicSchoolPng from 'icons/google_map_pins/public_school_markers.png';
 import privateSchoolPng from 'icons/google_map_pins/private_school_markers.png';
 import districtPng from 'icons/google_map_pins/district_markers.png';
 import { t } from '../../util/i18n';
-import {mapPinColor,createDefaultPinWithRating,createHighlightedPinWithRating,createAssignedPinWithRating,createPinWithoutRating,createAssignedPinWithoutRating,addressPin} from './map_pin_assets';
+import {mapPinColor,createDefaultPinWithRating,createHighlightedPinWithRating,createAssignedPinWithRating,createPinWithoutRating,createAssignedPinWithoutRating,addressPin,createAssignedHighlightedPinWithRating} from './map_pin_assets';
 
 export const PUBLIC_SCHOOL = 'PUBLIC_SCHOOL';
 export const PRIVATE_SCHOOL = 'PRIVATE_SCHOOL';
@@ -31,14 +31,15 @@ export default function createMarkerFactory(googleMaps) {
 
     selectPinFunction: function(rating, color, highlighted, assigned, address){
       if (assigned && rating && !highlighted) {return createAssignedPinWithRating(rating, color)}
-      else if (rating && highlighted) {return createHighlightedPinWithRating(rating, color, assigned)}
-      else if (rating) {return createDefaultPinWithRating(rating, color, assigned)}
-      else if (address) {return addressPin}
-      else if (assigned) {return createAssignedPinWithoutRating(highlighted)}
-      else {return createPinWithoutRating(highlighted)}
+      if (assigned && rating && highlighted) {return createAssignedHighlightedPinWithRating(rating, color)}
+      if (rating && highlighted) {return createHighlightedPinWithRating(rating, color)}
+      if (rating) {return createDefaultPinWithRating(rating, color, assigned)}
+      if (address) {return addressPin}
+      if (assigned) {return createAssignedPinWithoutRating(highlighted)}
+      return createPinWithoutRating(highlighted)
     },
 
-    createMarker: function(title, rating, lat, lon, highlighted, svg=true, assigned, address,) {
+    createMarker: function(title, rating, lat, lon, highlighted, svg=true, assigned, address) {
       // svg flag intended to permit backwards compatibility while we decide which assets to use for district boundaries tool
       let position = new googleMaps.LatLng(lat, lon);
       let color = mapPinColor(rating);
