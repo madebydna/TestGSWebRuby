@@ -54,7 +54,7 @@ module Search
 
         {
           city: city,
-          state: state,
+          state: state.upcase,
           type: type,
           url: url
         }.tap do |hash|
