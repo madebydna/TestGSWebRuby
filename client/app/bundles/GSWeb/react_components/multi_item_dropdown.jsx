@@ -32,7 +32,7 @@ const MultiItemDropdown = ({ listGroups, searchTerm }) => {
       </li>
     ));
 
-  const renderList = listData =>
+  const renderList = (listData = {}) =>
     Object.keys(listData).map(group => (
       <React.Fragment>
         {groupNameListItem(group)}
