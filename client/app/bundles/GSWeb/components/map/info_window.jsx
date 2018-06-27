@@ -46,6 +46,7 @@ export default function createInfoWindow(entity) {
 
   let contentString = (
     <div class="info-window">
+      {entity.assigned && <div class="assigned-text">ASSIGNED</div>}
       <div class="clearfix">
         { jsxToString(ratingDiv(entity)).replace(/>\s+/, '>').replace(/\s+</, '<') }
         <div class="school-info">
