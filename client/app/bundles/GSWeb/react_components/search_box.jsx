@@ -16,19 +16,16 @@ export default class SearchBox extends React.Component {
     // this.onSearchTermChange = this.onSearchTermChange.bind(this);
     // this.search = this.search.bind(this);
     this.state = { searchTerm: '' };
-    this.searchData = this.searchData.bind(this);
   }
 
-  searchData(e) {
-    this.setState({ searchTerm: e.target.value }, () => {
-      this.props.searchFunction(this.state.searchTerm);
-    });
+  shouldRenderResults(){
+    return (this.props.autoSuggestResults && Object.keys(this.props.autoSuggestResults).length > 0 && this.props.autoSuggestResults.city.length > 0)
   }
 
   render() {
     return (
-      <OpenableCloseable openByDefault>
-        {(isOpen, { toggle, open, close } = {}) => (
+      <OpenableCloseable>
+        {(isOpen, { open, close } = {}) => (
           <div>
             <CaptureOutsideClick
               _key="testing multi item dropdown"
@@ -37,13 +34,20 @@ export default class SearchBox extends React.Component {
               {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
               <div style={{ width: '237px' }}>
                 <input
-                  onKeyPress={this.searchData}
+                  onKeyUp={(e) => {
+                    open()
+                    this.setState({ searchTerm: e.target.value }, () => {
+                      this.props.searchFunction(this.state.searchTerm)
+                      if(this.state.searchTerm === '') {
+                        close()
+                      }
+                    });
+                  }}
                   type="text"
-                  className="js-nav-school-search-input typeahead-nav full-width pam search_form_field"
+                  className="full-width pam search_form_field"
                   placeholder="City, zip, address or school"
-                  style={{ width: '100%' }}
                 />
-                {isOpen && (
+                {isOpen && this.shouldRenderResults() && (
                   <MultiItemDropdown
                     listGroups={this.props.autoSuggestResults}
                     searchTerm={this.state.searchTerm}

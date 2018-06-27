@@ -27,7 +27,7 @@ class Search extends React.Component {
     schools: [],
     loadingSchools: false,
     shouldIncludeDistance: false,
-    suggest: () => {}
+    autoSuggestQuery: () => {}
   };
 
   static propTypes = {
@@ -46,7 +46,7 @@ class Search extends React.Component {
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     shouldIncludeDistance: PropTypes.bool,
     toggleHighlight: PropTypes.func,
-    suggest: PropTypes.func
+    autoSuggestQuery: PropTypes.func
   };
 
   constructor(props) {
@@ -123,7 +123,7 @@ class Search extends React.Component {
                 isLoading={this.props.loadingSchools}
               />
             }
-            searchBox={<SearchBox searchFunction={this.props.suggest} />}
+            searchBox={<SearchBox searchFunction={this.props.autoSuggestQuery} autoSuggestResults={this.props.autoSuggestResults} />}
           />
         )}
       </DistanceContext.Consumer>

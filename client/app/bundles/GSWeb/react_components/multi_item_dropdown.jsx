@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const MultiItemDropdown = ({ listGroups, searchTerm }) => {
   const boldSubstring = string => {
+    if(string === undefined){return}
     const substringIdx = string.indexOf(searchTerm);
     if (substringIdx === -1) {
       return;
@@ -24,21 +25,21 @@ const MultiItemDropdown = ({ listGroups, searchTerm }) => {
   );
   const groupListItems = listItems =>
     listItems.map((listItem, idx) => (
-      <li className="multi-item-select-list-item">
-        <a key={listItem.title + idx.toString()} href={listItem.url}>
-          <div>{boldSubstring(listItem.title)}</div>
+      <li key={listItem.title + idx.toString()} className="multi-item-select-list-item">
+        <a href={listItem.url}>
+          <div>{listItem.title}</div>
           <div>{listItem.additionalInfo}</div>
         </a>
       </li>
-    ));
+    ),this);
 
   const renderList = (listData = {}) =>
     Object.keys(listData).map(group => (
       <React.Fragment>
         {groupNameListItem(group)}
-        {groupListItems(listGroups[group].listItems)}
+        {groupListItems(listGroups[group])}
       </React.Fragment>
-    ));
+    ),this);
   return (
     <div className="multi-item-dropdown">
       <ul>{renderList(listGroups)}</ul>

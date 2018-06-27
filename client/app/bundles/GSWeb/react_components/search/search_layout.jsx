@@ -148,9 +148,7 @@ class SearchLayout extends React.Component {
       <div className="menu-bar filters" ref={this.header}>
         <div style={{ margin: 'auto', padding: '0 10px' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
-          <span className="menu-item">
-            <SearchBox searchFunction={suggest} />
-          </span>
+          <span className="menu-item">{this.props.searchBox}</span>
           {this.props.distanceFilter ? (
             <span className="menu-item">
               <span className="label">Distance:</span>

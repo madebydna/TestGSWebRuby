@@ -71,7 +71,8 @@ class SearchProvider extends React.Component {
       resultSummary: props.resultSummary,
       paginationSummary: props.paginationSummary,
       loadingSchools: false,
-      size: viewportSize()
+      size: viewportSize(),
+      autoSuggestResults: { city: [], school: [], district: [] }
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
@@ -79,6 +80,7 @@ class SearchProvider extends React.Component {
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
+    this.autoSuggestQuery = this.autoSuggestQuery.bind(this);
   }
 
   componentDidMount() {
@@ -110,7 +112,8 @@ class SearchProvider extends React.Component {
       {"id": null,
       "city": "New Boston",
       "state": "nh",
-      "type": "city"}
+      "type": "city",
+      "url": '/new-mexico/alamogordo//829-Alamogordo-SDA-School}
     ],
     school: [
       {"id": null,
@@ -121,13 +124,13 @@ class SearchProvider extends React.Component {
     ]
   },
   */
-  suggest(q) {
-    suggest(q).done(results => {
+  autoSuggestQuery(q) {
+    q.length >= 3 && suggest(q).done(results => {
       const adaptedResults = { city: [], school: [], district: [] };
 
       Object.keys(results).forEach(category => {
         results[category].forEach(result => {
-          const { school, district, city, state, url } = result;
+          const { school, district = '', city, state, url } = result;
 
           let title = null;
           if (category === 'school') {
@@ -248,7 +251,7 @@ class SearchProvider extends React.Component {
           toggleHighlight: this.toggleHighlight,
           defaultLat: this.props.defaultLat,
           defaultLon: this.props.defaultLon,
-          suggest: this.suggest,
+          autoSuggestQuery: this.autoSuggestQuery,
           autoSuggestResults: this.state.autoSuggestResults
         }}
       >
