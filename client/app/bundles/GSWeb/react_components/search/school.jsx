@@ -65,6 +65,7 @@ const School = ({
   ratingScale,
   active,
   distance,
+  assigned,
   links
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
@@ -77,6 +78,7 @@ const School = ({
 
   return (
     <React.Fragment key={state + id}>
+      {assigned && <div className='assigned-text'>{t('assigned')}</div>}
       <span>{rating && renderRating(rating, ratingScale)}</span>
       <span>
         <a href={links.profile} className="name" target="_blank">

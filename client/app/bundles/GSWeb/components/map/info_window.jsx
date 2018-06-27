@@ -1,5 +1,6 @@
 import React from 'react';
 import jsxToString from 'jsx-to-string';
+import { t } from '../../util/i18n';
 
 export default function createInfoWindow(entity) {
 
@@ -46,6 +47,7 @@ export default function createInfoWindow(entity) {
 
   let contentString = (
     <div class="info-window">
+      {entity.assigned && <div class="assigned-text">{t('assigned')}</div>}
       <div class="clearfix">
         { jsxToString(ratingDiv(entity)).replace(/>\s+/, '>').replace(/\s+</, '<') }
         <div class="school-info">

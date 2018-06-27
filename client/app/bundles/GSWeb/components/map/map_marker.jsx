@@ -14,7 +14,8 @@ export default class MapMarker extends DefaultMapMarker {
     lon: PropTypes.number.isRequired,
     rating: PropTypes.number,
     onClick: PropTypes.func,
-    selected: PropTypes.bool
+    selected: PropTypes.bool,
+    assigned: PropTypes.bool
   };
 
   constructor(props) {
@@ -34,11 +35,13 @@ export default class MapMarker extends DefaultMapMarker {
       this.props.lat,
       this.props.lon,
       this.props.highlighted,
-      this.props.svg
+      this.props.svg,
+      this.props.assigned
     );
     this.marker.setMap(this.props.map);
     google.maps.event.addListener(this.marker, 'click', () =>
-      this.props.onClick(this.marker)
+      // this.props.onClick(this.marker)
+      this.props.openInfoWindow(this.marker)
     );
     if (this.props.selected) {
       this.props.openInfoWindow(this.marker);
@@ -69,6 +72,7 @@ const createMarkersFromSchools = (
         lon: s.lon,
         svg: true,
         highlighted: s.highlighted,
+        assigned: s.assigned,
         googleMaps,
         map,
         key: `s${s.state}${s.id}${s.highlighted}`,

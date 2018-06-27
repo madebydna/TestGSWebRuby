@@ -28,7 +28,7 @@ function createDefaultPinWithRating(rating,color, assigned=false){
         </svg>`)
 }
 
-function createHighlightedPinWithRating(rating, color, assigned=false){
+function createHighlightedPinWithRating(rating, color){
   return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="50" viewBox="0 0 40 50">\
         <defs>\
         <circle id="a" cx="20" cy="24" r="18"/>\
@@ -46,12 +46,36 @@ function createHighlightedPinWithRating(rating, color, assigned=false){
         </svg>`)
 }
 
+function createAssignedHighlightedPinWithRating(rating, color){
+  return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="59" height="75" viewBox="0 0 59 75">\
+    <defs>
+      <circle id="a" cx="20" cy="24" r="18"/>
+    </defs>
+    
+    <g fill="none" fill-rule="evenodd">\
+      <g transform="translate(10 21)">\
+        <path fill="${color}" d="M14.26 42.417C6.122 40.019.187 32.547.187 23.701.188 12.92 9.004 4.18 19.878 4.18S39.567 12.92 39.567 23.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
+        <ellipse cx="19.957" cy="23.813" fill="#FFF" rx="16.957" ry="16.813"/>\\
+        <circle cx="20" cy="24" r="17" stroke="${color}" stroke-width="2"/>\
+
+        <text fill="${color}" font-family="RobotoSlab-Bold, Roboto Slab" font-size="18" font-weight="bold">\
+          <tspan x="${ rating == 10 ? 6 : 11}" y="29">${rating}</tspan> <tspan x="${ rating == 10 ? 24 : 22}" y="29" font-size="8" font-weight="normal">/10</tspan>\
+        </text>\
+      </g>\
+      <path fill="#176997" d="M32.968 19l-3.655 3.655L25.658 19H0V0h59v19H32.968z"/>\
+      <text fill="#FFF" font-family="OpenSans-Bold, Open Sans" font-size="10" font-weight="bold" letter-spacing=".002">\
+        <tspan x="5.192" y="13">${t('assigned')}</tspan>\
+      </text>\
+    </g>\
+  </svg>`)
+}
+
 function createAssignedPinWithRating(rating, color){
   return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="59" height="75" viewBox="0 0 59 75">\
         <g fill="none" fill-rule="evenodd">\
         <g transform="translate(10 21)">\
-        <path fill="#FFF" d="M14.26 42.417C6.122 40.019.187 32.547.187 23.701.188 12.92 9.004 4.18 19.878 4.18S39.567 12.92 39.567 23.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
-        <ellipse cx="19.957" cy="23.813" fill="${color}" rx="16.957" ry="16.813"/>\
+        <path fill="#999" d="M14.26 42.417C6.122 40.019.187 32.547.187 23.701.188 12.92 9.004 4.18 19.878 4.18S39.567 12.92 39.567 23.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
+        <ellipse cx="19.957" cy="23.813" fill="${color}" rx="18" ry="18"/>\
         <text fill="#FFF" font-family="RobotoSlab-Bold, Roboto Slab" font-size="18" font-weight="bold">\
         <tspan x="${ rating == 10 ? 6 : 11}" y="30">${rating}</tspan> <tspan x="${ rating == 10 ? 24 : 22}" y="30" font-size="8">/10</tspan>\
         </text>\
@@ -96,4 +120,4 @@ const addressPin = (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000
         </svg>`)
 
 export {mapPinColor,createDefaultPinWithRating,createHighlightedPinWithRating,createAssignedPinWithRating,
-  createPinWithoutRating,createAssignedPinWithoutRating,addressPin};
+  createPinWithoutRating,createAssignedPinWithoutRating,addressPin, createAssignedHighlightedPinWithRating};
