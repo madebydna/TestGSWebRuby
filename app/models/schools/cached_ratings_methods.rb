@@ -56,6 +56,10 @@ module CachedRatingsMethods
     rating_for_key('Test Score Rating')
   end
 
+  def gsdata_test_scores_rating_hash
+    rating_object_for_key('Test Score Rating')
+  end
+
   def test_scores_rating_hash
     test_scores_rating_hash_map_to_old_format(rating_object_for_key('Test Score Rating'), 'Test Score Rating')
   end
@@ -78,6 +82,10 @@ module CachedRatingsMethods
 
   def courses_rating
     rating_for_key('Advanced Course Rating')
+  end
+
+  def courses_rating_hash
+    rating_object_for_key('Advanced Course Rating')
   end
 
   def courses_rating_array
@@ -138,6 +146,18 @@ module CachedRatingsMethods
 
   def college_readiness_rating_year
     rating_year_for_key('College Readiness Rating')
+  end
+
+  def low_income_rating_hash
+    rating_object_for_key('Test Score Rating', 'Economically disadvantaged')
+  end
+
+  def low_income_rating
+    low_income_rating_hash.try(:school_value_as_int)
+  end
+
+  def low_income_rating_year
+    low_income_rating_hash.try(:source_date_valid)
   end
 
   ####################################################################

@@ -115,7 +115,11 @@ class GsdataCaching::GsDataValue
       select do |dv|
         # data value selected if all its breakdowns
         # are contained within the given list
-        (breakdowns & Array.wrap(dv.breakdowns)) == dv.breakdowns
+        if dv.breakdowns.empty?
+          breakdowns.empty?
+        else
+          (breakdowns & Array.wrap(dv.breakdowns)) == dv.breakdowns
+        end
       end.extend(CollectionMethods)
     end
     alias_method :having_breakdown, :having_breakdown_in
