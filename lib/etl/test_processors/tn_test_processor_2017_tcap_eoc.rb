@@ -93,16 +93,16 @@ class TNTestProcessor2017TCAPEOC < GS::ETL::TestProcessor
      entity_level: 'state'
    })
   end
-  source("district_tn.txt",[], col_sep: "\t") do |s|
-    s.transform('Fill missing default fields', Fill, {
-      entity_level: 'district'
-    })
-  end
-  source("school_tn.txt",[], col_sep: "\t") do |s|
-    s.transform('Fill missing default fields', Fill, {
-      entity_level: 'school'
-    })
-  end
+  # source("district_tn.txt",[], col_sep: "\t") do |s|
+  #   s.transform('Fill missing default fields', Fill, {
+  #     entity_level: 'district'
+  #   })
+  # end
+  # source("school_tn.txt",[], col_sep: "\t") do |s|
+  #   s.transform('Fill missing default fields', Fill, {
+  #     entity_level: 'school'
+  #   })
+  # end
 
   shared do |s|
     s.transform("Rename columns", MultiFieldRenamer,
@@ -112,7 +112,7 @@ class TNTestProcessor2017TCAPEOC < GS::ETL::TestProcessor
         testadministration: :test_data_type,
         gradelevel: :grade,
         subgroup: :breakdown,
-        valid_tests: :number_tested,
+        # valid_tests: :number_tested,
         pct_on_mastered: :value_float
       })
       .transform('Fill missing default fields', Fill, {
