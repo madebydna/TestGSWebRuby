@@ -6,22 +6,17 @@ class Api::AutosuggestController < ApplicationController
   def show
     return render json: {} unless q.present?
     set_cache_headers_for_suggest
-    render json: {
-      school: search(SearchSuggestSchool, count: 20),
-      city: search(SearchSuggestCity),
-      district: search(SearchSuggestDistrict)
-    }
+    render json: results
   end
 
   private
 
-  def search(auto_suggest_class, **other)
-    auto_suggest_class.new.search(
-      count: 10,
-      state: state,
-      query: q,
-      **other
-    )
+  def results
+    Search::SolrAutosuggestQuery.new(q).search
+      .group_by { |h| h[:type] }
+      .each_with_object({}) do |(type, rows), hash|
+        hash[type] = rows.take(10)
+      end
   end
 
   def set_cache_headers_for_suggest
