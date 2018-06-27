@@ -312,6 +312,20 @@ describe SearchMetaTagsConcerns do
         end
       end
     end
+
+    context 'In states for A/B test' do
+      before do
+        controller.instance_variable_set(:@state, {long: 'Illinois', short: 'IL'})
+        controller.instance_variable_set(:@city, Struct.new(:name, :state).new('Chicago', 'Illinois'))
+        controller.instance_variable_set(:@params_hash, {})
+        allow(controller).to receive(:search_city_browse_url).and_return('http://localhost/illinois/chicago/schools/' )
+        allow(controller).to receive(:request).and_return(Struct.new(:url).new('http://localhost/illinois/chicago/schools/' ))
+      end
+
+      it 'Serves up the correct description for Illinois' do
+        expect(controller.search_city_browse_meta_tag_hash[:description]).to eq('Chicago, Illinois school districts, public, private and charter school listings and rankings for Chicago, Illinois. Find your school district information from Greatschools.org')
+      end
+    end
   end
 
   describe '#search_district_browse_meta_tag_hash' do

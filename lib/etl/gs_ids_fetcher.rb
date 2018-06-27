@@ -18,9 +18,7 @@ class GsIdsFetcher
   end
 
   def hash
-    hash = {}
-    fetcher.column.map { |v| hash[v.values.last] = v.values.first }
-    hash
+    fetcher.column.each_with_object({}) { |v, hash| hash[v.values.last] = v.values.first }
   end
 
   private

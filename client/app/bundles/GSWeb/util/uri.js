@@ -22,7 +22,7 @@ export function copyParam(param, sourceUrl, targetUrl) {
   const queryString = getQueryStringFromGivenUrl(sourceUrl);
   const queryData = getQueryData(`?${queryString}`);
   let value = queryData[param];
-  if (value === undefined) {
+  if (queryString.includes(param) && value === undefined) {
     if(param == 'newsearch'){value = true;}
     else {return targetUrl}
   }

@@ -21,6 +21,13 @@ button.tour-cta {
   @include button;
 }
 
+.gs-rating-tour-item {
+  @include media-breakpoint-only(xs) {
+    margin-left: -44px !important;
+    margin-top: 40px !important;
+  }
+}
+
 .school-profile-tour-modal {
   display: inline-block;
   text-align: center;

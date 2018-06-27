@@ -124,9 +124,12 @@
                                                             column_size: first_column_sizes, districts: @nearby_districts}%>
 
 
-    <div class="<%= second_column_sizes %> ma ptm">
-      <h3 class="ma" style="width:300px">Nearby homes for sale</h3>
-      <%= render 'deprecated_school_profile/data_layouts/zillow_content', data: @zillow_data %>
+    <div class="<%= second_column_sizes %>  tac pal">
+      <a class="btn btn-primary btn-lg"
+         style="width: 100%"
+         href="https://www.zillow.com?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_content=map&utm_campaign=districtlink"
+         target="_blank">
+         Nearby homes for sale</a>
     </div>
   </div>
 

@@ -202,11 +202,12 @@ module GS
 
       def source_steps
         node = output_files_root_step.add_step('Keep only state rows for source', KeepRows, :entity_level, 'state')
-        sources = []
+        sources = {}
         node = node.transform 'Find unique source', WithBlock do |row|
-            unless sources.include?("#{config_hash[:date_valid]}#{row[:notes]}#{row[:description]}")
+            source_key = [config_hash[:date_valid],row[:notes],row[:description]]
+            unless sources[source_key]
               row[:entity_level] = 'source' 
-              sources << "#{config_hash[:date_valid]}#{row[:notes]}#{row[:description]}"
+              sources[source_key] = true
             end      
           row
         end
@@ -232,17 +233,21 @@ module GS
           row[:district_id] = 'NULL'
           row
         end
+        node = node.transform 'Check n_tested"', WithBlock do |row|
+          row[:number_tested] = 'NULL' if row[:number_tested].nil?
+          row
+        end
         node.sql_writer 'Output state rows to SQL file', SqlDestination, state_output_sql_file, config_hash, *COLUMN_ORDER
         node
       end
 
-      def distirct_id_hash
+      def district_id_hash
         GsIdsFetcher.new('ditto', config_hash[:state],'district').hash
       end
       
       def district_steps
         output_files_root_step.add(summary_output_step)
-        distirct_ids = distirct_id_hash
+        district_ids = district_id_hash
         node = output_files_root_step.add_step('Keep only district rows', KeepRows, :entity_level, 'district')
         node = node.transform 'Fill a couple columns with "district"', Fill,
           school_id: 'district',
@@ -250,7 +255,11 @@ module GS
         node.destination 'Output district rows to CSV', CsvDestination, district_output_file, *COLUMN_ORDER
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           row[:school_id] = 'NULL'
-          row[:district_id] = distirct_ids[row[:state_id]]
+          row[:district_id] = district_ids[row[:state_id]]
+          row
+        end
+        node = node.transform 'Check n_tested"', WithBlock do |row|
+          row[:number_tested] = 'NULL' if row[:number_tested].nil?
           row
         end
         node.sql_writer 'Output district rows to SQL file', SqlDestination, district_output_sql_file, config_hash, *COLUMN_ORDER
@@ -271,6 +280,10 @@ module GS
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           row[:district_id] = 'NULL'
           row[:school_id] = school_ids[row[:state_id]]
+          row
+        end
+        node = node.transform 'Check n_tested"', WithBlock do |row|
+          row[:number_tested] = 'NULL' if row[:number_tested].nil?
           row
         end
         node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, *COLUMN_ORDER
