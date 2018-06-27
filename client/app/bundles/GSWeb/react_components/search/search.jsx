@@ -16,6 +16,7 @@ import DistanceContext from './distance_context';
 import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
+import SearchBox from '../search_box';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -25,7 +26,8 @@ class Search extends React.Component {
     lon: null,
     schools: [],
     loadingSchools: false,
-    shouldIncludeDistance: false
+    shouldIncludeDistance: false,
+    suggest: () => {}
   };
 
   static propTypes = {
@@ -43,7 +45,8 @@ class Search extends React.Component {
     onPageChanged: PropTypes.func.isRequired,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     shouldIncludeDistance: PropTypes.bool,
-    toggleHighlight: PropTypes.func
+    toggleHighlight: PropTypes.func,
+    suggest: PropTypes.func
   };
 
   constructor(props) {
@@ -120,6 +123,7 @@ class Search extends React.Component {
                 isLoading={this.props.loadingSchools}
               />
             }
+            searchBox={<SearchBox searchFunction={this.props.suggest} />}
           />
         )}
       </DistanceContext.Consumer>

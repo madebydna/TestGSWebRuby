@@ -7,6 +7,7 @@ import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 import SearchBox from '../search_box';
 import { t } from 'util/i18n';
+import suggest from 'api_clients/autosuggest';
 
 function keepInViewport(
   ref,
@@ -148,7 +149,7 @@ class SearchLayout extends React.Component {
         <div style={{ margin: 'auto', padding: '0 10px' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
           <span className="menu-item">
-            <SearchBox />
+            <SearchBox searchFunction={suggest} />
           </span>
           {this.props.distanceFilter ? (
             <span className="menu-item">

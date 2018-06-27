@@ -11,6 +11,7 @@ import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
 import DistanceContext from './distance_context';
 import { analyticsEvent } from 'util/page_analytics';
+import suggest from 'api_clients/autosuggest';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -102,6 +103,52 @@ class SearchProvider extends React.Component {
 
   handleWindowResize() {
     this.setState({ size: viewportSize() });
+  }
+
+  /*
+  { city: [
+      {"id": null,
+      "city": "New Boston",
+      "state": "nh",
+      "type": "city"}
+    ],
+    school: [
+      {"id": null,
+      "school": "Alameda High School",
+      "city": "New Boston",
+      "state": "nh",
+      "type": "school"}
+    ]
+  },
+  */
+  suggest(q) {
+    suggest(q).done(results => {
+      const adaptedResults = { city: [], school: [], district: [] };
+
+      Object.keys(results).forEach(category => {
+        results[category].forEach(result => {
+          const { school, district, city, state, url } = result;
+
+          let title = null;
+          if (category === 'school') {
+            title = school;
+          } else {
+            title = `Schools in ${city}${district}, ${state}`;
+          }
+
+          const additionalInfo =
+            category === 'city' ? null : `${city}, ${state}`;
+
+          adaptedResults[category].push({
+            title,
+            additionalInfo,
+            url
+          });
+        });
+      });
+
+      this.setState({ autoSuggestResults: adaptedResults });
+    });
   }
 
   // 62 = nav offset on non-mobile
@@ -200,7 +247,9 @@ class SearchProvider extends React.Component {
           shouldIncludeDistance: this.shouldIncludeDistance(),
           toggleHighlight: this.toggleHighlight,
           defaultLat: this.props.defaultLat,
-          defaultLon: this.props.defaultLon
+          defaultLon: this.props.defaultLon,
+          suggest: this.suggest,
+          autoSuggestResults: this.state.autoSuggestResults
         }}
       >
         <DistanceContext.Provider
