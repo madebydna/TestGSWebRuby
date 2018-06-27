@@ -233,6 +233,10 @@ module GS
           row[:district_id] = 'NULL'
           row
         end
+        node = node.transform 'Check n_tested"', WithBlock do |row|
+          row[:number_tested] = 'NULL' if row[:number_tested].nil?
+          row
+        end
         node.sql_writer 'Output state rows to SQL file', SqlDestination, state_output_sql_file, config_hash, *COLUMN_ORDER
         node
       end
@@ -254,6 +258,10 @@ module GS
           row[:district_id] = district_ids[row[:state_id]]
           row
         end
+        node = node.transform 'Check n_tested"', WithBlock do |row|
+          row[:number_tested] = 'NULL' if row[:number_tested].nil?
+          row
+        end
         node.sql_writer 'Output district rows to SQL file', SqlDestination, district_output_sql_file, config_hash, *COLUMN_ORDER
         node
       end
@@ -272,6 +280,10 @@ module GS
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           row[:district_id] = 'NULL'
           row[:school_id] = school_ids[row[:state_id]]
+          row
+        end
+        node = node.transform 'Check n_tested"', WithBlock do |row|
+          row[:number_tested] = 'NULL' if row[:number_tested].nil?
           row
         end
         node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, *COLUMN_ORDER
