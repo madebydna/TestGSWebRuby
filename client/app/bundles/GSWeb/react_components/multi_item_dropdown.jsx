@@ -3,31 +3,30 @@ import PropTypes from 'prop-types';
 
 const MultiItemDropdown = ({ listGroups, searchTerm }) => {
   const boldSubstring = string => {
-    if(string === undefined){return}
-    const substringIdx = string.indexOf(searchTerm);
-    if (substringIdx === -1) {
+    const substringMatch = string.match(new RegExp(searchTerm, 'i'));
+    if (!substringMatch) {
       return;
     }
     const allSubstrings = [];
-    allSubstrings.push(string.slice(0, substringIdx));
+    allSubstrings.push(string.slice(0, substringMatch.index));
     allSubstrings.push(
-      string.slice(substringIdx, searchTerm.length + substringIdx)
+      string.slice(substringMatch.index, searchTerm.length + substringMatch.index)
     );
-    allSubstrings.push(string.slice(substringIdx + searchTerm.length));
+    allSubstrings.push(string.slice(substringMatch.index + searchTerm.length));
     const nonEmptySubs = allSubstrings.filter(str => str.length > 0);
     const stringWithMarkup = nonEmptySubs.map(str => (
-      <span style={str === searchTerm ? { fontWeight: 700 } : {}}>{str}</span>
+      <span style={str.toLowerCase() === searchTerm.toLowerCase() ? { fontWeight: 700 } : {}}>{str}</span>
     ));
     return stringWithMarkup;
   };
   const groupNameListItem = name => (
-    <li className="multi-item-select-group-name">{name}</li>
+    <li className="multi-item-select-group-name">{name[0].toUpperCase() + name.slice(1)}</li>
   );
   const groupListItems = listItems =>
     listItems.map((listItem, idx) => (
       <li key={listItem.title + idx.toString()} className="multi-item-select-list-item">
         <a href={listItem.url}>
-          <div>{listItem.title}</div>
+          <div>{boldSubstring(listItem.title)}</div>
           <div>{listItem.additionalInfo}</div>
         </a>
       </li>
