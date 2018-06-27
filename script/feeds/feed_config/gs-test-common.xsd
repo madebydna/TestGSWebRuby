@@ -47,7 +47,7 @@
   <xs:simpleType name="Str30">
     <xs:restriction base="xs:string">
       <xs:minLength value="1"/>
-      <xs:maxLength value="50000"/>
+      <xs:maxLength value="30"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -61,14 +61,14 @@
   <xs:simpleType name="Str500">
     <xs:restriction base="xs:string">
       <xs:minLength value="1"/>
-      <xs:maxLength value="100"/>
+      <xs:maxLength value="500"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Str50000">
     <xs:restriction base="xs:string">
       <xs:minLength value="1"/>
-      <xs:maxLength value="100"/>
+      <xs:maxLength value="50000"/>
     </xs:restriction>
   </xs:simpleType>
 
