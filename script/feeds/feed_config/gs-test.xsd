@@ -19,7 +19,7 @@
           <xs:sequence>
             <xs:element name="year" type="xs:nonNegativeInteger"/>
             <xs:element name="subject-name" type="Str100"/>
-            <xs:element name="grade-name" type="grade"/>
+            <xs:element name="grade" type="grade"/>
             <xs:element name="score" type="Str100"/>
             <xs:element name="proficiency-band-name" nillable="true" minOccurs="0" type="Str100"/>
             <xs:element name="number-tested" nillable="true" type="xs:string" minOccurs="0" maxOccurs="1"/>
