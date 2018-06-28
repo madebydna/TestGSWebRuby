@@ -134,10 +134,10 @@ class SearchProvider extends React.Component {
     if (q.length >= 3) {
       suggest(q).done(results => {
         const adaptedResults = {
+          Zipcodes: [],
           Cities: [],
           Districts: [],
-          Schools: [],
-          Zipcodes: []
+          Schools: []
         };
         Object.keys(results).forEach(category => {
           (results[category] || []).forEach(result => {
@@ -148,7 +148,7 @@ class SearchProvider extends React.Component {
             let value = null;
             if (category === 'Schools') {
               title = school;
-              additionalInfo = `${city}, ${state}`;
+              additionalInfo = `${city}, ${state} ${zip ? zip : ''}`;
             } else if (category === 'Cities') {
               title = `Schools in ${city}, ${state}`;
             } else if (category === 'Districts') {
