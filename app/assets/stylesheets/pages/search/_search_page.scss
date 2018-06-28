@@ -355,3 +355,11 @@ body {
     background-image: none !important;
   }
 }
+
+.breadcrumbs {
+  .separator {
+    font-size: $font-size-s3;
+    color: $gray;
+    padding: 0 5px;
+  }
+}

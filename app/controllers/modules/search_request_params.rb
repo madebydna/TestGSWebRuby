@@ -14,6 +14,10 @@ module SearchRequestParams
     end
   end
 
+  def state_name
+    States.state_name(state)
+  end
+
   def is_browse_url?
     request.path.match? /\/schools/
   end

@@ -7,6 +7,10 @@ module StructuredMarkup
 
     protected
 
+    def make_breadcrumb(text:, url:)
+      [text, url]
+    end
+
     def json_ld_hash 
       @_json_ld_hash ||= default_json_ld_hash
     end
@@ -107,6 +111,25 @@ module StructuredMarkup
     url_local
   end
 
+  def self.breadcrumbs_as_json_ld(crumbs)
+    crumbs.map.with_index do |(name, url), index|
+      {
+        "@type" => "ListItem",
+        "position" => index + 1,
+        "item" => {
+          "@id" => ensure_https(url),
+          "name" => name,
+          "image" => ensure_https(url)
+        }
+      }
+    end
+    {
+      "@context" => "https://schema.org",
+      "@type" => "BreadcrumbList",
+      "itemListElement" => crumbs
+    }
+  end
+    
   def self.breadcrumbs_hash(school)
     urlHelperMethods = Class.new
       .include(Rails.application.routes.url_helpers)
