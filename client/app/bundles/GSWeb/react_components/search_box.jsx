@@ -27,9 +27,6 @@ export default class SearchBox extends React.Component {
 
   constructor(props) {
     super(props);
-    // this.submitOnEnterKey = this.submitOnEnterKey.bind(this);
-    // this.onSearchTermChange = this.onSearchTermChange.bind(this);
-    // this.search = this.search.bind(this);
     this.state = { searchTerm: '', type: 'schools' };
   }
 
