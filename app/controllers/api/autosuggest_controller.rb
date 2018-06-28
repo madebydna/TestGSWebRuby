@@ -12,13 +12,15 @@ class Api::AutosuggestController < ApplicationController
   private
 
   def results
-    Search::SolrAutosuggestQuery.new(q).search
-      .group_by { |h| h[:type] }
-      .tap do |hash|
-        hash['school'] = hash['school']&.take(5)
-        hash['city'] = hash['city']&.take(5)
-        hash['district'] = hash['district']&.take(5)
-      end
+    grouped_results = Search::SolrAutosuggestQuery.new(q)
+                       .search
+                       .group_by { |h| h[:type] }
+    {}.tap do |hash|
+      hash['Schools'] = grouped_results['school']&.take(5)
+      hash['Cities'] = grouped_results['city']&.take(5)
+      hash['Districts'] = grouped_results['district']&.take(5)
+      hash['Zipcodes'] = q.match?(/\d{3}+/) ? grouped_results['zip']&.take(5) : []
+    end
   end
 
   def set_cache_headers_for_suggest

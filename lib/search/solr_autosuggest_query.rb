@@ -14,12 +14,27 @@ module Search
       @limit = 250
     end
 
+    # ['facet_counts']['facet_fields']['zip']
+
+    def solr_result
+      @_solr_result ||= client.search(School, &sunspot_query).instance_variable_get(:@solr_result)
+    end
+
     def response
-      @_response ||= begin
-        results = client
-          .search(School, &sunspot_query).instance_variable_get(:@solr_result)['response']['docs']
-          .map { |r| standardize(r) }
-      end
+
+      rval = solr_result['response']['docs'].map { |r| standardize(r) } + zips
+    end
+
+    def zips
+      #          zip,   count, zip,   count,
+      # returns [94612, 5,     94501, 10,    ...]
+      zips_and_counts = solr_result['facet_counts']['facet_fields']['zip']
+      zips = zips_and_counts
+        .each_slice(2)
+        .select { |zip, count| count > 0 }
+        .map(&:first) # grab only the zip
+        .select { |zip| zip.present? } # can have empty string
+        .map { |zip| {zip: zip, type: 'zip'}}
     end
 
     def q
@@ -36,16 +51,16 @@ module Search
 
       url = 
         if type == 'city'
-          city_path(
+          search_city_browse_path(
             state: gs_legacy_url_encode(States.state_name(state)),
             city: gs_legacy_url_encode(city),
             trailing_slash: true
           )
         elsif type == 'district'
-          district_path(
+          search_district_browse_path(
             state: gs_legacy_url_encode(States.state_name(state)),
             city: gs_legacy_url_encode(city),
-            district: gs_legacy_url_encode(district),
+            district_name: gs_legacy_url_encode(district),
             trailing_slash: true
           )
         elsif type == 'school'
@@ -91,20 +106,24 @@ module Search
         "city_state",
         "state",
         "city_sortable_name",
-        "district_sortable_name"
+        "district_sortable_name",
+        "zip"
       ]
     end
 
     def sunspot_query
       lambda do |search|
         # search.keywords(q)
-        search.keywords("+(school_name_untokenized:#{q.gsub(' ', '\ ')}* school_name:(#{q}*) city_name:#{q.gsub(' ', '')}*^1.1 district_name:#{q.gsub(' ', '\ ')}*^1.1)")
+        search.keywords("+(zip:#{q}* school_name_untokenized:#{q.gsub(' ', '\ ')}* school_name:(#{q}*) city_name:#{q.gsub(' ', '')}*^5.0 district_name_untokenized:#{q.gsub(' ', '\ ')}*^8.0)")
         search.paginate(page: 1, per_page: limit)
         search.adjust_solr_params do |params|
           params[:fq][0] = nil
           params[:defType] = 'lucene'
           params[:fl] = fields.join(',')
-          params[:sort] = 'document_type asc'
+          params[:facet] = true
+          params[:sort] = 'score desc, city_number_of_schools desc, district_number_of_schools desc'
+          params['facet.field']='zip'
+          # facet=on&facet.field=txt
         end
       end
     end
