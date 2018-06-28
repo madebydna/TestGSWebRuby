@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { copyParam } from 'util/uri';
 
+// This component is responsible for formatting and rendering a payload of search results (listGroups) into a dropdown.
+// It is stateless.
+// Noteworthy behavior: 1) within the title of each listItem, it will bold substrings that match the searchTerm,
+// 2) it will invoke the onSelect callback if a listItem does not have a url. In the current implementation, SearchBox
+// houses the callback, and updates the value of the input with the value of the listItem, then submits a search.
+
 const SearchResultsList = ({ listGroups, searchTerm, onSelect }) => {
   const href = url =>
     url
