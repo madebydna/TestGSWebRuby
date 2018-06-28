@@ -32,7 +32,8 @@ class SearchProvider extends React.Component {
     pageSize: gon.search.pageSize,
     totalPages: gon.search.totalPages,
     resultSummary: gon.search.resultSummary,
-    paginationSummary: gon.search.paginationSummary
+    paginationSummary: gon.search.paginationSummary,
+    breadcrumbs: gon.search.breadcrumbs || []
   };
 
   static propTypes = {
@@ -59,7 +60,8 @@ class SearchProvider extends React.Component {
     updateEntityTypes: PropTypes.func.isRequired,
     updateSort: PropTypes.func.isRequired,
     updatePage: PropTypes.func.isRequired,
-    updateDistance: PropTypes.func.isRequired
+    updateDistance: PropTypes.func.isRequired,
+    breadcrumbs: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
   };
 
   constructor(props) {
@@ -200,7 +202,8 @@ class SearchProvider extends React.Component {
           shouldIncludeDistance: this.shouldIncludeDistance(),
           toggleHighlight: this.toggleHighlight,
           defaultLat: this.props.defaultLat,
-          defaultLon: this.props.defaultLon
+          defaultLon: this.props.defaultLon,
+          breadcrumbs: this.props.breadcrumbs
         }}
       >
         <DistanceContext.Provider
