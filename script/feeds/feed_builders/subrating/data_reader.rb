@@ -22,16 +22,23 @@ module Feeds
       end
 
       def state_results
-        ratings_hashes.each_with_object({}) do |hash, state_results|
+        state_results = ratings_hashes.each_with_object({}) do |hash, results|
           unless hash[:ratings].empty?
             hash[:ratings].each do |rating_name, rating_obj|
-              state_results[rating_name] ||= {}
-              state_results[rating_name][:name] = rating_name
-              state_results[rating_name][:description] = rating_obj.description
-              state_results[rating_name][:year] = rating_obj.year
+              results[rating_name] ||= {}
+              results[rating_name][:name] = rating_name
+              results[rating_name][:description] = rating_obj.description
+              results[rating_name][:year] = rating_obj.year
             end
           end
         end
+        # For some reason, only the Discipline Flag has a description in the DB which is a
+        # shared description for both flags
+        if state_results['Attendance Flag'].present? && state_results['Discipline Flag'].present? &&
+            state_results['Attendance Flag'][:description].blank?
+          state_results['Attendance Flag'][:description] = state_results['Discipline Flag'][:description]
+        end
+        state_results
       end
 
       private
@@ -64,6 +71,8 @@ module Feeds
                   hash['Academic Progress'] = school.academic_progress_rating_hash if school.academic_progress_rating_hash
                   hash['Student Growth'] = school.student_growth_rating_hash if school.student_growth_rating_hash
                   hash['Low Income'] = school.low_income_rating_hash if school.low_income_rating_hash
+                  hash['Discipline Flag'] = school.discipline_flag_hash if school.discipline_flag_hash
+                  hash['Attendance Flag'] = school.absence_flag_hash if school.absence_flag_hash
                 end
             }
           end

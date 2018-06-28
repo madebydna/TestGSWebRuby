@@ -160,6 +160,14 @@ module CachedRatingsMethods
     low_income_rating_hash.try(:source_date_valid)
   end
 
+  def discipline_flag_hash
+    rating_object_for_key('Discipline Flag')
+  end
+
+  def absence_flag_hash
+    rating_object_for_key('Absence Flag')
+  end
+
   ####################################################################
   #
   # START - use with GSData
