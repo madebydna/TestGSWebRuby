@@ -14,8 +14,10 @@ class Api::AutosuggestController < ApplicationController
   def results
     Search::SolrAutosuggestQuery.new(q).search
       .group_by { |h| h[:type] }
-      .each_with_object({}) do |(type, rows), hash|
-        hash[type] = rows.take(10)
+      .tap do |hash|
+        hash['school'] = hash['school']&.take(5)
+        hash['city'] = hash['city']&.take(5)
+        hash['district'] = hash['district']&.take(5)
       end
   end
 

@@ -4,7 +4,7 @@ import CaptureOutsideClick from './capture_outside_click';
 
 const Dropdown = props => (
   <Dropdownable {...props}>
-    {({ isOpen, close, toggle, selection, options }) => (
+    {({ isOpen, open, close, toggle, selection, options }) => (
       <CaptureOutsideClick callback={close}>
         <div className="dropdown">
           <div

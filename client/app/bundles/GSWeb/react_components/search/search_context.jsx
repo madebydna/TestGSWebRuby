@@ -80,7 +80,7 @@ class SearchProvider extends React.Component {
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
-    this.autoSuggestQuery = this.autoSuggestQuery.bind(this);
+    this.autoSuggestQuery = debounce(this.autoSuggestQuery.bind(this), 200);
   }
 
   componentDidMount() {
@@ -125,33 +125,37 @@ class SearchProvider extends React.Component {
   },
   */
   autoSuggestQuery(q) {
-    q.length >= 3 && suggest(q).done(results => {
-      const adaptedResults = { city: [], school: [], district: [] };
+    if (q.length >= 3) {
+      suggest(q).done(results => {
+        const adaptedResults = { city: [], school: [], district: [] };
+        Object.keys(results).forEach(category => {
+          (results[category] || []).forEach(result => {
+            const { school, district = '', city, state, url } = result;
 
-      Object.keys(results).forEach(category => {
-        results[category].forEach(result => {
-          const { school, district = '', city, state, url } = result;
+            let title = null;
+            if (category === 'school') {
+              title = school;
+            } else if (category === 'city') {
+              title = `Schools in ${city}, ${state}`;
+            } else if (category === 'district') {
+              title = `Schools in ${district}, ${state}`;
+            }
 
-          let title = null;
-          if (category === 'school') {
-            title = school;
-          } else {
-            title = `Schools in ${city}${district}, ${state}`;
-          }
+            const additionalInfo =
+              category === 'city' ? null : `${city}, ${state}`;
 
-          const additionalInfo =
-            category === 'city' ? null : `${city}, ${state}`;
-
-          adaptedResults[category].push({
-            title,
-            additionalInfo,
-            url
+            adaptedResults[category].push({
+              title,
+              additionalInfo,
+              url
+            });
           });
         });
+        this.setState({ autoSuggestResults: adaptedResults });
       });
-
-      this.setState({ autoSuggestResults: adaptedResults });
-    });
+    } else {
+      this.setState({ autoSuggestResults: {} });
+    }
   }
 
   // 62 = nav offset on non-mobile

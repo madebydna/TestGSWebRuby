@@ -88,7 +88,8 @@ class SearchLayout extends React.Component {
     listMapDropdown: PropTypes.element.isRequired,
     schoolList: PropTypes.element.isRequired,
     map: PropTypes.element.isRequired,
-    tallAd: PropTypes.element.isRequired
+    tallAd: PropTypes.element.isRequired,
+    searchBox: PropTypes.element.isRequired
   };
 
   constructor(props) {
@@ -148,6 +149,7 @@ class SearchLayout extends React.Component {
       <div className="menu-bar filters" ref={this.header}>
         <div style={{ margin: 'auto', padding: '0 10px' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
+          <span className="menu-item">{this.props.gradeLevelButtons}</span>
           <span className="menu-item">{this.props.searchBox}</span>
           {this.props.distanceFilter ? (
             <span className="menu-item">
