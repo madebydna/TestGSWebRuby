@@ -111,10 +111,28 @@ module Search
       ]
     end
 
+    def q_no_whitespace
+      q.gsub(/\s+/, '')
+    end
+
+    def q_escape_spaces
+      q.gsub(' ', '\ ')
+    end
+
+    def query_fragments
+      [
+        "zip:#{q}*",
+        "school_name_untokenized:#{q_escape_spaces}*",
+        "school_name:(#{q}*)",
+        "city_name:(#{q_no_whitespace} #{q_no_whitespace}*)^5.0",
+        "district_name_untokenized:#{q_escape_spaces}*^8.0"
+      ]
+    end
+
     def sunspot_query
       lambda do |search|
         # search.keywords(q)
-        search.keywords("+(zip:#{q}* school_name_untokenized:#{q.gsub(' ', '\ ')}* school_name:(#{q}*) city_name:#{q.gsub(' ', '')}*^5.0 district_name_untokenized:#{q.gsub(' ', '\ ')}*^8.0)")
+        search.keywords("+(#{query_fragments.join(' ')})")
         search.paginate(page: 1, per_page: limit)
         search.adjust_solr_params do |params|
           params[:fq][0] = nil
