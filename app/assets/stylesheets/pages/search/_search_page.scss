@@ -320,9 +320,11 @@ body {
 }
 
 .search-box {
-  top: 7px;
+  left: 0px;
   position: absolute;
   background: white;
+  width: 100%;
+  display: flex;
 
   input {
     outline: none;
@@ -333,12 +335,16 @@ body {
     margin-top: -1px;
   }
 
+  .multi-item-select-list-item {
+    cursor: pointer;
+  }
+
   .dropdown {
     font-family: 'opensans-semibold', Arial, 'Helvetica Neue', Helvetica,
       sans-serif;
-    border: 1px solid #c1d2d9;
+    border: 1px solid #b8b8b8;
     border-radius: 3px 0px 0px 3px;
-    border-width: 1px 0px 1px 1px;
+    border-width: 1px 1px 1px 1px;
     background: white;
     z-index: 2;
   }

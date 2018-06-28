@@ -72,7 +72,12 @@ class SearchProvider extends React.Component {
       paginationSummary: props.paginationSummary,
       loadingSchools: false,
       size: viewportSize(),
-      autoSuggestResults: { city: [], school: [], district: [] }
+      autoSuggestResults: {
+        Cities: [],
+        Districts: [],
+        Schools: [],
+        Zipcodes: []
+      }
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
@@ -127,27 +132,37 @@ class SearchProvider extends React.Component {
   autoSuggestQuery(q) {
     if (q.length >= 3) {
       suggest(q).done(results => {
-        const adaptedResults = { city: [], school: [], district: [] };
+        const adaptedResults = {
+          Cities: [],
+          Districts: [],
+          Schools: [],
+          Zipcodes: []
+        };
         Object.keys(results).forEach(category => {
           (results[category] || []).forEach(result => {
-            const { school, district = '', city, state, url } = result;
+            const { school, district = '', city, state, url, zip } = result;
 
             let title = null;
-            if (category === 'school') {
+            let additionalInfo = null;
+            let value = null;
+            if (category === 'Schools') {
               title = school;
-            } else if (category === 'city') {
+              additionalInfo = `${city}, ${state}`;
+            } else if (category === 'Cities') {
               title = `Schools in ${city}, ${state}`;
-            } else if (category === 'district') {
+            } else if (category === 'Districts') {
               title = `Schools in ${district}, ${state}`;
+              additionalInfo = `${city}, ${state}`;
+            } else if (category === 'Zipcodes') {
+              title = `Schools in ${zip}`;
+              value = zip;
             }
-
-            const additionalInfo =
-              category === 'city' ? null : `${city}, ${state}`;
 
             adaptedResults[category].push({
               title,
               additionalInfo,
-              url
+              url,
+              value
             });
           });
         });

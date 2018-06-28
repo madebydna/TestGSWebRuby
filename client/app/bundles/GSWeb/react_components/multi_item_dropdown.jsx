@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { copyParam } from 'util/uri';
 
-const MultiItemDropdown = ({ listGroups, searchTerm }) => {
+const MultiItemDropdown = ({ listGroups, searchTerm, onSelect }) => {
+  const href = url =>
+    url
+      ? copyParam(
+          'newsearch',
+          window.location.href,
+          copyParam('lang', window.location.href, url)
+        )
+      : undefined;
+
   const boldSubstring = string => {
     const substringMatch = string.match(new RegExp(searchTerm, 'i'));
     if (!substringMatch) {
@@ -37,10 +47,11 @@ const MultiItemDropdown = ({ listGroups, searchTerm }) => {
     listItems.map(
       (listItem, idx) => (
         <li
+          onClick={listItem.url ? () => {} : () => onSelect(listItem.value)}
           key={listItem.title + idx.toString()}
           className="multi-item-select-list-item"
         >
-          <a href={listItem.url}>
+          <a href={href(listItem.url)}>
             <div>{boldSubstring(listItem.title)}</div>
             <div>{listItem.additionalInfo}</div>
           </a>
@@ -66,6 +77,10 @@ const MultiItemDropdown = ({ listGroups, searchTerm }) => {
       <ul>{renderList(listGroups)}</ul>
     </div>
   );
+};
+
+MultiItemDropdown.propTypes = {
+  onSelect: PropTypes.func.isRequired
 };
 
 export default MultiItemDropdown;
