@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Breadcrumbs from 'react_components/breadcrumbs';
 import SearchContext from './search_context';
 import DistanceConsumer from './distance_context';
 import SortSelect from './sort_select';
@@ -25,7 +26,8 @@ class Search extends React.Component {
     lon: null,
     schools: [],
     loadingSchools: false,
-    shouldIncludeDistance: false
+    shouldIncludeDistance: false,
+    breadcrumbs: []
   };
 
   static propTypes = {
@@ -43,7 +45,8 @@ class Search extends React.Component {
     onPageChanged: PropTypes.func.isRequired,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     shouldIncludeDistance: PropTypes.bool,
-    toggleHighlight: PropTypes.func
+    toggleHighlight: PropTypes.func,
+    breadcrumbs: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
   };
 
   constructor(props) {
@@ -120,6 +123,7 @@ class Search extends React.Component {
                 isLoading={this.props.loadingSchools}
               />
             }
+            breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
           />
         )}
       </DistanceContext.Consumer>

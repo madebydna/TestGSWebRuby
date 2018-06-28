@@ -22,6 +22,7 @@ class NewSearchController < ApplicationController
       props[:district] = district_record.name if district_record
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
+      props[:breadcrumbs] = search_breadcrumbs
     end
 
     prev_page = prev_page_url(page_of_results)
@@ -31,9 +32,26 @@ class NewSearchController < ApplicationController
     set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url?
     set_ad_targeting_props
     set_page_analytics_data
+
+
+    add_json_ld(StructuredMarkup.breadcrumbs_as_json_ld(search_breadcrumbs))
   end
 
   private
+
+  def search_breadcrumbs
+    @_search_breadcrumbs ||=
+      [
+        make_breadcrumb(
+          text: StructuredMarkup.state_breadcrumb_text(state),
+          url: state_url(state_params(state))
+        ),
+        make_breadcrumb(
+          text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
+          url: city_url(city_params(state, city))
+        )
+      ]
+  end
 
   # AdvertisingConcerns
   def ad_targeting_props
