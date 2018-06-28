@@ -1,7 +1,7 @@
 $page-side-padding: 15px;
 $search-primary-blue-on-white: #1dace5;
 @import 'list-and-map';
-@import 'components/multi-item-dropdown';
+@import 'components/search-results-list';
 
 .featured {
   display: none; // TODO: dont put this here
@@ -330,12 +330,12 @@ body {
     outline: none;
   }
 
-  .multi-item-dropdown {
+  .search-results-list {
     z-index: 2;
     margin-top: -1px;
   }
 
-  .multi-item-select-list-item {
+  .search-results-list-item {
     cursor: pointer;
   }
 

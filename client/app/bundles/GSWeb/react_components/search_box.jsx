@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import OpenableCloseable from './openable_closeable';
 import CaptureOutsideClick from './search/capture_outside_click';
-import MultiItemDropdown from './multi_item_dropdown';
+import SearchResultsList from './search_results_list';
 import Dropdown from 'react_components/search/dropdown';
 import { createPortal } from 'react-dom';
 import { reduce } from 'lodash';
@@ -124,11 +124,13 @@ export default class SearchBox extends React.Component {
                 />
                 {isOpen &&
                   this.shouldRenderResults() && (
-                    <MultiItemDropdown
+                  <div className="search-results-list">
+                    <SearchResultsList
                       listGroups={this.props.autoSuggestResults}
                       searchTerm={this.state.searchTerm}
                       onSelect={this.onSelectItem(close)}
                     />
+                  </div>
                   )}
               </div>
             </CaptureOutsideClick>

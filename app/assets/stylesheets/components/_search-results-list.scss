@@ -1,4 +1,4 @@
-.multi-item-dropdown {
+.search-results-list {
   * {
     font-family: opensans-regular;
   }
@@ -19,12 +19,12 @@
       padding: 9px 19px;
       color: black;
     }
-    .multi-item-select-group-name {
+    .search-results-list-group-name {
       border-radius: 4px;
       background: #f1f4f7;
       color: #677c93;
     }
-    .multi-item-select-list-item {
+    .search-results-list-item {
       &:hover {
         background: #fafafa;
       }

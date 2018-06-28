@@ -126,7 +126,8 @@ class SearchProvider extends React.Component {
       "city": "New Boston",
       "state": "nh",
       "type": "school"}
-    ]
+    ],
+    zip....includes an additional 'value' key.
   },
   */
   autoSuggestQuery(q) {

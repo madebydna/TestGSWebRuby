@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { copyParam } from 'util/uri';
 
-const MultiItemDropdown = ({ listGroups, searchTerm, onSelect }) => {
+const SearchResultsList = ({ listGroups, searchTerm, onSelect }) => {
   const href = url =>
     url
       ? copyParam(
@@ -39,7 +39,7 @@ const MultiItemDropdown = ({ listGroups, searchTerm, onSelect }) => {
     return stringWithMarkup;
   };
   const groupNameListItem = name => (
-    <li className="multi-item-select-group-name">
+    <li className="search-results-list-group-name">
       {name[0].toUpperCase() + name.slice(1)}
     </li>
   );
@@ -49,7 +49,7 @@ const MultiItemDropdown = ({ listGroups, searchTerm, onSelect }) => {
         <li
           onClick={listItem.url ? () => {} : () => onSelect(listItem.value)}
           key={listItem.title + idx.toString()}
-          className="multi-item-select-list-item"
+          className="search-results-list-item"
         >
           <a href={href(listItem.url)}>
             <div>{boldSubstring(listItem.title)}</div>
@@ -73,14 +73,12 @@ const MultiItemDropdown = ({ listGroups, searchTerm, onSelect }) => {
         this
       );
   return (
-    <div className="multi-item-dropdown">
-      <ul>{renderList(listGroups)}</ul>
-    </div>
+    <ul>{renderList(listGroups)}</ul>
   );
 };
 
-MultiItemDropdown.propTypes = {
+SearchResultsList.propTypes = {
   onSelect: PropTypes.func.isRequired
 };
 
-export default MultiItemDropdown;
+export default SearchResultsList;
