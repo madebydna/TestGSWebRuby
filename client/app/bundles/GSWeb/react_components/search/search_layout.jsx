@@ -5,7 +5,9 @@ import $ from 'jquery';
 import { SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
+import SearchBox from '../search_box';
 import { t } from 'util/i18n';
+import suggest from 'api_clients/autosuggest';
 
 function keepInViewport(
   ref,
@@ -89,6 +91,7 @@ class SearchLayout extends React.Component {
     schoolList: PropTypes.element.isRequired,
     map: PropTypes.element.isRequired,
     tallAd: PropTypes.element.isRequired,
+    searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element
   };
 
@@ -150,6 +153,7 @@ class SearchLayout extends React.Component {
         <div style={{ margin: 'auto', padding: '0 10px' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
           <span className="menu-item">{this.props.gradeLevelButtons}</span>
+          <span className="menu-item">{this.props.searchBox}</span>
           {this.props.distanceFilter ? (
             <span className="menu-item">
               <span className="label">Distance:</span>

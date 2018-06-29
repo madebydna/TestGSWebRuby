@@ -1,0 +1,43 @@
+.search-results-list {
+  * {
+    font-family: opensans-regular;
+  }
+  max-height: 450px;
+  overflow: scroll;
+  color: black;
+  position: absolute;
+  background: white;
+  border: 1px solid $form-field-border-color;
+  border-radius: $form-field-border-radius;
+
+  .match {
+    font-family: opensans-bold;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    li {
+      padding: 9px 19px;
+      color: black;
+    }
+    .search-results-list-group-name {
+      border-radius: 4px;
+      background: #f1f4f7;
+      color: #677c93;
+    }
+    .search-results-list-item {
+      &:hover {
+        background: #fafafa;
+      }
+      a {
+        text-decoration: none;
+        color: black;
+        div + div {
+          margin-top: 4px;
+          font-size: 11px;
+        }
+      }
+    }
+  }
+}

@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 // and fire a callback if a click event occurs anywhere outside of the
 // childrens' dom tree. Used for things like clicking a dropdown
 // menu when user clicks outside of it.
+
+// NOTE: The first child of this component must be an html element for the ref to work properly
 export default class CaptureOutsideClick extends React.Component {
   static propTypes = {
     callback: PropTypes.func.isRequired,
@@ -26,7 +28,7 @@ export default class CaptureOutsideClick extends React.Component {
 
   handleClick() {
     return e => {
-      if (this.ref === undefined || this.ref.current.contains(e.target)) {
+      if (this.ref === undefined || this.ref.current === null || this.ref.current.contains(e.target)) {
         return;
       }
       this.props.callback();

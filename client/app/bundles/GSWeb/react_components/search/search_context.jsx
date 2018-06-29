@@ -11,6 +11,7 @@ import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
 import DistanceContext from './distance_context';
 import { analyticsEvent } from 'util/page_analytics';
+import suggest from 'api_clients/autosuggest';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -77,7 +78,13 @@ class SearchProvider extends React.Component {
       resultSummary: props.resultSummary,
       paginationSummary: props.paginationSummary,
       loadingSchools: false,
-      size: viewportSize()
+      size: viewportSize(),
+      autoSuggestResults: {
+        Cities: [],
+        Districts: [],
+        Schools: [],
+        Zipcodes: []
+      }
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
@@ -85,6 +92,7 @@ class SearchProvider extends React.Component {
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
+    this.autoSuggestQuery = debounce(this.autoSuggestQuery.bind(this), 200);
   }
 
   componentDidMount() {
@@ -109,6 +117,68 @@ class SearchProvider extends React.Component {
 
   handleWindowResize() {
     this.setState({ size: viewportSize() });
+  }
+
+  /*
+  { city: [
+      {"id": null,
+      "city": "New Boston",
+      "state": "nh",
+      "type": "city",
+      "url": '/new-mexico/alamogordo//829-Alamogordo-SDA-School}
+    ],
+    school: [
+      {"id": null,
+      "school": "Alameda High School",
+      "city": "New Boston",
+      "state": "nh",
+      "type": "school"}
+    ],
+    zip....includes an additional 'value' key.
+  },
+  */
+  autoSuggestQuery(q) {
+    if (q.length >= 3) {
+      suggest(q).done(results => {
+        const adaptedResults = {
+          Zipcodes: [],
+          Cities: [],
+          Districts: [],
+          Schools: []
+        };
+        Object.keys(results).forEach(category => {
+          (results[category] || []).forEach(result => {
+            const { school, district = '', city, state, url, zip } = result;
+
+            let title = null;
+            let additionalInfo = null;
+            let value = null;
+            if (category === 'Schools') {
+              title = school;
+              additionalInfo = `${city}, ${state} ${zip || ''}`;
+            } else if (category === 'Cities') {
+              title = `Schools in ${city}, ${state}`;
+            } else if (category === 'Districts') {
+              title = `Schools in ${district}, ${state}`;
+              additionalInfo = `${city}, ${state}`;
+            } else if (category === 'Zipcodes') {
+              title = `Schools in ${zip}`;
+              value = zip;
+            }
+
+            adaptedResults[category].push({
+              title,
+              additionalInfo,
+              url,
+              value
+            });
+          });
+        });
+        this.setState({ autoSuggestResults: adaptedResults });
+      });
+    } else {
+      this.setState({ autoSuggestResults: {} });
+    }
   }
 
   // 62 = nav offset on non-mobile
@@ -208,6 +278,8 @@ class SearchProvider extends React.Component {
           toggleHighlight: this.toggleHighlight,
           defaultLat: this.props.defaultLat,
           defaultLon: this.props.defaultLon,
+          autoSuggestQuery: this.autoSuggestQuery,
+          autoSuggestResults: this.state.autoSuggestResults,
           breadcrumbs: this.props.breadcrumbs
         }}
       >

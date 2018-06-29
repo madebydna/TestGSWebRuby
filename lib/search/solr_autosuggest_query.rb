@@ -5,20 +5,40 @@ module Search
     include Rails.application.routes.url_helpers
     include UrlHelper
 
-    attr_accessor :q, :client, :limit
+    attr_accessor :client, :limit
+    attr_writer :q
 
     def initialize(q)
       self.q = q
       @client = Sunspot
-      @limit = 100
+      @limit = 250
+    end
+
+    # ['facet_counts']['facet_fields']['zip']
+
+    def solr_result
+      @_solr_result ||= client.search(School, &sunspot_query).instance_variable_get(:@solr_result)
     end
 
     def response
-      @_response ||= begin
-        results = client
-          .search(School, &sunspot_query).instance_variable_get(:@solr_result)['response']['docs']
-          .map { |r| standardize(r) }
-      end
+
+      rval = solr_result['response']['docs'].map { |r| standardize(r) } + zips
+    end
+
+    def zips
+      #          zip,   count, zip,   count,
+      # returns [94612, 5,     94501, 10,    ...]
+      zips_and_counts = solr_result['facet_counts']['facet_fields']['zip']
+      zips = zips_and_counts
+        .each_slice(2)
+        .select { |zip, count| count > 0 }
+        .map(&:first) # grab only the zip
+        .select { |zip| zip.present? } # can have empty string
+        .map { |zip| {zip: zip, type: 'zip'}}
+    end
+
+    def q
+      @q&.downcase
     end
 
     def standardize(solr_result)
@@ -31,16 +51,16 @@ module Search
 
       url = 
         if type == 'city'
-          city_path(
+          search_city_browse_path(
             state: gs_legacy_url_encode(States.state_name(state)),
             city: gs_legacy_url_encode(city),
             trailing_slash: true
           )
         elsif type == 'district'
-          district_path(
+          search_district_browse_path(
             state: gs_legacy_url_encode(States.state_name(state)),
             city: gs_legacy_url_encode(city),
-            district: gs_legacy_url_encode(district),
+            district_name: gs_legacy_url_encode(district),
             trailing_slash: true
           )
         elsif type == 'school'
@@ -86,24 +106,42 @@ module Search
         "city_state",
         "state",
         "city_sortable_name",
-        "district_sortable_name"
+        "district_sortable_name",
+        "zip"
+      ]
+    end
+
+    def q_no_whitespace
+      q.gsub(/\s+/, '')
+    end
+
+    def q_escape_spaces
+      q.gsub(' ', '\ ')
+    end
+
+    def query_fragments
+      [
+        "zip:#{q}*",
+        "school_name_untokenized:#{q_escape_spaces}*",
+        "school_name:(#{q}*)",
+        "city_name:(#{q_no_whitespace} #{q_no_whitespace}*)^5.0",
+        "district_name_untokenized:#{q_escape_spaces}*^8.0"
       ]
     end
 
     def sunspot_query
       lambda do |search|
         # search.keywords(q)
-        search.keywords("+(school_name_untokenized:#{q.gsub(' ', '\ ')}* school_name:(#{q}*) city_name:#{q}*^1.1 district_name:#{q}*^1.1)")
+        search.keywords("+(#{query_fragments.join(' ')})")
         search.paginate(page: 1, per_page: limit)
         search.adjust_solr_params do |params|
           params[:fq][0] = nil
           params[:defType] = 'lucene'
           params[:fl] = fields.join(',')
-          # params[:qf] = 'city_name^99.0 city_name_untokenized^99.0 city_sortable_name^90.0 district_sortable_name^10.0 school_type^3.5 zip^3.0 school_name^2.5 city^0.5 school_district_name^2.5 school_grade_level^1.0 school_database_state^1.0 school_name_synonyms school_subtype'
-          # params[:qf] = 'city_keyword city_name city_name_untokenized city_sortable_name'
-          params[:qf] = 'city_name^99.0 city_keyword city_name_untokenized^99.0 city_sortable_name^90.0 city_state city_citystate city_citystate_autosuggest city^0.5'
-          # params[:qf] = 'city^1.0 city_name^1.0 city_name_untokenized^1.0 city_sortable_name^1.0'
-          
+          params[:facet] = true
+          params[:sort] = 'score desc, city_number_of_schools desc, district_number_of_schools desc'
+          params['facet.field']='zip'
+          # facet=on&facet.field=txt
         end
       end
     end
