@@ -1,11 +1,15 @@
 .info-window {
-  font-family: 'opensans-regular', Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  $color-faded-gray: #647981;
+  $font-default: 'opensans-regular', Helvetica, Arial, sans-serif;
+  $font-bold: 'opensans-bold', Helvetica, Arial, sans-serif;
+
+  font-family: $font-default;
+  font-size: $font-size-l2;
 
   .assigned-text{
-    font-family: "opensans-bold", Helvetica, Arial;
+    font-family: $font-bold;
     background-color: #176997;
-    font-size: 12px;
+    font-size: $new-profile-font-size-base;
     line-height: 16px;
     color: white;
     padding-left: 10px;
@@ -18,7 +22,7 @@
 
     .rating-scale {
       margin-top: 5px;
-      color: #647981;
+      color: $color-faded-gray;
     }
   }
   .school-info {
@@ -27,16 +31,16 @@
     margin-left: 10px;
 
     > a {
-      font-family: "opensans-bold", Helvetica, Arial, sans-serif;
-      font-size: 16px;
+      font-family: $font-bold;
+      font-size: $font-size-l3;
     }
     .address {
-      color: #647981;
+      color: $color-faded-gray;
       margin-top: 5px;
     }
 
     .school-subinfo {
-      font-family: "opensans-bold", Helvetica, Arial, sans-serif;
+      font-family: $font-bold;
       margin-top: 10px;
     }
   }

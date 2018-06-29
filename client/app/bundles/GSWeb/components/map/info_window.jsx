@@ -56,6 +56,8 @@ export default function createInfoWindow(entity) {
     }
   };
 
+  let addressString = `${entity.address.street1}, ${entity.address.city}, ${entity.state} ${entity.address.zip}`;
+  let typeString = `${capitalize(entity.schoolType)}, ${entity.gradeLevels}`;
   let contentString = (
     <div class="info-window">
       {entity.assigned && <div class="assigned-text">{t('assigned')}</div>}
@@ -65,8 +67,8 @@ export default function createInfoWindow(entity) {
           <a href={entity.links ? entity.links.profile : '#'} target="_blank">{entity.name}</a>
           {entity.type == 'school' && entity.address &&
             <div>
-              <div class="address">{entity.address.street1 + ','} {entity.address.city + ','} {entity.state} {entity.address.zip}</div>
-              <div class="school-subinfo"><span>{capitalize(entity.schoolType) + ','} {entity.gradeLevels}</span></div>
+              <div class="address">{addressString}</div>
+              <div class="school-subinfo"><span>{typeString}</span></div>
               <div class="other-links">
                 <span class="icon-house">  </span>
                 <a href={homesForSaleHref} rel="nofollow" target="_blank">Homes for sale</a>
