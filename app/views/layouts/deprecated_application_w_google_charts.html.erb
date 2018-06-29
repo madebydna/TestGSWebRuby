@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
+  <%= @no_index %>
   <%= display_meta_tags %>
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "deprecated_application", media: "all", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "deprecated_print",       media: "print" %>
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
-  <%= javascript_include_tag "deprecated_application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "deprecated_application_w_google_charts", "data-turbolinks-track" => true %>
 
   <%= csrf_meta_tags %>
     <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
@@ -62,7 +63,7 @@
 
 <%=  render 'omniture/quantcast' %>
 
-<a href="#" class="back-to-top"><span class="iconx16 i-16-back-to-top" style="margin-top: 14px;"></span><span class="top-text"><%= t('.top') %></span></a>
+<a href="#" class="back-to-top"><span class="iconx16 i-16-back-to-top" style="margin-top: 14px;"></span><span class="top-text"><%= t('top', scope: 'layouts.deprecated_application') %></span></a>
 
 <%= render 'nav/footer' %>
 <%= render 'shared/bottom_mobile_ad' %>

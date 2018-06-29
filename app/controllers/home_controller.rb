@@ -4,7 +4,6 @@ class HomeController < ApplicationController
   before_action :ad_setTargeting_through_gon
   before_action :data_layer_through_gon
   before_action :set_login_redirect
-  before_action :set_no_index
 
   layout "home"
 

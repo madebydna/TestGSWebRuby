@@ -95,9 +95,16 @@ module SearchMetaTagsConcerns
     prev_url = prev_url(url_without_params, page.prev_page_num, params)
     next_url = next_url(url_without_params, page.next_page_num, params)
     city_type_level_code_text = "#{@city.name} #{school_type.text}#{level_code.text}#{level_code.school}"
+
+    if %w(il pa).include?(@state[:short].downcase)
+      meta_description = "#{@city.name}, #{@city.state} school districts, public, private and charter school listings" \
+          " and rankings for #{@city.name}, #{@city.state}. Find your school district information from Greatschools.org"
+    else
+      meta_description = "View and map all #{@city.name}, #{@city.state} schools. Plus, compare or save schools"
+    end
     {
       title: "#{city_type_level_code_text.chop}#{pagination_text}- #{@city.name}, #{@city.state} | GreatSchools",
-      description: "View and map all #{@city.name}, #{@city.state} schools. Plus, compare or save schools",
+      description: meta_description,
       canonical: canonical_url,
       prev: (prev_url ||= nil),
       next: (next_url ||= nil)

@@ -5,6 +5,8 @@ class CompareSchoolsController < ApplicationController
   include SchoolHelper
   include DataDisplayHelper
 
+  layout "deprecated_application_w_google_charts"
+
   def show
     require_state
     set_login_redirect

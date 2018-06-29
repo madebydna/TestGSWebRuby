@@ -170,7 +170,7 @@ module SchoolProfiles
     end
 
     def li_rating_sources
-      if equity_test_scores.low_income_test_scores_visible?
+      if low_income_rating_year
         rating_source(
           year: low_income_rating_year,
           label: static_label('li_GreatSchools_Rating'),

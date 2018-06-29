@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+  <xs:element name="universal-id" type="xs:nonNegativeInteger"/>
+
+  <xs:element name="test" maxOccurs="unbounded">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="test-name" type="Str100"/>
+        <xs:element name="test-abbrv" type="Str30"/>
+        <xs:element name="scale" type="Str500"/>
+        <xs:element name="most-recent-year" type="xs:nonNegativeInteger"/>
+        <xs:element name="description" type="Str50000"/>
+        <xs:element name="state">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="entity" type="entity"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="district">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="entity" type="entity" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="school">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="entity" type="entity" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="entity">
+    <xs:sequence>
+      <xs:element name="universal-id" type="xs:nonNegativeInteger"/>
+      <xs:element name="results" type="results"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="Str30">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Str100">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Str500">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="500"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Str50000">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="50000"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="grade">
+    <xs:annotation>
+      <xs:documentation>
+        The grade associated with a test result.
+        'All' means (school,district,or state)-wide
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="PK"/>
+        <xs:enumeration value="KG"/>
+        <xs:enumeration value="1"/>
+        <xs:enumeration value="2"/>
+        <xs:enumeration value="3"/>
+        <xs:enumeration value="4"/>
+        <xs:enumeration value="5"/>
+        <xs:enumeration value="6"/>
+        <xs:enumeration value="7"/>
+        <xs:enumeration value="8"/>
+        <xs:enumeration value="9"/>
+        <xs:enumeration value="10"/>
+        <xs:enumeration value="11"/>
+        <xs:enumeration value="12"/>
+        <xs:enumeration value="All"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+</xs:schema>
+
+
+
