@@ -39,6 +39,14 @@ module Feeds
       @options[:school_ids]
     end
 
+    def schools(state)
+      if school_ids.present?
+        School.find_by_state_and_ids(state, school_ids)
+      else
+        School.on_db(state.downcase.to_sym).active.not_preschool_only.order(:id)
+      end
+    end
+
     def states
       Array.wrap(@options[:state] || States.abbreviations)
     end
@@ -64,7 +72,7 @@ module Feeds
       @_data_readers ||= Hash.new do |hash, s|
         reader = DATA_READERS[feed]
         raise "No data reader found for #{feed}" unless reader.present?
-        hash[s] = reader.new(s, school_ids)
+        hash[s] = reader.new(s, schools(s))
       end
       @_data_readers[state]
     end

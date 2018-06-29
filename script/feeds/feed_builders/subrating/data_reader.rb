@@ -6,11 +6,11 @@ module Feeds
       include Rails.application.routes.url_helpers
       include UrlHelper
 
-      attr_reader :state, :school_ids
+      attr_reader :state, :schools
 
-      def initialize(state, school_ids = nil)
+      def initialize(state, schools)
         @state = state
-        @school_ids = school_ids || School.ids_by_state(@state)
+        @schools = schools
       end
 
       def default_url_options
@@ -47,14 +47,8 @@ module Feeds
         ratings_hashes
       end
 
-      def schools
-        @_schools ||= begin
-          if @school_ids.present?
-            School.on_db(state.downcase.to_sym).where(:id => school_ids).active
-          else
-            School.on_db(state.downcase.to_sym).all.active
-          end
-        end
+      def school_ids
+        @schools.map(&:id)
       end
 
       def ratings_hashes
@@ -81,7 +75,7 @@ module Feeds
 
       def ratings_caches
         @_ratings_caches ||= begin
-          query = SchoolCacheQuery.new.include_cache_keys('ratings').include_schools(@state, @school_ids)
+          query = SchoolCacheQuery.new.include_cache_keys('ratings').include_schools(@state, school_ids)
           query_results = query.query_and_use_cache_keys
           school_cache_results = SchoolCacheResults.new('ratings', query_results)
           school_cache_results.decorate_schools(schools)

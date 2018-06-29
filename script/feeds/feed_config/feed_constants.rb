@@ -46,7 +46,8 @@ module Feeds
           'directory_feed' => 'https://www.greatschools.org/feeds/local-greatschools.xsd',
           'google_feed' => 'https://www.gstatic.com/localfeed/local_feed.xsd',
           'city' => 'https://www.greatschools.org/feeds/greatschools-city2.xsd',
-          'proficiency_band' => 'https://www.greatschools.org/feeds/gs-proficiency-band.xsd'
+          'proficiency_band' => 'https://www.greatschools.org/feeds/gs-proficiency-band.xsd',
+          'subrating' => 'https://www.greatschools.org/feeds/gs-subrating.xsd'
       }
       FEED_TO_ROOT_ELEMENT_MAPPING = {
           'test_scores' => 'gs-test-feed',
