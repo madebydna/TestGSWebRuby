@@ -33,7 +33,8 @@ class SearchProvider extends React.Component {
     pageSize: gon.search.pageSize,
     totalPages: gon.search.totalPages,
     resultSummary: gon.search.resultSummary,
-    paginationSummary: gon.search.paginationSummary
+    paginationSummary: gon.search.paginationSummary,
+    breadcrumbs: gon.search.breadcrumbs || []
   };
 
   static propTypes = {
@@ -60,7 +61,8 @@ class SearchProvider extends React.Component {
     updateEntityTypes: PropTypes.func.isRequired,
     updateSort: PropTypes.func.isRequired,
     updatePage: PropTypes.func.isRequired,
-    updateDistance: PropTypes.func.isRequired
+    updateDistance: PropTypes.func.isRequired,
+    breadcrumbs: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
   };
 
   constructor(props) {
@@ -148,7 +150,7 @@ class SearchProvider extends React.Component {
             let value = null;
             if (category === 'Schools') {
               title = school;
-              additionalInfo = `${city}, ${state} ${zip ? zip : ''}`;
+              additionalInfo = `${city}, ${state} ${zip || ''}`;
             } else if (category === 'Cities') {
               title = `Schools in ${city}, ${state}`;
             } else if (category === 'Districts') {
@@ -272,7 +274,8 @@ class SearchProvider extends React.Component {
           defaultLat: this.props.defaultLat,
           defaultLon: this.props.defaultLon,
           autoSuggestQuery: this.autoSuggestQuery,
-          autoSuggestResults: this.state.autoSuggestResults
+          autoSuggestResults: this.state.autoSuggestResults,
+          breadcrumbs: this.props.breadcrumbs
         }}
       >
         <DistanceContext.Provider

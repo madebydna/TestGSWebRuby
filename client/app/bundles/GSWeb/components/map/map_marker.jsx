@@ -39,10 +39,10 @@ export default class MapMarker extends DefaultMapMarker {
       this.props.assigned
     );
     this.marker.setMap(this.props.map);
-    google.maps.event.addListener(this.marker, 'click', () =>
-      // this.props.onClick(this.marker)
-      this.props.openInfoWindow(this.marker)
-    );
+    google.maps.event.addListener(this.marker, 'click', () => {
+      this.props.onClick(this.marker);
+      this.props.openInfoWindow(this.marker);
+    });
     if (this.props.selected) {
       this.props.openInfoWindow(this.marker);
     }
@@ -77,7 +77,12 @@ const createMarkersFromSchools = (
         map,
         key: `s${s.state}${s.id}${s.highlighted}`,
         openInfoWindow: m => openInfoWindow(createInfoWindow(s), m),
-        onClick: selectSchool || (m => openInfoWindow(createInfoWindow(s), m)),
+        onClick: m => {
+          if (selectSchool) {
+            selectSchool();
+          }
+          openInfoWindow(createInfoWindow(s), m);
+        },
         selected: s === selectedSchool,
         type:
           s.schoolType === 'private'

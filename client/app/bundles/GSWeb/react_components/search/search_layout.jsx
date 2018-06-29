@@ -75,7 +75,9 @@ function keepInViewport(
 }
 
 class SearchLayout extends React.Component {
-  static defaultProps = {};
+  static defaultProps = {
+    breadcrumbs: null
+  };
 
   static propTypes = {
     size: PropTypes.oneOf(validSizes).isRequired,
@@ -89,7 +91,8 @@ class SearchLayout extends React.Component {
     schoolList: PropTypes.element.isRequired,
     map: PropTypes.element.isRequired,
     tallAd: PropTypes.element.isRequired,
-    searchBox: PropTypes.element.isRequired
+    searchBox: PropTypes.element.isRequired,
+    breadcrumbs: PropTypes.element
   };
 
   constructor(props) {
@@ -216,6 +219,7 @@ class SearchLayout extends React.Component {
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
         <div className="subheader menu-bar">
+          {this.props.breadcrumbs}
           <div className="pagination-summary">{this.props.resultSummary}</div>
           {this.props.size > SM && (
             <div className="menu-item">
