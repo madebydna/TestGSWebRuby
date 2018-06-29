@@ -1,4 +1,7 @@
 .info-window {
+  font-family: 'opensans-regular', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+
   .assigned-text{
     font-family: "opensans-bold", Helvetica, Arial;
     background-color: #176997;
@@ -9,28 +12,40 @@
     margin-bottom: 10px;
   }
 
-  .rating {
+  .rating-container {
     float: left;
+    text-align: center;
+
+    .rating-scale {
+      margin-top: 5px;
+      color: #647981;
+    }
   }
   .school-info {
     float: left;
-    font-size: 12px;
-    width: 170px;
+    width: 250px;
     margin-left: 10px;
+
+    > a {
+      font-family: "opensans-bold", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+    }
+    .address {
+      color: #647981;
+      margin-top: 5px;
+    }
+
+    .school-subinfo {
+      font-family: "opensans-bold", Helvetica, Arial, sans-serif;
+      margin-top: 10px;
+    }
   }
   hr {
     margin: 10px 0;
   }
   .other-links {
-    font-size: 12px;
-    a {
-      font-size: 12px;
-    }
-    .school-details {
-      padding-left: 7px;
-      border-left: 1px solid #c1d2d9;
-      margin-left: 5px;
-    }
+    margin-top: 10px;
+
     .icon-house {
       color: #2ba3dc;
     }
