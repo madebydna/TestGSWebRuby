@@ -1,14 +1,15 @@
 
 const escapeRegexChars = (str) => {
-  return String(s).replace(/([-()\[\]{}+?*.$\^|,:#<!\\])/g, '\\$1').
+  return str.replace(/([-()\[\]{}+?*.$\^|,:#<!\\])/g, '\\$1').
   replace(/\x08/g, '\\x08');
 }
 
-const boldSubstring = (string, subString) => {
-
+const everythingButHTML = (str) => {
+  let match = str.match(/(?<!<[^>]*).*/)
+  return (match ? match[0] : undefined)
 }
 
 export {
   escapeRegexChars,
-  boldSubstring
+  everythingButHTML
 }

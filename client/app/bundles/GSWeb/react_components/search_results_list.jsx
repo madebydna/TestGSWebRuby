@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { copyParam } from 'util/uri';
+import { capitalize } from 'util/i18n';
+import { escapeRegexChars, everythingButHTML } from 'util/regex';
 
 // This component is responsible for formatting and rendering a payload of search results (listGroups) into a dropdown.
 // It is stateless.
@@ -18,32 +20,21 @@ const SearchResultsList = ({ listGroups, searchTerm, onSelect }) => {
         )
       : undefined;
 
-  const boldSubstring = string => {
-    const substringMatch = string.match(new RegExp(searchTerm, 'i'));
-    if (!substringMatch) {
-      return string;
-    }
-    const allSubstrings = [];
-    allSubstrings.push(string.slice(0, substringMatch.index));
-    allSubstrings.push(
-      string.slice(
-        substringMatch.index,
-        searchTerm.length + substringMatch.index
-      )
-    );
-    allSubstrings.push(string.slice(substringMatch.index + searchTerm.length));
-    const nonEmptySubs = allSubstrings.filter(str => str.length > 0);
-    const stringWithMarkup = nonEmptySubs.map(str => (
-      <span
-        className={
-          str.toLowerCase() === searchTerm.toLowerCase() ? 'match' : ''
-        }
-      >
-        {str}
-      </span>
-    ));
-    return stringWithMarkup;
-  };
+  const boldSearchTerms = (string, substring)=>{
+    let splitSub = substring.split(' ').filter(str=>str.length > 0);
+    let substringsBolded = string;
+    splitSub.forEach((sub, idx)=>{
+      // Need to preserve capitalization in original string
+      let match = string.match(new RegExp(sub, 'i'))
+      if (match){
+        //This loop adds html tags to a string, so we need to avoid matching anything in those tags. After disregarding
+        // text following < and preceding >, replace the match with the span.
+        substringsBolded = everythingButHTML(substringsBolded).replace(match, `<span class="match">${match}</span>`)
+      }
+    });
+    return substringsBolded
+  }
+
   const groupNameListItem = name => (
     <li className="search-results-list-group-name">
       {name[0].toUpperCase() + name.slice(1)}
@@ -58,7 +49,8 @@ const SearchResultsList = ({ listGroups, searchTerm, onSelect }) => {
           className="search-results-list-item"
         >
           <a href={href(listItem.url)}>
-            <div>{boldSubstring(listItem.title)}</div>
+            <div dangerouslySetInnerHTML={{__html: boldSearchTerms(listItem.title, searchTerm)}}></div>
+            {/*<div>{boldSearchTerms(listItem.title, searchTerm)}</div>*/}
             <div>{listItem.additionalInfo}</div>
           </a>
         </li>
