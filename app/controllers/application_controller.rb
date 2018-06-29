@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
 
   # helper :all
   helper_method :logged_in?, :current_user, :state_param_safe
-  helper_method :json_ld_hash
+  helper_method :json_ld_data
 
   def disconnect_connection_pools
     # This used to be done with the rack_after_reply gem.

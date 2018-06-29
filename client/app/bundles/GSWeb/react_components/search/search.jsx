@@ -46,7 +46,12 @@ class Search extends React.Component {
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     shouldIncludeDistance: PropTypes.bool,
     toggleHighlight: PropTypes.func,
-    breadcrumbs: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
+    breadcrumbs: PropTypes.arrayOf(
+      PropTypes.shape({
+        text: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired
+      })
+    )
   };
 
   constructor(props) {

@@ -7,27 +7,42 @@ module StructuredMarkup
 
     protected
 
-    def make_breadcrumb(text:, url:)
-      [text, url]
-    end
-
-    def json_ld_hash 
-      @_json_ld_hash ||= default_json_ld_hash
-    end
-
-    def json_ld_hash=(hash)
-      @_json_ld_hash = hash
+    def json_ld_data
+      prepare_json_ld
+      return json_ld_array
     end
 
     def add_json_ld(array_or_other_obj)
       if array_or_other_obj.is_a?(Array)
-        json_ld_hash.concat(array_or_other_obj)
+        json_ld_array.concat(array_or_other_obj)
       else
-        json_ld_hash.push(array_or_other_obj)
+        json_ld_array.push(array_or_other_obj)
       end
     end
 
-    def default_json_ld_hash
+    def add_json_ld_breadcrumb(text:, url:)
+      unless existing_json_ld_breadcrumbs
+        add_json_ld(StructuredMarkup.breadcrumbs_as_json_ld([]))
+      end
+      existing_json_ld_breadcrumbs << [text, url]
+    end
+
+    def existing_json_ld_breadcrumbs
+      json_ld_array.find { |h| h['@type'] == 'BreadcrumbList'}&.fetch('itemListElement')
+    end
+
+    def prepare_json_ld
+      # noop. override to implement
+    end
+
+    private
+
+    # internal data structure, do not use outside of this module
+    def json_ld_array
+      @_json_ld_array ||= default_json_ld_data
+    end
+
+    def default_json_ld_data
       [StructuredMarkup.organization_hash]
     end
   end
