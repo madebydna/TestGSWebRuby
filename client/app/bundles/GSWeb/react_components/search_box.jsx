@@ -27,7 +27,7 @@ export default class SearchBox extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { searchTerm: '', type: 'schools' };
+    this.state = { searchTerm: '', type: 'schools', listItemsSelectable: false };
   }
 
   componentDidMount() {
@@ -88,6 +88,14 @@ export default class SearchBox extends React.Component {
     };
   }
 
+  resetListItemsSelectable(){
+    this.state.listItemsSelectable && this.setState({listItemsSelectable: false})
+  }
+
+  makeListItemsSelectable(){
+    this.setState({listItemsSelectable: true})
+  }
+
   render() {
     return createPortal(
       <OpenableCloseable>
@@ -103,7 +111,7 @@ export default class SearchBox extends React.Component {
             />
             <CaptureOutsideClick
               _key="testing multi item dropdown"
-              callback={close}
+              callback={()=> {this.resetListItemsSelectable(); close()}}
             >
               {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
               <div style={{ flexGrow: 2 }}>
@@ -111,6 +119,8 @@ export default class SearchBox extends React.Component {
                   onKeyUp={e => {
                     if (e.key === 'Enter') {
                       this.submit();
+                    } else if (e.key === 'ArrowDown') {
+                      this.makeListItemsSelectable()
                     }
                   }}
                   onChange={this.onTextChanged({ open, close })}
@@ -126,6 +136,7 @@ export default class SearchBox extends React.Component {
                       listGroups={this.props.autoSuggestResults}
                       searchTerm={this.state.searchTerm}
                       onSelect={this.onSelectItem(close)}
+                      listItemsSelectable={this.state.listItemsSelectable}
                     />
                   </div>
                   )}

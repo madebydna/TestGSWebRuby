@@ -10,7 +10,7 @@ import { escapeRegexChars, everythingButHTML } from 'util/regex';
 // 2) it will invoke the onSelect callback if a listItem does not have a url. In the current implementation, SearchBox
 // houses the callback, and updates the value of the input with the value of the listItem, then submits a search.
 
-const SearchResultsList = ({ listGroups, searchTerm, onSelect }) => {
+const SearchResultsList = ({ listGroups, searchTerm, onSelect, listItemsSelectable }) => {
   const href = url =>
     url
       ? copyParam(
