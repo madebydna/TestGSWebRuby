@@ -26,5 +26,18 @@ module Search
         )
       end
     end
+
+    def search_all_levels
+      @_search = begin
+        results = SchoolGeometry.all_valid_schools_having_point_in_attendance_zone(lat, lon)
+        PageOfResults.new(
+            results,
+            query: self,
+            total: results.size,
+            offset: offset,
+            limit: limit
+        )
+      end
+    end
   end
 end

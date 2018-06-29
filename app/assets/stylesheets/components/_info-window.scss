@@ -1,26 +1,55 @@
 .info-window {
-  .rating {
+  $color-faded-gray: #647981;
+  $font-default: 'opensans-regular', Helvetica, Arial, sans-serif;
+  $font-bold: 'opensans-bold', Helvetica, Arial, sans-serif;
+
+  font-family: $font-default;
+  font-size: $font-size-l2;
+
+  .assigned-text{
+    font-family: $font-bold;
+    background-color: #176997;
+    font-size: $new-profile-font-size-base;
+    line-height: 16px;
+    color: white;
+    padding-left: 10px;
+    margin-bottom: 10px;
+  }
+
+  .rating-container {
     float: left;
+    text-align: center;
+
+    .rating-scale {
+      margin-top: 5px;
+      color: $color-faded-gray;
+    }
   }
   .school-info {
     float: left;
-    font-size: 12px;
-    width: 170px;
+    width: 250px;
     margin-left: 10px;
+
+    > a {
+      font-family: $font-bold;
+      font-size: $font-size-l3;
+    }
+    .address {
+      color: $color-faded-gray;
+      margin-top: 5px;
+    }
+
+    .school-subinfo {
+      font-family: $font-bold;
+      margin-top: 10px;
+    }
   }
   hr {
     margin: 10px 0;
   }
   .other-links {
-    font-size: 12px;
-    a {
-      font-size: 12px;
-    }
-    .school-details {
-      padding-left: 7px;
-      border-left: 1px solid #c1d2d9;
-      margin-left: 5px;
-    }
+    margin-top: 10px;
+
     .icon-house {
       color: #2ba3dc;
     }

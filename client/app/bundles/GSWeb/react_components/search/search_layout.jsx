@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'lodash';
 import $ from 'jquery';
-import { viewport, SM, validSizes } from 'util/viewport';
+import { SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
-import CaptureOutsideClick from 'react_components/search/capture_outside_click';
 import Button from 'react_components/button';
+import SearchBox from '../search_box';
+import { t } from 'util/i18n';
+import suggest from 'api_clients/autosuggest';
 
 function keepInViewport(
   ref,
@@ -73,7 +75,9 @@ function keepInViewport(
 }
 
 class SearchLayout extends React.Component {
-  static defaultProps = {};
+  static defaultProps = {
+    breadcrumbs: null
+  };
 
   static propTypes = {
     size: PropTypes.oneOf(validSizes).isRequired,
@@ -86,7 +90,9 @@ class SearchLayout extends React.Component {
     listMapDropdown: PropTypes.element.isRequired,
     schoolList: PropTypes.element.isRequired,
     map: PropTypes.element.isRequired,
-    tallAd: PropTypes.element.isRequired
+    tallAd: PropTypes.element.isRequired,
+    searchBox: PropTypes.element.isRequired,
+    breadcrumbs: PropTypes.element
   };
 
   constructor(props) {
@@ -120,7 +126,7 @@ class SearchLayout extends React.Component {
   renderMapAndAdContainer(map, ad) {
     if (this.props.size > SM) {
       return (
-        <div className="right-column">
+        <div key="right-column" className="right-column">
           <div className="right-column-fixed" ref={this.fixedYLayer}>
             <div className="ad-column">{ad}</div>
             <div className="map-column">{map}</div>
@@ -130,6 +136,7 @@ class SearchLayout extends React.Component {
     }
     return (
       <div
+        key="right-column"
         className={`right-column ${this.shouldRenderMap() ? ' ' : 'closed'}`}
       >
         <div className="right-column-fixed">
@@ -143,9 +150,10 @@ class SearchLayout extends React.Component {
   renderDesktopFilterBar() {
     return (
       <div className="menu-bar filters" ref={this.header}>
-        <div style={{ maxWidth: '1282px', margin: 'auto', padding: '0 10px' }}>
+        <div style={{ margin: 'auto', padding: '0 10px' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
           <span className="menu-item">{this.props.gradeLevelButtons}</span>
+          <span className="menu-item">{this.props.searchBox}</span>
           {this.props.distanceFilter ? (
             <span className="menu-item">
               <span className="label">Distance:</span>
@@ -153,17 +161,6 @@ class SearchLayout extends React.Component {
             </span>
           ) : null}
         </div>
-      </div>
-    );
-  }
-
-  renderDesktopSortBar() {
-    return (
-      <div className="menu-bar sort">
-        <span className="menu-item">
-          <span>Sort by: </span>
-          <span>{this.props.sortSelect}</span>
-        </span>
       </div>
     );
   }
@@ -193,6 +190,7 @@ class SearchLayout extends React.Component {
                 />
                 <div className="menu-bar">
                   <span className="menu-item">
+                    <span className="label">{t('School type and level')}:</span>
                     {this.props.entityTypeDropdown}
                   </span>
                   <span className="menu-item">
@@ -220,9 +218,15 @@ class SearchLayout extends React.Component {
         {this.props.size > SM
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
-        <div className="subheader">
-          <div>{this.props.resultSummary}</div>
-          {this.props.size > SM && <div>{this.props.sortSelect}</div>}
+        <div className="subheader menu-bar">
+          {this.props.breadcrumbs}
+          <div className="pagination-summary">{this.props.resultSummary}</div>
+          {this.props.size > SM && (
+            <div className="menu-item">
+              <span className="label">Sort by:</span>
+              {this.props.sortSelect}
+            </div>
+          )}
         </div>
         <div className="list-map-ad clearfix">
           <div
@@ -233,11 +237,10 @@ class SearchLayout extends React.Component {
             {this.props.schoolList}
           </div>
           {this.renderMapAndAdContainer(
-            <div className="map-container">
-              <div className="map-fit">{this.props.map}</div>
-            </div>,
+            <div className="map-fit">{this.props.map}</div>,
             this.props.tallAd
           )}
+          {this.props.pagination}
         </div>
       </div>
     );

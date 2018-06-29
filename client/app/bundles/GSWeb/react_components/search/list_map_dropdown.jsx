@@ -15,7 +15,7 @@ const options = [
     key: 'map',
     label: (
       <span>
-        <span className="icon-question" />
+        <span className="icon-location" />
         <span style={{ marginLeft: '8px' }} />Map view
       </span>
     )

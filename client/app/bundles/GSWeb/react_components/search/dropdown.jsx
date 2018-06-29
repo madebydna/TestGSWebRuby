@@ -4,7 +4,7 @@ import CaptureOutsideClick from './capture_outside_click';
 
 const Dropdown = props => (
   <Dropdownable {...props}>
-    {({ isOpen, close, toggle, selection, options }) => (
+    {({ isOpen, open, close, toggle, selection, options }) => (
       <CaptureOutsideClick callback={close}>
         <div className="dropdown">
           <div
@@ -16,7 +16,10 @@ const Dropdown = props => (
           >
             <div>
               {selection.label}
-              <span className="icon-caret-down" style={{ marginLeft: '8px' }} />
+              <span
+                className={`icon-caret-down ${isOpen ? 'rotate-text-180' : ''}`}
+                style={{ marginLeft: '8px' }}
+              />
             </div>
           </div>
           {isOpen && (
