@@ -61,7 +61,12 @@ class SearchProvider extends React.Component {
     updateSort: PropTypes.func.isRequired,
     updatePage: PropTypes.func.isRequired,
     updateDistance: PropTypes.func.isRequired,
-    breadcrumbs: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
+    breadcrumbs: PropTypes.arrayOf(
+      PropTypes.shape({
+        text: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired
+      })
+    )
   };
 
   constructor(props) {

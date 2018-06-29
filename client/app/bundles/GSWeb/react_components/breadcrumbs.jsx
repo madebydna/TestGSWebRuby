@@ -4,15 +4,21 @@ import PropTypes from 'prop-types';
 const Breadcrumbs = ({ items }) => (
   <div className="breadcrumbs">
     {items
-      .map(breadcrumb => <a href={breadcrumb[1]}>{breadcrumb[0]}</a>)
-      .reduce((prev, curr) => [
-        prev,
+      .map(({ url, text }) => <a href={url}>{text}</a>)
+      .reduce((list, current) => [
+        list,
         <span className="icon-chevron-right separator" />,
-        curr
+        current
       ])}
   </div>
 );
+
 Breadcrumbs.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired
+    })
+  ).isRequired
 };
 export default Breadcrumbs;
