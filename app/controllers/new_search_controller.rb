@@ -22,7 +22,7 @@ class NewSearchController < ApplicationController
       props[:district] = district_record.name if district_record
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
-      props[:breadcrumbs] = search_breadcrumbs
+      props[:breadcrumbs] = city_browse? || district_browse? ? search_breadcrumbs : []
     end
 
     prev_page = prev_page_url(page_of_results)
@@ -52,7 +52,9 @@ class NewSearchController < ApplicationController
 
   # StructuredMarkup
   def prepare_json_ld
-    search_breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+    if city_browse? || district_browse?
+      search_breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+    end
   end
 
   # AdvertisingConcerns
