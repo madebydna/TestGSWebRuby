@@ -25,6 +25,9 @@
       &.active {
         span {
           color: #ffffff;
+          &:hover {
+            background-color: transparent;
+          }
         }
         &.strongly-disagree {
           background-color: $color-5-scale-strongly-disagree;
