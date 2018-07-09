@@ -54,15 +54,10 @@ class Search extends React.Component {
         url: PropTypes.string.isRequired
       })
     ),
-    autoSuggestQuery: PropTypes.func
+    autoSuggestQuery: PropTypes.func,
+    view: PropTypes.string.isRequired,
+    updateView: PropTypes.func.isRequired
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentView: 'map'
-    };
-  }
 
   componentDidMount() {
     initAdvertising();
@@ -74,7 +69,7 @@ class Search extends React.Component {
         {({ distance, onChange }) => (
           <SearchLayout
             size={this.props.size}
-            currentView={this.state.currentView}
+            view={this.props.view}
             entityTypeDropdown={<EntityTypeDropdown />}
             gradeLevelButtons={<GradeLevelButtons />}
             gradeLevelCheckboxes={<GradeLevelCheckboxes />}
@@ -91,10 +86,9 @@ class Search extends React.Component {
             resultSummary={this.props.resultSummary}
             listMapDropdown={
               <ListMapDropdown
-                currentView={this.state.currentView}
-                onSelect={currentView => {
-                  this.setState({ currentView });
-                }}
+                view={this.props.view}
+                onSelect={this.props.updateView}
+                size={this.props.size}
               />
             }
             tallAd={

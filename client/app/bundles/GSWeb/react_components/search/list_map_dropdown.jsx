@@ -1,35 +1,48 @@
 import React from 'react';
-import Dropdown from './dropdown';
+import PropTypes from 'prop-types';
+import ButtonGroup from 'react_components/buttongroup';
+import { validSizes, SM } from 'util/viewport';
 
-const options = [
-  {
-    key: 'list',
-    label: (
-      <span>
-        <span className="icon-list" />
-        <span style={{ marginLeft: '8px' }} />List view
-      </span>
-    )
-  },
-  {
-    key: 'map',
-    label: (
-      <span>
-        <span className="icon-location" />
-        <span style={{ marginLeft: '8px' }} />Map view
-      </span>
-    )
+const mobileOptions = {
+  list: <span className="icon-list" />,
+  map: <span className="icon-map" />,
+  table: <span className="icon-grid" />
+};
+
+const desktopOptions = {
+  list: (
+    <span>
+      <span className="icon-map" />
+      <span style={{ marginLeft: '8px' }} />ListMap view
+    </span>
+  ),
+  table: (
+    <span>
+      <span className="icon-grid" />
+      <span style={{ marginLeft: '8px' }} />Table view
+    </span>
+  )
+};
+
+const ListMapDropdown = ({ view, onSelect, size }) => {
+  if (size > SM && view === 'map') {
+    view = 'list';
   }
-];
-
-const ListMapDropdown = ({ currentView, onSelect } = {}) => (
-  <div>
-    <Dropdown
-      onSelect={opt => onSelect(opt.key)}
-      options={options}
-      activeOption={options.find(o => o.key === currentView)}
+  return (
+    <ButtonGroup
+      onSelect={onSelect}
+      options={size <= SM ? mobileOptions : desktopOptions}
+      activeOption={view}
     />
-  </div>
-);
+  );
+};
 
 export default ListMapDropdown;
+
+ListMapDropdown.propTypes = {
+  view: PropTypes.oneOf(
+    Object.keys(mobileOptions).concat(Object.keys(desktopOptions))
+  ).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(validSizes).isRequired
+};

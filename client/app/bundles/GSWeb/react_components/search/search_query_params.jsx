@@ -31,6 +31,7 @@ export default class SearchQueryParams extends React.Component {
       sort: queryParams.getSort(),
       page: queryParams.getPage(),
       q: queryParams.getQ(),
+      view: queryParams.getView(),
       updateLevelCodes: codes => {
         pushQueryString(queryParams.queryStringWithNewGradeLevels(codes));
       },
@@ -45,7 +46,9 @@ export default class SearchQueryParams extends React.Component {
       },
       updateDistance: distance => {
         pushQueryString(queryParams.queryStringWithNewDistance(distance));
-      }
+      },
+      updateView: view =>
+        pushQueryString(queryParams.queryStringWithNewView(view))
     };
 
     return this.props.children(extraProps);
