@@ -5,7 +5,7 @@ import SearchContext from './search_context';
 import DistanceConsumer from './distance_context';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
-import ListMapTableSelect from './list_map_dropdown';
+import ListMapTableSelect from './list_map_table_select';
 import PaginationButtons from './pagination_buttons';
 import Map from './map';
 import SchoolList from './school_list';
