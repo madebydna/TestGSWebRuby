@@ -12,6 +12,8 @@ en:
     Elementary: Elementary
     Middle: Middle
     High: High
+    ListMap view: ListMap view
+    Table view: Table view
     Filter by: Filter by
     School type and level: School type and level
     Public schools: Public schools

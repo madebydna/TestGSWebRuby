@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ButtonGroup from 'react_components/buttongroup';
 import { validSizes, SM } from 'util/viewport';
+import { t } from 'util/i18n';
 
 const mobileOptions = {
   list: <span className="icon-list" />,
@@ -13,13 +14,15 @@ const desktopOptions = {
   list: (
     <span>
       <span className="icon-map" />
-      <span style={{ marginLeft: '8px' }} />ListMap view
+      <span style={{ marginLeft: '8px' }} />
+      {t('ListMap view')}
     </span>
   ),
   table: (
     <span>
       <span className="icon-grid" />
-      <span style={{ marginLeft: '8px' }} />Table view
+      <span style={{ marginLeft: '8px' }} />
+      {t('Table view')}
     </span>
   )
 };
