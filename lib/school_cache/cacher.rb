@@ -28,7 +28,7 @@ class Cacher
           INSERT INTO #{SchoolCache.table_name} (school_id, state, name, value, updated)
           VALUES (
             #{school.id},
-            #{ActiveRecord::Base.connection.quote(school.state)},
+            #{ActiveRecord::Base.connection.quote(school.shard_state)},
             #{ActiveRecord::Base.connection.quote(self.class::CACHE_KEY)},
             #{ActiveRecord::Base.connection.quote(build_hash_for_cache.to_json)},
             #{ActiveRecord::Base.connection.quote(Time.now)}
@@ -46,7 +46,7 @@ class Cacher
     SchoolCache.on_rw_db do
       SchoolCache.delete_all(
         school_id: school.id,
-        state: school.state,
+        state: school.shard_state,
         name: self.class::CACHE_KEY
       )
     end
@@ -134,7 +134,7 @@ class Cacher
       begin
         cacher_class.new(school).cache if cacher_class.active?
       rescue => error
-        error_vars = { data_type: data_type, school_state: school.state, school_id: school.id }
+        error_vars = { data_type: data_type, school_state: school.state, school_id: school.id, shard: school.shard_state }
         GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
       end
     end
@@ -147,7 +147,7 @@ class Cacher
       cacher = cacher_class.new(school)
       cacher.cache
     rescue => error
-      error_vars = { cache_key: cache_key, school_state: school.state, school_id: school.id }
+      error_vars = { cache_key: cache_key, school_state: school.state, school_id: school.id, shard: school.shard_state }
       GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
       raise
     end
