@@ -21,18 +21,18 @@ const SearchResultsList = ({ listGroups, searchTerm, onSelect, listItemsSelectab
       : undefined;
 
   const boldSearchTerms = (string, substring)=>{
-    let splitSub = substring.split(' ').filter(str=>str.length > 0);
-    let substringsBolded = string;
-    splitSub.forEach((sub, idx)=>{
-      // Need to preserve capitalization in original string
-      let match = string.match(new RegExp(sub, 'i'))
-      if (match){
-        //This loop adds html tags to a string, so we need to avoid matching anything in those tags. After disregarding
-        // text following < and preceding >, replace the match with the span.
-        substringsBolded = everythingButHTML(substringsBolded).replace(match, `<span class="match">${match}</span>`)
-      }
-    });
-    return substringsBolded
+    // let splitSub = substring.split(' ').filter(str=>str.length > 0);
+    // let substringsBolded = string;
+    // splitSub.forEach((sub, idx)=>{
+    //   // Need to preserve capitalization in original string
+    //   let match = string.match(new RegExp(sub, 'i'))
+    //   if (match){
+    //     //This loop adds html tags to a string, so we need to avoid matching anything in those tags. After disregarding
+    //     // text following < and preceding >, replace the match with the span.
+    //     substringsBolded = everythingButHTML(substringsBolded).replace(match, `<span class="match">${match}</span>`)
+    //   }
+    // });
+    return string
   }
 
   const groupNameListItem = name => (
@@ -49,7 +49,7 @@ const SearchResultsList = ({ listGroups, searchTerm, onSelect, listItemsSelectab
           className="search-results-list-item"
         >
           <a href={href(listItem.url)}>
-            <div dangerouslySetInnerHTML={{__html: boldSearchTerms(listItem.title, searchTerm)}}></div>
+            <div dangerouslySetInnerHTML={{__html: boldSearchTerms(listItem.title)}}></div>
             {/*<div>{boldSearchTerms(listItem.title, searchTerm)}</div>*/}
             <div>{listItem.additionalInfo}</div>
           </a>
