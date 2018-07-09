@@ -88,7 +88,7 @@ class SearchLayout extends React.Component {
     gradeLevelCheckboxes: PropTypes.element.isRequired,
     distanceFilter: PropTypes.element.isRequired,
     sortSelect: PropTypes.element.isRequired,
-    listMapDropdown: PropTypes.element.isRequired,
+    listMapTableSelect: PropTypes.element.isRequired,
     schoolList: PropTypes.element.isRequired,
     map: PropTypes.element.isRequired,
     tallAd: PropTypes.element.isRequired,
@@ -179,7 +179,7 @@ class SearchLayout extends React.Component {
             </span>
           ) : null}
           <span className="menu-item list-map-toggle">
-            {this.props.listMapDropdown}
+            {this.props.listMapTableSelect}
           </span>
         </div>
       </div>
@@ -193,7 +193,7 @@ class SearchLayout extends React.Component {
           <div>
             <div className="menu-bar mobile-filters">
               <span className="menu-item list-map-toggle">
-                {this.props.listMapDropdown}
+                {this.props.listMapTableSelect}
               </span>
               <span className="menu-item">
                 <span className="button-group">
