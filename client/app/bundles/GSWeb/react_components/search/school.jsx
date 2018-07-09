@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
+import { getHomesForSaleHref, studentsPhrase, schoolTypePhrase } from 'util/school';
 
 const renderRating = (rating, ratingScale) => {
   const className = `circle-rating--small circle-rating--${rating}`;
@@ -23,35 +24,6 @@ const renderRating = (rating, ratingScale) => {
     </React.Fragment>
   );
 };
-
-const getHomesForSaleHref = (state, address) => {
-  if (state && address && address.zip) {
-    let homesForSaleHref = null;
-    homesForSaleHref = `https://www.zillow.com/${state}-${
-      address.zip.split('-')[0]
-    }?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap`;
-    return homesForSaleHref;
-  }
-  return null;
-};
-
-const studentsPhrase = enrollment => {
-  if (!enrollment) {
-    return null;
-  }
-  return (
-    <span>
-      <span className="open-sans_semibold">{enrollment}</span>
-      {enrollment > 1 ? ' students' : ' student'}
-    </span>
-  );
-};
-
-const schoolTypePhrase = (schoolType, gradeLevels) => (
-  <span className="open-sans_semibold">
-    {capitalize(schoolType)}, {gradeLevels}
-  </span>
-);
 
 const School = ({
   id,
