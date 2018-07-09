@@ -82,6 +82,23 @@ class DataValue < ActiveRecord::Base
           .having("breakdown_count < 2 OR breakdown_names like '%All students except 504 category%'")
   end
 
+  def self.find_by_school_and_data_types_with_proficiency_band_name(school, data_types)
+    school_values_with_academics_with_proficiency_band_names.
+        from(
+            DataValue.school_and_data_types(school.state,
+                                            school.id,
+                                            data_types), :data_values)
+        .with_data_types
+        .with_sources
+        .with_academics
+        .with_academic_tags
+        .with_breakdowns
+        .with_breakdown_tags
+        .with_proficiency_bands
+        .group('data_values.id')
+        .having("(breakdown_count + academic_count) < 3 OR breakdown_names like '%All students except 504 category%'")
+  end
+
   def self.find_by_school_and_data_types_and_config(school, data_types, config, breakdown_tag_names=[])
     find_by_school_and_data_types(school,data_types).where(configuration: "%#{config}%")
   end
@@ -105,6 +122,23 @@ class DataValue < ActiveRecord::Base
   end
 
 # rubocop:enable Style/FormatStringToken
+
+  def self.school_values_with_academics_with_proficiency_band_names
+    school_values_with_academics = <<-SQL
+      data_values.id, data_values.value, data_values.state, data_values.school_id,
+      data_values.data_type_id, data_values.configuration, data_values.grade, data_values.cohort_count,
+      data_values.proficiency_band_id, data_types.name, proficiency_bands.name as proficiency_band_name,
+      sources.source_name, sources.date_valid, sources.description,
+      group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
+      group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",
+      count(distinct(breakdowns.name)) as "breakdown_count",
+      group_concat(distinct academics.name ORDER BY academics.name) as "academic_names",
+      group_concat(distinct act.tag ORDER BY act.tag) as "academic_tags",
+      count(distinct(academics.name)) as "academic_count",
+      group_concat(distinct academics.type ORDER BY academics.type) as "academic_types"
+    SQL
+    select(school_values_with_academics)
+  end
 
   def self.school_values
     school_values = <<-SQL
@@ -208,6 +242,17 @@ class DataValue < ActiveRecord::Base
     select(state_and_district_values)
   end
 
+  def self.state_and_district_values_with_proficiency_band
+    state_and_district_values = <<-SQL
+      data_values.id, data_values.data_type_id, data_types.name, sources.source_name, sources.description, 
+      data_values.value, date_valid, grade, proficiency_band_id, 
+      proficiency_bands.name as proficiency_band_name, cohort_count,
+      group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
+      group_concat(academics.name ORDER BY academics.name) as "academic_names"
+    SQL
+    select(state_and_district_values)
+  end
+
   def self.school_and_data_types(state, school_id, data_type_ids)
     school_subquery_sql = <<-SQL
           state = ?
@@ -270,6 +315,10 @@ class DataValue < ActiveRecord::Base
 
   def self.with_sources
     joins('JOIN sources on sources.id = source_id')
+  end
+
+  def self.with_proficiency_bands
+    joins('JOIN proficiency_bands on proficiency_bands.id = proficiency_band_id')
   end
 
   def self.with_breakdowns

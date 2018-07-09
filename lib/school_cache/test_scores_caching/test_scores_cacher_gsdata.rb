@@ -3,7 +3,7 @@
 class TestScoresCaching::TestScoresCacherGsdata < Cacher
   CACHE_KEY = 'test_scores_gsdata'
 
-  DATA_TYPE_TAGS = ['state_test']
+  DATA_TYPE_TAGS = %w(state_test)
 
   def data_type_tags
     self.class::DATA_TYPE_TAGS
