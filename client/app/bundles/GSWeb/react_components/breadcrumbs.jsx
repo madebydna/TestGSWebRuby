@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Breadcrumbs = ({ items }) => (
+  items.length > 0 &&
   <div className="breadcrumbs">
     {items
       .map(({ url, text }) => <a href={url}>{text}</a>)
@@ -9,7 +10,7 @@ const Breadcrumbs = ({ items }) => (
         list,
         <span className="icon-chevron-right separator" />,
         current
-      ])}
+      ],[])}
   </div>
 );
 
