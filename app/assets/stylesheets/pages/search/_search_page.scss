@@ -153,6 +153,9 @@ body {
         }
       }
       .menu-item + .menu-item {
+        @include media-breakpoint-up(xs) {
+          margin-left: 15px;
+        }
         @include media-breakpoint-up(md) {
           margin-left: 20px;
         }

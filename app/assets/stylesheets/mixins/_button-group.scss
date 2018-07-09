@@ -23,12 +23,14 @@
 
   > a:first-child,
   button:first-child {
-    border-radius: $form-field-border-radius 0 0 $form-field-border-radius;
+    border-top-left-radius: $form-field-border-radius;
+    border-bottom-left-radius: $form-field-border-radius;
     border-left: 1px solid $form-field-border-color;
   }
   > a:last-child,
   button:last-child {
-    border-radius: 0 $form-field-border-radius $form-field-border-radius 0;
+    border-top-right-radius: $form-field-border-radius;
+    border-bottom-right-radius: $form-field-border-radius;
     border-right: 1px solid $form-field-border-color;
   }
   > button,

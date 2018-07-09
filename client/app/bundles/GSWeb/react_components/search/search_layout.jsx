@@ -8,6 +8,7 @@ import Button from 'react_components/button';
 import SearchBox from '../search_box';
 import { t } from 'util/i18n';
 import suggest from 'api_clients/autosuggest';
+import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 
 function keepInViewport(
   ref,
@@ -81,13 +82,13 @@ class SearchLayout extends React.Component {
 
   static propTypes = {
     size: PropTypes.oneOf(validSizes).isRequired,
-    currentView: PropTypes.string.isRequired,
+    view: PropTypes.string.isRequired,
     gradeLevelButtons: PropTypes.element.isRequired,
     entityTypeDropdown: PropTypes.element.isRequired,
     gradeLevelCheckboxes: PropTypes.element.isRequired,
     distanceFilter: PropTypes.element.isRequired,
     sortSelect: PropTypes.element.isRequired,
-    listMapDropdown: PropTypes.element.isRequired,
+    listMapTableSelect: PropTypes.element.isRequired,
     schoolList: PropTypes.element.isRequired,
     map: PropTypes.element.isRequired,
     tallAd: PropTypes.element.isRequired,
@@ -116,17 +117,34 @@ class SearchLayout extends React.Component {
   }
 
   shouldRenderMap() {
-    return this.props.size > SM || this.props.currentView === 'map';
+    return (
+      this.props.view === MAP_VIEW ||
+      (this.props.size > SM && this.props.view !== TABLE_VIEW)
+    );
   }
 
   shouldRenderList() {
-    return this.props.size > SM || this.props.currentView === 'list';
+    return (
+      this.props.view === LIST_VIEW ||
+      (this.props.size > SM && this.props.view !== TABLE_VIEW)
+    );
+  }
+
+  shouldRenderTable() {
+    return this.props.view === TABLE_VIEW;
+  }
+
+  renderTableView() {
+    return <div>Table view</div>;
   }
 
   renderMapAndAdContainer(map, ad) {
     if (this.props.size > SM) {
       return (
-        <div key="right-column" className="right-column">
+        <div
+          key="right-column"
+          className={`right-column ${this.shouldRenderMap() ? ' ' : 'closed'}`}
+        >
           <div className="right-column-fixed" ref={this.fixedYLayer}>
             <div className="ad-column">{ad}</div>
             <div className="map-column">{map}</div>
@@ -150,16 +168,19 @@ class SearchLayout extends React.Component {
   renderDesktopFilterBar() {
     return (
       <div className="menu-bar filters" ref={this.header}>
+        {this.props.searchBox}
         <div style={{ margin: 'auto', padding: '0 10px' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
           <span className="menu-item">{this.props.gradeLevelButtons}</span>
-          <span className="menu-item">{this.props.searchBox}</span>
           {this.props.distanceFilter ? (
             <span className="menu-item">
               <span className="label">Distance:</span>
               <span>{this.props.distanceFilter}</span>
             </span>
           ) : null}
+          <span className="menu-item list-map-toggle">
+            {this.props.listMapTableSelect}
+          </span>
         </div>
       </div>
     );
@@ -171,14 +192,20 @@ class SearchLayout extends React.Component {
         {(isOpen, { toggle, close }) => (
           <div>
             <div className="menu-bar mobile-filters">
-              <Button
-                key="filter"
-                label="Filter"
-                active={isOpen}
-                onClick={toggle}
-                onKeyPress={toggle}
-              />
-              <span className="menu-item">{this.props.listMapDropdown}</span>
+              <span className="menu-item list-map-toggle">
+                {this.props.listMapTableSelect}
+              </span>
+              <span className="menu-item">
+                <span className="button-group">
+                  <Button
+                    key="filter"
+                    label="Filter"
+                    active={isOpen}
+                    onClick={toggle}
+                    onKeyPress={toggle}
+                  />
+                </span>
+              </span>
             </div>
             {isOpen ? (
               <div className="filter-panel">
@@ -188,7 +215,7 @@ class SearchLayout extends React.Component {
                   onKeyPress={close}
                   role="button"
                 />
-                <div className="menu-bar">
+                <div>
                   <span className="menu-item">
                     <span className="label">{t('School type and level')}:</span>
                     {this.props.entityTypeDropdown}
@@ -240,6 +267,7 @@ class SearchLayout extends React.Component {
             <div className="map-fit">{this.props.map}</div>,
             this.props.tallAd
           )}
+          {this.shouldRenderTable() ? this.renderTableView() : null}
           {this.props.pagination}
         </div>
       </div>

@@ -5,7 +5,7 @@ import SearchContext from './search_context';
 import DistanceConsumer from './distance_context';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
-import ListMapDropdown from './list_map_dropdown';
+import ListMapTableSelect from './list_map_table_select';
 import PaginationButtons from './pagination_buttons';
 import Map from './map';
 import SchoolList from './school_list';
@@ -54,15 +54,10 @@ class Search extends React.Component {
         url: PropTypes.string.isRequired
       })
     ),
-    autoSuggestQuery: PropTypes.func
+    autoSuggestQuery: PropTypes.func,
+    view: PropTypes.string.isRequired,
+    updateView: PropTypes.func.isRequired
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentView: 'map'
-    };
-  }
 
   componentDidMount() {
     initAdvertising();
@@ -74,7 +69,7 @@ class Search extends React.Component {
         {({ distance, onChange }) => (
           <SearchLayout
             size={this.props.size}
-            currentView={this.state.currentView}
+            view={this.props.view}
             entityTypeDropdown={<EntityTypeDropdown />}
             gradeLevelButtons={<GradeLevelButtons />}
             gradeLevelCheckboxes={<GradeLevelCheckboxes />}
@@ -89,12 +84,11 @@ class Search extends React.Component {
               <SortSelect includeDistance={this.props.shouldIncludeDistance} />
             }
             resultSummary={this.props.resultSummary}
-            listMapDropdown={
-              <ListMapDropdown
-                currentView={this.state.currentView}
-                onSelect={currentView => {
-                  this.setState({ currentView });
-                }}
+            listMapTableSelect={
+              <ListMapTableSelect
+                view={this.props.view}
+                onSelect={this.props.updateView}
+                size={this.props.size}
               />
             }
             tallAd={
