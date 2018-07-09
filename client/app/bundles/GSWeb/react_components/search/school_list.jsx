@@ -42,10 +42,10 @@ const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
   </section>
 );
 
-var classNameGenerator = function(s){
-  let active = s.active ? 'active ' : '';
-  let assigned = s.assigned ? 'assigned' : '';
-  return active + assigned
+const classNameGenerator = function(s){
+  let active = s.active ? 'active' : '';
+  let assigned = s.assigned ? ' assigned' : '';
+  return active + assigned;
 }
 
 SchoolList.propTypes = {
