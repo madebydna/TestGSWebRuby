@@ -199,6 +199,11 @@ class NewSearchController < ApplicationController
     schools
   end
 
+  def add_enrollment(schools)
+    cache_keys << 'characteristics'
+    schools
+  end
+
   def add_distance(schools)
     return schools unless point_given? || area_given?
 
@@ -229,7 +234,7 @@ class NewSearchController < ApplicationController
   end
 
   def extras
-    ['summary_rating', 'distance', 'assigned']
+    %w(summary_rating distance assigned enrollment)
   end
 
 end

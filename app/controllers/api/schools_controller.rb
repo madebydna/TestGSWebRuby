@@ -151,6 +151,11 @@ class Api::SchoolsController < ApplicationController
     schools
   end
 
+  def add_enrollment(schools)
+    cache_keys << 'characteristics'
+    schools
+  end
+
   def add_boundaries(schools)
     schools = Array.wrap(schools)
     if schools.length == 1
@@ -196,7 +201,7 @@ class Api::SchoolsController < ApplicationController
   # than have the client provide every field desires, just made an "extras"
   # for asking for data not in the default response
   def extras
-    (params[:extras] || '').split(',') + ['summary_rating', 'distance', 'assigned']
+    (params[:extras] || '').split(',') + %w(summary_rating distance assigned enrollment)
   end
 
 end
