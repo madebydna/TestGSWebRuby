@@ -13,9 +13,9 @@
         <% if url.nil? %>
           <span class="gray-dark"><%= text %></span>
         <% else %>
-          <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-            <%= link_to url, itemprop:'url', class: (inverted ? 'inverted-text' : '') do
-              %><span itemprop="title" class="font-size-small"><%= text %></span><%
+          <span>
+            <%= link_to url,  class: (inverted ? 'inverted-text' : '') do
+              %><span class="font-size-small"><%= text %></span><%
             end %>
           </span>
         <% end %>

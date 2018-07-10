@@ -48,6 +48,29 @@ class DistrictsController < ApplicationController
     )
   end
 
+  def search_breadcrumbs
+
+    @_search_breadcrumbs ||= [
+      {
+        text: StructuredMarkup.state_breadcrumb_text(@state[:long]),
+        url: state_url(state_params(@state[:long]))
+      },
+      {
+        text: StructuredMarkup.city_breadcrumb_text(state: @state[:long], city: @city),
+        url: city_url(city_params(@state[:long], @city))
+      },
+      {
+        text: district.name,
+        url: district_url(district_params(@state[:long], @city,  district.name))
+      }
+    ]
+  end
+
+  # StructuredMarkup
+  def prepare_json_ld
+      search_breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+  end
+
   def district_home_breadcrumbs
     if ( @state.present? &&  @city.present?)
     breadcrumbs = {

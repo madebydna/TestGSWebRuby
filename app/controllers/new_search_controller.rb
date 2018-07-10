@@ -37,17 +37,16 @@ class NewSearchController < ApplicationController
   private
 
   def search_breadcrumbs
-    @_search_breadcrumbs ||=
-      [
-        { 
-          text: StructuredMarkup.state_breadcrumb_text(state),
-          url: state_url(state_params(state))
-        },
-        {
-          text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
-          url: city_url(city_params(state, city))
-        }
-      ]
+    @_search_breadcrumbs ||= [
+      {
+        text: StructuredMarkup.state_breadcrumb_text(state),
+        url: state_url(state_params(state))
+      },
+      {
+        text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
+        url: city_url(city_params(state, city))
+      }
+    ]
   end
 
   # StructuredMarkup

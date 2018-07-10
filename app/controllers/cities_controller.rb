@@ -50,6 +50,24 @@ class CitiesController < ApplicationController
     end
   end
 
+  def search_breadcrumbs
+    @_search_breadcrumbs ||= [
+      {
+        text: StructuredMarkup.state_breadcrumb_text(@state[:long]),
+        url: state_url(state_params(@state[:long]))
+      },
+      {
+        text: StructuredMarkup.city_breadcrumb_text(state: @state[:long], city: @city),
+        url: city_url(city_params(@state[:long], @city))
+      }
+    ]
+  end
+
+  # StructuredMarkup
+  def prepare_json_ld
+    search_breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+  end
+
   def city_hub
     write_meta_tags
     @cities = popular_cities
