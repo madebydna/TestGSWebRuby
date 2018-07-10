@@ -14,6 +14,10 @@
     font-family: opensans-bold;
   }
 
+  .selected {
+    background: $gray;
+  }
+
   ul {
     list-style-type: none;
     padding: 0;
@@ -28,7 +32,7 @@
     }
     .search-results-list-item {
       &:hover {
-        background: #fafafa;
+        background: $gray;
       }
       a {
         text-decoration: none;

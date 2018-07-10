@@ -11,7 +11,9 @@ import {escapeRegexChars, everythingButHTML} from 'util/regex';
 class SearchResultsList extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {searchselectedListItem: undefined}
+    let {selectedListItem} = this.props;
+    this.state = {selectedListItem: selectedListItem}
+    this.counter = -1
   }
 
   href(url) {
@@ -45,23 +47,33 @@ class SearchResultsList extends React.Component {
     </li>)
   }
 
+  componentDidUpdate(prevProps){
+    this.counter = -1
+    if (prevProps.selectedListItem !== this.props.selectedListItem) {
+      this.setState({selectedListItem: this.props.selectedListItem})
+    }
+  }
+
   groupListItems(listItems) {
     let {searchTerm} = this.props;
     return (listItems.map(
-        (listItem, idx) => (
-          <li
-            onClick={listItem.url ? () => {
-            } : () => onSelect(listItem.value)}
-            key={listItem.title + idx.toString()}
-            className="search-results-list-item"
-          >
-            <a href={this.href(listItem.url)}>
-              <div dangerouslySetInnerHTML={{__html: this.boldSearchTerms(listItem.title, searchTerm)}}></div>
-              {/*<div>{boldSearchTerms(listItem.title, searchTerm)}</div>*/}
-              <div>{listItem.additionalInfo}</div>
-            </a>
-          </li>
-        ),
+        (listItem, idx) => {
+          this.counter += 1
+          return (
+            <li
+              onClick={listItem.url ? () => {
+              } : () => onSelect(listItem.value)}
+              key={this.counter}
+              className={"search-results-list-item" + (this.counter === this.state.selectedListItem ? " selected" : '')}
+            >
+              <a href={this.href(listItem.url)}>
+                <div dangerouslySetInnerHTML={{__html: this.boldSearchTerms(listItem.title, searchTerm)}}></div>
+                {/*<div>{boldSearchTerms(listItem.title, searchTerm)}</div>*/}
+                <div>{listItem.additionalInfo}</div>
+              </a>
+            </li>
+          )
+        },
         this
       )
     )
@@ -83,7 +95,7 @@ class SearchResultsList extends React.Component {
     )
   }
 
-  render(){
+  render() {
     return <ul>{this.renderList()}</ul>
   }
 }

@@ -19,6 +19,8 @@ const options = [
   }
 ];
 
+const keyMap = {'ArrowUp': -1, 'ArrowDown': 1};
+
 export default class SearchBox extends React.Component {
   static propTypes = {
     autoSuggestResults: PropTypes.object.isRequired,
@@ -27,7 +29,10 @@ export default class SearchBox extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { searchTerm: '', type: 'schools', listItemsSelectable: false };
+    this.handleKeyDown = this.handleKeyDown.bind(this)
+    this.resetSelectedListItem = this.resetSelectedListItem.bind(this)
+    this.manageSelectedListItem = this.manageSelectedListItem.bind(this)
+    this.state = { searchTerm: '', type: 'schools', selectedListItem: -1 };
   }
 
   componentDidMount() {
@@ -88,12 +93,32 @@ export default class SearchBox extends React.Component {
     };
   }
 
-  resetListItemsSelectable(){
-    this.state.listItemsSelectable && this.setState({listItemsSelectable: false})
+  resetSelectedListItem(){
+    this.setState({selectedListItem: -1})
   }
 
-  makeListItemsSelectable(){
-    this.setState({listItemsSelectable: true})
+  listItemCount(){
+    let counter = 0
+    for (var key in this.props.autoSuggestResults) {
+      counter += this.props.autoSuggestResults[key].length
+    }
+    return counter;
+  }
+
+  manageSelectedListItem(e){
+    if( (e.key === 'ArrowUp' && this.state.selectedListItem === -1) || ( e.key === 'ArrowDown' && this.state.selectedListItem >= this.listItemCount() - 1) ) {
+      return;
+    } else {
+      this.setState({selectedListItem: this.state.selectedListItem + keyMap[e.key]})
+    }
+  }
+
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      this.submit();
+    } else if (Object.keys(keyMap).includes(e.key)) {
+      this.manageSelectedListItem(e)
+    }
   }
 
   render() {
@@ -111,18 +136,12 @@ export default class SearchBox extends React.Component {
             />
             <CaptureOutsideClick
               _key="testing multi item dropdown"
-              callback={()=> {this.resetListItemsSelectable(); close()}}
+              callback={()=> {this.resetSelectedListItem(); close()}}
             >
               {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
               <div style={{ flexGrow: 2 }}>
                 <input
-                  onKeyUp={e => {
-                    if (e.key === 'Enter') {
-                      this.submit();
-                    } else if (e.key === 'ArrowDown') {
-                      this.makeListItemsSelectable()
-                    }
-                  }}
+                  onKeyDown={this.handleKeyDown}
                   onChange={this.onTextChanged({ open, close })}
                   type="text"
                   className="full-width pam search_form_field"
@@ -136,7 +155,7 @@ export default class SearchBox extends React.Component {
                       listGroups={this.props.autoSuggestResults}
                       searchTerm={this.state.searchTerm}
                       onSelect={this.onSelectItem(close)}
-                      listItemsSelectable={this.state.listItemsSelectable}
+                      selectedListItem={this.state.selectedListItem}
                     />
                   </div>
                   )}
