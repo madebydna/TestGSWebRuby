@@ -101,7 +101,7 @@ export function find({
     data.page = page;
   }
   if (extras) {
-    data.extras = extras;
+    data.extras = extras.join(',');
   }
   return $.ajax({
     url: '/gsr/api/schools/',
