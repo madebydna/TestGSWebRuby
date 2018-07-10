@@ -29,7 +29,7 @@ class NewSearchController < ApplicationController
     next_page = next_page_url(page_of_results)
     set_meta_tags(prev: prev_page) if prev_page
     set_meta_tags(next: next_page) if next_page
-    set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url?
+    set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url? && page_of_results.present?
     set_ad_targeting_props
     set_page_analytics_data
   end
