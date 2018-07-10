@@ -378,6 +378,15 @@ body {
   width: 100%;
   background-color: #f1fafd;
 
+  &.loading table {
+    opacity: 0.2;
+    filter: blur(4px);
+    th,
+    td {
+      background-color: lightgray;
+    }
+  }
+
   table {
     table-layout: fixed;
     overflow: scroll;
