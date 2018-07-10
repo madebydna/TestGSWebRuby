@@ -206,6 +206,16 @@ class NewSearchController < ApplicationController
     schools
   end
 
+  def add_students_per_teacher(schools)
+    cache_keys << 'gsdata'
+    schools
+  end
+
+  def add_review_summary(schools)
+    cache_keys << 'reviews_snapshot'
+    schools
+  end
+
   def add_distance(schools)
     return schools unless point_given? || area_given?
 
@@ -236,7 +246,7 @@ class NewSearchController < ApplicationController
   end
 
   def extras
-    %w(summary_rating distance assigned enrollment)
+    %w(summary_rating distance assigned enrollment students_per_teacher review_summary)
   end
 
 end

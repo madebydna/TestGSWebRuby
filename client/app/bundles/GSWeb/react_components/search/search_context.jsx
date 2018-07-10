@@ -244,7 +244,8 @@ class SearchProvider extends React.Component {
           distance: this.props.distance,
           sort: this.props.sort,
           page: this.props.page,
-          limit: this.props.pageSize
+          limit: this.props.pageSize,
+          extras: ['students_per_teacher', 'review_summary']
         },
         newState
       )

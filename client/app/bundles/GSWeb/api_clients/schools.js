@@ -70,6 +70,7 @@ export function find({
   lon,
   distance,
   sort = 'rating',
+  extras = [],
   page = 1,
   limit = 25
 } = {}) {
@@ -98,6 +99,9 @@ export function find({
   }
   if (page && page > 1) {
     data.page = page;
+  }
+  if (extras) {
+    data.extras = extras;
   }
   return $.ajax({
     url: '/gsr/api/schools/',

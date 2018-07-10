@@ -9,6 +9,7 @@ import ListMapTableSelect from './list_map_table_select';
 import PaginationButtons from './pagination_buttons';
 import Map from './map';
 import SchoolList from './school_list';
+import SchoolTable from './school_table';
 import EntityTypeDropdown from './entity_type_dropdown';
 import GradeLevelButtons from './grade_level_buttons';
 import GradeLevelCheckboxes from './grade_level_checkboxes';
@@ -98,6 +99,13 @@ class Search extends React.Component {
             }
             schoolList={
               <SchoolList
+                toggleHighlight={this.props.toggleHighlight}
+                schools={this.props.schools}
+                isLoading={this.props.loadingSchools}
+              />
+            }
+            schoolTable={
+              <SchoolTable
                 toggleHighlight={this.props.toggleHighlight}
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}

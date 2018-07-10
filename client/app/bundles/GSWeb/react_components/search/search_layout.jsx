@@ -90,6 +90,7 @@ class SearchLayout extends React.Component {
     sortSelect: PropTypes.element.isRequired,
     listMapTableSelect: PropTypes.element.isRequired,
     schoolList: PropTypes.element.isRequired,
+    schoolTable: PropTypes.element.isRequired,
     map: PropTypes.element.isRequired,
     tallAd: PropTypes.element.isRequired,
     searchBox: PropTypes.element.isRequired,
@@ -135,7 +136,7 @@ class SearchLayout extends React.Component {
   }
 
   renderTableView() {
-    return <div>Table view</div>;
+    return this.props.schoolTable;
   }
 
   renderMapAndAdContainer(map, ad) {

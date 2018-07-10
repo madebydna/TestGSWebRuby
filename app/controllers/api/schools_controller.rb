@@ -148,11 +148,17 @@ class Api::SchoolsController < ApplicationController
 
   def add_review_summary(schools)
     cache_keys << 'review_summary'
+    cache_keys << 'reviews_snapshot'
     schools
   end
 
   def add_enrollment(schools)
     cache_keys << 'characteristics'
+    schools
+  end
+
+  def add_students_per_teacher(schools)
+    cache_keys << 'gsdata'
     schools
   end
 
