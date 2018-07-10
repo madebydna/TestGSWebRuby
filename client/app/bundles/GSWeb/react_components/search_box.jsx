@@ -32,7 +32,7 @@ export default class SearchBox extends React.Component {
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.resetSelectedListItem = this.resetSelectedListItem.bind(this)
     this.manageSelectedListItem = this.manageSelectedListItem.bind(this)
-    this.state = { searchTerm: '', type: 'schools', selectedListItem: -1 };
+    this.state = { searchTerm: '', type: 'schools', selectedListItem: -1, navigateToSelectedListItem: false };
   }
 
   componentDidMount() {
@@ -115,7 +115,11 @@ export default class SearchBox extends React.Component {
 
   handleKeyDown(e) {
     if (e.key === 'Enter') {
-      this.submit();
+      if(this.state.selectedListItem > -1){
+        this.setState({navigateToSelectedListItem: true})
+      } else {
+        this.submit();
+      }
     } else if (Object.keys(keyMap).includes(e.key)) {
       this.manageSelectedListItem(e)
     }
@@ -156,6 +160,7 @@ export default class SearchBox extends React.Component {
                       searchTerm={this.state.searchTerm}
                       onSelect={this.onSelectItem(close)}
                       selectedListItem={this.state.selectedListItem}
+                      navigateToSelectedListItem={this.state.navigateToSelectedListItem}
                     />
                   </div>
                   )}

@@ -11,7 +11,7 @@ import {escapeRegexChars, everythingButHTML} from 'util/regex';
 class SearchResultsList extends React.Component {
   constructor(props) {
     super(props)
-    let {selectedListItem} = this.props;
+    let {selectedListItem, navigateToSelectedListItem} = this.props;
     this.state = {selectedListItem: selectedListItem}
     this.counter = -1
   }
@@ -27,18 +27,18 @@ class SearchResultsList extends React.Component {
   }
 
   boldSearchTerms(string, substring) {
-    let splitSub = substring.split(' ').filter(str => str.length > 0);
-    let substringsBolded = string;
-    splitSub.forEach((sub, idx) => {
-      // Need to preserve capitalization in original string
-      let match = string.match(new RegExp(sub, 'i'))
-      if (match) {
-        //This loop adds html tags to a string, so we need to avoid matching anything in those tags. After disregarding
-        // text following < and preceding >, replace the match with the span.
-        substringsBolded = everythingButHTML(substringsBolded).replace(match, `<span class="match">${match}</span>`)
+    let tokens = substring.split(/\s+/)
+    //The following separates string into chunks of matching and non matching substrings
+    //We cannot inject a variable into a regex literal, hence 'new RegExp'. Noteworthy that split returns the matched
+    //string when fed a regex (compare 'Some string'.split(' '), which returns ['some','string'], not ['some',' ','string']
+    let matchesAndNonMatches = string.split(new RegExp(`\\b(${tokens.join('|')})`, 'gi'))
+    return matchesAndNonMatches.map(token => {
+      let queryContainsToken = tokens.find(item => item.toLowerCase() === token.toLowerCase())
+      if(queryContainsToken) {
+        return <span className="match">{token}</span>
       }
-    });
-    return substringsBolded
+      return token;
+    })
   }
 
   groupNameListItem(name) {
@@ -54,11 +54,16 @@ class SearchResultsList extends React.Component {
     }
   }
 
+  changeUrlIfSelected(listItem, key){
+    this.props.navigateToSelectedListItem && listItem.url && this.counter === this.state.selectedListItem && (window.location.href = listItem.url + '?newsearch')
+  }
+
   groupListItems(listItems) {
     let {searchTerm} = this.props;
     return (listItems.map(
         (listItem, idx) => {
           this.counter += 1
+          this.changeUrlIfSelected(listItem, idx)
           return (
             <li
               onClick={listItem.url ? () => {
@@ -67,7 +72,7 @@ class SearchResultsList extends React.Component {
               className={"search-results-list-item" + (this.counter === this.state.selectedListItem ? " selected" : '')}
             >
               <a href={this.href(listItem.url)}>
-                <div dangerouslySetInnerHTML={{__html: this.boldSearchTerms(listItem.title, searchTerm)}}></div>
+                <div>{this.boldSearchTerms(listItem.title, searchTerm)}</div>
                 {/*<div>{boldSearchTerms(listItem.title, searchTerm)}</div>*/}
                 <div>{listItem.additionalInfo}</div>
               </a>
