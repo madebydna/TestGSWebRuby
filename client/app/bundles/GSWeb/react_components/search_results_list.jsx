@@ -30,7 +30,7 @@ class SearchResultsList extends React.Component {
     let tokens = substring.split(/\s+/)
     //The following separates string into chunks of matching and non matching substrings
     //We cannot inject a variable into a regex literal, hence 'new RegExp'. Noteworthy that split returns the matched
-    //string when fed a regex (compare 'Some string'.split(' '), which returns ['some','string'], not ['some',' ','string']
+    //string when fed a group-capturing regex (compare 'Some string'.split(' '), which returns ['some','string'], not ['some',' ','string']
     let matchesAndNonMatches = string.split(new RegExp(`\\b(${tokens.join('|')})`, 'gi'))
     return matchesAndNonMatches.map(token => {
       let queryContainsToken = tokens.find(item => item.toLowerCase() === token.toLowerCase())
@@ -59,7 +59,7 @@ class SearchResultsList extends React.Component {
   }
 
   groupListItems(listItems) {
-    let {searchTerm} = this.props;
+    let {searchTerm,onSelect} = this.props;
     return (listItems.map(
         (listItem, idx) => {
           this.counter += 1
@@ -84,6 +84,12 @@ class SearchResultsList extends React.Component {
     )
   }
 
+  // The last <li> is always an option to do a full search using the current search term (i.e. without clicking the search icon)
+  allResultsListItem(){
+    let {searchTerm,onSelect} = this.props;
+    return <li className="search-results-list-item" onClick={()=> onSelect(searchTerm)}>{`Search all results for "${searchTerm}"`}</li>
+  }
+
   renderList(listData) {
     let {listGroups} = this.props;
     return (Object.keys(listGroups)
@@ -101,7 +107,12 @@ class SearchResultsList extends React.Component {
   }
 
   render() {
-    return <ul>{this.renderList()}</ul>
+    return (
+      <ul>
+        {this.renderList()}
+        {this.allResultsListItem()}
+      </ul>
+    )
   }
 }
 

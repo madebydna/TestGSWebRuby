@@ -151,6 +151,7 @@ export default class SearchBox extends React.Component {
                   className="full-width pam search_form_field"
                   placeholder={this.placeholderText()}
                   value={this.state.searchTerm}
+                  maxLength={60}
                 />
                 {isOpen &&
                   this.shouldRenderResults() && (
