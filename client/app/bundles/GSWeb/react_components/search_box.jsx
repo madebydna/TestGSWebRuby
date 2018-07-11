@@ -35,17 +35,22 @@ export default class SearchBox extends React.Component {
     this.state = { searchTerm: '', type: 'schools', selectedListItem: -1, navigateToSelectedListItem: false };
   }
 
-  componentDidMount() {
-    // window.document.querySelector('.search_bar').innerHTML = '';
+  componentDidUpdate(prevProps){
+    if(this.props.autoSuggestResults !== prevProps.autoSuggestResults) {
+      this.setState({autoSuggestResultsCount: this.autoSuggestResultsCount()})
+    }
   }
 
   shouldRenderResults() {
-    const totalResults = reduce(
+    return this.state.autoSuggestResultsCount > 0;
+  }
+
+  autoSuggestResultsCount(){
+    return reduce(
       Object.keys(this.props.autoSuggestResults || {}),
       (sum, k) => sum + (this.props.autoSuggestResults[k] || []).length,
       0
     );
-    return totalResults > 0;
   }
 
   placeholderText() {
@@ -97,20 +102,15 @@ export default class SearchBox extends React.Component {
     this.setState({selectedListItem: -1})
   }
 
-  listItemCount(){
-    let counter = 0
-    for (var key in this.props.autoSuggestResults) {
-      counter += this.props.autoSuggestResults[key].length
-    }
-    return counter;
+  selectionOutOfBounds(e){
+    return (e.key === 'ArrowUp' && this.state.selectedListItem === -1) || ( e.key === 'ArrowDown' && this.state.selectedListItem >= this.state.autoSuggestResultsCount - 1)
   }
 
   manageSelectedListItem(e){
-    if( (e.key === 'ArrowUp' && this.state.selectedListItem === -1) || ( e.key === 'ArrowDown' && this.state.selectedListItem >= this.listItemCount() - 1) ) {
+    if( this.selectionOutOfBounds(e) ) {
       return;
-    } else {
-      this.setState({selectedListItem: this.state.selectedListItem + keyMap[e.key]})
     }
+    this.setState({selectedListItem: this.state.selectedListItem + keyMap[e.key]})
   }
 
   handleKeyDown(e) {
