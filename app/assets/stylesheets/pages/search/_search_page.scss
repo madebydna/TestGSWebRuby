@@ -165,7 +165,7 @@ body {
     }
 
     .subheader {
-      padding: 5px 10px 10px 10px;
+      padding: 5px 15px 10px 15px;
       * + * {
         margin-top: 5px;
       }
@@ -197,7 +197,7 @@ body {
 
     .menu-bar.mobile-filters {
       background-color: #e0e7eb;
-      padding: 10px;
+      padding: 10px 15px;
     }
 
     .checkbox-group {
@@ -376,7 +376,7 @@ body {
 .school-table {
   overflow-x: scroll;
   width: 100%;
-  background-color: #f1fafd;
+  background-color: white;
 
   &.loading table {
     opacity: 0.2;
@@ -389,8 +389,8 @@ body {
 
   table {
     table-layout: fixed;
-    overflow: scroll;
     width: 991px;
+
     @include media-breakpoint-up(lg) {
       width: 100%;
     }
@@ -399,13 +399,13 @@ body {
     th {
       border: 1px solid $form-field-border-color;
       padding: 10px 15px;
-      background-color: white;
     }
 
     th {
       color: $gray-darker;
       font-weight: normal;
       text-align: left;
+      background-color: #f1fafd;
     }
     th.school {
       width: 290px;
