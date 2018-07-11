@@ -155,4 +155,24 @@ module SearchRequestParams
     end
   end
 
+  # reading about API design, I tend to agree that rather than make multiple
+  # endpoints for different views on the same resource (school) we should allow
+  # the client to say what data they want back. Felt like boundary data
+  # belongs as part of the schools api resource, but it has performance
+  # overhead to obtain that data and not every request needs it. Rather
+  # than have the client provide every field desires, just made an "extras"
+  # for asking for data not in the default response
+  def extras
+    default_extras + extras_param
+  end
+
+  def extras_param
+    params[:extras]&.split(',') || []
+  end
+
+  # to be overridden by controller
+  def default_extras
+    []
+  end
+
 end
