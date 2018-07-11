@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {copyParam} from 'util/uri';
-import {capitalize} from 'util/i18n';
-import {escapeRegexChars, everythingButHTML} from 'util/regex';
 
 // This component is responsible for formatting and rendering a payload of search results (listGroups) into a dropdown.
 // Noteworthy behavior: 1) within the title of each listItem, it will bold substrings that match the searchTerm,
@@ -73,7 +71,6 @@ class SearchResultsList extends React.Component {
             >
               <a href={this.href(listItem.url)}>
                 <div>{this.boldSearchTerms(listItem.title, searchTerm)}</div>
-                {/*<div>{boldSearchTerms(listItem.title, searchTerm)}</div>*/}
                 <div>{listItem.additionalInfo}</div>
               </a>
             </li>
