@@ -26,7 +26,7 @@ const studentsPhrase = enrollment => {
 
 const clarifySchoolType = (schoolType) => {
   let clarifiedSchoolType = {'public': 'Public district', 'charter': 'Public charter'}[schoolType.toLowerCase()]
-  return (clarifiedSchoolType ? clarifiedSchoolType : schoolType)
+  return clarifiedSchoolType || schoolType
 }
 
 const schoolTypePhrase = (schoolType, gradeLevels) => (
