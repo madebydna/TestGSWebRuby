@@ -242,24 +242,27 @@ class SearchLayout extends React.Component {
     );
   }
 
+  renderBreadcrumbsSummarySort(){
+    return (
+      <div className="subheader menu-bar">
+        {this.props.breadcrumbs}
+        <div className="pagination-summary">{this.props.resultSummary}</div>
+        <div className="menu-item">
+          <span className="label">Sort by:</span>
+          {this.props.sortSelect}
+        </div>
+      </div>
+    )
+  }
+
+
   render() {
     return (
       <div className="search-body">
         {this.props.size > SM
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
-        {this.props.size > SM && (
-          <React.Fragment>
-            <div className="subheader menu-bar">
-              {this.props.breadcrumbs}
-              <div className="pagination-summary">{this.props.resultSummary}</div>
-              <div className="menu-item">
-                <span className="label">Sort by:</span>
-                {this.props.sortSelect}
-              </div>
-            </div>
-          </React.Fragment>
-        )}
+        {this.props.size > SM && this.renderBreadcrumbsSummarySort()}
         <div className="list-map-ad clearfix">
           <div
             className={`list-column ${
