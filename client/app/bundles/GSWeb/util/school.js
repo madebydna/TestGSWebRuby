@@ -24,9 +24,14 @@ const studentsPhrase = enrollment => {
   );
 };
 
+const clarifySchoolType = (schoolType) => {
+  let clarifiedSchoolType = {'public': 'Public district', 'charter': 'Public charter'}[schoolType.toLowerCase()]
+  return (clarifiedSchoolType ? clarifiedSchoolType : schoolType)
+}
+
 const schoolTypePhrase = (schoolType, gradeLevels) => (
   <span key="school-type" className="open-sans_semibold">
-    {`${capitalize(schoolType)}, ${gradeLevels}`}
+    {`${capitalize(clarifySchoolType(schoolType))}, ${gradeLevels}`}
   </span>
 );
 
