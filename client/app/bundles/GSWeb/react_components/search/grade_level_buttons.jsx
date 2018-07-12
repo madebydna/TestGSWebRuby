@@ -10,7 +10,7 @@ const options = {
   h: t('High')
 };
 
-const GradeLevelFilter = () => (
+const GradeLevelButtons = () => (
   <GradeLevelContext.Consumer>
     {({ levelCodes, onLevelCodesChanged }) => (
       <ButtonGroup
@@ -24,4 +24,4 @@ const GradeLevelFilter = () => (
   </GradeLevelContext.Consumer>
 );
 
-export default GradeLevelFilter;
+export default GradeLevelButtons;

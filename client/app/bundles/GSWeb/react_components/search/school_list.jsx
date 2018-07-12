@@ -16,7 +16,7 @@ const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
     }
     <ol style={{}}>
       {schools.map((s, index) => (
-        <React.Fragment>
+        <React.Fragment key={s.state + s.id}>
           {index > 0 &&
             index % 4 === 0 && (
               <Ad
@@ -42,11 +42,11 @@ const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
   </section>
 );
 
-const classNameGenerator = function(s){
-  let active = s.active ? 'active' : '';
-  let assigned = s.assigned ? ' assigned' : '';
+const classNameGenerator = function(s) {
+  const active = s.active ? 'active' : '';
+  const assigned = s.assigned ? ' assigned' : '';
   return active + assigned;
-}
+};
 
 SchoolList.propTypes = {
   schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,

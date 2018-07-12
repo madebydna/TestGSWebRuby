@@ -5,9 +5,7 @@ import $ from 'jquery';
 import { SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
-import SearchBox from '../search_box';
 import { t } from 'util/i18n';
-import suggest from 'api_clients/autosuggest';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 
 function keepInViewport(
@@ -77,7 +75,8 @@ function keepInViewport(
 
 class SearchLayout extends React.Component {
   static defaultProps = {
-    breadcrumbs: null
+    breadcrumbs: null,
+    distanceFilter: null
   };
 
   static propTypes = {
@@ -86,7 +85,7 @@ class SearchLayout extends React.Component {
     gradeLevelButtons: PropTypes.element.isRequired,
     entityTypeDropdown: PropTypes.element.isRequired,
     gradeLevelCheckboxes: PropTypes.element.isRequired,
-    distanceFilter: PropTypes.element.isRequired,
+    distanceFilter: PropTypes.element,
     sortSelect: PropTypes.element.isRequired,
     listMapTableSelect: PropTypes.element.isRequired,
     schoolList: PropTypes.element.isRequired,

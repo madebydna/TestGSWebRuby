@@ -25,6 +25,11 @@ body {
   }
 
   .search-body {
+    .divider {
+      color: rgb(187, 192, 202);
+      padding: 0 5px;
+    }
+
     position: relative;
     margin: auto;
 
@@ -366,10 +371,8 @@ body {
 }
 
 .breadcrumbs {
-  .separator {
+  .divider {
     font-size: $font-size-s3;
-    color: $gray;
-    padding: 0 5px;
   }
 }
 

@@ -2,7 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
-import { getHomesForSaleHref, studentsPhrase, schoolTypePhrase } from 'util/school';
+import {
+  getHomesForSaleHref,
+  studentsPhrase,
+  schoolTypePhrase
+} from 'util/school';
+
+const joinWithSeparator = (arrayOfElements, separator) =>
+  arrayOfElements
+    .filter(e => !!e)
+    .reduce((list, current) => [list, separator, current]);
 
 const renderRating = (rating, ratingScale) => {
   const className = `circle-rating--small circle-rating--${rating}`;
@@ -50,7 +59,7 @@ const School = ({
 
   return (
     <React.Fragment key={state + id}>
-      {assigned && <div className='assigned-text'>{t('assigned')}</div>}
+      {assigned && <div className="assigned-text">{t('assigned')}</div>}
       <span>{rating && renderRating(rating, ratingScale)}</span>
       <span>
         <a href={links.profile} className="name" target="_blank">
@@ -59,29 +68,20 @@ const School = ({
         <br />
         {addressPhrase && <div className="address">{addressPhrase}</div>}
         <div>
-          {[
-            schoolTypePhrase(schoolType, gradeLevels),
-            studentsPhrase(enrollment)
-          ].reduce((accum, el) => {
-            if (accum.length > 0) {
-              return el === null
-                ? accum
-                : [
-                    ...accum,
-                  <span style={{ color: '#bbc0ca', padding: '0 5px' }}>
-                    {' '}
-                      |{' '}
-                  </span>,
-                    el
-                  ];
-            }
-            return el === null ? accum : [...accum, el];
-          }, [])}
+          {joinWithSeparator(
+            [
+              schoolTypePhrase(schoolType, gradeLevels),
+              studentsPhrase(enrollment)
+            ],
+            <span key="divider" className="divider">
+              |
+            </span>
+          )}
         </div>
         {distance && <div>Distance: {distance} miles</div>}
         {homesForSaleHref && (
           <div>
-            <span className="icon icon-house" />
+            <span key="homes-for-sale" className="icon icon-house" />
             <a
               href={homesForSaleHref}
               target="_blank"

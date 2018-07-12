@@ -10,7 +10,7 @@ const options = {
   h: t('High')
 };
 
-const GradeLevelFilter = () => (
+const GradeLevelCheckboxes = () => (
   <GradeLevelContext.Consumer>
     {({ levelCodes, onLevelCodesChanged }) => (
       <CheckboxGroup
@@ -23,4 +23,4 @@ const GradeLevelFilter = () => (
   </GradeLevelContext.Consumer>
 );
 
-export default GradeLevelFilter;
+export default GradeLevelCheckboxes;
