@@ -2,8 +2,6 @@
   * {
     font-family: opensans-regular;
   }
-  max-height: 450px;
-  overflow: scroll;
   color: black;
   position: absolute;
   background: white;
@@ -14,9 +12,14 @@
     font-family: opensans-bold;
   }
 
+  .selected {
+    background: $gray;
+  }
+
   ul {
     list-style-type: none;
     padding: 0;
+    margin-bottom: 0;
     li {
       padding: 9px 19px;
       color: black;
@@ -28,7 +31,7 @@
     }
     .search-results-list-item {
       &:hover {
-        background: #fafafa;
+        background: $gray;
       }
       a {
         text-decoration: none;
@@ -36,6 +39,14 @@
         div + div {
           margin-top: 4px;
           font-size: 11px;
+        }
+      }
+      &:last-child {
+        color: #2bade3;
+        font-weight: 600;
+        border-top: solid 1px $gray;
+        &:hover {
+          background: none;
         }
       }
     }

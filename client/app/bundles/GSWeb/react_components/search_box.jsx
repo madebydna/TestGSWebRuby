@@ -19,6 +19,8 @@ const options = [
   }
 ];
 
+const keyMap = {'ArrowUp': -1, 'ArrowDown': 1};
+
 export default class SearchBox extends React.Component {
   static propTypes = {
     autoSuggestResults: PropTypes.object.isRequired,
@@ -27,20 +29,28 @@ export default class SearchBox extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { searchTerm: '', type: 'schools', listItemsSelectable: false };
+    this.handleKeyDown = this.handleKeyDown.bind(this)
+    this.resetSelectedListItem = this.resetSelectedListItem.bind(this)
+    this.manageSelectedListItem = this.manageSelectedListItem.bind(this)
+    this.state = { searchTerm: '', type: 'schools', selectedListItem: -1, navigateToSelectedListItem: false };
   }
 
-  componentDidMount() {
-    // window.document.querySelector('.search_bar').innerHTML = '';
+  componentDidUpdate(prevProps){
+    if(this.props.autoSuggestResults !== prevProps.autoSuggestResults) {
+      this.setState({autoSuggestResultsCount: this.autoSuggestResultsCount()})
+    }
   }
 
   shouldRenderResults() {
-    const totalResults = reduce(
+    return this.state.autoSuggestResultsCount > 0;
+  }
+
+  autoSuggestResultsCount(){
+    return reduce(
       Object.keys(this.props.autoSuggestResults || {}),
       (sum, k) => sum + (this.props.autoSuggestResults[k] || []).length,
       0
     );
-    return totalResults > 0;
   }
 
   placeholderText() {
@@ -88,12 +98,31 @@ export default class SearchBox extends React.Component {
     };
   }
 
-  resetListItemsSelectable(){
-    this.state.listItemsSelectable && this.setState({listItemsSelectable: false})
+  resetSelectedListItem(){
+    this.setState({selectedListItem: -1})
   }
 
-  makeListItemsSelectable(){
-    this.setState({listItemsSelectable: true})
+  selectionOutOfBounds(e){
+    return (e.key === 'ArrowUp' && this.state.selectedListItem === -1) || ( e.key === 'ArrowDown' && this.state.selectedListItem >= this.state.autoSuggestResultsCount - 1)
+  }
+
+  manageSelectedListItem(e){
+    if( this.selectionOutOfBounds(e) ) {
+      return;
+    }
+    this.setState({selectedListItem: this.state.selectedListItem + keyMap[e.key]})
+  }
+
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      if(this.state.selectedListItem > -1){
+        this.setState({navigateToSelectedListItem: true})
+      } else {
+        this.submit();
+      }
+    } else if (Object.keys(keyMap).includes(e.key)) {
+      this.manageSelectedListItem(e)
+    }
   }
 
   render() {
@@ -111,23 +140,18 @@ export default class SearchBox extends React.Component {
             />
             <CaptureOutsideClick
               _key="testing multi item dropdown"
-              callback={()=> {this.resetListItemsSelectable(); close()}}
+              callback={()=> {this.resetSelectedListItem(); close()}}
             >
               {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
               <div style={{ flexGrow: 2 }}>
                 <input
-                  onKeyUp={e => {
-                    if (e.key === 'Enter') {
-                      this.submit();
-                    } else if (e.key === 'ArrowDown') {
-                      this.makeListItemsSelectable()
-                    }
-                  }}
+                  onKeyDown={this.handleKeyDown}
                   onChange={this.onTextChanged({ open, close })}
                   type="text"
                   className="full-width pam search_form_field"
                   placeholder={this.placeholderText()}
                   value={this.state.searchTerm}
+                  maxLength={60}
                 />
                 {isOpen &&
                   this.shouldRenderResults() && (
@@ -136,7 +160,8 @@ export default class SearchBox extends React.Component {
                       listGroups={this.props.autoSuggestResults}
                       searchTerm={this.state.searchTerm}
                       onSelect={this.onSelectItem(close)}
-                      listItemsSelectable={this.state.listItemsSelectable}
+                      selectedListItem={this.state.selectedListItem}
+                      navigateToSelectedListItem={this.state.navigateToSelectedListItem}
                     />
                   </div>
                   )}

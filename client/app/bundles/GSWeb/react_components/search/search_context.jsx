@@ -169,7 +169,7 @@ class SearchProvider extends React.Component {
             } else if (category === 'Cities') {
               title = `Schools in ${city}, ${state}`;
             } else if (category === 'Districts') {
-              title = `Schools in ${district}, ${state}`;
+              title = `Schools in ${district}`;
               additionalInfo = `${city}, ${state}`;
             } else if (category === 'Zipcodes') {
               title = `Schools in ${zip}`;
