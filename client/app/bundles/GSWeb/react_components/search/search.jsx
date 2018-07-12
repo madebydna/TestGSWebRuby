@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Breadcrumbs from 'react_components/breadcrumbs';
 import SearchContext from './search_context';
-import DistanceConsumer from './distance_context';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
 import ListMapTableSelect from './list_map_table_select';
@@ -22,8 +21,6 @@ import SearchBox from '../search_box';
 
 class Search extends React.Component {
   static defaultProps = {
-    city: null,
-    state: null,
     lat: null,
     lon: null,
     schools: [],
@@ -34,8 +31,6 @@ class Search extends React.Component {
   };
 
   static propTypes = {
-    city: PropTypes.string,
-    state: PropTypes.string,
     schools: PropTypes.arrayOf(PropTypes.object),
     resultSummary: PropTypes.string.isRequired,
     defaultLat: PropTypes.number.isRequired,
@@ -48,7 +43,7 @@ class Search extends React.Component {
     onPageChanged: PropTypes.func.isRequired,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     shouldIncludeDistance: PropTypes.bool,
-    toggleHighlight: PropTypes.func,
+    toggleHighlight: PropTypes.func.isRequired,
     breadcrumbs: PropTypes.arrayOf(
       PropTypes.shape({
         text: PropTypes.string.isRequired,
@@ -57,7 +52,8 @@ class Search extends React.Component {
     ),
     autoSuggestQuery: PropTypes.func,
     view: PropTypes.string.isRequired,
-    updateView: PropTypes.func.isRequired
+    updateView: PropTypes.func.isRequired,
+    autoSuggestResults: PropTypes.object.isRequired
   };
 
   componentDidMount() {

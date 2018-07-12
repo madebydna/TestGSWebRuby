@@ -76,7 +76,8 @@ function keepInViewport(
 class SearchLayout extends React.Component {
   static defaultProps = {
     breadcrumbs: null,
-    distanceFilter: null
+    distanceFilter: null,
+    pagination: null
   };
 
   static propTypes = {
@@ -93,7 +94,9 @@ class SearchLayout extends React.Component {
     map: PropTypes.element.isRequired,
     tallAd: PropTypes.element.isRequired,
     searchBox: PropTypes.element.isRequired,
-    breadcrumbs: PropTypes.element
+    breadcrumbs: PropTypes.element,
+    pagination: PropTypes.element,
+    resultSummary: PropTypes.string.isRequired
   };
 
   constructor(props) {

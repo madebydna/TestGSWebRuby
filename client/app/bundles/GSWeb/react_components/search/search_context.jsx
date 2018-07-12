@@ -32,6 +32,8 @@ class SearchProvider extends React.Component {
     entityTypes: gon.search.entityTypes || [],
     defaultLat: gon.search.cityLat || 37.8078456,
     defaultLon: gon.search.cityLon || -122.2672673,
+    lat: null,
+    lon: null,
     distance: gon.search.distance,
     sort: gon.search.sort,
     page: gon.search.page || 1,

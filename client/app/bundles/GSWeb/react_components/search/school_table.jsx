@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Ad from 'react_components/ad';
 import School from './school';
 import SchoolListOverlay from './school_list_overlay';
 import SchoolTableRow from './school_table_row';
 
-const SchoolTable = ({ schools, isLoading, pagination, toggleHighlight }) => (
+const SchoolTable = ({ schools, isLoading }) => (
   <section className={`school-table ${isLoading ? 'loading' : ''}`}>
     {
       /* would prefer to just not render overlay if not showing it,
@@ -32,20 +31,12 @@ const SchoolTable = ({ schools, isLoading, pagination, toggleHighlight }) => (
   </section>
 );
 
-const classNameGenerator = function(s) {
-  const active = s.active ? 'active ' : '';
-  const assigned = s.assigned ? 'assigned' : '';
-  return active + assigned;
-};
-
 SchoolTable.propTypes = {
   schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
-  isLoading: PropTypes.bool,
-  pagination: PropTypes.element,
-  toggleHighlight: PropTypes.func.isRequired
+  isLoading: PropTypes.bool
 };
+
 SchoolTable.defaultProps = {
-  isLoading: false,
-  pagination: null
+  isLoading: false
 };
 export default SchoolTable;

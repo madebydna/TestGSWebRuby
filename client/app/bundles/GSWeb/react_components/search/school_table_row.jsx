@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
-import {
-  getHomesForSaleHref,
-  studentsPhrase,
-  schoolTypePhrase
-} from 'util/school';
+import { getHomesForSaleHref } from 'util/school';
 import FiveStarRating from '../review/form/five_star_rating';
 
 const renderRating = (rating, ratingScale) => {
@@ -53,10 +49,6 @@ const SchoolTableRow = ({
   gradeLevels,
   enrollment,
   rating,
-  ratingScale,
-  active,
-  distance,
-  assigned,
   studentsPerTeacher,
   numReviews,
   parentRating,
@@ -118,8 +110,9 @@ SchoolTableRow.propTypes = {
   gradeLevels: PropTypes.string.isRequired,
   enrollment: PropTypes.number,
   rating: PropTypes.number,
-  ratingScale: PropTypes.string,
-  active: PropTypes.bool,
+  studentsPerTeacher: PropTypes.number,
+  numReviews: PropTypes.number,
+  parentRating: PropTypes.number,
   links: PropTypes.shape({
     profile: PropTypes.string.isRequired
   }).isRequired
@@ -129,7 +122,10 @@ SchoolTableRow.defaultProps = {
   enrollment: null,
   rating: null,
   ratingScale: null,
-  active: false
+  active: false,
+  studentsPerTeacher: null,
+  numReviews: null,
+  parentRating: null
 };
 
 export default SchoolTableRow;
