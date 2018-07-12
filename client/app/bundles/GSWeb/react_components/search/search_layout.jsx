@@ -243,7 +243,8 @@ class SearchLayout extends React.Component {
   }
 
   renderBreadcrumbsSummarySort(){
-    return (
+    return !(this.shouldRenderMap() && this.props.size <= SM) &&
+     (
       <div className="subheader menu-bar">
         {this.props.breadcrumbs}
         <div className="pagination-summary">{this.props.resultSummary}</div>
@@ -255,14 +256,13 @@ class SearchLayout extends React.Component {
     )
   }
 
-
   render() {
     return (
       <div className="search-body">
         {this.props.size > SM
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
-        {this.props.size > SM && this.renderBreadcrumbsSummarySort()}
+        {this.renderBreadcrumbsSummarySort()}
         <div className="list-map-ad clearfix">
           <div
             className={`list-column ${
