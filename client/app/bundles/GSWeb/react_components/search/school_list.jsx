@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Ad from 'react_components/ad';
 import School from './school';
-import SchoolListOverlay from './school_list_overlay';
+import LoadingOverlay from './loading_overlay';
 
 const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
-  <section className={`school-list ${isLoading ? 'loading' : ''}`}>
+  <section className="school-list">
     {
       /* would prefer to just not render overlay if not showing it,
       but then loader gif has delay, and we would need to preload it */
-      <SchoolListOverlay
+      <LoadingOverlay
         visible={isLoading && schools.length > 0}
         numItems={schools.length}
       />
     }
-    <ol style={{}}>
+    <ol className={isLoading ? 'loading' : ''}>
       {schools.map((s, index) => (
         <React.Fragment key={s.state + s.id}>
           {index > 0 &&

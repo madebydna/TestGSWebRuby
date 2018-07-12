@@ -6,7 +6,7 @@ import {
   amountElementBottomBelowViewport
 } from 'util/viewport';
 
-class SchoolListOverlay extends React.Component {
+class LoadingOverlay extends React.Component {
   static propTypes = {
     visible: PropTypes.bool,
     numItems: PropTypes.number
@@ -56,7 +56,7 @@ class SchoolListOverlay extends React.Component {
   render() {
     return (
       <div
-        className="school-list-overlay"
+        className="loading-overlay"
         ref={this.domElement}
         style={{
           top: this.state.top,
@@ -70,4 +70,4 @@ class SchoolListOverlay extends React.Component {
   }
 }
 
-export default SchoolListOverlay;
+export default LoadingOverlay;

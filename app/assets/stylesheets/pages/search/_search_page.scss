@@ -222,7 +222,7 @@ body {
     .filter-panel {
       position: relative;
       background: #cdd8dd;
-      padding: 15px;
+      padding: 1px 10px 10px 10px;
       margin: 5px;
       border-radius: $form-field-border-radius;
 
@@ -268,15 +268,7 @@ body {
       }
     }
 
-    .school-list.loading ol {
-      opacity: 0.2;
-      filter: blur(4px);
-      li {
-        background-color: lightgray;
-      }
-    }
-
-    .school-list-overlay {
+    .loading-overlay {
       position: absolute;
       width: 100%;
       z-index: 1;
@@ -376,19 +368,17 @@ body {
   }
 }
 
+.loading {
+  opacity: 0.2;
+  filter: blur(4px);
+  background-color: lightgray;
+}
+
 .school-table {
   overflow-x: scroll;
   width: 100%;
   background-color: white;
-
-  &.loading table {
-    opacity: 0.2;
-    filter: blur(4px);
-    th,
-    td {
-      background-color: lightgray;
-    }
-  }
+  position: relative;
 
   table {
     table-layout: fixed;
