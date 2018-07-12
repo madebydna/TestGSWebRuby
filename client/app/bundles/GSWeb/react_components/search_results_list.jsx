@@ -66,7 +66,7 @@ class SearchResultsList extends React.Component {
             <li
               onClick={listItem.url ? () => {
               } : () => onSelect(listItem.value)}
-              key={this.counter}
+              key={listItem.title}
               className={"search-results-list-item" + (this.counter === this.state.selectedListItem ? " selected" : '')}
             >
               <a href={this.href(listItem.url)}>
