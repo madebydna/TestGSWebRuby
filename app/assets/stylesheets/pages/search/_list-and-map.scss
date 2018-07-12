@@ -62,6 +62,9 @@
       @include media-breakpoint-up(lg) {
         min-height: $map-column-min-height;
       }
+      @include media-breakpoint-down(sm) {
+        min-height: calc(100vh - 185px);
+      }
     }
 
     .ad-column {
