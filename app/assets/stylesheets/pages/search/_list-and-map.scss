@@ -45,7 +45,7 @@
     .right-column-fixed {
       position: fixed;
       width: inherit;
-      top: 205px;
+      top: 237px;
       @include media-breakpoint-down(sm) {
         position: initial;
       }
