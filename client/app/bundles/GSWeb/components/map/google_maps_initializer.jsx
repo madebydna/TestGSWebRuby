@@ -14,7 +14,12 @@ export default class GoogleMapsInitializer extends React.Component {
     this.state = {
       initialized: false
     };
-    this.init();
+  }
+
+  componentDidMount() {
+    if (!this.state.initialized) {
+      this.init();
+    }
   }
 
   init() {

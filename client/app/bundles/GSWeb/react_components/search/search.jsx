@@ -133,6 +133,7 @@ class Search extends React.Component {
               <SearchBox
                 searchFunction={this.props.autoSuggestQuery}
                 autoSuggestResults={this.props.autoSuggestResults}
+                size={this.props.size}
               />
             }
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}

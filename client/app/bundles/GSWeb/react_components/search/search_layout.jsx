@@ -99,10 +99,25 @@ class SearchLayout extends React.Component {
     resultSummary: PropTypes.string.isRequired
   };
 
+  static getDerivedStateFromProps(props) {
+    if (
+      props.view === MAP_VIEW ||
+      (props.size > SM && props.view !== TABLE_VIEW)
+    ) {
+      return {
+        hasShownMap: true
+      };
+    }
+    return {};
+  }
+
   constructor(props) {
     super(props);
     this.fixedYLayer = React.createRef();
     this.header = React.createRef();
+    this.state = {
+      hasShownMap: this.shouldRenderMap()
+    };
   }
 
   componentDidMount() {
@@ -142,6 +157,9 @@ class SearchLayout extends React.Component {
   }
 
   renderMapAndAdContainer(map, ad) {
+    if (!this.state.hasShownMap) {
+      return null;
+    }
     if (this.props.size > SM) {
       return (
         <div
@@ -194,6 +212,7 @@ class SearchLayout extends React.Component {
       <OpenableCloseable openByDefault>
         {(isOpen, { toggle, close }) => (
           <div>
+            {this.props.searchBox}
             <div className="menu-bar mobile-filters">
               <span className="menu-item list-map-toggle">
                 {this.props.listMapTableSelect}
@@ -242,18 +261,19 @@ class SearchLayout extends React.Component {
     );
   }
 
-  renderBreadcrumbsSummarySort(){
-    return !(this.shouldRenderMap() && this.props.size <= SM) &&
-     (
-      <div className="subheader menu-bar">
-        {this.props.breadcrumbs}
-        <div className="pagination-summary">{this.props.resultSummary}</div>
-        <div className="menu-item">
-          <span className="label">Sort by:</span>
-          {this.props.sortSelect}
+  renderBreadcrumbsSummarySort() {
+    return (
+      !(this.shouldRenderMap() && this.props.size <= SM) && (
+        <div className="subheader menu-bar">
+          {this.props.breadcrumbs}
+          <div className="pagination-summary">{this.props.resultSummary}</div>
+          <div className="menu-item">
+            <span className="label">Sort by:</span>
+            {this.props.sortSelect}
+          </div>
         </div>
-      </div>
-    )
+      )
+    );
   }
 
   render() {

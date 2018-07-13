@@ -326,11 +326,17 @@ body {
 }
 
 .search-box {
+  top: 0px;
   left: 0px;
   position: absolute;
   background: white;
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
+  @include media-breakpoint-down(sm) {
+    margin-left: -20px;
+    width: calc(100% + 40px);
+  }
 
   input {
     outline: none;
@@ -339,6 +345,10 @@ body {
   .search-results-list {
     z-index: 2;
     margin-top: -1px;
+    @include media-breakpoint-down(sm) {
+      width: 100%;
+      overflow-y: scroll;
+    }
   }
 
   .search-results-list-item {
