@@ -267,10 +267,12 @@ class SearchLayout extends React.Component {
         <div className="subheader menu-bar">
           {this.props.breadcrumbs}
           <div className="pagination-summary">{this.props.resultSummary}</div>
-          <div className="menu-item">
-            <span className="label">Sort by:</span>
-            {this.props.sortSelect}
-          </div>
+          {this.props.size > SM && (
+            <div className="menu-item">
+              <span className="label">Sort by:</span>
+              {this.props.sortSelect}
+            </div>
+          )}
         </div>
       )
     );
