@@ -54,7 +54,7 @@ body {
       }
       @include media-breakpoint-down(xs) {
         position: fixed;
-        bottom:0;
+        bottom: 0;
         width: 100%;
         display: block;
         text-align: center;
@@ -230,9 +230,10 @@ body {
 
     .filter-panel {
       position: relative;
-      background: #cdd8dd;
       padding: 1px 10px 10px 10px;
       margin: 5px;
+      background-color: #e0e7eb;
+      border: 1px solid #cdd8dd;
       border-radius: $form-field-border-radius;
 
       .menu-item {
@@ -245,10 +246,12 @@ body {
         }
       }
 
+      select {
+        background-color: white;
+      }
+
       button {
-        background: $search-primary-blue-on-white;
-        color: #fff;
-        width: 100%;
+        padding: 0px 13px;
         max-width: 290px;
       }
 

@@ -243,7 +243,7 @@ class SearchLayout extends React.Component {
                     {this.props.entityTypeDropdown}
                   </span>
                   <span className="menu-item">
-                    {this.props.gradeLevelCheckboxes}
+                    {this.props.gradeLevelButtons}
                   </span>
                   <span className="menu-item">
                     <span className="label">Sort by:</span>
