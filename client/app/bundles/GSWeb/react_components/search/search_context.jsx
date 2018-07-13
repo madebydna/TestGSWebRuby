@@ -16,6 +16,11 @@ import suggest from 'api_clients/autosuggest';
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
 
+export const LIST_VIEW = 'list';
+export const MAP_VIEW = 'map';
+export const TABLE_VIEW = 'table';
+export const validViews = [LIST_VIEW, MAP_VIEW, TABLE_VIEW];
+
 class SearchProvider extends React.Component {
   static defaultProps = {
     q: gon.search.q,
@@ -27,6 +32,8 @@ class SearchProvider extends React.Component {
     entityTypes: gon.search.entityTypes || [],
     defaultLat: gon.search.cityLat || 37.8078456,
     defaultLon: gon.search.cityLon || -122.2672673,
+    lat: null,
+    lon: null,
     distance: gon.search.distance,
     sort: gon.search.sort,
     page: gon.search.page || 1,
@@ -34,7 +41,8 @@ class SearchProvider extends React.Component {
     totalPages: gon.search.totalPages,
     resultSummary: gon.search.resultSummary,
     paginationSummary: gon.search.paginationSummary,
-    breadcrumbs: gon.search.breadcrumbs || []
+    breadcrumbs: gon.search.breadcrumbs || [],
+    view: gon.search.view || LIST_VIEW
   };
 
   static propTypes = {
@@ -56,12 +64,14 @@ class SearchProvider extends React.Component {
     totalPages: PropTypes.number,
     resultSummary: PropTypes.string,
     paginationSummary: PropTypes.string,
+    view: PropTypes.oneOf(validViews),
     children: PropTypes.element.isRequired,
     updateLevelCodes: PropTypes.func.isRequired,
     updateEntityTypes: PropTypes.func.isRequired,
     updateSort: PropTypes.func.isRequired,
     updatePage: PropTypes.func.isRequired,
     updateDistance: PropTypes.func.isRequired,
+    updateView: PropTypes.func.isRequired,
     breadcrumbs: PropTypes.arrayOf(
       PropTypes.shape({
         text: PropTypes.string.isRequired,
@@ -159,7 +169,7 @@ class SearchProvider extends React.Component {
             } else if (category === 'Cities') {
               title = `Schools in ${city}, ${state}`;
             } else if (category === 'Districts') {
-              title = `Schools in ${district}, ${state}`;
+              title = `Schools in ${district}`;
               additionalInfo = `${city}, ${state}`;
             } else if (category === 'Zipcodes') {
               title = `Schools in ${zip}`;
@@ -236,7 +246,8 @@ class SearchProvider extends React.Component {
           distance: this.props.distance,
           sort: this.props.sort,
           page: this.props.page,
-          limit: this.props.pageSize
+          limit: this.props.pageSize,
+          fields: ['students_per_teacher', 'review_summary']
         },
         newState
       )
@@ -280,7 +291,9 @@ class SearchProvider extends React.Component {
           defaultLon: this.props.defaultLon,
           autoSuggestQuery: this.autoSuggestQuery,
           autoSuggestResults: this.state.autoSuggestResults,
-          breadcrumbs: this.props.breadcrumbs
+          breadcrumbs: this.props.breadcrumbs,
+          view: this.props.view,
+          updateView: this.props.updateView
         }}
       >
         <DistanceContext.Provider

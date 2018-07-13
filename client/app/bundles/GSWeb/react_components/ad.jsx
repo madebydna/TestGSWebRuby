@@ -11,7 +11,7 @@ import {
 class Ad extends React.Component {
   static propTypes = {
     slot: PropTypes.string.isRequired, // slot name
-    sizeName: PropTypes.string.isRequired, // previously known as data-ad-setting or sizeMapping
+    sizeName: PropTypes.string, // previously known as data-ad-setting or sizeMapping
     idCounter: PropTypes.number,
     defer: PropTypes.bool,
     ghostTextEnabled: PropTypes.bool,
@@ -21,6 +21,7 @@ class Ad extends React.Component {
 
   static defaultProps = {
     idCounter: 1,
+    sizeName: null,
     defer: false,
     ghostTextEnabled: true,
     container: <div />,

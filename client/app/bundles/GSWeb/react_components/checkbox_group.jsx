@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { castArray } from 'lodash';
 import Selectable from './selectable';
-import Button from './button';
 
 const CheckboxGroup = ({
   options,
@@ -34,6 +33,7 @@ const CheckboxGroup = ({
                 type="checkbox"
                 value={option.value}
                 checked={active}
+                readOnly
               />
               <label>{option.label}</label>
             </span>
@@ -47,7 +47,10 @@ const CheckboxGroup = ({
 CheckboxGroup.propTypes = {
   options: PropTypes.object.isRequired,
   onSelect: PropTypes.func.isRequired,
-  activeOption: PropTypes.string.isRequired,
+  activeOption: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]).isRequired,
   multiple: PropTypes.bool,
   label: PropTypes.string
 };

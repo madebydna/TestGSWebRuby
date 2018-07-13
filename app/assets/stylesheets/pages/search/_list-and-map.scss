@@ -34,18 +34,18 @@
     @include media-breakpoint-up(lg) {
       width: calc(100% - #{$lg-list-width + 10px + $page-side-padding});
     }
-
     @include media-breakpoint-down(sm) {
       width: 100%;
-      &.closed {
-        display: none;
-      }
+    }
+
+    &.closed {
+      display: none;
     }
 
     .right-column-fixed {
       position: fixed;
       width: inherit;
-      top: 205px;
+      top: 237px;
       @include media-breakpoint-down(sm) {
         position: initial;
       }
@@ -61,6 +61,9 @@
       }
       @include media-breakpoint-up(lg) {
         min-height: $map-column-min-height;
+      }
+      @include media-breakpoint-down(sm) {
+        min-height: calc(100vh - 240px);
       }
     }
 
@@ -87,9 +90,9 @@
       }
       @include media-breakpoint-down(sm) {
         width: $xs-list-width;
-        &.closed {
-          display: none;
-        }
+      }
+      &.closed {
+        display: none;
       }
     }
 

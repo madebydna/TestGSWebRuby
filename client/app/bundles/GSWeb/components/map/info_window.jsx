@@ -1,15 +1,10 @@
 import React from 'react';
 import jsxToString from 'jsx-to-string';
 import { capitalize, t } from 'util/i18n';
+import { getHomesForSaleHref, studentsPhrase, schoolTypePhrase } from 'util/school'
 
 export default function createInfoWindow(entity) {
-
-  let homesForSaleHref;
-  if (entity.state && entity.address && entity.address.zip) {
-    homesForSaleHref = 'https://www.zillow.com/' + entity.state + '-' + entity.address.zip.split("-")[0] + '?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap';
-  } else {
-    homesForSaleHref = 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap';
-  }
+  const homesForSaleHref = getHomesForSaleHref(entity.state, entity.address);
 
   let schoolLevels = entity => {
     let levelNameMap = {p: 'Preschool', e: 'Elementary', m: 'Middle', h: 'High'};
@@ -57,7 +52,6 @@ export default function createInfoWindow(entity) {
   };
 
   let addressString = `${entity.address.street1}, ${entity.address.city}, ${entity.state} ${entity.address.zip}`;
-  let typeString = `${capitalize(entity.schoolType)}, ${entity.gradeLevels}`;
   let contentString = (
     <div class="info-window">
       {entity.assigned && <div class="assigned-text">{t('assigned')}</div>}
@@ -68,11 +62,14 @@ export default function createInfoWindow(entity) {
           {entity.type == 'school' && entity.address &&
             <div>
               <div class="address">{addressString}</div>
-              <div class="school-subinfo"><span>{typeString}</span></div>
+              <div class="school-subinfo">{schoolTypePhrase(entity.schoolType, entity.gradeLevels)}
+                {entity.enrollment && <span><span class="divider"> | </span><span>{studentsPhrase(entity.enrollment)}</span></span>}
+              </div>
+              {homesForSaleHref && (
               <div class="other-links">
                 <span class="icon-house">  </span>
-                <a href={homesForSaleHref} rel="nofollow" target="_blank">Homes for sale</a>
-              </div>
+                <a href={homesForSaleHref} rel="nofollow" target="_blank"> Homes for sale</a>
+              </div>)}
             </div>
           }
           { entity.schoolCountsByLevelCode && <div><br/>Number of schools:<div>{levelMarkup(entity)}</div></div> }

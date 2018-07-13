@@ -21,11 +21,11 @@ section.school-list {
     height: inherit;
 
     li {
-      &.assigned{
+      &.assigned {
         border-top: solid 17px #176997;
-        > .assigned-text{
-          font-family: "opensans-bold", Helvetica, Arial;
-          color:white;
+        > .assigned-text {
+          font-family: 'opensans-bold', Helvetica, Arial;
+          color: white;
           font-size: $font-size-l2;
           margin-top: -28px;
           padding-bottom: 10px;

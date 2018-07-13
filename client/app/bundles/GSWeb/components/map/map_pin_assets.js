@@ -81,19 +81,14 @@ function createAssignedHighlightedPinWithRating(rating, color) {
   </svg>`;
 }
 
-function createAssignedPinWithRating(rating, color) {
-  return `data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="59" height="75" viewBox="0 0 59 75">\
+function createAssignedPinWithRating(rating, color){
+  return (`data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="59" height="75" viewBox="0 0 59 75">\
         <g fill="none" fill-rule="evenodd">\
         <g transform="translate(10 21)">\
         <path fill="#999" d="M14.26 42.417C6.122 40.019.187 32.547.187 23.701.188 12.92 9.004 4.18 19.878 4.18S39.567 12.92 39.567 23.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
         <ellipse cx="19.957" cy="23.813" fill="${color}" rx="18" ry="18"/>\
-        <path fill="#FFF" d="M14.26 42.417C6.122 40.019.187 32.547.187 23.701.188 12.92 9.004 4.18 19.878 4.18S39.567 12.92 39.567 23.7c0 8.132-5.014 15.102-12.144 18.038l-6.767 11.575-6.397-10.897z"/>\
         <text fill="#FFF" font-family="RobotoSlab-Bold, Roboto Slab" font-size="18" font-weight="bold">\
-        <tspan x="${
-          rating == 10 ? 6 : 11
-        }" y="30">${rating}</tspan> <tspan x="${
-    rating == 10 ? 24 : 22
-  }" y="30" font-size="8">/10</tspan>\
+        <tspan x="${ rating == 10 ? 6 : 11}" y="30">${rating}</tspan> <tspan x="${ rating == 10 ? 24 : 22}" y="30" font-size="8">/10</tspan>\
         </text>\
         </g>\
         <path fill="#176997" d="M32.968 19l-3.655 3.655L25.658 19H0V0h59v19H32.968z"/>\
@@ -101,7 +96,7 @@ function createAssignedPinWithRating(rating, color) {
         <tspan x="5.192" y="13">${t('assigned')}</tspan>\
         </text>\
         </g>\
-        </svg>`;
+        </svg>`)
 }
 
 function createPinWithoutRating(highlighted) {

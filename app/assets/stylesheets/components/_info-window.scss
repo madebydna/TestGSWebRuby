@@ -42,7 +42,12 @@
     .school-subinfo {
       font-family: $font-bold;
       margin-top: 10px;
+      .divider {
+        color: rgb(187, 192, 202);
+        padding: 0 5px;
+      }
     }
+
   }
   hr {
     margin: 10px 0;

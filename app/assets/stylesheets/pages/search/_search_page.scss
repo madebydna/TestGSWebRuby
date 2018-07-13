@@ -1,7 +1,9 @@
 $page-side-padding: 15px;
 $search-primary-blue-on-white: #1dace5;
+
 @import 'list-and-map';
 @import 'components/search-results-list';
+@import 'components/five-stars';
 
 .featured {
   display: none; // TODO: dont put this here
@@ -23,6 +25,11 @@ body {
   }
 
   .search-body {
+    .divider {
+      color: rgb(187, 192, 202);
+      padding: 0 5px;
+    }
+
     position: relative;
     margin: auto;
 
@@ -44,6 +51,15 @@ body {
       padding: 20px 0 15px 0;
       @include media-breakpoint-down(sm) {
         justify-content: center;
+      }
+      @include media-breakpoint-down(xs) {
+        position: fixed;
+        bottom:0;
+        width: 100%;
+        display: block;
+        text-align: center;
+        z-index: 999;
+        background: white;
       }
       @include media-breakpoint-up(sm) {
         .anchor-button {
@@ -153,6 +169,9 @@ body {
         }
       }
       .menu-item + .menu-item {
+        @include media-breakpoint-up(xs) {
+          margin-left: 15px;
+        }
         @include media-breakpoint-up(md) {
           margin-left: 20px;
         }
@@ -160,7 +179,7 @@ body {
     }
 
     .subheader {
-      padding: 5px 10px 10px 10px;
+      padding: 5px 15px 10px 15px;
       * + * {
         margin-top: 5px;
       }
@@ -192,7 +211,7 @@ body {
 
     .menu-bar.mobile-filters {
       background-color: #e0e7eb;
-      padding: 10px;
+      padding: 10px 15px;
     }
 
     .checkbox-group {
@@ -212,7 +231,7 @@ body {
     .filter-panel {
       position: relative;
       background: #cdd8dd;
-      padding: 15px;
+      padding: 1px 10px 10px 10px;
       margin: 5px;
       border-radius: $form-field-border-radius;
 
@@ -258,15 +277,7 @@ body {
       }
     }
 
-    .school-list.loading ol {
-      opacity: 0.2;
-      filter: blur(4px);
-      li {
-        background-color: lightgray;
-      }
-    }
-
-    .school-list-overlay {
+    .loading-overlay {
       position: absolute;
       width: 100%;
       z-index: 1;
@@ -285,6 +296,10 @@ body {
         background-position: center;
       }
     }
+  }
+
+  .icon-star {
+    font-size: 11px;
   }
 }
 
@@ -320,11 +335,17 @@ body {
 }
 
 .search-box {
+  top: 0px;
   left: 0px;
   position: absolute;
   background: white;
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
+  @include media-breakpoint-down(sm) {
+    margin-left: -20px;
+    width: calc(100% + 40px);
+  }
 
   input {
     outline: none;
@@ -333,6 +354,10 @@ body {
   .search-results-list {
     z-index: 2;
     margin-top: -1px;
+    @include media-breakpoint-down(sm) {
+      width: 100%;
+      overflow-y: scroll;
+    }
   }
 
   .search-results-list-item {
@@ -357,9 +382,93 @@ body {
 }
 
 .breadcrumbs {
-  .separator {
+  .divider {
     font-size: $font-size-s3;
-    color: $gray;
-    padding: 0 5px;
+  }
+}
+
+.loading {
+  opacity: 0.2;
+  filter: blur(4px);
+  background-color: lightgray;
+}
+
+.school-table {
+  overflow-x: scroll;
+  width: 100%;
+  background-color: white;
+  position: relative;
+
+  table {
+    table-layout: fixed;
+    width: 991px;
+
+    @include media-breakpoint-up(lg) {
+      width: 100%;
+    }
+
+    td,
+    th {
+      border: 1px solid $form-field-border-color;
+      padding: 10px 15px;
+    }
+
+    th {
+      color: $gray-darker;
+      font-weight: normal;
+      text-align: left;
+      background-color: #f1fafd;
+    }
+    th.school {
+      width: 290px;
+    }
+
+    td.school {
+      $active-color: #f6f9fa;
+      $hover-color: #f6f9fa;
+      $border-color: #dbe6eb;
+
+      &.assigned {
+        border-top: solid 17px #176997;
+        > .assigned-text {
+          font-family: 'opensans-bold', Helvetica, Arial;
+          color: white;
+          font-size: $font-size-l2;
+          margin-top: -28px;
+          padding-bottom: 10px;
+        }
+      }
+
+      @include clearfix;
+      span {
+        display: inline-block;
+      }
+      a {
+        font-size: $font-size-l2;
+        font-family: 'opensans-semibold', sans-serif;
+      }
+      a.name {
+        font-size: $font-size-l3;
+      }
+      &:hover {
+        background-color: $hover-color;
+      }
+      &.active {
+        background-color: $active-color;
+      }
+      > span:first-of-type {
+        text-align: center;
+        width: 38px;
+      }
+      > span:last-of-type {
+        width: calc(100% - 48px);
+      }
+      > span {
+        vertical-align: top;
+      }
+      > span + span {
+        margin-left: 10px;
+      }
+    }
   }
 }

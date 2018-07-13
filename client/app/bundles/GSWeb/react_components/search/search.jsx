@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Breadcrumbs from 'react_components/breadcrumbs';
 import SearchContext from './search_context';
-import DistanceConsumer from './distance_context';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
-import ListMapDropdown from './list_map_dropdown';
+import ListMapTableSelect from './list_map_table_select';
 import PaginationButtons from './pagination_buttons';
 import Map from './map';
 import SchoolList from './school_list';
+import SchoolTable from './school_table';
 import EntityTypeDropdown from './entity_type_dropdown';
 import GradeLevelButtons from './grade_level_buttons';
 import GradeLevelCheckboxes from './grade_level_checkboxes';
@@ -21,8 +21,6 @@ import SearchBox from '../search_box';
 
 class Search extends React.Component {
   static defaultProps = {
-    city: null,
-    state: null,
     lat: null,
     lon: null,
     schools: [],
@@ -33,8 +31,6 @@ class Search extends React.Component {
   };
 
   static propTypes = {
-    city: PropTypes.string,
-    state: PropTypes.string,
     schools: PropTypes.arrayOf(PropTypes.object),
     resultSummary: PropTypes.string.isRequired,
     defaultLat: PropTypes.number.isRequired,
@@ -47,22 +43,18 @@ class Search extends React.Component {
     onPageChanged: PropTypes.func.isRequired,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     shouldIncludeDistance: PropTypes.bool,
-    toggleHighlight: PropTypes.func,
+    toggleHighlight: PropTypes.func.isRequired,
     breadcrumbs: PropTypes.arrayOf(
       PropTypes.shape({
         text: PropTypes.string.isRequired,
         url: PropTypes.string.isRequired
       })
     ),
-    autoSuggestQuery: PropTypes.func
+    autoSuggestQuery: PropTypes.func,
+    view: PropTypes.string.isRequired,
+    updateView: PropTypes.func.isRequired,
+    autoSuggestResults: PropTypes.object.isRequired
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentView: 'map'
-    };
-  }
 
   componentDidMount() {
     initAdvertising();
@@ -74,7 +66,7 @@ class Search extends React.Component {
         {({ distance, onChange }) => (
           <SearchLayout
             size={this.props.size}
-            currentView={this.state.currentView}
+            view={this.props.view}
             entityTypeDropdown={<EntityTypeDropdown />}
             gradeLevelButtons={<GradeLevelButtons />}
             gradeLevelCheckboxes={<GradeLevelCheckboxes />}
@@ -89,12 +81,11 @@ class Search extends React.Component {
               <SortSelect includeDistance={this.props.shouldIncludeDistance} />
             }
             resultSummary={this.props.resultSummary}
-            listMapDropdown={
-              <ListMapDropdown
-                currentView={this.state.currentView}
-                onSelect={currentView => {
-                  this.setState({ currentView });
-                }}
+            listMapTableSelect={
+              <ListMapTableSelect
+                view={this.props.view}
+                onSelect={this.props.updateView}
+                size={this.props.size}
               />
             }
             tallAd={
@@ -104,6 +95,13 @@ class Search extends React.Component {
             }
             schoolList={
               <SchoolList
+                toggleHighlight={this.props.toggleHighlight}
+                schools={this.props.schools}
+                isLoading={this.props.loadingSchools}
+              />
+            }
+            schoolTable={
+              <SchoolTable
                 toggleHighlight={this.props.toggleHighlight}
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
@@ -135,6 +133,7 @@ class Search extends React.Component {
               <SearchBox
                 searchFunction={this.props.autoSuggestQuery}
                 autoSuggestResults={this.props.autoSuggestResults}
+                size={this.props.size}
               />
             }
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
