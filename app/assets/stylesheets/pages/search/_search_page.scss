@@ -52,6 +52,15 @@ body {
       @include media-breakpoint-down(sm) {
         justify-content: center;
       }
+      @include media-breakpoint-down(xs) {
+        position: fixed;
+        bottom:0;
+        width: 100%;
+        display: block;
+        text-align: center;
+        z-index: 999;
+        background: white;
+      }
       @include media-breakpoint-up(sm) {
         .anchor-button {
           min-width: 40px;

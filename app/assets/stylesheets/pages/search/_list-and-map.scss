@@ -63,7 +63,7 @@
         min-height: $map-column-min-height;
       }
       @include media-breakpoint-down(sm) {
-        min-height: calc(100vh - 300px);
+        min-height: calc(100vh - 240px);
       }
     }
 
