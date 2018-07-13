@@ -41,8 +41,8 @@ class Api::SchoolSerializer
       state: school.state,
       type: 'school',
       links: {
-        profile: school_path(school),
-        reviews: school_path(school, anchor: 'Reviews')
+        profile: school_path(school, trailing_slash: true),
+        reviews: school_path(school, anchor: 'Reviews', trailing_slash: true)
       },
       highlighted: false
     }.tap do |h|
