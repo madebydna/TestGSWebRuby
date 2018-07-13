@@ -62,7 +62,7 @@ class SearchResultsList extends React.Component {
     this.props.navigateToSelectedListItem &&
       listItem.url &&
       this.counter === this.state.selectedListItem &&
-      (window.location.href = `${listItem.url}?newsearch`);
+      (window.location.href = this.href(listItem.url));
   }
 
   groupListItems(listItems) {
