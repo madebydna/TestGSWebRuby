@@ -13,7 +13,7 @@ const AnchorButton = ({
 }) => (
   <a
     onClick={enabled ? onClick : undefined}
-    className={`${active ? 'active' : ''} ${
+    className={`anchor-button ${active ? 'active' : ''} ${
       enabled ? '' : 'disabled'
     } ${className}`}
     onKeyPress={enabled ? onClick : undefined}
