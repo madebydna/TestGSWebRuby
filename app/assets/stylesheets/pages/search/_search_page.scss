@@ -43,6 +43,7 @@ body {
 
     select {
       @include select;
+      background-color: white;
     }
     .pagination-container {
       clear: both;
@@ -244,10 +245,6 @@ body {
           display: block;
           margin-bottom: 5px;
         }
-      }
-
-      select {
-        background-color: white;
       }
 
       button {
