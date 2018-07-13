@@ -24,7 +24,15 @@ module StructuredMarkup
       unless existing_json_ld_breadcrumbs
         add_json_ld(StructuredMarkup.breadcrumbs_as_json_ld([]))
       end
-      existing_json_ld_breadcrumbs << [text, url]
+      existing_json_ld_breadcrumbs << {
+        "@type" => "ListItem",
+        "position" => existing_json_ld_breadcrumbs.length + 1,
+        "item" => {
+          "@id" => StructuredMarkup.ensure_https(url),
+          "name" => text,
+          "image" => StructuredMarkup.ensure_https(url)
+        }
+      }
     end
 
     def existing_json_ld_breadcrumbs
