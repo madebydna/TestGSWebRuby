@@ -42,9 +42,7 @@ const slotRenderedHandler = function(event) {
     // Show the ghost text as an ad is rendered
     const $ghostText = $(`.js-${event.slot.getSlotId().getDomId()}-ghostText`); // wordpress
     if ($ghostText.length > 0) {
-      const $ghostWrapper = $ghostText.parent();
-      $ghostWrapper.remove($ghostText);
-      $ghostWrapper.append($ghostText);
+      $ghostText.appendTo($ghostText.parent());
       $ghostText.show();
     }
     jQuery(`.js-${event.slot.getSlotElementId()}-wrapper .advertisement-text`)
