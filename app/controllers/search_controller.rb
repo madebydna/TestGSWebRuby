@@ -90,7 +90,7 @@ class SearchController < ApplicationController
 
     @search_term = "#{@city.name}, #{state_abbreviation.upcase}"
     @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: state_abbreviation)
-
+    set_meta_tags(robots: 'noindex, nofollow') unless @total_results.present? && @total_results > 0
     set_meta_tags search_city_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
     setup_search_gon_variables
@@ -126,7 +126,7 @@ class SearchController < ApplicationController
     end
 
     @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: state_abbreviation)
-
+    set_meta_tags(robots: 'noindex, nofollow') unless @total_results.present? && @total_results > 0
     set_meta_tags search_district_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
     setup_search_gon_variables
@@ -237,12 +237,13 @@ class SearchController < ApplicationController
     yield search_options, @params_hash if block_given?
 
     ad_setTargeting_through_gon
-    data_layer_through_gon
+
 
     results = search_method.call(search_options)
     session[:soft_filter_params] = soft_filters_params_hash
     # sort_by_fit(results[:results], sort) if sorting_by_fit?
     process_results(results, offset) unless results.empty?
+    data_layer_through_gon
     set_hub # must come after @schools is defined in process_results
     add_collection_id_to_gtm_data_layer
     @show_guided_search = has_guided_search?

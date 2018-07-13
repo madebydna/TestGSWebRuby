@@ -14,6 +14,10 @@ module SearchRequestParams
     end
   end
 
+  def state_name
+    States.state_name(state)
+  end
+
   def is_browse_url?
     request.path.match? /\/schools/
   end
@@ -23,7 +27,7 @@ module SearchRequestParams
   end
 
   def q
-    params[:q]
+    params[:q] || params[:query]
   end
 
   def level_codes
@@ -56,6 +60,10 @@ module SearchRequestParams
     params[:distance]&.to_i || params[:radius]&.to_i
   end
 
+  def location_given?
+    point_given? || area_given?
+  end
+
   def point_given?
     lat.present? && lon.present? && radius.blank?
   end
@@ -78,8 +86,19 @@ module SearchRequestParams
     params[:city]&.gsub('-', ' ')&.gs_capitalize_words
   end
 
+  def county_object
+    if defined?(@_county_object)
+      return @_county_object 
+    end
+    @_county_object = city_record&.county
+  end
+
   def city_param
     params[:city]
+  end
+
+  def district_param
+    params[:district] || params[:district_name]
   end
 
   def city_record
@@ -97,7 +116,7 @@ module SearchRequestParams
   end
 
   def district
-    params[:district_name]&.gsub('-', ' ')&.gs_capitalize_words
+    district_param&.gsub('-', ' ')&.gs_capitalize_words
   end
 
   def district_record
@@ -110,6 +129,50 @@ module SearchRequestParams
         District.on_db(state).where(name: district).first
       end
     end
+  end
+
+  def district_browse?
+    state && district
+  end
+
+  def city_browse?
+    state && city
+  end
+
+  def zip_code_search?
+    /^\d{5}+$/.match?(q)
+  end
+
+  def search_type
+    if district_browse?
+      :district_browse
+    elsif city_browse?
+      :city_browse
+    elsif zip_code_search?
+      :zip_code
+    else
+      :other
+    end
+  end
+
+  # reading about API design, I tend to agree that rather than make multiple
+  # endpoints for different views on the same resource (school) we should allow
+  # the client to say what data they want back. Felt like boundary data
+  # belongs as part of the schools api resource, but it has performance
+  # overhead to obtain that data and not every request needs it. Rather
+  # than have the client provide every field desires, just made an "extras"
+  # for asking for data not in the default response
+  def extras
+    default_extras + extras_param
+  end
+
+  def extras_param
+    params[:extras]&.split(',') || []
+  end
+
+  # to be overridden by controller
+  def default_extras
+    []
   end
 
 end

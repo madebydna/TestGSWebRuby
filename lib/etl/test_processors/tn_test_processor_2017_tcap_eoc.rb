@@ -112,7 +112,7 @@ class TNTestProcessor2017TCAPEOC < GS::ETL::TestProcessor
         testadministration: :test_data_type,
         gradelevel: :grade,
         subgroup: :breakdown,
-        # valid_tests: :number_tested,
+        valid_tests: :number_tested,
         pct_on_mastered: :value_float
       })
       .transform('Fill missing default fields', Fill, {

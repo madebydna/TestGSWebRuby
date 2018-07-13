@@ -13,7 +13,7 @@
     line-height: $height;
   }
 
-  > a:hover {
+  > a:hover:not(.disabled) {
     background-color: $active-background-color;
     border-top: 1px solid $active-background-color;
     border-bottom: 1px solid $active-background-color;
@@ -23,12 +23,14 @@
 
   > a:first-child,
   button:first-child {
-    border-radius: $form-field-border-radius 0 0 $form-field-border-radius;
+    border-top-left-radius: $form-field-border-radius;
+    border-bottom-left-radius: $form-field-border-radius;
     border-left: 1px solid $form-field-border-color;
   }
   > a:last-child,
   button:last-child {
-    border-radius: 0 $form-field-border-radius $form-field-border-radius 0;
+    border-top-right-radius: $form-field-border-radius;
+    border-bottom-right-radius: $form-field-border-radius;
     border-right: 1px solid $form-field-border-color;
   }
   > button,
@@ -51,6 +53,10 @@
       color: $active-color;
       background-image: none;
     }
+  }
+  > button.disabled,
+  a.disabled {
+    cursor: default;
   }
   button ~ button {
     border-left: 1px solid $form-field-border-color;

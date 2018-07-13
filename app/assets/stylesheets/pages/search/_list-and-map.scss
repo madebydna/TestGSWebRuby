@@ -1,4 +1,9 @@
 #search-page {
+  $map-column-min-height: 615px;
+  $xs-list-width: 100%;
+  $md-list-width: 370px;
+  $lg-list-width: 450px;
+
   .school-list ol {
     overflow: visible;
   }
@@ -18,45 +23,55 @@
   }
 
   .right-column {
-    position: absolute;
     right: 0px;
-    width: 570px;
     height: 100%;
     float: left;
     position: relative;
-    width: 60%;
+
+    @include media-breakpoint-up(md) {
+      width: calc(100% - #{$md-list-width + 10px + $page-side-padding});
+    }
+    @include media-breakpoint-up(lg) {
+      width: calc(100% - #{$lg-list-width + 10px + $page-side-padding});
+    }
     @include media-breakpoint-down(sm) {
       width: 100%;
-      &.closed {
-        display: none;
-      }
+    }
+
+    &.closed {
+      display: none;
     }
 
     .right-column-fixed {
       position: fixed;
       width: inherit;
-      max-width: 769px;
-      top: 205px;
+      top: 237px;
       @include media-breakpoint-down(sm) {
         position: initial;
       }
     }
 
     .map-column {
+      @include clearfix;
       position: relative;
       height: 100%;
-      min-height: 600px;
+      min-height: $map-column-min-height;
       @include media-breakpoint-up(sm) {
-        margin-right: 180px;
+        margin-right: 170px;
+      }
+      @include media-breakpoint-up(lg) {
+        min-height: $map-column-min-height;
+      }
+      @include media-breakpoint-down(sm) {
+        min-height: calc(100vh - 240px);
       }
     }
 
     .ad-column {
       position: relative;
       float: right;
-      width: 170px;
-      background-color: lightgrey;
-      height: 600px;
+      width: 160px;
+      height: $map-column-min-height;
       @include media-breakpoint-only(xs) {
         display: none;
       }
@@ -65,18 +80,19 @@
 
   .list-map-ad {
     .list-column {
-      min-height: 600px;
+      min-height: $map-column-min-height;
       float: left;
-      width: 40%;
-      min-width: 290px;
       @include media-breakpoint-up(md) {
-        max-width: 465px;
+        width: $md-list-width;
+      }
+      @include media-breakpoint-up(lg) {
+        width: $lg-list-width;
       }
       @include media-breakpoint-down(sm) {
-        width: 100%;
-        &.closed {
-          display: none;
-        }
+        width: $xs-list-width;
+      }
+      &.closed {
+        display: none;
       }
     }
 

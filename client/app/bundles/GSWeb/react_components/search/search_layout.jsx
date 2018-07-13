@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'lodash';
 import $ from 'jquery';
-import { viewport, SM, validSizes } from 'util/viewport';
+import { SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
-import CaptureOutsideClick from 'react_components/search/capture_outside_click';
 import Button from 'react_components/button';
+import { t } from 'util/i18n';
+import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 
 function keepInViewport(
   ref,
@@ -73,26 +74,50 @@ function keepInViewport(
 }
 
 class SearchLayout extends React.Component {
-  static defaultProps = {};
+  static defaultProps = {
+    breadcrumbs: null,
+    distanceFilter: null,
+    pagination: null
+  };
 
   static propTypes = {
     size: PropTypes.oneOf(validSizes).isRequired,
-    currentView: PropTypes.string.isRequired,
+    view: PropTypes.string.isRequired,
     gradeLevelButtons: PropTypes.element.isRequired,
     entityTypeDropdown: PropTypes.element.isRequired,
     gradeLevelCheckboxes: PropTypes.element.isRequired,
-    distanceFilter: PropTypes.element.isRequired,
+    distanceFilter: PropTypes.element,
     sortSelect: PropTypes.element.isRequired,
-    listMapDropdown: PropTypes.element.isRequired,
+    listMapTableSelect: PropTypes.element.isRequired,
     schoolList: PropTypes.element.isRequired,
+    schoolTable: PropTypes.element.isRequired,
     map: PropTypes.element.isRequired,
-    tallAd: PropTypes.element.isRequired
+    tallAd: PropTypes.element.isRequired,
+    searchBox: PropTypes.element.isRequired,
+    breadcrumbs: PropTypes.element,
+    pagination: PropTypes.element,
+    resultSummary: PropTypes.string.isRequired
   };
+
+  static getDerivedStateFromProps(props) {
+    if (
+      props.view === MAP_VIEW ||
+      (props.size > SM && props.view !== TABLE_VIEW)
+    ) {
+      return {
+        hasShownMap: true
+      };
+    }
+    return {};
+  }
 
   constructor(props) {
     super(props);
     this.fixedYLayer = React.createRef();
     this.header = React.createRef();
+    this.state = {
+      hasShownMap: this.shouldRenderMap()
+    };
   }
 
   componentDidMount() {
@@ -110,17 +135,37 @@ class SearchLayout extends React.Component {
   }
 
   shouldRenderMap() {
-    return this.props.size > SM || this.props.currentView === 'map';
+    return (
+      this.props.view === MAP_VIEW ||
+      (this.props.size > SM && this.props.view !== TABLE_VIEW)
+    );
   }
 
   shouldRenderList() {
-    return this.props.size > SM || this.props.currentView === 'list';
+    return (
+      this.props.view === LIST_VIEW ||
+      (this.props.size > SM && this.props.view !== TABLE_VIEW)
+    );
+  }
+
+  shouldRenderTable() {
+    return this.props.view === TABLE_VIEW;
+  }
+
+  renderTableView() {
+    return this.props.schoolTable;
   }
 
   renderMapAndAdContainer(map, ad) {
+    if (!this.state.hasShownMap) {
+      return null;
+    }
     if (this.props.size > SM) {
       return (
-        <div className="right-column">
+        <div
+          key="right-column"
+          className={`right-column ${this.shouldRenderMap() ? ' ' : 'closed'}`}
+        >
           <div className="right-column-fixed" ref={this.fixedYLayer}>
             <div className="ad-column">{ad}</div>
             <div className="map-column">{map}</div>
@@ -130,6 +175,7 @@ class SearchLayout extends React.Component {
     }
     return (
       <div
+        key="right-column"
         className={`right-column ${this.shouldRenderMap() ? ' ' : 'closed'}`}
       >
         <div className="right-column-fixed">
@@ -143,7 +189,8 @@ class SearchLayout extends React.Component {
   renderDesktopFilterBar() {
     return (
       <div className="menu-bar filters" ref={this.header}>
-        <div style={{ maxWidth: '1282px', margin: 'auto', padding: '0 10px' }}>
+        {this.props.searchBox}
+        <div style={{ margin: 'auto' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
           <span className="menu-item">{this.props.gradeLevelButtons}</span>
           {this.props.distanceFilter ? (
@@ -152,18 +199,10 @@ class SearchLayout extends React.Component {
               <span>{this.props.distanceFilter}</span>
             </span>
           ) : null}
+          <span className="menu-item list-map-toggle">
+            {this.props.listMapTableSelect}
+          </span>
         </div>
-      </div>
-    );
-  }
-
-  renderDesktopSortBar() {
-    return (
-      <div className="menu-bar sort">
-        <span className="menu-item">
-          <span>Sort by: </span>
-          <span>{this.props.sortSelect}</span>
-        </span>
       </div>
     );
   }
@@ -173,15 +212,22 @@ class SearchLayout extends React.Component {
       <OpenableCloseable openByDefault>
         {(isOpen, { toggle, close }) => (
           <div>
+            {this.props.searchBox}
             <div className="menu-bar mobile-filters">
-              <Button
-                key="filter"
-                label="Filter"
-                active={isOpen}
-                onClick={toggle}
-                onKeyPress={toggle}
-              />
-              <span className="menu-item">{this.props.listMapDropdown}</span>
+              <span className="menu-item list-map-toggle">
+                {this.props.listMapTableSelect}
+              </span>
+              <span className="menu-item">
+                <span className="button-group">
+                  <Button
+                    key="filter"
+                    label="Filter"
+                    active={isOpen}
+                    onClick={toggle}
+                    onKeyPress={toggle}
+                  />
+                </span>
+              </span>
             </div>
             {isOpen ? (
               <div className="filter-panel">
@@ -191,12 +237,13 @@ class SearchLayout extends React.Component {
                   onKeyPress={close}
                   role="button"
                 />
-                <div className="menu-bar">
+                <div>
                   <span className="menu-item">
+                    <span className="label">{t('School type and level')}:</span>
                     {this.props.entityTypeDropdown}
                   </span>
                   <span className="menu-item">
-                    {this.props.gradeLevelCheckboxes}
+                    {this.props.gradeLevelButtons}
                   </span>
                   <span className="menu-item">
                     <span className="label">Sort by:</span>
@@ -214,16 +261,30 @@ class SearchLayout extends React.Component {
     );
   }
 
+  renderBreadcrumbsSummarySort() {
+    return (
+      !(this.shouldRenderMap() && this.props.size <= SM) && (
+        <div className="subheader menu-bar">
+          {this.props.breadcrumbs}
+          <div className="pagination-summary">{this.props.resultSummary}</div>
+          {this.props.size > SM && (
+            <div className="menu-item">
+              <span className="label">Sort by:</span>
+              {this.props.sortSelect}
+            </div>
+          )}
+        </div>
+      )
+    );
+  }
+
   render() {
     return (
       <div className="search-body">
         {this.props.size > SM
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
-        <div className="subheader">
-          <div>{this.props.resultSummary}</div>
-          {this.props.size > SM && <div>{this.props.sortSelect}</div>}
-        </div>
+        {this.renderBreadcrumbsSummarySort()}
         <div className="list-map-ad clearfix">
           <div
             className={`list-column ${
@@ -233,11 +294,11 @@ class SearchLayout extends React.Component {
             {this.props.schoolList}
           </div>
           {this.renderMapAndAdContainer(
-            <div className="map-container">
-              <div className="map-fit">{this.props.map}</div>
-            </div>,
+            <div className="map-fit">{this.props.map}</div>,
             this.props.tallAd
           )}
+          {this.shouldRenderTable() ? this.renderTableView() : null}
+          {this.props.pagination}
         </div>
       </div>
     );

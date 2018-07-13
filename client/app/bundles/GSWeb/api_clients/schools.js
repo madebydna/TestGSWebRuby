@@ -62,6 +62,7 @@ export function findNearLatLon(lat, lon, radius, options) {
 export function find({
   q,
   city,
+  district,
   state,
   levelCodes,
   entityTypes,
@@ -69,11 +70,13 @@ export function find({
   lon,
   distance,
   sort = 'rating',
+  extras = [],
   page = 1,
   limit = 25
 } = {}) {
   const data = {
     city,
+    district,
     state,
     q,
     sort,
@@ -96,6 +99,9 @@ export function find({
   }
   if (page && page > 1) {
     data.page = page;
+  }
+  if (extras) {
+    data.extras = extras.join(',');
   }
   return $.ajax({
     url: '/gsr/api/schools/',

@@ -1,8 +1,21 @@
 ---
 en:
   javascript:
+    rating_description_html: >
+      <p style="text-align: left;">GreatSchools’ Summary Rating provides an overall snapshot of school quality. Ratings follow a 1-10 scale:
+      <ul style="text-align: left;"><li>ratings between 1-3 signal “below average”</li>
+      <li>4-7 indicate “average”</li>
+      <li>ratings of 8-10 are “above average”</li></ul></p>
+    advertisement: Advertisement
     assigned: ASSIGNED
+    PreK: PreK
+    Elementary: Elementary
+    Middle: Middle
+    High: High
+    ListMap view: ListMap view
+    Table view: Table view
     Filter by: Filter by
+    School type and level: School type and level
     Public schools: Public schools
     Private schools: Private schools
     Public & private schools: Public & private schools

@@ -4,7 +4,6 @@ import createMarkerFactory, * as Markers from '../../components/map/markers';
 import DefaultMapMarker from './default_map_marker';
 import createInfoWindow from '../../components/map/info_window';
 
-
 export default class MapMarker extends DefaultMapMarker {
   static propTypes = {
     googleMaps: PropTypes.object,
@@ -15,7 +14,8 @@ export default class MapMarker extends DefaultMapMarker {
     lon: PropTypes.number.isRequired,
     rating: PropTypes.number,
     onClick: PropTypes.func,
-    selected: PropTypes.bool
+    selected: PropTypes.bool,
+    assigned: PropTypes.bool
   };
 
   constructor(props) {
@@ -35,12 +35,14 @@ export default class MapMarker extends DefaultMapMarker {
       this.props.lat,
       this.props.lon,
       this.props.highlighted,
-      this.props.svg
+      this.props.svg,
+      this.props.assigned
     );
     this.marker.setMap(this.props.map);
-    google.maps.event.addListener(this.marker, 'click', () =>
-      this.props.onClick(this.marker)
-    );
+    google.maps.event.addListener(this.marker, 'click', () => {
+      this.props.onClick(this.marker);
+      this.props.openInfoWindow(this.marker);
+    });
     if (this.props.selected) {
       this.props.openInfoWindow(this.marker);
     }
@@ -51,38 +53,43 @@ export default class MapMarker extends DefaultMapMarker {
       this.props.openInfoWindow(this.marker);
     }
   }
-
 }
 
 const createMarkersFromSchools = (
   schools,
   selectedSchool,
   map,
-  selectSchool
-) => {
-  const markers = schools.map(s => {
-    const props = {
-      title: s.name,
-      rating: s.rating,
-      lat: s.lat,
-      lon: s.lon,
-      highlighted: s.highlighted,
-      map
-    };
-    props.key = `s${s.state}${s.id}${s.highlighted}`;
-    props.createInfoWindow = () => createInfoWindow(s);
-    if (selectedSchool && s === selectedSchool) {
-      props.selected = true;
-    }
-
-    props.onClick = () => selectSchool(s.id, s.state);
-
-    if (s.schoolType === 'private') {
-      return <MapMarker type={Markers.PRIVATE_SCHOOL} {...props} />;
-    }
-    return <MapMarker type={Markers.PUBLIC_SCHOOL} {...props} />;
-  });
-  return markers;
-};
+  selectSchool,
+  openInfoWindow,
+  googleMaps
+) =>
+  schools.map(s => (
+    <MapMarker
+      {...{
+        title: s.name,
+        rating: s.rating,
+        lat: s.lat,
+        lon: s.lon,
+        svg: true,
+        highlighted: s.highlighted,
+        assigned: s.assigned,
+        googleMaps,
+        map,
+        key: `s${s.state}${s.id}${s.highlighted}`,
+        openInfoWindow: m => openInfoWindow(createInfoWindow(s), m),
+        onClick: m => {
+          if (selectSchool) {
+            selectSchool();
+          }
+          openInfoWindow(createInfoWindow(s), m);
+        },
+        selected: s === selectedSchool,
+        type:
+          s.schoolType === 'private'
+            ? Markers.PRIVATE_SCHOOL
+            : Markers.PUBLIC_SCHOOL
+      }}
+    />
+  ));
 
 export { createMarkersFromSchools };

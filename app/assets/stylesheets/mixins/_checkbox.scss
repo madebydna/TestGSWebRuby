@@ -2,8 +2,9 @@
   $height: $form-field-medium-height,
   $background-color: rgba(0, 0, 0, 0)
 ) {
-  $checkmark-color: #07c568;
+  $checkmark-color: white;
   display: none;
+  $checked-background-color: #2ba3dc;
 
   + label {
     cursor: pointer;
@@ -25,10 +26,12 @@
   }
   &:checked + label {
     &:before {
-      padding-left: 3px;
+      text-align: center;
       content: '\2713';
       font-size: $height * 0.4;
       color: $checkmark-color;
+      border: none;
+      background-color: $checked-background-color;
     }
   }
 }

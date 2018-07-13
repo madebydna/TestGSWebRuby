@@ -1,28 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { capitalize } from 'util/i18n';
-import QuestionMarkTooltip from 'react_components/school_profiles/question_mark_tooltip';
+import { capitalize, t } from 'util/i18n';
+import ModalTooltip from 'react_components/modal_tooltip';
+import {
+  getHomesForSaleHref,
+  studentsPhrase,
+  schoolTypePhrase
+} from 'util/school';
+
+const joinWithSeparator = (arrayOfElements, separator) =>
+  arrayOfElements
+    .filter(e => !!e)
+    .reduce((list, current) => [list, separator, current]);
 
 const renderRating = (rating, ratingScale) => {
   const className = `circle-rating--small circle-rating--${rating}`;
   const content = (
-    <span>
-      <b>The GreatSchools Summary Rating</b> appears at the top of a school’s
-      profile and provides an overall snapshot of school quality based on how
-      well a school prepares all its students for postsecondary success—be it
-      college or career. The Summary Rating calculation is based on five of the
-      school’s themed ratings (the Test Score Rating, Student or Academic
-      Progress Rating, College Readiness Rating, Equity Rating and Advanced
-      Courses Rating) and flags for discipline and attendance disparities at a
-      school. The ratings we display for each school can vary based on data
-      availability or relevance to a school level (for example, high schools
-      will have a College Readiness Rating, but elementary schools will not). We
-      will not produce a Summary Rating for a school if we lack sufficient data
-      to calculate one. For more about how this rating is calculated, see the
-      Summary Rating inputs & weights section below. For more information about
-      how we calculate this rating, see the GreatSchools Ratings methodology
-      report.
-    </span>
+    <div dangerouslySetInnerHTML={{ __html: t('rating_description_html') }} />
   );
   return (
     <React.Fragment>
@@ -31,42 +25,14 @@ const renderRating = (rating, ratingScale) => {
         <span className="rating-circle-small">/10</span>
       </div>
       <div className="scale">
-        <QuestionMarkTooltip content={content}>
+        <ModalTooltip content={content}>
           {ratingScale}
-        </QuestionMarkTooltip>
+          <span className="info-circle icon-info" />
+        </ModalTooltip>
       </div>
     </React.Fragment>
   );
 };
-
-const getHomesForSaleHref = (state, address) => {
-  if (state && address && address.zip) {
-    let homesForSaleHref = null;
-    homesForSaleHref = `https://www.zillow.com/${state}-${
-      address.zip.split('-')[0]
-    }?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap`;
-    return homesForSaleHref;
-  }
-  return null;
-};
-
-const studentsPhrase = enrollment => {
-  if (!enrollment) {
-    return null;
-  }
-  return (
-    <span>
-      <span className="open-sans_semibold">{enrollment}</span>
-      {enrollment > 1 ? ' students' : ' student'}
-    </span>
-  );
-};
-
-const schoolTypePhrase = (schoolType, gradeLevels) => (
-  <span className="open-sans_semibold">
-    {capitalize(schoolType)}, {gradeLevels}
-  </span>
-);
 
 const School = ({
   id,
@@ -80,6 +46,7 @@ const School = ({
   ratingScale,
   active,
   distance,
+  assigned,
   links
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
@@ -92,6 +59,7 @@ const School = ({
 
   return (
     <React.Fragment key={state + id}>
+      {assigned && <div className="assigned-text">{t('assigned')}</div>}
       <span>{rating && renderRating(rating, ratingScale)}</span>
       <span>
         <a href={links.profile} className="name" target="_blank">
@@ -100,30 +68,26 @@ const School = ({
         <br />
         {addressPhrase && <div className="address">{addressPhrase}</div>}
         <div>
-          {[
-            schoolTypePhrase(schoolType, gradeLevels),
-            studentsPhrase(enrollment)
-          ].reduce((accum, el) => {
-            if (accum.length > 0) {
-              return el === null
-                ? accum
-                : [
-                    ...accum,
-                  <span style={{ color: '#bbc0ca', padding: '0 5px' }}>
-                    {' '}
-                      |{' '}
-                  </span>,
-                    el
-                  ];
-            }
-            return el === null ? accum : [...accum, el];
-          }, [])}
+          {joinWithSeparator(
+            [
+              schoolTypePhrase(schoolType, gradeLevels),
+              studentsPhrase(enrollment)
+            ],
+            <span key="divider" className="divider">
+              |
+            </span>
+          )}
         </div>
         {distance && <div>Distance: {distance} miles</div>}
         {homesForSaleHref && (
-          <div className="icon active icon-house">
-            <a href={homesForSaleHref} target="_blank">
-              Homes for sale
+          <div>
+            <span key="homes-for-sale" className="icon icon-house" />
+            <a
+              href={homesForSaleHref}
+              target="_blank"
+              className="homes-for-sale-link"
+            >
+              &nbsp; Homes for sale
             </a>
           </div>
         )}

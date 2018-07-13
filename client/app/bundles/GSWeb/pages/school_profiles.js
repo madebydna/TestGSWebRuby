@@ -281,6 +281,7 @@ $(function() {
     }
   });
 
+
   // for historical ratings
   $body.on('click', '.js-historical-button', function () {
     var historical_data = $(this).closest('.js-historical-module').find('.js-historical-target');

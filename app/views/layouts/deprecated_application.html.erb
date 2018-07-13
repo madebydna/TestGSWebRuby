@@ -35,7 +35,7 @@
   <% end %>
   <%= yield :head %>
 
-  <% json_ld_hash.each do |hash| %>
+  <% json_ld_data.each do |hash| %>
       <script type="application/ld+json"><%= raw hash.to_json %></script>
   <% end %>
 

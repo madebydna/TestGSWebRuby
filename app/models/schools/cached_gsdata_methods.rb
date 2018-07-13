@@ -34,6 +34,10 @@ module CachedGsdataMethods
     )
   end
 
+  def ratio_of_students_to_full_time_teachers
+    gsdata['Ratio of students to full time teachers']&.first&.fetch('school_value', nil)&.to_f&.round
+  end
+
   def max_source_date_valid
     @_max_source_date_valid ||= begin
       all_gsdata_objs = gsdata.values.map do |array_of_hashes|

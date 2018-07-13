@@ -1,5 +1,6 @@
 import { castArray } from 'lodash';
 import { parse, stringify } from 'query-string';
+import { validViews as validSearchViews } from 'react_components/search/search_context';
 
 function currentQueryString() {
   return window.location.search;
@@ -94,8 +95,20 @@ export function getDistance() {
   return distance ? parseInt(distance, 10) : undefined;
 }
 
+export function getView() {
+  const { view } = parse(currentQueryString());
+  if (validSearchViews.indexOf(view) > -1) {
+    return view;
+  }
+  return undefined;
+}
+
+export function queryStringWithNewView(view) {
+  return getQueryStringWithUpdatedParams({ view });
+}
+
 export function queryStringWithNewDistance(distance) {
-  const page = parsePage(pageArg);
+  const page = parsePage(1);
   return getQueryStringWithUpdatedParams({
     distance,
     page

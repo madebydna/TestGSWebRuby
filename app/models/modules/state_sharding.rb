@@ -50,11 +50,25 @@ Example of sharding. This seems to work, but just using on_db to switch dbs seem
     def self.prevent_chaining_without_on_db?
       true
     end
+
+    after_find do |obj|
+      # Rails is currently running in "not threadsafe" mode, so the connection will still be
+      # set to whatever it was set to when the object was queried
+      obj.instance_variable_set(:@_source_shard, School.connection.current_database)
+    end
   end
 
   def shard
     state = self.state || 'ca'
     state.downcase.to_sym
+  end
+
+  def source_shard
+    @_source_shard
+  end
+
+  def shard_state
+    source_shard.present? ? source_shard[-2..-1] : state
   end
 
   def retrieved_from_shard

@@ -5,7 +5,7 @@
   }
   padding-right: 0;
   padding-left: 0;
-  .search-btn  {
+  .search-btn {
     height: 46px;
     vertical-align: middle;
     color: white;
@@ -15,7 +15,7 @@
     display: inline-block;
     margin-bottom: 0;
     font-weight: normal;
-    font-family: "opensans-bold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-family: 'opensans-bold', Arial, 'Helvetica Neue', Helvetica, sans-serif;
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
@@ -56,21 +56,21 @@
       font-size: 30px;
     }
     .mission-text {
-      font-family: "RobotoSlab-Bold", sans-serif;
+      font-family: 'RobotoSlab-Bold', sans-serif;
       font-weight: 900;
       font-size: 36px;
       color: $gray-darkest;
       padding: 30px 15px 0 15px;
       @media (max-width: $screen-sm-min) {
-        font-size: .75em;
+        font-size: 0.75em;
       }
     }
     .mission-text.subtext {
-      font-family: "RobotoSlab-Light", sans-serif;
+      font-family: 'RobotoSlab-Light', sans-serif;
       font-size: 36px;
       padding: 15px 0;
       @media (max-width: $screen-sm-min) {
-        font-size: .65em;
+        font-size: 0.65em;
       }
     }
     .our-work-module {
@@ -79,22 +79,24 @@
       .our-work-block {
         padding: 0 2%;
         p:nth-child(2) {
-          font-family: "RobotoSlab-Light", sans-serif;
-          font-size: .65em;
+          font-family: 'RobotoSlab-Light', sans-serif;
+          font-size: 0.65em;
           color: $gray-darker;
         }
         p:nth-child(3) {
           line-height: 1.8em;
-          font-size: .42em;
+          font-size: 0.42em;
           @media (max-width: $screen-sm-min) {
-            font-size: .47em;
+            font-size: 0.47em;
           }
         }
       }
       @media (max-width: $screen-sm-min) {
         margin-top: 10px;
       }
-      .row { text-align: center; }
+      .row {
+        text-align: center;
+      }
       .row:nth-child(3) {
         text-align: left;
       }
@@ -114,7 +116,7 @@
         p:first-child {
           text-transform: uppercase;
           font-size: 14px;
-          color: #8A90A0;
+          color: #8a90a0;
           font-family: opensans-regular;
         }
         p:nth-child(2) {
@@ -157,7 +159,6 @@
       }
     }
   }
-
 
   .learn-more {
     font-family: 'opensans-semibold', sans-serif;

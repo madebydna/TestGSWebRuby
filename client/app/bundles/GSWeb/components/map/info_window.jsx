@@ -1,14 +1,10 @@
 import React from 'react';
 import jsxToString from 'jsx-to-string';
+import { capitalize, t } from 'util/i18n';
+import { getHomesForSaleHref, studentsPhrase, schoolTypePhrase } from 'util/school'
 
 export default function createInfoWindow(entity) {
-
-  let homesForSaleHref;
-  if (entity.state && entity.address && entity.address.zip) {
-    homesForSaleHref = 'https://www.zillow.com/' + entity.state + '-' + entity.address.zip.split("-")[0] + '?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap';
-  } else {
-    homesForSaleHref = 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap';
-  }
+  const homesForSaleHref = getHomesForSaleHref(entity.state, entity.address);
 
   let schoolLevels = entity => {
     let levelNameMap = {p: 'Preschool', e: 'Elementary', m: 'Middle', h: 'High'};
@@ -23,9 +19,17 @@ export default function createInfoWindow(entity) {
   let ratingDiv = (entity) => {
     let visibleRating = entity.rating != 'NR' ? entity.rating : undefined;
     let ratingText = <span></span>;
+    let ratingScale = '';
 
     if(visibleRating) {
       ratingText = (<div>{visibleRating}<span>/10</span></div>);
+      if (entity.ratingScale) {
+        let scaleString = entity.ratingScale.split(' ').join('<br/>');
+        ratingScale = (
+            <div class="rating-scale">
+              {scaleString}
+            </div>);
+      }
     }
     let shape = 'circle';
     if(entity.type == 'school' && entity.schoolType == 'private') {
@@ -35,7 +39,10 @@ export default function createInfoWindow(entity) {
     }
     if (entity.type == 'school') {
       return (
-        <div class={'rating_' + entity.rating + ' ' + shape +'-rating--small rating'}>{ratingText}</div>
+          <div class="rating-container">
+            <div class={'rating_' + entity.rating + ' ' + shape + '-rating--small rating'}>{ratingText}</div>
+            { ratingScale }
+          </div>
       );
     } else {
       return (
@@ -44,28 +51,29 @@ export default function createInfoWindow(entity) {
     }
   };
 
+  let addressString = `${entity.address.street1}, ${entity.address.city}, ${entity.state} ${entity.address.zip}`;
   let contentString = (
     <div class="info-window">
+      {entity.assigned && <div class="assigned-text">{t('assigned')}</div>}
       <div class="clearfix">
         { jsxToString(ratingDiv(entity)).replace(/>\s+/, '>').replace(/\s+</, '<') }
         <div class="school-info">
           <a href={entity.links ? entity.links.profile : '#'} target="_blank">{entity.name}</a>
           {entity.type == 'school' && entity.address &&
             <div>
-              <div>{entity.address.street1}</div>
-              <div>{entity.address.city + ','} {entity.state} {entity.address.zip}</div>
+              <div class="address">{addressString}</div>
+              <div class="school-subinfo">{schoolTypePhrase(entity.schoolType, entity.gradeLevels)}
+                {entity.enrollment && <span><span class="divider"> | </span><span>{studentsPhrase(entity.enrollment)}</span></span>}
+              </div>
+              {homesForSaleHref && (
+              <div class="other-links">
+                <span class="icon-house">  </span>
+                <a href={homesForSaleHref} rel="nofollow" target="_blank"> Homes for sale</a>
+              </div>)}
             </div>
           }
           { entity.schoolCountsByLevelCode && <div><br/>Number of schools:<div>{levelMarkup(entity)}</div></div> }
         </div>
-      </div>
-      <hr/>
-      <div class="other-links">
-        <span class="icon-house">  </span>
-        <a href={homesForSaleHref} rel="nofollow" target="_blank">Homes for sale</a>
-        { entity.links && entity.links.profile &&
-          <a href={entity.links.profile} class="school-details" target="_blank">View school details</a>
-        }
       </div>
     </div>
   );

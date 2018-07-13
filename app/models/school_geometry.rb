@@ -27,6 +27,10 @@ class SchoolGeometry < ActiveRecord::Base
 
   def self.schools_having_point_in_attendance_zone(lat, lon, level_code)
     geometries = find_by_point_and_level(lat, lon, level_code)
+    school_level_filter_by_attendance_zone(geometries)
+  end
+
+  def self.school_level_filter_by_attendance_zone(geometries)
     geometries_valid = geometries.present?
     if geometries && geometries.size > 1 && geometries[0].area == geometries[1].area
       # A geometry is not valid if it covers the same area as the next one
@@ -34,6 +38,19 @@ class SchoolGeometry < ActiveRecord::Base
       geometries_valid = false
     end
     geometries_valid ? [geometries.first.school].compact : []
+  end
+
+  def self.all_valid_schools_having_point_in_attendance_zone(lat, lon, levels=nil)
+    all_levels = levels || %w(o p m h)
+    geometries = find_by_point_and_level(lat, lon, all_levels)
+    if geometries.present?
+      geometries.
+        group_by { |obj| obj['ed_level'] }.
+        values.
+        flat_map { |geos_for_level| school_level_filter_by_attendance_zone(geos_for_level) }
+    else
+      []
+    end
   end
 
 end

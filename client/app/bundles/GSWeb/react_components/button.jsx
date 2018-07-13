@@ -9,7 +9,7 @@ const Button = ({ label, active, ...other } = {}) => (
 
 Button.propTypes = {
   active: PropTypes.bool,
-  label: PropTypes.string.isRequired
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired
 };
 
 Button.defaultProps = {
