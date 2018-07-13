@@ -5,7 +5,9 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
 
   DATA_TYPE_TAGS = %w(state_test)
 
-  def data_type_tags
+  CACHE_EXCEPTIONS = :data_type, :percentage, :narrative, :label, :methodology
+
+      def data_type_tags
     self.class::DATA_TYPE_TAGS
   end
 
@@ -20,9 +22,13 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     hashes.each_with_object(school_cache_hash) do |result_hash, cache_hash|
       result_hash = result_hash.to_hash
       if valid_result_hash?(result_hash)
-        cache_hash[result_hash[:data_type]] << result_hash.except(:data_type, :percentage, :narrative, :label, :methodology)
+        cache_hash[result_hash[:data_type]] << result_hash.except(*cache_exceptions)
       end
     end
+  end
+
+  def cache_exceptions
+    %i(data_type percentage narrative label methodology)
   end
 
   def school_results

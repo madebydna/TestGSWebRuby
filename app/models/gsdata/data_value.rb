@@ -82,13 +82,14 @@ class DataValue < ActiveRecord::Base
           .having("breakdown_count < 2 OR breakdown_names like '%All students except 504 category%'")
   end
 
-  def self.find_by_school_and_data_types_with_proficiency_band_name(school, data_types)
+  def self.find_by_school_and_data_types_with_proficiency_band_name(school, data_types, tags, breakdown_tag_names = [], academic_tag_names = [] )
     school_values_with_academics_with_proficiency_band_names.
         from(
             DataValue.school_and_data_types(school.state,
                                             school.id,
                                             data_types), :data_values)
         .with_data_types
+        .with_data_type_tags(tags)
         .with_sources
         .with_academics
         .with_academic_tags
@@ -231,6 +232,41 @@ class DataValue < ActiveRecord::Base
           .with_academic_tags
           .with_sources
           .group('data_values.id')
+  end
+
+  def self.find_by_state_and_data_types_with_proficiency_band_name(state, data_types)
+    state_and_district_values_with_proficiency_band.
+        from(
+            DataValue.state_and_data_types(
+                state,
+                data_types
+            ), :data_values)
+        .with_data_types
+        .with_breakdowns
+        .with_breakdown_tags
+        .with_academics
+        .with_academic_tags
+        .with_sources
+        .with_proficiency_bands
+        .group('data_values.id')
+  end
+
+  def self.find_by_district_and_data_types_with_proficiency_band_name(state, district_id, data_types)
+    state_and_district_values_with_proficiency_band.
+        from(
+            DataValue.state_and_district_data_types(
+                state,
+                district_id,
+                data_types
+            ), :data_values)
+        .with_data_types
+        .with_breakdowns
+        .with_breakdown_tags
+        .with_academics
+        .with_academic_tags
+        .with_sources
+        .with_proficiency_bands
+        .group('data_values.id')
   end
 
   def self.state_and_district_values

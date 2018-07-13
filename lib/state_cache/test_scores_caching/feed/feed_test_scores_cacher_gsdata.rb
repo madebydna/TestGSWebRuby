@@ -3,13 +3,14 @@
 class TestScoresCaching::Feed::FeedTestScoresCacherGsdata < TestScoresCaching::TestScoresCacherGsdata
   CACHE_KEY = 'feed_test_scores_gsdata'
 
+
   def query_results
     @query_results ||=
       begin
-       DataValue
-        .find_by_school_and_data_types_with_proficiency_band_name(school, data_type_ids, data_type_tags, 'feeds')
-        .with_configuration('feeds')
-        .where(proficiency_band_id: 1)
+        DataValue
+          .find_by_school_and_data_types_with_proficiency_band_name(school, data_type_ids, data_type_tags, 'feeds')
+          .with_configuration('feeds')
+          .where(proficiency_band_id: 1)
       end
   end
 
@@ -52,7 +53,7 @@ class TestScoresCaching::Feed::FeedTestScoresCacherGsdata < TestScoresCaching::T
 
   def valid_result_hash?(result_hash)
     result_hash = result_hash.reject { |_,v| v.blank? }
-    required_keys = %i(school_value source_date_valid data_type)
+    required_keys = %i(state_value source_date_valid data_type)
     missing_keys = required_keys - result_hash.keys
     if missing_keys.count.positive?
       GSLogger.error(
@@ -60,7 +61,7 @@ class TestScoresCaching::Feed::FeedTestScoresCacherGsdata < TestScoresCaching::T
           nil,
           message: "#{self.class.name} cache missing required keys",
 
-          vars: { school: school.id,
+          vars: {
                   state: school.state,
                   data_type: result_hash[:data_type],
                   breakdowns: result_hash[:breakdowns],
@@ -71,7 +72,7 @@ class TestScoresCaching::Feed::FeedTestScoresCacherGsdata < TestScoresCaching::T
   end
 
   def cache_exceptions
-    %i(data_type percentage narrative label methodology description source_year source_name breakdown_tags flags district_value state_value state_cohort_count)
+    %i(data_type percentage narrative label methodology description source_year source_name breakdown_tags flags district_value school_value school_cohort_count)
   end
 
 end
