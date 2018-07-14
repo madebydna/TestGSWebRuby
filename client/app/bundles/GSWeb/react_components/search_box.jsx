@@ -9,6 +9,7 @@ import { createPortal } from 'react-dom';
 import { reduce } from 'lodash';
 import { addQueryParamToUrl, copyParam } from 'util/uri';
 import { SM, validSizes, viewport } from 'util/viewport';
+import { geocode } from 'components/geocoding';
 
 const options = [
   {
@@ -26,6 +27,25 @@ const keyMap = {
   ArrowDown: 1
 };
 
+const newSearchResultsPageUrl = ({ q, lat, lon }) => {
+  let newUrl = addQueryParamToUrl(
+    'q',
+    q,
+    `/search/search.page${window.location.search}`
+  );
+  if (lat && lon) {
+    newUrl = addQueryParamToUrl(
+      'distance',
+      5,
+      addQueryParamToUrl('lon', lon, addQueryParamToUrl('lat', lat, newUrl))
+    );
+  }
+  return copyParam('newsearch', window.location.href, newUrl);
+};
+
+const contentSearchResultsPageUrl = ({ q }) =>
+  `/gk/?s=${window.encodeURIComponent(q)}`;
+
 export default class SearchBox extends React.Component {
   static propTypes = {
     autoSuggestResults: PropTypes.object.isRequired,
@@ -42,9 +62,12 @@ export default class SearchBox extends React.Component {
       searchTerm: '',
       type: 'schools',
       selectedListItem: -1,
-      navigateToSelectedListItem: false
+      navigateToSelectedListItem: false,
+      lat: null,
+      lon: null
     };
     this.submit = this.submit.bind(this);
+    this.geocodeAndSubmit = this.geocodeAndSubmit.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -78,25 +101,46 @@ export default class SearchBox extends React.Component {
   onSelectItem(close) {
     return itemValue => {
       close();
-      this.setState({ searchTerm: itemValue }, () => {
-        this.submit();
-      });
+      this.setState({ searchTerm: itemValue }, this.submit);
     };
+  }
+
+  geocodeAndSubmit() {
+    if (this.state.type === 'parenting') {
+      window.location.href = contentSearchResultsPageUrl({
+        q: this.state.searchTerm
+      });
+    } else if (this.state.type === 'schools') {
+      geocode(this.state.searchTerm)
+        .then(json => json[0])
+        .done(({ lat, lon } = {}) => {
+          if (lat && lon) {
+            this.setState({ lat, lon }, () => {
+              window.location.href = newSearchResultsPageUrl({
+                q: this.state.searchTerm,
+                lat: this.state.lat,
+                lon: this.state.lon
+              });
+            });
+          }
+        })
+        .fail(() => {
+          window.location.href = newSearchResultsPageUrl({
+            q: this.state.searchTerm
+          });
+        });
+    }
   }
 
   submit() {
     if (this.state.type === 'parenting') {
-      window.location.href = `/gk/?s=${window.encodeURIComponent(
-        this.state.searchTerm
-      )}`;
+      window.location.href = contentSearchResultsPageUrl({
+        q: this.state.searchTerm
+      });
     } else if (this.state.type === 'schools') {
-      let newUrl = addQueryParamToUrl(
-        'q',
-        this.state.searchTerm,
-        `/search/search.page${window.location.search}`
-      );
-      newUrl = copyParam('newsearch', window.location.href, newUrl);
-      window.location.href = newUrl;
+      window.location.href = newSearchResultsPageUrl({
+        q: this.state.searchTerm
+      });
     }
   }
 
@@ -143,7 +187,7 @@ export default class SearchBox extends React.Component {
       if (this.state.selectedListItem > -1) {
         this.setState({ navigateToSelectedListItem: true });
       } else {
-        this.submit();
+        this.geocodeAndSubmit();
       }
     } else if (Object.keys(keyMap).includes(e.key)) {
       this.manageSelectedListItem(e);
@@ -193,7 +237,7 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
-            <div className="search_bar_button" onClick={this.submit}>
+            <div className="search_bar_button" onClick={this.geocodeAndSubmit}>
               <button type="submit" className="search_form_button">
                 <span className="search_icon_image_white" />
               </button>
@@ -236,7 +280,7 @@ export default class SearchBox extends React.Component {
               <input
                 onKeyUp={e => {
                   if (e.key === 'Enter') {
-                    this.submit();
+                    this.geocodeAndSubmit();
                   } else if (e.key === 'ArrowDown') {
                     this.makeListItemsSelectable();
                   }
