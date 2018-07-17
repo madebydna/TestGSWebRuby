@@ -72,7 +72,7 @@ class SearchResultsList extends React.Component {
       this.changeUrlIfSelected(listItem, idx);
       return (
         <li
-          onClick={listItem.url ? () => {} : () => onSelect(listItem.value)}
+          onClick={listItem.url ? () => {} : () => onSelect(listItem)}
           key={listItem.title + listItem.url}
           className={`search-results-list-item${
             this.counter === this.state.selectedListItem ? ' selected' : ''
@@ -103,7 +103,7 @@ class SearchResultsList extends React.Component {
   renderList(listData) {
     const { listGroups } = this.props;
     return Object.keys(listGroups)
-      .filter(k => listGroups[k].length > 0)
+      .filter(k => listGroups[k] && listGroups[k].length > 0)
       .map(
         group => (
           <React.Fragment>

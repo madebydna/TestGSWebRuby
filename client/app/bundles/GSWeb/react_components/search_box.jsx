@@ -98,10 +98,14 @@ export default class SearchBox extends React.Component {
     }
   }
 
-  onSelectItem(close) {
-    return itemValue => {
+  selectAndSubmit(close) {
+    return item => {
       close();
-      this.setState({ searchTerm: itemValue }, this.submit);
+      if (item.address) {
+        this.setState({ searchTerm: item.address }, this.geocodeAndSubmit);
+      } else {
+        this.setState({ searchTerm: item.value }, this.submit);
+      }
     };
   }
 
@@ -230,7 +234,7 @@ export default class SearchBox extends React.Component {
                       <SearchResultsList
                         listGroups={this.props.autoSuggestResults}
                         searchTerm={this.state.searchTerm}
-                        onSelect={this.onSelectItem(close)}
+                        onSelect={this.selectAndSubmit(close)}
                         listItemsSelectable={this.state.listItemsSelectable}
                       />
                     </div>
@@ -300,7 +304,7 @@ export default class SearchBox extends React.Component {
                     <SearchResultsList
                       listGroups={this.props.autoSuggestResults}
                       searchTerm={this.state.searchTerm}
-                      onSelect={this.onSelectItem(close)}
+                      onSelect={this.selectAndSubmit(close)}
                       selectedListItem={this.state.selectedListItem}
                       navigateToSelectedListItem={
                         this.state.navigateToSelectedListItem

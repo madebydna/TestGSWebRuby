@@ -46,6 +46,8 @@ module Search
         'asc'
       elsif name == 'name'
         'asc'
+      elsif name == 'rating'
+        'desc'
       end
     end
 

@@ -12,6 +12,11 @@ import SortContext from './sort_context';
 import DistanceContext from './distance_context';
 import { analyticsEvent } from 'util/page_analytics';
 import suggest from 'api_clients/autosuggest';
+import {
+  init as initGoolePlacesApi,
+  getAddressPredictions
+} from 'api_clients/google_places';
+import { init as initGoogleMaps } from 'components/map/google_maps';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -90,10 +95,11 @@ class SearchProvider extends React.Component {
       loadingSchools: false,
       size: viewportSize(),
       autoSuggestResults: {
+        Addresses: [],
+        Zipcodes: [],
         Cities: [],
         Districts: [],
-        Schools: [],
-        Zipcodes: []
+        Schools: []
       }
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
@@ -149,8 +155,23 @@ class SearchProvider extends React.Component {
   */
   autoSuggestQuery(q) {
     if (q.length >= 3) {
+      if (q.match(/^[0-9]{3}.*/)) {
+        initGoogleMaps(() => {
+          getAddressPredictions(q, addresses => {
+            const newResults = { ...this.state.autoSuggestResults };
+            newResults.Addresses = addresses.map(address => ({
+              title: address,
+              value: address,
+              address
+            }));
+            this.setState({ autoSuggestResults: newResults });
+          });
+        });
+      }
+
       suggest(q).done(results => {
         const adaptedResults = {
+          Addresses: [],
           Zipcodes: [],
           Cities: [],
           Districts: [],
@@ -184,6 +205,7 @@ class SearchProvider extends React.Component {
             });
           });
         });
+        adaptedResults.Addresses = this.state.autoSuggestResults.Addresses;
         this.setState({ autoSuggestResults: adaptedResults });
       });
     } else {
@@ -332,7 +354,9 @@ class SearchProvider extends React.Component {
             >
               <SortContext.Provider
                 value={{
-                  sort: this.props.sort,
+                  sort:
+                    this.props.sort ||
+                    (this.shouldIncludeDistance() ? 'distance' : 'rating'),
                   onSortChanged: compose(
                     this.scrollToTop,
                     this.props.updateSort,

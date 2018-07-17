@@ -69,7 +69,7 @@ export function find({
   lat,
   lon,
   distance,
-  sort = 'rating',
+  sort,
   extras = [],
   page = 1,
   limit = 25

@@ -29,7 +29,7 @@ const SortSelect = ({ includeDistance }) => {
 
   return (
     <SortContext.Consumer>
-      {({ sort = 'rating', onSortChanged }) => (
+      {({ sort, onSortChanged }) => (
         <Select
           objects={options}
           labelFunc={d => d.label}
