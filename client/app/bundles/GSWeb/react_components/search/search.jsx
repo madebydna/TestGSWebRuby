@@ -52,8 +52,7 @@ class Search extends React.Component {
     ),
     autoSuggestQuery: PropTypes.func,
     view: PropTypes.string.isRequired,
-    updateView: PropTypes.func.isRequired,
-    autoSuggestResults: PropTypes.object.isRequired
+    updateView: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -132,13 +131,7 @@ class Search extends React.Component {
                 isLoading={this.props.loadingSchools}
               />
             }
-            searchBox={
-              <SearchBox
-                searchFunction={this.props.autoSuggestQuery}
-                autoSuggestResults={this.props.autoSuggestResults}
-                size={this.props.size}
-              />
-            }
+            searchBox={<SearchBox size={this.props.size} />}
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
           />
         )}

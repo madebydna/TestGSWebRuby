@@ -9,6 +9,9 @@
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
   <%= javascript_include_tag "deprecated_application_w_google_charts", "data-turbolinks-track" => true %>
+  <%# webpack_javascript_include_tag("commons-blocking", "data-turbolinks-track" => true) %>
+  <%# webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%# webpack_javascript_include_tag("search-box", "data-turbolinks-track" => true, defer: true) %>
 
   <%= csrf_meta_tags %>
     <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
@@ -82,6 +85,7 @@
     }
   });
 </script>
+<%= react_component('SearchBoxWrapper') %>
 <%= yield :javascript_includes %>
 </body>
 </html>

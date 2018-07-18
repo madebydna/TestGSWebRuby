@@ -6,10 +6,16 @@ import SearchResultsList from './search_results_list';
 import Selectable from 'react_components/selectable';
 import Dropdown from 'react_components/search/dropdown';
 import { createPortal } from 'react-dom';
-import { reduce } from 'lodash';
+import { reduce, debounce } from 'lodash';
 import { addQueryParamToUrl, copyParam } from 'util/uri';
 import { SM, validSizes, viewport } from 'util/viewport';
 import { geocode } from 'components/geocoding';
+import suggest from 'api_clients/autosuggest';
+import {
+  init as initGoolePlacesApi,
+  getAddressPredictions
+} from 'api_clients/google_places';
+import { init as initGoogleMaps } from 'components/map/google_maps';
 
 const options = [
   {
@@ -48,9 +54,10 @@ const contentSearchResultsPageUrl = ({ q }) =>
 
 export default class SearchBox extends React.Component {
   static propTypes = {
-    autoSuggestResults: PropTypes.object.isRequired,
-    searchFunction: PropTypes.func.isRequired,
-    size: PropTypes.oneOf(validSizes).isRequired
+    size: PropTypes.oneOf(validSizes)
+  };
+  static defaultProps = {
+    size: 2
   };
 
   constructor(props) {
@@ -64,14 +71,22 @@ export default class SearchBox extends React.Component {
       selectedListItem: -1,
       navigateToSelectedListItem: false,
       lat: null,
-      lon: null
+      lon: null,
+      autoSuggestResults: {
+        Addresses: [],
+        Zipcodes: [],
+        Cities: [],
+        Districts: [],
+        Schools: []
+      }
     };
     this.submit = this.submit.bind(this);
     this.geocodeAndSubmit = this.geocodeAndSubmit.bind(this);
+    this.autoSuggestQuery = debounce(this.autoSuggestQuery.bind(this), 200);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.autoSuggestResults !== prevProps.autoSuggestResults) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.autoSuggestResults !== prevState.autoSuggestResults) {
       this.setState({
         autoSuggestResultsCount: this.autoSuggestResultsCount()
       });
@@ -84,8 +99,8 @@ export default class SearchBox extends React.Component {
 
   autoSuggestResultsCount() {
     return reduce(
-      Object.keys(this.props.autoSuggestResults || {}),
-      (sum, k) => sum + (this.props.autoSuggestResults[k] || []).length,
+      Object.keys(this.state.autoSuggestResults || {}),
+      (sum, k) => sum + (this.state.autoSuggestResults[k] || []).length,
       0
     );
   }
@@ -152,7 +167,7 @@ export default class SearchBox extends React.Component {
     return e => {
       this.setState({ searchTerm: e.target.value }, () => {
         if (this.state.type === 'schools') {
-          this.props.searchFunction(this.state.searchTerm);
+          this.autoSuggestQuery(this.state.searchTerm);
           if (this.state.searchTerm === '') {
             close();
           } else {
@@ -163,6 +178,84 @@ export default class SearchBox extends React.Component {
         }
       });
     };
+  }
+
+  /*
+  { city: [
+      {"id": null,
+      "city": "New Boston",
+      "state": "nh",
+      "type": "city",
+      "url": '/new-mexico/alamogordo//829-Alamogordo-SDA-School}
+    ],
+    school: [
+      {"id": null,
+      "school": "Alameda High School",
+      "city": "New Boston",
+      "state": "nh",
+      "type": "school"}
+    ],
+    zip....includes an additional 'value' key.
+  },
+  */
+  autoSuggestQuery(q) {
+    if (q.length >= 3) {
+      if (q.match(/^[0-9]{3}.*/)) {
+        initGoogleMaps(() => {
+          getAddressPredictions(q, addresses => {
+            const newResults = { ...this.state.autoSuggestResults };
+            newResults.Addresses = addresses.map(address => ({
+              title: address,
+              value: address,
+              address
+            }));
+            this.setState({ autoSuggestResults: newResults });
+          });
+        });
+      }
+
+      suggest(q).done(results => {
+        const adaptedResults = {
+          Addresses: [],
+          Zipcodes: [],
+          Cities: [],
+          Districts: [],
+          Schools: []
+        };
+        Object.keys(results).forEach(category => {
+          (results[category] || []).forEach(result => {
+            const { school, district = '', city, state, url, zip } = result;
+
+            let title = null;
+            let additionalInfo = null;
+            let value = null;
+            if (category === 'Schools') {
+              title = school;
+              additionalInfo = `${city}, ${state} ${zip || ''}`;
+            } else if (category === 'Cities') {
+              title = `Schools in ${city}, ${state}`;
+            } else if (category === 'Districts') {
+              title = `Schools in ${district}`;
+              additionalInfo = `${city}, ${state}`;
+            } else if (category === 'Zipcodes') {
+              title = `Schools in ${zip}`;
+              value = zip;
+            }
+
+            adaptedResults[category].push({
+              title,
+              additionalInfo,
+              url,
+              value
+            });
+          });
+        });
+        adaptedResults.Addresses = this.state.autoSuggestResults.Addresses;
+        this.setState({ autoSuggestResults: adaptedResults });
+      });
+    } else {
+      this.setState({ autoSuggestResults: {} });
+    }
   }
 
   resetSelectedListItem() {
@@ -232,7 +325,7 @@ export default class SearchBox extends React.Component {
                   this.shouldRenderResults() && (
                     <div className="search-results-list">
                       <SearchResultsList
-                        listGroups={this.props.autoSuggestResults}
+                        listGroups={this.state.autoSuggestResults}
                         searchTerm={this.state.searchTerm}
                         onSelect={this.selectAndSubmit(close)}
                         listItemsSelectable={this.state.listItemsSelectable}
@@ -302,7 +395,7 @@ export default class SearchBox extends React.Component {
                     style={{ maxHeight: viewport().height - 160 }}
                   >
                     <SearchResultsList
-                      listGroups={this.props.autoSuggestResults}
+                      listGroups={this.state.autoSuggestResults}
                       searchTerm={this.state.searchTerm}
                       onSelect={this.selectAndSubmit(close)}
                       selectedListItem={this.state.selectedListItem}
