@@ -6,7 +6,7 @@ import SortContext from './sort_context';
 const defaultOptions = [
   {
     key: 'rating',
-    label: 'Summary rating'
+    label: 'GreatSchools rating'
   },
   {
     key: 'name',

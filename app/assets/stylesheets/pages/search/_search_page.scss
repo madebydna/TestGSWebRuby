@@ -215,6 +215,12 @@ body {
       padding: 10px 15px;
     }
 
+    .list-map-toggle {
+      @include media-breakpoint-up(lg) {
+        float: right;
+      }
+    }
+
     .checkbox-group {
       input[type='checkbox'] {
         @include checkbox(28px, white);
@@ -248,8 +254,9 @@ body {
       }
 
       button {
-        padding: 0px 13px;
+        padding: 0px 12px;
         max-width: 290px;
+        font-size: $font-size-s1;
       }
 
       .icon-close {
