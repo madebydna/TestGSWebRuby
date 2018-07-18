@@ -123,8 +123,11 @@ class Search extends React.Component {
             }
             map={
               <Map
-                lat={this.props.lat || this.props.defaultLat}
-                lon={this.props.lon || this.props.defaultLon}
+                locationMarker={
+                  this.props.lat && this.props.lon
+                    ? { lat: this.props.lat, lon: this.props.lon }
+                    : null
+                }
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
               />

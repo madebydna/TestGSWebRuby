@@ -5,8 +5,9 @@ import { createMarkersFromSchools } from '../../components/map/map_marker';
 import School from './school';
 import GoogleMapsInitializer from '../../components/map/google_maps_initializer';
 import LoadingOverlay from './loading_overlay';
+import DefaultMapMarker from 'components/map/default_map_marker';
 
-const SearchMap = ({ schools, isLoading, ...other }) => (
+const SearchMap = ({ schools, isLoading, locationMarker, ...other }) => (
   <React.Fragment>
     {
       /* would prefer to just not render overlay if not showing it,
@@ -25,7 +26,7 @@ const SearchMap = ({ schools, isLoading, ...other }) => (
           isInitialized && (
             <Map googleMaps={googleMaps} changeLocation={() => {}} {...other}>
               {({ googleMaps, map, openInfoWindow, fitBounds }) => {
-                const markers = createMarkersFromSchools(
+                let markers = createMarkersFromSchools(
                   schools,
                   {},
                   map,
@@ -33,6 +34,21 @@ const SearchMap = ({ schools, isLoading, ...other }) => (
                   openInfoWindow,
                   googleMaps
                 );
+                if (locationMarker) {
+                  markers = markers.concat([
+                    <DefaultMapMarker
+                      {...{
+                        ...locationMarker,
+                        svg: false,
+                        key: `locationMarkerl${locationMarker.lat}l${
+                          locationMarker.lon
+                        }`,
+                        map,
+                        googleMaps
+                      }}
+                    />
+                  ]);
+                }
                 if (fitBounds) {
                   fitBounds(markers);
                 }
@@ -48,11 +64,13 @@ const SearchMap = ({ schools, isLoading, ...other }) => (
 
 SearchMap.propTypes = {
   schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  locationMarker: PropTypes.object
 };
 
 SearchMap.defaultProps = {
-  isLoading: false
+  isLoading: false,
+  locationMarker: null
 };
 
 export default SearchMap;
