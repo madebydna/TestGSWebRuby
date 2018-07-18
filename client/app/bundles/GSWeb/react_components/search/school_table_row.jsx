@@ -52,6 +52,7 @@ const SchoolTableRow = ({
   studentsPerTeacher,
   numReviews,
   parentRating,
+  districtName,
   links
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
@@ -96,7 +97,7 @@ const SchoolTableRow = ({
         {numReviewsLink(numReviews, links.reviews)}
         {fiveStars(parentRating)}
       </td>
-      <td>District url</td>
+      <td>{districtName}</td>
     </tr>
   );
 };
@@ -113,6 +114,7 @@ SchoolTableRow.propTypes = {
   studentsPerTeacher: PropTypes.number,
   numReviews: PropTypes.number,
   parentRating: PropTypes.number,
+  districtName: PropTypes.string,
   links: PropTypes.shape({
     profile: PropTypes.string.isRequired
   }).isRequired
@@ -125,7 +127,8 @@ SchoolTableRow.defaultProps = {
   active: false,
   studentsPerTeacher: null,
   numReviews: null,
-  parentRating: null
+  parentRating: null,
+  districtName: null
 };
 
 export default SchoolTableRow;
