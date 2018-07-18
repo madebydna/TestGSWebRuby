@@ -155,7 +155,7 @@ class SearchProvider extends React.Component {
   */
   autoSuggestQuery(q) {
     if (q.length >= 3) {
-      if (q.match(/^[0-9]{3}.*/)) {
+      if (q.match(/^[0-9].*/)) {
         initGoogleMaps(() => {
           getAddressPredictions(q, addresses => {
             const newResults = { ...this.state.autoSuggestResults };
