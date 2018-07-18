@@ -26,7 +26,7 @@ const SearchMap = ({ schools, isLoading, locationMarker, ...other }) => (
           isInitialized && (
             <Map googleMaps={googleMaps} changeLocation={() => {}} {...other}>
               {({ googleMaps, map, openInfoWindow, fitBounds }) => {
-                let markers = createMarkersFromSchools(
+                const markers = createMarkersFromSchools(
                   schools,
                   {},
                   map,
@@ -35,7 +35,7 @@ const SearchMap = ({ schools, isLoading, locationMarker, ...other }) => (
                   googleMaps
                 );
                 if (locationMarker) {
-                  markers = markers.concat([
+                  markers.push(
                     <DefaultMapMarker
                       {...{
                         ...locationMarker,
@@ -47,7 +47,7 @@ const SearchMap = ({ schools, isLoading, locationMarker, ...other }) => (
                         googleMaps
                       }}
                     />
-                  ]);
+                  );
                 }
                 if (fitBounds) {
                   fitBounds(markers);
