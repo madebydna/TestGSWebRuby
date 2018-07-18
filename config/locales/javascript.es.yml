@@ -6,6 +6,9 @@ es:
       <ul style="text-align: left;"><li>calificaciones de 1-3 señalan "por debajo del promedio”</li>
       <li>calificaciones de 4-7 indican “al promedio”</li>
       <li>calificaciones de 8-10 indican “por encima del promedio”</li></ul></p>
+    no_rating_description_html: >
+      <p style="text-align: left;">La Calificación General de GreatSchools es una reflexión de múltiples medidas sobre la calidad de una escuela.
+      <br/>Para algunas escuelas no tenemos suficientes datos de las agencias estatales o nacionales de educación para proporcionar una calificación.</p>
     PreK: Preescolar
     Elementary: Primaria
     Middle: Intermedia

@@ -6,6 +6,10 @@ en:
       <ul style="text-align: left;"><li>ratings between 1-3 signal “below average”</li>
       <li>4-7 indicate “average”</li>
       <li>ratings of 8-10 are “above average”</li></ul></p>
+    no_rating_description_html: >
+      <p style="text-align: left;">
+      GreatSchools’ Summary Rating provides an overall snapshot of school quality. 
+      <br/>For some schools, we do not have enough data from state or national education agencies to provide a rating.</p>
     advertisement: Advertisement
     assigned: ASSIGNED
     PreK: PreK
