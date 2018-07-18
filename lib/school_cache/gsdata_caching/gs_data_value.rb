@@ -453,6 +453,7 @@ class GsdataCaching::GsDataValue
     :academic_types,
     :grade,
     :proficiency_band_id,
+    :proficiency_band_name,
     :cohort_count,
     :school_value,
     :state_value,
@@ -552,7 +553,8 @@ class GsdataCaching::GsDataValue
       percentage: percentage,
       narrative: narrative,
       label: label,
-      flags: flags
+      flags: flags,
+      proficiency_band_name: proficiency_band_name
     }.tap do |hash|
       hash[:narrative] = narrative if narrative
     end
