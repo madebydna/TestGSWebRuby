@@ -3,6 +3,7 @@ class DistrictCacher
   attr_accessor :district
 
   # Known data types:
+  # :feed_test_scores_gsdata
   # :feed_test_scores
   # :ratings
   # :district_schools_summary
@@ -36,6 +37,7 @@ class DistrictCacher
 
   def self.cacher_for(key)
     {
+        feed_test_scores_gsdata: TestScoresCaching::Feed::FeedDistrictTestScoresCacherGsdata,
         test_scores_gsdata: TestScoresCaching::DistrictTestScoresCacherGsdata,
         feed_test_scores: TestScoresCaching::DistrictTestScoresCacher,
         ratings: DistrictRatingsCacher,
@@ -62,6 +64,7 @@ class DistrictCacher
 
   def self.registered_cachers
     @registered_cachers ||= [
+        TestScoresCaching::Feed::FeedDistrictTestScoresCacherGsdata,
         TestScoresCaching::DistrictTestScoresCacherGsdata,
         TestScoresCaching::DistrictTestScoresCacher,
         DistrictRatingsCacher,

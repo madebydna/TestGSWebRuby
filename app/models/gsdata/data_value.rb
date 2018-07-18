@@ -234,36 +234,29 @@ class DataValue < ActiveRecord::Base
           .group('data_values.id')
   end
 
-  def self.find_by_state_and_data_types_with_proficiency_band_name(state, data_types)
+  def self.find_by_state_and_data_type_tags_with_proficiency_band_name(state, data_type_tags)
     state_and_district_values_with_proficiency_band.
-        from(
-            DataValue.state_and_data_types(
-                state,
-                data_types
-            ), :data_values)
+        from(DataValue.state(state), :data_values)
         .with_data_types
+        .with_data_type_tags(data_type_tags)
         .with_breakdowns
-        .with_breakdown_tags
         .with_academics
-        .with_academic_tags
         .with_sources
         .with_proficiency_bands
         .group('data_values.id')
   end
 
-  def self.find_by_district_and_data_types_with_proficiency_band_name(state, district_id, data_types)
+  def self.find_by_district_and_data_type_tags_with_proficiency_band_name(state, district_id, data_type_tags)
     state_and_district_values_with_proficiency_band.
         from(
-            DataValue.state_and_district_data_types(
+            DataValue.state_and_district(
                 state,
-                district_id,
-                data_types
+                district_id
             ), :data_values)
         .with_data_types
+        .with_data_type_tags(data_type_tags)
         .with_breakdowns
-        .with_breakdown_tags
         .with_academics
-        .with_academic_tags
         .with_sources
         .with_proficiency_bands
         .group('data_values.id')

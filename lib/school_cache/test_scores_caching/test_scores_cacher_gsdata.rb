@@ -22,9 +22,14 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     hashes.each_with_object(school_cache_hash) do |result_hash, cache_hash|
       result_hash = result_hash.to_hash
       if valid_result_hash?(result_hash)
+        hash_name_changer!(result_hash)
         cache_hash[result_hash[:data_type]] << result_hash.except(*cache_exceptions)
       end
     end
+  end
+
+  def hash_name_changer!(hash)
+    hash
   end
 
   def cache_exceptions

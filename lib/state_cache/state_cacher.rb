@@ -32,7 +32,8 @@ class StateCacher
   def self.cacher_for(key)
     {
         state_characteristics: StateCharacteristicsCacher,
-        test_scores_gsdata: TestScoresCaching::StateTestScoresCacherGsdata
+        test_scores_gsdata: TestScoresCaching::StateTestScoresCacherGsdata,
+        feed_test_scores_gsdata: TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata
     }[key.to_s.to_sym]
   end
 
@@ -54,7 +55,8 @@ class StateCacher
   def self.registered_cachers
     @registered_cachers ||= [
        StateCharacteristicsCacher,
-       TestScoresCaching::TestScoresCacherGsdata
+       TestScoresCaching::TestScoresCacherGsdata,
+       TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata
     ]
   end
 
