@@ -1,85 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { copyParam } from 'util/uri';
+import { href } from 'util/search';
+
+const boldSearchTerms = (string, substring) => {
+  const tokens = substring.split(/\s+/);
+  // The following separates string into chunks of matching and non matching substrings
+  // We cannot inject a variable into a regex literal, hence 'new RegExp'. Noteworthy that split returns the matched
+  // string when fed a group-capturing regex (compare 'Some string'.split(' '), which returns ['some','string'], not ['some',' ','string']
+  const matchesAndNonMatches = string.split(
+    new RegExp(`\\b(${tokens.join('|')})`, 'gi')
+  )
+  return matchesAndNonMatches.map(token => {
+    const queryContainsToken = tokens.find(
+      item => item.toLowerCase() === token.toLowerCase()
+    );
+    if (queryContainsToken) {
+      return <span className="match">{token}</span>;
+    }
+    return token;
+  })
+}
 
 // This component is responsible for formatting and rendering a payload of search results (listGroups) into a dropdown.
 // Noteworthy behavior: 1) within the title of each listItem, it will bold substrings that match the searchTerm,
-// 2) it will invoke the onSelect callback if a listItem does not have a url. In the current implementation, SearchBox
-// houses the callback, and updates the value of the input with the value of the listItem, then submits a search.
-class SearchResultsList extends React.Component {
-  constructor(props) {
-    super(props);
-    const { selectedListItem, navigateToSelectedListItem } = this.props;
-    this.state = { selectedListItem };
-    this.counter = -1;
-  }
-
-  href(url) {
-    return url
-      ? copyParam(
-          'newsearch',
-          window.location.href,
-          copyParam('lang', window.location.href, url)
-        )
-      : undefined;
-  }
-
-  boldSearchTerms(string, substring) {
-    const tokens = substring.split(/\s+/);
-    // The following separates string into chunks of matching and non matching substrings
-    // We cannot inject a variable into a regex literal, hence 'new RegExp'. Noteworthy that split returns the matched
-    // string when fed a group-capturing regex (compare 'Some string'.split(' '), which returns ['some','string'], not ['some',' ','string']
-    const matchesAndNonMatches = string.split(
-      new RegExp(`\\b(${tokens.join('|')})`, 'gi')
-    );
-    return matchesAndNonMatches.map(token => {
-      const queryContainsToken = tokens.find(
-        item => item.toLowerCase() === token.toLowerCase()
-      );
-      if (queryContainsToken) {
-        return <span className="match">{token}</span>;
-      }
-      return token;
-    });
-  }
-
-  groupNameListItem(name) {
-    return (
-      <li className="search-results-list-group-name">
+// 2) onclick, it will invoke the onSelect callback if a listItem does not have a url. In the current implementation, SearchBox
+// houses the callback, and updates the value of the input with the value of the listItem, then submits a search. 3) if a list item
+// is selected and the user hits the return key, that event is handled by the search box.
+const SearchResultsList = ({selectedListItem, navigateToSelectedListItem, onSelect, listGroups, searchTerm}) => {
+  const groupNameListItem = (name) => {
+      return (<li className="search-results-list-group-name">
         {name[0].toUpperCase() + name.slice(1)}
-      </li>
-    );
+      </li>)
   }
 
-  componentDidUpdate(prevProps) {
-    this.counter = -1;
-    if (prevProps.selectedListItem !== this.props.selectedListItem) {
-      this.setState({ selectedListItem: this.props.selectedListItem });
-    }
-  }
-
-  changeUrlIfSelected(listItem, key) {
-    this.props.navigateToSelectedListItem &&
-      listItem.url &&
-      this.counter === this.state.selectedListItem &&
-      (window.location.href = this.href(listItem.url));
-  }
-
-  groupListItems(listItems) {
-    const { searchTerm, onSelect } = this.props;
-    return listItems.map((listItem, idx) => {
-      this.counter += 1;
-      this.changeUrlIfSelected(listItem, idx);
+  const groupListItems = (listItems,order) => {
+    return listItems.map((listItem) => {
+      order.counter += 1
       return (
         <li
           onClick={listItem.url ? () => {} : () => onSelect(listItem)}
           key={listItem.title + listItem.url}
           className={`search-results-list-item${
-            this.counter === this.state.selectedListItem ? ' selected' : ''
+            order.counter === selectedListItem ? ' selected' : ''
           }`}
         >
-          <a href={this.href(listItem.url)}>
-            <div>{this.boldSearchTerms(listItem.title, searchTerm)}</div>
+          <a href={href(listItem.url)}>
+            <div>{boldSearchTerms(listItem.title, searchTerm)}</div>
             <div>{listItem.additionalInfo}</div>
           </a>
         </li>
@@ -88,8 +54,7 @@ class SearchResultsList extends React.Component {
   }
 
   // The last <li> is always an option to do a full search using the current search term (i.e. without clicking the search icon)
-  allResultsListItem() {
-    const { searchTerm, onSelect } = this.props;
+  const allResultsListItem = () => {
     return (
       <li
         className="search-results-list-item"
@@ -100,33 +65,36 @@ class SearchResultsList extends React.Component {
     );
   }
 
-  renderList(listData) {
-    const { listGroups } = this.props;
+  const renderList = () => {
+    let order = {counter: -1}
     return Object.keys(listGroups)
-      .filter(k => listGroups[k] && listGroups[k].length > 0)
-      .map(
-        group => (
-          <React.Fragment>
-            {this.groupNameListItem(group)}
-            {this.groupListItems(listGroups[group])}
-          </React.Fragment>
-        ),
-        this
-      );
+    .filter(k => listGroups[k] && listGroups[k].length > 0)
+    .map(
+      group => (
+        <React.Fragment>
+          {groupNameListItem(group)}
+          {groupListItems(listGroups[group],order)}
+        </React.Fragment>
+      )
+    )
   }
 
-  render() {
-    return (
-      <ul>
-        {this.renderList()}
-        {this.allResultsListItem()}
-      </ul>
-    );
-  }
+  return (
+    <ul>
+      {renderList()}
+      {allResultsListItem()}
+    </ul>
+  )
+    
+  
 }
 
 SearchResultsList.propTypes = {
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
+  selectedListItem: PropTypes.number,
+  navigateToSelectedListItem: PropTypes.bool,
+  listGroups: PropTypes.object,
+  searchTerm: PropTypes.string
 };
 
 export default SearchResultsList;
