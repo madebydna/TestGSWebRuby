@@ -17,6 +17,7 @@ import {
   getAddressPredictions
 } from 'api_clients/google_places';
 import { init as initGoogleMaps } from 'components/map/google_maps';
+import { href } from 'util/search';
 
 // Matches only 5 digits
 // Todo currently 3-4 schools would match this regex,
@@ -314,10 +315,17 @@ export default class SearchBox extends React.Component {
     });
   }
 
-  handleKeyDown(e) {
+  handleKeyDown(e,{close}) {
     if (e.key === 'Enter') {
       if (this.state.selectedListItem > -1) {
-        this.setState({ navigateToSelectedListItem: true });
+        close()
+        const flattenedResultValues = Array.concat.apply([], Object.values(this.state.autoSuggestResults));
+        const selectedListItem = flattenedResultValues[this.state.selectedListItem]
+        if (selectedListItem.url) {
+          window.location.href = href(selectedListItem.url)
+        } else {
+          this.selectAndSubmit(() =>{})(selectedListItem)
+        }
       } else {
         this.geocodeAndSubmit();
       }
@@ -348,7 +356,7 @@ export default class SearchBox extends React.Component {
               {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
               <div style={{ flexGrow: 2 }}>
                 <input
-                  onKeyDown={this.handleKeyDown}
+                  onKeyDown={(e)=> this.handleKeyDown(e,{close})}
                   onChange={this.onTextChanged({ open, close })}
                   type="text"
                   className="full-width pam search_form_field"
@@ -363,7 +371,8 @@ export default class SearchBox extends React.Component {
                         listGroups={this.state.autoSuggestResults}
                         searchTerm={this.state.searchTerm}
                         onSelect={this.selectAndSubmit(close)}
-                        listItemsSelectable={this.state.listItemsSelectable}
+                        selectedListItem={this.state.selectedListItem}
+                        navigateToSelectedListItem={this.state.navigateToSelectedListItem}
                       />
                     </div>
                   )}
@@ -410,13 +419,7 @@ export default class SearchBox extends React.Component {
 
             <div style={{ flexGrow: 2 }}>
               <input
-                onKeyUp={e => {
-                  if (e.key === 'Enter') {
-                    this.geocodeAndSubmit();
-                  } else if (e.key === 'ArrowDown') {
-                    this.makeListItemsSelectable();
-                  }
-                }}
+                onKeyDown={(e)=> this.handleKeyDown(e,{close})}
                 onChange={this.onTextChanged({ open, close })}
                 type="text"
                 className="full-width pam search_form_field"
