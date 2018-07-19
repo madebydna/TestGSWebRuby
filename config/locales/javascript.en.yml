@@ -1,6 +1,19 @@
 ---
 en:
   javascript:
+    School: School
+    Type: Type
+    Grades: Grades
+    Total students enrolled: Total students enrolled
+    Students per teacher: Students per teacher
+    Reviews: Reviews
+    Next: Next
+    Previous: Previous
+    Sort by: Sort by
+    GreatSchools Rating: GreatSchools Rating
+    School name: School name
+    Distance: Distance
+    Filter: Filter
     rating_description_html: >
       <p style="text-align: left;">GreatSchools’ Summary Rating provides an overall snapshot of school quality. Ratings follow a 1-10 scale:
       <ul style="text-align: left;"><li>ratings between 1-3 signal “below average”</li>
@@ -48,6 +61,8 @@ en:
       people: people
       person: person
       share_review_caption: 'User review of '
+      reviews: reviews
+      No reviews yet: No reviews yet
     school_picker:
       city: city
       school: school
@@ -79,6 +94,7 @@ en:
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare schools now&nbsp</a>or<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspclear schools&nbsp</a><strong>to compare in this location.</strong>'
 #    added for equity
     of students: '% of students'
+    student: student
     students: students
     State avg: 'State avg:'
     State average: State average

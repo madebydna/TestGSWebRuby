@@ -222,7 +222,7 @@ class SearchLayout extends React.Component {
                 <span className="button-group">
                   <Button
                     key="filter"
-                    label="Filter"
+                    label={t('Filter')}
                     active={isOpen}
                     onClick={toggle}
                     onKeyPress={toggle}
@@ -254,7 +254,7 @@ class SearchLayout extends React.Component {
                       {this.props.gradeLevelButtons}
                     </span>
                     <span className="menu-item">
-                      <span className="label">Sort by:</span>
+                      <span className="label">{t('Sort by')}:</span>
                       {this.props.sortSelect}
                     </span>
                   </div>
@@ -278,7 +278,7 @@ class SearchLayout extends React.Component {
           <div className="pagination-summary">{this.props.resultSummary}</div>
           {this.props.size > SM && (
             <div className="menu-item">
-              <span className="label">Sort by:</span>
+              <span className="label">{t('Sort by')}:</span>
               {this.props.sortSelect}
             </div>
           )}

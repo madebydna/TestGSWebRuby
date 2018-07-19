@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
-import { getHomesForSaleHref } from 'util/school';
+import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
 import FiveStarRating from '../review/form/five_star_rating';
 
 const renderRating = (rating, ratingScale) => {
@@ -34,7 +34,13 @@ const renderEnrollment = enrollment => {
 };
 
 const numReviewsLink = (numReviews, reviewsUrl) =>
-  numReviews ? <a href={reviewsUrl}>{numReviews} reviews</a> : 'No reviews yet';
+  numReviews ? (
+    <a href={reviewsUrl}>
+      {numReviews} {t('reviews.reviews')}
+    </a>
+  ) : (
+    t('reviews.No reviews yet')
+  );
 
 const fiveStars = numFilled => (
   <FiveStarRating questionId={1} value={numFilled} onClick={() => {}} />
@@ -89,13 +95,13 @@ const SchoolTableRow = ({
           </span>
         </React.Fragment>
       </td>
-      <td>{capitalize(schoolType)}</td>
+      <td>{clarifySchoolType(schoolType)}</td>
       <td>{gradeLevels}</td>
       <td>{renderEnrollment(enrollment)}</td>
       <td>{studentsPerTeacher ? `${studentsPerTeacher}:1` : 'N/A'}</td>
       <td>
         {numReviewsLink(numReviews, links.reviews)}
-        {fiveStars(parentRating)}
+        {parentRating ? fiveStars(parentRating) : null}
       </td>
       <td>{districtName}</td>
     </tr>

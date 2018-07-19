@@ -2,22 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from '../select';
 import SortContext from './sort_context';
+import { t } from 'util/i18n';
 
 const defaultOptions = [
   {
     key: 'rating',
-    label: 'GreatSchools rating'
+    label: t('GreatSchools Rating')
   },
   {
     key: 'name',
-    label: 'School name'
+    label: t('School name')
   }
 ];
 
 const distanceOptions = [
   {
     key: 'distance',
-    label: 'Distance'
+    label: t('Distance')
   }
 ];
 

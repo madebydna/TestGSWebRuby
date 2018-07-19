@@ -1,5 +1,5 @@
 import React from 'react';
-import { capitalize } from 'util/i18n';
+import { t, capitalize } from 'util/i18n';
 
 const getHomesForSaleHref = (state, address) => {
   if (state && address && address.zip) {
@@ -19,15 +19,18 @@ const studentsPhrase = enrollment => {
   return (
     <span key="enrollment">
       <span className="open-sans_semibold">{enrollment}</span>
-      {enrollment > 1 ? ' students' : ' student'}
+      {` ${enrollment > 1 ? t('students') : t('student')}`}
     </span>
   );
 };
 
-const clarifySchoolType = (schoolType) => {
-  let clarifiedSchoolType = {'public': 'Public district', 'charter': 'Public charter'}[schoolType.toLowerCase()]
-  return clarifiedSchoolType || schoolType
-}
+const clarifySchoolType = schoolType => {
+  const clarifiedSchoolType = {
+    public: 'Public district',
+    charter: 'Public charter'
+  }[schoolType.toLowerCase()];
+  return t(`school_types.${clarifiedSchoolType || schoolType}`);
+};
 
 const schoolTypePhrase = (schoolType, gradeLevels) => (
   <span key="school-type" className="open-sans_semibold">
@@ -35,4 +38,9 @@ const schoolTypePhrase = (schoolType, gradeLevels) => (
   </span>
 );
 
-export { getHomesForSaleHref, studentsPhrase, schoolTypePhrase };
+export {
+  getHomesForSaleHref,
+  studentsPhrase,
+  schoolTypePhrase,
+  clarifySchoolType
+};
