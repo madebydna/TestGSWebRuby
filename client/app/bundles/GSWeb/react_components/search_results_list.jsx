@@ -15,7 +15,7 @@ const boldSearchTerms = (string, substring) => {
       item => item.toLowerCase() === token.toLowerCase()
     );
     if (queryContainsToken) {
-      return <span className="match">{token}</span>;
+      return <span key={token} className="match">{token}</span>;
     }
     return token;
   })
@@ -28,7 +28,7 @@ const boldSearchTerms = (string, substring) => {
 // is selected and the user hits the return key, that event is handled by the search box.
 const SearchResultsList = ({selectedListItem, navigateToSelectedListItem, onSelect, listGroups, searchTerm}) => {
   const groupNameListItem = (name) => {
-      return (<li className="search-results-list-group-name">
+      return (<li key={`category ${name}`} className="search-results-list-group-name">
         {name[0].toUpperCase() + name.slice(1)}
       </li>)
   }
@@ -58,7 +58,7 @@ const SearchResultsList = ({selectedListItem, navigateToSelectedListItem, onSele
     return (
       <li
         className="search-results-list-item"
-        onClick={() => onSelect(searchTerm)}
+        onClick={() => onSelect({value: searchTerm})}
       >
         {`Search all results for "${searchTerm}"`}
       </li>
@@ -71,7 +71,7 @@ const SearchResultsList = ({selectedListItem, navigateToSelectedListItem, onSele
     .filter(k => listGroups[k] && listGroups[k].length > 0)
     .map(
       group => (
-        <React.Fragment>
+        <React.Fragment key={`fragment ${listGroups[group]}`}>
           {groupNameListItem(group)}
           {groupListItems(listGroups[group],order)}
         </React.Fragment>

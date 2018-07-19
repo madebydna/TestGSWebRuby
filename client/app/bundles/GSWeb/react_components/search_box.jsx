@@ -384,13 +384,7 @@ export default class SearchBox extends React.Component {
 
             <div style={{ flexGrow: 2 }}>
               <input
-                onKeyUp={e => {
-                  if (e.key === 'Enter') {
-                    this.geocodeAndSubmit();
-                  } else if (e.key === 'ArrowDown') {
-                    this.makeListItemsSelectable();
-                  }
-                }}
+                onKeyDown={(e)=> this.handleKeyDown(e,{close})}
                 onChange={this.onTextChanged({ open, close })}
                 type="text"
                 className="full-width pam search_form_field"
