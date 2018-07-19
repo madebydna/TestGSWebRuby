@@ -95,7 +95,7 @@ class NewSearchController < ApplicationController
   end
 
   def redirect_unless_valid_search_criteria
-    if q || (lat && lon)
+    if q.present? || (lat.present? && lon.present?)
       return
     elsif state && district
       unless district_record

@@ -5,7 +5,7 @@ module Search
     include Pagination::Paginatable
     include Sortable
 
-    attr_accessor :q, :district_id, :city, :level_codes, :entity_types, :id, :lat, :lon, :radius
+    attr_accessor :q, :district_id, :district_name, :location_label, :city, :level_codes, :entity_types, :id, :lat, :lon, :radius
     attr_reader :state
 
     def initialize(
@@ -13,6 +13,8 @@ module Search
       city: nil,
       state: nil,
       district_id: nil,
+      district_name: nil,
+      location_label: nil,
       q: nil,
       level_codes: nil,
       entity_types: nil,
@@ -28,6 +30,8 @@ module Search
       self.city = city
       self.state = state
       self.district_id = district_id
+      self.district_name = district_name
+      self.location_label = location_label
       self.q = q
       self.level_codes = level_codes
       self.entity_types = entity_types
@@ -48,10 +52,17 @@ module Search
       # TODO: requires translation
       prefix = pagination_summary(results)
 
-      if @q.present?
-        "#{prefix} for #{@q}"
+      if lat && lon && location_label
+        location_text = "#{location_label}"
+        "#{prefix} #{t('near_address', address: location_text)}"
+      elsif lat && lon && q
+        "#{prefix} #{t('near_address', address: @q)}"
+      elsif district_name
+        "#{prefix} #{t('in_district', district: district_name)}"
       elsif city
         "#{prefix} #{t('in_city_state', city: city, state: state.upcase)}"
+      elsif @q.present?
+        "#{prefix} for #{@q}"
       end
     end
 
@@ -61,9 +72,9 @@ module Search
       if total == 0
         "No schools found"
       elsif total == 1
-        "Showing 1 school"
+        "Showing 1 school found"
       else
-        "Showing #{results.index_of_first_result} to #{results.index_of_last_result} of #{results.total} schools"
+        "Showing #{results.index_of_first_result} to #{results.index_of_last_result} of #{results.total} schools found"
       end
     end
 

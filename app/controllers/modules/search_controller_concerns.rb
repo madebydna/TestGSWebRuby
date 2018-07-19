@@ -81,6 +81,8 @@ module SearchControllerConcerns
       city: city,
       state: state,
       district_id: district_record&.id,
+      district_name: district_record&.name,
+      location_label: location_label_param,
       level_codes: level_codes,
       entity_types: entity_types,
       lat: lat,

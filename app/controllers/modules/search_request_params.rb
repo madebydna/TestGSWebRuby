@@ -57,6 +57,10 @@ module SearchRequestParams
   end
 
   def radius
+    radius_param || 5
+  end
+
+  def radius_param
     params[:distance]&.to_i || params[:radius]&.to_i
   end
 
@@ -65,11 +69,11 @@ module SearchRequestParams
   end
 
   def point_given?
-    lat.present? && lon.present? && radius.blank?
+    lat.present? && lon.present? && radius_param.blank?
   end
 
   def area_given?
-    lat.present? && lon.present? && radius.present?
+    lat.present? && lon.present? && radius_param.present?
   end
 
   def boundary_level
@@ -99,6 +103,10 @@ module SearchRequestParams
 
   def district_param
     params[:district] || params[:district_name]
+  end
+
+  def location_label_param 
+    params[:locationLabel]
   end
 
   def city_record

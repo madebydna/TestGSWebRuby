@@ -11,11 +11,38 @@ import { addQueryParamToUrl, copyParam } from 'util/uri';
 import { SM, validSizes, viewport } from 'util/viewport';
 import { geocode } from 'components/geocoding';
 import suggest from 'api_clients/autosuggest';
+import { parse, stringify } from 'query-string';
 import {
   init as initGoolePlacesApi,
   getAddressPredictions
 } from 'api_clients/google_places';
 import { init as initGoogleMaps } from 'components/map/google_maps';
+
+// Matches only 5 digits
+// Todo currently 3-4 schools would match this regex,
+// but it may not be worth maintain a list of those schools to prevent matches
+const matchesFiveDigits = string => /(\D|^)\d{5}(\D*$|$)/.test(string);
+
+// Matches 5 digits + dash or space or no space + 4 digits.
+const matchesFiveDigitsPlusFourDigits = string =>
+  /(\D|^)\d{5}(-|\s*)\d{4}(\D|$)/.test(string);
+
+const matchesZip = string =>
+  matchesFiveDigits(string) || matchesFiveDigitsPlusFourDigits(string);
+
+const matchesNumbersAsOnlyFirstCharacters = string => /^\W*\d+\s/.test(string);
+
+const matchesStateAbbreviationQuery = string => /\w*, \w\w\b/.test(string);
+
+// Matches when first character/characters are numbers + a space + if it does not match schools in the school and district list.
+// ToDo perhaps not worth maintaining list of 300 schools for this regex.
+// ToDo if we do decide to maintain the list, perhaps move this into a service that autogenerates the list
+const matchesAddress = string =>
+  matchesNumbersAsOnlyFirstCharacters(string) ||
+  matchesStateAbbreviationQuery(string);
+
+const matchesAddressOrZip = string =>
+  matchesAddress(string) || matchesZip(string);
 
 const options = [
   {
@@ -33,20 +60,14 @@ const keyMap = {
   ArrowDown: 1
 };
 
-const newSearchResultsPageUrl = ({ q, lat, lon }) => {
-  let newUrl = addQueryParamToUrl(
-    'q',
-    q,
-    `/search/search.page${window.location.search}`
-  );
-  if (lat && lon) {
-    newUrl = addQueryParamToUrl(
-      'distance',
-      5,
-      addQueryParamToUrl('lon', lon, addQueryParamToUrl('lat', lat, newUrl))
-    );
-  }
-  return copyParam('newsearch', window.location.href, newUrl);
+const newSearchResultsPageUrl = newParams => {
+  const { newsearch, lang } = parse(window.location.search);
+  const params = {
+    newsearch,
+    lang,
+    ...newParams
+  };
+  return `/search/search.page?${stringify(params)}`;
 };
 
 const contentSearchResultsPageUrl = ({ q }) =>
@@ -125,23 +146,32 @@ export default class SearchBox extends React.Component {
   }
 
   geocodeAndSubmit() {
-    if (this.state.type === 'parenting') {
+    const { searchTerm, type } = this.state;
+    if (!matchesAddressOrZip(searchTerm)) {
+      this.submit();
+      return;
+    }
+
+    if (type === 'parenting') {
       window.location.href = contentSearchResultsPageUrl({
-        q: this.state.searchTerm
+        q: searchTerm
       });
-    } else if (this.state.type === 'schools') {
-      geocode(this.state.searchTerm)
+    } else if (type === 'schools') {
+      geocode(searchTerm)
         .then(json => json[0])
-        .done(({ lat, lon } = {}) => {
+        .done(({ lat, lon, city, state, zip, normalizedAddress } = {}) => {
+          let params = {};
           if (lat && lon) {
-            this.setState({ lat, lon }, () => {
-              window.location.href = newSearchResultsPageUrl({
-                q: this.state.searchTerm,
-                lat: this.state.lat,
-                lon: this.state.lon
-              });
-            });
+            params = { lat, lon };
+          } else {
+            params.q = searchTerm;
           }
+          if (matchesZip(searchTerm) && !matchesAddress(searchTerm)) {
+            params.locationLabel = `${city}, ${state} ${zip}`;
+          } else {
+            params.locationLabel = normalizedAddress.replace(', USA', '');
+          }
+          window.location.href = newSearchResultsPageUrl(params);
         })
         .fail(() => {
           window.location.href = newSearchResultsPageUrl({
@@ -204,11 +234,13 @@ export default class SearchBox extends React.Component {
         initGoogleMaps(() => {
           getAddressPredictions(q, addresses => {
             const newResults = { ...this.state.autoSuggestResults };
-            newResults.Addresses = addresses.map(address => ({
-              title: address,
-              value: address,
-              address
-            }));
+            newResults.Addresses = addresses
+              .map(address => address.replace(', USA', ''))
+              .map(address => ({
+                title: address,
+                value: address,
+                address
+              }));
             this.setState({ autoSuggestResults: newResults });
           });
         });
@@ -229,6 +261,7 @@ export default class SearchBox extends React.Component {
             let title = null;
             let additionalInfo = null;
             let value = null;
+            let address = null;
             if (category === 'Schools') {
               title = school;
               additionalInfo = `${city}, ${state} ${zip || ''}`;
@@ -240,13 +273,15 @@ export default class SearchBox extends React.Component {
             } else if (category === 'Zipcodes') {
               title = `Schools in ${zip}`;
               value = zip;
+              address = zip;
             }
 
             adaptedResults[category].push({
               title,
               additionalInfo,
               url,
-              value
+              value,
+              address
             });
           });
         });
