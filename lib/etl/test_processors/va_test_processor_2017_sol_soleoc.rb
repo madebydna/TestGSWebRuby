@@ -150,7 +150,7 @@ class VATestProcessor2017SOL_EOC < GS::ETL::TestProcessor
 				row[:description] = "In 2016-2017 Virginia used the Standards of Learning (SOL) tests to assess students in reading and math in grades 3 through 8, writing in grades 5 and 8, and science in grades 3, 5 and 8. The SOL tests are standards-based, which means they measure how well students are mastering specific skills defined for each grade by the state of Virginia. The goal is for all students to pass the tests."
 			else
 				row[:notes] = 'DXT-2696: VA VA EOC'
-				row[:description] = "In 2016-2017 Virginia used the Standards of Learning (SOL) End-of-Course tests to assess students in reading, writing, math, science and history/social science subjects at the end of each course, regardless of the student\\'s grade level. The SOL End-of-Course tests are standards-based, which means they measure how well students are mastering specific skills defined for each grade by the state of Virginia. High school students must pass at least six SOL End-of-Course tests to graduate. The goal is for all students to pass the tests."
+				row[:description] = "In 2016-2017 Virginia used the Standards of Learning (SOL) End-of-Course tests to assess students in reading, writing, math, science and history/social science subjects at the end of each course, regardless of the student's grade level. The SOL End-of-Course tests are standards-based, which means they measure how well students are mastering specific skills defined for each grade by the state of Virginia. High school students must pass at least six SOL End-of-Course tests to graduate. The goal is for all students to pass the tests."
 			end
 			row
 		end					

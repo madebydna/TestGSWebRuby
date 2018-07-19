@@ -124,7 +124,7 @@ module GS
 
       def build_column_value_report
         require_relative 'column_value_report'
-        ::ColumnValueReport.new('column_value_report.txt', :grade, :breakdown_id)
+        ::ColumnValueReport.new('/tmp/column_value_report.txt', :grade, :breakdown_id)
       end
 
       def build_graph
