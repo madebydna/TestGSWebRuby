@@ -1,6 +1,7 @@
 class Api::SchoolUserDigestsController < ApplicationController
 
   def show
+    response.headers['X-Robots-Tag'] = 'noindex, nofollow'
     if logged_in?
       state = school_user_digest_params[:state]
       school_id = school_user_digest_params[:school_id]

@@ -34,6 +34,8 @@ class ReviewsController < ApplicationController
     review_id = params[:id]
     comment = params.fetch(:review_flag, {})[:comment]
 
+    response.headers['X-Robots-Tag'] = 'noindex, nofollow'
+
     if review_id.blank? || comment.blank?
       flash_error t('actions.generic_error')
       if request.xhr?
