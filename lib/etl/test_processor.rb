@@ -31,6 +31,22 @@ module GS
                        :district_id, :district_name, :test_data_type, :test_data_type_id, :grade,
                        :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
                        :proficiency_band_id, :level_code, :number_tested, :value_float]
+      GSDATA_COLUMNS = %w[
+        source_name date_valid notes 
+        description value_float state district_id 
+        school_id gsdata_test_data_type_id 
+        source_name number_tested grade 
+        proficiency_band_gsdata_id gsdata_source_id
+        breakdown_gsdata_id
+        academic_gsdata_id
+      ]
+      REQUIRED_GSDATA_COLUMNS = %w[
+        source_name date_valid notes 
+        description value_float state
+        gsdata_source_id
+        breakdown_gsdata_id
+        academic_gsdata_id
+      ]
       SUMMARY_OUTPUT_FIELDS = %i[entity_level field value count]
 
       def initialize(input_dir, options = {})
@@ -212,7 +228,7 @@ module GS
           row
         end
         node = node.transform('Keep rows for source', KeepRows, :entity_level, 'source')
-        node.sql_writer 'Output source rows to SQL file', SqlDestination, source_output_sql_file, config_hash, *COLUMN_ORDER
+        node.sql_writer 'Output source rows to SQL file', SqlDestination, source_output_sql_file, config_hash, GSDATA_COLUMNS, REQUIRED_GSDATA_COLUMNS
         node
       end
 
@@ -237,7 +253,7 @@ module GS
           row[:number_tested] = 'NULL' if row[:number_tested].nil?
           row
         end
-        node.sql_writer 'Output state rows to SQL file', SqlDestination, state_output_sql_file, config_hash, *COLUMN_ORDER
+        node.sql_writer 'Output state rows to SQL file', SqlDestination, state_output_sql_file, config_hash, GSDATA_COLUMNS, REQUIRED_GSDATA_COLUMNS
         node
       end
 
@@ -262,7 +278,7 @@ module GS
           row[:number_tested] = 'NULL' if row[:number_tested].nil?
           row
         end
-        node.sql_writer 'Output district rows to SQL file', SqlDestination, district_output_sql_file, config_hash, *COLUMN_ORDER
+        node.sql_writer 'Output district rows to SQL file', SqlDestination, district_output_sql_file, config_hash, GSDATA_COLUMNS, REQUIRED_GSDATA_COLUMNS
         node
       end
 
@@ -286,7 +302,7 @@ module GS
           row[:number_tested] = 'NULL' if row[:number_tested].nil?
           row
         end
-        node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, *COLUMN_ORDER
+        node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, GSDATA_COLUMNS, REQUIRED_GSDATA_COLUMNS
         node
       end
 
