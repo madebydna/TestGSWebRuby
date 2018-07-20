@@ -231,7 +231,10 @@ class SearchProvider extends React.Component {
           autoSuggestQuery: this.autoSuggestQuery,
           breadcrumbs: this.props.breadcrumbs,
           view: this.props.view,
-          updateView: this.props.updateView
+          updateView: compose(
+            this.props.updateView,
+            curry(this.trackParams)('View', this.props.view)
+          )
         }}
       >
         <DistanceContext.Provider
