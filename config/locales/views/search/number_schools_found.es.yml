@@ -26,6 +26,10 @@ es:
       Preschool:
         one: escuela preescolar
         other: escuelas preescolares
+      showing_number_of_schools_found:
+        zero: No se encontraron escuelas
+        one: Mostrando 1 escuela encontrada
+        other: Mostrando %{first} to %{last} de %{count} escuelas encontradas
       number_of_schools_found:
         one: 1 escuela encontrada
         other: "%{count} escuelas encontradas"

@@ -23,6 +23,10 @@ en:
       number_of_schools_found:
         one: 1 school found
         other: "%{count} schools found"
+      showing_number_of_schools_found:
+        zero: No schools found
+        one: Showing 1 school found
+        other: Showing %{first} to %{last} of %{count} schools found
       number_of_schools_found_with_level_code:
         one: "1 %{level_code} found"
         other: "%{count} %{level_code} found"

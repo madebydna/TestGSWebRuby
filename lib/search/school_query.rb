@@ -67,15 +67,12 @@ module Search
     end
 
     def pagination_summary(results)
-      # TODO: requires translation
-      total = results.total
-      if total == 0
-        "No schools found"
-      elsif total == 1
-        "Showing 1 school found"
-      else
-        "Showing #{results.index_of_first_result} to #{results.index_of_last_result} of #{results.total} schools found"
-      end
+      t(
+        'showing_number_of_schools_found',
+        count: results.total,
+        first: results.index_of_first_result,
+        last: results.index_of_last_result
+      )
     end
 
     # accept state or state abbreviation

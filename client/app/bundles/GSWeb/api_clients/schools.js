@@ -1,5 +1,6 @@
 // TODO: import jQuery
 import { without } from 'lodash';
+import { parse } from 'query-string';
 
 export function findById(id, options) {
   return $.ajax({
@@ -103,6 +104,8 @@ export function find({
   if (extras) {
     data.extras = extras.join(',');
   }
+  const currentParams = parse(window.location.search);
+  data.lang = currentParams.lang;
   return $.ajax({
     url: '/gsr/api/schools/',
     data,
