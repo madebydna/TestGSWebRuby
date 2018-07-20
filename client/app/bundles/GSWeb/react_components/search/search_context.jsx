@@ -202,9 +202,7 @@ class SearchProvider extends React.Component {
 
   trackParams = (name, oldParams, newParams) => {
     const addedItems = difference(castArray(newParams), castArray(oldParams));
-    addedItems.forEach(filter =>
-      analyticsEvent('search', `${name} added`, filter)
-    );
+    addedItems.forEach(filter => analyticsEvent('search', name, filter));
     return newParams;
   };
 
@@ -216,7 +214,11 @@ class SearchProvider extends React.Component {
           schools: this.state.schools,
           page: this.props.page,
           totalPages: this.state.totalPages,
-          onPageChanged: compose(this.scrollToTop, this.props.updatePage),
+          onPageChanged: compose(
+            this.scrollToTop,
+            this.props.updatePage,
+            curry(this.trackParams)('Page', this.props.page)
+          ),
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
           size: this.state.size,
