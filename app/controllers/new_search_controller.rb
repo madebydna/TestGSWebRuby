@@ -26,11 +26,7 @@ class NewSearchController < ApplicationController
       props[:breadcrumbs] = should_include_breadcrumbs? ? search_breadcrumbs : []
     end
 
-    prev_page = prev_page_url(page_of_results)
-    next_page = next_page_url(page_of_results)
-    set_meta_tags(prev: prev_page) if prev_page
-    set_meta_tags(next: next_page) if next_page
-    set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url? && page_of_results.present?
+    set_search_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
   end
@@ -124,6 +120,89 @@ class NewSearchController < ApplicationController
   # SearchRequestParams
   def not_default_extras
     %w(geometry)
+  end
+
+  # Begin meta-tag code
+  def prev_page
+    @_prev_page ||= prev_page_url(page_of_results)
+  end
+
+  def next_page
+    @_next_page ||= next_page_url(page_of_results)
+  end
+
+  def set_search_meta_tags
+    set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url? && page_of_results.present?
+
+    if city_browse?
+      set_meta_tags city_browse_meta_tag_hash
+    elsif district_browse?
+      set_meta_tags district_browse_meta_tag_hash
+    end
+  end
+
+  def city_browse_meta_tag_hash
+    if %w(il pa).include?(state)
+      meta_description = "#{city_record.name}, #{city_record.state} school districts, public, private and charter school listings" \
+          " and rankings for #{city_record.name}, #{city_record.state}. Find your school district information from Greatschools.org"
+    else
+      meta_description = "View and map all #{city_record.name}, #{city_record.state} schools. Plus, compare or save schools"
+    end
+    url_without_params = search_city_browse_url[0..(search_city_browse_url.index('?').to_i - 1)]
+    {
+      title: "#{city_browse_title} | GreatSchools",
+      description: meta_description,
+      canonical: url_without_params + params_for_canonical,
+      prev: (prev_page),
+      next: (next_page)
+    }
+  end
+
+  def district_browse_meta_tag_hash
+    url_without_params = search_district_browse_url[0..(search_district_browse_url.index('?').to_i - 1)]
+    {
+      title: "#{district_browse_title} | GreatSchools",
+      description: "Ratings and parent reviews for all elementary, middle and high schools in the #{district_record.name}, #{city_record.state}",
+      canonical: url_without_params + params_for_canonical,
+      prev: (prev_page),
+      next: (next_page)
+    }
+  end
+
+  def city_browse_title
+    city_type_level_code_text = "#{city_record.name} #{entity_type_long}#{level_code_long}#{schools_or_preschools}"
+    "#{city_type_level_code_text}#{pagination_text} - #{city_record.name}, #{city_record.state}"
+  end
+
+  def district_browse_title
+    "#{entity_type_long}#{level_code_long}#{schools_or_preschools} in #{district_record.name}#{pagination_text} - #{city_record.name}, #{city_record.state}"
+  end
+
+  def pagination_text
+    return if offset > page_of_results.total
+    ", #{(offset + 1).to_s}-#{(offset + 1 + page_of_results.length).to_s}"
+  end
+
+  def entity_type_long
+    {
+      'charter' => 'Public Charter ',
+      'public' => 'Public ',
+      'private' => 'Private '
+    }[whitelisted_entity_type]
+  end
+
+  def level_code_long
+    {
+      'e' => 'Elementary ',
+      'm' => 'Middle ',
+      'h' => 'High ',
+      'p' => nil
+    }[whitelisted_level_code]
+  end
+
+  def schools_or_preschools
+    school_preschool_map = Hash.new('Schools').merge('p' => 'Preschools')
+    school_preschool_map[whitelisted_level_code]
   end
 
 end

@@ -136,11 +136,27 @@ module SearchRequestParams
   end
 
   def city_browse?
-    state && city
+    state && city && !district
   end
 
   def zip_code_search?
     /^\d{5}+$/.match?(q)
+  end
+
+  def whitelisted_page
+    params[:page] if (/\d+/.match(params[:page]).to_s == params[:page])
+  end
+
+  def whitelisted_lang
+    params[:lang] if ['es', 'en'].include?(params[:lang]&.downcase)
+  end
+
+  def whitelisted_level_code
+    ['e', 'm', 'h', 'p'].include?(level_code) ? level_code : nil
+  end
+
+  def whitelisted_entity_type
+    ['public', 'private', 'charter'].include?(entity_types.first) ? entity_types.first : nil
   end
 
   def search_type
@@ -153,6 +169,16 @@ module SearchRequestParams
     else
       :other
     end
+  end
+
+  def params_for_canonical
+    param_vals_array = []
+    whitelisted_query_params = {'gradeLevels' => whitelisted_level_code,'lang' => whitelisted_lang,'page' => whitelisted_page, 'st' => whitelisted_entity_type }
+    whitelisted_query_params.each do |param, val|
+      param_vals_array << "#{param}=#{val}" if val
+    end
+
+    param_vals_array.present? ? "?#{param_vals_array.join('&')}" : ''
   end
 
   # reading about API design, I tend to agree that rather than make multiple
