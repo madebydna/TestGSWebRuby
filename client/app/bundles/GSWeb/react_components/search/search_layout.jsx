@@ -242,6 +242,7 @@ class SearchLayout extends React.Component {
                     onClick={close}
                     onKeyPress={close}
                     role="button"
+                    aria-label={t('Close filters')}
                   />
                   <div>
                     <span className="menu-item">
