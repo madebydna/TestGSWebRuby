@@ -12,6 +12,10 @@ module CachedCharacteristicsMethods
     characteristcs_value_by_name('Enrollment', opts)
   end
 
+  def numeric_enrollment
+    characteristcs_value_by_name('Enrollment')
+  end
+
   def characteristcs_value_by_name(name, options={})
     if valid_characteristic_cache(characteristics[name])
       characteristics[name].each do |characteristic|

@@ -23,7 +23,7 @@ class NewSearchController < ApplicationController
       props[:district] = district_record.name if district_record
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
-      props[:breadcrumbs] = city_browse? || district_browse? ? search_breadcrumbs : []
+      props[:breadcrumbs] = should_include_breadcrumbs? ? search_breadcrumbs : []
     end
 
     prev_page = prev_page_url(page_of_results)
@@ -36,6 +36,10 @@ class NewSearchController < ApplicationController
   end
 
   private
+
+  def should_include_breadcrumbs?
+    city_browse? || district_browse?
+  end
 
   def search_breadcrumbs
     @_search_breadcrumbs ||= [
@@ -52,7 +56,7 @@ class NewSearchController < ApplicationController
 
   # StructuredMarkup
   def prepare_json_ld
-    if city_browse? || district_browse?
+    if should_include_breadcrumbs?
       search_breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
     end
   end
@@ -91,7 +95,7 @@ class NewSearchController < ApplicationController
   end
 
   def redirect_unless_valid_search_criteria
-    if q || (lat && lon)
+    if q.present? || (lat.present? && lon.present?)
       return
     elsif state && district
       unless district_record

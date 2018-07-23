@@ -11,7 +11,11 @@ import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
 import DistanceContext from './distance_context';
 import { analyticsEvent } from 'util/page_analytics';
-import suggest from 'api_clients/autosuggest';
+import {
+  init as initGoolePlacesApi,
+  getAddressPredictions
+} from 'api_clients/google_places';
+import { init as initGoogleMaps } from 'components/map/google_maps';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -32,8 +36,8 @@ class SearchProvider extends React.Component {
     entityTypes: gon.search.entityTypes || [],
     defaultLat: gon.search.cityLat || 37.8078456,
     defaultLon: gon.search.cityLon || -122.2672673,
-    lat: null,
-    lon: null,
+    lat: gon.search.lat,
+    lon: gon.search.lon,
     distance: gon.search.distance,
     sort: gon.search.sort,
     page: gon.search.page || 1,
@@ -88,13 +92,7 @@ class SearchProvider extends React.Component {
       resultSummary: props.resultSummary,
       paginationSummary: props.paginationSummary,
       loadingSchools: false,
-      size: viewportSize(),
-      autoSuggestResults: {
-        Cities: [],
-        Districts: [],
-        Schools: [],
-        Zipcodes: []
-      }
+      size: viewportSize()
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
@@ -102,7 +100,6 @@ class SearchProvider extends React.Component {
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
-    this.autoSuggestQuery = debounce(this.autoSuggestQuery.bind(this), 200);
   }
 
   componentDidMount() {
@@ -127,68 +124,6 @@ class SearchProvider extends React.Component {
 
   handleWindowResize() {
     this.setState({ size: viewportSize() });
-  }
-
-  /*
-  { city: [
-      {"id": null,
-      "city": "New Boston",
-      "state": "nh",
-      "type": "city",
-      "url": '/new-mexico/alamogordo//829-Alamogordo-SDA-School}
-    ],
-    school: [
-      {"id": null,
-      "school": "Alameda High School",
-      "city": "New Boston",
-      "state": "nh",
-      "type": "school"}
-    ],
-    zip....includes an additional 'value' key.
-  },
-  */
-  autoSuggestQuery(q) {
-    if (q.length >= 3) {
-      suggest(q).done(results => {
-        const adaptedResults = {
-          Zipcodes: [],
-          Cities: [],
-          Districts: [],
-          Schools: []
-        };
-        Object.keys(results).forEach(category => {
-          (results[category] || []).forEach(result => {
-            const { school, district = '', city, state, url, zip } = result;
-
-            let title = null;
-            let additionalInfo = null;
-            let value = null;
-            if (category === 'Schools') {
-              title = school;
-              additionalInfo = `${city}, ${state} ${zip || ''}`;
-            } else if (category === 'Cities') {
-              title = `Schools in ${city}, ${state}`;
-            } else if (category === 'Districts') {
-              title = `Schools in ${district}`;
-              additionalInfo = `${city}, ${state}`;
-            } else if (category === 'Zipcodes') {
-              title = `Schools in ${zip}`;
-              value = zip;
-            }
-
-            adaptedResults[category].push({
-              title,
-              additionalInfo,
-              url,
-              value
-            });
-          });
-        });
-        this.setState({ autoSuggestResults: adaptedResults });
-      });
-    } else {
-      this.setState({ autoSuggestResults: {} });
-    }
   }
 
   // 62 = nav offset on non-mobile
@@ -247,7 +182,7 @@ class SearchProvider extends React.Component {
           sort: this.props.sort,
           page: this.props.page,
           limit: this.props.pageSize,
-          fields: ['students_per_teacher', 'review_summary']
+          extras: ['students_per_teacher', 'review_summary']
         },
         newState
       )
@@ -267,9 +202,7 @@ class SearchProvider extends React.Component {
 
   trackParams = (name, oldParams, newParams) => {
     const addedItems = difference(castArray(newParams), castArray(oldParams));
-    addedItems.forEach(filter =>
-      analyticsEvent('search', `${name} added`, filter)
-    );
+    addedItems.forEach(filter => analyticsEvent('search', name, filter));
     return newParams;
   };
 
@@ -281,19 +214,27 @@ class SearchProvider extends React.Component {
           schools: this.state.schools,
           page: this.props.page,
           totalPages: this.state.totalPages,
-          onPageChanged: compose(this.scrollToTop, this.props.updatePage),
+          onPageChanged: compose(
+            this.scrollToTop,
+            this.props.updatePage,
+            curry(this.trackParams)('Page', this.props.page)
+          ),
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
           size: this.state.size,
           shouldIncludeDistance: this.shouldIncludeDistance(),
           toggleHighlight: this.toggleHighlight,
+          lat: this.props.lat,
+          lon: this.props.lon,
           defaultLat: this.props.defaultLat,
           defaultLon: this.props.defaultLon,
           autoSuggestQuery: this.autoSuggestQuery,
-          autoSuggestResults: this.state.autoSuggestResults,
           breadcrumbs: this.props.breadcrumbs,
           view: this.props.view,
-          updateView: this.props.updateView
+          updateView: compose(
+            this.props.updateView,
+            curry(this.trackParams)('View', this.props.view)
+          )
         }}
       >
         <DistanceContext.Provider
@@ -330,7 +271,9 @@ class SearchProvider extends React.Component {
             >
               <SortContext.Provider
                 value={{
-                  sort: this.props.sort,
+                  sort:
+                    this.props.sort ||
+                    (this.shouldIncludeDistance() ? 'distance' : 'rating'),
                   onSortChanged: compose(
                     this.scrollToTop,
                     this.props.updateSort,

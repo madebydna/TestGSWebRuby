@@ -52,8 +52,7 @@ class Search extends React.Component {
     ),
     autoSuggestQuery: PropTypes.func,
     view: PropTypes.string.isRequired,
-    updateView: PropTypes.func.isRequired,
-    autoSuggestResults: PropTypes.object.isRequired
+    updateView: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -123,19 +122,16 @@ class Search extends React.Component {
             }
             map={
               <Map
-                lat={this.props.lat || this.props.defaultLat}
-                lon={this.props.lon || this.props.defaultLon}
+                locationMarker={
+                  this.props.lat && this.props.lon
+                    ? { lat: this.props.lat, lon: this.props.lon }
+                    : null
+                }
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
               />
             }
-            searchBox={
-              <SearchBox
-                searchFunction={this.props.autoSuggestQuery}
-                autoSuggestResults={this.props.autoSuggestResults}
-                size={this.props.size}
-              />
-            }
+            searchBox={<SearchBox size={this.props.size} />}
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
           />
         )}

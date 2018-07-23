@@ -7,6 +7,7 @@ import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 import { t } from 'util/i18n';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
+import CaptureOutsideClick from './capture_outside_click';
 
 function keepInViewport(
   ref,
@@ -209,7 +210,7 @@ class SearchLayout extends React.Component {
 
   renderMobileMenuBar() {
     return (
-      <OpenableCloseable openByDefault>
+      <OpenableCloseable openByDefault={this.props.view === LIST_VIEW}>
         {(isOpen, { toggle, close }) => (
           <div>
             {this.props.searchBox}
@@ -221,39 +222,48 @@ class SearchLayout extends React.Component {
                 <span className="button-group">
                   <Button
                     key="filter"
-                    label="Filter"
+                    label={t('Filter')}
                     active={isOpen}
                     onClick={toggle}
                     onKeyPress={toggle}
+                    className="js-filter-button"
                   />
                 </span>
               </span>
             </div>
             {isOpen ? (
-              <div className="filter-panel">
-                <span
-                  className="icon-close"
-                  onClick={close}
-                  onKeyPress={close}
-                  role="button"
-                />
-                <div>
-                  <span className="menu-item">
-                    <span className="label">{t('School type and level')}:</span>
-                    {this.props.entityTypeDropdown}
-                  </span>
-                  <span className="menu-item">
-                    {this.props.gradeLevelButtons}
-                  </span>
-                  <span className="menu-item">
-                    <span className="label">Sort by:</span>
-                    {this.props.sortSelect}
-                  </span>
-                </div>
-                {/* <div className="controls">
+              <CaptureOutsideClick
+                callback={toggle}
+                ignoreClassNames={['js-filter-button']}
+              >
+                <div className="filter-panel">
+                  <span
+                    className="icon-close"
+                    onClick={close}
+                    onKeyPress={close}
+                    role="button"
+                    aria-label={t('Close filters')}
+                  />
+                  <div>
+                    <span className="menu-item">
+                      <span className="label">
+                        {t('School type and level')}:
+                      </span>
+                      {this.props.entityTypeDropdown}
+                    </span>
+                    <span className="menu-item">
+                      {this.props.gradeLevelButtons}
+                    </span>
+                    <span className="menu-item">
+                      <span className="label">{t('Sort by')}:</span>
+                      {this.props.sortSelect}
+                    </span>
+                  </div>
+                  {/* <div className="controls">
                     <button onClick={close}>Done</button>
                   </div> */}
-              </div>
+                </div>
+              </CaptureOutsideClick>
             ) : null}
           </div>
         )}
@@ -269,7 +279,7 @@ class SearchLayout extends React.Component {
           <div className="pagination-summary">{this.props.resultSummary}</div>
           {this.props.size > SM && (
             <div className="menu-item">
-              <span className="label">Sort by:</span>
+              <span className="label">{t('Sort by')}:</span>
               {this.props.sortSelect}
             </div>
           )}

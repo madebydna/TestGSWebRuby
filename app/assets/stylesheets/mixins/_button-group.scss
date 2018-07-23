@@ -14,11 +14,13 @@
   }
 
   > a:hover:not(.disabled) {
-    background-color: $active-background-color;
-    border-top: 1px solid $active-background-color;
-    border-bottom: 1px solid $active-background-color;
-    color: $active-color;
-    background-image: none;
+    @media (hover: hover) {
+      background-color: $active-background-color;
+      border-top: 1px solid $active-background-color;
+      border-bottom: 1px solid $active-background-color;
+      color: $active-color;
+      background-image: none;
+    }
   }
 
   > a:first-child,

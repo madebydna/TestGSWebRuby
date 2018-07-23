@@ -16,7 +16,7 @@ module Search
     def search
       @_search ||= begin
         PageOfResults.new(
-          School.load_all_from_associates(response.results),
+          School.load_all_from_associates(response.results, &:include_district_name),
           query: self,
           total: response.results.total_count,
           offset: offset,
@@ -46,6 +46,8 @@ module Search
         'asc'
       elsif name == 'name'
         'asc'
+      elsif name == 'rating'
+        'desc'
       end
     end
 
