@@ -150,16 +150,16 @@ export default class SearchBox extends React.Component {
 
   geocodeAndSubmit() {
     const { searchTerm, type } = this.state;
-    if (!matchesAddressOrZip(searchTerm)) {
-      this.submit();
-      return;
-    }
-
     if (type === 'parenting') {
       window.location.href = contentSearchResultsPageUrl({
         q: searchTerm
       });
     } else if (type === 'schools') {
+      if (!matchesAddressOrZip(searchTerm)) {
+        this.submit();
+        return;
+      }
+
       geocode(searchTerm)
         .then(json => json[0])
         .done(({ lat, lon, city, state, zip, normalizedAddress } = {}) => {
