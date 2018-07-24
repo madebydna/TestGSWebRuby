@@ -97,7 +97,8 @@ class SearchLayout extends React.Component {
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
     pagination: PropTypes.element,
-    resultSummary: PropTypes.string.isRequired
+    resultSummary: PropTypes.string.isRequired,
+    noResults: PropTypes.element.isRequired
   };
 
   static getDerivedStateFromProps(props) {
@@ -294,22 +295,29 @@ class SearchLayout extends React.Component {
         {this.props.size > SM
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
-        {this.renderBreadcrumbsSummarySort()}
-        <div className="list-map-ad clearfix">
-          <div
-            className={`list-column ${
-              this.shouldRenderList() ? ' ' : 'closed'
-            }`}
-          >
-            {this.props.schoolList}
-          </div>
-          {this.renderMapAndAdContainer(
-            <div className="map-fit">{this.props.map}</div>,
-            this.props.tallAd
-          )}
-          {this.shouldRenderTable() ? this.renderTableView() : null}
-          {this.props.pagination}
-        </div>
+        {}
+        {this.props.noResults ? (
+          this.props.noResults
+        ) : (
+          <React.Fragment>
+            {this.renderBreadcrumbsSummarySort()}
+            <div className="list-map-ad clearfix">
+              <div
+                className={`list-column ${
+                  this.shouldRenderList() ? ' ' : 'closed'
+                }`}
+              >
+                {this.props.schoolList}
+              </div>
+              {this.renderMapAndAdContainer(
+                <div className="map-fit">{this.props.map}</div>,
+                this.props.tallAd
+              )}
+              {this.shouldRenderTable() ? this.renderTableView() : null}
+              {this.props.pagination}
+            </div>
+          </React.Fragment>
+        )}
       </div>
     );
   }

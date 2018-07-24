@@ -114,3 +114,7 @@ export function queryStringWithNewDistance(distance) {
     page
   });
 }
+
+export function getValueForKey(key) {
+  return parse(currentQueryString())[key];
+}

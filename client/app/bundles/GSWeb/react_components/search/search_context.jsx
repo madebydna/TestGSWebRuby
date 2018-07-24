@@ -39,6 +39,7 @@ class SearchProvider extends React.Component {
     lat: gon.search.lat,
     lon: gon.search.lon,
     distance: gon.search.distance,
+    locationLabel: gon.search.locationLabel,
     sort: gon.search.sort,
     page: gon.search.page || 1,
     pageSize: gon.search.pageSize,
@@ -62,6 +63,7 @@ class SearchProvider extends React.Component {
     lat: PropTypes.number,
     lon: PropTypes.number,
     distance: PropTypes.number,
+    locationLabel: PropTypes.string,
     sort: PropTypes.string,
     page: PropTypes.number,
     pageSize: PropTypes.number,
@@ -182,7 +184,8 @@ class SearchProvider extends React.Component {
           sort: this.props.sort,
           page: this.props.page,
           limit: this.props.pageSize,
-          extras: ['students_per_teacher', 'review_summary']
+          extras: ['students_per_teacher', 'review_summary'],
+          locationLabel: this.props.locationLabel
         },
         newState
       )
@@ -234,7 +237,8 @@ class SearchProvider extends React.Component {
           updateView: compose(
             this.props.updateView,
             curry(this.trackParams)('View', this.props.view)
-          )
+          ),
+          q: this.props.q
         }}
       >
         <DistanceContext.Provider
