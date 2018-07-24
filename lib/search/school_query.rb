@@ -53,6 +53,9 @@ module Search
         count: results.total,
         first: results.index_of_first_result,
         last: results.index_of_last_result,
+        city: city,
+        state: state&.upcase,
+        district: district_name,
         search_term: @q.presence,
         location: location_label || @q
       }
