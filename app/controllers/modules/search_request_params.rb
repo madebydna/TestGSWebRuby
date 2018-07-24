@@ -106,7 +106,7 @@ module SearchRequestParams
   end
 
   def location_label_param 
-    params[:locationLabel]
+    params[:locationLabel] || params[:locationSearchString]
   end
 
   def city_record
