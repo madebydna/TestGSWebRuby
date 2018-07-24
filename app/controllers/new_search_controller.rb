@@ -148,22 +148,21 @@ class NewSearchController < ApplicationController
     else
       meta_description = "View and map all #{city_record.name}, #{city_record.state} schools. Plus, compare or save schools"
     end
-    url_without_params = search_city_browse_url[0..(search_city_browse_url.index('?').to_i - 1)]
+
     {
       title: "#{city_browse_title} | GreatSchools",
       description: meta_description,
-      canonical: url_without_params + params_for_canonical,
+      canonical: search_city_browse_url(params_for_canonical),
       prev: (prev_page),
       next: (next_page)
     }
   end
 
   def district_browse_meta_tag_hash
-    url_without_params = search_district_browse_url[0..(search_district_browse_url.index('?').to_i - 1)]
     {
       title: "#{district_browse_title} | GreatSchools",
       description: "Ratings and parent reviews for all elementary, middle and high schools in the #{district_record.name}, #{city_record.state}",
-      canonical: url_without_params + params_for_canonical,
+      canonical: search_district_browse_url(params_for_canonical),
       prev: (prev_page),
       next: (next_page)
     }

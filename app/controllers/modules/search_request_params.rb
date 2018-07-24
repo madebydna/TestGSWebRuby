@@ -147,10 +147,6 @@ module SearchRequestParams
     params[:page] if (/\d+/.match(params[:page]).to_s == params[:page])
   end
 
-  def whitelisted_lang
-    params[:lang] if ['es', 'en'].include?(params[:lang]&.downcase)
-  end
-
   def whitelisted_level_code
     ['e', 'm', 'h', 'p'].include?(level_code) ? level_code : nil
   end
@@ -172,13 +168,7 @@ module SearchRequestParams
   end
 
   def params_for_canonical
-    param_vals_array = []
-    whitelisted_query_params = {'gradeLevels' => whitelisted_level_code,'lang' => whitelisted_lang,'page' => whitelisted_page, 'st' => whitelisted_entity_type }
-    whitelisted_query_params.each do |param, val|
-      param_vals_array << "#{param}=#{val}" if val
-    end
-
-    param_vals_array.present? ? "?#{param_vals_array.join('&')}" : ''
+    {'gradeLevels' => whitelisted_level_code, 'page' => whitelisted_page, 'st' => whitelisted_entity_type }.compact
   end
 
   # reading about API design, I tend to agree that rather than make multiple
