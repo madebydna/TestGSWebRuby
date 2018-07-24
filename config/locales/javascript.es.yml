@@ -1,6 +1,12 @@
 ---
 es:
   javascript:
+    Suggestions: Sugerencias
+    no_results_suggestions:
+      - Asegúrate de que todas las palabras están escritas correctamente.
+      - Prueba diferentes o menos palabras.
+      - Prueba otras palabras más generales.
+      - Try different search filters (e.g. school types or levels).
     Close filters: Cerrar los filtros
     School: Escuela
     Type: Tipo

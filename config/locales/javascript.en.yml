@@ -1,6 +1,12 @@
 ---
 en:
   javascript:
+    Suggestions: Suggestions
+    no_results_suggestions:
+      - Make sure all words are spelled correctly.
+      - Try different or fewer keywords.
+      - Try more general keywords.
+      - Try different search filters (e.g. school types or levels).
     Close filters: Close filters
     School: School
     Type: Type

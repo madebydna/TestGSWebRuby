@@ -18,6 +18,7 @@ import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import SearchBox from '../search_box';
+import NoResults from './no_results';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -27,7 +28,8 @@ class Search extends React.Component {
     loadingSchools: false,
     shouldIncludeDistance: false,
     autoSuggestQuery: () => {},
-    breadcrumbs: []
+    breadcrumbs: [],
+    q: null
   };
 
   static propTypes = {
@@ -52,7 +54,8 @@ class Search extends React.Component {
     ),
     autoSuggestQuery: PropTypes.func,
     view: PropTypes.string.isRequired,
-    updateView: PropTypes.func.isRequired
+    updateView: PropTypes.func.isRequired,
+    q: PropTypes.string
   };
 
   componentDidMount() {
@@ -133,6 +136,11 @@ class Search extends React.Component {
             }
             searchBox={<SearchBox size={this.props.size} />}
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
+            noResults={
+              this.props.schools.length === 0 ? (
+                <NoResults resultSummary={this.props.resultSummary} />
+              ) : null
+            }
           />
         )}
       </DistanceContext.Consumer>

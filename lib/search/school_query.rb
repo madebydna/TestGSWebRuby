@@ -49,20 +49,21 @@ module Search
     end
 
     def result_summary(results)
-      # TODO: requires translation
-      prefix = pagination_summary(results)
-
-      if lat && lon && location_label
-        location_text = "#{location_label}"
-        "#{prefix} #{t('near_address', address: location_text)}"
-      elsif lat && lon && q
-        "#{prefix} #{t('near_address', address: @q)}"
+      params = {
+        count: results.total,
+        first: results.index_of_first_result,
+        last: results.index_of_last_result,
+        search_term: @q.presence,
+        location: location_label || @q
+      }
+      if lat && lon && radius
+        t('distance', **params)
       elsif district_name
-        "#{prefix} #{t('in_district', district: district_name)}"
+        t('district_browse', **params)
       elsif city
-        "#{prefix} #{t('in_city_state', city: city, state: state.upcase)}"
+        t('city_browse', **params)
       elsif @q.present?
-        "#{prefix} for #{@q}"
+        t('search_term', **params)
       end
     end
 

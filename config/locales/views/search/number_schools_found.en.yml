@@ -2,6 +2,22 @@
 en:
   search:
     number_schools_found:
+      city_browse:
+        zero: Your search did not return any schools in %{city}, %{state}
+        one: Showing one school found in %{city}, %{state}
+        other: Showing %{first} to %{last} of %{count} schools found in %{city}, %{state}
+      district_browse:
+        zero: Your search did not return any schools in %{district}
+        one: Showing one school found in %{district}
+        other: Showing %{first} to %{last} of %{count} schools found in %{district}
+      distance:
+        zero: Your search did not return any schools near %{location}
+        one: Showing one school found near %{location}
+        other: Showing %{first} to %{last} of %{count} schools found near %{location}
+      search_term:
+        zero: Your search for <span class="search-term">%{search_term}</span> did not return any results.
+        one: Showing one school found for %{search_term}
+        other: Showing %{first} to %{last} of %{count} schools found for %{search_term}
       in_city_state: in %{city}, %{state}
       in_district: in %{district}
       near_address: near %{address}

@@ -71,6 +71,7 @@ export function find({
   lon,
   distance,
   sort,
+  locationLabel,
   extras = [],
   page = 1,
   limit = 25
@@ -103,6 +104,9 @@ export function find({
   }
   if (extras) {
     data.extras = extras.join(',');
+  }
+  if (locationLabel) {
+    data.locationLabel = locationLabel;
   }
   const currentParams = parse(window.location.search);
   data.lang = currentParams.lang;
