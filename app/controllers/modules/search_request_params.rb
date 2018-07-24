@@ -144,11 +144,23 @@ module SearchRequestParams
   end
 
   def city_browse?
-    state && city
+    state && city && !district
   end
 
   def zip_code_search?
     /^\d{5}+$/.match?(q)
+  end
+
+  def whitelisted_page
+    params[:page] if (/\d+/.match(params[:page]).to_s == params[:page])
+  end
+
+  def whitelisted_level_code
+    ['e', 'm', 'h', 'p'].include?(level_code) ? level_code : nil
+  end
+
+  def whitelisted_entity_type
+    ['public', 'private', 'charter'].include?(entity_types.first) ? entity_types.first : nil
   end
 
   def search_type
@@ -161,6 +173,10 @@ module SearchRequestParams
     else
       :other
     end
+  end
+
+  def params_for_canonical
+    {'gradeLevels' => whitelisted_level_code, 'page' => whitelisted_page, 'st' => whitelisted_entity_type }.compact
   end
 
   # reading about API design, I tend to agree that rather than make multiple
