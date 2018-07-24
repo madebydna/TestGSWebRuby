@@ -6,16 +6,12 @@ import SearchResultsList from './search_results_list';
 import Selectable from 'react_components/selectable';
 import Dropdown from 'react_components/search/dropdown';
 import { createPortal } from 'react-dom';
-import { reduce, debounce } from 'lodash';
-import { addQueryParamToUrl, copyParam } from 'util/uri';
+import { reduce, debounce, cloneDeep } from 'lodash';
 import { SM, validSizes, viewport } from 'util/viewport';
 import { geocode } from 'components/geocoding';
 import suggest from 'api_clients/autosuggest';
 import { parse, stringify } from 'query-string';
-import {
-  init as initGoolePlacesApi,
-  getAddressPredictions
-} from 'api_clients/google_places';
+import { getAddressPredictions } from 'api_clients/google_places';
 import { init as initGoogleMaps } from 'components/map/google_maps';
 import { href } from 'util/search';
 import { analyticsEvent } from 'util/page_analytics';
@@ -93,8 +89,6 @@ export default class SearchBox extends React.Component {
       type: 'schools',
       selectedListItem: -1,
       navigateToSelectedListItem: false,
-      lat: null,
-      lon: null,
       autoSuggestResults: {
         Addresses: [],
         Zipcodes: [],
@@ -172,7 +166,7 @@ export default class SearchBox extends React.Component {
           if (matchesZip(searchTerm) && !matchesAddress(searchTerm)) {
             params.locationLabel = `${city}, ${state} ${zip}`;
           } else {
-            params.locationLabel = normalizedAddress.replace(', USA', '');
+            params.locationLabel = normalizedAddress;
           }
           window.location.href = newSearchResultsPageUrl(params);
         })
@@ -233,17 +227,15 @@ export default class SearchBox extends React.Component {
   */
   autoSuggestQuery(q) {
     if (q.length >= 3) {
-      if (q.match(/^[0-9]{3}.*/)) {
+      if (matchesAddress(q)) {
         initGoogleMaps(() => {
           getAddressPredictions(q, addresses => {
-            const newResults = { ...this.state.autoSuggestResults };
-            newResults.Addresses = addresses
-              .map(address => address.replace(', USA', ''))
-              .map(address => ({
-                title: address,
-                value: address,
-                address
-              }));
+            const newResults = cloneDeep(this.state.autoSuggestResults);
+            newResults.Addresses = addresses.map(address => ({
+              title: address,
+              value: address,
+              address
+            }));
             this.setState({ autoSuggestResults: newResults });
           });
         });

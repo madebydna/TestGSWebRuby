@@ -48,7 +48,9 @@ const getAddressPredictions = (query, callback) => {
       } else {
         callback.call(
           this,
-          predictions.map(prediction => prediction.description)
+          predictions.map(prediction =>
+            prediction.description.replace(', USA', '')
+          )
         );
       }
     }
