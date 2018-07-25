@@ -17,6 +17,7 @@ module Pagination
     end
 
     def given_page
+      return nil unless /\d+/.match(params[page_param_name]).to_s == params[page_param_name]
       p = params[page_param_name]&.to_i
       [p, 1].max if p
     end
