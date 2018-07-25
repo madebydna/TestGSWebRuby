@@ -34,7 +34,7 @@ module Search
         .select { |zip, count| count > 0 }
         .map(&:first) # grab only the zip
         .select do |zip|
-          first_numbers = q.match(/^(\d+)/)[0]
+          first_numbers = q.match(/^(\d+)/).try(:[],0)
           zip.present? && first_numbers.present? && zip.start_with?(first_numbers)
         end # can have empty string
         .map { |zip| {zip: zip, type: 'zip'}}
