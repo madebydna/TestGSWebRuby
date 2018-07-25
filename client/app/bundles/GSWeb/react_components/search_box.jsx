@@ -133,10 +133,10 @@ export default class SearchBox extends React.Component {
 
   selectAndSubmit(close) {
     return item => {
-      analyticsEvent('autosuggest', `select ${item.category}`, item.value);
+      analyticsEvent('autosuggest', `select ${item.category}`, item.title);
       close();
-      if (item.address) {
-        this.setState({ searchTerm: item.address }, this.geocodeAndSubmit);
+      if (item.type === 'zip' || item.type === 'address') {
+        this.setState({ searchTerm: item.value }, this.geocodeAndSubmit);
       } else {
         this.setState({ searchTerm: item.value }, this.submit);
       }
@@ -233,9 +233,9 @@ export default class SearchBox extends React.Component {
           getAddressPredictions(q, addresses => {
             const newResults = cloneDeep(this.state.autoSuggestResults);
             newResults.Addresses = addresses.map(address => ({
+              type: 'address',
               title: address,
-              value: address,
-              address
+              value: address
             }));
             this.setState({ autoSuggestResults: newResults });
           });
@@ -419,7 +419,7 @@ export default class SearchBox extends React.Component {
                   </div>
                 )}
             </div>
-            <div className="search_bar_button" onClick={this.submit}>
+            <div className="search_bar_button" onClick={this.geocodeAndSubmit}>
               <button type="submit" className="search_form_button">
                 <span className="search_icon_image_white" />
               </button>

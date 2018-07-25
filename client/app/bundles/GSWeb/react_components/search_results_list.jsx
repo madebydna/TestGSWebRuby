@@ -42,12 +42,13 @@ const resultTypes = {
     additionalInfo: ({ city, state }) => `${city}, ${state}`
   },
   Zipcodes: {
-    title: ({ zip }) => t('Schools in', { parameters: { location: zip } }),
+    title: ({ value }) =>
+      t('Schools near', { parameters: { location: value } }),
     additionalInfo: () => null
   },
   Addresses: {
-    title: ({ address }) =>
-      t('Schools near', { parameters: { location: address } }),
+    title: ({ value }) =>
+      t('Schools near', { parameters: { location: value } }),
     additionalInfo: () => null
   }
 };
