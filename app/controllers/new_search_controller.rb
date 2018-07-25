@@ -30,8 +30,8 @@ class NewSearchController < ApplicationController
     set_ad_targeting_props
     set_page_analytics_data
     set_meta_tags(alternate: {
-      en: url_for(params.merge(lang: nil)),
-      es: url_for(params.merge(lang: :es))
+      en: url_for(params_for_rel_alternate.merge(lang: nil)),
+      es: url_for(params_for_rel_alternate.merge(lang: :es))
     })
   end
 
@@ -191,7 +191,7 @@ class NewSearchController < ApplicationController
       'charter' => 'Public Charter ',
       'public' => 'Public ',
       'private' => 'Private '
-    }[whitelisted_entity_type]
+    }[entity_type]
   end
 
   def level_code_long
@@ -200,12 +200,28 @@ class NewSearchController < ApplicationController
       'm' => 'Middle ',
       'h' => 'High ',
       'p' => nil
-    }[whitelisted_level_code]
+    }[level_code]
   end
 
   def schools_or_preschools
     school_preschool_map = Hash.new('Schools').merge('p' => 'Preschools')
-    school_preschool_map[whitelisted_level_code]
+    school_preschool_map[level_code]
+  end
+
+  def params_for_canonical
+    {
+      grade_level_param_name => level_code,
+      page_param_name => given_page,
+      school_type_param_name => entity_type
+    }.compact
+  end
+
+  def params_for_rel_alternate
+    {
+      grade_level_param_name => level_codes,
+      page_param_name => given_page,
+      school_type_param_name => entity_types,
+    }.compact
   end
 
 end

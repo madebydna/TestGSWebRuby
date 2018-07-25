@@ -32,9 +32,9 @@ module SearchRequestParams
 
   def level_codes
     params = parse_array_query_string(request.query_string)
-    codes = params['gradeLevels'] || params['level_code'] || []
+    codes = params[grade_level_param_name] || params['level_code'] || []
     codes = codes.split(',') unless codes.is_a?(Array)
-    codes
+    codes & ['e', 'm', 'h', 'p']
   end
 
   def level_code
@@ -45,7 +45,11 @@ module SearchRequestParams
     params = parse_array_query_string(request.query_string)
     types = params['st'] || params['type'] || []
     types = types.split(',') unless types.is_a?(Array)
-    types
+    types & ['public', 'private', 'charter']
+  end
+
+  def entity_type
+    entity_types.first
   end
 
   def lat
@@ -151,18 +155,6 @@ module SearchRequestParams
     /^\d{5}+$/.match?(q)
   end
 
-  def whitelisted_page
-    params[:page] if (/\d+/.match(params[:page]).to_s == params[:page])
-  end
-
-  def whitelisted_level_code
-    ['e', 'm', 'h', 'p'].include?(level_code) ? level_code : nil
-  end
-
-  def whitelisted_entity_type
-    ['public', 'private', 'charter'].include?(entity_types.first) ? entity_types.first : nil
-  end
-
   def search_type
     if district_browse?
       :district_browse
@@ -173,10 +165,6 @@ module SearchRequestParams
     else
       :other
     end
-  end
-
-  def params_for_canonical
-    {'gradeLevels' => whitelisted_level_code, 'page' => whitelisted_page, 'st' => whitelisted_entity_type }.compact
   end
 
   # reading about API design, I tend to agree that rather than make multiple
@@ -192,6 +180,18 @@ module SearchRequestParams
 
   def extras_param
     params[:extras]&.split(',') || []
+  end
+
+  def grade_level_param_name
+    'gradeLevels'
+  end
+
+  def page_param_name
+    'page'
+  end
+
+  def school_type_param_name
+    'st'
   end
 
   # to be overridden by controller
