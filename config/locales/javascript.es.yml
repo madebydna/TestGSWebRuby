@@ -1,12 +1,25 @@
 ---
 es:
   javascript:
+    City, zip, address or school: Ciudad, código postal, dirección o escuela
+    Articles, worksheets and more: Artículos, hoja de ejercicios y más
+    Mile: Milla
+    Miles: Millas
+    Parenting: Crianza
+    Search all results for: Buscar todos los resultados para {searchTerm}
+    Addresses: Direcciones
+    Zipcodes: Códigos ZIP
+    Districts: Distritos
+    Cities: Ciudades
+    Schools: Escuelas
+    Schools in: Escuelas en {location}
+    Schools near: Escuelas cerca de {location}
     Suggestions: Sugerencias
     no_results_suggestions:
       - Asegúrate de que todas las palabras están escritas correctamente.
       - Prueba diferentes o menos palabras.
       - Prueba otras palabras más generales.
-      - Try different search filters (e.g. school types or levels).
+      - Prueba otros filtros.
     Close filters: Cerrar los filtros
     School: Escuela
     Type: Tipo

@@ -1,6 +1,19 @@
 ---
 en:
   javascript:
+    City, zip, address or school: City, zip, address or school
+    Articles, worksheets and more: Articles, worksheets and more
+    Mile: Mile
+    Miles: Miles
+    Parenting: Parenting
+    Search all results for: Search all results for {searchTerm}
+    Addresses: Addresses
+    Zipcodes: Zipcodes
+    Districts: Districts
+    Cities: Cities
+    Schools: Schools
+    Schools in: Schools in {location}
+    Schools near: Schools near {location}
     Suggestions: Suggestions
     no_results_suggestions:
       - Make sure all words are spelled correctly.
