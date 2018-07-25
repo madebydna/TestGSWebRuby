@@ -34,9 +34,9 @@ const renderEnrollment = enrollment => {
 };
 
 const numReviewsLink = (numReviews, reviewsUrl) =>
-  numReviews ? (
+  numReviews && numReviews > 0 ? (
     <a href={reviewsUrl}>
-      {numReviews} {t('reviews.reviews')}
+      {numReviews} {numReviews > 1 ? t('reviews.reviews') : t('reviews.review')}
     </a>
   ) : (
     t('reviews.No reviews yet')
@@ -95,7 +95,7 @@ const SchoolTableRow = ({
           </span>
         </React.Fragment>
       </td>
-      <td>{clarifySchoolType(schoolType)}</td>
+      <td>{capitalize(clarifySchoolType(schoolType))}</td>
       <td>{gradeLevels}</td>
       <td>{renderEnrollment(enrollment)}</td>
       <td>{studentsPerTeacher ? `${studentsPerTeacher}:1` : 'N/A'}</td>

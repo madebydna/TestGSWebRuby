@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { t } from 'util/I18n';
+import { t } from 'util/i18n';
 
 const DistanceFilter = ({ distance, onChange }) => {
   const range = [2, 3, 4, 5, 10, 15, 20, 25, 30, 60];

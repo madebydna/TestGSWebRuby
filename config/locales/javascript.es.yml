@@ -80,6 +80,7 @@ es:
       people: personas
       person: persona
       share_review_caption: 'Opinión de usuarios de la '
+      review: opinión
       reviews: opiniones
       No reviews yet: Sin opiniones
     school_picker:
