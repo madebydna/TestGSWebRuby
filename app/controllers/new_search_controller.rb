@@ -156,7 +156,12 @@ class NewSearchController < ApplicationController
     {
       title: "#{city_browse_title} | GreatSchools",
       description: meta_description,
-      canonical: search_city_browse_url(params_for_canonical),
+      canonical: search_city_browse_url(
+        params_for_canonical.merge(
+          city: gs_legacy_url_encode(city),
+          state: gs_legacy_url_encode(States.state_name(state))
+        )
+      ),
       prev: (prev_page),
       next: (next_page)
     }
@@ -166,7 +171,13 @@ class NewSearchController < ApplicationController
     {
       title: "#{district_browse_title} | GreatSchools",
       description: "Ratings and parent reviews for all elementary, middle and high schools in the #{district_record.name}, #{city_record.state}",
-      canonical: search_district_browse_url(params_for_canonical),
+      canonical: search_district_browse_url(
+        params_for_canonical.merge(
+          district_name: gs_legacy_url_encode(district),
+          city: gs_legacy_url_encode(city),
+          state: gs_legacy_url_encode(States.state_name(state))
+        )
+      ),
       prev: (prev_page),
       next: (next_page)
     }
