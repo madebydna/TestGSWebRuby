@@ -2,7 +2,7 @@
 <html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
   <%= display_meta_tags %>
-  <%= render 'layouts/common_prefetches' unless content_for? :head %>
+  <%= render 'layouts/common_prefetches' %>
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "deprecated_application", media: "all", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "deprecated_print",       media: "print" %>

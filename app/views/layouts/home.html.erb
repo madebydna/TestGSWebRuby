@@ -2,7 +2,7 @@
 <html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
   <%= display_meta_tags %>
-  <%= render 'layouts/common_prefetches' unless content_for? :head %>
+  <%= render 'layouts/common_prefetches' %>
   <%= yield :stylesheet_includes %>
   <%= yield :page_stylesheets %>
   <link rel="preload" href="<%= asset_path('icon-greatschools.woff?6dfdhg', format:'woff') %>" as="font" type="font/woff" crossorigin>

@@ -10,9 +10,9 @@
 <head>
   <%= display_meta_tags %>
 
-  <%= yield :page_stylesheets %>
+  <%= render 'layouts/common_prefetches' %>
 
-  <%= render 'layouts/common_prefetches' unless content_for? :head %>
+  <%= yield :page_stylesheets %>
 
   <%= render 'layouts/preloads' %>
 
