@@ -15,6 +15,7 @@ import { getAddressPredictions } from 'api_clients/google_places';
 import { init as initGoogleMaps } from 'components/map/google_maps';
 import { href } from 'util/search';
 import { analyticsEvent } from 'util/page_analytics';
+import { t } from 'util/i18n';
 
 // Matches only 5 digits
 // Todo currently 3-4 schools would match this regex,
@@ -45,11 +46,11 @@ const matchesAddressOrZip = string =>
 const options = [
   {
     key: 'schools',
-    label: <span>Schools</span>
+    label: <span>{t('Schools')}</span>
   },
   {
     key: 'parenting',
-    label: <span>Parenting</span>
+    label: <span>{t('Parenting')}</span>
   }
 ];
 
@@ -124,9 +125,9 @@ export default class SearchBox extends React.Component {
 
   placeholderText() {
     if (this.state.type === 'schools') {
-      return 'City, zip, address or school';
+      return t('City, zip, address or school');
     } else if (this.state.type === 'parenting') {
-      return 'Articles, worksheets and more';
+      return t('Articles, worksheets and more');
     }
   }
 

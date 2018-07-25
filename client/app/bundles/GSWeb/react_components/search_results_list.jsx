@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { href } from 'util/search';
+import { t, capitalize } from 'util/i18n';
 
 const boldSearchTerms = (string, substring) => {
   const tokens = substring.trim().split(/\s+/);
@@ -31,19 +32,22 @@ const resultTypes = {
     additionalInfo: ({ city, state, zip }) => `${city}, ${state} ${zip || ''}`
   },
   Cities: {
-    title: ({ city, state }) => `Schools in ${city}, ${state}`,
+    title: ({ city, state }) =>
+      t('Schools in', { parameters: { location: `${city}, ${state}` } }),
     additionalInfo: () => null
   },
   Districts: {
-    title: ({ district }) => `Schools in ${district}`,
+    title: ({ district }) =>
+      t('Schools in', { parameters: { location: district } }),
     additionalInfo: ({ city, state }) => `${city}, ${state}`
   },
   Zipcodes: {
-    title: ({ zip }) => `Schools in ${zip}`,
+    title: ({ zip }) => t('Schools in', { parameters: { location: zip } }),
     additionalInfo: () => null
   },
   Addresses: {
-    title: ({ address }) => `Schools near ${address}`,
+    title: ({ address }) =>
+      t('Schools near', { parameters: { location: address } }),
     additionalInfo: () => null
   }
 };
@@ -61,7 +65,7 @@ const SearchResultsList = ({
 }) => {
   const groupNameListItem = name => (
     <li key={`category ${name}`} className="search-results-list-group-name">
-      {name[0].toUpperCase() + name.slice(1)}
+      {t(capitalize(name))}
     </li>
   );
 
@@ -92,7 +96,7 @@ const SearchResultsList = ({
       className="search-results-list-item"
       onClick={() => onSelect({ value: searchTerm })}
     >
-      {`Search all results for "${searchTerm}"`}
+      {t('Search all results for', { parameters: { searchTerm } })}
     </li>
   );
 
