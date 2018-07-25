@@ -12,6 +12,8 @@
 
   <%= yield :page_stylesheets %>
 
+  <%= render 'layouts/common_prefetches' unless content_for? :head %>
+
   <%= render 'layouts/preloads' %>
 
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
