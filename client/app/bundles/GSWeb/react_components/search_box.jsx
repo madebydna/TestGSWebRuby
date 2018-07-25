@@ -251,34 +251,7 @@ export default class SearchBox extends React.Component {
         };
         Object.keys(results).forEach(category => {
           (results[category] || []).forEach(result => {
-            const { school, district = '', city, state, url, zip } = result;
-
-            let title = null;
-            let additionalInfo = null;
-            let value = null;
-            let address = null;
-            if (category === 'Schools') {
-              title = school;
-              additionalInfo = `${city}, ${state} ${zip || ''}`;
-            } else if (category === 'Cities') {
-              title = `Schools in ${city}, ${state}`;
-            } else if (category === 'Districts') {
-              title = `Schools in ${district}`;
-              additionalInfo = `${city}, ${state}`;
-            } else if (category === 'Zipcodes') {
-              title = `Schools in ${zip}`;
-              value = zip;
-              address = zip;
-            }
-
-            adaptedResults[category].push({
-              title,
-              additionalInfo,
-              url,
-              value,
-              address,
-              category
-            });
+            adaptedResults[category].push(result);
           });
         });
         adaptedResults.Addresses = this.state.autoSuggestResults.Addresses;

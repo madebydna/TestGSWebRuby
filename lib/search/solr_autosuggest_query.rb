@@ -33,12 +33,15 @@ module Search
         .each_slice(2)
         .select { |zip, count| count > 0 }
         .map(&:first) # grab only the zip
-        .select { |zip| zip.present? } # can have empty string
+        .select do |zip|
+          first_numbers = q.match(/^(\d+)/)[0]
+          zip.present? && first_numbers.present? && zip.start_with?(first_numbers)
+        end # can have empty string
         .map { |zip| {zip: zip, type: 'zip'}}
     end
 
     def q
-      @q&.downcase
+      @q&.downcase.strip
     end
 
     def standardize(solr_result)
@@ -132,7 +135,7 @@ module Search
     def sunspot_query
       lambda do |search|
         # search.keywords(q)
-        search.keywords("+(#{query_fragments.join(' ')})")
+        search.keywords("#{query_fragments.join(' ')}")
         search.paginate(page: 1, per_page: limit)
         search.adjust_solr_params do |params|
           params[:fq][0] = nil
