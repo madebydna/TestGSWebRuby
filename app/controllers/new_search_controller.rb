@@ -29,6 +29,10 @@ class NewSearchController < ApplicationController
     set_search_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
+    set_meta_tags(alternate: {
+      en: url_for(params.merge(lang: nil)),
+      es: url_for(params.merge(lang: :es))
+    })
   end
 
   private

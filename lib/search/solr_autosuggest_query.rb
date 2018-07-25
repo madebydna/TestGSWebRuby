@@ -37,7 +37,7 @@ module Search
           first_numbers = q.match(/^(\d+)/).try(:[],0)
           zip.present? && first_numbers.present? && zip.start_with?(first_numbers)
         end # can have empty string
-        .map { |zip| {zip: zip, type: 'zip'}}
+        .map { |zip| {value: zip, type: 'zip'}}
     end
 
     def q

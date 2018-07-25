@@ -82,6 +82,7 @@ en:
       person: person
       share_review_caption: 'User review of '
       reviews: reviews
+      review: review
       No reviews yet: No reviews yet
     school_picker:
       city: city
