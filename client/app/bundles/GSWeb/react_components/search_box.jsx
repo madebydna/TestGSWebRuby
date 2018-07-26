@@ -307,6 +307,45 @@ export default class SearchBox extends React.Component {
     }
   }
 
+  inputBox = ({ open, close }) => (
+    <form
+      action="#"
+      onSubmit={e => {
+        e.preventDefault();
+        return false;
+      }}
+    >
+      {/* Form and action makes iOS button say 'Go' */}
+      <input
+        onKeyDown={e => this.handleKeyDown(e, { close })}
+        onChange={this.onTextChanged({ open, close })}
+        type="text"
+        className="full-width pam search_form_field"
+        placeholder={this.placeholderText()}
+        value={this.state.searchTerm}
+        maxLength={60}
+      />
+    </form>
+  );
+
+  searchButton = () => (
+    <div className="search_bar_button" onClick={this.geocodeAndSubmit}>
+      <button type="submit" className="search_form_button">
+        <span className="search_icon_image_white" />
+      </button>
+    </div>
+  );
+
+  searchResultsList = ({ close }) => (
+    <SearchResultsList
+      listGroups={this.state.autoSuggestResults}
+      searchTerm={this.state.searchTerm}
+      onSelect={this.selectAndSubmit(close)}
+      selectedListItem={this.state.selectedListItem}
+      navigateToSelectedListItem={this.state.navigateToSelectedListItem}
+    />
+  );
+
   renderDesktop() {
     return createPortal(
       <OpenableCloseable>
@@ -328,36 +367,16 @@ export default class SearchBox extends React.Component {
             >
               {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
               <div style={{ flexGrow: 2 }}>
-                <input
-                  onKeyDown={e => this.handleKeyDown(e, { close })}
-                  onChange={this.onTextChanged({ open, close })}
-                  type="text"
-                  className="full-width pam search_form_field"
-                  placeholder={this.placeholderText()}
-                  value={this.state.searchTerm}
-                  maxLength={60}
-                />
+                {this.inputBox({ open, close })}
                 {isOpen &&
                   this.shouldRenderResults() && (
                     <div className="search-results-list">
-                      <SearchResultsList
-                        listGroups={this.state.autoSuggestResults}
-                        searchTerm={this.state.searchTerm}
-                        onSelect={this.selectAndSubmit(close)}
-                        selectedListItem={this.state.selectedListItem}
-                        navigateToSelectedListItem={
-                          this.state.navigateToSelectedListItem
-                        }
-                      />
+                      {this.searchResultsList({ close })}
                     </div>
                   )}
               </div>
             </CaptureOutsideClick>
-            <div className="search_bar_button" onClick={this.geocodeAndSubmit}>
-              <button type="submit" className="search_form_button">
-                <span className="search_icon_image_white" />
-              </button>
-            </div>
+            {this.searchButton()}
           </div>
         )}
       </OpenableCloseable>,
@@ -381,6 +400,7 @@ export default class SearchBox extends React.Component {
               {opts =>
                 opts.map(({ option, active, select }) => (
                   <div
+                    key={option.key}
                     onClick={select}
                     className={`mobile-toggle-button font-size-medium tac tav ${
                       active ? 'active' : ''
@@ -393,37 +413,18 @@ export default class SearchBox extends React.Component {
             </Selectable>
 
             <div style={{ flexGrow: 2 }}>
-              <input
-                onKeyDown={e => this.handleKeyDown(e, { close })}
-                onChange={this.onTextChanged({ open, close })}
-                type="text"
-                className="full-width pam search_form_field"
-                placeholder={this.placeholderText()}
-                value={this.state.searchTerm}
-              />
+              {this.inputBox({ open, close })}
               {isOpen &&
                 this.shouldRenderResults() && (
                   <div
                     className="search-results-list"
                     style={{ maxHeight: viewport().height - 160 }}
                   >
-                    <SearchResultsList
-                      listGroups={this.state.autoSuggestResults}
-                      searchTerm={this.state.searchTerm}
-                      onSelect={this.selectAndSubmit(close)}
-                      selectedListItem={this.state.selectedListItem}
-                      navigateToSelectedListItem={
-                        this.state.navigateToSelectedListItem
-                      }
-                    />
+                    {this.searchResultsList({ close })}
                   </div>
                 )}
             </div>
-            <div className="search_bar_button" onClick={this.geocodeAndSubmit}>
-              <button type="submit" className="search_form_button">
-                <span className="search_icon_image_white" />
-              </button>
-            </div>
+            {this.searchButton()}
           </div>
         )}
       </OpenableCloseable>,

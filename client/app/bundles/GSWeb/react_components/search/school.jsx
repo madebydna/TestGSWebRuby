@@ -31,10 +31,8 @@ const renderRating = (rating, ratingScale) => {
           {rating}
           {rating && <span className="rating-circle-small">/10</span>}
         </div>
-        <div className="scale">
-          {ratingScale || 'Currently unrated'}
-          <span className="info-circle icon-info" />
-        </div>
+        <div className="scale">{ratingScale || 'Currently unrated'}</div>
+        <span className="info-circle icon-info" />
       </React.Fragment>
     </ModalTooltip>
   );

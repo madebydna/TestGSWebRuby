@@ -46,6 +46,9 @@ class LoadingOverlay extends React.Component {
   }
 
   updateHeight() {
+    if(!this.domElement.current) {
+      return;
+    }
     const parent = this.domElement.current.parentNode;
     this.setState({
       top: Math.max(0, amountElementTopAboveViewport(parent)),
