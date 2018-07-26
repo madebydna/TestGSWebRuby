@@ -308,7 +308,13 @@ export default class SearchBox extends React.Component {
   }
 
   inputBox = ({ open, close }) => (
-    <form action="#">
+    <form
+      action="#"
+      onSubmit={e => {
+        e.preventDefault();
+        return false;
+      }}
+    >
       {/* Form and action makes iOS button say 'Go' */}
       <input
         onKeyDown={e => this.handleKeyDown(e, { close })}
