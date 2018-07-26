@@ -381,6 +381,7 @@ export default class SearchBox extends React.Component {
               {opts =>
                 opts.map(({ option, active, select }) => (
                   <div
+                    key={option.key}
                     onClick={select}
                     className={`mobile-toggle-button font-size-medium tac tav ${
                       active ? 'active' : ''

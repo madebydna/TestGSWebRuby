@@ -78,7 +78,8 @@ class SearchLayout extends React.Component {
   static defaultProps = {
     breadcrumbs: null,
     distanceFilter: null,
-    pagination: null
+    pagination: null,
+    noResults: null
   };
 
   static propTypes = {
@@ -86,7 +87,6 @@ class SearchLayout extends React.Component {
     view: PropTypes.string.isRequired,
     gradeLevelButtons: PropTypes.element.isRequired,
     entityTypeDropdown: PropTypes.element.isRequired,
-    gradeLevelCheckboxes: PropTypes.element.isRequired,
     distanceFilter: PropTypes.element,
     sortSelect: PropTypes.element.isRequired,
     listMapTableSelect: PropTypes.element.isRequired,
@@ -98,7 +98,7 @@ class SearchLayout extends React.Component {
     breadcrumbs: PropTypes.element,
     pagination: PropTypes.element,
     resultSummary: PropTypes.string.isRequired,
-    noResults: PropTypes.element.isRequired
+    noResults: PropTypes.element
   };
 
   static getDerivedStateFromProps(props) {

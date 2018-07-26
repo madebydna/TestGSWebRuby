@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { t } from 'util/i18n';
 import School from './school';
 import LoadingOverlay from './loading_overlay';
 import SchoolTableRow from './school_table_row';
-import { t } from 'util/i18n';
 
 const SchoolTable = ({ schools, isLoading }) => (
   <section className="school-table">
@@ -27,7 +27,9 @@ const SchoolTable = ({ schools, isLoading }) => (
           <th>{t('District')}</th>
         </tr>
       </thead>
-      <tbody>{schools.map(s => <SchoolTableRow {...s} />)}</tbody>
+      <tbody>
+        {schools.map(s => <SchoolTableRow key={s.state + s.id} {...s} />)}
+      </tbody>
     </table>
   </section>
 );
