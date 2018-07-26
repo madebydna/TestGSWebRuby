@@ -32,7 +32,7 @@ const renderRating = (rating, ratingScale) => {
           <div className={className}>
             {rating}
             {rating && <span className="rating-circle-small">/10</span>}
-          </div> : <img alt="" src={unratedSchoolIcon} />}
+          </div> : <img alt="Owl icon for unrated school" src={unratedSchoolIcon} />}
         <div className="scale">
           {ratingScale || t('Currently unrated')}
           <span className="info-circle icon-info" />
