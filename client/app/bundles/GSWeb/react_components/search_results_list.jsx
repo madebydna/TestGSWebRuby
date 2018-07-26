@@ -78,7 +78,7 @@ const SearchResultsList = ({
       return (
         <li
           onClick={listItem.url ? () => {} : () => onSelect(listItem)}
-          key={listItem.title + listItem.url}
+          key={group + title + listItem.url}
           className={`search-results-list-item${
             order.counter === selectedListItem ? ' selected' : ''
           }`}
