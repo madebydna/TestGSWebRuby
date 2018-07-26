@@ -1,5 +1,6 @@
 import { t } from '../../util/i18n';
 
+const GRAY = 'rgb(150,150,150)';
 const DARK_GRAY = 'rgb(104,104,104)';
 const WHITE = 'rgb(255,255,255)';
 const LIGHT_BLUE = 'rgb(232,247,250)';
@@ -76,8 +77,8 @@ const pinWithoutRatingDisc = highlighted =>
     cx="13"
     cy="13"
     r="11.5"
-    stroke="${highlighted ? LIGHT_BLUE : DARK_GRAY}"
-    fill="${highlighted ? DARK_GRAY : LIGHT_BLUE}"
+    stroke="${highlighted ? DARK_GRAY : DARK_GRAY}"
+    fill="${highlighted ? WHITE : GRAY}"
   />`;
 
 const svg = (width, height, content) =>
