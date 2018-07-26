@@ -1,3 +1,5 @@
+import 'core-js/es6/set';
+import 'core-js/fn/array/find';
 import ReactOnRails from 'react-on-rails';
 import configureStore from './store/appStore';
 import Search from './react_components/search/search';
