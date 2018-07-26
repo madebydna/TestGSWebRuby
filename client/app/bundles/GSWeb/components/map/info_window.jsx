@@ -1,6 +1,7 @@
 import React from 'react';
 import jsxToString from 'jsx-to-string';
 import { capitalize, t } from 'util/i18n';
+import unratedSchoolIcon from 'school_profiles/owl.png';
 import { getHomesForSaleHref, studentsPhrase, schoolTypePhrase } from 'util/school'
 
 export default function createInfoWindow(entity) {
@@ -30,6 +31,13 @@ export default function createInfoWindow(entity) {
               {scaleString}
             </div>);
       }
+    } else {
+      return (
+        <div class="rating-container">
+          <img src={unratedSchoolIcon} />
+          <div class="rating-scale">{t('Currently unrated')}</div>
+        </div>
+      )
     }
     let shape = 'circle';
     if(entity.type == 'school' && entity.schoolType == 'private') {

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
+import unratedSchoolIcon from 'school_profiles/owl.png';
 import {
   getHomesForSaleHref,
   studentsPhrase,
@@ -27,12 +28,14 @@ const renderRating = (rating, ratingScale) => {
   return (
     <ModalTooltip content={content}>
       <React.Fragment>
-        <div className={className}>
-          {rating}
-          {rating && <span className="rating-circle-small">/10</span>}
+        {rating ? 
+          <div className={className}>
+            {rating && <span className="rating-circle-small">/10</span>}
+          </div> : <img alt="" src={unratedSchoolIcon} />}
+        <div className="scale">
+          {ratingScale || t('Currently unrated')}
+          <span className="info-circle icon-info" />
         </div>
-        <div className="scale">{ratingScale || 'Currently unrated'}</div>
-        <span className="info-circle icon-info" />
       </React.Fragment>
     </ModalTooltip>
   );
