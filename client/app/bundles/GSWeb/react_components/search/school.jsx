@@ -30,6 +30,7 @@ const renderRating = (rating, ratingScale) => {
       <React.Fragment>
         {rating ? 
           <div className={className}>
+            {rating}
             {rating && <span className="rating-circle-small">/10</span>}
           </div> : <img alt="" src={unratedSchoolIcon} />}
         <div className="scale">
