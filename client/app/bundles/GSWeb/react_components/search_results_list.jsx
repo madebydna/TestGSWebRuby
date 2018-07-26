@@ -124,7 +124,6 @@ const SearchResultsList = ({
 SearchResultsList.propTypes = {
   onSelect: PropTypes.func.isRequired,
   selectedListItem: PropTypes.number,
-  navigateToSelectedListItem: PropTypes.bool,
   listGroups: PropTypes.object,
   searchTerm: PropTypes.string
 };
