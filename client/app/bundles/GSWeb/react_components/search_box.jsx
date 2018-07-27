@@ -167,9 +167,11 @@ export default class SearchBox extends React.Component {
           if (matchesZip(searchTerm) && !matchesAddress(searchTerm)) {
             params.locationLabel = `${city}, ${state} ${zip}`;
             params.locationType = 'zip';
+            params.state = state;
           } else {
             params.locationLabel = normalizedAddress;
             params.locationType = 'street_address';
+            params.state = state;
           }
           window.location.href = newSearchResultsPageUrl(params);
         })
@@ -348,19 +350,21 @@ export default class SearchBox extends React.Component {
     />
   );
 
-  renderDesktop() {
+  renderDesktop(element, renderDropdown = true) {
     return createPortal(
       <OpenableCloseable>
         {(isOpen, { open, close } = {}) => (
           <div className="search-box">
-            <Dropdown
-              mouseOver
-              options={options}
-              onSelect={opt => {
-                this.setState({ type: opt.key });
-              }}
-              activeOption={options.find(opt => opt.key === this.state.type)}
-            />
+            {renderDropdown ? (
+              <Dropdown
+                mouseOver
+                options={options}
+                onSelect={opt => {
+                  this.setState({ type: opt.key });
+                }}
+                activeOption={options.find(opt => opt.key === this.state.type)}
+              />
+            ) : null}
             <CaptureOutsideClick
               callback={() => {
                 this.resetSelectedListItem();
@@ -382,11 +386,11 @@ export default class SearchBox extends React.Component {
           </div>
         )}
       </OpenableCloseable>,
-      window.document.querySelector('.dt-desktop')
+      element
     );
   }
 
-  renderMobile() {
+  renderMobile(element) {
     return createPortal(
       <OpenableCloseable>
         {(isOpen, { open, close } = {}) => (
@@ -430,14 +434,20 @@ export default class SearchBox extends React.Component {
           </div>
         )}
       </OpenableCloseable>,
-      window.document.querySelector('.dt-desktop')
+      element
     );
   }
 
   render() {
-    if (this.props.size <= SM) {
-      return this.renderMobile();
+    let element = window.document.querySelector('#home-page .input-group');
+    if (element) {
+      return this.renderDesktop(element, false);
     }
-    return this.renderDesktop();
+
+    element = window.document.querySelector('.dt-desktop');
+    if (this.props.size <= SM) {
+      return this.renderMobile(element);
+    }
+    return this.renderDesktop(element);
   }
 }
