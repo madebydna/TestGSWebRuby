@@ -21,7 +21,7 @@ export default function pages(currentPage, totalPages) {
     do {
       middleLength = middle.length;
       const min = middle[0];
-      if (min > 2) {
+      if (min > 1) {
         middle.unshift(min - 1);
       }
       if (middle.length >= pagesRemaining) {

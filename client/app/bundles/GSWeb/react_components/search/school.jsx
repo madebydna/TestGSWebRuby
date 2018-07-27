@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
+import unratedSchoolIcon from 'school_profiles/owl.png';
 import {
   getHomesForSaleHref,
   studentsPhrase,
@@ -14,23 +15,30 @@ const joinWithSeparator = (arrayOfElements, separator) =>
     .reduce((list, current) => [list, separator, current]);
 
 const renderRating = (rating, ratingScale) => {
-  const className = `circle-rating--small circle-rating--${rating}`;
+  const className = `circle-rating--small circle-rating--${rating || 'gray'}`;
   const content = (
-    <div dangerouslySetInnerHTML={{ __html: t('rating_description_html') }} />
+    <div
+      dangerouslySetInnerHTML={{
+        __html: rating
+          ? t('rating_description_html')
+          : t('no_rating_description_html')
+      }}
+    />
   );
   return (
-    <React.Fragment>
-      <div className={className}>
-        {rating}
-        <span className="rating-circle-small">/10</span>
-      </div>
-      <div className="scale">
-        <ModalTooltip content={content}>
-          {ratingScale}
+    <ModalTooltip content={content}>
+      <React.Fragment>
+        {rating ? 
+          <div className={className}>
+            {rating}
+            {rating && <span className="rating-circle-small">/10</span>}
+          </div> : <img alt="Owl icon for unrated school" src={unratedSchoolIcon} />}
+        <div className="scale">
+          {ratingScale || t('Currently unrated')}
           <span className="info-circle icon-info" />
-        </ModalTooltip>
-      </div>
-    </React.Fragment>
+        </div>
+      </React.Fragment>
+    </ModalTooltip>
   );
 };
 
@@ -60,7 +68,7 @@ const School = ({
   return (
     <React.Fragment key={state + id}>
       {assigned && <div className="assigned-text">{t('assigned')}</div>}
-      <span>{rating && renderRating(rating, ratingScale)}</span>
+      <span>{renderRating(rating, ratingScale)}</span>
       <span>
         <a href={links.profile} className="name" target="_blank">
           {name}

@@ -156,6 +156,28 @@ describe('<PaginationButtons />', () => {
       });
     });
 
+    context('and we are on page 2', () => {
+      before(() => (page = 2));
+
+      it('it shows 9 buttons', () => {
+        expect(buttons().length).to.eq(9);
+      });
+
+      it('should have correct sequence of page numbers', () => {
+        expect(buttons().map(b => b.text())).to.eql([
+          '',
+          '1',
+          '2',
+          '3',
+          '4',
+          '5',
+          '6',
+          '7',
+          ''
+        ]);
+      });
+    });
+
     context('and we are on page 10', () => {
       before(() => (page = 10));
 

@@ -2,7 +2,8 @@ $page-side-padding: 15px;
 $search-primary-blue-on-white: #1dace5;
 
 @import 'list-and-map';
-@import 'components/search-results-list';
+@import 'components/dropdown';
+@import 'components/search-autosuggest';
 @import 'components/five-stars';
 
 .featured {
@@ -43,6 +44,7 @@ body {
 
     select {
       @include select;
+      background-color: white;
     }
     .pagination-container {
       clear: both;
@@ -54,11 +56,11 @@ body {
       }
       @include media-breakpoint-down(xs) {
         position: fixed;
-        bottom:0;
+        bottom: 0;
         width: 100%;
         display: block;
         text-align: center;
-        z-index: 999;
+        z-index: 2;
         background: white;
       }
       @include media-breakpoint-up(sm) {
@@ -214,6 +216,12 @@ body {
       padding: 10px 15px;
     }
 
+    .list-map-toggle {
+      @include media-breakpoint-up(lg) {
+        float: right;
+      }
+    }
+
     .checkbox-group {
       input[type='checkbox'] {
         @include checkbox(28px, white);
@@ -230,9 +238,10 @@ body {
 
     .filter-panel {
       position: relative;
-      background: #cdd8dd;
       padding: 1px 10px 10px 10px;
       margin: 5px;
+      background-color: #e0e7eb;
+      border: 1px solid #cdd8dd;
       border-radius: $form-field-border-radius;
 
       .menu-item {
@@ -246,10 +255,9 @@ body {
       }
 
       button {
-        background: $search-primary-blue-on-white;
-        color: #fff;
-        width: 100%;
+        padding: 0px 12px;
         max-width: 290px;
+        font-size: $font-size-s1;
       }
 
       .icon-close {
@@ -296,88 +304,53 @@ body {
         background-position: center;
       }
     }
+
+    .no-results {
+      @include media-breakpoint-up(sm) {
+        margin: 15px;
+      }
+
+      .body {
+        padding: 20px;
+        font-size: $font-size-l3;
+        flex-wrap: wrap;
+        display: flex;
+        max-width: 991px;
+        background-color: white;
+        @include media-breakpoint-up(sm) {
+          margin: 30px auto;
+          border: 1px solid #c1d2d9;
+          border-radius: $form-field-border-radius;
+        }
+        img {
+          margin: 0 auto 20px auto;
+          @include media-breakpoint-up(sm) {
+            margin: 0 20px 20px 0;
+          }
+          width: 242px;
+          height: 172px;
+        }
+        .heading {
+          font-family: RobotoSlab-Light;
+          font-size: $font-size-l4;
+        }
+        .search-term {
+          font-family: RobotoSlab-Bold;
+          font-size: $font-size-l4;
+        }
+        hr {
+          color: #dbe6eb;
+        }
+        p {
+          font-family: opensans-bold;
+          font-size: $font-size-l3;
+        }
+      }
+    }
   }
 
   .icon-star {
     font-size: 11px;
-  }
-}
-
-.dropdown {
-  display: inline-block;
-  .selection {
-    padding: 8px 27px 7px 7px;
-    border: 1px solid #c1d2d9;
-    border-radius: 3px;
-    position: relative;
-    top: 1px;
-    background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
-    outline: none;
-  }
-  .icon-caret-down {
-    position: absolute;
-    right: 10px;
-    top: calc(50% - 9px);
-  }
-  .panel {
-    display: inline-block;
-    padding: 15px 15px 10px 15px;
-    border: 1px solid #c1d2d9;
-    border-radius: 3px;
-    background-color: #f6f9fa;
-    position: absolute;
-    z-index: 1;
-    cursor: pointer;
-    > div + div {
-      margin-top: 5px;
-    }
-  }
-}
-
-.search-box {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  background: white;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  @include media-breakpoint-down(sm) {
-    margin-left: -20px;
-    width: calc(100% + 40px);
-  }
-
-  input {
-    outline: none;
-  }
-
-  .search-results-list {
-    z-index: 2;
-    margin-top: -1px;
-    @include media-breakpoint-down(sm) {
-      width: 100%;
-      overflow-y: scroll;
-    }
-  }
-
-  .search-results-list-item {
-    cursor: pointer;
-  }
-
-  .dropdown {
-    font-family: 'opensans-semibold', Arial, 'Helvetica Neue', Helvetica,
-      sans-serif;
-    border: 1px solid #b8b8b8;
-    border-radius: 3px 0px 0px 3px;
-    border-width: 1px 1px 1px 1px;
-    background: white;
-    z-index: 2;
-  }
-  .selection {
-    border-radius: 0px !important;
-    border-width: 0px !important;
-    height: 40px;
-    background-image: none !important;
   }
 }
 

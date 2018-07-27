@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { t } from 'util/i18n';
 
 const DistanceFilter = ({ distance, onChange }) => {
   const range = [2, 3, 4, 5, 10, 15, 20, 25, 30, 60];
   const options = [
     {
       key: 1,
-      label: '1 Mile'
+      label: `1 ${t('Mile')}`
     }
   ];
 
   range.forEach(i => {
     options.push({
       key: i,
-      label: `${i} Miles`
+      label: `${i} ${t('Miles')}`
     });
   });
 

@@ -81,6 +81,8 @@ module SearchControllerConcerns
       city: city,
       state: state,
       district_id: district_record&.id,
+      district_name: district_record&.name,
+      location_label: location_label_param,
       level_codes: level_codes,
       entity_types: entity_types,
       lat: lat,
@@ -158,7 +160,7 @@ module SearchControllerConcerns
   end
 
   def add_assigned(schools)
-    assigned_schools = location_given? ? attendance_zone_query.search_all_levels : []
+    assigned_schools = location_given? && street_address? ? attendance_zone_query.search_all_levels : []
     schools.each do | sr |
       assigned_schools.each do | as |
         sr.assigned ||= sr&.id == as&.id

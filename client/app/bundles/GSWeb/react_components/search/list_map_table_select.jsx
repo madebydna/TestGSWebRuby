@@ -6,7 +6,7 @@ import { t } from 'util/i18n';
 
 const mobileOptions = {
   list: <span className="icon-list" />,
-  map: <span className="icon-map" />,
+  map: <span className="icon-location" />,
   table: <span className="icon-grid" />
 };
 

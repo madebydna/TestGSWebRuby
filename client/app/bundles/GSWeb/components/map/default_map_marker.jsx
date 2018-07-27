@@ -17,9 +17,12 @@ export default class DefaultMapMarker extends React.Component {
     // the reason we call createMarker() here and not pass in the marker as
     // a prop, is we want to wait until React mounts the component before
     // actually having to create a Google Maps marker
-    let position = new this.props.googleMaps.LatLng(this.props.lat, this.props.lon);
+    const position = new this.props.googleMaps.LatLng(
+      this.props.lat,
+      this.props.lon
+    );
     this.marker = new this.props.googleMaps.Marker({
-      position: position,
+      position,
       zIndex: 2,
       animation: this.props.googleMaps.Animation.DROP
     });
