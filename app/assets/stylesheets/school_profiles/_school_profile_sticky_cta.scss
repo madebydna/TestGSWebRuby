@@ -1,11 +1,12 @@
-$cta_background: #ffffff;
-$cta_shadow: #cccccc;
-$cta_button_border: rgba(255, 255, 255, 0.17);
+$cta_background: #FFFFFF;
+$cta_shadow: #CCCCCC;
+$cta_button_border: rgba(255,255,255,0.17);
 $cta_icon_color: #ffffff; // Regular GS Blue
 $cta_icon_hover_color: #55b5e3; // Light GS Blue
 $cta_icon_active_color: #2282b0; // Medium GS Blue
 
 #profile-sticky-container {
+
   &.fixed-top {
     position: fixed;
     top: 0;
@@ -35,7 +36,7 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
     //opacity: 0.95;
     background-image: image_url('school_profiles/hero_bg.jpg');
     border-radius: 0 0 2px 2px;
-    box-shadow: 0px 4px 2px #bbbbbb;
+    box-shadow: 0px 4px 2px #BBBBBB;
   }
 
   &.dn {
@@ -44,13 +45,13 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
 
   .rr-nearby-school {
     width: 300px;
-    border: solid 1px #aaaaaa;
+    border: solid 1px #AAAAAA;
     margin-bottom: 40px;
     @include media-breakpoint-down(sm) {
-      display: none;
+      display:none;
     }
 
-    > .content {
+    >.content {
       padding: 10px;
       background-color: #efefef;
       color: #000000;
@@ -66,9 +67,9 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
         display: inline-block;
         padding-left: 10px;
 
-        > a {
+        >a {
           font-family: $font-family-base-bold;
-          color: #26abe2;
+          color:#26abe2;
         }
       }
     }
@@ -81,14 +82,17 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
   }
 
   @include media-breakpoint-down(sm) {
+
     &.blue-background {
-      width: 100%;
+      width:100%;
       border-top: solid 1px $cta_button_border;
     }
+
   }
 }
 
 #hero {
+
   .blue-background-hero {
     border-top: solid 1px $cta_button_border;
     border-bottom: solid 1px $cta_button_border;
@@ -109,17 +113,18 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
 }
 
 .cta {
+
   &.cta-container {
     height: 65px;
   }
 
   .cta-rating {
-    float: left;
+    float:left;
     padding: 7px 0 0 10px;
   }
 
   .cta-title {
-    float: left;
+    float:left;
     padding: 18px 20px 15px 10px;
     font-size: 20px;
     color: #ffffff;
@@ -137,9 +142,7 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
     padding-top: 10px;
     border-left: 1px solid $cta_button_border;
     @include media-breakpoint-down(sm) {
-      &:last-child {
-        border-left: none;
-      }
+      &:last-child { border-left: none; }
     }
 
     a {
@@ -164,11 +167,12 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
   }
 
   @include media-breakpoint-down(sm) {
-    .cta-four-buttons {
+
+    .cta-four-buttons{
       width: 25%;
     }
 
-    .cta-three-buttons {
+    .cta-three-buttons{
       width: 33%;
     }
 
@@ -176,12 +180,12 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
       height: 50px;
       text-align: center;
       padding-top: 10px;
-      margin: auto;
+      margin:auto;
       background-image: image_url('school_profiles/hero_bg.jpg');
 
       a > div {
         vertical-align: top;
-        display: inline-block;
+        display:inline-block;
       }
 
       .owly_size {
@@ -195,21 +199,22 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
       position: relative;
       top: 0px;
       clear: both;
-      left: 0px;
-      z-index: 10;
+      left:0px;
+      z-index : 10;
     }
 
     .cta-rating {
-      display: none;
+      display:none;
     }
 
     .cta-title {
-      display: none;
+      display:none;
     }
   }
 }
 
 @include media-breakpoint-up(md) {
+
   .static-container_cta {
     position: relative;
     margin: auto;
@@ -221,5 +226,6 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
       // 300 for right rail and 15 for gutter
       margin-right: 315px;
     }
+
   }
 }
