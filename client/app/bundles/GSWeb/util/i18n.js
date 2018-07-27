@@ -43,7 +43,7 @@ const setTranslationsHash = function(hash) {
 
 // changes state of translationsHash if it is undefined and there are gon translations
 const getTranslationsHash = function() {
-  translationsHash = translationsHash || gon.translations;
+  translationsHash = translationsHash || gon.translations || {};
   return translationsHash;
 };
 
