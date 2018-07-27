@@ -134,7 +134,7 @@ GS.nav.searchBar = GS.nav.searchBar || (function(){
     });
   };
 
-  var includesParam = function(key,val=undefined){
+  var includesParam = function(key,val){
     var queryData = GS.uri.Uri.getQueryData(document.location.search);
     if(val !== undefined){
       // If a query string has duplicate keys (i.e. lang=es&lang=en), a single key will be added to queryData with values
