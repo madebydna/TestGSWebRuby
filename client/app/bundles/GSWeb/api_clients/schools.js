@@ -110,6 +110,9 @@ export function find({
   }
   const currentParams = parse(window.location.search);
   data.lang = currentParams.lang;
+  if (currentParams.locationType) {
+    data.locationType = currentParams.locationType;
+  }
   return $.ajax({
     url: '/gsr/api/schools/',
     data,
