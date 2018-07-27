@@ -292,7 +292,7 @@ export default class SearchBox extends React.Component {
         close();
         const flattenedResultValues = Array.concat.apply(
           [],
-          Object.values(this.state.autoSuggestResults)
+          Object.values(this.state.autoSuggestResults).filter(array => !!array)
         );
         const selectedListItem =
           flattenedResultValues[this.state.selectedListItem];

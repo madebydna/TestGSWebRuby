@@ -76,6 +76,7 @@
 @import "components/gs-rating-with-label";
 @import "school_profiles/speech_bubbles";
 @import "components/compare";
+@import 'components/search-autosuggest';
 
 .button-group {
   @include button-group;
