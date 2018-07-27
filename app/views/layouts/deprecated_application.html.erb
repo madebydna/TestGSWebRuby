@@ -10,6 +10,10 @@
   <%= include_gon %>
   <%= javascript_include_tag "deprecated_application", "data-turbolinks-track" => true %>
 
+  <%= webpack_javascript_include_tag('react-redux', defer: true) %>
+  <%= webpack_javascript_include_tag("search-box", "data-turbolinks-track" => true, defer: true) %>
+  <%= react_component('SearchBoxWrapper') %>
+
   <%= csrf_meta_tags %>
     <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
 
