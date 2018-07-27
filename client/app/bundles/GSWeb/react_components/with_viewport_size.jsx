@@ -11,7 +11,7 @@ const withViewportSize = ({ propName = 'viewportSize' }) => WrappedComponent =>
         this
       );
       this.state = {
-        size: 3
+        size: viewportSize()
       };
     }
 

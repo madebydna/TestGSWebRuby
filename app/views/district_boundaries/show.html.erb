@@ -6,7 +6,8 @@
   <%= webpack_javascript_include_tag 'district-boundaries', defer: true %>
 <% end %>
 <% content_for :page_stylesheets do %>
-  <%= stylesheet_link_tag "district-boundaries", async: true %>
+   <%= stylesheet_link_tag "post_load", media: "all", "data-turbolinks-track" => true %>
+   <%= stylesheet_link_tag "district-boundaries", async: true %>
 <% end %>
 
 <div id="district-boundaries-page">
@@ -18,3 +19,4 @@
   </div>
   <%= react_component('ConnectedDistrictBoundaries') %>
 </div>
+<%= react_component('SearchBoxWrapper') %>
