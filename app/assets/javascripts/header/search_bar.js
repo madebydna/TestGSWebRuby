@@ -165,7 +165,6 @@ GS.nav.searchBar = GS.nav.searchBar || (function(){
 
   var submitSchoolSearch = function(e) {
     if (includesParam('lang', 'es')) {addInput('lang', 'es', schoolSearchForm)};
-    if (includesParam('newsearch')) {addInput('newsearch', 'true', schoolSearchForm)};
   }
 
   var submitContentSearch = function (e) {
