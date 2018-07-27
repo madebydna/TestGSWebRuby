@@ -199,4 +199,8 @@ module SearchRequestParams
     []
   end
 
+  def street_address?
+    params['locationType'] == 'street_address'
+  end
+
 end

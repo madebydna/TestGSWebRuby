@@ -16,7 +16,7 @@ const translate = function(key, options) {
   // defaults to empty string if no matching translation and no default provided
   const defaultValue = options.default || '';
   const parameters = options.parameters || '';
-  let translationValue = translationsHash[key];
+  let translationValue = (translationsHash || {})[key];
   if (translationValue !== undefined) {
     translationValue = replaceParameters(translationValue, parameters);
     return translationValue;
@@ -43,7 +43,7 @@ const setTranslationsHash = function(hash) {
 
 // changes state of translationsHash if it is undefined and there are gon translations
 const getTranslationsHash = function() {
-  translationsHash = translationsHash || gon.translations;
+  translationsHash = translationsHash || gon.translations || {};
   return translationsHash;
 };
 

@@ -29,10 +29,12 @@ export default class CaptureOutsideClick extends React.Component {
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClick(), false);
+    document.addEventListener('touchend', this.handleClick(), false);
   }
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick(), false);
+    document.removeEventListener('touchend', this.handleClick(), false);
   }
 
   handleClick() {

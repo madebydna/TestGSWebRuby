@@ -28,6 +28,7 @@ const config = {
       './app/bundles/GSWeb/header'
     ],
     'react-redux': [
+      './app/bundles/GSWeb/polyfills',
       'react',
       'react-dom',
       'redux',

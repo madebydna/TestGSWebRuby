@@ -166,8 +166,10 @@ export default class SearchBox extends React.Component {
           }
           if (matchesZip(searchTerm) && !matchesAddress(searchTerm)) {
             params.locationLabel = `${city}, ${state} ${zip}`;
+            params.locationType = 'zip';
           } else {
             params.locationLabel = normalizedAddress;
+            params.locationType = 'street_address';
           }
           window.location.href = newSearchResultsPageUrl(params);
         })
@@ -290,7 +292,7 @@ export default class SearchBox extends React.Component {
         close();
         const flattenedResultValues = Array.concat.apply(
           [],
-          Object.values(this.state.autoSuggestResults)
+          Object.values(this.state.autoSuggestResults).filter(array => !!array)
         );
         const selectedListItem =
           flattenedResultValues[this.state.selectedListItem];
