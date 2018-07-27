@@ -11,13 +11,13 @@ import SchoolList from './school_list';
 import SchoolTable from './school_table';
 import EntityTypeDropdown from './entity_type_dropdown';
 import GradeLevelButtons from './grade_level_buttons';
-import GradeLevelCheckboxes from './grade_level_checkboxes';
 import DistanceFilter from './distance_filter';
 import DistanceContext from './distance_context';
 import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import SearchBox from '../search_box';
+import NoResults from './no_results';
 
 class Search extends React.Component {
   static defaultProps = {
@@ -27,7 +27,8 @@ class Search extends React.Component {
     loadingSchools: false,
     shouldIncludeDistance: false,
     autoSuggestQuery: () => {},
-    breadcrumbs: []
+    breadcrumbs: [],
+    q: null
   };
 
   static propTypes = {
@@ -53,7 +54,7 @@ class Search extends React.Component {
     autoSuggestQuery: PropTypes.func,
     view: PropTypes.string.isRequired,
     updateView: PropTypes.func.isRequired,
-    autoSuggestResults: PropTypes.object.isRequired
+    q: PropTypes.string
   };
 
   componentDidMount() {
@@ -69,7 +70,6 @@ class Search extends React.Component {
             view={this.props.view}
             entityTypeDropdown={<EntityTypeDropdown />}
             gradeLevelButtons={<GradeLevelButtons />}
-            gradeLevelCheckboxes={<GradeLevelCheckboxes />}
             distanceFilter={
               distance ||
               (this.props.schools[0] &&
@@ -123,20 +123,22 @@ class Search extends React.Component {
             }
             map={
               <Map
-                lat={this.props.lat || this.props.defaultLat}
-                lon={this.props.lon || this.props.defaultLon}
+                locationMarker={
+                  this.props.lat && this.props.lon
+                    ? { lat: this.props.lat, lon: this.props.lon }
+                    : null
+                }
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
               />
             }
-            searchBox={
-              <SearchBox
-                searchFunction={this.props.autoSuggestQuery}
-                autoSuggestResults={this.props.autoSuggestResults}
-                size={this.props.size}
-              />
-            }
+            searchBox={<SearchBox size={this.props.size} />}
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
+            noResults={
+              this.props.schools.length === 0 ? (
+                <NoResults resultSummary={this.props.resultSummary} />
+              ) : null
+            }
           />
         )}
       </DistanceContext.Consumer>

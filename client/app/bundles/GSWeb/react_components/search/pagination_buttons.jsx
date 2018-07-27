@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Selectable from 'react_components/selectable';
 import pageNumbers from 'util/pagination';
 import AnchorButton from 'react_components/anchor_button';
+import { t } from 'util/i18n';
 
 const PaginationButtons = ({ page, totalPages, onPageChanged, mobileView }) => {
   const { prev, next, range } = pageNumbers(page, totalPages);
@@ -14,7 +15,7 @@ const PaginationButtons = ({ page, totalPages, onPageChanged, mobileView }) => {
       value: prev,
       label: (
         <span>
-          <span className="icon-caret-down rotate-text-90" /> Previous 25
+          <span className="icon-caret-down rotate-text-90" /> {t('Previous')} 25
         </span>
       ),
       preventSelect: !prev
@@ -24,7 +25,7 @@ const PaginationButtons = ({ page, totalPages, onPageChanged, mobileView }) => {
       value: next,
       label: (
         <span>
-          Next 25 <span className="icon-caret-down rotate-text-270" />
+          {t('Next')} 25 <span className="icon-caret-down rotate-text-270" />
         </span>
       ),
       preventSelect: !next

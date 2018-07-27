@@ -33,6 +33,7 @@ const ButtonGroup = ({
             <Button
               key={option.key}
               label={option.label}
+              aria-label={option.key}
               active={active}
               onClick={select}
               onKeyPress={select}

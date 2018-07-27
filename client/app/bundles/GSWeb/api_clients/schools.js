@@ -1,5 +1,6 @@
 // TODO: import jQuery
 import { without } from 'lodash';
+import { parse } from 'query-string';
 
 export function findById(id, options) {
   return $.ajax({
@@ -69,7 +70,8 @@ export function find({
   lat,
   lon,
   distance,
-  sort = 'rating',
+  sort,
+  locationLabel,
   extras = [],
   page = 1,
   limit = 25
@@ -102,6 +104,14 @@ export function find({
   }
   if (extras) {
     data.extras = extras.join(',');
+  }
+  if (locationLabel) {
+    data.locationLabel = locationLabel;
+  }
+  const currentParams = parse(window.location.search);
+  data.lang = currentParams.lang;
+  if (currentParams.locationType) {
+    data.locationType = currentParams.locationType;
   }
   return $.ajax({
     url: '/gsr/api/schools/',

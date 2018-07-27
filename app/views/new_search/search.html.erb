@@ -1,3 +1,6 @@
+<% content_for :head do %>
+    <link rel="dns-prefetch" href="//maps.googleapis.com">
+<% end %>
 <% content_for :page_javascripts do %>
     <%= webpack_javascript_include_tag 'react-redux', defer: true %>
     <%= webpack_javascript_include_tag 'search', defer: true %>

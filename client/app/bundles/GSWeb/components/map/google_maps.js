@@ -1,7 +1,7 @@
 import { getScript } from '../../util/dependency';
 
 const scriptURL =
-  '//maps.googleapis.com/maps/api/js?key=AIzaSyA2A9es1i_iP9joGhiV9Yhez1WjVoV37l4&amp;libraries=geometry&amp;sensor=false';
+  '//maps.googleapis.com/maps/api/js?key=AIzaSyA2A9es1i_iP9joGhiV9Yhez1WjVoV37l4&libraries=places,geometry';
 const callbackFunctions = [];
 
 function executeCallbacks() {

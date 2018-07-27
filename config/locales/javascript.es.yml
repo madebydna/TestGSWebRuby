@@ -1,20 +1,57 @@
 ---
 es:
   javascript:
+    City, zip, address or school: Ciudad, código postal, dirección o escuela
+    Articles, worksheets and more: Artículos, hoja de ejercicios y más
+    Mile: Milla
+    Miles: Millas
+    Parenting: Crianza
+    Search all results for: Buscar todos los resultados para {searchTerm}
+    Addresses: Direcciones
+    Zipcodes: Códigos ZIP
+    Districts: Distritos
+    Cities: Ciudades
+    Schools: Escuelas
+    Schools in: Escuelas en {location}
+    Schools near: Escuelas cerca de {location}
+    Suggestions: Sugerencias
+    no_results_suggestions:
+      - Asegúrate de que todas las palabras están escritas correctamente.
+      - Prueba diferentes o menos palabras.
+      - Prueba otras palabras más generales.
+      - Prueba otros filtros.
+    Close filters: Cerrar los filtros
+    School: Escuela
+    Type: Tipo
+    Grades: Grados
+    Total students enrolled: Número de estudiantes
+    Students per teacher: Estudiantes por profesor
+    Reviews: Opiniones
+    Next: Siguiente
+    Previous: Anterior
+    Sort by: Ordenar por
+    GreatSchools Rating: Calificación de GreatSchools
+    School name: Nombre de escuela
+    Distance: Distancia
+    Filter: Filtro
+    Currently unrated: Actualmente sin calificación
     rating_description_html: >
       <p style="text-align: left;">La Calificación General de GreatSchools es una reflexión de múltiples medidas sobre la calidad de una escuela. Las calificaciones siguen una escala del 1-10:
       <ul style="text-align: left;"><li>calificaciones de 1-3 señalan "por debajo del promedio”</li>
       <li>calificaciones de 4-7 indican “al promedio”</li>
       <li>calificaciones de 8-10 indican “por encima del promedio”</li></ul></p>
-    PreK: Preescolar
+    no_rating_description_html: >
+      <p style="text-align: left;">La Calificación General de GreatSchools es una reflexión de múltiples medidas sobre la calidad de una escuela.
+      <br/>Para algunas escuelas no tenemos suficientes datos de las agencias estatales o nacionales de educación para proporcionar una calificación.</p>
+    PreK: PreK
     Elementary: Primaria
     Middle: Intermedia
     High: Secundaria
     advertisement: Anuncio
     assigned: ASIGNADA
     Filter by: Filtrado por
-    ListMap view: ListMap view
-    Table view: Table view
+    ListMap view: Mapa
+    Table view: Tabla
     School type and level: Tipo de escuela y grado
     Public schools: Escuelas públicas
     Private schools: Escuelas privadas
@@ -44,6 +81,9 @@ es:
       people: personas
       person: persona
       share_review_caption: 'Opinión de usuarios de la '
+      review: opinión
+      reviews: opiniones
+      No reviews yet: Sin opiniones
     school_picker:
       city: ciudad
       school: esculea
@@ -75,6 +115,7 @@ es:
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare escuelas ahora&nbsp</a>o<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspdremover escuelas&nbsp</a><strong>para comparar en esta ubicación.'
 #    added for equity
     of students: '% de estudiantes'
+    student: estudiante
     students: estudiantes
     State avg: Promedio del estado
     State average: Promedio del estado

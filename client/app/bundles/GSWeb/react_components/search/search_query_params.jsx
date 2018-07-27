@@ -28,6 +28,9 @@ export default class SearchQueryParams extends React.Component {
       lat: queryParams.getLat(),
       lon: queryParams.getLon(),
       distance: queryParams.getDistance(),
+      locationLabel:
+        queryParams.getValueForKey('locationLabel') ||
+        queryParams.getValueForKey('locationSearchString'),
       sort: queryParams.getSort(),
       page: queryParams.getPage(),
       q: queryParams.getQ(),

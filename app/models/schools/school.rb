@@ -69,7 +69,7 @@ class School < ActiveRecord::Base
 
     schools = 
       state_to_id_map.flat_map do |(state, ids)|
-        find_by_state_and_ids(state, ids).to_a
+        yield(find_by_state_and_ids(state, ids)).to_a
       end
 
     schools.each do |school|

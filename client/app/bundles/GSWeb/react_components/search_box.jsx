@@ -6,18 +6,51 @@ import SearchResultsList from './search_results_list';
 import Selectable from 'react_components/selectable';
 import Dropdown from 'react_components/search/dropdown';
 import { createPortal } from 'react-dom';
-import { reduce } from 'lodash';
-import { addQueryParamToUrl, copyParam } from 'util/uri';
+import { reduce, debounce, cloneDeep } from 'lodash';
 import { SM, validSizes, viewport } from 'util/viewport';
+import { geocode } from 'components/geocoding';
+import suggest from 'api_clients/autosuggest';
+import { parse, stringify } from 'query-string';
+import { getAddressPredictions } from 'api_clients/google_places';
+import { init as initGoogleMaps } from 'components/map/google_maps';
+import { href } from 'util/search';
+import { analyticsEvent } from 'util/page_analytics';
+import { t } from 'util/i18n';
+
+// Matches only 5 digits
+// Todo currently 3-4 schools would match this regex,
+// but it may not be worth maintain a list of those schools to prevent matches
+const matchesFiveDigits = string => /(\D|^)\d{5}(\D*$|$)/.test(string);
+
+// Matches 5 digits + dash or space or no space + 4 digits.
+const matchesFiveDigitsPlusFourDigits = string =>
+  /(\D|^)\d{5}(-|\s*)\d{4}(\D|$)/.test(string);
+
+const matchesZip = string =>
+  matchesFiveDigits(string) || matchesFiveDigitsPlusFourDigits(string);
+
+const matchesNumbersAsOnlyFirstCharacters = string => /^\W*\d+\s/.test(string);
+
+const matchesStateAbbreviationQuery = string => /\w*, \w\w\b/.test(string);
+
+// Matches when first character/characters are numbers + a space + if it does not match schools in the school and district list.
+// ToDo perhaps not worth maintaining list of 300 schools for this regex.
+// ToDo if we do decide to maintain the list, perhaps move this into a service that autogenerates the list
+const matchesAddress = string =>
+  matchesNumbersAsOnlyFirstCharacters(string) ||
+  matchesStateAbbreviationQuery(string);
+
+const matchesAddressOrZip = string =>
+  matchesAddress(string) || matchesZip(string);
 
 const options = [
   {
     key: 'schools',
-    label: <span>Schools</span>
+    label: <span>{t('Schools')}</span>
   },
   {
     key: 'parenting',
-    label: <span>Parenting</span>
+    label: <span>{t('Parenting')}</span>
   }
 ];
 
@@ -26,11 +59,25 @@ const keyMap = {
   ArrowDown: 1
 };
 
+const newSearchResultsPageUrl = newParams => {
+  const { newsearch, lang } = parse(window.location.search);
+  const params = {
+    newsearch,
+    lang,
+    ...newParams
+  };
+  return `/search/search.page?${stringify(params)}`;
+};
+
+const contentSearchResultsPageUrl = ({ q }) =>
+  `/gk/?s=${window.encodeURIComponent(q)}`;
+
 export default class SearchBox extends React.Component {
   static propTypes = {
-    autoSuggestResults: PropTypes.object.isRequired,
-    searchFunction: PropTypes.func.isRequired,
-    size: PropTypes.oneOf(validSizes).isRequired
+    size: PropTypes.oneOf(validSizes)
+  };
+  static defaultProps = {
+    size: 2
   };
 
   constructor(props) {
@@ -42,13 +89,22 @@ export default class SearchBox extends React.Component {
       searchTerm: '',
       type: 'schools',
       selectedListItem: -1,
-      navigateToSelectedListItem: false
+      navigateToSelectedListItem: false,
+      autoSuggestResults: {
+        Addresses: [],
+        Zipcodes: [],
+        Cities: [],
+        Districts: [],
+        Schools: []
+      }
     };
     this.submit = this.submit.bind(this);
+    this.geocodeAndSubmit = this.geocodeAndSubmit.bind(this);
+    this.autoSuggestQuery = debounce(this.autoSuggestQuery.bind(this), 200);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.autoSuggestResults !== prevProps.autoSuggestResults) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.autoSuggestResults !== prevState.autoSuggestResults) {
       this.setState({
         autoSuggestResultsCount: this.autoSuggestResultsCount()
       });
@@ -61,42 +117,81 @@ export default class SearchBox extends React.Component {
 
   autoSuggestResultsCount() {
     return reduce(
-      Object.keys(this.props.autoSuggestResults || {}),
-      (sum, k) => sum + (this.props.autoSuggestResults[k] || []).length,
+      Object.keys(this.state.autoSuggestResults || {}),
+      (sum, k) => sum + (this.state.autoSuggestResults[k] || []).length,
       0
     );
   }
 
   placeholderText() {
     if (this.state.type === 'schools') {
-      return 'City, zip, address or school';
+      return t('City, zip, address or school');
     } else if (this.state.type === 'parenting') {
-      return 'Articles, worksheets and more';
+      return t('Articles, worksheets and more');
     }
   }
 
-  onSelectItem(close) {
-    return itemValue => {
+  selectAndSubmit(close) {
+    return item => {
+      analyticsEvent('autosuggest', `select ${item.category}`, item.title);
       close();
-      this.setState({ searchTerm: itemValue }, () => {
-        this.submit();
-      });
+      if (item.type === 'zip' || item.type === 'address') {
+        this.setState({ searchTerm: item.value }, this.geocodeAndSubmit);
+      } else {
+        this.setState({ searchTerm: item.value }, this.submit);
+      }
     };
+  }
+
+  geocodeAndSubmit() {
+    const { searchTerm, type } = this.state;
+    if (type === 'parenting') {
+      window.location.href = contentSearchResultsPageUrl({
+        q: searchTerm
+      });
+    } else if (type === 'schools') {
+      if (!matchesAddressOrZip(searchTerm)) {
+        this.submit();
+        return;
+      }
+
+      geocode(searchTerm)
+        .then(json => json[0])
+        .done(({ lat, lon, city, state, zip, normalizedAddress } = {}) => {
+          let params = {};
+          if (lat && lon) {
+            params = { lat, lon };
+          } else {
+            params.q = searchTerm;
+          }
+          if (matchesZip(searchTerm) && !matchesAddress(searchTerm)) {
+            params.locationLabel = `${city}, ${state} ${zip}`;
+            params.locationType = 'zip';
+            params.state = state;
+          } else {
+            params.locationLabel = normalizedAddress;
+            params.locationType = 'street_address';
+            params.state = state;
+          }
+          window.location.href = newSearchResultsPageUrl(params);
+        })
+        .fail(() => {
+          window.location.href = newSearchResultsPageUrl({
+            q: this.state.searchTerm
+          });
+        });
+    }
   }
 
   submit() {
     if (this.state.type === 'parenting') {
-      window.location.href = `/gk/?s=${window.encodeURIComponent(
-        this.state.searchTerm
-      )}`;
+      window.location.href = contentSearchResultsPageUrl({
+        q: this.state.searchTerm
+      });
     } else if (this.state.type === 'schools') {
-      let newUrl = addQueryParamToUrl(
-        'q',
-        this.state.searchTerm,
-        `/search/search.page${window.location.search}`
-      );
-      newUrl = copyParam('newsearch', window.location.href, newUrl);
-      window.location.href = newUrl;
+      window.location.href = newSearchResultsPageUrl({
+        q: this.state.searchTerm
+      });
     }
   }
 
@@ -104,7 +199,7 @@ export default class SearchBox extends React.Component {
     return e => {
       this.setState({ searchTerm: e.target.value }, () => {
         if (this.state.type === 'schools') {
-          this.props.searchFunction(this.state.searchTerm);
+          this.autoSuggestQuery(this.state.searchTerm);
           if (this.state.searchTerm === '') {
             close();
           } else {
@@ -115,6 +210,61 @@ export default class SearchBox extends React.Component {
         }
       });
     };
+  }
+
+  /*
+  { city: [
+      {"id": null,
+      "city": "New Boston",
+      "state": "nh",
+      "type": "city",
+      "url": '/new-mexico/alamogordo//829-Alamogordo-SDA-School}
+    ],
+    school: [
+      {"id": null,
+      "school": "Alameda High School",
+      "city": "New Boston",
+      "state": "nh",
+      "type": "school"}
+    ],
+    zip....includes an additional 'value' key.
+  },
+  */
+  autoSuggestQuery(q) {
+    if (q.length >= 3) {
+      if (matchesAddress(q)) {
+        initGoogleMaps(() => {
+          getAddressPredictions(q, addresses => {
+            const newResults = cloneDeep(this.state.autoSuggestResults);
+            newResults.Addresses = addresses.map(address => ({
+              type: 'address',
+              title: address,
+              value: address
+            }));
+            this.setState({ autoSuggestResults: newResults });
+          });
+        });
+      }
+
+      suggest(q).done(results => {
+        const adaptedResults = {
+          Addresses: [],
+          Zipcodes: [],
+          Cities: [],
+          Districts: [],
+          Schools: []
+        };
+        Object.keys(results).forEach(category => {
+          (results[category] || []).forEach(result => {
+            adaptedResults[category].push(result);
+          });
+        });
+        adaptedResults.Addresses = this.state.autoSuggestResults.Addresses;
+        this.setState({ autoSuggestResults: adaptedResults });
+      });
+    } else {
+      this.setState({ autoSuggestResults: {} });
+    }
   }
 
   resetSelectedListItem() {
@@ -138,31 +288,83 @@ export default class SearchBox extends React.Component {
     });
   }
 
-  handleKeyDown(e) {
+  handleKeyDown(e, { close }) {
     if (e.key === 'Enter') {
       if (this.state.selectedListItem > -1) {
-        this.setState({ navigateToSelectedListItem: true });
+        close();
+        const flattenedResultValues = Array.concat.apply(
+          [],
+          Object.values(this.state.autoSuggestResults).filter(array => !!array)
+        );
+        const selectedListItem =
+          flattenedResultValues[this.state.selectedListItem];
+        if (selectedListItem.url) {
+          window.location.href = href(selectedListItem.url);
+        } else {
+          this.selectAndSubmit(() => {})(selectedListItem);
+        }
       } else {
-        this.submit();
+        this.geocodeAndSubmit();
       }
     } else if (Object.keys(keyMap).includes(e.key)) {
       this.manageSelectedListItem(e);
     }
   }
 
-  renderDesktop() {
+  inputBox = ({ open, close }) => (
+    <form
+      action="#"
+      onSubmit={e => {
+        e.preventDefault();
+        return false;
+      }}
+    >
+      {/* Form and action makes iOS button say 'Go' */}
+      <input
+        onKeyDown={e => this.handleKeyDown(e, { close })}
+        onChange={this.onTextChanged({ open, close })}
+        type="text"
+        className="full-width pam search_form_field"
+        placeholder={this.placeholderText()}
+        value={this.state.searchTerm}
+        maxLength={60}
+      />
+    </form>
+  );
+
+  searchButton = () => (
+    <div className="search_bar_button" onClick={this.geocodeAndSubmit}>
+      <button type="submit" className="search_form_button">
+        <span className="search_icon_image_white" />
+      </button>
+    </div>
+  );
+
+  searchResultsList = ({ close }) => (
+    <SearchResultsList
+      listGroups={this.state.autoSuggestResults}
+      searchTerm={this.state.searchTerm}
+      onSelect={this.selectAndSubmit(close)}
+      selectedListItem={this.state.selectedListItem}
+      navigateToSelectedListItem={this.state.navigateToSelectedListItem}
+    />
+  );
+
+  renderDesktop(element, renderDropdown = true) {
     return createPortal(
       <OpenableCloseable>
         {(isOpen, { open, close } = {}) => (
           <div className="search-box">
-            <Dropdown
-              mouseOver
-              options={options}
-              onSelect={opt => {
-                this.setState({ type: opt.key });
-              }}
-              activeOption={options.find(opt => opt.key === this.state.type)}
-            />
+            {renderDropdown ? (
+              <Dropdown
+                mouseOver
+                options={options}
+                onSelect={opt => {
+                  this.setState({ type: opt.key });
+                }}
+                activeOption={options.find(opt => opt.key === this.state.type)}
+              />
+            ) : null}
             <CaptureOutsideClick
               callback={() => {
                 this.resetSelectedListItem();
@@ -171,41 +373,24 @@ export default class SearchBox extends React.Component {
             >
               {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
               <div style={{ flexGrow: 2 }}>
-                <input
-                  onKeyDown={this.handleKeyDown}
-                  onChange={this.onTextChanged({ open, close })}
-                  type="text"
-                  className="full-width pam search_form_field"
-                  placeholder={this.placeholderText()}
-                  value={this.state.searchTerm}
-                  maxLength={60}
-                />
+                {this.inputBox({ open, close })}
                 {isOpen &&
                   this.shouldRenderResults() && (
                     <div className="search-results-list">
-                      <SearchResultsList
-                        listGroups={this.props.autoSuggestResults}
-                        searchTerm={this.state.searchTerm}
-                        onSelect={this.onSelectItem(close)}
-                        listItemsSelectable={this.state.listItemsSelectable}
-                      />
+                      {this.searchResultsList({ close })}
                     </div>
                   )}
               </div>
             </CaptureOutsideClick>
-            <div className="search_bar_button" onClick={this.submit}>
-              <button type="submit" className="search_form_button">
-                <span className="search_icon_image_white" />
-              </button>
-            </div>
+            {this.searchButton()}
           </div>
         )}
       </OpenableCloseable>,
-      window.document.querySelector('.dt-desktop')
+      element
     );
   }
 
-  renderMobile() {
+  renderMobile(element) {
     return createPortal(
       <OpenableCloseable>
         {(isOpen, { open, close } = {}) => (
@@ -221,6 +406,7 @@ export default class SearchBox extends React.Component {
               {opts =>
                 opts.map(({ option, active, select }) => (
                   <div
+                    key={option.key}
                     onClick={select}
                     className={`mobile-toggle-button font-size-medium tac tav ${
                       active ? 'active' : ''
@@ -233,54 +419,35 @@ export default class SearchBox extends React.Component {
             </Selectable>
 
             <div style={{ flexGrow: 2 }}>
-              <input
-                onKeyUp={e => {
-                  if (e.key === 'Enter') {
-                    this.submit();
-                  } else if (e.key === 'ArrowDown') {
-                    this.makeListItemsSelectable();
-                  }
-                }}
-                onChange={this.onTextChanged({ open, close })}
-                type="text"
-                className="full-width pam search_form_field"
-                placeholder={this.placeholderText()}
-                value={this.state.searchTerm}
-              />
+              {this.inputBox({ open, close })}
               {isOpen &&
                 this.shouldRenderResults() && (
                   <div
                     className="search-results-list"
                     style={{ maxHeight: viewport().height - 160 }}
                   >
-                    <SearchResultsList
-                      listGroups={this.props.autoSuggestResults}
-                      searchTerm={this.state.searchTerm}
-                      onSelect={this.onSelectItem(close)}
-                      selectedListItem={this.state.selectedListItem}
-                      navigateToSelectedListItem={
-                        this.state.navigateToSelectedListItem
-                      }
-                    />
+                    {this.searchResultsList({ close })}
                   </div>
                 )}
             </div>
-            <div className="search_bar_button" onClick={this.submit}>
-              <button type="submit" className="search_form_button">
-                <span className="search_icon_image_white" />
-              </button>
-            </div>
+            {this.searchButton()}
           </div>
         )}
       </OpenableCloseable>,
-      window.document.querySelector('.dt-desktop')
+      element
     );
   }
 
   render() {
-    if (this.props.size <= SM) {
-      return this.renderMobile();
+    let element = window.document.querySelector('#home-page .input-group');
+    if (element) {
+      return this.renderDesktop(element, false);
     }
-    return this.renderDesktop();
+
+    element = window.document.querySelector('.dt-desktop');
+    if (this.props.size <= SM) {
+      return this.renderMobile(element);
+    }
+    return this.renderDesktop(element);
   }
 }

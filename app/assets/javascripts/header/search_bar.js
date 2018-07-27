@@ -134,9 +134,38 @@ GS.nav.searchBar = GS.nav.searchBar || (function(){
     });
   };
 
+  var includesParam = function(key,val=undefined){
+    var queryData = GS.uri.Uri.getQueryData(document.location.search);
+    if(val !== undefined){
+      // If a query string has duplicate keys (i.e. lang=es&lang=en), a single key will be added to queryData with values
+      // stored in an array. Otherwise the val is a string. The check below will return true if there are no duplicate
+      // keys in the url and the val matches strictly, or if there are multiple keys and at least one of the vals matches.
+      return queryData[key] === val || (Array.isArray(queryData[key]) && $.inArray(val,queryData[key]));
+    } else {
+      if (queryData.hasOwnProperty(key)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   var setContentSearchBarSubmitHandler = function () {
     contentSearchForm.addEventListener("submit", submitContentSearch, false);
   };
+
+  var setSchoolSearchBarSubmitHandler = function() {
+    schoolSearchForm.addEventListener("submit", submitSchoolSearch, false)
+  };
+
+  var addInput = function(name, val, formElement) {
+    var newInput = document.createElement("input");
+    newInput.setAttribute("name", name); newInput.setAttribute("type", "hidden"); newInput.setAttribute("value", val);
+    formElement.appendChild(newInput);
+  }
+
+  var submitSchoolSearch = function(e) {
+    if (includesParam('lang', 'es')) {addInput('lang', 'es', schoolSearchForm)};
+  }
 
   var submitContentSearch = function (e) {
     e.preventDefault();
@@ -196,6 +225,7 @@ GS.nav.searchBar = GS.nav.searchBar || (function(){
     setMobileChooseContentButtonHandler();
     setMobileChooseSearchButtonHandler();
     setContentSearchBarSubmitHandler();
+    setSchoolSearchBarSubmitHandler();
     initializeSearchBar();
   };
 

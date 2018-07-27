@@ -9,6 +9,9 @@
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
   <%= javascript_include_tag "deprecated_application_w_google_charts", "data-turbolinks-track" => true %>
+  <%# webpack_javascript_include_tag("commons-blocking", "data-turbolinks-track" => true) %>
+  <%# webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%# webpack_javascript_include_tag("search-box", "data-turbolinks-track" => true, defer: true) %>
 
   <%= csrf_meta_tags %>
     <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
@@ -26,8 +29,8 @@
   <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
   <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'32x32', href: image_path('icons/favicons/GS_favicon_32x32.png') %>
 
-  <link rel="alternate" hreflang="en" href="<%= (@hreflang.present? && @hreflang.has_key?(:en)) ? @hreflang[:en] : url_for(params.merge(only_path: false, lang: nil,  state: params[:state].try(:gsub,' ','-'))) %>" />
-  <link rel="alternate" hreflang="es" href="<%= (@hreflang.present? && @hreflang.has_key?(:es)) ? @hreflang[:es] : url_for(params.merge(only_path: false, lang: 'es', state: params[:state].try(:gsub,' ','-'))) %>" />
+  <link rel="alternate" hreflang="en" href="<%= (@hreflang.present? && @hreflang.has_key?(:en)) ? @hreflang[:en] : url_for(params.merge(only_path: false, s_cid: nil, lang: nil,  state: params[:state].try(:gsub,' ','-'))) %>" />
+  <link rel="alternate" hreflang="es" href="<%= (@hreflang.present? && @hreflang.has_key?(:es)) ? @hreflang[:es] : url_for(params.merge(only_path: false, s_cid: nil, lang: 'es', state: params[:state].try(:gsub,' ','-'))) %>" />
 
   <% if @canonical_url.present? %>
     <link rel="canonical" href="<%= @canonical_url %>" />
@@ -82,6 +85,7 @@
     }
   });
 </script>
+<%= react_component('SearchBoxWrapper') %>
 <%= yield :javascript_includes %>
 </body>
 </html>

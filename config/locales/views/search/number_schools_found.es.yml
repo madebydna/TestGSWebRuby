@@ -2,9 +2,26 @@
 es:
   search:
     number_schools_found:
+      city_browse:
+        zero: Su búsqueda no obtuvo resultados en %{city}, %{state}.
+        one: Mostrando 1 escuela encontrada en %{city}, %{state}
+        other: Mostrando %{first} to %{last} de %{count} escuelas encontradas en %{city}, %{state}
+      district_browse:
+        zero: Su búsqueda no obtuvo resultados en %{district}.
+        one: Mostrando 1 escuela encontrada en %{district}
+        other: Mostrando %{first} to %{last} de %{count} escuelas encontradas en %{district}
+      distance:
+        zero: Su búsqueda no obtuvo resultados cerca %{location}.
+        one: Mostrando 1 escuela encontrada cerca %{location}
+        other: Mostrando %{first} to %{last} de %{count} escuelas encontradas circa %{location}
+      search_term:
+        zero: Su búsqueda de <span class="search-term">%{search_term}</span> no obtuvo resultados.
+        one: Mostrando 1 escuela encontrada para %{search_term}
+        other: Mostrando %{first} to %{last} de %{count} escuelas encontradas para %{search_term}
       in_city_state: en %{city}, %{state}
       in_district: en %{district}
       near_address: cerca %{address}
+      for_search_term: para %{search_term}
       public:
         one: pública
         other: públicas
@@ -26,6 +43,10 @@ es:
       Preschool:
         one: escuela preescolar
         other: escuelas preescolares
+      showing_number_of_schools_found:
+        zero: No se encontraron escuelas
+        one: Mostrando 1 escuela encontrada
+        other: Mostrando %{first} to %{last} de %{count} escuelas encontradas
       number_of_schools_found:
         one: 1 escuela encontrada
         other: "%{count} escuelas encontradas"
