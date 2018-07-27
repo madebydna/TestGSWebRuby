@@ -16,7 +16,7 @@ const translate = function(key, options) {
   // defaults to empty string if no matching translation and no default provided
   const defaultValue = options.default || '';
   const parameters = options.parameters || '';
-  let translationValue = translationsHash[key];
+  let translationValue = (translationsHash || {})[key];
   if (translationValue !== undefined) {
     translationValue = replaceParameters(translationValue, parameters);
     return translationValue;
