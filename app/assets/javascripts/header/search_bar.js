@@ -142,14 +142,11 @@ GS.nav.searchBar = GS.nav.searchBar || (function(){
       // keys in the url and the val matches strictly, or if there are multiple keys and at least one of the vals matches.
       return queryData[key] === val || (Array.isArray(queryData[key]) && $.inArray(val,queryData[key]));
     } else {
-      var keys = [];
-      for (var key in object) {
-        if (object.hasOwnProperty(key)) {
-          keys.push(key);
-        }
+      if (queryData.hasOwnProperty(key)) {
+        return true;
       }
-      return $.inArray(key, objectKeys(queryData));
     }
+    return false;
   }
 
   var setContentSearchBarSubmitHandler = function () {
