@@ -7,10 +7,6 @@
   background: white;
   border: 1px solid $form-field-border-color;
   border-radius: $form-field-border-radius;
-  @include media-breakpoint-only(xs) {
-    height: 100vh;
-    border: none;
-  }
 
   .match {
     font-family: opensans-bold;
@@ -53,6 +49,13 @@
           background: none;
         }
       }
+    }
+  }
+  @include media-breakpoint-only(xs) {
+    height: 100vh;
+    border: none;
+    ul .search-results-list-item:hover {
+      background: inherit;
     }
   }
 }
