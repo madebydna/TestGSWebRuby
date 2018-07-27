@@ -29,8 +29,8 @@ LocalizedProfiles::Application.routes.draw do
 
   # Routes for search pages
   scope ':state/:city/schools/', constraints: {state: States.any_state_name_regex, city: city_regex}, as: :search_city_browse do
-    get '', constraints: proc { |req| req.params.has_key?('newsearch') }, to: 'new_search#search'
-    get '', to: 'search#city_browse'
+    get '', constraints: proc { |req| req.params.has_key?('oldsearch') }, to: 'search#city_browse'
+    get '', to: 'new_search#search'
   end
 
   get ':state/:city/:level/',
@@ -52,8 +52,8 @@ LocalizedProfiles::Application.routes.draw do
   scope ':state/:city/:district_name/schools/', constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/}, as: :search_district_browse do
     # This city regex allows for all characters except /
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
-    get '', constraints: proc { |req| req.params.has_key?('newsearch') },  to: 'new_search#search'
-    get '', to: 'search#district_browse'
+    get '', constraints: proc { |req| req.params.has_key?('oldsearch') },  to: 'search#district_browse'
+    get '', to: 'new_search#search'
   end
   
 
@@ -74,8 +74,8 @@ LocalizedProfiles::Application.routes.draw do
       to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}/#{params[:level]}", '/schools/')}?gradeLevels=#{params[:level][0]}&st=#{params[:type].split('-').last}" }
 
   scope '/search/search.page', as: :search do
-    get '', constraints: proc { |req| req.params.has_key?('newsearch') }, to: 'new_search#search'
-    get '', to: 'search#search'
+    get '', constraints: proc { |req| req.params.has_key?('oldsearch') }, to: 'search#search'
+    get '', to: 'new_search#search'
   end
 
   get '/search/nearbySearch.page', as: :search_by_zip, to: 'search#by_zip'
