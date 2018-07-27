@@ -17,13 +17,13 @@ describe 'search routing' do
 
   describe "old search" do
     it "should route to search controller" do
-      expect( get "/search/search.page" ).to route_to('search#search')
+      expect( get "/search/search.page?oldsearch" ).to route_to('search#search', oldsearch: nil)
     end
   end
 
   describe "new search" do
     it "should route to new search controller" do
-      expect( get "/search/search.page?newsearch" ).to route_to('new_search#search', newsearch: nil)
+      expect( get "/search/search.page" ).to route_to('new_search#search')
     end
   end
 
