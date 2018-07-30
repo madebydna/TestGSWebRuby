@@ -21,7 +21,7 @@ const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
             index % 4 === 0 && (
               <Ad
                 slot={`Search_After${index}_300x250`}
-                dimensions={[300, 250]}
+                sizeName="box"
                 idCounter={index / 4}
                 key={`ad-${index}`}
                 container={<li className="ad" />}
