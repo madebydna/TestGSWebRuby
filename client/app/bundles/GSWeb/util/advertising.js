@@ -180,6 +180,10 @@ const getSizeMappings = function() {
       .sizeMapping()
       .addSize([640, 480], [[640, 800], [300, 137]])
       .addSize([0, 0], [[300, 137]])
+      .build(),
+    box: googletag
+      .sizeMapping()
+      .addSize([0, 0], [[300, 250], [320, 100], [320, 50]])
       .build()
   };
 };
