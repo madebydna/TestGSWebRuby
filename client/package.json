@@ -43,7 +43,7 @@
     "jsx-to-string": "^1.0.0",
     "loader-utils": "^1.0.2",
     "prop-types": "^15.6.1",
-    "query-string": "^6.1.0",
+    "query-string": "^5.1.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-on-rails": "^10.1.4",

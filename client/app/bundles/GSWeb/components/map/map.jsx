@@ -41,7 +41,8 @@ export default class Map extends React.Component {
       scrollwheel: false,
       zoomControlOptions: {
         position: this.props.googleMaps.ControlPosition.TOP_RIGHT
-      }
+      },
+      clickableIcons: false
     };
     return new this.props.googleMaps.Map($elem, mapOptions);
   }

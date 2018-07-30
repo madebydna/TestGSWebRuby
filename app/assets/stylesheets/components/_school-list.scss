@@ -7,8 +7,8 @@ section.school-list {
   .scale {
     margin-top: 5px;
     font-size: $font-size-s2;
-    max-width: 45px;
-    color: #b9ccd4;
+    max-width: 62px;
+    color: #999;
     text-align: center;
   }
 
@@ -54,10 +54,10 @@ section.school-list {
       }
       > span:first-of-type {
         text-align: center;
-        width: 38px;
+        width: 55px;
       }
       > span:last-of-type {
-        width: calc(100% - 48px);
+        width: calc(100% - 65px);
       }
       > span {
         vertical-align: top;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
-import { getHomesForSaleHref } from 'util/school';
+import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
 import FiveStarRating from '../review/form/five_star_rating';
 
 const renderRating = (rating, ratingScale) => {
@@ -34,7 +34,13 @@ const renderEnrollment = enrollment => {
 };
 
 const numReviewsLink = (numReviews, reviewsUrl) =>
-  numReviews ? <a href={reviewsUrl}>{numReviews} reviews</a> : 'No reviews yet';
+  numReviews && numReviews > 0 ? (
+    <a href={reviewsUrl}>
+      {numReviews} {numReviews > 1 ? t('reviews.reviews') : t('reviews.review')}
+    </a>
+  ) : (
+    t('reviews.No reviews yet')
+  );
 
 const fiveStars = numFilled => (
   <FiveStarRating questionId={1} value={numFilled} onClick={() => {}} />
@@ -52,6 +58,7 @@ const SchoolTableRow = ({
   studentsPerTeacher,
   numReviews,
   parentRating,
+  districtName,
   links
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
@@ -88,15 +95,15 @@ const SchoolTableRow = ({
           </span>
         </React.Fragment>
       </td>
-      <td>{capitalize(schoolType)}</td>
+      <td>{capitalize(clarifySchoolType(schoolType))}</td>
       <td>{gradeLevels}</td>
       <td>{renderEnrollment(enrollment)}</td>
       <td>{studentsPerTeacher ? `${studentsPerTeacher}:1` : 'N/A'}</td>
       <td>
         {numReviewsLink(numReviews, links.reviews)}
-        {fiveStars(parentRating)}
+        {parentRating ? fiveStars(parentRating) : null}
       </td>
-      <td>District url</td>
+      <td>{districtName}</td>
     </tr>
   );
 };
@@ -113,6 +120,7 @@ SchoolTableRow.propTypes = {
   studentsPerTeacher: PropTypes.number,
   numReviews: PropTypes.number,
   parentRating: PropTypes.number,
+  districtName: PropTypes.string,
   links: PropTypes.shape({
     profile: PropTypes.string.isRequired
   }).isRequired
@@ -125,7 +133,8 @@ SchoolTableRow.defaultProps = {
   active: false,
   studentsPerTeacher: null,
   numReviews: null,
-  parentRating: null
+  parentRating: null,
+  districtName: null
 };
 
 export default SchoolTableRow;

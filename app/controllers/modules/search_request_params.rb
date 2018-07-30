@@ -32,9 +32,9 @@ module SearchRequestParams
 
   def level_codes
     params = parse_array_query_string(request.query_string)
-    codes = params['gradeLevels'] || params['level_code'] || []
+    codes = params[grade_level_param_name] || params['level_code'] || []
     codes = codes.split(',') unless codes.is_a?(Array)
-    codes
+    codes & ['e', 'm', 'h', 'p']
   end
 
   def level_code
@@ -45,7 +45,11 @@ module SearchRequestParams
     params = parse_array_query_string(request.query_string)
     types = params['st'] || params['type'] || []
     types = types.split(',') unless types.is_a?(Array)
-    types
+    types & ['public', 'private', 'charter']
+  end
+
+  def entity_type
+    entity_types.first
   end
 
   def lat
@@ -57,6 +61,10 @@ module SearchRequestParams
   end
 
   def radius
+    radius_param || 5
+  end
+
+  def radius_param
     params[:distance]&.to_i || params[:radius]&.to_i
   end
 
@@ -65,11 +73,11 @@ module SearchRequestParams
   end
 
   def point_given?
-    lat.present? && lon.present? && radius.blank?
+    lat.present? && lon.present? && radius_param.blank?
   end
 
   def area_given?
-    lat.present? && lon.present? && radius.present?
+    lat.present? && lon.present? && radius_param.present?
   end
 
   def boundary_level
@@ -99,6 +107,10 @@ module SearchRequestParams
 
   def district_param
     params[:district] || params[:district_name]
+  end
+
+  def location_label_param 
+    params[:locationLabel] || params[:locationSearchString]
   end
 
   def city_record
@@ -136,7 +148,7 @@ module SearchRequestParams
   end
 
   def city_browse?
-    state && city
+    state && city && !district
   end
 
   def zip_code_search?
@@ -170,9 +182,25 @@ module SearchRequestParams
     params[:extras]&.split(',') || []
   end
 
+  def grade_level_param_name
+    'gradeLevels'
+  end
+
+  def page_param_name
+    'page'
+  end
+
+  def school_type_param_name
+    'st'
+  end
+
   # to be overridden by controller
   def default_extras
     []
+  end
+
+  def street_address?
+    params['locationType'] == 'street_address'
   end
 
 end

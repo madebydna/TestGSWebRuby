@@ -17,12 +17,12 @@ describe 'New search page' do
     end
 
     [
-      ['/search/search.page?newsearch&q=foo', true],
-      ['/search/search.page?newsearch&lat=1&lon=2', true],
-      ['/search/search.page?newsearch&lat=1&lon=2&radius=3', true],
-      ['/california/alameda/schools/?newsearch', true],
-      ['/california/alameda/schools/?newsearch&q=bay', true],
-      ['/california/alameda/alameda-unified-school-district/schools/?newsearch&q=bay', true]
+      ['/search/search.page?q=foo', true],
+      ['/search/search.page?lat=1&lon=2', true],
+      ['/search/search.page?lat=1&lon=2&radius=3', true],
+      ['/california/alameda/schools/', true],
+      ['/california/alameda/schools/?q=bay', true],
+      ['/california/alameda/alameda-unified-school-district/schools/?q=bay', true]
     ].each do |path, should_write_noindex|
       it "the uri: #{path} should #{should_write_noindex ? '' : 'not'} include noindex tag" do
         get path
@@ -49,12 +49,9 @@ describe 'New search page' do
     end
 
     [
-        ['/search/search.page?newsearch&q=foo', true],
-        ['/search/search.page?newsearch&lat=1&lon=2', true],
-        ['/search/search.page?newsearch&lat=1&lon=2&radius=3', true],
-        # ['/california/alameda/schools/?newsearch', false],
-        # ['/california/alameda/schools/?newsearch&q=bay', false],
-        # ['/california/alameda/alameda-unified-school-district/schools/?newsearch&q=bay', false]
+        ['/search/search.page?q=foo', true],
+        ['/search/search.page?lat=1&lon=2', true],
+        ['/search/search.page?lat=1&lon=2&radius=3', true],
     ].each do |path, should_write_noindex|
 
       it "the uri: #{path} should #{should_write_noindex ? '' : 'not'} include noindex tag" do

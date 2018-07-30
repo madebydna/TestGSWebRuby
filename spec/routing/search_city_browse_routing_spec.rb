@@ -27,7 +27,7 @@ describe 'search city browse routing' do
           'city starting with a number' => '12th-city'
       }.each do |city_description, city|
         it "should route a #{city_description}" do
-          expect( get "/#{state}/#{city}/schools/" ).to route_to('search#city_browse', state: state, city: city.sub('%23', '#'))
+          expect( get "/#{state}/#{city}/schools/?oldsearch" ).to route_to('search#city_browse', state: state, city: city.sub('%23', '#'), oldsearch: nil)
         end
       end
     end
@@ -47,7 +47,7 @@ describe 'search city browse routing' do
             'city starting with a number' => '12th-city'
         }.each do |city_description, city|
           it "should route a #{city_description}" do
-            expect( get "/#{state}/#{city}/schools/?newsearch" ).to route_to('new_search#search', state: state, city: city.sub('%23', '#'), newsearch: nil)
+            expect( get "/#{state}/#{city}/schools/" ).to route_to('new_search#search', state: state, city: city.sub('%23', '#'))
           end
         end
       end

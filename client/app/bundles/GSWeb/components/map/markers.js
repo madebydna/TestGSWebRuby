@@ -36,7 +36,7 @@ export default function createMarkerFactory(googleMaps) {
       );
     },
 
-    selectPinFunction(rating, color, highlighted, assigned, address) {
+    selectPin(rating, color, highlighted, assigned, address) {
       if (assigned && rating && !highlighted) {
         return createAssignedPinWithRating(rating, color);
       }
@@ -76,13 +76,7 @@ export default function createMarkerFactory(googleMaps) {
         title,
         icon: svg
           ? {
-              url: this.selectPinFunction(
-                rating,
-                color,
-                highlighted,
-                assigned,
-                address
-              )
+              url: this.selectPin(rating, color, highlighted, assigned, address)
             }
           : this.markerImage(rating),
         zIndex: 1,

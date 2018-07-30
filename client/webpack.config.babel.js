@@ -28,6 +28,7 @@ const config = {
       './app/bundles/GSWeb/header'
     ],
     'react-redux': [
+      './app/bundles/GSWeb/polyfills',
       'react',
       'react-dom',
       'redux',
@@ -43,7 +44,8 @@ const config = {
     jquery: ['jquery'],
     'admin-tools': ['./app/bundles/GSWeb/admin_tools'],
     'add-schools': ['./app/bundles/GSWeb/pages/add_schools'],
-    search: ['./app/bundles/GSWeb/search']
+    search: ['./app/bundles/GSWeb/search'],
+    'search-box': ['./app/bundles/GSWeb/react_components/search_box_wrapper']
   },
 
   output: {
@@ -76,7 +78,8 @@ const config = {
         'school-profiles',
         'district-boundaries',
         'widget',
-        'search'
+        'search',
+        'search-box'
       ],
       minChunks: Infinity
     }),
@@ -87,13 +90,20 @@ const config = {
         'school-profiles',
         'district-boundaries',
         'widget',
-        'search'
+        'search',
+        'search-box'
       ],
       minChunks: Infinity
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'react-redux',
-      chunks: ['school-profiles', 'district-boundaries', 'widget', 'search'],
+      chunks: [
+        'school-profiles',
+        'district-boundaries',
+        'widget',
+        'search',
+        'search-box'
+      ],
       minChunks: Infinity
     }),
     new webpack.DefinePlugin({

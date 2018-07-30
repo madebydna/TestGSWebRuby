@@ -47,6 +47,7 @@ class CitiesController < ApplicationController
       ad_setTargeting_through_gon
       gon.pagename = 'GS:City:Home'
       data_layer_through_gon
+      @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
     end
   end
 

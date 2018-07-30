@@ -49,6 +49,9 @@ import {
   registerPredefinedInterrupts,
   runInterrupts
 } from 'util/interrupts';
+import SearchBox from 'react_components/search_box';
+import withViewportSize from 'react_components/with_viewport_size';
+const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 
 window.store = getStore();
 
@@ -63,7 +66,8 @@ ReactOnRails.register({
   OspSchoolInfo,
   HomesAndRentals,
   StemCourses,
-  TopicalReviewSummary
+  TopicalReviewSummary,
+  SearchBoxWrapper
 });
 
 $(function() {

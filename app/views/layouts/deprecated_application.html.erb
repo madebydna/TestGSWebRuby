@@ -2,6 +2,7 @@
 <html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
   <%= display_meta_tags %>
+  <%= render 'layouts/common_prefetches' %>
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "deprecated_application", media: "all", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "deprecated_print",       media: "print" %>
@@ -25,8 +26,8 @@
   <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
   <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'32x32', href: image_path('icons/favicons/GS_favicon_32x32.png') %>
 
-  <link rel="alternate" hreflang="en" href="<%= (@hreflang.present? && @hreflang.has_key?(:en)) ? @hreflang[:en] : url_for(params.merge(only_path: false, lang: nil,  state: params[:state].try(:gsub,' ','-'))) %>" />
-  <link rel="alternate" hreflang="es" href="<%= (@hreflang.present? && @hreflang.has_key?(:es)) ? @hreflang[:es] : url_for(params.merge(only_path: false, lang: 'es', state: params[:state].try(:gsub,' ','-'))) %>" />
+  <link rel="alternate" hreflang="en" href="<%= (@hreflang.present? && @hreflang.has_key?(:en)) ? @hreflang[:en] : url_for(params.merge(only_path: false, s_cid: nil, lang: nil,  state: params[:state].try(:gsub,' ','-'))) %>" />
+  <link rel="alternate" hreflang="es" href="<%= (@hreflang.present? && @hreflang.has_key?(:es)) ? @hreflang[:es] : url_for(params.merge(only_path: false, s_cid: nil, lang: 'es', state: params[:state].try(:gsub,' ','-'))) %>" />
 
   <% if @canonical_url.present? %>
     <link rel="canonical" href="<%= @canonical_url %>" />

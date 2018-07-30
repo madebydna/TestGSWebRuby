@@ -15,35 +15,40 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 // reset css
-@import "resources/normalize";
+@import 'resources/normalize';
 
 // bootstrap
-@import "resources/bootstrap/smaller_bootstrap";
-
+@import 'resources/bootstrap/smaller_bootstrap';
 
 // variables, mixins, base styles
-@import "variables/variables";
-@import "mixins/*";
-@import "gs/mixins"; // deprecated
-@import "gs/form";
-@import "base/spacing";
-@import "base/typography";
+@import 'variables/variables';
+@import 'mixins/*';
+@import 'gs/mixins'; // deprecated
+@import 'gs/form';
+@import 'base/spacing';
+@import 'base/typography';
 
 // TODO: clean this up
-@import "gs/bring-back-bootstrap"; // depends on responsive-utilities mixins
-
+@import 'gs/bring-back-bootstrap'; // depends on responsive-utilities mixins
 
 // fonts
-@import "fonts/fonts-opensans-regular";
-@import "fonts/fonts-opensans-semibold";
-@import "fonts/fonts-robotoslab-bold";
-
+@import 'fonts/fonts-opensans-regular';
+@import 'fonts/fonts-opensans-semibold';
+@import 'fonts/fonts-robotoslab-bold';
+@font-face {
+  font-family: 'opensans-bold';
+  src: url('opensans-bold-webfont.eot?');
+  src: local('?'), asset-url('opensans-bold-webfont.woff') format('woff'),
+    asset-url('opensans-bold-webfont.ttf') format('truetype'),
+    asset-url('opensans-bold-webfont.svg#opensans-bold') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
 
 // icons / sprites
-@import "fonts/gs-icon-font";
-@import "sprites/avatars_33x33";
-@import "sprites/avatars_65x65";
-
+@import 'fonts/gs-icon-font';
+@import 'sprites/avatars_33x33';
+@import 'sprites/avatars_65x65';
 
 // components
 @import 'components/show-more';
@@ -53,53 +58,53 @@
 @import 'components/gs-rating-with-label';
 @import 'components/person-bar-viz';
 @import 'components/static-right-rail-container';
-@import "components/breadcrumbs";
-@import "components/rating-container";
-@import "components/circle-rating";
-@import "components/circle-rating-with-label";
-@import "components/diamond-rating";
-@import "components/square-rating";
-@import "components/rating-score-item";
-@import "components/bar-graph-display";
-@import "components/five-stars";
-@import "components/review-list";
-@import "components/review";
-@import "components/review-summary";
-@import "components/report-review";
-@import "components/five-star-question-cta";
-@import "components/join-form";
-@import "components/nearby-schools";
-@import "components/homes-and-rentals";
-@import "components/neighborhood";
-@import "components/school-user-modal";
-@import "components/info-circle";
-@import "components/module-header";
-@import "components/ratio-viz";
-@import "components/back-to-top";
-@import "components/info-window";
-@import "components/school-list";
-@import "components/anchor-button";
+@import 'components/breadcrumbs';
+@import 'components/rating-container';
+@import 'components/circle-rating';
+@import 'components/circle-rating-with-label';
+@import 'components/diamond-rating';
+@import 'components/square-rating';
+@import 'components/rating-score-item';
+@import 'components/bar-graph-display';
+@import 'components/five-stars';
+@import 'components/review-list';
+@import 'components/review';
+@import 'components/review-summary';
+@import 'components/report-review';
+@import 'components/five-star-question-cta';
+@import 'components/join-form';
+@import 'components/nearby-schools';
+@import 'components/homes-and-rentals';
+@import 'components/neighborhood';
+@import 'components/school-user-modal';
+@import 'components/info-circle';
+@import 'components/module-header';
+@import 'components/ratio-viz';
+@import 'components/back-to-top';
+@import 'components/info-window';
+@import 'components/school-list';
+@import 'components/anchor-button';
 @import 'components/rating-with-bar';
-@import "components/vertical-nav";
+@import 'components/vertical-nav';
 // more components
-@import "gs/objects/spinny_wheel.css.scss";
-@import "gs/objects/modal_layout";
-@import "pages/districts-cities-list";
+@import 'gs/objects/spinny_wheel.css.scss';
+@import 'gs/objects/modal_layout';
+@import 'pages/districts-cities-list';
 @import 'gs/modal_tooltip';
 @import 'lib/transform';
 @import 'components/mobile-overlay-ad';
-
+@import 'components/search-autosuggest';
 
 // footer-specific
-@import "gs/objects/footer";
-@import "sprites/footer_icons_16x16";
+@import 'gs/objects/footer';
+@import 'sprites/footer_icons_16x16';
 
 // page specific
-@import "pages/interstitial";
-@import "pages/page-not-found";
+@import 'pages/interstitial';
+@import 'pages/page-not-found';
 
 // school profile specific
-@import "school_profiles/school_profile";
+@import 'school_profiles/school_profile';
 @import 'school_profiles/profile_section';
 @import 'school_profiles/profile_module';
 @import 'school_profiles/module_feedback';
