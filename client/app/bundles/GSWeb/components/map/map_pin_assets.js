@@ -4,7 +4,7 @@ const GRAY = 'rgb(150,150,150)';
 const DARK_GRAY = 'rgb(104,104,104)';
 const WHITE = 'rgb(255,255,255)';
 const LIGHT_BLUE = 'rgb(232,247,250)';
-const PREFIX = 'data:image/svg+xml;utf-8,';
+const PREFIX = 'data:image/svg+xml;base64,';
 
 const mapPinColor = rating =>
   ({
@@ -82,7 +82,10 @@ const pinWithoutRatingDisc = highlighted =>
   />`;
 
 const svg = (width, height, content) =>
-  `${PREFIX}<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${content}</svg>`;
+  PREFIX +
+  btoa(
+    `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${content}</svg>`
+  );
 
 const createDefaultPinWithRating = (rating, color) =>
   svg(
