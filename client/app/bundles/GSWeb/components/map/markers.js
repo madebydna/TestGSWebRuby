@@ -71,12 +71,32 @@ export default function createMarkerFactory(googleMaps) {
       // svg flag intended to permit backwards compatibility while we decide which assets to use for district boundaries tool
       const position = new googleMaps.LatLng(lat, lon);
       const color = mapPinColor(rating);
+      let size = null;
+      if (address) {
+        size = new googleMaps.Size(25, 34); // address pin
+      } else if (assigned && rating) {
+        size = new googleMaps.Size(59, 75);
+      } else if (assigned && !rating) {
+        size = new googleMaps.Size(59, 58);
+      } else if (!assigned && rating) {
+        size = new googleMaps.Size(40, 50);
+      } else if (!assigned && !rating) {
+        size = new googleMaps.Size(26, 33);
+      }
       return new googleMaps.Marker({
         position,
         title,
+        optimized: false,
         icon: svg
           ? {
-              url: this.selectPin(rating, color, highlighted, assigned, address)
+              url: this.selectPin(
+                rating,
+                color,
+                highlighted,
+                assigned,
+                address
+              ),
+              scaledSize: size
             }
           : this.markerImage(rating),
         zIndex: 1,
