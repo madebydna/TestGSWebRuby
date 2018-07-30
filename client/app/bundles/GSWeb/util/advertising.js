@@ -1,7 +1,3 @@
-import {
-  onAdFilled as onMobileOverlayAdFilled,
-  onAdNotFilled as onMobileOverlayAdNotFilled
-} from 'components/ads/mobile_overlay';
 import log from 'util/log';
 import { remove } from 'lodash';
 
