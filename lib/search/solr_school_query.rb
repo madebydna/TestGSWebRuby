@@ -34,11 +34,11 @@ module Search
     end
 
     def default_sort_name
-      lat && lon ? 'distance' : 'rating'
+      'rating'
     end
 
     def default_sort_direction
-      lat && lon ? 'asc' : 'desc'
+      'desc'
     end
 
     def map_sort_direction(name, _)
