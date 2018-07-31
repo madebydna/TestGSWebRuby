@@ -16,6 +16,7 @@ class Cacher
   # :feed_characteristics
   # :test_scores_gsdata
   # :feed_test_scores_gsdata
+  # :feed_old_test_scores_gsdata
 
   def initialize(school)
     @school = school
@@ -93,6 +94,7 @@ class Cacher
         directory:        DirectoryCaching::DirectoryCacher,
         courses:              CoursesCaching::GsdataCoursesCacher,
         feed_test_scores_gsdata: TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
+        feed_old_test_scores_gsdata: TestScoresCaching::FeedOldTestScoresCacherGsdata,
         feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
     }[key.to_s.to_sym]
   end
@@ -121,6 +123,7 @@ class Cacher
       ProgressBarCaching::ProgressBarCacher,
       FeedTestScoresCacher,
       TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
+      TestScoresCaching::FeedOldTestScoresCacherGsdata,
       GsdataCaching::GsdataCacher,
       RatingsCaching::GsdataRatingsCacher,
       CoursesCaching::GsdataCoursesCacher,

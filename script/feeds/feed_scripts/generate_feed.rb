@@ -7,17 +7,29 @@ require_relative '../feed_helpers/feeds_option_parser'
 
 require_relative '../feed_builders/subrating/data_reader'
 require_relative '../feed_builders/subrating/xml_writer'
+require_relative '../feed_builders/old-test-gsdata/data_reader'
+require_relative '../feed_builders/old-test-gsdata/all_students_data_reader'
+require_relative '../feed_builders/old-test-gsdata/xml_writer'
+require_relative '../feed_builders/old-test-gsdata/all_students_xml_writer'
 
 module Feeds
   class GenerateFeed
     DATA_READERS = {
-        subrating: Feeds::Subrating::DataReader
+        subrating: Feeds::Subrating::DataReader,
+        old_test_gsdata: Feeds::OldTestGsdata::AllStudentsDataReader,
+        old_test_subgroup_gsdata: Feeds::OldTestGsdata::DataReader
     }
 
     DATA_WRITERS = {
         subrating: {
             xml: Feeds::Subrating::XmlWriter
-        }
+        },
+        old_test_gsdata: {
+            xml: Feeds::OldTestGsdata::XmlWriter
+        },
+        old_test_subgroup_gsdata: {
+            xml: Feeds::OldTestGsdata::AllStudentsXmlWriter
+        },
     }
 
     def initialize
@@ -39,11 +51,23 @@ module Feeds
       @options[:school_ids]
     end
 
+    def district_ids
+      @options[:district_ids]
+    end
+
     def schools(state)
       if school_ids.present?
         School.find_by_state_and_ids(state, school_ids)
       else
         School.on_db(state.downcase.to_sym).active.not_preschool_only.order(:id)
+      end
+    end
+
+    def districts(state)
+      if district_ids.present?
+        District.find_by_state_and_ids(state, district_ids)
+      else
+        District.on_db(state.downcase.to_sym).active.order(:id)
       end
     end
 
@@ -72,7 +96,7 @@ module Feeds
       @_data_readers ||= Hash.new do |hash, s|
         reader = DATA_READERS[feed]
         raise "No data reader found for #{feed}" unless reader.present?
-        hash[s] = reader.new(s, schools(s))
+        hash[s] = reader.new(s, schools(s), districts(s))
       end
       @_data_readers[state]
     end
