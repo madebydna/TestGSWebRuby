@@ -12,6 +12,10 @@ const defaultOptions = [
   {
     key: 'name',
     label: t('School name')
+  },
+  {
+    key: 'relevance',
+    label: t('Relevance')
   }
 ];
 

@@ -22,6 +22,8 @@ module Search
         return 'sorted_gs_rating_asc'
       elsif name == 'rating' && direction == 'desc' 
         return 'overall_gs_rating'
+      elsif name == 'relevance'
+        return 'score'
       else
         {
           'name' => 'school_sortable_name'
