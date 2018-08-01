@@ -67,7 +67,7 @@ const School = ({
 
   return (
     <React.Fragment key={state + id}>
-      {assigned && <div className="assigned-text">{t('assigned')}</div>}
+      {assigned && <div className="assigned-text">{t('assigned_school')}</div>}
       <span>{renderRating(rating, ratingScale)}</span>
       <span>
         <a href={links.profile} className="name" target="_blank">
@@ -95,7 +95,7 @@ const School = ({
               target="_blank"
               className="homes-for-sale-link"
             >
-              &nbsp; Homes for sale
+              &nbsp; {t('homes_for_sale')}
             </a>
           </div>
         )}

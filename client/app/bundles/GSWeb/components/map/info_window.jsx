@@ -62,7 +62,7 @@ export default function createInfoWindow(entity) {
   let addressString = `${entity.address.street1}, ${entity.address.city}, ${entity.state} ${entity.address.zip}`;
   let contentString = (
     <div class="info-window">
-      {entity.assigned && <div class="assigned-text">{t('assigned')}</div>}
+      {entity.assigned && <div class="assigned-text">{t('assigned_school')}</div>}
       <div class="clearfix">
         { jsxToString(ratingDiv(entity)).replace(/>\s+/, '>').replace(/\s+</, '<') }
         <div class="school-info">
@@ -76,7 +76,7 @@ export default function createInfoWindow(entity) {
               {homesForSaleHref && (
               <div class="other-links">
                 <span class="icon-house">  </span>
-                <a href={homesForSaleHref} rel="nofollow" target="_blank"> Homes for sale</a>
+                <a href={homesForSaleHref} rel="nofollow" target="_blank"> {t('homes_for_sale')}</a>
               </div>)}
             </div>
           }
