@@ -212,24 +212,6 @@ export default class SearchBox extends React.Component {
     };
   }
 
-  /*
-  { city: [
-      {"id": null,
-      "city": "New Boston",
-      "state": "nh",
-      "type": "city",
-      "url": '/new-mexico/alamogordo//829-Alamogordo-SDA-School}
-    ],
-    school: [
-      {"id": null,
-      "school": "Alameda High School",
-      "city": "New Boston",
-      "state": "nh",
-      "type": "school"}
-    ],
-    zip....includes an additional 'value' key.
-  },
-  */
   autoSuggestQuery(q) {
     if (q.length >= 3) {
       if (matchesAddress(q)) {
@@ -269,6 +251,10 @@ export default class SearchBox extends React.Component {
 
   resetSelectedListItem() {
     this.setState({ selectedListItem: -1 });
+  }
+
+  resetSearchTerm() {
+    this.setState({searchTerm: ''});
   }
 
   selectionOutOfBounds(e) {
@@ -340,6 +326,10 @@ export default class SearchBox extends React.Component {
     </div>
   );
 
+  resetSearchTermButton = () => (
+    <span className="search-term-reset-button" onClick={()=> this.resetSearchTerm()}>x</span>
+  )
+
   searchResultsList = ({ close }) => (
     <SearchResultsList
       listGroups={this.state.autoSuggestResults}
@@ -382,6 +372,7 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
+            {this.resetSearchTermButton()}
             {this.searchButton()}
           </div>
         )}
@@ -430,6 +421,7 @@ export default class SearchBox extends React.Component {
                   </div>
                 )}
             </div>
+            {this.resetSearchTermButton()}
             {this.searchButton()}
           </div>
         )}
