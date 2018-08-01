@@ -46,6 +46,8 @@ en:
       <p style="text-align: left;">
       GreatSchools’ Summary Rating provides an overall snapshot of school quality. 
       <br/>For some schools, we do not have enough data from state or national education agencies to provide a rating.</p>
+    assigned_description_html: >
+      It looks like this is your assigned <span style='text-transform: lowercase;' class="open-sans_semibold">{school_level} school</span>, but we recommend double-checking with the district or school.
     advertisement: Advertisement
     assigned: ASSIGNED
     PreK: PreK

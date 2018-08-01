@@ -42,6 +42,29 @@ const renderRating = (rating, ratingScale) => {
   );
 };
 
+const levelCodeLong = (lc) => {
+  if (lc == 'e') return 'Elementary';
+  if (lc == 'm') return 'Middle';
+  if (lc == 'h') return 'High';
+  if (lc == 'p') return 'PreSchool';
+}
+
+const renderAssigned = (lc) => {
+  let school_level = t(levelCodeLong(lc));
+  const content = (
+      <div
+          dangerouslySetInnerHTML={{
+            __html: t('assigned_description_html', { parameters: { school_level } })
+          }}
+      />
+  );
+  return (
+      <ModalTooltip content={content}>
+         <span className="info-circle icon-info" />
+      </ModalTooltip>
+  );
+};
+
 const School = ({
   id,
   state,
@@ -52,6 +75,7 @@ const School = ({
   enrollment,
   rating,
   ratingScale,
+  levelCode,
   active,
   distance,
   assigned,
@@ -67,7 +91,7 @@ const School = ({
 
   return (
     <React.Fragment key={state + id}>
-      {assigned && <div className="assigned-text">{t('assigned_school')}</div>}
+      {assigned && <div className="assigned-text">{t('assigned_school') } {renderAssigned(levelCode)}</div>}
       <span>{renderRating(rating, ratingScale)}</span>
       <span>
         <a href={links.profile} className="name" target="_blank">
