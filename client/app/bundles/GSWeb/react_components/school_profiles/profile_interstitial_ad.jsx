@@ -54,6 +54,16 @@ ProfileInterstitialAd.propTypes = {
   loaded: PropTypes.bool.isRequired
 };
 
+// shouldLoad is just a property on this object that will cause the interstitial to load immediately
+// (if shouldLoad is true). This handles the case where we know we want to load the interstitial
+// before the component has been mounted
+//
+// If the interstitial has been mounted and not loaded, then we can cause it to load by invoking
+// profileInterstitialLoader.load(), which is overwritten by the interstitial when it is constructed.
+//
+// I could have put this code in the ProfileInterstitialAd above and had one fewer components,
+// But wanted to separate it out since it's specific to how we're using it currently.
+// The interstitial could be used separately without all this loading logic stuff
 const profileInterstitialLoader = {
   shouldLoad: false,
   load: () => {
