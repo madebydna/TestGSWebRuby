@@ -12,10 +12,6 @@ const defaultOptions = [
   {
     key: 'name',
     label: t('School name')
-  },
-  {
-    key: 'relevance',
-    label: t('Relevance')
   }
 ];
 
@@ -26,11 +22,20 @@ const distanceOptions = [
   }
 ];
 
-const SortSelect = ({ includeDistance }) => {
+const relevanceOption = [
+  {
+    key: 'relevance',
+    label: t('Relevance')
+  }
+]
+
+const SortSelect = ({ includeDistance, includeRelevance }) => {
   let options = defaultOptions;
   if (includeDistance) {
     options = options.concat(distanceOptions);
   }
+  includeRelevance && (options = options.concat(relevanceOption));
+
 
   return (
     <SortContext.Consumer>

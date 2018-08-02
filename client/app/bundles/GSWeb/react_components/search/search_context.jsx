@@ -141,6 +141,10 @@ class SearchProvider extends React.Component {
     );
   }
 
+  shouldIncludeRelevance() {
+    return !!this.props.q;
+  }
+
   updateSchools() {
     this.setState(
       {
@@ -226,6 +230,7 @@ class SearchProvider extends React.Component {
           resultSummary: this.state.resultSummary,
           size: this.state.size,
           shouldIncludeDistance: this.shouldIncludeDistance(),
+          shouldIncludeRelevance: this.shouldIncludeRelevance(),
           toggleHighlight: this.toggleHighlight,
           lat: this.props.lat,
           lon: this.props.lon,
