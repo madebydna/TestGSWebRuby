@@ -170,13 +170,4 @@ module SearchControllerConcerns
     schools
   end
 
-  def add_level_code(schools)
-    schools.each do | sr |
-      sr.level_code = sr.level_code
-    end
-    schools
-  end
-
-
-
 end
