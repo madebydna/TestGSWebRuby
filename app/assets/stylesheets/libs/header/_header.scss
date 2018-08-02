@@ -683,9 +683,9 @@
   .un .search_form_field {
     border: 1px solid #b8b8b8;
     border-right: none;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
+    border-radius: 0;
     border-bottom-left-radius: 4px;
+    -webkit-appearance: none;
   }
 
   .un .search_form_button {
