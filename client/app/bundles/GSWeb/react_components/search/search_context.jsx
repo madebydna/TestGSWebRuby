@@ -198,6 +198,8 @@ class SearchProvider extends React.Component {
         s.highlighted = !s.highlighted;
         return s;
       }
+      // Un-highlight any previously highlighted schools 
+      s.highlighted = false;
       return s;
     });
     this.setState({ schools });
