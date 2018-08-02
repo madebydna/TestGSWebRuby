@@ -84,6 +84,7 @@ export default class SearchBox extends React.Component {
     super(props);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.resetSelectedListItem = this.resetSelectedListItem.bind(this);
+    this.resetSearchTerm = this.resetSearchTerm.bind(this);
     this.manageSelectedListItem = this.manageSelectedListItem.bind(this);
     this.state = {
       searchTerm: '',
@@ -327,7 +328,10 @@ export default class SearchBox extends React.Component {
   );
 
   resetSearchTermButton = () => (
-    <span className="search-term-reset-button" onClick={()=> this.resetSearchTerm()}>x</span>
+    <span className="search-term-reset-button" onClick={()=> {
+      analyticsEvent('search', 'autocomplete-search-reset', this.state.searchTerm);
+      this.resetSearchTerm();
+    }}>x</span>
   )
 
   searchResultsList = ({ close }) => (
