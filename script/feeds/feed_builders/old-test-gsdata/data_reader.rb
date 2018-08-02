@@ -15,22 +15,50 @@ module Feeds
         state_test_info.each(&block)
       end
 
-      def each_state_result(&block)
-        state_caches.each(&block)
+      def each_state_result
+        state_cache = StateCache.for_state('feed_test_scores_gsdata', @state)
+        raise "State cache not found for #{@state}" unless state_cache
+        cache_hash = state_cache.cache_data
+        cache_hash.each do |(test_name, hash_arr)|
+          hash_arr.select(&cache_filter).each do |hash|
+            yield hash.merge({'test-name' => test_name})
+          end
+        end
       end
 
-      def each_district_result(&block)
-        district_caches.each(&block)
+      def each_district_result
+        DistrictCache.where(name: 'feed_test_scores_gsdata', district_id: district_ids, state: @state).find_each(batch_size: 100) do |district_cache|
+          district_id = district_cache.district_id
+          test_hash = district_cache.cache_data
+          test_hash.each do |(test_name, hash_arr)|
+            hash_arr.select(&cache_filter).each do |hash|
+              yield hash.merge({
+                                   'test-name' => test_name,
+                                   'district-id' => district_id
+                               })
+            end
+          end
+        end
       end
 
-      def each_school_result(&block)
-        school_caches.each(&block)
+      def each_school_result
+        SchoolCache.where(name: 'feed_old_test_scores_gsdata', school_id: school_ids, state: state).find_each(batch_size: 100) do |school_cache|
+          school_id = school_cache.school_id
+          test_hash = school_cache.cache_data
+          test_hash.each do |(test_name, hash_arr)|
+            hash_arr.select(&cache_filter).each do |hash|
+              yield(hash.merge({
+                                   'test-name' => test_name,
+                                   'school-id' => school_id
+                               }))
+            end
+          end
+        end
       end
 
       private
 
       def school_ids
-        puts @schools.map(&:id).join(',')
         @schools.map(&:id)
       end
 
@@ -40,17 +68,19 @@ module Feeds
 
       def state_test_info
         @_state_test_info ||= begin
-          state_info = school_caches.each_with_object({}) do |hash, info|
-            info[hash['test-id']] ||= {}
-            info[hash['test-id']]['test-id'] = hash['test-id']
-            info[hash['test-id']]['test-name'] = hash['test-name']
-            info[hash['test-id']]['test-abbr'] = hash['test-abbr']
-            info[hash['test-id']]['scale'] ||= {}
+          state_info = {}
+          each_school_result do |hash|
+            state_info[hash['test-id']] ||= {}
+            test_hash = state_info[hash['test-id']]
+            test_hash['test-id'] = hash['test-id']
+            test_hash['test-name'] = hash['test-name']
+            test_hash['test-abbr'] = hash['test-abbr']
+            test_hash['scale'] ||= {}
             if hash['composite-of-pro-null'] == 1
-              info[hash['test-id']]['scale'][hash['proficiency-band-name']] = 1
+              test_hash['scale'][hash['proficiency-band-name']] = 1
             end
-            info[hash['test-id']]['most-recent-year'] = hash['year'] unless info[hash['test-id']]['most-recent-year'] && info[hash['test-id']]['most-recent-year'] > hash['year']
-            info[hash['test-id']]['description'] = hash['description']
+            test_hash['most-recent-year'] = hash['year'] unless state_info[hash['test-id']]['most-recent-year'] && state_info[hash['test-id']]['most-recent-year'] > hash['year']
+            test_hash['description'] = hash['description']
           end
           state_info.each do |(_, hash)|
             bands = hash['scale'].keys
@@ -67,65 +97,28 @@ module Feeds
           if breakdown =~ /Learners Enrolled/ ||
               breakdown =~ /Fluent-English/ ||
               breakdown =~ /Initially-Fluent/ ||
+              breakdown =~ /Proficient Former/ ||
+              breakdown =~ /Proficient Current/ ||
               breakdown =~ /General-Education/ ||
               breakdown =~ /Parents/ ||
               breakdown =~ /Reclassified/ ||
-              breakdown =~ /Migrant/
+              breakdown =~ /Migrant/ ||
+              breakdown =~ /migrant/ ||
+              breakdown =~ /Homeless/ ||
+              breakdown =~ /Free lunch/ ||
+              breakdown =~ /Reduced lunch/ ||
+              breakdown =~ /Title I/ ||
+              breakdown =~ /Poverty/ ||
+              breakdown =~ /poverty/ ||
+              breakdown =~ /LEP/ ||
+              breakdown =~ /Gender Unknown/ ||
+              breakdown =~ /General population/ ||
+              breakdown =~ /Unspecified/ ||
+              breakdown =~ /Gifted/
             false
           else
             true
           end
-        end
-      end
-
-      def school_caches
-        @_school_caches ||= begin
-          cache_hash = SchoolCache.for_schools_keys('feed_old_test_scores_gsdata', school_ids, @state)
-          final_hashes = cache_hash.sort.each_with_object([]) do |(school_id, test_hash), output|
-            test_hash['feed_old_test_scores_gsdata'].each do |test_name, hash_arr|
-              augmented_hashes = hash_arr.select(&cache_filter).map do |hash|
-                hash.merge({
-                               'test-name' => test_name,
-                               'school-id' => school_id
-                           })
-              end
-              output.concat(augmented_hashes)
-            end
-          end
-          final_hashes
-        end
-      end
-
-      def district_caches
-        @_district_caches ||= begin
-          cache_hash = DistrictCache.for_districts_keys('feed_test_scores_gsdata', district_ids, @state)
-          final_hashes = cache_hash.sort.each_with_object([]) do |(district_id, test_hash), output|
-            test_hash['feed_test_scores_gsdata'].each do |test_name, hash_arr|
-              augmented_hashes = hash_arr.select(&cache_filter).map do |hash|
-                hash.merge({
-                    'test-name' => test_name,
-                    'district-id' => district_id
-                           })
-              end
-              output.concat(augmented_hashes)
-            end
-          end
-          final_hashes
-        end
-      end
-
-      def state_caches
-        @_state_caches ||= begin
-          state_cache = StateCache.for_state('feed_test_scores_gsdata', @state)
-          raise "State cache not found for #{@state}" unless state_cache
-          cache_hash = state_cache.cache_data
-          final_hashes = cache_hash.each_with_object([]) do |(test_name, hash_arr), output|
-            augmented_hashes = hash_arr.select(&cache_filter).map do |hash|
-              hash.merge({'test-name' => test_name})
-            end
-            output.concat(augmented_hashes)
-          end
-          final_hashes
         end
       end
     end
