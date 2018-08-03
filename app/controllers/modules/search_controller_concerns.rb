@@ -169,4 +169,5 @@ module SearchControllerConcerns
 
     schools
   end
+
 end

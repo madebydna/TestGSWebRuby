@@ -92,7 +92,7 @@ const SchoolTableRow = ({
                   target="_blank"
                   className="homes-for-sale-link"
                 >
-                  &nbsp; Homes for sale
+                  &nbsp; {t('homes_for_sale')}
                 </a>
               </div>
             )}

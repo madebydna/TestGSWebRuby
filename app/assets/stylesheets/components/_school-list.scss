@@ -19,13 +19,16 @@ section.school-list {
 
     li {
       &.assigned {
-        border-top: solid 17px #176997;
+        border-top: solid 19px #176997;
         > .assigned-text {
           font-family: 'opensans-bold', Helvetica, Arial;
           color: white;
           font-size: $font-size-l2;
-          margin-top: -28px;
+          margin-top: -30px;
           padding-bottom: 10px;
+          > div {
+            display: inline-block;
+          }
         }
       }
 

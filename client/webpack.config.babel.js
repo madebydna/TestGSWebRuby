@@ -78,8 +78,7 @@ const config = {
         'school-profiles',
         'district-boundaries',
         'widget',
-        'search',
-        'search-box'
+        'search'
       ],
       minChunks: Infinity
     }),
@@ -90,20 +89,13 @@ const config = {
         'school-profiles',
         'district-boundaries',
         'widget',
-        'search',
-        'search-box'
+        'search'
       ],
       minChunks: Infinity
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'react-redux',
-      chunks: [
-        'school-profiles',
-        'district-boundaries',
-        'widget',
-        'search',
-        'search-box'
-      ],
+      chunks: ['school-profiles', 'district-boundaries', 'widget', 'search'],
       minChunks: Infinity
     }),
     new webpack.DefinePlugin({
