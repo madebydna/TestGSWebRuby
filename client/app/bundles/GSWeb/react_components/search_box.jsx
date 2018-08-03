@@ -85,10 +85,12 @@ const contentSearchResultsPageUrl = ({ q }) =>
 
 export default class SearchBox extends React.Component {
   static propTypes = {
-    size: PropTypes.oneOf(validSizes)
+    size: PropTypes.oneOf(validSizes),
+    defaultType: PropTypes.string
   };
   static defaultProps = {
-    size: 2
+    size: 2,
+    defaultType: 'schools'
   };
 
   constructor(props) {
@@ -98,7 +100,7 @@ export default class SearchBox extends React.Component {
     this.manageSelectedListItem = this.manageSelectedListItem.bind(this);
     this.state = {
       searchTerm: '',
-      type: 'schools',
+      type: props.defaultType,
       selectedListItem: -1,
       navigateToSelectedListItem: false,
       autoSuggestResults: {
