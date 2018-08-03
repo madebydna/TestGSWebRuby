@@ -14,8 +14,8 @@ let translationsHash;
 const translate = function(key, options) {
   options = options || {};
   // defaults to empty string if no matching translation and no default provided
-  const defaultValue = options.default || '';
-  const parameters = options.parameters || '';
+  const defaultValue = options.default || key;
+  const parameters = options.parameters || {};
   let translationValue = (translationsHash || {})[key];
   if (translationValue !== undefined) {
     translationValue = replaceParameters(translationValue, parameters);
@@ -26,14 +26,11 @@ const translate = function(key, options) {
 };
 
 const replaceParameters = function(tv, p) {
-  let tranHash = tv;
-  if (p != '') {
-    $.each(p, (k, v) => {
-      tranHash = tranHash.replace(`%{${k}}`, v);
-      tranHash = tranHash.replace(`{${k}}`, v);
-    });
-  }
-  return tranHash;
+  Object.entries(p).forEach(([k, v]) => {
+    tv = tv.replace(`%{${k}}`, v);
+    tv = tv.replace(`{${k}}`, v);
+  });
+  return tv;
 };
 
 // used in tests
