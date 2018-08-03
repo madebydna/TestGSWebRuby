@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
+import { renderAssignedTooltip } from 'react_components/search/tooltips';
 import unratedSchoolIcon from 'school_profiles/owl.png';
 import {
   getHomesForSaleHref,
@@ -49,6 +50,7 @@ const School = ({
   address,
   schoolType,
   gradeLevels,
+  levelCode,
   enrollment,
   rating,
   ratingScale,
@@ -67,7 +69,8 @@ const School = ({
 
   return (
     <React.Fragment key={state + id}>
-      {assigned && <div className="assigned-text">{t('assigned')}</div>}
+
+      {assigned && <div className="assigned-text">{t('assigned_school') } {renderAssignedTooltip(levelCode)}</div>}
       <span>{renderRating(rating, ratingScale)}</span>
       <span>
         <a href={links.profile} className="name" target="_blank">

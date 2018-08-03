@@ -387,6 +387,10 @@ body {
       width: 100%;
     }
 
+    td {
+      position: relative;
+    }
+
     td,
     th {
       border: 1px solid $form-field-border-color;
@@ -407,6 +411,24 @@ body {
       $active-color: #f6f9fa;
       $hover-color: #f6f9fa;
       $border-color: #dbe6eb;
+
+      .assigned-school-table-view {
+        height: 19px;
+        line-height: 18px;
+        width: 100%;
+        background: #176997;
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-family: 'opensans-bold', Helvetica, Arial;
+        color: white;
+        font-size: $font-size-l2;
+        padding-left: 10px;
+        div {
+          display: inline-block;
+          margin-left: 6px;
+        }
+      }
 
       &.assigned {
         border-top: solid 17px #176997;

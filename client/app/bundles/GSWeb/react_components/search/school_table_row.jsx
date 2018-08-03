@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
+import { renderAssignedTooltip } from 'react_components/search/tooltips'
 import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
 import FiveStarRating from '../review/form/five_star_rating';
 import unratedSchoolIcon from 'school_profiles/owl.png';
@@ -50,8 +51,10 @@ const SchoolTableRow = ({
   state,
   name,
   address,
+  assigned,
   schoolType,
   gradeLevels,
+  levelCode,
   enrollment,
   rating,
   ratingScale,
@@ -71,8 +74,9 @@ const SchoolTableRow = ({
 
   return (
     <tr>
-      <td className="school">
+      <td className="school" style={assigned ? {paddingTop: '28px'} : null}>
         <React.Fragment key={state + id}>
+          {assigned && <div className="assigned-school-table-view">{t('assigned_school')}{renderAssignedTooltip(levelCode)}</div>}
           <span>{renderRating(rating, ratingScale)}</span>
           <span>
             <a href={links.profile} className="name" target="_blank">
