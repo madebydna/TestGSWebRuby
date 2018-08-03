@@ -11,19 +11,22 @@ import log from './log';
 const defaultLocale = 'en';
 let translationsHash;
 
-const translate = function(key, options) {
+const translate = function(key, options, dictionary = {}) {
   options = options || {};
   // defaults to empty string if no matching translation and no default provided
   const defaultValue = options.default || key;
   const parameters = options.parameters || {};
-  let translationValue = (translationsHash || {})[key];
+  dictionary = dictionary[currentLocale()];
+  let translationValue = (dictionary || translationsHash || {})[key];
   if (translationValue !== undefined) {
     translationValue = replaceParameters(translationValue, parameters);
     return translationValue;
   }
-  log(`Translation for ${key} not found. Defaulting to ${defaultValue}`);
   return defaultValue;
 };
+
+const translateWithDictionary = dictionary => (key, options) =>
+  translate(key, options, dictionary);
 
 const replaceParameters = function(tv, p) {
   Object.entries(p).forEach(([k, v]) => {
@@ -99,5 +102,6 @@ export {
   capitalize,
   currentLocale,
   preserveLanguageParam,
-  initLanguageLinkListener
+  initLanguageLinkListener,
+  translateWithDictionary
 };

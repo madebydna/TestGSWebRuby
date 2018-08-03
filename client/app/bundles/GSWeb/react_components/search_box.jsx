@@ -15,7 +15,7 @@ import { getAddressPredictions } from 'api_clients/google_places';
 import { init as initGoogleMaps } from 'components/map/google_maps';
 import { href } from 'util/search';
 import { analyticsEvent } from 'util/page_analytics';
-import { t } from 'util/i18n';
+import { translateWithDictionary } from 'util/i18n';
 
 // Matches only 5 digits
 // Todo currently 3-4 schools would match this regex,
@@ -43,6 +43,17 @@ const matchesAddress = string =>
 const matchesAddressOrZip = string =>
   matchesAddress(string) || matchesZip(string);
 
+const t = translateWithDictionary({
+  // entries not needed if text matches key
+  en: {},
+  es: {
+    Schools: 'Escuelas',
+    Parenting: 'Crianza',
+    'City, zip, address or school':
+      'Ciudad, código postal, dirección o escuela',
+    'Articles, worksheets and more': 'Artículos, hoja de ejercicios y más'
+  }
+});
 const options = [
   {
     key: 'schools',
