@@ -7,13 +7,15 @@ class Modal extends React.Component {
   static propTypes = {
     children: PropTypes.func,
     renderTrigger: PropTypes.func,
-    closeOnOutsideClick: PropTypes.bool
+    closeOnOutsideClick: PropTypes.bool,
+    className: PropTypes.string
   };
 
   static defaultProps = {
     closeOnOutsideClick: true,
     renderTrigger: () => {},
-    children: () => {}
+    children: () => {},
+    className: ''
   };
 
   overlay = () => (
@@ -43,7 +45,7 @@ class Modal extends React.Component {
               close,
               toggle
             })}
-            <div>
+            <div className={this.props.className}>
               {isOpen ? this.overlay() : null}
               <div {...this.wrapperProps(isOpen)}>
                 <CaptureOutsideClick

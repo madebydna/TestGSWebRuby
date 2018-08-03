@@ -28,7 +28,7 @@ const shouldShowInterstitial = () =>
 
 const ProfileInterstitialAd = ({ loaded }) =>
   shouldShowInterstitial() && loaded ? (
-    <Modal closeOnOutsideClick={false}>
+    <Modal closeOnOutsideClick={false} className="interstitial-modal">
       {({ openForDuration, close }) => (
         <Ad
           sizeName="prestitial"
