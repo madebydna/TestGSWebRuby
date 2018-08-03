@@ -46,7 +46,7 @@ const levelCodeLong = (lc) => {
   if (lc == 'e') return 'Elementary';
   if (lc == 'm') return 'Middle';
   if (lc == 'h') return 'High';
-  if (lc == 'p') return 'PreSchool';
+  if (lc == 'p') return 'PreK';
 }
 
 const renderAssigned = (lc) => {
