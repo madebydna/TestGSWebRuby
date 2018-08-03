@@ -73,7 +73,6 @@ const School = ({
   address,
   schoolType,
   gradeLevels,
-  levelCode,
   enrollment,
   rating,
   ratingScale,
