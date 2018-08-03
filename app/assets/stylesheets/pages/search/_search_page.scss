@@ -366,11 +366,18 @@ body {
   background-color: lightgray;
 }
 
+.scale {
+  margin-top: 5px;
+  font-size: $font-size-s2;
+  color: #999;
+}
+
 .school-table {
   overflow-x: scroll;
   width: 100%;
   background-color: white;
   position: relative;
+
 
   table {
     table-layout: fixed;
@@ -431,16 +438,16 @@ body {
       }
       > span:first-of-type {
         text-align: center;
-        width: 38px;
+        width: 55px;
       }
       > span:last-of-type {
-        width: calc(100% - 48px);
+        width: calc(100% - 70px);
       }
       > span {
         vertical-align: top;
       }
       > span + span {
-        margin-left: 10px;
+        margin-left: 15px;
       }
     }
   }

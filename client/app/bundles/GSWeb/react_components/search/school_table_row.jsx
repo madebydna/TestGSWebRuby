@@ -4,6 +4,8 @@ import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
 import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
 import FiveStarRating from '../review/form/five_star_rating';
+import unratedSchoolIcon from 'school_profiles/owl.png';
+import Rating from '../../components/rating';
 
 const renderRating = (rating, ratingScale) => {
   const className = `circle-rating--small circle-rating--${rating}`;
@@ -12,13 +14,10 @@ const renderRating = (rating, ratingScale) => {
   );
   return (
     <React.Fragment>
-      <div className={className}>
-        {rating}
-        <span className="rating-circle-small">/10</span>
-      </div>
+      <Rating score={rating} size="small" />
       <div className="scale">
+        {ratingScale ? ratingScale : t('Currently unrated')}
         <ModalTooltip content={content}>
-          {ratingScale}
           <span className="info-circle icon-info" />
         </ModalTooltip>
       </div>
@@ -55,6 +54,7 @@ const SchoolTableRow = ({
   gradeLevels,
   enrollment,
   rating,
+  ratingScale,
   studentsPerTeacher,
   numReviews,
   parentRating,
@@ -73,7 +73,7 @@ const SchoolTableRow = ({
     <tr>
       <td className="school">
         <React.Fragment key={state + id}>
-          <span>{rating && renderRating(rating)}</span>
+          <span>{renderRating(rating, ratingScale)}</span>
           <span>
             <a href={links.profile} className="name" target="_blank">
               {name}
@@ -103,7 +103,7 @@ const SchoolTableRow = ({
         {numReviewsLink(numReviews, links.reviews)}
         {parentRating ? fiveStars(parentRating) : null}
       </td>
-      <td>{districtName}</td>
+      <td>{districtName ? districtName : 'N/A'}</td>
     </tr>
   );
 };
@@ -117,6 +117,7 @@ SchoolTableRow.propTypes = {
   gradeLevels: PropTypes.string.isRequired,
   enrollment: PropTypes.number,
   rating: PropTypes.number,
+  ratingScale: PropTypes.string,
   studentsPerTeacher: PropTypes.number,
   numReviews: PropTypes.number,
   parentRating: PropTypes.number,
