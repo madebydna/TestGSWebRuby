@@ -8,6 +8,7 @@ import Button from 'react_components/button';
 import { t } from 'util/i18n';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import CaptureOutsideClick from './capture_outside_click';
+import SearchHelpMenu from '../search_help_menu';
 
 function keepInViewport(
   ref,
@@ -201,8 +202,9 @@ class SearchLayout extends React.Component {
               <span>{this.props.distanceFilter}</span>
             </span>
           ) : null}
-          <span className="menu-item list-map-toggle">
+          <span style={{display: 'flex'}} className="menu-item list-map-toggle">
             {this.props.listMapTableSelect}
+            <SearchHelpMenu />
           </span>
         </div>
       </div>
