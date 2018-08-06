@@ -48,7 +48,7 @@ class NewSchoolSubmission < ActiveRecord::Base
   end
 
   def district_required_if_not_private
-    if school_types_without_private.include?(school_type) && district_name.empty?
+    if school_types_without_private.include?(school_type.downcase) && district_name.empty?
       errors.add(:district_name, 'must be present for public/charter schools.')
     end
   end
