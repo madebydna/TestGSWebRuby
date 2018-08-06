@@ -30,7 +30,7 @@ module Search
     attr_reader :client
 
     def valid_sort_names
-      ['rating', 'name', 'distance']
+      ['rating', 'name', 'distance', 'relevance']
     end
 
     def default_sort_name
@@ -54,7 +54,8 @@ module Search
     def map_sort_name_to_field(name, _)
       {
         'rating' => 'summary_rating',
-        'name' => 'name'
+        'name' => 'name',
+        'relevance' => 'score'
       }[name]
     end
 
