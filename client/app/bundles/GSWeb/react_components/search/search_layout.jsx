@@ -202,9 +202,11 @@ class SearchLayout extends React.Component {
               <span>{this.props.distanceFilter}</span>
             </span>
           ) : null}
-          <span style={{display: 'flex'}} className="menu-item list-map-toggle">
-            {this.props.listMapTableSelect}
-            <SearchHelpMenu />
+          <span className="menu-item list-map-toggle">
+            <div style={{display: 'flex'}}>
+              {this.props.listMapTableSelect}
+              <span id="ollie-help-icon"><SearchHelpMenu /></span>
+            </div>
           </span>
         </div>
       </div>
@@ -233,7 +235,7 @@ class SearchLayout extends React.Component {
                   />
                 </span>
               </span>
-              <span className='ollie-mobile-help'>
+              <span id='ollie-mobile-help'>
                 <SearchHelpMenu />
               </span>
             </div>
