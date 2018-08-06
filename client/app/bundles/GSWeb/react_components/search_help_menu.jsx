@@ -37,10 +37,10 @@ const content = (
       {t('search_help.currently_rated_info')}
     </p>
     <hr />
-    <p><strong>{t('search_help.search_suggestions')}</strong><br />
+    <p><strong>{t('search_help.search_suggestions')}</strong>
       <br />
-      <a href='https://greatschools.zendesk.com/hc/en-us/requests/new'>{t('search_help.send_feedback')}</a>
     </p>
+    <a href='https://greatschools.zendesk.com/hc/en-us/requests/new'>{t('search_help.send_feedback')}</a>
   </div>
 );
 

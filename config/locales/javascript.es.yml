@@ -100,11 +100,9 @@ es:
         average: "Al \n promedio"
         above_average: "Por encima \n del promedio"
       currently_rated: "Escuelas actualmente sin calificación: \n \n"
-      currently_rated_info: "La Calificación General de GreatSchools es una reflexión de múltiples medidas sobre la calidad de una escuela.
-                            Para algunas escuelas no tenemos suficientes datos de las agencias estatales o nacionales de educación para proporcionar una calificación.
-                            "
-      search_suggestions: "Help us improve the new search (PH)"
-      send_feedback: Send Feedback (PH)
+      currently_rated_info: "Para algunas escuelas no tenemos suficientes datos de las agencias estatales o nacionales de educación para proporcionar una calificación."
+      search_suggestions: "Por favor ayúdenos a mejorar la nueva búsqueda"
+      send_feedback: Mandanos tus comentarios
     saved_search_validation_error: Por favor, nombre su búsqueda
     strong_fit: Fuerte
     test_scores:
