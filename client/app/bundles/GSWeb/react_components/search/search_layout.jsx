@@ -268,9 +268,6 @@ class SearchLayout extends React.Component {
                       ) : null}
                     </span>
                   </div>
-                  {/* <div className="controls">
-                    <button onClick={close}>Done</button>
-                  </div> */}
                 </div>
               </CaptureOutsideClick>
             ) : null}
