@@ -485,12 +485,16 @@ body {
     justify-content: space-between;
     .word-scale {
       font-size: 16px;
+      text-align: center;
+    }
+    .word-scale:first-child {
+      margin-left: -15px;
     }
     .word-scale:nth-child(2) {
-      margin-left: 25px;
+      // margin-left: 20px;
     }
     .word-scale:last-child {
-      margin-right: 20px;
+      // margin-right: 20px;
     }
   }
   h4{

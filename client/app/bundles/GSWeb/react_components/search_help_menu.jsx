@@ -1,12 +1,12 @@
 import React from 'react';
 import ollie from 'school_profiles/owl_tutorial_prompt.png';
+import { t } from 'util/i18n';
 import ModalTooltip from './modal_tooltip';
 
 const content = (
   <div className='rating-help-container'>
-    <h4>Help</h4>
-    <p>GreatSchools’ Summary Rating provides an overall snapshot of school
-       quality. Ratings follow a 1-10 scale:
+    <h4>{t('search_help.help')}</h4>
+    <p>{t('search_help.greatschool_rating')}
     </p>
     <div className='ratings-scale-container'>
       <div className='rating-scale'>
@@ -27,19 +27,19 @@ const content = (
       </div>
     </div>
     <div className='ratings-scale-container'>
-      <div className='word-scale rating-scale'>Below <br /> average</div>
-      <div className='word-scale rating-scale'>Average</div>
-      <div className='word-scale rating-scale'>Above <br /> average</div>
+      <div className='word-scale rating-scale'>{t('search_help.rating.below_average')}</div>
+      <div className='word-scale rating-scale'>{t('search_help.rating.average')}</div>
+      <div className='word-scale rating-scale'>{t('search_help.rating.above_average')}</div>
     </div>
     <hr />
-    <p className='search-help-unrated'><span className='circle gray'></span>Currently unrated schools: <br /> <br />
-      For some schools, we do not have enough data from state or national education
-      agencies to provide a rating.
+    <p className='search-help-unrated'><span className='circle gray'></span>
+      {t('search_help.currently_rated')} <br/> <br/>
+      {t('search_help.currently_rated_info')}
     </p>
     <hr />
-    <p><strong>Help us improve the new search</strong><br />
+    <p><strong>{t('search_help.search_suggestions')}</strong><br />
       <br />
-      <a href='#'>Send feedback</a>
+      <a href='https://greatschools.zendesk.com/hc/en-us/requests/new'>{t('search_help.send_feedback')}</a>
     </p>
   </div>
 );
