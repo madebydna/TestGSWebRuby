@@ -111,9 +111,9 @@ export default class SearchBar extends React.Component {
     let homesForSaleHref = null;
     if (this.props.districts && this.props.districts[0] && this.props.districts[0].state && this.props.districts[0].address) {
       let entity = this.props.districts[0];
-      homesForSaleHref = 'https://www.zillow.com/' + entity.state + '-' + entity.address.zip.split("-")[0] + '?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=schoolsearch';
+      homesForSaleHref = 'https://www.zillow.com/' + entity.state + '-' + entity.address.zip.split("-")[0] + '?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap';
     } else {
-      homesForSaleHref = 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=schoolsearch';
+      homesForSaleHref = 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap';
     }
     return homesForSaleHref;
   }

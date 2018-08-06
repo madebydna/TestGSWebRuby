@@ -6,7 +6,7 @@ const getHomesForSaleHref = (state, address) => {
     // let homesForSaleHref = null;
     return `https://www.zillow.com/${state}-${
       address.zip.split('-')[0]
-    }?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=schoolsearch`;
+    }?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap`;
     // return homesForSaleHref;
   }
   return null;
