@@ -84,8 +84,8 @@
           </div>
           <div>
             <%= f.label :district_name, 'District name' %>
-            <%= f.text_field :district_name, {required: true, maxlength: 100} %>
-            <span class="input_required">* required</span>
+            <%= f.text_field :district_name, {required: (@new_school_submission.school_type == 'private' ? false: true), maxlength: 100} %>
+            <span class="input_required" style="<%= (@new_school_submission.school_type == 'private' ? 'display: none': '') %>">* required</span>
           </div>
           <div>
             <%= f.label :county, 'County name' %>

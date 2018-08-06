@@ -21,6 +21,12 @@ $(function(){
     }
   };
 
+  let handleDistrictName = function() {
+    if ($('#new_school_submission_school_type').val() === 'private') {
+      $('#new_school_submission_district_name').prop('required', false);
+    }
+  }
+
   // Checks the pk box and sets the hidden field for persisting the user's selection of pre-k or k-12 forms.
   let setPkToTrue = function() {
     $('#pk').prop('checked', true);
@@ -33,9 +39,10 @@ $(function(){
     }
   };
 
-  $('form').submit(function(){
+  $('#new_new_school_submission').submit(function(){
     checkPkFormSelection();
     handleMailingAddress();
+    handleDistrictName();
     collectGradeLevels();
     if ($('#grade-level-selections').val().length <= 0 && $('#k-12-form').prop('checked') == true) {
       alert('Please select the grade levels offered at this school before submitting.');
@@ -72,6 +79,17 @@ $(function(){
       $('.mailing').css('display', 'block')
     }
   });
+
+  $('#new_school_submission_school_type').on('change', function() {
+    let districtNameInput = $('#new_school_submission_district_name');
+    if(this.value === 'private') {
+      districtNameInput.prop('required', false);
+      districtNameInput.parent().find('span.input_required').css('display', 'none');
+    } else {
+      districtNameInput.prop('required', 'required');
+      districtNameInput.parent().find('span.input_required').css('display', 'inline');
+    }
+  })
 
 });
 

@@ -3,11 +3,12 @@
 class NewSchoolSubmission < ActiveRecord::Base
   self.table_name = 'new_school_submissions'
   db_magic :connection => :gs_schooldb
-  validates :district_name, :county, :physical_address, :physical_city, :mailing_address,
+  validates :county, :physical_address, :physical_city, :mailing_address,
             :mailing_city, presence: true
   validates :school_name, presence: true, length: {maximum: 100 }
   validates :physical_zip_code, :mailing_zip_code, length: {is: 5}, numericality: { only_integer: true }
-  validate :valid_grades, :valid_nces_code, :valid_school_type, :valid_state, :valid_state_school_id
+  validate :valid_grades, :valid_nces_code, :valid_school_type, :valid_state, :valid_state_school_id,
+           :district_required_if_not_private
 
   SCHOOL_TYPE_TO_NCES_CODE = {
     'private' => 8,
@@ -45,6 +46,12 @@ class NewSchoolSubmission < ActiveRecord::Base
       errors.add(:state, 'must be selected from the dropdown menu provided.')
     end
   end
+
+  def district_required_if_not_private
+    if school_types_without_private.include?(school_type) && district_name.empty?
+      errors.add(:district_name, 'must be present for public/charter schools.')
+    end
+  end
   #---------end custom validations-----------#
 
   def add_level_code
@@ -63,6 +70,10 @@ class NewSchoolSubmission < ActiveRecord::Base
 
   def well_formed_nces_code?
     nces_code && nces_code.length == SCHOOL_TYPE_TO_NCES_CODE[school_type]
+  end
+
+  def school_types_without_private
+    SCHOOL_TYPE_TO_NCES_CODE.dup.tap {|hash| hash.delete('private')}
   end
 
 end
