@@ -259,6 +259,14 @@ class SearchLayout extends React.Component {
                       <span className="label">{t('Sort by')}:</span>
                       {this.props.sortSelect}
                     </span>
+                    <span className="menu-item">
+                      {this.props.distanceFilter ? (
+                        <React.Fragment>
+                          <span className="label">{t('Distance')}:</span>
+                          {this.props.distanceFilter}
+                        </React.Fragment>
+                      ) : null}
+                    </span>
                   </div>
                   {/* <div className="controls">
                     <button onClick={close}>Done</button>
