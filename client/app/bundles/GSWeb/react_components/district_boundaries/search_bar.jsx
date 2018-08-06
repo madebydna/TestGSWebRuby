@@ -111,9 +111,9 @@ export default class SearchBar extends React.Component {
     let homesForSaleHref = null;
     if (this.props.districts && this.props.districts[0] && this.props.districts[0].state && this.props.districts[0].address) {
       let entity = this.props.districts[0];
-      homesForSaleHref = 'https://www.zillow.com/' + entity.state + '-' + entity.address.zip.split("-")[0] + '?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap';
+      homesForSaleHref = 'https://www.zillow.com/' + entity.state + '-' + entity.address.zip.split("-")[0] + '?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=schoolsearch';
     } else {
-      homesForSaleHref = 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap';
+      homesForSaleHref = 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=schoolsearch';
     }
     return homesForSaleHref;
   }
@@ -141,7 +141,7 @@ export default class SearchBar extends React.Component {
 
         <div className="toggle-bar">
           <span className="icon active icon-house"> <a href={this.homesForSaleHref()} target="_blank">Nearby homes for sale</a></span>
-          
+
           <div className="list-map-toggle">
             <a href="javascript:void(0);" className="show-list" onClick={this.onClickListView}>
               <span className={'icon icon-list' + (this.state.listSelected ? ' active' : '')}/>
