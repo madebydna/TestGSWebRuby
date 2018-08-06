@@ -453,7 +453,6 @@ body {
   margin-top: 15px;
   text-align: left;
   h4 { font-size: 14px;}
-  .gray { background-color: $charcoal-gray; }
   .circle {
     width: 20px;
     height: 20px;
@@ -516,4 +515,8 @@ body {
 .ollie-mobile-help{
   display: inline-block;
   margin-left: 40px;
+}
+
+#search-help-modal-container{
+  margin-top: 20px;
 }
