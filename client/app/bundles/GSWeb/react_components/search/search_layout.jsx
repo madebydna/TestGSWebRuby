@@ -233,6 +233,9 @@ class SearchLayout extends React.Component {
                   />
                 </span>
               </span>
+              <span className='ollie-mobile-help'>
+                <SearchHelpMenu />
+              </span>
             </div>
             {isOpen ? (
               <CaptureOutsideClick

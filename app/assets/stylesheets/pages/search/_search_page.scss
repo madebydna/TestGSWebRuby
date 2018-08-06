@@ -1,5 +1,6 @@
 $page-side-padding: 15px;
 $search-primary-blue-on-white: #1dace5;
+$charcoal-gray: #2E3438;
 
 @import 'list-and-map';
 @import 'components/dropdown';
@@ -214,6 +215,8 @@ body {
     .menu-bar.mobile-filters {
       background-color: #e0e7eb;
       padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
     }
 
     .list-map-toggle {
@@ -449,8 +452,16 @@ body {
 .rating-help-container {
   margin-top: 15px;
   text-align: left;
+  h4 { font-size: 14px;}
+  .gray { background-color: $charcoal-gray; }
+  .circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    left:0;
+    top: 0;
+  }
   .rating-scale{
-    display: flex;
     .search-help-circle {
       text-align: center;
       color: white;
@@ -466,6 +477,7 @@ body {
       .search-help-circle:nth-child(3) { z-index: 3; }
       .search-help-circle:nth-child(4) { z-index: 4; }
     }
+    display: flex;
   }
   .ratings-scale-container {
     width: 95%;
@@ -487,4 +499,17 @@ body {
   a {
     color: $search-primary-blue-on-white;
   }
+}
+
+.search-help-unrated {
+  position: relative;
+  span{
+    position: absolute;
+  }
+  text-indent: 25px;
+}
+
+.ollie-mobile-help{
+  display: inline-block;
+  margin-left: 40px;
 }

@@ -4,9 +4,8 @@ import ModalTooltip from './modal_tooltip';
 
 const content = (
   <div className='rating-help-container'>
-    <h4>(PLACEHOLDER)Help</h4>
-    <hr />
-    <p>(PLACEHOLDER)GreatSchools’ Summary Rating provides an overall snapshot of school
+    <h4>Help</h4>
+    <p>GreatSchools’ Summary Rating provides an overall snapshot of school
        quality. Ratings follow a 1-10 scale:
     </p>
     <div className='ratings-scale-container'>
@@ -33,25 +32,22 @@ const content = (
       <div className='word-scale rating-scale'>Above <br /> average</div>
     </div>
     <hr />
-    <p>(PLACEHOLDER)Currently unrated schools:
-
+    <p className='search-help-unrated'><span className='circle gray'></span>Currently unrated schools: <br /> <br />
       For some schools, we do not have enough data from state or national education
       agencies to provide a rating.
     </p>
     <hr />
-    <p>(PLACEHOLDER)Help us improve the new search <br/>
-       <a href='#'>Send feedback</a>
+    <p><strong>Help us improve the new search</strong><br />
+      <br />
+      <a href='#'>Send feedback</a>
     </p>
   </div>
 );
 
-const SearchHelpMenu = () => {
-
-  return(
+const SearchHelpMenu = () => (
     <ModalTooltip content={content}>
       <img src={ollie} className='owly_size' alt='' />
     </ModalTooltip>
-  )
-}
+)
 
 export default SearchHelpMenu;
