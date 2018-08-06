@@ -80,8 +80,14 @@ const newSearchResultsPageUrl = newParams => {
   return `/search/search.page?${stringify(params)}`;
 };
 
-const contentSearchResultsPageUrl = ({ q }) =>
-  `/gk/?s=${window.encodeURIComponent(q)}`;
+const contentSearchResultsPageUrl = ({ q }) => {
+  const { lang } = parse(window.location.search);
+  const params = {
+    s: q,
+    lang
+  };
+  return `/gk/?${stringify(params)}`;
+};
 
 export default class SearchBox extends React.Component {
   static propTypes = {

@@ -10,10 +10,10 @@ class DistrictCache < ActiveRecord::Base
 
   def self.for_districts_keys(keys, districts, state)
     district_data = Hash.new { |h,k| h[k] = {} }
-    cached_data = DistrictCache.where(name: keys, district: districts, state: state)
+    cached_data = DistrictCache.where(name: keys, district_id: districts, state: state)
     cached_data.each do |cache|
       cache_value = begin JSON.parse(cache.value) rescue {} end
-      district_data[cache.district].merge! cache.name => cache_value
+      district_data[cache.district_id].merge! cache.name => cache_value
     end
     district_data
   end

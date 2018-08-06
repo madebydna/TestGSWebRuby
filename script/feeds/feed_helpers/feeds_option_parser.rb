@@ -26,7 +26,7 @@ module Feeds
         @options[:feed] = f
       end
 
-      @option_parser.on('-d', '--destination PATH', 'Output path, defaults to current dir') do |path|
+      @option_parser.on('-o', '--output PATH', 'Output path, defaults to current dir') do |path|
         @options[:path] = path
       end
 
@@ -36,6 +36,10 @@ module Feeds
 
       @option_parser.on('-i', '--schoolids IDS', 'School IDs, defaults to all') do |school_ids|
         @options[:school_ids] = school_ids.split(',').map(&:to_i)
+      end
+
+      @option_parser.on('-d', '--districtids IDS', 'District IDs, defaults to all') do |district_ids|
+        @options[:district_ids] = district_ids.split(',').map(&:to_i)
       end
 
       @option_parser.on('-t', '--type FORMAT', VALID_FEED_FORMATS,
