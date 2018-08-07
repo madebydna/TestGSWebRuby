@@ -32,7 +32,7 @@ const content = (
       <div className='word-scale rating-scale'>{t('search_help.rating.above_average')}</div>
     </div>
     <hr />
-    <p className='search-help-unrated'><span className='circle circle-rating--gray'></span>
+    <p className='search-help-unrated'><span className='circle circle-rating--gray'/>
       {t('search_help.currently_rated')} <br/> <br/>
       {t('search_help.currently_rated_info')}
     </p>
