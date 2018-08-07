@@ -1,89 +1,126 @@
 import React from 'react';
-import jsxToString from 'jsx-to-string';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { capitalize, t } from 'util/i18n';
 import unratedSchoolIcon from 'school_profiles/owl.png';
-import { getHomesForSaleHref, studentsPhrase, schoolTypePhrase } from 'util/school'
+import {
+  getHomesForSaleHref,
+  studentsPhrase,
+  schoolTypePhrase
+} from 'util/school';
 
 export default function createInfoWindow(entity) {
   const homesForSaleHref = getHomesForSaleHref(entity.state, entity.address);
 
-  let schoolLevels = entity => {
-    let levelNameMap = {p: 'Preschool', e: 'Elementary', m: 'Middle', h: 'High'};
-    return Object.entries(entity.schoolCountsByLevelCode)
-      .map(([level, value]) => [levelNameMap[level], value] );
-  }
-
-  let levelMarkup = entity => {
-    return schoolLevels(entity).map(([level, value]) => '<span>' + level + ' (' + value + ')</span>').join(', ')
+  const schoolLevels = entity => {
+    const levelNameMap = {
+      p: 'Preschool',
+      e: 'Elementary',
+      m: 'Middle',
+      h: 'High'
+    };
+    return Object.entries(entity.schoolCountsByLevelCode).map(
+      ([level, value]) => [levelNameMap[level], value]
+    );
   };
 
-  let ratingDiv = (entity) => {
-    let visibleRating = entity.rating != 'NR' ? entity.rating : undefined;
-    let ratingText = <span></span>;
+  const levelMarkup = entity =>
+    schoolLevels(entity)
+      .map(([level, value]) => `<span>${level} (${value})</span>`)
+      .join(', ');
+
+  const ratingDiv = entity => {
+    const visibleRating = entity.rating != 'NR' ? entity.rating : undefined;
+    let ratingText = <span />;
     let ratingScale = '';
 
-    if(visibleRating) {
-      ratingText = (<div>{visibleRating}<span>/10</span></div>);
+    if (visibleRating) {
+      ratingText = (
+        <div>
+          {visibleRating}
+          <span>/10</span>
+        </div>
+      );
       if (entity.ratingScale) {
-        let scaleString = entity.ratingScale.split(' ').join('<br/>');
-        ratingScale = (
-            <div class="rating-scale">
-              {scaleString}
-            </div>);
+        const scaleString = entity.ratingScale
+          .split(' ')
+          .reduce((list, current) => [list, <br />, current]);
+        ratingScale = <div className="rating-scale">{scaleString}</div>;
       }
     } else {
       return (
-        <div class="rating-container">
+        <div className="rating-container">
           <img src={unratedSchoolIcon} />
-          <div class="rating-scale">{t('Currently unrated')}</div>
+          <div className="rating-scale">{t('Currently unrated')}</div>
         </div>
-      )
+      );
     }
     let shape = 'circle';
-    if(entity.type == 'school' && entity.schoolType == 'private') {
+    if (entity.type == 'school' && entity.schoolType == 'private') {
       shape = 'diamond';
     } else if (entity.type == 'district') {
       shape = 'square';
     }
     if (entity.type == 'school') {
       return (
-          <div class="rating-container">
-            <div class={'rating_' + entity.rating + ' ' + shape + '-rating--small rating'}>{ratingText}</div>
-            { ratingScale }
+        <div className="rating-container">
+          <div
+            className={`rating_${entity.rating} ${shape}-rating--small rating`}
+          >
+            {ratingText}
           </div>
-      );
-    } else {
-      return (
-        <div></div>
+          {ratingScale}
+        </div>
       );
     }
+    return <div />;
   };
 
-  let addressString = `${entity.address.street1}, ${entity.address.city}, ${entity.state} ${entity.address.zip}`;
-  let contentString = (
-    <div class="info-window">
-      {entity.assigned && <div class="assigned-text">{t('assigned_school')}</div>}
-      <div class="clearfix">
-        { jsxToString(ratingDiv(entity)).replace(/>\s+/, '>').replace(/\s+</, '<') }
-        <div class="school-info">
-          <a href={entity.links ? entity.links.profile : '#'} target="_blank">{entity.name}</a>
-          {entity.type == 'school' && entity.address &&
-            <div>
-              <div class="address">{addressString}</div>
-              <div class="school-subinfo">{schoolTypePhrase(entity.schoolType, entity.gradeLevels)}
-                {entity.enrollment && <span><span class="divider"> | </span><span>{studentsPhrase(entity.enrollment)}</span></span>}
+  const addressString = `${entity.address.street1}, ${entity.address.city}, ${
+    entity.state
+  } ${entity.address.zip}`;
+  const contentString = (
+    <div className="info-window">
+      {entity.assigned && (
+        <div className="assigned-text">{t('assigned_school')}</div>
+      )}
+      <div className="clearfix">
+        {ratingDiv(entity)}
+        <div className="school-info">
+          <a href={entity.links ? entity.links.profile : '#'} target="_blank">
+            {entity.name}
+          </a>
+          {entity.type == 'school' &&
+            entity.address && (
+              <div>
+                <div className="address">{addressString}</div>
+                <div className="school-subinfo">
+                  {schoolTypePhrase(entity.schoolType, entity.gradeLevels)}
+                  {entity.enrollment && (
+                    <span>
+                      <span className="divider"> | </span>
+                      <span>{studentsPhrase(entity.enrollment)}</span>
+                    </span>
+                  )}
+                </div>
+                {homesForSaleHref && (
+                  <div className="other-links">
+                    <span className="icon-house" />
+                    <a href={homesForSaleHref} rel="nofollow" target="_blank">
+                      {' '}
+                      {t('homes_for_sale')}
+                    </a>
+                  </div>
+                )}
               </div>
-              {homesForSaleHref && (
-              <div class="other-links">
-                <span class="icon-house">  </span>
-                <a href={homesForSaleHref} rel="nofollow" target="_blank"> {t('homes_for_sale')}</a>
-              </div>)}
+            )}
+          {entity.schoolCountsByLevelCode && (
+            <div>
+              <br />Number of schools:<div>{levelMarkup(entity)}</div>
             </div>
-          }
-          { entity.schoolCountsByLevelCode && <div><br/>Number of schools:<div>{levelMarkup(entity)}</div></div> }
+          )}
         </div>
       </div>
     </div>
   );
-  return jsxToString(contentString);
+  return renderToStaticMarkup(contentString);
 }
