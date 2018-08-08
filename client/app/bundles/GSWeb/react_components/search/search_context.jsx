@@ -196,14 +196,16 @@ class SearchProvider extends React.Component {
     );
   }
 
+  unhighlightAll(objectArray){
+    return objectArray.map((s) => {s.highlighted = false; return s;});
+  }
+
   toggleHighlight(school) {
-    const schools = this.state.schools.map(s => {
+    const schools = this.unhighlightAll(this.state.schools).map(s => {
       if (s.id === school.id) {
         s.highlighted = !s.highlighted;
         return s;
       }
-      // Un-highlight any previously highlighted schools 
-      s.highlighted = false;
       return s;
     });
     this.setState({ schools });
