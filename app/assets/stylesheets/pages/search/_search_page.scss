@@ -220,6 +220,10 @@ body {
     }
 
     .list-map-toggle {
+      .ollie-map-container{
+        display: flex;
+        margin-right: 25px;
+      }
       @include media-breakpoint-up(lg) {
         float: right;
       }
@@ -449,72 +453,54 @@ body {
   }
 }
 
-.rating-help-container {
-  margin-top: 15px;
-  text-align: left;
-  .circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    left:0;
-    top: 0;
-  }
-  .rating-scale{
-    .search-help-circle {
-      text-align: center;
-      color: white;
-      width: 25px;
-      height: 25px;
-      font-size: 15px;
+.remodal-content{
+  .rating-help-container {
+    margin-top: 15px;
+    text-align: left;
+    .circle-ur {
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      border: 2px solid #ffffff;
-      line-height: 20px;
-      z-index: 1;
-      margin-left: -7px;
-      .search-help-circle:nth-child(2) { z-index: 2; }
-      .search-help-circle:nth-child(3) { z-index: 3; }
-      .search-help-circle:nth-child(4) { z-index: 4; }
+      float: left;
+      margin-right: 5px;
     }
-    display: flex;
-  }
-  .ratings-scale-container {
-    width: 95%;
-    display: flex;
-    justify-content: space-between;
-    .word-scale {
-      font-size: 16px;
-      text-align: center;
+    .rating-scale{
+      display: flex;
+      .help-circle {
+        text-align: center;
+        color: white;
+        width: 25px;
+        height: 25px;
+        font-size: 15px;
+        border-radius: 50%;
+        border: 2px solid #ffffff;
+        margin-left: -7px;
+      }
     }
-    .word-scale:first-child {
-      margin-left: -15px;
+    .ratings-scale-container {
+      display: flex;
+      justify-content: space-between;
+      .block-container{
+        .rating-scale{
+          justify-content: center;
+        }
+        .word-scale{
+          text-align: center;
+          font-size: 16px;
+        }
+      }
     }
-    .word-scale:nth-child(2) {
-      margin-left: 20px;
-    }
-    .word-scale:last-child {
-      margin-left: 15px;
-    }
-  }
-  h4{ font-size: 19px; }
-  a {
-    color: $search-primary-blue-on-white;
+    h4{ font-size: 19px; }
+    a { color: $search-primary-blue-on-white; }
   }
 }
 
-.search-help-unrated {
-  position: relative;
-  span{
-    position: absolute;
-  }
-  text-indent: 25px;
-}
-
-#ollie-mobile-help{
-  display: inline-block;
-  margin-left: 40px;
-}
-
-#ollie-help-icon{
+.ollie-help-icon{
   display: inline;
   margin-left: 15px;
+  @media only screen and (max-width: 991px) {
+    display: inline-block;
+    margin-right: 20px;
+
+  }
 }

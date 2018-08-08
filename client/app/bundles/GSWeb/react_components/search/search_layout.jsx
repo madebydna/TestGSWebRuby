@@ -8,7 +8,7 @@ import Button from 'react_components/button';
 import { t } from 'util/i18n';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import CaptureOutsideClick from './capture_outside_click';
-import SearchHelpMenu from '../search_help_menu';
+import HelpTooltip from '../help_tooltip';
 
 function keepInViewport(
   ref,
@@ -203,9 +203,9 @@ class SearchLayout extends React.Component {
             </span>
           ) : null}
           <span className="menu-item list-map-toggle">
-            <div style={{display: 'flex'}}>
+            <div className="ollie-map-container">
               {this.props.listMapTableSelect}
-              <span id="ollie-help-icon"><SearchHelpMenu /></span>
+              <span className="ollie-help-icon"><HelpTooltip /></span>
             </div>
           </span>
         </div>
@@ -235,7 +235,7 @@ class SearchLayout extends React.Component {
                   />
                 </span>
               </span>
-              <span id='ollie-mobile-help'>
+              <span className='ollie-help-icon'>
                 <SearchHelpMenu />
               </span>
             </div>
