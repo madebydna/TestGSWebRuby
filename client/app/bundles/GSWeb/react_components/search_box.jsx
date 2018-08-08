@@ -327,9 +327,10 @@ export default class SearchBox extends React.Component {
     </div>
   );
 
-  resetSearchTermButton = () => (
+  resetSearchTermButton = (close) => (
     <span className="search-term-reset-button" onClick={()=> {
       analyticsEvent('search', 'autocomplete-search-reset', this.state.searchTerm);
+      close();
       this.resetSearchTerm();
     }}>x</span>
   )
@@ -376,7 +377,7 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
-            {this.resetSearchTermButton()}
+            {this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
@@ -425,7 +426,7 @@ export default class SearchBox extends React.Component {
                   </div>
                 )}
             </div>
-            {this.resetSearchTermButton()}
+            {this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
