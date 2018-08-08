@@ -99,6 +99,7 @@ class Search extends React.Component {
                 toggleHighlight={this.props.toggleHighlight}
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
+                size={this.props.size}
               />
             }
             schoolTable={
