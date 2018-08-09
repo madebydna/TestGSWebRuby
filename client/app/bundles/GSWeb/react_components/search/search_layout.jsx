@@ -236,7 +236,7 @@ class SearchLayout extends React.Component {
                 </span>
               </span>
               <span className='ollie-help-icon'>
-                <SearchHelpMenu />
+                <HelpTooltip />
               </span>
             </div>
             {isOpen ? (
