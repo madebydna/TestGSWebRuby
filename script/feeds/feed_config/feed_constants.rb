@@ -17,6 +17,8 @@ module Feeds
           'subrating' => 'gs-subrating-feed',
           'old_test_gsdata' => 'local-gs-test-feed',
           'old_test_subgroup_gsdata' => 'local-gs-test-subgroup-feed',
+          'new_test_gsdata' => 'new-local-gs-test-feed',
+          'new_test_subgroup_gsdata' => 'new-local-gs-test-subgroup-feed',
           'official_overall' => 'local-gs-official-overall-rating-feed',
           'directory_feed' => 'local-greatschools-feed',
           'google_feed' => 'local-google-feed',
@@ -25,7 +27,7 @@ module Feeds
 
       }
 
-      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata)
+      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata)
 
       VALID_FEED_FORMATS = %w(xml)
 
@@ -51,7 +53,7 @@ module Feeds
           'proficiency_band' => 'https://www.greatschools.org/feeds/gs-proficiency-band.xsd',
           'feed_test_scores_gsdata' => 'https://www.greatschools.org/feeds/gs-test.xsd',
           'feed_test_scores_subgroup_gsdata' => 'https://www.greatschools.org/feeds/gs-test-subgroups.xsd',
-          'subrating' => 'https://www.greatschools.org/feeds/gs-subrating.xsd'
+          'subrating' => 'https://www.greatschools.org/feeds/gs-subrating.xsd',
       }
       FEED_TO_ROOT_ELEMENT_MAPPING = {
           'test_scores' => 'gs-test-feed',

@@ -70,7 +70,7 @@ module Feeds
           official_overall:  Feeds::TestRatingFeed,
           directory_feed:    Feeds::DirectoryFeed,
           city:              Feeds::City::FeedGenerator,
-          proficiency_band:  Feeds::ProficiencyBand::FeedGenerator
+          proficiency_band:  Feeds::ProficiencyBand::FeedGenerator,
       }[key.to_s.to_sym]
     end
   end
