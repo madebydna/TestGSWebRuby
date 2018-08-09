@@ -155,13 +155,11 @@ export default class Map extends React.Component {
     });
     if (this.state.mapUpdated) {
       this.map.fitBounds(this.bounds);
-      console.log(this.bounds);
       this.setState({
         mapUpdated: false,
       })
-      this.bounds = new this.props.googleMaps.LatLngBounds();
     }
-
+    this.bounds = new this.props.googleMaps.LatLngBounds();
   }
 
   render() {
