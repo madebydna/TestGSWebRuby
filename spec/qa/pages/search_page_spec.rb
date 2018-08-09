@@ -6,7 +6,7 @@ describe 'User sees assigned schools', type: :feature, remote: true do
   before do
     visit '/search/search.page?lat=37.860781&locationLabel=2125%20Derby%20St%2C%20Berkeley%2C%20CA%2094705%2C%20USA&locationType=street_address&lon=-122.26572499999997&state=CA'
   end
-  subject(:page_object) { SearchPage.new.list_view_assigned_school? }
+  subject(:assigned_school) { SearchPage.new.list_view_assigned_school? }
   it { is_expected.to eq true }
 end
 
@@ -14,7 +14,7 @@ describe 'Assigned school has a rating', type: :feature, remote: true do
   before do
     visit '/search/search.page?lat=37.860781&locationLabel=2125%20Derby%20St%2C%20Berkeley%2C%20CA%2094705%2C%20USA&locationType=street_address&lon=-122.26572499999997&state=CA'
   end
-  subject(:page_object) { SearchPage.new.list_view_assigned_school_rating? }
+  subject(:assigned_school) { SearchPage.new.list_view_assigned_school_rating? }
   it { is_expected.to eq true }
 end
 
