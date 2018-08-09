@@ -78,7 +78,8 @@ class Search extends React.Component {
               ) : null
             }
             sortSelect={
-              <SortSelect includeDistance={this.props.shouldIncludeDistance} />
+              <SortSelect includeDistance={this.props.shouldIncludeDistance}
+                          includeRelevance={this.props.shouldIncludeRelevance} />
             }
             resultSummary={this.props.resultSummary}
             listMapTableSelect={
@@ -98,6 +99,7 @@ class Search extends React.Component {
                 toggleHighlight={this.props.toggleHighlight}
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
+                size={this.props.size}
               />
             }
             schoolTable={

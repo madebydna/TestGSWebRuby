@@ -227,7 +227,7 @@ class SearchLayout extends React.Component {
                     active={isOpen}
                     onClick={toggle}
                     onKeyPress={toggle}
-                    className="js-filter-button"
+                    className={`js-filter-button${isOpen ? ' active' : ''}`}
                   />
                 </span>
               </span>
@@ -259,10 +259,15 @@ class SearchLayout extends React.Component {
                       <span className="label">{t('Sort by')}:</span>
                       {this.props.sortSelect}
                     </span>
+                    <span className="menu-item">
+                      {this.props.distanceFilter ? (
+                        <React.Fragment>
+                          <span className="label">{t('Distance')}:</span>
+                          {this.props.distanceFilter}
+                        </React.Fragment>
+                      ) : null}
+                    </span>
                   </div>
-                  {/* <div className="controls">
-                    <button onClick={close}>Done</button>
-                  </div> */}
                 </div>
               </CaptureOutsideClick>
             ) : null}

@@ -561,6 +561,8 @@ class GsdataCaching::GsDataValue
       proficiency_band_name: proficiency_band_name
     }.tap do |hash|
       hash[:narrative] = narrative if narrative
+      hash[:proficiency_band_id] = proficiency_band_id if defined? proficiency_band_id
+      hash[:composite_of_pro_null] = composite_of_pro_null if defined? composite_of_pro_null
     end
   end
 

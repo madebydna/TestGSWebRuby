@@ -8,7 +8,7 @@ module Feeds
 
       attr_reader :state, :schools
 
-      def initialize(state, schools)
+      def initialize(state, schools, _)
         @state = state
         @schools = schools
       end

@@ -24,6 +24,13 @@ const studentsPhrase = enrollment => {
   );
 };
 
+const levelCodeLong = (lc) => {
+  if (lc == 'e') return 'Elementary';
+  if (lc == 'm') return 'Middle';
+  if (lc == 'h') return 'High';
+  if (lc == 'p') return 'PreK';
+}
+
 const clarifySchoolType = schoolType => {
   const clarifiedSchoolType = {
     public: 'Public district',
@@ -42,5 +49,6 @@ export {
   getHomesForSaleHref,
   studentsPhrase,
   schoolTypePhrase,
-  clarifySchoolType
+  clarifySchoolType,
+  levelCodeLong
 };

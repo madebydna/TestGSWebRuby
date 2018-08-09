@@ -6,6 +6,9 @@ class TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata < TestScoresCachi
       school_value: 'score',
       source_date_valid: 'year',
       proficiency_band_name: 'proficiency-band-name',
+      proficiency_band_id: 'proficiency-band-id',
+      data_type_id: 'test-id',
+      breakdown_id: 'breakdown-id',
       school_cohort_count: 'number-tested',
       academics: 'subject-name'
   }
@@ -16,7 +19,6 @@ class TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata < TestScoresCachi
         DataValue
           .find_by_state_and_data_type_tags_with_proficiency_band_name(state, 'state_test')
           .with_configuration('feeds')
-          .where(proficiency_band_id: 1)
       end
   end
 
@@ -49,10 +51,13 @@ class TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata < TestScoresCachi
 
     {}.tap do |h|
       h[:data_type] = result.name  #data_type.short_name
+      h[:data_type_id] = result.data_type_id
       h[:breakdowns] = breakdowns # if breakdowns
+      h[:breakdown_id] = result.breakdown_id_list
       h[:school_value] = result.value  #data_value.value
       h[:source_date_valid] = result.source_date_valid.strftime('%Y')  #source.data_valid
       h[:proficiency_band_name] = result.proficiency_band_name
+      h[:proficiency_band_id] = result.proficiency_band_id
       h[:school_cohort_count] = result.cohort_count if result.cohort_count #data_value.cohort_count
       h[:academics] = academics # if academics   #data_value.academics.pluck(:name).join(',')
       h[:grade] = result.grade if result.grade  #data_value.grade

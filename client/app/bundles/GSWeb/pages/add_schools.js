@@ -33,7 +33,7 @@ $(function(){
     }
   };
 
-  $('form').submit(function(){
+  $('#new_new_school_submission').submit(function(){
     checkPkFormSelection();
     handleMailingAddress();
     collectGradeLevels();
@@ -72,6 +72,17 @@ $(function(){
       $('.mailing').css('display', 'block')
     }
   });
+
+  $('#new_school_submission_school_type').on('change', function() {
+    let districtNameInput = $('#new_school_submission_district_name');
+    if(this.value === 'private') {
+      districtNameInput.prop('required', false);
+      districtNameInput.parent().find('span.input_required').css('display', 'none');
+    } else {
+      districtNameInput.prop('required', 'required');
+      districtNameInput.parent().find('span.input_required').css('display', 'inline');
+    }
+  })
 
 });
 

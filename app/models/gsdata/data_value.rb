@@ -128,9 +128,11 @@ class DataValue < ActiveRecord::Base
     school_values_with_academics = <<-SQL
       data_values.id, data_values.value, data_values.state, data_values.school_id,
       data_values.data_type_id, data_values.configuration, data_values.grade, data_values.cohort_count,
-      data_values.proficiency_band_id, data_types.name, proficiency_bands.name as proficiency_band_name,
+      data_values.proficiency_band_id, data_types.id as data_type_id, data_types.name, data_types.short_name,
+      proficiency_bands.name as proficiency_band_name, proficiency_bands.composite_of_pro_null,
       sources.source_name, sources.date_valid, sources.description,
       group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
+      group_concat(distinct breakdowns.id ORDER BY breakdowns.id) as "breakdown_id_list",
       group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",
       count(distinct(breakdowns.name)) as "breakdown_count",
       group_concat(distinct academics.name ORDER BY academics.name) as "academic_names",
@@ -264,7 +266,8 @@ class DataValue < ActiveRecord::Base
 
   def self.state_and_district_values
     state_and_district_values = <<-SQL
-      data_values.id, data_values.data_type_id, data_types.name, sources.source_name, sources.description, data_values.value, date_valid, grade, proficiency_band_id, cohort_count,
+      data_values.id, data_values.data_type_id, data_types.name, data_types.id as data_type_id,
+      sources.source_name, sources.description, data_values.value, date_valid, grade, proficiency_band_id, cohort_count,
       group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(academics.name ORDER BY academics.name) as "academic_names"
     SQL
@@ -277,6 +280,7 @@ class DataValue < ActiveRecord::Base
       data_values.value, date_valid, grade, proficiency_band_id, 
       proficiency_bands.name as proficiency_band_name, cohort_count,
       group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
+      group_concat(breakdowns.id ORDER BY breakdowns.id) as "breakdown_id_list",
       group_concat(academics.name ORDER BY academics.name) as "academic_names"
     SQL
     select(state_and_district_values)

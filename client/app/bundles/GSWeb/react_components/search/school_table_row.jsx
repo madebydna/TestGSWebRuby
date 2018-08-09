@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
+import { renderAssignedTooltip } from 'react_components/search/tooltips'
 import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
 import FiveStarRating from '../review/form/five_star_rating';
+import unratedSchoolIcon from 'school_profiles/owl.png';
+import Rating from '../../components/rating';
 
 const renderRating = (rating, ratingScale) => {
   const className = `circle-rating--small circle-rating--${rating}`;
@@ -12,13 +15,10 @@ const renderRating = (rating, ratingScale) => {
   );
   return (
     <React.Fragment>
-      <div className={className}>
-        {rating}
-        <span className="rating-circle-small">/10</span>
-      </div>
+      <Rating score={rating} size="small" />
       <div className="scale">
+        {ratingScale ? ratingScale : t('Currently unrated')}
         <ModalTooltip content={content}>
-          {ratingScale}
           <span className="info-circle icon-info" />
         </ModalTooltip>
       </div>
@@ -51,10 +51,13 @@ const SchoolTableRow = ({
   state,
   name,
   address,
+  assigned,
   schoolType,
   gradeLevels,
+  levelCode,
   enrollment,
   rating,
+  ratingScale,
   studentsPerTeacher,
   numReviews,
   parentRating,
@@ -71,9 +74,10 @@ const SchoolTableRow = ({
 
   return (
     <tr>
-      <td className="school">
+      <td className="school" style={assigned ? {paddingTop: '28px'} : null}>
         <React.Fragment key={state + id}>
-          <span>{rating && renderRating(rating)}</span>
+          {assigned && <div className="assigned-school-table-view">{t('assigned_school')}{renderAssignedTooltip(levelCode)}</div>}
+          <span>{renderRating(rating, ratingScale)}</span>
           <span>
             <a href={links.profile} className="name" target="_blank">
               {name}
@@ -88,7 +92,7 @@ const SchoolTableRow = ({
                   target="_blank"
                   className="homes-for-sale-link"
                 >
-                  &nbsp; Homes for sale
+                  &nbsp; {t('homes_for_sale')}
                 </a>
               </div>
             )}
@@ -103,7 +107,7 @@ const SchoolTableRow = ({
         {numReviewsLink(numReviews, links.reviews)}
         {parentRating ? fiveStars(parentRating) : null}
       </td>
-      <td>{districtName}</td>
+      <td>{districtName ? districtName : 'N/A'}</td>
     </tr>
   );
 };
@@ -117,6 +121,7 @@ SchoolTableRow.propTypes = {
   gradeLevels: PropTypes.string.isRequired,
   enrollment: PropTypes.number,
   rating: PropTypes.number,
+  ratingScale: PropTypes.string,
   studentsPerTeacher: PropTypes.number,
   numReviews: PropTypes.number,
   parentRating: PropTypes.number,

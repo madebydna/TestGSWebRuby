@@ -141,6 +141,10 @@ class SearchProvider extends React.Component {
     );
   }
 
+  shouldIncludeRelevance() {
+    return !!this.props.q;
+  }
+
   updateSchools() {
     this.setState(
       {
@@ -192,8 +196,12 @@ class SearchProvider extends React.Component {
     );
   }
 
+  unhighlightAll(objectArray){
+    return objectArray.map((s) => {s.highlighted = false; return s;});
+  }
+
   toggleHighlight(school) {
-    const schools = this.state.schools.map(s => {
+    const schools = this.unhighlightAll(this.state.schools).map(s => {
       if (s.id === school.id) {
         s.highlighted = !s.highlighted;
         return s;
@@ -226,6 +234,7 @@ class SearchProvider extends React.Component {
           resultSummary: this.state.resultSummary,
           size: this.state.size,
           shouldIncludeDistance: this.shouldIncludeDistance(),
+          shouldIncludeRelevance: this.shouldIncludeRelevance(),
           toggleHighlight: this.toggleHighlight,
           lat: this.props.lat,
           lon: this.props.lon,

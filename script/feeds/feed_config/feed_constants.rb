@@ -15,6 +15,8 @@ module Feeds
           'test_subgroup' => 'local-gs-test-subgroup-feed',
           'test_rating' => 'local-gs-test-rating-feed',
           'subrating' => 'gs-subrating-feed',
+          'old_test_gsdata' => 'local-gs-test-feed',
+          'old_test_subgroup_gsdata' => 'local-gs-test-subgroup-feed',
           'official_overall' => 'local-gs-official-overall-rating-feed',
           'directory_feed' => 'local-greatschools-feed',
           'google_feed' => 'local-google-feed',
@@ -23,7 +25,7 @@ module Feeds
 
       }
 
-      VALID_FEED_NAMES = %w(subrating)
+      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata)
 
       VALID_FEED_FORMATS = %w(xml)
 
