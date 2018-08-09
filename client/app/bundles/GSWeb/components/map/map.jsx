@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import { once } from 'lodash';
+import School from '../../react_components/search/school'
 
 export default class Map extends React.Component {
   static propTypes = {
@@ -10,7 +11,8 @@ export default class Map extends React.Component {
     polygons: PropTypes.arrayOf(PropTypes.element),
     hidden: PropTypes.bool,
     lat: PropTypes.number,
-    lon: PropTypes.number
+    lon: PropTypes.number,
+    schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)),
   };
 
   static defaultProps = {
@@ -23,9 +25,9 @@ export default class Map extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { mapUpdated: true };
     this.openInfoWindow = this.openInfoWindow.bind(this);
-    this.fitBounds = once(this.fitBounds.bind(this));
+    this.fitBounds = (this.fitBounds.bind(this));
   }
 
   createGoogleMap($elem) {
@@ -115,6 +117,9 @@ export default class Map extends React.Component {
     if (prevProps.hidden && !this.props.hidden) {
       this.onResize();
     }
+    if (this.props.schools.map(school => school.id + school.name).join('') !== prevProps.schools.map(school => school.id + school.name).join('')) {
+      this.setState({ mapUpdated: true});
+    }
   }
 
   renderPolygons() {
@@ -148,7 +153,15 @@ export default class Map extends React.Component {
         new this.props.googleMaps.LatLng(m.props.lat, m.props.lon)
       );
     });
-    this.map.fitBounds(this.bounds);
+    if (this.state.mapUpdated) {
+      this.map.fitBounds(this.bounds);
+      console.log(this.bounds);
+      this.setState({
+        mapUpdated: false,
+      })
+      this.bounds = new this.props.googleMaps.LatLngBounds();
+    }
+
   }
 
   render() {
