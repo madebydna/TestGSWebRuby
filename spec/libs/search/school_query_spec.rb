@@ -35,9 +35,9 @@ describe Search::SchoolQuery do
 
   describe '#result_summary' do
     {
-      [0, 'Alameda', 'CA'] => 'No schools found in Alameda, CA',
-      [1, 'Alameda', 'CA'] => 'Showing 1 school in Alameda, CA',
-      [2, 'Alameda', 'CA'] => 'Showing 1 to 2 of 2 schools in Alameda, CA'
+      [0, 'Alameda', 'CA'] => 'Your search did not return any schools in Alameda, CA',
+      [1, 'Alameda', 'CA'] => 'Showing one school found in Alameda, CA',
+      [2, 'Alameda', 'CA'] => 'Showing 1 to 2 of 2 schools found in Alameda, CA'
     }.each do |args, expected|
       context "given #{args.join(', ')} " do
         it "should return #{expected}" do
@@ -53,9 +53,9 @@ describe Search::SchoolQuery do
   describe '#pagination_summary' do
     {
       [0, 0, 0] => 'No schools found',
-      [1, 1, 1] => 'Showing 1 school',
-      [1, 2, 2] => 'Showing 1 to 2 of 2 schools',
-      [1, 10, 100] => 'Showing 1 to 10 of 100 schools'
+      [1, 1, 1] => 'Showing 1 school found',
+      [1, 2, 2] => 'Showing 1 to 2 of 2 schools found',
+      [1, 10, 100] => 'Showing 1 to 10 of 100 schools found'
     }.each do |args, expected|
       context "given #{args.join(', ')} " do
         it "should return #{expected}" do

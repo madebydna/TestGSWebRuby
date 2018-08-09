@@ -12,7 +12,6 @@ import ConnectedSearchBar from './connected_search_bar';
 import * as markerTypes from '../../components/map/markers';
 import * as polygonTypes from '../../components/map/polygons';
 import SchoolList from './school_list';
-import jsxToString from 'jsx-to-string';
 import DistrictBoundariesLegend from './district_boundaries_legend';
 
 const markerProps = entity => {

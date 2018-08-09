@@ -16,7 +16,8 @@ class Ad extends React.Component {
     defer: PropTypes.bool,
     ghostTextEnabled: PropTypes.bool,
     container: PropTypes.element,
-    dimensions: PropTypes.arrayOf(PropTypes.number)
+    dimensions: PropTypes.arrayOf(PropTypes.number),
+    children: PropTypes.func
   };
 
   static defaultProps = {
@@ -25,7 +26,8 @@ class Ad extends React.Component {
     defer: false,
     ghostTextEnabled: true,
     container: <div />,
-    dimensions: [1, 1] // width, height
+    dimensions: [1, 1], // width, height
+    children: null
   };
 
   constructor(props) {
@@ -59,10 +61,17 @@ class Ad extends React.Component {
   }
 
   onAdRenderEnded({ isEmpty }) {
-    this.setState({
-      adRenderEnded: true,
-      adFilled: !isEmpty
-    });
+    this.setState(
+      {
+        adRenderEnded: true,
+        adFilled: !isEmpty
+      },
+      () => {
+        if (this.state.adFilled && this.props.onFill) {
+          this.props.onFill();
+        }
+      }
+    );
   }
 
   shouldShowContainer = () => this.state.adRenderEnded && this.state.adFilled;
@@ -79,18 +88,19 @@ class Ad extends React.Component {
     const newContainerClassName = `${givenContainerClassName || ''} ${
       this.shouldShowContainer() ? '' : 'dn'
     }`;
+    const adElement = (
+      <React.Fragment>
+        <div className="tac" id={this.slotId()} />
+        {this.props.ghostTextEnabled && (
+          <div width="100%">
+            <div className="advertisement-text ma">{t('advertisement')}</div>
+          </div>
+        )}
+      </React.Fragment>
+    );
     return React.cloneElement(container, {
       className: newContainerClassName,
-      children: (
-        <React.Fragment>
-          <div className="tac" id={this.slotId()} />
-          {this.props.ghostTextEnabled && (
-            <div width="100%">
-              <div className="advertisement-text ma">{t('advertisement')}</div>
-            </div>
-          )}
-        </React.Fragment>
-      )
+      children: this.props.children ? this.props.children(adElement) : adElement
     });
   }
 }

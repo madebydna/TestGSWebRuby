@@ -8,7 +8,7 @@
     overflow: visible;
   }
 
-  .school-list {
+  .school-list, .school-table {
     img {
       width: 55%;
     }
@@ -59,7 +59,6 @@
       @include media-breakpoint-down(sm) {
         width: 100%;
       }
-      top: 237px;
       @include media-breakpoint-down(sm) {
         position: initial;
       }

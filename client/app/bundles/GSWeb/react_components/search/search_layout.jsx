@@ -231,7 +231,7 @@ class SearchLayout extends React.Component {
                     active={isOpen}
                     onClick={toggle}
                     onKeyPress={toggle}
-                    className="js-filter-button"
+                    className={`js-filter-button${isOpen ? ' active' : ''}`}
                   />
                 </span>
               </span>

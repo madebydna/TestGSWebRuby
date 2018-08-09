@@ -5,10 +5,7 @@ section.school-list {
   position: relative;
 
   .scale {
-    margin-top: 5px;
-    font-size: $font-size-s2;
     max-width: 62px;
-    color: #999;
     text-align: center;
   }
 
@@ -21,24 +18,11 @@ section.school-list {
     height: inherit;
 
     li {
-      &.assigned {
-        border-top: solid 19px #176997;
-        > .assigned-text {
-          font-family: 'opensans-bold', Helvetica, Arial;
-          color: white;
-          font-size: $font-size-l2;
-          margin-top: -30px;
-          padding-bottom: 10px;
-          > div {
-            display: inline-block;
-          }
-        }
-      }
-
       @include clearfix;
       padding: 10px 10px;
       box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.09);
       background-color: white;
+      position: relative;
       span {
         display: inline-block;
       }

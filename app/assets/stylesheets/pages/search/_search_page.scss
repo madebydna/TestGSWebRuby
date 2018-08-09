@@ -352,6 +352,27 @@ body {
         }
       }
     }
+
+    .assigned {
+      padding-top: 28px;
+      > div:first-of-type {
+        height: 19px;
+        line-height: 18px;
+        width: 100%;
+        background: #176997;
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-family: 'opensans-bold', Helvetica, Arial;
+        color: white;
+        font-size: $font-size-l2;
+        padding-left: 10px;
+        div {
+          display: inline-block;
+          margin-left: 6px;
+        }
+      }
+    }
   }
 
   .icon-star {
@@ -371,11 +392,18 @@ body {
   background-color: lightgray;
 }
 
+.scale {
+  margin-top: 5px;
+  font-size: $font-size-s2;
+  color: #999;
+}
+
 .school-table {
   overflow-x: scroll;
   width: 100%;
   background-color: white;
   position: relative;
+
 
   table {
     table-layout: fixed;
@@ -383,6 +411,10 @@ body {
 
     @include media-breakpoint-up(lg) {
       width: 100%;
+    }
+
+    td {
+      position: relative;
     }
 
     td,
@@ -406,17 +438,6 @@ body {
       $hover-color: #f6f9fa;
       $border-color: #dbe6eb;
 
-      &.assigned {
-        border-top: solid 17px #176997;
-        > .assigned-text {
-          font-family: 'opensans-bold', Helvetica, Arial;
-          color: white;
-          font-size: $font-size-l2;
-          margin-top: -28px;
-          padding-bottom: 10px;
-        }
-      }
-
       @include clearfix;
       span {
         display: inline-block;
@@ -436,16 +457,16 @@ body {
       }
       > span:first-of-type {
         text-align: center;
-        width: 38px;
+        width: 55px;
       }
       > span:last-of-type {
-        width: calc(100% - 48px);
+        width: calc(100% - 70px);
       }
       > span {
         vertical-align: top;
       }
       > span + span {
-        margin-left: 10px;
+        margin-left: 15px;
       }
     }
   }

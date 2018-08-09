@@ -71,7 +71,6 @@ module Feeds
           directory_feed:    Feeds::DirectoryFeed,
           city:              Feeds::City::FeedGenerator,
           proficiency_band:  Feeds::ProficiencyBand::FeedGenerator,
-          feed_test_scores_gsdata:  Feeds::TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
       }[key.to_s.to_sym]
     end
   end

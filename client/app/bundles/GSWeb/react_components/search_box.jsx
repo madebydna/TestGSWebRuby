@@ -103,6 +103,7 @@ export default class SearchBox extends React.Component {
     super(props);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.resetSelectedListItem = this.resetSelectedListItem.bind(this);
+    this.resetSearchTerm = this.resetSearchTerm.bind(this);
     this.manageSelectedListItem = this.manageSelectedListItem.bind(this);
     this.state = {
       searchTerm: '',
@@ -231,24 +232,6 @@ export default class SearchBox extends React.Component {
     };
   }
 
-  /*
-  { city: [
-      {"id": null,
-      "city": "New Boston",
-      "state": "nh",
-      "type": "city",
-      "url": '/new-mexico/alamogordo//829-Alamogordo-SDA-School}
-    ],
-    school: [
-      {"id": null,
-      "school": "Alameda High School",
-      "city": "New Boston",
-      "state": "nh",
-      "type": "school"}
-    ],
-    zip....includes an additional 'value' key.
-  },
-  */
   autoSuggestQuery(q) {
     if (q.length >= 3) {
       if (matchesAddress(q)) {
@@ -288,6 +271,10 @@ export default class SearchBox extends React.Component {
 
   resetSelectedListItem() {
     this.setState({ selectedListItem: -1 });
+  }
+
+  resetSearchTerm() {
+    this.setState({searchTerm: ''});
   }
 
   selectionOutOfBounds(e) {
@@ -359,6 +346,18 @@ export default class SearchBox extends React.Component {
     </div>
   );
 
+  resetSearchTermButton = (close) => (
+    <span className="search-term-reset-button" onClick={()=> {
+      analyticsEvent('search', 'autocomplete-search-reset', this.state.searchTerm);
+      close();
+      this.resetSearchTerm();
+    }}>x</span>
+  )
+
+  renderResetSearchTermButton(){
+    return this.state.searchTerm.length > 0
+  }
+
   searchResultsList = ({ close }) => (
     <SearchResultsList
       listGroups={this.state.autoSuggestResults}
@@ -401,6 +400,7 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
+            {this.renderResetSearchTermButton() && this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
@@ -449,6 +449,7 @@ export default class SearchBox extends React.Component {
                   </div>
                 )}
             </div>
+            {this.renderResetSearchTermButton() && this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}

@@ -148,6 +148,10 @@ class MissingDatabaseTranslationChecker
       {
         table: :'gs_schooldb.census_description',
         column: :source
+      },
+      {
+          table: :'gsdata.loads',
+          column: :description
       }
     ]
     @missing_translation_messages = []
@@ -218,12 +222,12 @@ class MissingDatabaseTranslationChecker
     end
 
     def missing_translations
-      @missing_translations ||= (
+      @missing_translations ||= begin
         default = '_missing_translation_'
         translation_keys.select do |string|
           I18n.db_t(string, default: default) == default
         end
-      )
+      end
     end
 
     def translation_keys
@@ -231,7 +235,7 @@ class MissingDatabaseTranslationChecker
     end
 
     def expanded_column_values
-      @expanded_column_values ||= (
+      @expanded_column_values ||= begin
         column_values.each_with_object([]) do |value, array|
           if value[0] == '{' && value[-1] == '}'
             value = value.force_encoding('windows-1252').encode('utf-8') rescue value
@@ -253,25 +257,33 @@ class MissingDatabaseTranslationChecker
             array << value
           end
         end
-      )
+      end
     end
 
     def strings_to_filter_out
-      @strings_to_filter_out ||= (
+      @strings_to_filter_out ||= begin
         expanded_column_values.select do |string|
           @filters.any? { |filter| !!filter.match(string.to_s) }
         end
-      )
+      end
     end
 
     # Values might be strings, integers, or strings that contain json blobs
     def column_values
-      result = ActiveRecord::Base.connection.execute(build_query)
+      if is_gsdata?
+        result = DataValue.connection.execute(build_query)
+      else
+        result = ActiveRecord::Base.connection.execute(build_query)
+      end
       result.to_a.map do |row|
         value = row.first
         next unless value
         value.gsub('\n', '').strip.presence
       end.compact
+    end
+
+    def is_gsdata?
+      table.to_s.start_with?('gsdata.')
     end
 
     def build_query

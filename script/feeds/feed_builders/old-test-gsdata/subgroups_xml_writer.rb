@@ -2,7 +2,7 @@
 
 module Feeds
   module OldTestGsdata
-    class AllStudentsXmlWriter < Feeds::OldTestGsdata::XmlWriter
+    class SubgroupsXmlWriter < Feeds::OldTestGsdata::XmlWriter
       def initialize(data_reader, output_path)
         super
         @root_element = 'gs-test-subgroup-feed'

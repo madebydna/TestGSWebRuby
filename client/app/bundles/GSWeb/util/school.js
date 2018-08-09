@@ -6,7 +6,7 @@ const getHomesForSaleHref = (state, address) => {
     // let homesForSaleHref = null;
     return `https://www.zillow.com/${state}-${
       address.zip.split('-')[0]
-    }?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=districtbrowsemap`;
+    }?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=schoolsearch`;
     // return homesForSaleHref;
   }
   return null;
@@ -23,6 +23,13 @@ const studentsPhrase = enrollment => {
     </span>
   );
 };
+
+const levelCodeLong = (lc) => {
+  if (lc == 'e') return 'Elementary';
+  if (lc == 'm') return 'Middle';
+  if (lc == 'h') return 'High';
+  if (lc == 'p') return 'PreK';
+}
 
 const clarifySchoolType = schoolType => {
   const clarifiedSchoolType = {
@@ -42,5 +49,6 @@ export {
   getHomesForSaleHref,
   studentsPhrase,
   schoolTypePhrase,
-  clarifySchoolType
+  clarifySchoolType,
+  levelCodeLong
 };

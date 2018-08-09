@@ -5,21 +5,45 @@ class SearchPage < SitePrism::Page
 
   set_url_matcher /search\/search\.page/
 
-  element :search_results_list_view_link, ".js-search-list-view"
-  element :search_results_map_view_link, ".js-search-map-view"
 
-  sections :school_search_results, '.js-schoolSearchResult' do
-    element :orange_stars, '.i-16-orange-star'
-    element :gs_rating, '.gs-rating'
+  sections :school_rows, '.school-table tbody tr' do
+    element :anchors, 'a'
+    section :five_stars, '.five-stars' do
+      elements :filled_stars, '.filled-star'
+
+      def star_rating
+        filled_stars.size
+      end
+    end
 
     def number_of_reviews
-      root_element.find('.js-reviewCount').text.to_i
+      anchors(text: 'reviews').text.to_i
     end
-    def star_rating
-      orange_stars[:class].scan(/i-16-star-([0-9])/).flatten.first.to_i
+  end
+
+  sections :school_list_items, '.school-list li' do
+    element :circle_rating, '.circle-rating--small'
+    element :assigned_text, '.assigned-text'
+
+    def gs_rating
+      circle_rating.text.to_i
     end
-    def gs_rating_value
-      gs_rating.text.to_i
+
+    def assigned_school_text
+      assigned_text.text
+    end
+  end
+
+  sections :assigned_school, '.assigned' do
+    elements :divs, 'div'
+    element :circle_rating, '.circle-rating--small'
+
+    def assigned_school_text
+      divs.first.text
+    end
+
+    def assigned_school_rating
+      circle_rating.text.to_i
     end
   end
 
@@ -27,16 +51,23 @@ class SearchPage < SitePrism::Page
     element :gs_rating, '.js-gs-rating-link'
   end
 
-  def number_of_reviews_for_school(name)
-    self.school_search_results(text: name).first.number_of_reviews
+  def list_view_gs_rating_for_school(name)
+    self.school_list_items(text: name).first.gs_rating
   end
 
-  def star_rating_for_school(name)
-    self.school_search_results(text: name).first.star_rating
+  def table_view_star_rating_for_school(name)
+    self.school_rows(text:name).first.five_stars.star_rating
   end
 
-  def gs_rating_for_school(name)
-    self.school_search_results(text: name).first.gs_rating_value
+  def table_view_reviews_for_school(name)
+    self.school_rows(text:name).first.number_of_reviews
   end
 
+  def list_view_assigned_school?
+    self.assigned_school.first.assigned_school_text == 'Assigned school'
+  end
+
+  def list_view_assigned_school_rating?
+    self.assigned_school.first.assigned_school_rating != 0
+  end
 end
