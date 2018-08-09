@@ -480,6 +480,7 @@ body {
     .ratings-scale-container {
       display: flex;
       justify-content: space-between;
+      max-width: 300px;
       .block-container{
         .rating-scale{
           justify-content: center;
