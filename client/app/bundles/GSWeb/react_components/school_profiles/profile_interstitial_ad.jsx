@@ -41,20 +41,28 @@ const shouldShowInterstitial = () =>
 const ProfileInterstitialAd = ({ loaded }) =>
   shouldShowInterstitial() && loaded ? (
     <Modal closeOnOutsideClick={false} className="interstitial-modal">
-      {({ openForDuration, close }) => (
+      {({ openForDuration, close, remainingTime }) => (
         <Ad
           sizeName="prestitial"
           slot="Prestitial"
-          onFill={() => trackInterstitialViewed() && openForDuration(10000)}
+          onFill={() =>
+            trackInterstitialViewed() && openForDuration(10000, 1000)
+          }
         >
-          <p>
-            {t('thanks_text')}{' '}
-            {
-              <a onClick={close} style={{ cursor: 'pointer' }}>
-                {t('click here')} »
-              </a>
-            }
-          </p>
+          {adElement => (
+            <React.Fragment>
+              <p>
+                {t('thanks_text')}{' '}
+                {
+                  <a onClick={close} style={{ cursor: 'pointer' }}>
+                    {t('click here')} »
+                  </a>
+                }
+              </p>
+              {adElement}
+              <p>This ad will close in {remainingTime / 1000} seconds.</p>
+            </React.Fragment>
+          )}
         </Ad>
       )}
     </Modal>

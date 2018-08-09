@@ -37,7 +37,7 @@ class Modal extends React.Component {
   render() {
     return (
       <OpenableCloseable>
-        {(isOpen, { openForDuration, open, close, toggle }) => (
+        {(isOpen, { openForDuration, open, close, toggle, remainingTime }) => (
           <React.Fragment>
             {this.props.renderTrigger(isOpen, {
               openForDuration,
@@ -58,7 +58,11 @@ class Modal extends React.Component {
                       onClick={close}
                     />
                     <div className="remodal-content">
-                      {this.props.children({ openForDuration, close })}
+                      {this.props.children({
+                        openForDuration,
+                        close,
+                        remainingTime
+                      })}
                     </div>
                   </div>
                 </CaptureOutsideClick>

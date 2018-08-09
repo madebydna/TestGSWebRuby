@@ -24,27 +24,47 @@ export default class OpenableCloseable extends React.Component {
     this.openForDuration = this.openForDuration.bind(this);
     this.close = this.close.bind(this);
     this.state = {
-      isOpen: props.openByDefault
+      isOpen: props.openByDefault,
+      whenOutOfTimeIntervalId: null,
+      interval: null
     };
   }
 
   open() {
-    this.clearTimeouts();
+    this.clearIntervals();
     this.setState({ isOpen: true }, () => this.props.onChange(this.isOpen));
   }
 
-  openForDuration(duration) {
-    this.clearTimeouts();
+  whenOutOfTime = onOutOfTime => () => {
+    const remainingTime = this.state.remainingTime - this.state.interval;
+    if (remainingTime <= 0) {
+      onOutOfTime();
+    }
+    this.setState({
+      remainingTime
+    });
+  };
+
+  openForDuration(duration, interval = null) {
+    this.clearIntervals();
     this.setState({ isOpen: true }, () => {
       this.props.onChange(this.isOpen);
       this.setState({
-        closeTimeout: window.setTimeout(this.close, duration)
+        remainingTime: duration,
+        interval: interval || duration,
+        whenOutOfTimeIntervalId: window.setInterval(
+          this.whenOutOfTime(() => {
+            this.close();
+            this.clearIntervals();
+          }),
+          interval
+        )
       });
     });
   }
 
   close() {
-    this.clearTimeouts();
+    this.clearIntervals();
     this.setState({ isOpen: false }, () => this.props.onChange(this.isOpen));
   }
 
@@ -54,11 +74,11 @@ export default class OpenableCloseable extends React.Component {
     );
   }
 
-  clearTimeouts() {
-    if (this.state.closeTimeout) {
-      window.clearTimeout(this.state.closeTimeout);
+  clearIntervals() {
+    if (this.state.whenOutOfTimeIntervalId) {
+      window.clearInterval(this.state.whenOutOfTimeIntervalId);
       this.setState({
-        closeTimeout: null
+        whenOutOfTimeIntervalId: null
       });
     }
   }
@@ -68,7 +88,8 @@ export default class OpenableCloseable extends React.Component {
       toggle: this.toggle,
       open: this.open,
       close: this.close,
-      openForDuration: this.openForDuration
+      openForDuration: this.openForDuration,
+      remainingTime: this.state.remainingTime > 0 ? this.state.remainingTime : 0
     });
   }
 }
