@@ -48,7 +48,7 @@ const ProfileInterstitialAd = ({ loaded }) =>
           onFill={() => trackInterstitialViewed() && openForDuration(10000)}
         >
           <p>
-            {t('thanks_text')}
+            {t('thanks_text')}{' '}
             {
               <a onClick={close} style={{ cursor: 'pointer' }}>
                 {t('click here')} »
