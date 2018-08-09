@@ -51,6 +51,8 @@ import {
 } from 'util/interrupts';
 import SearchBox from 'react_components/search_box';
 import withViewportSize from 'react_components/with_viewport_size';
+import ProfileInterstitialAd, { shouldShowInterstitial, profileInterstitialLoader } from 'react_components/school_profiles/profile_interstitial_ad';
+
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 
 window.store = getStore();
@@ -67,7 +69,8 @@ ReactOnRails.register({
   HomesAndRentals,
   StemCourses,
   TopicalReviewSummary,
-  SearchBoxWrapper
+  SearchBoxWrapper,
+  ProfileInterstitialAd
 });
 
 $(function() {
@@ -101,6 +104,14 @@ $(function() {
       });
     }
   }
+
+  registerInterrupt('interstitial', (nextInterrupt) => {
+    if(shouldShowInterstitial()) {
+      profileInterstitialLoader.load();
+    } else {
+      nextInterrupt();
+    }
+  });
 
   initAnchorHashUpdater();
 
@@ -383,7 +394,7 @@ $(window).on('load', function() {
   });
 
   registerPredefinedInterrupts(['mobileOverlayAd', 'qualaroo'])
-  runInterrupts(['profileTour', 'mobileOverlayAd', 'qualaroo'])
+  runInterrupts(['interstitial', 'profileTour', 'mobileOverlayAd', 'qualaroo'])
 
   $('#toc').on('click', 'a', function(e) {
     const ANCHOR_REGEX = /^#[^ ]+$/;

@@ -5,6 +5,10 @@ module I18n
     locale != default_locale && locale_available?(locale) ? locale.to_s : nil
   end
 
+  def self.current_non_en_locale
+    I18n.locale if I18n.locale != :en
+  end
+
   class GSLoggingExceptionHandler < ExceptionHandler
     def call(exception, locale, key, options)
       if exception.is_a?(MissingTranslation)

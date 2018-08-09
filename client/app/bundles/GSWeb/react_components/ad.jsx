@@ -59,10 +59,17 @@ class Ad extends React.Component {
   }
 
   onAdRenderEnded({ isEmpty }) {
-    this.setState({
-      adRenderEnded: true,
-      adFilled: !isEmpty
-    });
+    this.setState(
+      {
+        adRenderEnded: true,
+        adFilled: !isEmpty
+      },
+      () => {
+        if (this.state.adFilled && this.props.onFill) {
+          this.props.onFill();
+        }
+      }
+    );
   }
 
   shouldShowContainer = () => this.state.adRenderEnded && this.state.adFilled;
@@ -83,6 +90,7 @@ class Ad extends React.Component {
       className: newContainerClassName,
       children: (
         <React.Fragment>
+          {this.props.children}
           <div className="tac" id={this.slotId()} />
           {this.props.ghostTextEnabled && (
             <div width="100%">

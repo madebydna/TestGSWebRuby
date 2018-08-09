@@ -6,30 +6,30 @@ describe NewSearchController do
 
     ['st', 'type'].each do |key|
       context "with multiple of the same #{key} param, where key doesnt have square brackets" do
-        before { controller.request = double(query_string: "#{key}=a&#{key}=b") }
+        before { controller.request = double(query_string: "#{key}=public&#{key}=charter") }
         it 'returns an array with the correct values' do
-          expect(subject).to eq(['a','b'])
+          expect(subject).to eq(['public','charter'])
         end
       end
 
       context "with multiple of the same #{key} param, where key has square brackets" do
-        before { controller.request = double(query_string: "#{key}[]=a&#{key}[]=b") }
+        before { controller.request = double(query_string: "#{key}[]=private&#{key}[]=charter") }
         it 'returns an array with the correct values' do
-          expect(subject).to eq(['a','b'])
+          expect(subject).to eq(['private','charter'])
         end
       end
 
       context "with a single #{key} param" do
-        before { controller.request = double(query_string: "#{key}=a") }
+        before { controller.request = double(query_string: "#{key}=charter") }
         it 'returns an array with one value' do
-          expect(subject).to eq(['a'])
+          expect(subject).to eq(['charter'])
         end
       end
 
       context "with a single #{key} param that has square brackets" do
-        before { controller.request = double(query_string: "#{key}[]=a") }
+        before { controller.request = double(query_string: "#{key}[]=charter") }
         it 'returns an array with one value' do
-          expect(subject).to eq(['a'])
+          expect(subject).to eq(['charter'])
         end
       end
     end
@@ -40,30 +40,30 @@ describe NewSearchController do
 
     ['gradeLevels', 'level_code'].each do |key|
       context "with multiple of the same #{key} param, where key doesnt have square brackets" do
-        before { controller.request = double(query_string: "#{key}=a&#{key}=b") }
+        before { controller.request = double(query_string: "#{key}=p&#{key}=e") }
         it 'returns an array with the correct values' do
-          expect(subject).to eq(['a','b'])
+          expect(subject).to eq(['p','e'])
         end
       end
 
       context "with multiple of the same #{key} param, where key has square brackets" do
-        before { controller.request = double(query_string: "#{key}[]=a&#{key}[]=b") }
+        before { controller.request = double(query_string: "#{key}[]=p&#{key}[]=e") }
         it 'returns an array with the correct values' do
-          expect(subject).to eq(['a','b'])
+          expect(subject).to eq(['p','e'])
         end
       end
 
       context "with a single #{key} param" do
-        before { controller.request = double(query_string: "#{key}=a") }
+        before { controller.request = double(query_string: "#{key}=p") }
         it 'returns an array with one value' do
-          expect(subject).to eq(['a'])
+          expect(subject).to eq(['p'])
         end
       end
 
       context "with a single #{key} param that has square brackets" do
-        before { controller.request = double(query_string: "#{key}[]=a") }
+        before { controller.request = double(query_string: "#{key}[]=p") }
         it 'returns an array with one value' do
-          expect(subject).to eq(['a'])
+          expect(subject).to eq(['p'])
         end
       end
 
