@@ -35,11 +35,11 @@ class SearchPage < SitePrism::Page
   end
 
   sections :assigned_school, '.assigned' do
-    element :assigned_text, '.assigned-text'
+    elements :divs, 'div'
     element :circle_rating, '.circle-rating--small'
 
     def assigned_school_text
-      assigned_text.text
+      divs.first.text
     end
 
     def assigned_school_rating
