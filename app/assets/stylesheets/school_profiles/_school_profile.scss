@@ -73,6 +73,14 @@ $space-between-profile-modules: $spacing-extra-large;
 }
 
 .interstitial-modal {
+  p {
+    padding: 10px 5px;
+  }
+  .remodal-close:after {
+    content: 'x';
+    font-size: 22px;
+    color: #666;
+  }
   @include media-breakpoint-down(xs) {
     .remodal-wrapper {
       padding: 0;
@@ -81,6 +89,9 @@ $space-between-profile-modules: $spacing-extra-large;
       border: 0px;
       padding: 10px 0;
       max-width: 320px;
+    }
+    p {
+      padding: 10px;
     }
   }
 }
