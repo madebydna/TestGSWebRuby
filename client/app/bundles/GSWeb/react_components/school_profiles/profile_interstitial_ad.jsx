@@ -3,7 +3,19 @@ import PropTypes from 'prop-types';
 import Modal from 'react_components/modal';
 import Ad from 'react_components/ad';
 import { get as getCookie, set as setCookie } from 'js-cookie';
-import { t } from 'util/i18n';
+import { translateWithDictionary } from 'util/i18n';
+
+const t = translateWithDictionary({
+  en: {
+    thanks_text:
+      'GreatSchools thanks the foundations and advertisers that make it possible to provide our site free to millions of parents. To skip this ad, '
+  },
+  es: {
+    'click here': 'haga clic aquí',
+    thanks_text:
+      'GreatSchools agradece a las fundaciones y los publicistas que hacen posible ofrecer nuestro sitio de forma gratuita a millones de padres. Para cerrar este anuncio, '
+  }
+});
 
 const COOKIE_NAME = 'gs_interstitial';
 const INTERSTITIAL_VIEWED = 'viewed';
@@ -36,12 +48,12 @@ const ProfileInterstitialAd = ({ loaded }) =>
           onFill={() => trackInterstitialViewed() && openForDuration(10000)}
         >
           <p>
-            {t(
-              'GreatSchools thanks the foundations and advertisers that make it possible to provide our site free to millions of parents. To skip ad,'
-            )}
-            <a onClick={close} style={{ cursor: 'pointer' }}>
-              {t('click here')} »
-            </a>
+            {t('thanks_text')}
+            {
+              <a onClick={close} style={{ cursor: 'pointer' }}>
+                {t('click here')} »
+              </a>
+            }
           </p>
         </Ad>
       )}
