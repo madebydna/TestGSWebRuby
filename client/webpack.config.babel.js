@@ -133,7 +133,7 @@ const config = {
         NODE_ENV: JSON.stringify(nodeEnv)
       }
     }),
-    new LodashModuleReplacementPlugin({ currying: true })
+    new LodashModuleReplacementPlugin({ currying: true, flattening: true })
   ],
   module: {
     rules: [
