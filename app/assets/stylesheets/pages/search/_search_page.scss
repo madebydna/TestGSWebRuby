@@ -215,8 +215,6 @@ body {
     .menu-bar.mobile-filters {
       background-color: #e0e7eb;
       padding: 10px 15px;
-      display: flex;
-      justify-content: space-between;
     }
 
     .list-map-toggle {
@@ -497,11 +495,12 @@ body {
 }
 
 .ollie-help-icon{
-  display: inline;
+  display: inline-block;
   margin-left: 15px;
   @media only screen and (max-width: 991px) {
     display: inline-block;
-    margin-right: 20px;
+    float: right;
+    margin-right: 15px;
 
   }
 }
