@@ -354,6 +354,10 @@ export default class SearchBox extends React.Component {
     }}>x</span>
   )
 
+  renderResetSearchTermButton(){
+    return this.state.searchTerm.length > 0
+  }
+
   searchResultsList = ({ close }) => (
     <SearchResultsList
       listGroups={this.state.autoSuggestResults}
@@ -396,7 +400,7 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
-            {this.resetSearchTermButton(close)}
+            {this.renderResetSearchTermButton() && this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
@@ -445,7 +449,7 @@ export default class SearchBox extends React.Component {
                   </div>
                 )}
             </div>
-            {this.resetSearchTermButton(close)}
+            {this.renderResetSearchTermButton() && this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
