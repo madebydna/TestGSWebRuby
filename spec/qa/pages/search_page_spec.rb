@@ -10,7 +10,7 @@ describe 'User sees assigned schools', type: :feature, remote: true do
   it { is_expected.to eq true }
 end
 
-describe 'User doesn\'t see NR rating for assigned school', type: :feature, remote: true do
+describe 'Assigned school has a rating', type: :feature, remote: true do
   before do
     visit '/search/search.page?lat=37.860781&locationLabel=2125%20Derby%20St%2C%20Berkeley%2C%20CA%2094705%2C%20USA&locationType=street_address&lon=-122.26572499999997&state=CA'
   end
