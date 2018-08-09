@@ -74,9 +74,9 @@ const SchoolTableRow = ({
 
   return (
     <tr>
-      <td className="school" style={assigned ? {paddingTop: '28px'} : null}>
+      <td className={`school${assigned ? ' assigned' : ''}`}>
         <React.Fragment key={state + id}>
-          {assigned && <div className="assigned-school-table-view">{t('assigned_school')}{renderAssignedTooltip(levelCode)}</div>}
+          {assigned && <div>{t('assigned_school')}{renderAssignedTooltip(levelCode)}</div>}
           <span>{renderRating(rating, ratingScale)}</span>
           <span>
             <a href={links.profile} className="name" target="_blank">

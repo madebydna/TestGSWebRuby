@@ -132,6 +132,7 @@ class Search extends React.Component {
                 }
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
+                locationLabel={this.props.locationLabel}
               />
             }
             searchBox={<SearchBox size={this.props.size} />}
