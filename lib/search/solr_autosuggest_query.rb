@@ -28,7 +28,7 @@ module Search
     def zips
       #          zip,   count, zip,   count,
       # returns [94612, 5,     94501, 10,    ...]
-      zips_and_counts = solr_result['facet_counts']['facet_fields']['zip']
+      zips_and_counts = solr_result.dig('facet_counts', 'facet_fields', 'zip') || []
       zips = zips_and_counts
         .each_slice(2)
         .select { |zip, count| count > 0 }
@@ -124,12 +124,21 @@ module Search
 
     def query_fragments
       [
-        "zip:#{q}*",
         "school_name_untokenized:#{q_escape_spaces}*",
         "school_name:(#{q}*)",
         "city_name:(#{q_no_whitespace} #{q_no_whitespace}*)^5.0",
         "district_name_untokenized:#{q_escape_spaces}*^8.0"
-      ]
+      ].tap do |fragments|
+        fragments << "zip:#{possible_zip}*" if possible_zip
+      end
+    end
+
+    def possible_zip
+      if defined?(@_possible_zip)
+        return @_possible_zip
+      end
+      # 3 to 5 consecutive numbers surrounded by word boundaries
+      @_possible_zip = q.scan(/\b\d{3,5}\b/).sort_by(&:length).last
     end
 
     def sunspot_query
@@ -141,9 +150,9 @@ module Search
           params[:fq][0] = nil
           params[:defType] = 'lucene'
           params[:fl] = fields.join(',')
-          params[:facet] = true
+          params[:facet] = true if possible_zip
           params[:sort] = 'score desc, city_number_of_schools desc, district_number_of_schools desc'
-          params['facet.field']='zip'
+          params['facet.field']='zip' if possible_zip
           # facet=on&facet.field=txt
         end
       end
