@@ -14,7 +14,7 @@ function getQueryStringWithUpdatedParams(obj) {
 
 function parsePage(pageArg) {
   let page = parseInt(pageArg, 10);
-  if (Number.isNaN(page) || page <= 1) {
+  if (isNaN(page) || page <= 1) {
     page = 1;
   }
   if (page === 1) {

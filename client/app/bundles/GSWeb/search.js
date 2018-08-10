@@ -14,7 +14,7 @@ ReactOnRails.register({
   Search
 });
 
-$(function() {
+$(() => {
   initHeader();
   ReactOnRails.reactOnRailsPageLoaded();
   tooltips.initialize();

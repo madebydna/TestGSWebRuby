@@ -274,7 +274,7 @@ export default class SearchBox extends React.Component {
   }
 
   resetSearchTerm() {
-    this.setState({searchTerm: ''});
+    this.setState({ searchTerm: '' });
   }
 
   selectionOutOfBounds(e) {
@@ -298,7 +298,7 @@ export default class SearchBox extends React.Component {
     if (e.key === 'Enter') {
       if (this.state.selectedListItem > -1) {
         close();
-        const flattenedResultValues = Array.concat.apply(
+        const flattenedResultValues = Array.prototype.concat.apply(
           [],
           Object.values(this.state.autoSuggestResults).filter(array => !!array)
         );
@@ -346,13 +346,22 @@ export default class SearchBox extends React.Component {
     </div>
   );
 
-  resetSearchTermButton = (close) => (
-    <span className="search-term-reset-button" onClick={()=> {
-      analyticsEvent('search', 'autocomplete-search-reset', this.state.searchTerm);
-      close();
-      this.resetSearchTerm();
-    }}>x</span>
-  )
+  resetSearchTermButton = close => (
+    <span
+      className="search-term-reset-button"
+      onClick={() => {
+        analyticsEvent(
+          'search',
+          'autocomplete-search-reset',
+          this.state.searchTerm
+        );
+        close();
+        this.resetSearchTerm();
+      }}
+    >
+      x
+    </span>
+  );
 
   renderResetSearchTermButton(){
     return this.state.searchTerm.length > 0

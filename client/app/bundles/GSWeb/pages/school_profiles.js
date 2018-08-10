@@ -4,6 +4,7 @@ import { getStore } from '../store/appStore';
 
 import 'jquery';
 import 'jquery-unveil';
+import 'jquery.cookie';
 import '../vendor/tipso';
 import '../vendor/fastclick';
 import '../vendor/remodal';

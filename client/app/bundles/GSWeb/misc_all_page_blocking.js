@@ -1,4 +1,17 @@
-import log from 'util/log';
+import $ from 'jquery';
+import * as jqueryujs from 'jquery-ujs';
+import * as jquerycookie from 'jquery.cookie';
+// do not import any addition dependencies for this blocking JS
+
+// do not import log from util/log in commons blocking.
+const log = function(msg) {
+  if (window.console) {
+    console.log(msg);
+  }
+};
+
+window.$ = $;
+window.jQuery = $;
 
 window.analyticsEvent = window.analyticsEvent || function() {};
 window.analyticsSocial = window.analyticsSocial || function() {};
@@ -10,8 +23,8 @@ window.dataLayer = window.dataLayer || [];
 dataLayer.push(gon.data_layer_hash);
 
 (function() {
-  var gaCookie = {};
-  var cval = $.cookie('GATracking');
+  let gaCookie = {};
+  const cval = $.cookie('GATracking');
   if (cval && cval != '') {
     try {
       gaCookie = JSON.parse(cval);
@@ -20,21 +33,21 @@ dataLayer.push(gon.data_layer_hash);
     }
   }
   if (gaCookie.events) {
-    $.each(gaCookie.events, function(_, event) {
+    $.each(gaCookie.events, (_, event) => {
       if (event.category && event.action) {
-        var gaEvent = {
-          'event': 'analyticsEvent',
-          'eventCategory': event.category,
-          'eventAction': event.action,
-          'eventLabel': event.label,
-          'eventValue': event.value,
-          'eventNonInt': event.non_interactive
+        const gaEvent = {
+          event: 'analyticsEvent',
+          eventCategory: event.category,
+          eventAction: event.action,
+          eventLabel: event.label,
+          eventValue: event.value,
+          eventNonInt: event.non_interactive
         };
         dataLayer.push(gaEvent);
       }
     });
   }
 
-  $.removeCookie('GATracking', {domain: '.greatschools.org', path: '/'});
-  $.removeCookie('GATracking', {path: '/'});
+  $.removeCookie('GATracking', { domain: '.greatschools.org', path: '/' });
+  $.removeCookie('GATracking', { path: '/' });
 })();
