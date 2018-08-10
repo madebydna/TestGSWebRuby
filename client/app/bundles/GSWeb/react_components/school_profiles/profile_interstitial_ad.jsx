@@ -8,12 +8,14 @@ import { translateWithDictionary } from 'util/i18n';
 const t = translateWithDictionary({
   en: {
     thanks_text:
-      'GreatSchools thanks the foundations and advertisers that make it possible to provide our site free to millions of parents. To skip this ad, '
+      'GreatSchools thanks the foundations and advertisers that make it possible to provide our site free to millions of parents. To skip this ad, ',
+    ad_will_close: 'This ad will close in {seconds} seconds.'
   },
   es: {
     'click here': 'haga clic aquí',
     thanks_text:
-      'GreatSchools agradece a las fundaciones y los publicistas que hacen posible ofrecer nuestro sitio de forma gratuita a millones de padres. Para cerrar este anuncio, '
+      'GreatSchools agradece a las fundaciones y los publicistas que hacen posible ofrecer nuestro sitio de forma gratuita a millones de padres. Para cerrar este anuncio, ',
+    ad_will_close: 'This ad will close in {seconds} seconds.'
   }
 });
 
@@ -45,6 +47,7 @@ const ProfileInterstitialAd = ({ loaded }) =>
         <Ad
           sizeName="prestitial"
           slot="Prestitial"
+          container={<React.Fragment />}
           onFill={() =>
             trackInterstitialViewed() && openForDuration(10000, 1000)
           }
@@ -60,7 +63,11 @@ const ProfileInterstitialAd = ({ loaded }) =>
                 }
               </p>
               {adElement}
-              <p>This ad will close in {remainingTime / 1000} seconds.</p>
+              <div className="timer">
+                {t('ad_will_close', {
+                  parameters: { seconds: remainingTime / 1000 }
+                })}
+              </div>
             </React.Fragment>
           )}
         </Ad>
