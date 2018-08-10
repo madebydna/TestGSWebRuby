@@ -172,6 +172,11 @@ const getSizeMappings = function() {
       .addSize([768, 120], [[728, 90]])
       .addSize([0, 0], [[320, 50], [300, 250]])
       .build(),
+    prestitial: googletag
+      .sizeMapping()
+      .addSize([640, 480], [[640, 480]])
+      .addSize([0, 0], [[300, 250]])
+      .build(),
     interstitial: googletag
       .sizeMapping()
       .addSize([640, 480], [[640, 800], [300, 137]])

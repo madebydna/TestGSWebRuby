@@ -7,8 +7,9 @@ import GoogleMapsInitializer from '../../components/map/google_maps_initializer'
 import LoadingOverlay from './loading_overlay';
 import DefaultMapMarker from 'components/map/default_map_marker';
 import MapMarker from 'components/map/map_marker';
+import createInfoWindow from '../../components/map/info_window';
 
-const SearchMap = ({ schools, isLoading, locationMarker, ...other }) => (
+const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other }) => (
   <React.Fragment>
     {
       /* would prefer to just not render overlay if not showing it,
@@ -47,6 +48,9 @@ const SearchMap = ({ schools, isLoading, locationMarker, ...other }) => (
                         key: `locationMarkerl${locationMarker.lat}l${
                           locationMarker.lon
                         }`,
+                        onClick: m => {
+                          openInfoWindow(`${locationLabel.replace(', USA', '')}`, m);
+                        },
                         map,
                         googleMaps
                       }}

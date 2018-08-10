@@ -141,7 +141,7 @@ export default class SearchBar extends React.Component {
 
         <div className="toggle-bar">
           <span className="icon active icon-house"> <a href={this.homesForSaleHref()} target="_blank">Nearby homes for sale</a></span>
-          
+
           <div className="list-map-toggle">
             <a href="javascript:void(0);" className="show-list" onClick={this.onClickListView}>
               <span className={'icon icon-list' + (this.state.listSelected ? ' active' : '')}/>

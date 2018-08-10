@@ -92,7 +92,7 @@ const School = ({
 
   return (
     <React.Fragment key={state + id}>
-      {assigned && <div className="assigned-text">{t('assigned_school') } {renderAssignedTooltip(levelCode)}</div>}
+      {assigned && <div>{t('assigned_school') } {renderAssignedTooltip(levelCode)}</div>}
       <span>{renderRating(rating, ratingScale)}</span>
       <span>
         <a href={links.profile} className="name" target="_blank">

@@ -196,16 +196,13 @@ class SearchProvider extends React.Component {
     );
   }
 
-  unhighlightAll(objectArray){
-    return objectArray.map((s) => {s.highlighted = false; return s;});
-  }
-
   toggleHighlight(school) {
-    const schools = this.unhighlightAll(this.state.schools).map(s => {
+    const schools = this.state.schools.map(s => {
       if (s.id === school.id) {
         s.highlighted = !s.highlighted;
         return s;
       }
+      s.highlighted = false;
       return s;
     });
     this.setState({ schools });
@@ -247,7 +244,8 @@ class SearchProvider extends React.Component {
             this.props.updateView,
             curry(this.trackParams)('View', this.props.view)
           ),
-          q: this.props.q
+          q: this.props.q,
+          locationLabel: this.props.locationLabel
         }}
       >
         <DistanceContext.Provider
