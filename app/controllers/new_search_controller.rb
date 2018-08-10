@@ -137,7 +137,9 @@ class NewSearchController < ApplicationController
 
   def set_search_meta_tags
     set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url? && page_of_results.present?
-    send(:set_meta_tags, send("#{search_type}_meta_tag_hash".to_sym))
+    if %i[zip_code city_browse district_browse].include?(search_type)
+      send(:set_meta_tags, send("#{search_type}_meta_tag_hash".to_sym))
+    end
   end
 
   def city_browse_meta_tag_hash
