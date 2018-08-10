@@ -16,6 +16,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
+  mode: devBuild ? 'development' : 'production',
   entry: {
     widget: ['./app/bundles/GSWeb/widget'],
     'mobile-overlay-ad': ['./app/bundles/GSWeb/components/ads/mobile_overlay'],
