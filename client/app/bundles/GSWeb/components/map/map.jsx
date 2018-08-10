@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import { once } from 'lodash';
-import School from '../../react_components/search/school'
 
 export default class Map extends React.Component {
   static propTypes = {
@@ -12,7 +11,7 @@ export default class Map extends React.Component {
     hidden: PropTypes.bool,
     lat: PropTypes.number,
     lon: PropTypes.number,
-    schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)),
+    markerId: PropTypes.string
   };
 
   static defaultProps = {
@@ -20,14 +19,15 @@ export default class Map extends React.Component {
     polygons: [],
     hidden: false,
     lat: null,
-    lon: null
+    lon: null,
+    markerId: ''
   };
 
   constructor(props) {
     super(props);
     this.state = { mapUpdated: true };
     this.openInfoWindow = this.openInfoWindow.bind(this);
-    this.fitBounds = (this.fitBounds.bind(this));
+    this.fitBounds = this.fitBounds.bind(this);
   }
 
   createGoogleMap($elem) {
@@ -117,7 +117,7 @@ export default class Map extends React.Component {
     if (prevProps.hidden && !this.props.hidden) {
       this.onResize();
     }
-    if (this.props.schools.map(school => school.id + school.name).join('') !== prevProps.schools.map(school => school.id + school.name).join('')) {
+    if (this.props.markerId !== prevProps.markerId) {
       this.setState({ mapUpdated: true});
     }
   }

@@ -25,7 +25,7 @@ const SearchMap = ({ schools, isLoading, locationMarker, ...other }) => (
       <GoogleMapsInitializer>
         {(isInitialized, googleMaps) =>
           isInitialized && (
-            <Map googleMaps={googleMaps} changeLocation={() => {}} schools={schools} {...other}>
+            <Map googleMaps={googleMaps} changeLocation={() => {}} markerId={schools.map(school => school.id + school.name).join('')} {...other}>
               {({ googleMaps, map, openInfoWindow, fitBounds }) => {
                 const markers = createMarkersFromSchools(
                   schools,
