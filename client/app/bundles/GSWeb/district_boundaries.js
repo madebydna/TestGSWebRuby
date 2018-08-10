@@ -1,3 +1,4 @@
+import 'polyfills';
 import ReactOnRails from 'react-on-rails';
 import configureStore from './store/appStore';
 import DistrictBoundaries from './react_components/district_boundaries/district_boundaries';

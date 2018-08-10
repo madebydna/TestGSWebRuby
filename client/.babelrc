@@ -1,4 +1,16 @@
 {
-  "presets": ["es2015", "stage-0", "react"],
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": ["cover 99.5% in US", "not ie < 10"]
+        },
+        "useBuiltIns": "entry"
+      }
+    ],
+    "stage-0",
+    "react"
+  ],
   "plugins": ["lodash"]
 }
