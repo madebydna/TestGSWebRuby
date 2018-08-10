@@ -20,16 +20,22 @@ const config = {
   entry: {
     widget: ['./app/bundles/GSWeb/widget'],
     'mobile-overlay-ad': ['./app/bundles/GSWeb/components/ads/mobile_overlay'],
-    interstitial: ['./app/bundles/GSWeb/interstitial'],
-    'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
-    'school-profiles': ['./app/bundles/GSWeb/school_profiles'],
+    interstitial: ['polyfills', './app/bundles/GSWeb/interstitial'],
+    'district-boundaries': [
+      'polyfills',
+      './app/bundles/GSWeb/district_boundaries'
+    ],
+    'school-profiles': ['polyfills', './app/bundles/GSWeb/school_profiles'],
     home: ['./app/bundles/GSWeb/home'],
     'commons-blocking-loader': ['./app/bundles/GSWeb/misc_all_page_blocking'],
     'jquery-loader': ['jquery'],
     'admin-tools': ['./app/bundles/GSWeb/admin_tools'],
     'add-schools': ['./app/bundles/GSWeb/pages/add_schools'],
-    search: ['./app/bundles/GSWeb/search'],
-    'search-box': ['./app/bundles/GSWeb/react_components/search_box_wrapper']
+    search: ['polyfills', './app/bundles/GSWeb/search'],
+    'search-box': [
+      'polyfills',
+      './app/bundles/GSWeb/react_components/search_box_wrapper'
+    ]
   },
 
   optimization: {
@@ -69,14 +75,20 @@ const config = {
             }
             return true;
           },
-          test: /core-js|polyfills|\breact\b|react-dom|redux|react-redux|react-transition-group/,
+          test: /\breact\b|react-dom|redux|react-redux|react-transition-group/,
           name: 'react-redux',
           enforce: true,
           reuseExistingChunk: true
         },
         commons: {
-          chunks: 'all',
-          test: /tipso|remodal|typeahead_modified.bundle.js|header|handlebars/,
+          chunks(module, chunks) {
+            if (module.name == 'search-box') {
+              // leave commons in search-box bundle so GK can use it without DLing multiple files
+              return false;
+            }
+            return true;
+          },
+          test: /core-js|tipso|remodal|typeahead_modified.bundle.js|header|handlebars/,
           name: 'commons',
           enforce: true,
           reuseExistingChunk: true
