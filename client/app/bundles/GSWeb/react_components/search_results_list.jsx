@@ -113,7 +113,10 @@ const SearchResultsList = ({
   const allResultsListItem = () => (
     <li
       className="search-results-list-item"
-      onClick={() => onSelect({ value: searchTerm })}
+      onClick={() => {
+        analyticsEvent('autosuggest', 'search all results', searchTerm);
+        onSelect({ value: searchTerm });
+      }}
     >
       {t('Search all results for', { parameters: { searchTerm } })}
     </li>

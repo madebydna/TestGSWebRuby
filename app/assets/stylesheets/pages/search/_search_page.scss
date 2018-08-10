@@ -1,5 +1,6 @@
 $page-side-padding: 15px;
 $search-primary-blue-on-white: #1dace5;
+$charcoal-gray: #2E3438;
 
 @import 'list-and-map';
 @import 'components/dropdown';
@@ -217,6 +218,10 @@ body {
     }
 
     .list-map-toggle {
+      .ollie-map-container{
+        display: flex;
+        margin-right: 25px;
+      }
       @include media-breakpoint-up(lg) {
         float: right;
       }
@@ -464,5 +469,59 @@ body {
         margin-left: 15px;
       }
     }
+  }
+}
+
+.remodal-content{
+  .rating-help-container {
+    margin-top: 15px;
+    text-align: left;
+    .circle-ur {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      float: left;
+      margin-right: 5px;
+    }
+    .rating-scale{
+      display: flex;
+      .help-circle {
+        text-align: center;
+        color: white;
+        width: 25px;
+        height: 25px;
+        font-size: 15px;
+        border-radius: 50%;
+        border: 2px solid #ffffff;
+        margin-left: -7px;
+      }
+    }
+    .ratings-scale-container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 300px;
+      .block-container{
+        .rating-scale{
+          justify-content: center;
+        }
+        .word-scale{
+          text-align: center;
+          font-size: 16px;
+        }
+      }
+    }
+    h4{ font-size: 19px; }
+    a { color: $search-primary-blue-on-white; }
+  }
+}
+
+.ollie-help-icon{
+  display: inline-block;
+  margin-left: 15px;
+  @media only screen and (max-width: 991px) {
+    display: inline-block;
+    float: right;
+    margin-right: 15px;
+
   }
 }
