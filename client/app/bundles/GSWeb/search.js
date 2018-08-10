@@ -1,3 +1,4 @@
+import 'polyfills';
 import ReactOnRails from 'react-on-rails';
 import configureStore from './store/appStore';
 import Search from './react_components/search/search';
@@ -14,7 +15,7 @@ ReactOnRails.register({
   Search
 });
 
-$(function() {
+$(() => {
   initHeader();
   ReactOnRails.reactOnRailsPageLoaded();
   tooltips.initialize();

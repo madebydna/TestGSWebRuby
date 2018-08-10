@@ -66,7 +66,7 @@ const config = {
             }
             return true;
           },
-          test: /polyfills|\breact\b|react-dom|redux|react-redux|react-transition-group/,
+          test: /core-js|polyfills|\breact\b|react-dom|redux|react-redux|react-transition-group/,
           name: 'react-redux',
           enforce: true,
           reuseExistingChunk: true
