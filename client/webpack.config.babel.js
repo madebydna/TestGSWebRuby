@@ -117,14 +117,17 @@ const config = {
           }
 
           fs.writeFile(
-            'webpack.stats.json',
+            path.resolve(
+              __dirname,
+              '../app/assets/webpack',
+              'webpack.stats.json'
+            ),
             JSON.stringify({
               assetsByChunkName: assets,
               publicPath: stats.compilation.outputOptions.publicPath
             }),
             done
           );
-          console.log(assets);
         });
       }
     },
