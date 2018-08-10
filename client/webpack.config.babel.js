@@ -51,7 +51,10 @@ const config = {
           enforce: true,
           reuseExistingChunk: true,
           chunks(module, chunks) {
-            if (module.name == 'mobile-overlay-ad') {
+            if (
+              module.name == 'mobile-overlay-ad' ||
+              module.name == 'search-box'
+            ) {
               // mobile overlay ad exists on "old" layouts w/ old deprecated JS, which means it cannot depend on webpack commons blocking
               return false;
             }
@@ -217,13 +220,13 @@ if (devBuild) {
       }
     })
   );
-  // config["externals"] = {
-  //   jquery: 'jQuery',
-  //   "jquery-ujs": "jquery-ujs",
-  //   'jquery.cookie': "jquery.cookie"
-  // }
   console.log('Webpack production build for Rails'); // eslint-disable-line no-console
 }
+// config["externals"] = {
+//   jquery: 'jQuery',
+//   "jquery-ujs": "jquery-ujs",
+//   'jquery.cookie': "jquery.cookie"
+// }
 
 if (process.env.ANALYZE) {
   config.plugins.push(new BundleAnalyzerPlugin());
