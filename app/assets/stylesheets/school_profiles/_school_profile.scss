@@ -74,7 +74,11 @@ $space-between-profile-modules: $spacing-extra-large;
 
 .interstitial-modal {
   p {
-    padding: 10px 5px;
+    padding: 10px 0 15px 0;
+    font-family: opensans-semibold;
+  }
+  .timer {
+    padding: 10px 0 0 0;
   }
   .remodal-close:after {
     content: 'x';
@@ -91,7 +95,10 @@ $space-between-profile-modules: $spacing-extra-large;
       max-width: 320px;
     }
     p {
-      padding: 10px;
+      padding: 10px 10px 15px 10px;
+    }
+    .timer {
+      padding: 10px 10px 0 10px;
     }
   }
 }
