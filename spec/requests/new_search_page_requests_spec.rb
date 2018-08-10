@@ -38,7 +38,7 @@ describe 'New search page' do
   context 'with two solr results' do
     before do
       stub_request(:any, /\/main\/select/)
-          .to_return(status: 200, body: {response: {docs: [{school_value:20, school_id:1, school_database_state:['AK', 'CA']},{school_value:14, school_id:1, school_database_state:['AK', 'CA']}], numFound: 2}}.to_json, headers: {})
+          .to_return(status: 200, body: {response: {docs: [{school_value:20, school_id:1, school_database_state:'CA', state:'CA', id:[1,2]},{school_value:14, school_id:1, school_database_state:'CA', id:[1,2]}], numFound: 2}}.to_json, headers: {})
 
       FactoryGirl.create(:city, name: 'Alameda', state: 'ca')
       FactoryGirl.create(:district, name: 'Alameda Unified School District', city: 'Alameda', state: 'ca')

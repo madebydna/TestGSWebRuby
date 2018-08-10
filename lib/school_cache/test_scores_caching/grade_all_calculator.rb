@@ -47,6 +47,8 @@ class TestScoresCaching::GradeAllCalculator
     grade_all_dv.state_value = nil
     grade_all_dv.school_cohort_count = nil
     grade_all_dv.state_cohort_count = nil
+    grade_all_dv.proficiency_band_name = data_values.first.proficiency_band_name
+    grade_all_dv.source_date_valid = data_values.first.source_date_valid
     grade_all_dv.grade = GsdataCaching::GsDataValue::GRADE_ALL
     flags = []
 

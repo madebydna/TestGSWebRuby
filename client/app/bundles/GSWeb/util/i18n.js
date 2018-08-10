@@ -11,29 +11,29 @@ import log from './log';
 const defaultLocale = 'en';
 let translationsHash;
 
-const translate = function(key, options) {
+const translate = function(key, options, dictionary = {}) {
   options = options || {};
   // defaults to empty string if no matching translation and no default provided
-  const defaultValue = options.default || '';
-  const parameters = options.parameters || '';
-  let translationValue = (translationsHash || {})[key];
+  const defaultValue = options.default || key;
+  const parameters = options.parameters || {};
+  dictionary = dictionary[currentLocale()];
+  let translationValue = (dictionary || translationsHash || {})[key];
   if (translationValue !== undefined) {
     translationValue = replaceParameters(translationValue, parameters);
     return translationValue;
   }
-  log(`Translation for ${key} not found. Defaulting to ${defaultValue}`);
   return defaultValue;
 };
 
+const translateWithDictionary = dictionary => (key, options) =>
+  translate(key, options, dictionary);
+
 const replaceParameters = function(tv, p) {
-  let tranHash = tv;
-  if (p != '') {
-    $.each(p, (k, v) => {
-      tranHash = tranHash.replace(`%{${k}}`, v);
-      tranHash = tranHash.replace(`{${k}}`, v);
-    });
-  }
-  return tranHash;
+  Object.entries(p).forEach(([k, v]) => {
+    tv = tv.replace(`%{${k}}`, v);
+    tv = tv.replace(`{${k}}`, v);
+  });
+  return tv;
 };
 
 // used in tests
@@ -102,5 +102,6 @@ export {
   capitalize,
   currentLocale,
   preserveLanguageParam,
-  initLanguageLinkListener
+  initLanguageLinkListener,
+  translateWithDictionary
 };

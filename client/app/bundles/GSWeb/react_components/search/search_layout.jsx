@@ -8,6 +8,7 @@ import Button from 'react_components/button';
 import { t } from 'util/i18n';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import CaptureOutsideClick from './capture_outside_click';
+import HelpTooltip from '../help_tooltip';
 
 function keepInViewport(
   ref,
@@ -202,7 +203,10 @@ class SearchLayout extends React.Component {
             </span>
           ) : null}
           <span className="menu-item list-map-toggle">
-            {this.props.listMapTableSelect}
+            <div className="ollie-map-container">
+              {this.props.listMapTableSelect}
+              <span className="ollie-help-icon"><HelpTooltip /></span>
+            </div>
           </span>
         </div>
       </div>
@@ -227,9 +231,12 @@ class SearchLayout extends React.Component {
                     active={isOpen}
                     onClick={toggle}
                     onKeyPress={toggle}
-                    className="js-filter-button"
+                    className={`js-filter-button${isOpen ? ' active' : ''}`}
                   />
                 </span>
+              </span>
+              <span className='ollie-help-icon'>
+                <HelpTooltip />
               </span>
             </div>
             {isOpen ? (
@@ -259,10 +266,15 @@ class SearchLayout extends React.Component {
                       <span className="label">{t('Sort by')}:</span>
                       {this.props.sortSelect}
                     </span>
+                    <span className="menu-item">
+                      {this.props.distanceFilter ? (
+                        <React.Fragment>
+                          <span className="label">{t('Distance')}:</span>
+                          {this.props.distanceFilter}
+                        </React.Fragment>
+                      ) : null}
+                    </span>
                   </div>
-                  {/* <div className="controls">
-                    <button onClick={close}>Done</button>
-                  </div> */}
                 </div>
               </CaptureOutsideClick>
             ) : null}

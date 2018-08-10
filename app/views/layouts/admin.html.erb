@@ -5,8 +5,8 @@
     <%= include_gon %>
     <%= yield :head %>
     <%= stylesheet_link_tag 'admin_tools'%>
-    <%= webpack_javascript_include_tag 'jquery' %>
-    <%= javascript_include_tag 'jquery.cookie' %>
+    <%= webpack_javascript_include_tag 'commons-blocking' %>
+    <%= webpack_javascript_include_tag 'commons-blocking-loader' %>
     <%= webpack_javascript_include_tag 'admin-tools' %>
   </head>
   <body class="open-sans">

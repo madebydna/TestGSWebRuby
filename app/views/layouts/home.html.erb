@@ -14,6 +14,7 @@
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
   <%= webpack_javascript_include_tag("commons-blocking", "data-turbolinks-track" => true) %>
+  <%= webpack_javascript_include_tag("commons-blocking-loader", "data-turbolinks-track" => true) %>
 
   <%= csrf_meta_tags %>
     <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>

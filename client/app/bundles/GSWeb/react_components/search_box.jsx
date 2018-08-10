@@ -15,7 +15,7 @@ import { getAddressPredictions } from 'api_clients/google_places';
 import { init as initGoogleMaps } from 'components/map/google_maps';
 import { href } from 'util/search';
 import { analyticsEvent } from 'util/page_analytics';
-import { t } from 'util/i18n';
+import { translateWithDictionary } from 'util/i18n';
 
 // Matches only 5 digits
 // Todo currently 3-4 schools would match this regex,
@@ -43,6 +43,17 @@ const matchesAddress = string =>
 const matchesAddressOrZip = string =>
   matchesAddress(string) || matchesZip(string);
 
+const t = translateWithDictionary({
+  // entries not needed if text matches key
+  en: {},
+  es: {
+    Schools: 'Escuelas',
+    Parenting: 'Crianza',
+    'City, zip, address or school':
+      'Ciudad, código postal, dirección o escuela',
+    'Articles, worksheets and more': 'Artículos, hoja de ejercicios y más'
+  }
+});
 const options = [
   {
     key: 'schools',
@@ -69,25 +80,34 @@ const newSearchResultsPageUrl = newParams => {
   return `/search/search.page?${stringify(params)}`;
 };
 
-const contentSearchResultsPageUrl = ({ q }) =>
-  `/gk/?s=${window.encodeURIComponent(q)}`;
+const contentSearchResultsPageUrl = ({ q }) => {
+  const { lang } = parse(window.location.search);
+  const params = {
+    s: q,
+    lang
+  };
+  return `/gk/?${stringify(params)}`;
+};
 
 export default class SearchBox extends React.Component {
   static propTypes = {
-    size: PropTypes.oneOf(validSizes)
+    size: PropTypes.oneOf(validSizes),
+    defaultType: PropTypes.string
   };
   static defaultProps = {
-    size: 2
+    size: 2,
+    defaultType: 'schools'
   };
 
   constructor(props) {
     super(props);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.resetSelectedListItem = this.resetSelectedListItem.bind(this);
+    this.resetSearchTerm = this.resetSearchTerm.bind(this);
     this.manageSelectedListItem = this.manageSelectedListItem.bind(this);
     this.state = {
       searchTerm: '',
-      type: 'schools',
+      type: props.defaultType,
       selectedListItem: -1,
       navigateToSelectedListItem: false,
       autoSuggestResults: {
@@ -212,24 +232,6 @@ export default class SearchBox extends React.Component {
     };
   }
 
-  /*
-  { city: [
-      {"id": null,
-      "city": "New Boston",
-      "state": "nh",
-      "type": "city",
-      "url": '/new-mexico/alamogordo//829-Alamogordo-SDA-School}
-    ],
-    school: [
-      {"id": null,
-      "school": "Alameda High School",
-      "city": "New Boston",
-      "state": "nh",
-      "type": "school"}
-    ],
-    zip....includes an additional 'value' key.
-  },
-  */
   autoSuggestQuery(q) {
     if (q.length >= 3) {
       if (matchesAddress(q)) {
@@ -271,6 +273,10 @@ export default class SearchBox extends React.Component {
     this.setState({ selectedListItem: -1 });
   }
 
+  resetSearchTerm() {
+    this.setState({ searchTerm: '' });
+  }
+
   selectionOutOfBounds(e) {
     return (
       (e.key === 'ArrowUp' && this.state.selectedListItem === -1) ||
@@ -292,7 +298,7 @@ export default class SearchBox extends React.Component {
     if (e.key === 'Enter') {
       if (this.state.selectedListItem > -1) {
         close();
-        const flattenedResultValues = Array.concat.apply(
+        const flattenedResultValues = Array.prototype.concat.apply(
           [],
           Object.values(this.state.autoSuggestResults).filter(array => !!array)
         );
@@ -340,6 +346,27 @@ export default class SearchBox extends React.Component {
     </div>
   );
 
+  resetSearchTermButton = close => (
+    <span
+      className="search-term-reset-button"
+      onClick={() => {
+        analyticsEvent(
+          'search',
+          'autocomplete-search-reset',
+          this.state.searchTerm
+        );
+        close();
+        this.resetSearchTerm();
+      }}
+    >
+      x
+    </span>
+  );
+
+  renderResetSearchTermButton(){
+    return this.state.searchTerm.length > 0
+  }
+
   searchResultsList = ({ close }) => (
     <SearchResultsList
       listGroups={this.state.autoSuggestResults}
@@ -382,6 +409,7 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
+            {this.renderResetSearchTermButton() && this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
@@ -430,6 +458,7 @@ export default class SearchBox extends React.Component {
                   </div>
                 )}
             </div>
+            {this.renderResetSearchTermButton() && this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}

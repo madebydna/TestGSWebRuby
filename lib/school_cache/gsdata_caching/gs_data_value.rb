@@ -115,7 +115,11 @@ class GsdataCaching::GsDataValue
       select do |dv|
         # data value selected if all its breakdowns
         # are contained within the given list
-        (breakdowns & Array.wrap(dv.breakdowns)) == dv.breakdowns
+        if dv.breakdowns.empty?
+          breakdowns.empty?
+        else
+          (breakdowns & Array.wrap(dv.breakdowns)) == dv.breakdowns
+        end
       end.extend(CollectionMethods)
     end
     alias_method :having_breakdown, :having_breakdown_in
@@ -453,6 +457,7 @@ class GsdataCaching::GsDataValue
     :academic_types,
     :grade,
     :proficiency_band_id,
+    :proficiency_band_name,
     :cohort_count,
     :school_value,
     :state_value,
@@ -552,9 +557,12 @@ class GsdataCaching::GsDataValue
       percentage: percentage,
       narrative: narrative,
       label: label,
-      flags: flags
+      flags: flags,
+      proficiency_band_name: proficiency_band_name
     }.tap do |hash|
       hash[:narrative] = narrative if narrative
+      hash[:proficiency_band_id] = proficiency_band_id if defined? proficiency_band_id
+      hash[:composite_of_pro_null] = composite_of_pro_null if defined? composite_of_pro_null
     end
   end
 

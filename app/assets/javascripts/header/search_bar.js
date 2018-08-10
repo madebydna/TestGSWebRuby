@@ -140,7 +140,7 @@ GS.nav.searchBar = GS.nav.searchBar || (function(){
       // If a query string has duplicate keys (i.e. lang=es&lang=en), a single key will be added to queryData with values
       // stored in an array. Otherwise the val is a string. The check below will return true if there are no duplicate
       // keys in the url and the val matches strictly, or if there are multiple keys and at least one of the vals matches.
-      return queryData[key] === val || (Array.isArray(queryData[key]) && $.inArray(val,queryData[key]));
+      return queryData[key] === val || (Array.isArray(queryData[key]) && ($.inArray(val,queryData[key]) > -1));
     } else {
       if (queryData.hasOwnProperty(key)) {
         return true;

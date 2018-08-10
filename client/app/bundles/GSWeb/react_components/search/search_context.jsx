@@ -141,6 +141,10 @@ class SearchProvider extends React.Component {
     );
   }
 
+  shouldIncludeRelevance() {
+    return !!this.props.q;
+  }
+
   updateSchools() {
     this.setState(
       {
@@ -198,6 +202,7 @@ class SearchProvider extends React.Component {
         s.highlighted = !s.highlighted;
         return s;
       }
+      s.highlighted = false;
       return s;
     });
     this.setState({ schools });
@@ -226,6 +231,7 @@ class SearchProvider extends React.Component {
           resultSummary: this.state.resultSummary,
           size: this.state.size,
           shouldIncludeDistance: this.shouldIncludeDistance(),
+          shouldIncludeRelevance: this.shouldIncludeRelevance(),
           toggleHighlight: this.toggleHighlight,
           lat: this.props.lat,
           lon: this.props.lon,
@@ -238,7 +244,8 @@ class SearchProvider extends React.Component {
             this.props.updateView,
             curry(this.trackParams)('View', this.props.view)
           ),
-          q: this.props.q
+          q: this.props.q,
+          locationLabel: this.props.locationLabel
         }}
       >
         <DistanceContext.Provider

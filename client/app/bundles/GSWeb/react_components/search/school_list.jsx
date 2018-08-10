@@ -1,10 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Ad from 'react_components/ad';
-import School from './school';
-import LoadingOverlay from './loading_overlay';
+import React from "react";
+import PropTypes from "prop-types";
+import Ad from "react_components/ad";
+import School from "./school";
+import LoadingOverlay from "./loading_overlay";
+import { SM } from "util/viewport";
 
-const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
+const SchoolList = ({
+  schools,
+  isLoading,
+  pagination,
+  toggleHighlight,
+  size
+}) => (
   <section className="school-list">
     {
       /* would prefer to just not render overlay if not showing it,
@@ -14,7 +21,7 @@ const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
         numItems={schools.length}
       />
     }
-    <ol className={isLoading ? 'loading' : ''}>
+    <ol className={isLoading ? "loading" : ""}>
       {schools.map((s, index) => (
         <React.Fragment key={s.state + s.id}>
           {index > 0 &&
@@ -27,14 +34,26 @@ const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
                 container={<li className="ad" />}
               />
             )}
-          <li
-            key={s.state + s.id}
-            onMouseEnter={() => toggleHighlight(s)}
-            onMouseLeave={() => toggleHighlight(s)}
-            className={classNameGenerator(s)}
-          >
-            <School {...s} />
-          </li>
+          {size > SM ? (
+            <li
+              key={s.state + s.id}
+              onMouseEnter={() => toggleHighlight(s)}
+              onMouseLeave={() => toggleHighlight(s)}
+              onTouchStart={() => toggleHighlight(s)}
+              className={classNameGenerator(s)}
+            >
+              <School {...s} />
+            </li> 
+          ) : (
+            <li
+              key={s.state + s.id}
+              onMouseEnter={() => toggleHighlight(s)}
+              onMouseLeave={() => toggleHighlight(s)}
+              className={classNameGenerator(s)}
+            >
+              <School {...s} />
+            </li>
+          )}
         </React.Fragment>
       ))}
       {pagination && <li>{pagination}</li>}
@@ -43,8 +62,8 @@ const SchoolList = ({ schools, isLoading, pagination, toggleHighlight }) => (
 );
 
 const classNameGenerator = function(s) {
-  const active = s.active ? 'active' : '';
-  const assigned = s.assigned ? ' assigned' : '';
+  const active = s.active ? "active" : "";
+  const assigned = s.assigned ? " assigned" : "";
   return active + assigned;
 };
 

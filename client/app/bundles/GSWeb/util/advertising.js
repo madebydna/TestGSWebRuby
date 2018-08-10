@@ -1,7 +1,3 @@
-import {
-  onAdFilled as onMobileOverlayAdFilled,
-  onAdNotFilled as onMobileOverlayAdNotFilled
-} from 'components/ads/mobile_overlay';
 import log from 'util/log';
 import { remove } from 'lodash';
 
@@ -175,6 +171,11 @@ const getSizeMappings = function() {
       .addSize([992, 300], [[728, 90], [970, 250]])
       .addSize([768, 120], [[728, 90]])
       .addSize([0, 0], [[320, 50], [300, 250]])
+      .build(),
+    prestitial: googletag
+      .sizeMapping()
+      .addSize([640, 480], [[640, 480]])
+      .addSize([0, 0], [[300, 250]])
       .build(),
     interstitial: googletag
       .sizeMapping()

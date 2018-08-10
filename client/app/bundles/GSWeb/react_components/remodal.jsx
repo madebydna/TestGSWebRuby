@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withAnalyticsTracking from 'util/with_analytics_tracking';
+import '../vendor/remodal';
 
 class Remodal extends React.Component {
   static propTypes = {

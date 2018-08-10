@@ -1,19 +1,11 @@
 ---
 en:
   javascript:
-    City, zip, address or school: City, zip, address or school
-    Articles, worksheets and more: Articles, worksheets and more
+    assigned_school: Assigned school
+    homes_for_sale: Homes for sale
     Mile: Mile
     Miles: Miles
-    Parenting: Parenting
-    Search all results for: Search all results for {searchTerm}
-    Addresses: Addresses
-    Zipcodes: Zipcodes
-    Districts: Districts
-    Cities: Cities
-    Schools: Schools
-    Schools in: Schools in {location}
-    Schools near: Schools near {location}
+    Relevance: Relevance
     Suggestions: Suggestions
     no_results_suggestions:
       - Make sure all words are spelled correctly.
@@ -42,8 +34,10 @@ en:
       <li>ratings of 8-10 are “above average”</li></ul></p>
     no_rating_description_html: >
       <p style="text-align: left;">
-      GreatSchools’ Summary Rating provides an overall snapshot of school quality. 
+      GreatSchools’ Summary Rating provides an overall snapshot of school quality.
       <br/>For some schools, we do not have enough data from state or national education agencies to provide a rating.</p>
+    assigned_description_html: >
+      It looks like this is your assigned <span style='text-transform: lowercase;' class="open-sans_semibold">{school_level} school</span>, but we recommend double-checking with the district or school.
     advertisement: Advertisement
     assigned: ASSIGNED
     PreK: PreK
@@ -99,6 +93,17 @@ en:
     search_form:
       long_placeholder: Find a great school
       short_placeholder: City, zip, address or school
+    search_help:
+      help: Help
+      greatschool_rating: "GreatSchools' Summary Rating provides an overall snapshot of school quality. Ratings follow a 1-10 scale:"
+      rating:
+        below_average: "Below \n average"
+        average: Average
+        above_average: "Above \n average"
+      currently_rated: "Currently unrated schools:"
+      currently_rated_info: "For some schools, we do not have enough data from state or national education agencies to provide a rating."
+      search_suggestions: "Help us improve the new search"
+      send_feedback: Send Feedback
     saved_search_validation_error: Please name your search
     strong_fit: 'Strong fit'
     test_scores:

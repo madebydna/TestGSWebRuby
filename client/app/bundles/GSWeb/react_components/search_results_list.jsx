@@ -1,7 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { href } from 'util/search';
-import { t, capitalize } from 'util/i18n';
+import { translateWithDictionary, capitalize } from 'util/i18n';
+
+const t = translateWithDictionary({
+  en: {
+    'Search all results for': 'Search all results for {searchTerm}',
+    'Schools in': 'Schools in {location}',
+    'Schools near': 'Schools near {location}'
+  },
+  es: {
+    'Search all results for': 'Buscar todos los resultados para {searchTerm}',
+    Addresses: 'Direcciones',
+    Zipcodes: 'Códigos ZIP',
+    Districts: 'Distritos',
+    Cities: 'Ciudades',
+    Schools: 'Escuelas',
+    'Schools in': 'Escuelas en {location}',
+    'Schools near': 'Escuelas cerca de {location}'
+  }
+});
 
 const boldSearchTerms = (string, substring) => {
   const tokens = substring.trim().split(/\s+/);
@@ -95,7 +113,10 @@ const SearchResultsList = ({
   const allResultsListItem = () => (
     <li
       className="search-results-list-item"
-      onClick={() => onSelect({ value: searchTerm })}
+      onClick={() => {
+        analyticsEvent('autosuggest', 'search all results', searchTerm);
+        onSelect({ value: searchTerm });
+      }}
     >
       {t('Search all results for', { parameters: { searchTerm } })}
     </li>

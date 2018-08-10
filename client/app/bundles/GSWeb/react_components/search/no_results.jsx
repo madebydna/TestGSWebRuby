@@ -17,7 +17,7 @@ const NoResults = ({ resultSummary }) => (
         <hr />
         <p>Suggestions:</p>
         <ul>
-          {t('no_results_suggestions').map(suggestion => <li>{suggestion}</li>)}
+          {t('no_results_suggestions').map(suggestion => <li key={suggestion}>{suggestion}</li>)}
         </ul>
       </div>
     </div>

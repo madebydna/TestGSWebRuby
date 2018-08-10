@@ -96,6 +96,7 @@ module SearchControllerConcerns
   end
 
   def decorate_schools(schools)
+    schools = assigned_schools + schools if extras.include?('assigned')
     extras.each do |extra|
       method = "add_#{extra}"
       schools = send(method, schools) if respond_to?(method, true)
@@ -159,8 +160,16 @@ module SearchControllerConcerns
     schools
   end
 
+  def assigned_schools
+    @_assigned_schools ||=
+      if location_given? && street_address?
+        attendance_zone_query.search_all_levels
+      else
+        []
+      end
+  end
+
   def add_assigned(schools)
-    assigned_schools = location_given? && street_address? ? attendance_zone_query.search_all_levels : []
     schools.each do | sr |
       assigned_schools.each do | as |
         sr.assigned ||= sr&.id == as&.id
@@ -169,4 +178,5 @@ module SearchControllerConcerns
 
     schools
   end
+
 end

@@ -14,6 +14,11 @@ module Feeds
           'test_scores' => 'local-gs-test-feed',
           'test_subgroup' => 'local-gs-test-subgroup-feed',
           'test_rating' => 'local-gs-test-rating-feed',
+          'subrating' => 'gs-subrating-feed',
+          'old_test_gsdata' => 'local-gs-test-feed',
+          'old_test_subgroup_gsdata' => 'local-gs-test-subgroup-feed',
+          'new_test_gsdata' => 'new-local-gs-test-feed',
+          'new_test_subgroup_gsdata' => 'new-local-gs-test-subgroup-feed',
           'official_overall' => 'local-gs-official-overall-rating-feed',
           'directory_feed' => 'local-greatschools-feed',
           'google_feed' => 'local-google-feed',
@@ -21,6 +26,10 @@ module Feeds
           'proficiency_band' => 'gs-proficiency-band'
 
       }
+
+      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata)
+
+      VALID_FEED_FORMATS = %w(xml)
 
       RATINGS_ID_RATING_FEED_MAPPING = {
           'test_rating' => 164,
@@ -41,7 +50,10 @@ module Feeds
           'directory_feed' => 'https://www.greatschools.org/feeds/local-greatschools.xsd',
           'google_feed' => 'https://www.gstatic.com/localfeed/local_feed.xsd',
           'city' => 'https://www.greatschools.org/feeds/greatschools-city2.xsd',
-          'proficiency_band' => 'https://www.greatschools.org/feeds/gs-proficiency-band.xsd'
+          'proficiency_band' => 'https://www.greatschools.org/feeds/gs-proficiency-band.xsd',
+          'feed_test_scores_gsdata' => 'https://www.greatschools.org/feeds/gs-test.xsd',
+          'feed_test_scores_subgroup_gsdata' => 'https://www.greatschools.org/feeds/gs-test-subgroups.xsd',
+          'subrating' => 'https://www.greatschools.org/feeds/gs-subrating.xsd',
       }
       FEED_TO_ROOT_ELEMENT_MAPPING = {
           'test_scores' => 'gs-test-feed',
@@ -52,6 +64,9 @@ module Feeds
           'google_feed' => 'listings',
           'city' => 'greatschools-city-feed',
           'proficiency_band' => 'proficiency-band-feed',
+          'feed_test_scores_gsdata' => 'gs-test-gsdata',
+          'feed_test_scores_subgroups_gsdata' => 'gs-test-subgroups-gsdata',
+          'subrating' => 'gs-subrating-feed'
       }
 
       PROFICIENT_AND_ABOVE_BAND = 'proficient and above'
@@ -255,7 +270,7 @@ module Feeds
       ].freeze
 
       def all_feeds
-        %w(test_scores test_subgroup test_rating official_overall directory_feed city proficiency_band)
+        %w(test_scores test_subgroup test_rating official_overall directory_feed city proficiency_band feed_test_scores_gsdata feed_test_scores_subgroup_gsdata)
       end
 
       def all_states

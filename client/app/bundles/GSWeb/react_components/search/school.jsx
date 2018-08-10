@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
+import { renderAssignedTooltip } from 'react_components/search/tooltips';
 import unratedSchoolIcon from 'school_profiles/owl.png';
 import {
   getHomesForSaleHref,
@@ -42,6 +43,29 @@ const renderRating = (rating, ratingScale) => {
   );
 };
 
+const levelCodeLong = (lc) => {
+  if (lc == 'e') return 'Elementary';
+  if (lc == 'm') return 'Middle';
+  if (lc == 'h') return 'High';
+  if (lc == 'p') return 'PreK';
+}
+
+const renderAssigned = (lc) => {
+  let school_level = t(levelCodeLong(lc));
+  const content = (
+      <div
+          dangerouslySetInnerHTML={{
+            __html: t('assigned_description_html', { parameters: { school_level } })
+          }}
+      />
+  );
+  return (
+      <ModalTooltip content={content}>
+         <span className="info-circle icon-info" />
+      </ModalTooltip>
+  );
+};
+
 const School = ({
   id,
   state,
@@ -52,6 +76,7 @@ const School = ({
   enrollment,
   rating,
   ratingScale,
+  levelCode,
   active,
   distance,
   assigned,
@@ -67,7 +92,7 @@ const School = ({
 
   return (
     <React.Fragment key={state + id}>
-      {assigned && <div className="assigned-text">{t('assigned')}</div>}
+      {assigned && <div>{t('assigned_school') } {renderAssignedTooltip(levelCode)}</div>}
       <span>{renderRating(rating, ratingScale)}</span>
       <span>
         <a href={links.profile} className="name" target="_blank">
@@ -86,7 +111,7 @@ const School = ({
             </span>
           )}
         </div>
-        {distance && <div>Distance: {distance} miles</div>}
+        {distance !== undefined ? <div>Distance: {distance} miles</div> : null}
         {homesForSaleHref && (
           <div>
             <span key="homes-for-sale" className="icon icon-house" />
@@ -95,7 +120,7 @@ const School = ({
               target="_blank"
               className="homes-for-sale-link"
             >
-              &nbsp; Homes for sale
+              &nbsp; {t('homes_for_sale')}
             </a>
           </div>
         )}
