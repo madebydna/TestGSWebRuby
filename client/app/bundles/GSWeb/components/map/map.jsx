@@ -6,26 +6,22 @@ import { once } from 'lodash';
 export default class Map extends React.Component {
   static propTypes = {
     googleMaps: PropTypes.object.isRequired,
-    markers: PropTypes.arrayOf(PropTypes.element),
-    polygons: PropTypes.arrayOf(PropTypes.element),
     hidden: PropTypes.bool,
     lat: PropTypes.number,
     lon: PropTypes.number,
-    markerId: PropTypes.string
+    markerDigest: PropTypes.string
   };
 
   static defaultProps = {
-    markers: [],
-    polygons: [],
     hidden: false,
     lat: null,
     lon: null,
-    markerId: ''
+    markerDigest: ''
   };
 
   constructor(props) {
     super(props);
-    this.state = { mapUpdated: true };
+    this.state = { markersUpdated: true };
     this.openInfoWindow = this.openInfoWindow.bind(this);
     this.fitBounds = this.fitBounds.bind(this);
   }
@@ -111,14 +107,11 @@ export default class Map extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.markers.length == 0 && this.props.markers.length > 0) {
-      this.onResize();
-    }
     if (prevProps.hidden && !this.props.hidden) {
       this.onResize();
     }
-    if (this.props.markerId !== prevProps.markerId) {
-      this.setState({ mapUpdated: true});
+    if (this.props.markerDigest !== prevProps.markerDigest) {
+      this.setState({ markersUpdated: true});
     }
   }
 
@@ -153,10 +146,10 @@ export default class Map extends React.Component {
         new this.props.googleMaps.LatLng(m.props.lat, m.props.lon)
       );
     });
-    if (this.state.mapUpdated) {
+    if (this.state.markersUpdated) {
       this.map.fitBounds(this.bounds);
       this.setState({
-        mapUpdated: false,
+        markersUpdated: false,
       })
     }
     this.bounds = new this.props.googleMaps.LatLngBounds();
