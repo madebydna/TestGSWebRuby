@@ -152,7 +152,12 @@ module SearchRequestParams
   end
 
   def zip_code_search?
-    /^\d{5}+$/.match?(q)
+    params[:locationType].downcase == 'zip'
+  end
+
+  def zip_code
+    # Stopgap until we pass the zip explicitly
+    params[:locationLabel].match(/[0-9]+/)
   end
 
   def search_type
