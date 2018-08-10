@@ -138,7 +138,8 @@ class NewSearchController < ApplicationController
   def set_search_meta_tags
     set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url? && page_of_results.present?
     if %i[zip_code city_browse district_browse].include?(search_type)
-      send(:set_meta_tags, send("#{search_type}_meta_tag_hash".to_sym))
+      complete_tags = send("#{search_type}_meta_tag_hash".to_sym).merge({prev: prev_page, next: next_page})
+      send(:set_meta_tags, complete_tags)
     end
   end
 
@@ -158,9 +159,7 @@ class NewSearchController < ApplicationController
           city: gs_legacy_url_encode(city),
           state: gs_legacy_url_encode(States.state_name(state))
         )
-      ),
-      prev: (prev_page),
-      next: (next_page)
+      )
     }
   end
 
@@ -174,18 +173,14 @@ class NewSearchController < ApplicationController
           city: gs_legacy_url_encode(city),
           state: gs_legacy_url_encode(States.state_name(state))
         )
-      ),
-      prev: (prev_page),
-      next: (next_page)
+      )
     }
   end
 
   def zip_code_meta_tag_hash
     {
       title: "#{zip_code_search_title} | GreatSchools",
-      description: "Ratings and parent reviews for all elementary, middle and high schools in #{zip_code}, #{state.upcase}",
-      prev: (prev_page),
-      next: (next_page)
+      description: "Ratings and parent reviews for all elementary, middle and high schools in #{zip_code}, #{state.upcase}"
     }
   end
 
