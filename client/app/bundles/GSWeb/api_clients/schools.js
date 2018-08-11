@@ -33,7 +33,8 @@ export function findByLatLon(lat, lon, options) {
     data: Object.assign(
       {
         lat,
-        lon
+        lon,
+        version: 1
       },
       options
     ),
@@ -50,7 +51,8 @@ export function findNearLatLon(lat, lon, radius, options) {
       {
         lat,
         lon,
-        radius
+        radius,
+        version: 1
       },
       options
     ),
