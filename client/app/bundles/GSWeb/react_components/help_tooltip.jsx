@@ -15,7 +15,6 @@ const content = (close) => (
       onClick={close}
       onKeyPress={close}
       role="button"
-      aria-label={t('Close filters')}
     />
     <h4>{t('search_help.help')}</h4>
     <p>{t('search_help.greatschool_rating')}
@@ -35,7 +34,7 @@ const content = (close) => (
       </div>
       <div className='block-container'>
         <div className='rating-scale'>
-            {renderHelpCircle([7, 8, 9, 10])}
+          {renderHelpCircle([7, 8, 9, 10])}
         </div>
         <p className='word-scale'>{t('search_help.rating.above_average')}</p>
       </div>
@@ -47,7 +46,7 @@ const content = (close) => (
       {t('search_help.currently_rated_info')}
     </p>
     <hr />
-    <p><strong>{t('search_help.search_suggestions')}</strong>
+    <p><span className="bold">{t('search_help.search_suggestions')}</span>
       <br />
     </p>
     <a href={Links.zendesk} target='_blank'>{t('search_help.send_feedback')}</a>
@@ -64,7 +63,7 @@ const HelpTooltip = () => (
             alt="owl_icon"
             onClick={toggle}
           />
-          <div className= {isOpen ? "help-overlay" : null}>
+          <div onClick={isOpen ? close : null} className= {isOpen ? "help-overlay" : null}>
             {isOpen ? content(close) : null}
           </div>
         </React.Fragment>

@@ -536,7 +536,16 @@ body {
     z-index: 5;
     margin-top: 0;
     right: 0;
+    h4 { 
+      font-size: 17px;
+      font-weight: bold;
+    }
+    p, .word-scale { font-size: 14px;}
   }
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .help-overlay{
