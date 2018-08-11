@@ -4,6 +4,7 @@ import { t } from 'util/i18n';
 import OpenableCloseable from './openable_closeable';
 import Links from '../components/links'
 import CaptureOutsideClick from './search/capture_outside_click';
+import withAnalyticsTracking from "../util/with_analytics_tracking";
 
 const renderHelpCircle = (numArr) => (
   numArr.map(num => <div className={`help-circle circle-rating--${num}`}>{num}</div>)

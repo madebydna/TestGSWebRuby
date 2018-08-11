@@ -474,6 +474,9 @@ body {
 
 .rating-help-container {
   $circle-radius: 25px;
+  $font-size: 15px;
+  $font-size-after-bp: 13px;
+  $circle-border: 2px solid #ffffff;
   margin-top: 45px;
   text-align: left;
   position: absolute;
@@ -489,8 +492,10 @@ body {
     width: $circle-radius;
     height: $circle-radius;
     border-radius: 50%;
+    border: $circle-border;
     float: left;
     margin-right: 5px;
+    margin-top: -3px;
   }
   .rating-scale{
     display: flex;
@@ -499,9 +504,9 @@ body {
       color: white;
       width: $circle-radius;
       height: $circle-radius;
-      font-size: 15px;
+      font-size: $font-size;
       border-radius: 50%;
-      border: 2px solid #ffffff;
+      border: $circle-border;
       margin-left: -7px;
     }
   }
@@ -515,7 +520,7 @@ body {
       }
       .word-scale{
         text-align: center;
-        font-size: 16px;
+        font-size: $font-size;
       }
     }
   }
@@ -529,19 +534,25 @@ body {
   }
   @include media-breakpoint-down(sm) {
     /* Resetting the modal when it reaches the breakpoint */
-    position: absolute;
     height: auto;
-    width: 100vw;
-    top: 15%;
+    width: 90vw;
+    margin: 0 auto;
+    top: 8%;
     z-index: 6;
-    margin-top: 0;
     right: 0;
-    z-index: 3;
+    left: 0;
     h4 { 
-      font-size: 17px;
+      font-size: $font-size;
       font-weight: bold;
     }
-    p, .word-scale { font-size: 14px;}
+    .ratings-scale-container {
+      .block-container{
+        .word-scale{
+          font-size: $font-size-after-bp;
+        }
+      }
+    }
+    p { font-size: $font-size-after-bp; }
   }
 }
 
@@ -555,8 +566,8 @@ body {
     z-index: 5;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
+    right:0;
+    bottom:0;
     background-color: rgba(0,0,0,0.8);
   }
 }
