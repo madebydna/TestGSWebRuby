@@ -1,11 +1,18 @@
 import React from 'react';
 import ollie from 'school_profiles/owl_tutorial_prompt.png';
 import { t } from 'util/i18n';
-import ModalTooltip from './modal_tooltip';
+import OpenableCloseable from './openable_closeable';
 import Links from '../components/links'
 
-const content = (
+const content = (close) => (
   <div className='rating-help-container'>
+    <span
+      className="icon-close btn-close"
+      onClick={close}
+      onKeyPress={close}
+      role="button"
+      aria-label={t('Close filters')}
+    />
     <h4>{t('search_help.help')}</h4>
     <p>{t('search_help.greatschool_rating')}
     </p>
@@ -51,9 +58,21 @@ const content = (
 );
 
 const HelpTooltip = () => (
-    <ModalTooltip content={content}>
-      <img src={ollie} className='owly_size' alt='owl_icon' />
-    </ModalTooltip>
-)
+  <OpenableCloseable>
+    {(isOpen, { open, close, toggle }) => (
+        <React.Fragment>
+          <img
+            src={ollie}
+            className="owly_size"
+            alt="owl_icon"
+            onClick={toggle}
+          />
+          <div className= {isOpen ? "help-overlay" : ""}>
+            {isOpen ? content(close) : null}
+          </div>
+        </React.Fragment>
+    )}
+  </OpenableCloseable>
+);
 
 export default HelpTooltip;

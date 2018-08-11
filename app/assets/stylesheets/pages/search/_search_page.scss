@@ -218,7 +218,7 @@ body {
     }
 
     .list-map-toggle {
-      .ollie-map-container{
+      > div {
         display: flex;
         margin-right: 25px;
       }
@@ -472,56 +472,88 @@ body {
   }
 }
 
-.remodal-content{
-  .rating-help-container {
-    margin-top: 15px;
-    text-align: left;
-    .circle-ur {
-      width: 20px;
-      height: 20px;
+.rating-help-container {
+  $circle-radius: 25px;
+  margin-top: 45px;
+  text-align: left;
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: $form-field-border-radius;;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.09);
+  .circle-ur {
+    width: $circle-radius;
+    height: $circle-radius;
+    border-radius: 50%;
+    float: left;
+    margin-right: 5px;
+  }
+  .rating-scale{
+    display: flex;
+    .help-circle {
+      text-align: center;
+      color: white;
+      width: $circle-radius;
+      height: $circle-radius;
+      font-size: 15px;
       border-radius: 50%;
-      float: left;
-      margin-right: 5px;
+      border: 2px solid #ffffff;
+      margin-left: -7px;
     }
-    .rating-scale{
-      display: flex;
-      .help-circle {
+  }
+  .ratings-scale-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 300px;
+    .block-container{
+      .rating-scale{
+        justify-content: center;
+      }
+      .word-scale{
         text-align: center;
-        color: white;
-        width: 25px;
-        height: 25px;
-        font-size: 15px;
-        border-radius: 50%;
-        border: 2px solid #ffffff;
-        margin-left: -7px;
+        font-size: 16px;
       }
     }
-    .ratings-scale-container {
-      display: flex;
-      justify-content: space-between;
-      max-width: 300px;
-      .block-container{
-        .rating-scale{
-          justify-content: center;
-        }
-        .word-scale{
-          text-align: center;
-          font-size: 16px;
-        }
-      }
-    }
-    h4{ font-size: 19px; }
-    a { color: $search-primary-blue-on-white; }
+  }
+  h4{ font-size: 19px; }
+  a { color: $search-primary-blue-on-white; }
+  .btn-close {
+    float: right;
+    margin-top: 12px;
+    margin-right: 10px;
+  }
+  @include media-breakpoint-down(sm) {
+    position: absolute;
+    height: auto;
+    width: 100vw;
+    top: 15%;
+    z-index: 5;
+    margin-top: 0;
+    right: 0;
+  }
+}
+
+.help-overlay{
+  @include media-breakpoint-down(sm) {
+    position: fixed;
+    z-index: 5;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
   }
 }
 
 .ollie-help-icon{
   display: inline-block;
   margin-left: 15px;
-  @media only screen and (max-width: 991px) {
+  position: relative;
+  @include media-breakpoint-down(sm) {
     display: inline-block;
     float: right;
-    margin-right: 15px;
-
   }
 }
