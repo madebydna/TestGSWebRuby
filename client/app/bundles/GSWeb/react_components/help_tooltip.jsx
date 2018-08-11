@@ -4,6 +4,10 @@ import { t } from 'util/i18n';
 import OpenableCloseable from './openable_closeable';
 import Links from '../components/links'
 
+const renderHelpCircle = (numArr) => (
+  numArr.map(num => <div className={`help-circle circle-rating--${num}`}>{num}</div>)
+)
+
 const content = (close) => (
   <div className='rating-help-container'>
     <span
@@ -19,33 +23,26 @@ const content = (close) => (
     <div className='ratings-scale-container'>
       <div className='block-container'>
         <div className='rating-scale'>
-          <div className='help-circle circle-rating--1'>1</div>
-          <div className='help-circle circle-rating--2'>2</div>
-          <div className='help-circle circle-rating--3'>3</div>
-          <div className='help-circle circle-rating--4'>4</div>
+          {renderHelpCircle([1, 2, 3, 4])}
         </div>
         <p className='word-scale'>{t('search_help.rating.below_average')}</p>
       </div>
       <div className='block-container'>
         <div className='rating-scale'>
-          <div className='help-circle circle-rating--5'>5</div>
-          <div className='help-circle circle-rating--6'>6</div>
+          {renderHelpCircle([5, 6])}
         </div>
         <p className='word-scale'>{t('search_help.rating.average')}</p>
       </div>
       <div className='block-container'>
         <div className='rating-scale'>
-          <div className='help-circle circle-rating--7'>7</div>
-          <div className='help-circle circle-rating--8'>8</div>
-          <div className='help-circle circle-rating--9'>9</div>
-          <div className='help-circle circle-rating--10'>10</div>
+            {renderHelpCircle([7, 8, 9, 10])}
         </div>
         <p className='word-scale'>{t('search_help.rating.above_average')}</p>
       </div>
     </div>
     <hr />
     <p>
-      <div className='circle-ur circle-rating--gray unrated'/>
+      <div className='circle-nr circle-rating--gray unrated'/>
       {t('search_help.currently_rated')} <br/> <br/>
       {t('search_help.currently_rated_info')}
     </p>
@@ -67,7 +64,7 @@ const HelpTooltip = () => (
             alt="owl_icon"
             onClick={toggle}
           />
-          <div className= {isOpen ? "help-overlay" : ""}>
+          <div className= {isOpen ? "help-overlay" : null}>
             {isOpen ? content(close) : null}
           </div>
         </React.Fragment>

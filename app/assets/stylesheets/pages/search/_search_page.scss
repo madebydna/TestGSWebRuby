@@ -484,7 +484,8 @@ body {
   padding: 20px;
   border-radius: $form-field-border-radius;;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.09);
-  .circle-ur {
+  cursor: default;
+  .circle-nr {
     width: $circle-radius;
     height: $circle-radius;
     border-radius: 50%;
@@ -524,8 +525,10 @@ body {
     float: right;
     margin-top: 12px;
     margin-right: 10px;
+    cursor: pointer;
   }
   @include media-breakpoint-down(sm) {
+    /* Resetting the modal when it reaches the breakpoint */
     position: absolute;
     height: auto;
     width: 100vw;
