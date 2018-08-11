@@ -3,6 +3,7 @@ import ollie from 'school_profiles/owl_tutorial_prompt.png';
 import { t } from 'util/i18n';
 import OpenableCloseable from './openable_closeable';
 import Links from '../components/links'
+import CaptureOutsideClick from './search/capture_outside_click';
 
 const renderHelpCircle = (numArr) => (
   numArr.map(num => <div className={`help-circle circle-rating--${num}`}>{num}</div>)
@@ -63,8 +64,12 @@ const HelpTooltip = () => (
             alt="owl_icon"
             onClick={toggle}
           />
-          <div onClick={isOpen ? close : null} className= {isOpen ? "help-overlay" : null}>
-            {isOpen ? content(close) : null}
+          <div className= {isOpen ? "help-overlay" : null}>
+            <CaptureOutsideClick callback={close}>
+              <div>
+                {isOpen ? content(close) : null}
+              </div>
+            </CaptureOutsideClick>
           </div>
         </React.Fragment>
     )}
