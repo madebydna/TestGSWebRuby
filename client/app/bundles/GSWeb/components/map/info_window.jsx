@@ -24,12 +24,10 @@ export default function createInfoWindow(entity) {
   };
 
   const levelMarkup = entity => {
-    let schoolLevelsLength = schoolLevels.length;
-    return schoolLevels(entity)
-      .map(([level, value], idx) => {
-        return idx < schoolLevelsLength ? (<span key={`${level}-${value}`}>{level} ({value}), </span>)
-        : (<span key={`${level}-${value}`}>{level} ({value})</span>)
-      })
+    let schoolLevelsArray = schoolLevels(entity);
+    return schoolLevelsArray
+      .map(([level, value]) => (<span key={`${level}-${value}`}>{level} ({value})</span>))
+      .reduce((list, current) => [list, ', ', current]);
   }
 
   const ratingDiv = entity => {
