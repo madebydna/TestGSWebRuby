@@ -58,11 +58,9 @@ const content = (close) => (
 const HelpTooltip = () => (
   <OpenableCloseable>
     {(isOpen, { open, close, toggle }) => {
-      const closeModal = (e) => {
-        if (e.target.classList.contains("help-overlay")) {
-          close();
-        }
-      }
+      const closeModal = (e) => (
+        e.target.classList.contains("help-overlay") ? close() : null
+      )
       return (<React.Fragment>
         <img
           src={ollie}
