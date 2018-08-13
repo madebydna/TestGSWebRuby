@@ -3,8 +3,7 @@ import ollie from 'school_profiles/owl_tutorial_prompt.png';
 import { t } from 'util/i18n';
 import OpenableCloseable from './openable_closeable';
 import Links from '../components/links'
-import CaptureOutsideClick from './search/capture_outside_click';
-import withAnalyticsTracking from "util/with_analytics_tracking";
+import { analyticsEvent } from "util/page_analytics";
 
 const renderHelpCircle = (numArr) => (
   numArr.map(num => <div className={`help-circle circle-rating--${num}`}>{num}</div>)
@@ -60,12 +59,16 @@ const HelpTooltip = () => (
       const closeModal = (e) => (
         e.target.classList.contains("help-overlay") ? close() : null
       )
+      const handleToggle = (e) => {
+        analyticsEvent('search', 'help', `main-help` )
+        toggle();
+      }
       return (<React.Fragment>
         <img
           src={ollie}
           className="owly_size"
           alt="owl_icon"
-          onClick={toggle}
+          onClick={handleToggle}
         />
         <div onClick={closeModal} className= {isOpen ? "help-overlay" : null}>
           {isOpen ? content(close) : null}
