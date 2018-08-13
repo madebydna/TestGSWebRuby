@@ -60,7 +60,7 @@ const HelpTooltip = () => (
         e.target.classList.contains("help-overlay") ? close() : null
       )
       const handleToggle = (e) => {
-        analyticsEvent('search', 'help', `main-help` )
+        analyticsEvent('search', 'help', `main-help`)
         toggle();
       }
       return (<React.Fragment>
