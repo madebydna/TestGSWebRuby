@@ -9,6 +9,10 @@ class District < ActiveRecord::Base
   def self.find_by_state_and_name(state, name)
     District.on_db(state).where(name: name).active.first rescue nil
   end
+  
+  def city_record
+    City.get_city_by_name_and_state(city, state).first
+  end
 
   def self.find_by_state_and_ids(state, ids = [])
     District.on_db(state.downcase.to_sym).

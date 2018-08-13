@@ -25,7 +25,6 @@ class NewSearchController < ApplicationController
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
       props[:breadcrumbs] = should_include_breadcrumbs? ? search_breadcrumbs : []
     end
-
     set_search_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
@@ -100,9 +99,18 @@ class NewSearchController < ApplicationController
     elsif state && district
       unless district_record
         if city_record
-          redirect_to city_path(city: city_param, state: state_param) && return
+          redirect_to city_path(city: city_param, state: state_param)
         else
-          redirect_to(state_path(States.state_path(state))) && return
+          redirect_to(state_path(States.state_path(state)))
+        end
+      end
+      unless city_record
+        # If the city name in the district record doesn't match one in city table, you'll get an infinite redirect.
+        # This checks that a record can be found in the city table before trying to use it for the redirect.
+        if district_record.city_record
+          redirect_to search_district_browse_path(States.state_path(state), city: gs_legacy_url_encode(district_record.city), district_name: district_param)
+        else
+          redirect_to(state_path(States.state_path(state)))
         end
       end
     elsif state && city
@@ -112,6 +120,7 @@ class NewSearchController < ApplicationController
     else
       redirect_to home_path
     end
+
   end
 
   # extra items returned even if not requested (besides school fields etc)
