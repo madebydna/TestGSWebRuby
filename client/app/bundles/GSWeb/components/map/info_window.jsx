@@ -24,7 +24,6 @@ export default function createInfoWindow(entity) {
   };
 
   const levelMarkup = entity => {
-    let schoolLevelsArray = schoolLevels(entity);
     return schoolLevelsArray
       .map(([level, value]) => (<span key={`${level}-${value}`}>{level} ({value})</span>))
       .reduce((list, current) => [list, ', ', current]);
