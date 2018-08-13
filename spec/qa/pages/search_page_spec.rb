@@ -56,3 +56,41 @@ describe 'data consistency', type: :feature, remote: true, safe_for_prod: true d
     expect(rating).to eq(profile_rating)
   end
 end
+
+describe 'Sorting' do
+  def visit_page(url)
+    visit(url)
+    SearchPage.new
+  end
+
+  subject(:page_object) { visit_page('/california/alameda/schools') }
+  it { is_expected.to have_sort_dropdown }
+
+  describe 'default options' do
+    subject(:page_object) do
+      visit_page('/california/alameda/schools').sort_dropdown
+    end
+    ['School name', 'GreatSchools Rating'].each do |option|
+      it { is_expected.to have_css('option', text: option)}
+    end
+  end
+
+  describe 'by distance options' do
+    subject(:page_object) do
+      visit_page('/search/search.page?lat=37.770&lon=-122.276')
+        .sort_dropdown
+    end
+    ['School name', 'GreatSchools Rating', 'Distance'].each do |option|
+      it { is_expected.to have_css('option', text: option)}
+    end
+  end
+
+  describe 'by name options' do
+    subject(:page_object) do
+      visit_page('/search/search.page?q=lowell').sort_dropdown
+    end
+    ['School name', 'GreatSchools Rating', 'Relevance'].each do |option|
+      it { is_expected.to have_css('option', text: option)}
+    end
+  end
+end

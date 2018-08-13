@@ -5,6 +5,7 @@ class SearchPage < SitePrism::Page
 
   set_url_matcher /search\/search\.page/
 
+  element :sort_dropdown, '.menu-item > select'
 
   sections :school_rows, '.school-table tbody tr' do
     element :anchors, 'a'
