@@ -536,11 +536,11 @@ body {
     /* Resetting the modal when it reaches the breakpoint */
     height: auto;
     width: 90vw;
-    margin: auto;
-    top: 50px;
     z-index: 6;
-    right: 0;
-    left: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     h4 { 
       font-size: $font-size;
       font-weight: bold;
