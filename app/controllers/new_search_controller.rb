@@ -19,6 +19,7 @@ class NewSearchController < ApplicationController
         props['lat'] = lat
         props['lon'] = lon
       end
+      props[:sort] = 'relevance' if q
       props.merge!(Api::CitySerializer.new(city_record).to_hash) if city_record
       props[:district] = district_record.name if district_record
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
