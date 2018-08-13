@@ -91,7 +91,7 @@ module SearchRequestParams
   end
 
   def city
-    params[:city]&.gsub('-', ' ')&.gs_capitalize_words
+    params[:city]&.gsub('-', ' ')&.gsub('_', '-')&.gs_capitalize_words
   end
 
   def county_object
@@ -128,7 +128,7 @@ module SearchRequestParams
   end
 
   def district
-    district_param&.gsub('-', ' ')&.gs_capitalize_words
+    district_param&.gsub('-', ' ')&.gsub('_', '-')&.gs_capitalize_words
   end
 
   def district_record
