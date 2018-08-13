@@ -4,7 +4,7 @@ import { t } from 'util/i18n';
 import OpenableCloseable from './openable_closeable';
 import Links from '../components/links'
 import CaptureOutsideClick from './search/capture_outside_click';
-import withAnalyticsTracking from "../util/with_analytics_tracking";
+import withAnalyticsTracking from "util/with_analytics_tracking";
 
 const renderHelpCircle = (numArr) => (
   numArr.map(num => <div className={`help-circle circle-rating--${num}`}>{num}</div>)
@@ -57,23 +57,24 @@ const content = (close) => (
 
 const HelpTooltip = () => (
   <OpenableCloseable>
-    {(isOpen, { open, close, toggle }) => (
-        <React.Fragment>
-          <img
-            src={ollie}
-            className="owly_size"
-            alt="owl_icon"
-            onClick={toggle}
-          />
-          <div className= {isOpen ? "help-overlay" : null}>
-            <CaptureOutsideClick callback={close}>
-              <div>
-                {isOpen ? content(close) : null}
-              </div>
-            </CaptureOutsideClick>
-          </div>
-        </React.Fragment>
-    )}
+    {(isOpen, { open, close, toggle }) => {
+      const closeModal = (e) => {
+        if (e.target.classList.contains("help-overlay")) {
+          close();
+        }
+      }
+      return (<React.Fragment>
+        <img
+          src={ollie}
+          className="owly_size"
+          alt="owl_icon"
+          onClick={toggle}
+        />
+        <div onClick={closeModal} className= {isOpen ? "help-overlay" : null}>
+          {isOpen ? content(close) : null}
+        </div>
+      </React.Fragment>)
+    }}
   </OpenableCloseable>
 );
 
