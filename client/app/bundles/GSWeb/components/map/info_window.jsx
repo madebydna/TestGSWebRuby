@@ -23,10 +23,11 @@ export default function createInfoWindow(entity) {
     );
   };
 
-  const levelMarkup = entity =>
-    schoolLevels(entity)
-      .map(([level, value]) => `<span>${level} (${value})</span>`)
-      .join(', ');
+  const levelMarkup = entity => {
+    return schoolLevelsArray
+      .map(([level, value]) => (<span key={`${level}-${value}`}>{level} ({value})</span>))
+      .reduce((list, current) => [list, ', ', current]);
+  }
 
   const ratingDiv = entity => {
     const visibleRating = entity.rating != 'NR' ? entity.rating : undefined;
