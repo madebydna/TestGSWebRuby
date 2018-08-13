@@ -541,10 +541,6 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    h4 { 
-      font-size: $font-size;
-      font-weight: bold;
-    }
     .ratings-scale-container {
       .block-container{
         .word-scale{
@@ -552,7 +548,7 @@ body {
         }
       }
     }
-    p { font-size: $font-size-after-bp; }
+    p, div { font-size: $font-size-after-bp; }
   }
 }
 

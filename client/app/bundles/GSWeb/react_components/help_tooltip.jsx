@@ -38,11 +38,11 @@ const content = close => (
       </div>
     </div>
     <hr />
-    <p>
+    <div>
       <div className="circle-nr circle-rating--gray unrated" />
       {t("search_help.currently_rated")} <br /> <br />
       {t("search_help.currently_rated_info")}
-    </p>
+    </div>
     <hr />
     <p>
       <span className="bold">{t("search_help.search_suggestions")}</span>
