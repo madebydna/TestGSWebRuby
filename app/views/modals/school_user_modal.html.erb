@@ -13,7 +13,7 @@
   heading: t('.heading'),
   modal_css_class: "school-user-modal #{modal_css_class}"
 } do %>
-  <%= form_for SchoolUser.new, remote: true, url: school_user_path(@school) do |f| %>
+  <%= form_for SchoolUser.new, url: school_user_path(@school) do |f| %>
     <%= f.hidden_field(:user_type, class: 'js-schoolUserValue') %>
     <div class="select-button-container">
       <% member_roles.each do |value, display_value| %>
