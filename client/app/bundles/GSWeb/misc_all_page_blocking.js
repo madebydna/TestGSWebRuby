@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import * as jqueryujs from 'jquery-ujs';
 import * as jquerycookie from 'jquery.cookie';
 // do not import any addition dependencies for this blocking JS
 
@@ -51,3 +50,7 @@ dataLayer.push(gon.data_layer_hash);
   $.removeCookie('GATracking', { domain: '.greatschools.org', path: '/' });
   $.removeCookie('GATracking', { path: '/' });
 })();
+
+$(() => {
+  require('jquery-ujs');
+});
