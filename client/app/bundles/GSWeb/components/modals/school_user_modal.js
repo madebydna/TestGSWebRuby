@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import BaseModal from './base_modal';
 import { addQueryParamToUrl } from '../../util/uri';
 import { preserveLanguageParam } from '../../util/i18n';

@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
+  before_action :set_csrf_cookie
   before_action :adapt_flash_messages_from_java
   before_action :set_uuid_cookie
   before_action :login_from_cookie
@@ -47,6 +48,14 @@ class ApplicationController < ActionController::Base
   # helper :all
   helper_method :logged_in?, :current_user, :state_param_safe
   helper_method :json_ld_data
+
+  def set_csrf_cookie
+    cookies[:csrf_token] = {
+      value: form_authenticity_token,
+      expires: 1.day.from_now,
+      secure: true
+    }
+  end
 
   def disconnect_connection_pools
     # This used to be done with the rack_after_reply gem.

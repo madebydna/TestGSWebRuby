@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 export const isEmailAvailable = function(email) {
   // path is poorly named
   // returns a 200 if email is available, otherwise 403 if email taken
