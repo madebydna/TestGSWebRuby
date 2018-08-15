@@ -97,9 +97,9 @@ en:
       help: Help
       greatschool_rating: "GreatSchools' Summary Rating provides an overall snapshot of school quality. Ratings follow a 1-10 scale:"
       rating:
-        below_average: "Below \n average"
-        average: Average
-        above_average: "Above \n average"
+        below_average_html: Below<br/>average
+        average_html: Average
+        above_average_html: Above<br/>average
       currently_rated: "Currently unrated schools:"
       currently_rated_info: "For some schools, we do not have enough data from state or national education agencies to provide a rating."
       search_suggestions: "Help us improve the new search"

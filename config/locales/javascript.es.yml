@@ -96,9 +96,9 @@ es:
       help: Ayuda
       greatschool_rating: 'La Calificación General de GreatSchools es una reflexión de múltiples medidas sobre la calidad de una escuela. Las calificaciones siguen una escala del 1-10:'
       rating:
-        below_average: "Por debajo \n del promedio"
-        average: "Al \n promedio"
-        above_average: "Por encima \n del promedio"
+        below_average_html: Por debajo<br/> del<br/> promedio
+        average_html: Al<br/> promedio
+        above_average_html: Por encima<br/> del<br/> promedio
       currently_rated: "Escuelas actualmente sin calificación: \n \n"
       currently_rated_info: "Para algunas escuelas no tenemos suficientes datos de las agencias estatales o nacionales de educación para proporcionar una calificación."
       search_suggestions: "Por favor ayúdenos a mejorar la nueva búsqueda"
