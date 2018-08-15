@@ -34,7 +34,11 @@ module Search
     end
 
     def default_sort_name
-      'rating'
+      if @q.present?
+        'relevance'
+      else
+        'rating'
+      end
     end
 
     def default_sort_direction
