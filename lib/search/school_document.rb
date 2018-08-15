@@ -40,7 +40,7 @@ module Search
         state_s: school.state.downcase,
         latlon_ll: latlon,
         summary_rating_i: gsdata_query.summary_rating,
-        level_codes: school.level_code&.split(',')
+        level_codes_s: school.level_code&.split(',')
       }
     end
 
