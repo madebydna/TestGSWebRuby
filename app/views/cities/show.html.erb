@@ -2,9 +2,9 @@
     <%= webpack_javascript_include_tag 'react-redux', defer: true %>
     <%= webpack_javascript_include_tag 'city', defer: true %>
 <% end %>
-<%# content_for :page_stylesheets do %>
-    <%#= stylesheet_link_tag "INSERT NEW STYLESHEET REF HERE", async: true %>
-<%# end %>
+<% content_for :page_stylesheets do %>
+    <%= stylesheet_link_tag "city", async: true %>
+<% end %>
 
 <div id="city-page">
   <%= react_component('City') %>
