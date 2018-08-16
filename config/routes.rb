@@ -469,7 +469,7 @@ LocalizedProfiles::Application.routes.draw do
     # Format: false allows periods to be in path segments.
     # This then needs to be paired with a regex constraint for each path component.
     # So in this hash there needs to be state and city and down below there's a constraint
-    # with the district segment's contrainst.
+    # with the district segment's constraint.
     format: false,
     state: States.any_state_name_regex,
     # This city regex allows for all characters except /

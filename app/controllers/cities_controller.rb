@@ -1,65 +1,66 @@
 class CitiesController < ApplicationController
-  include ApplicationHelper
-  include SeoHelper
-  include SearchHelper
-  include SchoolHelper
-  include GoogleMapConcerns
-  include CitiesMetaTagsConcerns
-  include CommunityTabConcerns
-  include PopularCitiesConcerns
+  include CityParams
+  include AdvertisingConcerns
+  include PageAnalytics
+  # include SearchControllerConcerns
 
-  before_action :set_city_state
-  before_action :set_hub
-  before_action :add_collection_id_to_gtm_data_layer
-  before_action :set_login_redirect
+  layout 'application'
+  before_filter :redirect_unless_valid_city
 
   def show
-    write_meta_tags
-    @cities = popular_cities
-    @city_object = City.where(name: @city, state: @state[:short], active: 1).first
+    gon.city = {
+      schools: [],
+    }.tap do |props|
 
-    @breadcrumbs = {
-        @state[:long].titleize => state_path(params[:state]),
-        @city.titleize => nil
-    }
-
-    if @hub && hub_matching_current_url[:city]
-      city_hub
-    else
-      gon.pagename = 'GS:City:Home'
-      @ad_page_name = 'City_Page'.to_sym
-
-      if @city_object.blank? && @state.present?
-        return redirect_to state_url
-      end
-
-      @show_ads = true
-      if @hub.present?
-        @collection_id = @hub.collection_id
-        collection_configs = hub_configs(@collection_id)
-        @show_ads = CollectionConfig.show_ads(collection_configs)
-      end
-
-      @top_schools = all_schools_by_rating_desc(@city_object,4)
-      @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
-      @show_ads = @show_ads && PropertyConfig.advertising_enabled?
-      gon.show_ads = show_ads?
-      ad_setTargeting_through_gon
-      gon.pagename = 'GS:City:Home'
-      data_layer_through_gon
-      @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
     end
+
+    ######################Extract breadcrumbs, ad targeting, meta tags, etc from this old code.
+    # @breadcrumbs = {
+    #     @state[:long].titleize => state_path(params[:state]),
+    #     @city.titleize => nil
+    # }
+
+
+      # gon.pagename = 'GS:City:Home'
+      # @ad_page_name = 'City_Page'.to_sym
+      #
+      #
+      # @show_ads = true
+      # if @hub.present?
+      #   @collection_id = @hub.collection_id
+      #   collection_configs = hub_configs(@collection_id)
+      #   @show_ads = CollectionConfig.show_ads(collection_configs)
+      # end
+      #
+      # @top_schools = all_schools_by_rating_desc(@city_object,4)
+      # @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
+      # @show_ads = @show_ads && PropertyConfig.advertising_enabled?
+      # gon.show_ads = show_ads?
+      # ad_setTargeting_through_gon
+      # gon.pagename = 'GS:City:Home'
+      # data_layer_through_gon
+      # @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
+    ####################################
+
+    ##########New meta tag, analytics, and ad targeting code
+    # set_city_meta_tags
+    # set_ad_targeting_props
+    # set_page_analytics_data
+    # set_meta_tags(alternate: {
+    #   en: url_for(params_for_rel_alternate.merge(lang: nil)),
+    #   es: url_for(params_for_rel_alternate.merge(lang: :es))
+    # })
   end
 
   def search_breadcrumbs
     @_search_breadcrumbs ||= [
       {
-        text: StructuredMarkup.state_breadcrumb_text(@state[:long]),
-        url: state_url(state_params(@state[:long]))
+        text: StructuredMarkup.state_breadcrumb_text(state),
+        url: state_url(state_params(state))
       },
       {
-        text: StructuredMarkup.city_breadcrumb_text(state: @state[:long], city: @city),
-        url: city_url(city_params(@state[:long], @city))
+        text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
+        url: city_url(city_params(state, city))
       }
     ]
   end
@@ -69,204 +70,11 @@ class CitiesController < ApplicationController
     search_breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
   end
 
-  def city_hub
-    write_meta_tags
-    @cities = popular_cities
-    @hub.has_guided_search?
-
-    @collection_id = @hub.collection_id
-    collection_configs = hub_configs(@collection_id)
-    @browse_links = CollectionConfig.browse_links(collection_configs)
-    @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
-    @sponsor = CollectionConfig.sponsor(collection_configs)
-    @choose_school = CollectionConfig.city_hub_choose_school(collection_configs)
-    @announcement = CollectionConfig.city_hub_announcement(collection_configs)
-    @articles = CollectionConfig.city_featured_articles(collection_configs)
-    @partner_carousel = parse_partners CollectionConfig.city_hub_partners(collection_configs)
-    @important_events = CollectionConfig.city_hub_important_events(collection_configs)
-    @hero_image = "hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
-    @hero_image_mobile = "hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
-    @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
-    @show_ads = CollectionConfig.show_ads(collection_configs) && PropertyConfig.advertising_enabled?
-    ad_setTargeting_through_gon
-    gon.pagename = 'GS:City:Home'
-    data_layer_through_gon
-    gon.state_abbr = @state[:short]
-
-    render 'hubs/city_hub'
-  end
-
-  def events
-    write_meta_tags
-    @cities = popular_cities
-    if @hub.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
-    else
-      @collection_id = @hub.collection_id
-      collection_configs = hub_configs(@collection_id)
-
-      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
-      @events = CollectionConfig.important_events(@collection_id)
-      @breadcrumbs = {
-        @state[:long].titleize => state_path(params[:state]),
-        @city.titleize => city_path(params[:state], params[:city]) ,
-        t('events', scope: 'controllers.cities_controller') =>nil
-      }
-      @canonical_url = city_events_url(@state[:long], @city)
-      gon.pagename = 'GS:City:Events'
-      data_layer_through_gon
-      gon.state_abbr = @state[:short]
-
-      render 'hubs/events'
-    end
-  end
-
-  def community
-    write_meta_tags
-    @cities = popular_cities
-    if @hub.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
-    else
-      @collection_id = @hub.collection_id
-      collection_configs = hub_configs(@collection_id)
-      @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
-      @tab = get_community_tab_from_request_path(request.path, @show_tabs)
-
-      set_community_gon_pagename
-
-      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
-      @important_events = CollectionConfig.city_hub_important_events(collection_configs)
-      @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
-      @partners = CollectionConfig.ed_community_partners(collection_configs)
-      @breadcrumbs = {
-        @state[:long].titleize => state_path(params[:state]),
-        @city.titleize => city_path(params[:state], params[:city]),
-        t('education_community', scope: 'controllers.cities_controller') => nil
-      }
-      @canonical_url = city_education_community_url(params[:state], params[:city])
-      data_layer_through_gon
-      gon.state_abbr = @state[:short]
-
-      render 'hubs/community'
-    end
-  end
-
-  def partner
-    @cities = popular_cities
-    if @hub.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
-    else
-      @collection_id = @hub.collection_id
-      collection_configs = hub_configs(@collection_id)
-
-      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
-      @partner = CollectionConfig.partner(collection_configs)
-      @events = CollectionConfig.city_hub_important_events(collection_configs)
-      @breadcrumbs = {
-        @state[:long].titleize => state_path(params[:state]),
-        @city.titleize => city_path(params[:state], params[:city]),
-        t('partner', scope: 'controllers.cities_controller') => nil
-      }
-      @canonical_url = city_education_community_partner_url(params[:state], params[:city])
-      set_meta_tags description: partner_page_description(@partner[:page_name]),
-                    title: @partner[:page_name]
-      gon.pagename = 'GS:City:Partner'
-      data_layer_through_gon
-      gon.state_abbr = @state[:short]
-
-    end
-  end
-
-
-  def choosing_schools
-    write_meta_tags
-    @cities = popular_cities
-    if @hub.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
-    else
-
-      @collection_id = @hub.collection_id
-      collection_configs = hub_configs(@collection_id)
-
-      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
-      @events = CollectionConfig.city_hub_important_events(collection_configs)
-      @step3_links = CollectionConfig.choosing_page_links(collection_configs)
-      @step3_search_links = CollectionConfig.choosing_page_search_links(collection_configs)
-      @breadcrumbs = {
-        @state[:long].titleize => state_path(params[:state]),
-        @city.titleize => city_path(params[:state], params[:city]),
-        t('choosing_a_school', scope: 'controllers.cities_controller') => nil
-      }
-      @canonical_url = city_choosing_schools_url(params[:state], params[:city])
-      gon.pagename = 'GS:City:ChoosingSchools'
-      data_layer_through_gon
-      gon.state_abbr = @state[:short]
-
-      render 'hubs/choosing_schools'
-    end
-  end
-
-  def enrollment
-    write_meta_tags
-    if @hub.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
-    else
-      @collection_id = @hub.collection_id
-      collection_configs = hub_configs(@collection_id)
-
-      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
-      @events = CollectionConfig.city_hub_important_events(collection_configs)
-      @tab = CollectionConfig.enrollment_tabs(@state[:short], @collection_id, params[:tab])
-      @subheading = CollectionConfig.enrollment_subheading(collection_configs)
-      @enrollment_module = CollectionConfig.enrollment_module(collection_configs, @tab[:key])
-      @tips = CollectionConfig.enrollment_tips(collection_configs, @tab[:key])
-      @key_dates = CollectionConfig.key_dates(collection_configs, @tab[:key])
-
-      @breadcrumbs = {
-        @state[:long].titleize => state_path(params[:state]),
-        @city.titleize => city_path(params[:state], params[:city]),
-        t('enrollment_information', scope: 'controllers.cities_controller') => nil
-      }
-
-      @canonical_url = city_enrollment_url(params[:state], params[:city])
-      set_enrollment_gon_pagename
-      data_layer_through_gon
-      gon.state_abbr = @state[:short]
-
-      render 'hubs/enrollment'
-    end
-  end
-
-  def programs
-    write_meta_tags
-    @cities = popular_cities
-    if @hub.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
-    else
-      @collection_id = @hub.collection_id
-      collection_configs = hub_configs(@collection_id)
-
-      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
-      @important_events = CollectionConfig.city_hub_important_events(collection_configs)
-      @heading = CollectionConfig.programs_heading(collection_configs)
-      @intro = CollectionConfig.programs_intro(collection_configs)
-      @sponsor = CollectionConfig.programs_sponsor(collection_configs)
-      @partners = CollectionConfig.programs_partners(collection_configs)
-      @articles = CollectionConfig.programs_articles(collection_configs)
-      @canonical_url = city_programs_url(params[:state], params[:city])
-      @breadcrumbs = {
-              @state[:long].titleize => state_path(params[:state]),
-              @city.titleize => city_path(params[:state], params[:city]) ,
-              t('programs', scope: 'controllers.cities_controller') =>nil
-            }
-      gon.pagename = 'GS:City:Programs'
-      data_layer_through_gon
-      gon.state_abbr = @state[:short]
-
-    end
-  end
-
   private
+
+  def redirect_unless_valid_city
+    redirect_to state_path(States.state_path(state)) unless city_record
+  end
 
   def write_meta_tags
     method_base = "#{controller_name}_#{action_name}"

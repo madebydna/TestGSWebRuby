@@ -1,15 +1,17 @@
 import ReactOnRails from 'react-on-rails';
 import configureStore from './store/appStore';
-import Search from './react_components/search/search';
+import City from './react_components/community/city';
 import * as tooltips from './util/tooltip';
 import * as remodal from './util/remodal';
 import './vendor/tipso';
 import { init as initHeader } from './header';
 
-c
+window.store = configureStore({
+  search: gon.city
+});
 
 ReactOnRails.register({
-  Search
+  City
 });
 
 $(() => {
