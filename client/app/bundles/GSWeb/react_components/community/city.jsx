@@ -175,14 +175,4 @@ const CityWithViewportSize = withViewportSize('size')(City);
 //     </SearchContext.Provider>
 //   );
 // }
-<<<<<<< HEAD
-export default function(){
-  return (
-    <div>
-      <City />
-    </div>
-  )
-};
-=======
 export default CityWithViewportSize;
->>>>>>> 679add9931657756ca947fb32d7c2c3cad3009f0
