@@ -5,13 +5,18 @@ import * as tooltips from './util/tooltip';
 import * as remodal from './util/remodal';
 import './vendor/tipso';
 import { init as initHeader } from './header';
+import SearchBox from 'react_components/search_box';
+import withViewportSize from 'react_components/with_viewport_size';
 
-window.store = configureStore({
-  search: gon.city
-});
+const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
+
+// window.store = configureStore({
+//   city: gon.city
+// });
 
 ReactOnRails.register({
-  City
+  City,
+  SearchBoxWrapper
 });
 
 $(() => {

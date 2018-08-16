@@ -6,7 +6,9 @@ import * as remodal from './util/remodal';
 import './vendor/tipso';
 import { init as initHeader } from './header';
 
-c
+window.store = configureStore({
+  search: gon.search
+});
 
 ReactOnRails.register({
   Search
