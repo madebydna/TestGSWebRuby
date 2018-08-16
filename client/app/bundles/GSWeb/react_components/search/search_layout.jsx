@@ -202,7 +202,7 @@ class SearchLayout extends React.Component {
             </span>
           ) : null}
           <span className="menu-item list-map-toggle">
-            <div className="ollie-map-container">
+            <div>
               {this.props.listMapTableSelect}
               <span className="ollie-help-icon"><HelpTooltip /></span>
             </div>

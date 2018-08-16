@@ -282,7 +282,7 @@ class SearchProvider extends React.Component {
             >
               <SortContext.Provider
                 value={{
-                  sort: this.props.sort || 'rating',
+                  sort: this.props.sort,
                   onSortChanged: compose(
                     this.scrollToTop,
                     this.props.updateSort,

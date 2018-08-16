@@ -152,7 +152,7 @@ module SearchRequestParams
   end
 
   def zip_code_search?
-    params[:locationType].downcase == 'zip'
+    params[:locationType]&.downcase == 'zip'
   end
 
   def zip_code

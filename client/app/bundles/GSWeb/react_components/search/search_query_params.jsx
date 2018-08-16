@@ -31,7 +31,7 @@ export default class SearchQueryParams extends React.Component {
       locationLabel:
         queryParams.getValueForKey('locationLabel') ||
         queryParams.getValueForKey('locationSearchString'),
-      sort: queryParams.getSort(),
+      sort: queryParams.getSort() || (queryParams.getQ() ? 'relevance' : 'rating'),
       page: queryParams.getPage(),
       q: queryParams.getQ(),
       view: queryParams.getView(),
