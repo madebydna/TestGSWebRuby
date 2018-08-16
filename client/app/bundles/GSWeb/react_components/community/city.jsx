@@ -6,6 +6,7 @@ import Breadcrumbs from 'react_components/breadcrumbs';
 import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
+import TopSchools from '../top_schools';
 
 class City extends React.Component {
   static defaultProps = {
@@ -50,6 +51,9 @@ class City extends React.Component {
 // }
 export default function(){
   return (
-    <City />
+    <div style={{display: 'flex', alignItems: 'center', flexDirection: 'center', flexDirection: 'column'}}>
+      <City />
+      <TopSchools />
+    </div>
   )
 };
