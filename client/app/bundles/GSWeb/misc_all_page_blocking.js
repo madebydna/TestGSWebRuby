@@ -50,24 +50,21 @@ dataLayer.push(gon.data_layer_hash);
 })();
 
 $(() => {
-  require('jquery-ujs');
-
   const csrfToken = getCookie('csrf_token');
 
   // when removing jquery_ujs, remove these meta tags and uncomment ajax prefilter
-  $('<meta>')
-    .attr('name', 'csrf-param')
-    .attr('content', 'authenticity_token')
-    .appendTo('head');
-  $('<meta>')
-    .attr('name', 'csrf-token')
-    .attr('content', csrfToken)
-    .appendTo('head');
+  // $('<meta>')
+  //   .attr('name', 'csrf-param')
+  //   .attr('content', 'authenticity_token')
+  //   .appendTo('head');
+  // $('<meta>')
+  //   .attr('name', 'csrf-token')
+  //   .attr('content', csrfToken)
+  //   .appendTo('head');
 
-  // $.ajaxPrefilter((options, originalOptions, xhr) => {
-  //   if (!options.crossDomain) {
-  //     const csrfToken = getCookie('csrf_token');
-  //     if (csrfToken) xhr.setRequestHeader('X-CSRF-Token', csrfToken);
-  //   }
-  // });
+  $.ajaxPrefilter((options, originalOptions, xhr) => {
+    if (!options.crossDomain) {
+      if (csrfToken) xhr.setRequestHeader('X-CSRF-Token', csrfToken);
+    }
+  });
 });
