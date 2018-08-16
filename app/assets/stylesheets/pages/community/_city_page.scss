@@ -1,12 +1,12 @@
 .top-school-module{
   // Temporary CSS
-  width: 500px;
+  width: 580px;
   // Real CSS - Remove at end of project
   .button-group {
     @include button-group;
     margin: 20px auto 0px auto;
   }
-  .school-table {
+.school-table {
   overflow-x: scroll;
   width: 100%;
   background-color: white;
@@ -23,6 +23,7 @@
 
     td {
       position: relative;
+      height: 97px;
     }
 
     td,
@@ -36,16 +37,39 @@
       font-weight: normal;
       text-align: left;
       background-color: #f1fafd;
+      height: 70px;
     }
     th.school {
-      width: 200px;
+      width: 290px;
     }
+
     td.school {
       $active-color: #f6f9fa;
       $hover-color: #f6f9fa;
       $border-color: #dbe6eb;
+      $school-color: #2bade3;
+      $links-color: #1dace5;
 
       @include clearfix;
+      .content-container{
+        display: flex;
+        p {
+          font-family: OpenSans;
+          font-size: 16px;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: $school-color;
+        }
+        .school-info{
+          margin-left: 15px;
+          .icon-house, a {
+            color: $links-color;
+          }
+        }
+      }
       span {
         display: inline-block;
       }

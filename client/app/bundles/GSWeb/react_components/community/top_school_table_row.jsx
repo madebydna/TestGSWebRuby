@@ -1,0 +1,76 @@
+import React from "react";
+import PropTypes from "prop-types";
+import Rating from "../../components/rating";
+import $ from "jquery";
+import ModalTooltip from "../modal_tooltip";
+import FiveStarRating from "../review/form/five_star_rating";
+import { getHomesForSaleHref, clarifySchoolType } from "../../util/school";
+
+const renderSchoolColumn = (name, rating, address, state) => {
+  const className = `circle-rating--small circle-rating--${rating}`;
+  const content = (
+    <div>Tooltip Placeholder</div>
+  )
+  const homesForSaleHref = getHomesForSaleHref(state, address);
+  return <React.Fragment>
+      <div className="content-container">
+        <div>
+          <Rating score={rating} size="medium" />
+          <div className="scale">
+            {/* <ModalTooltip content={content}>
+            <span className="info-circle icon-info" /> X
+          </ModalTooltip> */}
+            <div>TOOL TIP</div>
+          </div>
+        </div>
+        <div className="school-info">
+          <p>{name}</p>
+          {homesForSaleHref && <div>
+            <span className="icon icon-house" />
+            <a href={homesForSaleHref} target="_blank" className="homes-for-sale-link">
+              &nbsp; Homes For sales
+            </a>
+          </div>}
+        </div>
+      </div>
+    </React.Fragment>;
+}
+
+const TopSchoolTableRow = ({name, numReviews, districtName, rating, address, state}) => (
+  <tr>
+    <td className="school">{renderSchoolColumn(name, rating, address, state)}</td>
+  </tr>
+);
+
+
+TopSchoolTableRow.propTypes = {
+  id: PropTypes.number.isRequired,
+  state: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  address: PropTypes.shape({}).isRequired,
+  schoolType: PropTypes.oneOf(["public", "private", "charter"]).isRequired,
+  gradeLevels: PropTypes.string.isRequired,
+  enrollment: PropTypes.number,
+  rating: PropTypes.number,
+  ratingScale: PropTypes.string,
+  studentsPerTeacher: PropTypes.number,
+  numReviews: PropTypes.number,
+  parentRating: PropTypes.number,
+  districtName: PropTypes.string,
+  links: PropTypes.shape({
+    profile: PropTypes.string.isRequired
+  }).isRequired
+};
+
+TopSchoolTableRow.defaultProps = {
+  enrollment: null,
+  rating: null,
+  ratingScale: null,
+  active: false,
+  studentsPerTeacher: null,
+  numReviews: null,
+  parentRating: null,
+  districtName: null
+};
+
+export default TopSchoolTableRow;

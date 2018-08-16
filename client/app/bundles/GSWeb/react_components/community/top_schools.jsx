@@ -1,13 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "react_components/button";
+import Button from "../button";
+import TopSchoolTableRow from './top_school_table_row';
 
 const TopSchools = ({schools}) => {
-	// const schoolElements = (schools) => (schools.map(school => (
-	// 	<tr>
-
-	// 	</tr>
-	// )))
 	return (
 		<div className="top-school-module">
 			<h3>Top schools by</h3>
@@ -34,12 +30,21 @@ const TopSchools = ({schools}) => {
 						</tr>
 					</thead>
 					<tbody>
-						{/* {schoolElements} */}
+						{schools.map(school => <TopSchoolTableRow key={school.state + school.id} {...school} />)}
 					</tbody>
 				</table>
 			</section>
 		</div>
 	)
 }
+
+TopSchools.propTypes = {
+  // schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
+  schools: PropTypes.arrayOf(PropTypes.element)
+};
+
+TopSchools.defaultProps = {
+  schools: []
+};
 
 export default TopSchools;
