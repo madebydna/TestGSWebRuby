@@ -8,11 +8,9 @@ class CitiesController < ApplicationController
   before_filter :redirect_unless_valid_city
 
   def show
-    gon.city = {
-      schools: serialized_schools,
-    }.tap do |props|
 
-    end
+      @schools = serialized_schools
+
 
     ######################Extract breadcrumbs, ad targeting, meta tags, etc from this old code.
     # @breadcrumbs = {

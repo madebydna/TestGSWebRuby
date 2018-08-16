@@ -23,15 +23,18 @@ class City extends React.Component {
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.object),
     loadingSchools: PropTypes.bool,
-    size: PropTypes.oneOf(validViewportSizes).isRequired,
+    viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
       PropTypes.shape({
         text: PropTypes.string.isRequired,
         url: PropTypes.string.isRequired
       })
-    ),
-    view: PropTypes.string.isRequired
+    )
   };
+
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount() {
     initAdvertising();
@@ -87,8 +90,8 @@ class City extends React.Component {
   render() {
     return (
       <CityLayout
-        searchBox={<SearchBox size={this.props.size} />}
-        size={this.props.size}
+        searchBox={<SearchBox size={this.props.viewportSize} />}
+        size={this.props.viewportSize}
       >
       </CityLayout>
     );
@@ -106,8 +109,4 @@ const CityWithViewportSize = withViewportSize('size')(City);
 //     </SearchContext.Provider>
 //   );
 // }
-export default function(){
-  return (
-    <CityWithViewportSize />
-  )
-};
+export default CityWithViewportSize;
