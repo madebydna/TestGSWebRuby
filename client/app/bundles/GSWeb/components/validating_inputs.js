@@ -1,5 +1,4 @@
 import { EMAIL_AVAILABLE, runAsyncValidation } from 'components/validations';
-import $ from 'jquery';
 
 const INPUT_SELECTOR = '.js-validating-input';
 const EVENT_TYPES = 'change';
