@@ -1,15 +1,15 @@
 class CitiesController < ApplicationController
-  include CityParams
+  include CommunityParams
   include AdvertisingConcerns
   include PageAnalytics
-  # include SearchControllerConcerns
+  include CommunityConcerns
 
   layout 'application'
   before_filter :redirect_unless_valid_city
 
   def show
     gon.city = {
-      schools: [],
+      schools: serialized_schools,
     }.tap do |props|
 
     end
@@ -73,7 +73,11 @@ class CitiesController < ApplicationController
   private
 
   def redirect_unless_valid_city
-    redirect_to state_path(States.state_path(state)) unless city_record
+    redirect_to(state_path(States.state_path(state)), status: 301) unless city_record
+  end
+
+  def default_extras
+    %w(summary_rating enrollment review_summary)
   end
 
   def write_meta_tags
