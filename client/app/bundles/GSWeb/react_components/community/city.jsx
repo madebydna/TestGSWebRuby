@@ -1,17 +1,22 @@
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import Breadcrumbs from 'react_components/breadcrumbs';
-// import SearchContext from './search_context';
-// import SearchLayout from './search_layout';
+import CityLayout from './city_layout';
+import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
+import withViewportSize from 'react_components/with_viewport_size';
+import '../../vendor/remodal';
+import { find as findSchools } from 'api_clients/schools';
+import { analyticsEvent } from 'util/page_analytics';
+const { gon } = window;
 
 class City extends React.Component {
   static defaultProps = {
     schools: [],
     loadingSchools: false,
-    shouldIncludeDistance: false,
     breadcrumbs: []
   };
 
@@ -32,12 +37,65 @@ class City extends React.Component {
     initAdvertising();
   }
 
+  // 62 = nav offset on non-mobile
+  scrollToTop = () =>
+    this.state.size > XS
+      ? document.querySelector('#search-page').scrollIntoView()
+      : window.scroll(0, 0);
+
+  updateSchools() {
+    this.setState(
+      {
+        loadingSchools: true
+      },
+      () => {
+        const start = Date.now();
+        this.findSchoolsWithReactState().done(
+          ({ items: schools, totalPages, paginationSummary, resultSummary }) =>
+            setTimeout(
+              () =>
+                this.setState({
+                  schools,
+                  totalPages,
+                  paginationSummary,
+                  resultSummary,
+                  loadingSchools: false
+                }),
+              500 - (Date.now() - start)
+            )
+        );
+      }
+    );
+  }
+
+  // school finder methods, based on obj state
+
+  findTopRatedSchoolsWithReactState(newState = {}) {
+    return findSchools(
+      Object.assign(
+        {
+          city: this.props.city,
+          state: this.props.state,
+          levelCodes: this.props.levelCodes,
+          extras: ['students_per_teacher', 'review_summary']
+        },
+        newState
+      )
+    );
+  }
+
   render() {
     return (
-     <div style={{height: '50px'}}>New City!</div>
+      <CityLayout
+        searchBox={<SearchBox size={this.props.size} />}
+        size={this.props.size}
+      >
+      </CityLayout>
     );
   }
 }
+
+const CityWithViewportSize = withViewportSize('size')(City);
 
 // export default function() {
 //   return (
@@ -50,6 +108,6 @@ class City extends React.Component {
 // }
 export default function(){
   return (
-    <City />
+    <CityWithViewportSize />
   )
 };
