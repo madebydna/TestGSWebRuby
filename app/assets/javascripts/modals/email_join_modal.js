@@ -139,8 +139,8 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
   },
 
   postJoinForm: function postJoinForm() {
-    let data = this.$getJoinForm().serialize();
-    let action = this.$getJoinForm().attr('action');
+    var data = this.$getJoinForm().serialize();
+    var action = this.$getJoinForm().attr('action');
     return $.post(action, data);
   },
 
