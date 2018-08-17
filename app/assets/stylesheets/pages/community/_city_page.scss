@@ -26,6 +26,14 @@
       height: 97px;
     }
 
+    td:nth-child(2) > p, td:nth-child(3) > p{
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: OpenSans;
+      letter-spacing: normal;
+    }
+
     td,
     th {
       border: 1px solid $form-field-border-color;
@@ -53,20 +61,23 @@
       @include clearfix;
       .content-container{
         display: flex;
-        p {
-          font-family: OpenSans;
-          font-size: 16px;
-          font-weight: bold;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: normal;
-          letter-spacing: normal;
-          color: $school-color;
-        }
         .school-info{
           margin-left: 15px;
-          .icon-house, a {
-            color: $links-color;
+          > a {
+            font-family: OpenSans;
+            font-size: 18px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: $school-color;
+          }
+          > div {
+            margin-top: 10px;
+            .icon-house, a {
+              color: $links-color;
+            }
           }
         }
       }

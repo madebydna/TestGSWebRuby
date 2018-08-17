@@ -6,7 +6,7 @@ import ModalTooltip from "../modal_tooltip";
 import FiveStarRating from "../review/form/five_star_rating";
 import { getHomesForSaleHref, clarifySchoolType } from "../../util/school";
 
-const renderSchoolColumn = (name, rating, address, state) => {
+const renderSchoolColumn = (name, rating, address, state, links) => {
   const className = `circle-rating--small circle-rating--${rating}`;
   const content = (
     <div>Tooltip Placeholder</div>
@@ -20,25 +20,51 @@ const renderSchoolColumn = (name, rating, address, state) => {
             {/* <ModalTooltip content={content}>
             <span className="info-circle icon-info" /> X
           </ModalTooltip> */}
-            <div>TOOL TIP</div>
+            <div>TOOL</div>
           </div>
         </div>
         <div className="school-info">
-          <p>{name}</p>
+          <a href={links.profile} target="_blank">
+            {name}
+          </a>
           {homesForSaleHref && <div>
-            <span className="icon icon-house" />
-            <a href={homesForSaleHref} target="_blank" className="homes-for-sale-link">
-              &nbsp; Homes For sales
-            </a>
-          </div>}
+              <span className="icon icon-house" />
+              <a href={homesForSaleHref} target="_blank" className="homes-for-sale-link">
+                &nbsp; Homes For sales
+              </a>
+            </div>}
         </div>
       </div>
     </React.Fragment>;
 }
 
-const TopSchoolTableRow = ({name, numReviews, districtName, rating, address, state}) => (
+const renderReviews = (numReviews, parentRating) => {
+  return(
+    <div>Hello World</div>
+  )
+}
+
+const TopSchoolTableRow = ({
+  name,
+  numReviews,
+  districtName,
+  rating,
+  address,
+  state,
+  numStudents,
+  parentRating,
+  links
+}) => (
   <tr>
-    <td className="school">{renderSchoolColumn(name, rating, address, state)}</td>
+    <td className="school">
+      {renderSchoolColumn(name, rating, address, state, links)}
+    </td>
+    <td>
+      <p>{numStudents}</p>
+    </td>
+    <td>
+      {renderReviews(numReviews, parentRating)}
+    </td>
   </tr>
 );
 

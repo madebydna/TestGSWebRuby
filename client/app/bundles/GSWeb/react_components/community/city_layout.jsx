@@ -122,6 +122,7 @@ class CityLayout extends React.Component {
             {this.props.hero}
             {this.props.toc}
             {this.props.tallAd}
+            {this.props.topSchools}
         </React.Fragment>
       </div>
     );
