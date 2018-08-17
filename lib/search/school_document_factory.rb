@@ -23,7 +23,7 @@ module Search
     private
 
     def ids_for_state(state)
-      School.on_db(state.downcase.to_sym).active.order(:id).select(:id)
+      School.on_db(state.downcase.to_sym) { School.active.pluck(:id) }
     end
   end
 end
