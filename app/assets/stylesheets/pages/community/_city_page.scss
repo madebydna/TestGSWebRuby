@@ -39,6 +39,9 @@
       border: 1px solid $form-field-border-color;
       padding: 10px 15px;
     }
+    th:nth-child(3){
+      width: 125px;
+    }
 
     th {
       color: $gray-darker;

@@ -34,7 +34,6 @@ const TopSchools = ({schools}) => {
               <TopSchoolTableRow
                 key={school.state + school.id}
                 {...school}
-                numStudents={Math.floor(Math.random() * 2000) + 1}
               />
             ))}
           </tbody>

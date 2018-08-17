@@ -38,9 +38,16 @@ const renderSchoolColumn = (name, rating, address, state, links) => {
     </React.Fragment>;
 }
 
-const renderReviews = (numReviews, parentRating) => {
+const renderReviews = (numReviews, parentRating, links) => {
+  const reviewCt = numReviews && numReviews > 0 ? <a href={links.reviews} target="_blank">
+        {numReviews} {numReviews > 1 ? "reviews" : "review"}
+      </a> : "No Reviews Yet";
+  const fiveStarRating = <FiveStarRating questionId={1} value={parentRating} onClick={() => {}} />;
   return(
-    <div>Hello World</div>
+    <React.Fragment>
+      {reviewCt}
+      {fiveStarRating}
+    </React.Fragment>
   )
 }
 
@@ -53,6 +60,7 @@ const TopSchoolTableRow = ({
   state,
   numStudents,
   parentRating,
+  enrollment,
   links
 }) => (
   <tr>
@@ -60,10 +68,10 @@ const TopSchoolTableRow = ({
       {renderSchoolColumn(name, rating, address, state, links)}
     </td>
     <td>
-      <p>{numStudents}</p>
+      <p>{enrollment}</p>
     </td>
     <td>
-      {renderReviews(numReviews, parentRating)}
+      {renderReviews(numReviews, parentRating, links)}
     </td>
   </tr>
 );
