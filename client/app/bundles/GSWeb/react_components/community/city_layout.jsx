@@ -113,13 +113,30 @@ class CityLayout extends React.Component {
     return null;
   }
 
+  heroTitle(){
+    let {city, state} = this.props.locality;
+    return `${city}, ${state}`
+  }
+
+  heroNarration(){
+    let {city,state,county} = this.props.locality;
+    return `${city} is a city in ${county} county, ${state}`
+  }
+
+
+
   render() {
     return (
       <div className="city-body">
         {this.props.searchBox}
         <React.Fragment>
             {this.props.breadcrumbs}
-            {this.props.hero}
+            <div className="hero">
+              <div className="icon-house"></div>
+              <div className="city-hero-title">{this.heroTitle()}</div>
+              <div className="city-hero-narrative">{this.heroNarration()}</div>
+              <div className="city-hero-stats"></div>
+            </div>
             {this.props.toc}
             {this.props.tallAd}
         </React.Fragment>

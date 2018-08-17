@@ -1,0 +1,28 @@
+#city-page {
+  .breadcrumbs {
+    padding-left: 15px;
+    .divider {
+      font-size: 9px;
+      color: #bbc0ca;
+      padding: 0 5px;
+    }
+  }
+
+  .hero {
+    padding: 20px 0 25px 0;
+    height: 200px;
+    background-image: image_url('school_profiles/hero_bg.jpg');
+    text-align: center;
+    color: white;
+    font-family: OpenSans;
+    .city-hero-title {
+      margin-top: 10px;
+      font-size: 36px;
+      font-family: 'RobotoSlab-Bold';
+    }
+    .city-hero-narrative {
+      font-size: 16px;
+      font-weight: normal;
+    }
+  }
+}

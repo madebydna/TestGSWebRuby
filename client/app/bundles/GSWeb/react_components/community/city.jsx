@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Breadcrumbs from 'react_components/breadcrumbs';
 import CityLayout from './city_layout';
-import SearchBox from 'react_components/search_box'
+import SearchBox from 'react_components/search_box';
 import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
@@ -92,6 +92,13 @@ class City extends React.Component {
       <CityLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
         size={this.props.viewportSize}
+        tallAd={
+          <div className="ad-bar">
+            <Ad slot="City_160x600" dimensions={[160, 600]} />
+          </div>
+        }
+        breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
+        locality={this.props.locality}
       >
       </CityLayout>
     );
@@ -100,13 +107,4 @@ class City extends React.Component {
 
 const CityWithViewportSize = withViewportSize('size')(City);
 
-// export default function() {
-//   return (
-//     <SearchContext.Provider>
-//       <SearchContext.Consumer>
-//         {state => <Search {...state} />}
-//       </SearchContext.Consumer>
-//     </SearchContext.Provider>
-//   );
-// }
 export default CityWithViewportSize;
