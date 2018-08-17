@@ -44,7 +44,6 @@ const TopSchools = ({schools}) => {
 
 TopSchools.propTypes = {
   schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
-  // schools: PropTypes.arrayOf(PropTypes.element)
 };
 
 TopSchools.defaultProps = {

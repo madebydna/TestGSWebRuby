@@ -51,6 +51,10 @@ const renderReviews = (numReviews, parentRating, links) => {
   )
 }
 
+const renderDistrctName = (districtName) => (
+  <p>{districtName}</p>
+)
+
 const TopSchoolTableRow = ({
   name,
   numReviews,
@@ -72,6 +76,9 @@ const TopSchoolTableRow = ({
     </td>
     <td>
       {renderReviews(numReviews, parentRating, links)}
+    </td>
+    <td>
+      {renderDistrctName(districtName)}
     </td>
   </tr>
 );

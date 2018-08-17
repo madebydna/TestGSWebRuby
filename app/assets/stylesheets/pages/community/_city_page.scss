@@ -12,7 +12,6 @@
   background-color: white;
   position: relative;
 
-
   table {
     table-layout: fixed;
     width: 991px;
@@ -34,6 +33,17 @@
       letter-spacing: normal;
     }
 
+    td:last-child{
+      font-family: OpenSans;
+      font-size: 14px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #647981;
+    }
+
     td,
     th {
       border: 1px solid $form-field-border-color;
@@ -51,7 +61,7 @@
       height: 70px;
     }
     th.school {
-      width: 290px;
+      width: 230px;
     }
 
     td.school {
@@ -68,7 +78,7 @@
           margin-left: 15px;
           > a {
             font-family: OpenSans;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             font-style: normal;
             font-stretch: normal;
