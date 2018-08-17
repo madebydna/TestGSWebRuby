@@ -52,8 +52,7 @@ class ApplicationController < ActionController::Base
   def set_csrf_cookie
     cookies[:csrf_token] = {
       value: form_authenticity_token,
-      expires: 1.day.from_now,
-      secure: true
+      expires: 1.day.from_now
     }
   end
 
