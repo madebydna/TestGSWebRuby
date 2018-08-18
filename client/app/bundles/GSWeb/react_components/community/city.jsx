@@ -86,6 +86,10 @@ class City extends React.Component {
     );
   }
 
+  toc(){
+
+  }
+
   render() {
     return (
       <CityLayout
@@ -93,6 +97,8 @@ class City extends React.Component {
         size={this.props.viewportSize}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
+        toc={this.toc()}
+        viewportSize={this.props.viewportSize}
       >
       </CityLayout>
     );

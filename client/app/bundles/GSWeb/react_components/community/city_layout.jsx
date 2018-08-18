@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'lodash';
 import $ from 'jquery';
-import { SM, validSizes } from 'util/viewport';
+import { XS, SM, LG, MD, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 import Ad from 'react_components/ad';
@@ -86,8 +86,9 @@ class CityLayout extends React.Component {
 
   constructor(props) {
     super(props);
-    this.fixedYLayer = React.createRef();
+    this.ad = React.createRef();
     this.breadcrumbs = React.createRef();
+    this.toc = React.createRef();
     this.state = {}
   }
 
@@ -97,7 +98,13 @@ class CityLayout extends React.Component {
       setTop: true,
       setBottom: false
     });
-    keepInViewport(this.fixedYLayer, {
+    keepInViewport(this.ad, {
+      $elementsAbove: [$('.header_un')],
+      $elementsBelow: [$('.footer')],
+      setTop: true,
+      setBottom: true
+    });
+    keepInViewport(this.toc, {
       $elementsAbove: [$('.header_un')],
       $elementsBelow: [$('.footer')],
       setTop: true,
@@ -135,11 +142,12 @@ class CityLayout extends React.Component {
               <div className="city-hero-narrative">{this.heroNarration()}</div>
               <div className="city-hero-stats"></div>
             </div>
-            <div style={{height: '1200px'}}>
-              <div ref={this.fixedYLayer} className="ad-bar">
+            <div className="below-hero">
+              {this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"></div>}
+              <div className="city-modules"></div>
+              {this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
                 <Ad slot="citypage_first" dimensions={[300, 600]} />
-              </div>
-              {this.props.toc}
+              </div>}
             </div>
         </React.Fragment>
       </div>
