@@ -1,10 +1,21 @@
+.featured {
+  display: none; // TODO: dont put this here
+}
+
 #city-page {
-  .breadcrumbs {
-    padding-left: 15px;
-    .divider {
-      font-size: 9px;
-      color: #bbc0ca;
-      padding: 0 5px;
+  position: relative;
+  padding-top: 38px;
+  .breadcrumbs-container {
+    position: fixed;
+    width: 100%;
+    top: 80px;
+    .breadcrumbs {
+      padding-left: 15px;
+      .divider {
+        font-size: 9px;
+        color: #bbc0ca;
+        padding: 0 5px;
+      }
     }
   }
 
@@ -24,5 +35,12 @@
       font-size: 16px;
       font-weight: normal;
     }
+  }
+
+  .ad-bar {
+    width: 300px;
+    height: 600px;
+    position: fixed;
+    top: 300px;
   }
 }

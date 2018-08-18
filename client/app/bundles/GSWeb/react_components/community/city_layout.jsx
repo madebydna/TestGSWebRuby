@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'lodash';
+import $ from 'jquery';
 import { SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
+import Ad from 'react_components/ad';
 import { t } from 'util/i18n';
-import CaptureOutsideClick from 'react_components/search/capture_outside_click';
 
 function keepInViewport(
   ref,
@@ -79,7 +80,6 @@ class CityLayout extends React.Component {
 
   static propTypes = {
     size: PropTypes.oneOf(validSizes).isRequired,
-    tallAd: PropTypes.element.isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
   };
@@ -87,12 +87,12 @@ class CityLayout extends React.Component {
   constructor(props) {
     super(props);
     this.fixedYLayer = React.createRef();
-    this.header = React.createRef();
+    this.breadcrumbs = React.createRef();
     this.state = {}
   }
 
   componentDidMount() {
-    keepInViewport(this.header, {
+    keepInViewport(this.breadcrumbs, {
       initialTop: 60,
       setTop: true,
       setBottom: false
@@ -123,22 +123,24 @@ class CityLayout extends React.Component {
     return `${city} is a city in ${county} county, ${state}`
   }
 
-
-
   render() {
     return (
       <div className="city-body">
         {this.props.searchBox}
         <React.Fragment>
-            {this.props.breadcrumbs}
+            <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
             <div className="hero">
               <div className="icon-house"></div>
               <div className="city-hero-title">{this.heroTitle()}</div>
               <div className="city-hero-narrative">{this.heroNarration()}</div>
               <div className="city-hero-stats"></div>
             </div>
-            {this.props.toc}
-            {this.props.tallAd}
+            <div style={{height: '1200px'}}>
+              <div ref={this.fixedYLayer} className="ad-bar">
+                <Ad slot="citypage_first" dimensions={[300, 600]} />
+              </div>
+              {this.props.toc}
+            </div>
         </React.Fragment>
       </div>
     );
