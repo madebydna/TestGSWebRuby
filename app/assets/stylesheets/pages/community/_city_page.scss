@@ -1,129 +1,177 @@
+$active-color: #f6f9fa;
+$hover-color: #f6f9fa;
+$border-color: #dbe6eb;
+$school-color: #2bade3;
+$links-color: #1dace5;
+
 .top-school-module{
   // Temporary CSS
   width: 580px;
+  border: solid 1px #dbe6eb;
+  > p, > h3 {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  > div {
+    display: flex;
+    justify-content: center;
+  }
+  @include media-breakpoint-down(sm) {
+    // temp
+    width: 90vw;
+    margin: auto;
+  }
   // Real CSS - Remove at end of project
   .button-group {
     @include button-group;
-    margin: 20px auto 0px auto;
+    // margin: 20px auto 0px auto;
+    margin: auto;
   }
-.school-table {
-  overflow-x: scroll;
-  width: 100%;
-  background-color: white;
-  position: relative;
-
-  table {
-    table-layout: fixed;
-    width: 991px;
-
-    @include media-breakpoint-up(lg) {
+  .school-col{
+    width: 90%;
+    margin: auto;
+    .blue-line{
+      border-bottom: 1px solid #dbe6eb;
       width: 100%;
+      margin: 10px 5px 10px 5px;
     }
-
-    td {
-      position: relative;
-      height: 97px;
-    }
-
-    td:nth-child(2) > p, td:nth-child(3) > p{
-      text-align: center;
-      font-size: 16px;
-      font-weight: 600;
-      font-family: OpenSans;
-      letter-spacing: normal;
-    }
-
-    td:last-child{
-      font-family: OpenSans;
-      font-size: 14px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      color: #647981;
-    }
-
-    td,
-    th {
-      border: 1px solid $form-field-border-color;
-      padding: 10px 15px;
-    }
-    th:nth-child(3){
-      width: 125px;
-    }
-
-    th {
-      color: $gray-darker;
-      font-weight: normal;
-      text-align: left;
-      background-color: #f1fafd;
-      height: 70px;
-    }
-    th.school {
-      width: 230px;
-    }
-
-    td.school {
-      $active-color: #f6f9fa;
-      $hover-color: #f6f9fa;
-      $border-color: #dbe6eb;
-      $school-color: #2bade3;
-      $links-color: #1dace5;
-
-      @include clearfix;
-      .content-container{
-        display: flex;
-        .school-info{
-          margin-left: 15px;
-          > a {
-            font-family: OpenSans;
-            font-size: 16px;
-            font-weight: bold;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: normal;
-            color: $school-color;
-          }
-          > div {
-            margin-top: 10px;
-            .icon-house, a {
-              color: $links-color;
-            }
+    .content-container{
+      display: flex;
+      .school-info{
+        margin-left: 15px;
+        > a {
+          font-family: OpenSans;
+          font-size: 16px;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: $school-color;
+        }
+        > div {
+          margin-top: 10px;
+          .icon-house, a {
+            color: $links-color;
           }
         }
       }
-      span {
-        display: inline-block;
+    }
+  }
+  .school-table {
+    overflow-x: scroll;
+    width: 100%;
+    background-color: white;
+    position: relative;
+
+    table {
+      table-layout: fixed;
+      // width: 991px;
+      width: 95%;
+      margin: auto;
+
+      // @include media-breakpoint-up(sm) {
+      //   width: 100%;
+      // }
+
+      td {
+        position: relative;
+        height: 97px;
       }
-      a {
-        font-size: $font-size-l2;
-        font-family: 'opensans-semibold', sans-serif;
-      }
-      a.name {
-        font-size: $font-size-l3;
-      }
-      &:hover {
-        background-color: $hover-color;
-      }
-      &.active {
-        background-color: $active-color;
-      }
-      > span:first-of-type {
+
+      td:nth-child(2) > p, td:nth-child(3) > p{
         text-align: center;
-        width: 55px;
+        font-size: 16px;
+        font-weight: 600;
+        font-family: OpenSans;
+        letter-spacing: normal;
       }
-      > span:last-of-type {
-        width: calc(100% - 70px);
+
+      td:last-child{
+        font-family: OpenSans;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: #647981;
       }
-      > span {
-        vertical-align: top;
+
+      td,
+      th {
+        border: 1px solid $form-field-border-color;
+        padding: 10px 15px;
       }
-      > span + span {
-        margin-left: 15px;
+      th:nth-child(3){
+        width: 125px;
+      }
+
+      th {
+        color: $gray-darker;
+        font-weight: normal;
+        text-align: left;
+        background-color: #f1fafd;
+        height: 70px;
+      }
+      th.school {
+        width: 230px;
+      }
+
+      td.school {
+        @include clearfix;
+        .content-container{
+          display: flex;
+          .school-info{
+            margin-left: 15px;
+            > a {
+              font-family: OpenSans;
+              font-size: 16px;
+              font-weight: bold;
+              font-style: normal;
+              font-stretch: normal;
+              line-height: normal;
+              letter-spacing: normal;
+              color: $school-color;
+            }
+            > div {
+              margin-top: 10px;
+              .icon-house, a {
+                color: $links-color;
+              }
+            }
+          }
+        }
+        span {
+          display: inline-block;
+        }
+        a {
+          font-size: $font-size-l2;
+          font-family: 'opensans-semibold', sans-serif;
+        }
+        a.name {
+          font-size: $font-size-l3;
+        }
+        &:hover {
+          background-color: $hover-color;
+        }
+        &.active {
+          background-color: $active-color;
+        }
+        > span:first-of-type {
+          text-align: center;
+          width: 55px;
+        }
+        > span:last-of-type {
+          width: calc(100% - 70px);
+        }
+        > span {
+          vertical-align: top;
+        }
+        > span + span {
+          margin-left: 15px;
+        }
       }
     }
   }
-}
 }

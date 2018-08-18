@@ -6,7 +6,7 @@ import ModalTooltip from "../modal_tooltip";
 import FiveStarRating from "../review/form/five_star_rating";
 import { getHomesForSaleHref, clarifySchoolType } from "../../util/school";
 
-const renderSchoolColumn = (name, rating, address, state, links) => {
+const renderSchoolColumn = (name, rating, address, state, links, districtName, size) => {
   const className = `circle-rating--small circle-rating--${rating}`;
   const content = (
     <div>Tooltip Placeholder</div>
@@ -27,6 +27,7 @@ const renderSchoolColumn = (name, rating, address, state, links) => {
           <a href={links.profile} target="_blank">
             {name}
           </a>
+          {size < 992 ? <p>{districtName}</p> : null}
           {homesForSaleHref && <div>
               <span className="icon icon-house" />
               <a href={homesForSaleHref} target="_blank" className="homes-for-sale-link">
@@ -35,6 +36,7 @@ const renderSchoolColumn = (name, rating, address, state, links) => {
             </div>}
         </div>
       </div>
+      {size < 992 ? <div className="blue-line"/> : null}
     </React.Fragment>;
 }
 
@@ -62,26 +64,34 @@ const TopSchoolTableRow = ({
   rating,
   address,
   state,
-  numStudents,
   parentRating,
   enrollment,
-  links
-}) => (
-  <tr>
-    <td className="school">
-      {renderSchoolColumn(name, rating, address, state, links)}
-    </td>
-    <td>
-      <p>{enrollment}</p>
-    </td>
-    <td>
-      {renderReviews(numReviews, parentRating, links)}
-    </td>
-    <td>
-      {renderDistrctName(districtName)}
-    </td>
-  </tr>
-);
+  links,
+  size
+}) => {
+  if (size > 992) {
+    return (
+      <tr>
+        <td className="school">
+          {renderSchoolColumn(name, rating, address, state, links, districtName, size)}
+        </td>
+        <td>
+          <p>{enrollment}</p>
+        </td>
+        <td>
+          {renderReviews(numReviews, parentRating, links)}
+        </td>
+        <td>
+          {renderDistrctName(districtName)}
+        </td>
+      </tr>
+    )
+  }else{
+    return <div className="school-col">
+            {renderSchoolColumn(name, rating, address, state, links, districtName, size)}
+          </div>;
+  }
+};
 
 
 TopSchoolTableRow.propTypes = {
