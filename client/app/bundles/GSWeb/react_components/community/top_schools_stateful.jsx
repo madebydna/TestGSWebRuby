@@ -7,7 +7,7 @@ import * as APISchools from 'api_clients/schools';
 
 class TopSchoolsStateful extends React.Component {
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
+    schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired
     // size: PropTypes.oneOf(validViewportSizes).isRequired,
   };
 
@@ -21,47 +21,61 @@ class TopSchoolsStateful extends React.Component {
     this.state = {
       isLoading: false,
       size: null,
-      levelCodes: 'e'
+      levelCodes: "e"
     };
     this.handleGradeLevel = this.handleGradeLevel.bind(this);
+    this.tempFindSize = this.tempFindSize.bind(this);
   }
 
   componentDidMount() {
     this.setState({
-      schools: this.props.schools
+      schools: this.props.schools,
+      // size: this.props.size
+      state: this.props.schools[0].state,
+      city: this.props.schools[0].address.city
     });
     // temp solution until I can figure out how to use size
-    this.tempFindSize()
+    this.tempFindSize();
   }
 
-  tempFindSize(){
+  componentDidUpdate(prevProps, prevState) {
+    // temp solution until I can figure out how to use size
+    this.tempFindSize();
+  }
+
+  // temp solution until I can figure out how to use size
+  tempFindSize() {
     const size = window.innerWidth;
     if (size !== this.state.size) {
-      this.setState({size})
+      this.setState({ size });
     }
   }
 
   handleGradeLevel(str) {
-    this.setState({ 
-      isLoading: true,
+    this.setState({
+      isLoading: true
     });
     APISchools.find(
       {
-        city: this.props.schools[0].address.city,
-        state: this.props.schools[0].state,
+        city: this.state.city,
+        state: this.state.state,
         levelCodes: [str],
         sort: "rating",
         extras: ["students_per_teacher", "review_summary"],
         limit: 5
       },
       {}
-    ).then(res =>
-      this.setState({
-        schools: res.items,
-        isLoading: false,
-        levelCodes: str
-      })
-    );
+    )
+      .then(res =>
+        this.setState({
+          schools: res.items,
+          isLoading: false,
+          levelCodes: str
+        })
+      )
+      .fail((xhr, status, error) =>
+        alert("Request timed out. Please try again.")
+      );
   }
 
   render() {
@@ -72,6 +86,8 @@ class TopSchoolsStateful extends React.Component {
         isLoading={this.state.isLoading}
         size={this.state.size}
         levelCodes={this.state.levelCodes}
+        state={this.state.state}
+        city={this.state.city}
       />
     );
   }

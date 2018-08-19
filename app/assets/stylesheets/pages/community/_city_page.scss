@@ -8,6 +8,13 @@ $links-color: #1dace5;
   // Temporary CSS
   width: 580px;
   border: solid 1px #dbe6eb;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  h3 {
+    font-size: 19px;
+    font-weight: bold;
+    line-height: 20px;
+  }
   > p, > h3 {
     margin-left: 15px;
     margin-right: 15px;
@@ -19,13 +26,52 @@ $links-color: #1dace5;
   @include media-breakpoint-down(sm) {
     // temp
     width: 90vw;
-    margin: auto;
   }
   // Real CSS - Remove at end of project
   .button-group {
     @include button-group;
-    // margin: 20px auto 0px auto;
     margin: auto;
+  }
+  .sort-filter{
+    button.active{
+      background-color: #dbe6eb;
+      color: black;
+      border: none;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 20px;
+    }
+  }
+  .grade-filter{
+    .button-group{
+      button.active{
+        background-color: #2ba3dc;
+        border: 1px solid #c1d2d9;
+      }
+    }
+  }
+  .more-school-btn{
+    display:flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    a {
+      width: 90%;
+      button{
+        text-transform: uppercase;
+        width: 100%;
+        margin: auto;
+        height: 50px;
+        color: #2bade3;
+        font-weight: 600;
+        background-image: linear-gradient(to bottom, white, #f4f5f7);
+        border: solid 1px #dbe6eb;
+        border-radius: 3px;
+      }
+    }
+  }
+  .sort-filter{
+    margin-left: 15px;
+    margin-bottom: 10px;
   }
   .school-col{
     width: 90%;
@@ -63,16 +109,12 @@ $links-color: #1dace5;
     width: 100%;
     background-color: white;
     position: relative;
-
+    margin-bottom: 15px;
     table {
       table-layout: fixed;
       // width: 991px;
       width: 95%;
       margin: auto;
-
-      // @include media-breakpoint-up(sm) {
-      //   width: 100%;
-      // }
 
       td {
         position: relative;
