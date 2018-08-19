@@ -50,6 +50,9 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
     "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VA": "Virginia", "VT": "Vermont",
     "WA": "Washington", "WI": "Wisconsin", "WV": "West Virginia", "WY": "Wyoming"
   };
+  const schoolMap = {
+    "e": "Elementary", "m": "Middle", "h": "High"
+  }
 	return <div className="top-school-module">
       <h3>Top schools</h3>
       <span className="button-group sort-filter">
@@ -71,8 +74,8 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
       <hr />
       {schoolList}
       <div className="more-school-btn">
-        <a href={`/${STATE_NAME_MAP[state]}/${city}/schools/?gradeLevels=${levelCodes}`} target='_blank'>
-          <button>See More Elementary Schools</button>
+        <a href={state ? `/${STATE_NAME_MAP[state.toUpperCase()]}/${city}/schools/?gradeLevels=${levelCodes}` : null} target='_blank'>
+          <button>See More {schoolMap[levelCodes]} Schools</button>
         </a>
       </div>
     </div>;
