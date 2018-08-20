@@ -26,7 +26,6 @@ const config = {
       './app/bundles/GSWeb/district_boundaries'
     ],
     'school-profiles': ['polyfills', './app/bundles/GSWeb/school_profiles'],
-    'city': ['polyfills', './app/bundles/GSWeb/city'],
     home: ['./app/bundles/GSWeb/home'],
     'commons-blocking-loader': ['./app/bundles/GSWeb/misc_all_page_blocking'],
     'jquery-loader': ['jquery'],
@@ -36,7 +35,8 @@ const config = {
     'search-box': [
       'polyfills',
       './app/bundles/GSWeb/react_components/search_box_wrapper'
-    ]
+    ],
+    city: ['polyfills', './app/bundles/GSWeb/city']
   },
 
   optimization: {

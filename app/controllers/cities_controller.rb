@@ -8,16 +8,11 @@ class CitiesController < ApplicationController
   before_filter :redirect_unless_valid_city
 
   def show
-
-      @schools = serialized_schools
-
+    @schools = serialized_schools
+    @breadcrumbs = breadcrumbs
+    @locality = locality
 
     ######################Extract breadcrumbs, ad targeting, meta tags, etc from this old code.
-    # @breadcrumbs = {
-    #     @state[:long].titleize => state_path(params[:state]),
-    #     @city.titleize => nil
-    # }
-
 
       # gon.pagename = 'GS:City:Home'
       # @ad_page_name = 'City_Page'.to_sym
@@ -50,8 +45,22 @@ class CitiesController < ApplicationController
     # })
   end
 
-  def search_breadcrumbs
-    @_search_breadcrumbs ||= [
+
+  private
+
+  def locality
+    @_locality ||= begin
+        Hash.new.tap do |cp|
+          cp[:city] = city_record.name
+          cp[:state] = States.abbreviation(state).upcase
+          cp[:county] = city_record.county.name
+        end
+      end
+  end
+
+
+  def breadcrumbs
+    @_city_breadcrumbs ||= [
       {
         text: StructuredMarkup.state_breadcrumb_text(state),
         url: state_url(state_params(state))
@@ -65,10 +74,8 @@ class CitiesController < ApplicationController
 
   # StructuredMarkup
   def prepare_json_ld
-    search_breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+    breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
   end
-
-  private
 
   def redirect_unless_valid_city
     redirect_to(state_path(States.state_path(state)), status: 301) unless city_record

@@ -7,6 +7,6 @@
     <%= stylesheet_link_tag "city", async: true %>
 <% end %>
 
-<div id="city-page" style="display:flex;flex-direction:column;align-items:center;">
-  <%= react_component("City", props: { schools: @schools}) %>
+<div id="city-page">
+  <%= react_component("City", props: { schools: @schools, breadcrumbs: @breadcrumbs, locality: @locality}) %>
 </div>

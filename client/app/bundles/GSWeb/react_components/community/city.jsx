@@ -88,6 +88,10 @@ class City extends React.Component {
     );
   }
 
+  toc(){
+
+  }
+
   render() {
     return (
       <CityLayout
@@ -99,6 +103,10 @@ class City extends React.Component {
             size={this.props.viewportSize}
           />
         }
+        breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
+        locality={this.props.locality}
+        toc={this.toc()}
+        viewportSize={this.props.viewportSize}
       >
       </CityLayout>
     );
@@ -107,13 +115,4 @@ class City extends React.Component {
 
 const CityWithViewportSize = withViewportSize('size')(City);
 
-// export default function() {
-//   return (
-//     <SearchContext.Provider>
-//       <SearchContext.Consumer>
-//         {state => <Search {...state} />}
-//       </SearchContext.Consumer>
-//     </SearchContext.Provider>
-//   );
-// }
 export default CityWithViewportSize;
