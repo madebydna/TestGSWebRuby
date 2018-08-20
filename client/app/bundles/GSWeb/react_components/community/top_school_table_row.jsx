@@ -4,6 +4,7 @@ import Rating from "../../components/rating";
 import ModalTooltip from "../modal_tooltip";
 import FiveStarRating from "../review/form/five_star_rating";
 import { getHomesForSaleHref, clarifySchoolType } from "../../util/school";
+import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t } from "util/i18n";
 
 const renderSchoolColumn = (name, rating, address, state, links, districtName, size) => {
@@ -23,7 +24,7 @@ const renderSchoolColumn = (name, rating, address, state, links, districtName, s
           <a href={links.profile} target="_blank">
             {name}
           </a>
-          {size < 992 ? <p>{districtName}</p> : null}
+          {size <= SM ? <p>{districtName}</p> : null}
           {homesForSaleHref && <div>
               <span className="icon icon-house" />
               <a href={homesForSaleHref} target="_blank" className="homes-for-sale-link">
@@ -32,7 +33,7 @@ const renderSchoolColumn = (name, rating, address, state, links, districtName, s
             </div>}
         </div>
       </div>
-      {size < 992 ? <div className="blue-line"/> : null}
+      {size <= SM ? <div className="blue-line"/> : null}
     </React.Fragment>;
 }
 
@@ -65,7 +66,7 @@ const TopSchoolTableRow = ({
   links,
   size
 }) => {
-  if (size > 992) {
+  if (size > SM) {
     return (
       <tr>
         <td className="school">

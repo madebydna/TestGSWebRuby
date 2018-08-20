@@ -96,7 +96,7 @@ class City extends React.Component {
         topSchools={
           <TopSchoolsStateful 
             schools={this.props.schools}
-            // size={this.props.size}
+            size={this.props.viewportSize}
           />
         }
       >

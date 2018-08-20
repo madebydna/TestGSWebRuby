@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../button";
 import TopSchoolTableRow from './top_school_table_row';
+import { SM, validSizes as validViewportSizes } from "util/viewport";
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
 // import LoadingOverlay from 'react_components/search/loading_overlay';
 
 const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes}) => {
-  const schoolList = size >= 992 ? 
+  const schoolList = size > SM ? 
       <section className="school-table">
         <table>
           <thead>

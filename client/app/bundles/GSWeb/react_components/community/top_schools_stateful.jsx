@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import TopSchools from "./top_schools";
 import School from "react_components/search/school";
-import { S, validSizes as validViewportSizes } from "util/viewport";
+import { SM, validSizes as validViewportSizes } from "util/viewport";
 import * as APISchools from 'api_clients/schools';
 
 class TopSchoolsStateful extends React.Component {
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired
-    // size: PropTypes.oneOf(validViewportSizes).isRequired,
+    schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
+    size: PropTypes.oneOf(validViewportSizes).isRequired,
   };
 
   static defaultProps = {
@@ -17,38 +17,25 @@ class TopSchoolsStateful extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = this.props;
     this.state = {
       isLoading: false,
-      size: null,
-      levelCodes: "e"
+      levelCodes: "e",
     };
     this.handleGradeLevel = this.handleGradeLevel.bind(this);
-    this.tempFindSize = this.tempFindSize.bind(this);
+    this.hydrateState = this.hydrateState.bind(this);
   }
 
   componentDidMount() {
+    this.hydrateState(this.props);
+  }
+
+  hydrateState(props){
     this.setState({
-      schools: this.props.schools,
-      // size: this.props.size
-      state: this.props.schools[0].state,
-      city: this.props.schools[0].address.city
+      schools: props.schools,
+      size: props.size,
+      state: props.schools[0].state,
+      city: props.schools[0].address.city
     });
-    // temp solution until I can figure out how to use size
-    this.tempFindSize();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    // temp solution until I can figure out how to use size
-    this.tempFindSize();
-  }
-
-  // temp solution until I can figure out how to use size
-  tempFindSize() {
-    const size = window.innerWidth;
-    if (size !== this.state.size) {
-      this.setState({ size });
-    }
   }
 
   handleGradeLevel(str) {
@@ -84,7 +71,7 @@ class TopSchoolsStateful extends React.Component {
         schools={this.state.schools}
         handleGradeLevel={this.handleGradeLevel}
         isLoading={this.state.isLoading}
-        size={this.state.size}
+        size={this.props.size}
         levelCodes={this.state.levelCodes}
         state={this.state.state}
         city={this.state.city}
