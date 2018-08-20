@@ -1,27 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Rating from "../../components/rating";
-import $ from "jquery";
 import ModalTooltip from "../modal_tooltip";
 import FiveStarRating from "../review/form/five_star_rating";
 import { getHomesForSaleHref, clarifySchoolType } from "../../util/school";
 import { t } from "util/i18n";
 
 const renderSchoolColumn = (name, rating, address, state, links, districtName, size) => {
-  const className = `circle-rating--small circle-rating--${rating}`;
-  const content = (
-    <div>Tooltip Placeholder</div>
-  )
+  const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
   const homesForSaleHref = getHomesForSaleHref(state, address);
   return <React.Fragment>
       <div className="content-container">
-        <div>
+        <div className="tooltip-container">
           <Rating score={rating} size="medium" />
           <div className="scale">
-            {/* <ModalTooltip content={content}>
-            <span className="info-circle icon-info" /> X
-          </ModalTooltip> */}
-            <div>TOOL</div>
+            <ModalTooltip content={content}>
+              <span className="info-circle icon-info" />
+            </ModalTooltip>
           </div>
         </div>
         <div className="school-info">
