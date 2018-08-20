@@ -146,6 +146,7 @@ class CityLayout extends React.Component {
             <div className="below-hero">
               {this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"></div>}
               <div className="city-modules">
+                {this.props.browseSchools}
                 {this.props.topSchools}
               </div>
               {this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"><Toc schools={this.props.schools}/></div>}

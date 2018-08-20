@@ -8,7 +8,6 @@ $blue-link: #2ba3dc;
 $border: #dbe6eb;
 
 .top-school-module{
-  // Temporary CSS
   width: 100%;
   border: solid 1px #dbe6eb;
   h3 {
@@ -25,10 +24,8 @@ $border: #dbe6eb;
     justify-content: center;
   }
   @include media-breakpoint-down(sm) {
-    // temp
     width: 100vw;
   }
-  // Real CSS - Remove at end of project
   .button-group {
     @include button-group;
     margin: auto;

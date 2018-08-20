@@ -6,6 +6,7 @@ import CityLayout from './city_layout';
 import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
+import SchoolBrowseLinks from './school_browse_links';
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 
@@ -97,11 +98,14 @@ class City extends React.Component {
       <CityLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schools={this.props.schools}
-        size={this.props.viewportSize}
         topSchools={
           <TopSchoolsStateful 
             schools={this.props.schools}
             size={this.props.viewportSize}
+          />
+        }
+        browseSchools={
+          <SchoolBrowseLinks
           />
         }
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
