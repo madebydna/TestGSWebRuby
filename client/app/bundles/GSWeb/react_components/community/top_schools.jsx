@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Button from "../button";
 import TopSchoolTableRow from './top_school_table_row';
 import School from 'react_components/search/school';
+import { t } from "util/i18n";
 // import LoadingOverlay from 'react_components/search/loading_overlay';
 
 const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes}) => {
@@ -11,10 +12,10 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
         <table>
           <thead>
             <tr>
-              <th className="school">School</th>
-              <th>Student</th>
-              <th>Reviews</th>
-              <th>District</th>
+              <th className="school">{t("School")}</th>
+              <th>{t("Students")}</th>
+              <th>{t("Reviews")}</th>
+              <th>{t("District")}</th>
             </tr>
           </thead>
           <tbody>
@@ -51,12 +52,12 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
     "WA": "Washington", "WI": "Wisconsin", "WV": "West Virginia", "WY": "Wyoming"
   };
   const schoolMap = {
-    "e": "Elementary", "m": "Middle", "h": "High"
+    "e": t("Elementary"), "m": t("Middle"), "h": t("High")
   }
 	return <div className="top-school-module">
       <h3>Top schools</h3>
       <span className="button-group sort-filter">
-        <Button label={"GreatSchools Rating"} active={true} />
+        <Button label={t("GreatSchools Rating")} active={true} />
       </span>
       <p>
         The GreatSchools Rating provides an overall snapshot of school quality
@@ -66,16 +67,16 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
       {/* Button Rows */}
       <div className="grade-filter">
         <span className="button-group">
-          <Button onClick={() => handleGradeLevel("e")} label={"Elementary"} active={levelCodes === "e" ? true : false} />
-          <Button onClick={() => handleGradeLevel("m")} label={"Middle"} active={levelCodes === "m" ? true : false} />
-          <Button onClick={() => handleGradeLevel("h")} label={"High"} active={levelCodes === "h" ? true : false} />
+          <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
+          <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} />
+          <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} />
         </span>
       </div>
       <hr />
       {schoolList}
       <div className="more-school-btn">
         <a href={state ? `/${STATE_NAME_MAP[state.toUpperCase()]}/${city}/schools/?gradeLevels=${levelCodes}` : null} target='_blank'>
-          <button>See More {schoolMap[levelCodes]} Schools</button>
+          <button>See More {schoolMap[levelCodes]} {t("schools")}</button>
         </a>
       </div>
     </div>;

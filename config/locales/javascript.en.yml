@@ -14,6 +14,7 @@ en:
       - Try different search filters (e.g. school types or levels).
     Close filters: Close filters
     School: School
+    schools: schools
     Type: Type
     Grades: Grades
     Total students enrolled: Total students enrolled
@@ -123,6 +124,7 @@ en:
     of students: '% of students'
     student: student
     students: students
+    Students: Students
     State avg: 'State avg:'
     State average: State average
     School value: School value

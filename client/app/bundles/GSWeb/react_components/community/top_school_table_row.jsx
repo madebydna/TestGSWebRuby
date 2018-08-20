@@ -5,6 +5,7 @@ import $ from "jquery";
 import ModalTooltip from "../modal_tooltip";
 import FiveStarRating from "../review/form/five_star_rating";
 import { getHomesForSaleHref, clarifySchoolType } from "../../util/school";
+import { t } from "util/i18n";
 
 const renderSchoolColumn = (name, rating, address, state, links, districtName, size) => {
   const className = `circle-rating--small circle-rating--${rating}`;
@@ -31,7 +32,7 @@ const renderSchoolColumn = (name, rating, address, state, links, districtName, s
           {homesForSaleHref && <div>
               <span className="icon icon-house" />
               <a href={homesForSaleHref} target="_blank" className="homes-for-sale-link">
-                &nbsp; Homes For sales
+                &nbsp; {t("homes_for_sale")}
               </a>
             </div>}
         </div>
@@ -42,8 +43,8 @@ const renderSchoolColumn = (name, rating, address, state, links, districtName, s
 
 const renderReviews = (numReviews, parentRating, links) => {
   const reviewCt = numReviews && numReviews > 0 ? <a href={links.reviews} target="_blank">
-        {numReviews} {numReviews > 1 ? "reviews" : "review"}
-      </a> : "No Reviews Yet";
+        {numReviews} {numReviews > 1 ? t("reviews.reviews") : t("reviews.review")}
+      </a> : t("No reviews yet");
   const fiveStarRating = <FiveStarRating questionId={1} value={parentRating} onClick={() => {}} />;
   return(
     <React.Fragment>
