@@ -6,6 +6,7 @@ import { XS, SM, LG, MD, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 import Ad from 'react_components/ad';
+import Toc from './toc';
 import { t } from 'util/i18n';
 
 function keepInViewport(
@@ -143,7 +144,7 @@ class CityLayout extends React.Component {
               <div className="city-hero-stats"></div>
             </div>
             <div className="below-hero">
-              {this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"></div>}
+              {this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"><Toc schools={this.props.schools}/></div>}
               <div className="city-modules"></div>
               {this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
                 <Ad slot="citypage_first" dimensions={[300, 600]} />

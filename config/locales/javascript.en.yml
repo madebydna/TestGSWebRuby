@@ -3,6 +3,7 @@ en:
   javascript:
     assigned_school: Assigned school
     homes_for_sale: Homes for sale
+    nearby homes for sale & rent: nearby homes for sale & rent
     Mile: Mile
     Miles: Miles
     Relevance: Relevance
@@ -45,9 +46,12 @@ en:
     Middle: Middle
     High: High
     ListMap view: ListMap view
+    map: map
     Table view: Table view
     Filter by: Filter by
     School type and level: School type and level
+    schools: schools
+    school districts: school districts
     Public schools: Public schools
     Private schools: Private schools
     Public & private schools: Public & private schools
@@ -177,6 +181,7 @@ en:
     Teacher: Teacher
     School leader: School leader
     Community member: Community member
+    community resources: community resources
     Nearest high-performing: Nearest high-performing
     Nearby schools: Nearby schools
     'Submitted ': 'Submitted '

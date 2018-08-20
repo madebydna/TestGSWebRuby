@@ -94,6 +94,7 @@ class City extends React.Component {
     return (
       <CityLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
+        schools={this.props.schools}
         size={this.props.viewportSize}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}

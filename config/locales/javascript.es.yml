@@ -3,6 +3,7 @@ es:
   javascript:
     assigned_school: Escuela asignada
     homes_for_sale: Casas en venta
+    nearby homes for sale & rent: nearby homes for sale & rent
     Mile: Milla
     Miles: Millas
     Relevance: Relevancia
@@ -45,8 +46,11 @@ es:
     assigned: ASIGNADA
     Filter by: Filtrado por
     ListMap view: Mapa
+    map: mapa
     Table view: Tabla
     School type and level: Tipo de escuela y grado
+    schools: escuelas
+    school districts: school districts
     Public schools: Escuelas públicas
     Private schools: Escuelas privadas
     Public & private schools: Escuelas públicas y privadas
@@ -177,6 +181,7 @@ es:
     Teacher: Profesor
     School leader: Funcionario de la escuela
     Community member: Miembro de la comunidad
+    community resources: community resources
     Nearest high-performing: Escuelas más cercanas de alto rendimiento
     Nearby schools: Todas las escuelas cercanas
     'Submitted ': 'Enviado '
