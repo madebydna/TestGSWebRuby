@@ -7,8 +7,7 @@ import { getHomesForSaleHref, clarifySchoolType } from "../../util/school";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t } from "util/i18n";
 
-const renderSchoolColumn = (name, rating, address, state, links, districtName, size) => {
-  const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
+const renderSchoolColumn = (name, rating, address, state, links, districtName, size, content) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   return <React.Fragment>
       <div className="content-container">
@@ -24,16 +23,14 @@ const renderSchoolColumn = (name, rating, address, state, links, districtName, s
           <a href={links.profile} target="_blank">
             {name}
           </a>
-          {size <= SM ? <p>{districtName}</p> : null}
-          {homesForSaleHref && <div>
+          {homesForSaleHref ? <div>
               <span className="icon icon-house" />
               <a href={homesForSaleHref} target="_blank" className="homes-for-sale-link">
                 &nbsp; {t("homes_for_sale")}
               </a>
-            </div>}
+            </div> : null}
         </div>
       </div>
-      {size <= SM ? <div className="blue-line"/> : null}
     </React.Fragment>;
 }
 
@@ -54,6 +51,30 @@ const renderDistrctName = (districtName) => (
   <p>{districtName}</p>
 )
 
+const renderMobileSchool = (name, rating, address, state, links, districtName, size, numReviews, parentRating, content, enrollment) => {
+  return <React.Fragment>
+      <div className="content-container">
+        <div className="tooltip-container">
+          <Rating score={rating} size="medium" />
+          <div className="scale">
+            <ModalTooltip content={content}>
+              <span className="info-circle icon-info" />
+            </ModalTooltip>
+          </div>
+        </div>
+        <div className="school-info">
+          <a href={links.profile} target="_blank">
+            {name}
+          </a>
+          {renderDistrctName(districtName)}
+          <p className="students">{enrollment} {t("students")}</p>
+          {renderReviews(numReviews, parentRating, links)}
+        </div>
+      </div>
+      <div className="blue-line" />
+    </React.Fragment>;
+}
+
 const TopSchoolTableRow = ({
   name,
   numReviews,
@@ -66,11 +87,12 @@ const TopSchoolTableRow = ({
   links,
   size
 }) => {
+  const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
   if (size > SM) {
     return (
       <tr>
         <td className="school">
-          {renderSchoolColumn(name, rating, address, state, links, districtName, size)}
+          {renderSchoolColumn(name, rating, address, state, links, districtName, size, content)}
         </td>
         <td>
           <p>{enrollment}</p>
@@ -85,7 +107,7 @@ const TopSchoolTableRow = ({
     )
   }else{
     return <div className="school-col">
-            {renderSchoolColumn(name, rating, address, state, links, districtName, size)}
+            {renderMobileSchool(name, rating, address, state, links, districtName, size, numReviews, parentRating, content, enrollment)}
           </div>;
   }
 };

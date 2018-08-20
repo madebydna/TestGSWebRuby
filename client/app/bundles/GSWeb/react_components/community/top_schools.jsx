@@ -57,9 +57,10 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
   }
 	return <div className="top-school-module">
       <h3>Top schools</h3>
-      <span className="button-group sort-filter">
+      {/* Code for sort-filter */}
+      {/* <span className="button-group sort-filter">
         <Button label={t("GreatSchools Rating")} active={true} />
-      </span>
+      </span> */}
       <p>
         The GreatSchools Rating provides an overall snapshot of school quality
         based on how well a school prepares all its students for postsecondary

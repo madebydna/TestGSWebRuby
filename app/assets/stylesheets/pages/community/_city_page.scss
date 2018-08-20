@@ -89,6 +89,15 @@ $links-color: #1dace5;
       display: flex;
       .school-info{
         margin-left: 15px;
+        p {
+          margin: 3px 0 0 0;
+        }
+        .students{
+          margin-bottom: 5px;
+        }
+        a {
+          margin: 3px 0 0 0;
+        }
         > a {
           font-family: OpenSans;
           font-size: 16px;
