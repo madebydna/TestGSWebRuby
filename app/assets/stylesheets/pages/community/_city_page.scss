@@ -1,8 +1,11 @@
+
 $active-color: #f6f9fa;
 $hover-color: #f6f9fa;
 $border-color: #dbe6eb;
 $school-color: #2bade3;
 $links-color: #1dace5;
+$blue-link: #2ba3dc;
+$border: #dbe6eb;
 
 .top-school-module{
   // Temporary CSS
@@ -230,6 +233,8 @@ $links-color: #1dace5;
     }
   }
 }
+
+
 .featured {
   display: none; // TODO: dont put this here
 }
@@ -282,11 +287,37 @@ $links-color: #1dace5;
       right: 20px;
     }
     .toc {
-      width: 350px;
+      width: 280px;
       display: inline-block;
-      height: 400px;
-      border: 1px solid pink;
       left: 20px;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        li {
+          color: $blue-link;
+          font-size: 14px;
+          &:hover {
+            cursor: pointer;
+          }
+          div {
+            height: 50px;
+            padding: 16px 0px;
+            margin: 0 20px;
+          }
+        }
+        li + li {
+          div {
+            border-top: 1px solid $border;
+          }
+        }
+        li.selected {
+          color: black;
+          background-color: #f6f9fa;
+          border-left: 5px solid $blue-link;
+        }
+      }
     }
     .city-modules {
       width: calc(100vw - 750px);
@@ -303,6 +334,10 @@ $links-color: #1dace5;
         width: 100%;
         margin: auto;
       }
+    }
+
+    .community-toc {
+      width: 280px;
     }
   }
 }
