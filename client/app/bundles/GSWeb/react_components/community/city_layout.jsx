@@ -75,10 +75,6 @@ function keepInViewport(
 }
 
 class CityLayout extends React.Component {
-  static defaultProps = {
-    breadcrumbs: null,
-  };
-
   static propTypes = {
     size: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
@@ -113,14 +109,6 @@ class CityLayout extends React.Component {
     });
   }
 
-  renderToc(){
-    return null;
-  }
-
-  renderCity(){
-    return null;
-  }
-
   heroTitle(){
     let {city, state} = this.props.locality;
     return `${city}, ${state}`
@@ -131,31 +119,43 @@ class CityLayout extends React.Component {
     return `${city} is a city in ${county} county, ${state}`
   }
 
+  renderHero(){
+    return (<div className="hero">
+      <div className="icon-house"></div>
+      <div className="city-hero-title">{this.heroTitle()}</div>
+      <div className="city-hero-narrative">{this.heroNarration()}</div>
+      <div className="city-hero-stats"></div>
+    </div>)
+  }
+
+  renderBreadcrumbs(){
+    return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
+  }
+
+  renderAd(){
+    return this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
+      <Ad slot="citypage_first" dimensions={[300, 600]}/>
+    </div>
+  }
+
+  renderToc(){
+    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"><Toc schools={this.props.schools}/></div>
+  }
+
   render() {
     return (
       <div className="city-body">
         {this.props.searchBox}
-        <React.Fragment>
-            <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
-            <div className="hero">
-              <div className="icon-house"></div>
-              <div className="city-hero-title">{this.heroTitle()}</div>
-              <div className="city-hero-narrative">{this.heroNarration()}</div>
-              <div className="city-hero-stats"></div>
-            </div>
-            <div className="below-hero">
-              {this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"></div>}
-              <div className="city-modules">
-                <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
-                {this.props.topSchools}
-              </div>
-              {this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"><Toc schools={this.props.schools}/></div>}
-              <div className="city-modules"></div>
-              {this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
-                <Ad slot="citypage_first" dimensions={[300, 600]} />
-              </div>}
-            </div>
-        </React.Fragment>
+        {this.renderBreadcrumbs()}
+        {this.renderHero()}
+        <div className="below-hero">
+          {this.renderToc()}
+          <div className="city-modules">
+            <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
+            {this.props.topSchools}
+          </div>
+          {this.renderAd()}
+        </div>
       </div>
     );
   }
