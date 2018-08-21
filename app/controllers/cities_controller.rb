@@ -17,15 +17,10 @@ class CitiesController < ApplicationController
   private
 
   def set_city_meta_tags
-    set_meta_tags(alternate: {
-      en: url_for(lang: nil),
-      es: url_for(lang: :es)
-    })
-    set_meta_tags({
-      title: cities_title,
-      description: cities_description,
-      canonical: city_url(state: States.state_path(state), city: city.downcase)
-    })
+    set_meta_tags(alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
+                  title: cities_title,
+                  description: cities_description,
+                  canonical: city_url(state: States.state_path(state), city: city.downcase))
   end
 
   def cities_title
