@@ -5,7 +5,8 @@ module Search
     include Pagination::Paginatable
     include Sortable
 
-    attr_accessor :q, :district_id, :district_name, :location_label, :city, :level_codes, :entity_types, :id, :lat, :lon, :radius
+    attr_accessor :q, :district_id, :district_name, :location_label, :city, :level_codes, :entity_types, :id, :lat,
+                  :lon, :radius, :with_rating
     attr_reader :state
 
     def initialize(
@@ -23,6 +24,7 @@ module Search
       radius: nil,
       sort_name: nil,
       sort_direction: nil,
+      with_rating: false,
       offset: -1,
       limit: 25
     )
@@ -42,6 +44,7 @@ module Search
       self.sort_direction = sort_direction
       self.limit = limit
       self.offset = offset
+      self.with_rating = with_rating
     end
 
     def search

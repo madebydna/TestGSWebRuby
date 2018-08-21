@@ -7,7 +7,7 @@ import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 import Ad from 'react_components/ad';
 import Toc from './toc';
-import { t } from 'util/i18n';
+import { t, capitalize } from 'util/i18n';
 
 function keepInViewport(
   ref,
@@ -146,6 +146,7 @@ class CityLayout extends React.Component {
             <div className="below-hero">
               {this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"></div>}
               <div className="city-modules">
+                <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
                 {this.props.topSchools}
               </div>
               {this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"><Toc schools={this.props.schools}/></div>}

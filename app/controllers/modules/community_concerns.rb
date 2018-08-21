@@ -31,7 +31,8 @@ module CommunityConcerns
         district_name: district_record&.name,
         level_codes: [level_code].compact,
         limit: default_top_schools_limit,
-        sort_name: 'rating'
+        sort_name: 'rating',
+        with_rating: true
       )
     end
 
