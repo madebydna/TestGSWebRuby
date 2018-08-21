@@ -33,8 +33,8 @@ class TopSchoolsStateful extends React.Component {
     this.setState({
       schools: props.schools,
       size: props.size,
-      state: props.schools[0].state,
-      city: props.schools[0].address.city
+      state: props.locality.state,
+      city: props.locality.city
     });
   }
 
