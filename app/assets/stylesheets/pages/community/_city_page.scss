@@ -10,6 +10,9 @@ $border: #dbe6eb;
 .top-school-module{
   width: 100%;
   border: solid 1px $border-color;
+  @include media-breakpoint-down(sm) {
+    width: 100%;
+  }
   .top-school-info{
     display: flex;
     justify-content: space-around;
@@ -19,7 +22,7 @@ $border: #dbe6eb;
       margin-top: 20px;
       width: 75%;
       @include media-breakpoint-down(sm) {
-        width: 100vw;
+        width: 95%;
       }
       h3 {
         font-size: 19px;
@@ -36,9 +39,6 @@ $border: #dbe6eb;
   .grade-filter {
     display: flex;
     justify-content: center;
-  }
-  @include media-breakpoint-down(sm) {
-    width: 100vw;
   }
   .button-group {
     @include button-group;
