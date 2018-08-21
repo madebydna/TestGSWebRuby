@@ -161,8 +161,9 @@ $border: #dbe6eb;
       // width: 991px;
       width: 75%;
       margin: auto;
-      @include media-breakpoint-down(sm) {
-        width: 90%;
+      // To help the data table fit inside the module better at a weird breakpoint
+      @media (max-width: 1420px){
+        width: 95%;
       }
       td {
         position: relative;
