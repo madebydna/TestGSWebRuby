@@ -8,7 +8,6 @@ $blue-link: #2ba3dc;
 $border: #dbe6eb;
 
 .top-school-module{
-  // Temporary CSS
   width: 100%;
   border: solid 1px #dbe6eb;
   h3 {
@@ -25,10 +24,8 @@ $border: #dbe6eb;
     justify-content: center;
   }
   @include media-breakpoint-down(sm) {
-    // temp
     width: 100vw;
   }
-  // Real CSS - Remove at end of project
   .button-group {
     @include button-group;
     margin: auto;
@@ -79,6 +76,24 @@ $border: #dbe6eb;
   .sort-filter{
     margin-left: 15px;
     margin-bottom: 10px;
+  }
+  .no-schools{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+    > div{
+      height: 150px;
+      width: 90%;
+      border: 1px solid #c1d2d9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      h3{
+        color: #2bade3;
+      }
+    }
   }
   .school-col{
     width: 90%;
@@ -161,10 +176,12 @@ $border: #dbe6eb;
         border: 1px solid $form-field-border-color;
         padding: 10px 15px;
       }
-      th:nth-child(3){
-        width: 125px;
+      th:nth-child(2){
+        width: 15%;
       }
-
+      th:nth-child(3){
+        width: 130px;
+      }
       th {
         color: $gray-darker;
         font-weight: normal;
@@ -173,7 +190,7 @@ $border: #dbe6eb;
         height: 70px;
       }
       th.school {
-        width: 230px;
+        width: 40%;
       }
 
       td.school {
