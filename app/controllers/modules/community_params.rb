@@ -10,6 +10,10 @@ module CommunityParams
     @_city_record ||= City.find_by(name: city, state: States.abbreviation(state), active: 1)
   end
 
+  def county_record
+    @_county_record ||= city_record&.county
+  end
+
   def district
     params[:district]
   end
@@ -19,7 +23,18 @@ module CommunityParams
   end
 
   def state
-    params[:state]
+    state_param = params[:state]
+    return nil unless state_param.present?
+
+    if States.is_abbreviation?(state_param)
+      state_param
+    else
+      States.abbreviation(state_param.gsub('-', ' ').downcase)
+    end
+  end
+
+  def state_name
+    States.state_name(state)
   end
 
   def level_code
