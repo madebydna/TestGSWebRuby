@@ -263,8 +263,11 @@ $border: #dbe6eb;
     text-align: center;
     color: white;
     font-family: OpenSans;
+    .icon-city {
+      font-size: 24px;
+    }
     .city-hero-title {
-      margin-top: 10px;
+      margin-top: 5px;
       font-size: 36px;
       font-family: 'RobotoSlab-Bold';
     }
