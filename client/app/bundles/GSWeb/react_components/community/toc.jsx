@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { t } from 'util/i18n';
-import { capitalize } from 'util/i18n';
+import { t, capitalize } from 'util/i18n';
 import TocItem from './toc_item';
 
 const cityTocItems = [
