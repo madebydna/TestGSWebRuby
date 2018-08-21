@@ -9,17 +9,31 @@ $border: #dbe6eb;
 
 .top-school-module{
   width: 100%;
-  border: solid 1px #dbe6eb;
-  h3 {
-    font-size: 19px;
-    font-weight: bold;
-    line-height: 20px;
+  border: solid 1px $border-color;
+  .top-school-info{
+    display: flex;
+    justify-content: space-around;
+    // align-items: center;
+    // flex-direction: column;
+    > div{
+      margin-top: 20px;
+      width: 75%;
+      @include media-breakpoint-down(sm) {
+        width: 100vw;
+      }
+      h3 {
+        font-size: 19px;
+        font-weight: bold;
+        line-height: 20px;
+      }
+      > p, > h3, > a {
+        // margin-left: 15px;
+        // margin-right: 15px;
+        padding: 0 20px 0 20px;
+      }
+    }
   }
-  > p, > h3 {
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-  > div {
+  .grade-filter {
     display: flex;
     justify-content: center;
   }
@@ -145,8 +159,11 @@ $border: #dbe6eb;
     table {
       table-layout: fixed;
       // width: 991px;
-      width: 95%;
+      width: 75%;
       margin: auto;
+      @include media-breakpoint-down(sm) {
+        width: 90%;
+      }
       td {
         position: relative;
         height: 97px;
