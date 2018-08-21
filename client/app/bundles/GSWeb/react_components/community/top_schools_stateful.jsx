@@ -49,7 +49,8 @@ class TopSchoolsStateful extends React.Component {
         levelCodes: [str],
         sort: "rating",
         extras: ["students_per_teacher", "review_summary"],
-        limit: 5
+        limit: 5,
+        with_rating: true
       },
       {}
     )

@@ -208,4 +208,8 @@ module SearchRequestParams
     params['locationType'] == 'street_address'
   end
 
+  def with_rating
+    params[:with_rating]
+  end
+
 end
