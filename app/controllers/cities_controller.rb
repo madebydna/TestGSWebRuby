@@ -30,12 +30,7 @@ class CitiesController < ApplicationController
 
   def cities_title
     additional_city_text = state.downcase == 'dc' ? ', DC' : ''
-    if %w(pa nj co in).include?(state)
-      title = "View The Best Schools in #{city_record.name.gs_capitalize_words}, #{state.upcase} | School Ratings for Public & Private"
-    else
-      title = "#{city_record.name.gs_capitalize_words}#{additional_city_text} Schools - #{cities_state_text}School Ratings - Public and Private"
-    end
-    title
+    "#{city_record.name.gs_capitalize_words}#{additional_city_text} Schools - #{cities_state_text}School Ratings - Public and Private"
   end
 
   def cities_description
