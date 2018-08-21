@@ -33,8 +33,8 @@ class TopSchoolsStateful extends React.Component {
     this.setState({
       schools: props.schools,
       size: props.size,
-      state: props.schools[0].state,
-      city: props.schools[0].address.city
+      state: props.locality.state,
+      city: props.locality.city
     });
   }
 
@@ -49,7 +49,8 @@ class TopSchoolsStateful extends React.Component {
         levelCodes: [str],
         sort: "rating",
         extras: ["students_per_teacher", "review_summary"],
-        limit: 5
+        limit: 5,
+        with_rating: true
       },
       {}
     )

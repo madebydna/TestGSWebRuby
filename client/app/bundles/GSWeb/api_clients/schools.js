@@ -76,7 +76,8 @@ export function find({
   locationLabel,
   extras = [],
   page = 1,
-  limit = 25
+  limit = 25,
+  with_rating = false
 } = {}) {
   const data = {
     city,
@@ -84,7 +85,8 @@ export function find({
     state,
     q,
     sort,
-    limit
+    limit,
+    with_rating
   };
   if (levelCodes && levelCodes.length > 0) {
     data.level_code = levelCodes.join(',');
