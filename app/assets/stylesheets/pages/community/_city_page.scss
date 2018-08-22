@@ -15,10 +15,9 @@ $border: #dbe6eb;
     margin: auto;
   }
   .top-school-info{
-    display: flex;
-    justify-content: space-around;
-    // align-items: center;
-    // flex-direction: column;
+    // display: flex;
+    // justify-content: space-around;
+    padding: 30px 0 0 30px;
     > div{
       margin-top: 20px;
       width: 75%;
@@ -180,7 +179,7 @@ $border: #dbe6eb;
     margin-bottom: 15px;
     table {
       table-layout: fixed;
-      width: 85%;
+      width: 90%;
       margin: auto;
       // To help the data table fit inside the module better at a weird breakpoint
       @media (max-width: 1420px){
