@@ -12,6 +12,7 @@ class CitiesController < ApplicationController
     @schools = serialized_schools
     @breadcrumbs = breadcrumbs
     @locality = locality
+    @all_school_count = school_count('all')
   end
 
   private
@@ -57,6 +58,17 @@ class CitiesController < ApplicationController
     {}.tap do |hash|
       # placeholder
     end
+  end
+
+  def city_cache_school_levels
+    @_city_cache_school_levels ||= begin
+      cc = CityCache.for_city_and_name('school_levels', city_record.id)
+      JSON.parse(cc['value']) if cc.present?
+    end
+  end
+
+  def school_count(key)
+    city_cache_school_levels[key].&first['city_value'] if city_cache_school_levels
   end
 
   def locality
