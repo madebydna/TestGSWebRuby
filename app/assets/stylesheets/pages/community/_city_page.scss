@@ -10,9 +10,6 @@ $border: #dbe6eb;
 .top-school-module{
   width: 100%;
   border: solid 1px $border-color;
-  @include media-breakpoint-down(sm) {
-    width: 100%;
-  }
   .top-school-info{
     display: flex;
     justify-content: space-around;
@@ -155,11 +152,10 @@ $border: #dbe6eb;
     background-color: white;
     position: relative;
     margin-bottom: 15px;
-    z-index: -1;
     table {
       table-layout: fixed;
       // width: 991px;
-      width: 75%;
+      width: 85%;
       margin: auto;
       // To help the data table fit inside the module better at a weird breakpoint
       @media (max-width: 1420px){
@@ -208,7 +204,7 @@ $border: #dbe6eb;
         height: 70px;
       }
       th.school {
-        width: 40%;
+        width: 45%;
       }
 
       td.school {
@@ -281,6 +277,7 @@ $border: #dbe6eb;
     position: fixed;
     width: 100%;
     top: 80px;
+    z-index:5;
     .breadcrumbs {
       padding-left: 15px;
       .divider {
