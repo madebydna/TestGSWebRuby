@@ -8,36 +8,47 @@ import { t } from "util/i18n";
 // import LoadingOverlay from 'react_components/search/loading_overlay';
 
 const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes}) => {
-  const schoolList = size > SM ? 
-      <section className="school-table">
-        <table>
-          <thead>
-            <tr>
-              <th className="school">{t("School")}</th>
-              <th>{t("Students")}</th>
-              <th>{t("Reviews")}</th>
-              <th>{t("District")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {schools.map(school => (
-              <TopSchoolTableRow
-                key={school.state + school.id}
-                {...school}
-                size={size}
-              />
-            ))}
-          </tbody>
-        </table>
-      </section> : <section classname="school-table-mobile">
-        {schools.map(school => (
-          <TopSchoolTableRow
-            key={school.state + school.id}
-            {...school}
-            size={size}
-          />
-        ))}
-      </section>;
+  let schoolList;
+  const schoolMap = {
+    "e": t("Elementary"), "m": t("Middle"), "h": t("High")
+  }
+  if (schools.length === 0) {
+    schoolList = <section className="no-schools">
+                    <div>
+                      <h3>No {schoolMap[levelCodes].toLowerCase()} schools found in this city.</h3>
+                    </div>
+                  </section>;
+  } else {
+    schoolList = size > SM ? <section className="school-table">
+          <table>
+            <thead>
+              <tr>
+                <th className="school">{t("School")}</th>
+                <th>{t("Students")}</th>
+                <th>{t("Reviews")}</th>
+                <th>{t("District")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {schools.map(school => (
+                <TopSchoolTableRow
+                  key={school.state + school.id}
+                  {...school}
+                  size={size}
+                />
+              ))}
+            </tbody>
+          </table>
+        </section> : <section classname="school-table-mobile">
+          {schools.map(school => (
+            <TopSchoolTableRow
+              key={school.state + school.id}
+              {...school}
+              size={size}
+            />
+          ))}
+        </section>;
+  }
   const STATE_NAME_MAP = {
     "AK": "Alaska", "AL": "Alabama", "AR": "Arkansas", "AZ": "Arizona",
     "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DC": "District of Columbia",
@@ -52,20 +63,24 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
     "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VA": "Virginia", "VT": "Vermont",
     "WA": "Washington", "WI": "Wisconsin", "WV": "West Virginia", "WY": "Wyoming"
   };
-  const schoolMap = {
-    "e": t("Elementary"), "m": t("Middle"), "h": t("High")
-  }
+
 	return <div className="top-school-module">
-      <h3>Top schools</h3>
-      {/* Code for sort-filter */}
-      {/* <span className="button-group sort-filter">
-        <Button label={t("GreatSchools Rating")} active={true} />
-      </span> */}
-      <p>
-        The GreatSchools Rating provides an overall snapshot of school quality
-        based on how well a school prepares all its students for postsecondary
-        success-be it college or career. Learn More
-      </p>
+      <div className="top-school-info">
+        <div>
+          <h3>Top schools</h3>
+          {/* Code for sort-filter */}
+          {/* <span className="button-group sort-filter">
+            <Button label={t("GreatSchools Rating")} active={true} />
+          </span> */}
+          <p>
+            The GreatSchools Rating provides an overall snapshot of school quality
+            based on how well a school prepares all its students for postsecondary
+            success - be it college or career.
+          </p>
+          <a href="">Learn More</a>
+        </div>
+      </div>
+      <br/>
       {/* Button Rows */}
       <div className="grade-filter">
         <span className="button-group">
@@ -77,7 +92,7 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
       <hr />
       {schoolList}
       <div className="more-school-btn">
-        <a href={state ? `/${STATE_NAME_MAP[state.toUpperCase()]}/${city}/schools/?gradeLevels=${levelCodes}` : null} target='_blank'>
+        <a href={state ? `/${STATE_NAME_MAP[state.toUpperCase()].toLowerCase()}/${city.toLowerCase()}/schools/?gradeLevels=${levelCodes}` : null} target='_blank'>
           <button>See More {schoolMap[levelCodes]} {t("schools")}</button>
         </a>
       </div>

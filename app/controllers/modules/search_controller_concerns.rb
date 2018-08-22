@@ -91,7 +91,8 @@ module SearchControllerConcerns
       q: q,
       offset: offset,
       limit: limit,
-      sort_name: sort_name
+      sort_name: sort_name,
+      with_rating: with_rating
     )
   end
 
