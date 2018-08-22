@@ -33,7 +33,9 @@ module Search
       return {} unless school
       {
         name_text: school.name,
+        sortable_name_s: school.name&.downcase,
         city_s: school.city.downcase,
+        school_district_id_i: school.district_id,
         street_s: school.street&.downcase,
         zipcode_s: school.zipcode,
         county_s: school.county&.downcase,
