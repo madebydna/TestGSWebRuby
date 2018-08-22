@@ -6,7 +6,7 @@ import FiveStarRating from "../review/form/five_star_rating";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t } from "util/i18n";
 
-const renderSchoolColumn = (name, rating, address, state, links, districtName, size, content, gradeLevels, schoolType) => {
+const renderSchoolColumn = (name, rating, links, districtName, content, gradeLevels, schoolType) => {
   return <React.Fragment>
       <div className="content-container">
         <div className="tooltip-container">
@@ -33,18 +33,18 @@ const renderReviews = (numReviews, parentRating, links) => {
       </a> : t("No reviews yet");
   const fiveStarRating = <FiveStarRating questionId={1} value={parentRating} onClick={() => {}} />;
   return(
-    <React.Fragment>
+    <div className="five-star-review">
       {reviewCt}
       {fiveStarRating}
-    </React.Fragment>
+    </div>
   )
 }
 
 const renderDistrctName = (districtName) => (
-  <p>{districtName}</p>
+  <p className="school-district">{districtName}</p>
 )
 
-const renderMobileSchool = (name, rating, address, state, links, districtName, size, numReviews, parentRating, content, enrollment) => {
+const renderMobileSchool = (name, rating, links, districtName, numReviews, parentRating, content, enrollment, gradeLevels, schoolType) => {
   return <React.Fragment>
       <div className="content-container">
         <div className="tooltip-container">
@@ -60,7 +60,7 @@ const renderMobileSchool = (name, rating, address, state, links, districtName, s
             {name}
           </a>
           {renderDistrctName(districtName)}
-          <p className="students">{enrollment} {t("students")}</p>
+          <p className="students">{schoolType[0].toUpperCase() + schoolType.slice(1)}, {gradeLevels} | {enrollment} {t("students")}</p>
           {renderReviews(numReviews, parentRating, links)}
         </div>
       </div>
@@ -87,7 +87,7 @@ const TopSchoolTableRow = ({
     return (
       <tr>
         <td className="school">
-          {renderSchoolColumn(name, rating, address, state, links, districtName, size, content, gradeLevels, schoolType)}
+          {renderSchoolColumn(name, rating, links, districtName, content, gradeLevels, schoolType)}
         </td>
         <td>
           <p>{enrollment}</p>
@@ -102,7 +102,7 @@ const TopSchoolTableRow = ({
     )
   }else{
     return <div className="school-col">
-            {renderMobileSchool(name, rating, address, state, links, districtName, size, numReviews, parentRating, content, enrollment)}
+      {renderMobileSchool(name, rating, links, districtName,  numReviews, parentRating, content, enrollment, gradeLevels, schoolType)}
           </div>;
   }
 };
