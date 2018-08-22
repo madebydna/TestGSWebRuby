@@ -7,7 +7,7 @@ import School from 'react_components/search/school';
 import { t } from "util/i18n";
 // import LoadingOverlay from 'react_components/search/loading_overlay';
 
-const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes}) => {
+const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, gradeLevels}) => {
   let schoolList;
   const schoolMap = {
     "e": t("Elementary"), "m": t("Middle"), "h": t("High")

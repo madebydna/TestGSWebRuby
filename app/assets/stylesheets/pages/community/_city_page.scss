@@ -8,7 +8,8 @@ $blue-link: #2ba3dc;
 $border: #dbe6eb;
 
 .top-school-module{
-  width: 100%;
+  width: 97%;
+  margin-bottom: 15px;
   border: solid 1px $border-color;
   .top-school-info{
     display: flex;
@@ -119,7 +120,7 @@ $border: #dbe6eb;
       .school-info{
         margin-left: 15px;
         p {
-          margin: 3px 0 0 0;
+          margin: 15px 0 0 0;
         }
         .students{
           margin-bottom: 5px;
@@ -147,14 +148,12 @@ $border: #dbe6eb;
     }
   }
   .school-table {
-    overflow-x: scroll;
     width: 100%;
     background-color: white;
     position: relative;
     margin-bottom: 15px;
     table {
       table-layout: fixed;
-      // width: 991px;
       width: 85%;
       margin: auto;
       // To help the data table fit inside the module better at a weird breakpoint
@@ -169,7 +168,6 @@ $border: #dbe6eb;
       td:nth-child(2) > p, td:nth-child(3) > p{
         text-align: center;
         font-size: 16px;
-        font-weight: 600;
         font-family: OpenSans;
         letter-spacing: normal;
       }
@@ -204,9 +202,9 @@ $border: #dbe6eb;
         height: 70px;
       }
       th.school {
-        width: 45%;
+        width: 40%;
       }
-
+      // Table View ONLY 
       td.school {
         @include clearfix;
         .content-container{
@@ -215,13 +213,24 @@ $border: #dbe6eb;
             margin-left: 15px;
             > a {
               font-family: OpenSans;
-              font-size: 16px;
+              font-size: 17px;
               font-weight: bold;
               font-style: normal;
               font-stretch: normal;
               line-height: normal;
               letter-spacing: normal;
               color: $school-color;
+            }
+            > h4 {
+              margin-top: 10px;
+
+              font-size: 14px;
+              font-weight: 600;
+              font-style: normal;
+              font-stretch: normal;
+              line-height: normal;
+              letter-spacing: normal;
+              color: #032532;
             }
             > div {
               margin-top: 10px;
@@ -355,11 +364,11 @@ $border: #dbe6eb;
       }
     }
     .city-modules {
-      width: calc(100vw - 750px);
+      width: calc(100vw - 680px);
       display: inline-block;
       height: 500px;
       margin-top: 22px;
-      margin-left: 390px;
+      margin-left: 330px;
       .modules-title {
         font-size: 20px;
         font-weight: bold;
@@ -369,6 +378,7 @@ $border: #dbe6eb;
       @include media-breakpoint-down(md) {
         width: calc(100vw - 350px);
         margin-left: 20px;
+        margin-right: 20px;
       }
       @include media-breakpoint-only(xs) {
         width: 100%;

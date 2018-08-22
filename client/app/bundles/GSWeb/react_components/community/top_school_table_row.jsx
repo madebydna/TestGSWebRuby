@@ -3,12 +3,10 @@ import PropTypes from "prop-types";
 import Rating from "../../components/rating";
 import ModalTooltip from "../modal_tooltip";
 import FiveStarRating from "../review/form/five_star_rating";
-import { getHomesForSaleHref, clarifySchoolType } from "../../util/school";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t } from "util/i18n";
 
-const renderSchoolColumn = (name, rating, address, state, links, districtName, size, content) => {
-  const homesForSaleHref = getHomesForSaleHref(state, address);
+const renderSchoolColumn = (name, rating, address, state, links, districtName, size, content, gradeLevels, schoolType) => {
   return <React.Fragment>
       <div className="content-container">
         <div className="tooltip-container">
@@ -23,12 +21,7 @@ const renderSchoolColumn = (name, rating, address, state, links, districtName, s
           <a href={links.profile} target="_blank">
             {name}
           </a>
-          {homesForSaleHref ? <div>
-              <span className="icon icon-house" />
-              <a href={homesForSaleHref} target="_blank" className="homes-for-sale-link">
-                &nbsp; {t("homes_for_sale")}
-              </a>
-            </div> : null}
+          <h4>{schoolType[0].toUpperCase() + schoolType.slice(1)}, {gradeLevels}</h4>
         </div>
       </div>
     </React.Fragment>;
@@ -85,14 +78,16 @@ const TopSchoolTableRow = ({
   parentRating,
   enrollment,
   links,
-  size
+  size,
+  gradeLevels,
+  schoolType
 }) => {
   const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
   if (size > SM) {
     return (
       <tr>
         <td className="school">
-          {renderSchoolColumn(name, rating, address, state, links, districtName, size, content)}
+          {renderSchoolColumn(name, rating, address, state, links, districtName, size, content, gradeLevels, schoolType)}
         </td>
         <td>
           <p>{enrollment}</p>
