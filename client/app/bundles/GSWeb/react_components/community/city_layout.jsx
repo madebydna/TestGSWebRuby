@@ -6,7 +6,6 @@ import { XS, SM, LG, MD, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 import Ad from 'react_components/ad';
-import Toc from './toc';
 import { t, capitalize } from 'util/i18n';
 
 function keepInViewport(
@@ -139,7 +138,42 @@ class CityLayout extends React.Component {
   }
 
   renderToc(){
-    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"><Toc schools={this.props.schools}/></div>
+    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
+  }
+
+  renderDistricts(){
+    return (
+      <div id="districts">
+        <div className="modules-title">{`${capitalize(t('school districts'))} ${t('in')} ${this.props.locality.city}`}</div>
+          <table>
+            <thead>
+            <tr>
+              <th className="school">{t("District")}</th>
+              <th>{t("Grades")}</th>
+              <th>{t("# of schools")}</th>
+              <th>{t("# of students")}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Oakland Unified School District</td>
+              <td>PK - 12</td>
+              <td>136</td>
+              <td> 5,572</td>
+            </tr>
+            </tbody>
+          </table>
+      </div>
+    )
+  }
+
+  renderTopSchools(){
+    return (
+      <div id="schools">
+        <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
+        {this.props.topSchools}
+      </div>
+    )
   }
 
   render() {
@@ -151,8 +185,8 @@ class CityLayout extends React.Component {
         <div className="below-hero">
           {this.renderToc()}
           <div className="city-modules">
-            <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
-            {this.props.topSchools}
+            {this.renderTopSchools()}
+            {this.renderDistricts()}
           </div>
           {this.renderAd()}
         </div>

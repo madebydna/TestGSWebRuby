@@ -146,9 +146,9 @@ $border: #dbe6eb;
       }
     }
   }
+
   .school-table {
     overflow-x: scroll;
-    width: 100%;
     background-color: white;
     position: relative;
     margin-bottom: 15px;
@@ -185,11 +185,6 @@ $border: #dbe6eb;
         color: #647981;
       }
 
-      td,
-      th {
-        border: 1px solid $form-field-border-color;
-        padding: 10px 15px;
-      }
       th:nth-child(2){
         width: 15%;
       }
@@ -201,7 +196,7 @@ $border: #dbe6eb;
         font-weight: normal;
         text-align: left;
         background-color: #f1fafd;
-        height: 70px;
+        height: 60px;
       }
       th.school {
         width: 45%;
@@ -311,6 +306,25 @@ $border: #dbe6eb;
 
   .below-hero {
     width: 100%;
+    table {
+      width: 100%;
+      text-align: center;
+      th {
+        color: $gray-darker;
+        font-weight: normal;
+        background-color: #f1fafd;
+        height: 60px;
+      }
+      td, th {
+        border: 1px solid $form-field-border-color;
+        padding: 10px 15px;
+      }
+    }
+    #districts {
+      tbody > tr > td:first-child {
+        color: $school-color;
+      }
+    }
     .sticky {
       position: fixed;
       top: 320px;
@@ -357,6 +371,9 @@ $border: #dbe6eb;
       width: calc(100vw - 750px);
       display: inline-block;
       margin: 22px 0 10px 390px;
+      > div {
+        margin-bottom: 20px;
+      }
       .modules-title {
         font-size: 20px;
         font-weight: bold;

@@ -8,7 +8,7 @@ import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
-
+import Toc from './toc';
 import withViewportSize from 'react_components/with_viewport_size';
 import '../../vendor/remodal';
 import { find as findSchools } from 'api_clients/schools';
@@ -18,11 +18,13 @@ class City extends React.Component {
   static defaultProps = {
     schools: [],
     loadingSchools: false,
-    breadcrumbs: []
+    breadcrumbs: [],
+    districts: []
   };
 
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.object),
+    districts: PropTypes.arrayOf(PropTypes.object),
     loadingSchools: PropTypes.bool,
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
@@ -88,10 +90,6 @@ class City extends React.Component {
     );
   }
 
-  toc(){
-
-  }
-
   render() {
     return (
       <CityLayout
@@ -105,9 +103,10 @@ class City extends React.Component {
             locality={this.props.locality}
           />
         }
+        districts={this.props.districts}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
-        toc={this.toc()}
+        toc={<Toc schools={this.props.schools}/>}
         viewportSize={this.props.viewportSize}
       >
       </CityLayout>
