@@ -15,7 +15,8 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
   if (schools.length === 0) {
     schoolList = <section className="no-schools">
                     <div>
-                      <h3>No {schoolMap[levelCodes].toLowerCase()} schools found in this city.</h3>
+                      <h3>There are no {schoolMap[levelCodes].toLowerCase()} schools with a GreatSchools 
+                      rating for this city.</h3>
                     </div>
                   </section>;
   } else {
