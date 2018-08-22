@@ -34,7 +34,8 @@ Rails.application.config.assets.precompile += [
     'highcharts.js',
     'api_documentation.css',
     'admin_tools.css',
-    'add_remove_schools.css'
+    'add_remove_schools.css',
+    'city.css'
 
 ]
 # Add client/assets/ folders to asset pipeline's search path.
