@@ -12,24 +12,25 @@ class CitiesController < ApplicationController
     @schools = serialized_schools
     @breadcrumbs = breadcrumbs
     @locality = locality
-    @districts = districts_by_city
+    # @districts = districts_by_city
     @school_levels = school_levels
+    @districts = district_content
   end
 
   private
 
-  def districts_by_city
-    School.on_db(state)
-      .where(city: city_record.name, active: 1)
-      .joins('left join district on district.id = school.district_id')
-      .where('district.charter_only = 0')
-      .group('district.id')
-      .pluck('district.name', 'district.level_code', 'district.num_schools', 'district.city')
-      .map {|school_record| {:districtName=> school_record[0],
-                             :grades=>LevelCode.full_from_all_grades(school_record[1]),
-                             :numSchools=>school_record[2],
-                             :url=>district_url(state: state_name, city: gs_legacy_url_encode(school_record[3]), district: gs_legacy_url_encode(school_record[0]))}}
-  end
+  # def districts_by_city
+  #   School.on_db(state)
+  #     .where(city: city_record.name, active: 1)
+  #     .joins('left join district on district.id = school.district_id')
+  #     .where('district.charter_only = 0')
+  #     .group('district.id')
+  #     .pluck('district.name', 'district.level_code', 'district.num_schools', 'district.city')
+  #     .map {|school_record| {:districtName=> school_record[0],
+  #                            :grades=>LevelCode.full_from_all_grades(school_record[1]),
+  #                            :numSchools=>school_record[2],
+  #                            :url=>district_url(state: state_name, city: gs_legacy_url_encode(school_record[3]), district: gs_legacy_url_encode(school_record[0]))}}
+  # end
 
   def set_city_meta_tags
     set_meta_tags(alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
@@ -77,7 +78,14 @@ class CitiesController < ApplicationController
   def city_cache_school_levels
     @_city_cache_school_levels ||= begin
       cc = CityCache.for_city_and_name('school_levels', city_record.id)
-      JSON.parse(cc['value']) if cc.present?
+      JSON.parse(cc.value) if cc.present?
+    end
+  end
+
+  def city_cache_district_content
+    @_city_cache_district_content ||= begin
+      cc = CityCache.for_city_and_name('district_content', city_record.id)
+      JSON.parse(cc.value) if cc.present?
     end
   end
 
@@ -98,6 +106,30 @@ class CitiesController < ApplicationController
 
   def school_count(key)
     city_cache_school_levels[key].first['city_value'] if city_cache_school_levels && city_cache_school_levels[key]
+  end
+
+  def district_content_field(district_content, key)
+    district_content[key].first['city_value'] if district_content && district_content[key]
+  end
+
+  def district_content
+    city_cache_district_content.map do |district_content|
+      {}.tap do |d|
+        name = district_content_field(district_content, 'name')
+        city = district_content_field(district_content, 'city')
+        d[:districtName] = name
+        d[:grades] = district_content_field(district_content, 'levels')
+        d[:numSchools] = district_content_field(district_content, 'school_count')
+        d[:url] = district_url(district_params(state, city, name))
+        d[:enrollment] =  district_enrollment(district_content_field(district_content, 'id'))
+      end
+    end
+  end
+
+  def district_enrollment(district_id)
+    dc = DistrictCache.where(name: 'district_characteristics', district_id: district_id, state: state)
+    dc_hash = JSON.parse(dc.first.value) if dc.present? && dc.first
+    dc_hash['Enrollment'].first['district_value'].to_i if dc_hash && dc_hash['Enrollment']
   end
 
   def locality
