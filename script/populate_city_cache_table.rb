@@ -62,9 +62,9 @@ def process_city(city, cache_keys)
   cache_keys.each do |cache_key|
     begin
       CityCacher.create_cache(city, cache_key)
-    # rescue
-    #   @had_any_errors = true
-    #   puts "City Error #{city.state}-#{city.name}-#{city.id}"
+    rescue e
+      @had_any_errors = true
+      puts "City Error #{city.state}-#{city.name}-#{city.id}  #{e}"
     end
   end
 end
@@ -87,8 +87,8 @@ parsed_arguments.each do |args|
     City.get_all_cities.each do | city |
       process_city(city, cache_keys)
       counter += counter
-      if counter%100 == 0
-        puts counter
+      if counter%1000 == 0
+        puts counter + " Cities complete"
       end
     end
   elsif states.blank? && city_ids.present?

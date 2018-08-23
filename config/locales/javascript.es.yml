@@ -1,6 +1,9 @@
 ---
 es:
   javascript:
+    '# of schools': '# of schools'
+    '# of students': '# of students'
+    in: en
     at a glance: at a glance
     assigned_school: Escuela asignada
     homes_for_sale: Casas en venta

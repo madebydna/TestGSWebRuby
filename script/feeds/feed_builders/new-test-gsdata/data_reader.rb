@@ -4,7 +4,30 @@ module Feeds
   module NewTestGsdata
     class DataReader
       attr_reader :state, :schools, :districts
-
+# rubocop:disable Layout/SpaceInsideArrayLiteralBrackets, MultilineArrayBraceLayout
+      BLACKLIST_BREAKDOWNS_REGEX = [    /Learners Enrolled/,
+                                        /Fluent-English/,
+                                        /Initially-Fluent/,
+                                        /Proficient Former/,
+                                        /Proficient Current/,
+                                        /General-Education/,
+                                        /Parents/,
+                                        /Reclassified/,
+                                        /Migrant/,
+                                        /migrant/,
+                                        /Homeless/,
+                                        /Free lunch/,
+                                        /Reduced lunch/,
+                                        /Title I/,
+                                        /Poverty/,
+                                        /poverty/,
+                                        /LEP/,
+                                        /Gender Unknown/,
+                                        /General population/,
+                                        /Unspecified/,
+                                        /Gifted/
+      ]
+# rubocop:enable Layout/SpaceInsideArrayLiteralBrackets, MultilineArrayBraceLayout
       def initialize(state, schools, districts)
         @state = state
         @schools = schools
@@ -87,38 +110,13 @@ module Feeds
           state_info.values
         end
       end
-# rubocop:disable Metrics/BlockLength
+
       def cache_filter
         lambda do |h|
-          breakdown = h['breakdowns']
-          if breakdown =~ /Learners Enrolled/ ||
-              breakdown =~ /Fluent-English/ ||
-              breakdown =~ /Initially-Fluent/ ||
-              breakdown =~ /Proficient Former/ ||
-              breakdown =~ /Proficient Current/ ||
-              breakdown =~ /General-Education/ ||
-              breakdown =~ /Parents/ ||
-              breakdown =~ /Reclassified/ ||
-              breakdown =~ /Migrant/ ||
-              breakdown =~ /migrant/ ||
-              breakdown =~ /Homeless/ ||
-              breakdown =~ /Free lunch/ ||
-              breakdown =~ /Reduced lunch/ ||
-              breakdown =~ /Title I/ ||
-              breakdown =~ /Poverty/ ||
-              breakdown =~ /poverty/ ||
-              breakdown =~ /LEP/ ||
-              breakdown =~ /Gender Unknown/ ||
-              breakdown =~ /General population/ ||
-              breakdown =~ /Unspecified/ ||
-              breakdown =~ /Gifted/
-            false
-          else
-            true
-          end
+          # ! h['breakdowns'].match(Regexp.union(BLACKLIST_BREAKDOWNS_REGEX))
+          BLACKLIST_BREAKDOWNS_REGEX.none? { |regex| regex.match?(h['breakdowns']) }
         end
       end
-# rubocop:enable Metrics/BlockLength
     end
   end
 end

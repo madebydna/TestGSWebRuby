@@ -6,7 +6,6 @@ import { XS, SM, LG, MD, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 import Ad from 'react_components/ad';
-import Toc from './toc';
 import { t, capitalize } from 'util/i18n';
 
 function keepInViewport(
@@ -76,7 +75,7 @@ function keepInViewport(
 
 class CityLayout extends React.Component {
   static propTypes = {
-    size: PropTypes.oneOf(validSizes).isRequired,
+    viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
   };
@@ -139,7 +138,45 @@ class CityLayout extends React.Component {
   }
 
   renderToc(){
-    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky"><Toc schools={this.props.schools}/></div>
+    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
+  }
+
+  renderDistricts(){
+    return (
+      <div id="districts">
+        <div className="modules-title">{`${capitalize(t('school districts'))} ${t('in')} ${this.props.locality.city}`}</div>
+          <table>
+            <thead>
+            <tr>
+              <th className="school">{t("District")}</th>
+              <th>{t("Grades")}</th>
+              <th>{t("# of schools")}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {this.props.districts.map(district => {
+              return (
+                <tr key={`${district.districtName}-${district.grades}`}>
+                  <td><a href={district.url}>{district.districtName}</a></td>
+                  <td>{district.grades}</td>
+                  <td>{district.numSchools}</td>
+                </tr>
+              )
+            })}
+            </tbody>
+          </table>
+      </div>
+    )
+  }
+
+  renderSchools(){
+    return (
+      <div id="schools">
+        <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
+        {this.props.browseSchools}
+        {this.props.topSchools}
+      </div>
+    )
   }
 
   render() {
@@ -151,9 +188,8 @@ class CityLayout extends React.Component {
         <div className="below-hero">
           {this.renderToc()}
           <div className="city-modules">
-            <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
-            {this.props.browseSchools}
-            {this.props.topSchools}
+            {this.renderSchools()}
+            {this.renderDistricts()}
           </div>
           {this.renderAd()}
         </div>

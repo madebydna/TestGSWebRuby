@@ -1,6 +1,9 @@
 ---
 en:
   javascript:
+    '# of schools': '# of schools'
+    '# of students': '# of students'
+    in: in
     at a glance: at a glance
     assigned_school: Assigned school
     homes_for_sale: Homes for sale

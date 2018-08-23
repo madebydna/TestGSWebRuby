@@ -17,9 +17,6 @@ $gradient-off-white: #f4f5f7;
   width: 95%;
   margin-bottom: 15px;
   border: solid 1px $border-color;
-  @include media-breakpoint-down(sm) {
-    margin: auto;
-  }
   .top-school-info{
     padding: 30px 0 0 30px;
     > div{
@@ -160,6 +157,7 @@ $gradient-off-white: #f4f5f7;
       }
     }
   }
+
   .five-star-review{
     @include media-breakpoint-down(sm) {
       display: flex;
@@ -178,9 +176,6 @@ $gradient-off-white: #f4f5f7;
       width: 90%;
       margin: auto;
       // To help the data table fit inside the module better at a weird breakpoint
-      @media (max-width: 1420px){
-        width: 95%;
-      }
       td {
         position: relative;
         height: 97px;
@@ -204,11 +199,6 @@ $gradient-off-white: #f4f5f7;
         color: #647981;
       }
 
-      td,
-      th {
-        border: 1px solid $form-field-border-color;
-        padding: 10px 15px;
-      }
       th:nth-child(2){
         width: 15%;
         @include media-breakpoint-up(lg) {
@@ -223,7 +213,7 @@ $gradient-off-white: #f4f5f7;
         font-weight: normal;
         text-align: left;
         background-color: #f1fafd;
-        height: 70px;
+        height: 60px;
       }
       th.school {
         width: 40%;
@@ -400,6 +390,27 @@ $gradient-off-white: #f4f5f7;
 
   .below-hero {
     width: 100%;
+    table {
+      text-align: center;
+      width: 95%;
+      th {
+        color: $gray-darker;
+        font-weight: normal;
+        background-color: #f1fafd;
+        height: 60px;
+      }
+      td, th {
+        border: 1px solid $form-field-border-color;
+        padding: 10px 15px;
+      }
+      @media (max-width: 1420px){
+      }
+    }
+    #districts {
+      tbody > tr > td:first-child a {
+        color: $school-color;
+      }
+    }
     .sticky {
       position: fixed;
       top: 320px;
@@ -445,6 +456,9 @@ $gradient-off-white: #f4f5f7;
     .city-modules {
       width: calc(100vw - 670px);
       display: inline-block;
+      > div {
+        margin-bottom: 20px;
+      }
       margin: 22px 0 10px 350px;
       .modules-title {
         font-size: 20px;
@@ -456,6 +470,14 @@ $gradient-off-white: #f4f5f7;
         width: calc(100vw - 350px);
         margin: 0;
         padding: 20px;
+      }
+      @include media-breakpoint-down(sm) {
+        > div {
+          margin: auto;
+          .top-school-module, table {
+            width: 100%;
+          }
+        }
       }
       @include media-breakpoint-only(xs) {
         width: 100%;

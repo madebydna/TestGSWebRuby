@@ -59,4 +59,8 @@ class LevelCode
     grades = grades_string.split(',')
     grades.map {|grade| from_grade(grade).to_s}.uniq.sort.join(',')
   end
+
+  def self.full_from_all_grades(level_code_string)
+    level_code_string.split(',').reduce([]) {|accum, string| accum << LevelCode::LEVEL_LOOKUP[string].long_name }.join(', ')
+  end
 end
