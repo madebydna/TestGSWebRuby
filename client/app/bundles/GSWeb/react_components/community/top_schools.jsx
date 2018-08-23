@@ -5,6 +5,7 @@ import TopSchoolTableRow from './top_school_table_row';
 import { SM } from "util/viewport";
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
+import { name } from "../../util/states";
 // import LoadingOverlay from 'react_components/search/loading_overlay';
 
 const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, gradeLevels}) => {
@@ -50,20 +51,6 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
           ))}
         </section>;
   }
-  const STATE_NAME_MAP = {
-    "AK": "Alaska", "AL": "Alabama", "AR": "Arkansas", "AZ": "Arizona",
-    "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DC": "District of Columbia",
-    "DE": "Delaware", "FL": "Florida", "GA": "Georgia", "HI": "Hawaii", "IA": "Iowa",
-    "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "KS": "Kansas", "KY": "Kentucky",
-    "LA": "Louisiana", "MA": "Massachusetts", "MD": "Maryland", "ME": "Maine", "MI": "Michigan",
-    "MN": "Minnesota", "MO": "Missouri", "MS": "Mississippi", "MT": "Montana",
-    "NC": "North Carolina", "ND": "North Dakota", "NE": "Nebraska", "NH": "New Hampshire",
-    "NJ": "New Jersey", "NM": "New Mexico", "NV": "Nevada", "NY": "New York",
-    "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania",
-    "RI": "Rhode Island", "SC": "South Carolina", "SD": "South Dakota",
-    "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VA": "Virginia", "VT": "Vermont",
-    "WA": "Washington", "WI": "Wisconsin", "WV": "West Virginia", "WY": "Wyoming"
-  };
 	return <div className="top-school-module">
       <div className="top-school-info">
         <div>
@@ -92,7 +79,7 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
       <hr />
       {schoolList}
       <div className="more-school-btn">
-        <a href={state ? `/${STATE_NAME_MAP[state.toUpperCase()].toLowerCase()}/${city.toLowerCase()}/schools/?gradeLevels=${levelCodes}` : null} target='_blank'>
+        <a href={state ? `/${name(state.toLowerCase())}/${city.toLowerCase()}/schools/?gradeLevels=${levelCodes}` : null} target='_blank'>
           <button>See More {schoolMap[levelCodes]} {t("schools")}</button>
         </a>
       </div>
