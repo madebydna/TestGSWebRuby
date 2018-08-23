@@ -7,6 +7,9 @@ class CityCacher
   # Known data types:
   # :header
   # :school_levels
+  # :district_content
+
+
 
   def initialize(city)
     @city = city
@@ -18,14 +21,16 @@ class CityCacher
         city_id: city.id,
         name:self.class::CACHE_KEY
     )
+# rubocop:disable Style/SafeNavigation
     if final_hash.present?
       city_cache.update_attributes!(
           value: final_hash.to_json,
           updated: Time.now
       )
-    elsif city_cache.&id.present?
+    elsif city_cache && city_cache.id.present?
       CityCache.destroy(city_cache.id)
     end
+# rubocop:enable Style/SafeNavigation
   end
 
   def build_hash_for_cache
@@ -35,7 +40,8 @@ class CityCacher
   def self.cacher_for(key)
     {
         header: HeaderCaching::CityHeaderCacher,
-        school_levels: LevelCaching::CityLevelCacher
+        school_levels: LevelCaching::CityLevelCacher,
+        district_content: DistrictCaching::DistrictContentCacher,
     }[key.to_s.to_sym]
   end
 
@@ -57,7 +63,8 @@ class CityCacher
   def self.registered_cachers
     @registered_cachers ||= [
         HeaderCaching::CityHeaderCacher,
-        LevelCaching::CityLevelCacher
+        LevelCaching::CityLevelCacher,
+        DistrictCaching::DistrictContentCacher,
     ]
   end
 

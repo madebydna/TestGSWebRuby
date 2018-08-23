@@ -5,7 +5,7 @@
 @had_any_errors = false
 
 def all_cache_keys
-  %w(header school_levels)
+  %w(header school_levels district_content)
 end
 
 def all_states
@@ -62,9 +62,9 @@ def process_city(city, cache_keys)
   cache_keys.each do |cache_key|
     begin
       CityCacher.create_cache(city, cache_key)
-    rescue e
-      @had_any_errors = true
-      puts "City Error #{city.state}-#{city.name}-#{city.id}  #{e}"
+    # rescue => error
+    #   @had_any_errors = true
+    #   puts "City Error #{city.state}-#{city.name}-#{city.id}  #{error}"
     end
   end
 end
