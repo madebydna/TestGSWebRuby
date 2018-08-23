@@ -32,11 +32,6 @@ module DistrictCaching
         end
     end
 
-    # def generate_url(district)
-    #   # district_url(district_params(district.state, district.city, district.name))
-    #   city_district_url(district_params_from_district(district))
-    # end
-
     def districts
       district_ids = city.schools_within_city.uniq {|s| s[:district_id] }.map{|s| s[:district_id]}.reject {|x| x == 0}
       District.find_by_state_and_ids(city.state, district_ids)

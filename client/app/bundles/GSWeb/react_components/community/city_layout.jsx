@@ -151,6 +151,7 @@ class CityLayout extends React.Component {
               <th className="school">{t("District")}</th>
               <th>{t("Grades")}</th>
               <th>{t("# of schools")}</th>
+              <th>{t("Enrollment")}</th>
             </tr>
             </thead>
             <tbody>
@@ -160,6 +161,7 @@ class CityLayout extends React.Component {
                   <td><a href={district.url}>{district.districtName}</a></td>
                   <td>{district.grades}</td>
                   <td>{district.numSchools}</td>
+                  <td>{district.enrollment}</td>
                 </tr>
               )
             })}
