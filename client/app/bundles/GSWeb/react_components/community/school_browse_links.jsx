@@ -13,7 +13,6 @@ const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
                        ["Private Schools", "?st=private", schoolLevels.private],
                        ["All Schools", "", schoolLevels.all]];
   let blueLine;
-  console.log(schoolLevels);
   const renderSchoolAmt = schoolTypes.map((schoolType, idx) => (
     <li className="school-type-li" key={schoolType[0]}>
       <div>
@@ -29,7 +28,6 @@ const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
       }
     </li>
   ));
-  console.log(name("ca"))
   return(
     <section className="school-browse-module">
       <h3>Here's a look at schools in {locality.city}</h3>
