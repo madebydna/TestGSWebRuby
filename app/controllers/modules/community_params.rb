@@ -3,7 +3,7 @@
 module CommunityParams
 
   def city
-    params[:city]&.gsub('-', ' ')&.gsub('_', '-')&.gs_capitalize_words
+    gs_legacy_url_decode(params[:city])&.gs_capitalize_words
   end
 
   def city_record
@@ -15,7 +15,7 @@ module CommunityParams
   end
 
   def district
-    params[:district]
+    gs_legacy_url_decode(params[:district])
   end
 
   def district_record

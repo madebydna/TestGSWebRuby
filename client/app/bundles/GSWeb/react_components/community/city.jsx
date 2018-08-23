@@ -33,7 +33,8 @@ class City extends React.Component {
         text: PropTypes.string.isRequired,
         url: PropTypes.string.isRequired
       })
-    )
+    ),
+    locality: PropTypes.object
   };
 
   constructor(props) {
@@ -113,7 +114,7 @@ class City extends React.Component {
         districts={this.props.districts}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
-        toc={<Toc schools={this.props.schools}/>}
+        toc={<Toc schools={this.props.schools} districts={this.props.districts} />}
         viewportSize={this.props.viewportSize}
       >
       </CityLayout>

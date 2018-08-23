@@ -32,10 +32,11 @@ class CitiesController < ApplicationController
   end
 
   def set_city_meta_tags
+    city_params_hash = city_params(state, city)
     set_meta_tags(alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
                   title: cities_title,
                   description: cities_description,
-                  canonical: city_url(state: States.state_path(state), city: city.downcase))
+                  canonical: city_url(state: city_params_hash[:state], city: city_params_hash[:city]))
   end
 
   def cities_title
@@ -63,7 +64,7 @@ class CitiesController < ApplicationController
       hash[:City] = city.gs_capitalize_words if city
       hash[:State] = state if state
       hash[:level] = level_codes.map { |s| s[0] } if level_codes.present?
-      hash[:county] = county_record&.name if county_record
+      hash[:county] = county_record.name if county_record
     end
   end
 
@@ -104,8 +105,9 @@ class CitiesController < ApplicationController
     @_locality ||= begin
       Hash.new.tap do |cp|
         cp[:city] = city_record.name
-        cp[:state] = state.upcase
-        cp[:county] = city_record.county.name
+        cp[:stateLong] = state_name.gs_capitalize_words
+        cp[:stateShort] = state.upcase
+        cp[:county] = county_record&.name
       end
     end
   end

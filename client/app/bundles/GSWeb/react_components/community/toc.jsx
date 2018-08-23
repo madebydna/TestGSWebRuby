@@ -4,16 +4,20 @@ import { t, capitalize } from 'util/i18n';
 import { scrollToElement } from 'util/scrolling';
 import TocItem from './toc_item';
 
+const SCHOOL_DISTRICTS = 'school districts'
+const SCHOOLS = 'schools'
+
+
 const cityTocItems = [
   {
-    key: 'schools',
-    label: t('schools'),
+    key: SCHOOLS,
+    label: t(SCHOOLS),
     anchor: '#schools',
     selected: true
   },
   {
-    key: 'school districts',
-    label: t('school districts'),
+    key: SCHOOL_DISTRICTS,
+    label: t(SCHOOL_DISTRICTS),
     anchor: '#districts',
     selected: false
   }
@@ -53,26 +57,31 @@ class Toc extends React.Component {
   static defaultProps = {
     schools: [],
     students: [],
-    schoolDistricts: [],
+    districts: [],
     reviews: []
   };
 
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.object),
     students: PropTypes.arrayOf(PropTypes.object),
-    schoolDistricts: PropTypes.arrayOf(PropTypes.object),
+    districts: PropTypes.arrayOf(PropTypes.object),
     reviews: PropTypes.arrayOf(PropTypes.object)
   };
 
   constructor(props) {
     super(props);
-    this.state = {tocItems: this.selectTocItems()};
     this.handleClick = this.handleClick.bind(this);
+    this.state = {tocItems: this.selectTocItems()};
   }
 
   selectTocItems(){
-    // logic for selecting toc items. Stubbed out for now.
-    return cityTocItems;
+    let suppressDistricts = this.props.districts.length < 1;
+    return cityTocItems.filter(tocItem=>{
+      if(tocItem.key === SCHOOL_DISTRICTS && suppressDistricts) {
+        return false;
+      }
+      return true;
+    })
   }
 
   renderHelp(){
@@ -103,7 +112,7 @@ class Toc extends React.Component {
     return (
       <ul>
         {this.state.tocItems.map(item => {
-          return <TocItem handleClick={this.handleClick} key={`${item.key}-selected:${item.selected}`} id={item.key} anchor={item.anchor} label={capitalize(item.label)} selected={item.selected} />
+          return item && <TocItem handleClick={this.handleClick} key={`${item.key}-selected:${item.selected}`} id={item.key} anchor={item.anchor} label={capitalize(item.label)} selected={item.selected} />
         })}
       </ul>
     )
