@@ -11,9 +11,6 @@ $border: #dbe6eb;
   width: 95%;
   margin-bottom: 15px;
   border: solid 1px $border-color;
-  @include media-breakpoint-down(sm) {
-    margin: auto;
-  }
   .top-school-info{
     // display: flex;
     // justify-content: space-around;
@@ -183,9 +180,6 @@ $border: #dbe6eb;
       width: 90%;
       margin: auto;
       // To help the data table fit inside the module better at a weird breakpoint
-      @media (max-width: 1420px){
-        width: 95%;
-      }
       td {
         position: relative;
         height: 97px;
@@ -342,8 +336,8 @@ $border: #dbe6eb;
   .below-hero {
     width: 100%;
     table {
-      width: 100%;
       text-align: center;
+      width: 95%;
       th {
         color: $gray-darker;
         font-weight: normal;
@@ -353,6 +347,8 @@ $border: #dbe6eb;
       td, th {
         border: 1px solid $form-field-border-color;
         padding: 10px 15px;
+      }
+      @media (max-width: 1420px){
       }
     }
     #districts {
@@ -419,6 +415,14 @@ $border: #dbe6eb;
         width: calc(100vw - 350px);
         margin: 0;
         padding: 20px;
+      }
+      @include media-breakpoint-down(sm) {
+        > div {
+          margin: auto;
+          .top-school-module, table {
+            width: 100%;
+          }
+        }
       }
       @include media-breakpoint-only(xs) {
         width: 100%;

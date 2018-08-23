@@ -40,7 +40,7 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
               ))}
             </tbody>
           </table>
-        </section> : <section classname="school-table-mobile">
+        </section> : <section className="school-table-mobile">
           {schools.map(school => (
             <TopSchoolTableRow
               key={school.state + school.id}
