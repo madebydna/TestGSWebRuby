@@ -1,15 +1,14 @@
-
 $active-color: #f6f9fa;
 $hover-color: #f6f9fa;
 $border-color: #dbe6eb;
 $school-color: #2bade3;
 $links-color: #1dace5;
 $blue-link: #2ba3dc;
-$border: #dbe6eb;
+$gradient-off-white: #f4f5f7;
 
 
 .blue-line{
-  border-bottom: 1px solid #dbe6eb;
+  border-bottom: 1px solid $border-color;
   width: 100%;
   margin: 10px 5px 10px 5px;
 }
@@ -30,12 +29,11 @@ $border: #dbe6eb;
         width: 95%;
       }
       h3 {
-        font-size: 18px;
-        font-weight: bold;
-        line-height: 20px;
+        font-size: 16px;
+        font-family: 'opensans-semibold';
       }
       > p, > h3, > a {
-        padding: 0 20px 0 20px;
+        padding: 0 20px;
       }
     }
   }
@@ -49,8 +47,8 @@ $border: #dbe6eb;
   }
   .sort-filter{
     button.active{
-      background-color: #dbe6eb;
-      color: black;
+      background-color: $border-color;
+      color: #333;
       border: none;
       font-size: 13px;
       font-weight: 800;
@@ -60,8 +58,8 @@ $border: #dbe6eb;
   .grade-filter{
     .button-group{
       button.active{
-        background-color: #2ba3dc;
-        border: 1px solid #c1d2d9;
+        background-color: $blue-link;
+        border: 1px solid $form-field-border-color;
       }
     }
   }
@@ -84,10 +82,10 @@ $border: #dbe6eb;
         width: 100%;
         margin: auto;
         height: 50px;
-        color: #2bade3;
+        color: $school-color;
         font-weight: 600;
-        background-image: linear-gradient(to bottom, white, #f4f5f7);
-        border: solid 1px #dbe6eb;
+        background-image: linear-gradient(to bottom, white, $gradient-off-white);
+        border: solid 1px $border-color;
         border-radius: 3px;
       }
     }
@@ -105,7 +103,7 @@ $border: #dbe6eb;
     > div{
       height: 150px;
       width: 90%;
-      border: 1px solid #c1d2d9;
+      border: 1px solid $form-field-border-color;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -310,8 +308,8 @@ $border: #dbe6eb;
   h3{
     padding: 10px 0 10px 15px;
     color: #333;
-    font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
+    font-family: 'opensans-semibold';
   }
   ul{
     height: 150px;
@@ -325,7 +323,7 @@ $border: #dbe6eb;
       width: 45%;
       margin-right: 20px;
       font-size: 25px;
-      color: #c1d2d9;
+      color: $color-button-border;
       @include media-breakpoint-down(sm) {
         width: 90%;
       }
@@ -341,19 +339,18 @@ $border: #dbe6eb;
         font-stretch: normal;
         line-height: 1.88;
         letter-spacing: normal;
-        color: #1dace5;
+        color: $links-color;
       }
       div{
         display: flex;
         justify-content: space-between;
         .school-count{
           font-size: 16px;
-          color: #333333;
+          color: #333;
           margin-right: 10px;
           margin-top: 10px;
         }
       }
-      // display: inline-block;
     }
   }
 }
@@ -435,12 +432,12 @@ $border: #dbe6eb;
         }
         li + li {
           div {
-            border-top: 1px solid $border;
+            border-top: 1px solid $border-color;
           }
         }
         li.selected {
           color: black;
-          background-color: #f6f9fa;
+          background-color: $gray-light-blue;
           border-left: 5px solid $blue-link;
         }
       }
