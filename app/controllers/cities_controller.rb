@@ -114,16 +114,20 @@ class CitiesController < ApplicationController
   end
 
   def district_content
-    city_cache_district_content.map do |district_content|
-      {}.tap do |d|
-        name = district_content_field(district_content, 'name')
-        city = district_content_field(district_content, 'city')
-        d[:districtName] = name
-        d[:grades] = district_content_field(district_content, 'levels')
-        d[:numSchools] = district_content_field(district_content, 'school_count')
-        d[:url] = district_url(district_params(state, city, name))
-        d[:enrollment] =  district_enrollment(district_content_field(district_content, 'id'))
+    if city_cache_district_content.present?
+      city_cache_district_content.map do |district_content|
+        {}.tap do |d|
+          name = district_content_field(district_content, 'name')
+          city = district_content_field(district_content, 'city')
+          d[:districtName] = name
+          d[:grades] = district_content_field(district_content, 'levels')
+          d[:numSchools] = district_content_field(district_content, 'school_count')
+          d[:url] = district_url(district_params(state, city, name))
+          d[:enrollment] =  district_enrollment(district_content_field(district_content, 'id'))
+        end
       end
+    else
+      []
     end
   end
 
