@@ -2,7 +2,6 @@
 
 import { getStore } from '../store/appStore';
 
-import 'jquery';
 import 'jquery-unveil';
 import 'jquery.cookie';
 import '../vendor/tipso';

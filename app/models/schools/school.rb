@@ -180,8 +180,17 @@ class School < ActiveRecord::Base
   end
 
   def public_or_charter?
-    ['public', 'charter'].include?(type.downcase)
+    charter? || public?
   end
+
+  def includes_charter?
+    ['charter'].include?(type.downcase)
+  end
+
+  def includes_public?
+    ['public'].include?(type.downcase)
+  end
+
 
   def preschool?
     level_code == 'p'
@@ -189,6 +198,14 @@ class School < ActiveRecord::Base
 
   def includes_preschool?
     includes_level_code? 'p'
+  end
+
+  def includes_elementaryschool?
+    includes_level_code? 'e'
+  end
+
+  def includes_middleschool?
+    includes_level_code? 'm'
   end
 
   def includes_highschool?
