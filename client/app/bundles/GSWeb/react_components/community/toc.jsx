@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { t, capitalize } from 'util/i18n';
+import { scrollToElement } from 'util/scrolling';
 import TocItem from './toc_item';
 
 const cityTocItems = [
   {
     key: 'schools',
     label: t('schools'),
-    anchor: '',
+    anchor: '#schools',
     selected: true
   },
   {
     key: 'school districts',
     label: t('school districts'),
-    anchor: '',
+    anchor: '#districts',
     selected: false
   }
   // {
@@ -89,16 +90,20 @@ class Toc extends React.Component {
     })
   }
 
-  handleClick(tocItem){
+  findTocItemSelector(tocItemKey){
+
+  }
+
+  handleClick(key, selector){
     this.unselectAllTocItems();
-    this.setState({tocItems: this.selectTocItem(tocItem)})
+    this.setState({tocItems: this.selectTocItem(key)}, scrollToElement(selector,()=>{}, -60))
   }
 
   renderTocItems(){
     return (
       <ul>
         {this.state.tocItems.map(item => {
-          return <TocItem handleClick={this.handleClick} key={`${item.key}-selected:${item.selected}`} id={item.key} label={capitalize(item.label)} selected={item.selected} />
+          return <TocItem handleClick={this.handleClick} key={`${item.key}-selected:${item.selected}`} id={item.key} anchor={item.anchor} label={capitalize(item.label)} selected={item.selected} />
         })}
       </ul>
     )

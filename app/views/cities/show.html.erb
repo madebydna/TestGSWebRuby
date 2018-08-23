@@ -8,5 +8,10 @@
 <% end %>
 
 <div id="city-page">
-  <%= react_component("City", props: { schools: @schools, breadcrumbs: @breadcrumbs, locality: @locality, school_levels: @school_levels}) %>
+  <%= react_component("City", props: {
+      schools: @schools,
+      breadcrumbs: @breadcrumbs,
+      locality: @locality,
+      districts: @districts,
+      school_levels: @school_levels}) %>
 </div>

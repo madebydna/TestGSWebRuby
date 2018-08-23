@@ -1,6 +1,6 @@
-export function scrollToElement(selector, doneCallback) {
+export function scrollToElement(selector, doneCallback, additionalYOffset=0) {
   if($(selector).length > 0) {
-    let y = $(selector).offset().top;
+    let y = $(selector).offset().top + additionalYOffset;
     let widthWithSearchBar = 767;
     let searchBarHeight = 48;
 
