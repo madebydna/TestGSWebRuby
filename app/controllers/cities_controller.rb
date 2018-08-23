@@ -69,7 +69,7 @@ class CitiesController < ApplicationController
 
   def school_levels
     @_school_levels ||= begin
-      {}.new.tap do |sl|
+      {}.tap do |sl|
         sl[:all] = school_count('all')
         sl[:public] = school_count('public')
         sl[:private] = school_count('private')
