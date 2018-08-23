@@ -215,6 +215,9 @@ $border: #dbe6eb;
       }
       th:nth-child(2){
         width: 15%;
+        @include media-breakpoint-up(lg) {
+          width: 110px;
+        }
       }
       th:nth-child(3){
         width: 130px;
@@ -237,7 +240,6 @@ $border: #dbe6eb;
           .school-info{
             margin-left: 15px;
             > a {
-              font-family: OpenSans;
               font-size: 17px;
               font-weight: bold;
               font-style: normal;
@@ -247,8 +249,7 @@ $border: #dbe6eb;
               color: $school-color;
             }
             > h4 {
-              margin-top: 10px;
-
+              margin-top: 0;
               font-size: 14px;
               font-weight: 600;
               font-style: normal;

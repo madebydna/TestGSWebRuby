@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../button";
 import TopSchoolTableRow from './top_school_table_row';
-import { SM, validSizes as validViewportSizes } from "util/viewport";
+import { SM } from "util/viewport";
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
 // import LoadingOverlay from 'react_components/search/loading_overlay';
@@ -64,7 +64,6 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
     "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VA": "Virginia", "VT": "Vermont",
     "WA": "Washington", "WI": "Wisconsin", "WV": "West Virginia", "WY": "Wyoming"
   };
-  const content = <div>ToolTip Placeholder</div>
 	return <div className="top-school-module">
       <div className="top-school-info">
         <div>
