@@ -151,16 +151,18 @@ class CityLayout extends React.Component {
               <th className="school">{t("District")}</th>
               <th>{t("Grades")}</th>
               <th>{t("# of schools")}</th>
-              <th>{t("# of students")}</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>Oakland Unified School District</td>
-              <td>PK - 12</td>
-              <td>136</td>
-              <td> 5,572</td>
-            </tr>
+            {this.props.districts.map(district => {
+              return (
+                <tr key={`${district.districtName}-${district.grades}`}>
+                  <td><a href={district.url}>{district.districtName}</a></td>
+                  <td>{district.grades}</td>
+                  <td>{district.numSchools}</td>
+                </tr>
+              )
+            })}
             </tbody>
           </table>
       </div>

@@ -321,7 +321,7 @@ $border: #dbe6eb;
       }
     }
     #districts {
-      tbody > tr > td:first-child {
+      tbody > tr > td:first-child a {
         color: $school-color;
       }
     }

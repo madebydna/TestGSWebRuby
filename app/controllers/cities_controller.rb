@@ -12,9 +12,23 @@ class CitiesController < ApplicationController
     @schools = serialized_schools
     @breadcrumbs = breadcrumbs
     @locality = locality
+    @districts = districts_by_city
   end
 
   private
+
+  def districts_by_city
+    School.on_db(state)
+      .where(city: city_record.name, active: 1)
+      .joins('left join district on district.id = school.district_id')
+      .where('district.charter_only = 0')
+      .group('district.id')
+      .pluck('district.name', 'district.level_code', 'district.num_schools', 'district.city')
+      .map {|school_record| {:districtName=> school_record[0],
+                             :grades=>LevelCode.full_from_all_grades(school_record[1]),
+                             :numSchools=>school_record[2],
+                             :url=>district_url(state: state_name, city: gs_legacy_url_encode(school_record[3]), district: gs_legacy_url_encode(school_record[0]))}}
+  end
 
   def set_city_meta_tags
     set_meta_tags(alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
