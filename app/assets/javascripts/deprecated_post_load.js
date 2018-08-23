@@ -12,7 +12,6 @@
 //= require search
 //= require google_maps
 //= require localized_profiles
-//= require topical_reviews
 //= require guided_search
 //= require account_management
 //= require community_scorecards
@@ -20,5 +19,3 @@
 //= require modals
 //= require page_initializers
 //= require zillow
-
-

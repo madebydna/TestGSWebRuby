@@ -127,21 +127,31 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
     return {
       email: this.getEmail(),
       grades: this.getGrades()
-    }
+    };
   },
 
-  submitFailHandler: function submitFailHandler(event, jqXHR, options, data) {
-    this.getDeferred().rejectWith(this, [jqXHR]);
+  joinSubmitHandler: function joinSubmitHandler(event) {
+    this.preventInteractions();
+    this.postJoinForm()
+      .done(this.submitSuccessHandler.bind(this))
+      .fail(this.submitFailHandler.bind(this));
+    return false;
+  },
+
+  postJoinForm: function postJoinForm() {
+    var data = this.$getJoinForm().serialize();
+    var action = this.$getJoinForm().attr('action');
+    return $.post(action, data);
+  },
+
+  submitFailHandler: function submitFailHandler(data) {
+    this.getDeferred().reject(data);
     this.allowInteractions();
   },
 
   initializeForm: function initializeForm() {
     this.$getJoinForm().parsley();
-
-    return this.$getJoinForm().
-      on('submit', this.preventInteractions.gs_bind(this)).
-      on('ajax:success', this.submitSuccessHandler.gs_bind(this)).
-      on('ajax:error', this.submitFailHandler.gs_bind(this));
+    return this.$getJoinForm().on('submit', this.joinSubmitHandler.bind(this));
   },
 
   initialize: function initialize() {
@@ -149,4 +159,3 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
     this.initializeForm();
   }
 });
-

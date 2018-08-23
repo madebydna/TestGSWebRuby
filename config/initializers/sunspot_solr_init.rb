@@ -3,7 +3,9 @@
 Sunspot.config.solr.url = ENV_GLOBAL['solr.ro.server.url']
 
 Sunspot.setup(School) do
+  string :sortable_name
   string :city
+  integer :school_district_id
   string :state
   integer :summary_rating
   latlon(:latlon) { Sunspot::Util::Coordinates.new(lat, lon) }
@@ -16,7 +18,6 @@ Sunspot.setup(School) do
   string :school_grade_level
   integer :overall_gs_rating
   integer :sorted_gs_rating_asc
-  integer :school_district_id
   integer :school_id
   string :school_sortable_name
   float :distance

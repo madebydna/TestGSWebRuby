@@ -8,13 +8,16 @@ $blue-link: #2ba3dc;
 $border: #dbe6eb;
 
 .top-school-module{
-  width: 100%;
+  width: 95%;
+  margin-bottom: 15px;
   border: solid 1px $border-color;
+  @include media-breakpoint-down(sm) {
+    margin: auto;
+  }
   .top-school-info{
-    display: flex;
-    justify-content: space-around;
-    // align-items: center;
-    // flex-direction: column;
+    // display: flex;
+    // justify-content: space-around;
+    padding: 30px 0 0 30px;
     > div{
       margin-top: 20px;
       width: 75%;
@@ -61,8 +64,10 @@ $border: #dbe6eb;
   }
   .tooltip-container{
     .scale{
+      height: 30px;
       display: flex;
       justify-content: center;
+      align-items: center;
     }
   }
   .more-school-btn{
@@ -102,7 +107,10 @@ $border: #dbe6eb;
       justify-content: center;
       align-items: center;
       h3{
-        color: #2bade3;
+        width: 85%;
+        color: #333;
+        font-size: 16px;
+        text-align: center;
       }
     }
   }
@@ -121,6 +129,16 @@ $border: #dbe6eb;
         p {
           margin: 3px 0 0 0;
         }
+        .school-district{
+          font-family: OpenSans;
+          font-size: 15px;
+          font-weight: normal;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: #647981;
+        }
         .students{
           margin-bottom: 5px;
         }
@@ -129,7 +147,7 @@ $border: #dbe6eb;
         }
         > a {
           font-family: OpenSans;
-          font-size: 16px;
+          font-size: 17px;
           font-weight: bold;
           font-style: normal;
           font-stretch: normal;
@@ -147,15 +165,22 @@ $border: #dbe6eb;
     }
   }
 
+  .five-star-review{
+    @include media-breakpoint-down(sm) {
+      display: flex;
+      .five-star-rating{
+        margin-left: 15px;
+      }
+    }
+  }
   .school-table {
-    overflow-x: scroll;
+    width: 100%;
     background-color: white;
     position: relative;
     margin-bottom: 15px;
     table {
       table-layout: fixed;
-      // width: 991px;
-      width: 85%;
+      width: 90%;
       margin: auto;
       // To help the data table fit inside the module better at a weird breakpoint
       @media (max-width: 1420px){
@@ -169,7 +194,6 @@ $border: #dbe6eb;
       td:nth-child(2) > p, td:nth-child(3) > p{
         text-align: center;
         font-size: 16px;
-        font-weight: 600;
         font-family: OpenSans;
         letter-spacing: normal;
       }
@@ -199,9 +223,9 @@ $border: #dbe6eb;
         height: 60px;
       }
       th.school {
-        width: 45%;
+        width: 40%;
       }
-
+      // Table View ONLY 
       td.school {
         @include clearfix;
         .content-container{
@@ -210,13 +234,24 @@ $border: #dbe6eb;
             margin-left: 15px;
             > a {
               font-family: OpenSans;
-              font-size: 16px;
+              font-size: 17px;
               font-weight: bold;
               font-style: normal;
               font-stretch: normal;
               line-height: normal;
               letter-spacing: normal;
               color: $school-color;
+            }
+            > h4 {
+              margin-top: 10px;
+
+              font-size: 14px;
+              font-weight: 600;
+              font-style: normal;
+              font-stretch: normal;
+              line-height: normal;
+              letter-spacing: normal;
+              color: #032532;
             }
             > div {
               margin-top: 10px;
@@ -272,7 +307,7 @@ $border: #dbe6eb;
     position: fixed;
     width: 100%;
     top: 80px;
-    z-index:5;
+    z-index:3;
     .breadcrumbs {
       padding-left: 15px;
       .divider {
@@ -368,12 +403,12 @@ $border: #dbe6eb;
       }
     }
     .city-modules {
-      width: calc(100vw - 750px);
+      width: calc(100vw - 670px);
       display: inline-block;
-      margin: 22px 0 10px 390px;
       > div {
         margin-bottom: 20px;
       }
+      margin: 22px 0 10px 350px;
       .modules-title {
         font-size: 20px;
         font-weight: bold;

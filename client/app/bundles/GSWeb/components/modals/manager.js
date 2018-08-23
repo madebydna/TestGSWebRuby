@@ -10,7 +10,6 @@ import SignupAndFollowSchoolModal from './signup_and_follow_school_modal';
 import SubmitReviewModal from './submit_review_modal';
 import SuccessModal from './success_modal';
 import { pull } from 'lodash';
-import jQuery from 'jquery';
 
 const MODALS = {
   EmailJoinForCompareSchoolsModal: EmailJoinForCompareSchoolsModal, 
@@ -154,6 +153,6 @@ const manager = (function ($) {
     getModalContainer: getModalContainer
   };
 
-})(jQuery);
+})($);
 
 export default manager;

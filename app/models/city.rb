@@ -3,7 +3,9 @@ class City < ActiveRecord::Base
 
   db_magic :connection => :us_geo
 
-  attr_accessible :population, :bp_census_id, :name, :state
+  SCHOOL_CACHE_KEYS = %w(characteristics)
+
+  attr_accessible :id, :population, :bp_census_id, :name, :state
   attr_reader :rating
 
   scope :active, -> { where(active: true) }
@@ -24,6 +26,10 @@ class City < ActiveRecord::Base
     City.where(name:city, state:state).active
   end
 
+  def self.get_all_cities
+    City.all.order(id: :asc).active
+  end
+
   def state_long
     States.abbreviation_hash[state.downcase]
   end
@@ -34,6 +40,12 @@ class City < ActiveRecord::Base
 
   def county
     @county ||= County.find_by(state: state, FIPS: fipsCounty)
+  end
+
+  def schools_within_city
+    @_schools_within_city ||= begin
+      School.within_city(self.state, self.name).active
+    end
   end
 
   def schools_by_rating_desc

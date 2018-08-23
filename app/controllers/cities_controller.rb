@@ -13,6 +13,7 @@ class CitiesController < ApplicationController
     @breadcrumbs = breadcrumbs
     @locality = locality
     @districts = districts_by_city
+    @school_levels = school_levels
   end
 
   private
@@ -71,6 +72,32 @@ class CitiesController < ApplicationController
     {}.tap do |hash|
       # placeholder
     end
+  end
+
+  def city_cache_school_levels
+    @_city_cache_school_levels ||= begin
+      cc = CityCache.for_city_and_name('school_levels', city_record.id)
+      JSON.parse(cc['value']) if cc.present?
+    end
+  end
+
+  def school_levels
+    @_school_levels ||= begin
+      {}.tap do |sl|
+        sl[:all] = school_count('all')
+        sl[:public] = school_count('public')
+        sl[:private] = school_count('private')
+        sl[:charter] = school_count('charter')
+        sl[:preschool] = school_count('preschool')
+        sl[:elementary] = school_count('elementary')
+        sl[:middle] = school_count('middle')
+        sl[:high] = school_count('high')
+      end
+    end
+  end
+
+  def school_count(key)
+    city_cache_school_levels[key].first['city_value'] if city_cache_school_levels && city_cache_school_levels[key]
   end
 
   def locality

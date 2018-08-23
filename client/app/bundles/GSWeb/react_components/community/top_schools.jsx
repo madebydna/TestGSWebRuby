@@ -7,7 +7,7 @@ import School from 'react_components/search/school';
 import { t } from "util/i18n";
 // import LoadingOverlay from 'react_components/search/loading_overlay';
 
-const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes}) => {
+const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, gradeLevels}) => {
   let schoolList;
   const schoolMap = {
     "e": t("Elementary"), "m": t("Middle"), "h": t("High")
@@ -15,7 +15,8 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
   if (schools.length === 0) {
     schoolList = <section className="no-schools">
                     <div>
-                      <h3>No {schoolMap[levelCodes].toLowerCase()} schools found in this city.</h3>
+                      <h3>There are no {schoolMap[levelCodes].toLowerCase()} schools with a GreatSchools 
+                      rating for this city.</h3>
                     </div>
                   </section>;
   } else {
@@ -63,7 +64,7 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
     "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VA": "Virginia", "VT": "Vermont",
     "WA": "Washington", "WI": "Wisconsin", "WV": "West Virginia", "WY": "Wyoming"
   };
-
+  const content = <div>ToolTip Placeholder</div>
 	return <div className="top-school-module">
       <div className="top-school-info">
         <div>
@@ -74,10 +75,10 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
           </span> */}
           <p>
             The GreatSchools Rating provides an overall snapshot of school quality
-            based on how well a school prepares all its students for postsecondary
-            success - be it college or career.
+          based on how well a school prepares all its students for postsecondary
+            success - be it college or career. <a href="/gk/ratings">Learn More</a>
           </p>
-          <a href="">Learn More</a>
+          
         </div>
       </div>
       <br/>
