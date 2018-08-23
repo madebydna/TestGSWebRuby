@@ -152,6 +152,7 @@ class CityLayout extends React.Component {
           {this.renderToc()}
           <div className="city-modules">
             <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
+            {this.props.browseSchools}
             {this.props.topSchools}
           </div>
           {this.renderAd()}

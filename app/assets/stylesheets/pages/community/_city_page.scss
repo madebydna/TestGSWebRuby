@@ -7,6 +7,13 @@ $links-color: #1dace5;
 $blue-link: #2ba3dc;
 $border: #dbe6eb;
 
+
+.blue-line{
+  border-bottom: 1px solid #dbe6eb;
+  width: 100%;
+  margin: 10px 5px 10px 5px;
+}
+
 .top-school-module{
   width: 95%;
   margin-bottom: 15px;
@@ -15,8 +22,6 @@ $border: #dbe6eb;
     margin: auto;
   }
   .top-school-info{
-    // display: flex;
-    // justify-content: space-around;
     padding: 30px 0 0 30px;
     > div{
       margin-top: 20px;
@@ -117,11 +122,6 @@ $border: #dbe6eb;
   .school-col{
     width: 90%;
     margin: auto;
-    .blue-line{
-      border-bottom: 1px solid #dbe6eb;
-      width: 100%;
-      margin: 10px 5px 10px 5px;
-    }
     .content-container{
       display: flex;
       .school-info{
@@ -299,6 +299,64 @@ $border: #dbe6eb;
   }
 }
 
+.school-browse-module{
+  width: 95%;
+  margin-bottom: 15px;
+  border: solid 1px $border-color;
+  padding: 10px;
+  @include media-breakpoint-down(sm) {
+    margin: auto;
+    margin-bottom: 15px;
+  }
+  h3{
+    padding: 15px 0 10px 15px;
+    color: #333;
+    font-size: 19px;
+  }
+  ul{
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    @include media-breakpoint-down(sm) {
+      height: auto;
+    }
+    li{
+      width: 45%;
+      margin-right: 20px;
+      font-size: 25px;
+      color: #c1d2d9;
+      @include media-breakpoint-down(sm) {
+        width: 90%;
+      }
+      .blue-line{
+        padding: 0;
+        margin: 0;
+        width: 100%;
+      }
+      a{
+        font-size: 16px;
+        font-weight: 600;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.88;
+        letter-spacing: normal;
+        color: #1dace5;
+      }
+      div{
+        display: flex;
+        justify-content: space-between;
+        .school-count{
+          font-size: 16px;
+          color: #333333;
+          margin-right: 10px;
+          margin-top: 10px;
+        }
+      }
+      // display: inline-block;
+    }
+  }
+}
 
 .featured {
   display: none; // TODO: dont put this here

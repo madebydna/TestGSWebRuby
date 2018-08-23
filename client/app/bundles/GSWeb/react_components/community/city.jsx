@@ -107,6 +107,8 @@ class City extends React.Component {
         }
         browseSchools={
           <SchoolBrowseLinks
+            locality={this.props.locality}
+            size={this.props.viewportSize}
           />
         }
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
