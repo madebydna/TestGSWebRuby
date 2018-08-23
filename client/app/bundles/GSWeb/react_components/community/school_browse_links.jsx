@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { name }from "../../util/states";
-import { SM } from "util/viewport";
+import { SM, validSizes as validViewportSizes } from "util/viewport";
 
 const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
   const schoolTypes = [["Preschools", "?gradeLevels=p", schoolLevels.preschool],
@@ -28,14 +28,28 @@ const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
       }
     </li>
   ));
-  return(
-    <section className="school-browse-module">
-      <h3>Here's a look at schools in {locality.city}</h3>
-      <ul>
-        {renderSchoolAmt}
-      </ul>
-    </section>
-  )
+  if (schoolLevels.all !== null) {
+    return (
+      <section className="school-browse-module">
+        <h3>Here's a look at schools in {locality.city}</h3>
+        <ul>
+          {renderSchoolAmt}
+        </ul>
+      </section>
+    )
+  }else{
+    return null;
+  }
 }
+
+schoolBrowseLinks.propTypes = {
+  schoolLevels: PropTypes.object,
+  locality: PropTypes.object.isRequired,
+  size: PropTypes.oneOf(validViewportSizes).isRequired
+};
+
+schoolBrowseLinks.defaultProps = {
+  schoolLevels: {}
+};
 
 export default schoolBrowseLinks;
