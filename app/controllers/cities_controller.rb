@@ -68,7 +68,7 @@ class CitiesController < ApplicationController
   end
 
   def school_count(key)
-    city_cache_school_levels[key].&first['city_value'] if city_cache_school_levels
+    city_cache_school_levels[key].first['city_value'] if city_cache_school_levels && city_cache_school_levels[key]
   end
 
   def locality
