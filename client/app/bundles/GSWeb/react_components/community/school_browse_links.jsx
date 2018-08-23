@@ -16,7 +16,7 @@ const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
     <li className="school-type-li" key={schoolType[0]}>
       <div>
         <span>
-          <a href={`/${locality.stateLong.toLowerCase()}/${locality.city.toLowerCase()}/schools/${schoolType[1]}`}>{schoolType[0]}</a>
+          <a href={`${locality.cityBrowseUrl}${schoolType[1]}`}>{schoolType[0]}</a>
         </span>
         <span className="school-count">{schoolType[2]}</span>
       </div>
