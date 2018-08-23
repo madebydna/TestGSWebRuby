@@ -13,7 +13,7 @@ class CitiesController < ApplicationController
     @breadcrumbs = breadcrumbs
     @locality = locality
     @districts = districts_by_city
-    @school_levels = school_levels
+    # @school_levels = school_levels
   end
 
   private
