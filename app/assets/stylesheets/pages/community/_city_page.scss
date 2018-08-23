@@ -197,6 +197,7 @@ $gradient-off-white: #f4f5f7;
         line-height: normal;
         letter-spacing: normal;
         color: #647981;
+        text-align: left;
       }
 
       th:nth-child(2){
@@ -225,6 +226,10 @@ $gradient-off-white: #f4f5f7;
           display: flex;
           .school-info{
             margin-left: 15px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             > a {
               font-size: 17px;
               font-weight: bold;
