@@ -75,7 +75,7 @@ function keepInViewport(
 
 class CityLayout extends React.Component {
   static propTypes = {
-    size: PropTypes.oneOf(validSizes).isRequired,
+    viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
   };
@@ -169,10 +169,11 @@ class CityLayout extends React.Component {
     )
   }
 
-  renderTopSchools(){
+  renderSchools(){
     return (
       <div id="schools">
         <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
+        {this.props.browseSchools}
         {this.props.topSchools}
       </div>
     )
@@ -187,8 +188,7 @@ class CityLayout extends React.Component {
         <div className="below-hero">
           {this.renderToc()}
           <div className="city-modules">
-            {this.props.browseSchools}
-            {this.renderTopSchools()}
+            {this.renderSchools()}
             {this.renderDistricts()}
           </div>
           {this.renderAd()}
