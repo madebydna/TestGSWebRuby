@@ -23,6 +23,8 @@ class TopSchoolsStateful extends React.Component {
     };
     this.handleGradeLevel = this.handleGradeLevel.bind(this);
     this.hydrateState = this.hydrateState.bind(this);
+    console.log(props);
+    
   }
 
   componentDidMount() {
@@ -33,7 +35,7 @@ class TopSchoolsStateful extends React.Component {
     this.setState({
       schools: props.schools,
       size: props.size,
-      state: props.locality.state,
+      state: props.locality.stateShort,
       city: props.locality.city
     });
   }
