@@ -109,31 +109,19 @@ export default function createMarkerFactory(googleMaps) {
     PUBLIC_SCHOOL: Object.assign(Object.create(markerFactory), {
       iconSheet: publicSchoolPng,
       width: 31,
-      height: 40,
-      shape: {
-        coord: [1, 1, 1, 30, 30, 30, 30, 1],
-        type: 'poly'
-      }
+      height: 40
     }),
 
     PRIVATE_SCHOOL: Object.assign(Object.create(markerFactory), {
       iconSheet: privateSchoolPng,
       width: 31,
-      height: 40,
-      shape: {
-        coord: [1, 15, 15, 30, 30, 15, 15, 1],
-        type: 'poly'
-      }
+      height: 40
     }),
 
     DISTRICT: Object.assign(Object.create(markerFactory), {
       iconSheet: districtPng,
       width: 31,
-      height: 40,
-      shape: {
-        coord: [1, 1, 1, 30, 30, 30, 30, 1],
-        type: 'poly'
-      }
+      height: 40
     })
   };
 

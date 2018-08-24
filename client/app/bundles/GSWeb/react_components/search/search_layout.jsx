@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { throttle, debounce } from 'lodash';
-import $ from 'jquery';
 import { SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
@@ -203,7 +202,7 @@ class SearchLayout extends React.Component {
             </span>
           ) : null}
           <span className="menu-item list-map-toggle">
-            <div className="ollie-map-container">
+            <div>
               {this.props.listMapTableSelect}
               <span className="ollie-help-icon"><HelpTooltip /></span>
             </div>

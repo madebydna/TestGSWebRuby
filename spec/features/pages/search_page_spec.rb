@@ -24,17 +24,6 @@ describe 'Search Page' do
     end
   end
 
-  describe 'By Location' do
-    describe 'page specific elements' do
-      include_context 'Visit By Location Search in Delaware'
-      with_shared_context 'Sorting toolbar' do
-        describe_mobile_and_desktop do
-          include_example 'should contain distance sort select option'
-        end
-      end
-    end
-  end
-
   describe 'By Name' do
     describe 'search logic' do
       with_shared_context 'Visit by name search using parameters state=de and q=north' do

@@ -49,7 +49,7 @@ const ProfileInterstitialAd = ({ loaded }) =>
           slot="Prestitial"
           container={<React.Fragment />}
           onFill={() =>
-            trackInterstitialViewed() && openForDuration(10000, 1000)
+            trackInterstitialViewed() && openForDuration(15000, 1000)
           }
         >
           {adElement => (

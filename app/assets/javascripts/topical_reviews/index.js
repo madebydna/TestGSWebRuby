@@ -1,1 +1,0 @@
-//= require ./topical_review

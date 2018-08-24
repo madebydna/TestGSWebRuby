@@ -6,26 +6,24 @@ import { once } from 'lodash';
 export default class Map extends React.Component {
   static propTypes = {
     googleMaps: PropTypes.object.isRequired,
-    markers: PropTypes.arrayOf(PropTypes.element),
-    polygons: PropTypes.arrayOf(PropTypes.element),
     hidden: PropTypes.bool,
     lat: PropTypes.number,
-    lon: PropTypes.number
+    lon: PropTypes.number,
+    markerDigest: PropTypes.string
   };
 
   static defaultProps = {
-    markers: [],
-    polygons: [],
     hidden: false,
     lat: null,
-    lon: null
+    lon: null,
+    markerDigest: ''
   };
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { markersUpdated: true };
     this.openInfoWindow = this.openInfoWindow.bind(this);
-    this.fitBounds = once(this.fitBounds.bind(this));
+    this.fitBounds = this.fitBounds.bind(this);
   }
 
   createGoogleMap($elem) {
@@ -110,11 +108,11 @@ export default class Map extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.markers.length == 0 && this.props.markers.length > 0) {
-      this.onResize();
-    }
     if (prevProps.hidden && !this.props.hidden) {
       this.onResize();
+    }
+    if (this.props.markerDigest !== prevProps.markerDigest) {
+      this.setState({ markersUpdated: true});
     }
   }
 
@@ -149,7 +147,13 @@ export default class Map extends React.Component {
         new this.props.googleMaps.LatLng(m.props.lat, m.props.lon)
       );
     });
-    this.map.fitBounds(this.bounds);
+    if (this.state.markersUpdated) {
+      this.map.fitBounds(this.bounds);
+      this.setState({
+        markersUpdated: false,
+      })
+    }
+    this.bounds = new this.props.googleMaps.LatLngBounds();
   }
 
   render() {
