@@ -7,7 +7,7 @@ module SearchControllerConcerns
     # results in less flexible/resuable code. Could use
     # active_model_serializers (included with rails 5) but it's yet another
     # gem...
-    schools.map do |school|
+    @_serialized_schools ||= schools.map do |school|
       Api::SchoolSerializer.new(school).to_hash.tap do |s|
         s.except(not_default_extras - extras)
       end
