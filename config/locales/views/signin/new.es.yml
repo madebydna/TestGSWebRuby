@@ -3,6 +3,6 @@ es:
   signin:
     new:
       articles_count: artículos, hojas de trabajo y vídeos
-      community_reviews_count: Críticas de la comunidad de las escuelas
-      header: Encuentra escuelas de calidad y obten buenos consejos
-      school_profiles_count: perfiles de las escuelas
+      community_reviews_count: opiniones de la comunidad
+      header: Encuentra escuelas de calidad y obtén consejos de la comunidad
+      school_profiles_count: perfiles de escuelas

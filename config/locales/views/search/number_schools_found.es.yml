@@ -13,7 +13,7 @@ es:
       distance:
         zero: Su búsqueda no obtuvo resultados cerca %{location}.
         one: Mostrando 1 escuela encontrada cerca %{location}
-        other: Mostrando %{first} a %{last} de %{count} escuelas encontradas circa %{location}
+        other: Mostrando %{first} a %{last} de %{count} escuelas encontradas cerca de %{location}
       search_term:
         zero: Su búsqueda de <span class="search-term">%{search_term}</span> no obtuvo resultados.
         one: Mostrando 1 escuela encontrada para %{search_term}

@@ -111,7 +111,7 @@ const School = ({
             </span>
           )}
         </div>
-        {distance !== undefined ? <div>Distance: {distance} miles</div> : null}
+        {distance !== undefined ? <div>{t('Distance')}: {distance} miles</div> : null}
         {homesForSaleHref && (
           <div>
             <span key="homes-for-sale" className="icon icon-house" />
