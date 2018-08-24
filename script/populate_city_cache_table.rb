@@ -83,13 +83,8 @@ parsed_arguments.each do |args|
 
   if states[:state] == ['all'] && city_ids.blank?
     puts "Working on all states - all cities"
-    counter = 0
     City.get_all_cities.each do | city |
       process_city(city, cache_keys)
-      counter += counter
-      if counter%1000 == 0
-        puts counter + " Cities complete"
-      end
     end
   elsif states.blank? && city_ids.present?
     puts "Working on city_ids"
