@@ -32,6 +32,7 @@ class NewSearchController < ApplicationController
       en: url_for(params_for_rel_alternate.merge(lang: nil)),
       es: url_for(params_for_rel_alternate.merge(lang: :es))
     })
+    response.status = 404 if serialized_schools.empty?
   end
 
   private
