@@ -46,12 +46,14 @@ const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
   let blueLine;
   const renderSchoolAmt = browseLinkData.map((linkData, idx) => (
     <li className="school-type-li" key={linkData.name}>
-      <div>
-        <span>
+      <span>
+        {linkData.schoolNumber !== 0 ?
           <a href={addParamsToUrl(linkData.queryParams, locality.cityBrowseUrl)}>{linkData.name}</a>
-        </span>
-        <span className="school-count">{linkData.schoolNumber}</span>
-      </div>
+          :
+          <p>{linkData.name}</p>
+        }
+      </span>
+      <span className="school-count">{linkData.schoolNumber}</span>
       {size > SM ? 
         ((idx !== 3 && idx !== 7) ? blueLine = <div className="blue-line" /> : null)
         :
