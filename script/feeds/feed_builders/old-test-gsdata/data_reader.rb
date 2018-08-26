@@ -27,7 +27,7 @@ module Feeds
       end
 
       def each_district_result
-        DistrictCache.where(name: 'feed_test_scores_gsdata', district_id: district_ids, state: @state).find_each(batch_size: 100) do |district_cache|
+        DistrictCache.where(name: 'feed_test_scores_gsdata', district_id: district_ids, state: @state).find_each(batch_size: 3) do |district_cache|
           district_id = district_cache.district_id
           test_hash = district_cache.cache_data
           test_hash.each do |(test_name, hash_arr)|
@@ -42,7 +42,7 @@ module Feeds
       end
 
       def each_school_result
-        SchoolCache.where(name: 'feed_old_test_scores_gsdata', school_id: school_ids, state: state).find_each(batch_size: 100) do |school_cache|
+        SchoolCache.where(name: 'feed_old_test_scores_gsdata', school_id: school_ids, state: state).find_each(batch_size: 3) do |school_cache|
           school_id = school_cache.school_id
           test_hash = school_cache.cache_data
           test_hash.each do |(test_name, hash_arr)|
