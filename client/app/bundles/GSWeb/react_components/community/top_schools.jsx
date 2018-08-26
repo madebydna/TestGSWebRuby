@@ -26,8 +26,8 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
             <thead>
               <tr>
                 <th className="school">{t("School")}</th>
-                <th>{t("Students")}</th>
-                <th>{t("Reviews")}</th>
+                <th className="students">{t("Students")}</th>
+                <th className="reviews">{t("Reviews")}</th>
                 <th>{t("District")}</th>
               </tr>
             </thead>
@@ -55,10 +55,6 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
       <div className="top-school-info">
         <div>
           <h3>Top schools</h3>
-          {/* Code for sort-filter */}
-          {/* <span className="button-group sort-filter">
-            <Button label={t("GreatSchools Rating")} active={true} />
-          </span> */}
           <p>
             The GreatSchools Rating provides an overall snapshot of school quality
           based on how well a school prepares all its students for postsecondary
@@ -68,7 +64,6 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
         </div>
       </div>
       <br/>
-      {/* Button Rows */}
       <div className="grade-filter">
         <span className="button-group">
           <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} />

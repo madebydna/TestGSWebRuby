@@ -6,10 +6,10 @@ import FiveStarRating from "../review/form/five_star_rating";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t } from "util/i18n";
 
-const renderSchoolColumn = (name, rating, links, districtName, content, gradeLevels, schoolType) => {
+const renderSchoolColumn = (name, rating, links, content, gradeLevels, schoolType) => {
   return <React.Fragment>
       <div className="content-container">
-        <div className="tooltip-container">
+        <div>
           <Rating score={rating} size="medium" />
           <div className="scale">
             <ModalTooltip content={content}>
@@ -21,7 +21,7 @@ const renderSchoolColumn = (name, rating, links, districtName, content, gradeLev
           <a href={links.profile} target="_blank">
             {name}
           </a>
-          <h4>{schoolType[0].toUpperCase() + schoolType.slice(1)}, {gradeLevels}</h4>
+          <p>{schoolType[0].toUpperCase() + schoolType.slice(1)}, {gradeLevels}</p>
         </div>
       </div>
     </React.Fragment>;
@@ -47,7 +47,7 @@ const renderDistrctName = (districtName) => (
 const renderMobileSchool = (name, rating, links, districtName, numReviews, parentRating, content, enrollment, gradeLevels, schoolType) => {
   return <React.Fragment>
       <div className="content-container">
-        <div className="tooltip-container">
+        <div>
           <Rating score={rating} size="medium" />
           <div className="scale">
             <ModalTooltip content={content}>
@@ -73,8 +73,6 @@ const TopSchoolTableRow = ({
   numReviews,
   districtName,
   rating,
-  address,
-  state,
   parentRating,
   enrollment,
   links,
@@ -87,7 +85,7 @@ const TopSchoolTableRow = ({
     return (
       <tr>
         <td className="school">
-          {renderSchoolColumn(name, rating, links, districtName, content, gradeLevels, schoolType)}
+          {renderSchoolColumn(name, rating, links, content, gradeLevels, schoolType)}
         </td>
         <td>
           <p>{enrollment}</p>
@@ -118,7 +116,6 @@ TopSchoolTableRow.propTypes = {
   enrollment: PropTypes.number,
   rating: PropTypes.number,
   ratingScale: PropTypes.string,
-  studentsPerTeacher: PropTypes.number,
   numReviews: PropTypes.number,
   parentRating: PropTypes.number,
   districtName: PropTypes.string,
@@ -132,7 +129,6 @@ TopSchoolTableRow.defaultProps = {
   rating: null,
   ratingScale: null,
   active: false,
-  studentsPerTeacher: null,
   numReviews: null,
   parentRating: null,
   districtName: null
