@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Sunspot.config.solr.url = ENV_GLOBAL['solr.ro.server.url']
+Sunspot.config.solr.url = 'http://dev-solr8.greatschools.org:8983/solr/main/' #ENV_GLOBAL['solr.ro.server.url']
 
 Sunspot.setup(School) do
   string :sortable_name

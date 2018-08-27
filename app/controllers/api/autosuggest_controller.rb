@@ -12,16 +12,9 @@ class Api::AutosuggestController < ApplicationController
   private
 
   def results
-    if params[:solr7]
-      grouped_results = Search::SolrAutosuggestQuery.new(q)
-                            .search
-                            .group_by { |h| h[:type] }
-    else
-      grouped_results = Search::LegacySolrAutosuggestQuery.new(q)
-                            .search
-                            .group_by { |h| h[:type] }
-    end
-
+    grouped_results = Search::SolrAutosuggestQuery.new(q)
+                          .search
+                          .group_by { |h| h[:type] }
 
     {}.tap do |hash|
       hash['Schools'] = grouped_results['school']&.take(5)
