@@ -12,13 +12,21 @@ class Api::AutosuggestController < ApplicationController
   private
 
   def results
-    grouped_results = Search::SolrAutosuggestQuery.new(q)
-                       .search
-                       .group_by { |h| h[:type] }
+    if params[:solr7]
+      grouped_results = Search::SolrAutosuggestQuery.new(q)
+                            .search
+                            .group_by { |h| h[:type] }
+    else
+      grouped_results = Search::LegacySolrAutosuggestQuery.new(q)
+                            .search
+                            .group_by { |h| h[:type] }
+    end
+
+
     {}.tap do |hash|
       hash['Schools'] = grouped_results['school']&.take(5)
       hash['Cities'] = grouped_results['city']&.take(5)
-      hash['Districts'] = grouped_results['district']&.take(5)
+      hash['Districts'] = grouped_results['district']&.take(5) || []
       hash['Zipcodes'] = q.match?(/\d{3}+/) ? grouped_results['zip']&.take(5) : []
     end
   end
