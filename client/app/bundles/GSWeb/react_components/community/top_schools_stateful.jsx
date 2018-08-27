@@ -23,8 +23,6 @@ class TopSchoolsStateful extends React.Component {
     };
     this.handleGradeLevel = this.handleGradeLevel.bind(this);
     this.hydrateState = this.hydrateState.bind(this);
-    console.log(props);
-    
   }
 
   componentDidMount() {

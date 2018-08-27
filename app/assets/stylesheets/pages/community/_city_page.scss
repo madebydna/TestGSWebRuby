@@ -6,11 +6,19 @@ $links-color: #1dace5;
 $blue-link: #2ba3dc;
 $gradient-off-white: #f4f5f7;
 
-
+// Class to help draw blueish-gray lines
 .blue-line{
   border-bottom: 1px solid $border-color;
   width: 100%;
   margin: 10px 5px 10px 5px;
+}
+
+// Class to help render districts in a few places with styling
+.school-district{
+  font-family: "opensans";
+  font-size: 14px;
+  color: #647981;
+  text-align: left;
 }
 
 .top-school-module{
@@ -22,9 +30,7 @@ $gradient-off-white: #f4f5f7;
     > div{
       margin-top: 20px;
       width: 75%;
-      @include media-breakpoint-down(sm) {
-        width: 95%;
-      }
+      @include media-breakpoint-down(sm) { width: 95%; }
       h3 {
         font-size: 16px;
         font-family: 'opensans-semibold';
@@ -42,31 +48,17 @@ $gradient-off-white: #f4f5f7;
     @include button-group;
     margin: auto;
   }
-  .sort-filter{
-    button.active{
-      background-color: $border-color;
-      color: #333;
-      border: none;
-      font-size: 13px;
-      font-weight: 800;
-      line-height: 20px;
-    }
-  }
   .grade-filter{
-    .button-group{
-      button.active{
-        background-color: $blue-link;
-        border: 1px solid $form-field-border-color;
-      }
+    button.active{
+      background-color: $blue-link;
+      border: 1px solid $form-field-border-color;
     }
   }
-  .tooltip-container{
-    .scale{
-      height: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  .scale{
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .more-school-btn{
     display:flex;
@@ -80,16 +72,13 @@ $gradient-off-white: #f4f5f7;
         margin: auto;
         height: 50px;
         color: $school-color;
-        font-weight: 600;
+        font-size: 14px;
+        font-family: 'opensans-semibold';
         background-image: linear-gradient(to bottom, white, $gradient-off-white);
         border: solid 1px $border-color;
         border-radius: 3px;
       }
     }
-  }
-  .sort-filter{
-    margin-left: 15px;
-    margin-bottom: 10px;
   }
   .no-schools{
     display: flex;
@@ -120,20 +109,7 @@ $gradient-off-white: #f4f5f7;
       .school-info{
         margin-left: 15px;
         p {
-          margin: 3px 0 0 0;
-        }
-        .school-district{
-          font-family: OpenSans;
-          font-size: 15px;
-          font-weight: normal;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: normal;
-          letter-spacing: normal;
-          color: #647981;
-        }
-        .students{
-          margin-bottom: 5px;
+          margin: 3px 0 5px 0;
         }
         a {
           margin: 3px 0 0 0;
@@ -148,17 +124,11 @@ $gradient-off-white: #f4f5f7;
           letter-spacing: normal;
           color: $school-color;
         }
-        > div {
-          margin-top: 5px;
-          .icon-house, a {
-            color: $links-color;
-          }
-        }
       }
     }
   }
-
   .five-star-review{
+    a { color: $school-color; }
     @include media-breakpoint-down(sm) {
       display: flex;
       .five-star-rating{
@@ -175,39 +145,9 @@ $gradient-off-white: #f4f5f7;
       table-layout: fixed;
       width: 90%;
       margin: auto;
-      // To help the data table fit inside the module better at a weird breakpoint
       td {
         position: relative;
         height: 97px;
-      }
-
-      td:nth-child(2) > p, td:nth-child(3) > p{
-        text-align: center;
-        font-size: 16px;
-        font-family: OpenSans;
-        letter-spacing: normal;
-      }
-
-      td:last-child{
-        font-family: OpenSans;
-        font-size: 14px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        color: #647981;
-        text-align: left;
-      }
-
-      th:nth-child(2){
-        width: 15%;
-        @include media-breakpoint-up(lg) {
-          width: 110px;
-        }
-      }
-      th:nth-child(3){
-        width: 130px;
       }
       th {
         color: $gray-darker;
@@ -218,6 +158,15 @@ $gradient-off-white: #f4f5f7;
       }
       th.school {
         width: 40%;
+      }
+      th.students{
+        width: 15%;
+        @include media-breakpoint-up(lg) {
+          width: 110px;
+        }
+      }
+      th.reviews{
+        width: 130px;
       }
       // Table View ONLY 
       td.school {
@@ -231,60 +180,30 @@ $gradient-off-white: #f4f5f7;
             flex-direction: column;
             justify-content: center;
             > a {
-              font-size: 17px;
+              font-size: 16px;
               font-weight: bold;
-              font-style: normal;
-              font-stretch: normal;
-              line-height: normal;
-              letter-spacing: normal;
               color: $school-color;
             }
-            > h4 {
+            > p {
               margin-top: 0;
               font-size: 14px;
               font-weight: 600;
-              font-style: normal;
-              font-stretch: normal;
-              line-height: normal;
-              letter-spacing: normal;
               color: #032532;
             }
             > div {
               margin-top: 10px;
-              .icon-house, a {
-                color: $links-color;
-              }
             }
           }
-        }
-        span {
-          display: inline-block;
         }
         a {
           font-size: $font-size-l2;
           font-family: 'opensans-semibold', sans-serif;
-        }
-        a.name {
-          font-size: $font-size-l3;
         }
         &:hover {
           background-color: $hover-color;
         }
         &.active {
           background-color: $active-color;
-        }
-        > span:first-of-type {
-          text-align: center;
-          width: 55px;
-        }
-        > span:last-of-type {
-          width: calc(100% - 70px);
-        }
-        > span {
-          vertical-align: top;
-        }
-        > span + span {
-          margin-left: 15px;
         }
       }
     }
@@ -322,29 +241,30 @@ $gradient-off-white: #f4f5f7;
       @include media-breakpoint-down(sm) {
         width: 90%;
       }
+      // modify the blueline to have no padding
       .blue-line{
         padding: 0;
         margin: 0;
         width: 100%;
       }
-      a{
+       a, p {
         font-size: 16px;
         font-weight: 600;
-        font-style: normal;
-        font-stretch: normal;
         line-height: 1.88;
         letter-spacing: normal;
-        color: $links-color;
       }
-      div{
-        display: flex;
-        justify-content: space-between;
-        .school-count{
-          font-size: 16px;
-          color: #333;
-          margin-right: 10px;
-          margin-top: 10px;
-        }
+      a { color: $links-color; }
+      p { 
+        color: #333;
+        margin-top: 5px;
+        margin-bottom: 0; 
+      }
+      .school-count{
+        font-size: 16px;
+        color: #333;
+        margin-right: 10px;
+        margin-top: 10px;
+        float: right;
       }
     }
   }
