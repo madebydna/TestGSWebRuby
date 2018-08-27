@@ -79,7 +79,7 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
       <hr />
       {schoolList}
       <div className="more-school-btn">
-        <a href={state ? `/${name(state.toLowerCase())}/${city.toLowerCase()}/schools/?gradeLevels=${levelCodes}` : null} target='_blank'>
+        <a href={state ? `/${name(state.toLowerCase())}/${city.toLowerCase()}/schools/?gradeLevels=${levelCodes}` : null}>
           <button>See More {schoolMap[levelCodes]} {t("schools")}</button>
         </a>
       </div>
