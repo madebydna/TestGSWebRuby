@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Search
-  class SolrAutosuggestQuery
+  class LegacySolrAutosuggestQuery
     include Rails.application.routes.url_helpers
     include UrlHelper
 
@@ -21,22 +21,23 @@ module Search
     end
 
     def response
-      solr_result['response']['docs'].map { |r| standardize(r) } + zips
+
+      rval = solr_result['response']['docs'].map { |r| standardize(r) } + zips
     end
 
     def zips
       #          zip,   count, zip,   count,
       # returns [94612, 5,     94501, 10,    ...]
-      zips_and_counts = solr_result.dig('facet_counts', 'facet_fields', 'zipcode_s') || []
-      zips_and_counts
-        .each_slice(2)
-        .select { |zip, count| count > 0 }
-        .map(&:first) # grab only the zip
-        .select do |zip|
-          first_numbers = q.match(/^(\d+)/).try(:[],0)
-          zip.present? && first_numbers.present? && zip.start_with?(first_numbers)
-        end # can have empty string
-        .map { |zip| {value: zip, type: 'zip'}}
+      zips_and_counts = solr_result.dig('facet_counts', 'facet_fields', 'zip') || []
+      zips = zips_and_counts
+                 .each_slice(2)
+                 .select {|_, count| count > 0}
+                 .map(&:first) # grab only the zip
+                 .select do |zip|
+        first_numbers = q.match(/^(\d+)/).try(:[], 0)
+        zip.present? && first_numbers.present? && zip.start_with?(first_numbers)
+      end
+      zips.map {|zip| {value: zip, type: 'zip'}}
     end
 
     def q
@@ -44,13 +45,12 @@ module Search
     end
 
     def standardize(solr_result)
-      city = solr_result['city_s'] || solr_result['city_name_text']
-      state = solr_result['state_s']
+      city = solr_result['city_sortable_name'] || solr_result['city']
+      state = solr_result['state'] || solr_result['city_state']
       state = state.first if state.is_a?(Array)
-      district = solr_result['district_name_text']
-      school_name = solr_result['name_text']
-      type = solr_result['type']&.downcase
-      school_id = solr_result['id'].split('-')&.last
+      district = solr_result['district_sortable_name']
+      school_name = solr_result['school_name']
+      type = solr_result['document_type']
 
       url = 
         if type == 'city'
@@ -70,7 +70,7 @@ module Search
           school_path(nil,
             state_name: States.state_name(state),
             city: gs_legacy_url_encode(city),
-            id: school_id,
+            id: solr_result['school_id'],
             name: gs_legacy_url_encode(school_name)
           ) + '/'
         end
@@ -81,8 +81,8 @@ module Search
           type: type,
           url: url
         }.tap do |hash|
-          hash[:school] = school_name if type == 'school'
-          hash[:district] = district if type == 'district'
+          hash[:school] = school_name if solr_result['document_type'] == 'school'
+          hash[:district] = district if solr_result['document_type'] == 'district'
         end
     end
 
@@ -99,14 +99,19 @@ module Search
     end
 
     def fields
-      %w(id
-         type
-         name_text
-         school_district_id_i
-         city_s
-         city_name_text
-         state_s
-         district_name_text)
+      [
+        "contentKey",
+        "document_type",
+        "school_id",
+        "district_id",
+        "school_name",
+        "city",
+        "city_state",
+        "state",
+        "city_sortable_name",
+        "district_sortable_name",
+        "zip"
+      ]
     end
 
     def q_no_whitespace
@@ -119,12 +124,12 @@ module Search
 
     def query_fragments
       [
-        "sortable_name_s:#{q_escape_spaces}*",
-        "name_text:(#{q}*)",
-        "city_name_text:(#{q_no_whitespace} #{q_no_whitespace}*)^5.0",
-        "district_name_text:#{q_escape_spaces}*^8.0"
+        "school_name_untokenized:#{q_escape_spaces}*",
+        "school_name:(#{q}*)",
+        "city_name:(#{q_no_whitespace} #{q_no_whitespace}*)^5.0",
+        "district_name_untokenized:#{q_escape_spaces}*^8.0"
       ].tap do |fragments|
-        fragments << "zipcode_s:#{possible_zip}*" if possible_zip
+        fragments << "zip:#{possible_zip}*" if possible_zip
       end
     end
 
@@ -146,8 +151,8 @@ module Search
           params[:defType] = 'lucene'
           params[:fl] = fields.join(',')
           params[:facet] = true if possible_zip
-          params[:sort] = 'score desc, number_of_schools desc'
-          params['facet.field']='zipcode_s' if possible_zip
+          params[:sort] = 'score desc, city_number_of_schools desc, district_number_of_schools desc'
+          params['facet.field']='zip' if possible_zip
           # facet=on&facet.field=txt
         end
       end

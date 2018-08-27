@@ -6,6 +6,7 @@ Sunspot.setup(School) do
   string :sortable_name
   string :city
   integer :school_district_id
+  string :school_district_name
   string :state
   integer :summary_rating
   latlon(:latlon) { Sunspot::Util::Coordinates.new(lat, lon) }
@@ -23,6 +24,14 @@ Sunspot.setup(School) do
   float :distance
 end
 
+Sunspot.setup(City) do
+
+end
+
+Sunspot.setup(District) do
+
+end
+
 Sunspot::Adapters::DataAccessor.register(
   Search::SchoolSunspotDataAccessor,
   School
@@ -31,4 +40,24 @@ Sunspot::Adapters::DataAccessor.register(
 Sunspot::Adapters::InstanceAdapter.register(
   Search::SchoolSunspotInstanceAdapter,
   Search::SchoolDocument
+)
+
+Sunspot::Adapters::DataAccessor.register(
+    Search::CitySunspotDataAccessor,
+    City
+)
+
+Sunspot::Adapters::InstanceAdapter.register(
+  Search::CitySunspotInstanceAdapter,
+  Search::CityDocument
+)
+
+Sunspot::Adapters::DataAccessor.register(
+    Sunspot::Adapters::DataAccessor,
+    District
+)
+
+Sunspot::Adapters::InstanceAdapter.register(
+    Search::DistrictSunspotInstanceAdapter,
+    Search::DistrictDocument
 )
