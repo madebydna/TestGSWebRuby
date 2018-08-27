@@ -1,6 +1,5 @@
 import 'jquery';
 import 'jquery.cookie';
-import 'jquery-unveil';
 import 'vendor/fastclick';
 import 'vendor/remodal';
 import { init as initHeader } from 'header';
@@ -14,6 +13,7 @@ import mobile_home_image from 'home/slideshow/home_480_6.jpg';
 import desktop_milestone_image from 'home/milestone_background-sm.jpg';
 import mobile_milestone_image from 'home/milestone_background_mobile.jpg';
 import { setupImages } from 'util/responsive_images';
+import "jquery-unveil";
 
 $(function() {
   initHeader({includeFeatured: false});
