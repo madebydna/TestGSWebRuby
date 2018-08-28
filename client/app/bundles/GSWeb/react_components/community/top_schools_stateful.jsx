@@ -9,6 +9,7 @@ class TopSchoolsStateful extends React.Component {
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
+    locality: PropTypes.object
   };
 
   static defaultProps = {
@@ -20,22 +21,12 @@ class TopSchoolsStateful extends React.Component {
     this.state = {
       isLoading: false,
       levelCodes: "e",
-    };
-    this.handleGradeLevel = this.handleGradeLevel.bind(this);
-    this.hydrateState = this.hydrateState.bind(this);
-  }
-
-  componentDidMount() {
-    this.hydrateState(this.props);
-  }
-
-  hydrateState(props){
-    this.setState({
       schools: props.schools,
       size: props.size,
       state: props.locality.stateShort,
       city: props.locality.city
-    });
+    };
+    this.handleGradeLevel = this.handleGradeLevel.bind(this);
   }
 
   handleGradeLevel(str) {
