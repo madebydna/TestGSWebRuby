@@ -408,6 +408,7 @@ $gradient-off-white: #f4f5f7;
     table {
       text-align: center;
       width: 95%;
+      overflow: auto;
       th {
         color: $gray-darker;
         font-weight: normal;
@@ -420,6 +421,7 @@ $gradient-off-white: #f4f5f7;
       }
     }
     #districts {
+      overflow-x: scroll;
       tbody > tr > td:first-child a {
         color: $school-color;
       }
