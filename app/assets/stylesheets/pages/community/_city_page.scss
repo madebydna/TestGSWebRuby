@@ -21,6 +21,20 @@ $gradient-off-white: #f4f5f7;
   text-align: left;
 }
 
+// Class to help render five star ratings
+.five-star-review{
+  a { color: $school-color; }
+  @include media-breakpoint-down(sm) {
+    //Vendor prefixes to target IE10+ and Safari
+    display: -ms-flexbox; 
+    display: flex;
+    display: -webkit-flex;
+    .five-star-rating{
+      margin-left: 15px;
+    }
+  }
+}
+
 .top-school-module{
   width: 95%;
   margin-bottom: 15px;
@@ -29,8 +43,7 @@ $gradient-off-white: #f4f5f7;
     padding: 30px 0 0 30px;
     > div{
       margin-top: 20px;
-      width: 75%;
-      @include media-breakpoint-down(sm) { width: 95%; }
+      width: 95%;
       h3 {
         font-size: 16px;
         font-family: 'opensans-semibold';
@@ -41,8 +54,16 @@ $gradient-off-white: #f4f5f7;
     }
   }
   .grade-filter {
+    display: -ms-flexbox; 
+      -ms-flex-pack: center;
     display: flex;
-    justify-content: center;
+    display: -webkit-flex;
+    -webkit-box-pack: center;
+            justify-content: center;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      //targeting IE10
+      -ms-flex-pack: start;
+    }
   }
   .button-group {
     @include button-group;
@@ -56,13 +77,23 @@ $gradient-off-white: #f4f5f7;
   }
   .scale{
     height: 30px;
+    display: -ms-flexbox; 
+      -ms-flex-pack: center;
+      -ms-flex-align: center;
+    display: -webkit-flex;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+            align-items: center;
   }
   .more-school-btn{
+    display: -ms-flexbox;
+      -ms-flex-pack: center;
+    display:-webkit-box;
+      -webkit-box-pack: center;
     display:flex;
-    justify-content: center;
+      justify-content: center;
     margin-bottom: 20px;
     a {
       width: 90%;
@@ -72,8 +103,10 @@ $gradient-off-white: #f4f5f7;
         margin: auto;
         height: 50px;
         color: $school-color;
-        font-size: 14px;
         font-family: 'opensans-semibold';
+        font-size: 14px;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(white), to($gradient-off-white));
+        background-image: -o-linear-gradient(top, white, $gradient-off-white);
         background-image: linear-gradient(to bottom, white, $gradient-off-white);
         border: solid 1px $border-color;
         border-radius: 3px;
@@ -81,18 +114,30 @@ $gradient-off-white: #f4f5f7;
     }
   }
   .no-schools{
+    display: -ms-flexbox; 
+      -ms-flex-pack: center;
+      -ms-flex-align: center;
+    display: -webkit-box;
+      -webkit-box-pack: center;
+      -webkit-box-align: center;
     display: flex;
-    justify-content: center;
-    align-items: center;
+      justify-content: center;
+      align-items: center;
     margin-bottom: 10px;
     width: 100%;
     > div{
       height: 150px;
       width: 90%;
       border: 1px solid $form-field-border-color;
+      display: -ms-flexbox; 
+        -ms-flex-pack: center;
+        -ms-flex-align: center;
+      display: -webkit-box;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
       display: flex;
-      justify-content: center;
-      align-items: center;
+          justify-content: center;
+          align-items: center;
       h3{
         width: 85%;
         color: #333;
@@ -105,34 +150,22 @@ $gradient-off-white: #f4f5f7;
     width: 90%;
     margin: auto;
     .content-container{
+      display: -ms-flexbox; 
+      display: -webkit-box; 
       display: flex;
       .school-info{
         margin-left: 15px;
-        p {
-          margin: 3px 0 5px 0;
+        .students{
+          margin-bottom: 5px;
         }
-        a {
+        a, p {
           margin: 3px 0 0 0;
         }
         > a {
-          font-family: OpenSans;
+          font-family: "opensans-semibold";
           font-size: 17px;
-          font-weight: bold;
-          font-style: normal;
-          font-stretch: normal;
-          line-height: normal;
-          letter-spacing: normal;
           color: $school-color;
         }
-      }
-    }
-  }
-  .five-star-review{
-    a { color: $school-color; }
-    @include media-breakpoint-down(sm) {
-      display: flex;
-      .five-star-rating{
-        margin-left: 15px;
       }
     }
   }
@@ -156,8 +189,18 @@ $gradient-off-white: #f4f5f7;
         background-color: #f1fafd;
         height: 60px;
       }
+
+      th.students{
+        width: 15%;
+        @include media-breakpoint-up(lg) {
+          width: 90px;
+        }
+      }
+      th.reviews{
+        width: 130px;
+      }
       th.school {
-        width: 40%;
+        width: 35%;
       }
       th.students{
         width: 15%;
@@ -172,19 +215,31 @@ $gradient-off-white: #f4f5f7;
       td.school {
         @include clearfix;
         .content-container{
+          display: -ms-flexbox; 
+          display: -webkit-box; 
           display: flex;
           .school-info{
             margin-left: 15px;
             text-align: left;
+            display: -ms-flexbox; 
+              -ms-flex-direction: column;
+              -ms-flex-pack: center;
+            display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-box-direction: normal;
+              -webkit-box-pack: center;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+              flex-direction: column;
+              justify-content: center;
+            //targets IE10 & IE11
+            @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+                display: block;
+            }
             > a {
-              font-size: 16px;
-              font-weight: bold;
+              font-size: 14px;
               color: $school-color;
             }
-            > p {
+             > p {
               margin-top: 0;
               font-size: 14px;
               font-weight: 600;
@@ -218,6 +273,7 @@ $gradient-off-white: #f4f5f7;
   @include media-breakpoint-down(sm) {
     margin: auto;
     margin-bottom: 15px;
+    width: 100%;
   }
   h3{
     padding: 10px 0 10px 15px;
@@ -227,9 +283,19 @@ $gradient-off-white: #f4f5f7;
   }
   ul{
     height: 150px;
+    display: -ms-flexbox; 
+      -ms-flex-direction: column;
+      -ms-flex-wrap: wrap;
+    display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+      flex-direction: column;
+      flex-wrap: wrap;
+    width: 100%;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      height: 185px;
+    }
     @include media-breakpoint-down(sm) {
       height: auto;
     }
@@ -241,13 +307,13 @@ $gradient-off-white: #f4f5f7;
       @include media-breakpoint-down(sm) {
         width: 90%;
       }
-      // modify the blueline to have no padding
+      // modify the blueline to have no padding for browse links
       .blue-line{
         padding: 0;
         margin: 0;
         width: 100%;
       }
-       a, p {
+      a, p {
         font-size: 16px;
         font-weight: 600;
         line-height: 1.88;
@@ -256,6 +322,7 @@ $gradient-off-white: #f4f5f7;
       a { color: $links-color; }
       p { 
         color: #333;
+        display: inline-block;
         margin-top: 5px;
         margin-bottom: 0; 
       }
@@ -279,10 +346,24 @@ $gradient-off-white: #f4f5f7;
   padding-top: 38px;
   .breadcrumbs-container {
     position: fixed;
-    width: 100%;
+    width: 100vw;
     top: 80px;
     z-index:3;
+    background-color: #002c47;
+    display: -ms-flexbox; 
+      -ms-flex-pack: center;
+      -ms-flex-align: center;
+    display: -webkit-box;
+    display: flex;
+      -webkit-box-pack: center;
+              justify-content: center;
+      -webkit-box-align: center;
+              align-items: center;
     .breadcrumbs {
+      width: 1200px;
+      @include media-breakpoint-down(md) {
+        max-width: 992px;
+      }
       padding-left: 15px;
       .divider {
         font-size: 9px;
@@ -315,6 +396,15 @@ $gradient-off-white: #f4f5f7;
 
   .below-hero {
     width: 100%;
+    display: -ms-flexbox; 
+      -ms-flex-pack: center;
+    display: -webkit-box;
+      -webkit-box-pack: center;
+    display: flex;
+    justify-content: center;
+    @media screen and (max-width: 1200px) and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      -ms-flex-pack: start;
+    }
     table {
       text-align: center;
       width: 95%;
@@ -328,8 +418,6 @@ $gradient-off-white: #f4f5f7;
         border: 1px solid $form-field-border-color;
         padding: 10px 15px;
       }
-      @media (max-width: 1420px){
-      }
     }
     #districts {
       tbody > tr > td:first-child a {
@@ -337,19 +425,33 @@ $gradient-off-white: #f4f5f7;
       }
     }
     .sticky {
-      position: fixed;
-      top: 320px;
+      margin-top: 15px;
+      margin-right: 20px;
+      position: -webkit-sticky;
+      position: sticky;
+      //target ie10
+      @media screen and (min-width:0\0) {
+        position: static;
+        vertical-align: top;
+      }
+    }
+    //Targets ie11 only
+    @media all and (-ms-high-contrast: none){
+     *::-ms-backdrop, .sticky{ position: fixed; }
     }
     .ad-bar {
       width: 300px;
       height: 600px;
-      right: 20px;
+      display: inline-block;
     }
     .toc {
-      width: 280px;
+      width: 230px;
       display: inline-block;
-      left: 20px;
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        margin-left: -250px;
+      }
       box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+      height: 100px;
       ul {
         list-style: none;
         padding: 0;
@@ -379,12 +481,13 @@ $gradient-off-white: #f4f5f7;
       }
     }
     .city-modules {
-      width: calc(100vw - 670px);
+      // width: calc(100vw - 670px);
+      max-width: 600px;
       display: inline-block;
+      margin-top: 20px;
       > div {
         margin-bottom: 20px;
       }
-      margin: 22px 0 10px 350px;
       .modules-title {
         font-size: 20px;
         font-weight: bold;
