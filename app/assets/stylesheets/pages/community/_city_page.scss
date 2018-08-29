@@ -312,18 +312,27 @@ $gradient-off-white: #f4f5f7;
         padding: 0;
         margin: 0;
         width: 100%;
+        margin-left: -5px;
       }
-      a{
+      a, p {
         font-size: 16px;
         font-family: 'opensans-semibold';
-        line-height: 1.88;
-        letter-spacing: -0.80px;
-        color: $links-color;
+        letter-spacing: -0.65px;
+      }
+      a { 
+        color: $links-color; 
+        margin-left: -5px;
+      }
+      p { 
+        color: #333;
+        display: inline-block;
+        margin-top: 5px;
+        margin-bottom: 0; 
       }
       .school-count{
-        font-size: 14px;
+        font-size: 15px;
         color: #333;
-        margin-right: 7px;
+        margin-right: 5px;
         margin-top: 10px;
         float: right;
       }
@@ -385,6 +394,7 @@ $gradient-off-white: #f4f5f7;
     .city-hero-narrative {
       font-size: 16px;
       font-weight: normal;
+      padding: 0 15px; 
     }
   }
 
