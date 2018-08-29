@@ -313,23 +313,17 @@ $gradient-off-white: #f4f5f7;
         margin: 0;
         width: 100%;
       }
-      a, p {
+      a{
         font-size: 16px;
         font-family: 'opensans-semibold';
         line-height: 1.88;
-        letter-spacing: normal;
-      }
-      a { color: $links-color; }
-      p { 
-        color: #333;
-        display: inline-block;
-        margin-top: 5px;
-        margin-bottom: 0; 
+        letter-spacing: -0.80px;
+        color: $links-color;
       }
       .school-count{
-        font-size: 16px;
+        font-size: 14px;
         color: #333;
-        margin-right: 10px;
+        margin-right: 7px;
         margin-top: 10px;
         float: right;
       }

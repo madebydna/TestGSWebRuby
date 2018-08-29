@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
-import { addQueryParamToUrl } from 'util/uri'
+import { addQueryParamToUrl } from 'util/uri';
+import { t } from "util/i18n";
 
 const addParamsToUrl = (paramsArray,url) => {
   return paramsArray.reduce((accum, params) => {
@@ -12,34 +13,34 @@ const addParamsToUrl = (paramsArray,url) => {
 const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
   const browseLinkData = [
     {
-      name: "Preschools", queryParams: [{key: "gradeLevels", val: "p"}], schoolNumber: schoolLevels.preschool
+      name: `${t("Preschools")}`, queryParams: [{key: "gradeLevels", val: "p"}], schoolNumber: schoolLevels.preschool
     },
     {
-      name: "Elementary Schools", queryParams: [{key: "gradeLevels", val: "e"}], schoolNumber: schoolLevels.elementary
+      name: `${t("Elementary schools")}`, queryParams: [{key: "gradeLevels", val: "e"}], schoolNumber: schoolLevels.elementary
     }
     ,
     {
-      name: "Middle Schools", queryParams: [{key: "gradeLevels", val: "m"}], schoolNumber: schoolLevels.middle
+      name: `${t("Middle schools")}`, queryParams: [{key: "gradeLevels", val: "m"}], schoolNumber: schoolLevels.middle
     }
     ,
     {
-      name: "High Schools", queryParams: [{key: "gradeLevels", val: "h"}], schoolNumber: schoolLevels.high
+      name: `${t("High schools")}`, queryParams: [{key: "gradeLevels", val: "h"}], schoolNumber: schoolLevels.high
     }
     ,
     {
-      name: "Public District Schools", queryParams: [{key: "st", val: "public_charter"},{key: "st", val:"public"}], schoolNumber: schoolLevels.public
+      name: `${t("Public district schools")}`, queryParams: [{key: "st", val: "public_charter"},{key: "st", val:"public"}], schoolNumber: schoolLevels.public
     }
     ,
     {
-      name: "Public Charter Schools", queryParams: [{key: "st", val:"public_charter"},{key: "st", val: "charter"}], schoolNumber: schoolLevels.charter
+      name: `${t("Public charter schools")}`, queryParams: [{key: "st", val:"public_charter"},{key: "st", val: "charter"}], schoolNumber: schoolLevels.charter
     }
     ,
     {
-      name: "Private Schools", queryParams: [{key: "st", val: "private"}], schoolNumber: schoolLevels.private
+      name: `${t("Private schools")}`, queryParams: [{key: "st", val: "private"}], schoolNumber: schoolLevels.private
     }
     ,
     {
-      name: "All Schools", queryParams: [], schoolNumber: schoolLevels.all
+      name: `${t("All schools")}`, queryParams: [], schoolNumber: schoolLevels.all
     }
   ];
 
@@ -64,7 +65,7 @@ const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
   if (schoolLevels.all !== null) {
     return (
       <section className="school-browse-module">
-        <h3>Here's a look at schools in {locality.city}</h3>
+        <h3>{t('browse_school_blurb')} {locality.city}</h3>
         <ul>
           {renderSchoolAmt}
         </ul>

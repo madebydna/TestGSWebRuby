@@ -115,7 +115,7 @@ class CityLayout extends React.Component {
 
   heroNarration(){
     let {city,stateLong,county} = this.props.locality;
-    return county && `${city} is a city in ${county} county, ${stateLong}`
+    return county && `${city} ${t("city.header.is_a_city")} ${county} ${t("county")}, ${stateLong}`
   }
 
   renderHero(){
@@ -144,14 +144,14 @@ class CityLayout extends React.Component {
   renderDistricts(){
     return this.props.districts.length > 0 && (
       <div id="districts">
-        <div className="modules-title">{`${capitalize(t('school districts'))} ${t('in')} ${this.props.locality.city}`}</div>
+        <div className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</div>
           <table>
             <thead>
             <tr>
               <th className="school">{t("District")}</th>
               <th>{t("Grades")}</th>
-              <th>{t("# of schools")}</th>
-              <th>{t("Enrollment")}</th>
+              <th>{capitalize(t("schools"))}</th>
+              <th>{capitalize(t("students"))}</th>
             </tr>
             </thead>
             <tbody>

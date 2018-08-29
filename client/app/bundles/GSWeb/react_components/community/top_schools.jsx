@@ -10,14 +10,16 @@ import { name } from "../../util/states";
 
 const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, gradeLevels}) => {
   let schoolList;
-  const schoolMap = {
-    "e": t("Elementary"), "m": t("Middle"), "h": t("High")
+  const seeSchoolMap = {
+    "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
+  }
+  const noSchoolsMap = {
+    "e": t("top_schools.no_elem"), "m": t("top_schools.no_mid"), "h": t("top_schools.no_high")
   }
   if (schools.length === 0) {
     schoolList = <section className="no-schools">
                     <div>
-                      <h3>There are no {schoolMap[levelCodes].toLowerCase()} schools with a GreatSchools 
-                      rating for this city.</h3>
+                      <h3>{noSchoolsMap[levelCodes]}</h3>
                     </div>
                   </section>;
   } else {
@@ -54,13 +56,11 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
 	return <div className="top-school-module">
       <div className="top-school-info">
         <div>
-          <h3>Top schools</h3>
+          <h3>{t("top_schools.top_schools")}</h3>
           <p>
-            The GreatSchools Rating provides an overall snapshot of school quality
-          based on how well a school prepares all its students for postsecondary
-            success - be it college or career. <a href="/gk/ratings">Learn More</a>
+            {t('top_schools.top_schools_blurbs')}
+             <a href="/gk/ratings">{t('top_schools.learn_more')}</a>
           </p>
-          
         </div>
       </div>
       <br/>
@@ -75,7 +75,7 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
       {schoolList}
       <div className="more-school-btn">
         <a href={state ? `/${name(state.toLowerCase())}/${city.toLowerCase()}/schools/?gradeLevels=${levelCodes}` : null}>
-          <button>See More {schoolMap[levelCodes]} {t("schools")}</button>
+          <button>{seeSchoolMap[levelCodes]}</button>
         </a>
       </div>
     </div>;

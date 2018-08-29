@@ -6,6 +6,11 @@ en:
     in: in
     at a glance: at a glance
     assigned_school: Assigned school
+    browse_school_blurb: Here's a look at schools in
+    city:
+      header:
+        is_a_city: is a city in
+    county: county
     homes_for_sale: Homes for sale
     nearby homes for sale & rent: nearby homes for sale & rent
     Mile: Mile
@@ -46,10 +51,15 @@ en:
       It looks like this is your assigned <span style='text-transform: lowercase;' class="open-sans_semibold">{school_level} school</span>, but we recommend double-checking with the district or school.
     advertisement: Advertisement
     assigned: ASSIGNED
+    Preschools: Preschools
     PreK: PreK
     Elementary: Elementary
+    Elementary schools: Elementary schools
     Middle: Middle
+    Middle schools: Middle schools
     High: High
+    High: High schools
+    All schools: All schools
     ListMap view: ListMap view
     map: map
     Table view: Table view
@@ -62,6 +72,7 @@ en:
     Public & private schools: Public & private schools
     Public charter schools: Public charter schools
     Public district schools: Public district schools
+    Public school districts in: Public school districts in
     Public district & private schools: Public district & private schools
     Public charter & private schools: Public charter & private schools
     Charter: Charter
@@ -121,6 +132,19 @@ en:
       proficient_or_better: Proficient or better
       at_grade_level: Proficient
     This school: This school
+    top_schools:
+      top_schools: Top schools
+      top_schools_blurbs: >
+        The GreatSchools Rating provides an overall snapshot of school quality
+        based on how well a school prepares all its students for postsecondary
+        success - be it college or career.
+      learn_more: Learn more
+      no_elem: There are no elementary schools with a GreatSchools rating for this city
+      no_mid: There are no middle schools with a GreatSchools rating for this city
+      no_high: There are no high schools with a GreatSchools rating for this city
+      see_elem: See more elementary schools
+      see_mid: See more middle schools
+      see_high: See more high schools
     State average: State average
     too_many_schools_error_html: '<strong>You&#39ve already selected 4 schools to compare.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspCompare schools.</a>'
     view_less: View less »
