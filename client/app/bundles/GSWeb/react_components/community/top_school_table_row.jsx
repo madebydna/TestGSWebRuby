@@ -4,7 +4,7 @@ import Rating from "../../components/rating";
 import ModalTooltip from "../modal_tooltip";
 import FiveStarRating from "../review/form/five_star_rating";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
-import { t } from "util/i18n";
+import { t, capitalize } from "util/i18n";
 
 const renderSchoolColumn = (name, rating, links, content, gradeLevels, schoolType) => {
   return <React.Fragment>
@@ -21,7 +21,7 @@ const renderSchoolColumn = (name, rating, links, content, gradeLevels, schoolTyp
           <a href={links.profile} target="_blank">
             {name}
           </a>
-          <p>{schoolType[0].toUpperCase() + schoolType.slice(1)}, {gradeLevels}</p>
+          <p>{capitalize(t(`school_types.${schoolType}`))}, {gradeLevels}</p>
         </div>
       </div>
     </React.Fragment>;
