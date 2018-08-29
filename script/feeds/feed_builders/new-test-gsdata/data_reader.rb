@@ -51,6 +51,7 @@ module Feeds
           next unless district_cache.present?
           district_id = district_cache.district_id
           test_hash = district_cache.cache_data
+          next unless test_hash[test_name].present?
           yield test_hash[test_name].select(&cache_filter), district_id
         end
       end
@@ -61,6 +62,7 @@ module Feeds
           next unless school_cache.present?
           school_id = school_cache.school_id
           test_hash = school_cache.cache_data
+          next unless test_hash[test_name].present?
           yield test_hash[test_name].select(&cache_filter), school_id
         end
       end
