@@ -1,0 +1,41 @@
+@mixin flexbox-center {
+  display: -ms-flexbox; 
+    -ms-flex-pack: center;
+    -ms-flex-align: center;
+  display: -webkit-flex;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flexbox{
+  display: -ms-flexbox; 
+  display: -webkit-flex;
+  display: flex;
+}
+
+@mixin flex-column-wrap{
+  display: -ms-flexbox; 
+    -ms-flex-direction: column;
+    -ms-flex-wrap: wrap;
+    -ms-flex-align: center;
+  display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-box-align: center;
+  display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+@mixin flex-justify-center{
+  display: -ms-flexbox; 
+    -ms-flex-pack: center;
+  display: -webkit-box;
+    -webkit-box-pack: center;
+  display: flex;
+    justify-content: center;
+}

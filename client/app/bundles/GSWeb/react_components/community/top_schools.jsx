@@ -23,27 +23,28 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
                     </div>
                   </section>;
   } else {
-    schoolList = size > SM ? <section className="school-table">
-          <table>
-            <thead>
-              <tr>
-                <th className="school">{t("School")}</th>
-                <th className="students">{t("Students")}</th>
-                <th className="reviews">{t("Reviews")}</th>
-                <th>{t("District")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {schools.map(school => (
-                <TopSchoolTableRow
-                  key={school.state + school.id}
-                  {...school}
-                  size={size}
-                />
-              ))}
-            </tbody>
-          </table>
-        </section> : <section className="school-table-mobile">
+    // schoolList = size > SM ? <section className="school-table">
+    //       <table>
+    //         <thead>
+    //           <tr>
+    //             <th className="school">{t("School")}</th>
+    //             <th className="students">{t("Students")}</th>
+    //             <th className="reviews">{t("Reviews")}</th>
+    //             <th>{t("District")}</th>
+    //           </tr>
+    //         </thead>
+    //         <tbody>
+    //           {schools.map(school => (
+    //             <TopSchoolTableRow
+    //               key={school.state + school.id}
+    //               {...school}
+    //               size={size}
+    //             />
+    //           ))}
+    //         </tbody>
+    //       </table>
+    //     </section> : 
+    schoolList = <section className="top-school-list">
           {schools.map(school => (
             <TopSchoolTableRow
               key={school.state + school.id}

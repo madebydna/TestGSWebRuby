@@ -1,0 +1,200 @@
+$active-color: #f6f9fa;
+$hover-color: $active-color;
+$border-color: #dbe6eb;
+$school-color: #2bade3;
+$gradient-off-white: #f4f5f7;
+$border-radius: 3px;
+$breadcrumbs-bg: #002c47;
+
+
+// Class to help draw blueish-gray lines
+.blue-line{
+  border-bottom: 1px solid $border-color;
+  width: 100%;
+  margin: 10px 5px 10px 5px;
+}
+
+// Class to help render districts in a few places with styling
+.school-district{
+  font-family: "opensans-regular";
+  color: #647981;
+  text-align: left;
+}
+
+.top-school-module{
+  width: 95%;
+  margin-bottom: 15px;
+  border: solid 1px $border-color;
+  .top-school-info{
+    padding: 30px 0 0 30px;
+    > div{
+      margin-top: 20px;
+      width: 95%;
+      h3 {
+        font-size: 16px;
+        font-family: 'opensans-semibold';
+      }
+      > p, > h3, > a {
+        padding: 0 20px;
+        }
+      }
+    }
+  .grade-filter {
+    display: -ms-flexbox; 
+      -ms-flex-pack: center;
+    display: -webkit-flex;
+      -webkit-box-pack: center;
+    display: flex;
+      justify-content: center;
+    .button-group {
+      @include button-group;
+      button.active{
+        background-color: $school-color;
+        border: 1px solid $form-field-border-color;
+      }
+    }
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      //targeting IE10
+      -ms-flex-pack: start;
+    }
+  }
+  .top-school-list{
+    .school-list-item{
+      width: 90%;
+      margin: auto;
+      // Class to help render five star ratings
+      .five-star-review{
+        a { color: $school-color; }
+        span { display: inline-block; }
+        .five-star-rating{ margin-left: 15px; }
+      }
+      .content-container{
+        @include flexbox;
+        a, p { font-size: 16px; }
+        .scale{
+          @include flexbox-center;
+          height: 30px;
+        }
+        .school-info{
+          margin-left: 15px;
+          .students{
+            margin-bottom: 5px;
+          }
+          a, p { margin: 3px 0 0; }
+          > a {
+            font-family: "opensans-semibold";
+            color: $school-color;
+          }
+        }
+      }
+    }
+  }
+
+  .more-school-btn{
+    margin-bottom: 20px;
+    @include flexbox-center;
+    a {
+      width: 90%;
+      button{
+        text-transform: uppercase;
+        width: 100%;
+        margin: auto;
+        height: 50px;
+        color: $school-color;
+        font-family: 'opensans-semibold';
+        font-size: 14px;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(white), to($gradient-off-white));
+        background-image: -o-linear-gradient(top, white, $gradient-off-white);
+        background-image: linear-gradient(to bottom, white, $gradient-off-white);
+        border: solid 1px $border-color;
+        border-radius: $border-radius;
+      }
+    }
+  }
+  .no-schools{
+    @include flexbox-center;
+    margin-bottom: 10px;
+    width: 100%;
+    > div{
+      height: 150px;
+      width: 90%;
+      border: 1px solid $form-field-border-color;
+      @include flexbox-center;
+      h3 {
+        width: 85%;
+        color: #333;
+        font-size: 16px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.school-browse-module{
+  width: 95%;
+  margin-bottom: 15px;
+  border: solid 1px $border-color;
+  padding: 5px;
+  @include media-breakpoint-down(sm) {
+    margin: auto;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  h3{
+    padding: 10px 0 10px 15px;
+    color: #333;
+    font-size: 16px;
+    font-family: 'opensans-semibold';
+  }
+  ul{
+    height: 150px;
+    @include flex-column-wrap;
+    width: 100%;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      height: 185px;
+    }
+    @include media-breakpoint-down(sm) {
+      height: auto;
+    }
+    li{
+      width: 45%;
+      margin-left: -10px;
+      font-size: 25px;
+      color: $color-button-border;
+      @include media-breakpoint-down(sm) {
+        width: 90%;
+      }
+      // modify the blueline to have no padding for browse links
+      .blue-line{
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        margin-left: -8px;
+      }
+      a, p {
+        font-size: 16px;
+        font-family: 'opensans-semibold';
+        letter-spacing: -0.70px;
+        margin-left: -8px;
+      }
+      a { 
+        color: $school-color; 
+        margin-top: -3px;
+      }
+      p { 
+        color: #333;
+        display: inline-block;
+        margin-top: 5px;
+        margin-bottom: 0; 
+      }
+      .school-count{
+        @include clearfix;
+        font-size: 15px;
+        color: #333;
+        margin-right: 15px;
+        margin-top: 10px;
+        float: right;
+      }
+    }
+  }
+}
