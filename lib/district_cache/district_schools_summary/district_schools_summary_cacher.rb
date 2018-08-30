@@ -34,14 +34,22 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
     level_code_counts = LevelCode::LEVEL_LOOKUP.keys.each_with_object({}) {|lc, hash| hash[lc] = 0}
     schools_within_district.pluck('level_code').each do |level_codes|
       split_lc = level_codes.split(',')
-      split_lc.each {|lc| level_code_counts[lc.strip.downcase] += 1}
+      split_lc.each do |lc|
+        cleaned_lc = lc.strip.downcase
+        level_code_counts[cleaned_lc] += 1 if level_code_counts.has_key?(cleaned_lc)
+      end
     end
+
     level_code_counts
   end
 
   def count_of_schools_by_type
     school_type_counts = {'public' => 0, 'charter' => 0}
-    schools_within_district.pluck('type').each {|st| school_type_counts[st.strip.downcase] += 1}
+    schools_within_district.pluck('type').each |st|
+      cleaned_st = st.strip.downcase
+      school_type_counts[cleaned_st] += 1 if school_type_counts.has_key?(cleaned_st)
+    end
+
     school_type_counts
   end
 
