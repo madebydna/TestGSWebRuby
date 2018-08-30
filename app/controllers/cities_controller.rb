@@ -115,7 +115,7 @@ class CitiesController < ApplicationController
 
   def district_content
     if city_cache_district_content.present?
-      city_cache_district_content.map do |district_content|
+      dc = city_cache_district_content.map do |district_content|
         {}.tap do |d|
           name = district_content_field(district_content, 'name')
           city = district_content_field(district_content, 'city')
@@ -126,6 +126,7 @@ class CitiesController < ApplicationController
           d[:enrollment] =  district_enrollment(district_content_field(district_content, 'id'))
         end
       end
+      dc.sort_by { |h| h[:enrollment] ? h[:enrollment] : 0 }.reverse!
     else
       []
     end

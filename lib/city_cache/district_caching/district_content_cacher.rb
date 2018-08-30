@@ -10,19 +10,15 @@ module DistrictCaching
       data_type == :district_content
     end
 
-    # def header_keys
-    #   %w(id name school_count city levels)
-    # end
-
     def build_hash_for_cache
       districts.map do |district|
-        hash = {}
-        hash['name'] = [{ city_value: district.name }]
-        hash['school_count'] = [{ city_value: district.num_schools }]
-        hash['id'] = [{ city_value: district.id }]
-        hash['levels'] = [{ city_value: GradeLevelConcerns.human_readable_level(district.level) }]
-        hash['city'] = [{ city_value: district.city }]
-        hash
+        {}.tap do |hash|
+          hash['name'] = [{ city_value: district.name }]
+          hash['school_count'] = [{ city_value: district.num_schools }]
+          hash['id'] = [{ city_value: district.id }]
+          hash['levels'] = [{ city_value: GradeLevelConcerns.human_readable_level(district.level) }]
+          hash['city'] = [{ city_value: district.city }]
+        end
       end
     end
 
