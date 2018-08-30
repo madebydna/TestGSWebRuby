@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { t } from 'util/i18n';
+import { t, capitalize } from "util/i18n";
 import School from './school';
 import LoadingOverlay from './loading_overlay';
 import SchoolTableRow from './school_table_row';
@@ -15,16 +15,16 @@ const SchoolTable = ({ schools, isLoading }) => (
         numItems={schools.length}
       />
     }
-    <table className={isLoading ? 'loading' : ''}>
+    <table className={isLoading ? "loading" : ""}>
       <thead>
         <tr>
-          <th className="school">{t('School')}</th>
-          <th>{t('Type')}</th>
-          <th>{t('Grades')}</th>
-          <th>{t('Total students enrolled')}</th>
-          <th>{t('Students per teacher')}</th>
-          <th>{t('Reviews')}</th>
-          <th>{t('District')}</th>
+          <th className="school">{capitalize(t("school"))}</th>
+          <th>{t("Type")}</th>
+          <th>{t("Grades")}</th>
+          <th>{t("Total students enrolled")}</th>
+          <th>{t("Students per teacher")}</th>
+          <th>{t("Reviews")}</th>
+          <th>{t("District")}</th>
         </tr>
       </thead>
       <tbody>
