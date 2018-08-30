@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Breadcrumbs from 'react_components/breadcrumbs';
-import CityLayout from './city_layout';
+// import CityLayout from './city_layout';
 import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
@@ -15,17 +15,16 @@ import withViewportSize from 'react_components/with_viewport_size';
 import '../../vendor/remodal';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
-class City extends React.Component {
+
+class Districts extends React.Component {
   static defaultProps = {
     schools: [],
     loadingSchools: false,
-    breadcrumbs: [],
-    districts: []
+    breadcrumbs: []
   };
 
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.object),
-    districts: PropTypes.arrayOf(PropTypes.object),
     loadingSchools: PropTypes.bool,
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
@@ -94,11 +93,11 @@ class City extends React.Component {
 
   render() {
     return (
-      <CityLayout
+      <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schools={this.props.schools}
         topSchools={
-          <TopSchoolsStateful 
+          <TopSchoolsStateful
             schools={this.props.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
@@ -111,22 +110,16 @@ class City extends React.Component {
             schoolLevels={this.props.school_levels}
           />
         }
-        districts={this.props.districts}
-        districtsInCity={
-          <DistrictsInCity
-            districts={this.props.districts}
-          />
-        }
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
         toc={<Toc schools={this.props.schools} districts={this.props.districts} />}
         viewportSize={this.props.viewportSize}
       >
-      </CityLayout>
+      </DistrictLayout>
     );
   }
 }
 
-const CityWithViewportSize = withViewportSize('size')(City);
+const DistrictWithViewportSize = withViewportSize('size')(District);
 
-export default CityWithViewportSize;
+export default DistrictWithViewportSize;
