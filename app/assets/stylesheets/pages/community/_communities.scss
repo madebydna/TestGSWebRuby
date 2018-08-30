@@ -79,7 +79,7 @@ $subtle-gray: #647981;
       @include media-breakpoint-down(sm) {
         > div {
           margin: auto;
-          .top-school-module, table {
+          .top-school-module {
             width: 100%;
           }
         }
@@ -108,7 +108,7 @@ $subtle-gray: #647981;
       height: 600px;
       display: inline-block;
     }
-    //Css for shared portion between City and District pages.
+    //CSS for shared portion between City and District pages.
     .toc {
       // set height in specific page of that module
       display: inline-block;
@@ -166,7 +166,7 @@ $subtle-gray: #647981;
   margin-bottom: 15px;
   border: solid 1px $border-color;
   .top-school-info{
-    padding: 30px 0 0 30px;
+    padding: 2px 0 0 2px;
     > div{
       margin-top: 20px;
       width: 95%;
@@ -188,10 +188,6 @@ $subtle-gray: #647981;
         border: 1px solid $form-field-border-color;
       }
     }
-    // @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    //   //targeting IE10
-    //   -ms-flex-pack: start;
-    // }
   }
   .top-school-list{
     .school-list-item{
