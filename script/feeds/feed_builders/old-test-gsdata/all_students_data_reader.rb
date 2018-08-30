@@ -4,7 +4,7 @@ module Feeds
   module OldTestGsdata
     class AllStudentsDataReader < Feeds::OldTestGsdata::DataReader
       def cache_filter
-        ->(h) { h['breakdowns'] == 'All Students' }
+        ->(h) { h['breakdowns'].downcase == 'All Students'.downcase  if h['breakdowns']}
       end
     end
   end

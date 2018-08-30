@@ -7,6 +7,8 @@ module Search
 
     attr_reader :state, :school_id
 
+    CACHE_KEYS = %w(ratings)
+
     def initialize(state:, school_id:)
       @state = state
       @school_id = school_id
@@ -34,14 +36,15 @@ module Search
       {
         name_text: school.name,
         sortable_name_s: school.name&.downcase,
-        city_s: school.city.downcase,
+        city_s: school.city,
         school_district_id_i: school.district_id,
+        school_district_name_s: school.district&.name,
         street_s: school.street&.downcase,
         zipcode_s: school.zipcode,
         county_s: school.county&.downcase,
         state_s: school.state.downcase,
         latlon_ll: latlon,
-        summary_rating_i: gsdata_query.summary_rating,
+        summary_rating_i: school.great_schools_rating,
         level_codes_s: school.level_code&.split(',')
       }
     end
@@ -54,15 +57,15 @@ module Search
 
     private
 
-    def gsdata_query
-      @_gsdata_query ||= DataValuesForSchoolQuery
-        .new(state: @state, school_id: @school_id)
-        .include_summary_rating
-        .run
-    end
-
     def school
-      @_school = School.find_by_state_and_id(@state, @school_id)
+      @_school ||= begin
+        school = School.find_by_state_and_id(@state, @school_id)
+        query = SchoolCacheQuery.new.include_cache_keys(CACHE_KEYS).include_schools(@state, @school_id)
+        query_results = query.query_and_use_cache_keys
+        school_cache_results = SchoolCacheResults.new(CACHE_KEYS, query_results)
+        school_cache_results.decorate_schools([school])
+        school
+      end
     end
 
     def latlon

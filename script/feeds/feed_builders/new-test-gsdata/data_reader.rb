@@ -46,23 +46,31 @@ module Feeds
       end
 
       def each_district_result_for_test_name(test_name)
-        DistrictCache.where(name: 'feed_test_scores_gsdata', district_id: district_ids, state: @state).find_each(batch_size: 100) do |district_cache|
+        district_ids.each do |district_id|
+          district_cache = DistrictCache.where(state: @state, district_id: district_id, name: 'feed_test_scores_gsdata').first
+          next unless district_cache.present?
           district_id = district_cache.district_id
           test_hash = district_cache.cache_data
+          next unless test_hash[test_name].present?
           yield test_hash[test_name].select(&cache_filter), district_id
         end
       end
 
       def each_school_result_for_test_name(test_name)
-        SchoolCache.where(name: 'feed_test_scores_gsdata', school_id: school_ids, state: state).find_each(batch_size: 100) do |school_cache|
+        school_ids.each do |school_id|
+          school_cache = SchoolCache.where(state: @state, school_id: school_id, name: 'feed_test_scores_gsdata').first
+          next unless school_cache.present?
           school_id = school_cache.school_id
           test_hash = school_cache.cache_data
+          next unless test_hash[test_name].present?
           yield test_hash[test_name].select(&cache_filter), school_id
         end
       end
 
       def each_school_result
-        SchoolCache.where(name: 'feed_old_test_scores_gsdata',  state: state).find_each(batch_size: 1) do |school_cache|
+        school_ids.each do |school_id|
+          school_cache = SchoolCache.where(state: @state, school_id: school_id, name: 'feed_old_test_scores_gsdata').first
+          next unless school_cache.present?
           school_id = school_cache.school_id
           test_hash = school_cache.cache_data
           test_hash.each do |(test_name, hash_arr)|

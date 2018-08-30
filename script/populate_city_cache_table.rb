@@ -61,9 +61,9 @@ def process_city(city, cache_keys)
   cache_keys.each do |cache_key|
     begin
       CityCacher.create_cache(city, cache_key)
-    rescue => error
-      @had_any_errors = true
-      puts "City Error #{city.state}-#{city.name}-#{city.id}  #{error}"
+    # rescue => error
+    #   @had_any_errors = true
+    #   puts "City Error #{city.state}-#{city.name}-#{city.id}  #{error}"
     end
   end
 end

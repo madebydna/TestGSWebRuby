@@ -32,6 +32,7 @@ class NewSearchController < ApplicationController
       en: url_for(params_for_rel_alternate.merge(lang: nil)),
       es: url_for(params_for_rel_alternate.merge(lang: :es))
     })
+    response.status = 404 if serialized_schools.empty?
   end
 
   private
@@ -85,6 +86,7 @@ class NewSearchController < ApplicationController
       hash[PageAnalytics::SEARCH_TERM] = q if q
       hash[PageAnalytics::SEARCH_TYPE] = search_type
       hash[PageAnalytics::SEARCH_HAS_RESULTS] = page_of_results.any?
+      hash[PageAnalytics::PAGE_NAME] = 'GS:SchoolSearchResults'
     end
   end
 

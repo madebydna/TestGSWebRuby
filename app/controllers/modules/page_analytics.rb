@@ -5,6 +5,7 @@ module PageAnalytics
   SEARCH_TERM = 'search_term'
   SEARCH_TYPE = 'search_type'
   SEARCH_HAS_RESULTS = 'search_has_results'
+  PAGE_NAME = 'page_name'
 
   def set_page_analytics_data
     hash = page_analytics_data

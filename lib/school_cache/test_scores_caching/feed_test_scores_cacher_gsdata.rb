@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TestScoresCaching::Feed::FeedTestScoresCacherGsdata < TestScoresCaching::TestScoresCacherGsdata
+class TestScoresCaching::FeedTestScoresCacherGsdata < TestScoresCaching::TestScoresCacherGsdata
   CACHE_KEY = 'feed_test_scores_gsdata'
   HASH_NAME_MAP = {
       school_value: 'score',
@@ -16,7 +16,6 @@ class TestScoresCaching::Feed::FeedTestScoresCacherGsdata < TestScoresCaching::T
        DataValue
         .find_by_school_and_data_types_with_proficiency_band_name(school, data_type_ids, data_type_tags, 'feeds')
         .with_configuration('feeds')
-        .where(proficiency_band_id: 1)
       end
   end
 

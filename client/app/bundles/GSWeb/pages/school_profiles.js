@@ -2,7 +2,6 @@
 
 import { getStore } from '../store/appStore';
 
-import 'jquery-unveil';
 import 'jquery.cookie';
 import '../vendor/tipso';
 import '../vendor/fastclick';
@@ -52,6 +51,7 @@ import {
 import SearchBox from 'react_components/search_box';
 import withViewportSize from 'react_components/with_viewport_size';
 import ProfileInterstitialAd, { shouldShowInterstitial, profileInterstitialLoader } from 'react_components/school_profiles/profile_interstitial_ad';
+import "jquery-unveil";
 
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 
