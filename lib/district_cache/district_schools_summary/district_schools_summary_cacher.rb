@@ -46,7 +46,7 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
 
   def count_of_schools_by_type
     school_type_counts = {'public' => 0, 'charter' => 0}
-    schools_within_district.pluck('type').each |st|
+    schools_within_district.pluck('type').each do |st|
       # Don't increment counter if school type is not 'public' or 'charter'
       cleaned_st = st.strip.downcase
       school_type_counts[cleaned_st] += 1 if school_type_counts.has_key?(cleaned_st)
