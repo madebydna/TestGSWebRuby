@@ -35,6 +35,7 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
     schools_within_district.pluck('level_code').each do |level_codes|
       split_lc = level_codes.split(',')
       split_lc.each do |lc|
+        # Don't increment counter if level code is not included in LevelCode::LEVEL_LOOKUP.keys
         cleaned_lc = lc.strip.downcase
         level_code_counts[cleaned_lc] += 1 if level_code_counts.has_key?(cleaned_lc)
       end
@@ -46,6 +47,7 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
   def count_of_schools_by_type
     school_type_counts = {'public' => 0, 'charter' => 0}
     schools_within_district.pluck('type').each |st|
+      # Don't increment counter if school type is not 'public' or 'charter'
       cleaned_st = st.strip.downcase
       school_type_counts[cleaned_st] += 1 if school_type_counts.has_key?(cleaned_st)
     end
