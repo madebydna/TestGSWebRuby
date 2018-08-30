@@ -7,9 +7,7 @@ en:
     at a glance: at a glance
     assigned_school: Assigned school
     browse_school_blurb: Here's a look at schools in
-    city:
-      header:
-        is_a_city: is a city in
+    city_hero_html: <div class="city-hero-narrative">{city} is a city in {county} county, {stateLong}</div>
     county: county
     homes_for_sale: Homes for sale
     nearby homes for sale & rent: nearby homes for sale & rent
@@ -58,7 +56,7 @@ en:
     Middle: Middle
     Middle schools: Middle schools
     High: High
-    High: High schools
+    High schools: High schools
     All schools: All schools
     ListMap view: ListMap view
     map: map

@@ -6,7 +6,6 @@ import { SM } from "util/viewport";
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
 import { name } from "../../util/states";
-// import LoadingOverlay from 'react_components/search/loading_overlay';
 
 const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, gradeLevels}) => {
   let schoolList;
@@ -23,27 +22,6 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
                     </div>
                   </section>;
   } else {
-    // schoolList = size > SM ? <section className="school-table">
-    //       <table>
-    //         <thead>
-    //           <tr>
-    //             <th className="school">{t("School")}</th>
-    //             <th className="students">{t("Students")}</th>
-    //             <th className="reviews">{t("Reviews")}</th>
-    //             <th>{t("District")}</th>
-    //           </tr>
-    //         </thead>
-    //         <tbody>
-    //           {schools.map(school => (
-    //             <TopSchoolTableRow
-    //               key={school.state + school.id}
-    //               {...school}
-    //               size={size}
-    //             />
-    //           ))}
-    //         </tbody>
-    //       </table>
-    //     </section> : 
     schoolList = <section className="top-school-list">
           {schools.map(school => (
             <TopSchoolTableRow

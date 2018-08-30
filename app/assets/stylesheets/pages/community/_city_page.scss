@@ -1,11 +1,11 @@
-@import "communities";
 
 #city-page {
   position: relative;
-  padding-top: 38px;
   .breadcrumbs-container {
     @include flexbox-center;
     position: fixed;
+    position: -webkit-sticky;
+    position:sticky;
     width: 100vw;
     top: 80px;
     z-index:3;
@@ -25,8 +25,9 @@
   }
 
   .hero {
-    padding: 20px 0 25px;
-    height: 200px;
+    @include flexbox-center;
+    padding: 30px 0px;
+    height: 220px;
     background-image: image_url('school_profiles/hero_bg.jpg');
     text-align: center;
     color: white;
@@ -35,14 +36,13 @@
       font-size: 24px;
     }
     .city-hero-title {
-      margin-top: 5px;
       font-size: 36px;
       font-family: 'RobotoSlab-Bold';
     }
     .city-hero-narrative {
       font-size: $font-size;
       font-weight: normal;
-      padding: 0 15px; 
+      padding: 0 25px; 
     }
   }
 
@@ -159,5 +159,12 @@
         width: 100%;
       }
     }
+    .community-toc{
+      width: 280px;
+    }
   }
 }
+
+.featured {
+ 		display: none; // TODO: dont put this here
+ 	}

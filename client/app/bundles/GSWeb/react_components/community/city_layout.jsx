@@ -114,16 +114,22 @@ class CityLayout extends React.Component {
   }
 
   heroNarration(){
-    let {city,stateLong,county} = this.props.locality;
-    return county && `${city} ${t("city.header.is_a_city")} ${county} ${t("county")}, ${stateLong}`
+    let {city,stateLong,county} = this.props.locality;    
+    return <div
+      dangerouslySetInnerHTML={{
+        __html: t('city_hero_html', { parameters: { city, stateLong, county } })
+      }}
+    />
   }
 
   renderHero(){
     return (<div className="hero">
-      <div className="icon-city"></div>
-      <div className="city-hero-title">{this.heroTitle()}</div>
-      <div className="city-hero-narrative">{this.heroNarration()}</div>
-      <div className="city-hero-stats"></div>
+      <div>
+        <div className="icon-city"></div>
+        <div className="city-hero-title">{this.heroTitle()}</div>
+        {this.heroNarration()}
+        <div className="city-hero-stats"></div>
+      </div>
     </div>)
   }
 

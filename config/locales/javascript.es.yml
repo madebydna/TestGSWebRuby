@@ -7,9 +7,7 @@ es:
     at a glance: de un vistazo
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en
-    city:
-      header:
-        is_a_city: es una ciudad en el condado de
+    city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
     county: condado
     homes_for_sale: Casas en venta
     nearby homes for sale & rent: nearby homes for sale & rent
