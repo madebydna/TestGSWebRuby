@@ -41,12 +41,7 @@ $font-size: 16px;
       }
     }
   .grade-filter {
-    display: -ms-flexbox; 
-      -ms-flex-pack: center;
-    display: -webkit-flex;
-      -webkit-box-pack: center;
-    display: flex;
-      justify-content: center;
+    @include flex-justify-center;
     .button-group {
       @include button-group;
       button.active{
@@ -54,10 +49,10 @@ $font-size: 16px;
         border: 1px solid $form-field-border-color;
       }
     }
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      //targeting IE10
-      -ms-flex-pack: start;
-    }
+    // @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    //   //targeting IE10
+    //   -ms-flex-pack: start;
+    // }
   }
   .top-school-list{
     .school-list-item{
@@ -152,7 +147,7 @@ $font-size: 16px;
     @include flex-column-wrap;
     width: 100%;
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      height: 170px;
+      height: 185px;
     }
     @include media-breakpoint-down(sm) {
       height: auto;
