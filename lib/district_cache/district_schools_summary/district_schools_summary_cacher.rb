@@ -20,7 +20,7 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
   def build_hash_for_cache
     {
       SCHOOLS_COUNTS_BY_LEVEL_CODE_KEY => count_of_schools_by_level_code,
-      SCHOOLS_COUNTS_BY_TYPE => count_of_schools_by_type,
+      SCHOOLS_COUNTS_BY_TYPE => count_of_schools_by_type
     }
   end
 
