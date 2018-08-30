@@ -8,11 +8,8 @@ class CityCacher
   # :header
   # :school_levels
   # :district_content
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 0cb1e3fae0e36a232ba27924c47621904a98b99e
 
   def initialize(city)
     @city = city

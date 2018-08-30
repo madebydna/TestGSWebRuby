@@ -78,14 +78,14 @@ class CitiesController < ApplicationController
 
   def city_cache_school_levels
     @_city_cache_school_levels ||= begin
-      cc = CityCache.for_city_and_name('school_levels', city_record.id)
+      cc = CityCache.for_name_and_city_id('school_levels', city_record.id)
       JSON.parse(cc.value) if cc.present?
     end
   end
 
   def city_cache_district_content
     @_city_cache_district_content ||= begin
-      cc = CityCache.for_city_and_name('district_content', city_record.id)
+      cc = CityCache.for_name_and_city_id('district_content', city_record.id)
       JSON.parse(cc.value) if cc.present?
     end
   end
