@@ -10,9 +10,9 @@ module DistrictCaching
       data_type == :district_content
     end
 
-    def header_keys
-      %w(id name school_count city levels)
-    end
+    # def header_keys
+    #   %w(id name school_count city levels)
+    # end
 
     def build_hash_for_cache
       districts.map do |district|
