@@ -7,6 +7,7 @@ import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
 import SchoolBrowseLinks from './school_browse_links';
+import DistrictsInCity from "./districts_in_city";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
@@ -93,6 +94,8 @@ class City extends React.Component {
   }
 
   render() {
+    console.log(this.props.districts);
+    
     return (
       <CityLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
@@ -112,6 +115,11 @@ class City extends React.Component {
           />
         }
         districts={this.props.districts}
+        districtsInCity={
+          <DistrictsInCity
+            districts={this.props.districts}
+          />
+        }
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
         toc={<Toc schools={this.props.schools} districts={this.props.districts} />}

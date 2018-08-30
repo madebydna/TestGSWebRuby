@@ -151,7 +151,8 @@ class CityLayout extends React.Component {
     return this.props.districts.length > 0 && (
       <div id="districts">
         <div className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</div>
-          <table>
+          {this.props.districtsInCity}
+          {/* <table>
             <thead>
             <tr>
               <th className="school">{t("District")}</th>
@@ -161,7 +162,7 @@ class CityLayout extends React.Component {
             </tr>
             </thead>
             <tbody>
-            {this.props.districts.map(district => {
+            {this.props.districts2.map(district => {
               return (
                 <tr key={`${district.districtName}-${district.grades}`}>
                   <td><a href={district.url}>{district.districtName}</a></td>
@@ -172,7 +173,7 @@ class CityLayout extends React.Component {
               )
             })}
             </tbody>
-          </table>
+          </table> */}
       </div>
     )
   }

@@ -6,7 +6,12 @@ $gradient-off-white: #f4f5f7;
 $border-radius: 3px;
 $breadcrumbs-bg: #002c47;
 $font-size: 16px;
+$subtle-gray: #647981;
 
+// Hides the navbar links
+.featured {
+  display: none; // TODO: dont put this here
+}
 
 // Class to help draw blueish-gray lines
 .blue-line{
@@ -18,7 +23,7 @@ $font-size: 16px;
 // Class to help render districts in a few places with styling
 .school-district{
   font-family: "opensans-regular";
-  color: #647981;
+  color: $subtle-gray;
   text-align: left;
 }
 

@@ -1,4 +1,32 @@
 
+//CSS rules for the districts in a city module
+.districts-in-city-module{
+  width: 95%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid $border-color;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      padding: 5px 15px;
+      a {
+        font-size: 17px;
+        color: $school-color;
+      }
+      span, p {
+        margin: 0;
+        font-size: $font-size;
+        font-family: 'opensans-regular';
+      }
+    }
+  }
+}
+
 #city-page {
   position: relative;
   .breadcrumbs-container {
@@ -32,17 +60,20 @@
     text-align: center;
     color: white;
     font-family: 'opensans-regular';
-    .icon-city {
-      font-size: 24px;
-    }
-    .city-hero-title {
-      font-size: 36px;
-      font-family: 'RobotoSlab-Bold';
-    }
-    .city-hero-narrative {
-      font-size: $font-size;
-      font-weight: normal;
-      padding: 0 25px; 
+    padding: 0 25px;
+    div{
+      max-width: 500px;
+      .icon-city {
+        font-size: 24px;
+      }
+      .city-hero-title {
+        font-size: 36px;
+        font-family: 'RobotoSlab-Bold';
+      }
+      .city-hero-narrative {
+        font-size: $font-size;
+        font-weight: normal;
+      }
     }
   }
 
@@ -68,7 +99,6 @@
       }
     }
     #districts {
-      overflow-x: scroll;
       tbody > tr > td:first-child a {
         color: $school-color;
       }
@@ -164,7 +194,3 @@
     }
   }
 }
-
-.featured {
- 		display: none; // TODO: dont put this here
- 	}
