@@ -1,10 +1,11 @@
 class District < ActiveRecord::Base
   self.table_name = 'district'
   include StateSharding
-  attr_accessible :FIPScounty, :active, :charter_only, :city, :county, :created, :fax, :home_page_url, :lat, :level, :level_code, :lon, :mail_city, :mail_street, :mail_zipcode, :manual_edit_by, :manual_edit_date, :modified, :modifiedBy, :name, :nces_code, :notes, :num_schools, :phone, :state, :state_id, :street, :street_line_2, :type_detail, :zipcentroid, :zipcode
+  attr_accessible :not_charter_only, :FIPScounty, :active, :charter_only, :city, :county, :created, :fax, :home_page_url, :lat, :level, :level_code, :lon, :mail_city, :mail_street, :mail_zipcode, :manual_edit_by, :manual_edit_date, :modified, :modifiedBy, :name, :nces_code, :notes, :num_schools, :phone, :state, :state_id, :street, :street_line_2, :type_detail, :zipcentroid, :zipcode
   has_many :schools
 
   scope :active, -> { where(active: true) }
+  scope :not_charter_only, -> { where(charter_only: 0)}
 
   def self.find_by_state_and_name(state, name)
     District.on_db(state).where(name: name).active.first rescue nil
@@ -18,6 +19,12 @@ class District < ActiveRecord::Base
     District.on_db(state.downcase.to_sym).
       where(id: ids).active
   end
+
+  def self.find_by_state_and_city(state, city)
+    District.on_db(state.downcase.to_sym).
+        where(city: city).active
+  end
+
 
   def self.ids_by_state(state)
     District.on_db(state.downcase.to_sym).active.order(:id).select(:id).map(&:id)
