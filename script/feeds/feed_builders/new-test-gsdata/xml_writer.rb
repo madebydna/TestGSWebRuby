@@ -32,8 +32,8 @@ module Feeds
             xml_builder.tag!('most-recent-year', hash['most-recent-year'])
             xml_builder.tag!('description', hash['description'])
             write_state_info(test_name)
-            write_school_info(test_name)
             write_district_info(test_name)
+            write_school_info(test_name)
           end
         end
       end

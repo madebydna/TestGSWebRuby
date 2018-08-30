@@ -59,13 +59,9 @@ module Feeds
       def each_school_result_for_test_name(test_name)
         school_ids.each do |school_id|
           school_cache = SchoolCache.where(state: @state, school_id: school_id, name: 'feed_test_scores_gsdata').first
-          # require 'pry'
-          # binding.pry
           next unless school_cache.present?
           school_id = school_cache.school_id
           test_hash = school_cache.cache_data
-          # require 'pry'
-          # binding.pry
           next unless test_hash[test_name].present?
           yield test_hash[test_name].select(&cache_filter), school_id
         end
@@ -125,8 +121,6 @@ module Feeds
 
       def cache_filter
         lambda do |h|
-          # require 'pry'
-          # binding.pry
           # ! h['breakdowns'].match(Regexp.union(BLACKLIST_BREAKDOWNS_REGEX))
           BLACKLIST_BREAKDOWNS_REGEX.none? { |regex| regex.match?(h['breakdowns']) }
         end
