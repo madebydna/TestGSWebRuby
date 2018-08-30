@@ -196,7 +196,7 @@ class CityLayout extends React.Component {
         {this.renderHero()}
         <div className="below-hero">
           {this.renderToc()}
-          <div className="city-modules">
+          <div className="community-modules">
             {this.renderSchools()}
             {this.renderDistricts()}
           </div>
