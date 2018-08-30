@@ -163,17 +163,15 @@ module SearchControllerConcerns
   def assigned_schools
     @_assigned_schools ||=
       if location_given? && street_address?
-        attendance_zone_query.search_all_levels
+        attendance_zone_query.search_by_level
       else
         []
       end
   end
 
   def add_assigned(schools)
-    schools.each do | sr |
-      assigned_schools.each do | as |
-        sr.assigned ||= sr&.id == as&.id
-      end
+    assigned_schools.each do | as |
+      as.assigned = true
     end
 
     schools

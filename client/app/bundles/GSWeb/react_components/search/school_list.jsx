@@ -23,7 +23,7 @@ const SchoolList = ({
     }
     <ol className={isLoading ? "loading" : ""}>
       {schools.map((s, index) => (
-        <React.Fragment key={s.state + s.id}>
+        <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
           {index > 0 &&
             index % 4 === 0 && (
               <Ad
@@ -36,7 +36,7 @@ const SchoolList = ({
             )}
           {size > SM ? (
             <li
-              key={s.state + s.id}
+              key={'li' + s.state + s.id + (s.assigned ? 'assigned' : '')}
               onMouseEnter={() => toggleHighlight(s)}
               onMouseLeave={() => toggleHighlight(s)}
               onTouchStart={() => toggleHighlight(s)}
@@ -46,7 +46,7 @@ const SchoolList = ({
             </li> 
           ) : (
             <li
-              key={s.state + s.id}
+              key={'li' + s.state + s.id + (s.assigned ? 'assigned' : '')}
               onMouseEnter={() => toggleHighlight(s)}
               onMouseLeave={() => toggleHighlight(s)}
               className={classNameGenerator(s)}
