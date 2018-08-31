@@ -94,8 +94,6 @@ class City extends React.Component {
   }
 
   render() {
-    console.log(this.props.districts);
-    
     return (
       <CityLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}

@@ -8,16 +8,9 @@
 <% end %>
 
 <div class="community-page">
-  <h1>Hello World</h1>
-  <% @schools.each do |school| %>
-    <%#= school %>
-    <% end  %>
-  <%#= @breadcrumbs %>
-  <%= @locality %>
-  <%#= react_component("City", props: {
+  <%= react_component("District", props: {
       schools: @schools,
       breadcrumbs: @breadcrumbs,
       locality: @locality,
-      districts: @districts,
-      school_levels: @school_levels}) %>
+      }) %>
 </div>
