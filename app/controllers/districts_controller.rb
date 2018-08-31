@@ -33,6 +33,7 @@ class DistrictsController < ApplicationController
     # prepare_map
     # render 'districts/district_home'
     set_district_meta_tags
+    @district = DistrictCache.cached_results_for([district_record], ['district_schools_summary', 'district_characteristics']).decorate_districts([district_record]).first
     @schools = serialized_schools
     @breadcrumbs = breadcrumbs
     @locality = locality
