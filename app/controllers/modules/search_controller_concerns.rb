@@ -96,7 +96,7 @@ module SearchControllerConcerns
   end
 
   def decorate_schools(schools)
-    schools = assigned_schools + schools if extras.include?('assigned')
+    schools = assigned_schools + schools if extras.include?('assigned') && page == 1
     extras.each do |extra|
       method = "add_#{extra}"
       schools = send(method, schools) if respond_to?(method, true)
