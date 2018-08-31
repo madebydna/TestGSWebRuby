@@ -3,6 +3,7 @@ class DistrictsController < ApplicationController
   include AdvertisingConcerns
   include PageAnalytics
   include CommunityConcerns
+  require 'pry'
 
   layout 'application'
   # before_action :set_city_state
@@ -43,10 +44,6 @@ class DistrictsController < ApplicationController
   private
   def set_district_meta_tags
     district_params_hash = district_params(state, city, district)
-    p state
-    p city
-    p district
-    p district_params_hash
     set_meta_tags(alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
                   title: districts_title,
                   description: districts_description,
@@ -90,6 +87,11 @@ class DistrictsController < ApplicationController
     end
   end
 
+  def district_cache_school_levels
+    # @_district_cache_school_levels ||= begin
+    #   cc= 
+  end
+
   def locality
     @_locality ||= begin
       Hash.new.tap do |cp|
@@ -111,12 +113,16 @@ class DistrictsController < ApplicationController
     {
       text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
       url: city_url(city_params(state, city))
+    },
+    {
+      text: district_record.name&.gs_capitalize_words,
+      url: ""
     }
   ]
 end
 
   def redirect_unless_valid_district
-    redirect_to(state_path(States.state_path(state_name)), status: 301) unless district_record
+    redirect_to(city_path(state: state_name, city: city&.downcase), status: 301) unless district_record
   end
 
 end

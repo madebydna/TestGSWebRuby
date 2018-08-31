@@ -10,7 +10,10 @@
 <div class="community-page">
   <h1>Hello World</h1>
   <% @schools.each do |school| %>
+    <%= school[:districtId] %>
     <%#= school %>
+    <%= school[:name] %>
+    <%= school[:district_id] %>
     <% end  %>
   <%#= @breadcrumbs %>
   <%= @locality %>
