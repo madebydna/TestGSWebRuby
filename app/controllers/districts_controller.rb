@@ -34,6 +34,7 @@ class DistrictsController < ApplicationController
     # render 'districts/district_home'
     set_district_meta_tags
     @district = DistrictCache.cached_results_for([district_record], ['district_schools_summary', 'district_characteristics']).decorate_districts([district_record]).first
+    # @decorated_districts = decorated_districts
     @schools = serialized_schools
     @breadcrumbs = breadcrumbs
     @locality = locality
@@ -106,21 +107,25 @@ class DistrictsController < ApplicationController
   end
 
   def breadcrumbs
-  @_district_breadcrumbs ||= [
-    {
-      text: StructuredMarkup.state_breadcrumb_text(state),
-      url: state_url(state_params(state))
-    },
-    {
-      text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
-      url: city_url(city_params(state, city))
-    },
-    {
-      text: district_record.name&.gs_capitalize_words,
-      url: ""
-    }
-  ]
-end
+    @_district_breadcrumbs ||= [
+      {
+        text: StructuredMarkup.state_breadcrumb_text(state),
+        url: state_url(state_params(state))
+      },
+      {
+        text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
+        url: city_url(city_params(state, city))
+      },
+      {
+        text: district_record.name&.gs_capitalize_words,
+        url: ""
+      }
+    ]
+  end
+
+  def decorated_district
+    # @_decorated_district
+  end
 
   def redirect_unless_valid_district
     redirect_to(city_path(state: state_name, city: city&.downcase), status: 301) unless district_record
