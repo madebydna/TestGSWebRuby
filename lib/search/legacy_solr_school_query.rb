@@ -37,7 +37,6 @@ module Search
         radius_in_km = radius.to_f * 1.6 # convert to KM
         spatial_query = "{!spatial circles=#{lat},#{lon},#{radius_in_km}}"
       end
-
       lambda do |search|
         # Must reference accessor methods, not instance variables!
         if lat && lon
@@ -49,7 +48,7 @@ module Search
         search.with(:school_database_state, state.downcase) if state
         search.with(:school_grade_level, level_codes.map(&:downcase)) if level_codes.present?
         search.with(:school_type, entity_types.map(&:downcase)) if entity_types.present?
-        search.with(:overall_gs_rating, (1..10).to_a) if with_rating
+        search.with(:overall_gs_rating, (1..10).to_a) if with_rating == "true"
         if district_id && district_id > 0
           search.with(:school_district_id, district_id) if district_id
         end
