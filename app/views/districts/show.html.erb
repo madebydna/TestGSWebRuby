@@ -1,0 +1,23 @@
+<% content_for :page_javascripts do %>
+    <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+    <%= webpack_javascript_include_tag 'district', defer: true %>
+<% end %>
+<% content_for :page_stylesheets do %>
+    <%= stylesheet_link_tag "post_load", media: "all", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag "district", async: true %>
+<% end %>
+
+<div class="community-page">
+  <h1>Hello World</h1>
+  <% @schools.each do |school| %>
+    <%#= school %>
+    <% end  %>
+  <%#= @breadcrumbs %>
+  <%= @locality %>
+  <%#= react_component("City", props: {
+      schools: @schools,
+      breadcrumbs: @breadcrumbs,
+      locality: @locality,
+      districts: @districts,
+      school_levels: @school_levels}) %>
+</div>
