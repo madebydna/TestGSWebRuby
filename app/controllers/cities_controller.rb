@@ -90,21 +90,6 @@ class CitiesController < ApplicationController
     end
   end
 
-  def school_levels
-    @_school_levels ||= begin
-      {}.tap do |sl|
-        sl[:all] = school_count('all')
-        sl[:public] = school_count('public')
-        sl[:private] = school_count('private')
-        sl[:charter] = school_count('charter')
-        sl[:preschool] = school_count('preschool')
-        sl[:elementary] = school_count('elementary')
-        sl[:middle] = school_count('middle')
-        sl[:high] = school_count('high')
-      end
-    end
-  end
-
   def school_count(key)
     city_cache_school_levels[key].first['city_value'] if city_cache_school_levels && city_cache_school_levels[key]
   end
@@ -157,7 +142,7 @@ class CitiesController < ApplicationController
       },
       {
         text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
-        url: city_url(city_params(state, city))
+        url: ""
       }
     ]
   end

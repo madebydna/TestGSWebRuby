@@ -8,10 +8,14 @@
 <% end %>
 
 <div class="community-page">
-    <%= @district %>
+    <h1>Hello World</h1>
+    <%#= @_decorated_district[:school_levels] %>
+    <%= @district.cache_data["district_schools_summary"]["school counts by type"] %>
+    
   <%= react_component("District", props: {
-      schools: @schools,
-      breadcrumbs: @breadcrumbs,
-      locality: @locality,
+      schools: @_decorated_district[:schools],
+      school_levels: @_decorated_district[:school_levels],
+      breadcrumbs: @_decorated_district[:breadcrumbs],
+      locality: @_decorated_district[:locality],
       }) %>
 </div>

@@ -25,22 +25,11 @@ class DistrictsController < ApplicationController
     # @top_schools = top_schools(@district, 4)
     # @params_hash = parse_array_query_string(request.query_string)
     # @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
-
-    # @breadcrumbs = district_home_breadcrumbs
-    # write_meta_tags
-    # ad_setTargeting_through_gon
-    # data_layer_through_gon
-    # prepare_map
-    # render 'districts/district_home'
+    @district = district_cache
     set_district_meta_tags
-    @district = DistrictCache.cached_results_for([district_record], ['district_schools_summary', 'district_characteristics']).decorate_districts([district_record]).first
-    # @decorated_districts = decorated_districts
-    @schools = serialized_schools
-    @breadcrumbs = breadcrumbs
-    @locality = locality
-    # # @districts = districts_by_city
-    # @school_levels = school_levels
-    # @districts = district_content
+    district_cache_school_levels
+    decorated_district
+    @district = district_cache
   end
 
   private
@@ -89,11 +78,6 @@ class DistrictsController < ApplicationController
     end
   end
 
-  def district_cache_school_levels
-    # @_district_cache_school_levels ||= begin
-    #   cc= 
-  end
-
   def locality
     @_locality ||= begin
       Hash.new.tap do |cp|
@@ -124,7 +108,41 @@ class DistrictsController < ApplicationController
   end
 
   def decorated_district
-    # @_decorated_district
+    @_decorated_district ||= begin
+      {}.tap do |dd|
+        dd[:locality] = locality
+        dd[:school_levels] = school_levels
+        dd[:breadcrumbs] = breadcrumbs
+        dd[:schools] = serialized_schools
+      end
+    end
+  end
+
+  def school_count(key)
+    p key
+    @school_types[key] if @school_types[key]
+  end
+
+  def district_cache_school_levels
+    @_city_cache_school_levels ||= begin
+      @school_types = district_cache.cache_data["district_schools_summary"]["school counts by type"]
+      @school_types["all"] = @school_types.values.reduce(:+)
+      district_level_code_transformer
+    end
+  end
+
+  def district_level_code_transformer
+    @level_codes = district_cache.cache_data["district_schools_summary"]["school counts by level code"]
+    @level_codes.each do |key, value|
+      @school_types["preschool"] = value if key == 'p'
+      @school_types["elementary"] = value if key == 'e'
+      @school_types["middle"] = value if key == 'm'
+      @school_types["high"] = value if key == 'h'
+    end
+  end
+
+  def district_cache
+    DistrictCache.cached_results_for([district_record], ['district_schools_summary', 'district_characteristics']).decorate_districts([district_record]).first
   end
 
   def redirect_unless_valid_district

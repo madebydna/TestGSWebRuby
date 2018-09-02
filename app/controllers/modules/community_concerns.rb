@@ -15,6 +15,21 @@ module CommunityConcerns
       end
     end
 
+    def school_levels
+      @_school_levels ||= begin
+        {}.tap do |sl|
+          sl[:all] = school_count('all') || 0
+          sl[:public] = school_count('public') || 0
+          sl[:private] = school_count('private') || 0
+          sl[:charter] = school_count('charter') || 0
+          sl[:preschool] = school_count('preschool') || 0
+          sl[:elementary] = school_count('elementary') || 0
+          sl[:middle] = school_count('middle') || 0
+          sl[:high] = school_count('high') || 0
+        end
+      end
+    end
+
     def page_of_results
       @_page_of_results ||= solr_query.search
     end
@@ -134,6 +149,5 @@ module CommunityConcerns
 
       schools
     end
-
 
 end
