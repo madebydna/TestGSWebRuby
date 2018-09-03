@@ -107,6 +107,7 @@ class City extends React.Component {
         }
         browseSchools={
           <SchoolBrowseLinks
+            community="city"
             locality={this.props.locality}
             size={this.props.viewportSize}
             schoolLevels={this.props.school_levels}

@@ -78,11 +78,12 @@ class DistrictsController < ApplicationController
   def locality
     @_locality ||= begin
       Hash.new.tap do |cp|
+        cp[:name] = district_record.name
         cp[:city] = district_record.city
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
-        # cp[:districtBrowseUrl] = search_district_browse_path(district_params(state, city, district))
+        cp[:cityBrowseUrl] = search_city_browse_path(city_params(state, city))
       end
     end
   end
@@ -140,8 +141,17 @@ class DistrictsController < ApplicationController
     @_district_cache ||= DistrictCache.cached_results_for([district_record], ['district_schools_summary', 'district_characteristics']).decorate_districts([district_record]).first
   end
 
+  # StructuredMarkup
+  def prepare_json_ld
+    breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+  end
+
   def redirect_unless_valid_district
     redirect_to(city_path(state: state_name, city: city&.downcase), status: 301) unless district_record
+  end
+
+  def default_extras
+    %w(summary_rating enrollment review_summary)
   end
 
 end

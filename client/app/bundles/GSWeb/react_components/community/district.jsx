@@ -2,11 +2,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Breadcrumbs from "react_components/breadcrumbs";
-// import CityLayout from "./city_layout";
+import DistrictLayout from "./district_layout";
 import SearchBox from "react_components/search_box";
 import Ad from "react_components/ad";
-// import TopSchoolsStateful from "./top_schools_stateful";
-// import SchoolBrowseLinks from "./school_browse_links";
+import TopSchoolsStateful from "./top_schools_stateful";
+import SchoolBrowseLinks from "./school_browse_links";
 // import DistrictsInCity from "./districts_in_city";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
@@ -91,16 +91,30 @@ class District extends React.Component {
   }
   render() {
     return (
-      <div>Hello World</div>
-      // <CityLayout
-      //   searchBox={<SearchBox size={this.props.viewportSize} />}
-      //   schools={this.props.schools}
-      //   breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
-      //   locality={this.props.locality}
-      //   toc={<Toc schools={this.props.schools} districts={this.props.districts} />}
-      //   viewportSize={this.props.viewportSize}
-      // >
-      // </CityLayout>
+      <DistrictLayout
+        searchBox={<SearchBox size={this.props.viewportSize} />}
+        schools={this.props.schools}
+        topSchools={
+          <TopSchoolsStateful
+            schools={this.props.schools}
+            size={this.props.viewportSize}
+            locality={this.props.locality}
+          />
+        }
+        browseSchools={
+          <SchoolBrowseLinks
+            community="district"
+            locality={this.props.locality}
+            size={this.props.viewportSize}
+            schoolLevels={this.props.school_levels}
+          />
+        }
+        breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
+        locality={this.props.locality}
+        toc={<Toc schools={this.props.schools} districts={this.props.districts} />}
+        viewportSize={this.props.viewportSize}
+      >
+      </DistrictLayout>
     );
   }
 }
