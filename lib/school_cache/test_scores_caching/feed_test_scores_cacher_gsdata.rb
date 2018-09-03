@@ -25,6 +25,10 @@ class TestScoresCaching::FeedTestScoresCacherGsdata < TestScoresCaching::TestSco
     end
   end
 
+  def inject_grade_all(hashes)
+    hashes
+  end
+
   def school_results
     @_school_results ||= query_results.extend(TestScoreCalculations)
   end
