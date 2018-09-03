@@ -25,11 +25,8 @@ class DistrictsController < ApplicationController
     # @top_schools = top_schools(@district, 4)
     # @params_hash = parse_array_query_string(request.query_string)
     # @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
-    @district = district_cache
     set_district_meta_tags
-    district_cache_school_levels
     decorated_district
-    @district = district_cache
   end
 
   private
@@ -119,30 +116,28 @@ class DistrictsController < ApplicationController
   end
 
   def school_count(key)
-    p key
-    @school_types[key] if @school_types[key]
+    district_cache_contents[key] if district_cache_contents && district_cache_contents[key]
   end
 
-  def district_cache_school_levels
-    @_city_cache_school_levels ||= begin
-      @school_types = district_cache.cache_data["district_schools_summary"]["school counts by type"]
-      @school_types["all"] = @school_types.values.reduce(:+)
-      district_level_code_transformer
-    end
-  end
-
-  def district_level_code_transformer
-    @level_codes = district_cache.cache_data["district_schools_summary"]["school counts by level code"]
-    @level_codes.each do |key, value|
-      @school_types["preschool"] = value if key == 'p'
-      @school_types["elementary"] = value if key == 'e'
-      @school_types["middle"] = value if key == 'm'
-      @school_types["high"] = value if key == 'h'
+  def district_cache_contents
+    @_district_cache_school_levels ||= begin
+      @level_codes = district_cache.cache_data["district_schools_summary"]["school counts by level code"] || {}
+      @school_types = district_cache.cache_data["district_schools_summary"]["school counts by type"] || {}
+      {}.tap do |st|
+        st["charter"] = @school_types["charter"] || 0
+        st["public"] = @school_types["public"] || 0
+        st["private"] = @school_types["private"] || 0
+        st["preschool"] = @level_codes["p"] || 0
+        st["elementary"] = @level_codes["e"] || 0
+        st["middle"] = @level_codes["m"] || 0
+        st["high"] = @level_codes["h"] || 0
+        st["all"] = @school_types.values.reduce(:+) || 0
+      end
     end
   end
 
   def district_cache
-    DistrictCache.cached_results_for([district_record], ['district_schools_summary', 'district_characteristics']).decorate_districts([district_record]).first
+    @_district_cache ||= DistrictCache.cached_results_for([district_record], ['district_schools_summary', 'district_characteristics']).decorate_districts([district_record]).first
   end
 
   def redirect_unless_valid_district
