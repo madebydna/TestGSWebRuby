@@ -108,11 +108,6 @@ class DistrictLayout extends React.Component {
     });
   }
 
-  heroTitle() {
-    let { city, stateShort } = this.props.locality;
-    return `${city}, ${stateShort}`
-  }
-
   heroNarration() {
     let { city, stateLong, county } = this.props.locality;
     return <div
@@ -123,10 +118,11 @@ class DistrictLayout extends React.Component {
   }
 
   renderHero() {
+    let { name } = this.props.locality;
     return (<div className="hero">
       <div>
-        <div className="icon-city"></div>
-        <div className="city-hero-title">{this.heroTitle()}</div>
+        <div className="icon-nearby_2"></div>
+        <div className="city-hero-title">{name}</div>
         {this.heroNarration()}
         <div className="city-hero-stats"></div>
       </div>

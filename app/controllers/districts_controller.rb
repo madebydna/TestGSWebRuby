@@ -5,6 +5,8 @@ class DistrictsController < ApplicationController
   include CommunityConcerns
   require 'pry'
 
+  CACHE_KEYS_FOR_READER = ['district_schools_summary', 'district_characteristics']
+
   layout 'application'
   # before_action :set_city_state
   # before_action :require_district
@@ -79,11 +81,14 @@ class DistrictsController < ApplicationController
     @_locality ||= begin
       Hash.new.tap do |cp|
         cp[:name] = district_record.name
+        cp[:address] = district_record.mail_street
         cp[:city] = district_record.city
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
-        cp[:county] = county_record&.name
-        cp[:cityBrowseUrl] = search_city_browse_path(city_params(state, city))
+        cp[:zipCode] = district_record.mail_zipcode
+        cp[:phone] = district_record.phone
+        cp[:district_url] = district_record.home_page_url
+        cp[:districtBrowseUrl] = search_city_browse_path(city_params(state, city))
       end
     end
   end
@@ -127,18 +132,17 @@ class DistrictsController < ApplicationController
       {}.tap do |st|
         st["charter"] = @school_types["charter"] || 0
         st["public"] = @school_types["public"] || 0
-        st["private"] = @school_types["private"] || 0
         st["preschool"] = @level_codes["p"] || 0
         st["elementary"] = @level_codes["e"] || 0
         st["middle"] = @level_codes["m"] || 0
         st["high"] = @level_codes["h"] || 0
-        st["all"] = @school_types.values.reduce(:+) || 0
+        st["all"] = district_record.num_schools
       end
     end
   end
 
   def district_cache
-    @_district_cache ||= DistrictCache.cached_results_for([district_record], ['district_schools_summary', 'district_characteristics']).decorate_districts([district_record]).first
+    @_district_cache ||= DistrictCache.cached_results_for([district_record], CACHE_KEYS_FOR_READER).decorate_districts([district_record]).first
   end
 
   # StructuredMarkup
