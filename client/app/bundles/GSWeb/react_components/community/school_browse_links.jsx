@@ -28,6 +28,7 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
     <h3>{t('browse_school_blurb')} {locality.city}</h3>
     :
     <h3>Here's a look at the district</h3>;
+
   const browseLinkData = [
     {
       name: `${t("Preschools")}`,
@@ -81,6 +82,7 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
       }
     </li>
   ));
+
   const browseLinkDistrictData = (browseLinkData.slice(0, 4)).concat([browseLinkData[7]]);
   const renderDistrictSchoolAmt = browseLinkDistrictData.map((linkData, idx) => (
     <li className="school-type-li" key={linkData.name}>
@@ -88,6 +90,7 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
       {idx !== 4 ? <div className="blue-line" /> : null}
     </li>
   ));
+  
   if (schoolLevels.all !== null) {
     return (
       <section className="school-browse-module">
