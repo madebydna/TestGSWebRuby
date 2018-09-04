@@ -14,7 +14,7 @@ const renderListItems = (linkData, locality) => (
   <React.Fragment>
     <span>
       {linkData.schoolNumber !== 0 ?
-        <a href={addParamsToUrl(linkData.queryParams, locality.cityBrowseUrl)}>{linkData.name}</a>
+        <a href={addParamsToUrl(linkData.queryParams, locality.searchResultBrowseUrl)}>{linkData.name}</a>
         :
         <p>{linkData.name}</p>
       }
@@ -24,6 +24,8 @@ const renderListItems = (linkData, locality) => (
 );
 
 const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
+  console.log(locality);
+  
   const browseSchoolBlurb = community === 'city' ? 
     <h3>{t('browse_school_blurb')} {locality.city}</h3>
     :

@@ -4,10 +4,8 @@ import PropTypes from "prop-types";
 import Breadcrumbs from "react_components/breadcrumbs";
 import DistrictLayout from "./district_layout";
 import SearchBox from "react_components/search_box";
-import Ad from "react_components/ad";
 import TopSchoolsStateful from "./top_schools_stateful";
 import SchoolBrowseLinks from "./school_browse_links";
-// import DistrictsInCity from "./districts_in_city";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
@@ -15,7 +13,6 @@ import withViewportSize from "react_components/with_viewport_size";
 import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
 import { analyticsEvent } from "util/page_analytics";
-const { gon } = window;
 
 class District extends React.Component {
   static defaultProps = {
@@ -25,6 +22,7 @@ class District extends React.Component {
 
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.object),
+    loadingSchools: PropTypes.bool,
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
       PropTypes.shape({
@@ -89,6 +87,7 @@ class District extends React.Component {
       )
     );
   }
+
   render() {
     return (
       <DistrictLayout
@@ -119,6 +118,7 @@ class District extends React.Component {
   }
 }
 
-const DistrictWithViewportSize = withViewportSize("size")(District);
+
+const DistrictWithViewportSize = withViewportSize('size')(District);
 
 export default DistrictWithViewportSize;

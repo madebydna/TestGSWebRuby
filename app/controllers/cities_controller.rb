@@ -130,7 +130,7 @@ class CitiesController < ApplicationController
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
-        cp[:cityBrowseUrl] = search_city_browse_path(city_params(state, city))
+        cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
       end
     end
   end

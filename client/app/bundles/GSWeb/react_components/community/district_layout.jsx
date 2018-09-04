@@ -108,11 +108,6 @@ class DistrictLayout extends React.Component {
     });
   }
 
-  heroTitle() {
-    let { city, stateShort } = this.props.locality;
-    return `${city}, ${stateShort}`
-  }
-
   heroNarration() {
     let { city, stateLong, county } = this.props.locality;
     return <div
@@ -123,59 +118,29 @@ class DistrictLayout extends React.Component {
   }
 
   renderHero() {
+    let { name } = this.props.locality;
     return (<div className="hero">
       <div>
-        <div className="icon-city"></div>
-        <div className="city-hero-title">{this.heroTitle()}</div>
+        <div className="icon-nearby_2"></div>
+        <div className="city-hero-title">{name}</div>
         {this.heroNarration()}
         <div className="city-hero-stats"></div>
       </div>
     </div>)
   }
 
-  renderBreadcrumbs() {
+  renderBreadcrumbs(){
     return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
   }
 
-  renderAd() {
+  renderAd(){
     return this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
-      <Ad slot="citypage_first" dimensions={[300, 600]} />
-    </div>
-  }
-
-  renderToc() {
-    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
-  }
-
-  renderDistricts() {
-    return this.props.districts.length > 0 && (
-      <div id="districts">
-        <div className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</div>
-        {this.props.districtsInCity}
-        {/* <table>
-            <thead>
-            <tr>
-              <th className="school">{t("District")}</th>
-              <th>{t("Grades")}</th>
-              <th>{capitalize(t("schools"))}</th>
-              <th>{capitalize(t("students"))}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {this.props.districts2.map(district => {
-              return (
-                <tr key={`${district.districtName}-${district.grades}`}>
-                  <td><a href={district.url}>{district.districtName}</a></td>
-                  <td>{district.grades}</td>
-                  <td>{district.numSchools}</td>
-                  <td>{district.enrollment}</td>
-                </tr>
-              )
-            })}
-            </tbody>
-          </table> */}
+        <Ad slot="districtpage_first" dimensions={[300, 600]}/>
       </div>
-    )
+  }
+
+  renderToc(){
+    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
   }
 
   renderSchools() {
@@ -190,9 +155,10 @@ class DistrictLayout extends React.Component {
 
   render() {
     return (
-      <div className="city-body">
+      <div className="district-body">
         {this.props.searchBox}
         {this.renderBreadcrumbs()}
+        {this.renderHero()}
         {/* {this.renderHero()} */}
         <div className="below-hero">
           {this.renderToc()}

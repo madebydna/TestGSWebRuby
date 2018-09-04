@@ -15,7 +15,6 @@ import withViewportSize from 'react_components/with_viewport_size';
 import '../../vendor/remodal';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
-const { gon } = window;
 class City extends React.Component {
   static defaultProps = {
     schools: [],
