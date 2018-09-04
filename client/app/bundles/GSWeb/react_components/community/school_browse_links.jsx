@@ -24,8 +24,6 @@ const renderListItems = (linkData, locality) => (
 );
 
 const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
-  console.log(locality);
-  
   const browseSchoolBlurb = community === 'city' ? 
     <h3>{t('browse_school_blurb')} {locality.city}</h3>
     :
