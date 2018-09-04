@@ -94,7 +94,6 @@ class DistrictsController < ApplicationController
         cp[:zipCode] = district_record.mail_zipcode
         cp[:phone] = district_record.phone
         cp[:district_url] = district_record.home_page_url
-        cp[:districtBrowseUrl] = search_city_browse_path(city_params(state, city))
       end
     end
   end
