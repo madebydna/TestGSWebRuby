@@ -10,7 +10,11 @@ const addParamsToUrl = (paramsArray,url) => {
   }, url)
 }
 
-const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
+const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
+  const browseSchoolBlurb = community === 'city' ? 
+    <h3>{t('browse_school_blurb')} {locality.city}</h3>
+    :
+    <h3>Here's a look at the district</h3>;
   const browseLinkData = [
     {
       name: `${t("Preschools")}`, queryParams: [{key: "gradeLevels", val: "p"}], schoolNumber: schoolLevels.preschool
@@ -43,7 +47,6 @@ const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
       name: `${t("All schools")}`, queryParams: [], schoolNumber: schoolLevels.all
     }
   ];
-
   let blueLine;
   const renderSchoolAmt = browseLinkData.map((linkData, idx) => (
     <li className="school-type-li" key={linkData.name}>
@@ -65,7 +68,7 @@ const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
   if (schoolLevels.all !== null) {
     return (
       <section className="school-browse-module">
-        <h3>{t('browse_school_blurb')} {locality.city}</h3>
+        {browseSchoolBlurb}
         <ul>
           {renderSchoolAmt}
         </ul>
@@ -79,7 +82,8 @@ const schoolBrowseLinks = ({locality, size,schoolLevels}) => {
 schoolBrowseLinks.propTypes = {
   schoolLevels: PropTypes.object,
   locality: PropTypes.object.isRequired,
-  size: PropTypes.oneOf(validViewportSizes).isRequired
+  size: PropTypes.oneOf(validViewportSizes).isRequired,
+  community: PropTypes.string.isRequired
 };
 
 schoolBrowseLinks.defaultProps = {

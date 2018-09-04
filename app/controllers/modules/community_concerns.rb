@@ -1,16 +1,32 @@
 # frozen_string_literal: true
 
 module CommunityConcerns
-
     def serialized_schools
-      schools.map do |school|
-        Api::SchoolSerializer.new(school).to_hash
+      @_serialized_schools ||= begin
+        schools.map do |school|
+          Api::SchoolSerializer.new(school).to_hash
+        end
       end
     end
 
     def schools
       @_schools ||= begin
         decorate_schools(page_of_results)
+      end
+    end
+
+    def school_levels
+      @_school_levels ||= begin
+        {}.tap do |sl|
+          sl[:all] = school_count('all')
+          sl[:public] = school_count('public')
+          sl[:private] = school_count('private')
+          sl[:charter] = school_count('charter')
+          sl[:preschool] = school_count('preschool')
+          sl[:elementary] = school_count('elementary')
+          sl[:middle] = school_count('middle')
+          sl[:high] = school_count('high')
+        end
       end
     end
 
@@ -25,15 +41,26 @@ module CommunityConcerns
         query_type = Search::LegacySolrSchoolQuery
       end
 
-      query_type.new(
-        city: city,
-        state: state,
-        district_name: district_record&.name,
-        level_codes: [level_code].compact,
-        limit: default_top_schools_limit,
-        sort_name: 'rating',
-        with_rating: true
-      )
+      if params[:district]
+        query_type.new(
+          state: state,
+          district_id: district_record.id,
+          level_codes: [level_code].compact,
+          limit: default_top_schools_limit,
+          sort_name: 'rating',
+          with_rating: true
+        )
+      else
+        query_type.new(
+          city: city,
+          state: state,
+          district_name: district_record&.name,
+          level_codes: [level_code].compact,
+          limit: default_top_schools_limit,
+          sort_name: 'rating',
+          with_rating: true
+        )
+      end
     end
 
     def default_top_schools_limit
@@ -122,6 +149,5 @@ module CommunityConcerns
 
       schools
     end
-
 
 end

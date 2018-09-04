@@ -36,7 +36,7 @@ const config = {
       'polyfills',
       './app/bundles/GSWeb/react_components/search_box_wrapper'
     ],
-    city: ['polyfills', './app/bundles/GSWeb/city']
+    community: ['polyfills', './app/bundles/GSWeb/community']
   },
 
   optimization: {

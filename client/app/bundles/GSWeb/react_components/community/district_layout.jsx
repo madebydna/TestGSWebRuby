@@ -108,13 +108,13 @@ class DistrictLayout extends React.Component {
     });
   }
 
-  heroTitle(){
-    let {city, stateShort} = this.props.locality;
+  heroTitle() {
+    let { city, stateShort } = this.props.locality;
     return `${city}, ${stateShort}`
   }
 
-  heroNarration(){
-    let {city,stateLong,county} = this.props.locality;
+  heroNarration() {
+    let { city, stateLong, county } = this.props.locality;
     return <div
       dangerouslySetInnerHTML={{
         __html: t('city_hero_html', { parameters: { city, stateLong, county } })
@@ -122,7 +122,7 @@ class DistrictLayout extends React.Component {
     />
   }
 
-  renderHero(){
+  renderHero() {
     return (<div className="hero">
       <div>
         <div className="icon-city"></div>
@@ -147,10 +147,10 @@ class DistrictLayout extends React.Component {
     return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
   }
 
-  renderSchools(){
+  renderSchools() {
     return (
       <div id="schools">
-        <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
+        <div className="modules-title">{`Schools in ${this.props.locality.name}`}</div>
         {this.props.browseSchools}
         {this.props.topSchools}
       </div>
@@ -163,11 +163,11 @@ class DistrictLayout extends React.Component {
         {this.props.searchBox}
         {this.renderBreadcrumbs()}
         {this.renderHero()}
+        {/* {this.renderHero()} */}
         <div className="below-hero">
           {this.renderToc()}
           <div className="community-modules">
             {this.renderSchools()}
-            {this.renderDistricts()}
           </div>
           {this.renderAd()}
         </div>

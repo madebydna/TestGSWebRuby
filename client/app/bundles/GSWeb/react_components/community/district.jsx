@@ -1,26 +1,23 @@
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import Breadcrumbs from 'react_components/breadcrumbs';
-// import CityLayout from './city_layout';
-import SearchBox from 'react_components/search_box'
-import Ad from 'react_components/ad';
-import TopSchoolsStateful from './top_schools_stateful';
-import SchoolBrowseLinks from './school_browse_links';
-import DistrictsInCity from "./districts_in_city";
-import { init as initAdvertising } from 'util/advertising';
-import { XS, validSizes as validViewportSizes } from 'util/viewport';
-import Toc from './toc';
-import withViewportSize from 'react_components/with_viewport_size';
-import '../../vendor/remodal';
-import { find as findSchools } from 'api_clients/schools';
-import { analyticsEvent } from 'util/page_analytics';
+import React from "react";
+import PropTypes from "prop-types";
+import Breadcrumbs from "react_components/breadcrumbs";
+import DistrictLayout from "./district_layout";
+import SearchBox from "react_components/search_box";
+import TopSchoolsStateful from "./top_schools_stateful";
+import SchoolBrowseLinks from "./school_browse_links";
+import { init as initAdvertising } from "util/advertising";
+import { XS, validSizes as validViewportSizes } from "util/viewport";
+import Toc from "./toc";
+import withViewportSize from "react_components/with_viewport_size";
+import "../../vendor/remodal";
+import { find as findSchools } from "api_clients/schools";
+import { analyticsEvent } from "util/page_analytics";
 
-class Districts extends React.Component {
+class District extends React.Component {
   static defaultProps = {
     schools: [],
-    loadingSchools: false,
-    breadcrumbs: []
+    breadcrumbs: [],
   };
 
   static propTypes = {
@@ -105,6 +102,7 @@ class Districts extends React.Component {
         }
         browseSchools={
           <SchoolBrowseLinks
+            community="district"
             locality={this.props.locality}
             size={this.props.viewportSize}
             schoolLevels={this.props.school_levels}
@@ -119,6 +117,7 @@ class Districts extends React.Component {
     );
   }
 }
+
 
 const DistrictWithViewportSize = withViewportSize('size')(District);
 
