@@ -278,23 +278,14 @@ $subtle-gray: #647981;
     font-family: 'opensans-semibold';
   }
   ul{
-    height: 150px;
     @include flex-column-wrap;
+    // Set height of UL in District or City specific page
     width: 100%;
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      height: 185px;
-    }
-    @include media-breakpoint-down(sm) {
-      height: auto;
-    }
     li{
-      width: 45%;
+      //Set width of li in District or City specific page
       margin-left: -10px;
       font-size: 25px;
       color: $color-button-border;
-      @include media-breakpoint-down(sm) {
-        width: 90%;
-      }
       // modify the blueline to have no padding for browse links
       .blue-line{
         padding: 0;
