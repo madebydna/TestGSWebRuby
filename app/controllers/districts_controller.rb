@@ -85,20 +85,16 @@ class DistrictsController < ApplicationController
         cp[:city] = district_record.city
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
-<<<<<<< HEAD
-        cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_district_browse_path(
           state: gs_legacy_url_encode(States.state_name(state)),
           city: gs_legacy_url_encode(city),
           district_name: gs_legacy_url_encode(district),
           trailing_slash: true
         )
-=======
         cp[:zipCode] = district_record.mail_zipcode
         cp[:phone] = district_record.phone
         cp[:district_url] = district_record.home_page_url
         cp[:districtBrowseUrl] = search_city_browse_path(city_params(state, city))
->>>>>>> b6fe9d7a63209c543709e6698a0404e75f4fa97c
       end
     end
   end
