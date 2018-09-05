@@ -19,12 +19,14 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
       </div>
     )
   }else{
+    console.log(schoolLevels);
+    
     return (
       <div className="grade-filter">
         <span className="button-group">
-          {schoolLevels.elementary === 0 ? <Button onClick={() => handleGradeLevel("e", community)} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
-          {schoolLevels.middle === 0 ? <Button onClick={() => handleGradeLevel("m", community)} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
-          {schoolLevels.high === 0 ? <Button onClick={() => handleGradeLevel("h", community)} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
+          {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e", community)} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
+          {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m", community)} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
+          {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h", community)} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
         </span>
       </div>
     )
