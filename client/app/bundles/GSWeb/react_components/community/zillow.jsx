@@ -15,7 +15,8 @@ import { t } from 'util/i18n';
 
 export default class Zillow extends React.Component {
   static propTypes = {
-    locality: PropTypes.object.isRequired
+    locality: PropTypes.object.isRequired,
+    utmCampaign: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -55,17 +56,23 @@ export default class Zillow extends React.Component {
     );
   }
 
+  getZipCode() {
+    // city page uses zip
+    if(this.props.locality.zip){ return this.props.locality.zip;}
+    // district page uses zipCode
+    if(this.props.locality.zipCode){ return this.props.locality.zipCode;}
+  }
+
   fetchData() {
     try {
       fetchHomesAndRentals(
           this.forSaleOrForRent(),
           this.props.locality.city,
           this.props.locality.stateShort,
-          this.props.locality.zip,
+          this.getZipCode(),
           this.numberOfListings
       )
           .done(data => {
-            console.log("DATA:"+JSON.stringify(data));
             if (data && data.response && data.response.results) {
               this.setState({
                 listings: data.response.results.map(decorateListing)
@@ -73,13 +80,11 @@ export default class Zillow extends React.Component {
             }
           })
           .fail(data => {
-            console.log("DATA:"+JSON.stringify(data));
             this.setState({
               listings: []
             });
           });
     } catch (e) {
-      console.log("DATAe:"+e);
       this.setState({
         listings: []
       });
@@ -120,7 +125,7 @@ export default class Zillow extends React.Component {
         <div className="tile-container">
           <a
               className="tile"
-              href={listing.detailPageLink()}
+              href={listing.detailPageLink(this.props.utmCampaign)}
               target="_blank"
               rel="nofollow"
           >
@@ -168,7 +173,7 @@ export default class Zillow extends React.Component {
                 className="bold-anchor"
                 rel="nofollow"
                 target="_blank"
-                href={nearbyHomesUrl(this.props.locality.city, this.props.locality.stateShort)}
+                href={nearbyHomesUrl(this.props.locality.city, this.props.locality.stateShort, this.props.utmCampaign)}
             >
               {t('See more listings in this city')}
             </AnchorButton>

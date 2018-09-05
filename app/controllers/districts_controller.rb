@@ -26,6 +26,7 @@ class DistrictsController < ApplicationController
     @serialized_schools = serialized_schools
     @hero_stats = hero_stats
     set_district_meta_tags
+    Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
   private
@@ -91,7 +92,6 @@ class DistrictsController < ApplicationController
         cp[:zipCode] = district_record.mail_zipcode[0..4]
         cp[:phone] = district_record.phone
         cp[:districtUrl] = prepend_http district_record.home_page_url
-        cp[:districtSearchUrl] = search_city_browse_path(city_params(state, city))
       end
     end
   end

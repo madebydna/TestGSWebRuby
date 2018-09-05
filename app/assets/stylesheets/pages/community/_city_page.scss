@@ -27,6 +27,25 @@
   }
 }
 
+.school-browse-module{
+  ul {
+    height: 150px;
+    li {
+      width:45%;
+      @include media-breakpoint-down(sm) {
+        width: 90%;
+      }
+    }
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      height: 185px;
+    }
+    @include media-breakpoint-down(sm) {
+      height: auto;
+    }
+  }
+
+}
+
 //CSS rules for the districts in a city module
 .districts-in-city-module{
   width: 95%;
