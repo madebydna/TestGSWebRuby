@@ -25,37 +25,64 @@ class TopSchoolsStateful extends React.Component {
       schools: props.schools,
       size: props.size,
       state: props.locality.stateShort,
-      city: props.locality.city
+      city: props.locality.city,
+      district_name: props.locality.name
     };
     this.handleGradeLevel = this.handleGradeLevel.bind(this);
   }
 
-  handleGradeLevel(str) {
+  handleGradeLevel(str, community) {
     this.setState({
       isLoading: true
     });
-    APISchools.find(
-      {
-        city: this.state.city,
-        state: this.state.state,
-        levelCodes: [str],
-        sort: "rating",
-        extras: ["students_per_teacher", "review_summary"],
-        limit: 5,
-        with_rating: true
-      },
-      {}
-    )
-      .then(res =>
-        this.setState({
-          schools: res.items,
-          isLoading: false,
-          levelCodes: str
-        })
+    if (community === 'city') {
+      APISchools.find(
+        {
+          city: this.state.city,
+          state: this.state.state,
+          levelCodes: [str],
+          sort: "rating",
+          extras: ["students_per_teacher", "review_summary"],
+          limit: 5,
+          with_rating: true
+        },
+        {}
       )
-      .fail((xhr, status, error) =>
-        alert("Request timed out. Please try again.")
-      );
+        .then(res =>
+          this.setState({
+            schools: res.items,
+            isLoading: false,
+            levelCodes: str
+          })
+        )
+        .fail((xhr, status, error) =>
+          alert("Request timed out. Please try again.")
+        );
+    }else{
+      APISchools.find(
+        {
+          city: this.state.city,
+          state: this.state.state,
+          district: this.state.district_name,
+          levelCodes: [str],
+          sort: "rating",
+          extras: ["students_per_teacher", "review_summary"],
+          limit: 5,
+          with_rating: true
+        },
+        {}
+      )
+        .then(res =>
+          this.setState({
+            schools: res.items,
+            isLoading: false,
+            levelCodes: str
+          })
+        )
+        .fail((xhr, status, error) =>
+          alert("Request timed out. Please try again.")
+        );
+    }
   }
 
   render() {

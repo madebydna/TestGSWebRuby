@@ -7,7 +7,7 @@ import School from 'react_components/search/school';
 import { t } from "util/i18n";
 import { name } from "../../util/states";
 
-const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, gradeLevels}) => {
+const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, community}) => {
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
@@ -45,9 +45,9 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
       <br/>
       <div className="grade-filter">
         <span className="button-group">
-          <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
-          <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} />
-          <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} />
+          <Button onClick={() => handleGradeLevel("e", community)} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
+          <Button onClick={() => handleGradeLevel("m", community)} label={t("Middle")} active={levelCodes === "m" ? true : false} />
+          <Button onClick={() => handleGradeLevel("h", community)} label={t("High")} active={levelCodes === "h" ? true : false} />
         </span>
       </div>
       <hr />
