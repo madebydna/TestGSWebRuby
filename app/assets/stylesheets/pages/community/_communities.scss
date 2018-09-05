@@ -290,6 +290,9 @@ $subtle-gray: #647981;
       margin-left: -10px;
       font-size: 25px;
       color: $color-button-border;
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        height: 36px;
+      }
       // modify the blueline to have no padding for browse links
       .blue-line{
         padding: 0;

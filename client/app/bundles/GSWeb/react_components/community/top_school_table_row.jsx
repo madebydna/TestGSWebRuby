@@ -19,7 +19,7 @@ const renderSchoolItem = (name, rating, links, districtName, numReviews, parentR
         </div>
       </div>
       <div className="school-info">
-        <a href={links.profile} target="_blank">
+        <a href={links.profile}>
           {name}
         </a>
         {renderDistrctName(districtName)}
@@ -32,7 +32,7 @@ const renderSchoolItem = (name, rating, links, districtName, numReviews, parentR
 }
 
 const renderReviews = (numReviews, parentRating, links) => {
-  const reviewCt = numReviews && numReviews > 0 ? <a href={links.reviews} target="_blank">
+  const reviewCt = numReviews && numReviews > 0 ? <a href={links.reviews}>
         {numReviews} {numReviews > 1 ? t("reviews.reviews") : t("reviews.review")}
       </a> : t("reviews.No reviews yet");
   const fiveStarRating = <FiveStarRating questionId={1} value={parentRating} onClick={() => {}} />;
