@@ -110,7 +110,7 @@ $subtle-gray: #647981;
     }
     //CSS for shared portion between City and District pages.
     .toc {
-      // set height of TOC in specific page of that module
+      height: 100px;
       display: inline-block;
       width: 230px;
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
