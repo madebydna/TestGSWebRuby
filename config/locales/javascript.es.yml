@@ -7,8 +7,10 @@ es:
     at a glance: de un vistazo
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en
+    browse_school_blurb_district: Aquí hay un vistazo a las escuelas en distrito
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
     county: condado
+    website: Página web
     homes_for_sale: Casas en venta
     nearby homes for sale & rent: nearby homes for sale & rent
     Mile: Milla
