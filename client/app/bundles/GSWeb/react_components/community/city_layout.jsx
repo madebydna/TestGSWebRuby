@@ -188,6 +188,14 @@ class CityLayout extends React.Component {
     )
   }
 
+  renderZillow(){
+    return (
+        <div>
+          {this.props.zillow}
+        </div>
+    )
+  }
+
   render() {
     return (
       <div className="city-body">
@@ -199,6 +207,7 @@ class CityLayout extends React.Component {
           <div className="community-modules">
             {this.renderSchools()}
             {this.renderDistricts()}
+            {this.renderZillow()}
           </div>
           {this.renderAd()}
         </div>
