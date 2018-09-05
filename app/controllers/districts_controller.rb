@@ -92,7 +92,6 @@ class DistrictsController < ApplicationController
         )
         cp[:zipCode] = district_record.mail_zipcode[0..4]
         cp[:phone] = district_record.phone
-        cp[:district_url] = district_record.home_page_url
         cp[:districtUrl] = prepend_http district_record.home_page_url
       end
     end
