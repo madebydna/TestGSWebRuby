@@ -124,6 +124,7 @@ class City extends React.Component {
         zillow={
           <Zillow
               locality={this.props.locality}
+              utmCampaign='citypage'
           />
         }
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}

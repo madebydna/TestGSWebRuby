@@ -15,7 +15,8 @@ import { t } from 'util/i18n';
 
 export default class Zillow extends React.Component {
   static propTypes = {
-    locality: PropTypes.object.isRequired
+    locality: PropTypes.object.isRequired,
+    utmCampaign: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -124,7 +125,7 @@ export default class Zillow extends React.Component {
         <div className="tile-container">
           <a
               className="tile"
-              href={listing.detailPageLink()}
+              href={listing.detailPageLink(this.props.utmCampaign)}
               target="_blank"
               rel="nofollow"
           >
@@ -172,7 +173,7 @@ export default class Zillow extends React.Component {
                 className="bold-anchor"
                 rel="nofollow"
                 target="_blank"
-                href={nearbyHomesUrl(this.props.locality.city, this.props.locality.stateShort)}
+                href={nearbyHomesUrl(this.props.locality.city, this.props.locality.stateShort, this.props.utmCampaign)}
             >
               {t('See more listings in this city')}
             </AnchorButton>
