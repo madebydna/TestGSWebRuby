@@ -8,12 +8,6 @@ class DistrictsController < ApplicationController
   CACHE_KEYS_FOR_READER = ['district_schools_summary', 'district_characteristics']
 
   layout 'application'
-  # before_action :set_city_state
-  # before_action :require_district
-  # before_action :set_hub
-  # before_action :add_collection_id_to_gtm_data_layer
-  # before_action :set_login_redirect
-  # before_action :redirect_to_canonical_url
   before_filter :redirect_unless_valid_district
 
   def show
@@ -27,8 +21,12 @@ class DistrictsController < ApplicationController
     # @top_schools = top_schools(@district, 4)
     # @params_hash = parse_array_query_string(request.query_string)
     # @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
+    @locality = locality
+    @school_levels = school_levels
+    @breadcrumbs = breadcrumbs
+    @serialized_schools = serialized_schools
+    @hero_stats = hero_stats
     set_district_meta_tags
-    decorated_district
   end
 
   private
@@ -58,7 +56,7 @@ class DistrictsController < ApplicationController
   def ad_targeting_props
     {
       page_name: "GS:District:Home",
-      template: "search",
+      template: "search"
     }.tap do |hash|
       # these intentionally capitalized to match property names that have
       # existed for a long time. Not sure if it matters
@@ -93,10 +91,28 @@ class DistrictsController < ApplicationController
         )
         cp[:zipCode] = district_record.mail_zipcode[0..4]
         cp[:phone] = district_record.phone
-        cp[:districtUrl] = district_record.home_page_url
+        cp[:districtUrl] = prepend_http district_record.home_page_url
         cp[:districtSearchUrl] = search_city_browse_path(city_params(state, city))
       end
     end
+  end
+
+  def hero_stats
+    @_hero_stats ||= begin
+      Hash.new.tap do |hs|
+        hs[:schoolCount] = district_record.num_schools
+        hs[:enrollment] = district_enrollment
+        hs[:grades] = GradeLevelConcerns.human_readable_level(district_record.level)
+      end
+    end
+  end
+
+  def district_enrollment
+    @_district_enrollment ||= begin
+      decorated_district.cache_data['district_characteristics']['Enrollment'].first['district_value']
+      rescue
+        return nil
+      end
   end
 
   def breadcrumbs
@@ -116,25 +132,14 @@ class DistrictsController < ApplicationController
     ]
   end
 
-  def decorated_district
-    @_decorated_district ||= begin
-      {}.tap do |dd|
-        dd[:locality] = locality
-        dd[:school_levels] = school_levels
-        dd[:breadcrumbs] = breadcrumbs
-        dd[:schools] = serialized_schools
-      end
-    end
-  end
-
   def school_count(key)
     district_cache_contents[key] if district_cache_contents && district_cache_contents[key]
   end
 
   def district_cache_contents
     @_district_cache_school_levels ||= begin
-      @level_codes = district_cache.cache_data["district_schools_summary"]["school counts by level code"] || {}
-      @school_types = district_cache.cache_data["district_schools_summary"]["school counts by type"] || {}
+      @level_codes = decorated_district.cache_data["district_schools_summary"]["school counts by level code"] || {}
+      @school_types = decorated_district.cache_data["district_schools_summary"]["school counts by type"] || {}
       {}.tap do |st|
         st["charter"] = @school_types["charter"] || 0
         st["public"] = @school_types["public"] || 0
@@ -147,8 +152,8 @@ class DistrictsController < ApplicationController
     end
   end
 
-  def district_cache
-    @_district_cache ||= DistrictCache.cached_results_for([district_record], CACHE_KEYS_FOR_READER).decorate_districts([district_record]).first
+  def decorated_district
+    @_decorated_district ||= DistrictCache.cached_results_for([district_record], CACHE_KEYS_FOR_READER).decorate_districts([district_record]).first
   end
 
   # StructuredMarkup

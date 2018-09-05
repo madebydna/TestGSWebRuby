@@ -9,10 +9,11 @@
 
 <div class="community-page">
   <%= react_component("District", props: {
-      schools: @_decorated_district[:schools],
-      school_levels: @_decorated_district[:school_levels],
-      breadcrumbs: @_decorated_district[:breadcrumbs],
-      locality: @_decorated_district[:locality],
+      schools: @serialized_schools,
+      school_levels: @school_levels,
+      breadcrumbs: @breadcrumbs,
+      locality: @locality,
+      heroStats: @hero_stats
       }) %>
 </div>
 
