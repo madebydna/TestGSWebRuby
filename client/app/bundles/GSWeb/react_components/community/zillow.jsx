@@ -55,17 +55,23 @@ export default class Zillow extends React.Component {
     );
   }
 
+  getZipCode() {
+    // city page uses zip
+    if(this.props.locality.zip){ return this.props.locality.zip;}
+    // district page uses zipCode
+    if(this.props.locality.zipCode){ return this.props.locality.zipCode;}
+  }
+
   fetchData() {
     try {
       fetchHomesAndRentals(
           this.forSaleOrForRent(),
           this.props.locality.city,
           this.props.locality.stateShort,
-          this.props.locality.zip,
+          this.getZipCode(),
           this.numberOfListings
       )
           .done(data => {
-            console.log("DATA:"+JSON.stringify(data));
             if (data && data.response && data.response.results) {
               this.setState({
                 listings: data.response.results.map(decorateListing)
@@ -73,13 +79,11 @@ export default class Zillow extends React.Component {
             }
           })
           .fail(data => {
-            console.log("DATA:"+JSON.stringify(data));
             this.setState({
               listings: []
             });
           });
     } catch (e) {
-      console.log("DATAe:"+e);
       this.setState({
         listings: []
       });
