@@ -115,6 +115,7 @@ $subtle-gray: #647981;
       width: 230px;
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
         margin-left: -250px;
+        height: auto;
       }
       box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
       ul {
@@ -124,6 +125,9 @@ $subtle-gray: #647981;
         li {
           color: $school-color;
           font-size: 14px;
+          @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+            height: 36px;
+          }
           &:hover {
             cursor: pointer;
           }
