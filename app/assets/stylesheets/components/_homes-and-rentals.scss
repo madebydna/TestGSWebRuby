@@ -44,7 +44,11 @@
       img {
         @include position-top-right;
         margin: 10px auto 0px auto;
+        &.zillow-logo {
+          position:relative;
+        }
       }
+
     }
   }
 

@@ -15,6 +15,7 @@ import withViewportSize from 'react_components/with_viewport_size';
 import '../../vendor/remodal';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
+import Zillow from "./zillow";
 const { gon } = window;
 class City extends React.Component {
   static defaultProps = {
@@ -118,6 +119,11 @@ class City extends React.Component {
         districtsInCity={
           <DistrictsInCity
             districts={this.props.districts}
+          />
+        }
+        zillow={
+          <Zillow
+              locality={this.props.locality}
           />
         }
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
