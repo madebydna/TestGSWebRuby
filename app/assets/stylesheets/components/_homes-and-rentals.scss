@@ -220,3 +220,7 @@
     }
   }
 }
+
+@include media-breakpoint-up(sm) {
+  .rwd-break { display: none; }
+}
