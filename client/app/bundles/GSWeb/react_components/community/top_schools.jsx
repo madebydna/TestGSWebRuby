@@ -38,7 +38,7 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
           <h3>{t("top_schools.top_schools")}</h3>
           <p>
             {t('top_schools.top_schools_blurbs')}
-             <a href="/gk/ratings">{t('top_schools.learn_more')}</a>
+            <a href="/gk/ratings">{t('top_schools.learn_more')}</a>
           </p>
         </div>
       </div>

@@ -98,10 +98,12 @@ class City extends React.Component {
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schools={this.props.schools}
         topSchools={
-          <TopSchoolsStateful 
+          <TopSchoolsStateful
+            community="city" 
             schools={this.props.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
+            schoolLevels={this.props.school_levels}
           />
         }
         browseSchools={
