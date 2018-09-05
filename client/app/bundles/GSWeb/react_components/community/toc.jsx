@@ -20,7 +20,7 @@ const cityTocItems = [
     label: t(SCHOOL_DISTRICTS),
     anchor: '#districts',
     selected: false
-  }
+  },
   // {
   //   key: 'students',
   //   label: t('students'),
@@ -39,12 +39,12 @@ const cityTocItems = [
   //   anchor: '',
   // selected: false
   // },
-  // {
-  //   key: 'nearby homes for sale & rent',
-  //   label: t('Schools'),
-  //   anchor: '',
-  // selected: false
-  // },
+  {
+    key: 'nearby homes for sale & rent',
+    label: t('nearby homes for sale & rent'),
+    anchor: '#homes-and-rentals',
+    selected: false
+  },
   // {
   //   key: 'Reviews',
   //   label: t('Schools'),

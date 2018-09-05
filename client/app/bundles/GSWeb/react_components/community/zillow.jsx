@@ -38,9 +38,11 @@ export default class Zillow extends React.Component {
 
   title() {
     return (
-        `${[t('Homes for sale near'), t('Rentals near')][this.state.tabIndex]
-            } ${
-            this.props.locality.city}`
+        <React.Fragment>
+          {[t('Homes for sale near'), t('Rentals near')][this.state.tabIndex]}
+          <br className="rwd-break" />&nbsp;
+          {this.props.locality.city}
+        </React.Fragment>
     );
   }
 
