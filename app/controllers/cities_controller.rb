@@ -15,6 +15,7 @@ class CitiesController < ApplicationController
     # @districts = districts_by_city
     @school_levels = school_levels
     @districts = district_content
+    Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
   private
@@ -99,21 +100,24 @@ class CitiesController < ApplicationController
   end
 
   def district_content
-    if city_cache_district_content.present?
-      dc = city_cache_district_content.map do |district_content|
-        {}.tap do |d|
-          name = district_content_field(district_content, 'name')
-          city = district_content_field(district_content, 'city')
-          d[:districtName] = name
-          d[:grades] = district_content_field(district_content, 'levels')
-          d[:numSchools] = district_content_field(district_content, 'school_count')
-          d[:url] = district_url(district_params(state, city, name))
-          d[:enrollment] =  district_enrollment(district_content_field(district_content, 'id'))
+    @_district_content ||= begin
+      if city_cache_district_content.present?
+        dc = city_cache_district_content.map do |district_content|
+          {}.tap do |d|
+            name = district_content_field(district_content, 'name')
+            city = district_content_field(district_content, 'city')
+            d[:districtName] = name
+            d[:grades] = district_content_field(district_content, 'levels')
+            d[:numSchools] = district_content_field(district_content, 'school_count')
+            d[:url] = district_url(district_params(state, city, name))
+            d[:enrollment] =  district_enrollment(district_content_field(district_content, 'id'))
+            d[:zip] = district_content_field(district_content, 'zip')
+          end
         end
+        dc.sort_by { |h| h[:enrollment] ? h[:enrollment] : 0 }.reverse!
+      else
+        []
       end
-      dc.sort_by { |h| h[:enrollment] ? h[:enrollment] : 0 }.reverse!
-    else
-      []
     end
   end
 
@@ -131,8 +135,19 @@ class CitiesController < ApplicationController
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
+        cp[:zip] = get_zip
       end
     end
+  end
+
+  def get_zip
+    zip = district_content.find do |dc|
+      break dc[:zip] if dc[:zip].present?
+    end
+    zip ||= @schools.find do |s|
+      break s[:address][:zip] if s[:address].present? && s[:address][:zip].present?
+    end
+    zip
   end
 
   def breadcrumbs

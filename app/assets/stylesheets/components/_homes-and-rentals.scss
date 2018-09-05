@@ -44,7 +44,11 @@
       img {
         @include position-top-right;
         margin: 10px auto 0px auto;
+        &.zillow-logo {
+          position:relative;
+        }
       }
+
     }
   }
 
@@ -56,6 +60,10 @@
       width: 100%;
       font-family: 'Robotoslab-Bold';
       font-size: 26px;
+      &.city{
+        font-size: 20px;
+        font-family: 'opensans-bold';
+      }
     }
 
     .button-group {
@@ -96,6 +104,11 @@
     @include media-breakpoint-up(sm) {
       margin-top: 20px;
     }
+  }
+  &.city{
+    margin:0px;
+    padding:0px;
+    width: 95%;
   }
 }
 

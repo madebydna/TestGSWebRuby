@@ -118,15 +118,41 @@ class DistrictLayout extends React.Component {
   }
 
   renderHero() {
-    let { name } = this.props.locality;
-    return (<div className="hero">
-      <div>
-        <div className="icon-nearby_2"></div>
-        <div className="city-hero-title">{name}</div>
-        {this.heroNarration()}
-        <div className="city-hero-stats"></div>
-      </div>
-    </div>)
+    let {name, address, city, stateShort, zipCode, phone, districtUrl} = this.props.locality;
+    let {enrollment, grades, schoolCount} = this.props.heroStats;
+    return (
+      <div id="hero">
+        <div>
+          <div className="icon-nearby_2"></div>
+          <div className="district-hero-title">{name}</div>
+          <div className="district-hero-contact-info">
+            <span className="content">{address}, {city}, {stateShort} {zipCode}</span>
+            <span className="badge-and-content">
+              <span className="badge icon-phone"></span>
+              <span className="content">{phone}</span>
+            </span>
+            <span className="badge-and-content">
+              <span className="badge icon-link" />
+              <span><a className="content" href={districtUrl}>District website</a></span>
+            </span>
+          </div>
+          {/*{this.heroNarration()}*/}
+          <div className="district-hero-stats">
+            <div>
+              <div>{t('schools').toUpperCase()}</div>
+              <div>{schoolCount}</div>
+            </div>
+            <div>
+              <div>{t('students').toUpperCase()}</div>
+              <div>{enrollment.toLocaleString()}</div>
+            </div>
+            <div>
+              <div>{t('grades').toUpperCase()}</div>
+              <div>{grades}</div>
+            </div>
+          </div>
+        </div>
+      </div>)
   }
 
   renderBreadcrumbs(){
