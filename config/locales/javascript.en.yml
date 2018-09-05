@@ -1,6 +1,7 @@
 ---
 en:
   javascript:
+    No listings found: No listings found
     '# of schools': '# of schools'
     '# of students': '# of students'
     in: in
@@ -256,6 +257,8 @@ en:
     Homes for sale near: Homes for sale near
     Rentals near: Rentals near
     See more listings near this school: See more listings near this school
+    See more listings near this district: See more listings near this district
+    See more listings near this city: See more listings near this city
     See how much you can afford to borrow: See how much you can afford to borrow
     beds: beds
     baths: baths

@@ -1,6 +1,7 @@
 ---
 es:
   javascript:
+    No listings found: No listings found
     '# of schools': '# of schools'
     '# of students': '# of students'
     in: en
@@ -12,7 +13,7 @@ es:
     county: condado
     website: Página web
     homes_for_sale: Casas en venta
-    nearby homes for sale & rent: nearby homes for sale & rent
+    nearby homes for sale & rent: Casas cercanas en venta y alquiler
     Mile: Milla
     Miles: Millas
     Relevance: Relevancia
@@ -257,6 +258,8 @@ es:
     Homes for sale near: Casas en venta cerca de
     Rentals near: Casas en alquiler cerca de
     See more listings near this school: Ver más anuncios de casas cerca de esta escuela
+    See more listings near this district: Ver más anuncios de casas cerca de este distrito
+    See more listings near this city: Ver más anuncios de casas cerca de este ciudad
     See how much you can afford to borrow: Vea cuánto puede pedir prestado
     beds: camas
     baths: baños
