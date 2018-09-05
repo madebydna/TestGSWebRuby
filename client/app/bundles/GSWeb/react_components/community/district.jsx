@@ -13,6 +13,7 @@ import withViewportSize from "react_components/with_viewport_size";
 import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
 import { analyticsEvent } from "util/page_analytics";
+import Zillow from "./zillow";
 
 class District extends React.Component {
   static defaultProps = {
@@ -95,9 +96,11 @@ class District extends React.Component {
         schools={this.props.schools}
         topSchools={
           <TopSchoolsStateful
+            community="district"
             schools={this.props.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
+            schoolLevels={this.props.school_levels}
           />
         }
         browseSchools={
@@ -106,6 +109,11 @@ class District extends React.Component {
             locality={this.props.locality}
             size={this.props.viewportSize}
             schoolLevels={this.props.school_levels}
+          />
+        }
+        zillow={
+          <Zillow
+              locality={this.props.locality}
           />
         }
         heroStats={this.props.heroStats}

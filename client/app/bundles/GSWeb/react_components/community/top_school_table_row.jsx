@@ -34,7 +34,7 @@ const renderSchoolItem = (name, rating, links, districtName, numReviews, parentR
 const renderReviews = (numReviews, parentRating, links) => {
   const reviewCt = numReviews && numReviews > 0 ? <a href={links.reviews} target="_blank">
         {numReviews} {numReviews > 1 ? t("reviews.reviews") : t("reviews.review")}
-      </a> : t("No reviews yet");
+      </a> : t("reviews.No reviews yet");
   const fiveStarRating = <FiveStarRating questionId={1} value={parentRating} onClick={() => {}} />;
   return <div className="five-star-review">
       <span>{reviewCt}</span>
