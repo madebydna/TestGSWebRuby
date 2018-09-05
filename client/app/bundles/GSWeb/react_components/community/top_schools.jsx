@@ -7,7 +7,31 @@ import School from 'react_components/search/school';
 import { t } from "util/i18n";
 import { name } from "../../util/states";
 
-const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, community}) => {
+const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
+  if (community === 'city') {
+    return(
+      <div className="grade-filter">
+        <span className="button-group">
+          <Button onClick={() => handleGradeLevel("e", community)} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
+          <Button onClick={() => handleGradeLevel("m", community)} label={t("Middle")} active={levelCodes === "m" ? true : false} />
+          <Button onClick={() => handleGradeLevel("h", community)} label={t("High")} active={levelCodes === "h" ? true : false} />
+        </span>
+      </div>
+    )
+  }else{
+    return (
+      <div className="grade-filter">
+        <span className="button-group">
+          {schoolLevels.elementary === 0 ? <Button onClick={() => handleGradeLevel("e", community)} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
+          {schoolLevels.middle === 0 ? <Button onClick={() => handleGradeLevel("m", community)} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
+          {schoolLevels.high === 0 ? <Button onClick={() => handleGradeLevel("h", community)} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
+        </span>
+      </div>
+    )
+  }
+}
+
+const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, community, schoolLevels}) => {
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
@@ -43,13 +67,7 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
         </div>
       </div>
       <br/>
-      <div className="grade-filter">
-        <span className="button-group">
-          <Button onClick={() => handleGradeLevel("e", community)} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
-          <Button onClick={() => handleGradeLevel("m", community)} label={t("Middle")} active={levelCodes === "m" ? true : false} />
-          <Button onClick={() => handleGradeLevel("h", community)} label={t("High")} active={levelCodes === "h" ? true : false} />
-        </span>
-      </div>
+      {renderButtons(handleGradeLevel, community, schoolLevels, levelCodes)}
       <hr />
       {schoolList}
       <div className="more-school-btn">
