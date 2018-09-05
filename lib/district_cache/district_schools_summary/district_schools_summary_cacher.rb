@@ -26,13 +26,15 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
 
   private
 
-  def schools_within_district
-    @_schools_within_district ||= School.within_district(district)
+  def column_data_for_schools_within_district(column)
+    @_schools_within_district ||= begin
+      School.on_db(district.shard) { School.active.where(district_id: district.id).pluck(column) }
+    end
   end
 
   def count_of_schools_by_level_code
     level_code_counts = LevelCode::LEVEL_LOOKUP.keys.each_with_object({}) {|lc, hash| hash[lc] = 0}
-    schools_within_district.pluck('level_code').each do |level_codes|
+    column_data_for_schools_within_district(:level_code).each do |level_codes|
       split_lc = level_codes.split(',')
       split_lc.each do |lc|
         # Don't increment counter if level code is not included in LevelCode::LEVEL_LOOKUP.keys
@@ -46,7 +48,7 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
 
   def count_of_schools_by_type
     school_type_counts = {'public' => 0, 'charter' => 0}
-    schools_within_district.pluck('type').each do |st|
+    column_data_for_schools_within_district(:type).each do |st|
       # Don't increment counter if school type is not 'public' or 'charter'
       cleaned_st = st.strip.downcase
       school_type_counts[cleaned_st] += 1 if school_type_counts.has_key?(cleaned_st)
