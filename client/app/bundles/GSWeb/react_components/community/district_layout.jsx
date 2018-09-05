@@ -85,6 +85,7 @@ class DistrictLayout extends React.Component {
     this.ad = React.createRef();
     this.breadcrumbs = React.createRef();
     this.toc = React.createRef();
+    this.zillow = React.createRef();
     this.state = {}
   }
 
@@ -115,6 +116,14 @@ class DistrictLayout extends React.Component {
         __html: t('city_hero_html', { parameters: { city, stateLong, county } })
       }}
     />
+  }
+
+  renderZillow(){
+    return (
+        <div>
+          {this.props.zillow}
+        </div>
+    )
   }
 
   renderHero() {
@@ -190,6 +199,7 @@ class DistrictLayout extends React.Component {
           {this.renderToc()}
           <div className="community-modules">
             {this.renderSchools()}
+            {this.renderZillow()}
           </div>
           {this.renderAd()}
         </div>

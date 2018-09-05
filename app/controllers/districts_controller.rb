@@ -27,6 +27,7 @@ class DistrictsController < ApplicationController
     @serialized_schools = serialized_schools
     @hero_stats = hero_stats
     set_district_meta_tags
+    Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
   private
