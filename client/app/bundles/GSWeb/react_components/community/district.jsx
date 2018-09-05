@@ -99,7 +99,6 @@ class District extends React.Component {
             schools={this.props.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
-            schoolLevels={this.props.school_levels}
           />
         }
         browseSchools={

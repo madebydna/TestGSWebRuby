@@ -10,7 +10,6 @@ class TopSchoolsStateful extends React.Component {
     schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     locality: PropTypes.object.isRequired,
-    schoolLevels: PropTypes.object,
     community: PropTypes.string
   };
 
