@@ -41,7 +41,7 @@ $subtle-gray: #647981;
 }
 
 // Community shared css for the hero header
-.hero {
+#hero {
   @include flexbox-center;
   padding: 30px 0px;
   height: 220px;

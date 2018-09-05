@@ -118,15 +118,27 @@ class DistrictLayout extends React.Component {
   }
 
   renderHero() {
-    let { name } = this.props.locality;
-    return (<div className="hero">
-      <div>
-        <div className="icon-nearby_2"></div>
-        <div className="city-hero-title">{name}</div>
-        {this.heroNarration()}
-        <div className="city-hero-stats"></div>
-      </div>
-    </div>)
+    let {name, address, city, stateShort, zipCode, phone, districtUrl} = this.props.locality;
+    return (
+      <div id="hero">
+        <div>
+          <div className="icon-nearby_2"></div>
+          <div className="district-hero-title">{name}</div>
+          <div className="district-hero-contact-info">
+            <span>{address}, {city}, {stateShort} {zipCode}</span>
+            <span className="badge-and-content">
+              <span className="badge icon-phone"></span>
+              <span className="content">{phone}</span>
+            </span>
+            <span className="badge-and-content">
+              <span className="badge icon-link" />
+              <span className="content"> <a href={districtUrl}>District website</a></span>
+            </span>
+          </div>
+          {/*{this.heroNarration()}*/}
+          <div className="district-hero-stats"></div>
+        </div>
+      </div>)
   }
 
   renderBreadcrumbs(){

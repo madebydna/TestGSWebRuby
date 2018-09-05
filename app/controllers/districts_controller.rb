@@ -91,9 +91,9 @@ class DistrictsController < ApplicationController
           district_name: gs_legacy_url_encode(district),
           trailing_slash: true
         )
-        cp[:zipCode] = district_record.mail_zipcode
+        cp[:zipCode] = district_record.mail_zipcode[0..4]
         cp[:phone] = district_record.phone
-        cp[:district_url] = district_record.home_page_url
+        cp[:districtUrl] = district_record.home_page_url
         cp[:districtBrowseUrl] = search_city_browse_path(city_params(state, city))
       end
     end

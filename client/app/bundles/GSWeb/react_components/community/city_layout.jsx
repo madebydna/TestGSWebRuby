@@ -123,7 +123,7 @@ class CityLayout extends React.Component {
   }
 
   renderHero(){
-    return (<div className="hero">
+    return (<div id="hero">
       <div>
         <div className="icon-city"></div>
         <div className="city-hero-title">{this.heroTitle()}</div>

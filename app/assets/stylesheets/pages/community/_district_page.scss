@@ -1,3 +1,33 @@
+#hero{
+  div{
+    max-width: 650px;
+    .district-hero-title {
+      font-size: 36px;
+      font-family: 'RobotoSlab-Bold';
+      margin-bottom: 10px;
+    }
+    .district-hero-narrative {
+      font-size: $font-size;
+      font-weight: normal;
+    }
+    .icon-nearby_2 {
+      font-size: 24px;
+    }
+    .district-hero-narrative {
+      font-size: $font-size;
+      font-weight: normal;
+    }
+    .district-hero-contact-info {
+      display: inline-block;
+      padding-bottom: 15px;
+      border-bottom: 1px solid white;
+      span + span.badge-and-content {
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
 .below-hero{
   .toc{
     // height for District specific page for toc
