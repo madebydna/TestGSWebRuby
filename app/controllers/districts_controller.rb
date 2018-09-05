@@ -3,7 +3,6 @@ class DistrictsController < ApplicationController
   include AdvertisingConcerns
   include PageAnalytics
   include CommunityConcerns
-  require 'pry'
 
   CACHE_KEYS_FOR_READER = ['district_schools_summary', 'district_characteristics']
 
@@ -166,7 +165,7 @@ class DistrictsController < ApplicationController
   end
 
   def default_extras
-    %w(summary_rating enrollment review_summary)
+    %w(summary_rating enrollment review_summary students_per_teacher)
   end
 
 end

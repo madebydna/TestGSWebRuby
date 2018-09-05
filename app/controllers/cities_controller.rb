@@ -173,6 +173,6 @@ class CitiesController < ApplicationController
   end
 
   def default_extras
-    %w(summary_rating enrollment review_summary)
+    %w(summary_rating enrollment review_summary students_per_teacher)
   end
 end
