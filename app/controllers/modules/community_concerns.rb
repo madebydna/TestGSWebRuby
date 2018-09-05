@@ -48,7 +48,7 @@ module CommunityConcerns
           level_codes: [level_code].compact,
           limit: default_top_schools_limit,
           sort_name: 'rating',
-          with_rating: true
+          with_rating: 'true'
         )
       else
         query_type.new(
@@ -58,7 +58,7 @@ module CommunityConcerns
           level_codes: [level_code].compact,
           limit: default_top_schools_limit,
           sort_name: 'rating',
-          with_rating: true
+          with_rating: 'true'
         )
       end
     end

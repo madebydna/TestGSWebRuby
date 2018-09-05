@@ -35,7 +35,8 @@ Rails.application.config.assets.precompile += [
     'api_documentation.css',
     'admin_tools.css',
     'add_remove_schools.css',
-    'city.css'
+    'city.css',
+    'district.css'
 
 ]
 # Add client/assets/ folders to asset pipeline's search path.

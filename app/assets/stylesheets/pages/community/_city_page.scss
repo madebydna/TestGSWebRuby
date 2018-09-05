@@ -1,5 +1,5 @@
 // City specific css on the hero header
-.hero{
+#hero{
   div{
     max-width: 500px;
     .icon-city {
@@ -24,13 +24,6 @@
       font-size: $font-size;
       font-weight: normal;
     }
-  }
-}
-
-.below-hero{
-  .toc{
-    // height for City specific page for toc
-    height: 100px;
   }
 }
 

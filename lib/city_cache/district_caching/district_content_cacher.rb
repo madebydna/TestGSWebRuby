@@ -18,6 +18,7 @@ module DistrictCaching
           hash['id'] = [{ city_value: district.id }]
           hash['levels'] = [{ city_value: GradeLevelConcerns.human_readable_level(district.level) }]
           hash['city'] = [{ city_value: district.city }]
+          hash['zip'] = [{ city_value: district.zipcode }]
         end
       end
     end
