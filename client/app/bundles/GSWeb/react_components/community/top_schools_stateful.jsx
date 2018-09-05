@@ -8,13 +8,15 @@ import * as APISchools from 'api_clients/schools';
 class TopSchoolsStateful extends React.Component {
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
+    // schoolsData: PropTypes.object.isRequired,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     locality: PropTypes.object.isRequired,
     community: PropTypes.string
   };
 
   static defaultProps = {
-    schools: []
+    schools: [],
+    // schoolsData: {}
   };
 
   constructor(props) {
@@ -22,7 +24,9 @@ class TopSchoolsStateful extends React.Component {
     this.state = {
       isLoading: false,
       levelCodes: "e",
+      // levelCodes: props.schoolsData.levelCode,
       schools: props.schools,
+      // schools: props.schoolsData.schools,
       size: props.size,
       state: props.locality.stateShort,
       city: props.locality.city,
@@ -89,6 +93,7 @@ class TopSchoolsStateful extends React.Component {
     return (
       <TopSchools
         schools={this.state.schools}
+        // schools={this.state.schoolsData.schools}
         handleGradeLevel={this.handleGradeLevel}
         isLoading={this.state.isLoading}
         size={this.props.size}
