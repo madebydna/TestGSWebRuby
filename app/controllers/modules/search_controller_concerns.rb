@@ -34,7 +34,7 @@ module SearchControllerConcerns
   end
 
   def query
-    if point_given? || area_given? || q.present?
+    if point_given? || area_given? || q.present? || new_api_search?
       solr_query
     elsif state.present? && (school_id.present? || district_id.present?)
       school_sql_query
@@ -76,7 +76,7 @@ module SearchControllerConcerns
     else
       query_type = Search::LegacySolrSchoolQuery
     end
-
+    
     query_type.new(
       city: city,
       state: state,

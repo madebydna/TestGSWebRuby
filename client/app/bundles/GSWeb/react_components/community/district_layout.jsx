@@ -151,10 +151,10 @@ class DistrictLayout extends React.Component {
               <div>{t('schools').toUpperCase()}</div>
               <div>{schoolCount}</div>
             </div>
-            <div>
+            {enrollment ? <div>
               <div>{t('students').toUpperCase()}</div>
               <div>{enrollment.toLocaleString()}</div>
-            </div>
+            </div> : null}
             <div>
               <div>{t('Grades').toUpperCase()}</div>
               <div>{grades}</div>

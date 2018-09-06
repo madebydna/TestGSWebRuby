@@ -25,6 +25,7 @@ class TopSchoolsStateful extends React.Component {
     this.state = {
       isLoading: false,
       levelCodes: "e",
+      districtId: props.locality.district_id,
       // levelCodes: props.schoolsData.levelCode,
       schools: props.schools,
       // schools: props.schoolsData.schools,
@@ -47,7 +48,7 @@ class TopSchoolsStateful extends React.Component {
           state: this.state.state,
           levelCodes: [str],
           sort: "rating",
-          extras: ["students_per_teacher", "review_summary"],
+          extras: ["students_per_teacher", "review_summary", "students_per_teacher"],
           limit: 5,
           with_rating: true
         },
@@ -66,13 +67,13 @@ class TopSchoolsStateful extends React.Component {
     }else{
       APISchools.find(
         {
-          city: this.state.city,
+          district_id: this.state.districtId,
+          new_api_search: true,
           state: this.state.state,
-          district: this.state.district_name,
           levelCodes: [str],
           sort: "rating",
-          extras: ["students_per_teacher", "review_summary"],
-          limit: 5,
+          extras: ["students_per_teacher", "review_summary", "students_per_teacher"],
+          limit: 5,   
           with_rating: true
         },
         {}

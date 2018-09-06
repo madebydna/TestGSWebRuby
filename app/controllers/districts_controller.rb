@@ -78,6 +78,7 @@ class DistrictsController < ApplicationController
   def locality
     @_locality ||= begin
       Hash.new.tap do |cp|
+        cp[:district_id] = district_record.id
         cp[:name] = district_record.name
         cp[:address] = district_record.mail_street
         cp[:city] = district_record.city

@@ -19,8 +19,6 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
       </div>
     )
   }else{
-    console.log(schoolLevels);
-    
     return (
       <div className="grade-filter">
         <span className="button-group">
