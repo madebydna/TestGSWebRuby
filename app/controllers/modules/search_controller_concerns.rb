@@ -34,7 +34,7 @@ module SearchControllerConcerns
   end
 
   def query
-    if point_given? || area_given? || q.present? || new_api_search?
+    if point_given? || area_given? || q.present? || top_school_module?
       solr_query
     elsif state.present? && (school_id.present? || district_id.present?)
       school_sql_query

@@ -68,7 +68,7 @@ class TopSchoolsStateful extends React.Component {
       APISchools.find(
         {
           district_id: this.state.districtId,
-          new_api_search: true,
+          top_school_module: true,
           state: this.state.state,
           levelCodes: [str],
           sort: "rating",

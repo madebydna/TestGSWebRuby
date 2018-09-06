@@ -79,7 +79,7 @@ export function find({
   page = 1,
   limit = 25,
   with_rating = false,
-  new_api_search
+  top_school_module
 } = {}) {
   const data = {
     city,
@@ -90,7 +90,7 @@ export function find({
     sort,
     limit,
     with_rating,
-    new_api_search
+    top_school_module
   };
   if (levelCodes && levelCodes.length > 0) {
     data.level_code = levelCodes.join(',');
@@ -116,8 +116,8 @@ export function find({
   if (locationLabel) {
     data.locationLabel = locationLabel;
   }
-  if (new_api_search) {
-    data.new_api_search = new_api_search;
+  if (top_school_module) {
+    data.top_school_module = top_school_module;
   }
   const currentParams = parse(window.location.search);
   data.lang = currentParams.lang;

@@ -212,8 +212,8 @@ module SearchRequestParams
     params[:with_rating]
   end
 
-  def new_api_search?
-    params[:new_api_search]
+  def top_school_module?
+    params[:top_school_module]
   end
 
 end
