@@ -148,7 +148,7 @@ $subtle-gray: #647981;
         }
         //Targets ie11 only
         @media all and (-ms-high-contrast: none){
-          *::-ms-backdrop, .li{ height: 100%; }
+          *::-ms-backdrop, li{ height: 100%; }
         }
         li + li {
           div {
