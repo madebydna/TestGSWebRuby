@@ -136,11 +136,11 @@ class DistrictLayout extends React.Component {
           <div className="district-hero-title">{name}</div>
           <div className="district-hero-contact-info">
             <span className="content">{address}, {city}, {stateShort} {zipCode}</span>
-            <span className="badge-and-content">
+            <span className="badge-and-content phone">
               <span className="badge icon-phone"></span>
               <span className="content">{phone}</span>
             </span>
-            <span className="badge-and-content">
+            <span className="badge-and-content link">
               <span className="badge icon-link" />
               <span><a className="content" href={districtUrl}>{t('website')}</a></span>
             </span>
