@@ -146,6 +146,10 @@ $subtle-gray: #647981;
             margin: 0 20px;
           }
         }
+        //Targets ie11 only
+        @media all and (-ms-high-contrast: none){
+          *::-ms-backdrop, .li{ height: 100%; }
+        }
         li + li {
           div {
             border-top: 1px solid $border-color;
