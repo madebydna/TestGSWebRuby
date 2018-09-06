@@ -50,6 +50,9 @@ $subtle-gray: #647981;
   color: white;
   font-family: 'opensans-regular';
   padding: 0 25px;
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    margin-top: 20px;
+  }
 }
 
 .below-hero {
@@ -93,6 +96,9 @@ $subtle-gray: #647981;
       margin-right: 20px;
       position: -webkit-sticky;
       position: sticky;
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        margin-top: 20px;
+      }
       //target ie10
       @media screen and (min-width:0\0) {
         position: static;
@@ -126,6 +132,7 @@ $subtle-gray: #647981;
         li {
           color: $school-color;
           font-size: 14px;
+          height: 100%;
           @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
             height: 36px;
           }

@@ -1,10 +1,5 @@
 #hero {
   height: 100%;
-  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    .ad-bar, .toc, .hero{
-      margin-top: 20px;
-    }
-  }
   div {
     max-width: 650px;
     .district-hero-title {
