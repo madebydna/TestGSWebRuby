@@ -1,14 +1,17 @@
 ---
 en:
   javascript:
+    No listings found: No listings found
     '# of schools': '# of schools'
     '# of students': '# of students'
     in: in
     at a glance: at a glance
     assigned_school: Assigned school
     browse_school_blurb: Here's a look at schools in
+    browse_school_blurb_district: Here's a look at the district
     city_hero_html: <div class="city-hero-narrative">{city} is a city in {county} county, {stateLong}</div>
     county: county
+    website: Website
     homes_for_sale: Homes for sale
     nearby homes for sale & rent: nearby homes for sale & rent
     Mile: Mile
@@ -254,6 +257,8 @@ en:
     Homes for sale near: Homes for sale near
     Rentals near: Rentals near
     See more listings near this school: See more listings near this school
+    See more listings near this district: See more listings near this district
+    See more listings near this city: See more listings near this city
     See how much you can afford to borrow: See how much you can afford to borrow
     beds: beds
     baths: baths

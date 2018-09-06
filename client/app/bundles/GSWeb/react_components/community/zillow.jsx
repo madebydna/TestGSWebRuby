@@ -16,7 +16,8 @@ import { t } from 'util/i18n';
 export default class Zillow extends React.Component {
   static propTypes = {
     locality: PropTypes.object.isRequired,
-    utmCampaign: PropTypes.string.isRequired
+    utmCampaign: PropTypes.string.isRequired,
+    pageType: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -56,6 +57,10 @@ export default class Zillow extends React.Component {
         () => this.setState({ initialized: true }),
         -1000
     );
+  }
+
+  buttonStringMoreListings(){
+    return 'See more listings near this '+this.props.pageType;
   }
 
   getZipCode() {
@@ -144,7 +149,7 @@ export default class Zillow extends React.Component {
 
   renderHomesAndRentals() {
     if (this.state.listings.length == 0) {
-      return <div className="tile-container">No listings found</div>;
+      return <div className="tile-container">{t('No listings found')}</div>;
     }
     return this.state.listings.map(this.renderHome);
   }
@@ -177,7 +182,7 @@ export default class Zillow extends React.Component {
                 target="_blank"
                 href={nearbyHomesUrl(this.props.locality.city, this.props.locality.stateShort, this.props.utmCampaign)}
             >
-              {t('See more listings in this city')}
+              {t(this.buttonStringMoreListings())}
             </AnchorButton>
             <img className="zillow-logo" src={zillowLogo} />
           </div>

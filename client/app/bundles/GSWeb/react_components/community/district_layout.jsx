@@ -142,7 +142,7 @@ class DistrictLayout extends React.Component {
             </span>
             <span className="badge-and-content">
               <span className="badge icon-link" />
-              <span><a className="content" href={districtUrl}>District website</a></span>
+              <span><a className="content" href={districtUrl}>{t('website')}</a></span>
             </span>
           </div>
           {/*{this.heroNarration()}*/}
@@ -156,7 +156,7 @@ class DistrictLayout extends React.Component {
               <div>{enrollment.toLocaleString()}</div>
             </div>
             <div>
-              <div>{t('grades').toUpperCase()}</div>
+              <div>{t('Grades').toUpperCase()}</div>
               <div>{grades}</div>
             </div>
           </div>
@@ -181,7 +181,7 @@ class DistrictLayout extends React.Component {
   renderSchools() {
     return (
       <div id="schools">
-        <div className="modules-title">{`Schools in ${this.props.locality.name}`}</div>
+        <div className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</div>
         {this.props.browseSchools}
         {this.props.topSchools}
       </div>

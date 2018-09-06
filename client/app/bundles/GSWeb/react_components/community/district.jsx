@@ -115,6 +115,7 @@ class District extends React.Component {
           <Zillow
               locality={this.props.locality}
               utmCampaign='districtpage'
+              pageType='district'
           />
         }
         heroStats={this.props.heroStats}

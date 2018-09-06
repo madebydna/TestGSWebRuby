@@ -27,7 +27,7 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
   const browseSchoolBlurb = community === 'city' ? 
     <h3>{t('browse_school_blurb')} {locality.city}</h3>
     :
-    <h3>Here's a look at the district</h3>;
+    <h3>{t('browse_school_blurb_district')}</h3>;
 
   const browseLinkData = [
     {
@@ -96,7 +96,7 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
       <section className="school-browse-module">
         {browseSchoolBlurb}
         <ul>
-          {community === 'city' ? renderCitySchoolAmt : renderDistrictSchoolAmt }
+          {community === 'city' ? renderCitySchoolAmt : renderDistrictSchoolAmt}
         </ul>
       </section>
     )
