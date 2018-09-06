@@ -15,6 +15,7 @@ class CitiesController < ApplicationController
     # @districts = districts_by_city
     @school_levels = school_levels
     @districts = district_content
+    set_ad_targeting_props
     Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
@@ -58,14 +59,12 @@ class CitiesController < ApplicationController
   # AdvertisingConcerns
   def ad_targeting_props
     {
-      page_name: "GS:City:Home",
-      template: "search",
+      page_name: "GS:City:Home"
     }.tap do |hash|
       # these intentionally capitalized to match property names that have
       # existed for a long time. Not sure if it matters
       hash[:City] = city.gs_capitalize_words if city
-      hash[:State] = state if state
-      hash[:level] = level_codes.map { |s| s[0] } if level_codes.present?
+      hash[:State] = state.upcase if state
       hash[:county] = county_record.name if county_record
     end
   end

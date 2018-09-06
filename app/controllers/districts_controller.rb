@@ -27,6 +27,7 @@ class DistrictsController < ApplicationController
     @hero_stats = hero_stats
     @hero_narration =  build_header_narration
     set_district_meta_tags
+    set_ad_targeting_props
     Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
@@ -79,15 +80,13 @@ class DistrictsController < ApplicationController
   # AdvertisingConcerns
   def ad_targeting_props
     {
-      page_name: "GS:District:Home",
-      template: "search"
+      page_name: "GS:District:Home"
     }.tap do |hash|
       # these intentionally capitalized to match property names that have
-      # existed for a long time. Not sure if it matters
+      # existed for a long time. Not sure if it matters (comment ported over from previous version of controller)
       hash[:City] = city.gs_capitalize_words if city
-      hash[:State] = state if state
-      hash[:District] = district if district
-      hash[:level] = level_codes.map { |s| s[0] } if level_codes.present?
+      hash[:State] = state.upcase if state
+      # hash[:District] = district if district
       hash[:county] = county_record.name if county_record
     end
   end
@@ -156,17 +155,27 @@ class DistrictsController < ApplicationController
     district_cache_contents[key] if district_cache_contents && district_cache_contents[key]
   end
 
+  def district_cache_level_codes
+    @_district_cache_level_codes ||= begin
+      decorated_district.cache_data.dig("district_schools_summary","school counts by level code") || {}
+    end
+  end
+
+  def district_cache_school_types
+    @_district_cache_school_types ||= begin
+      decorated_district.cache_data.dig("district_schools_summary","school counts by type") || {}
+    end
+  end
+
   def district_cache_contents
     @_district_cache_school_levels ||= begin
-      @level_codes = decorated_district.cache_data["district_schools_summary"]["school counts by level code"] || {}
-      @school_types = decorated_district.cache_data["district_schools_summary"]["school counts by type"] || {}
       {}.tap do |st|
-        st["charter"] = @school_types["charter"] || 0
-        st["public"] = @school_types["public"] || 0
-        st["preschool"] = @level_codes["p"] || 0
-        st["elementary"] = @level_codes["e"] || 0
-        st["middle"] = @level_codes["m"] || 0
-        st["high"] = @level_codes["h"] || 0
+        st["charter"] = district_cache_school_types["charter"] || 0
+        st["public"] = district_cache_school_types["public"] || 0
+        st["preschool"] = district_cache_level_codes["p"] || 0
+        st["elementary"] = district_cache_level_codes["e"] || 0
+        st["middle"] = district_cache_level_codes["m"] || 0
+        st["high"] = district_cache_level_codes["h"] || 0
         st["all"] = district_record.num_schools
       end
     end
