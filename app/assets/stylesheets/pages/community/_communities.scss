@@ -96,7 +96,7 @@ $subtle-gray: #647981;
       margin-right: 20px;
       position: -webkit-sticky;
       position: sticky;
-      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      @media screen and (min-width: 992px) and (-ms-high-contrast: none), (-ms-high-contrast: active) {
         margin-top: 20px;
       }
       //target ie10
