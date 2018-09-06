@@ -6,6 +6,9 @@
       font-size: 36px;
       font-family: 'RobotoSlab-Bold';
       margin-bottom: 10px;
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        margin: auto;
+      }
     }
     .district-hero-narrative {
       padding-top: 20px;
@@ -67,11 +70,6 @@
       margin: 15px;
       max-width: 300px;
     }
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      .ad-bar{
-        position: static;
-      }
-    }
     div.district-hero-contact-info {
       padding-bottom: 20px;
       > .content {
@@ -92,6 +90,9 @@
           .content{
             margin-left: 15px;
           }
+        }
+        .sticky{
+          margin-top: 60px;
         }
       }
     }
