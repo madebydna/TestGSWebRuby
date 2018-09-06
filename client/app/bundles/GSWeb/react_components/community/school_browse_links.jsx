@@ -83,12 +83,14 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
     </li>
   ));
 
+
   const browseLinkDistrictData = (browseLinkData.slice(0, 4)).concat([browseLinkData[7]]);
   const renderDistrictSchoolAmt = browseLinkDistrictData.map((linkData, idx) => (
-    <li className="school-type-li" key={linkData.name}>
-      {renderListItems(linkData, locality)}
-      {idx !== 4 ? <div className="blue-line" /> : null}
-    </li>
+      linkData.schoolNumber > 0 ?
+        <li className="school-type-li" key={linkData.name}>
+          {renderListItems(linkData, locality)}
+          {idx !== 4 ? <div className="blue-line"/> : null}
+        </li> : null
   ));
   
   if (schoolLevels.all !== null) {

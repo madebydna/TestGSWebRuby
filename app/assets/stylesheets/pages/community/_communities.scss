@@ -133,9 +133,6 @@ $subtle-gray: #647981;
           color: $school-color;
           font-size: 14px;
           height: 100%;
-          @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-            height: 36px;
-          }
           &:hover {
             cursor: pointer;
           }
@@ -322,7 +319,7 @@ $subtle-gray: #647981;
         margin-top: -3px;
       }
       p { 
-        color: #333;
+        color: #999;
         display: inline-block;
         margin-top: 5px;
         margin-bottom: 0; 
