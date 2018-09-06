@@ -6,9 +6,7 @@
       font-size: 36px;
       font-family: 'RobotoSlab-Bold';
       margin-bottom: 10px;
-      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        margin: auto;
-      }
+      margin: auto;
     }
     .district-hero-narrative {
       padding-top: 20px;
@@ -61,11 +59,9 @@
       border-left: 1px solid rgba(255, 255, 255, 0.3);
     }
   }
-  @include media-breakpoint-down(md){
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      .sticky{
-        margin-top: 60px;
-      }
+  @media screen and (max-width: 1200px) and and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .sticky{
+      margin-top: 60px;
     }
   }
   @include media-breakpoint-down(sm) {
