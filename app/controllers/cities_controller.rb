@@ -123,7 +123,7 @@ class CitiesController < ApplicationController
   def district_enrollment(district_id)
     dc = DistrictCache.where(name: 'district_characteristics', district_id: district_id, state: state)
     dc_hash = JSON.parse(dc.first.value) if dc.present? && dc.first
-    dc_hash['Enrollment'].first['district_value'].to_i if dc_hash && dc_hash['Enrollment']
+    dc_hash['Enrollment'].first['district_value'].to_i if dc_hash && dc_hash['Enrollment'] && dc_hash['Enrollment'].first
   end
 
   def locality
