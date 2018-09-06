@@ -36,13 +36,16 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
   }
-  const noSchoolsMap = {
-    "e": t("top_schools.no_elem"), "m": t("top_schools.no_mid"), "h": t("top_schools.no_high")
+  const noSchoolsMapC = {
+    "e": t("top_schools.no_elemC"), "m": t("top_schools.no_midC"), "h": t("top_schools.no_highC")
+  }
+  const noSchoolsMapD = {
+    "e": t("top_schools.no_elemD"), "m": t("top_schools.no_midD"), "h": t("top_schools.no_highD")
   }
   if (schools.length === 0) {
     schoolList = <section className="no-schools">
                     <div>
-                      <h3>{noSchoolsMap[levelCodes]}</h3>
+        <h3>{community === 'city' ? noSchoolsMapC[levelCodes] : noSchoolsMapD[levelCodes]}</h3>
                     </div>
                   </section>;
   } else {

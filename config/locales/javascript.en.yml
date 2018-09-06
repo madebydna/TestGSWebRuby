@@ -140,9 +140,12 @@ en:
         based on how well a school prepares all its students for postsecondary
         success - be it college or career.
       learn_more: Learn more
-      no_elem: There are no elementary schools with a GreatSchools rating for this city
-      no_mid: There are no middle schools with a GreatSchools rating for this city
-      no_high: There are no high schools with a GreatSchools rating for this city
+      no_elemC: There are no elementary schools with a GreatSchools rating for this city
+      no_midC: There are no middle schools with a GreatSchools rating for this city
+      no_highC: There are no high schools with a GreatSchools rating for this city
+      no_elemD: There are no elementary schools with a GreatSchools rating for this district
+      no_midD: There are no middle schools with a GreatSchools rating for this district
+      no_highD: There are no high schools with a GreatSchools rating for district 
       see_elem: See more elementary schools
       see_mid: See more middle schools
       see_high: See more high schools
