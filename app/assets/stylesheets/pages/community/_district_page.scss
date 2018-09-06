@@ -61,6 +61,13 @@
       border-left: 1px solid rgba(255, 255, 255, 0.3);
     }
   }
+  @include media-breakpoint-down(md){
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      .sticky{
+        margin-top: 60px;
+      }
+    }
+  }
   @include media-breakpoint-down(sm) {
     .content {
       font-size: 14px;
@@ -91,9 +98,7 @@
             margin-left: 15px;
           }
         }
-        .sticky{
-          margin-top: 60px;
-        }
+
       }
     }
     .district-hero-stats {
