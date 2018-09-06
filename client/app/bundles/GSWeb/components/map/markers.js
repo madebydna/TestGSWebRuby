@@ -83,6 +83,10 @@ export default function createMarkerFactory(googleMaps) {
       } else if (!assigned && !rating) {
         size = new googleMaps.Size(26, 33);
       }
+      let zIndex = 1;
+      if (assigned) {
+        zIndex = 10;
+      }
       return new googleMaps.Marker({
         position,
         title,
@@ -99,7 +103,7 @@ export default function createMarkerFactory(googleMaps) {
               scaledSize: size
             }
           : this.markerImage(rating),
-        zIndex: 1,
+        zIndex: zIndex,
         shape: this.shape
       });
     }
