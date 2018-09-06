@@ -78,6 +78,7 @@ class DistrictLayout extends React.Component {
     viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
+    heroNarration: PropTypes.string,
   };
 
   constructor(props) {
@@ -109,13 +110,10 @@ class DistrictLayout extends React.Component {
     });
   }
 
-  heroNarration() {
-    let { city, stateLong, county } = this.props.locality;
-    return <div
-      dangerouslySetInnerHTML={{
-        __html: t('city_hero_html', { parameters: { city, stateLong, county } })
-      }}
-    />
+  renderHeroNarration() {
+    if (this.props.heroNarration){
+      return <div className='district-hero-narrative'>{this.props.heroNarration}</div>
+    }
   }
 
   renderZillow(){
@@ -145,7 +143,7 @@ class DistrictLayout extends React.Component {
               <span><a className="content" href={districtUrl}>{t('website')}</a></span>
             </span>
           </div>
-          {/*{this.heroNarration()}*/}
+          {  this.renderHeroNarration()}
           <div className="district-hero-stats">
             <div>
               <div>{t('schools').toUpperCase()}</div>

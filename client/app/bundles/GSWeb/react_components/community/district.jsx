@@ -119,6 +119,7 @@ class District extends React.Component {
           />
         }
         heroStats={this.props.heroStats}
+        heroNarration={this.props.heroNarration}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
         toc={<Toc schools={this.props.schools} districts={this.props.districts} />}
