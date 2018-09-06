@@ -108,11 +108,7 @@ class DistrictsController < ApplicationController
   end
 
   def district_enrollment
-    @_district_enrollment ||= begin
-      decorated_district.cache_data['district_characteristics']['Enrollment'].first['district_value']
-      rescue
-        return nil
-      end
+    @_district_enrollment ||= decorated_district.enrollment
   end
 
   def breadcrumbs
