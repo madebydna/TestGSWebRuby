@@ -132,7 +132,7 @@ $subtle-gray: #647981;
             cursor: pointer;
           }
           div {
-            height: 50px;
+            height: 100%;
             padding: 16px 0px;
             margin: 0 20px;
           }
@@ -146,6 +146,9 @@ $subtle-gray: #647981;
           color: black;
           background-color: $gray-light-blue;
           border-left: 5px solid $school-color;
+          div {
+            margin-left: 15px;
+          }
         }
       }
     }
