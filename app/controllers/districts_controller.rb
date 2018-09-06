@@ -25,6 +25,7 @@ class DistrictsController < ApplicationController
     @breadcrumbs = breadcrumbs
     @serialized_schools = serialized_schools
     @hero_stats = hero_stats
+    @hero_narration =  build_header_narration
     set_district_meta_tags
     Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
@@ -38,6 +39,29 @@ class DistrictsController < ApplicationController
                   description: districts_description,
                   canonical: city_district_url(state: district_params_hash[:state], city: district_params_hash[:city], district: district_params_hash[:district]))
   end
+
+  def build_header_narration
+    "#{district_record.name.gs_capitalize_words} #{t('controllers.districts_controller.District header narration')} #{city}, #{state.upcase}" if largest_district_in_city?
+  end
+
+  def largest_district_in_city?
+    # check city cache for district_content - if district id in first hash of cache is equal to this district id it is the largest district by enrollment
+    largest_district_id = city_key_value('id')
+    largest_district_id == district_record.id
+  end
+
+  def city_cache_district_content
+    @_city_cache_district_content ||= begin
+      cc = CityCache.for_name_and_city_id('district_content', district_record.city_record.id)
+      JSON.parse(cc.value) if cc.present?
+    end
+  end
+
+# rubocop:disable Lint/SafeNavigationChain
+  def city_key_value(key)
+    city_cache_district_content&.first[key]&.first['city_value'] if city_cache_district_content&.first[key]
+  end
+# rubocop:enable Lint/SafeNavigationChain
 
   def districts_title
     additional_district_text = state.downcase == 'dc' ? ', DC' : ''
