@@ -14,6 +14,20 @@ class CityCache < ActiveRecord::Base
     CityCache.where(city_id: city_id)
   end
 
+  def self.district_content_cache(city_id)
+    @_city_cache_district_content ||= begin
+      cc = CityCache.for_name_and_city_id('district_content', city_id)
+      JSON.parse(cc.value) if cc.present?
+    end
+  end
+
+  def self.school_levels(city_id)
+    @_city_cache_school_levels ||= begin
+      cc = CityCache.for_name_and_city_id('school_levels', city_id)
+      JSON.parse(cc.value) if cc.present?
+    end
+  end
+
   self::KEYS.each do |key|
     method_name = "cached_#{key}_data"
     define_singleton_method(method_name) do |city|

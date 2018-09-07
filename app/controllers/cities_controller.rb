@@ -13,7 +13,7 @@ class CitiesController < ApplicationController
     @breadcrumbs = breadcrumbs
     @locality = locality
     @school_levels = school_levels
-    @districts = district_content
+    @districts = district_content(city_record.id)
     set_ad_targeting_props
     set_page_analytics_data
     Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
@@ -68,54 +68,8 @@ class CitiesController < ApplicationController
     end
   end
 
-  def city_cache_school_levels
-    @_city_cache_school_levels ||= begin
-      cc = CityCache.for_name_and_city_id('school_levels', city_record.id)
-      JSON.parse(cc.value) if cc.present?
-    end
-  end
-
-  def city_cache_district_content
-    @_city_cache_district_content ||= begin
-      cc = CityCache.for_name_and_city_id('district_content', city_record.id)
-      JSON.parse(cc.value) if cc.present?
-    end
-  end
-
   def school_count(key)
-    city_cache_school_levels[key].first['city_value'] if city_cache_school_levels && city_cache_school_levels[key]
-  end
-
-  def district_content_field(district_content, key)
-    district_content[key].first['city_value'] if district_content && district_content[key]
-  end
-
-  def district_content
-    @_district_content ||= begin
-      if city_cache_district_content.present?
-        dc = city_cache_district_content.map do |district_content|
-          {}.tap do |d|
-            name = district_content_field(district_content, 'name')
-            city = district_content_field(district_content, 'city')
-            d[:districtName] = name
-            d[:grades] = district_content_field(district_content, 'levels')
-            d[:numSchools] = district_content_field(district_content, 'school_count')
-            d[:url] = district_url(district_params(state, city, name))
-            d[:enrollment] =  district_enrollment(district_content_field(district_content, 'id'))
-            d[:zip] = district_content_field(district_content, 'zip')
-          end
-        end
-        dc.sort_by { |h| h[:enrollment] ? h[:enrollment] : 0 }.reverse!
-      else
-        []
-      end
-    end
-  end
-
-  def district_enrollment(district_id)
-    dc = DistrictCache.where(name: 'district_characteristics', district_id: district_id, state: state)
-    dc_hash = JSON.parse(dc.first.value) if dc.present? && dc.first
-    dc_hash['Enrollment'].first['district_value'].to_i if dc_hash && dc_hash['Enrollment'] && dc_hash['Enrollment'].first
+    CityCache.school_levels(city_record.id)[key].first['city_value'] if CityCache.school_levels(city_record.id) && CityCache.school_levels(city_record.id)[key]
   end
 
   def locality
@@ -132,11 +86,11 @@ class CitiesController < ApplicationController
   end
 
   def get_zip
-    zip = district_content.find do |dc|
+    zip = district_content(city_record.id).find do |dc|
       break dc[:zip] if dc[:zip].present?
     end
     zip ||= @schools.find do |s|
-      break s[:address][:zip] if s[:address].present? && s[:address][:zip].present?
+      break s[:address][:zip] if s && s[:address].present? && s[:address][:zip].present?
     end
     zip
   end
