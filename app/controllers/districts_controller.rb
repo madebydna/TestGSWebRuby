@@ -14,8 +14,7 @@ class DistrictsController < ApplicationController
     @school_levels = school_levels
     @breadcrumbs = breadcrumbs
     @serialized_schools = serialized_schools
-    @hero_stats = hero_stats
-    @hero_narration =  build_header_narration
+    @hero_data = hero_data
     set_district_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
@@ -106,12 +105,13 @@ class DistrictsController < ApplicationController
     end
   end
 
-  def hero_stats
-    @_hero_stats ||= begin
+  def hero_data
+    @_hero_data ||= begin
       Hash.new.tap do |hs|
         hs[:schoolCount] = district_record.num_schools
         hs[:enrollment] = district_enrollment
         hs[:grades] = GradeLevelConcerns.human_readable_level(district_record.level)
+        hs[:narration] = build_header_narration
       end
     end
   end

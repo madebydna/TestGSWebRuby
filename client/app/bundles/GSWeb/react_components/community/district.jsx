@@ -31,7 +31,8 @@ class District extends React.Component {
         url: PropTypes.string.isRequired
       })
     ),
-    locality: PropTypes.object
+    locality: PropTypes.object,
+    heroData: PropTypes.object
   };
 
   constructor(props) {
@@ -118,8 +119,7 @@ class District extends React.Component {
               pageType='district'
           />
         }
-        heroStats={this.props.heroStats}
-        heroNarration={this.props.heroNarration}
+        heroData={this.props.heroData}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
         toc={<Toc schools={this.props.schools} districts={this.props.districts} />}

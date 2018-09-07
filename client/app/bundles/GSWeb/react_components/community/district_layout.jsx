@@ -78,7 +78,7 @@ class DistrictLayout extends React.Component {
     viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
-    heroNarration: PropTypes.string,
+    heroData: PropTypes.object
   };
 
   constructor(props) {
@@ -110,9 +110,9 @@ class DistrictLayout extends React.Component {
     });
   }
 
-  renderHeroNarration() {
-    if (this.props.heroNarration){
-      return <div className='district-hero-narrative'>{this.props.heroNarration}</div>
+  renderNarration(narration) {
+    if (narration){
+      return <div className='district-hero-narrative'>{narration}</div>
     }
   }
 
@@ -126,7 +126,7 @@ class DistrictLayout extends React.Component {
 
   renderHero() {
     let {name, address, city, stateShort, zipCode, phone, districtUrl} = this.props.locality;
-    let {enrollment, grades, schoolCount} = this.props.heroStats;
+    let {enrollment, grades, schoolCount, narration} = this.props.heroData;
     return (
       <div id="hero">
         <div>
@@ -144,7 +144,7 @@ class DistrictLayout extends React.Component {
             </span>
             }
           </div>
-          {  this.renderHeroNarration()}
+          {  this.renderNarration(narration)}
           <div className="district-hero-stats">
             <div>
               <div>{t('schools').toUpperCase()}</div>
