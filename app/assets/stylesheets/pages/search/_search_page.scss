@@ -219,7 +219,7 @@ body {
 
     .list-map-toggle {
       > div {
-        display: flex;
+        @include flexbox;
         margin-right: 25px;
       }
       @include media-breakpoint-up(lg) {
@@ -498,7 +498,7 @@ body {
     margin-top: -3px;
   }
   .rating-scale{
-    display: flex;
+    @include flexbox;
     .help-circle {
       text-align: center;
       color: white;
@@ -511,8 +511,7 @@ body {
     }
   }
   .ratings-scale-container {
-    display: flex;
-    justify-content: space-between;
+    @include flex-justify-space-between;
     max-width: 300px;
     .block-container{
       .rating-scale{
