@@ -39,7 +39,6 @@ module AdvertisingConcerns
     return advertising_enabled
   end
 
-
   protected
 
   def set_ad_targeting_props
@@ -47,7 +46,7 @@ module AdvertisingConcerns
 
     hash = {}
     hash[:env] = advertising_env
-    hash[:compfilter] = rand(1..4).to_s
+    hash[:compfilter] = compfilter
 
     page_specific_props = 
       ad_targeting_props.each_with_object({}) do |(key, value), h|

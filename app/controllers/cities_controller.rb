@@ -12,7 +12,6 @@ class CitiesController < ApplicationController
     @schools = serialized_schools
     @breadcrumbs = breadcrumbs
     @locality = locality
-    # @districts = districts_by_city
     @school_levels = school_levels
     @districts = district_content
     set_ad_targeting_props
@@ -21,19 +20,6 @@ class CitiesController < ApplicationController
   end
 
   private
-
-  # def districts_by_city
-  #   School.on_db(state)
-  #     .where(city: city_record.name, active: 1)
-  #     .joins('left join district on district.id = school.district_id')
-  #     .where('district.charter_only = 0')
-  #     .group('district.id')
-  #     .pluck('district.name', 'district.level_code', 'district.num_schools', 'district.city')
-  #     .map {|school_record| {:districtName=> school_record[0],
-  #                            :grades=>LevelCode.full_from_all_grades(school_record[1]),
-  #                            :numSchools=>school_record[2],
-  #                            :url=>district_url(state: state_name, city: gs_legacy_url_encode(school_record[3]), district: gs_legacy_url_encode(school_record[0]))}}
-  # end
 
   def set_city_meta_tags
     city_params_hash = city_params(state, city)
@@ -78,7 +64,7 @@ class CitiesController < ApplicationController
       hash[PageAnalytics::STATE] = state.upcase if state
       hash[PageAnalytics::COUNTY] = county_record.name if county_record
       hash[PageAnalytics::ENV] = ENV_GLOBAL['advertising_env']
-      hash[PageAnalytics::COMPFILTER] = set_ad_targeting_props[:compfilter]
+      hash[PageAnalytics::COMPFILTER] = gon.ad_set_targeting[:compfilter]
     end
   end
 

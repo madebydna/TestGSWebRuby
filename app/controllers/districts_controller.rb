@@ -1,7 +1,6 @@
 class DistrictsController < ApplicationController
   include CommunityParams
-  include AdvertisingConcerns
-  include PageAnalytics
+  include AdvertisingAndPageAnalyticsConcerns
   include CommunityConcerns
 
   CACHE_KEYS_FOR_READER = ['district_schools_summary', 'district_characteristics']
@@ -10,16 +9,6 @@ class DistrictsController < ApplicationController
   before_filter :redirect_unless_valid_district
 
   def show
-    # gon.pagename = 'DistrictHome'
-    # @district = district
-    # @ad_page_name = :District_Home # TODO verify name to use
-
-    # @nearby_districts = @district.nearby_districts
-    # @canonical_url = city_district_url(district_params_from_district(@district))
-
-    # @top_schools = top_schools(@district, 4)
-    # @params_hash = parse_array_query_string(request.query_string)
-    # @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
     @locality = locality
     @school_levels = school_levels
     @breadcrumbs = breadcrumbs
@@ -30,7 +19,6 @@ class DistrictsController < ApplicationController
     set_ad_targeting_props
     set_page_analytics_data
     Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
-    # require 'pry'; binding.pry
   end
 
   private
@@ -125,7 +113,6 @@ class DistrictsController < ApplicationController
       # existed for a long time. Not sure if it matters (comment ported over from previous version of controller)
       hash[:City] = city.gs_capitalize_words if city
       hash[:State] = state.upcase if state
-      # hash[:District] = district if district
       hash[:county] = county_record.name if county_record
     end
   end
@@ -137,8 +124,7 @@ class DistrictsController < ApplicationController
       hash[PageAnalytics::CITY] = city.gs_capitalize_words if city
       hash[PageAnalytics::STATE] = state.upcase if state
       hash[PageAnalytics::COUNTY] = county_record.name if county_record
-      hash[PageAnalytics::ENV] = ENV_GLOBAL['advertising_env']
-      hash[PageAnalytics::COMPFILTER] = set_ad_targeting_props[:compfilter]
+      hash[PageAnalytics::ENV] = advertising_env
     end
   end
 
@@ -147,7 +133,7 @@ class DistrictsController < ApplicationController
       Hash.new.tap do |cp|
         cp[:district_id] = district_record.id
         cp[:name] = district_record.name
-        cp[:address] = district_record.mail_street
+        cp[:address] = district_record.mail_street if district_record.mail_street.present?
         cp[:city] = district_record.city
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
@@ -158,8 +144,8 @@ class DistrictsController < ApplicationController
           trailing_slash: true
         )
         cp[:zipCode] = district_record.mail_zipcode[0..4]
-        cp[:phone] = district_record.phone
-        cp[:districtUrl] = prepend_http district_record.home_page_url
+        cp[:phone] = district_record.phone if district_record.phone.present?
+        cp[:districtUrl] = prepend_http district_record.home_page_url if district_record.home_page_url.present?
       end
     end
   end
