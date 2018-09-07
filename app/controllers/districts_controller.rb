@@ -49,8 +49,44 @@ class DistrictsController < ApplicationController
 
   def largest_district_in_city?
     # check city cache for district_content - if district id in first hash of cache is equal to this district id it is the largest district by enrollment
-    largest_district_id = city_key_value('id')
+    largest_district_id = city_key_value(:id)
     largest_district_id == district_record.id
+  end
+
+
+  ###################################################################################################################
+  ######## NEED TO COMBINE WITH CITY FUNCTIONS
+  def district_content_field(district_content, key)
+    district_content[key].first['city_value'] if district_content && district_content[key]
+  end
+
+  def district_enrollment_dc(district_id)
+    dc = DistrictCache.where(name: 'district_characteristics', district_id: district_id, state: state)
+    dc_hash = JSON.parse(dc.first.value) if dc.present? && dc.first
+    dc_hash['Enrollment'].first['district_value'].to_i if dc_hash && dc_hash['Enrollment'] && dc_hash['Enrollment'].first
+  end
+
+  def district_content
+    @_district_content ||= begin
+      if city_cache_district_content.present?
+        dc = city_cache_district_content.map do |district_content|
+          {}.tap do |d|
+            name = district_content_field(district_content, 'name')
+            city = district_content_field(district_content, 'city')
+            d[:id] = district_content_field(district_content, 'id')
+            d[:districtName] = name
+            d[:grades] = district_content_field(district_content, 'levels')
+            d[:numSchools] = district_content_field(district_content, 'school_count')
+            d[:url] = district_url(district_params(state, city, name))
+            d[:enrollment] =  district_enrollment_dc(district_content_field(district_content, 'id'))
+            d[:zip] = district_content_field(district_content, 'zip')
+          end
+        end
+        dc.sort_by { |h| h[:enrollment] ? h[:enrollment] : 0 }.reverse!
+      else
+        []
+      end
+    end
   end
 
   def city_cache_district_content
@@ -59,10 +95,11 @@ class DistrictsController < ApplicationController
       JSON.parse(cc.value) if cc.present?
     end
   end
+###############################################################################################################################
 
 # rubocop:disable Lint/SafeNavigationChain
   def city_key_value(key)
-    city_cache_district_content&.first[key]&.first['city_value'] if city_cache_district_content&.first[key]
+    district_content&.first[key]
   end
 # rubocop:enable Lint/SafeNavigationChain
 
