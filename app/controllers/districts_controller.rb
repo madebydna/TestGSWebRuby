@@ -1,6 +1,7 @@
 class DistrictsController < ApplicationController
   include CommunityParams
-  include AdvertisingAndPageAnalyticsConcerns
+  include AdvertisingConcerns
+  include PageAnalytics
   include CommunityConcerns
 
   CACHE_KEYS_FOR_READER = %w(district_schools_summary district_characteristics)

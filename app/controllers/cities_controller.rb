@@ -64,7 +64,6 @@ class CitiesController < ApplicationController
       hash[PageAnalytics::STATE] = state.upcase if state
       hash[PageAnalytics::COUNTY] = county_record.name if county_record
       hash[PageAnalytics::ENV] = ENV_GLOBAL['advertising_env']
-      hash[PageAnalytics::COMPFILTER] = gon.ad_set_targeting[:compfilter]
     end
   end
 

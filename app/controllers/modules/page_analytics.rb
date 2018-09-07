@@ -14,7 +14,6 @@ module PageAnalytics
 
   def set_page_analytics_data
     hash = page_analytics_data
-    hash[:compfilter] = compfilter
     data_layer_gon_hash.merge!(hash)
   end
 

@@ -46,7 +46,7 @@ module AdvertisingConcerns
 
     hash = {}
     hash[:env] = advertising_env
-    hash[:compfilter] = compfilter
+    hash[:compfilter] = rand(1..4).to_s
 
     page_specific_props = 
       ad_targeting_props.each_with_object({}) do |(key, value), h|
