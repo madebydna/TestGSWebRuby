@@ -23,7 +23,6 @@ end
 
 def parse_arguments
   # Returns false or parsed arguments
-
   if ARGV[0] == 'all' && ARGV[1].nil?
     [{
          states: 'all',
@@ -57,7 +56,7 @@ end
 def handle_city_ids(city_ids)
   { id: city_ids.split(',') } if city_ids.present?
 end
-
+# rubocop:disable   Style/RescueStandardError
 def process_city(city, cache_keys)
   cache_keys.each do |cache_key|
     begin
@@ -68,7 +67,7 @@ def process_city(city, cache_keys)
     end
   end
 end
-
+# rubocop:enable   Style/RescueStandardError
 parsed_arguments = parse_arguments
 
 usage unless parsed_arguments.present?
@@ -81,7 +80,7 @@ parsed_arguments.each do |args|
   city_ids = args[:city_ids]
   puts
 
-  if states[:state] == ['all'] && city_ids.blank?
+  if states.present? && states[:state] == ['all'] && city_ids.blank?
     puts "Working on all states - all cities"
     City.get_all_cities.each do | city |
       process_city(city, cache_keys)

@@ -6,6 +6,11 @@ module PageAnalytics
   SEARCH_TYPE = 'search_type'
   SEARCH_HAS_RESULTS = 'search_has_results'
   PAGE_NAME = 'page_name'
+  CITY = 'City'
+  STATE = 'State'
+  COUNTY = 'county'
+  ENV = 'env'
+  COMPFILTER = 'compfilter'
 
   def set_page_analytics_data
     hash = page_analytics_data

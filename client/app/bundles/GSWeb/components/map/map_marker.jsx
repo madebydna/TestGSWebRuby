@@ -81,7 +81,7 @@ const createMarkersFromSchools = (
         assigned: s.assigned,
         googleMaps,
         map,
-        key: `s${s.state}${s.id}${s.highlighted}`,
+        key: `s${s.state}${s.id}${s.assigned}${s.highlighted}`,
         openInfoWindow: m => openInfoWindow(createInfoWindow(s), m),
         onClick: m => {
           if (selectSchool) {

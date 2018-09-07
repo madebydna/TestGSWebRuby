@@ -6,13 +6,22 @@ class CityCache < ActiveRecord::Base
   attr_accessible :name, :city_id, :value, :updated
   KEYS = %i(header school_levels)
 
-
-  def self.for_city_and_name(name, city_id)
+  def self.for_name_and_city_id(name, city_id)
     CityCache.where(name: name, city_id: city_id).first
   end
 
   def self.for_city(city_id)
     CityCache.where(city_id: city_id)
+  end
+
+  def self.district_content_cache(city_id)
+      cc = CityCache.for_name_and_city_id('district_content', city_id)
+      JSON.parse(cc.value) if cc.present?
+  end
+
+  def self.school_levels(city_id)
+      cc = CityCache.for_name_and_city_id('school_levels', city_id)
+      JSON.parse(cc.value) if cc.present?
   end
 
   self::KEYS.each do |key|
@@ -22,7 +31,7 @@ class CityCache < ActiveRecord::Base
       if city.instance_variable_get("@#{cache_key}")
         return city.instance_variable_get("@#{cache_key}")
       end
-      cached_data = if (city_cache = self.for_city_and_name(key,city.city_id))
+      cached_data = if (city_cache = self.for_name_and_city_id(key,city.city_id))
                       city_cache.cache_data(symbolize_names: true)
                     else
                       {}

@@ -1,8 +1,20 @@
 ---
 en:
   javascript:
+    No listings found: No listings found
+    '# of schools': '# of schools'
+    '# of students': '# of students'
+    in: in
+    at a glance: at a glance
     assigned_school: Assigned school
+    browse_school_blurb: Here's a look at schools in
+    browse_school_blurb_district: Here's a look at the district
+    city_hero_html: <div class="city-hero-narrative">{city} is a city in {county} county, {stateLong}</div>
+    city_hero_no_county_html: <div class="city-hero-narrative">{city} is a city in {stateLong}</div>
+    county: county
+    website: Website
     homes_for_sale: Homes for sale
+    nearby homes for sale & rent: nearby homes for sale & rent
     Mile: Mile
     Miles: Miles
     Relevance: Relevance
@@ -13,7 +25,8 @@ en:
       - Try more general keywords.
       - Try different search filters (e.g. school types or levels).
     Close filters: Close filters
-    School: School
+    school: school
+    schools: schools
     Type: Type
     Grades: Grades
     Total students enrolled: Total students enrolled
@@ -40,19 +53,28 @@ en:
       It looks like this is your assigned <span style='text-transform: lowercase;' class="open-sans_semibold">{school_level} school</span>, but we recommend double-checking with the district or school.
     advertisement: Advertisement
     assigned: ASSIGNED
+    Preschools: Preschools
     PreK: PreK
     Elementary: Elementary
+    Elementary schools: Elementary schools
     Middle: Middle
+    Middle schools: Middle schools
     High: High
+    High schools: High schools
+    All schools: All schools
     ListMap view: ListMap view
+    map: map
     Table view: Table view
     Filter by: Filter by
     School type and level: School type and level
+    schools: schools
+    school districts: school districts
     Public schools: Public schools
     Private schools: Private schools
     Public & private schools: Public & private schools
     Public charter schools: Public charter schools
     Public district schools: Public district schools
+    Public school districts in: Public school districts in
     Public district & private schools: Public district & private schools
     Public charter & private schools: Public charter & private schools
     Charter: Charter
@@ -112,6 +134,22 @@ en:
       proficient_or_better: Proficient or better
       at_grade_level: Proficient
     This school: This school
+    top_schools:
+      top_schools: Top schools
+      top_schools_blurbs: >
+        The GreatSchools Rating provides an overall snapshot of school quality
+        based on how well a school prepares all its students for postsecondary
+        success - be it college or career.
+      learn_more: Learn more
+      no_elemC: There are no elementary schools with a GreatSchools rating for this city
+      no_midC: There are no middle schools with a GreatSchools rating for this city
+      no_highC: There are no high schools with a GreatSchools rating for this city
+      no_elemD: There are no elementary schools with a GreatSchools rating for this district
+      no_midD: There are no middle schools with a GreatSchools rating for this district
+      no_highD: There are no high schools with a GreatSchools rating for district 
+      see_elem: See more elementary schools
+      see_mid: See more middle schools
+      see_high: See more high schools
     State average: State average
     too_many_schools_error_html: '<strong>You&#39ve already selected 4 schools to compare.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspCompare schools.</a>'
     view_less: View less »
@@ -123,6 +161,7 @@ en:
     of students: '% of students'
     student: student
     students: students
+    Students: Students
     State avg: 'State avg:'
     State average: State average
     School value: School value
@@ -177,6 +216,7 @@ en:
     Teacher: Teacher
     School leader: School leader
     Community member: Community member
+    community resources: community resources
     Nearest high-performing: Nearest high-performing
     Nearby schools: Nearby schools
     'Submitted ': 'Submitted '
@@ -221,6 +261,8 @@ en:
     Homes for sale near: Homes for sale near
     Rentals near: Rentals near
     See more listings near this school: See more listings near this school
+    See more listings near this district: See more listings near this district
+    See more listings near this city: See more listings near this city
     See how much you can afford to borrow: See how much you can afford to borrow
     beds: beds
     baths: baths

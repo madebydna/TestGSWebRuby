@@ -27,13 +27,13 @@ module Feeds
           within_tag('test') do
             test_name = hash['test-name']
             xml_builder.tag!('test-name', test_name)
-            xml_builder.tag!('test-abbr', hash['test-abbr'])
+            xml_builder.tag!('test-abbrv', hash['test-abbr'])
             xml_builder.tag!('scale', hash['scale'])
             xml_builder.tag!('most-recent-year', hash['most-recent-year'])
             xml_builder.tag!('description', hash['description'])
             write_state_info(test_name)
-            write_school_info(test_name)
             write_district_info(test_name)
+            write_school_info(test_name)
           end
         end
       end

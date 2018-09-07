@@ -30,6 +30,10 @@ module SchoolProfiles
             end
             return first
           end
+          def having_most_recent_date
+            max_year = map(&:year).max
+            select { |dv| dv.year == max_year }.extend(CollectionMethods)
+          end
         end
         attr_accessor :breakdown, :original_breakdown, :school_value,
           :district_average, :state_average, :year, :subject, :data_type,
@@ -123,7 +127,7 @@ module SchoolProfiles
           return [] if hashes.blank?
           handle_ACT_SAT_to_display!(hashes)
           hashes = hashes.map do |key, array|
-            array = array.for_all_students.having_school_value
+            array = array.for_all_students.having_school_value.having_most_recent_date
             if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
               # This is for characteristics
               array = array.no_subject_or_all_subjects_or_graduates_remediation

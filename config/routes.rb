@@ -153,6 +153,8 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/privacy/', as: :privacy
     get '/gk/faq/', as: :faq
     get '/gk/back-to-school/', as: :back_to_school
+    get '/gk/summary-rating/', as: :school_ratings
+    get '/gk/reviews/', as: :gk_school_reviews
     get '/gk/worksheets/', as: :worksheets_and_activities
     get '/gk/category/dilemmas/', as: :parenting_dilemmas
     get '/gk/emotional-smarts/', as: :emotional_smarts
@@ -469,7 +471,7 @@ LocalizedProfiles::Application.routes.draw do
     # Format: false allows periods to be in path segments.
     # This then needs to be paired with a regex constraint for each path component.
     # So in this hash there needs to be state and city and down below there's a constraint
-    # with the district segment's contrainst.
+    # with the district segment's constraint.
     format: false,
     state: States.any_state_name_regex,
     # This city regex allows for all characters except /

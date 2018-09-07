@@ -1,8 +1,20 @@
 ---
 es:
   javascript:
+    No listings found: No se encontraron listados
+    '# of schools': '# of schools'
+    '# of students': '# of students'
+    in: en
+    at a glance: de un vistazo
     assigned_school: Escuela asignada
+    browse_school_blurb: Aquí hay un vistazo a las escuelas en
+    browse_school_blurb_district: Aquí hay un vistazo a las escuelas en distrito
+    city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
+    city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
+    county: condado
+    website: Página web
     homes_for_sale: Casas en venta
+    nearby homes for sale & rent: Casas cercanas en venta y alquiler
     Mile: Milla
     Miles: Millas
     Relevance: Relevancia
@@ -13,7 +25,8 @@ es:
       - Prueba otras palabras más generales.
       - Prueba otros filtros.
     Close filters: Cerrar los filtros
-    School: Escuela
+    school: escuela
+    schools: escuelas
     Type: Tipo
     Grades: Grados
     Total students enrolled: Número de estudiantes
@@ -37,21 +50,30 @@ es:
       <br/>Para algunas escuelas no tenemos suficientes datos de las agencias estatales o nacionales de educación para proporcionar una calificación.</p>
     assigned_description_html: >
       Parece que este es su escuela <span style='text-transform: lowercase;' class="open-sans_semibold">{school_level} asignado</span>, pero recomendamos doble control con el distrito o la escuela.
+    Preschools: Prescolares
     PreK: PreK
     Elementary: Primaria
+    Elementary schools: Escuelas primarias
     Middle: Intermedia
+    Middle schools: Escuelas intermedias
     High: Secundaria
+    High schools: Escuelas secundarias
+    All schools: Todas las escuelas
     advertisement: Anuncio
     assigned: ASIGNADA
     Filter by: Filtrado por
     ListMap view: Mapa
+    map: mapa
     Table view: Tabla
     School type and level: Tipo de escuela y grado
+    schools: escuelas
+    school districts: Distritos escolares
     Public schools: Escuelas públicas
     Private schools: Escuelas privadas
     Public & private schools: Escuelas públicas y privadas
     Public charter schools: Escuelas públicas chárter
     Public district schools: Escuelas públicas del distrito
+    Public school districts in: Distritos escolares en
     Public district & private schools: Escuelas públicas del distrito y privadas
     Public charter & private schools: Escuelas públicas chárter y privadas
     Charter: Chárter
@@ -111,6 +133,23 @@ es:
       proficient_or_better: Competente o mejor
       at_grade_level: a nivel de grado
     This school: Esta escuela
+    top_schools:
+      top_schools: Escuelas con una calificación alta
+      top_schools_blurbs: >
+        La Calificación General de GreatSchools aparece en la parte superior del perfil de una 
+        escuela y proporciona un resumen general de la calidad de la escuela sobre la base de 
+        qué tan bien una escuela prepara a todos sus estudiantes para el éxito postsecundaria
+         — ya sea de colegio o carrera.
+      learn_more: Obtenga más información
+      no_elemC: No hay escuelas primarias con una Calificación General de GreatSchools en esta ciudad
+      no_midC: No hay escuelas intermedias con una Calificación General de GreatSchools en esta ciudad
+      no_highC: No hay escuelas secundarias con una Calificación General de GreatSchools en esta ciudad
+      no_elemD: No hay escuelas primarias con una Calificación General de GreatSchools en esta distrito
+      no_midD: No hay escuelas intermedias con una Calificación General de GreatSchools en esta distrito
+      no_highD: No hay escuelas secundarias con una Calificación General de GreatSchools en esta distrito
+      see_elem: Vea más escuelas primarias
+      see_mid: Vea más escuelas intermedias
+      see_high: Vea más escuelas secundarias
     State average: Promedio estatal
     too_many_schools_error_html: '<strong>Ya ha seleccionado 4 escuelas para comparar.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspComparar las escuelas.</a>'
     view_less: Ver menos »
@@ -122,6 +161,7 @@ es:
     of students: '% de estudiantes'
     student: estudiante
     students: estudiantes
+    Students: Estudiantes
     State avg: Promedio del estado
     State average: Promedio del estado
     School value: Valor de la escuela
@@ -177,6 +217,7 @@ es:
     Teacher: Profesor
     School leader: Funcionario de la escuela
     Community member: Miembro de la comunidad
+    community resources: community resources
     Nearest high-performing: Escuelas más cercanas de alto rendimiento
     Nearby schools: Todas las escuelas cercanas
     'Submitted ': 'Enviado '
@@ -221,6 +262,8 @@ es:
     Homes for sale near: Casas en venta cerca de
     Rentals near: Casas en alquiler cerca de
     See more listings near this school: Ver más anuncios de casas cerca de esta escuela
+    See more listings near this district: Ver más anuncios de casas cerca de este distrito
+    See more listings near this city: Ver más anuncios de casas cerca de este ciudad
     See how much you can afford to borrow: Vea cuánto puede pedir prestado
     beds: camas
     baths: baños

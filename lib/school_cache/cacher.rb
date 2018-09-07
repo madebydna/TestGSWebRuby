@@ -93,7 +93,7 @@ class Cacher
         ratings:         RatingsCaching::GsdataRatingsCacher,
         directory:        DirectoryCaching::DirectoryCacher,
         courses:              CoursesCaching::GsdataCoursesCacher,
-        feed_test_scores_gsdata: TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
+        feed_test_scores_gsdata: TestScoresCaching::FeedTestScoresCacherGsdata,
         feed_old_test_scores_gsdata: TestScoresCaching::FeedOldTestScoresCacherGsdata,
         feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
     }[key.to_s.to_sym]
@@ -122,7 +122,7 @@ class Cacher
       ReviewsCaching::ReviewsSnapshotCacher,
       ProgressBarCaching::ProgressBarCacher,
       FeedTestScoresCacher,
-      TestScoresCaching::Feed::FeedTestScoresCacherGsdata,
+      TestScoresCaching::FeedTestScoresCacherGsdata,
       TestScoresCaching::FeedOldTestScoresCacherGsdata,
       GsdataCaching::GsdataCacher,
       RatingsCaching::GsdataRatingsCacher,

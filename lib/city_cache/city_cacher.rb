@@ -67,18 +67,18 @@ class CityCacher
         DistrictCaching::DistrictContentCacher,
     ]
   end
-
+# rubocop:disable   Style/RescueStandardError
   def self.create_cache(city, cache_key)
     begin
       cacher_class = cacher_for(cache_key)
         return unless cacher_class.active?
       cacher = cacher_class.new(city)
       cacher.cache
-    # rescue => error
-    #   error_vars = { cache_key: cache_key, city_id: city.id }
-    #   GSLogger.error(:city_cache, error, vars: error_vars, message: 'Failed to build city cache')
-    #   raise
+    rescue => error
+      error_vars = { cache_key: cache_key, city_id: city.id }
+      GSLogger.error(:city_cache, error, vars: error_vars, message: 'Failed to build city cache')
+      raise
     end
   end
-
+# rubocop:enable   Style/RescueStandardError
 end

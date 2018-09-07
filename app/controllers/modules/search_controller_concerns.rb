@@ -34,7 +34,7 @@ module SearchControllerConcerns
   end
 
   def query
-    if point_given? || area_given? || q.present?
+    if point_given? || area_given? || q.present? || top_school_module?
       solr_query
     elsif state.present? && (school_id.present? || district_id.present?)
       school_sql_query
@@ -76,7 +76,7 @@ module SearchControllerConcerns
     else
       query_type = Search::LegacySolrSchoolQuery
     end
-
+    
     query_type.new(
       city: city,
       state: state,
@@ -91,12 +91,13 @@ module SearchControllerConcerns
       q: q,
       offset: offset,
       limit: limit,
-      sort_name: sort_name
+      sort_name: sort_name,
+      with_rating: with_rating
     )
   end
 
   def decorate_schools(schools)
-    schools = assigned_schools + schools if extras.include?('assigned')
+    schools = assigned_schools + schools if extras.include?('assigned') && page == 1
     extras.each do |extra|
       method = "add_#{extra}"
       schools = send(method, schools) if respond_to?(method, true)
@@ -163,17 +164,15 @@ module SearchControllerConcerns
   def assigned_schools
     @_assigned_schools ||=
       if location_given? && street_address?
-        attendance_zone_query.search_all_levels
+        attendance_zone_query.search_by_level
       else
         []
       end
   end
 
   def add_assigned(schools)
-    schools.each do | sr |
-      assigned_schools.each do | as |
-        sr.assigned ||= sr&.id == as&.id
-      end
+    assigned_schools.each do | as |
+      as.assigned = true
     end
 
     schools

@@ -73,7 +73,8 @@ class DistrictCacheResults
         DistrictCachedDistrictSchoolsSummaryMethods
       when 'feed_district_characteristics'
         FeedDistrictCachedCharacteristicsMethods
-      when 'district_directory'
+      when 'district_characteristics'
+        DistrictCachedCharacteristicsMethods
 
     end
   end

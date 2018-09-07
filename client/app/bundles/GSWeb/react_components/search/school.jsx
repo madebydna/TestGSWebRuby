@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
-import ModalTooltip from 'react_components/modal_tooltip';
 import { renderAssignedTooltip } from 'react_components/search/tooltips';
-import unratedSchoolIcon from 'school_profiles/owl.png';
+import RatingWithTooltip from 'react_components/rating_with_tooltip';
 import {
   getHomesForSaleHref,
   studentsPhrase,
@@ -14,57 +13,6 @@ const joinWithSeparator = (arrayOfElements, separator) =>
   arrayOfElements
     .filter(e => !!e)
     .reduce((list, current) => [list, separator, current]);
-
-const renderRating = (rating, ratingScale) => {
-  const className = `circle-rating--small circle-rating--${rating || 'gray'}`;
-  const content = (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: rating
-          ? t('rating_description_html')
-          : t('no_rating_description_html')
-      }}
-    />
-  );
-  return (
-    <ModalTooltip content={content}>
-      <React.Fragment>
-        {rating ? 
-          <div className={className}>
-            {rating}
-            {rating && <span className="rating-circle-small">/10</span>}
-          </div> : <img alt="Owl icon for unrated school" src={unratedSchoolIcon} />}
-        <div className="scale">
-          {ratingScale || t('Currently unrated')}
-          <span className="info-circle icon-info" />
-        </div>
-      </React.Fragment>
-    </ModalTooltip>
-  );
-};
-
-const levelCodeLong = (lc) => {
-  if (lc == 'e') return 'Elementary';
-  if (lc == 'm') return 'Middle';
-  if (lc == 'h') return 'High';
-  if (lc == 'p') return 'PreK';
-}
-
-const renderAssigned = (lc) => {
-  let school_level = t(levelCodeLong(lc));
-  const content = (
-      <div
-          dangerouslySetInnerHTML={{
-            __html: t('assigned_description_html', { parameters: { school_level } })
-          }}
-      />
-  );
-  return (
-      <ModalTooltip content={content}>
-         <span className="info-circle icon-info" />
-      </ModalTooltip>
-  );
-};
 
 const School = ({
   id,
@@ -91,9 +39,9 @@ const School = ({
   }
 
   return (
-    <React.Fragment key={state + id}>
+    <React.Fragment key={state + id + (assigned ? 'assigned' : '')}>
       {assigned && <div>{t('assigned_school') } {renderAssignedTooltip(levelCode)}</div>}
-      <span>{renderRating(rating, ratingScale)}</span>
+      <span><RatingWithTooltip rating={rating} ratingScale={ratingScale}/></span>
       <span>
         <a href={links.profile} className="name" target="_blank">
           {name}

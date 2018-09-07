@@ -1,30 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
-import ModalTooltip from 'react_components/modal_tooltip';
 import { renderAssignedTooltip } from 'react_components/search/tooltips'
 import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
 import FiveStarRating from '../review/form/five_star_rating';
-import unratedSchoolIcon from 'school_profiles/owl.png';
-import Rating from '../../components/rating';
-
-const renderRating = (rating, ratingScale) => {
-  const className = `circle-rating--small circle-rating--${rating}`;
-  const content = (
-    <div dangerouslySetInnerHTML={{ __html: t('rating_description_html') }} />
-  );
-  return (
-    <React.Fragment>
-      <Rating score={rating} size="small" />
-      <div className="scale">
-        {ratingScale ? ratingScale : t('Currently unrated')}
-        <ModalTooltip content={content}>
-          <span className="info-circle icon-info" />
-        </ModalTooltip>
-      </div>
-    </React.Fragment>
-  );
-};
+import RatingWithTooltip from 'react_components/rating_with_tooltip';
 
 const renderEnrollment = enrollment => {
   if (enrollment) {
@@ -77,7 +57,7 @@ const SchoolTableRow = ({
       <td className={`school${assigned ? ' assigned' : ''}`}>
         <React.Fragment key={state + id}>
           {assigned && <div>{t('assigned_school')}{renderAssignedTooltip(levelCode)}</div>}
-          <span>{renderRating(rating, ratingScale)}</span>
+          <span><RatingWithTooltip rating={rating} ratingScale={ratingScale}/></span>
           <span>
             <a href={links.profile} className="name" target="_blank">
               {name}

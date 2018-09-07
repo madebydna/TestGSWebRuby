@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-describe Search::SolrAutosuggestQuery do
+describe Search::LegacySolrAutosuggestQuery do
   let(:q) { nil }
 
-  subject { Search::SolrAutosuggestQuery.new(q) }
+  subject { Search::LegacySolrAutosuggestQuery.new(q) }
 
   {
     '' => nil,

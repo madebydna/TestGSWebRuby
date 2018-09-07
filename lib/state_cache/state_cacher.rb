@@ -3,7 +3,7 @@ class StateCacher
   attr_accessor :state
 
   # Known data types:
-  # :state_characteristics, :test_scores_gsdata
+  # :state_characteristics, :test_scores_gsdata, :feed_test_scores_gsdata
 
   def initialize(state)
     @state = state

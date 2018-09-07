@@ -81,8 +81,15 @@ module SearchRequestParams
   end
 
   def boundary_level
-    (params[:boundary_level] || '').split(',').tap do |array|
-      array << 'o' unless array.include?('o')
+    if params[:boundary_level].present?
+      params[:boundary_level].split(',') | %w(o)
+    elsif level_codes.present?
+      levels = level_codes.reject { |l| l == 'p' }.map do |level|
+        level == 'e' ? 'p' : level
+      end
+      (levels & %w(o p m h)) | %w(o)
+    else
+      %w(o p m h)
     end
   end
 
@@ -206,6 +213,14 @@ module SearchRequestParams
 
   def street_address?
     params['locationType'] == 'street_address'
+  end
+
+  def with_rating
+    params[:with_rating]
+  end
+
+  def top_school_module?
+    params[:top_school_module]
   end
 
 end
