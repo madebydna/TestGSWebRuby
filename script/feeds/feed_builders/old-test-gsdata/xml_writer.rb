@@ -30,7 +30,7 @@ module Feeds
           within_tag('test') do
             xml_builder.tag!('id', test_id(hash['test-id']))
             xml_builder.tag!('test-name', hash['test-name'])
-            xml_builder.tag!('test-abbr', hash['test-abbr'])
+            xml_builder.tag!('test-abbrv', hash['test-abbr'])
             xml_builder.tag!('scale', hash['scale'])
             xml_builder.tag!('most-recent-year', hash['most-recent-year'])
             xml_builder.tag!('level-code', 'e,m,h')
