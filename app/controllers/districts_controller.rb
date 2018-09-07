@@ -28,7 +28,9 @@ class DistrictsController < ApplicationController
     @hero_narration =  build_header_narration
     set_district_meta_tags
     set_ad_targeting_props
+    set_page_analytics_data
     Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
+    # require 'pry'; binding.pry
   end
 
   private
@@ -94,7 +96,12 @@ class DistrictsController < ApplicationController
   # PageAnalytics
   def page_analytics_data
     {}.tap do |hash|
-      # placeholder
+      hash[PageAnalytics::PAGE_NAME] = 'GS:District:Home'
+      hash[PageAnalytics::CITY] = city.gs_capitalize_words if city
+      hash[PageAnalytics::STATE] = state.upcase if state
+      hash[PageAnalytics::COUNTY] = county_record.name if county_record
+      hash[PageAnalytics::ENV] = ENV_GLOBAL['advertising_env']
+      hash[PageAnalytics::COMPFILTER] = set_ad_targeting_props[:compfilter]
     end
   end
 

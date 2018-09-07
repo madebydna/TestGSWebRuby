@@ -16,6 +16,7 @@ class CitiesController < ApplicationController
     @school_levels = school_levels
     @districts = district_content
     set_ad_targeting_props
+    set_page_analytics_data
     Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
@@ -72,7 +73,12 @@ class CitiesController < ApplicationController
   # PageAnalytics
   def page_analytics_data
     {}.tap do |hash|
-      # placeholder
+      hash[PageAnalytics::PAGE_NAME] = 'GS:City:Home'
+      hash[PageAnalytics::CITY] = city.gs_capitalize_words if city
+      hash[PageAnalytics::STATE] = state.upcase if state
+      hash[PageAnalytics::COUNTY] = county_record.name if county_record
+      hash[PageAnalytics::ENV] = ENV_GLOBAL['advertising_env']
+      hash[PageAnalytics::COMPFILTER] = set_ad_targeting_props[:compfilter]
     end
   end
 
