@@ -239,43 +239,38 @@ class SearchLayout extends React.Component {
               </span>
             </div>
             {isOpen ? (
-              <CaptureOutsideClick
-                callback={toggle}
-                ignoreClassNames={['js-filter-button']}
-              >
-                <div className="filter-panel">
-                  <span
-                    className="icon-close"
-                    onClick={close}
-                    onKeyPress={close}
-                    role="button"
-                    aria-label={t('Close filters')}
-                  />
-                  <div>
-                    <span className="menu-item">
-                      <span className="label">
-                        {t('School type and level')}:
-                      </span>
-                      {this.props.entityTypeDropdown}
+              <div className="filter-panel">
+                <span
+                  className="icon-close"
+                  onClick={close}
+                  onKeyPress={close}
+                  role="button"
+                  aria-label={t('Close filters')}
+                />
+                <div>
+                  <span className="menu-item">
+                    <span className="label">
+                      {t('School type and level')}:
                     </span>
-                    <span className="menu-item">
-                      {this.props.gradeLevelButtons}
-                    </span>
-                    <span className="menu-item">
-                      <span className="label">{t('Sort by')}:</span>
-                      {this.props.sortSelect}
-                    </span>
-                    <span className="menu-item">
-                      {this.props.distanceFilter ? (
-                        <React.Fragment>
-                          <span className="label">{t('Distance')}:</span>
-                          {this.props.distanceFilter}
-                        </React.Fragment>
-                      ) : null}
-                    </span>
-                  </div>
+                    {this.props.entityTypeDropdown}
+                  </span>
+                  <span className="menu-item">
+                    {this.props.gradeLevelButtons}
+                  </span>
+                  <span className="menu-item">
+                    <span className="label">{t('Sort by')}:</span>
+                    {this.props.sortSelect}
+                  </span>
+                  <span className="menu-item">
+                    {this.props.distanceFilter ? (
+                      <React.Fragment>
+                        <span className="label">{t('Distance')}:</span>
+                        {this.props.distanceFilter}
+                      </React.Fragment>
+                    ) : null}
+                  </span>
                 </div>
-              </CaptureOutsideClick>
+              </div>
             ) : null}
           </div>
         )}
