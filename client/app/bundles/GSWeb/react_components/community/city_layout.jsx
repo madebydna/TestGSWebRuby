@@ -115,11 +115,19 @@ class CityLayout extends React.Component {
 
   heroNarration(){
     let {city,stateLong,county} = this.props.locality;    
-    return <div
-      dangerouslySetInnerHTML={{
-        __html: t('city_hero_html', { parameters: { city, stateLong, county } })
-      }}
-    />
+    if (county) {
+      return <div
+        dangerouslySetInnerHTML={{
+          __html: t('city_hero_html', { parameters: { city, stateLong, county } })
+        }}
+      />
+    }else{
+      return <div
+        dangerouslySetInnerHTML={{
+          __html: t('city_hero_no_county_html', { parameters: { city, stateLong } })
+        }}
+      />
+    }
   }
 
   renderHero(){
@@ -152,28 +160,6 @@ class CityLayout extends React.Component {
       <div id="districts">
         <div className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</div>
           {this.props.districtsInCity}
-          {/* <table>
-            <thead>
-            <tr>
-              <th className="school">{t("District")}</th>
-              <th>{t("Grades")}</th>
-              <th>{capitalize(t("schools"))}</th>
-              <th>{capitalize(t("students"))}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {this.props.districts2.map(district => {
-              return (
-                <tr key={`${district.districtName}-${district.grades}`}>
-                  <td><a href={district.url}>{district.districtName}</a></td>
-                  <td>{district.grades}</td>
-                  <td>{district.numSchools}</td>
-                  <td>{district.enrollment}</td>
-                </tr>
-              )
-            })}
-            </tbody>
-          </table> */}
       </div>
     )
   }

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { SM, validSizes as validViewportSizes } from "util/viewport";
+import { MD, validSizes as validViewportSizes } from "util/viewport";
 import { addQueryParamToUrl } from 'util/uri';
 import { t } from "util/i18n";
 
@@ -75,7 +75,7 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
   const renderCitySchoolAmt = browseLinkData.map((linkData, idx) => (
     <li className="school-type-li" key={linkData.name}>
       {renderListItems(linkData, locality)}
-      {size > SM ? 
+      {size > MD ? 
         ((idx !== 3 && idx !== 7) ? blueLine = <div className="blue-line" /> : null)
         :
         (idx !== 7) ? blueLine = <div className="blue-line" /> : null
