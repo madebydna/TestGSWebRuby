@@ -15,21 +15,21 @@
         <xs:element name="state">
           <xs:complexType>
             <xs:sequence>
-              <xs:element ref="entity"/>
+              <xs:element ref="entity" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
         <xs:element name="district">
           <xs:complexType>
             <xs:sequence>
-              <xs:element ref="entity" maxOccurs="unbounded"/>
+              <xs:element ref="entity" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
         <xs:element name="school">
           <xs:complexType>
             <xs:sequence>
-              <xs:element ref="entity" maxOccurs="unbounded"/>
+              <xs:element ref="entity" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -49,7 +49,7 @@
   <xs:element name="results">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="test-result" maxOccurs="unbounded">
+        <xs:element name="test-result" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="year" type="xs:nonNegativeInteger"/>
