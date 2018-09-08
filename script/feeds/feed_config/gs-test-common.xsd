@@ -57,6 +57,7 @@
               <xs:element ref="grade"/>
               <xs:element name="score" type="Str100"/>
               <xs:element name="proficiency-band-name" nillable="true" minOccurs="0" type="Str100"/>
+              <xs:element name="number-tested" nillable="true" type="xs:string" minOccurs="0" />
               <xs:element name="breakdowns" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>
@@ -64,7 +65,6 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="number-tested" nillable="true" type="xs:string" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
