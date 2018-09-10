@@ -146,7 +146,7 @@ en:
       no_highC: There are no high schools with a GreatSchools rating for this city
       no_elemD: There are no elementary schools with a GreatSchools rating for this district
       no_midD: There are no middle schools with a GreatSchools rating for this district
-      no_highD: There are no high schools with a GreatSchools rating for district 
+      no_highD: There are no high schools with a GreatSchools rating for this district 
       see_elem: See more elementary schools
       see_mid: See more middle schools
       see_high: See more high schools

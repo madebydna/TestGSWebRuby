@@ -42,7 +42,7 @@ class DistrictsController < ApplicationController
 
 # rubocop:disable Lint/SafeNavigationChain
   def city_key_value(key)
-    district_content(district_record.city_record.id)&.first[key]
+    (district_content(district_record.city_record.id)&.first || {}).fetch(key, nil)
   end
 # rubocop:enable Lint/SafeNavigationChain
 
