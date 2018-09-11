@@ -7,6 +7,7 @@ class DistrictsController < ApplicationController
   CACHE_KEYS_FOR_READER = %w(district_schools_summary district_characteristics)
 
   layout 'application'
+  before_filter :redirect_unless_valid_city
   before_filter :redirect_unless_valid_district
 
   def show
@@ -178,6 +179,10 @@ class DistrictsController < ApplicationController
 
   def redirect_unless_valid_district
     redirect_to(city_path(state: state_name, city: city&.downcase), status: 301) unless district_record
+  end
+
+  def redirect_unless_valid_city
+    redirect_to(state_path(States.state_path(state_name)), status: 301) unless city_record
   end
 
   def default_extras
