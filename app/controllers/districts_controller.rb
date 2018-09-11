@@ -7,8 +7,8 @@ class DistrictsController < ApplicationController
   CACHE_KEYS_FOR_READER = %w(district_schools_summary district_characteristics)
 
   layout 'application'
-  before_filter :redirect_unless_valid_city
   before_filter :redirect_unless_valid_district
+  before_action :redirect_to_canonical_url
 
   def show
     @locality = locality
@@ -25,7 +25,7 @@ class DistrictsController < ApplicationController
   private
 
   def set_district_meta_tags
-    district_params_hash = district_params(state, city, district)
+    district_params_hash = district_params(state, district_record.city, district)
     set_meta_tags(alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
                   title: districts_title,
                   description: districts_description,
@@ -43,7 +43,7 @@ class DistrictsController < ApplicationController
 
 # rubocop:disable Lint/SafeNavigationChain
   def city_key_value(key)
-    (district_content(district_record.city_record.id)&.first || {}).fetch(key, nil)
+    (district_content(district_record.city_record&.id)&.first || {}).fetch(key, nil)
   end
 # rubocop:enable Lint/SafeNavigationChain
 
@@ -181,8 +181,20 @@ class DistrictsController < ApplicationController
     redirect_to(city_path(state: state_name, city: city&.downcase), status: 301) unless district_record
   end
 
-  def redirect_unless_valid_city
-    redirect_to(state_path(States.state_path(state_name)), status: 301) unless city_record
+  def redirect_to_canonical_url
+    district_params_hash = district_params(state, district_record.city, district)
+    # this prevents an endless redirect loop for the profile pages
+    # because of ApplicationController::url_options
+    canonical_path = remove_query_params_from_url( city_district_path(state: district_params_hash[:state], city: district_params_hash[:city], district: district_params_hash[:district]), [:lang] )
+
+    # Add a trailing slash to the request path, only if one doesn't already exist.
+    unless canonical_path == with_trailing_slash(request.path)
+      redirect_to add_query_params_to_url(
+                      city_district_path(state: district_params_hash[:state], city: district_params_hash[:city], district: district_params_hash[:district]),
+                      true,
+                      request.query_parameters
+                  ), status: :moved_permanently
+    end
   end
 
   def default_extras
