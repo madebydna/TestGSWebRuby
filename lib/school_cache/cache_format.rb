@@ -2,13 +2,15 @@ module CacheFormat
   include CacheValidation
 
   def build_hash_for_cache
-    hash = {}
-    query_results.each do |result|
-      hash[result.label] = [] unless hash.key? result.label
-      additional_data = build_hash_for_data_set(result)
-      hash[result.label] << additional_data if additional_data
+    @_build_hash_for_cache ||= begin
+      hash = {}
+      query_results.each do |result|
+        hash[result.label] = [] unless hash.key? result.label
+        additional_data = build_hash_for_data_set(result)
+        hash[result.label] << additional_data if additional_data
+      end
+      validate!(hash)
     end
-    validate!(hash)
   end
 
   def build_hash_for_data_set(result)
