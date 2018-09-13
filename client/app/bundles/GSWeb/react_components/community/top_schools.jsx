@@ -31,7 +31,7 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
   }
 }
 
-const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, community, schoolLevels}) => {
+const TopSchools = ({schools, handleGradeLevel, isLoading, size, levelCodes, community, schoolLevels, locality}) => {
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
@@ -74,7 +74,7 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
       <hr />
       {schoolList}
       <div className="more-school-btn">
-        <a href={state ? `/${name(state.toLowerCase())}/${city.toLowerCase()}/schools/?gradeLevels=${levelCodes}` : null}>
+        <a href={`${locality.searchResultBrowseUrl}?gradeLevels=${levelCodes}` }>
           <button>{seeSchoolMap[levelCodes]}</button>
         </a>
       </div>
