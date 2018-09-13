@@ -143,7 +143,8 @@ class TopSchoolsStateful extends React.Component {
         state={this.state.state}
         city={this.state.city}
         community={this.props.community}
-        schoolsData={this.props.schoolsData}
+        schoolLevels={this.props.schoolLevels}
+        locality={this.props.locality}
       />
     );
   }

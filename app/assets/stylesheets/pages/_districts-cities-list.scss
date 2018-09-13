@@ -5,7 +5,7 @@
   margin-bottom: $spacing_large;
 
   .top {
-    font-size: 13px;
+    font-size: 15px;
     margin-bottom: 30px;
   }
 
@@ -21,7 +21,7 @@
 
   a {
     color: #26abe2;
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .top-link {
@@ -47,8 +47,12 @@
 
   .city-district-link {
     height: 22px;
-    font-size: 12px;
+    font-size: 14px;
     padding-right: 10px;
+  }
+
+  td {
+    padding: 4px 4px 4px 0;
   }
 
 }
