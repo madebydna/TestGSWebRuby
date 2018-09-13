@@ -98,7 +98,6 @@ class City extends React.Component {
     return (
       <CityLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
-        schools={this.props.schools}
         topSchools={
           <TopSchoolsStateful
             community="city" 
