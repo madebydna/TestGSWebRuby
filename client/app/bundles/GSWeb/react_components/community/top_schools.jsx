@@ -5,6 +5,7 @@ import TopSchoolTableRow from './top_school_table_row';
 import { SM } from "util/viewport";
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
+import { addQueryParamToUrl } from 'util/uri';
 import { name } from "../../util/states";
 
 const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
@@ -74,7 +75,7 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, levelCodes, com
       <hr />
       {schoolList}
       <div className="more-school-btn">
-        <a href={`${locality.searchResultBrowseUrl}?gradeLevels=${levelCodes}` }>
+        <a href={addQueryParamToUrl('gradeLevels', levelCodes, locality.searchResultBrowseUrl)}>
           <button>{seeSchoolMap[levelCodes]}</button>
         </a>
       </div>
