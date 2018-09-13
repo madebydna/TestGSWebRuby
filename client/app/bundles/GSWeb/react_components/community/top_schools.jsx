@@ -32,7 +32,11 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
   }
 }
 
+<<<<<<< HEAD
 const TopSchools = ({ schools, handleGradeLevel, size, levelCodes, community, schoolLevels, locality}) => {
+=======
+const TopSchools = ({schools, handleGradeLevel, isLoading, size, levelCodes, community, schoolLevels, locality}) => {
+>>>>>>> 40c8a4980c69598e8869198708dc0bfee2251da7
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
