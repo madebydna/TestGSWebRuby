@@ -25,48 +25,44 @@ class TopSchoolsStateful extends React.Component {
     this.state = {
       isLoading: false,
       // levelCodes: "e",
+      schoolLevels: props.schoolLevels,
       districtId: props.locality.district_id,
       // levelCodes: props.schoolsData.levelCode,
-      // schools: props.schools,
+      schools: props.schools,
       // schools: props.schoolsData.schools,
       size: props.size,
       state: props.locality.stateShort,
       city: props.locality.city,
       district_name: props.locality.name
     };
-    this.initialSchoolLoad(props.schoolsData);
+    this.initialSchoolLoad(props.schools);
     this.handleGradeLevel = this.handleGradeLevel.bind(this);
   }
 
-  initialSchoolLoad({elementarySchools, middleSchools, highSchools}){
-    if (elementarySchools.length > 0) {
+  initialSchoolLoad({elementary, middle, high}){
+    if (elementary.length > 0) {
       this.state = {
         levelCodes: 'e',
-        schools: elementarySchools
+        schools: elementary
       }
-    }else if(middleSchools.length > 0){
+    }else if(middle.length > 0){
       this.state = {
         levelCodes: 'm',
-        schools: middleSchools
+        schools: middle
       }
-    }else if(highSchools.length > 0){
+    }else if(high.length > 0){
       this.state = {
         levelCodes: 'h',
-        schools: highSchools
+        schools: high
       }
-    }else{
-        this.state = {
-          levelCodes: 'n/a',
-          schools: []
-        }
     }
   }
 
   handleGradeLevel(str){
     const schools = { 
-      'e': this.props.schoolsData.elementarySchools, 
-      'm': this.props.schoolsData.middleSchools, 
-      'h': this.props.schoolsData.highSchools
+      'e': this.props.schools.elementary, 
+      'm': this.props.schools.middle, 
+      'h': this.props.schools.high
     }
     this.setState({
       levelCodes: str,
@@ -132,6 +128,7 @@ class TopSchoolsStateful extends React.Component {
     return (
        <TopSchools
         schools={this.state.schools}
+        schoolLevels={this.props.schoolLevels}
         // schools={this.state.schoolsData.schools}
         handleGradeLevel={this.handleGradeLevel}
         isLoading={this.state.isLoading}

@@ -7,7 +7,7 @@ import School from 'react_components/search/school';
 import { t } from "util/i18n";
 import { name } from "../../util/states";
 
-const renderButtons = (handleGradeLevel, community, schoolsData, levelCodes) => {
+const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
   if (community === 'city') {
     return(
       <div className="grade-filter">
@@ -19,19 +19,20 @@ const renderButtons = (handleGradeLevel, community, schoolsData, levelCodes) => 
       </div>
     )
   }else{
+    debugger;
     return (
       <div className="grade-filter">
         <span className="button-group">
-          {schoolsData.elementaryCount !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
-          {schoolsData.middleCount !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
-          {schoolsData.highCount !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
+          {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
+          {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
+          {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
         </span>
       </div>
     )
   }
 }
 
-const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, community, schoolsData}) => {
+const TopSchools = ({ schools, handleGradeLevel, size, state, city, levelCodes, community, schoolLevels}) => {
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
@@ -70,7 +71,7 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
         </div>
       </div>
       <br/>
-      {renderButtons(handleGradeLevel, community, schoolsData, levelCodes)}
+      {renderButtons(handleGradeLevel, community, schoolLevels, levelCodes)}
       <hr />
       {schoolList}
       <div className="more-school-btn">
@@ -92,6 +93,7 @@ TopSchools.defaultProps = {
   schools: [],
   handleGradeLevel: null,
   isLoading: false,
+  levelCodes: 'e'
 };
 
 export default TopSchools;

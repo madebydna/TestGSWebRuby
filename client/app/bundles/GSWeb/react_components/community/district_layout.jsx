@@ -182,7 +182,7 @@ class DistrictLayout extends React.Component {
       <div id="schools">
         <div className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</div>
         {this.props.browseSchools}
-        {this.props.schoolsData.all > 0 ? this.props.topSchools: null}
+        {this.props.schoolCounts.all > 0 ? this.props.topSchools: null}
       </div>
     )
   }
