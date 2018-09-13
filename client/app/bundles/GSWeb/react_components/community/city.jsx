@@ -103,6 +103,7 @@ class City extends React.Component {
           <TopSchoolsStateful
             community="city" 
             schools={this.props.schools}
+            schoolsData={this.props.schools_data}
             size={this.props.viewportSize}
             locality={this.props.locality}
           />

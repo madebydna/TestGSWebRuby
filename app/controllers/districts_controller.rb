@@ -15,6 +15,7 @@ class DistrictsController < ApplicationController
     @school_levels = school_levels
     @breadcrumbs = breadcrumbs
     @serialized_schools = serialized_schools
+    @top_schools_cache =  top_rated_schools
     @hero_data = hero_data
     set_district_meta_tags
     set_ad_targeting_props

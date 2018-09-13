@@ -13,6 +13,7 @@ class CitiesController < ApplicationController
     @breadcrumbs = breadcrumbs
     @locality = locality
     @school_levels = school_levels
+    @top_schools_cache =  top_rated_schools
     @districts = district_content(city_record.id)
     set_ad_targeting_props
     set_page_analytics_data

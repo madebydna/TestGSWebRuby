@@ -38,7 +38,7 @@ module CommunityParams
   end
 
   def level_code
-    params[:levelCode] || 'e'
+    params[:levelCode]
   end
 
   def extras

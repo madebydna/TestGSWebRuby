@@ -1,18 +1,15 @@
 # frozen_string_literal: true
 
 module CommunityConcerns
-    def serialized_schools
-      @_serialized_schools ||= begin
-        schools.map do |school|
-          Api::SchoolSerializer.new(school).to_hash
-        end
+    def serialized_schools(level_code='e')
+      params[:levelCode] = level_code
+      schools.map do |school|
+        Api::SchoolSerializer.new(school).to_hash
       end
     end
 
     def schools
-      @_schools ||= begin
-        decorate_schools(page_of_results)
-      end
+      decorate_schools(page_of_results)
     end
 
     def school_levels
@@ -30,8 +27,22 @@ module CommunityConcerns
       end
     end
 
+    def top_rated_schools
+      @_top_rated_schools ||= begin
+        Hash.new.tap do |ts|
+          ts[:elementarySchools] = serialized_schools('e')
+          ts[:elementarySchoolCount] = ts[:elementarySchools]&.length || 0
+          ts[:middleSchools] = serialized_schools('m')
+          ts[:middleSchoolCount] = ts[:middleSchools]&.length || 0
+          ts[:highSchools] = serialized_schools('h')
+          ts[:highSchoolCount] = ts[:middleSchools]&.length || 0
+          ts[:all] = ts[:elementarySchoolCount] + ts[:middleSchoolCount] + ts[:highSchoolCount]
+        end
+      end
+    end
+
     def page_of_results
-      @_page_of_results ||= solr_query.search
+      solr_query.search
     end
 
     def solr_query

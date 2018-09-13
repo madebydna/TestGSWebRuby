@@ -92,7 +92,7 @@ TopSchools.defaultProps = {
   schools: [],
   handleGradeLevel: null,
   isLoading: false,
-  levelCodes: 'e'
+  // levelCodes: 'e'
 };
 
 export default TopSchools;

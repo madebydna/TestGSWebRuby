@@ -7,8 +7,8 @@ import * as APISchools from 'api_clients/schools';
 
 class TopSchoolsStateful extends React.Component {
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
-    // schoolsData: PropTypes.object.isRequired,
+    // schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
+    schoolsData: PropTypes.object.isRequired,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     locality: PropTypes.object.isRequired,
     community: PropTypes.string,
@@ -17,24 +17,49 @@ class TopSchoolsStateful extends React.Component {
 
   static defaultProps = {
     schools: [],
-    // schoolsData: {}
+    schoolsData: {}
   };
 
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
-      levelCodes: "e",
+      // levelCodes: "e",
       districtId: props.locality.district_id,
       // levelCodes: props.schoolsData.levelCode,
-      schools: props.schools,
+      // schools: props.schools,
       // schools: props.schoolsData.schools,
       size: props.size,
       state: props.locality.stateShort,
       city: props.locality.city,
       district_name: props.locality.name
     };
+    this.initialSchoolLoad(props.schoolsData);
     this.handleGradeLevel = this.handleGradeLevel.bind(this);
+  }
+
+  initialSchoolLoad({elementarySchools, middleSchools, highSchools}){
+    if (elementarySchools.length > 0) {
+      this.state = {
+        levelCodes: 'e',
+        schools: elementarySchools
+      }
+    }else if(middleSchools.length > 0){
+      this.state = {
+        levelCodes: 'm',
+        schools: middleSchools
+      }
+    }else if(highSchools.length > 0){
+      this.state = {
+        levelCodes: 'h',
+        schools: highSchools
+      }
+    }else{
+      this.state = {
+        levelCodes: 'n/a',
+        schools: []
+      }
+    }
   }
 
   handleGradeLevel(str, community) {
@@ -93,7 +118,7 @@ class TopSchoolsStateful extends React.Component {
 
   render() {
     return (
-      <TopSchools
+       <TopSchools
         schools={this.state.schools}
         // schools={this.state.schoolsData.schools}
         handleGradeLevel={this.handleGradeLevel}
