@@ -169,7 +169,7 @@ class CityLayout extends React.Component {
       <div id="schools">
         <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
         {this.props.browseSchools}
-        {this.props.schoolCounts.all > 0 ? this.props.topSchools : null}
+        {this.props.topSchools}
       </div>
     )
   }

@@ -2,11 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../button";
 import TopSchoolTableRow from './top_school_table_row';
-import { SM } from "util/viewport";
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
 import { addQueryParamToUrl } from 'util/uri';
-import { name } from "../../util/states";
 
 const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
   if (community === 'city') {
@@ -32,11 +30,7 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
   }
 }
 
-<<<<<<< HEAD
 const TopSchools = ({ schools, handleGradeLevel, size, levelCodes, community, schoolLevels, locality}) => {
-=======
-const TopSchools = ({schools, handleGradeLevel, isLoading, size, levelCodes, community, schoolLevels, locality}) => {
->>>>>>> 40c8a4980c69598e8869198708dc0bfee2251da7
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
@@ -96,7 +90,6 @@ TopSchools.propTypes = {
 TopSchools.defaultProps = {
   schools: [],
   handleGradeLevel: null,
-  isLoading: false,
   levelCodes: 'e'
 };
 
