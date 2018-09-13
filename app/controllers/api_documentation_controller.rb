@@ -11,7 +11,6 @@ class ApiDocumentationController < ApplicationController
       school-search
       school-reviews
       review-topics
-      school-test-scores
       school-census-data
       city-overview
       nearby-cities
