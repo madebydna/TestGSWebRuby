@@ -31,12 +31,12 @@ module CommunityConcerns
       @_top_rated_schools ||= begin
         Hash.new.tap do |ts|
           ts[:elementarySchools] = serialized_schools('e')
-          ts[:elementarySchoolCount] = ts[:elementarySchools]&.length || 0
           ts[:middleSchools] = serialized_schools('m')
-          ts[:middleSchoolCount] = ts[:middleSchools]&.length || 0
           ts[:highSchools] = serialized_schools('h')
-          ts[:highSchoolCount] = ts[:middleSchools]&.length || 0
-          ts[:all] = ts[:elementarySchoolCount] + ts[:middleSchoolCount] + ts[:highSchoolCount]
+          ts[:elementaryCount] = ts[:elementarySchools]&.length || 0
+          ts[:middleCount] = ts[:middleSchools]&.length || 0
+          ts[:highCount] = ts[:middleSchools]&.length || 0
+          ts[:all] = ts[:elementaryCount] + ts[:middleCount] + ts[:highCount]
         end
       end
     end

@@ -55,66 +55,78 @@ class TopSchoolsStateful extends React.Component {
         schools: highSchools
       }
     }else{
-      this.state = {
-        levelCodes: 'n/a',
-        schools: []
-      }
+        this.state = {
+          levelCodes: 'n/a',
+          schools: []
+        }
     }
   }
 
-  handleGradeLevel(str, community) {
-    this.setState({
-      isLoading: true
-    });
-    if (community === 'city') {
-      APISchools.find(
-        {
-          city: this.state.city,
-          state: this.state.state,
-          levelCodes: [str],
-          sort: "rating",
-          extras: ["students_per_teacher", "review_summary", "students_per_teacher"],
-          limit: 5,
-          with_rating: true
-        },
-        {}
-      )
-        .then(res =>
-          this.setState({
-            schools: res.items,
-            isLoading: false,
-            levelCodes: str
-          })
-        )
-        .fail((xhr, status, error) =>
-          alert("Request timed out. Please try again.")
-        );
-    }else{
-      APISchools.find(
-        {
-          district_id: this.state.districtId,
-          top_school_module: true,
-          state: this.state.state,
-          levelCodes: [str],
-          sort: "rating",
-          extras: ["students_per_teacher", "review_summary", "students_per_teacher"],
-          limit: 5,   
-          with_rating: true
-        },
-        {}
-      )
-        .then(res =>
-          this.setState({
-            schools: res.items,
-            isLoading: false,
-            levelCodes: str
-          })
-        )
-        .fail((xhr, status, error) =>
-          alert("Request timed out. Please try again.")
-        );
+  handleGradeLevel(str){
+    const schools = { 
+      'e': this.props.schoolsData.elementarySchools, 
+      'm': this.props.schoolsData.middleSchools, 
+      'h': this.props.schoolsData.highSchools
     }
+    this.setState({
+      levelCodes: str,
+      schools: schools[str]
+    })
   }
+
+  // handleGradeLevel(str, community) {
+  //   this.setState({
+  //     isLoading: true
+  //   });
+  //   if (community === 'city') {
+  //     APISchools.find(
+  //       {
+  //         city: this.state.city,
+  //         state: this.state.state,
+  //         levelCodes: [str],
+  //         sort: "rating",
+  //         extras: ["students_per_teacher", "review_summary", "students_per_teacher"],
+  //         limit: 5,
+  //         with_rating: true
+  //       },
+  //       {}
+  //     )
+  //       .then(res =>
+  //         this.setState({
+  //           schools: res.items,
+  //           isLoading: false,
+  //           levelCodes: str
+  //         })
+  //       )
+  //       .fail((xhr, status, error) =>
+  //         alert("Request timed out. Please try again.")
+  //       );
+  //   }else{
+  //     APISchools.find(
+  //       {
+  //         district_id: this.state.districtId,
+  //         top_school_module: true,
+  //         state: this.state.state,
+  //         levelCodes: [str],
+  //         sort: "rating",
+  //         extras: ["students_per_teacher", "review_summary", "students_per_teacher"],
+  //         limit: 5,   
+  //         with_rating: true
+  //       },
+  //       {}
+  //     )
+  //       .then(res =>
+  //         this.setState({
+  //           schools: res.items,
+  //           isLoading: false,
+  //           levelCodes: str
+  //         })
+  //       )
+  //       .fail((xhr, status, error) =>
+  //         alert("Request timed out. Please try again.")
+  //       );
+  //   }
+  // }
 
   render() {
     return (
@@ -128,7 +140,7 @@ class TopSchoolsStateful extends React.Component {
         state={this.state.state}
         city={this.state.city}
         community={this.props.community}
-        schoolLevels={this.props.schoolLevels}
+        schoolsData={this.props.schoolsData}
       />
     );
   }
