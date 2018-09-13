@@ -105,6 +105,7 @@ class City extends React.Component {
             schools={this.props.schools_data.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
+            schoolLevels={this.props.schools_data.counts}
           />
         }
         browseSchools={

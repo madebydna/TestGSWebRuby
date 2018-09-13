@@ -19,7 +19,6 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
       </div>
     )
   }else{
-    debugger;
     return (
       <div className="grade-filter">
         <span className="button-group">
@@ -37,7 +36,7 @@ const TopSchools = ({ schools, handleGradeLevel, size, state, city, levelCodes, 
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
   }
-  const noSchoolsMapC = {
+  const noSchoolsMapCity = {
     "e": t("top_schools.no_elemC"), "m": t("top_schools.no_midC"), "h": t("top_schools.no_highC")
   }
   const noSchoolsMapD = {
@@ -46,7 +45,7 @@ const TopSchools = ({ schools, handleGradeLevel, size, state, city, levelCodes, 
   if (schools.length === 0) {
     schoolList = <section className="no-schools">
                     <div>
-        <h3>{community === 'city' ? noSchoolsMapC[levelCodes] : noSchoolsMapD[levelCodes]}</h3>
+                      <h3>{noSchoolsMapCity[levelCodes]}</h3>
                     </div>
                   </section>;
   } else {

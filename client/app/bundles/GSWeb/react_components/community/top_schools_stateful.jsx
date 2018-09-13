@@ -12,7 +12,7 @@ class TopSchoolsStateful extends React.Component {
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     locality: PropTypes.object.isRequired,
     community: PropTypes.string,
-    schoolLevels: PropTypes.object.isRequired
+    schoolLevels: PropTypes.object
   };
 
   static defaultProps = {
@@ -55,6 +55,12 @@ class TopSchoolsStateful extends React.Component {
         levelCodes: 'h',
         schools: high
       }
+    }else{
+        // Set the default for City#Show page
+        this.state = {
+          levelCodes: 'e',
+          schools: elementary
+        }
     }
   }
 
