@@ -14,7 +14,7 @@ class DistrictsController < ApplicationController
     @locality = locality
     @school_levels = school_levels
     @breadcrumbs = breadcrumbs
-    @serialized_schools = serialized_schools
+    # @serialized_schools = serialized_schools
     @top_schools_cache =  top_rated_schools
     @hero_data = hero_data
     set_district_meta_tags
