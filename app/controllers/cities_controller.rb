@@ -80,6 +80,8 @@ class CitiesController < ApplicationController
         cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
         cp[:zip] = get_zip
+        cp[:lat] = city_record&.lat
+        cp[:lon] = city_record&.lon
       end
     end
   end

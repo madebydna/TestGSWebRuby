@@ -174,9 +174,10 @@ class CityLayout extends React.Component {
     )
   }
 
-  renderZillow(){
+  renderExternalAPIs(){
     return (
         <div>
+          {this.props.mobility}
           {this.props.zillow}
         </div>
     )
@@ -193,7 +194,7 @@ class CityLayout extends React.Component {
           <div className="community-modules">
             {this.renderSchools()}
             {this.renderDistricts()}
-            {this.renderZillow()}
+            {this.renderExternalAPIs()}
           </div>
           {this.renderAd()}
         </div>
