@@ -8,6 +8,7 @@ class DistrictsController < ApplicationController
 
   layout 'application'
   before_filter :redirect_unless_valid_district
+  before_action :redirect_to_canonical_url
 
   def show
     @locality = locality
@@ -24,7 +25,7 @@ class DistrictsController < ApplicationController
   private
 
   def set_district_meta_tags
-    district_params_hash = district_params(state, city, district)
+    district_params_hash = district_params(state, district_record.city, district)
     set_meta_tags(alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
                   title: districts_title,
                   description: districts_description,
@@ -42,7 +43,7 @@ class DistrictsController < ApplicationController
 
 # rubocop:disable Lint/SafeNavigationChain
   def city_key_value(key)
-    district_content(district_record.city_record.id)&.first[key]
+    (district_content(district_record.city_record&.id)&.first || {}).fetch(key, nil)
   end
 # rubocop:enable Lint/SafeNavigationChain
 
@@ -178,6 +179,22 @@ class DistrictsController < ApplicationController
 
   def redirect_unless_valid_district
     redirect_to(city_path(state: state_name, city: city&.downcase), status: 301) unless district_record
+  end
+
+  def redirect_to_canonical_url
+    canonical_district_params = district_params(state, district_record.city, district)
+    # this prevents an endless redirect loop for the profile pages
+    # because of ApplicationController::url_options
+    canonical_path = remove_query_params_from_url( city_district_path(state: canonical_district_params[:state], city: canonical_district_params[:city], district: canonical_district_params[:district]), [:lang] )
+
+    # Add a trailing slash to the request path, only if one doesn't already exist.
+    unless canonical_path == with_trailing_slash(request.path)
+      redirect_to add_query_params_to_url(
+                      city_district_path(state: canonical_district_params[:state], city: canonical_district_params[:city], district: canonical_district_params[:district]),
+                      true,
+                      request.query_parameters
+                  ), status: :moved_permanently
+    end
   end
 
   def default_extras

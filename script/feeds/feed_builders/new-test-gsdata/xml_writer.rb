@@ -82,7 +82,7 @@ module Feeds
       def write_test_result(h)
         xml_builder.tag!('year', h['year'])
         xml_builder.tag!('subject-name', h['subject-name'])
-        xml_builder.tag!('grade-name', h['grade'])
+        xml_builder.tag!('grade', h['grade'])
         xml_builder.tag!('score', h['score'])
         xml_builder.tag!('proficiency-band-name', h['proficiency-band-name'])
         xml_builder.tag!('number-tested', h['number-tested']) unless h['number-tested'].nil?
