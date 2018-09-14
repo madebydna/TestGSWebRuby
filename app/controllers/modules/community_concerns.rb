@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module CommunityConcerns
-    def serialized_schools(level_code='e')
-      params[:levelCode] = level_code
+    def serialized_schools(lc = 'e')
+      params[:levelCode] = lc
       schools.map do |school|
         Api::SchoolSerializer.new(school).to_hash
       end
@@ -28,10 +28,10 @@ module CommunityConcerns
     end
 
     def top_rated_schools
-      elementary ||= serialized_schools('e')
-      middle ||= serialized_schools('m')
-      high ||= serialized_schools('h')
       @_top_rated_schools ||= begin
+        elementary = serialized_schools('e')
+        middle = serialized_schools('m')
+        high = serialized_schools('h')
         {
           schools: {
             elementary: elementary,
