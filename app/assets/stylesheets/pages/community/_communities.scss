@@ -343,3 +343,46 @@ $subtle-gray: #647981;
     }
   }
 }
+
+.mobility-module{
+  width: 95%;
+  margin-bottom: 15px;
+  border: solid 1px $border-color;
+  padding: 5px;
+  >div{ 
+    @include flexbox;
+    padding: 10px;
+    >div{
+      padding: 10px;
+    }
+    .scale{
+      @include flexbox-center;
+      height: 30px;
+    }
+    .transportation-content{
+      width: 100%;
+      h3{
+        font-family: "opensans-semibold";
+        font-size: $font-size;
+      }
+      .transportation-container{
+        @include flexbox-align-items-center;
+        p { margin-bottom: 0px; }
+        >img{ 
+          margin-right: 10px;
+          height: 25px;
+        }
+        margin-top: 20px;
+        margin-bottom: 5px;
+      }
+      .agencies{
+        @include flexbox-align-items-center;
+        margin-left: 25px;
+        margin-bottom: 10px;
+        >div, img, p{ margin-right: 10px;}
+        img{ height: 20px; }
+        p { margin-bottom: 0px; }
+      }
+    }
+  }
+}
