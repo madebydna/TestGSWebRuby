@@ -7,6 +7,8 @@ require_relative '../feed_helpers/feeds_option_parser'
 
 require_relative '../feed_builders/subrating/data_reader'
 require_relative '../feed_builders/subrating/xml_writer'
+require_relative '../feed_builders/subrating/csv_writer'
+require_relative '../feed_builders/subrating/csv_writer_description'
 require_relative '../feed_builders/old-test-gsdata/data_reader'
 require_relative '../feed_builders/old-test-gsdata/all_students_data_reader'
 require_relative '../feed_builders/old-test-gsdata/xml_writer'
@@ -20,6 +22,7 @@ module Feeds
   class GenerateFeed
     DATA_READERS = {
         subrating: Feeds::Subrating::DataReader,
+        subrating_description: Feeds::Subrating::DataReader,
         old_test_gsdata: Feeds::OldTestGsdata::AllStudentsDataReader,
         old_test_subgroup_gsdata: Feeds::OldTestGsdata::DataReader,
         new_test_gsdata: Feeds::NewTestGsdata::AllStudentsDataReader,
@@ -28,7 +31,11 @@ module Feeds
 
     DATA_WRITERS = {
         subrating: {
-            xml: Feeds::Subrating::XmlWriter
+            xml: Feeds::Subrating::XmlWriter,
+            csv: Feeds::Subrating::CsvWriter
+        },
+        subrating_description: {
+            csv: Feeds::Subrating::CsvWriterDescription
         },
         old_test_gsdata: {
             xml: Feeds::OldTestGsdata::XmlWriter
