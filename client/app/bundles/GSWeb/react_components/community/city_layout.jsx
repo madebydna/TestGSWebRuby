@@ -185,7 +185,7 @@ class CityLayout extends React.Component {
   renderMobility(){
     return(
       <div id="mobility">
-        <div className="modules-title">{`Community Resources in ${this.props.locality.city}`}</div>
+        <div className="modules-title">{`${t('mobility.title')} ${this.props.locality.city}`}</div>
         {this.props.mobility}
       </div>
     )

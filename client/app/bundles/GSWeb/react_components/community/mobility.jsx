@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { t } from "util/i18n";
 import ModalTooltip from "../modal_tooltip";
+import InfoBox from '../school_profiles/info_box';
 
 class Mobility extends React.Component {
   constructor(props){
@@ -26,7 +27,6 @@ class Mobility extends React.Component {
   renderAgencies = (agencies) =>(
     agencies.map(agency => {
       const logoLine = `solid 5px ${agency.agencyColor}`;
-      console.log(logoLine)
       return(
         <div className="agencies">
           <div style={{height: '25px', borderRight: logoLine}}></div>
@@ -56,31 +56,38 @@ class Mobility extends React.Component {
       )
     }else{
       const data = this.state.data.data.mobilityScore;
-      const content = "Hello"
+      const content = 
+        <div className="tooltip-content">
+          <p>{t('mobility.help')}</p>
+        </div>
+      const sources = t('mobility.sources_html');
       return(
-        <section className="mobility-module">
-          <div>
+        <React.Fragment>
+          <section className="mobility-module">
             <div>
-              <img src={data.badgeURL} alt="badge_score"/>
-              <div className="scale">
-                <ModalTooltip content={content}>
-                  <span className="info-circle icon-info" />
-                </ModalTooltip>
+              <div>
+                <img src={data.badgeURL} alt="badge_score"/>
+                <div className="scale">
+                  <ModalTooltip content={content}>
+                    <span className="info-circle icon-info" />
+                  </ModalTooltip>
+                </div>
+              </div>
+              <div className="transportation-content">
+                <h3>{data.scoreLabel}</h3>
+                <p>{data.scoreDescription}</p>
+                <div className="blue-line"/>
+                {data.modes.subway ? this.renderTransportation("subway", data.modes.subway) : null}
+                {data.modes.bus ? this.renderTransportation("bus", data.modes.bus) : null}
+                {data.modes.carshare ? this.renderTransportation("carshare", data.modes.carshare) : null}
+                {data.modes.bikeshare ? this.renderTransportation("bikeshare", data.modes.bikeshare) : null}
+                {data.modes.scootershare ? this.renderTransportation("scootershare", data.modes.scootershare) : null}
+                {data.modes.ridehailing ? this.renderTransportation("ridehailing", data.modes.ridehailing) : null}
               </div>
             </div>
-            <div className="transportation-content">
-              <h3>{data.scoreLabel}</h3>
-              <p>{data.scoreDescription}</p>
-              <div className="blue-line"/>
-              {data.modes.subway ? this.renderTransportation("subway", data.modes.subway) : null}
-              {data.modes.bus ? this.renderTransportation("bus", data.modes.bus) : null}
-              {data.modes.carshare ? this.renderTransportation("carshare", data.modes.carshare) : null}
-              {data.modes.bikeshare ? this.renderTransportation("bikeshare", data.modes.bikeshare) : null}
-              {data.modes.scootershare ? this.renderTransportation("scootershare", data.modes.scootershare) : null}
-              {data.modes.ridehailing ? this.renderTransportation("ridehailing", data.modes.ridehailing) : null}
-            </div>
-          </div>
-        </section>
+          </section>
+          <InfoBox content={sources} element_type="sources" >{t('See notes')}</InfoBox>
+        </React.Fragment>
       )
     }
   }

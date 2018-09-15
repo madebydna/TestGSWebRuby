@@ -84,6 +84,19 @@ es:
     edit: Editar
     close: Cerrar
     learn_more_html: Aprender Mas &raquo;
+    mobility:
+      title: Recursos comunitarios en
+      help: >
+        MobilityScore® le ayuda a comprender lo fácil que es viajar. Funciona en cualquier ubicación o dirección dentro 
+        de los EE. UU. y Canadá y le proporciona una calificación que va desde 0 (sin opciones de movilidad) hasta 100 
+        (excelentes opciones de movilidad). ¡MobilityScore tiene en cuenta todas tus opciones, desde el transporte público 
+        hasta el carsharing, el bikesharing, el ridesharing, las bicicletas e incluso los scooters!
+      sources_html: >
+        <div class="sources-text">
+          <h3>Fuentes de los datos de comunidades y información en GreatSchools </h3>
+          <div>Transporte</div>
+          <p><span>Fuente&#58;</span> MobilityScore&reg;</p>
+        <div>
     fatal_error: Se produjo un error inesperado durante la carga de la página. Por favor, intente actualizar la página.
     fewer_filters: Menos filtros
     follow_schools:
