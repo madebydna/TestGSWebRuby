@@ -4,8 +4,9 @@ import { t, capitalize } from 'util/i18n';
 import { scrollToElement } from 'util/scrolling';
 import TocItem from './toc_item';
 
-const SCHOOL_DISTRICTS = 'school districts'
-const SCHOOLS = 'schools'
+const SCHOOL_DISTRICTS = 'school districts';
+const SCHOOLS = 'schools';
+const COMMUNITY_RESOURCES = 'community_resources';
 
 
 const cityTocItems = [
@@ -27,12 +28,12 @@ const cityTocItems = [
   //   anchor: '',
   // selected: false
   // },
-  // {
-  //   key: 'community resources',
-  //   label: t('community resources'),
-  //   anchor: '',
-  // selected: false
-  // },
+  {
+    key: 'community resources',
+    label: capitalize(t(COMMUNITY_RESOURCES)),
+    anchor: '#mobility',
+    selected: false
+  },
   // {
   //   key: 'map',
   //   label: t('Schools'),

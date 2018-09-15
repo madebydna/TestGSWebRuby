@@ -11,6 +11,7 @@ es:
     browse_school_blurb_district: Aquí hay un vistazo a las escuelas en distrito
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
+    community_resources: recursos de la comunidad 
     county: condado
     website: Página web
     homes_for_sale: Casas en venta
