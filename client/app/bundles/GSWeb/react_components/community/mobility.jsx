@@ -59,6 +59,9 @@ class Mobility extends React.Component {
       const content = 
         <div className="tooltip-content">
           <p>{t('mobility.help')}</p>
+          <a href={data.mapURL} rel="nofollow" target="_blank">
+            {t('top_schools.learn_more')}
+          </a>
         </div>
       const sources = t('mobility.sources_html');
       return(

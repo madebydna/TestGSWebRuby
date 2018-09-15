@@ -345,6 +345,7 @@ $subtle-gray: #647981;
 }
 
 #mobility{
+  margin-bottom: 20px;
   .mobility-module{
     width: 95%;
     margin-bottom: 5px;
@@ -352,6 +353,15 @@ $subtle-gray: #647981;
     padding: 5px;
     >div{ 
       @include flexbox;
+      @include media-breakpoint-down(sm){
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        >div:first-child{
+          margin: auto;
+        }
+      }
       padding: 10px;
       >div{
         padding: 10px;
