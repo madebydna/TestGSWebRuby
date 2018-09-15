@@ -11,7 +11,7 @@ module Feeds
       SUBRATING_LIST = ['Test Scores', 'Advanced Courses', 'College Readiness', 'Equity', 'Academic Progress', 'Student Growth', 'Low Income']
 
       def initialize(data_reader, output_path)
-        @column_titles = %w(Id Url).insert(1, *SUBRATING_LIST)
+        @column_titles = %w(School Url).insert(1, *SUBRATING_LIST)
         @feed_file_path = output_path
         @data_reader = data_reader
       end
