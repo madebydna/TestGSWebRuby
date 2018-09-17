@@ -128,11 +128,6 @@ const getSizeMappings = function() {
       .sizeMapping()
       .addSize([992, 300], [[300, 250]])
       .build(),
-    box: googletag
-      .sizeMapping()
-      .addSize([300, 600], [[300, 600], [300, 250]])
-      .addSize([0, 0], [[300, 250]])
-      .build(),
     box_or_tall: googletag
       .sizeMapping()
       .addSize([992, 300], [[300, 600], [300, 250]])
