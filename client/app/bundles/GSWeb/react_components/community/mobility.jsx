@@ -11,17 +11,28 @@ class Mobility extends React.Component {
       isLoading: true,
       data: {}
     }
+    this.handleErrors = this.handleErrors.bind(this);
     this.renderAgencies = this.renderAgencies.bind(this);
     this.renderTransportation = this.renderTransportation.bind(this);
   }
 
   componentDidMount(){
     fetch(`https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkf`)
+    // fetch(`https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=74.0060,40.7128&key=7Q0jpitnctkvjAkfl`)
+      .then(this.handleErrors)
       .then(response => response.json())
       .then(data => this.setState({
         isLoading: false,
         data
-      }))
+      })
+      .catch(error => console.log("Error is", error)));
+  }
+
+  handleErrors(res){
+    if (!res.ok) {
+      throw Error(res.status);
+    }
+    return res;
   }
 
   renderAgencies = (agencies) =>(
@@ -52,7 +63,9 @@ class Mobility extends React.Component {
   render(){
     if (this.state.isLoading === true) {
       return(
-        <div>Module is loading</div>
+        <section className="mobility-module">
+          <div style={{ textAlign: "center" }}><h3>Error Loading Module</h3></div>
+        </section>
       )
     }else{
       const data = this.state.data.data.mobilityScore;
