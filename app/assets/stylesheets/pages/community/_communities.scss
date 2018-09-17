@@ -399,9 +399,29 @@ $subtle-gray: #647981;
         }
       }
     }
+    .null-state{
+      display: block;
+      font-family: 'opensans-semibold';
+      padding: 20px;
+      margin: auto;
+      h3{ text-align: center; }
+      .loading-overlay {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        > .loader {
+          width: 60px;
+          height: 60px;
+          margin: auto;
+          background-image: image-url('search/owl-loader.gif');
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+    }
   }
   > a:hover { text-decoration: none;}
-  
 }
 
 .tooltip-content{
@@ -420,3 +440,4 @@ $subtle-gray: #647981;
     margin-bottom: 10px;
   }
 }
+

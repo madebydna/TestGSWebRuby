@@ -3,12 +3,15 @@ import PropTypes from "prop-types";
 import { t } from "util/i18n";
 import ModalTooltip from "../modal_tooltip";
 import InfoBox from '../school_profiles/info_box';
+import ollie from 'school_profiles/owl_tutorial_prompt.png';
+import LoadingOverlay from "../search/loading_overlay";
 
 class Mobility extends React.Component {
   constructor(props){
     super(props);
     this.state={
       isLoading: true,
+      didFail: false,
       data: {}
     }
     this.handleErrors = this.handleErrors.bind(this);
@@ -18,21 +21,27 @@ class Mobility extends React.Component {
 
   componentDidMount(){
     fetch(`https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkf`)
-    // fetch(`https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=74.0060,40.7128&key=7Q0jpitnctkvjAkf`)
       .then(this.handleErrors)
       .then(response => response.json())
+      .catch(error => this.setState({
+        didFail: true,
+        error
+      }))
       .then(data => this.setState({
         isLoading: false,
         data
       })
-      .catch(error => console.log("Error is", error)));
+      .catch(error => this.setState({
+        didFail: true,
+        error
+      }))
+    );
   }
 
   handleErrors(res){
     console.log(res);
     if (!res.ok) {
-      // throw Error(res.status);
-      return Promise.reject('something went wrong');
+      return Promise.reject('Error occurred');
     }
     return res;
   }
@@ -66,7 +75,18 @@ class Mobility extends React.Component {
     if (this.state.isLoading === true) {
       return(
         <section className="mobility-module">
-          <div style={{ textAlign: "center" }}><h3>Loading Module</h3></div>
+          <div className="null-state">
+            <h3>Loading...</h3>
+            <LoadingOverlay numItems={4} />
+          </div>
+        </section>
+      )
+    }else if(this.state.didFail === true){
+      return(
+        <section className="mobility-module">
+          <div className="null-state">
+            <h4>There was an issue loading the module. Sorry for the inconvenience. Please try again.</h4>
+          </div>
         </section>
       )
     }else{
