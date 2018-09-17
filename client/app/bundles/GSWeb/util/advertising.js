@@ -122,6 +122,7 @@ const onInitialize = func =>
   initialized ? func() : onInitializeFuncs.push(func);
 
 const getSizeMappings = function() {
+  // for the addSize function, the first dimension specifies the browser size.  The second specifies the ad size
   return {
     box_desktop_not_tall: googletag
       .sizeMapping()

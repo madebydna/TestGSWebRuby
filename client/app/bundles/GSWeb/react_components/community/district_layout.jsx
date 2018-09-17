@@ -169,7 +169,7 @@ class DistrictLayout extends React.Component {
 
   renderAd(){
     return this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
-        <Ad slot="districtpage_first" sizeName='box' />
+        <Ad slot="districtpage_first" sizeName="box_or_tall" />
       </div>
   }
 
