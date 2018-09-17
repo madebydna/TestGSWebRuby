@@ -91,6 +91,8 @@ class DistrictsController < ApplicationController
         cp[:name] = district_record.name
         cp[:address] = district_record.mail_street if district_record.mail_street.present?
         cp[:city] = district_record.city
+        cp[:lat] = district_record&.lat
+        cp[:lon] = district_record&.lon
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
         cp[:searchResultBrowseUrl] = search_district_browse_path(

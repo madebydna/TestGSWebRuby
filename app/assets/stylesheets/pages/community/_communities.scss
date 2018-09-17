@@ -392,7 +392,10 @@ $subtle-gray: #647981;
           margin-bottom: 10px;
           >div, img, p{ margin-right: 10px;}
           img{ height: 20px; }
-          p { margin-bottom: 0px; }
+          p { 
+            margin-bottom: 0px;
+            color: $subtle-gray;
+          }
         }
       }
     }

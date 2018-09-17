@@ -18,7 +18,7 @@ class Mobility extends React.Component {
 
   componentDidMount(){
     fetch(`https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkf`)
-    // fetch(`https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=74.0060,40.7128&key=7Q0jpitnctkvjAkfl`)
+    // fetch(`https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=74.0060,40.7128&key=7Q0jpitnctkvjAkf`)
       .then(this.handleErrors)
       .then(response => response.json())
       .then(data => this.setState({
@@ -29,17 +29,19 @@ class Mobility extends React.Component {
   }
 
   handleErrors(res){
+    console.log(res);
     if (!res.ok) {
-      throw Error(res.status);
+      // throw Error(res.status);
+      return Promise.reject('something went wrong');
     }
     return res;
   }
 
   renderAgencies = (agencies) =>(
     agencies.map(agency => {
-      const logoLine = `solid 5px ${agency.agencyColor}`;
+      const logoLine = agency.agencyColor !== null ? `solid 5px ${agency.agencyColor}` : "solid 5px #dbe6eb";
       return(
-        <div className="agencies">
+        <div key={`${agency.agencyShortName}`} className="agencies">
           <div style={{height: '25px', borderRight: logoLine}}></div>
           <img src={`https://mobilityscore.transitscreen.io/${agency.agencyLogoLight}`} alt={agency.agencyShortName}/>
           <p>{agency.agencyShortName}</p>
@@ -64,7 +66,7 @@ class Mobility extends React.Component {
     if (this.state.isLoading === true) {
       return(
         <section className="mobility-module">
-          <div style={{ textAlign: "center" }}><h3>Error Loading Module</h3></div>
+          <div style={{ textAlign: "center" }}><h3>Loading Module</h3></div>
         </section>
       )
     }else{
@@ -92,7 +94,7 @@ class Mobility extends React.Component {
               <div className="transportation-content">
                 <h3>{data.scoreLabel}</h3>
                 <p>{data.scoreDescription}</p>
-                <div className="blue-line"/>
+                {data.score !== 0 ? <div className="blue-line"/> : null}
                 {data.modes.subway ? this.renderTransportation("subway", data.modes.subway) : null}
                 {data.modes.bus ? this.renderTransportation("bus", data.modes.bus) : null}
                 {data.modes.carshare ? this.renderTransportation("carshare", data.modes.carshare) : null}
