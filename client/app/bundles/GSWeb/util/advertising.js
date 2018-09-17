@@ -341,10 +341,14 @@ const handleGhostTextMessages = function(event) {
       ) {
         const $adSlotDiv = jQuery(this).parents('.gs_ad_slot');
         const slotName = $adSlotDiv.attr('id');
-        $adSlotDiv
-          .parents(`.js-${slotName}-wrapper`)
-          .find('.advertisement-text')
-          .text(event.data.ghostText);
+        let $adTextDiv = $adSlotDiv
+            .parents(`.js-${slotName}-wrapper`)
+            .find('.advertisement-text');
+        if ($adTextDiv.length === 0) {
+          // Probably under /gk/
+          $adTextDiv = $adSlotDiv.find('.advertisement-text');
+        }
+        $adTextDiv.text(event.data.ghostText);
       }
     });
   }
