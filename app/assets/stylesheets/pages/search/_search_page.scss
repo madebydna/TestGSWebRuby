@@ -252,7 +252,9 @@ body {
       .menu-item {
         display: block;
         margin-top: 15px;
-
+        select::-ms-expand {
+          display: none;
+        }
         .label {
           display: block;
           margin-bottom: 5px;
