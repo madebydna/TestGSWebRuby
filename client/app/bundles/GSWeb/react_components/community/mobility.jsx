@@ -7,6 +7,14 @@ import ollie from 'school_profiles/owl_tutorial_prompt.png';
 import LoadingOverlay from "../search/loading_overlay";
 
 class Mobility extends React.Component {
+  static propTypes = {
+    locality: PropTypes.obj
+  };
+
+  static defaultProps = {
+    locality: {}
+  };
+
   constructor(props){
     super(props);
     this.state={
@@ -39,7 +47,6 @@ class Mobility extends React.Component {
   }
 
   handleErrors(res){
-    console.log(res);
     if (!res.ok) {
       return Promise.reject('Error occurred');
     }
