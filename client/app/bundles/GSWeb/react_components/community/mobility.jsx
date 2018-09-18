@@ -34,9 +34,9 @@ class Mobility extends React.Component {
         didFail: true,
         error
       }))
-      .then(data => this.setState({
+      .then(jsonRes => this.setState({
         isLoading: false,
-        data
+        data: jsonRes.data.mobilityScore,
       })
       .catch(error => this.setState({
         didFail: true,
@@ -65,14 +65,14 @@ class Mobility extends React.Component {
     }
   ));
 
-  renderTransportation(str, data){
+  renderTransportation(str, transportation){
     return(
       <React.Fragment>
         <div className="transportation-container">
-          <img src={`https://mobilityscore.transitscreen.io/${data.logo}`} alt={str} />
-          <p>{data.friendlyName}</p>
+          <img src={`https://mobilityscore.transitscreen.io/${transportation.logo}`} alt={str} />
+          <p>{transportation.friendlyName}</p>
         </div>
-        {this.renderAgencies(data.agencies)}
+        {this.renderAgencies(transportation.agencies)}
       </React.Fragment>
     )
   }
@@ -96,11 +96,15 @@ class Mobility extends React.Component {
         </section>
       )
     }else{
-      const data = this.state.data.data.mobilityScore;
+      const { mapURL,
+              badgeURL, 
+              scoreLabel, 
+              scoreDescription, 
+              score, modes } = this.state.data;
       const content = 
         <div className="tooltip-content">
           <p>{t('mobility.help')}</p>
-          <a href={data.mapURL} rel="nofollow" target="_blank">
+          <a href={mapURL} rel="nofollow" target="_blank">
             {t('top_schools.learn_more')}
           </a>
         </div>
@@ -110,7 +114,7 @@ class Mobility extends React.Component {
           <section className="mobility-module">
             <div>
               <div>
-                <img src={data.badgeURL} alt="badge_score"/>
+                <img src={badgeURL} alt="badge_score"/>
                 <div className="scale">
                   <ModalTooltip content={content}>
                     <span className="info-circle icon-info" />
@@ -118,15 +122,15 @@ class Mobility extends React.Component {
                 </div>
               </div>
               <div className="transportation-content">
-                <h3>{data.scoreLabel}</h3>
-                <p>{data.scoreDescription}</p>
-                {data.score !== 0 ? <div className="blue-line"/> : null}
-                {data.modes.subway ? this.renderTransportation("subway", data.modes.subway) : null}
-                {data.modes.bus ? this.renderTransportation("bus", data.modes.bus) : null}
-                {data.modes.carshare ? this.renderTransportation("carshare", data.modes.carshare) : null}
-                {data.modes.bikeshare ? this.renderTransportation("bikeshare", data.modes.bikeshare) : null}
-                {data.modes.scootershare ? this.renderTransportation("scootershare", data.modes.scootershare) : null}
-                {data.modes.ridehailing ? this.renderTransportation("ridehailing", data.modes.ridehailing) : null}
+                <h3>{scoreLabel}</h3>
+                <p>{scoreDescription}</p>
+                {score !== 0 ? <div className="blue-line"/> : null}
+                {modes.subway ? this.renderTransportation("subway", modes.subway) : null}
+                {modes.bus ? this.renderTransportation("bus", modes.bus) : null}
+                {modes.carshare ? this.renderTransportation("carshare", modes.carshare) : null}
+                {modes.bikeshare ? this.renderTransportation("bikeshare", modes.bikeshare) : null}
+                {modes.scootershare ? this.renderTransportation("scootershare", modes.scootershare) : null}
+                {modes.ridehailing ? this.renderTransportation("ridehailing", modes.ridehailing) : null}
               </div>
             </div>
           </section>
