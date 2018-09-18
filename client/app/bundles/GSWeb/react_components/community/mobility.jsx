@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { t } from "util/i18n";
 import ModalTooltip from "../modal_tooltip";
 import InfoBox from '../school_profiles/info_box';
-import ollie from 'school_profiles/owl_tutorial_prompt.png';
 import LoadingOverlay from "../search/loading_overlay";
 
 class Mobility extends React.Component {
