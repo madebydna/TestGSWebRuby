@@ -19,7 +19,8 @@ class Mobility extends React.Component {
     this.state={
       isLoading: true,
       didFail: false,
-      data: {}
+      data: {},
+      error: ""
     }
     this.handleErrors = this.handleErrors.bind(this);
     this.renderAgencies = this.renderAgencies.bind(this);
@@ -27,22 +28,18 @@ class Mobility extends React.Component {
   }
 
   componentDidMount(){
-    fetch(`https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkf`)
-      .then(this.handleErrors)
-      .then(response => response.json())
-      .catch(error => this.setState({
-        didFail: true,
-        error
-      }))
-      .then(jsonRes => this.setState({
+    $.ajax({
+      type: 'GET',
+      url: `https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkfl`,
+    }).done($jsonRes => this.setState({
         isLoading: false,
-        data: jsonRes.data.mobilityScore,
-      })
-      .catch(error => this.setState({
-        didFail: true,
-        error
+        data: $jsonRes.data.mobilityScore,
       }))
-    );
+      .fail(error => this.setState({
+        isLoading: false,
+        didFail: true,
+        error: error.textStatus
+      }))
   }
 
   handleErrors(res){
