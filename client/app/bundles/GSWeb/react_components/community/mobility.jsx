@@ -103,23 +103,25 @@ class Mobility extends React.Component {
           <section className="mobility-module">
             <div>
               <div>
-                <img src={badgeURL} alt="badge_score"/>
-                <div className="scale">
                   <ModalTooltip content={content}>
-                    <span className="info-circle icon-info" />
+                    <img src={badgeURL} alt="badge_score"/>
+                    <div className="scale">
+                      <span className="info-circle icon-info" />
+                    </div>
                   </ModalTooltip>
-                </div>
               </div>
               <div className="transportation-content">
                 <h3>{scoreLabel}</h3>
                 <p>{scoreDescription}</p>
                 {score !== 0 ? <div className="blue-line"/> : null}
-                {modes.subway ? this.renderTransportation("subway", modes.subway) : null}
-                {modes.bus ? this.renderTransportation("bus", modes.bus) : null}
-                {modes.carshare ? this.renderTransportation("carshare", modes.carshare) : null}
-                {modes.bikeshare ? this.renderTransportation("bikeshare", modes.bikeshare) : null}
-                {modes.scootershare ? this.renderTransportation("scootershare", modes.scootershare) : null}
-                {modes.ridehailing ? this.renderTransportation("ridehailing", modes.ridehailing) : null}
+                <a href={mapURL} rel="nofollow" target="_blank">
+                  {modes.subway ? this.renderTransportation("subway", modes.subway) : null}
+                  {modes.bus ? this.renderTransportation("bus", modes.bus) : null}
+                  {modes.carshare ? this.renderTransportation("carshare", modes.carshare) : null}
+                  {modes.bikeshare ? this.renderTransportation("bikeshare", modes.bikeshare) : null}
+                  {modes.scootershare ? this.renderTransportation("scootershare", modes.scootershare) : null}
+                  {modes.ridehailing ? this.renderTransportation("ridehailing", modes.ridehailing) : null}
+                </a>
               </div>
             </div>
           </section>

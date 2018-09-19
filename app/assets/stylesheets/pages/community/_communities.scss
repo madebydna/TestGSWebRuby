@@ -376,6 +376,7 @@ $subtle-gray: #647981;
           font-family: "opensans-semibold";
           font-size: $font-size;
         }
+        a:hover{ text-decoration: none; }
         .transportation-container{
           @include flexbox-align-items-center;
           p { margin-bottom: 0px; }
