@@ -183,4 +183,8 @@ module CommunityConcerns
       dc_hash['Enrollment'].first['district_value'].to_i if dc_hash && dc_hash['Enrollment'] && dc_hash['Enrollment'].first
     end
 
+    def fetch_district(id)
+      District.on_db(States.abbreviation(state)).find_by(id: id, active: 1)
+    end
+
 end
