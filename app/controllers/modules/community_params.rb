@@ -37,8 +37,12 @@ module CommunityParams
     States.state_name(state)
   end
 
-  def level_code
-    params[:levelCode]
+  def level_code_param
+    params[:levelCode] || 'e'
+  end
+
+  def set_level_code_params(level_code)
+    params[:levelCode] = level_code
   end
 
   def extras

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module CommunityConcerns
-    def serialized_schools(lc = 'e')
-      params[:levelCode] = lc
+    def serialized_schools
       schools.map do |school|
         Api::SchoolSerializer.new(school).to_hash
       end
@@ -27,11 +26,16 @@ module CommunityConcerns
       end
     end
 
+    def fetch_top_rated_schools(level_code)
+      set_level_code_params(level_code)
+      serialized_schools
+    end
+
     def top_rated_schools
       @_top_rated_schools ||= begin
-        elementary = serialized_schools('e')
-        middle = serialized_schools('m')
-        high = serialized_schools('h')
+        elementary = fetch_top_rated_schools('e')
+        middle = fetch_top_rated_schools('m')
+        high = fetch_top_rated_schools('h')
         {
           schools: {
             elementary: elementary,
@@ -63,7 +67,7 @@ module CommunityConcerns
         query_type.new(
           state: state,
           district_id: district_record.id,
-          level_codes: [level_code].compact,
+          level_codes: [level_code_param].compact,
           limit: default_top_schools_limit,
           sort_name: 'rating',
           with_rating: 'true'
@@ -73,7 +77,7 @@ module CommunityConcerns
           city: city,
           state: state,
           district_name: district_record&.name,
-          level_codes: [level_code].compact,
+          level_codes: [level_code_param].compact,
           limit: default_top_schools_limit,
           sort_name: 'rating',
           with_rating: 'true'
