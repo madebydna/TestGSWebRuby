@@ -24,6 +24,8 @@ class DistrictsController < ApplicationController
 
   private
 
+  # coordinates=key=7Q0jpitnctkvjAkf
+
   def set_district_meta_tags
     district_params_hash = district_params(state, district_record.city, district)
     set_meta_tags(alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
@@ -101,6 +103,7 @@ class DistrictsController < ApplicationController
           district_name: gs_legacy_url_encode(district),
           trailing_slash: true
         )
+        cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:zipCode] = district_record.mail_zipcode[0..4]
         cp[:phone] = district_record.phone if district_record.phone.present?
         cp[:districtUrl] = prepend_http district_record.home_page_url if district_record.home_page_url.present?

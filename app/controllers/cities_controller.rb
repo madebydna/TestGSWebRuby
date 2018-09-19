@@ -79,6 +79,7 @@ class CitiesController < ApplicationController
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
+        cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:zip] = get_zip
         cp[:lat] = fetch_district_attr(:lat) || city_record&.lat
         cp[:lon] = fetch_district_attr(:lon) || city_record&.lon

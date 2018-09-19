@@ -27,9 +27,10 @@ class Mobility extends React.Component {
   }
 
   componentDidMount(){
+    console.log(`${this.props.locality.mobilityURL}?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkf`)
     $.ajax({
       type: 'GET',
-      url: `https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkf`,
+      url: `${this.props.locality.mobilityURL}?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkf`,
     }).done($jsonRes => this.setState({
         isLoading: false,
         data: $jsonRes.data.mobilityScore,
@@ -89,7 +90,8 @@ class Mobility extends React.Component {
               badgeURL, 
               scoreLabel, 
               scoreDescription, 
-              score, modes } = this.state.data;
+              score, 
+              modes } = this.state.data;
       const content = 
         <div className="tooltip-content">
           <p>{t('mobility.help')}</p>
