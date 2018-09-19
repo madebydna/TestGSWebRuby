@@ -22,7 +22,6 @@ class Mobility extends React.Component {
       data: {},
       error: ""
     }
-    this.handleErrors = this.handleErrors.bind(this);
     this.renderAgencies = this.renderAgencies.bind(this);
     this.renderTransportation = this.renderTransportation.bind(this);
   }
@@ -30,7 +29,7 @@ class Mobility extends React.Component {
   componentDidMount(){
     $.ajax({
       type: 'GET',
-      url: `https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkfl`,
+      url: `https://mobilityscore.transitscreen.io/api/v1/locations.json?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkf`,
     }).done($jsonRes => this.setState({
         isLoading: false,
         data: $jsonRes.data.mobilityScore,
