@@ -73,7 +73,6 @@ class CitiesController < ApplicationController
 
   def locality
     @_locality ||= begin
-      require 'pry'; binding.pry
       Hash.new.tap do |cp|
         cp[:city] = city_record.name
         cp[:stateLong] = state_name.gs_capitalize_words
