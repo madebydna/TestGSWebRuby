@@ -37,18 +37,26 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
   end
 
   def count_of_schools_by_level_code
-    st_and_lc_within_district
-      .fetch(:level_codes, []).map {|lc| lc.split(',')}  # the level code for each record is a string, i.e. 'e,m,h'
-      .flatten # after splitting, the array may contain a mix of strings and arrays
-      .each_with_object(Hash.new(0)) {|lc, hash| hash[lc] += 1}
-      .slice(*LevelCode::LEVEL_LOOKUP.keys)
+    level_codes = st_and_lc_within_district.fetch(:level_codes, nil)
+    if level_codes
+      level_codes.map {|lc| lc.split(',')} # the level code for each record is a string, i.e. 'e,m,h' or 'e'. Need to count each instance
+        .flatten
+        .each_with_object(Hash.new(0)) {|lc, hash| hash[lc] += 1}
+        .slice(*LevelCode::LEVEL_LOOKUP.keys)
+    else
+      LevelCode::LEVEL_LOOKUP.keys.each_with_object({}) {|lc, hash| hash[lc] = 0}
+    end
   end
 
   def count_of_schools_by_type
-    st_and_lc_within_district
-      .fetch(:types, [])
-      .each_with_object(Hash.new(0)) {|type,hash| hash[type] += 1}
-      .slice('public', 'charter')
+    schools_by_type = st_and_lc_within_district.fetch(:types, nil)
+    if schools_by_type
+      schools_by_type
+        .each_with_object(Hash.new(0)) {|type,hash| hash[type] += 1}
+        .slice('public', 'charter')
+    else
+      {'public' => 0, 'charter' => 0}
+    end
   end
 
 end
