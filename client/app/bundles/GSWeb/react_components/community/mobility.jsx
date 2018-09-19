@@ -42,13 +42,6 @@ class Mobility extends React.Component {
       }))
   }
 
-  handleErrors(res){
-    if (!res.ok) {
-      return Promise.reject('Error occurred');
-    }
-    return res;
-  }
-
   renderAgencies = (agencies) =>(
     agencies.map(agency => {
       const logoLine = agency.agencyColor !== null ? `solid 5px ${agency.agencyColor}` : "solid 5px #dbe6eb";
