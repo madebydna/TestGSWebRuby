@@ -80,8 +80,8 @@ class CitiesController < ApplicationController
         cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
         cp[:zip] = get_zip
-        cp[:lat] = fetch_district(@districts&.first&.fetch(:id, nil))&.lat || city_record&.lat
-        cp[:lon] = fetch_district(@districts&.first&.fetch(:id, nil))&.lon || city_record&.lon
+        cp[:lat] = fetch_district_attr(:lat) || city_record&.lat
+        cp[:lon] = fetch_district_attr(:lon)|| city_record&.lon
       end
     end
   end
