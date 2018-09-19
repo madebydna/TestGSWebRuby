@@ -168,6 +168,8 @@ module CommunityConcerns
               d[:url] = district_url(district_params(state, city, name))
               d[:enrollment] =  district_enrollment_cache(district_content_field(district_content, 'id'))
               d[:zip] = district_content_field(district_content, 'zip')
+              d[:lat] = district_content_field(district_content, 'lat')
+              d[:lon] = district_content_field(district_content, 'lon')
             end
           end
           dc.sort_by { |h| h[:enrollment] ? h[:enrollment] : 0 }.reverse!
