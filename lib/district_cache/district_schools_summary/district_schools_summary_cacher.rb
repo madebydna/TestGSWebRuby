@@ -16,6 +16,8 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
   CACHE_KEY = "district_schools_summary".freeze
   SCHOOLS_COUNTS_BY_LEVEL_CODE_KEY = "school counts by level code".freeze
   SCHOOLS_COUNTS_BY_TYPE = "school counts by type".freeze
+  DEFAULT_LEVEL_HASH = LevelCode::LEVEL_LOOKUP.keys.each_with_object({}) {|lc, hash| hash[lc] = 0}
+  DEFAULT_SCHOOL_TYPE_HASH = {'public' => 0, 'charter' => 0}
 
   def build_hash_for_cache
     {
@@ -39,12 +41,12 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
   def count_of_schools_by_level_code
     level_codes = st_and_lc_within_district.fetch(:level_codes, nil)
     if level_codes
-      level_codes.map {|lc| lc.split(',')} # the level code for each record is a string, i.e. 'e,m,h' or 'e'. Need to count each instance
+      level_codes.map {|lc| lc.split(',')} # the level code for each record is a string, i.e. 'e,m,h' or 'e'. 
         .flatten
         .each_with_object(Hash.new(0)) {|lc, hash| hash[lc] += 1}
         .slice(*LevelCode::LEVEL_LOOKUP.keys)
     else
-      LevelCode::LEVEL_LOOKUP.keys.each_with_object({}) {|lc, hash| hash[lc] = 0}
+      DEFAULT_LEVEL_HASH
     end
   end
 
@@ -55,7 +57,7 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
         .each_with_object(Hash.new(0)) {|type,hash| hash[type] += 1}
         .slice('public', 'charter')
     else
-      {'public' => 0, 'charter' => 0}
+      DEFAULT_SCHOOL_TYPE_HASH
     end
   end
 
