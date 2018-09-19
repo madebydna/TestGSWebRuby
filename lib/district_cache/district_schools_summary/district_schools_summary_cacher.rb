@@ -24,7 +24,7 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
     }
   end
 
-  # private
+  private
 
   def st_and_lc_within_district
     @_school_types_and_level_codes_within_district ||= begin
