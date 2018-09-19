@@ -147,7 +147,7 @@ class CityLayout extends React.Component {
 
   renderAd(){
     return this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
-      <Ad slot="citypage_first" dimensions={[300, 600]}/>
+      <Ad slot="citypage_first" sizeName="box_or_tall" />
     </div>
   }
 

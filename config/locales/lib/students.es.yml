@@ -3,6 +3,8 @@ es:
     students:
       'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'source': 'Fuente'
-      'ethnicity': 'Ethnicity'
+      'ethnicity': 'Etnicidad'
       'gender': 'El Sexo'
       'subgroups': 'Subgroups'
+      Students participating in free or reduced-price lunch program: Estudiantes de familias de bajos ingresos
+      English learners: Estudiantes aprendices de Inglés
