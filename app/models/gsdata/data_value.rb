@@ -14,6 +14,7 @@ class DataValue < ActiveRecord::Base
   has_many :data_values_to_academics, inverse_of: :data_value
   has_many :academics, through: :data_values_to_academics, inverse_of: :data_values
   belongs_to :source, class_name: '::Gsdata::Source', inverse_of: :data_values
+  belongs_to :load, inverse_of: :data_values
   belongs_to :proficiency_band, inverse_of: :data_values
 
 

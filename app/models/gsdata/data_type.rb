@@ -8,6 +8,7 @@ class DataType < ActiveRecord::Base
 
   has_many :data_type_tags, class_name: 'DataTypeTag', foreign_key: :data_type_id
   has_many :data_values
+  has_many :loads
 
   def self.to_hash
     all.index_by(&:id)
