@@ -196,7 +196,7 @@ class SearchLayout extends React.Component {
         <div style={{ margin: 'auto' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
           <span className="menu-item">{this.props.gradeLevelButtons}</span>
-          <span className="menu-item">{this.props.chooseTableButtons}</span>
+
           {this.props.distanceFilter ? (
             <span className="menu-item">
               <span className="label">Distance:</span>
@@ -286,6 +286,7 @@ class SearchLayout extends React.Component {
         <div className="subheader menu-bar">
           {this.props.breadcrumbs}
           <div className="pagination-summary">{this.props.resultSummary}</div>
+          <div className="menu-item">{this.props.chooseTableButtons}</div>
           {this.props.size > SM && (
             <div className="menu-item">
               <span className="label">{t('Sort by')}:</span>
