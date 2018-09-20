@@ -43,9 +43,9 @@ module Feeds
     def transpose_url(entity,entity_level,state)
       begin
         if entity_level == ENTITY_TYPE_DISTRICT
-          city_district_url district_params_from_district(entity)
+          city_district_url district_params_from_district(entity).merge(trailing_slash: true, protocol: 'https')
         elsif entity_level == ENTITY_TYPE_SCHOOL
-          school_url entity
+          school_url entity, trailing_slash: true, protocol: 'https'
         end
       rescue  => e
          Feeds::FeedLog.log.info "Could not find the correct url for #{entity_level} in #{state} and id #{entity.id} hence state url will be sent"

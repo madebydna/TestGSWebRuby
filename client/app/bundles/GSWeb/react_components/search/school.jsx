@@ -39,7 +39,7 @@ const School = ({
   }
 
   return (
-    <React.Fragment key={state + id}>
+    <React.Fragment key={state + id + (assigned ? 'assigned' : '')}>
       {assigned && <div>{t('assigned_school') } {renderAssignedTooltip(levelCode)}</div>}
       <span><RatingWithTooltip rating={rating} ratingScale={ratingScale}/></span>
       <span>

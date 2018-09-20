@@ -12,26 +12,14 @@ class CitiesController < ApplicationController
     @schools = serialized_schools
     @breadcrumbs = breadcrumbs
     @locality = locality
-    # @districts = districts_by_city
     @school_levels = school_levels
-    @districts = district_content
+    @districts = district_content(city_record.id)
+    set_ad_targeting_props
+    set_page_analytics_data
     Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
   private
-
-  # def districts_by_city
-  #   School.on_db(state)
-  #     .where(city: city_record.name, active: 1)
-  #     .joins('left join district on district.id = school.district_id')
-  #     .where('district.charter_only = 0')
-  #     .group('district.id')
-  #     .pluck('district.name', 'district.level_code', 'district.num_schools', 'district.city')
-  #     .map {|school_record| {:districtName=> school_record[0],
-  #                            :grades=>LevelCode.full_from_all_grades(school_record[1]),
-  #                            :numSchools=>school_record[2],
-  #                            :url=>district_url(state: state_name, city: gs_legacy_url_encode(school_record[3]), district: gs_legacy_url_encode(school_record[0]))}}
-  # end
 
   def set_city_meta_tags
     city_params_hash = city_params(state, city)
@@ -58,14 +46,12 @@ class CitiesController < ApplicationController
   # AdvertisingConcerns
   def ad_targeting_props
     {
-      page_name: "GS:City:Home",
-      template: "search",
+      page_name: "GS:City:Home"
     }.tap do |hash|
       # these intentionally capitalized to match property names that have
       # existed for a long time. Not sure if it matters
       hash[:City] = city.gs_capitalize_words if city
-      hash[:State] = state if state
-      hash[:level] = level_codes.map { |s| s[0] } if level_codes.present?
+      hash[:State] = state.upcase if state
       hash[:county] = county_record.name if county_record
     end
   end
@@ -73,73 +59,16 @@ class CitiesController < ApplicationController
   # PageAnalytics
   def page_analytics_data
     {}.tap do |hash|
-      # placeholder
-    end
-  end
-
-  def city_cache_school_levels
-    @_city_cache_school_levels ||= begin
-      cc = CityCache.for_name_and_city_id('school_levels', city_record.id)
-      JSON.parse(cc.value) if cc.present?
-    end
-  end
-
-  def city_cache_district_content
-    @_city_cache_district_content ||= begin
-      cc = CityCache.for_name_and_city_id('district_content', city_record.id)
-      JSON.parse(cc.value) if cc.present?
-    end
-  end
-
-  def school_levels
-    @_school_levels ||= begin
-      {}.tap do |sl|
-        sl[:all] = school_count('all')
-        sl[:public] = school_count('public')
-        sl[:private] = school_count('private')
-        sl[:charter] = school_count('charter')
-        sl[:preschool] = school_count('preschool')
-        sl[:elementary] = school_count('elementary')
-        sl[:middle] = school_count('middle')
-        sl[:high] = school_count('high')
-      end
+      hash[PageAnalytics::PAGE_NAME] = 'GS:City:Home'
+      hash[PageAnalytics::CITY] = city.gs_capitalize_words if city
+      hash[PageAnalytics::STATE] = state.upcase if state
+      hash[PageAnalytics::COUNTY] = county_record.name if county_record
+      hash[PageAnalytics::ENV] = ENV_GLOBAL['advertising_env']
     end
   end
 
   def school_count(key)
-    city_cache_school_levels[key].first['city_value'] if city_cache_school_levels && city_cache_school_levels[key]
-  end
-
-  def district_content_field(district_content, key)
-    district_content[key].first['city_value'] if district_content && district_content[key]
-  end
-
-  def district_content
-    @_district_content ||= begin
-      if city_cache_district_content.present?
-        dc = city_cache_district_content.map do |district_content|
-          {}.tap do |d|
-            name = district_content_field(district_content, 'name')
-            city = district_content_field(district_content, 'city')
-            d[:districtName] = name
-            d[:grades] = district_content_field(district_content, 'levels')
-            d[:numSchools] = district_content_field(district_content, 'school_count')
-            d[:url] = district_url(district_params(state, city, name))
-            d[:enrollment] =  district_enrollment(district_content_field(district_content, 'id'))
-            d[:zip] = district_content_field(district_content, 'zip')
-          end
-        end
-        dc.sort_by { |h| h[:enrollment] ? h[:enrollment] : 0 }.reverse!
-      else
-        []
-      end
-    end
-  end
-
-  def district_enrollment(district_id)
-    dc = DistrictCache.where(name: 'district_characteristics', district_id: district_id, state: state)
-    dc_hash = JSON.parse(dc.first.value) if dc.present? && dc.first
-    dc_hash['Enrollment'].first['district_value'].to_i if dc_hash && dc_hash['Enrollment']
+    CityCache.school_levels(city_record.id)[key].first['city_value'] if CityCache.school_levels(city_record.id) && CityCache.school_levels(city_record.id)[key]
   end
 
   def locality
@@ -149,18 +78,18 @@ class CitiesController < ApplicationController
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
-        cp[:cityBrowseUrl] = search_city_browse_path(city_params(state, city))
+        cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
         cp[:zip] = get_zip
       end
     end
   end
 
   def get_zip
-    zip = district_content.find do |dc|
+    zip = district_content(city_record.id).find do |dc|
       break dc[:zip] if dc[:zip].present?
     end
     zip ||= @schools.find do |s|
-      break s[:address][:zip] if s[:address].present? && s[:address][:zip].present?
+      break s[:address][:zip] if s && s[:address].present? && s[:address][:zip].present?
     end
     zip
   end
@@ -173,7 +102,7 @@ class CitiesController < ApplicationController
       },
       {
         text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
-        url: city_url(city_params(state, city))
+        url: ""
       }
     ]
   end
@@ -188,6 +117,6 @@ class CitiesController < ApplicationController
   end
 
   def default_extras
-    %w(summary_rating enrollment review_summary)
+    %w(summary_rating enrollment review_summary students_per_teacher)
   end
 end

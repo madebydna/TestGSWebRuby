@@ -6,32 +6,9 @@
   <xs:element name="gs-test-subgroup-feed">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="test" type="test"/>
+        <xs:element ref="test" maxOccurs="unbounded" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:complexType name="entity" type="entity"/>
-  <xs:complexType name="results">
-    <xs:sequence>
-      <xs:element name="test-result" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="year" type="xs:nonNegativeInteger"/>
-            <xs:element name="subject-name" type="Str100"/>
-            <xs:element name="grade" type="grade"/>
-            <xs:element name="score" type="Str100"/>
-            <xs:element name="proficiency-band-name" nillable="true" minOccurs="0" type="Str100"/>
-            <xs:element name="breakdowns" minOccurs="0">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="breakdown-name" nillable="true" minOccurs="0" maxOccurs="unbounded" type="Str100"/>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="number-tested" nillable="true" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
+
 </xs:schema>

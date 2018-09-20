@@ -1,16 +1,20 @@
 ---
 es:
   javascript:
+    No listings found: No se encontraron listados
     '# of schools': '# of schools'
     '# of students': '# of students'
     in: en
     at a glance: de un vistazo
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en
+    browse_school_blurb_district: Aquí hay un vistazo a las escuelas en distrito
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
+    city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
     county: condado
+    website: Página web
     homes_for_sale: Casas en venta
-    nearby homes for sale & rent: nearby homes for sale & rent
+    nearby homes for sale & rent: Casas cercanas en venta y alquiler
     Mile: Milla
     Miles: Millas
     Relevance: Relevancia
@@ -137,9 +141,12 @@ es:
         qué tan bien una escuela prepara a todos sus estudiantes para el éxito postsecundaria
          — ya sea de colegio o carrera.
       learn_more: Obtenga más información
-      no_elem: No hay escuelas primarias con una Calificación General de GreatSchools en esta ciudad
-      no_mid: No hay escuelas intermedias con una Calificación General de GreatSchools en esta ciudad
-      no_high: No hay escuelas secundarias con una Calificación General de GreatSchools en esta ciudad
+      no_elemC: No hay escuelas primarias con una Calificación General de GreatSchools en esta ciudad
+      no_midC: No hay escuelas intermedias con una Calificación General de GreatSchools en esta ciudad
+      no_highC: No hay escuelas secundarias con una Calificación General de GreatSchools en esta ciudad
+      no_elemD: No hay escuelas primarias con una Calificación General de GreatSchools en esta distrito
+      no_midD: No hay escuelas intermedias con una Calificación General de GreatSchools en esta distrito
+      no_highD: No hay escuelas secundarias con una Calificación General de GreatSchools en esta distrito
       see_elem: Vea más escuelas primarias
       see_mid: Vea más escuelas intermedias
       see_high: Vea más escuelas secundarias
@@ -255,6 +262,8 @@ es:
     Homes for sale near: Casas en venta cerca de
     Rentals near: Casas en alquiler cerca de
     See more listings near this school: Ver más anuncios de casas cerca de esta escuela
+    See more listings near this district: Ver más anuncios de casas cerca de este distrito
+    See more listings near this city: Ver más anuncios de casas cerca de este ciudad
     See how much you can afford to borrow: Vea cuánto puede pedir prestado
     beds: camas
     baths: baños

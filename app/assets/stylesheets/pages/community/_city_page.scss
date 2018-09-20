@@ -1,5 +1,5 @@
 // City specific css on the hero header
-.hero{
+#hero{
   div{
     max-width: 500px;
     .icon-city {
@@ -27,11 +27,23 @@
   }
 }
 
-.below-hero{
-  .toc{
-    // height for City specific page for toc
-    height: 100px;
+.school-browse-module{
+  ul {
+    height: 150px;
+    li {
+      width:45%;
+      @include media-breakpoint-down(md) {
+        width: 90%;
+      }
+    }
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      height: 175px;
+    }
+    @include media-breakpoint-down(md) {
+      height: auto;
+    }
   }
+
 }
 
 //CSS rules for the districts in a city module

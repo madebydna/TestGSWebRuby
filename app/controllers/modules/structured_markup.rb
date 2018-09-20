@@ -68,7 +68,8 @@ module StructuredMarkup
         "https://pinterest.com/greatschools/",
         "https://www.youtube.com/GreatSchools",
         "https://www.instagram.com/greatschools/",
-        "https://en.wikipedia.org/wiki/GreatSchools"
+        "https://en.wikipedia.org/wiki/GreatSchools",
+        "https://plus.google.com/104459805636611937872"
       ]
     }
   end

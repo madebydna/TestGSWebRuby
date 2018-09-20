@@ -153,6 +153,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/privacy/', as: :privacy
     get '/gk/faq/', as: :faq
     get '/gk/back-to-school/', as: :back_to_school
+    get '/gk/parent-power/', as: :parent_power
+    get '/gk/summary-rating/', as: :school_ratings
+    get '/gk/reviews/', as: :gk_school_reviews
     get '/gk/worksheets/', as: :worksheets_and_activities
     get '/gk/category/dilemmas/', as: :parenting_dilemmas
     get '/gk/emotional-smarts/', as: :emotional_smarts

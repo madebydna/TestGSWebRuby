@@ -1,14 +1,18 @@
 ---
 en:
   javascript:
+    No listings found: No listings found
     '# of schools': '# of schools'
     '# of students': '# of students'
     in: in
     at a glance: at a glance
     assigned_school: Assigned school
     browse_school_blurb: Here's a look at schools in
+    browse_school_blurb_district: Here's a look at the district
     city_hero_html: <div class="city-hero-narrative">{city} is a city in {county} county, {stateLong}</div>
+    city_hero_no_county_html: <div class="city-hero-narrative">{city} is a city in {stateLong}</div>
     county: county
+    website: Website
     homes_for_sale: Homes for sale
     nearby homes for sale & rent: nearby homes for sale & rent
     Mile: Mile
@@ -137,9 +141,12 @@ en:
         based on how well a school prepares all its students for postsecondary
         success - be it college or career.
       learn_more: Learn more
-      no_elem: There are no elementary schools with a GreatSchools rating for this city
-      no_mid: There are no middle schools with a GreatSchools rating for this city
-      no_high: There are no high schools with a GreatSchools rating for this city
+      no_elemC: There are no elementary schools with a GreatSchools rating for this city
+      no_midC: There are no middle schools with a GreatSchools rating for this city
+      no_highC: There are no high schools with a GreatSchools rating for this city
+      no_elemD: There are no elementary schools with a GreatSchools rating for this district
+      no_midD: There are no middle schools with a GreatSchools rating for this district
+      no_highD: There are no high schools with a GreatSchools rating for this district 
       see_elem: See more elementary schools
       see_mid: See more middle schools
       see_high: See more high schools
@@ -254,6 +261,8 @@ en:
     Homes for sale near: Homes for sale near
     Rentals near: Rentals near
     See more listings near this school: See more listings near this school
+    See more listings near this district: See more listings near this district
+    See more listings near this city: See more listings near this city
     See how much you can afford to borrow: See how much you can afford to borrow
     beds: beds
     baths: baths

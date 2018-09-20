@@ -39,7 +39,6 @@ module AdvertisingConcerns
     return advertising_enabled
   end
 
-
   protected
 
   def set_ad_targeting_props

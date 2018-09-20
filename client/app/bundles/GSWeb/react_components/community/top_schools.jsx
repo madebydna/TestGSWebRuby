@@ -5,20 +5,48 @@ import TopSchoolTableRow from './top_school_table_row';
 import { SM } from "util/viewport";
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
+import { addQueryParamToUrl } from 'util/uri';
 import { name } from "../../util/states";
 
-const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, levelCodes, gradeLevels}) => {
+const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
+  if (community === 'city') {
+    return(
+      <div className="grade-filter">
+        <span className="button-group">
+          <Button onClick={() => handleGradeLevel("e", community)} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
+          <Button onClick={() => handleGradeLevel("m", community)} label={t("Middle")} active={levelCodes === "m" ? true : false} />
+          <Button onClick={() => handleGradeLevel("h", community)} label={t("High")} active={levelCodes === "h" ? true : false} />
+        </span>
+      </div>
+    )
+  }else{
+    return (
+      <div className="grade-filter">
+        <span className="button-group">
+          {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e", community)} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
+          {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m", community)} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
+          {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h", community)} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
+        </span>
+      </div>
+    )
+  }
+}
+
+const TopSchools = ({schools, handleGradeLevel, isLoading, size, levelCodes, community, schoolLevels, locality}) => {
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
   }
-  const noSchoolsMap = {
-    "e": t("top_schools.no_elem"), "m": t("top_schools.no_mid"), "h": t("top_schools.no_high")
+  const noSchoolsMapC = {
+    "e": t("top_schools.no_elemC"), "m": t("top_schools.no_midC"), "h": t("top_schools.no_highC")
+  }
+  const noSchoolsMapD = {
+    "e": t("top_schools.no_elemD"), "m": t("top_schools.no_midD"), "h": t("top_schools.no_highD")
   }
   if (schools.length === 0) {
     schoolList = <section className="no-schools">
                     <div>
-                      <h3>{noSchoolsMap[levelCodes]}</h3>
+        <h3>{community === 'city' ? noSchoolsMapC[levelCodes] : noSchoolsMapD[levelCodes]}</h3>
                     </div>
                   </section>;
   } else {
@@ -38,22 +66,16 @@ const TopSchools = ({schools, handleGradeLevel, isLoading, size, state, city, le
           <h3>{t("top_schools.top_schools")}</h3>
           <p>
             {t('top_schools.top_schools_blurbs')}
-             <a href="/gk/ratings">{t('top_schools.learn_more')}</a>
+            <a href="/gk/ratings">{t('top_schools.learn_more')}</a>
           </p>
         </div>
       </div>
       <br/>
-      <div className="grade-filter">
-        <span className="button-group">
-          <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
-          <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} />
-          <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} />
-        </span>
-      </div>
+      {renderButtons(handleGradeLevel, community, schoolLevels, levelCodes)}
       <hr />
       {schoolList}
       <div className="more-school-btn">
-        <a href={state ? `/${name(state.toLowerCase())}/${city.toLowerCase()}/schools/?gradeLevels=${levelCodes}` : null}>
+        <a href={addQueryParamToUrl('gradeLevels', levelCodes, locality.searchResultBrowseUrl)}>
           <button>{seeSchoolMap[levelCodes]}</button>
         </a>
       </div>

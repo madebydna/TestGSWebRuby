@@ -24,10 +24,11 @@ module SchoolProfiles
     def academics
       hash = {}
       arr = []
-      arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
       if @school.level_code =~ /h/
         arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness', badge: @college_readiness.school_csa_badge?}
       end
+
+      arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
 
       # NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
       # The SP module has a no-data state, while The AP module DOES NOT have a no-data state.

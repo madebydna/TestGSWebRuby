@@ -97,24 +97,25 @@ export function decorateListing(listing) {
     //utm_source=Great_Schools
     //utm_medium=referral
     //utm_campaign=nearbyhomes_profiles
-    detailPageLink: function() {
-      return addCampaignCode(listing.detailPageLink);
+    detailPageLink: function(utm_campaign='nearbyhomes_profiles') {
+      return addCampaignCode(listing.detailPageLink, utm_campaign);
     }
   }
 };
 
-export function addCampaignCode(url) {
+export function addCampaignCode(url, utm_campaign='nearbyhomes_profiles') {
   url = addQueryParamToUrl('cbpartner', 'Great+Schools', url);
   url = addQueryParamToUrl('utm_source', 'Great_Schools', url);
   url = addQueryParamToUrl('utm_medium', 'referral', url);
-  url = addQueryParamToUrl('utm_campaign', 'nearbyhomes_profiles', url);
+  url = addQueryParamToUrl('utm_campaign', utm_campaign, url);
   return url;
 };
 
-export function nearbyHomesUrl(city, state) {
+export function nearbyHomesUrl(city, state, utm_campaign='nearbyhomes_profiles') {
   return addCampaignCode(
     'https://www.zillow.com/' +
-    city.toLowerCase().replace(' ', '-') + '-' + state.toLowerCase()
+    city.toLowerCase().replace(' ', '-') + '-' + state.toLowerCase(),
+      utm_campaign
   );
 };
 

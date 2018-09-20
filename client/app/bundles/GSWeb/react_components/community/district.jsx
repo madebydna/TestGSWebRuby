@@ -1,33 +1,28 @@
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import Breadcrumbs from 'react_components/breadcrumbs';
-import CityLayout from './city_layout';
-import SearchBox from 'react_components/search_box'
-import Ad from 'react_components/ad';
-import TopSchoolsStateful from './top_schools_stateful';
-import SchoolBrowseLinks from './school_browse_links';
-import DistrictsInCity from "./districts_in_city";
-import { init as initAdvertising } from 'util/advertising';
-import { XS, validSizes as validViewportSizes } from 'util/viewport';
-import Toc from './toc';
-import withViewportSize from 'react_components/with_viewport_size';
-import '../../vendor/remodal';
-import { find as findSchools } from 'api_clients/schools';
-import { analyticsEvent } from 'util/page_analytics';
+import React from "react";
+import PropTypes from "prop-types";
+import Breadcrumbs from "react_components/breadcrumbs";
+import DistrictLayout from "./district_layout";
+import SearchBox from "react_components/search_box";
+import TopSchoolsStateful from "./top_schools_stateful";
+import SchoolBrowseLinks from "./school_browse_links";
+import { init as initAdvertising } from "util/advertising";
+import { XS, validSizes as validViewportSizes } from "util/viewport";
+import Toc from "./toc";
+import withViewportSize from "react_components/with_viewport_size";
+import "../../vendor/remodal";
+import { find as findSchools } from "api_clients/schools";
+import { analyticsEvent } from "util/page_analytics";
 import Zillow from "./zillow";
-const { gon } = window;
-class City extends React.Component {
+
+class District extends React.Component {
   static defaultProps = {
     schools: [],
-    loadingSchools: false,
     breadcrumbs: [],
-    districts: []
   };
 
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.object),
-    districts: PropTypes.arrayOf(PropTypes.object),
     loadingSchools: PropTypes.bool,
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
@@ -36,7 +31,8 @@ class City extends React.Component {
         url: PropTypes.string.isRequired
       })
     ),
-    locality: PropTypes.object
+    locality: PropTypes.object,
+    heroData: PropTypes.object
   };
 
   constructor(props) {
@@ -96,48 +92,45 @@ class City extends React.Component {
 
   render() {
     return (
-      <CityLayout
+      <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schools={this.props.schools}
         topSchools={
           <TopSchoolsStateful
-            community="city" 
+            community="district"
             schools={this.props.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
+            schoolLevels={this.props.school_levels}
           />
         }
         browseSchools={
           <SchoolBrowseLinks
-            community="city"
+            community="district"
             locality={this.props.locality}
             size={this.props.viewportSize}
             schoolLevels={this.props.school_levels}
           />
         }
-        districts={this.props.districts}
-        districtsInCity={
-          <DistrictsInCity
-            districts={this.props.districts}
-          />
-        }
         zillow={
           <Zillow
               locality={this.props.locality}
-              utmCampaign='citypage'
-              pageType='city'
+              utmCampaign='districtpage'
+              pageType='district'
           />
         }
+        heroData={this.props.heroData}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
         toc={<Toc schools={this.props.schools} districts={this.props.districts} />}
         viewportSize={this.props.viewportSize}
       >
-      </CityLayout>
+      </DistrictLayout>
     );
   }
 }
 
-const CityWithViewportSize = withViewportSize('size')(City);
 
-export default CityWithViewportSize;
+const DistrictWithViewportSize = withViewportSize('size')(District);
+
+export default DistrictWithViewportSize;

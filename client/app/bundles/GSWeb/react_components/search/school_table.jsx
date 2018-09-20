@@ -28,7 +28,7 @@ const SchoolTable = ({ schools, isLoading }) => (
         </tr>
       </thead>
       <tbody>
-        {schools.map(s => <SchoolTableRow key={s.state + s.id} {...s} />)}
+        {schools.map(s => <SchoolTableRow key={s.state + s.id + (s.assigned ? 'assigned' : '')} {...s} />)}
       </tbody>
     </table>
   </section>

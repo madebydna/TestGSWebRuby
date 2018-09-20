@@ -21,9 +21,9 @@ $subtle-gray: #647981;
     position: fixed;
     position: -webkit-sticky;
     position:sticky;
-    width: 100vw;
+    width: 100%;
     top: 80px;
-    z-index:3;
+    z-index:1;
     background-color: $breadcrumbs-bg;
     .breadcrumbs {
       width: 1200px;
@@ -41,7 +41,7 @@ $subtle-gray: #647981;
 }
 
 // Community shared css for the hero header
-.hero {
+#hero {
   @include flexbox-center;
   padding: 30px 0px;
   height: 220px;
@@ -50,6 +50,9 @@ $subtle-gray: #647981;
   color: white;
   font-family: 'opensans-regular';
   padding: 0 25px;
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    margin-top: 20px;
+  }
 }
 
 .below-hero {
@@ -93,6 +96,9 @@ $subtle-gray: #647981;
       margin-right: 20px;
       position: -webkit-sticky;
       position: sticky;
+      @media screen and (min-width: 992px) and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        margin-top: 20px;
+      }
       //target ie10
       @media screen and (min-width:0\0) {
         position: static;
@@ -110,28 +116,39 @@ $subtle-gray: #647981;
     }
     //CSS for shared portion between City and District pages.
     .toc {
-      // set height of TOC in specific page of that module
+      height: 100%;
       display: inline-block;
       width: 230px;
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
         margin-left: -250px;
+        height: auto;
       }
       box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
       ul {
         list-style: none;
         padding: 0;
         margin: 0;
+        height: 100%;
         li {
           color: $school-color;
           font-size: 14px;
+          height: 100%;
+          //Targets IE10
+          @media screen and (min-width:0\0) {
+            height: 50px;
+          }
           &:hover {
             cursor: pointer;
           }
           div {
-            height: 50px;
+            height: 100%;
             padding: 16px 0px;
             margin: 0 20px;
           }
+        }
+        //Targets ie11 only
+        @media all and (-ms-high-contrast: none){
+          *::-ms-backdrop, li{ height: 100%; }
         }
         li + li {
           div {
@@ -142,6 +159,9 @@ $subtle-gray: #647981;
           color: black;
           background-color: $gray-light-blue;
           border-left: 5px solid $school-color;
+          div {
+            margin-left: 15px;
+          }
         }
       }
     }
@@ -278,22 +298,16 @@ $subtle-gray: #647981;
     font-family: 'opensans-semibold';
   }
   ul{
-    height: 150px;
     @include flex-column-wrap;
+    // Set height of UL in District or City specific page
     width: 100%;
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      height: 185px;
-    }
-    @include media-breakpoint-down(sm) {
-      height: auto;
-    }
     li{
-      width: 45%;
+      //Set width of li in District or City specific page
       margin-left: -10px;
       font-size: 25px;
       color: $color-button-border;
-      @include media-breakpoint-down(sm) {
-        width: 90%;
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        height: 36px;
       }
       // modify the blueline to have no padding for browse links
       .blue-line{
@@ -313,7 +327,7 @@ $subtle-gray: #647981;
         margin-top: -3px;
       }
       p { 
-        color: #333;
+        color: #999;
         display: inline-block;
         margin-top: 5px;
         margin-bottom: 0; 

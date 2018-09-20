@@ -73,11 +73,12 @@ function keepInViewport(
   updateElementPosition();
 }
 
-class CityLayout extends React.Component {
+class DistrictLayout extends React.Component {
   static propTypes = {
     viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
+    heroData: PropTypes.object
   };
 
   constructor(props) {
@@ -85,6 +86,7 @@ class CityLayout extends React.Component {
     this.ad = React.createRef();
     this.breadcrumbs = React.createRef();
     this.toc = React.createRef();
+    this.zillow = React.createRef();
     this.state = {}
   }
 
@@ -108,70 +110,10 @@ class CityLayout extends React.Component {
     });
   }
 
-  heroTitle(){
-    let {city, stateShort} = this.props.locality;
-    return `${city}, ${stateShort}`
-  }
-
-  heroNarration(){
-    let {city,stateLong,county} = this.props.locality;    
-    if (county) {
-      return <div
-        dangerouslySetInnerHTML={{
-          __html: t('city_hero_html', { parameters: { city, stateLong, county } })
-        }}
-      />
-    }else{
-      return <div
-        dangerouslySetInnerHTML={{
-          __html: t('city_hero_no_county_html', { parameters: { city, stateLong } })
-        }}
-      />
+  renderNarration(narration) {
+    if (narration){
+      return <div className='district-hero-narrative'>{narration}</div>
     }
-  }
-
-  renderHero(){
-    return (<div id="hero">
-      <div>
-        <div className="icon-city"></div>
-        <div className="city-hero-title">{this.heroTitle()}</div>
-        {this.heroNarration()}
-        <div className="city-hero-stats"></div>
-      </div>
-    </div>)
-  }
-
-  renderBreadcrumbs(){
-    return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
-  }
-
-  renderAd(){
-    return this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
-      <Ad slot="citypage_first" sizeName="box_or_tall" />
-    </div>
-  }
-
-  renderToc(){
-    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
-  }
-
-  renderDistricts(){
-    return this.props.districts.length > 0 && (
-      <div id="districts">
-        <div className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</div>
-          {this.props.districtsInCity}
-      </div>
-    )
-  }
-
-  renderSchools(){
-    return (
-      <div id="schools">
-        <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
-        {this.props.browseSchools}
-        {this.props.topSchools}
-      </div>
-    )
   }
 
   renderZillow(){
@@ -182,17 +124,80 @@ class CityLayout extends React.Component {
     )
   }
 
+  renderHero() {
+    let {name, address, city, stateShort, zipCode, phone, districtUrl} = this.props.locality;
+    let {enrollment, grades, schoolCount, narration} = this.props.heroData;
+    return (
+      <div id="hero">
+        <div>
+          <div className="icon-nearby_2"></div>
+          <div className="district-hero-title">{name}</div>
+          <div className="district-hero-contact-info">
+            {address && <span className="content">{address}, {city}, {stateShort} {zipCode}</span>}
+            {phone && <span className="badge-and-content phone">
+              <span className="badge icon-phone"></span>
+              <span className="content">{phone}</span>
+            </span>}
+            {districtUrl && <span className="badge-and-content link">
+              <span className="badge icon-link"/>
+              <span><a className="content" href={districtUrl}>{t('website')}</a></span>
+            </span>
+            }
+          </div>
+          {  this.renderNarration(narration)}
+          <div className="district-hero-stats">
+            <div>
+              <div>{t('schools').toUpperCase()}</div>
+              <div>{schoolCount}</div>
+            </div>
+            {enrollment ? <div>
+              <div>{t('students').toUpperCase()}</div>
+              <div>{enrollment.toLocaleString()}</div>
+            </div> : null}
+            <div>
+              <div>{t('Grades').toUpperCase()}</div>
+              <div>{grades}</div>
+            </div>
+          </div>
+        </div>
+      </div>)
+  }
+
+  renderBreadcrumbs(){
+    return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
+  }
+
+  renderAd(){
+    return this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
+        <Ad slot="districtpage_first" sizeName="box_or_tall" />
+      </div>
+  }
+
+  renderToc(){
+    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
+  }
+
+  renderSchools() {
+    return (
+      <div id="schools">
+        <div className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</div>
+        {this.props.browseSchools}
+        {this.props.topSchools}
+      </div>
+    )
+  }
+
   render() {
     return (
-      <div className="city-body">
+      <div className="district-body">
         {this.props.searchBox}
         {this.renderBreadcrumbs()}
         {this.renderHero()}
+        {/* {this.renderHero()} */}
         <div className="below-hero">
           {this.renderToc()}
           <div className="community-modules">
             {this.renderSchools()}
-            {this.renderDistricts()}
             {this.renderZillow()}
           </div>
           {this.renderAd()}
@@ -202,4 +207,4 @@ class CityLayout extends React.Component {
   }
 }
 
-export default CityLayout;
+export default DistrictLayout;
