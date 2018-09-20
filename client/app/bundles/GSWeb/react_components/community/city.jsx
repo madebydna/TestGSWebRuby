@@ -19,14 +19,14 @@ import Zillow from "./zillow";
 const { gon } = window;
 class City extends React.Component {
   static defaultProps = {
-    schools: [],
+    schools_data: {},
     loadingSchools: false,
     breadcrumbs: [],
     districts: []
   };
 
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.object),
+    schools_data: PropTypes.object,
     districts: PropTypes.arrayOf(PropTypes.object),
     loadingSchools: PropTypes.bool,
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,

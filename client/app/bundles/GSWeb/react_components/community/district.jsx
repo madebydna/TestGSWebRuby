@@ -17,12 +17,12 @@ import Zillow from "./zillow";
 
 class District extends React.Component {
   static defaultProps = {
-    schools: [],
+    schools_data: {},
     breadcrumbs: [],
   };
 
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.object),
+    schools_data: PropTypes.object,
     loadingSchools: PropTypes.bool,
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
