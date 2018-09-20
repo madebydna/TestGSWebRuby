@@ -33,9 +33,9 @@ const tableHeaders = (headerArray, tableView) => {
   headers = schoolHeader.concat(headers);
   return (
     <thead>
-    <tr>
-      {headers}
-    </tr>
+      <tr>
+        {headers}
+      </tr>
     </thead>
   )
 };

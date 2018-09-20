@@ -303,7 +303,8 @@ class SearchProvider extends React.Component {
                 <ChooseTableContext.Provider
                     value={{
                       tableView: this.props.tableView,
-                      updateTableView: this.props.updateTableView
+                      updateTableView: this.props.updateTableView,
+                      size: this.state.size
                     }}
                 >
                 {this.props.children}

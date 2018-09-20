@@ -172,6 +172,7 @@ body {
         }
       }
       .menu-item + .menu-item {
+        float: right;
         @include media-breakpoint-up(xs) {
           margin-left: 15px;
         }
