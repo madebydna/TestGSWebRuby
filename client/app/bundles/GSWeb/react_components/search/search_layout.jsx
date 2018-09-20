@@ -98,7 +98,8 @@ class SearchLayout extends React.Component {
     breadcrumbs: PropTypes.element,
     pagination: PropTypes.element,
     resultSummary: PropTypes.string.isRequired,
-    noResults: PropTypes.element
+    noResults: PropTypes.element,
+    chooseTableButtons: PropTypes.element
   };
 
   static getDerivedStateFromProps(props) {
@@ -195,6 +196,7 @@ class SearchLayout extends React.Component {
         <div style={{ margin: 'auto' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
           <span className="menu-item">{this.props.gradeLevelButtons}</span>
+          <span className="menu-item">{this.props.chooseTableButtons}</span>
           {this.props.distanceFilter ? (
             <span className="menu-item">
               <span className="label">Distance:</span>

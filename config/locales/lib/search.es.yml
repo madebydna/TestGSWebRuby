@@ -1,0 +1,48 @@
+es:
+  lib:
+    search:
+      School: Escuela
+      Test Scores Rating: Resultados de Exámenes
+      Test Scores Description: >
+        Las Calificaciones de GreatSchools de los Resultados de Exámenes reflejan los resultados de los
+        exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.
+      Student Progress Rating: Progreso del Estudiante
+      Student Progress Description: >
+        La Calificación de GreatSchools de el Progreso del Estudiante es
+        una forma de medir si las escuelas están ayudando a los estudiantes a avanzar académicamente año
+        tras año, y si estos estudiantes están en camino a lograr su máximo potencial, en comparación con
+        otras escuelas en el estado.
+      Academic Progress Rating: Progreso Académico
+      Academic Progress Description: >
+        La Calificación del Progreso Académico ayuda a medir cuánto lo
+        que los estudiantes aprenden en un año, en comparación con sus
+        compañeros de todo el estado.
+      College Readiness Rating: Preparación Universitaria
+      College Readiness Description: >
+        Esta calificación muestra si los estudiantes de esta escuela están preparados para la universidad en
+        comparación a los estudiantes en otras escuelas en este estado, en base a medidas como índices de
+        graduación, pruebas de ingreso universitario y cursos de AP cuando están disponibles.
+      Advanced Courses Rating: Cursos Avanzados
+      Advanced Courses Description: >
+        Las Calificaciones de Cursos Avanzados reflejan el número de cursos tomados por estudiantes de esta
+        escuela en inglés, STEM, ciencias sociales e idiomas extranjeros, en comparación al promedio estatal.
+      Equity Overview Rating: Resumen de Equidad
+      Equity Overview Description: >
+        La Calificación General de Equidad analiza cómo esta escuela está atendiendo las necesidades
+        de sus estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas
+        en el estado, basado en los resultados de los exámenes del Departamento de Educación del estado.
+      African American: Afroamericanos
+      Black: Afroamericanos
+      White: Blancos
+      Asian: Asiático
+      Asian or Pacific Islander: Asiático o Isleños del Pacífico
+      All: Todos
+      Multiracial: Dos o más razas
+      Two or more races: Dos o más razas
+      American Indian/Alaska Native: Los indios americanos / nativos de Alaska
+      Native American: Los indios americanos / nativos de Alaska
+      Pacific Islander: Islas del Pacífico
+      Hawaiian Native/Pacific Islander: Islas del Pacífico
+      Native Hawaiian or Other Pacific Islander: Islas del Pacífico
+      Economically disadvantaged: De bajos ingresos
+      Low Income: De bajos ingresos

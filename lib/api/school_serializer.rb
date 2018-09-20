@@ -15,9 +15,13 @@ class Api::SchoolSerializer
     return nil
   end
 
+
+
   def to_hash
     rating = school.great_schools_rating if defined? school.great_schools_rating || school.respond_to?(:great_schools_rating)
     rating = rating && rating != 'NR' ? rating.to_i : nil
+    # rating_subrating_hash = build_rating_subrating_hash
+    # rating_ethnicity_hash = school.subratings
 
     {
       id: school.id,
@@ -37,6 +41,8 @@ class Api::SchoolSerializer
       },
       rating: rating,
       ratingScale: rating ? SchoolProfiles::SummaryRating.scale(rating) : nil,
+      subratings: school.subratings,
+      ethnicity_ratings: school.ethnicity_ratings,
       schoolType: school.type,
       state: school.state,
       type: 'school',

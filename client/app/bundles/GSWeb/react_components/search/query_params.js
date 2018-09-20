@@ -103,8 +103,17 @@ export function getView() {
   return undefined;
 }
 
+export function getTableView() {
+  const { tableView } = parse(currentQueryString());
+  return tableView;
+}
+
 export function queryStringWithNewView(view) {
   return getQueryStringWithUpdatedParams({ view });
+}
+
+export function queryStringWithNewTableView(tableView) {
+  return getQueryStringWithUpdatedParams({ tableView });
 }
 
 export function queryStringWithNewDistance(distance) {
