@@ -26,7 +26,7 @@ module SchoolProfiles
       @_ethnicity_data ||= (
         @school_cache_data_reader.ethnicity_data.select { |e| e.has_key?('school_value') }.map do |hash|
           {
-              breakdown: data_label(hash['breakdown']),
+              breakdown: ethnicity_label(hash['breakdown']),
               school_value: hash['school_value']
           }.compact
         end
@@ -63,12 +63,14 @@ module SchoolProfiles
         str << "#{gender_data_source['gender'][:year]}</p>"
         str << '</div>'
       end
-      if subgroups_data_source.present?
-        str << '<div>'
-        str << '<h4>' + static_label('subgroups') + '</h4>'
-        str << '<p><span class="emphasis">' + static_label('source') + "</span>: #{data_label(subgroups_data_source['subgroups'][:source])}, "
-        str << "#{subgroups_data_source['subgroups'][:year]}</p>"
-        str << '</div>'
+      if subgroups_data_sources.present?
+        subgroups_data_sources.each do |(data_type, source_hash)|
+          str << '<div>'
+          str << '<h4>' + data_label(data_type) + '</h4>'
+          str << '<p><span class="emphasis">' + static_label('source') + "</span>: #{data_label(source_hash[:source])}, "
+          str << "#{source_hash[:year]}</p>"
+          str << '</div>'
+        end
       end
       str << '</div>'
       str
@@ -89,14 +91,16 @@ module SchoolProfiles
       end
     end
 
+    # TODO: ethnicity_data translates the keys, but this method does not. We should translate
+    #       here so that we don't have to duplicate the translations in JavaScript
     def subgroups_data
       @school_cache_data_reader.characteristics_data(*OTHER_BREAKDOWN_KEYS)
     end
 
-    def subgroups_data_source
-      subgroups_data.each_with_object({}) do |(_, array_of_one_hash), output|
+    def subgroups_data_sources
+      subgroups_data.each_with_object({}) do |(data_type, array_of_one_hash), output|
         array_of_one_hash.each do |hash|
-          output['subgroups'] = {
+          output[data_type] = {
               source: hash['source'],
               year: hash['year']
           }
@@ -108,8 +112,14 @@ module SchoolProfiles
       I18n.t(key.to_sym, scope: 'lib.students', default: key)
     end
 
-    def data_label(key)
+    # For ethnicity breakdowns we share translations with test scores for consistency
+    def ethnicity_label(key)
       I18n.t(key, scope: 'lib.equity_test_scores', default: I18n.db_t(key, default: key))
+    end
+
+    # All other data labels should default to students and then db_t
+    def data_label(key)
+      I18n.t(key, scope: 'lib.students', default: I18n.db_t(key, default: key))
     end
 
     def visible?
