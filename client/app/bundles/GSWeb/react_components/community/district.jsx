@@ -116,6 +116,7 @@ class District extends React.Component {
         mobility={
           <Mobility
             locality={this.props.locality}
+            pageType="District"
           />
         }
         zillow={

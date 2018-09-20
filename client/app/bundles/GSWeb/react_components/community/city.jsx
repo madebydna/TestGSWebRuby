@@ -123,6 +123,7 @@ class City extends React.Component {
         mobility={
           <Mobility
             locality={this.props.locality}
+            pageType='City'
              />
         }
         zillow={

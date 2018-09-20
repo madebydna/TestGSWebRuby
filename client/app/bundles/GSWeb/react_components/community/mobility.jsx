@@ -4,14 +4,17 @@ import { t } from "util/i18n";
 import ModalTooltip from "../modal_tooltip";
 import InfoBox from '../school_profiles/info_box';
 import LoadingOverlay from "../search/loading_overlay";
+import { analyticsEvent } from "util/page_analytics";
 
 class Mobility extends React.Component {
   static propTypes = {
-    locality: PropTypes.obj
+    locality: PropTypes.obj,
+    pageType: PropTypes.string.isRequired
   };
 
   static defaultProps = {
-    locality: {}
+    locality: {},
+    pageType: ""
   };
 
   constructor(props){
@@ -24,10 +27,10 @@ class Mobility extends React.Component {
     }
     this.renderAgencies = this.renderAgencies.bind(this);
     this.renderTransportation = this.renderTransportation.bind(this);
+    this.handleGoogleAnalyics = this.handleGoogleAnalyics.bind(this);
   }
 
   componentDidMount(){
-    console.log(`${this.props.locality.mobilityURL}?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkf`)
     $.ajax({
       type: 'GET',
       url: `${this.props.locality.mobilityURL}?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkf`,
@@ -67,6 +70,10 @@ class Mobility extends React.Component {
     )
   }
 
+  handleGoogleAnalyics(action, label){
+    analyticsEvent(`${this.props.pageType}`, action, label);
+  }
+
   render(){
     if (this.state.isLoading === true) {
       return(
@@ -95,7 +102,7 @@ class Mobility extends React.Component {
       const content = 
         <div className="tooltip-content">
           <p>{t('mobility.help')}</p>
-          <a href={mapURL} rel="nofollow" target="_blank">
+          <a href={mapURL} rel="nofollow" target="_blank" onClick={() => this.handleGoogleAnalyics('Infobox', 'Mobility')}>
             {t('top_schools.learn_more')}
           </a>
         </div>
@@ -104,26 +111,29 @@ class Mobility extends React.Component {
         <React.Fragment>
           <section className="mobility-module">
             <div>
-              <div>
-                  <ModalTooltip content={content}>
-                    <img src={badgeURL} alt="badge_score"/>
-                    <div className="scale">
-                      <span className="info-circle icon-info" />
-                    </div>
-                  </ModalTooltip>
-              </div>
+              {/* <div>
+                Removing for now until TransitScreen has better coverage
+                <ModalTooltip content={content}>
+                  <img src={badgeURL} alt="badge_score" onMouseEnter={() => this.handleGoogleAnalyics('Infobox', 'Mobility')} />
+                  <div className="scale" onMouseEnter={() => this.handleGoogleAnalyics('Infobox', 'Mobility')}>
+                    <span className="info-circle icon-info" />
+                  </div>
+                </ModalTooltip>
+              </div> */}
               <div className="transportation-content">
                 <h3>{scoreLabel}</h3>
                 <p>{scoreDescription}</p>
                 {score !== 0 ? <div className="blue-line"/> : null}
-                <a href={mapURL} rel="nofollow" target="_blank">
-                  {modes.subway ? this.renderTransportation("subway", modes.subway) : null}
-                  {modes.bus ? this.renderTransportation("bus", modes.bus) : null}
-                  {modes.carshare ? this.renderTransportation("carshare", modes.carshare) : null}
-                  {modes.bikeshare ? this.renderTransportation("bikeshare", modes.bikeshare) : null}
-                  {modes.scootershare ? this.renderTransportation("scootershare", modes.scootershare) : null}
-                  {modes.ridehailing ? this.renderTransportation("ridehailing", modes.ridehailing) : null}
-                </a>
+                <div>
+                  <a href={mapURL} rel="nofollow" target="_blank" onClick={() => this.handleGoogleAnalyics('External link', 'Mobility transport') }>
+                    {modes.subway ? this.renderTransportation("subway", modes.subway) : null}
+                    {modes.bus ? this.renderTransportation("bus", modes.bus) : null}
+                    {modes.carshare ? this.renderTransportation("carshare", modes.carshare) : null}
+                    {modes.bikeshare ? this.renderTransportation("bikeshare", modes.bikeshare) : null}
+                    {modes.scootershare ? this.renderTransportation("scootershare", modes.scootershare) : null}
+                    {modes.ridehailing ? this.renderTransportation("ridehailing", modes.ridehailing) : null}
+                  </a>
+                </div>
               </div>
             </div>
           </section>

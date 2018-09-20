@@ -352,20 +352,18 @@ $subtle-gray: #647981;
     border: solid 1px $border-color;
     padding: 5px;
     >div{ 
-      @include flexbox;
-      @include media-breakpoint-down(sm){
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        >div:first-child{
-          margin: auto;
-        }
-      }
-      padding: 10px;
-      >div{
-        padding: 10px;
-      }
+      padding: 20px;
+      // Add this back when TransitScreen has better coverage
+      // @include flexbox;
+      // @include media-breakpoint-down(sm){
+      //   -webkit-box-orient: vertical;
+      //   -webkit-box-direction: normal;
+      //   -ms-flex-direction: column;
+      //   flex-direction: column;
+      //   >div:first-child{
+      //     margin: auto;
+      //   }
+      // }
       .scale{
         @include flexbox-center;
         height: 30px;
@@ -376,6 +374,9 @@ $subtle-gray: #647981;
           font-family: "opensans-semibold";
           font-size: $font-size;
         }
+        //Remove margin-left when mobility score gets added back
+        >div:last-child{ margin-left: 20px; }
+        a{color: black;}
         a:hover{ text-decoration: none; }
         .transportation-container{
           @include flexbox-align-items-center;
