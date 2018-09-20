@@ -6,7 +6,7 @@ module Search
     include Sortable
 
     attr_accessor :q, :district_id, :district_name, :location_label, :city, :level_codes, :entity_types, :id, :lat,
-                  :lon, :radius, :with_rating
+                  :lon, :radius, :with_rating, :ratings
     attr_reader :state
 
     def initialize(
@@ -25,6 +25,7 @@ module Search
       sort_name: nil,
       sort_direction: nil,
       with_rating: false,
+      ratings: [],
       offset: -1,
       limit: 25
     )
@@ -45,6 +46,7 @@ module Search
       self.limit = limit
       self.offset = offset
       self.with_rating = with_rating
+      self.ratings = ratings
     end
 
     def search

@@ -31,15 +31,6 @@ describe Api::NearbySchoolsController do
       expect(response.status).to be(404)
     end
 
-    it 'accepts and uses overall_gs_rating_param' do
-      expect(SchoolSearchService).to(
-        receive(:by_location).
-        with(hash_including(filters: hash_including(overall_gs_rating: ['8','9','10']))).
-        and_return(no_results)
-      )
-      get :show, state: school.state, id: school.id, overall_gs_rating: [8,9,10]
-    end
-
     it 'omits overall_gs_rating when param not present' do
       expect(SchoolSearchService).to(
         receive(:by_location).

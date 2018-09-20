@@ -18,12 +18,28 @@ module Search
     def search
       @_search ||= begin
         PageOfResults.new(
-          School.load_all_from_associates(response.results, &:include_district_name),
+          preserve_distance_from_solr(
+            School.load_all_from_associates(response.results, &:include_district_name)
+          ),
           query: self,
           total: response.results.total_count,
           offset: offset,
           limit: limit
         )
+      end
+    end
+
+    def preserve_distance_from_solr(schools)
+      hash = response.instance_variable_get(:@solr_result)['response']['docs'].each_with_object({}) do |doc, h|
+        sd = SchoolDocument.from_unique_key(doc['id'].gsub(doc['type']+' ', ''))
+        h[[sd.state.upcase, sd.school_id.to_i]] = doc
+      end
+      schools.map do |s|
+        distance = (hash[[s.state, s.id]] || {})['geodist()'] / M_TO_KM
+        s.define_singleton_method(:distance) do
+          distance
+        end
+        s
       end
     end
 
@@ -38,6 +54,8 @@ module Search
     def default_sort_name
       if @q.present?
         'relevance'
+      elsif lat && lon
+        nil
       else
         'rating'
       end
@@ -88,7 +106,7 @@ module Search
           # search.with(:latlon).in_radius(lat, lon, 5*1.60934)
           # search.order_by_geodist(:latlon, lat, lon)
           search.adjust_solr_params do |params|
-            params[:fq] = '{!geofilt}'
+            params[:fq] << '{!geofilt}'
             params[:sfield] = 'latlon_ll'
             params[:pt] = "#{lat},#{lon}"
             params[:d] = radius
@@ -111,6 +129,8 @@ module Search
         search.with(:state, state.downcase) if state
         search.with(:level_codes, level_codes.map(&:downcase)) if level_codes.present?
         search.with(:entity_type, entity_types.map(&:downcase)) if entity_types.present?
+        search.with(:summary_rating, ratings) if ratings.present?
+
         search.paginate(page: page, per_page: limit)
       end
     end

@@ -142,7 +142,7 @@ module SearchControllerConcerns
     return schools unless point_given? || area_given?
 
     schools.each do |school|
-      if school.lat && school.lon
+      if school.lat && school.lon && !school.singleton_class.method_defined?(:distance)
         distance = 
           Geo::Coordinate.new(school.lat, school.lon).distance_to(
             Geo::Coordinate.new(lat.to_f, lon.to_f)

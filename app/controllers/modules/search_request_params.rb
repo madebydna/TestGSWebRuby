@@ -223,4 +223,8 @@ module SearchRequestParams
     params[:top_school_module]
   end
 
+  def ratings
+    params[:overall_gs_rating] || []
+  end
+
 end

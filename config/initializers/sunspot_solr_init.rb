@@ -9,6 +9,7 @@ Sunspot.setup(School) do
   string :school_district_name
   string :state
   integer :summary_rating
+  string :level_codes
   latlon(:latlon) { Sunspot::Util::Coordinates.new(lat, lon) }
 
   # Remove these after we are totally on Solr 7
@@ -17,7 +18,6 @@ Sunspot.setup(School) do
   string :school_database_state
   integer :overall_gs_rating
   string :school_grade_level
-  integer :overall_gs_rating
   integer :sorted_gs_rating_asc
   integer :school_id
   string :school_sortable_name

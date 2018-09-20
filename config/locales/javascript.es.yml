@@ -107,7 +107,9 @@ es:
     school_types:
       Private: Privada
       Public charter: Charter pública
+      Charter: Charter pública
       Public district: Distrito pública
+      Public: Distrito pública
       charter: charter
       private: privada
       public: pública
