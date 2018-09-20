@@ -37,7 +37,7 @@ class Mobility extends React.Component {
         isLoading: false,
         data: $jsonRes.data.mobilityScore,
       }))
-      .fail(error => this.setState({
+      .fail(error => console.log(error) || this.setState({
         isLoading: false,
         didFail: true,
         error: error.textStatus
