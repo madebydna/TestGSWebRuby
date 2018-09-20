@@ -14,12 +14,12 @@ const options = {
 const ChooseTableButtons = () => (
     <ChooseTableContext.Consumer>
       {({ tableView, updateTableView, size }) => (
-        renderTableFilters(tableView, updateTableView, size)
+        renderTableButtonsFilters(tableView, updateTableView, size)
       )}
     </ChooseTableContext.Consumer>
 );
 
-const renderTableFilters = (tableView, updateTableView, size) => {
+const renderTableButtonsFilters = (tableView, updateTableView, size) => {
     if(size > SM){
         return(
             <ButtonGroup
