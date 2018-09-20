@@ -13,14 +13,14 @@ const renderEnrollment = enrollment => {
   return <span>N/A</span>;
 };
 
-const drawRating = (theRating) => {
+const drawRating = (theRating, linkProfile) => {
   const className = `circle-rating--small circle-rating--${theRating || 'gray'}`;
   return (
-      theRating ?
-            <div className={className}>
+      theRating ? <a href={linkProfile}>
+            <span className={className}>
               {theRating}
               {theRating && <span className="rating-circle-small">/10</span>}
-            </div> : <span>N/A</span>
+            </span></a> : <span>N/A</span>
       )
 }
 const numReviewsLink = (numReviews, reviewsUrl) => {
@@ -110,11 +110,11 @@ const SchoolTableRow = ({
     );
   }
   else if (tableView == 'Equity') {
-    content = equityColumns(columns, ethnicity_ratings);
+    content = equityColumns(columns, ethnicity_ratings, links.profile);
   }
 
   else if (tableView == 'Academic') {
-    content = academicColumns(columns, subratings);
+    content = academicColumns(columns, subratings, links.profile);
   }
 
   return (
@@ -147,18 +147,15 @@ const overviewColumns = (type, grades, enrollmentDisplay, studentPerTeacher, rev
   )
 }
 
-const equityColumns = (columns, ethnicity_ratings) => {
-  console.log(JSON.stringify(columns));
-  console.log(JSON.stringify(ethnicity_ratings));
-
-  let horstyle = {textAlign: 'center'}
+const equityColumns = (columns, ethnicity_ratings, profileLink) => {
+  let cellStyle = {textAlign: 'center'}
   let content = [] ;
   columns.map(function(hash, index){
     if (ethnicity_ratings.hasOwnProperty(hash['key'])){
-      content.push(<td key={ index } style={horstyle}>{drawRating(ethnicity_ratings[hash['key']])}</td>);
+      content.push(<td key={ index } style={cellStyle}>{drawRating(ethnicity_ratings[hash['key']], profileLink)}</td>);
     }
     else{
-      content.push(<td key={ index } style={horstyle}>N/A</td>);
+      content.push(<td key={ index } style={cellStyle}>N/A</td>);
     }
   });
   return (
@@ -168,15 +165,15 @@ const equityColumns = (columns, ethnicity_ratings) => {
   )
 }
 
-const academicColumns = (columns, subratings) => {
-  let horstyle = {textAlign: 'center'}
+const academicColumns = (columns, subratings, profileLink) => {
+  let cellStyle = {textAlign: 'center'}
   let content = [] ;
     columns.map(function(hash, index){
      if (subratings.hasOwnProperty(hash['key'])){
-       content.push(<td key={ index } style={horstyle}>{drawRating(subratings[hash['key']])}</td>);
+       content.push(<td key={ index } style={cellStyle}>{drawRating(subratings[hash['key']])}</td>);
      }
      else{
-       content.push(<td key={ index } style={horstyle}>N/A</td>);
+       content.push(<td key={ index } style={cellStyle}>N/A</td>);
      }
   });
   return (
