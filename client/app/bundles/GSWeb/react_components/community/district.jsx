@@ -98,7 +98,7 @@ class District extends React.Component {
         topSchools={
           <TopSchoolsStateful
             community="district"
-            schoolsObj={this.props.schools_data.schools}
+            schoolsData={this.props.schools_data.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
             schoolLevels={this.props.schools_data.counts}

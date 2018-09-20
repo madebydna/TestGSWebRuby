@@ -7,7 +7,7 @@ import * as APISchools from 'api_clients/schools';
 
 class TopSchoolsStateful extends React.Component {
   static propTypes = {
-    schoolsObj: PropTypes.object,
+    schoolsData: PropTypes.object,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     locality: PropTypes.object.isRequired,
     community: PropTypes.string.isRequired,
@@ -15,7 +15,7 @@ class TopSchoolsStateful extends React.Component {
   };
 
   static defaultProps = {
-    schoolsObj: {},
+    schoolsData: {},
     schoolLevels: {}
   };
 
@@ -25,7 +25,7 @@ class TopSchoolsStateful extends React.Component {
       size: props.size,
       schoolLevels: props.schoolLevels
     };
-    this.initialSchoolLoad(props.schoolsObj);
+    this.initialSchoolLoad(props.schoolsData);
     this.handleGradeLevel = this.handleGradeLevel.bind(this);
   }
 
@@ -50,9 +50,9 @@ class TopSchoolsStateful extends React.Component {
 
   handleGradeLevel(str){
     const schools = { 
-      'e': this.props.schoolsObj.elementary, 
-      'm': this.props.schoolsObj.middle, 
-      'h': this.props.schoolsObj.high
+      'e': this.props.schoolsData.elementary, 
+      'm': this.props.schoolsData.middle, 
+      'h': this.props.schoolsData.high
     }
     this.setState({
       levelCodes: str,
