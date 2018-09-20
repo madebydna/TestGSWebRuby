@@ -122,15 +122,11 @@ const onInitialize = func =>
   initialized ? func() : onInitializeFuncs.push(func);
 
 const getSizeMappings = function() {
+  // for the addSize function, the first dimension specifies the browser size.  The second specifies the ad size
   return {
     box_desktop_not_tall: googletag
       .sizeMapping()
       .addSize([992, 300], [[300, 250]])
-      .build(),
-    box: googletag
-      .sizeMapping()
-      .addSize([300, 600], [[300, 600], [300, 250]])
-      .addSize([0, 0], [[300, 250]])
       .build(),
     box_or_tall: googletag
       .sizeMapping()
@@ -341,10 +337,14 @@ const handleGhostTextMessages = function(event) {
       ) {
         const $adSlotDiv = jQuery(this).parents('.gs_ad_slot');
         const slotName = $adSlotDiv.attr('id');
-        $adSlotDiv
-          .parents(`.js-${slotName}-wrapper`)
-          .find('.advertisement-text')
-          .text(event.data.ghostText);
+        let $adTextDiv = $adSlotDiv
+            .parents(`.js-${slotName}-wrapper`)
+            .find('.advertisement-text');
+        if ($adTextDiv.length === 0) {
+          // Probably under /gk/
+          $adTextDiv = $adSlotDiv.find('.advertisement-text');
+        }
+        $adTextDiv.text(event.data.ghostText);
       }
     });
   }
