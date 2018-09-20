@@ -185,7 +185,15 @@ const getSizeMappings = function() {
     box: googletag
       .sizeMapping()
       .addSize([0, 0], [[300, 250], [320, 100], [320, 50]])
-      .build()
+      .build(),
+    banner_top: googletag
+      .sizeMapping()
+      .addSize([1200, 300], [[1140, 250], [1140, 100], [728, 90]])
+      .addSize([1052, 300], [[970, 250], [970, 100], [728, 90]])
+      .addSize([865, 300], [[728, 90], [630, 250], [630, 100]])
+      .addSize([690, 300], [[630, 250], [630, 100], [320, 50]])
+      .addSize([0, 0], [[320, 100], [320, 50]])
+      .build(),
   };
 };
 
