@@ -87,6 +87,7 @@ es:
     learn_more_html: Aprender Mas &raquo;
     mobility:
       title: Recursos comunitarios en
+      transportation_narration: Opciones de transporte cerca de las escuelas
       help: >
         MobilityScore® le ayuda a comprender lo fácil que es viajar. Funciona en cualquier ubicación o dirección dentro 
         de los EE. UU. y Canadá y le proporciona una calificación que va desde 0 (sin opciones de movilidad) hasta 100 
@@ -98,6 +99,8 @@ es:
           <div>Transporte</div>
           <p><span>Fuente&#58;</span> MobilityScore&reg;</p>
         <div>
+      no_score_city: Esta sección muestra las opciones de transporte que se ofrecen en esta ciudad. En este momento, esta información no está disponible.
+      no_score_district: Esta sección muestra las opciones de transporte que se ofrecen en esta distrito. En este momento, esta información no está disponible.
     fatal_error: Se produjo un error inesperado durante la carga de la página. Por favor, intente actualizar la página.
     fewer_filters: Menos filtros
     follow_schools:

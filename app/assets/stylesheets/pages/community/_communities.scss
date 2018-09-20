@@ -401,12 +401,14 @@ $subtle-gray: #647981;
         }
       }
     }
+    //CSS for the Null states
     .null-state{
       display: block;
       font-family: 'opensans-semibold';
       padding: 20px;
       margin: auto;
       h3{ text-align: center; }
+      h4{ font-size: $font-size; }
       .loading-overlay {
         position: relative;
         z-index: 1;

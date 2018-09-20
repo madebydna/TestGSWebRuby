@@ -88,6 +88,7 @@ en:
     learn_more_html: Learn More &raquo;
     mobility:
       title: Community Resources in
+      transportation_narration: Transportation options near the schools
       help: >
         MobilityScore® helps you understand how easy it is to get around. It works at any location or 
         address within the US and Canada and gives you a score ranging from 0 (no mobility choices) 
@@ -99,6 +100,8 @@ en:
           <div>Transportation</div>
           <p><span>Sources&#58;</span> MobilityScore&reg;</p>
         </div>
+      no_score_city: This section shows the transportation option offered at this city. Currently, this information is not available.
+      no_score_district: This section shows the transportation option offered in this district. Currently, this information is not available.
     fatal_error: An unexpected error occurred while loading the page. Please try refreshing the page.
     fewer_filters: Fewer filters
     follow_schools:

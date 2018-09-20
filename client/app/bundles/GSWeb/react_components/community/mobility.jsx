@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { t } from "util/i18n";
 import ModalTooltip from "../modal_tooltip";
+import {findMobilityScoreWithLatLon as fetchMobilityScore} from 'api_clients/mobility';
 import InfoBox from '../school_profiles/info_box';
 import LoadingOverlay from "../search/loading_overlay";
 import { analyticsEvent } from "util/page_analytics";
@@ -31,10 +32,8 @@ class Mobility extends React.Component {
   }
 
   componentDidMount(){
-    $.ajax({
-      type: 'GET',
-      url: `${this.props.locality.mobilityURL}?coordinates=${this.props.locality.lat},${this.props.locality.lon}&key=7Q0jpitnctkvjAkf`,
-    }).done($jsonRes => this.setState({
+    fetchMobilityScore(this.props.locality.mobilityURL, this.props.locality.lat, this.props.locality.lon)
+      .done($jsonRes => this.setState({
         isLoading: false,
         data: $jsonRes.data.mobilityScore,
       }))
@@ -92,6 +91,15 @@ class Mobility extends React.Component {
           </div>
         </section>
       )
+    }else if(this.state.data.score === 0){
+      const noScoreMapping = { 'City': t('mobility.no_score_city'), 'District': t('mobility.no_score_district') }
+      return(
+        <section className="mobility-module">
+          <div className="null-state">
+            <h4>{noScoreMapping[this.props.pageType]}</h4>
+          </div>
+        </section>
+      )
     }else{
       const { mapURL,
               badgeURL, 
@@ -121,8 +129,9 @@ class Mobility extends React.Component {
                 </ModalTooltip>
               </div> */}
               <div className="transportation-content">
-                <h3>{scoreLabel}</h3>
-                <p>{scoreDescription}</p>
+                <h3>{t('mobility.transportation_narration')}</h3>
+                {/* <h3>{scoreLabel}</h3>
+                <p>{scoreDescription}</p> */}
                 {score !== 0 ? <div className="blue-line"/> : null}
                 <div>
                   <a href={mapURL} rel="nofollow" target="_blank" onClick={() => this.handleGoogleAnalyics('External link', 'Mobility transport') }>
