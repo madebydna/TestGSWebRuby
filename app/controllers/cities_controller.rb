@@ -9,10 +9,10 @@ class CitiesController < ApplicationController
 
   def show
     set_city_meta_tags
+    @top_schools =  top_rated_schools
     @breadcrumbs = breadcrumbs
     @locality = locality
     @school_levels = school_levels
-    @top_schools =  top_rated_schools
     @districts = district_content(city_record.id)
     set_ad_targeting_props
     set_page_analytics_data
@@ -88,7 +88,7 @@ class CitiesController < ApplicationController
     zip = district_content(city_record.id).find do |dc|
       break dc[:zip] if dc[:zip].present?
     end
-    zip ||= @schools.find do |s|
+    zip ||= @top_schools[:schools][:elementary].find do |s|
       break s[:address][:zip] if s && s[:address].present? && s[:address][:zip].present?
     end
     zip
