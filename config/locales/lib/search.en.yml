@@ -2,12 +2,6 @@ en:
   lib:
     search:
       School: School
-      Type: Type
-      Grades: Grades
-      Total students enrolled: Total students enrolled
-      Students per teacher: Students per teacher
-      Reviews: Reviews
-      District: District
       Test Scores Rating: Test Scores Rating
       Test Scores Description: >
         The GreatSchools Test Score Rating reflects annual state test results for this school compared with
