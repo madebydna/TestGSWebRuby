@@ -288,7 +288,7 @@ class SearchLayout extends React.Component {
           <div className="pagination-summary">{this.props.resultSummary}</div>
           <div className="menu-item">{this.props.chooseTableButtons}</div>
           {this.props.size > SM && (
-            <div className="menu-item">
+            <div className="menu-item sort-dropdown">
               <span className="label">{t('Sort by')}:</span>
               {this.props.sortSelect}
             </div>

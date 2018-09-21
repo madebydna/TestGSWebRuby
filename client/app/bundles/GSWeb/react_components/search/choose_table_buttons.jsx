@@ -3,6 +3,7 @@ import ButtonGroup from 'react_components/buttongroup';
 import { t } from 'util/i18n';
 import ChooseTableContext from './choose_table_context';
 import { SM, validSizes } from 'util/viewport';
+import TableSelect from './table_select';
 
 const options = {
   Overview: t('School Overview'),
@@ -30,7 +31,7 @@ const renderTableButtonsFilters = (tableView, updateTableView, size) => {
         )
     }else{
         return(
-            <div>Hello World</div>
+            <TableSelect/>
         )
     }
 };

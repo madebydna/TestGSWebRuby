@@ -172,13 +172,15 @@ body {
         }
       }
       .menu-item + .menu-item {
-        float: right;
         @include media-breakpoint-up(xs) {
           margin-left: 15px;
         }
         @include media-breakpoint-up(md) {
           margin-left: 20px;
         }
+      }
+      .sort-dropdown{
+        float: right;
       }
     }
 
