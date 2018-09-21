@@ -8,22 +8,22 @@ import Select from '../select';
 const optionsArray = [
     {
         key: 'Overview',
-        label: t('School Overview')
+        label: t('Overview')
     },
     {
         key: 'Academic',
-        label: t('Academic and Equity ratings')
+        label: t('Ratings Snapshot')
     },
     {
         key: 'Equity',
-        label: t('Equity Test Score ratings')
+        label: t('Equity Test Scores')
     }
 ];
 
 const optionsObject = {
-    Overview: t('School Overview'),
-    Academic: t('Academic and Equity ratings'),
-    Equity: t('Equity Test Score ratings')
+    Overview: t('Overview'),
+    Academic: t('Ratings Snapshot'),
+    Equity: t('Equity Test Scores')
 };
 
 

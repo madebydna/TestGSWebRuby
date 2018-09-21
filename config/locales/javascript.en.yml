@@ -93,6 +93,9 @@ en:
       signed_in_message_on_compare_follow_all: Good news! You’re signed up to receive our newsletter and updates for these schools.
     more_filters: More filters
     ok_fit: 'Ok fit'
+    Overview: Overview
+    Ratings Snapshot: Ratings Snapshot
+    Equity Test Scores: "Equity: Test scores"
     reviews:
       found_this_helpful: ! ' found this helpful'
       people: people

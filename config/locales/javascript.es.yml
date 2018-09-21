@@ -92,6 +92,9 @@ es:
            signed_in_message_on_compare_follow_all: ¡Buenas noticias! Usted está registrado para recibir nuestro boletín de noticias y actualizaciones para estas escuelas .
     more_filters: Más filtros
     ok_fit: Medio
+    Overview: Descripción general
+    Ratings Snapshot: Vistazo de las calificaciones
+    Equity Test Scores: "Equidad: Resultados de exámenes"
     reviews:
       found_this_helpful: ! ' encontraron esta útil'
       people: personas
