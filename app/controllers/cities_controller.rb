@@ -9,7 +9,7 @@ class CitiesController < ApplicationController
 
   def show
     set_city_meta_tags
-    @schools = serialized_schools
+    @top_schools =  top_rated_schools
     @breadcrumbs = breadcrumbs
     @locality = locality
     @school_levels = school_levels
@@ -88,7 +88,7 @@ class CitiesController < ApplicationController
     zip = district_content(city_record.id).find do |dc|
       break dc[:zip] if dc[:zip].present?
     end
-    zip ||= @schools.find do |s|
+    zip ||= @top_schools[:schools][:elementary].find do |s|
       break s[:address][:zip] if s && s[:address].present? && s[:address][:zip].present?
     end
     zip

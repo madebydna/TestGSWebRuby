@@ -16,6 +16,8 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
   CACHE_KEY = "district_schools_summary".freeze
   SCHOOLS_COUNTS_BY_LEVEL_CODE_KEY = "school counts by level code".freeze
   SCHOOLS_COUNTS_BY_TYPE = "school counts by type".freeze
+  DEFAULT_LEVEL_HASH = LevelCode::LEVEL_LOOKUP.keys.each_with_object({}) {|lc, hash| hash[lc] = 0}
+  DEFAULT_SCHOOL_TYPE_HASH = {'public' => 0, 'charter' => 0}
 
   def build_hash_for_cache
     {
@@ -26,35 +28,37 @@ class DistrictSchoolsSummary::DistrictSchoolsSummaryCacher < DistrictCacher
 
   private
 
-  def column_data_for_schools_within_district(column)
-    @_schools_within_district ||= begin
-      School.on_db(district.shard) { School.active.where(district_id: district.id).pluck(column) }
+  def st_and_lc_within_district
+    @_school_types_and_level_codes_within_district ||= begin
+      types_and_level_codes = School.on_db(district.shard){School.active.where(district_id: district.id).pluck(:type,:level_code)}.transpose
+      {
+        :types => types_and_level_codes.first,
+        :level_codes => types_and_level_codes.last
+      }
     end
   end
 
   def count_of_schools_by_level_code
-    level_code_counts = LevelCode::LEVEL_LOOKUP.keys.each_with_object({}) {|lc, hash| hash[lc] = 0}
-    column_data_for_schools_within_district(:level_code).each do |level_codes|
-      split_lc = level_codes.split(',')
-      split_lc.each do |lc|
-        # Don't increment counter if level code is not included in LevelCode::LEVEL_LOOKUP.keys
-        cleaned_lc = lc.strip.downcase
-        level_code_counts[cleaned_lc] += 1 if level_code_counts.has_key?(cleaned_lc)
-      end
+    level_codes = st_and_lc_within_district.fetch(:level_codes, nil)
+    if level_codes
+      level_codes.map {|lc| lc.split(',')} # the level code for each record is a string, i.e. 'e,m,h' or 'e'. 
+        .flatten
+        .each_with_object(Hash.new(0)) {|lc, hash| hash[lc] += 1}
+        .slice(*LevelCode::LEVEL_LOOKUP.keys)
+    else
+      DEFAULT_LEVEL_HASH
     end
-
-    level_code_counts
   end
 
   def count_of_schools_by_type
-    school_type_counts = {'public' => 0, 'charter' => 0}
-    column_data_for_schools_within_district(:type).each do |st|
-      # Don't increment counter if school type is not 'public' or 'charter'
-      cleaned_st = st.strip.downcase
-      school_type_counts[cleaned_st] += 1 if school_type_counts.has_key?(cleaned_st)
+    schools_by_type = st_and_lc_within_district.fetch(:types, nil)
+    if schools_by_type
+      schools_by_type
+        .each_with_object(Hash.new(0)) {|type,hash| hash[type] += 1}
+        .slice('public', 'charter')
+    else
+      DEFAULT_SCHOOL_TYPE_HASH
     end
-
-    school_type_counts
   end
 
 end

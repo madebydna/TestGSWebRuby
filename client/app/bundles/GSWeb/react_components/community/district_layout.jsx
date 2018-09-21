@@ -169,7 +169,7 @@ class DistrictLayout extends React.Component {
 
   renderAd(){
     return this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
-        <Ad slot="districtpage_first" dimensions={[300, 600]}/>
+        <Ad slot="districtpage_first" sizeName="box_or_tall" />
       </div>
   }
 
@@ -182,7 +182,7 @@ class DistrictLayout extends React.Component {
       <div id="schools">
         <div className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</div>
         {this.props.browseSchools}
-        {this.props.topSchools}
+        {this.props.schoolCounts.all > 0 ? this.props.topSchools: null}
       </div>
     )
   }

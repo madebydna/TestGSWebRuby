@@ -29,13 +29,13 @@ const boldSearchTerms = (string, substring) => {
   const matchesAndNonMatches = string.split(
     new RegExp(`\\b(${tokens.join('|')})`, 'gi')
   );
-  return matchesAndNonMatches.map(token => {
+  return matchesAndNonMatches.map((token, i) => {
     const queryContainsToken = tokens.find(
       item => item.toLowerCase() === token.toLowerCase()
     );
     if (queryContainsToken) {
       return (
-        <span key={token} className="match">
+        <span key={token + i} className="match">
           {token}
         </span>
       );
