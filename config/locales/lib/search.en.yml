@@ -1,0 +1,45 @@
+en:
+  lib:
+    search:
+      School: School
+      Test Scores Rating: Test Scores Rating
+      Test Scores Description: >
+        The GreatSchools Test Score Rating reflects annual state test results for this school compared with
+        scores statewide.
+      Student Progress Rating: Student Progress Rating
+      Student Progress Description: >
+        The GreatSchools Student Progress Rating compares the academic progress over time for this school to all
+        schools in the state, using student growth data provided by the state Department of Education.
+      Academic Progress Rating: Academic Progress Rating
+      Academic Progress Description: >
+        The Academic Progress Rating helps measure how much students learn in a year, compared to their peers
+        across the state.
+      College Readiness Rating: College Readiness Rating
+      College Readiness Description: >
+        This rating shows how well students at this school are prepared for college compared to students at
+        other schools in this state, based on key measures, like graduation rates, college entrance tests and AP
+        coursework when available.
+      Advanced Courses Rating: Advanced Courses Rating
+      Advanced Courses Description: >
+        The Advanced Courses Rating reflects the number of advanced courses taken per student at this school in
+        English, STEM, social sciences, and foreign languages compared to the state average.
+      Equity Overview Rating: Equity Overview Rating
+      Equity Overview Description: >
+        The Equity Overview Rating looks at how well this school is serving the needs of its disadvantaged
+        students relative to all its students, compared to other schools in the state, based on test scores
+        provided from the state Department of Education.
+      African American: Black
+      Black: Black
+      White: White
+      Asian or Pacific Islander: Asian or Pacific Islander
+      Asian: Asian
+      All: All students
+      Multiracial: Two or more races
+      Two or more races: Two or more races
+      American Indian/Alaska Native: American Indian/Alaska Native
+      Native American: American Indian/Alaska Native
+      Pacific Islander: Pacific Islander
+      Hawaiian Native/Pacific Islander: Pacific Islander
+      Native Hawaiian or Other Pacific Islander: Pacific Islander
+      Economically disadvantaged: Low-income
+      Low Income: Low-income

@@ -14,9 +14,8 @@ class DistrictsController < ApplicationController
     @locality = locality
     @school_levels = school_levels
     @breadcrumbs = breadcrumbs
-    @serialized_schools = serialized_schools
-    @hero_stats = hero_stats
-    @hero_narration =  build_header_narration
+    @top_schools =  top_rated_schools
+    @hero_data = hero_data
     set_district_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
@@ -107,12 +106,13 @@ class DistrictsController < ApplicationController
     end
   end
 
-  def hero_stats
-    @_hero_stats ||= begin
+  def hero_data
+    @_hero_data ||= begin
       Hash.new.tap do |hs|
         hs[:schoolCount] = district_record.num_schools
         hs[:enrollment] = district_enrollment
         hs[:grades] = GradeLevelConcerns.human_readable_level(district_record.level)
+        hs[:narration] = build_header_narration
       end
     end
   end
@@ -182,15 +182,15 @@ class DistrictsController < ApplicationController
   end
 
   def redirect_to_canonical_url
-    district_params_hash = district_params(state, district_record.city, district)
+    canonical_district_params = district_params(state, district_record.city, district)
     # this prevents an endless redirect loop for the profile pages
     # because of ApplicationController::url_options
-    canonical_path = remove_query_params_from_url( city_district_path(state: district_params_hash[:state], city: district_params_hash[:city], district: district_params_hash[:district]), [:lang] )
+    canonical_path = remove_query_params_from_url( city_district_path(state: canonical_district_params[:state], city: canonical_district_params[:city], district: canonical_district_params[:district]), [:lang] )
 
     # Add a trailing slash to the request path, only if one doesn't already exist.
     unless canonical_path == with_trailing_slash(request.path)
       redirect_to add_query_params_to_url(
-                      city_district_path(state: district_params_hash[:state], city: district_params_hash[:city], district: district_params_hash[:district]),
+                      city_district_path(state: canonical_district_params[:state], city: canonical_district_params[:city], district: canonical_district_params[:district]),
                       true,
                       request.query_parameters
                   ), status: :moved_permanently

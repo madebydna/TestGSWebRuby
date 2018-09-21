@@ -9,12 +9,11 @@
 
 <div class="community-page">
   <%= react_component("District", props: {
-      schools: @serialized_schools,
+      schools_data: @top_schools,
       school_levels: @school_levels,
       breadcrumbs: @breadcrumbs,
       locality: @locality,
-      heroStats: @hero_stats,
-      heroNarration: @hero_narration
+      heroData: @hero_data,
       }) %>
 </div>
 

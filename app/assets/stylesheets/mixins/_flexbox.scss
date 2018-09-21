@@ -39,3 +39,12 @@
   display: flex;
     justify-content: center;
 }
+
+@mixin flex-justify-space-between{
+  display: -ms-flexbox;
+    -ms-flex-pack: justify;
+  display: -webkit-box;
+    -webkit-box-pack: justify;
+  display: flex;
+    justify-content: space-between;
+}

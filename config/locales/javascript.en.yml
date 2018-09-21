@@ -93,6 +93,9 @@ en:
       signed_in_message_on_compare_follow_all: Good news! You’re signed up to receive our newsletter and updates for these schools.
     more_filters: More filters
     ok_fit: 'Ok fit'
+    Overview: Overview
+    Ratings Snapshot: Ratings Snapshot
+    Equity Test Scores: "Equity: Test scores"
     reviews:
       found_this_helpful: ! ' found this helpful'
       people: people
@@ -141,12 +144,12 @@ en:
         based on how well a school prepares all its students for postsecondary
         success - be it college or career.
       learn_more: Learn more
-      no_elemC: There are no elementary schools with a GreatSchools rating for this city
-      no_midC: There are no middle schools with a GreatSchools rating for this city
-      no_highC: There are no high schools with a GreatSchools rating for this city
-      no_elemD: There are no elementary schools with a GreatSchools rating for this district
-      no_midD: There are no middle schools with a GreatSchools rating for this district
-      no_highD: There are no high schools with a GreatSchools rating for this district 
+      no_elemCity: There are no elementary schools with a GreatSchools rating for this city
+      no_midCity: There are no middle schools with a GreatSchools rating for this city
+      no_highCity: There are no high schools with a GreatSchools rating for this city
+      no_elemDistrict: There are no elementary schools with a GreatSchools rating for this district
+      no_midDistrict: There are no middle schools with a GreatSchools rating for this district
+      no_highDistrict: There are no high schools with a GreatSchools rating for this district 
       see_elem: See more elementary schools
       see_mid: See more middle schools
       see_high: See more high schools

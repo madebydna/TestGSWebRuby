@@ -6,6 +6,7 @@ class NewSearchController < ApplicationController
   include AdvertisingConcerns
   include PageAnalytics
   include SearchControllerConcerns
+  include SearchTableConcerns
 
   layout 'application'
   before_filter :redirect_unless_valid_search_criteria # we need at least a 'q' param or state and city/district
@@ -24,6 +25,11 @@ class NewSearchController < ApplicationController
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
       props[:breadcrumbs] = should_include_breadcrumbs? ? search_breadcrumbs : []
+      props[:searchTableViewHeaders] = {
+          'Overview' => overview_header_hash,
+          'Equity' => equity_header_hash(schools),
+          'Academic' => academic_header_hash
+      }
     end
     set_search_meta_tags
     set_ad_targeting_props
@@ -148,7 +154,7 @@ class NewSearchController < ApplicationController
 
   def set_search_meta_tags
     set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url? && page_of_results.present?
-    if %i[zip_code city_browse district_browse].include?(search_type)
+    if %i[zip_code city_browse district_browse address other].include?(search_type)
       complete_tags = send("#{search_type}_meta_tag_hash".to_sym).merge({prev: prev_page, next: next_page})
       send(:set_meta_tags, complete_tags)
     end
@@ -195,22 +201,34 @@ class NewSearchController < ApplicationController
     }
   end
 
+  def address_meta_tag_hash
+    {
+      title: "#{entity_type_long}#{level_code_long}#{schools_or_preschools} near #{location_label} | GreatSchools",
+    }
+  end
+
+  def other_meta_tag_hash
+    {
+      title: "#{entity_type_long}#{level_code_long}#{schools_or_preschools} matching #{q} | GreatSchools",
+    }
+  end
+
   def city_browse_title
     city_type_level_code_text = "#{city_record.name} #{entity_type_long}#{level_code_long}#{schools_or_preschools}"
-    "#{city_type_level_code_text}#{pagination_text} - #{city_record.name}, #{city_record.state}"
+    "#{city_type_level_code_text}#{title_pagination_text} - #{city_record.name}, #{city_record.state}"
   end
 
   def district_browse_title
-    "#{entity_type_long}#{level_code_long}#{schools_or_preschools} in #{district_record.name}#{pagination_text} - #{city_record.name}, #{city_record.state}"
+    "#{entity_type_long}#{level_code_long}#{schools_or_preschools} in #{district_record.name}#{title_pagination_text} - #{city_record.name}, #{city_record.state}"
   end
 
   def zip_code_search_title
-    "#{entity_type_long}#{level_code_long}#{schools_or_preschools} in #{zip_code}#{pagination_text} - #{state.upcase}"
+    "#{entity_type_long}#{level_code_long}#{schools_or_preschools} near #{location_label}#{title_pagination_text} - #{state.upcase}"
   end
 
-  def pagination_text
+  def title_pagination_text
     return if offset > page_of_results.total
-    ", #{(offset + 1).to_s}-#{(offset + 1 + page_of_results.length).to_s}"
+    ", #{page_of_results.index_of_first_result}-#{page_of_results.index_of_last_result}"
   end
 
   def entity_type_long

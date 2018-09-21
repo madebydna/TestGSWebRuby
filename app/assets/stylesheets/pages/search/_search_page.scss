@@ -167,6 +167,10 @@ body {
       .menu-item {
         display: inline-block;
         cursor: pointer;
+        // Hide select dropdown on IE10+ browsers
+        select::-ms-expand {
+          display: none;
+        }
         > * + * {
           margin-left: 5px;
         }
@@ -178,6 +182,9 @@ body {
         @include media-breakpoint-up(md) {
           margin-left: 20px;
         }
+      }
+      .sort-dropdown-table-view{
+        float: right;
       }
     }
 
@@ -219,7 +226,7 @@ body {
 
     .list-map-toggle {
       > div {
-        display: flex;
+        @include flexbox;
         margin-right: 25px;
       }
       @include media-breakpoint-up(lg) {
@@ -252,7 +259,6 @@ body {
       .menu-item {
         display: block;
         margin-top: 15px;
-
         .label {
           display: block;
           margin-bottom: 5px;
@@ -428,9 +434,11 @@ body {
       font-weight: normal;
       text-align: left;
       background-color: #f1fafd;
+      text-align: center;
     }
     th.school {
       width: 290px;
+      text-align: left;
     }
 
     td.school {
@@ -498,7 +506,7 @@ body {
     margin-top: -3px;
   }
   .rating-scale{
-    display: flex;
+    @include flexbox;
     .help-circle {
       text-align: center;
       color: white;
@@ -511,8 +519,7 @@ body {
     }
   }
   .ratings-scale-container {
-    display: flex;
-    justify-content: space-between;
+    @include flex-justify-space-between;
     max-width: 300px;
     .block-container{
       .rating-scale{

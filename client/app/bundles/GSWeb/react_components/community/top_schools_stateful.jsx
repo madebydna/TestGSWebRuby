@@ -7,103 +7,68 @@ import * as APISchools from 'api_clients/schools';
 
 class TopSchoolsStateful extends React.Component {
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
-    // schoolsData: PropTypes.object.isRequired,
+    schoolsData: PropTypes.object,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     locality: PropTypes.object.isRequired,
-    community: PropTypes.string,
-    schoolLevels: PropTypes.object.isRequired
+    community: PropTypes.string.isRequired,
+    schoolLevels: PropTypes.object,
   };
 
   static defaultProps = {
-    schools: [],
-    // schoolsData: {}
+    schoolsData: {},
+    schoolLevels: {}
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false,
-      levelCodes: "e",
-      districtId: props.locality.district_id,
-      // levelCodes: props.schoolsData.levelCode,
-      schools: props.schools,
-      // schools: props.schoolsData.schools,
       size: props.size,
-      state: props.locality.stateShort,
-      city: props.locality.city,
-      district_name: props.locality.name
+      schoolLevels: props.schoolLevels
     };
+    this.initialSchoolLoad(props.schoolsData);
     this.handleGradeLevel = this.handleGradeLevel.bind(this);
   }
 
-  handleGradeLevel(str, community) {
-    this.setState({
-      isLoading: true
-    });
-    if (community === 'city') {
-      APISchools.find(
-        {
-          city: this.state.city,
-          state: this.state.state,
-          levelCodes: [str],
-          sort: "rating",
-          extras: ["students_per_teacher", "review_summary", "students_per_teacher"],
-          limit: 5,
-          with_rating: true
-        },
-        {}
-      )
-        .then(res =>
-          this.setState({
-            schools: res.items,
-            isLoading: false,
-            levelCodes: str
-          })
-        )
-        .fail((xhr, status, error) =>
-          alert("Request timed out. Please try again.")
-        );
-    }else{
-      APISchools.find(
-        {
-          district_id: this.state.districtId,
-          top_school_module: true,
-          state: this.state.state,
-          levelCodes: [str],
-          sort: "rating",
-          extras: ["students_per_teacher", "review_summary", "students_per_teacher"],
-          limit: 5,   
-          with_rating: true
-        },
-        {}
-      )
-        .then(res =>
-          this.setState({
-            schools: res.items,
-            isLoading: false,
-            levelCodes: str
-          })
-        )
-        .fail((xhr, status, error) =>
-          alert("Request timed out. Please try again.")
-        );
+  initialSchoolLoad({elementary, middle, high}){
+    if (elementary.length > 0) {
+      this.state = {
+        levelCodes: 'e',
+        schools: elementary
+      }
+    }else if(middle.length > 0){
+      this.state = {
+        levelCodes: 'm',
+        schools: middle
+      }
+    }else if(high.length > 0){
+      this.state = {
+        levelCodes: 'h',
+        schools: high
+      }
     }
+  }
+
+  handleGradeLevel(str){
+    const schools = { 
+      'e': this.props.schoolsData.elementary, 
+      'm': this.props.schoolsData.middle, 
+      'h': this.props.schoolsData.high
+    }
+    this.setState({
+      levelCodes: str,
+      schools: schools[str]
+    })
   }
 
   render() {
     return (
-      <TopSchools
+       <TopSchools
         schools={this.state.schools}
-        // schools={this.state.schoolsData.schools}
+        schoolLevels={this.props.schoolLevels}
         handleGradeLevel={this.handleGradeLevel}
-        isLoading={this.state.isLoading}
         size={this.props.size}
         levelCodes={this.state.levelCodes}
-        state={this.state.state}
-        city={this.state.city}
         community={this.props.community}
-        schoolLevels={this.props.schoolLevels}
         locality={this.props.locality}
       />
     );

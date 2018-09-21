@@ -92,6 +92,9 @@ es:
            signed_in_message_on_compare_follow_all: ¡Buenas noticias! Usted está registrado para recibir nuestro boletín de noticias y actualizaciones para estas escuelas .
     more_filters: Más filtros
     ok_fit: Medio
+    Overview: Descripción general
+    Ratings Snapshot: Vistazo de las calificaciones
+    Equity Test Scores: "Equidad: Resultados de exámenes"
     reviews:
       found_this_helpful: ! ' encontraron esta útil'
       people: personas
@@ -141,12 +144,12 @@ es:
         qué tan bien una escuela prepara a todos sus estudiantes para el éxito postsecundaria
          — ya sea de colegio o carrera.
       learn_more: Obtenga más información
-      no_elemC: No hay escuelas primarias con una Calificación General de GreatSchools en esta ciudad
-      no_midC: No hay escuelas intermedias con una Calificación General de GreatSchools en esta ciudad
-      no_highC: No hay escuelas secundarias con una Calificación General de GreatSchools en esta ciudad
-      no_elemD: No hay escuelas primarias con una Calificación General de GreatSchools en esta distrito
-      no_midD: No hay escuelas intermedias con una Calificación General de GreatSchools en esta distrito
-      no_highD: No hay escuelas secundarias con una Calificación General de GreatSchools en esta distrito
+      no_elemCity: No hay escuelas primarias con una Calificación General de GreatSchools en esta ciudad
+      no_midCity: No hay escuelas intermedias con una Calificación General de GreatSchools en esta ciudad
+      no_highCity: No hay escuelas secundarias con una Calificación General de GreatSchools en esta ciudad
+      no_elemDistrict: No hay escuelas primarias con una Calificación General de GreatSchools en esta distrito
+      no_midDistrict: No hay escuelas intermedias con una Calificación General de GreatSchools en esta distrito
+      no_highDistrict: No hay escuelas secundarias con una Calificación General de GreatSchools en esta distrito
       see_elem: Vea más escuelas primarias
       see_mid: Vea más escuelas intermedias
       see_high: Vea más escuelas secundarias

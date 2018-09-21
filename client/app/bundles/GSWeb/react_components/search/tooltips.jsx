@@ -14,7 +14,7 @@ const renderAssignedTooltip = (lc) => {
   );
   return (
     <ModalTooltip content={content}>
-    <span className="info-circle icon-info" />
+      <span className="info-circle icon-info" />
     </ModalTooltip>
   );
 };

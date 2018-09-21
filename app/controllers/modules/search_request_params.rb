@@ -120,6 +120,10 @@ module SearchRequestParams
     params[:locationLabel] || params[:locationSearchString]
   end
 
+  def location_label
+    location_label_param.gsub(', USA', '')
+  end
+
   def city_record
     return nil unless city
     return @_city_record if defined? @_city_record
@@ -174,6 +178,8 @@ module SearchRequestParams
       :city_browse
     elsif zip_code_search?
       :zip_code
+    elsif street_address?
+      :address
     else
       :other
     end
@@ -217,10 +223,6 @@ module SearchRequestParams
 
   def with_rating
     params[:with_rating]
-  end
-
-  def top_school_module?
-    params[:top_school_module]
   end
 
 end
