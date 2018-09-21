@@ -28,7 +28,7 @@ const SchoolTable = ({ schools, isLoading, searchTableViewHeaders, tableView }) 
 const tableHeaders = (headerArray, tableView) => {
   let schoolHeader = [<SchoolTableColumnHeader key={tableView+'school'} colName={capitalize(t("school"))} classNameTH='school' tooltipContent="" />];
   let headers = headerArray.map(hash =>
-    <SchoolTableColumnHeader key={tableView+hash['key']} colName={hash['title']} tooltipContent={hash['tooltip']} tableView={tableView} />
+    <SchoolTableColumnHeader key={tableView+hash['key']} colName={hash['title']} tooltipContent={hash['tooltip']} />
   );
   headers = schoolHeader.concat(headers);
   return (

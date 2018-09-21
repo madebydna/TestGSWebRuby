@@ -6,16 +6,13 @@ import { SM, validSizes } from 'util/viewport';
 import Select from '../select';
 
 const optionsArray = [
-    {
-        key: 'Overview',
+    {   key: 'Overview',
         label: t('Overview')
     },
-    {
-        key: 'Academic',
+    {   key: 'Academic',
         label: t('Ratings Snapshot')
     },
-    {
-        key: 'Equity',
+    {   key: 'Equity',
         label: t('Equity Test Scores')
     }
 ];
@@ -29,9 +26,16 @@ const optionsObject = {
 
 const ChooseTableButtons = () => (
     <ChooseTableContext.Consumer>
-      {({ tableView, updateTableView, size }) => (
-        renderTableButtonsFilters(tableView, updateTableView, size)
-      )}
+      {({ tableView, updateTableView, size, equitySize }) => {
+        // Remove Equity from displaying in the selections
+        if(equitySize === 0){
+            delete optionsObject.Equity;
+            optionsArray.splice(-1,1);
+        }
+        return(
+            renderTableButtonsFilters(tableView, updateTableView, size)
+        )
+      }}
     </ChooseTableContext.Consumer>
 );
 

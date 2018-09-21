@@ -304,7 +304,8 @@ class SearchProvider extends React.Component {
                     value={{
                       tableView: this.props.tableView,
                       updateTableView: this.props.updateTableView,
-                      size: this.state.size
+                      size: this.state.size,
+                      equitySize: this.props.searchTableViewHeaders.Equity.length,
                     }}
                 >
                 {this.props.children}
