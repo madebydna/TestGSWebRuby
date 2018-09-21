@@ -55,4 +55,12 @@
     padding: 4px 4px 4px 0;
   }
 
+  @include media-breakpoint-down(sm) {
+    padding-left: 15px;
+    margin-top: 25px;
+    .top > ul {
+      padding-left: 0;
+    }
+  }
+
 }
