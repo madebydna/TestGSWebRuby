@@ -6,7 +6,7 @@ import LoadingOverlay from './loading_overlay';
 import SchoolTableRow from './school_table_row';
 import SchoolTableColumnHeader from './school_table_column_header'
 
-const SchoolTable = ({ schools, isLoading, searchTableViewHeaders, tableView }) =>console.log(searchTableViewHeaders) || (
+const SchoolTable = ({ schools, isLoading, searchTableViewHeaders, tableView }) => (
   <section className="school-table">
     {
       /* would prefer to just not render overlay if not showing it,
