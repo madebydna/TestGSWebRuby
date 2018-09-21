@@ -35,9 +35,12 @@ module Search
         h[[sd.state.upcase, sd.school_id.to_i]] = doc
       end
       schools.map do |s|
-        distance = (hash[[s.state, s.id]] || {})['geodist()'] / M_TO_KM
-        s.define_singleton_method(:distance) do
-          distance
+        distance = (hash[[s.state, s.id]] || {})['geodist()']
+        if distance
+          distance /= M_TO_KM
+          s.define_singleton_method(:distance) do
+            distance
+          end
         end
         s
       end
