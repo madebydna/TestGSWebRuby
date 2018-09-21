@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { t, capitalize } from "util/i18n";  may need this, maybe not
+import ModalTooltip from 'react_components/modal_tooltip';
+import { t, capitalize } from "util/i18n";
 
-const SchoolTableColumnHeader = ({ colName, tooltipContent, classNameTH }) => (
-  <th className={classNameTH}>{colName}</th>
+const SchoolTableColumnHeader = ({ colName, tooltipContent, classNameTH, tableView }) => (
+  <th className={`${classNameTH} table-headers`}>
+    {colName}
+    {tooltipContent !== '' ? 
+    <ModalTooltip content={tooltipContent}>
+      <span className="info-circle icon-info" />
+    </ModalTooltip> : null}
+  </th>
 );
 
 SchoolTableColumnHeader.propTypes = {

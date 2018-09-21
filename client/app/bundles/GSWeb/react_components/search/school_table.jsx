@@ -6,7 +6,7 @@ import LoadingOverlay from './loading_overlay';
 import SchoolTableRow from './school_table_row';
 import SchoolTableColumnHeader from './school_table_column_header'
 
-const SchoolTable = ({ schools, isLoading, searchTableViewHeaders, tableView }) => (
+const SchoolTable = ({ schools, isLoading, searchTableViewHeaders, tableView }) =>console.log(searchTableViewHeaders) || (
   <section className="school-table">
     {
       /* would prefer to just not render overlay if not showing it,
@@ -26,9 +26,9 @@ const SchoolTable = ({ schools, isLoading, searchTableViewHeaders, tableView }) 
 );
 
 const tableHeaders = (headerArray, tableView) => {
-  let schoolHeader = [<SchoolTableColumnHeader key={tableView+'school'} colName={capitalize(t("school"))} classNameTH='school' tooltipContent={'NEED TO ADD CONTENT'} />];
+  let schoolHeader = [<SchoolTableColumnHeader key={tableView+'school'} colName={capitalize(t("school"))} classNameTH='school' tooltipContent="" />];
   let headers = headerArray.map(hash =>
-    <SchoolTableColumnHeader key={tableView+hash['key']} colName={hash['title']} tooltipContent={hash['tooltip']} />
+    <SchoolTableColumnHeader key={tableView+hash['key']} colName={hash['title']} tooltipContent={hash['tooltip']} tableView={tableView} />
   );
   headers = schoolHeader.concat(headers);
   return (
