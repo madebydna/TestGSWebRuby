@@ -23,12 +23,20 @@ module Feeds
       private
 
       def write_info
-        CSV.open(@feed_file_path, 'w', {:col_sep => "\t"}) do |csv|
+        CSV.open(@feed_file_path, 'w', {:col_sep => column_separator}) do |csv|
           csv << @column_titles
           @data_reader.each_result do |hash|
             school_info = get_info(hash)
             csv << school_info if school_info
           end
+        end
+      end
+
+      def column_separator
+        if File.extname(@feed_file_path) == '.txt'
+          "\t"
+        else
+          ','
         end
       end
 

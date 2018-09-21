@@ -30,7 +30,7 @@ module Feeds
 
       VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description)
 
-      VALID_FEED_FORMATS = %w(xml csv)
+      VALID_FEED_FORMATS = %w(xml csv txt)
 
       RATINGS_ID_RATING_FEED_MAPPING = {
           'test_rating' => 164,

@@ -32,9 +32,11 @@ module Feeds
     DATA_WRITERS = {
         subrating: {
             xml: Feeds::Subrating::XmlWriter,
+            txt: Feeds::Subrating::CsvWriter,
             csv: Feeds::Subrating::CsvWriter
         },
         subrating_description: {
+            txt: Feeds::Subrating::CsvWriterDescription,
             csv: Feeds::Subrating::CsvWriterDescription
         },
         old_test_gsdata: {

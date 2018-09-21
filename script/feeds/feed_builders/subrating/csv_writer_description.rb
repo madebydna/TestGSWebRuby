@@ -17,7 +17,7 @@ module Feeds
       private
 
       def write_info
-        CSV.open(@feed_file_path, 'w', {:col_sep => "\t"}) do |csv|
+        CSV.open(@feed_file_path, 'w', {:col_sep => column_separator}) do |csv|
           csv << @column_titles
           @data_reader.state_results.each_value do |ratings_data|
             state_description = get_info(ratings_data)
