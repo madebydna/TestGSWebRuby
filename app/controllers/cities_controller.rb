@@ -9,7 +9,6 @@ class CitiesController < ApplicationController
 
   def show
     set_city_meta_tags
-    @schools = serialized_schools
     @breadcrumbs = breadcrumbs
     @locality = locality
     @school_levels = school_levels
