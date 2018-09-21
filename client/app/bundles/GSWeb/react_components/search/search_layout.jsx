@@ -286,16 +286,35 @@ class SearchLayout extends React.Component {
         <div className="subheader menu-bar">
           {this.props.breadcrumbs}
           <div className="pagination-summary">{this.props.resultSummary}</div>
-          <div className="menu-item">{this.props.chooseTableButtons}</div>
-          {this.props.size > SM && (
-            <div className="menu-item sort-dropdown">
-              <span className="label">{t('Sort by')}:</span>
-              {this.props.sortSelect}
-            </div>
-          )}
+          {this.shouldRenderTable() ? 
+            <div className="menu-item">
+              {this.props.chooseTableButtons}
+            </div> : null
+          }
+          {this.renderSortDropDown()}
         </div>
       )
     );
+  }
+
+  renderSortDropDown(){
+    if(this.props.size <= SM){
+      return null;
+    }else if(this.shouldRenderTable()){
+      return (
+        <div className="menu-item sort-dropdown-table-view">
+          <span className="label">{t('Sort by')}:</span>
+          {this.props.sortSelect}
+        </div>
+      )
+    }else{
+      return(
+        <div className="menu-item">
+          <span className="label">{t('Sort by')}:</span>
+          {this.props.sortSelect}
+        </div>
+      )
+    }
   }
 
   render() {

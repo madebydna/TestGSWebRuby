@@ -2,6 +2,12 @@ es:
   lib:
     search:
       School: Escuela
+      Type: Tipo
+      Grades: Grados
+      Total students enrolled: Número de estudiantes
+      Students per teacher: Estudiantes por profesor
+      Reviews: Opiniones
+      District: Distrito
       Test Scores Rating: Resultados de Exámenes
       Test Scores Description: >
         Las Calificaciones de GreatSchools de los Resultados de Exámenes reflejan los resultados de los
