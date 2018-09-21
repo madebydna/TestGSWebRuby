@@ -167,6 +167,10 @@ body {
       .menu-item {
         display: inline-block;
         cursor: pointer;
+        // Hide select dropdown on IE10+ browsers
+        select::-ms-expand {
+          display: none;
+        }
         > * + * {
           margin-left: 5px;
         }
@@ -255,7 +259,6 @@ body {
       .menu-item {
         display: block;
         margin-top: 15px;
-
         .label {
           display: block;
           margin-bottom: 5px;

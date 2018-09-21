@@ -219,8 +219,4 @@ module SearchRequestParams
     params[:with_rating]
   end
 
-  def top_school_module?
-    params[:top_school_module]
-  end
-
 end

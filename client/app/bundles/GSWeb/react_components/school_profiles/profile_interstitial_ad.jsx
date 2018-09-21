@@ -29,16 +29,80 @@ const trackInterstitialViewed = () => {
 
 const searchRegExp = /search\.page/;
 const browseExp = /\/schools\/|\?/;
+const STATE_HASH = {
+  alabama: 'al',
+  alaska: 'ak',
+  arizona: 'az',
+  arkansas: 'ar',
+  california: 'ca',
+  colorado: 'co',
+  connecticut: 'ct',
+  delaware: 'de',
+  'district of columbia': 'dc',
+  'washington dc': 'dc',
+  florida: 'fl',
+  georgia: 'ga',
+  hawaii: 'hi',
+  idaho: 'id',
+  illinois: 'il',
+  indiana: 'in',
+  iowa: 'ia',
+  kansas: 'ks',
+  kentucky: 'ky',
+  louisiana: 'la',
+  maine: 'me',
+  maryland: 'md',
+  massachusetts: 'ma',
+  michigan: 'mi',
+  minnesota: 'mn',
+  mississippi: 'ms',
+  missouri: 'mo',
+  montana: 'mt',
+  nebraska: 'ne',
+  nevada: 'nv',
+  'new hampshire': 'nh',
+  'new jersey': 'nj',
+  'new mexico': 'nm',
+  'new york': 'ny',
+  'north carolina': 'nc',
+  'north dakota': 'nd',
+  ohio: 'oh',
+  oklahoma: 'ok',
+  oregon: 'or',
+  pennsylvania: 'pa',
+  'rhode island': 'ri',
+  'south carolina': 'sc',
+  'south dakota': 'sd',
+  tennessee: 'tn',
+  texas: 'tx',
+  utah: 'ut',
+  vermont: 'vt',
+  virginia: 'va',
+  washington: 'wa',
+  'west virginia': 'wv',
+  wisconsin: 'wi',
+  wyoming: 'wy'
+};
+let statesPattern = [];
+Object.keys(STATE_HASH).forEach(stateName => {
+  statesPattern.push(`${stateName.replace(/\s+/, '-')}`);
+});
+statesPattern = statesPattern.join('|');
+const cityHomeRegex = new RegExp(`(${statesPattern})\/[^/]+\/?$`);
+const districtHomeRegex = new RegExp(`(${statesPattern})\/[^/]+\/[^/]+\/?$`);
+window.cityHomeRegex = cityHomeRegex;
 
-const referrerIsSearch = () =>
+const referrerMatches = () =>
   searchRegExp.test(window.document.referrer) ||
-  browseExp.test(window.document.referrer);
+  browseExp.test(window.document.referrer) ||
+  cityHomeRegex.test(window.document.referrer) ||
+  districtHomeRegex.test(window.document.referrer);
 
 const hasViewedInterstitial = () =>
   getCookie(COOKIE_NAME) === INTERSTITIAL_VIEWED;
 
 const shouldShowInterstitial = () =>
-  referrerIsSearch() && !hasViewedInterstitial();
+  referrerMatches() && !hasViewedInterstitial();
 
 const ProfileInterstitialAd = ({ loaded }) =>
   shouldShowInterstitial() && loaded ? (
