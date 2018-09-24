@@ -158,6 +158,14 @@ module SearchRequestParams
     state && district
   end
 
+  def view
+    params['view']
+  end
+
+  def tableView
+    params['tableView']
+  end
+
   def city_browse?
     state && city && !district
   end
@@ -202,6 +210,14 @@ module SearchRequestParams
 
   def grade_level_param_name
     'gradeLevels'
+  end
+
+  def list_table_view_param_name
+    'view'
+  end
+
+  def which_table_view_param_name
+    'tableView'
   end
 
   def page_param_name
