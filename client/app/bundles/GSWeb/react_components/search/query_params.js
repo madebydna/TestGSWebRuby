@@ -104,7 +104,8 @@ export function getView() {
 }
 
 export function getTableView() {
-  const { tableView } = parse(currentQueryString());
+  let { tableView } = parse(currentQueryString());
+  tableView = ["Overview", "Academic", "Equity"].includes(tableView) ? tableView : undefined;
   return tableView;
 }
 

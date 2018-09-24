@@ -4,6 +4,7 @@ import { t } from 'util/i18n';
 import ChooseTableContext from './choose_table_context';
 import { SM, validSizes } from 'util/viewport';
 import Select from '../select';
+import PropTypes from 'prop-types';
 
 const optionsArray = [
     {
@@ -34,7 +35,7 @@ const ChooseTableButtons = () => (
     <ChooseTableContext.Consumer>
         {({ tableView, updateTableView, size, equitySize }) => {
             // Remove Equity from displaying in the selections
-            if (equitySize === 0) {
+            if (equitySize === 0 && optionsObject.Equity) {
                 delete optionsObject.Equity;
                 optionsArray.splice(-1, 1);
             }
@@ -50,7 +51,9 @@ const renderTableButtonsFilters = (tableView, updateTableView, size) => {
         return (
             <ButtonGroup
                 options={optionsObject}
-                activeOption={Object.keys(optionsObject).includes(tableView) ? tableView : "Overview"}
+                activeOption={
+                    Object.keys(optionsObject).includes(tableView) ? tableView : "Overview"
+                }
                 onSelect={updateTableView}
             />
         )
@@ -72,6 +75,15 @@ const renderTableButtonsFilters = (tableView, updateTableView, size) => {
             </ChooseTableContext.Consumer>
         )
     }
+};
+ChooseTableButtons.propTypes = {
+    searchTableViewHeaders: PropTypes.object,
+    tableView: PropTypes.string
+};
+
+ChooseTableButtons.defaultProps = {
+    searchTableViewHeaders: {},
+    tableView: 'Overview'
 };
 
 export default ChooseTableButtons;
