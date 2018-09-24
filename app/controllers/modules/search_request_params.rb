@@ -200,6 +200,22 @@ module SearchRequestParams
     params[:extras]&.split(',') || []
   end
 
+  def view_param_name
+    'view'
+  end
+
+  def table_view_param_name
+    'tableView'
+  end
+
+  def view
+    params['view']
+  end
+
+  def tableView
+    params['tableView']
+  end
+
   def grade_level_param_name
     'gradeLevels'
   end

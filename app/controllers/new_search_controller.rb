@@ -35,7 +35,7 @@ class NewSearchController < ApplicationController
     set_ad_targeting_props
     set_page_analytics_data
     set_meta_tags(alternate: {
-      en: url_for(params_for_rel_alternate.merge(lang: nil)),
+      en: url_for(params_for_rel_alternate),
       es: url_for(params_for_rel_alternate.merge(lang: :es))
     })
     response.status = 404 if serialized_schools.empty?
@@ -254,19 +254,23 @@ class NewSearchController < ApplicationController
   end
 
   def params_for_canonical
-    {
-      grade_level_param_name => level_code,
-      page_param_name => given_page,
-      school_type_param_name => entity_type
-    }.compact
+    {}.tap do |key|
+      key[grade_level_param_name] = level_code if level_code.present?
+      key[page_param_name] = given_page  if given_page.present?
+      key[school_type_param_name] = entity_types  if entity_types.present?
+      key[view_param_name] =  view  if view.present?
+      key[table_view_param_name] = tableView  if tableView.present?
+    end.compact
   end
 
   def params_for_rel_alternate
-    {
-      grade_level_param_name => level_codes,
-      page_param_name => given_page,
-      school_type_param_name => entity_types,
-    }.compact
+    {}.tap do |key|
+      key[grade_level_param_name] = level_codes if level_codes.present?
+      key[page_param_name] = given_page  if given_page.present?
+      key[school_type_param_name] = entity_types  if entity_types.present?
+      key[view_param_name] =  view  if view.present?
+      key[table_view_param_name] = tableView  if tableView.present?
+    end
   end
 
 end
