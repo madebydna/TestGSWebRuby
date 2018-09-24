@@ -7,7 +7,7 @@ import SchoolTableRow from './school_table_row';
 import SchoolTableColumnHeader from './school_table_column_header'
 
 const SchoolTable = ({ schools, isLoading, searchTableViewHeaders, tableView }) => {
-  if (searchTableViewHeaders[tableView] === undefined || searchTableViewHeaders[tableView].length === 0) {
+  if (searchTableViewHeaders[tableView].length === 0) {
     tableView = 'Overview';
   }
   return (
