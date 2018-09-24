@@ -6,29 +6,34 @@ import LoadingOverlay from './loading_overlay';
 import SchoolTableRow from './school_table_row';
 import SchoolTableColumnHeader from './school_table_column_header'
 
-const SchoolTable = ({ schools, isLoading, searchTableViewHeaders, tableView }) => (
-  <section className="school-table">
-    {
-      /* would prefer to just not render overlay if not showing it,
-      but then loader gif has delay, and we would need to preload it */
-      <LoadingOverlay
-        visible={isLoading && schools.length > 0}
-        numItems={schools.length}
-      />
-    }
-    <table className={isLoading ? "loading" : ""}>
-      {tableHeaders(searchTableViewHeaders[tableView], tableView)}
-      <tbody>
-        {schools.map(s => <SchoolTableRow tableView={tableView} columns={searchTableViewHeaders[tableView]} key={s.state + s.id + (s.assigned ? 'assigned' : '')} {...s} />)}
-      </tbody>
-    </table>
-  </section>
-);
+const SchoolTable = ({ schools, isLoading, searchTableViewHeaders, tableView }) => {
+  if (searchTableViewHeaders[tableView] === undefined || searchTableViewHeaders[tableView].length === 0) {
+    tableView = 'Overview';
+  }
+  return (
+    <section className="school-table">
+      {
+        /* would prefer to just not render overlay if not showing it,
+        but then loader gif has delay, and we would need to preload it */
+        <LoadingOverlay
+          visible={isLoading && schools.length > 0}
+          numItems={schools.length}
+        />
+      }
+      <table className={isLoading ? "loading" : ""}>
+        {tableHeaders(searchTableViewHeaders[tableView], tableView)}
+        <tbody>
+          {schools.map(s => <SchoolTableRow tableView={tableView} columns={searchTableViewHeaders[tableView]} key={s.state + s.id + (s.assigned ? 'assigned' : '')} {...s} />)}
+        </tbody>
+      </table>
+    </section>
+  )
+};
 
 const tableHeaders = (headerArray, tableView) => {
-  let schoolHeader = [<SchoolTableColumnHeader key={tableView+'school'} colName={capitalize(t("school"))} classNameTH='school' tooltipContent="" />];
+  let schoolHeader = [<SchoolTableColumnHeader key={tableView + 'school'} colName={capitalize(t("school"))} classNameTH='school' tooltipContent="" />];
   let headers = headerArray.map(hash =>
-    <SchoolTableColumnHeader key={tableView+hash['key']} colName={hash['title']} tooltipContent={hash['tooltip']} />
+    <SchoolTableColumnHeader key={tableView + hash['key']} colName={hash['title']} tooltipContent={hash['tooltip']} />
   );
   headers = schoolHeader.concat(headers);
   return (
@@ -48,6 +53,7 @@ SchoolTable.propTypes = {
 };
 
 SchoolTable.defaultProps = {
-  isLoading: false
+  isLoading: false,
+  tableView: 'Overview'
 };
 export default SchoolTable;
