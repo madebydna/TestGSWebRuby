@@ -288,8 +288,8 @@ class SearchController < ApplicationController
       key[grade_level_param_name] = level_code if level_code.present?
       key[page_param_name] = given_page  if given_page.present?
       key[school_type_param_name] = entity_types  if entity_types.present?
-      key[list_table_view_param_name] =  view  if view.present?
-      key[which_table_view_param_name] = tableView  if tableView.present?
+      key[view_param_name] =  view  if view.present?
+      key[table_view_param_name] = tableView  if tableView.present?
     end.compact
   end
 
@@ -298,8 +298,8 @@ class SearchController < ApplicationController
       key[grade_level_param_name] = level_codes if level_codes.present?
       key[page_param_name] = given_page  if given_page.present?
       key[school_type_param_name] = entity_types  if entity_types.present?
-      key[list_table_view_param_name] =  view  if view.present?
-      key[which_table_view_param_name] = tableView  if tableView.present?
+      key[view_param_name] =  view  if view.present?
+      key[table_view_param_name] = tableView  if tableView.present?
     end.compact
   end
 

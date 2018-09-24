@@ -212,11 +212,11 @@ module SearchRequestParams
     'gradeLevels'
   end
 
-  def list_table_view_param_name
+  def view_param_name
     'view'
   end
 
-  def which_table_view_param_name
+  def table_view_param_name
     'tableView'
   end
 
