@@ -35,7 +35,7 @@ class NewSearchController < ApplicationController
     set_ad_targeting_props
     set_page_analytics_data
     set_meta_tags(alternate: {
-      en: url_for(params_for_rel_alternate),
+      en: url_for(params_for_rel_alternate.merge(lang: nil)),
       es: url_for(params_for_rel_alternate.merge(lang: :es))
     })
     response.status = 404 if serialized_schools.empty?
