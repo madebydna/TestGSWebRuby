@@ -16,6 +16,7 @@ class DataValue < ActiveRecord::Base
   belongs_to :source, class_name: '::Gsdata::Source', inverse_of: :data_values
   belongs_to :load, inverse_of: :data_values
   belongs_to :proficiency_band, inverse_of: :data_values
+  
 
 
   def self.from_hash(hash)
@@ -44,6 +45,7 @@ class DataValue < ActiveRecord::Base
                                             school.id,
                                             data_types), :data_values)
         .with_data_types
+        .with_loads
         .with_sources
         .with_academics
         .with_academic_tags
@@ -60,6 +62,7 @@ class DataValue < ActiveRecord::Base
                                             school.id,
                                             data_types), :data_values)
         .with_data_types
+        .with_loads
         .with_sources
         .with_academics
         .with_academic_tags
@@ -76,6 +79,7 @@ class DataValue < ActiveRecord::Base
                                        school.id,
                                        data_types), :data_values)
           .with_data_types
+          .with_loads
           .with_sources
           .with_breakdowns
           .with_breakdown_tags
@@ -91,6 +95,7 @@ class DataValue < ActiveRecord::Base
                                             data_types), :data_values)
         .with_data_types
         .with_data_type_tags(tags)
+        .with_loads
         .with_sources
         .with_academics
         .with_academic_tags
@@ -115,6 +120,7 @@ class DataValue < ActiveRecord::Base
         DataValue.where(school_id: school.id, state: school.state, active: 1), :data_values)
           .with_data_types
           .with_data_type_tags(tags)
+          .with_loads
           .with_sources
           .with_academics
           .with_academic_tags
@@ -131,7 +137,7 @@ class DataValue < ActiveRecord::Base
       data_values.data_type_id, data_values.configuration, data_values.grade, data_values.cohort_count,
       data_values.proficiency_band_id, data_types.id as data_type_id, data_types.name, data_types.short_name,
       proficiency_bands.name as proficiency_band_name, proficiency_bands.composite_of_pro_null,
-      sources.source_name, sources.date_valid, sources.description,
+      #{LoadSource.table_name}.name as source_name, #{Load.table_name}.date_valid, #{Load.table_name}.description,
       group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(distinct breakdowns.id ORDER BY breakdowns.id) as "breakdown_id_list",
       group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",
@@ -149,7 +155,7 @@ class DataValue < ActiveRecord::Base
       data_values.id, data_values.value, data_values.state, data_values.school_id,
       data_values.data_type_id, data_values.configuration, data_values.grade, data_values.cohort_count,
       data_values.proficiency_band_id, data_types.name, data_types.short_name,
-      sources.source_name, sources.date_valid, sources.description,
+      #{LoadSource.table_name}.name as source_name, #{Load.table_name}.date_valid, #{Load.table_name}.description,
       group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",
       count(distinct(breakdowns.name)) as "breakdown_count"
@@ -162,7 +168,7 @@ class DataValue < ActiveRecord::Base
       data_values.id, data_values.value, data_values.state, data_values.school_id,
       data_values.data_type_id, data_values.configuration, data_values.grade, data_values.cohort_count,
       data_values.proficiency_band_id, data_types.name,
-      sources.source_name, sources.date_valid, sources.description,
+      #{LoadSource.table_name}.name as source_name, #{Load.table_name}.date_valid, #{Load.table_name}.description,
       group_concat(distinct breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(distinct bt.tag ORDER BY bt.tag) as "breakdown_tags",
       count(distinct(breakdowns.name)) as "breakdown_count",
@@ -186,6 +192,7 @@ class DataValue < ActiveRecord::Base
           .with_breakdown_tags
           .with_academics
           .with_academic_tags
+          .with_loads
           .with_sources
           .group('data_values.id')
   end
@@ -199,6 +206,7 @@ class DataValue < ActiveRecord::Base
         .with_breakdown_tags
         .with_academics
         .with_academic_tags
+        .with_loads
         .with_sources
         .group('data_values.id')
   end
@@ -216,6 +224,7 @@ class DataValue < ActiveRecord::Base
           .with_breakdown_tags
           .with_academics
           .with_academic_tags
+          .with_loads
           .with_sources
           .group('data_values.id')
   end
@@ -233,6 +242,7 @@ class DataValue < ActiveRecord::Base
           .with_breakdown_tags
           .with_academics
           .with_academic_tags
+          .with_loads
           .with_sources
           .group('data_values.id')
   end
@@ -244,6 +254,7 @@ class DataValue < ActiveRecord::Base
         .with_data_type_tags(data_type_tags)
         .with_breakdowns
         .with_academics
+        .with_loads
         .with_sources
         .with_proficiency_bands
         .group('data_values.id')
@@ -260,6 +271,7 @@ class DataValue < ActiveRecord::Base
         .with_data_type_tags(data_type_tags)
         .with_breakdowns
         .with_academics
+        .with_loads
         .with_sources
         .with_proficiency_bands
         .group('data_values.id')
@@ -268,7 +280,7 @@ class DataValue < ActiveRecord::Base
   def self.state_and_district_values
     state_and_district_values = <<-SQL
       data_values.id, data_values.data_type_id, data_types.name, data_types.id as data_type_id,
-      sources.source_name, sources.description, data_values.value, date_valid, grade, proficiency_band_id, cohort_count,
+      #{LoadSource.table_name}.name as source_name, #{Load.table_name}.description, data_values.value, #{Load.table_name}.date_valid, grade, proficiency_band_id, cohort_count,
       group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(academics.name ORDER BY academics.name) as "academic_names"
     SQL
@@ -277,8 +289,8 @@ class DataValue < ActiveRecord::Base
 
   def self.state_and_district_values_with_proficiency_band
     state_and_district_values = <<-SQL
-      data_values.id, data_values.data_type_id, data_types.name, sources.source_name, sources.description, 
-      data_values.value, date_valid, grade, proficiency_band_id, 
+      data_values.id, data_values.data_type_id, data_types.name, #{LoadSource.table_name}.name as source_name, #{Load.table_name}.description, 
+      data_values.value, #{Load.table_name}.date_valid, grade, proficiency_band_id, 
       proficiency_bands.name as proficiency_band_name, cohort_count,
       group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(breakdowns.id ORDER BY breakdowns.id) as "breakdown_id_list",
@@ -347,8 +359,12 @@ class DataValue < ActiveRecord::Base
     joins('JOIN data_types on data_type_id = data_types.id')
   end
 
+  def self.with_loads
+    joins('JOIN loads on loads.id = load_id')
+  end
+
   def self.with_sources
-    joins('JOIN sources on sources.id = source_id')
+    joins("JOIN #{LoadSource.table_name} on #{LoadSource.table_name}.id = #{Load.table_name}.source_id")
   end
 
   def self.with_proficiency_bands
