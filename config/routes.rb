@@ -53,6 +53,8 @@ LocalizedProfiles::Application.routes.draw do
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
     get '', to: 'search#search'
   end
+
+  get '/myschoollist/', as: :school_list, to: 'search#search'
   
 
   get ':state/:city/:district_name/:level/',

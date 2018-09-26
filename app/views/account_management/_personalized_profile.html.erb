@@ -57,34 +57,14 @@
 
 </div>
 
-<% if @saved_searches.present? %>
-    <div class="limit-width-1200">
-      <div class="bg-light-gray mvl js-header-slide-toggle">
-        <div class="row">
-          <div class="col-xs-12 clearfix phm">
-            <div class="fl pointer font-size-large mam">
-              My Saved Searches
-            </div>
-            <span class="fr iconx32-college_ready i-32-close-arrow-head pointer mtm"></span>
-          </div>
-        </div>
-      </div>
-      <%= render partial: 'account_management/saved_searches' %>
-    </div>
-<% end %>
-
 <div class="limit-width-1200">
   <div class="bg-light-gray mvl js-header-slide-toggle">
     <div class="row">
       <div class="col-xs-12 clearfix phm">
-        <div class="fl pointer font-size-large mam">
-          My School List
-        </div>
-        <span class="fr iconx32-college_ready i-32-open-arrow-head pointer mtm"></span>
+        <%= link_to 'My School List', school_list_path, class: "fl pointer font-size-large mam" %>
       </div>
     </div>
   </div>
-  <%= render partial: 'school_list' %>
 </div>
 
 <div class="limit-width-1200">
