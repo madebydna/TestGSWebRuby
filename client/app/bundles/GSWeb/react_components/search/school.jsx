@@ -8,6 +8,8 @@ import {
   studentsPhrase,
   schoolTypePhrase
 } from 'util/school';
+import { get as getCookie, set as setCookie } from 'js-cookie';
+import { COOKIE_NAME } from './search_context';
 
 const joinWithSeparator = (arrayOfElements, separator) =>
   arrayOfElements
@@ -28,7 +30,9 @@ const School = ({
   active,
   distance,
   assigned,
-  links
+  links,
+  saveSchoolCallback,
+  savedSchool
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   let addressPhrase = [address.street1, address.city, state, address.zip]
@@ -48,6 +52,7 @@ const School = ({
         </a>
         <br />
         {addressPhrase && <div className="address">{addressPhrase}</div>}
+        <span onClick={()=> saveSchoolCallback([state, id.toString()])} className={savedSchool ? 'icon-heart' : 'icon-heart-outline'}></span>
         <div>
           {joinWithSeparator(
             [

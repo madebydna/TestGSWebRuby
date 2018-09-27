@@ -101,10 +101,13 @@ class Search extends React.Component {
               <SchoolList
                 toggleHighlight={this.props.toggleHighlight}
                 schools={this.props.schools}
+                savedSchools={this.props.savedSchools}
+                saveSchoolCallback={this.props.saveSchoolCallback}
                 isLoading={this.props.loadingSchools}
                 size={this.props.size}
               />
             }
+
             schoolTable={
               <SchoolTable
                 toggleHighlight={this.props.toggleHighlight}

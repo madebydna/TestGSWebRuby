@@ -17,6 +17,7 @@ import {
   getAddressPredictions
 } from 'api_clients/google_places';
 import { init as initGoogleMaps } from 'components/map/google_maps';
+import { get as getCookie, set as setCookie } from 'js-cookie';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -25,6 +26,7 @@ export const LIST_VIEW = 'list';
 export const MAP_VIEW = 'map';
 export const TABLE_VIEW = 'table';
 export const validViews = [LIST_VIEW, MAP_VIEW, TABLE_VIEW];
+const COOKIE_NAME = 'gs_saved_schools';
 
 class SearchProvider extends React.Component {
   static defaultProps = {
@@ -100,7 +102,8 @@ class SearchProvider extends React.Component {
       resultSummary: props.resultSummary,
       paginationSummary: props.paginationSummary,
       loadingSchools: false,
-      size: viewportSize()
+      size: viewportSize(),
+      savedSchools: this.getSavedSchools()
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
@@ -108,6 +111,7 @@ class SearchProvider extends React.Component {
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
+    this.handleSaveSchoolClick = this.handleSaveSchoolClick.bind(this);
   }
 
   componentDidMount() {
@@ -176,6 +180,21 @@ class SearchProvider extends React.Component {
     );
   }
 
+  getSavedSchools(){
+    let savedSchoolsCookie = getCookie(COOKIE_NAME)
+    return (
+      savedSchoolsCookie ? JSON.parse(savedSchoolsCookie) : []
+    )
+  }
+
+  handleSaveSchoolClick(schoolKey){
+    let { savedSchools } = this.state;
+    let schoolKeyIdx = savedSchools.findIndex((key)=> JSON.stringify(key) == JSON.stringify(schoolKey))
+    schoolKeyIdx > -1 ? savedSchools.splice(schoolKeyIdx,1) : savedSchools.push(schoolKey)
+    setCookie(COOKIE_NAME, savedSchools);
+    this.setState({savedSchools: savedSchools})
+  }
+
   // school finder methods, based on obj state
 
   findSchoolsWithReactState(newState = {}) {
@@ -226,6 +245,8 @@ class SearchProvider extends React.Component {
         value={{
           loadingSchools: this.state.loadingSchools,
           schools: this.state.schools,
+          savedSchools: this.state.savedSchools,
+          saveSchoolCallback: this.handleSaveSchoolClick,
           page: this.props.page,
           totalPages: this.state.totalPages,
           onPageChanged: compose(
