@@ -190,7 +190,7 @@ class DistrictLayout extends React.Component {
   renderReviews(){
     return(
       <div id="reviews">
-        <div className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</div>
+        <div className="modules-title">{`Recent school reviews from schools in ${this.props.locality.name}`}</div>
         {this.props.recentReviews}
       </div>
     )

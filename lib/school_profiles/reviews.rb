@@ -2,11 +2,12 @@ module SchoolProfiles
   class Reviews
     include Rails.application.routes.url_helpers
 
-    attr_reader :reviews, :school
+    attr_reader :reviews, :school, :reviews_array
 
-    def initialize(school, review_questions)
+    def initialize(school, review_questions, reviews_array=nil)
       @school = school
-      @reviews = school.reviews
+      @reviews = school&.reviews
+      @reviews_array = reviews_array
       # review_questions is the ReviewQuestions class in lib
       # .questions is the hash of questions produced from the DB
       @review_questions = review_questions.questions
@@ -29,6 +30,15 @@ module SchoolProfiles
     def reviews_list
       UserReviews.
         make_instance_for_each_user(reviews.having_comments, school).
+        sort_by { |r| r.most_recent_date }.
+        reverse.
+        map { |user_reviews| user_reviews.build_struct }
+    end
+
+    def reviews_list2
+      reviews = reviews_array if reviews_array != nil
+      UserReviews.
+        make_instance_for_each_user(reviews, school).
         sort_by { |r| r.most_recent_date }.
         reverse.
         map { |user_reviews| user_reviews.build_struct }
