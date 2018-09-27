@@ -3,6 +3,7 @@ class DistrictsController < ApplicationController
   include AdvertisingConcerns
   include PageAnalytics
   include CommunityConcerns
+  include ReviewCalculations
 
   CACHE_KEYS_FOR_READER = %w(district_schools_summary district_characteristics)
 
@@ -16,10 +17,31 @@ class DistrictsController < ApplicationController
     @breadcrumbs = breadcrumbs
     @top_schools =  top_rated_schools
     @hero_data = hero_data
+    @reviews = user_reviews #test method just to get some reviews down the pipeline
     set_district_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
     Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
+  end
+
+  def reviews
+      @_reviews_scope ||= 
+        Review.
+          active.
+            where(school_id: School.on_db(district_record.state.downcase).where(district_id: district_record.id).pluck(:id),
+                  state: district_record.state.downcase)
+              .where.not(comment: nil)
+                .eager_load(:school_user)
+                  .includes(:answers, :votes, question: :review_topic)
+                    .order(created: :desc)
+                      .limit(25)
+  end
+
+  DEFAULT_FIELDS = %w[answer_value answer comment user_type created]
+
+  def user_reviews
+    # UserReviews.make_instance_for_each_user(reviews_scope, School.on_db(district_record.state.downcase).active.first)
+    UserReviews.make_instance_for_each_user(reviews, "cat")
   end
 
   private
@@ -166,6 +188,15 @@ class DistrictsController < ApplicationController
         st["all"] = district_record.num_schools
       end
     end
+  end
+
+  def test_reviews
+    #test method just to get some reviews down the pipeline
+    Review.active.take(5)
+  end
+
+  def schools_in_a_district
+    School.on_db("ca").active.where(district_id: district_record.id).pluck(:id)
   end
 
   def decorated_district

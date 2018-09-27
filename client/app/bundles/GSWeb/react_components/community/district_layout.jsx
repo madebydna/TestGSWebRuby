@@ -187,6 +187,15 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderReviews(){
+    return(
+      <div id="reviews">
+        <div className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</div>
+        {this.props.recentReviews}
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="district-body">
@@ -199,6 +208,7 @@ class DistrictLayout extends React.Component {
           <div className="community-modules">
             {this.renderSchools()}
             {this.renderZillow()}
+            {this.renderReviews()}
           </div>
           {this.renderAd()}
         </div>

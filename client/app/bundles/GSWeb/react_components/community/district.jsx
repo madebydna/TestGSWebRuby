@@ -13,6 +13,7 @@ import withViewportSize from "react_components/with_viewport_size";
 import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
 import { analyticsEvent } from "util/page_analytics";
+import ReviewsList from "react_components/review/reviews_list";
 import Zillow from "./zillow";
 
 class District extends React.Component {
@@ -117,6 +118,11 @@ class District extends React.Component {
               locality={this.props.locality}
               utmCampaign='districtpage'
               pageType='district'
+          />
+        }
+        recentReviews={
+          <ReviewsList 
+            reviews={this.props.reviews}
           />
         }
         heroData={this.props.heroData}
