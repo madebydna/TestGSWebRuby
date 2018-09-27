@@ -43,9 +43,9 @@ class RecentReviews extends React.Component {
   renderReviewLayout(componentFunction) {
     return (
       <div id="Reviews">
-        <div className="rating-container profile-section">
+        <div className="rating-container community-section">
           <div className="row">
-            <div className="col-xs-12 col-lg-9">{componentFunction()}</div>
+            <div className="col-xs-12 col-lg-12">{componentFunction()}</div>
           </div>
         </div>
       </div>
