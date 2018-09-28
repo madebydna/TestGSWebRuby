@@ -30,6 +30,7 @@ const COOKIE_NAME = 'gs_saved_schools';
 
 class SearchProvider extends React.Component {
   static defaultProps = {
+    findSchools,
     q: gon.search.q,
     city: gon.search.city,
     district: gon.search.district,
@@ -51,15 +52,17 @@ class SearchProvider extends React.Component {
     paginationSummary: gon.search.paginationSummary,
     breadcrumbs: gon.search.breadcrumbs || [],
     view: gon.search.view || LIST_VIEW,
-    searchTableViewHeaders: gon.search.searchTableViewHeaders,
+    searchTableViewHeaders: gon.search.searchTableViewHeaders || {},
     tableView: 'Overview'
   };
 
   static propTypes = {
+    findSchools: PropTypes.func,
     q: PropTypes.string,
     city: PropTypes.string,
     district: PropTypes.string,
     state: PropTypes.string,
+    schoolKeys: PropTypes.arrayOf(PropTypes.array),
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
@@ -111,8 +114,8 @@ class SearchProvider extends React.Component {
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
     this.handleSaveSchoolClick = this.handleSaveSchoolClick.bind(this);
-    this.toggleAll = this.toggleAll.bind(this)
-    this.toggleOne = this.toggleOne.bind(this)
+    this.toggleAll = this.toggleAll.bind(this);
+    this.toggleOne = this.toggleOne.bind(this);
   }
 
   componentDidMount() {
@@ -181,83 +184,86 @@ class SearchProvider extends React.Component {
     );
   }
 
-  getSavedSchoolsFromCookie(){
-    let savedSchoolsCookie = getCookie(COOKIE_NAME)
-    return (
-      savedSchoolsCookie ? JSON.parse(savedSchoolsCookie) : []
-    )
+  getSavedSchoolsFromCookie() {
+    const savedSchoolsCookie = getCookie(COOKIE_NAME);
+    return savedSchoolsCookie ? JSON.parse(savedSchoolsCookie) : [];
   }
 
-  updateSavedSchoolsCookie(schoolKey){
-    let savedSchools = this.getSavedSchoolsFromCookie();
-    let schoolKeyIdx = savedSchools.findIndex((key)=> (key.id.toString() === schoolKey.id.toString() && key.state === schoolKey.state))
-    schoolKeyIdx > -1 ? savedSchools.splice(schoolKeyIdx,1) : savedSchools.push(schoolKey)
+  updateSavedSchoolsCookie(schoolKey) {
+    const savedSchools = this.getSavedSchoolsFromCookie();
+    const schoolKeyIdx = savedSchools.findIndex(
+      key =>
+        key.id.toString() === schoolKey.id.toString() &&
+        key.state === schoolKey.state
+    );
+    schoolKeyIdx > -1
+      ? savedSchools.splice(schoolKeyIdx, 1)
+      : savedSchools.push(schoolKey);
     setCookie(COOKIE_NAME, savedSchools);
+    analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
   }
 
-  handleSaveSchoolClick(schoolKey){
+  handleSaveSchoolClick(schoolKey) {
+    this.toggleSchoolProperty([schoolKey], 'savedSchool', this.toggleAll);
     this.updateSavedSchoolsCookie(schoolKey);
-    this.toggleSchoolProperty([schoolKey], 'saved_school', this.toggleAll)
   }
 
   toggleSchoolProperty(schoolKeys, property, mapFunc) {
-    let schools = mapFunc(schoolKeys, property);
-    this.setState({ schools: schools })
+    const schools = mapFunc(schoolKeys, property);
+    this.setState({ schools });
   }
 
   // school finder methods, based on obj state
+  propsForFindSchools(props) {
+    return {
+      city: props.city,
+      district: props.district,
+      state: props.state,
+      q: props.q,
+      levelCodes: props.levelCodes,
+      entityTypes: props.entityTypes,
+      lat: props.lat,
+      lon: props.lon,
+      distance: props.distance,
+      sort: props.sort,
+      page: props.page,
+      limit: props.pageSize,
+      extras: ['students_per_teacher', 'review_summary'],
+      locationLabel: props.locationLabel
+    };
+  }
 
   findSchoolsWithReactState(newState = {}) {
-    return findSchools(
-      Object.assign(
-        {
-          city: this.props.city,
-          district: this.props.district,
-          state: this.props.state,
-          q: this.props.q,
-          levelCodes: this.props.levelCodes,
-          entityTypes: this.props.entityTypes,
-          lat: this.props.lat,
-          lon: this.props.lon,
-          distance: this.props.distance,
-          sort: this.props.sort,
-          page: this.props.page,
-          limit: this.props.pageSize,
-          extras: ['students_per_teacher', 'review_summary'],
-          locationLabel: this.props.locationLabel
-        },
-        newState
-      )
+    return this.props.findSchools(
+      Object.assign(this.propsForFindSchools(this.props), newState)
     );
   }
 
   toggleOne(school, booleanProp) {
-    let schools = this.state.schools.map(s => {
+    const schools = this.state.schools.map(s => {
       if (s.id === school.id && s.state === school.state) {
         s[booleanProp] = !s[booleanProp];
         return s;
       }
       s[booleanProp] = false;
       return s;
-    })
+    });
     return schools;
   }
 
   toggleAll(schoolKeys, property) {
-    return (
-      this.state.schools.map(s => {
-        schoolKeys.forEach((key) => {
-          if (s.id.toString() === key.id.toString() && s.state === key.state) {
-            s[property] = !s[property];
-          }
-        })
-        return s;
-      })
-    )
+    return this.state.schools.map(s => {
+      schoolKeys.forEach(key => {
+        if (s.id.toString() === key.id.toString() && s.state === key.state) {
+          s[property] = !s[property];
+        }
+      });
+      return s;
+    });
   }
 
   toggleHighlight(school) {
-    this.toggleSchoolProperty(school, 'highlighted', this.toggleOne)
+    this.toggleSchoolProperty(school, 'highlighted', this.toggleOne);
   }
 
   trackParams = (name, oldParams, newParams) => {
@@ -327,7 +333,6 @@ class SearchProvider extends React.Component {
               )
             }}
           >
-
             <EntityTypeContext.Provider
               value={{
                 entityTypes: this.props.entityTypes,
@@ -349,14 +354,15 @@ class SearchProvider extends React.Component {
                 }}
               >
                 <ChooseTableContext.Provider
-                    value={{
-                      tableView: this.props.tableView,
-                      updateTableView: this.props.updateTableView,
-                      size: this.state.size,
-                      equitySize: this.props.searchTableViewHeaders.Equity.length,
-                    }}
+                  value={{
+                    tableView: this.props.tableView,
+                    updateTableView: this.props.updateTableView,
+                    size: this.state.size,
+                    equitySize: (this.props.searchTableViewHeaders.Equity || {})
+                      .length
+                  }}
                 >
-                {this.props.children}
+                  {this.props.children}
                 </ChooseTableContext.Provider>
               </SortContext.Provider>
             </EntityTypeContext.Provider>
@@ -372,5 +378,8 @@ const SearchProviderWithQueryParams = props => (
     {paramProps => <SearchProvider {...paramProps} {...props} />}
   </SearchQueryParams>
 );
-
-export default { Consumer, Provider: SearchProviderWithQueryParams };
+export { SearchProvider };
+export default {
+  Consumer,
+  Provider: SearchProviderWithQueryParams
+};

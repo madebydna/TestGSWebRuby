@@ -257,4 +257,20 @@ module SearchRequestParams
     params[:with_rating]
   end
 
+  def saved_school_keys
+    JSON.parse(cookies[:gs_saved_schools]).map {|hash| [hash['state']&.downcase, hash['id']&.to_i]}
+  end
+
+  def school_keys
+    params[:schoolKeys] || []
+  end
+
+  def school_list
+    params[:schoolList]
+  end
+
+  def my_school_list?
+    school_list == 'msl'
+  end
+
 end

@@ -374,6 +374,7 @@ LocalizedProfiles::Application.routes.draw do
   # JIRA: JT-385
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
   get '/school-district-boundaries-map', as: :district_boundary, to: 'district_boundaries#show'
+  get '/my-school-list', to: 'my_school_list#show', as: :my_school_list
 
   # post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
   #     state: States.any_state_name_regex,

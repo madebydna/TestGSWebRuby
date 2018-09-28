@@ -66,6 +66,12 @@ module Search
           params[:fq].map! do |param|
             param.sub(/_s(\W)/, '\1').sub(/_i(\W)/, '\1')
           end
+          if school_keys.present?
+            fragment = school_keys.each_with_object([]) do |(state, school_id), phrases|
+              phrases << "(+school_database_state:#{state} +school_id:#{school_id})"
+            end.join(' ')
+            params[:fq] << fragment
+          end
           params[:sort] = params[:sort].sub(/_i(\W)/, '\1') if params[:sort]
           params[:sort] = params[:sort].sub(/_s(\W)/, '\1') if params[:sort]
           params[:sort] = params[:sort].sub(/_f(\W)/, '\1') if params[:sort]

@@ -4,6 +4,7 @@ import Breadcrumbs from 'react_components/breadcrumbs';
 import SearchContext from './search_context';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
+import MySchoolListLayout from './my_school_list_layout';
 import ListMapTableSelect from './list_map_table_select';
 import PaginationButtons from './pagination_buttons';
 import Map from './map';
@@ -29,7 +30,9 @@ class Search extends React.Component {
     shouldIncludeDistance: false,
     autoSuggestQuery: () => {},
     breadcrumbs: [],
-    q: null
+    q: null,
+    layout: 'Search',
+    schoolKeys: []
   };
 
   static propTypes = {
@@ -56,7 +59,9 @@ class Search extends React.Component {
     view: PropTypes.string.isRequired,
     updateView: PropTypes.func.isRequired,
     q: PropTypes.string,
-    searchTableViewHeaders: PropTypes.object
+    searchTableViewHeaders: PropTypes.object,
+    layout: PropTypes.string,
+    schoolKeys: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array))
   };
 
   componentDidMount() {
@@ -64,10 +69,14 @@ class Search extends React.Component {
   }
 
   render() {
+    const Layout = {
+      Search: SearchLayout,
+      MySchoolList: MySchoolListLayout
+    }[this.props.layout];
     return (
       <DistanceContext.Consumer>
         {({ distance, onChange }) => (
-          <SearchLayout
+          <Layout
             size={this.props.size}
             view={this.props.view}
             entityTypeDropdown={<EntityTypeDropdown />}
@@ -81,8 +90,10 @@ class Search extends React.Component {
               ) : null
             }
             sortSelect={
-              <SortSelect includeDistance={this.props.shouldIncludeDistance}
-                          includeRelevance={this.props.shouldIncludeRelevance} />
+              <SortSelect
+                includeDistance={this.props.shouldIncludeDistance}
+                includeRelevance={this.props.shouldIncludeRelevance}
+              />
             }
             resultSummary={this.props.resultSummary}
             listMapTableSelect={
@@ -106,14 +117,13 @@ class Search extends React.Component {
                 size={this.props.size}
               />
             }
-
             schoolTable={
               <SchoolTable
                 toggleHighlight={this.props.toggleHighlight}
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
-                searchTableViewHeaders = {this.props.searchTableViewHeaders}
-                tableView = {this.props.tableView}
+                searchTableViewHeaders={this.props.searchTableViewHeaders}
+                tableView={this.props.tableView}
               />
             }
             pagination={
@@ -156,6 +166,7 @@ class Search extends React.Component {
   }
 }
 
+export { Search };
 export default function() {
   return (
     <SearchContext.Provider>

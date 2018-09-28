@@ -32,7 +32,7 @@ const School = ({
   assigned,
   links,
   saveSchoolCallback,
-  saved_school
+  savedSchool
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   let addressPhrase = [address.street1, address.city, state, address.zip]
@@ -44,15 +44,24 @@ const School = ({
 
   return (
     <React.Fragment key={state + id + (assigned ? 'assigned' : '')}>
-      {assigned && <div>{t('assigned_school') } {renderAssignedTooltip(levelCode)}</div>}
-      <span><RatingWithTooltip rating={rating} ratingScale={ratingScale}/></span>
+      {assigned && (
+        <div>
+          {t('assigned_school')} {renderAssignedTooltip(levelCode)}
+        </div>
+      )}
+      <span>
+        <RatingWithTooltip rating={rating} ratingScale={ratingScale} />
+      </span>
       <span>
         <a href={links.profile} className="name" target="_blank">
           {name}
         </a>
         <br />
         {addressPhrase && <div className="address">{addressPhrase}</div>}
-        <span onClick={()=> saveSchoolCallback({state: state, id: id.toString()})} className={saved_school ? 'icon-heart' : 'icon-heart-outline'}></span>
+        <span
+          onClick={() => saveSchoolCallback({ state, id: id.toString() })}
+          className={savedSchool ? 'icon-heart' : 'icon-heart-outline'}
+        />
         <div>
           {joinWithSeparator(
             [
@@ -64,7 +73,11 @@ const School = ({
             </span>
           )}
         </div>
-        {distance !== undefined ? <div>{t('Distance')}: {distance} miles</div> : null}
+        {distance !== undefined ? (
+          <div>
+            {t('Distance')}: {distance} miles
+          </div>
+        ) : null}
         {homesForSaleHref && (
           <div>
             <span key="homes-for-sale" className="icon icon-house" />

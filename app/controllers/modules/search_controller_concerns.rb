@@ -80,6 +80,7 @@ module SearchControllerConcerns
     query_type.new(
       city: city,
       state: state,
+      school_keys: school_keys,
       district_id: district_record&.id,
       district_name: district_record&.name,
       location_label: location_label_param,
@@ -114,12 +115,15 @@ module SearchControllerConcerns
 
   def add_saved_schools(schools)
     #grab saved school keys from the cookie and compare to keys constructed from schools.
-    saved_school_keys = JSON.parse(cookies[:gs_saved_schools])&.map {|key| key.symbolize_keys} if cookies[:gs_saved_schools]
     schools.each do |school|
-      if saved_school_keys&.include?({'state': school.state, 'id': school.id.to_s})
-        school.saved_school = true
+      if saved_school_keys&.include?([school.state.downcase, school.id])
+        school.define_singleton_method(:saved_school) do
+          true
+        end
       else
-        school.saved_school = false
+        school.define_singleton_method(:saved_school) do
+          false
+        end
       end
     end
   end
