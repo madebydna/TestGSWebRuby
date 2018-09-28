@@ -102,8 +102,7 @@ class SearchProvider extends React.Component {
       resultSummary: props.resultSummary,
       paginationSummary: props.paginationSummary,
       loadingSchools: false,
-      size: viewportSize(),
-      savedSchools: this.getSavedSchools()
+      size: viewportSize()
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
@@ -113,6 +112,7 @@ class SearchProvider extends React.Component {
     this.toggleHighlight = this.toggleHighlight.bind(this);
     this.handleSaveSchoolClick = this.handleSaveSchoolClick.bind(this);
     this.toggleAll = this.toggleAll.bind(this)
+    this.toggleOne = this.toggleOne.bind(this)
   }
 
   componentDidMount() {
@@ -181,20 +181,23 @@ class SearchProvider extends React.Component {
     );
   }
 
-  getSavedSchools(){
+  getSavedSchoolsFromCookie(){
     let savedSchoolsCookie = getCookie(COOKIE_NAME)
     return (
       savedSchoolsCookie ? JSON.parse(savedSchoolsCookie) : []
     )
   }
 
-  handleSaveSchoolClick(schoolKey){
-    let { savedSchools } = this.state;
+  updateSavedSchoolsCookie(schoolKey){
+    let savedSchools = this.getSavedSchoolsFromCookie();
     let schoolKeyIdx = savedSchools.findIndex((key)=> (key.id.toString() === schoolKey.id.toString() && key.state === schoolKey.state))
     schoolKeyIdx > -1 ? savedSchools.splice(schoolKeyIdx,1) : savedSchools.push(schoolKey)
     setCookie(COOKIE_NAME, savedSchools);
+  }
+
+  handleSaveSchoolClick(schoolKey){
+    this.updateSavedSchoolsCookie(schoolKey);
     this.toggleSchoolProperty([schoolKey], 'saved_school', this.toggleAll)
-    this.setState({savedSchools: savedSchools})
   }
 
   toggleSchoolProperty(schoolKeys, property, mapFunc) {
@@ -229,14 +232,15 @@ class SearchProvider extends React.Component {
   }
 
   toggleOne(school, booleanProp) {
-    return this.state.schools.map(s => {
-      if (s.id === school.id) {
+    let schools = this.state.schools.map(s => {
+      if (s.id === school.id && s.state === school.state) {
         s[booleanProp] = !s[booleanProp];
         return s;
       }
       s[booleanProp] = false;
       return s;
     })
+    return schools;
   }
 
   toggleAll(schoolKeys, property) {
@@ -253,16 +257,7 @@ class SearchProvider extends React.Component {
   }
 
   toggleHighlight(school) {
-    // this.toggleSchoolProperty([school], 'highlighted', this.toggleOne)
-    const schools = this.state.schools.map(s => {
-      if (s.id === school.id && s.state === school.state) {
-        s.highlighted = !s.highlighted;
-        return s;
-      }
-      s.highlighted = false;
-      return s;
-    });
-    this.setState({ schools });
+    this.toggleSchoolProperty(school, 'highlighted', this.toggleOne)
   }
 
   trackParams = (name, oldParams, newParams) => {
