@@ -6,7 +6,6 @@ class DistrictsController < ApplicationController
   include ReviewCalculations
 
   CACHE_KEYS_FOR_READER = %w(district_schools_summary district_characteristics)
-  SECRET = 343788
 
 
   layout 'application'
@@ -26,63 +25,26 @@ class DistrictsController < ApplicationController
     Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
-  def serialized_reviews
-    reviews.map do |review|
-      {}.tap do |sr|
-        sr["school_user_digest"] = create_community_digest(review.member_id, district_record)
-        sr["five_star_review"] = user_reviews(review)
-      end
-    end
-  end
-
   def review_questions
     @_review_questions ||= SchoolProfiles::ReviewQuestions.new(district_record)
-  end
-
-  def create_community_digest(member_id, district_record)
-    return nil unless member_id && district_record
-    Digest::MD5.base64digest("#{SECRET}#{district_record.id}#{district_record.state}#{member_id}")
-  end
-
-  def user_reviews(review)
-    review = SchoolProfileReviewDecorator.decorate(review)
-    {
-      comment: review.comment,
-      topic_label: review.topic_label,
-      answer: review.answer.to_s.try(:downcase),
-      answer_label: review.answer_label,
-      answer_value: review.numeric_answer_value,
-      date_published: review.created,
-      id: review.id,
-      links: {
-        flag: flag_review_path(review.id)
-      }
-    }
   end
 
   def reviews
       @_reviews ||= 
         Review
           .active
-            .where(school_id: School.on_db(district_record.state.downcase)
-              .where(district_id: district_record.id).pluck(:id),
-                     state: district_record.state.downcase)
-                .where.not(comment: nil)
-                  .eager_load(:school_user)
-                    .includes(:answers, :votes, question: :review_topic)
-                      .order(created: :desc)
+            .where(school_id: 
+              School.on_db(district_record.state.downcase)
+                .where(district_id: district_record.id).pluck(:id),
+                      state: district_record.state.downcase)
+              .where.not(comment: nil)
+                .eager_load(:school_user)
+                  .includes(:answers, :votes, question: :review_topic)
+                    .extend(SchoolAssociationPreloading).preload_associated_schools!
   end
 
   def reviews_formatted
     @_reviews_formatted ||= SchoolProfiles::Reviews.new(nil, review_questions, reviews)
-  end
-
-  def reviews_list
-    UserReviews.
-      make_instance_for_each_user(reviews.having_comments, School.on_db("ca").find_by(review.first.school_id)).
-      sort_by { |r| r.most_recent_date }.
-      reverse.
-      map { |user_reviews| user_reviews.build_struct }
   end
 
   private

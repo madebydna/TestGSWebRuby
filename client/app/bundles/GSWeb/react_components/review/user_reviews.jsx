@@ -15,6 +15,7 @@ export default class UserReviews extends React.Component {
     avatar: PropTypes.number,
     review_reported_callback: PropTypes.func,
     current_user_reported_reviews: PropTypes.array,
+    school_name: PropTypes.string
   };
 
   constructor(props) {
@@ -131,6 +132,7 @@ export default class UserReviews extends React.Component {
     }
     return (
         <div className="type-and-date">
+          { this.props.pageType === "Community" && `Review for ${this.props.school_name}` } <br/>
           { userTypeSentence }
           { this.props.most_recent_date }
         </div>

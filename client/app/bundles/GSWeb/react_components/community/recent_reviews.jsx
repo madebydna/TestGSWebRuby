@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReviewsList from 'react_components/review/reviews_list';
+import Button from "../button";
 import { t } from 'util/i18n';
 import { XS, size as viewportSize } from 'util/viewport';
 import { scrollToElement } from 'util/scrolling';
@@ -15,7 +16,8 @@ class RecentReviews extends React.Component {
         most_recent_date: PropTypes.string,
         user_type_label: PropTypes.string,
         avatar: PropTypes.number,
-        reviewSubmitMessage: PropTypes.object
+        reviewSubmitMessage: PropTypes.object,
+        school_name: PropTypes.string
       })
     ),
     state: PropTypes.string,
@@ -36,6 +38,7 @@ class RecentReviews extends React.Component {
         reviewSubmitMessage={"PLACEHOLDER"}
         limit={3}
         offset={0}
+        pageType={"Community"}
       />
     );
   }
@@ -44,6 +47,11 @@ class RecentReviews extends React.Component {
     return (
       <div id="Reviews">
         <div className="rating-container community-section">
+          <div className="grade-filter">
+            <span className="button-group">
+              <Button label={t("All")} active={true} />
+            </span>
+          </div>
           <div className="row">
             <div className="col-xs-12 col-lg-12">{componentFunction()}</div>
           </div>
