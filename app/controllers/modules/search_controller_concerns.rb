@@ -114,7 +114,7 @@ module SearchControllerConcerns
 
   def add_saved_schools(schools)
     #grab saved school keys from the cookie and compare to keys constructed from schools.
-    saved_school_keys = JSON.parse(cookies[:gs_saved_schools]).map {|key| key.symbolize_keys} if cookies[:gs_saved_schools]
+    saved_school_keys = JSON.parse(cookies[:gs_saved_schools])&.map {|key| key.symbolize_keys} if cookies[:gs_saved_schools]
     schools.each do |school|
       if saved_school_keys&.include?({'state': school.state, 'id': school.id.to_s})
         school.saved_school = true
