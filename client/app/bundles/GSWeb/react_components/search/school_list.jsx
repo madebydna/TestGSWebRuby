@@ -26,7 +26,7 @@ const SchoolList = ({
     <ol className={isLoading ? "loading" : ""}>
       {schools.map((s, index) => (
         <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
-          {savedSchools.findIndex((key)=> JSON.stringify(key) == JSON.stringify([s.state, s.id.toString()])) > -1 ? s.savedSchool = true : s.savedSchool = false}
+          {/*{savedSchools.findIndex((key)=> JSON.stringify(key) == JSON.stringify([s.state, s.id.toString()])) > -1 ? s.savedSchool = true : s.savedSchool = false}*/}
           {index > 0 &&
             index % 4 === 0 && (
               <Ad

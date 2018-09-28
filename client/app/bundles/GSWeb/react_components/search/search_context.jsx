@@ -112,6 +112,7 @@ class SearchProvider extends React.Component {
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
     this.handleSaveSchoolClick = this.handleSaveSchoolClick.bind(this);
+    this.toggleAll = this.toggleAll.bind(this)
   }
 
   componentDidMount() {
@@ -189,10 +190,16 @@ class SearchProvider extends React.Component {
 
   handleSaveSchoolClick(schoolKey){
     let { savedSchools } = this.state;
-    let schoolKeyIdx = savedSchools.findIndex((key)=> JSON.stringify(key) == JSON.stringify(schoolKey))
+    let schoolKeyIdx = savedSchools.findIndex((key)=> (key.id.toString() === schoolKey.id.toString() && key.state === schoolKey.state))
     schoolKeyIdx > -1 ? savedSchools.splice(schoolKeyIdx,1) : savedSchools.push(schoolKey)
     setCookie(COOKIE_NAME, savedSchools);
+    this.toggleSchoolProperty([schoolKey], 'saved_school', this.toggleAll)
     this.setState({savedSchools: savedSchools})
+  }
+
+  toggleSchoolProperty(schoolKeys, property, mapFunc) {
+    let schools = mapFunc(schoolKeys, property);
+    this.setState({ schools: schools })
   }
 
   // school finder methods, based on obj state
@@ -221,9 +228,34 @@ class SearchProvider extends React.Component {
     );
   }
 
-  toggleHighlight(school) {
-    const schools = this.state.schools.map(s => {
+  toggleOne(school, booleanProp) {
+    return this.state.schools.map(s => {
       if (s.id === school.id) {
+        s[booleanProp] = !s[booleanProp];
+        return s;
+      }
+      s[booleanProp] = false;
+      return s;
+    })
+  }
+
+  toggleAll(schoolKeys, property) {
+    return (
+      this.state.schools.map(s => {
+        schoolKeys.forEach((key) => {
+          if (s.id.toString() === key.id.toString() && s.state === key.state) {
+            s[property] = !s[property];
+          }
+        })
+        return s;
+      })
+    )
+  }
+
+  toggleHighlight(school) {
+    // this.toggleSchoolProperty([school], 'highlighted', this.toggleOne)
+    const schools = this.state.schools.map(s => {
+      if (s.id === school.id && s.state === school.state) {
         s.highlighted = !s.highlighted;
         return s;
       }

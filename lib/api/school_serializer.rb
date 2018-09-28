@@ -50,7 +50,8 @@ class Api::SchoolSerializer
         profile: school_path(school, trailing_slash: true, lang: I18n.current_non_en_locale),
         reviews: school_path(school, anchor: 'Reviews', trailing_slash: true, lang: I18n.current_non_en_locale)
       },
-      highlighted: false
+      highlighted: false,
+      saved_school: school.saved_school
     }.tap do |h|
       enrollment = value_from_decorated_school(school, :numeric_enrollment)
       students_per_teacher = value_from_decorated_school(school, :ratio_of_students_to_full_time_teachers)

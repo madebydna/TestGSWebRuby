@@ -32,7 +32,7 @@ const School = ({
   assigned,
   links,
   saveSchoolCallback,
-  savedSchool
+  saved_school
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   let addressPhrase = [address.street1, address.city, state, address.zip]
@@ -52,7 +52,7 @@ const School = ({
         </a>
         <br />
         {addressPhrase && <div className="address">{addressPhrase}</div>}
-        <span onClick={()=> saveSchoolCallback([state, id.toString()])} className={savedSchool ? 'icon-heart' : 'icon-heart-outline'}></span>
+        <span onClick={()=> saveSchoolCallback({state: state, id: id.toString()})} className={saved_school ? 'icon-heart' : 'icon-heart-outline'}></span>
         <div>
           {joinWithSeparator(
             [
