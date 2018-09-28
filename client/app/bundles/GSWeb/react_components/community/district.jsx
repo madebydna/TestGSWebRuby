@@ -96,6 +96,7 @@ class District extends React.Component {
       <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schoolCounts={this.props.schools_data.counts}
+        reviews={this.props.reviews}
         topSchools={
           <TopSchoolsStateful
             community="district"

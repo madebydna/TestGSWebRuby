@@ -40,7 +40,9 @@ class DistrictsController < ApplicationController
               .where.not(comment: nil)
                 .eager_load(:school_user)
                   .includes(:answers, :votes, question: :review_topic)
-                    .extend(SchoolAssociationPreloading).preload_associated_schools!
+                    .order(created: :desc)
+                      .limit(50)
+                    # .extend(SchoolAssociationPreloading).preload_associated_schools!
   end
 
   def reviews_formatted
