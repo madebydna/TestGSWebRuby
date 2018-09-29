@@ -18,25 +18,11 @@ class DistrictsController < ApplicationController
     @breadcrumbs = breadcrumbs
     @top_schools =  top_rated_schools
     @hero_data = hero_data
-    @reviews = reviews_formatted #test method just to get some reviews down the pipeline
+    @reviews = reviews_formatted.reviews_list.take(3)
     set_district_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
     set_gon_variables
-  end
-
-  def set_gon_variables
-    gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
-    gon.links = {
-      terms_of_use: terms_of_use_path,
-      school_review_guidelines: school_review_guidelines_path,
-      session: api_session_path,
-      school_user_digest: api_school_user_digest_path
-    }
-  end
-
-  def review_questions
-    @_review_questions ||= SchoolProfiles::ReviewQuestions.new(district_record)
   end
 
   def reviews
@@ -52,10 +38,6 @@ class DistrictsController < ApplicationController
                   .order(created: :desc)
                     .limit(50)
                       .extend(SchoolAssociationPreloading).preload_associated_schools!
-  end
-
-  def reviews_formatted
-    @_reviews_formatted ||= SchoolProfiles::Reviews.new(nil, review_questions, reviews)
   end
 
   private
@@ -210,6 +192,24 @@ class DistrictsController < ApplicationController
 
   def decorated_district
     @_decorated_district ||= DistrictCache.cached_results_for([district_record], CACHE_KEYS_FOR_READER).decorate_districts([district_record]).first
+  end
+
+    def set_gon_variables
+    gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
+    gon.links = {
+      terms_of_use: terms_of_use_path,
+      school_review_guidelines: school_review_guidelines_path,
+      session: api_session_path,
+      school_user_digest: api_school_user_digest_path
+    }
+  end
+
+  def reviews_formatted
+    @_reviews_formatted ||= CommunityProfiles::Reviews.new(reviews, review_questions, district_record)
+  end
+
+  def review_questions
+    @_review_questions ||= CommunityProfiles::ReviewQuestions.new(district_record)
   end
 
   # StructuredMarkup

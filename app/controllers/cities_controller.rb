@@ -3,6 +3,7 @@ class CitiesController < ApplicationController
   include AdvertisingConcerns
   include PageAnalytics
   include CommunityConcerns
+  include CommunityProfiles
 
   layout 'application'
   before_filter :redirect_unless_valid_city
@@ -14,7 +15,7 @@ class CitiesController < ApplicationController
     @locality = locality
     @school_levels = school_levels
     @districts = district_content(city_record.id)
-    @reviews = reviews_formatted
+    @reviews = reviews_formatted.reviews_list.take(3)
     set_gon_variables
     set_ad_targeting_props
     set_page_analytics_data
@@ -50,11 +51,11 @@ class CitiesController < ApplicationController
   end
 
   def reviews_formatted
-    @_reviews_formatted ||= SchoolProfiles::Reviews.new(nil, review_questions, reviews)
+    @_reviews_formatted ||= CommunityProfiles::Reviews.new(reviews, review_questions, city_record)
   end
 
   def review_questions
-    @_review_questions ||= SchoolProfiles::ReviewQuestions.new(district_record)
+    @_review_questions ||= CommunityProfiles::ReviewQuestions.new(city_record)
   end
 
   def set_city_meta_tags
