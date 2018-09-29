@@ -46,13 +46,12 @@ class DistrictsController < ApplicationController
             .where(school_id: 
               School.on_db(district_record.state.downcase)
                 .where(district_id: district_record.id).pluck(:id),
-                      state: district_record.state.downcase)
+              state: district_record.state.downcase)
               .where.not(comment: nil)
-                .eager_load(:school_user)
-                  .includes(:answers, :votes, question: :review_topic)
-                    .order(created: :desc)
-                      .limit(50)
-                    # .extend(SchoolAssociationPreloading).preload_associated_schools!
+                .includes(:answers, :votes, question: :review_topic)
+                  .order(created: :desc)
+                    .limit(50)
+                      .extend(SchoolAssociationPreloading).preload_associated_schools!
   end
 
   def reviews_formatted

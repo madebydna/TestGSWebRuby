@@ -188,9 +188,13 @@ class DistrictLayout extends React.Component {
   }
 
   renderReviews(){
-    return(
-      <div id="reviews">
-        {this.props.reviews.length > 0 && this.props.recentReviews}
+    return (
+      this.props.reviews.length > 0 &&
+      <div id="Reviews">
+        <div className="rating-container community-section">
+          <h3>Recent school reviews from schools in {`${this.props.locality.name}`}</h3>
+          {this.props.recentReviews}
+        </div>
       </div>
     )
   }

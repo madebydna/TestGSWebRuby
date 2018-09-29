@@ -14,12 +14,48 @@ class CitiesController < ApplicationController
     @locality = locality
     @school_levels = school_levels
     @districts = district_content(city_record.id)
+    @reviews = reviews_formatted
+    set_gon_variables
     set_ad_targeting_props
     set_page_analytics_data
-    Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
   private
+
+  def set_gon_variables
+    gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
+    gon.links = {
+      terms_of_use: terms_of_use_path,
+      school_review_guidelines: school_review_guidelines_path,
+      session: api_session_path,
+      school_user_digest: api_school_user_digest_path
+    }
+  end
+
+  def reviews
+      @_reviews ||= 
+        Review
+          .active
+            .where(school_id: 
+              School.on_db(city_record.state.downcase)
+                .where(city: city_record.name,
+                      state: city_record.state.downcase)
+                  .pluck(:id),
+              state: city_record.state.downcase)
+              .where.not(comment: nil)
+                .includes(:answers, :votes, question: :review_topic)
+                  .order(created: :desc)
+                    .limit(50)
+                      .extend(SchoolAssociationPreloading).preload_associated_schools!
+  end
+
+  def reviews_formatted
+    @_reviews_formatted ||= SchoolProfiles::Reviews.new(nil, review_questions, reviews)
+  end
+
+  def review_questions
+    @_review_questions ||= SchoolProfiles::ReviewQuestions.new(district_record)
+  end
 
   def set_city_meta_tags
     city_params_hash = city_params(state, city)

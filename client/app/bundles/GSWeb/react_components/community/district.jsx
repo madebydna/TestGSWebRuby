@@ -6,6 +6,7 @@ import DistrictLayout from "./district_layout";
 import SearchBox from "react_components/search_box";
 import TopSchoolsStateful from "./top_schools_stateful";
 import SchoolBrowseLinks from "./school_browse_links";
+import RecentReviews from "./recent_reviews";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
@@ -13,13 +14,13 @@ import withViewportSize from "react_components/with_viewport_size";
 import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
 import { analyticsEvent } from "util/page_analytics";
-import RecentReviews from "./recent_reviews";
 import Zillow from "./zillow";
 
 class District extends React.Component {
   static defaultProps = {
     schools_data: {},
     breadcrumbs: [],
+    reviews: []
   };
 
   static propTypes = {

@@ -368,18 +368,20 @@ $subtle-gray: #647981;
       }
     }
   }
-  a{
-    display: block;
-    text-align: center;
-    .add-a-review{
-      @include button;
+  .add-review-container{
+    >a{
+      display: block;
+      text-align: center;
+      button{
+        @include button;
+      }
     }
-  }
-  > a:hover{
-    text-decoration: none
-  }
-  > p { 
-    text-align: center;
-    margin-bottom: 15px;
+    > a:hover{
+      text-decoration: none
+    }
+    > p { 
+      text-align: center;
+      margin-bottom: 15px;
+    }
   }
 }
