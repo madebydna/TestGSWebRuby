@@ -190,7 +190,6 @@ class DistrictLayout extends React.Component {
   renderReviews(){
     return(
       <div id="reviews">
-        <div className="modules-title">{`Recent school reviews from schools in ${this.props.locality.name}`}</div>
         {this.props.reviews.length > 0 && this.props.recentReviews}
       </div>
     )
@@ -202,7 +201,6 @@ class DistrictLayout extends React.Component {
         {this.props.searchBox}
         {this.renderBreadcrumbs()}
         {this.renderHero()}
-        {/* {this.renderHero()} */}
         <div className="below-hero">
           {this.renderToc()}
           <div className="community-modules">

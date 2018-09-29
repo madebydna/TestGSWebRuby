@@ -84,13 +84,13 @@ export default class UserReviews extends React.Component {
       var alreadyReported = this.props.current_user_reported_reviews.indexOf(review.id) >= 0;
       const desktopLabel = alreadyReported ? t('Review Reported') : t('Report Review');
       return (
-          <div className="review-button-bar">
+        <div className="review-button-bar">
           <span className={'button' + (alreadyReported ? ' reported' : '')} onClick={this.handleReportReviewClick.bind(this, review.id)}>
             <span className="icon-flag"></span>
             <span className="hidden-xs-inline pls">{desktopLabel}</span>
             { this.reportReviewMobileLabel(review) }
           </span>
-          </div>
+        </div>
       )
     }
   }

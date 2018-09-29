@@ -22,7 +22,8 @@ class RecentReviews extends React.Component {
     ),
     state: PropTypes.string,
     schoolId: PropTypes.number,
-    questions: PropTypes.arrayOf(PropTypes.object)
+    questions: PropTypes.arrayOf(PropTypes.object),
+    locality: PropTypes.object
   };
 
   constructor(props) {
@@ -47,14 +48,24 @@ class RecentReviews extends React.Component {
     return (
       <div id="Reviews">
         <div className="rating-container community-section">
-          <div className="grade-filter">
+          <h3>Recent school reviews from schools in {`${this.props.locality.name}`}</h3>
+          <div className="grade-filter mb-30">
             <span className="button-group">
               <Button label={t("All")} active={true} />
+              <Button label={t("Elementary")} active={false} />
+              <Button label={t("Middle")} active={false} />
+              <Button label={t("High")} active={false} />
             </span>
           </div>
           <div className="row">
             <div className="col-xs-12 col-lg-12">{componentFunction()}</div>
           </div>
+          <div className="blue-line" />
+          <p>Does your kids attend a school in this district? </p>
+          <a href="/reviews/">
+            {/* <Button label={"Add a review"} active={false} /> */}
+            <button className="add-a-review">Add a review</button>
+          </a>
         </div>
       </div>
     );

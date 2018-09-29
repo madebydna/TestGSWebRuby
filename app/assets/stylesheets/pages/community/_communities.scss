@@ -351,9 +351,15 @@ $subtle-gray: #647981;
   margin-bottom: 15px;
   border: solid 1px $border-color;
   padding: 20px;
+  h3{
+    padding: 10px 0 10px 15px;
+    color: #333;
+    font-size: 20px;
+    font-family: 'opensans-semibold';
+  }
+  .mb-30{ margin-bottom: 30px; }
   .grade-filter {
     @include flex-justify-center;
-    margin-bottom: 20px;
     .button-group {
       @include button-group;
       button.active{
@@ -361,5 +367,19 @@ $subtle-gray: #647981;
         border: 1px solid $form-field-border-color;
       }
     }
+  }
+  a{
+    display: block;
+    text-align: center;
+    .add-a-review{
+      @include button;
+    }
+  }
+  > a:hover{
+    text-decoration: none
+  }
+  > p { 
+    text-align: center;
+    margin-bottom: 15px;
   }
 }

@@ -22,7 +22,17 @@ class DistrictsController < ApplicationController
     set_district_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
-    Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
+    set_gon_variables
+  end
+
+  def set_gon_variables
+    gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
+    gon.links = {
+      terms_of_use: terms_of_use_path,
+      school_review_guidelines: school_review_guidelines_path,
+      session: api_session_path,
+      school_user_digest: api_school_user_digest_path
+    }
   end
 
   def review_questions
