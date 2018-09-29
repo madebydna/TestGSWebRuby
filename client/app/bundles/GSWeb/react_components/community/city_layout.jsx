@@ -191,6 +191,7 @@ class CityLayout extends React.Component {
         <div className="below-hero">
           {this.renderToc()}
           <div className="community-modules">
+            {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="banner_short" />}
             {this.renderSchools()}
             {this.renderDistricts()}
             {this.renderZillow()}

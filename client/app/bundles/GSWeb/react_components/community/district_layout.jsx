@@ -167,10 +167,12 @@ class DistrictLayout extends React.Component {
     return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
   }
 
-  renderAd(){
-    return this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
+  renderDesktopAd(){
+    return (
+      this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
         <Ad slot="districtpage_first" sizeName="box_or_tall" />
       </div>
+    )
   }
 
   renderToc(){
@@ -197,10 +199,11 @@ class DistrictLayout extends React.Component {
         <div className="below-hero">
           {this.renderToc()}
           <div className="community-modules">
+            {this.props.viewportSize < SM && <Ad slot="districtpage_first" sizeName="banner_short" />}
             {this.renderSchools()}
             {this.renderZillow()}
           </div>
-          {this.renderAd()}
+          {this.renderDesktopAd()}
         </div>
       </div>
     );
