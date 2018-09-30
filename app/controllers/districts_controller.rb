@@ -31,7 +31,7 @@ class DistrictsController < ApplicationController
           .active
             .where(school_id: 
               School.on_db(district_record.state.downcase)
-                .where(district_id: district_record.id).pluck(:id),
+                .where(district_id: district_record.id).ids,
               state: district_record.state.downcase)
               .where.not(comment: nil)
                 .includes(:answers, :votes, question: :review_topic)

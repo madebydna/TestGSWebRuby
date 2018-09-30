@@ -40,8 +40,7 @@ class CitiesController < ApplicationController
             .where(school_id: 
               School.on_db(city_record.state.downcase)
                 .where(city: city_record.name,
-                      state: city_record.state.downcase)
-                  .pluck(:id),
+                      state: city_record.state.downcase).ids,
               state: city_record.state.downcase)
               .where.not(comment: nil)
                 .includes(:answers, :votes, question: :review_topic)
