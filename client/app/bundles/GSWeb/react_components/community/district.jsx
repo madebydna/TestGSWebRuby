@@ -131,7 +131,7 @@ class District extends React.Component {
         heroData={this.props.heroData}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
-        toc={<Toc schools={this.props.schools} districts={this.props.districts} />}
+        toc={<Toc schools={this.props.schools} districts={this.props.districts} reviews={this.props.reviews} />}
         viewportSize={this.props.viewportSize}
       >
       </DistrictLayout>

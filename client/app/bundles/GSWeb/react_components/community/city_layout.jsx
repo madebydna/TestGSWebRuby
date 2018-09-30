@@ -185,7 +185,7 @@ class CityLayout extends React.Component {
   renderReviews() {
     return (
       this.props.reviews.length > 0 &&
-        <div id="Reviews">
+        <div id="reviews">
           <div className="rating-container community-section">
             <h3>Recent school reviews from schools in {`${this.props.locality.city}`}</h3>
             {this.props.recentReviews}

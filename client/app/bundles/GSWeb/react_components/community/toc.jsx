@@ -6,6 +6,7 @@ import TocItem from './toc_item';
 
 const SCHOOL_DISTRICTS = 'school districts'
 const SCHOOLS = 'schools'
+const REVIEWS = 'Reviews'
 
 
 const cityTocItems = [
@@ -45,12 +46,12 @@ const cityTocItems = [
     anchor: '#homes-and-rentals',
     selected: false
   },
-  // {
-  //   key: 'Reviews',
-  //   label: t('Schools'),
-  //   anchor: '',
-  // selected: false
-  // }
+  {
+    key: 'Reviews',
+    label: t(REVIEWS),
+    anchor: '#reviews',
+    selected: false
+  }
 ]
 
 class Toc extends React.Component {
@@ -76,8 +77,11 @@ class Toc extends React.Component {
 
   selectTocItems(){
     let suppressDistricts = this.props.districts.length < 1;
+    let suppressReviews = this.props.reviews.length < 1;
     return cityTocItems.filter(tocItem=>{
-      if(tocItem.key === SCHOOL_DISTRICTS && suppressDistricts) {
+      if(tocItem.key === SCHOOL_DISTRICTS && suppressDistricts ) {
+        return false;
+      } else if (tocItem.key === REVIEWS && suppressReviews){
         return false;
       }
       return true;
