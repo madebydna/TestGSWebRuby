@@ -28,31 +28,33 @@ export const TABLE_VIEW = 'table';
 export const validViews = [LIST_VIEW, MAP_VIEW, TABLE_VIEW];
 const COOKIE_NAME = 'gs_saved_schools';
 
+const gonSearch = (window.gon || {}).search || {};
+
 class SearchProvider extends React.Component {
   static defaultProps = {
     findSchools,
-    q: gon.search.q,
-    city: gon.search.city,
-    district: gon.search.district,
-    state: gon.search.state,
-    schools: gon.search.schools,
-    levelCodes: gon.search.levelCodes || [],
-    entityTypes: gon.search.entityTypes || [],
-    defaultLat: gon.search.cityLat || 37.8078456,
-    defaultLon: gon.search.cityLon || -122.2672673,
-    lat: gon.search.lat,
-    lon: gon.search.lon,
-    distance: gon.search.distance,
-    locationLabel: gon.search.locationLabel,
-    sort: gon.search.sort,
-    page: gon.search.page || 1,
-    pageSize: gon.search.pageSize,
-    totalPages: gon.search.totalPages,
-    resultSummary: gon.search.resultSummary,
-    paginationSummary: gon.search.paginationSummary,
-    breadcrumbs: gon.search.breadcrumbs || [],
-    view: gon.search.view || LIST_VIEW,
-    searchTableViewHeaders: gon.search.searchTableViewHeaders || {},
+    q: gonSearch.q,
+    city: gonSearch.city,
+    district: gonSearch.district,
+    state: gonSearch.state,
+    schools: gonSearch.schools,
+    levelCodes: gonSearch.levelCodes || [],
+    entityTypes: gonSearch.entityTypes || [],
+    defaultLat: gonSearch.cityLat || 37.8078456,
+    defaultLon: gonSearch.cityLon || -122.2672673,
+    lat: gonSearch.lat,
+    lon: gonSearch.lon,
+    distance: gonSearch.distance,
+    locationLabel: gonSearch.locationLabel,
+    sort: gonSearch.sort,
+    page: gonSearch.page || 1,
+    pageSize: gonSearch.pageSize,
+    totalPages: gonSearch.totalPages,
+    resultSummary: gonSearch.resultSummary,
+    paginationSummary: gonSearch.paginationSummary,
+    breadcrumbs: gonSearch.breadcrumbs || [],
+    view: gonSearch.view || LIST_VIEW,
+    searchTableViewHeaders: gonSearch.searchTableViewHeaders || {},
     tableView: 'Overview'
   };
 
