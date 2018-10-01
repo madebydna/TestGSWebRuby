@@ -23,8 +23,8 @@ module CommunityParams
   end
 
   def state
+    return nil unless params[:state].present?
     state_param = params[:state]
-    return nil unless state_param.present?
 
     if States.is_abbreviation?(state_param)
       state_param
