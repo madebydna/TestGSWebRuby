@@ -199,7 +199,7 @@ class DistrictLayout extends React.Component {
         <div className="below-hero">
           {this.renderToc()}
           <div className="community-modules">
-            {this.props.viewportSize < SM && <Ad slot="districtpage_first" sizeName="banner_short" />}
+            {this.props.viewportSize < SM && <Ad slot="districtpage_first" sizeName="thin_banner_mobile" />}
             {this.renderSchools()}
             {this.renderZillow()}
           </div>
