@@ -58,8 +58,6 @@ class Toc extends React.Component {
   static defaultProps = {
     schools: [],
     students: [],
-    districts: [],
-    reviews: [],
     suppressReviews: true,
     suppressDistricts: true
   };
@@ -67,7 +65,6 @@ class Toc extends React.Component {
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.object),
     students: PropTypes.arrayOf(PropTypes.object),
-    districts: PropTypes.arrayOf(PropTypes.object),
     suppressReviews: PropTypes.bool,
     suppressDistricts: PropTypes.bool
   };
