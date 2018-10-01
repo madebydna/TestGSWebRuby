@@ -48,7 +48,6 @@ class UserReviews
     {}.tap do |hash|
       five_star_review, topical_reviews = partition
       hash["school_user_digest"] = school_user_digest(member_id)
-      hash["school_name"] = self&.reviews&.first&.school&.name
       hash["five_star_review"] = review_to_hash(five_star_review) if five_star_review
       hash["topical_reviews"] = topical_reviews.map { |r| review_to_hash(r) }
       if reviews.present?

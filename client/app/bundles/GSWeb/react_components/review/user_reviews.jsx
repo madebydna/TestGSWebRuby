@@ -24,7 +24,7 @@ export default class UserReviews extends React.Component {
   }
 
   fiveStars(numberFilled) {
-    var filled = [];
+    var filled = []; 2
     for (var i=0; i < numberFilled; i++) {
       filled.push(<span className="icon-star filled-star" key={i}></span>);
     }
@@ -47,6 +47,7 @@ export default class UserReviews extends React.Component {
         return (<TopicalReview review={review} key={review.id}
                                reportedCallback={this.handleReviewReported.bind(this, review.id)}
                                userAlreadyReported={userAlreadyReported}
+                               schoolName={this.props.school_name}
         />)
       }, this);
     }
@@ -132,7 +133,7 @@ export default class UserReviews extends React.Component {
     }
     return (
         <div className="type-and-date">
-          { this.props.pageType === "Community" && `Review for ${this.props.school_name}` } <br/>
+          { this.props.school_name && `Review for ${this.props.school_name}` } <br/>
           { userTypeSentence }
           { this.props.most_recent_date }
         </div>
@@ -151,7 +152,7 @@ export default class UserReviews extends React.Component {
             { this.fiveStarReview() }
             { this.topicalReviews() }
             { this.userTypeAndDate() }
-            { this.buttonBar(this.props.five_star_review) }
+            { this.props.school_name === undefined ? this.buttonBar(this.props.five_star_review) : null }
             { this.reportFiveStarReview() }
           </div>
         </div>

@@ -343,12 +343,9 @@ $subtle-gray: #647981;
   }
 }
 
-#homes-and-rentals{
+.reviews-module{
   margin-bottom: 15px;
-}
-
-.community-section{
-  margin-bottom: 15px;
+  margin-top: 15px;
   border: solid 1px $border-color;
   padding: 20px;
   h3{
@@ -356,9 +353,10 @@ $subtle-gray: #647981;
     color: #333;
     font-size: 20px;
     font-family: 'opensans-semibold';
+    margin-bottom: 30px; //remove when we add back the gradelevel filter buttons
   }
-  .mb-30{ margin-bottom: 30px; }
   .grade-filter {
+    margin-bottom: 30px;
     @include flex-justify-center;
     .button-group {
       @include button-group;
@@ -368,6 +366,7 @@ $subtle-gray: #647981;
       }
     }
   }
+  
   .add-review-container{
     >a{
       display: block;

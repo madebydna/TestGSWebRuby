@@ -3,7 +3,6 @@ class DistrictsController < ApplicationController
   include AdvertisingConcerns
   include PageAnalytics
   include CommunityConcerns
-  include ReviewCalculations
 
   CACHE_KEYS_FOR_READER = %w(district_schools_summary district_characteristics)
 
@@ -19,34 +18,11 @@ class DistrictsController < ApplicationController
     @top_schools =  top_rated_schools
     @hero_data = hero_data
     @reviews = reviews_formatted.reviews_list.take(3)
+    gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
-    set_gon_variables
   end
-
-  def reviews
-      @_reviews ||= 
-        Review
-          .active
-            .where(school_id: 
-              School.on_db(district_record.state.downcase)
-                .where(district_id: district_record.id).ids,
-              state: district_record.state.downcase)
-              .where.not(comment: nil)
-                .includes(:answers, :votes, question: :review_topic)
-                  .order(created: :desc)
-                    .limit(50)
-                      .extend(SchoolAssociationPreloading).preload_associated_schools!
-  end
-
-  # def sql_query
-  #   "SELECT reviews.* FROM _#{district_record.state.downcase}.school JOIN gs_schooldb.reviews ON school.id=reviews.school_id WHERE reviews.state=_#{district_record.state.downcase}.school.state AND reviews.school_id IN (SELECT  id FROM _#{district_record.state.downcase}.school WHERE district_id='#{district_record.id}');"
-  # end
-
-  # def reviews
-  #   @queries ||= ActiveRecord::Base.connection.exec_query(sql_query)
-  # end
 
   private
 
@@ -194,22 +170,21 @@ class DistrictsController < ApplicationController
     end
   end
 
-  def schools_in_a_district
-    School.on_db("ca").active.where(district_id: district_record.id).pluck(:id)
-  end
-
   def decorated_district
     @_decorated_district ||= DistrictCache.cached_results_for([district_record], CACHE_KEYS_FOR_READER).decorate_districts([district_record]).first
   end
 
-    def set_gon_variables
-    gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
-    gon.links = {
-      terms_of_use: terms_of_use_path,
-      school_review_guidelines: school_review_guidelines_path,
-      session: api_session_path,
-      school_user_digest: api_school_user_digest_path
-    }
+  def reviews
+    @_reviews ||= 
+      Review
+        .active
+          .where(school_id: 
+            School.on_db(district_record.state.downcase) { School.active.where(district_id: district_record.id).ids },
+            state: district_record.state.downcase)
+            .where.not(comment: nil)
+              .includes(:answers, :votes, question: :review_topic)
+                .order(created: :desc)
+                  .extend(SchoolAssociationPreloading).preload_associated_schools!
   end
 
   def reviews_formatted

@@ -3,7 +3,6 @@ class CitiesController < ApplicationController
   include AdvertisingConcerns
   include PageAnalytics
   include CommunityConcerns
-  include CommunityProfiles
 
   layout 'application'
   before_filter :redirect_unless_valid_city
@@ -16,46 +15,12 @@ class CitiesController < ApplicationController
     @school_levels = school_levels
     @districts = district_content(city_record.id)
     @reviews = reviews_formatted.reviews_list.take(3)
-    set_gon_variables
+    gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props
     set_page_analytics_data
   end
 
   private
-
-  def set_gon_variables
-    gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
-    gon.links = {
-      terms_of_use: terms_of_use_path,
-      school_review_guidelines: school_review_guidelines_path,
-      session: api_session_path,
-      school_user_digest: api_school_user_digest_path
-    }
-  end
-
-  def reviews
-      @_reviews ||= 
-        Review
-          .active
-            .where(school_id: 
-              School.on_db(city_record.state.downcase)
-                .where(city: city_record.name,
-                      state: city_record.state.downcase).ids,
-              state: city_record.state.downcase)
-              .where.not(comment: nil)
-                .includes(:answers, :votes, question: :review_topic)
-                  .order(created: :desc)
-                    .limit(50)
-                      .extend(SchoolAssociationPreloading).preload_associated_schools!
-  end
-
-  def reviews_formatted
-    @_reviews_formatted ||= CommunityProfiles::Reviews.new(reviews, review_questions, city_record)
-  end
-
-  def review_questions
-    @_review_questions ||= CommunityProfiles::ReviewQuestions.new(city_record)
-  end
 
   def set_city_meta_tags
     city_params_hash = city_params(state, city)
@@ -77,6 +42,27 @@ class CitiesController < ApplicationController
 
   def cities_state_text
     state.downcase == 'dc' ? '' : "#{city_record.name.gs_capitalize_words} #{state_name.gs_capitalize_words} "
+  end
+
+    def reviews
+      @_reviews ||= 
+        Review
+          .active
+            .where(school_id: 
+              School.on_db(city_record.state.downcase) { School.active.where(city: city_record.name).ids },
+              state: city_record.state.downcase)
+              .where.not(comment: nil)
+                .includes(:answers, :votes, question: :review_topic)
+                  .order(created: :desc)
+                      .extend(SchoolAssociationPreloading).preload_associated_schools!
+  end
+
+  def reviews_formatted
+    @_reviews_formatted ||= CommunityProfiles::Reviews.new(reviews, review_questions, city_record)
+  end
+
+  def review_questions
+    @_review_questions ||= CommunityProfiles::ReviewQuestions.new(city_record)
   end
 
   # AdvertisingConcerns

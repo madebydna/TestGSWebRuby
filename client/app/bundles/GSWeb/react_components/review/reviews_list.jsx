@@ -4,10 +4,6 @@ import UserReviews from './user_reviews';
 import { t } from 'util/i18n';
 
 export default class ReviewsList extends React.Component {
-  static defaultProps = {
-    schools_name: "SchoolProfiles"
-  };
-
   static propTypes = {
     reviews: PropTypes.arrayOf(PropTypes.shape({
       five_star_review: PropTypes.object,
@@ -15,8 +11,7 @@ export default class ReviewsList extends React.Component {
       most_recent_date: PropTypes.string,
       user_type_label: PropTypes.string,
       avatar: PropTypes.number,
-      reviewSubmitMessage: PropTypes.object,
-      school_name: PropTypes.string
+      reviewSubmitMessage: PropTypes.object
     }))
   };
 
@@ -72,7 +67,6 @@ export default class ReviewsList extends React.Component {
       current_user_reported_reviews={this.state.currentUserReportedReviews}
       review_reported_callback={this.reviewReportedCallback}
       school_name = {userReviews.school_name}
-      pageType={this.props.pageType}
     />)
   }
 
@@ -81,7 +75,6 @@ export default class ReviewsList extends React.Component {
       <div className="review-list">
         <div>{this.renderReviewSubmitMessage()}</div>
         <div>{this.displayReviews()}</div>
-
       </div>
     )
   }

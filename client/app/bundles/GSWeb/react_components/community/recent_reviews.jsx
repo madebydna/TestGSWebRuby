@@ -47,14 +47,15 @@ class RecentReviews extends React.Component {
   renderReviewLayout(componentFunction) {
     return (
       <React.Fragment>
-        <div className="grade-filter mb-30">
+        {/* Commented out until we need to filter for gradeLevels */}
+        {/* <div className="grade-filter">
           <span className="button-group">
             <Button label={t("All")} active={true} />
             <Button label={t("Elementary")} active={false} />
             <Button label={t("Middle")} active={false} />
             <Button label={t("High")} active={false} />
           </span>
-        </div>
+        </div> */}
         <div className="row">
           <div className="col-xs-12 col-lg-12">{componentFunction()}</div>
         </div>
