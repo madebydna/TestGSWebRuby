@@ -97,6 +97,10 @@ module SearchControllerConcerns
     )
   end
 
+  def null_query
+    Search::NullQuery.new
+  end
+
   def decorate_schools(schools)
     schools = assigned_schools + schools if extras.include?('assigned') && page == 1
     extras.each do |extra|

@@ -13,9 +13,10 @@ class MySchoolListController < ApplicationController
 
   def show
     gon.search = {
-      schools: school_keys.present? ? serialized_schools : []
+      schools: serialized_schools
     }.tap do |props|
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
+      props[:resultSummary] = I18n.t('.search.Your school list is empty') if serialized_schools.empty?
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
       props[:searchTableViewHeaders] = {
         'Overview' => overview_header_hash,
@@ -26,6 +27,16 @@ class MySchoolListController < ApplicationController
 
     set_ad_targeting_props
     set_page_analytics_data
+  end
+
+  # SearchControllerConcerns
+
+  def query
+    if school_keys.present?
+      solr_query
+    else
+      null_query
+    end
   end
 
   # SearchRequestParams

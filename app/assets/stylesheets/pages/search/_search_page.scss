@@ -1,6 +1,6 @@
 $page-side-padding: 15px;
 $search-primary-blue-on-white: #1dace5;
-$charcoal-gray: #2E3438;
+$charcoal-gray: #2e3438;
 
 @import 'list-and-map';
 @import 'components/dropdown';
@@ -183,7 +183,7 @@ body {
           margin-left: 20px;
         }
       }
-      .sort-dropdown-table-view{
+      .sort-dropdown-table-view {
         float: right;
       }
     }
@@ -205,7 +205,8 @@ body {
       @include media-breakpoint-only(xs) {
         padding: 0;
       }
-      li span.icon-heart, span.icon-heart-outline {
+      li span.icon-heart,
+      span.icon-heart-outline {
         position: absolute;
         top: 10px;
         right: 12px;
@@ -334,7 +335,9 @@ body {
       .body {
         padding: 20px;
         font-size: $font-size-l3;
-        flex-wrap: wrap;
+        @include media-breakpoint-only(xs) {
+          flex-wrap: wrap;
+        }
         display: flex;
         max-width: 991px;
         background-color: white;
@@ -420,7 +423,6 @@ body {
   background-color: white;
   position: relative;
 
-
   table {
     table-layout: fixed;
     width: 991px;
@@ -503,7 +505,7 @@ body {
   width: 300px;
   background-color: #fff;
   padding: 20px;
-  border-radius: $form-field-border-radius;;
+  border-radius: $form-field-border-radius;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.09);
   cursor: default;
   .circle-nr {
@@ -515,7 +517,7 @@ body {
     margin-right: 5px;
     margin-top: -3px;
   }
-  .rating-scale{
+  .rating-scale {
     @include flexbox;
     .help-circle {
       text-align: center;
@@ -531,18 +533,22 @@ body {
   .ratings-scale-container {
     @include flex-justify-space-between;
     max-width: 300px;
-    .block-container{
-      .rating-scale{
+    .block-container {
+      .rating-scale {
         justify-content: center;
       }
-      .word-scale{
+      .word-scale {
         text-align: center;
         font-size: $font-size;
       }
     }
   }
-  h4{ font-size: 19px; }
-  a { color: $search-primary-blue-on-white; }
+  h4 {
+    font-size: 19px;
+  }
+  a {
+    color: $search-primary-blue-on-white;
+  }
   .btn-close {
     float: right;
     margin-top: 12px;
@@ -559,13 +565,16 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     .ratings-scale-container {
-      .block-container{
-        .word-scale{
+      .block-container {
+        .word-scale {
           font-size: $font-size-after-bp;
         }
       }
     }
-    p, div { font-size: $font-size-after-bp; }
+    p,
+    div {
+      font-size: $font-size-after-bp;
+    }
   }
 }
 
@@ -573,19 +582,19 @@ body {
   font-weight: bold;
 }
 
-.help-overlay{
+.help-overlay {
   @include media-breakpoint-down(sm) {
     position: fixed;
     z-index: 5;
     left: 0;
     top: 0;
-    right:0;
-    bottom:0;
-    background-color: rgba(0,0,0,0.8);
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }
 
-.ollie-help-icon{
+.ollie-help-icon {
   display: inline-block;
   margin-left: 15px;
   position: relative;

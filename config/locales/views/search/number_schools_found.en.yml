@@ -1,6 +1,6 @@
----
 en:
   search:
+    Your school list is empty: Your school list is empty
     number_schools_found:
       city_browse:
         zero: Your search did not return any schools in %{city}, %{state}

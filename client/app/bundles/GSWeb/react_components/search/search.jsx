@@ -68,6 +68,12 @@ class Search extends React.Component {
     initAdvertising();
   }
 
+  noResults() {
+    return this.props.schools.length === 0 ? (
+      <NoResults resultSummary={this.props.resultSummary} />
+    ) : null;
+  }
+
   render() {
     const Layout = {
       Search: SearchLayout,
@@ -154,11 +160,7 @@ class Search extends React.Component {
             }
             searchBox={<SearchBox size={this.props.size} />}
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
-            noResults={
-              this.props.schools.length === 0 ? (
-                <NoResults resultSummary={this.props.resultSummary} />
-              ) : null
-            }
+            noResults={this.noResults()}
           />
         )}
       </DistanceContext.Consumer>
