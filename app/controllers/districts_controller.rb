@@ -40,6 +40,14 @@ class DistrictsController < ApplicationController
                       .extend(SchoolAssociationPreloading).preload_associated_schools!
   end
 
+  # def sql_query
+  #   "SELECT reviews.* FROM _#{district_record.state.downcase}.school JOIN gs_schooldb.reviews ON school.id=reviews.school_id WHERE reviews.state=_#{district_record.state.downcase}.school.state AND reviews.school_id IN (SELECT  id FROM _#{district_record.state.downcase}.school WHERE district_id='#{district_record.id}');"
+  # end
+
+  # def reviews
+  #   @queries ||= ActiveRecord::Base.connection.exec_query(sql_query)
+  # end
+
   private
 
   def set_district_meta_tags
