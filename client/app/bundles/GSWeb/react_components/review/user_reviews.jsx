@@ -24,7 +24,7 @@ export default class UserReviews extends React.Component {
   }
 
   fiveStars(numberFilled) {
-    var filled = []; 2
+    var filled = [];
     for (var i=0; i < numberFilled; i++) {
       filled.push(<span className="icon-star filled-star" key={i}></span>);
     }

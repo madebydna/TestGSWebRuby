@@ -9,9 +9,8 @@ module CommunityProfiles
     # The CommunityProfiles::Reviews class uses this
     def questions
       @_questions ||= (
-        ReviewQuestion.active
+        ReviewQuestion.active.map{ |q| question_to_hash(q) }
       )
-      @_questions.map{ |q| question_to_hash(q) }
     end
 
     def community_id
