@@ -54,9 +54,6 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'search#search'
   end
 
-  get '/myschoollist/', as: :school_list, to: 'search#search'
-  
-
   get ':state/:city/:district_name/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/,
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
