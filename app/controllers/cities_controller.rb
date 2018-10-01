@@ -51,10 +51,12 @@ class CitiesController < ApplicationController
             .where(school_id: 
               School.on_db(city_record.state.downcase) { School.active.where(city: city_record.name).ids },
               state: city_record.state.downcase)
-              .where.not(comment: nil)
-                .includes(:answers, :votes, question: :review_topic)
-                  .order(created: :desc)
-                      .extend(SchoolAssociationPreloading).preload_associated_schools!
+              .where(review_question_id: 1)
+                .where.not(comment: nil)
+                  .includes(:answers, :votes, question: :review_topic)
+                    .order(id: :desc)
+                      .limit(3)
+                        .extend(SchoolAssociationPreloading).preload_associated_schools!
   end
 
   def reviews_formatted
