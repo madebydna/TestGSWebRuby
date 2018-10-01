@@ -193,6 +193,11 @@ body {
       * + * {
         margin-top: 5px;
       }
+
+      .table-view-filter{
+        @include tab-group;
+      }
+
     }
 
     .pagination-summary {
