@@ -59,14 +59,17 @@ class Toc extends React.Component {
     schools: [],
     students: [],
     districts: [],
-    reviews: []
+    reviews: [],
+    suppressReviews: true,
+    suppressDistricts: true
   };
 
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.object),
     students: PropTypes.arrayOf(PropTypes.object),
     districts: PropTypes.arrayOf(PropTypes.object),
-    reviews: PropTypes.arrayOf(PropTypes.object)
+    suppressReviews: PropTypes.bool,
+    suppressDistricts: PropTypes.bool
   };
 
   constructor(props) {
@@ -76,8 +79,8 @@ class Toc extends React.Component {
   }
 
   selectTocItems(){
-    let suppressDistricts = this.props.districts.length < 1;
-    let suppressReviews = this.props.reviews.length < 1;
+    const suppressDistricts = this.props.suppressDistricts;
+    const suppressReviews = this.props.suppressReviews;
     return cityTocItems.filter(tocItem=>{
       if(tocItem.key === SCHOOL_DISTRICTS && suppressDistricts ) {
         return false;

@@ -101,7 +101,8 @@ class City extends React.Component {
       <CityLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schoolCounts={this.props.schools_data.counts}
-        reviews={this.props.reviews}
+        shouldDisplayReviews={this.props.reviews.length > 0}
+        shouldDisplayDistricts={this.props.districts.length > 0}
         topSchools={
           <TopSchoolsStateful
             community="city" 
@@ -140,7 +141,13 @@ class City extends React.Component {
         }
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
-        toc={<Toc schools={this.props.schools} districts={this.props.districts} reviews={this.props.reviews} />}
+        toc={
+          <Toc 
+            schools={this.props.schools} 
+            suppressDistricts={this.props.districts.length === 0} 
+            suppressReviews={this.props.reviews.length === 0} 
+          />
+        }
         viewportSize={this.props.viewportSize}
       >
       </CityLayout>

@@ -78,6 +78,8 @@ class CityLayout extends React.Component {
     viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
+    shouldDisplayReviews: PropTypes.bool,
+    shouldDisplayDistricts: PropTypes.bool
   };
 
   constructor(props) {
@@ -156,7 +158,7 @@ class CityLayout extends React.Component {
   }
 
   renderDistricts(){
-    return this.props.districts.length > 0 && (
+    return this.props.shouldDisplayReviews && (
       <div id="districts">
         <div className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</div>
           {this.props.districtsInCity}
@@ -184,7 +186,7 @@ class CityLayout extends React.Component {
 
   renderReviews() {
     return (
-      this.props.reviews.length > 0 &&
+      this.props.shouldDisplayReviews &&
         <div id="reviews">
           <div className="rating-container reviews-module">
             <h3>Recent school reviews from schools in {`${this.props.locality.city}`}</h3>

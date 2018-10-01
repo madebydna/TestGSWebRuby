@@ -97,7 +97,7 @@ class District extends React.Component {
       <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schoolCounts={this.props.schools_data.counts}
-        reviews={this.props.reviews}
+        shouldDisplayReviews={this.props.reviews.length > 0}
         topSchools={
           <TopSchoolsStateful
             community="district"
@@ -131,7 +131,12 @@ class District extends React.Component {
         heroData={this.props.heroData}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
-        toc={<Toc schools={this.props.schools} districts={this.props.districts} reviews={this.props.reviews} />}
+        toc={
+          <Toc 
+            schools={this.props.schools}
+            suppressReviews={this.props.reviews.length === 0} 
+          />
+        }
         viewportSize={this.props.viewportSize}
       >
       </DistrictLayout>

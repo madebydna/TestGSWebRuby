@@ -78,7 +78,8 @@ class DistrictLayout extends React.Component {
     viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
-    heroData: PropTypes.object
+    heroData: PropTypes.object,
+    shouldDisplayReviews: PropTypes.boolean
   };
 
   constructor(props) {
@@ -189,7 +190,7 @@ class DistrictLayout extends React.Component {
 
   renderReviews(){
     return (
-      this.props.reviews.length > 0 &&
+      this.props.shouldDisplayReviews &&
       <div id="reviews">
         <div className="rating-container reviews-module">
           <h3>Recent school reviews from schools in {`${this.props.locality.name}`}</h3>
