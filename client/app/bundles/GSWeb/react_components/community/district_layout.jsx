@@ -79,7 +79,7 @@ class DistrictLayout extends React.Component {
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
     heroData: PropTypes.object,
-    shouldDisplayReviews: PropTypes.boolean
+    shouldDisplayReviews: PropTypes.bool
   };
 
   constructor(props) {
