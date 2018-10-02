@@ -63,10 +63,12 @@ module Feeds
       end
 
       def write_entity_info(hash, universal_id)
-        within_tag('entity') do
-          xml_builder.tag!('universal-id', universal_id)
-          within_tag('results') do
-            write_test_results(hash)
+        if hash.present?
+          within_tag('entity') do
+            xml_builder.tag!('universal-id', universal_id)
+            within_tag('results') do
+              write_test_results(hash)
+            end
           end
         end
       end
