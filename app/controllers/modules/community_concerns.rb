@@ -2,17 +2,13 @@
 
 module CommunityConcerns
     def serialized_schools
-      @_serialized_schools ||= begin
-        schools.map do |school|
-          Api::SchoolSerializer.new(school).to_hash
-        end
+      schools.map do |school|
+        Api::SchoolSerializer.new(school).to_hash
       end
     end
 
     def schools
-      @_schools ||= begin
-        decorate_schools(page_of_results)
-      end
+      decorate_schools(page_of_results)
     end
 
     def school_levels
@@ -30,8 +26,34 @@ module CommunityConcerns
       end
     end
 
+    def fetch_top_rated_schools(level_code)
+      set_level_code_params(level_code)
+      serialized_schools
+    end
+
+    def top_rated_schools
+      @_top_rated_schools ||= begin
+        elementary = fetch_top_rated_schools('e')
+        middle = fetch_top_rated_schools('m')
+        high = fetch_top_rated_schools('h')
+        {
+          schools: {
+            elementary: elementary,
+            middle: middle,
+            high: high,
+          },
+          counts: {
+            elementary: elementary.count,
+            middle: middle.count,
+            high: high.count,
+            all: elementary.count + middle.count + high.count
+          }
+        }
+      end
+    end
+
     def page_of_results
-      @_page_of_results ||= solr_query.search
+      solr_query.search
     end
 
     def solr_query
@@ -45,7 +67,7 @@ module CommunityConcerns
         query_type.new(
           state: state,
           district_id: district_record.id,
-          level_codes: [level_code].compact,
+          level_codes: [level_code_param].compact,
           limit: default_top_schools_limit,
           sort_name: 'rating',
           with_rating: 'true'
@@ -55,7 +77,7 @@ module CommunityConcerns
           city: city,
           state: state,
           district_name: district_record&.name,
-          level_codes: [level_code].compact,
+          level_codes: [level_code_param].compact,
           limit: default_top_schools_limit,
           sort_name: 'rating',
           with_rating: 'true'

@@ -98,7 +98,8 @@ class SearchLayout extends React.Component {
     breadcrumbs: PropTypes.element,
     pagination: PropTypes.element,
     resultSummary: PropTypes.string.isRequired,
-    noResults: PropTypes.element
+    noResults: PropTypes.element,
+    chooseTableButtons: PropTypes.element
   };
 
   static getDerivedStateFromProps(props) {
@@ -195,6 +196,7 @@ class SearchLayout extends React.Component {
         <div style={{ margin: 'auto' }}>
           <span className="menu-item">{this.props.entityTypeDropdown}</span>
           <span className="menu-item">{this.props.gradeLevelButtons}</span>
+
           {this.props.distanceFilter ? (
             <span className="menu-item">
               <span className="label">Distance:</span>
@@ -284,15 +286,35 @@ class SearchLayout extends React.Component {
         <div className="subheader menu-bar">
           {this.props.breadcrumbs}
           <div className="pagination-summary">{this.props.resultSummary}</div>
-          {this.props.size > SM && (
+          {this.shouldRenderTable() ? 
             <div className="menu-item">
-              <span className="label">{t('Sort by')}:</span>
-              {this.props.sortSelect}
-            </div>
-          )}
+              {this.props.chooseTableButtons}
+            </div> : null
+          }
+          {this.renderSortDropDown()}
         </div>
       )
     );
+  }
+
+  renderSortDropDown(){
+    if(this.props.size <= SM){
+      return null;
+    }else if(this.shouldRenderTable()){
+      return (
+        <div className="menu-item sort-dropdown-table-view">
+          <span className="label">{t('Sort by')}:</span>
+          {this.props.sortSelect}
+        </div>
+      )
+    }else{
+      return(
+        <div className="menu-item">
+          <span className="label">{t('Sort by')}:</span>
+          {this.props.sortSelect}
+        </div>
+      )
+    }
   }
 
   render() {

@@ -20,13 +20,14 @@ import Zillow from "./zillow";
 const { gon } = window;
 class City extends React.Component {
   static defaultProps = {
-    schools: [],
+    schools_data: {},
+    loadingSchools: false,
     breadcrumbs: [],
     districts: []
   };
 
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.object),
+    schools_data: PropTypes.object,
     districts: PropTypes.arrayOf(PropTypes.object),
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
@@ -97,13 +98,14 @@ class City extends React.Component {
     return (
       <CityLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
-        schools={this.props.schools}
+        schoolCounts={this.props.schools_data.counts}
         topSchools={
           <TopSchoolsStateful
             community="city" 
-            schools={this.props.schools}
+            schoolsData={this.props.schools_data.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
+            schoolLevels={this.props.schools_data.counts}
           />
         }
         browseSchools={

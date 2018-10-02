@@ -2,20 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../button";
 import TopSchoolTableRow from './top_school_table_row';
-import { SM } from "util/viewport";
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
 import { addQueryParamToUrl } from 'util/uri';
-import { name } from "../../util/states";
 
 const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
   if (community === 'city') {
     return(
       <div className="grade-filter">
         <span className="button-group">
-          <Button onClick={() => handleGradeLevel("e", community)} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
-          <Button onClick={() => handleGradeLevel("m", community)} label={t("Middle")} active={levelCodes === "m" ? true : false} />
-          <Button onClick={() => handleGradeLevel("h", community)} label={t("High")} active={levelCodes === "h" ? true : false} />
+          <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
+          <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} />
+          <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} />
         </span>
       </div>
     )
@@ -23,30 +21,30 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
     return (
       <div className="grade-filter">
         <span className="button-group">
-          {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e", community)} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
-          {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m", community)} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
-          {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h", community)} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
+          {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
+          {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
+          {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
         </span>
       </div>
     )
   }
 }
 
-const TopSchools = ({schools, handleGradeLevel, isLoading, size, levelCodes, community, schoolLevels, locality}) => {
+const TopSchools = ({ schools, handleGradeLevel, size, levelCodes, community, schoolLevels, locality}) => {
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
   }
-  const noSchoolsMapC = {
-    "e": t("top_schools.no_elemC"), "m": t("top_schools.no_midC"), "h": t("top_schools.no_highC")
+  const noSchoolsMapCity = {
+    "e": t("top_schools.no_elemCity"), "m": t("top_schools.no_midCity"), "h": t("top_schools.no_highCity")
   }
-  const noSchoolsMapD = {
-    "e": t("top_schools.no_elemD"), "m": t("top_schools.no_midD"), "h": t("top_schools.no_highD")
+  const noSchoolsMapDistrict = {
+    "e": t("top_schools.no_elemDistrict"), "m": t("top_schools.no_midDistrict"), "h": t("top_schools.no_highDistrict")
   }
   if (schools.length === 0) {
     schoolList = <section className="no-schools">
                     <div>
-        <h3>{community === 'city' ? noSchoolsMapC[levelCodes] : noSchoolsMapD[levelCodes]}</h3>
+                      <h3>{noSchoolsMapCity[levelCodes]}</h3>
                     </div>
                   </section>;
   } else {
@@ -92,7 +90,6 @@ TopSchools.propTypes = {
 TopSchools.defaultProps = {
   schools: [],
   handleGradeLevel: null,
-  isLoading: false,
   levelCodes: 'e'
 };
 

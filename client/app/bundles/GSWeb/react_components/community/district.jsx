@@ -18,12 +18,12 @@ import Zillow from "./zillow";
 
 class District extends React.Component {
   static defaultProps = {
-    schools: [],
+    schools_data: {},
     breadcrumbs: [],
   };
 
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.object),
+    schools_data: PropTypes.object,
     loadingSchools: PropTypes.bool,
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
@@ -95,14 +95,14 @@ class District extends React.Component {
     return (
       <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
-        schools={this.props.schools}
+        schoolCounts={this.props.schools_data.counts}
         topSchools={
           <TopSchoolsStateful
             community="district"
-            schools={this.props.schools}
+            schoolsData={this.props.schools_data.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
-            schoolLevels={this.props.school_levels}
+            schoolLevels={this.props.schools_data.counts}
           />
         }
         browseSchools={

@@ -7,6 +7,7 @@ import { compose, curry } from 'lodash/fp';
 import { size as viewportSize, XS } from 'util/viewport';
 import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
+import ChooseTableContext from './choose_table_context';
 import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
 import DistanceContext from './distance_context';
@@ -47,7 +48,9 @@ class SearchProvider extends React.Component {
     resultSummary: gon.search.resultSummary,
     paginationSummary: gon.search.paginationSummary,
     breadcrumbs: gon.search.breadcrumbs || [],
-    view: gon.search.view || LIST_VIEW
+    view: gon.search.view || LIST_VIEW,
+    searchTableViewHeaders: gon.search.searchTableViewHeaders,
+    tableView: 'Overview'
   };
 
   static propTypes = {
@@ -83,7 +86,10 @@ class SearchProvider extends React.Component {
         text: PropTypes.string.isRequired,
         url: PropTypes.string.isRequired
       })
-    )
+    ),
+    updateTableView: PropTypes.func.isRequired,
+    searchTableViewHeaders: PropTypes.object,
+    tableView: PropTypes.string
   };
 
   constructor(props) {
@@ -244,8 +250,11 @@ class SearchProvider extends React.Component {
             this.props.updateView,
             curry(this.trackParams)('View', this.props.view)
           ),
+          updateTableView: this.props.updateTableView,
           q: this.props.q,
-          locationLabel: this.props.locationLabel
+          locationLabel: this.props.locationLabel,
+          searchTableViewHeaders: this.props.searchTableViewHeaders,
+          tableView: this.props.tableView
         }}
       >
         <DistanceContext.Provider
@@ -270,6 +279,7 @@ class SearchProvider extends React.Component {
               )
             }}
           >
+
             <EntityTypeContext.Provider
               value={{
                 entityTypes: this.props.entityTypes,
@@ -290,7 +300,16 @@ class SearchProvider extends React.Component {
                   )
                 }}
               >
+                <ChooseTableContext.Provider
+                    value={{
+                      tableView: this.props.tableView,
+                      updateTableView: this.props.updateTableView,
+                      size: this.state.size,
+                      equitySize: this.props.searchTableViewHeaders.Equity.length,
+                    }}
+                >
                 {this.props.children}
+                </ChooseTableContext.Provider>
               </SortContext.Provider>
             </EntityTypeContext.Provider>
           </GradeLevelContext.Provider>

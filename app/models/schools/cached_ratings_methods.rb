@@ -35,6 +35,19 @@ module CachedRatingsMethods
     rating_for_key('Summary Rating')
   end
 
+  def subratings
+    formatted_ratings_table_view
+    # result['Equity Overview Rating'] = result.delete('Equity rating') if result['Equity rating']
+    # result.except!('GreatSchools rating')
+    # result.except!('Student progress rating')
+  end
+
+  def ethnicity_ratings
+    fer = formatted_ethnicity_ratings
+    fer = {'Low Income' => low_income_rating}.merge(fer) if fer && low_income_rating
+    fer
+  end
+
   def great_schools_rating
     test_score_weight = (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value']
     if overall_gs_rating.nil? && test_score_weight == '1'
@@ -268,6 +281,30 @@ module CachedRatingsMethods
       end
     else
       {}
+    end
+  end
+
+  def formatted_ratings_table_view(rating_type=nil)
+    if rating_type.nil? || rating_type == 'gs_rating'
+      {
+          :'Test Scores Rating' => :test_scores_rating,
+          :'Academic Progress Rating' => :academic_progress_rating,
+          :'College Readiness Rating' => :college_readiness_rating,
+          :'Advanced Courses Rating' => :courses_rating,
+          :'Equity Overview Rating' => :equity_overview_rating
+      }.each_with_object({}) do |(name, method), accum|
+        result = send(method)
+        accum[name.to_s] = result if result
+      end
+    else
+      {}
+    end
+  end
+
+  def formatted_ethnicity_ratings
+    ethnicity = ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
+    ethnicity.each_with_object({}) do |e, accum|
+      accum[e.breakdowns.join(',')] = e.school_value  if e.school_value
     end
   end
 

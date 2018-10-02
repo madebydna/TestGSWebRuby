@@ -11,6 +11,7 @@ import SchoolList from './school_list';
 import SchoolTable from './school_table';
 import EntityTypeDropdown from './entity_type_dropdown';
 import GradeLevelButtons from './grade_level_buttons';
+import ChooseTableButtons from './choose_table_buttons';
 import DistanceFilter from './distance_filter';
 import DistanceContext from './distance_context';
 import Ad from 'react_components/ad';
@@ -54,7 +55,8 @@ class Search extends React.Component {
     autoSuggestQuery: PropTypes.func,
     view: PropTypes.string.isRequired,
     updateView: PropTypes.func.isRequired,
-    q: PropTypes.string
+    q: PropTypes.string,
+    searchTableViewHeaders: PropTypes.object
   };
 
   componentDidMount() {
@@ -70,6 +72,7 @@ class Search extends React.Component {
             view={this.props.view}
             entityTypeDropdown={<EntityTypeDropdown />}
             gradeLevelButtons={<GradeLevelButtons />}
+            chooseTableButtons={<ChooseTableButtons />}
             distanceFilter={
               distance ||
               (this.props.schools[0] &&
@@ -107,6 +110,8 @@ class Search extends React.Component {
                 toggleHighlight={this.props.toggleHighlight}
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
+                searchTableViewHeaders = {this.props.searchTableViewHeaders}
+                tableView = {this.props.tableView}
               />
             }
             pagination={

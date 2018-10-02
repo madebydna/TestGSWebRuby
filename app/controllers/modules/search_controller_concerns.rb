@@ -34,7 +34,7 @@ module SearchControllerConcerns
   end
 
   def query
-    if point_given? || area_given? || q.present? || top_school_module?
+    if point_given? || area_given? || q.present?
       solr_query
     elsif state.present? && (school_id.present? || district_id.present?)
       school_sql_query
@@ -119,6 +119,11 @@ module SearchControllerConcerns
     schools
   end
 
+  def add_all_ratings(schools)
+    cache_keys << 'ratings'
+    schools
+  end
+
   def add_review_summary(schools)
     cache_keys << 'review_summary'
     cache_keys << 'reviews_snapshot'
@@ -176,6 +181,14 @@ module SearchControllerConcerns
     end
 
     schools
+  end
+
+  def add_subrating_hash
+    school.ratings
+  end
+
+  def add_ethincity_hash
+
   end
 
 end

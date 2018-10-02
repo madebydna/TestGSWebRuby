@@ -11,24 +11,31 @@ module Search
     def initialize(q)
       self.q = q
       @client = Sunspot
-      @limit = 250
+      @limit = 5
     end
 
-    # ['facet_counts']['facet_fields']['zip']
+    def school_result
+      @_school_result ||= client.search(School, &school_query).instance_variable_get(:@solr_result)
+    end
 
-    def solr_result
-      @_solr_result ||= client.search(School, &sunspot_query).instance_variable_get(:@solr_result)
+    def city_result
+      @_city_result ||= client.search(School, &city_query).instance_variable_get(:@solr_result)
+    end
+
+    def district_result
+      @_district_result ||= client.search(School, &district_query).instance_variable_get(:@solr_result)
     end
 
     def response
-
-      rval = solr_result['response']['docs'].map { |r| standardize(r) } + zips
+      school_result['response']['docs'].map { |r| standardize(r) } +
+      city_result['response']['docs'].map { |r| standardize(r) } +
+      district_result['response']['docs'].map { |r| standardize(r) } + zips 
     end
 
     def zips
       #          zip,   count, zip,   count,
       # returns [94612, 5,     94501, 10,    ...]
-      zips_and_counts = solr_result.dig('facet_counts', 'facet_fields', 'zip') || []
+      zips_and_counts = school_result.dig('facet_counts', 'facet_fields', 'zip') || []
       zips = zips_and_counts
                  .each_slice(2)
                  .select {|_, count| count > 0}
@@ -126,11 +133,32 @@ module Search
       [
         "school_name_untokenized:#{q_escape_spaces}*",
         "school_name:(#{q}*)",
-        "city_name:(#{q_no_whitespace} #{q_no_whitespace}*)^5.0",
-        "district_name_untokenized:#{q_escape_spaces}*^8.0"
+        "city_name:(#{q_no_whitespace} #{q_no_whitespace}*)^100.0",
+        "district_name_untokenized:#{q_escape_spaces}*^1000.0"
       ].tap do |fragments|
         fragments << "zip:#{possible_zip}*" if possible_zip
       end
+    end
+
+    def school_fragments
+      [
+        "school_name_untokenized:#{q_escape_spaces}*",
+        "school_name:(#{q}*)",
+      ].tap do |fragments|
+        fragments << "zip:#{possible_zip}*" if possible_zip
+      end
+    end
+
+    def city_fragments
+      [
+        "city_name:(#{q_no_whitespace} #{q_no_whitespace}*)",
+      ]
+    end
+
+    def district_fragments
+      [
+        "district_name_untokenized:#{q_escape_spaces}*"
+      ]
     end
 
     def possible_zip
@@ -141,19 +169,47 @@ module Search
       @_possible_zip = q.scan(/\b\d{3,5}\b/).sort_by(&:length).last
     end
 
-    def sunspot_query
+    def school_query
       lambda do |search|
-        # search.keywords(q)
-        search.keywords("#{query_fragments.join(' ')}")
+        search.keywords("#{school_fragments.join(' ')}")
         search.paginate(page: 1, per_page: limit)
         search.adjust_solr_params do |params|
           params[:fq][0] = nil
           params[:defType] = 'lucene'
           params[:fl] = fields.join(',')
           params[:facet] = true if possible_zip
-          params[:sort] = 'score desc, city_number_of_schools desc, district_number_of_schools desc'
+          params[:sort] = 'score desc'
           params['facet.field']='zip' if possible_zip
-          # facet=on&facet.field=txt
+        end
+      end
+    end
+
+    def city_query
+      lambda do |search|
+        search.keywords("#{city_fragments.join(' ')}")
+        search.paginate(page: 1, per_page: limit)
+        search.adjust_solr_params do |params|
+          params[:fq][0] = nil
+          params[:defType] = 'lucene'
+          params[:fl] = fields.join(',')
+          params[:facet] = true if possible_zip
+          params[:sort] = 'score desc, city_number_of_schools desc'
+          params['facet.field']='zip' if possible_zip
+        end
+      end
+    end
+
+    def district_query
+      lambda do |search|
+        search.keywords("#{district_fragments.join(' ')}")
+        search.paginate(page: 1, per_page: limit)
+        search.adjust_solr_params do |params|
+          params[:fq][0] = nil
+          params[:defType] = 'lucene'
+          params[:fl] = fields.join(',')
+          params[:facet] = true if possible_zip
+          params[:sort] = 'score desc, district_number_of_schools desc'
+          params['facet.field']='zip' if possible_zip
         end
       end
     end

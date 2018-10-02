@@ -54,7 +54,7 @@ Example of sharding. This seems to work, but just using on_db to switch dbs seem
     after_find do |obj|
       # Rails is currently running in "not threadsafe" mode, so the connection will still be
       # set to whatever it was set to when the object was queried
-      obj.instance_variable_set(:@_source_shard, School.connection.current_database)
+      obj.instance_variable_set(:@_source_shard, '_' + self.class.connection.connection_name)
     end
   end
 

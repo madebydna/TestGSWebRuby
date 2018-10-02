@@ -1,658 +1,306 @@
+# frozen_string_literal: true
+
 class SearchController < ApplicationController
-  include ApplicationHelper
-  include SearchHelper
-  include SchoolHelper
-  include DataDisplayHelper
-  include SearchMetaTagsConcerns
-  include ActionView::Helpers::TagHelper
-  include PaginationConcerns
-  include SortingConcerns
-  include GoogleMapConcerns
-  include HubConcerns
+  include Pagination::PaginatableRequest
+  include SearchRequestParams
+  include AdvertisingConcerns
+  include PageAnalytics
+  include SearchControllerConcerns
+  include SearchTableConcerns
 
-  #Todo move before filters to methods
-  before_action :set_city_state, only: [:suggest_school_by_name, :suggest_city_by_name, :suggest_district_by_name]
-  before_action :set_verified_city_state, only: [:city_browse, :district_browse]
-  before_action :set_hub, only: [:city_browse, :district_browse]
-  before_action :add_collection_id_to_gtm_data_layer, only: [:city_browse, :district_browse]
-  before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
-  before_action :use_gs_bootstrap
-
-  layout 'deprecated_application'
-
-  #ToDo SOFT_FILTERS_KEYS be generated dynamically by the filter builder class
-  SOFT_FILTER_KEYS = %w(beforeAfterCare dress_code boys_sports girls_sports transportation school_focus class_offerings enrollment summer_program voucher_type spec_ed)
-  MAX_RESULTS_FOR_MAP = 100
-  NUM_NEARBY_CITIES = 8
-  MAX_RESULTS_FOR_FIT = 300
-  DEFAULT_RADIUS = 5
-  MAX_RADIUS = 60
-  MIN_RADIUS = 1
-
-
-  def default_search
-    redirect_to "/", :status => 301
-  end
-
-  def lat
-    Float(params[:lat]) rescue nil
-  end
-
-  def lon
-    Float(params[:lon]) rescue nil
-  end
+  layout 'application'
+  before_filter :redirect_unless_valid_search_criteria # we need at least a 'q' param or state and city/district
 
   def search
-    @state = {
-        long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
-        short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
-    } if params_hash['state'].present?
-    @state_abbreviation = state_abbreviation
-    @allow_compare = can_compare?
-    gon.allow_compare = can_compare?
-
-    if lat && lon && @state.present?
-      self.by_location
-    elsif params.include?(:city) && params.include?(:district_name) && @state.present?
-      self.district_browse
-    elsif params.include?(:city) && @state.present?
-      self.city_browse
-    elsif params.include?(:q)
-      query = params['q'].mb_chars.tidy_bytes.to_s
-      if query != params['q']
-        redirect_to url_for(params.merge(only_path: true, q: query)) and return
+    gon.search = {
+      schools: serialized_schools,
+    }.tap do |props|
+      props['state'] = state
+      if lat && lon
+        props['lat'] = lat
+        props['lon'] = lon
       end
-      if params_hash['q'].blank?
-        redirect_to default_search_url  and return
-      end
-      self.by_name
-    else
-      redirect_to default_search_url
-
+      props.merge!(Api::CitySerializer.new(city_record).to_hash) if city_record
+      props[:district] = district_record.name if district_record
+      props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
+      props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
+      props[:breadcrumbs] = should_include_breadcrumbs? ? search_breadcrumbs : []
+      props[:searchTableViewHeaders] = {
+          'Overview' => overview_header_hash,
+          'Equity' => equity_header_hash(schools),
+          'Academic' => academic_header_hash
+      }
     end
+    set_search_meta_tags
+    set_ad_targeting_props
+    set_page_analytics_data
+    set_meta_tags(alternate: {
+      en: url_for(params_for_rel_alternate.merge(lang: nil)),
+      es: url_for(params_for_rel_alternate.merge(lang: :es))
+    })
+    response.status = 404 if serialized_schools.empty?
   end
 
-  #todo decide to use or not use before filters
-  #Currently the before filters are only activated if city_browse is hit directly from the route (also affects district browse)
-  #This can pose a problem if city browse is hit via the search method above, thus not activating the before filters
-  #Either remove city browse from search method above or move the before filter methods to city browse.
-  def city_browse
-    @state_abbreviation = state_abbreviation
-    @allow_compare = can_compare?
-    gon.allow_compare = can_compare?
-    set_login_redirect
-    @city_browse = true
-    require_city_instance_variable { redirect_to state_path(gs_legacy_url_encode(@state[:long])); return }
-
-    setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
-      search_options.merge!({state: state_abbreviation, city: @city.name})
-    end
-
-    @search_term = "#{@city.name}, #{state_abbreviation.upcase}"
-    @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: state_abbreviation)
-    set_meta_tags(robots: 'noindex, nofollow') unless @total_results.present? && @total_results > 0
-    set_meta_tags search_city_browse_meta_tag_hash
-    set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
-    setup_search_gon_variables
-    if bail_on_fit?
-      redirect_to path_w_query_string 'sort', nil
-    else
-      render 'search_page'
-    end
-  end
-
-  def district_browse
-    @state_abbreviation = state_abbreviation
-    @allow_compare = can_compare?
-    gon.allow_compare = can_compare?
-    set_login_redirect
-    @district_browse = true
-    require_city_instance_variable { redirect_to state_path(gs_legacy_url_encode(@state[:long])); return }
-
-    district_name = params[:district_name]
-    district_name = URI.unescape district_name # url decode
-    district_name = district_name.gsub('-', ' ').gsub('_', '-') # replace hyphens with spaces ToDo Move url decoding elsewhere
-    @district = params[:district_name] ? District.on_db(state_abbreviation.downcase.to_sym).where(name: district_name, active:1).first : nil
-
-    if @district.nil?
-      redirect_to city_path(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city.name))
-      return
-    end
-
-    @search_term = @district.name
-
-    setup_search_results!(Proc.new { |search_options| SchoolSearchService.district_browse(search_options) }) do |search_options|
-      search_options.merge!({state: state_abbreviation, district_id: @district.id})
-    end
-
-    @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: state_abbreviation)
-    set_meta_tags(robots: 'noindex, nofollow') unless @total_results.present? && @total_results > 0
-    set_meta_tags search_district_browse_meta_tag_hash
-    set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
-    setup_search_gon_variables
-    if bail_on_fit?
-      redirect_to path_w_query_string 'sort', nil
-    else
-      render 'search_page'
-    end
-  end
-
-  def by_location
-    @state_abbreviation = state_abbreviation
-    @allow_compare = can_compare?
-    gon.allow_compare = can_compare?
-    set_login_redirect
-    city = nil
-    @by_location = true
-    setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
-      @lat = params_hash['lat']
-      @lon = params_hash['lon']
-      search_options.merge!({lat: @lat, lon: @lon, radius: radius_param})
-      search_options.merge!({state: state_abbreviation}) if @state
-      @normalized_address = params_hash['normalizedAddress']
-      @search_term = params_hash['locationSearchString']
-      city = params_hash['city']
-    end
-
-    @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: state_abbreviation)
-
-    set_meta_tags search_by_location_meta_tag_hash
-    set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
-    setup_search_gon_variables
-    if bail_on_fit?
-      redirect_to path_w_query_string 'sort', nil
-    else
-      render 'search_page'
-    end
-  end
-
-  def by_name
-    @state_abbreviation = state_abbreviation
-    @allow_compare = can_compare?
-    gon.allow_compare = can_compare?
-    set_login_redirect
-    @by_name = true
-    setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_name(search_options) }) do |search_options, params_hash|
-      @query_string = params_hash['q']
-      search_options.merge!({query: @query_string})
-      search_options.merge!({state: state_abbreviation}) if @state
-      @search_term=@query_string
-    end
-    @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{state_abbreviation}"} if @suggested_query
-
-    set_meta_tags search_by_name_meta_tag_hash
-    set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
-    setup_search_gon_variables
-    if bail_on_fit?
-      redirect_to path_w_query_string 'sort', nil
-    else
-      render 'search_page'
-    end
-  end
-
-  def by_zip
-    zip = zip_param
-    if zip.present?
-      redirect_to search_path(lat: zip.lat,
-                              lon: zip.lon,
-                              state: zip.state,
-                              city: zip.name,
-                              locationType: 'postal_code',
-                              normalizedAddress: zip.zip,
-                              locationSearchString: zip.zip,
-                              zipCode: zip.zip)
-    else
-      redirect_to home_path
-    end
-  end
-
-  def setup_search_results!(search_method)
-    setup_filter_display_map
-    @params_hash = parse_array_query_string(request.query_string)
-    set_page_instance_variables # @results_offset @page_size @page_number
-
-
-    # calculate offset and number of results such that we'll definitely have 200 map pins to display
-    # To guarantee this in a simple way I fetch a total of 400 results centered around the page to be displayed
-    offset = @results_offset - MAX_RESULTS_FOR_MAP
-    offset = 0 if offset < 0
-    number_of_results = @results_offset + MAX_RESULTS_FOR_MAP
-    number_of_results = (MAX_RESULTS_FOR_MAP * 2) if number_of_results > (MAX_RESULTS_FOR_MAP*2)
-    search_options = {number_of_results: number_of_results, offset: offset}
-
-    (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
-    @sort_type = parse_sorts(@params_hash).presence
-    @active_sort = active_sort_name(@sort_type)
-
-    if @sort_type
-      search_options.merge!({sort: @sort_type})
-    end
-
-    # To sort by fit, we need all the schools matching the search. So override offset and num results here
-    if sorting_by_fit?
-      search_options[:number_of_results] = MAX_RESULTS_FOR_FIT
-      search_options[:offset] = 0
-    end
-
-    yield search_options, @params_hash if block_given?
-
-    ad_setTargeting_through_gon
-
-
-    results = search_method.call(search_options)
-    session[:soft_filter_params] = soft_filters_params_hash
-    # sort_by_fit(results[:results], sort) if sorting_by_fit?
-    process_results(results, offset) unless results.empty?
-    data_layer_through_gon
-    set_hub # must come after @schools is defined in process_results
-    add_collection_id_to_gtm_data_layer
-    @show_guided_search = has_guided_search?
-    @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
-    @ad_definition = Advertising.new
-    @relevant_sort_types = sort_types(hide_fit?)
-
-    omniture_filter_list_values(filters, @params_hash)
-    add_filters_to_gtm_data_layer
-  end
-
-  def process_results(results, solr_offset)
-    @query_string = '?' + encode_square_brackets(CGI.unescape(@params_hash.to_param))
-    @total_results = results[:num_found]
-
-    school_results = results[:results] || []
-    relative_offset = @results_offset - solr_offset
-
-    #when not sorting by fit, only applying fit scores to 25 schools on page. (previously it was up to 200 schools)
-    if sorting_by_fit? && filtering_search? && !hide_fit?
-      setup_fit_scores(school_results, @params_hash)
-      sort_by_fit(school_results)
-      @schools = school_results[relative_offset..(relative_offset+@page_size-1)]
-    else
-      @schools = school_results[relative_offset..(relative_offset+@page_size-1)]
-      setup_fit_scores(@schools, @params_hash) if filtering_search?
-    end
-
-    @suggested_query = results[:suggestion] if @total_results == 0 && search_by_name? #for Did you mean? feature on no results page
-    # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
-    # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
-    # 225 (the user requested offset)
-    relative_offset = @results_offset - solr_offset
-    @schools = school_results[relative_offset..(relative_offset+@page_size-1)] || []
-
-    if params[:limit]
-      if params[:limit].to_i > 0
-        @schools = @schools[0..(params[:limit].to_i - 1)] || []
-      else
-        @schools = []
-      end
-    end
-
-    (map_start, map_end) = calculate_map_range solr_offset
-    @map_schools = school_results[map_start..map_end] || []
-    SchoolSearchResultReviewInfoAppender.add_review_info_to_school_search_results!(@map_schools)
-
-    # mark the results that appear in the list so the map can handle them differently
-    @schools.each { |school| school.on_page = true } if @schools.present?
-
-    mapping_points_through_gon
-    assign_sprite_files_though_gon
-
-    set_pagination_instance_variables(@total_results) # @max_number_of_pages @window_size @pagination
-  end
+  ## ported over to support legacy search
 
   def suggest_school_by_name
     set_city_state
-
-    state_abbr = state_abbreviation if @state && state_abbreviation.present?
-    response_objects = SearchSuggestSchool.new.search(count: 20, state: state_abbr, query: params[:query])
-
-    set_cache_headers_for_suggest
+    response_objects = SearchSuggestSchool.new.search(count: 20, state: state, query: params[:query])
+    set_cache_headers_for_legacy_suggest
     render json:response_objects
   end
 
   def suggest_city_by_name
     set_city_state
-
-    state_abbr = state_abbreviation if @state && state_abbreviation.present?
-    response_objects = SearchSuggestCity.new.search(count: 10, state: state_abbr, query: params[:query])
-
-    set_cache_headers_for_suggest
+    response_objects = SearchSuggestCity.new.search(count: 10, state: state, query: params[:query])
+    set_cache_headers_for_legacy_suggest
     render json:response_objects
   end
 
   def suggest_district_by_name
     set_city_state
-
-    state_abbr = state_abbreviation if @state && state_abbreviation.present?
-    response_objects = SearchSuggestDistrict.new.search(count: 10, state: state_abbr, query: params[:query])
-
-    set_cache_headers_for_suggest
+    response_objects = SearchSuggestDistrict.new.search(count: 10, state: state, query: params[:query])
+    set_cache_headers_for_legacy_suggest
     render json:response_objects
   end
 
-  def set_cache_headers_for_suggest
+  ## end legacy search code
+
+  private
+
+  def set_cache_headers_for_legacy_suggest
     cache_time = ENV_GLOBAL['search_suggest_cache_time'] || 0
     expires_in cache_time, public: true
   end
 
-  protected
-
-  def zip_param
-    return @_zip_param if defined?(@_zip_param)
-    zip_code = params[:zipCode]
-    @_zip_param = (zip_code.present? && zip_code =~ /^\d{5}$/) ? BpZip.find_by_zip(zip_code) : nil
+  def should_include_breadcrumbs?
+    city_browse? || district_browse?
   end
 
-  def radius_param
-    @radius = params_hash['distance'].presence || DEFAULT_RADIUS
-    @radius = Integer(@radius) rescue @radius = DEFAULT_RADIUS
-    @radius = MAX_RADIUS if @radius > MAX_RADIUS
-    @radius = MIN_RADIUS if @radius < MIN_RADIUS
-    record_applied_filter_value('distance', @radius) unless "#{@radius}" == params_hash['distance']
-    @radius
+  def search_breadcrumbs
+    @_search_breadcrumbs ||= [
+      {
+        text: StructuredMarkup.state_breadcrumb_text(state),
+        url: state_url(state_params(state))
+      },
+      {
+        text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
+        url: city_url(city_params(state, city))
+      }
+    ]
   end
 
-  def bail_on_fit?
-    sorting_by_fit? && hide_fit?
-  end
-
-  def hide_fit?
-    @total_results.present? ? @total_results > MAX_RESULTS_FOR_FIT : true
-  end
-
-  def calculate_map_range(solr_offset)
-    # solr_offset is used to convert from an absolute range to a relative range.
-    # e.g. if user requested 225-250, we want to display on map 150-350. That's the absolute range
-    # If we asked solr to give us results 25-425, then the relative range into that resultset is
-    # 125-325
-    map_start = @results_offset - solr_offset - (MAX_RESULTS_FOR_MAP/2) + @page_size
-    map_start = 0 if map_start < 0
-    map_start = (@results_offset - solr_offset) if map_start > @results_offset # handles when @page_size > (MAX_RESULTS_FOR_MAP/2)
-    map_end = map_start + MAX_RESULTS_FOR_MAP-1
-    if map_end > @total_results
-      map_end = @total_results-1
-      map_start = map_end - MAX_RESULTS_FOR_MAP
-      map_start = 0 if map_start < 0
-      map_start = (@results_offset - solr_offset) if map_start > @results_offset
-    end
-    [map_start, map_end]
-  end
-
-  def parse_filters(params_hash)
-    filters = {}
-    if should_apply_filter? :st
-      st_params = params_hash['st']
-      st_params = [st_params] unless st_params.instance_of?(Array)
-      school_types = []
-      school_types << :public if st_params.include? 'public'
-      school_types << :charter if st_params.include? 'charter'
-      school_types << :private if st_params.include? 'private'
-      filters[:school_type] = school_types unless school_types.empty? || school_types.length == 3
-    end
-    if params_hash.include? 'gradeLevels'
-      lc_params = params_hash['gradeLevels']
-      lc_params = [lc_params] unless lc_params.instance_of?(Array)
-      level_codes = []
-      level_codes << :preschool if lc_params.include? 'p'
-      level_codes << :elementary if lc_params.include? 'e'
-      level_codes << :middle if lc_params.include? 'm'
-      level_codes << :high if lc_params.include? 'h'
-      filters[:level_code] = level_codes unless level_codes.empty? || level_codes.length == 4
-    end
-    if should_apply_filter? :grades
-      grades_params = params_hash['grades']
-      grades_params = [grades_params] unless grades_params.instance_of?(Array)
-      grades = []
-      valid_grade_params = ['p','k', '1','2','3','4','5','6','7','8','9','10','11','12']
-      grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
-      filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
-    end
-
-    if should_apply_filter?(:gs_rating)
-      gs_rating_params = [*params_hash['gs_rating']]
-      value_map = {'above_average' => [8,9,10],'average' => [4,5,6,7],'below_average' => [1,2,3] }
-      gs_ratings = gs_rating_params.select {|param| value_map.has_key?(param)}.map {|param| value_map[param]}.flatten
-      filters[:overall_gs_rating] = gs_ratings unless gs_ratings.empty?
-    end
-
-    if should_apply_filter?(:indypk) || params_hash.include?('indypk')
-      indypk_params = params_hash['indypk']
-      indypk_params = [*indypk_params]
-      filters[:indy_omwpk] = true if indypk_params.include?('omwpk')
-      filters[:indy_ccdf] = true if indypk_params.include?('ccdf')
-      filters[:indy_indypsp] = true if indypk_params.include?('indypsp')
-      filters[:indy_scholarships] = true if indypk_params.include?('scholarships')
-    end
-
-    if should_apply_filter?(:cgr)
-      valid_cgr_values = ['70_TO_100']
-      filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ') if valid_cgr_values.include? params_hash['cgr']
-    end
-    if on_city_browse? && hub_matching_current_url && hub_matching_current_url.city
-      filters[:collection_id] = hub_matching_current_url.collection_id
-    elsif params_hash.include? 'collectionId'
-      filters[:collection_id] = params_hash['collectionId']
-    end
-    @filtering_search = !soft_filters_params_hash.empty?
-    filters
-  end
-
-  private
-
-  def params_hash
-    @params_hash ||= parse_array_query_string(request.query_string)
-  end
-
-  def should_apply_filter?(filter)
-    params_hash.include?(filter.to_s) && @filter_display_map.keys.include?(filter)
-  end
-
-  def set_omniture_data_search_school(page_number, search_type, search_term, locale)
-    gon.omniture_pagename = "GS:SchoolSearchResults"
-    gon.omniture_hier1 = "Search,School Search"
-    set_omniture_data_for_user_request
-    gon.omniture_sprops['searchTerm'] = search_term if search_term
-    gon.omniture_sprops['locale'] = locale if locale
-    gon.omniture_channel = state_abbreviation.try(:upcase) if @state
-    gon.omniture_evars ||= {}
-    gon.omniture_evars['search_page_number'] = page_number if page_number
-    gon.omniture_evars['search_page_type'] = search_type if search_type
-    gon.omniture_lists ||= {}
-    gon.omniture_lists['search_filters'] = @filter_values.join(',')
-  end
-
-  def page_view_metadata
-    @page_view_metadata ||= (
-      page_view_metadata = {}
-      page_view_metadata['page_name']   = 'GS:SchoolSearchResults'
-      page_view_metadata['template']    = 'search' # use this for page name - configured_page_name
-      targeted_city = if @city && @city.respond_to?(:name)
-                        @city.name
-                      elsif params[:city]
-                        params[:city]
-                      end
-      page_view_metadata['City']        = targeted_city if targeted_city
-      page_view_metadata['State']       = state_abbreviation.upcase if state_abbreviation
-      page_view_metadata['county']      = county_object.try(:name) if county_object
-      page_view_metadata['gradeLevels'] = params[:gradeLevels] if params[:gradeLevels].present?
-      page_view_metadata['type']        = params[:st] if params[:st].present?
-      if params[:grades].present?
-        level_code = LevelCode.from_grade(params[:grades])
-        page_view_metadata['level'] = level_code if level_code
-      end
-      if params[:zipCode].present?
-        page_view_metadata['Zipcode'] = params[:zipCode]
-      end
-
-      page_view_metadata
-    )
-
-  end
-
-  def ad_setTargeting_through_gon
-    page_view_metadata.each do |key, value|
-      ad_targeting_gon_hash[key] = value
+  # StructuredMarkup
+  def prepare_json_ld
+    if should_include_breadcrumbs?
+      search_breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
     end
   end
 
-  def data_layer_through_gon
-   data_layer_gon_hash.merge!(page_view_metadata)
-  end
-
-  def county_object
-    if @city && @city.respond_to?(:county)
-      @city.county
-    else
-      nil
+  # AdvertisingConcerns
+  def ad_targeting_props
+    {
+      page_name: "GS:SchoolS",
+      template: "search",
+    }.tap do |hash|
+      hash[:district_id] = district_id if district_id
+      hash[:school_id] = school_id if school_id
+      # these intentionally capitalized to match property names that have
+      # existed for a long time. Not sure if it matters
+      hash[:City] = city.gs_capitalize_words if city
+      hash[:State] = state if state
+      hash[:level] = level_codes.map { |s| s[0] } if level_codes.present?
+      hash[:type] = entity_types.map(&:capitalize) if entity_types.present?
+      hash[:county] = county_object&.name if county_object
+      # hash[:zipcode]
     end
   end
 
-  def setup_fit_scores(results, params_hash)
-
-    params = soft_filters_params_hash
-
-    results.each do |result|
-      result.calculate_fit_score!(params)
-      unless result.fit_score_breakdown.nil?
-        result.update_breakdown_labels! @filter_display_map
-        result.sort_breakdown_by_match_status!
-      end
+  # PageAnalytics
+  def page_analytics_data
+    {}.tap do |hash|
+      hash[PageAnalytics::SEARCH_TERM] = q if q
+      hash[PageAnalytics::SEARCH_TYPE] = search_type
+      hash[PageAnalytics::SEARCH_HAS_RESULTS] = page_of_results.any?
+      hash[PageAnalytics::PAGE_NAME] = 'GS:SchoolSearchResults'
     end
   end
 
-  def setup_filter_display_map
-    city_name = if @city
-                  @city.name
-                elsif params[:city]
-                  params[:city]
-                else
-                  ''
-                end
-    filter_builder = FilterBuilder.new(state_abbreviation, city_name, @by_name)
-
-    session[:soft_filter_config] = {state: state_abbreviation, city: city_name, force_simple: @by_name}
-
-    @filter_display_map = filter_builder.filter_display_map
-    # The FilterBuilder doesn't know we conditionally hide the distance filter on the search results page,
-    # so we have to add that logic to the cache key here.
-    @filters = filter_builder.filters
-    @filter_cache_key = @filters.cache_key + (@by_location ? '-distance' : '-no_distance')
-    @filter_cache_key << "-lang_#{locale.to_s}"
+  # Paginatable
+  def default_limit
+    25
   end
 
-  def soft_filters_params_hash
-    @soft_filter_params ||= params_hash.select do |key|
-      SOFT_FILTER_KEYS.include?(key) && @filter_display_map.keys.include?(key.to_sym)
-    end
-  end
-
-  def omniture_soft_filters_hash
-    params = soft_filters_params_hash
-    omniture_filter_values_prepend(params)
-  end
-
-  def omniture_filter_values_prepend(params)
-
-    filters_hash = {
-        'boys_sports' => 'boys_',
-        'girls_sports' => 'girls_',
-        'beforeAfterCare' => 'care_',
-        'class_offerings' => 'class_',
-        'school_focus' => 'school_focus_'
-    }
-
-    if params
-      transformed_params = params.inject({}) do
-      |hash,(key, value)|
-        if filters_hash.include?(key)
-          hash[key] = [*value].collect { |e| filters_hash[key] + e}
+  def redirect_unless_valid_search_criteria
+    if q.present? || (lat.present? && lon.present?)
+      return
+    elsif state && district
+      unless district_record
+        if city_record
+          redirect_to city_path(city: city_param, state: state_param)
         else
-          hash[key] = value
+          redirect_to(state_path(States.state_path(state)))
         end
-        hash
       end
-      @filter_values += transformed_params.values.flatten
-    end
-  end
-
-  def omniture_hard_filter(filters, params_hash)
-    if filters
-      @filter_values += filters.values.flatten
-    end
-  end
-
-  def omniture_distance_filter(params_hash)
-    if params_hash['distance']
-      @filter_values << params_hash['distance'] + '_miles'
-    end
-  end
-
-  def omniture_filter_list_values(filters, params_hash)
-
-    @filter_values = []
-    omniture_soft_filters_hash
-    omniture_hard_filter(filters, params_hash)
-    omniture_distance_filter(params_hash)
-  end
-
-  # Any time we apply a different filter value than what is in the URL, we should record that here
-  # so the view knows how to render the filter form. See search.js::updateFilterState and normalizeInputValue
-  def record_applied_filter_value(filter_name, filter_value)
-    gon.search_applied_filter_values ||= {}
-    gon.search_applied_filter_values[filter_name] = filter_value
-  end
-
-  def setup_search_gon_variables
-    gon.soft_filter_keys = SOFT_FILTER_KEYS
-    gon.pagename = "SearchResultsPage"
-    gon.state_abbr = state_abbreviation
-    gon.show_ads = @show_ads
-    gon.city_name = if @city
-                      @city.name
-                    elsif params[:city]
-                      params[:city]
-                    else
-                      ''
-                    end
-  end
-
-  def add_filters_to_gtm_data_layer
-    ignored_filter_values = ['5_miles']
-    filters_used = 'No'
-    unless @filter_values.blank?
-      # the trailing space allows Google Analytics admins to run queries on it
-      data_layer_gon_hash['GS Search Filters Applied'] = @filter_values.join(' ') + ' '
-      filters_used = 'Yes' unless @filter_values.reject{|v| ignored_filter_values.include?(v) }.blank?
-    end
-    data_layer_gon_hash['GS Search Filters Used'] = filters_used
-  end
-
-  def on_district_browse?
-    @district_browse == true
-  end
-
-  def on_city_browse?
-    @city_browse == true
-  end
-
-  def on_by_name_search?
-    @by_name == true
-  end
-
-  def on_by_location_search?
-    @by_location == true
-  end
-
-  def state_abbreviation
-    if @state.is_a?(Hash)
-      @state[:short]
+      unless city_record
+        # If the city name in the district record doesn't match one in city table, you'll get an infinite redirect.
+        # This checks that a record can be found in the city table before trying to use it for the redirect.
+        if district_record.city_record
+          redirect_to search_district_browse_path(States.state_path(state), city: gs_legacy_url_encode(district_record.city), district_name: district_param)
+        else
+          redirect_to(state_path(States.state_path(state)))
+        end
+      end
+    elsif state && city
+      redirect_to(state_path(States.state_path(state))) unless city_record
+    elsif state
+      redirect_to(state_path(States.state_path(state)))
     else
-      @state
+      redirect_to home_path
+    end
+
+  end
+
+  # extra items returned even if not requested (besides school fields etc)
+  # SearchRequestParams
+  def default_extras
+    %w(summary_rating distance assigned enrollment students_per_teacher review_summary)
+  end
+
+  # extras requiring specific ask, otherwise removed from response
+  # SearchRequestParams
+  def not_default_extras
+    %w(geometry)
+  end
+
+  # Begin meta-tag code
+  def prev_page
+    @_prev_page ||= prev_page_url(page_of_results)
+  end
+
+  def next_page
+    @_next_page ||= next_page_url(page_of_results)
+  end
+
+  def set_search_meta_tags
+    set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url? && page_of_results.present?
+    if %i[zip_code city_browse district_browse address other].include?(search_type)
+      complete_tags = send("#{search_type}_meta_tag_hash".to_sym).merge({prev: prev_page, next: next_page})
+      send(:set_meta_tags, complete_tags)
     end
   end
 
-  def can_compare?
-    !@state.nil? && !@state[:short].nil?
+  def city_browse_meta_tag_hash
+    if %w(il pa).include?(state)
+      meta_description = "#{city_record.name}, #{city_record.state} school districts, public, private and charter school listings" \
+          " and rankings for #{city_record.name}, #{city_record.state}. Find your school district information from Greatschools.org"
+    else
+      meta_description = "View and map all #{city_record.name}, #{city_record.state} schools. Plus, compare or save schools"
+    end
+
+    {
+      title: "#{city_browse_title} | GreatSchools",
+      description: meta_description,
+      canonical: search_city_browse_url(
+        params_for_canonical.merge(
+          city: gs_legacy_url_encode(city),
+          state: gs_legacy_url_encode(States.state_name(state))
+        )
+      )
+    }
+  end
+
+  def district_browse_meta_tag_hash
+    {
+      title: "#{district_browse_title} | GreatSchools",
+      description: "Ratings and parent reviews for all elementary, middle and high schools in the #{district_record.name}, #{city_record.state}",
+      canonical: search_district_browse_url(
+        params_for_canonical.merge(
+          district_name: gs_legacy_url_encode(district),
+          city: gs_legacy_url_encode(city),
+          state: gs_legacy_url_encode(States.state_name(state))
+        )
+      )
+    }
+  end
+
+  def zip_code_meta_tag_hash
+    {
+      title: "#{zip_code_search_title} | GreatSchools",
+      description: "Ratings and parent reviews for all elementary, middle and high schools in #{zip_code}, #{state.upcase}"
+    }
+  end
+
+  def address_meta_tag_hash
+    {
+      title: "#{entity_type_long}#{level_code_long}#{schools_or_preschools} near #{location_label} | GreatSchools",
+    }
+  end
+
+  def other_meta_tag_hash
+    {
+      title: "#{entity_type_long}#{level_code_long}#{schools_or_preschools} matching #{q} | GreatSchools",
+    }
+  end
+
+  def city_browse_title
+    city_type_level_code_text = "#{city_record.name} #{entity_type_long}#{level_code_long}#{schools_or_preschools}"
+    "#{city_type_level_code_text}#{title_pagination_text} - #{city_record.name}, #{city_record.state}"
+  end
+
+  def district_browse_title
+    "#{entity_type_long}#{level_code_long}#{schools_or_preschools} in #{district_record.name}#{title_pagination_text} - #{city_record.name}, #{city_record.state}"
+  end
+
+  def zip_code_search_title
+    "#{entity_type_long}#{level_code_long}#{schools_or_preschools} near #{location_label}#{title_pagination_text} - #{state.upcase}"
+  end
+
+  def title_pagination_text
+    return if offset > page_of_results.total
+    ", #{page_of_results.index_of_first_result}-#{page_of_results.index_of_last_result}"
+  end
+
+  def entity_type_long
+    {
+      'charter' => 'Public Charter ',
+      'public' => 'Public ',
+      'private' => 'Private '
+    }[entity_type]
+  end
+
+  def level_code_long
+    {
+      'e' => 'Elementary ',
+      'm' => 'Middle ',
+      'h' => 'High ',
+      'p' => nil
+    }[level_code]
+  end
+
+  def schools_or_preschools
+    school_preschool_map = Hash.new('Schools').merge('p' => 'Preschools')
+    school_preschool_map[level_code]
+  end
+
+  def params_for_canonical
+    {}.tap do |key|
+      key[grade_level_param_name] = level_code if level_code.present?
+      key[page_param_name] = given_page  if given_page.present?
+      key[school_type_param_name] = entity_types  if entity_types.present?
+      key[view_param_name] =  view  if view.present?
+      key[table_view_param_name] = tableView  if tableView.present?
+    end.compact
+  end
+
+  def params_for_rel_alternate
+    {}.tap do |key|
+      key[grade_level_param_name] = level_codes if level_codes.present?
+      key[page_param_name] = given_page  if given_page.present?
+      key[school_type_param_name] = entity_types  if entity_types.present?
+      key[view_param_name] =  view  if view.present?
+      key[table_view_param_name] = tableView  if tableView.present?
+    end.compact
   end
 
 end
