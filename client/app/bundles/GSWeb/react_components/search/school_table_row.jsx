@@ -16,7 +16,7 @@ const renderEnrollment = enrollment => {
 const drawRating = (theRating, linkProfile) => {
   const className = `circle-rating--small circle-rating--${theRating || 'gray'}`;
   return (
-      theRating ? <a href={linkProfile}>
+      theRating ? <a href={`${linkProfile}`}>
             <span className={className}>
               {theRating}
               {theRating && <span className="rating-circle-small">/10</span>}
@@ -151,10 +151,16 @@ const equityColumns = (columns, ethnicity_ratings, profileLink) => {
   let cellStyle = {textAlign: 'center'}
   let content = [] ;
   columns.map(function(hash, index){
-    if (ethnicity_ratings.hasOwnProperty(hash['key'])){
-      content.push(<td key={ index } style={cellStyle}>{drawRating(ethnicity_ratings[hash['key']], profileLink)}</td>);
+    let deepLinkParams;
+    if(hash['key'] === 'Low Income') { 
+      deepLinkParams = "#Low-income_students";
+    }else{
+      deepLinkParams = "#Race_ethnicity";
     }
-    else{
+
+    if (ethnicity_ratings.hasOwnProperty(hash['key'])){
+      content.push(<td key={index} style={cellStyle}>{drawRating(ethnicity_ratings[hash['key']], `${profileLink}${deepLinkParams}`)}</td>);
+    }else{
       content.push(<td key={ index } style={cellStyle}>N/A</td>);
     }
   });
@@ -168,13 +174,20 @@ const equityColumns = (columns, ethnicity_ratings, profileLink) => {
 const academicColumns = (columns, subratings, profileLink) => {
   let cellStyle = {textAlign: 'center'}
   let content = [] ;
-    columns.map(function(hash, index){
-     if (subratings.hasOwnProperty(hash['key'])){
-       content.push(<td key={ index } style={cellStyle}>{drawRating(subratings[hash['key']])}</td>);
-     }
-     else{
-       content.push(<td key={ index } style={cellStyle}>N/A</td>);
-     }
+  const deepLinkParamsObject = {
+    "Test Scores Rating": "#Test_scores",
+    "Academic Progress Rating": "#Academic_progress",
+    "College Readiness Rating": "#College_readiness",
+    "Advanced Courses Rating": "#Advanced_courses",
+    "Equity Overview Rating": "#Equity_overview"
+  }
+  columns.map(function(hash, index){
+    let deepLinkParams = deepLinkParamsObject[hash.key]
+    if (subratings.hasOwnProperty(hash['key'])){
+      content.push(<td key={index} style={cellStyle}>{drawRating(subratings[hash['key']], `${profileLink}${deepLinkParams}`)}</td>);
+    }else{
+      content.push(<td key={ index } style={cellStyle}>N/A</td>);
+    }
   });
   return (
       <React.Fragment>

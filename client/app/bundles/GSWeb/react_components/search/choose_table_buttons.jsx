@@ -52,17 +52,14 @@ const ChooseTableButtons = () => (
 const renderTableButtonsFilters = (tableView, updateTableView, size) => {
     if (size > SM) {
         return (
-            // <div className="table-view-filter">
-            //     <ButtonGroup
-            //         options={optionsObject}
-            //         activeOption={
-            //             Object.keys(optionsObject).includes(tableView) ? tableView : "Overview"
-            //         }
-            //         onSelect={updateTableView}
-            //     />
-            // </div>
             <div className="table-view-filter">
-                <TabGroup options={optionsArray} onSelect={updateTableView} activeOption={tableView} />
+                <ButtonGroup
+                    options={optionsObject}
+                    activeOption={
+                        Object.keys(optionsObject).includes(tableView) ? tableView : "Overview"
+                    }
+                    onSelect={updateTableView}
+                />
             </div>
         )
     } else {
