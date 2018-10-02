@@ -71,7 +71,8 @@ module Search
             state: gs_legacy_url_encode(States.state_name(state)),
             city: gs_legacy_url_encode(city),
             district_name: gs_legacy_url_encode(district),
-            trailing_slash: true
+            trailing_slash: true,
+            st: ['public_charter', 'public', 'charter']
           )
         elsif type == 'school'
           school_path(nil,
