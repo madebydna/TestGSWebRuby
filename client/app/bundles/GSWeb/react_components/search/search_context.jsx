@@ -122,6 +122,10 @@ class SearchProvider extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
+    // If user adds or removes school on /my-school-list and then uses browser back button to return to search, a cached
+    // version of the page is displayed and the saved schools number in the navbar is incorrect. This updates the number
+    // based on the state of the cookie.
+    this.updateNavbarHeart();
   }
 
   componentDidUpdate(prevProps) {
@@ -208,11 +212,16 @@ class SearchProvider extends React.Component {
   handleSaveSchoolClick(schoolKey) {
     this.toggleSchoolProperty([schoolKey], 'savedSchool', this.toggleAll);
     this.updateSavedSchoolsCookie(schoolKey);
+    this.updateNavbarHeart();
+  }
+
+  updateNavbarHeart(){
+    $('div.header_un').find('a.saved-schools-nav span:last-child').text(`(${this.getSavedSchoolsFromCookie().length})`)
   }
 
   toggleSchoolProperty(schoolKeys, property, mapFunc) {
     const schools = mapFunc(schoolKeys, property);
-    this.setState({ schools });
+    this.setState({ schools }, this.forceUpdate());
   }
 
   // school finder methods, based on obj state

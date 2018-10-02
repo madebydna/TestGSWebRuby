@@ -58,10 +58,6 @@ const School = ({
         </a>
         <br />
         {addressPhrase && <div className="address">{addressPhrase}</div>}
-        {(saveSchoolCallback) && <span
-          onClick={() => saveSchoolCallback({ state, id: id.toString() })}
-          className={savedSchool ? 'icon-heart' : 'icon-heart-outline'}
-        />}
         <div>
           {joinWithSeparator(
             [
@@ -91,6 +87,10 @@ const School = ({
           </div>
         )}
       </span>
+      {(saveSchoolCallback) && <span
+        onClick={() => saveSchoolCallback({ state, id: id.toString() })}
+        className={savedSchool ? 'icon-heart' : 'icon-heart-outline'}
+      />}
     </React.Fragment>
   );
 };

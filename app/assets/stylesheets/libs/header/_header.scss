@@ -118,8 +118,11 @@
     display: table-cell;
   }
 
-  .icon-heart {
-    margin-left: 7.5px;
+  .saved-schools-nav {
+    color: #26abe2;
+    &:hover {
+      background: none;
+    }
   }
 
   .logo_size {
