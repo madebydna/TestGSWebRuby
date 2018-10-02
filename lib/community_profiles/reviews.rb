@@ -31,7 +31,9 @@ module CommunityProfiles
         .make_instance_for_each_user(reviews, community_record)
         .sort_by { |r| r.most_recent_date }
         .reverse
-        .map { |user_reviews| user_reviews.build_struct.merge({school_name: self.reviews&.first.school.name}) }
+        .map.with_index do |user_reviews, idx| 
+          user_reviews.build_struct.merge({school_name: self.reviews&.dig(idx).school.name})
+        end
     end
 
     private
