@@ -124,6 +124,7 @@ class District extends React.Component {
         }
         recentReviews={
           <RecentReviews 
+            community="district"
             reviews={this.props.reviews}
             locality={this.props.locality}
           />

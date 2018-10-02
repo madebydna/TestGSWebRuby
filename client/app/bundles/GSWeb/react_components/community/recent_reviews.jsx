@@ -24,6 +24,7 @@ class RecentReviews extends React.Component {
     schoolId: PropTypes.number,
     questions: PropTypes.arrayOf(PropTypes.object),
     locality: PropTypes.object,
+    community: PropTypes.string
   };
 
   constructor(props) {
@@ -61,9 +62,9 @@ class RecentReviews extends React.Component {
         </div>
         <div className="blue-line" />
         <div className="add-review-container">
-          <p>Does your kids attend a school in this district</p>
+          <p>{this.props.community === "city" ? t('recent_reviews.city_blurb') : t('recent_reviews.district_blurb')}</p>
           <a href="/reviews/">
-            <button>Add a review</button>
+            <button>{t('recent_reviews.Add a review')}</button>
           </a>
         </div>
       </React.Fragment>

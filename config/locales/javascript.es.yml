@@ -153,6 +153,12 @@ es:
       see_elem: Vea más escuelas primarias
       see_mid: Vea más escuelas intermedias
       see_high: Vea más escuelas secundarias
+    recent_reviews:
+      title: Comentarios recientes de escuelas de escuelas en
+      review_for: Comentarios para
+      district_blurb: ¿Su hijo asiste a una escuela en este distrito?
+      city_blurb: ¿Su hijo asiste a una escuela en esta ciudad?
+      Add a review: Agrega un comentario
     State average: Promedio estatal
     too_many_schools_error_html: '<strong>Ya ha seleccionado 4 escuelas para comparar.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspComparar las escuelas.</a>'
     view_less: Ver menos »

@@ -189,7 +189,7 @@ class CityLayout extends React.Component {
       this.props.shouldDisplayReviews &&
         <div id="reviews">
           <div className="rating-container reviews-module">
-            <h3>Recent school reviews from schools in {`${this.props.locality.city}`}</h3>
+            <h3>{t('recent_reviews.title')} {`${this.props.locality.city}`}</h3>
             {this.props.recentReviews}
           </div>
         </div>

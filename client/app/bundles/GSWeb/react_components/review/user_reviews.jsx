@@ -133,7 +133,7 @@ export default class UserReviews extends React.Component {
     }
     return (
         <div className="type-and-date">
-          { this.props.school_name && `Review for ${this.props.school_name}` } <br/>
+          {this.props.school_name && `${t('recent_reviews.review_for')} ${this.props.school_name}` } <br/>
           { userTypeSentence }
           { this.props.most_recent_date }
         </div>
