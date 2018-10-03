@@ -17,7 +17,8 @@ import {
   getAddressPredictions
 } from 'api_clients/google_places';
 import { init as initGoogleMaps } from 'components/map/google_maps';
-import { get as getCookie, set as setCookie } from 'js-cookie';
+import { set as setCookie } from 'js-cookie';
+import { updateNavbarHeart, getSavedSchoolsFromCookie, COOKIE_NAME } from 'util/session';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -26,7 +27,6 @@ export const LIST_VIEW = 'list';
 export const MAP_VIEW = 'map';
 export const TABLE_VIEW = 'table';
 export const validViews = [LIST_VIEW, MAP_VIEW, TABLE_VIEW];
-const COOKIE_NAME = 'gs_saved_schools';
 
 const gonSearch = (window.gon || {}).search || {};
 
@@ -122,10 +122,8 @@ class SearchProvider extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
-    // If user adds or removes school on /my-school-list and then uses browser back button to return to search, a cached
-    // version of the page is displayed and the saved schools number in the navbar is incorrect. This updates the number
-    // based on the state of the cookie.
-    this.updateNavbarHeart();
+    //
+    updateNavbarHeart();
   }
 
   componentDidUpdate(prevProps) {
@@ -190,13 +188,10 @@ class SearchProvider extends React.Component {
     );
   }
 
-  getSavedSchoolsFromCookie() {
-    const savedSchoolsCookie = getCookie(COOKIE_NAME);
-    return savedSchoolsCookie ? JSON.parse(savedSchoolsCookie) : [];
-  }
+
 
   updateSavedSchoolsCookie(schoolKey) {
-    const savedSchools = this.getSavedSchoolsFromCookie();
+    const savedSchools = getSavedSchoolsFromCookie();
     const schoolKeyIdx = savedSchools.findIndex(
       key =>
         key.id.toString() === schoolKey.id.toString() &&
@@ -212,11 +207,7 @@ class SearchProvider extends React.Component {
   handleSaveSchoolClick(schoolKey) {
     this.toggleSchoolProperty([schoolKey], 'savedSchool', this.toggleAll);
     this.updateSavedSchoolsCookie(schoolKey);
-    this.updateNavbarHeart();
-  }
-
-  updateNavbarHeart(){
-    $('div.header_un').find('a.saved-schools-nav span:last-child').text(`(${this.getSavedSchoolsFromCookie().length})`)
+    updateNavbarHeart();
   }
 
   toggleSchoolProperty(schoolKeys, property, mapFunc) {
