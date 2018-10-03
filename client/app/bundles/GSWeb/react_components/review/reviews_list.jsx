@@ -67,6 +67,7 @@ export default class ReviewsList extends React.Component {
       current_user_reported_reviews={this.state.currentUserReportedReviews}
       review_reported_callback={this.reviewReportedCallback}
       school_name = {userReviews.school_name}
+      school_url = {userReviews.school_url}
     />)
   }
 

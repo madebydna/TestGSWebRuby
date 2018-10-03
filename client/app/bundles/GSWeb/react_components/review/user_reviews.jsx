@@ -15,7 +15,8 @@ export default class UserReviews extends React.Component {
     avatar: PropTypes.number,
     review_reported_callback: PropTypes.func,
     current_user_reported_reviews: PropTypes.array,
-    school_name: PropTypes.string
+    school_name: PropTypes.string,
+    school_url: PropTypes.string
   };
 
   constructor(props) {
@@ -133,7 +134,11 @@ export default class UserReviews extends React.Component {
     }
     return (
         <div className="type-and-date">
-          {this.props.school_name && `${t('recent_reviews.review_for')} ${this.props.school_name}` } <br/>
+          {this.props.school_name &&
+            <span>
+              <span>{t('recent_reviews.review_for')} </span> 
+              <a href={this.props.school_url}>{this.props.school_name}</a> <br />
+            </span>}
           { userTypeSentence }
           { this.props.most_recent_date }
         </div>

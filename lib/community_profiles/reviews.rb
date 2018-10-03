@@ -32,7 +32,15 @@ module CommunityProfiles
         .sort_by { |r| r.most_recent_date }
         .reverse
         .map.with_index do |user_reviews, idx| 
-          user_reviews.build_struct.merge({school_name: self.reviews&.dig(idx).school.name})
+          user_reviews.build_struct.merge({
+            school_name: reviews&.dig(idx)&.school&.name,
+            school_url: school_path(nil, 
+                          schoolId: reviews&.dig(idx)&.school_id,
+                          school_name: reviews&.dig(idx)&.school&.name,
+                          city: reviews&.dig(idx)&.school&.city,
+                          state: States.state_name(reviews&.dig(idx)&.school&.state)
+                        )
+          })
         end
     end
 
