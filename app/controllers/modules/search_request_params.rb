@@ -258,7 +258,7 @@ module SearchRequestParams
   end
 
   def saved_school_keys
-    JSON.parse(cookies[:gs_saved_schools]).map {|hash| [hash['state']&.downcase, hash['id']&.to_i]}
+    JSON.parse(cookies[:gs_saved_schools]).map {|hash| [hash['state']&.downcase, hash['id']&.to_i]} if cookies[:gs_saved_schools]
   end
 
   def school_keys
