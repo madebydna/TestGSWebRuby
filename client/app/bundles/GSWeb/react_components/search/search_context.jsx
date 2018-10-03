@@ -122,8 +122,6 @@ class SearchProvider extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
-    //
-    updateNavbarHeart();
   }
 
   componentDidUpdate(prevProps) {

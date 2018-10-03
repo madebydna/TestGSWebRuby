@@ -35,7 +35,7 @@ export const getSavedSchoolsFromCookie = () => {
 }
 
 export const updateNavbarHeart = () => {
-  $('div.header_un').find('a.saved-schools-nav span:last-child').text(`(${getSavedSchoolsFromCookie().length})`)
+  document.querySelector('a.saved-schools-nav span:last-child').innerHTML = `(${getSavedSchoolsFromCookie().length})`;
 }
 
 export const COOKIE_NAME = 'gs_saved_schools';

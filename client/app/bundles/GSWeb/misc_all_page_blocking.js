@@ -1,6 +1,7 @@
 // import $ from 'jquery';
 import * as jquerycookie from 'jquery.cookie';
 import { get as getCookie } from 'js-cookie';
+import { updateNavbarHeart } from 'util/session';
 // do not import any addition dependencies for this blocking JS
 
 // do not import log from util/log in commons blocking.
@@ -47,6 +48,7 @@ dataLayer.push(gon.data_layer_hash);
 
   $.removeCookie('GATracking', { domain: '.greatschools.org', path: '/' });
   $.removeCookie('GATracking', { path: '/' });
+  document.addEventListener('DOMContentLoaded', () => {updateNavbarHeart()}, false);
 })();
 
 $(() => {
