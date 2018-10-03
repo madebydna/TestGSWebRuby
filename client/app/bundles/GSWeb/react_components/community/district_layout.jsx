@@ -124,6 +124,15 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderMobility() {
+    return (
+      <div id="mobility">
+        <div className="modules-title">{`${t('mobility.title')} ${this.props.locality.name}`}</div>
+        {this.props.mobility}
+      </div>
+    )
+  }
+
   renderHero() {
     let {name, address, city, stateShort, zipCode, phone, districtUrl} = this.props.locality;
     let {enrollment, grades, schoolCount, narration} = this.props.heroData;
@@ -198,6 +207,7 @@ class DistrictLayout extends React.Component {
           {this.renderToc()}
           <div className="community-modules">
             {this.renderSchools()}
+            {this.renderMobility()}
             {this.renderZillow()}
           </div>
           {this.renderAd()}

@@ -24,6 +24,8 @@ class DistrictsController < ApplicationController
 
   private
 
+  # coordinates=key=7Q0jpitnctkvjAkf
+
   def set_district_meta_tags
     district_params_hash = district_params(state, district_record.city, district)
     set_meta_tags(alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
@@ -91,6 +93,8 @@ class DistrictsController < ApplicationController
         cp[:name] = district_record.name
         cp[:address] = district_record.mail_street if district_record.mail_street.present?
         cp[:city] = district_record.city
+        cp[:lat] = district_record&.lat
+        cp[:lon] = district_record&.lon
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
         cp[:searchResultBrowseUrl] = search_district_browse_path(
@@ -99,6 +103,7 @@ class DistrictsController < ApplicationController
           district_name: gs_legacy_url_encode(district),
           trailing_slash: true
         )
+        cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:zipCode] = district_record.mail_zipcode[0..4]
         cp[:phone] = district_record.phone if district_record.phone.present?
         cp[:districtUrl] = prepend_http district_record.home_page_url if district_record.home_page_url.present?
@@ -122,6 +127,7 @@ class DistrictsController < ApplicationController
   end
 
   def breadcrumbs
+    canonical_district_params = district_params(state, district_record.city, district)
     @_district_breadcrumbs ||= [
       {
         text: StructuredMarkup.state_breadcrumb_text(state),
@@ -133,7 +139,7 @@ class DistrictsController < ApplicationController
       },
       {
         text: district_record.name&.gs_capitalize_words,
-        url: ""
+        url: city_district_url(state: canonical_district_params[:state], city: canonical_district_params[:city], district: canonical_district_params[:district])
       }
     ]
   end

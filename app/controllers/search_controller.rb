@@ -78,7 +78,11 @@ class SearchController < ApplicationController
   end
 
   def search_breadcrumbs
-    @_search_breadcrumbs ||= [
+    district_browse? ? district_breadcrumbs : city_breadcrumbs
+  end
+
+  def city_breadcrumbs
+    @_city_breadcrumbs ||= [
       {
         text: StructuredMarkup.state_breadcrumb_text(state),
         url: state_url(state_params(state))
@@ -86,6 +90,23 @@ class SearchController < ApplicationController
       {
         text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
         url: city_url(city_params(state, city))
+      }
+    ]
+  end
+
+  def district_breadcrumbs
+    @_district_breadcrumbs ||= [
+      {
+        text: StructuredMarkup.state_breadcrumb_text(state),
+        url: state_url(state_params(state))
+      },
+      {
+        text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
+        url: city_url(city_params(state, city))
+      },
+      {
+        text: district&.gs_capitalize_words,
+        url: district_url(district_params(state_name, city,  district))
       }
     ]
   end

@@ -190,6 +190,8 @@ module CommunityConcerns
               d[:url] = district_url(district_params(state, city, name))
               d[:enrollment] =  district_enrollment_cache(district_content_field(district_content, 'id'))
               d[:zip] = district_content_field(district_content, 'zip')
+              d[:lat] = district_content_field(district_content, 'lat')
+              d[:lon] = district_content_field(district_content, 'lon')
             end
           end
           dc.sort_by { |h| h[:enrollment] ? h[:enrollment] : 0 }.reverse!
@@ -203,6 +205,10 @@ module CommunityConcerns
       dc = DistrictCache.where(name: 'district_characteristics', district_id: district_id, state: state)
       dc_hash = JSON.parse(dc.first.value) if dc.present? && dc.first
       dc_hash['Enrollment'].first['district_value'].to_i if dc_hash && dc_hash['Enrollment'] && dc_hash['Enrollment'].first
+    end
+
+    def fetch_district_attr(key)
+      district_content(city_record)&.first&.fetch(key, nil) 
     end
 
 end

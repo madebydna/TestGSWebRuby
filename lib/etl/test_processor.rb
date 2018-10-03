@@ -182,11 +182,11 @@ module GS
       private
 
       def build_file_output_steps
+        initialize_queue
         source_steps
         state_steps
         district_steps
         school_steps
-        # unique_breakdown_mappings
       end
 
       def output_files_root_step
@@ -195,7 +195,7 @@ module GS
           s.description = 'Root for output files subgraph'
           s
         )
-      end
+      end  
 
       def self.define_output_files
         ENTITIES.each do |entity|
@@ -214,6 +214,14 @@ module GS
 
       def source_output_sql_file
         FILE_LOCATION +  data_file_prefix + "source.sql"
+      end
+
+      def queue_output_file
+        FILE_LOCATION + ['queue.config', state,  @year ,'test.1.txt'].join('.')
+      end
+
+      def initialize_queue
+        @queue_file = QueueFile.new(queue_output_file)
       end
 
       def source_steps
@@ -269,9 +277,15 @@ module GS
           school_id: 'district',
           school_name: 'district'
         node.destination 'Output district rows to CSV', CsvDestination, district_output_file, *COLUMN_ORDER
+        queue_hash = {}
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           row[:school_id] = 'NULL'
-          row[:district_id] = district_ids[row[:state_id]]
+          if district_ids[row[:state_id]].nil? and !queue_hash.key?(row[:state_id])
+            queue_hash[row[:state_id]] = true
+            @queue_file.write_queue(row)
+          elsif district_ids[row[:state_id]]
+            row[:district_id] = district_ids[row[:state_id]]
+          end
           row
         end
         node = node.transform 'Check n_tested"', WithBlock do |row|
@@ -291,11 +305,19 @@ module GS
           .add(summary_output_step)
           .destination('Output summary data to file', CsvDestination, summary_output_file, *SUMMARY_OUTPUT_FIELDS)
         school_ids = school_id_hash
+        district_ids = district_id_hash
         node = output_files_root_step.add_step('Keep only school rows', KeepRows, :entity_level, 'school')
         node.destination 'Output school rows to CSV', CsvDestination, school_output_file, *COLUMN_ORDER
+        queue_hash = {}
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
+          row[:gs_district_id] = district_ids[row[:district_id]]
           row[:district_id] = 'NULL'
-          row[:school_id] = school_ids[row[:state_id]]
+          if school_ids[row[:state_id]].nil? and !queue_hash.key?(row[:state_id])
+            queue_hash[row[:state_id]] = true
+            @queue_file.write_queue(row)
+          elsif school_ids[row[:state_id]]
+            row[:school_id] = school_ids[row[:state_id]]
+          end
           row
         end
         node = node.transform 'Check n_tested"', WithBlock do |row|

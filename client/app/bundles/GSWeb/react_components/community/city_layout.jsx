@@ -182,6 +182,15 @@ class CityLayout extends React.Component {
     )
   }
 
+  renderMobility(){
+    return(
+      <div id="mobility">
+        <div className="modules-title">{`${t('mobility.title')} ${this.props.locality.city}`}</div>
+        {this.props.mobility}
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="city-body">
@@ -193,6 +202,7 @@ class CityLayout extends React.Component {
           <div className="community-modules">
             {this.renderSchools()}
             {this.renderDistricts()}
+            {this.renderMobility()}
             {this.renderZillow()}
           </div>
           {this.renderAd()}

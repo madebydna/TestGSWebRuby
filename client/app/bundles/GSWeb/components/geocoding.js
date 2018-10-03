@@ -23,7 +23,7 @@ export function geocode(searchInput) {
           }
           for (let i = 0; i < results[x].address_components.length; i++) {
             if (results[x].address_components[i].types.contains('locality')) {
-              geocodeResult.city = results[x].address_components[i].short_name;
+              geocodeResult.city = results[x].address_components[i].long_name;
             }
             if (
               results[x].address_components[i].types.contains('postal_code')
@@ -41,6 +41,9 @@ export function geocode(searchInput) {
               geocodeResult.country =
                 results[x].address_components[i].short_name;
             }
+          }
+          if (results[x].address_components[0].types[0] === 'locality') {
+            geocodeResult.level = 'city';
           }
           // http://stackoverflow.com/questions/1098040/checking-if-an-associative-array-key-exists-in-javascript
           if (

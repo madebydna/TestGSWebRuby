@@ -8,6 +8,7 @@ import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
 import SchoolBrowseLinks from './school_browse_links';
 import DistrictsInCity from "./districts_in_city";
+import Mobility from "./mobility";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
@@ -28,7 +29,6 @@ class City extends React.Component {
   static propTypes = {
     schools_data: PropTypes.object,
     districts: PropTypes.arrayOf(PropTypes.object),
-    loadingSchools: PropTypes.bool,
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
       PropTypes.shape({
@@ -36,7 +36,7 @@ class City extends React.Component {
         url: PropTypes.string.isRequired
       })
     ),
-    locality: PropTypes.object
+    locality: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -121,6 +121,12 @@ class City extends React.Component {
           <DistrictsInCity
             districts={this.props.districts}
           />
+        }
+        mobility={
+          <Mobility
+            locality={this.props.locality}
+            pageType='City'
+             />
         }
         zillow={
           <Zillow
