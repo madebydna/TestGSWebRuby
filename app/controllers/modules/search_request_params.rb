@@ -258,7 +258,8 @@ module SearchRequestParams
   end
 
   def saved_school_keys
-    JSON.parse(cookies[:gs_saved_schools]).map {|hash| [hash['state']&.downcase, hash['id']&.to_i]} if cookies[:gs_saved_schools]
+    # If a user saves a school and then removes it, the cookie will be set as '[]'. Code below will return [] in that case.
+    cookies[:gs_saved_schools] ? JSON.parse(cookies[:gs_saved_schools]).map {|hash| [hash['state']&.downcase, hash['id']&.to_i]} : []
   end
 
   def school_keys
