@@ -321,10 +321,10 @@ es:
       step8_sources: Fuentes
       step9_html: '<h1>¡Terminado!</h1><div>¿Tiene unos minutos más? Infórmese más en las secciones de Contenido Académico, Igualdad y Ambiente de la escuela.</div><br/><p><button class="tour-cta js-start-second-tour active">Continuar</button><div> <a class="js-close-school-tour" style="cursor: pointer;">No en este momento</a><p/><br/><p>¿Esto estuvo útil? <a href="https://s.qualaroo.com/45194/49372ef1-a8d5-47be-8507-f4a208ece19b" target="_blank">Danos tu opinion</a></p></div>'
     tour2:
-      step1_title_html: '<div class="tutorial-header">Resultados de exámenes</div><br/>'
-      step1: Aquí verá un resumen de los niveles de competencia de esta escuela en materias importantes, en base a resultados de exámenes y comparados con el promedio estatal, con “Consejos para Padres” que puede usar para informarse más.
-      step2_title_html: '<div class="tutorial-header">Preparación universitaria</div><br/>'
-      step2: ¿Cómo prepara esta escuela a sus estudiantes para la Universidad? Esta sección ofrece información sobre exámenes de ingreso a la Universidad, cursos de Ubicación Avanzada (AP), índices de graduación y más.
+      step1_title_html: '<div class="tutorial-header">Preparación universitaria</div><br/>'
+      step1: ¿Cómo prepara esta escuela a sus estudiantes para la Universidad? Esta sección ofrece información sobre exámenes de ingreso a la Universidad, cursos de Ubicación Avanzada (AP), índices de graduación y más.
+      step2_title_html: '<div class="tutorial-header">Resultados de exámenes</div><br/>'
+      step2: Aquí verá un resumen de los niveles de competencia de esta escuela en materias importantes, en base a resultados de exámenes y comparados con el promedio estatal, con “Consejos para Padres” que puede usar para informarse más.
       step3_title_html: '<div class="tutorial-header">Progreso estudiantil</div><br/>'
       step3: El Índice de Progreso de Estudiantes da una idea de cuánto han mejorado académicamente los estudiantes en esta escuela cada año (también conocido como “crecimiento”) en comparación a otras escuelas en el estado.
       step4_title_html: '<div class="tutorial-header">Cursos avanzados</div><br/>'

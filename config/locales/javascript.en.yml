@@ -320,10 +320,10 @@ en:
       step8_sources: Sources
       step9_html: '<h1>All done!</h1><div>Have a few more minutes? Learn<br/>more about the school&apos;s Academics,<br/>Equity and Environment sections.</div><br/><p><button class="tour-cta js-start-second-tour active">Continue</button><div> <a class="js-close-school-tour" style="cursor: pointer;">Not right now </a></p></br><p>Was this useful? <a href="https://s.qualaroo.com/45194/49372ef1-a8d5-47be-8507-f4a208ece19b" target="_blank">Give us your feedback</a></p></div>'
     tour2:
-      step1_title_html: '<div class="tutorial-header">Test scores</div><br/>'
-      step1: Here you'll find a snapshot of this school's proficiency levels in key subjects, based on test scores and compared to state averages, with "Parent tips" you can use to learn more.
-      step2_title_html: '<div class="tutorial-header">College readiness</div><br/>'
-      step2: How well does this school prepare its students for college? This section offers information about college entrance tests, Advanced Placement (AP) coursework, graduation rates and more.
+      step1_title_html: '<div class="tutorial-header">College readiness</div><br/>'
+      step1: How well does this school prepare its students for college? This section offers information about college entrance tests, Advanced Placement (AP) coursework, graduation rates and more.
+      step2_title_html: '<div class="tutorial-header">Test scores</div><br/>'
+      step2: Here you'll find a snapshot of this school's proficiency levels in key subjects, based on test scores and compared to state averages, with "Parent tips" you can use to learn more.
       step3_title_html: '<div class="tutorial-header">Student progress</div><br/>'
       step3: The Student Progress Rating gives you a sense of how much academic improvement students at this school have made year-over-year (also known as “growth”) compared with other schools in the state.
       step4_title_html: '<div class="tutorial-header">Advanced courses</div><br/>'

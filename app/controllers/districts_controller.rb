@@ -127,6 +127,7 @@ class DistrictsController < ApplicationController
   end
 
   def breadcrumbs
+    canonical_district_params = district_params(state, district_record.city, district)
     @_district_breadcrumbs ||= [
       {
         text: StructuredMarkup.state_breadcrumb_text(state),
@@ -138,7 +139,7 @@ class DistrictsController < ApplicationController
       },
       {
         text: district_record.name&.gs_capitalize_words,
-        url: ""
+        url: city_district_url(state: canonical_district_params[:state], city: canonical_district_params[:city], district: canonical_district_params[:district])
       }
     ]
   end
