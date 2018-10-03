@@ -105,7 +105,6 @@ class SearchController < ApplicationController
         url: city_url(city_params(state, city))
       },
       {
-        # text: district_record.name&.gs_capitalize_words,
         text: district&.gs_capitalize_words,
         url: district_url(district_params(state_name, city,  district))
       }
