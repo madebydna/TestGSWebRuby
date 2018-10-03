@@ -105,7 +105,7 @@ class CitiesController < ApplicationController
       },
       {
         text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
-        url: ""
+        url: city_url(city_params(state, city))
       }
     ]
   end
