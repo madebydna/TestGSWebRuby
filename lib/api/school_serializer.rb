@@ -41,8 +41,6 @@ class Api::SchoolSerializer
       },
       rating: rating,
       ratingScale: rating ? SchoolProfiles::SummaryRating.scale(rating) : nil,
-      subratings: school.subratings,
-      ethnicity_ratings: school.ethnicity_ratings,
       schoolType: school.type,
       state: school.state,
       type: 'school',
@@ -50,13 +48,16 @@ class Api::SchoolSerializer
         profile: school_path(school, trailing_slash: true, lang: I18n.current_non_en_locale),
         reviews: school_path(school, anchor: 'Reviews', trailing_slash: true, lang: I18n.current_non_en_locale)
       },
-      highlighted: false
+      highlighted: false,
     }.tap do |h|
       enrollment = value_from_decorated_school(school, :numeric_enrollment)
       students_per_teacher = value_from_decorated_school(school, :ratio_of_students_to_full_time_teachers)
       five_star_rating = value_from_decorated_school(school, :star_rating)
       num_reviews = value_from_decorated_school(school, :num_reviews)
       distance = value_from_decorated_school(school, :distance)
+      subratings = value_from_decorated_school(school, :subratings)
+      ethnicity_ratings = value_from_decorated_school(school, :ethnicity_ratings)
+      saved_school = value_from_decorated_school(school, :saved_school)
 
       h[:boundaries] = school.boundaries if school.respond_to?(:boundaries)
       h[:enrollment] = enrollment&.to_i if enrollment
@@ -64,6 +65,9 @@ class Api::SchoolSerializer
       h[:numReviews] = num_reviews if num_reviews
       h[:distance] = distance if distance
       h[:studentsPerTeacher] = students_per_teacher if students_per_teacher
+      h[:subratings] = subratings if subratings
+      h[:ethnicityRatings] = ethnicity_ratings if ethnicity_ratings
+      h[:savedSchool] = saved_school if saved_school
     end
   end
 end

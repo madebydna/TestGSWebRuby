@@ -185,7 +185,7 @@ class SearchController < ApplicationController
   # extra items returned even if not requested (besides school fields etc)
   # SearchRequestParams
   def default_extras
-    %w(summary_rating distance assigned enrollment students_per_teacher review_summary)
+    %w(summary_rating distance assigned enrollment students_per_teacher review_summary saved_schools all_ratings)
   end
 
   # extras requiring specific ask, otherwise removed from response
