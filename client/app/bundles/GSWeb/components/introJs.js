@@ -100,16 +100,16 @@ const firstTutorialForTestScoresOnlyRating = [
 
 const secondTutorial = [
   {
-    element: '#TestScores .module-header',
+    element: '#CollegeReadiness .module-header',
     intro: t('tour2.step1_title_html') + t('tour2.step1'),
     position: 'top',
-    gaLabel: 'test-scores'
+    gaLabel: 'college-readiness'
   },
   {
-    element: '#CollegeReadiness .module-header',
+    element: '#TestScores .module-header',
     intro: t('tour2.step2_title_html') + t('tour2.step2'),
     position: 'top',
-    gaLabel: 'college-readiness'
+    gaLabel: 'test-scores'
   },
   {
     element: '#StudentProgress .module-header',
