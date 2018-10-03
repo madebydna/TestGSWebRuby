@@ -5,9 +5,6 @@ import ChooseTableContext from './choose_table_context';
 import { SM, validSizes } from 'util/viewport';
 import Select from '../select';
 import PropTypes from 'prop-types';
-import SectionNavigation from 'react_components/equity/tabs/section_navigation';
-import ModuleTab from 'react_components/school_profiles/module_tab';
-import TabGroup from 'react_components/tabgroup';
 
 const optionsArray = [
     {
