@@ -145,7 +145,7 @@ class CityLayout extends React.Component {
     return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
   }
 
-  renderAd(){
+  renderDesktopAd(){
     return this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
       <Ad slot="citypage_first" sizeName="box_or_tall" />
     </div>
@@ -182,6 +182,15 @@ class CityLayout extends React.Component {
     )
   }
 
+  renderMobility(){
+    return(
+      <div id="mobility">
+        <div className="modules-title">{`${t('mobility.title')} ${this.props.locality.city}`}</div>
+        {this.props.mobility}
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="city-body">
@@ -191,11 +200,13 @@ class CityLayout extends React.Component {
         <div className="below-hero">
           {this.renderToc()}
           <div className="community-modules">
+            {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
             {this.renderSchools()}
             {this.renderDistricts()}
+            {this.renderMobility()}
             {this.renderZillow()}
           </div>
-          {this.renderAd()}
+          {this.renderDesktopAd()}
         </div>
       </div>
     );

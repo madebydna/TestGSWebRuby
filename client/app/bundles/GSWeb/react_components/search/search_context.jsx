@@ -7,6 +7,7 @@ import { compose, curry } from 'lodash/fp';
 import { size as viewportSize, XS } from 'util/viewport';
 import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
+import ChooseTableContext from './choose_table_context';
 import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
 import DistanceContext from './distance_context';
@@ -16,6 +17,8 @@ import {
   getAddressPredictions
 } from 'api_clients/google_places';
 import { init as initGoogleMaps } from 'components/map/google_maps';
+import { set as setCookie } from 'js-cookie';
+import { updateNavbarHeart, getSavedSchoolsFromCookie, COOKIE_NAME } from 'util/session';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -25,36 +28,43 @@ export const MAP_VIEW = 'map';
 export const TABLE_VIEW = 'table';
 export const validViews = [LIST_VIEW, MAP_VIEW, TABLE_VIEW];
 
+const gonSearch = (window.gon || {}).search || {};
+
 class SearchProvider extends React.Component {
   static defaultProps = {
-    q: gon.search.q,
-    city: gon.search.city,
-    district: gon.search.district,
-    state: gon.search.state,
-    schools: gon.search.schools,
-    levelCodes: gon.search.levelCodes || [],
-    entityTypes: gon.search.entityTypes || [],
-    defaultLat: gon.search.cityLat || 37.8078456,
-    defaultLon: gon.search.cityLon || -122.2672673,
-    lat: gon.search.lat,
-    lon: gon.search.lon,
-    distance: gon.search.distance,
-    locationLabel: gon.search.locationLabel,
-    sort: gon.search.sort,
-    page: gon.search.page || 1,
-    pageSize: gon.search.pageSize,
-    totalPages: gon.search.totalPages,
-    resultSummary: gon.search.resultSummary,
-    paginationSummary: gon.search.paginationSummary,
-    breadcrumbs: gon.search.breadcrumbs || [],
-    view: gon.search.view || LIST_VIEW
+    findSchools,
+    q: gonSearch.q,
+    city: gonSearch.city,
+    district: gonSearch.district,
+    state: gonSearch.state,
+    schools: gonSearch.schools,
+    levelCodes: gonSearch.levelCodes || [],
+    entityTypes: gonSearch.entityTypes || [],
+    defaultLat: gonSearch.cityLat || 37.8078456,
+    defaultLon: gonSearch.cityLon || -122.2672673,
+    lat: gonSearch.lat,
+    lon: gonSearch.lon,
+    distance: gonSearch.distance,
+    locationLabel: gonSearch.locationLabel,
+    sort: gonSearch.sort,
+    page: gonSearch.page || 1,
+    pageSize: gonSearch.pageSize,
+    totalPages: gonSearch.totalPages,
+    resultSummary: gonSearch.resultSummary,
+    paginationSummary: gonSearch.paginationSummary,
+    breadcrumbs: gonSearch.breadcrumbs || [],
+    view: gonSearch.view || LIST_VIEW,
+    searchTableViewHeaders: gonSearch.searchTableViewHeaders || {},
+    tableView: 'Overview'
   };
 
   static propTypes = {
+    findSchools: PropTypes.func,
     q: PropTypes.string,
     city: PropTypes.string,
     district: PropTypes.string,
     state: PropTypes.string,
+    schoolKeys: PropTypes.arrayOf(PropTypes.array),
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
@@ -83,7 +93,10 @@ class SearchProvider extends React.Component {
         text: PropTypes.string.isRequired,
         url: PropTypes.string.isRequired
       })
-    )
+    ),
+    updateTableView: PropTypes.func.isRequired,
+    searchTableViewHeaders: PropTypes.object,
+    tableView: PropTypes.string
   };
 
   constructor(props) {
@@ -102,6 +115,9 @@ class SearchProvider extends React.Component {
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
+    this.handleSaveSchoolClick = this.handleSaveSchoolClick.bind(this);
+    this.toggleAll = this.toggleAll.bind(this);
+    this.toggleOne = this.toggleOne.bind(this);
   }
 
   componentDidMount() {
@@ -170,42 +186,84 @@ class SearchProvider extends React.Component {
     );
   }
 
+
+
+  updateSavedSchoolsCookie(schoolKey) {
+    const savedSchools = getSavedSchoolsFromCookie();
+    const schoolKeyIdx = savedSchools.findIndex(
+      key =>
+        key.id.toString() === schoolKey.id.toString() &&
+        key.state === schoolKey.state
+    );
+    schoolKeyIdx > -1
+      ? savedSchools.splice(schoolKeyIdx, 1)
+      : savedSchools.push(schoolKey);
+    setCookie(COOKIE_NAME, savedSchools);
+    analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
+  }
+
+  handleSaveSchoolClick(schoolKey) {
+    this.toggleSchoolProperty([schoolKey], 'savedSchool', this.toggleAll);
+    this.updateSavedSchoolsCookie(schoolKey);
+    updateNavbarHeart();
+  }
+
+  toggleSchoolProperty(schoolKeys, property, mapFunc) {
+    const schools = mapFunc(schoolKeys, property);
+    this.setState({ schools }, this.forceUpdate());
+  }
+
   // school finder methods, based on obj state
+  propsForFindSchools(props) {
+    return {
+      city: props.city,
+      district: props.district,
+      state: props.state,
+      q: props.q,
+      levelCodes: props.levelCodes,
+      entityTypes: props.entityTypes,
+      lat: props.lat,
+      lon: props.lon,
+      distance: props.distance,
+      sort: props.sort,
+      page: props.page,
+      limit: props.pageSize,
+      extras: ['students_per_teacher', 'review_summary'],
+      locationLabel: props.locationLabel
+    };
+  }
 
   findSchoolsWithReactState(newState = {}) {
-    return findSchools(
-      Object.assign(
-        {
-          city: this.props.city,
-          district: this.props.district,
-          state: this.props.state,
-          q: this.props.q,
-          levelCodes: this.props.levelCodes,
-          entityTypes: this.props.entityTypes,
-          lat: this.props.lat,
-          lon: this.props.lon,
-          distance: this.props.distance,
-          sort: this.props.sort,
-          page: this.props.page,
-          limit: this.props.pageSize,
-          extras: ['students_per_teacher', 'review_summary'],
-          locationLabel: this.props.locationLabel
-        },
-        newState
-      )
+    return this.props.findSchools(
+      Object.assign(this.propsForFindSchools(this.props), newState)
     );
   }
 
-  toggleHighlight(school) {
+  toggleOne(school, booleanProp) {
     const schools = this.state.schools.map(s => {
-      if (s.id === school.id) {
-        s.highlighted = !s.highlighted;
+      if (s.id === school.id && s.state === school.state) {
+        s[booleanProp] = !s[booleanProp];
         return s;
       }
-      s.highlighted = false;
+      s[booleanProp] = false;
       return s;
     });
-    this.setState({ schools });
+    return schools;
+  }
+
+  toggleAll(schoolKeys, property) {
+    return this.state.schools.map(s => {
+      schoolKeys.forEach(key => {
+        if (s.id.toString() === key.id.toString() && s.state === key.state) {
+          s[property] = !s[property];
+        }
+      });
+      return s;
+    });
+  }
+
+  toggleHighlight(school) {
+    this.toggleSchoolProperty(school, 'highlighted', this.toggleOne);
   }
 
   trackParams = (name, oldParams, newParams) => {
@@ -220,6 +278,8 @@ class SearchProvider extends React.Component {
         value={{
           loadingSchools: this.state.loadingSchools,
           schools: this.state.schools,
+          savedSchools: this.state.savedSchools,
+          saveSchoolCallback: this.handleSaveSchoolClick,
           page: this.props.page,
           totalPages: this.state.totalPages,
           onPageChanged: compose(
@@ -244,8 +304,11 @@ class SearchProvider extends React.Component {
             this.props.updateView,
             curry(this.trackParams)('View', this.props.view)
           ),
+          updateTableView: this.props.updateTableView,
           q: this.props.q,
-          locationLabel: this.props.locationLabel
+          locationLabel: this.props.locationLabel,
+          searchTableViewHeaders: this.props.searchTableViewHeaders,
+          tableView: this.props.tableView
         }}
       >
         <DistanceContext.Provider
@@ -290,7 +353,17 @@ class SearchProvider extends React.Component {
                   )
                 }}
               >
-                {this.props.children}
+                <ChooseTableContext.Provider
+                  value={{
+                    tableView: this.props.tableView,
+                    updateTableView: this.props.updateTableView,
+                    size: this.state.size,
+                    equitySize: (this.props.searchTableViewHeaders.Equity || {})
+                      .length
+                  }}
+                >
+                  {this.props.children}
+                </ChooseTableContext.Provider>
               </SortContext.Provider>
             </EntityTypeContext.Provider>
           </GradeLevelContext.Provider>
@@ -305,5 +378,8 @@ const SearchProviderWithQueryParams = props => (
     {paramProps => <SearchProvider {...paramProps} {...props} />}
   </SearchQueryParams>
 );
-
-export default { Consumer, Provider: SearchProviderWithQueryParams };
+export { SearchProvider };
+export default {
+  Consumer,
+  Provider: SearchProviderWithQueryParams
+};

@@ -4,6 +4,7 @@ import Breadcrumbs from 'react_components/breadcrumbs';
 import SearchContext from './search_context';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
+import MySchoolListLayout from './my_school_list_layout';
 import ListMapTableSelect from './list_map_table_select';
 import PaginationButtons from './pagination_buttons';
 import Map from './map';
@@ -11,6 +12,7 @@ import SchoolList from './school_list';
 import SchoolTable from './school_table';
 import EntityTypeDropdown from './entity_type_dropdown';
 import GradeLevelButtons from './grade_level_buttons';
+import ChooseTableButtons from './choose_table_buttons';
 import DistanceFilter from './distance_filter';
 import DistanceContext from './distance_context';
 import Ad from 'react_components/ad';
@@ -28,7 +30,9 @@ class Search extends React.Component {
     shouldIncludeDistance: false,
     autoSuggestQuery: () => {},
     breadcrumbs: [],
-    q: null
+    q: null,
+    layout: 'Search',
+    schoolKeys: []
   };
 
   static propTypes = {
@@ -54,22 +58,36 @@ class Search extends React.Component {
     autoSuggestQuery: PropTypes.func,
     view: PropTypes.string.isRequired,
     updateView: PropTypes.func.isRequired,
-    q: PropTypes.string
+    q: PropTypes.string,
+    searchTableViewHeaders: PropTypes.object,
+    layout: PropTypes.string,
+    schoolKeys: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array))
   };
 
   componentDidMount() {
     initAdvertising();
   }
 
+  noResults() {
+    return this.props.schools.length === 0 ? (
+      <NoResults resultSummary={this.props.resultSummary} />
+    ) : null;
+  }
+
   render() {
+    const Layout = {
+      Search: SearchLayout,
+      MySchoolList: MySchoolListLayout
+    }[this.props.layout];
     return (
       <DistanceContext.Consumer>
         {({ distance, onChange }) => (
-          <SearchLayout
+          <Layout
             size={this.props.size}
             view={this.props.view}
             entityTypeDropdown={<EntityTypeDropdown />}
             gradeLevelButtons={<GradeLevelButtons />}
+            chooseTableButtons={<ChooseTableButtons />}
             distanceFilter={
               distance ||
               (this.props.schools[0] &&
@@ -78,8 +96,10 @@ class Search extends React.Component {
               ) : null
             }
             sortSelect={
-              <SortSelect includeDistance={this.props.shouldIncludeDistance}
-                          includeRelevance={this.props.shouldIncludeRelevance} />
+              <SortSelect
+                includeDistance={this.props.shouldIncludeDistance}
+                includeRelevance={this.props.shouldIncludeRelevance}
+              />
             }
             resultSummary={this.props.resultSummary}
             listMapTableSelect={
@@ -98,6 +118,7 @@ class Search extends React.Component {
               <SchoolList
                 toggleHighlight={this.props.toggleHighlight}
                 schools={this.props.schools}
+                saveSchoolCallback={this.props.saveSchoolCallback}
                 isLoading={this.props.loadingSchools}
                 size={this.props.size}
               />
@@ -107,6 +128,8 @@ class Search extends React.Component {
                 toggleHighlight={this.props.toggleHighlight}
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
+                searchTableViewHeaders={this.props.searchTableViewHeaders}
+                tableView={this.props.tableView}
               />
             }
             pagination={
@@ -137,11 +160,7 @@ class Search extends React.Component {
             }
             searchBox={<SearchBox size={this.props.size} />}
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
-            noResults={
-              this.props.schools.length === 0 ? (
-                <NoResults resultSummary={this.props.resultSummary} />
-              ) : null
-            }
+            noResults={this.noResults()}
           />
         )}
       </DistanceContext.Consumer>
@@ -149,6 +168,7 @@ class Search extends React.Component {
   }
 }
 
+export { Search };
 export default function() {
   return (
     <SearchContext.Provider>

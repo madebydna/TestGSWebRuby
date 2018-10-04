@@ -6,13 +6,14 @@ module Search
     include Sortable
 
     attr_accessor :q, :district_id, :district_name, :location_label, :city, :level_codes, :entity_types, :id, :lat,
-                  :lon, :radius, :with_rating, :ratings
+                  :lon, :radius, :with_rating, :ratings, :school_keys
     attr_reader :state
 
     def initialize(
       id: nil,
       city: nil,
       state: nil,
+      school_keys: [],
       district_id: nil,
       district_name: nil,
       location_label: nil,
@@ -47,6 +48,7 @@ module Search
       self.offset = offset
       self.with_rating = with_rating
       self.ratings = ratings
+      self.school_keys = school_keys
     end
 
     def search
@@ -72,6 +74,8 @@ module Search
         t('city_browse', **params)
       elsif @q.present?
         t('search_term', **params)
+      else
+        t('showing_number_of_schools', **params)
       end
     end
 

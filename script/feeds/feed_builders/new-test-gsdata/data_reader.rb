@@ -56,6 +56,18 @@ module Feeds
         end
       end
 
+      def district_data_for_test_name?(test_name)
+        district_ids.each do |district_id|
+          district_cache = DistrictCache.where(state: @state, district_id: district_id, name: 'feed_test_scores_gsdata').first
+          if district_cache.present? &&
+              district_cache.cache_data[test_name].present? &&
+              district_cache.cache_data[test_name].select(&cache_filter)
+            return true
+          end
+        end
+        return false
+      end
+
       def each_school_result_for_test_name(test_name)
         school_ids.each do |school_id|
           school_cache = SchoolCache.where(state: @state, school_id: school_id, name: 'feed_test_scores_gsdata').first
@@ -65,6 +77,18 @@ module Feeds
           next unless test_hash[test_name].present?
           yield test_hash[test_name].select(&cache_filter), school_id
         end
+      end
+
+      def school_data_for_test_name?(test_name)
+        school_ids.each do |school_id|
+          school_cache = SchoolCache.where(state: @state, school_id: school_id, name: 'feed_test_scores_gsdata').first
+          if school_cache.present? &&
+              school_cache.cache_data[test_name].present? &&
+              school_cache.cache_data[test_name].select(&cache_filter)
+            return true
+          end
+        end
+        return false
       end
 
       def each_school_result

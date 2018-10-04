@@ -29,12 +29,13 @@ export default class SearchQueryParams extends React.Component {
       lon: queryParams.getLon(),
       distance: queryParams.getDistance(),
       locationLabel:
-        queryParams.getValueForKey('locationLabel') ||
-        queryParams.getValueForKey('locationSearchString'),
+      queryParams.getValueForKey('locationLabel') ||
+      queryParams.getValueForKey('locationSearchString'),
       sort: queryParams.getSort() || (queryParams.getQ() ? 'relevance' : 'rating'),
       page: queryParams.getPage(),
       q: queryParams.getQ(),
       view: queryParams.getView(),
+      tableView: queryParams.getTableView(),
       updateLevelCodes: codes => {
         pushQueryString(queryParams.queryStringWithNewGradeLevels(codes));
       },
@@ -50,8 +51,12 @@ export default class SearchQueryParams extends React.Component {
       updateDistance: distance => {
         pushQueryString(queryParams.queryStringWithNewDistance(distance));
       },
-      updateView: view =>
-        pushQueryString(queryParams.queryStringWithNewView(view))
+      updateView: view => {
+        pushQueryString(queryParams.queryStringWithNewView(view));
+      },
+      updateTableView: tableView => {
+        pushQueryString(queryParams.queryStringWithNewTableView(tableView));
+      }
     };
 
     return this.props.children(extraProps);

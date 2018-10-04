@@ -67,6 +67,7 @@ export function find({
   city,
   district,
   district_id,
+  schoolKeys,
   state,
   levelCodes,
   entityTypes,
@@ -79,18 +80,19 @@ export function find({
   page = 1,
   limit = 25,
   with_rating = false,
-  top_school_module
+  schoolList
 } = {}) {
   const data = {
     city,
     district,
     district_id,
+    schoolKeys,
     state,
     q,
     sort,
     limit,
     with_rating,
-    top_school_module
+    schoolList
   };
   if (levelCodes && levelCodes.length > 0) {
     data.level_code = levelCodes.join(',');
@@ -116,9 +118,6 @@ export function find({
   if (locationLabel) {
     data.locationLabel = locationLabel;
   }
-  if (top_school_module) {
-    data.top_school_module = top_school_module;
-  }
   const currentParams = parse(window.location.search);
   data.lang = currentParams.lang;
   if (currentParams.locationType) {
@@ -130,5 +129,13 @@ export function find({
     type: 'GET',
     dataType: 'json',
     timeout: 6000
+  });
+}
+
+export function mySchoolList(props) {
+  return find({
+    ...props,
+    schoolList: 'msl',
+    extras: ['saved_schools']
   });
 }

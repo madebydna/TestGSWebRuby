@@ -47,26 +47,32 @@ module Feeds
       end
 
       def write_district_info(test_name)
-        within_tag('district') do
-          @data_reader.each_district_result_for_test_name(test_name) do |hash, district_id|
-            write_entity_info(hash, district_uid(district_id))
+        if @data_reader.district_data_for_test_name? test_name
+          within_tag('district') do
+            @data_reader.each_district_result_for_test_name(test_name) do |hash, district_id|
+              write_entity_info(hash, district_uid(district_id))
+            end
           end
         end
       end
 
       def write_school_info(test_name)
-        within_tag('school') do
-          @data_reader.each_school_result_for_test_name(test_name) do |hash, school_id|
-            write_entity_info(hash, school_uid(school_id))
+        if @data_reader.school_data_for_test_name? test_name
+          within_tag('school') do
+            @data_reader.each_school_result_for_test_name(test_name) do |hash, school_id|
+              write_entity_info(hash, school_uid(school_id))
+            end
           end
         end
       end
 
       def write_entity_info(hash, universal_id)
-        within_tag('entity') do
-          xml_builder.tag!('universal-id', universal_id)
-          within_tag('results') do
-            write_test_results(hash)
+        if hash.present?
+          within_tag('entity') do
+            xml_builder.tag!('universal-id', universal_id)
+            within_tag('results') do
+              write_test_results(hash)
+            end
           end
         end
       end

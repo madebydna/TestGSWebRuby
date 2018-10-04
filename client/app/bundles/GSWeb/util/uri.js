@@ -23,16 +23,19 @@ export function copyParam(param, sourceUrl, targetUrl) {
   const queryData = getQueryData(`?${queryString}`);
   let value = queryData[param];
   if (queryString.includes(param) && value === undefined) {
-    if(param == 'newsearch'){value = true;}
-    else {return targetUrl}
+    if (param == 'newsearch') {
+      value = true;
+    } else {
+      return targetUrl;
+    }
   }
   return addQueryParamToUrl(param, value, targetUrl);
 }
 
 export function copyParams(paramsArray, sourceUrl, targetUrl) {
   let target = targetUrl;
-  paramsArray.forEach((param) =>{
-    target = copyParam(param, sourceUrl, target)
+  paramsArray.forEach(param => {
+    target = copyParam(param, sourceUrl, target);
   });
   return target;
 }
@@ -390,4 +393,14 @@ export function getQueryStringFromFormElements($elements) {
 
 export function changeFormAction(action, formObject) {
   $(formObject).attr('action', action);
+}
+
+export function legacyUrlEncode(param) {
+  if (param === undefined || param === null) {
+    return null;
+  }
+  return param
+    .toLowerCase()
+    .replace(new RegExp('-', 'g'), '_')
+    .replace(new RegExp(' ', 'g'), '-');
 }

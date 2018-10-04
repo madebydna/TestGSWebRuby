@@ -6,7 +6,7 @@ import FiveStarRating from "../review/form/five_star_rating";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t, capitalize } from "util/i18n";
 
-const renderSchoolItem = (name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType) => {
+const renderSchoolItem = ({name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType}) => {
   const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
   return <React.Fragment>
     <div className="content-container">
@@ -46,19 +46,9 @@ const renderDistrctName = (districtName) => (
   <p className="school-district">{districtName}</p>
 )
 
-const TopSchoolTableRow = ({
-  name,
-  numReviews,
-  districtName,
-  rating,
-  parentRating,
-  enrollment,
-  links,
-  gradeLevels,
-  schoolType
-}) => (
+const TopSchoolTableRow = (props) => (
   <div className="school-list-item">
-    {renderSchoolItem(name, rating, links, districtName,  numReviews, parentRating, enrollment, gradeLevels, schoolType)}
+    {renderSchoolItem(props)}
   </div>
 );
 

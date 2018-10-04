@@ -9,11 +9,11 @@ class CitiesController < ApplicationController
 
   def show
     set_city_meta_tags
-    @schools = serialized_schools
+    @top_schools =  top_rated_schools
     @breadcrumbs = breadcrumbs
-    @locality = locality
     @school_levels = school_levels
     @districts = district_content(city_record.id)
+    @locality = locality
     set_ad_targeting_props
     set_page_analytics_data
     Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
@@ -79,7 +79,10 @@ class CitiesController < ApplicationController
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
+        cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:zip] = get_zip
+        cp[:lat] = fetch_district_attr(:lat) || city_record&.lat
+        cp[:lon] = fetch_district_attr(:lon) || city_record&.lon
       end
     end
   end
@@ -88,7 +91,7 @@ class CitiesController < ApplicationController
     zip = district_content(city_record.id).find do |dc|
       break dc[:zip] if dc[:zip].present?
     end
-    zip ||= @schools.find do |s|
+    zip ||= @top_schools[:schools][:elementary].find do |s|
       break s[:address][:zip] if s && s[:address].present? && s[:address][:zip].present?
     end
     zip
@@ -102,7 +105,7 @@ class CitiesController < ApplicationController
       },
       {
         text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
-        url: ""
+        url: city_url(city_params(state, city))
       }
     ]
   end

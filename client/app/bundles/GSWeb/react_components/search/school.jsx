@@ -8,6 +8,8 @@ import {
   studentsPhrase,
   schoolTypePhrase
 } from 'util/school';
+import { get as getCookie, set as setCookie } from 'js-cookie';
+import { COOKIE_NAME } from './search_context';
 
 const joinWithSeparator = (arrayOfElements, separator) =>
   arrayOfElements
@@ -28,7 +30,9 @@ const School = ({
   active,
   distance,
   assigned,
-  links
+  links,
+  saveSchoolCallback,
+  savedSchool
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   let addressPhrase = [address.street1, address.city, state, address.zip]
@@ -40,8 +44,14 @@ const School = ({
 
   return (
     <React.Fragment key={state + id + (assigned ? 'assigned' : '')}>
-      {assigned && <div>{t('assigned_school') } {renderAssignedTooltip(levelCode)}</div>}
-      <span><RatingWithTooltip rating={rating} ratingScale={ratingScale}/></span>
+      {assigned && (
+        <div>
+          {t('assigned_school')} {renderAssignedTooltip(levelCode)}
+        </div>
+      )}
+      <span>
+        <RatingWithTooltip rating={rating} ratingScale={ratingScale} />
+      </span>
       <span>
         <a href={links.profile} className="name" target="_blank">
           {name}
@@ -59,7 +69,11 @@ const School = ({
             </span>
           )}
         </div>
-        {distance !== undefined ? <div>{t('Distance')}: {distance} miles</div> : null}
+        {distance !== undefined ? (
+          <div>
+            {t('Distance')}: {distance} miles
+          </div>
+        ) : null}
         {homesForSaleHref && (
           <div>
             <span key="homes-for-sale" className="icon icon-house" />
@@ -73,6 +87,10 @@ const School = ({
           </div>
         )}
       </span>
+      {(saveSchoolCallback) && <span
+        onClick={() => saveSchoolCallback({ state, id: id.toString() })}
+        className={savedSchool ? 'icon-heart' : 'icon-heart-outline'}
+      />}
     </React.Fragment>
   );
 };

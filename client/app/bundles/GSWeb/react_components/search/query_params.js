@@ -32,8 +32,8 @@ export function getGradeLevels() {
 export function queryStringWithNewGradeLevels(levelCodes) {
   const existingParams = parse(currentQueryString());
   const newParams = Object.assign(existingParams, {
-    'gradeLevels[]': undefined,
-    gradeLevels: levelCodes,
+    'gradeLevels[]': levelCodes,
+    gradeLevels: undefined,
     page: parsePage(1)
   });
   return stringify(newParams);
@@ -48,8 +48,8 @@ export function getEntityTypes() {
 export function queryStringWithNewEntityTypes(entityTypes) {
   const existingParams = parse(currentQueryString());
   const newParams = Object.assign(existingParams, {
-    'st[]': undefined,
-    st: entityTypes,
+    'st[]': entityTypes,
+    st: undefined,
     page: parsePage(1)
   });
   return stringify(newParams);
@@ -103,8 +103,18 @@ export function getView() {
   return undefined;
 }
 
+export function getTableView() {
+  let { tableView } = parse(currentQueryString());
+  tableView = ["Overview", "Academic", "Equity"].includes(tableView) ? tableView : undefined;
+  return tableView;
+}
+
 export function queryStringWithNewView(view) {
   return getQueryStringWithUpdatedParams({ view });
+}
+
+export function queryStringWithNewTableView(tableView) {
+  return getQueryStringWithUpdatedParams({ tableView });
 }
 
 export function queryStringWithNewDistance(distance) {

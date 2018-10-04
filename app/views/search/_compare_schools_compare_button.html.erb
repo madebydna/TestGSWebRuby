@@ -1,11 +1,11 @@
 <% s = defined?(school) ? school : Struct.new(:state,:name,:id,:overall_gs_rating).new('',nil,nil,nil) %>
 <div class="clearfix">
   <div class="btn btn-default full-width clearfix mbm db fl js-compareSchoolButton"
-    id='js-compareSchool<%= "#{s.id}" %>'
-    data-schoolname="<%= s.name %>"
-    data-schoolstate="<%= s.state.downcase %>"
-    data-schoolid="<%= s.id %>"
-    data-schoolrating="<%= s.overall_gs_rating || 'nr' %>"
+       id='js-compareSchool<%= "#{s.id}" %>'
+       data-schoolname="<%= s.name %>"
+       data-schoolstate="<%= s.state.downcase %>"
+       data-schoolid="<%= s.id %>"
+       data-schoolrating="<%= s.overall_gs_rating || 'nr' %>"
   >
     <div class="iconx16 i-16-check-bigger-off fl mrs "></div>
     <div class="fl js-compareSchoolsButtonText"><%= t('.compare') %></div>

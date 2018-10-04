@@ -6,6 +6,7 @@ import DistrictLayout from "./district_layout";
 import SearchBox from "react_components/search_box";
 import TopSchoolsStateful from "./top_schools_stateful";
 import SchoolBrowseLinks from "./school_browse_links";
+import Mobility from "./mobility";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
@@ -17,12 +18,12 @@ import Zillow from "./zillow";
 
 class District extends React.Component {
   static defaultProps = {
-    schools: [],
+    schools_data: {},
     breadcrumbs: [],
   };
 
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.object),
+    schools_data: PropTypes.object,
     loadingSchools: PropTypes.bool,
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
@@ -94,14 +95,14 @@ class District extends React.Component {
     return (
       <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
-        schools={this.props.schools}
+        schoolCounts={this.props.schools_data.counts}
         topSchools={
           <TopSchoolsStateful
             community="district"
-            schools={this.props.schools}
+            schoolsData={this.props.schools_data.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
-            schoolLevels={this.props.school_levels}
+            schoolLevels={this.props.schools_data.counts}
           />
         }
         browseSchools={
@@ -110,6 +111,12 @@ class District extends React.Component {
             locality={this.props.locality}
             size={this.props.viewportSize}
             schoolLevels={this.props.school_levels}
+          />
+        }
+        mobility={
+          <Mobility
+            locality={this.props.locality}
+            pageType="District"
           />
         }
         zillow={

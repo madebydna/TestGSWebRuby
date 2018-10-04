@@ -128,6 +128,14 @@ module Search
             params[:qt] = 'school-search' unless browse?
           end
         end
+        if school_keys.present?
+          fragment = school_keys.each_with_object([]) do |(state, school_id), phrases|
+            phrases << "(+school_database_state:#{state} +school_id:#{school_id})"
+          end.join(' ')
+          search.adjust_solr_params do |params|
+            params[:fq] << fragment
+          end
+        end
         search.order_by(sort_field, sort_direction) if sort_field
         search.with(:state, state.downcase) if state
         search.with(:level_codes, level_codes.map(&:downcase)) if level_codes.present?

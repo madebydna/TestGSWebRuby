@@ -8,6 +8,7 @@ import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
 import SchoolBrowseLinks from './school_browse_links';
 import DistrictsInCity from "./districts_in_city";
+import Mobility from "./mobility";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
@@ -19,16 +20,15 @@ import Zillow from "./zillow";
 const { gon } = window;
 class City extends React.Component {
   static defaultProps = {
-    schools: [],
+    schools_data: {},
     loadingSchools: false,
     breadcrumbs: [],
     districts: []
   };
 
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.object),
+    schools_data: PropTypes.object,
     districts: PropTypes.arrayOf(PropTypes.object),
-    loadingSchools: PropTypes.bool,
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
       PropTypes.shape({
@@ -36,7 +36,7 @@ class City extends React.Component {
         url: PropTypes.string.isRequired
       })
     ),
-    locality: PropTypes.object
+    locality: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -98,13 +98,14 @@ class City extends React.Component {
     return (
       <CityLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
-        schools={this.props.schools}
+        schoolCounts={this.props.schools_data.counts}
         topSchools={
           <TopSchoolsStateful
             community="city" 
-            schools={this.props.schools}
+            schoolsData={this.props.schools_data.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
+            schoolLevels={this.props.schools_data.counts}
           />
         }
         browseSchools={
@@ -120,6 +121,12 @@ class City extends React.Component {
           <DistrictsInCity
             districts={this.props.districts}
           />
+        }
+        mobility={
+          <Mobility
+            locality={this.props.locality}
+            pageType='City'
+             />
         }
         zillow={
           <Zillow

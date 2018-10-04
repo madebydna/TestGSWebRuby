@@ -34,7 +34,7 @@ module SearchControllerConcerns
   end
 
   def query
-    if point_given? || area_given? || q.present? || top_school_module?
+    if point_given? || area_given? || q.present?
       solr_query
     elsif state.present? && (school_id.present? || district_id.present?)
       school_sql_query
@@ -75,6 +75,7 @@ module SearchControllerConcerns
     query_type.new(
       city: city,
       state: state,
+      school_keys: school_keys,
       district_id: district_record&.id,
       district_name: district_record&.name,
       location_label: location_label_param,
@@ -89,6 +90,10 @@ module SearchControllerConcerns
       sort_name: sort_name,
       with_rating: with_rating
     )
+  end
+
+  def null_query
+    Search::NullQuery.new
   end
 
   def decorate_schools(schools)
@@ -107,9 +112,29 @@ module SearchControllerConcerns
     @_cache_keys ||= []
   end
 
+  def add_saved_schools(schools)
+    #grab saved school keys from the cookie and compare to keys constructed from schools.
+    schools.each do |school|
+      if saved_school_keys&.include?([school.state.downcase, school.id])
+        school.define_singleton_method(:saved_school) do
+          true
+        end
+      else
+        school.define_singleton_method(:saved_school) do
+          false
+        end
+      end
+    end
+  end
+
   # methods for adding extras
   # method names prefixed with add_*
   def add_summary_rating(schools)
+    cache_keys << 'ratings'
+    schools
+  end
+
+  def add_all_ratings(schools)
     cache_keys << 'ratings'
     schools
   end
@@ -171,6 +196,14 @@ module SearchControllerConcerns
     end
 
     schools
+  end
+
+  def add_subrating_hash
+    school.ratings
+  end
+
+  def add_ethincity_hash
+
   end
 
 end
