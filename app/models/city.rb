@@ -24,7 +24,7 @@ class City < ActiveRecord::Base
 
   # used by the widget
   def self.get_city_by_name_and_state(city, state)
-    City.where(name:city, state:state).active
+    City.find_by(name: city, state: States.abbreviation(state), active: 1)
   end
 
   def self.get_all_cities
