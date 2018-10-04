@@ -37,8 +37,8 @@ class SearchController < ApplicationController
     set_ad_targeting_props
     set_page_analytics_data
     set_meta_tags(alternate: {
-      en: url_for(params_for_rel_alternate.merge(lang: nil)),
-      es: url_for(params_for_rel_alternate.merge(lang: :es))
+      en: url_for(params_for_canonical.merge(lang: nil)),
+      es: url_for(params_for_canonical.merge(lang: :es))
     })
     response.status = 404 if serialized_schools.empty?
   end
@@ -308,21 +308,22 @@ class SearchController < ApplicationController
 
   def params_for_canonical
     {}.tap do |key|
-      key[grade_level_param_name] = level_code if level_code.present?
-      key[page_param_name] = given_page  if given_page.present?
-      key[school_type_param_name] = entity_types  if entity_types.present?
-      key[view_param_name] =  view  if view.present? && view != DEFAULT_VIEW
-      key[table_view_param_name] = tableView  if tableView.present?
+      key[grade_level_param_name] = level_code
+      key[page_param_name] = given_page
+      key[school_type_param_name] = entity_types
+      key[view_param_name] =  view
+      key[table_view_param_name] = tableView
+    end.compact.gs_remove_empty_values
   end
 
-  def params_for_rel_alternate
-    {}.tap do |key|
-      key[grade_level_param_name] = level_codes if level_codes.present?
-      key[page_param_name] = given_page if given_page.present?
-      key[school_type_param_name] = entity_types if entity_types.present?
-      key[view_param_name] = view if view.present? && view != DEFAULT_VIEW
-      key[table_view_param_name] = tableView if tableView.present?
-    end.compact
-  end
+  # def params_for_rel_alternate
+  #   {}.tap do |key|
+  #     key[grade_level_param_name] = level_code
+  #     key[page_param_name] = given_page
+  #     key[school_type_param_name] = entity_types
+  #     key[view_param_name] =  view
+  #     key[table_view_param_name] = tableView
+  #   end.compact.gs_remove_empty_values
+  # end
 
 end
