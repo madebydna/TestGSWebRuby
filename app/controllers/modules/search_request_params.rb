@@ -61,7 +61,16 @@ module SearchRequestParams
   end
 
   def radius
-    radius_param || 5
+    r = radius_param || 5
+    if max_radius
+      [max_radius, r].min
+    else
+      r
+    end
+  end
+
+  def max_radius
+    nil
   end
 
   def radius_param
@@ -123,7 +132,7 @@ module SearchRequestParams
   def city_record
     return nil unless city
     return @_city_record if defined? @_city_record
-    @_city_object = City.get_city_by_name_and_state(city, state).first
+    @_city_object = City.get_city_by_name_and_state(city, state)
   end
 
   def school_id

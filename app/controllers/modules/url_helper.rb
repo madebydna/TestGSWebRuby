@@ -314,4 +314,16 @@ module UrlHelper
     school_url
   end
 
+  def zillow_url(state, zipcode, campaign=nil)
+    campaign ||= 'gstrackingpagefail'
+    tracking_codes = "?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=#{campaign}"
+    # test that values needed are populated
+    if state.present? && zipcode.present?
+      url = "https://www.zillow.com/#{States.abbreviation(state).upcase}-#{zipcode.split("-")[0]}"
+    else
+      url = 'https://www.zillow.com/'
+    end
+    "#{url}#{tracking_codes}"
+  end
+
 end

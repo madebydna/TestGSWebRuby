@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe UrlHelper do
   let(:url_helper) { Object.new.extend UrlHelper }
+  let(:helper) { url_helper }
 
   describe '.add_query_params_to_url' do
     let(:url) { 'http://test.com/'}
@@ -331,4 +332,52 @@ describe UrlHelper do
 
     its(:path) { is_expected.to eq('/gsr/authenticate-token') }
   end
+
+  shared_examples_for 'produces a correct zillow campaign code' do
+    {
+        unknown: 'gstrackingpagefail'
+    }.each do |action, default_campaign|
+      it "should use #{default_campaign} for #{action} action" do
+        allow(helper).to receive(:action_name).and_return(action.to_s)
+        expect(subject).to eq("#{expected_url}#{default_campaign}")
+      end
+    end
+
+    describe 'with a campaign parameter' do
+      let (:campaign) { 'spec' }
+      subject { helper.zillow_url(state, zipcode, campaign) }
+
+      it 'should use provided campaign parameter regardless of action' do
+        allow(helper).to receive(:action_name).and_return('show')
+        expect(subject).to eq("#{expected_url}#{campaign}")
+      end
+    end
+  end
+
+  describe '#zillow_url' do
+    subject { helper.zillow_url(state, zipcode) }
+    let(:state) { 'ca' }
+    let(:zipcode) { '94611-1234' }
+
+    describe 'without a state' do
+      it_behaves_like 'produces a correct zillow campaign code' do
+        let (:state) { nil }
+        let (:expected_url) { 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=' }
+      end
+    end
+
+    describe 'without a zip' do
+      it_behaves_like 'produces a correct zillow campaign code' do
+        let (:zipcode) { nil }
+        let (:expected_url) { 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=' }
+      end
+    end
+
+    describe 'with a state and zip' do
+      it_behaves_like 'produces a correct zillow campaign code' do
+        let (:expected_url) { 'https://www.zillow.com/CA-94611?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=' }
+      end
+    end
+  end
+
 end

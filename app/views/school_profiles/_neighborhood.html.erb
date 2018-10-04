@@ -82,7 +82,7 @@
           <div class="homes-for-sale">
             <a href="<%= district_boundary_path(db_hash) %>"><button><%= t('.attendance_zone')%></button></a>
           </div>
-          <a class="homes-for-sale" target="_blank" href='<%= zillow_url(@school, 'localoverview') %>'>
+          <a class="homes-for-sale" target="_blank" href='<%= zillow_url(@school.state, @school.zipcode, 'localoverview') %>'>
             <button class="nearby-homes"><%= t('.nearby_homes').upcase %></button>
           </a>
 

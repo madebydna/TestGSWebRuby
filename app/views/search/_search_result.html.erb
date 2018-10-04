@@ -83,7 +83,7 @@
           <!-- Compare and Homes for Sale -->
           <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
             <%= render 'compare_schools_compare_button', school: school if @allow_compare %>
-            <%= link_to zillow_url(school), class: 'btn btn-default zillow-button clearfix mts db', rel: 'nofollow', target: '_blank' do %>
+            <%= link_to zillow_url(school.state, school.zipcode), class: 'btn btn-default zillow-button clearfix mts db', rel: 'nofollow', target: '_blank' do %>
               <div class="iconx16 i-16-blue-home fl mrs"></div>
               <div class="fl"><%= t('.homes_for_sale_html') %></div>
             <% end %>
@@ -111,7 +111,7 @@
       <div class="col-xs-12 visible-xs">
         <div class="row">
           <div class="fl tac mlm">
-            <%= link_to zillow_url(school), class: 'btn btn-default zillow-button clearfix db phm', rel: 'nofollow', target: '_blank' do %>
+            <%= link_to zillow_url(school.state, school.zipcode), class: 'btn btn-default zillow-button clearfix db phm', rel: 'nofollow', target: '_blank' do %>
               <span class="iconx16 i-16-blue-home mrs vat"></span>
               <span class="prl vat tac"><%= t('.homes_for_sale_html') %></span>
             <% end %>
