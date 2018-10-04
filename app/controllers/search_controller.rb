@@ -316,14 +316,4 @@ class SearchController < ApplicationController
     end.compact.gs_remove_empty_values
   end
 
-  # def params_for_rel_alternate
-  #   {}.tap do |key|
-  #     key[grade_level_param_name] = level_code
-  #     key[page_param_name] = given_page
-  #     key[school_type_param_name] = entity_types
-  #     key[view_param_name] =  view
-  #     key[table_view_param_name] = tableView
-  #   end.compact.gs_remove_empty_values
-  # end
-
 end
