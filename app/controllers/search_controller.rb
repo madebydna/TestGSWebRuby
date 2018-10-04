@@ -306,22 +306,22 @@ class SearchController < ApplicationController
 
   def params_for_canonical
     {}.tap do |key|
-      key[grade_level_param_name] = level_code if level_code.present?
-      key[page_param_name] = given_page  if given_page.present?
-      key[school_type_param_name] = entity_types  if entity_types.present?
-      key[view_param_name] =  view  if view.present?
-      key[table_view_param_name] = tableView  if tableView.present?
-    end.compact
+      key[grade_level_param_name] = level_code
+      key[page_param_name] = given_page
+      key[school_type_param_name] = entity_types
+      key[view_param_name] =  view
+      key[table_view_param_name] = tableView
+    end.compact.gs_remove_empty_values
   end
 
   def params_for_rel_alternate
     {}.tap do |key|
-      key[grade_level_param_name] = level_codes if level_codes.present?
-      key[page_param_name] = given_page  if given_page.present?
-      key[school_type_param_name] = entity_types  if entity_types.present?
-      key[view_param_name] =  view  if view.present?
-      key[table_view_param_name] = tableView  if tableView.present?
-    end.compact
+      key[grade_level_param_name] = level_code
+      key[page_param_name] = given_page
+      key[school_type_param_name] = entity_types
+      key[view_param_name] =  view
+      key[table_view_param_name] = tableView
+    end.compact.gs_remove_empty_values
   end
 
 end
