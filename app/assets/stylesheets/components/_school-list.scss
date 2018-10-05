@@ -19,6 +19,7 @@ section.school-list {
 
     li {
       @include clearfix;
+      margin-top: 7px;
       padding: 10px 10px;
       box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.09);
       background-color: white;
