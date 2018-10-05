@@ -313,6 +313,7 @@ class SearchController < ApplicationController
       key[school_type_param_name] = entity_types  if entity_types.present?
       key[view_param_name] =  view  if view.present? && view != DEFAULT_VIEW
       key[table_view_param_name] = tableView  if tableView.present?
+    end.compact
   end
 
   def params_for_rel_alternate
