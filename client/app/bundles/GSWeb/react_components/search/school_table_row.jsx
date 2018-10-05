@@ -59,7 +59,7 @@ const SchoolTableRow = ({
   columns,
   tableView,
   subratings,
-  ethnicity_ratings
+  ethnicityRatings
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   let addressPhrase = [address.street1, address.city, state, address.zip]
@@ -110,7 +110,7 @@ const SchoolTableRow = ({
     );
   }
   else if (tableView == 'Equity') {
-    content = equityColumns(columns, ethnicity_ratings, links.profile);
+    content = equityColumns(columns, ethnicityRatings, links.profile);
   }
 
   else if (tableView == 'Academic') {
@@ -147,7 +147,7 @@ const overviewColumns = (type, grades, enrollmentDisplay, studentPerTeacher, rev
   )
 }
 
-const equityColumns = (columns, ethnicity_ratings, profileLink) => {
+const equityColumns = (columns, ethnicityRatings, profileLink) => {
   let cellStyle = {textAlign: 'center'}
   let content = [] ;
   columns.map(function(hash, index){
@@ -158,8 +158,8 @@ const equityColumns = (columns, ethnicity_ratings, profileLink) => {
       deepLinkParams = "#Race_ethnicity";
     }
 
-    if (ethnicity_ratings.hasOwnProperty(hash['key'])){
-      content.push(<td key={index} style={cellStyle}>{drawRating(ethnicity_ratings[hash['key']], `${profileLink}${deepLinkParams}`)}</td>);
+    if (ethnicityRatings.hasOwnProperty(hash['key'])){
+      content.push(<td key={index} style={cellStyle}>{drawRating(ethnicityRatings[hash['key']], `${profileLink}${deepLinkParams}`)}</td>);
     }else{
       content.push(<td key={ index } style={cellStyle}>N/A</td>);
     }

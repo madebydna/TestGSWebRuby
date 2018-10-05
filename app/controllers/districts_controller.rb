@@ -6,6 +6,7 @@ class DistrictsController < ApplicationController
 
   CACHE_KEYS_FOR_READER = %w(district_schools_summary district_characteristics)
 
+
   layout 'application'
   before_filter :redirect_unless_valid_district
   before_action :redirect_to_canonical_url
@@ -16,10 +17,11 @@ class DistrictsController < ApplicationController
     @breadcrumbs = breadcrumbs
     @top_schools =  top_rated_schools
     @hero_data = hero_data
+    @reviews = reviews_formatted.reviews_list
+    gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
-    Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
   private
@@ -176,6 +178,29 @@ class DistrictsController < ApplicationController
 
   def decorated_district
     @_decorated_district ||= DistrictCache.cached_results_for([district_record], CACHE_KEYS_FOR_READER).decorate_districts([district_record]).first
+  end
+
+  def reviews
+    @_reviews ||= 
+      Review
+        .active
+          .where(school_id: 
+            School.on_db(district_record.state.downcase) { School.active.where(district_id: district_record.id).ids },
+            state: district_record.state.downcase)
+            .where(review_question_id: 1)
+              .where.not(comment: nil)
+                .includes(:answers, :votes, question: :review_topic)
+                  .order(id: :desc)
+                    .limit(3)
+                      .extend(SchoolAssociationPreloading).preload_associated_schools!
+  end
+
+  def reviews_formatted
+    @_reviews_formatted ||= CommunityProfiles::Reviews.new(reviews, review_questions, district_record)
+  end
+
+  def review_questions
+    @_review_questions ||= CommunityProfiles::ReviewQuestions.new(district_record)
   end
 
   # StructuredMarkup

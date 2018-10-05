@@ -22,7 +22,7 @@ class Api::SchoolsController < ApplicationController
   end
 
   def require_valid_params
-    unless q || point_given? || area_given?
+    unless q || point_given? || area_given? || school_keys.present?
       return require_state
     end
   end
@@ -41,6 +41,10 @@ class Api::SchoolsController < ApplicationController
   # SearchRequestParams
   def not_default_extras
     %w(geometry)
+  end
+
+  def school_keys
+    return saved_school_keys if my_school_list?
   end
 
 end

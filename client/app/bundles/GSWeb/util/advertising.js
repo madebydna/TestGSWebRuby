@@ -166,6 +166,10 @@ const getSizeMappings = function() {
       .addSize([768, 0], [])
       .addSize([0, 0], [[320, 100], [320, 50]])
       .build(),
+    thin_banner_mobile: googletag
+      .sizeMapping()
+      .addSize([0,0], [[320, 100], [320, 50]])
+      .build(),
     thin_banner_or_box: googletag
       .sizeMapping()
       .addSize([992, 300], [[728, 90], [970, 250]])

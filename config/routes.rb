@@ -53,7 +53,6 @@ LocalizedProfiles::Application.routes.draw do
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
     get '', to: 'search#search'
   end
-  
 
   get ':state/:city/:district_name/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/,
@@ -273,6 +272,7 @@ LocalizedProfiles::Application.routes.draw do
     resource :widget_logs, only: [:create]
     resources :students
     get '/autosuggest', to: 'autosuggest', action: 'show'
+    post '/save_school', as: :save_school, to: 'saved_schools_controller#create'
   end
 
   match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs
@@ -371,6 +371,7 @@ LocalizedProfiles::Application.routes.draw do
   # JIRA: JT-385
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
   get '/school-district-boundaries-map', as: :district_boundary, to: 'district_boundaries#show'
+  get '/my-school-list', to: 'my_school_list#show', as: :my_school_list
 
   # post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
   #     state: States.any_state_name_regex,

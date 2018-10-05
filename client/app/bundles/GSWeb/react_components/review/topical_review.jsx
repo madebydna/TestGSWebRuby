@@ -10,6 +10,7 @@ export default class TopicalReview extends React.Component {
     review: PropTypes.object.isRequired,
     reportedCallback: PropTypes.func,
     userAlreadyReported: PropTypes.bool,
+    schoolName: PropTypes.string
   };
 
   constructor(props) {
@@ -61,7 +62,7 @@ export default class TopicalReview extends React.Component {
             </div>
             <div className="topical-review-button-bar">
             <div className="topical-review-report">
-              { this.topicalReviewReportLink(review.id) }
+              {this.props.schoolName === undefined && this.topicalReviewReportLink(review.id) }
             </div>
             </div>
             <ReportReview open={this.state.reportReviewOpen}
