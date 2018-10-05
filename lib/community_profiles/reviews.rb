@@ -37,7 +37,7 @@ module CommunityProfiles
             school_url: school_path(nil, 
                           schoolId: reviews&.dig(idx)&.school_id,
                           school_name: reviews&.dig(idx)&.school&.name,
-                          city: reviews&.dig(idx)&.school&.city,
+                          city: reviews&.dig(idx)&.school&.city&.downcase,
                           state: States.state_name(reviews&.dig(idx)&.school&.state).gsub('-', '_').gsub(' ', '-')
                         )
           })
