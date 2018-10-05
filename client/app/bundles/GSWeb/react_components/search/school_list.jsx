@@ -40,9 +40,9 @@ const SchoolList = ({
                   />
                 )}
               {adSlotPlacementCounter === 2 &&
-                <div className="ad-item">
+                <li className="ad-item">
                   <Ad slot="search_sponsoredlisting" sizeName="search_result_item" />
-                </div>
+                </li>
               }
               {size > SM ? (
                 <li
