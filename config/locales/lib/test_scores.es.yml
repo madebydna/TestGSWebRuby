@@ -22,6 +22,14 @@ es:
       give_us_your_feedback: Danos tu opinion
       Subject: Materias
       percent_proficient: '% a nivel de grado'
+      alternate_no_data_summary: >
+        En este estado, los estudiantes de escuela secundaria ya no toman exámenes estatales. En cambio, los exámenes
+        de ingreso a la universidad (SAT / ACT) se les dan a todos los estudiantes y se usan para medir el dominio de
+        las materias generales.
+      standardized_tests_note:  >
+        En este estado, los estudiantes de escuela secundaria ya no toman exámenes estatales. En cambio, los exámenes
+        de ingreso a la universidad (SAT / ACT) se les dan a todos los estudiantes y se usan para medir el dominio de las materias generales.
+        <br></br>
       faq:
         cta: ¿Notas que algo falta o confunde?
         content_html: >
@@ -32,6 +40,7 @@ es:
           Es muy probable que esto se deba a la supresión. A los estados se les requiere que supriman información de
           grado/materia si el número de estudiantes tomando el examen es demasiado bajo. Esto puede significar que
           algunos resultados de grados que son parte del resultado general no se pueden mostrar individualmente.</p>
+          %{standardized_tests_note}
           <p><a href="/gk/como-clasificamos/?lang=es#testscorerating” target="_blank">Infórmese más sobre esta calificación.</a></p>
           <p><a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Todavía tiene preguntas? Visite nuestra página de
           preguntas frecuentes.</a></p>

@@ -9,6 +9,7 @@ module SchoolProfiles
     N_TESTED = 'n_tested'
     STRAIGHT_AVG = 'straight_avg'
     N_TESTED_AND_STRAIGHT_AVG = 'n_tested_and_straight_avg'
+    STATES_WITHOUT_HS_STANDARDIZED_TESTS = %w(wi nv ct mt il)
 
     def initialize(school, school_cache_data_reader:)
       @school = school
@@ -21,8 +22,24 @@ module SchoolProfiles
 
     def faq
       @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.test_scores.faq'),
-                        content: I18n.t(:content_html, scope: 'lib.test_scores.faq'),
-                        element_type: 'faq')
+                        content: I18n.t(:content_html, scope: 'lib.test_scores.faq',
+                        standardized_tests_note: standardized_tests_clarification_note), element_type: 'faq')
+    end
+
+    def alternate_no_data_summary
+      I18n.t('lib.test_scores.alternate_no_data_summary')
+    end
+
+    def show_alternate_no_data_summary?
+      @show_alternate_no_data_summary ||= (!visible? && @school.level_code == 'h')
+    end
+
+    # Added to the 'Notice something missing or confusing?' modal when the conditions are met. For states that use
+    # college entrance exams instead of standardized tests.
+    def standardized_tests_clarification_note
+      if visible? && @school.level_code == 'h' && STATES_WITHOUT_HS_STANDARDIZED_TESTS.include?(@school.state.downcase)
+        I18n.t('lib.test_scores.standardized_tests_note')
+      end
     end
 
     def rating

@@ -41,6 +41,15 @@ $space-between-profile-modules: $spacing-extra-large;
     }
   }
 
+  .no-data-alternate {
+    span:last-child {
+      display: inline-block;
+      width: calc(100% - 60px);
+      float: right;
+      margin-bottom: 6px;
+    }
+  }
+
   .more-reveal {
     display: none;
   }

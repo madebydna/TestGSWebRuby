@@ -8,6 +8,7 @@
 <% initial_size = 3 %>
 <% content = test_scores.sources %>
 <% narration = test_scores.narration %>
+<% no_data_summary = test_scores.show_alternate_no_data_summary? ? test_scores.alternate_no_data_summary : t('.no_data_html') %>
 
 <% content_for(:profile_module_header, flush: true) do %>
     <%= render "module_header",
@@ -18,8 +19,9 @@
       has_data: test_scores.visible?,
       share_content: test_scores.share_content,
       show_historical_ratings: test_scores.show_historical_ratings?,
-      no_data_summary: t('.no_data_html'),
-      icon: 'book'
+      no_data_summary: no_data_summary,
+      icon: 'book',
+      alternate_no_data_summary: test_scores.show_alternate_no_data_summary?
     %>
 <% end %>
 

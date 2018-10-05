@@ -22,6 +22,13 @@ en:
       give_us_your_feedback: Give us your feedback
       Subject: Subject
       percent_proficient: '% Proficient'
+      alternate_no_data_summary: >
+        In this state, high school students no longer take state standardized tests. Instead, college entrance exams
+        (SAT/ACT) are given to all students and are used to measure proficiency in core subjects.
+      standardized_tests_note:  >
+        In this state, high school students no longer take state standardized tests. Instead, college entrance exams
+        (SAT/ACT) are given to all students and are used to measure proficiency in core subjects.
+        <br></br>
       faq:
         cta: Notice something missing or confusing?
         content_html: >
@@ -32,6 +39,7 @@ en:
           due to suppression. States are required to suppress grade/subject data if the number of test-taking students
           is too small. This can mean that some grade-level scores that are part of the overall score cannot be
           displayed individually.</p>
+          %{standardized_tests_note}
           <p><a href="/gk/ratings/#testscorerating" target="_blank">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       narration:
