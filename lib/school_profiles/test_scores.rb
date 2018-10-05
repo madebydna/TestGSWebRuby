@@ -23,7 +23,8 @@ module SchoolProfiles
     def faq
       @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.test_scores.faq'),
                         content: I18n.t(:content_html, scope: 'lib.test_scores.faq',
-                        standardized_tests_note: standardized_tests_clarification_note), element_type: 'faq')
+                        standardized_tests_note: standardized_tests_clarification_note),
+                        element_type: 'faq')
     end
 
     def alternate_no_data_summary
