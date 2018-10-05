@@ -197,18 +197,14 @@ class SearchController < ApplicationController
   end
 
   # Begin meta-tag code
-  def prev_page
-    @_prev_page ||= prev_page_url(page_of_results)
-  end
-
-  def next_page
-    @_next_page ||= next_page_url(page_of_results)
-  end
 
   def set_search_meta_tags
     set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url? && page_of_results.present?
     if %i[zip_code city_browse district_browse address other].include?(search_type)
-      complete_tags = send("#{search_type}_meta_tag_hash".to_sym).merge({prev: prev_page, next: next_page})
+      param_to_remove = view == DEFAULT_VIEW ? :view : nil
+      complete_tags = send("#{search_type}_meta_tag_hash".to_sym)
+                        .merge({prev: prev_page_url(page_of_results, param_to_remove),
+                                next: next_page_url(page_of_results, param_to_remove)})
       send(:set_meta_tags, complete_tags)
     end
   end
@@ -220,16 +216,15 @@ class SearchController < ApplicationController
     else
       meta_description = "View and map all #{city_record.name}, #{city_record.state} schools. Plus, compare or save schools"
     end
-
     {
       title: "#{city_browse_title} | GreatSchools",
       description: meta_description,
-      canonical: search_city_browse_url(
+      canonical: url_for(search_city_browse_url(
         params_for_canonical.merge(
           city: gs_legacy_url_encode(city),
           state: gs_legacy_url_encode(States.state_name(state))
         )
-      )
+      ))
     }
   end
 
@@ -308,7 +303,7 @@ class SearchController < ApplicationController
 
   def params_for_canonical
     {}.tap do |key|
-      key[grade_level_param_name] = level_code if level_code.present?
+      key[grade_level_param_name] = level_codes if level_code.present?
       key[page_param_name] = given_page  if given_page.present?
       key[school_type_param_name] = entity_types  if entity_types.present?
       key[view_param_name] =  view  if view.present? && view != DEFAULT_VIEW
