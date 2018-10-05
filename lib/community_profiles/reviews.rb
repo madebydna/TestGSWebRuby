@@ -38,7 +38,7 @@ module CommunityProfiles
                           schoolId: reviews&.dig(idx)&.school_id,
                           school_name: reviews&.dig(idx)&.school&.name,
                           city: reviews&.dig(idx)&.school&.city,
-                          state: States.state_name(reviews&.dig(idx)&.school&.state)
+                          state: States.state_name(reviews&.dig(idx)&.school&.state).gsub('-', '_').gsub(' ', '-')
                         )
           })
         end
