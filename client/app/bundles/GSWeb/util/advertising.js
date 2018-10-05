@@ -198,6 +198,12 @@ const getSizeMappings = function() {
       .addSize([690, 300], [[630, 250], [630, 100], [320, 50]])
       .addSize([0, 0], [[320, 100], [320, 50]])
       .build(),
+    search_result_item: googletag
+      .sizeMapping()
+      .addSize([1200, 300], [[440, 140]])
+      .addSize([992, 300], [[360, 140]])
+      .addSize([0, 0], [[992,140],[768,140],[440, 140]])
+      .build(),
   };
 };
 
