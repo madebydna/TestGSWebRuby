@@ -25,11 +25,7 @@ es:
       alternate_no_data_summary: >
         En este estado, los estudiantes de escuela secundaria ya no toman exámenes estatales. En cambio, los exámenes
         de ingreso a la universidad (SAT / ACT) se les dan a todos los estudiantes y se usan para medir el dominio de
-        las materias generales.
-      standardized_tests_note:  >
-        En este estado, los estudiantes de escuela secundaria ya no toman exámenes estatales. En cambio, los exámenes
-        de ingreso a la universidad (SAT / ACT) se les dan a todos los estudiantes y se usan para medir el dominio de las materias generales.
-        <br></br>
+        las materias generales.<br></br>
       faq:
         cta: ¿Notas que algo falta o confunde?
         content_html: >

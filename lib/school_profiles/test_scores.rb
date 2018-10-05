@@ -27,18 +27,18 @@ module SchoolProfiles
     end
 
     def alternate_no_data_summary
-      I18n.t('lib.test_scores.alternate_no_data_summary')
+      I18n.t('lib.test_scores.alternate_no_data_summary').html_safe
     end
 
     def show_alternate_no_data_summary?
-      @show_alternate_no_data_summary ||= (!visible? && @school.level_code == 'h')
+      !visible? && @school.level_code == 'h'
     end
 
     # Added to the 'Notice something missing or confusing?' modal when the conditions are met. For states that use
     # college entrance exams instead of standardized tests.
     def standardized_tests_clarification_note
       if visible? && @school.level_code == 'h' && STATES_WITHOUT_HS_STANDARDIZED_TESTS.include?(@school.state.downcase)
-        I18n.t('lib.test_scores.standardized_tests_note')
+        alternate_no_data_summary
       end
     end
 

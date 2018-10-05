@@ -24,11 +24,7 @@ en:
       percent_proficient: '% Proficient'
       alternate_no_data_summary: >
         In this state, high school students no longer take state standardized tests. Instead, college entrance exams
-        (SAT/ACT) are given to all students and are used to measure proficiency in core subjects.
-      standardized_tests_note:  >
-        In this state, high school students no longer take state standardized tests. Instead, college entrance exams
-        (SAT/ACT) are given to all students and are used to measure proficiency in core subjects.
-        <br></br>
+        (SAT/ACT) are given to all students and are used to measure proficiency in core subjects.<br></br>
       faq:
         cta: Notice something missing or confusing?
         content_html: >
