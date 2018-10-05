@@ -11,6 +11,7 @@ en:
     browse_school_blurb_district: Here's a look at the district
     city_hero_html: <div class="city-hero-narrative">{city} is a city in {county} county, {stateLong}</div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} is a city in {stateLong}</div>
+    community_resources: community resources
     county: county
     website: Website
     homes_for_sale: Homes for sale
@@ -85,6 +86,22 @@ en:
     close: Close
     edit: Edit
     learn_more_html: Learn More &raquo;
+    mobility:
+      title: Community Resources in
+      transportation_narration: Transportation options near the schools
+      help: >
+        MobilityScore® helps you understand how easy it is to get around. It works at any location or 
+        address within the US and Canada and gives you a score ranging from 0 (no mobility choices) 
+        to 100 (excellent mobility choices). MobilityScore takes into account all your options, from 
+        public transit to carsharing, bikesharing, ridesharing, bikes, and even scooters!
+      sources_html: >
+        <div class="sources-text">
+          <h3>GreatSchools community data sources & information</h3>
+          <div>Transportation</div>
+          <p><span>Sources&#58;</span> MobilityScore&reg;</p>
+        </div>
+      no_score_city: This section shows the transportation option offered at this city. Currently, this information is not available.
+      no_score_district: This section shows the transportation option offered in this district. Currently, this information is not available.
     fatal_error: An unexpected error occurred while loading the page. Please try refreshing the page.
     fewer_filters: Fewer filters
     follow_schools:
@@ -153,6 +170,12 @@ en:
       see_elem: See more elementary schools
       see_mid: See more middle schools
       see_high: See more high schools
+    recent_reviews:
+      title: Recent school reviews from schools in
+      review_for: Review for
+      district_blurb: Does your child attend a school in this district?
+      city_blurb: Does your child attend a school in this city?
+      Add a review: Add a review
     State average: State average
     too_many_schools_error_html: '<strong>You&#39ve already selected 4 schools to compare.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspCompare schools.</a>'
     view_less: View less »
@@ -303,10 +326,10 @@ en:
       step8_sources: Sources
       step9_html: '<h1>All done!</h1><div>Have a few more minutes? Learn<br/>more about the school&apos;s Academics,<br/>Equity and Environment sections.</div><br/><p><button class="tour-cta js-start-second-tour active">Continue</button><div> <a class="js-close-school-tour" style="cursor: pointer;">Not right now </a></p></br><p>Was this useful? <a href="https://s.qualaroo.com/45194/49372ef1-a8d5-47be-8507-f4a208ece19b" target="_blank">Give us your feedback</a></p></div>'
     tour2:
-      step1_title_html: '<div class="tutorial-header">Test scores</div><br/>'
-      step1: Here you'll find a snapshot of this school's proficiency levels in key subjects, based on test scores and compared to state averages, with "Parent tips" you can use to learn more.
-      step2_title_html: '<div class="tutorial-header">College readiness</div><br/>'
-      step2: How well does this school prepare its students for college? This section offers information about college entrance tests, Advanced Placement (AP) coursework, graduation rates and more.
+      step1_title_html: '<div class="tutorial-header">College readiness</div><br/>'
+      step1: How well does this school prepare its students for college? This section offers information about college entrance tests, Advanced Placement (AP) coursework, graduation rates and more.
+      step2_title_html: '<div class="tutorial-header">Test scores</div><br/>'
+      step2: Here you'll find a snapshot of this school's proficiency levels in key subjects, based on test scores and compared to state averages, with "Parent tips" you can use to learn more.
       step3_title_html: '<div class="tutorial-header">Student progress</div><br/>'
       step3: The Student Progress Rating gives you a sense of how much academic improvement students at this school have made year-over-year (also known as “growth”) compared with other schools in the state.
       step4_title_html: '<div class="tutorial-header">Advanced courses</div><br/>'

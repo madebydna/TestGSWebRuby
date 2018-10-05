@@ -1,8 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import OpenableCloseable from './openable_closeable';
-import CaptureOutsideClick from './search/capture_outside_click';
-import SearchResultsList from './search_results_list';
 import Selectable from 'react_components/selectable';
 import Dropdown from 'react_components/search/dropdown';
 import { createPortal } from 'react-dom';
@@ -16,6 +13,11 @@ import { init as initGoogleMaps } from 'components/map/google_maps';
 import { href } from 'util/search';
 import { analyticsEvent } from 'util/page_analytics';
 import { translateWithDictionary } from 'util/i18n';
+import { legacyUrlEncode } from 'util/uri';
+import OpenableCloseable from './openable_closeable';
+import CaptureOutsideClick from './search/capture_outside_click';
+import SearchResultsList from './search_results_list';
+import { name as stateName } from 'util/states';
 
 // Matches only 5 digits
 // Todo currently 3-4 schools would match this regex,
@@ -31,7 +33,7 @@ const matchesZip = string =>
 
 const matchesNumbersAsOnlyFirstCharacters = string => /^\W*\d+\s/.test(string);
 
-const matchesStateAbbreviationQuery = string => /\w*, \w\w\b/.test(string);
+const matchesStateAbbreviationQuery = string => /\w*,\s*\w\w\b/.test(string);
 
 // Matches when first character/characters are numbers + a space + if it does not match schools in the school and district list.
 // ToDo perhaps not worth maintaining list of 300 schools for this regex.
@@ -78,6 +80,23 @@ const newSearchResultsPageUrl = newParams => {
     ...newParams
   };
   return `/search/search.page?${stringify(params)}`;
+};
+
+// city should be a not-yet-encoded string
+const newCityBrowsePageUrl = (stateAbbreviation, city, newParams) => {
+  const { newsearch, lang } = parse(window.location.search);
+  const params = {
+    newsearch,
+    lang,
+    ...newParams
+  };
+  const stateUriPart = legacyUrlEncode(stateName(stateAbbreviation));
+  const cityUriPart = legacyUrlEncode(city);
+  const queryString = stringify(params);
+  if (queryString) {
+    return `/${stateUriPart}/${cityUriPart}/schools/?${stringify(params)}`;
+  }
+  return `/${stateUriPart}/${cityUriPart}/schools/`;
 };
 
 const contentSearchResultsPageUrl = ({ q }) => {
@@ -177,24 +196,31 @@ export default class SearchBox extends React.Component {
 
       geocode(searchTerm)
         .then(json => json[0])
-        .done(({ lat, lon, city, state, zip, normalizedAddress } = {}) => {
-          let params = {};
-          if (lat && lon) {
-            params = { lat, lon };
-          } else {
-            params.q = searchTerm;
+        .done(
+          ({ lat, lon, city, state, zip, normalizedAddress, level } = {}) => {
+            let params = {};
+            if (city && state && level === 'city') {
+              window.location.href = newCityBrowsePageUrl(state, city, params);
+              return;
+            }
+
+            if (lat && lon) {
+              params = { lat, lon };
+            } else {
+              params.q = searchTerm;
+            }
+            if (matchesZip(searchTerm) && !matchesAddress(searchTerm)) {
+              params.locationLabel = `${city}, ${state} ${zip}`;
+              params.locationType = 'zip';
+              params.state = state;
+            } else {
+              params.locationLabel = normalizedAddress;
+              params.locationType = 'street_address';
+              params.state = state;
+            }
+            window.location.href = newSearchResultsPageUrl(params);
           }
-          if (matchesZip(searchTerm) && !matchesAddress(searchTerm)) {
-            params.locationLabel = `${city}, ${state} ${zip}`;
-            params.locationType = 'zip';
-            params.state = state;
-          } else {
-            params.locationLabel = normalizedAddress;
-            params.locationType = 'street_address';
-            params.state = state;
-          }
-          window.location.href = newSearchResultsPageUrl(params);
-        })
+        )
         .fail(() => {
           window.location.href = newSearchResultsPageUrl({
             q: this.state.searchTerm
@@ -363,8 +389,8 @@ export default class SearchBox extends React.Component {
     </span>
   );
 
-  renderResetSearchTermButton(){
-    return this.state.searchTerm.length > 0
+  renderResetSearchTermButton() {
+    return this.state.searchTerm.length > 0;
   }
 
   searchResultsList = ({ close }) => (
@@ -409,7 +435,8 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
-            {this.renderResetSearchTermButton() && this.resetSearchTermButton(close)}
+            {this.renderResetSearchTermButton() &&
+              this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
@@ -458,7 +485,8 @@ export default class SearchBox extends React.Component {
                   </div>
                 )}
             </div>
-            {this.renderResetSearchTermButton() && this.resetSearchTermButton(close)}
+            {this.renderResetSearchTermButton() &&
+              this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}

@@ -158,6 +158,14 @@ module SearchRequestParams
     state && district
   end
 
+  def view
+    params['view']
+  end
+
+  def tableView
+    params['tableView']
+  end
+
   def city_browse?
     state && city && !district
   end
@@ -220,6 +228,14 @@ module SearchRequestParams
     'gradeLevels'
   end
 
+  def view_param_name
+    'view'
+  end
+
+  def table_view_param_name
+    'tableView'
+  end
+
   def page_param_name
     'page'
   end
@@ -239,6 +255,23 @@ module SearchRequestParams
 
   def with_rating
     params[:with_rating]
+  end
+
+  def saved_school_keys
+    # If a user saves a school and then removes it, the cookie will be set as '[]'. Code below will return [] in that case.
+    cookies[:gs_saved_schools] ? JSON.parse(cookies[:gs_saved_schools]).map {|hash| [hash['state']&.downcase, hash['id']&.to_i]} : []
+  end
+
+  def school_keys
+    params[:schoolKeys] || []
+  end
+
+  def school_list
+    params[:schoolList]
+  end
+
+  def my_school_list?
+    school_list == 'msl'
   end
 
 end

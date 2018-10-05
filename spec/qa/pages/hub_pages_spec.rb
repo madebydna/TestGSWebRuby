@@ -6,12 +6,6 @@ describe '#hub pages', remote:true, safe_for_prod: true  do
     '/georgia' => 'Georgia',
     '/oklahoma' => 'Oklahoma',
     '/north-carolina' => 'North Carolina',
-    '/michigan/detroit' => 'Detroit',
-    '/wisconsin/milwaukee' => 'Milwaukee',
-    '/washington-dc/washington' => 'Washington, DC',
-    '/indiana/indianapolis' => 'Indianapolis',
-    '/oklahoma/tulsa' => 'Tulsa',
-    '/colorado' => 'Colorado'
   }.each do |uri, hub_title|
     describe "#{uri} hub page" do
       before { visit uri }

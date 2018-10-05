@@ -118,8 +118,11 @@
     display: table-cell;
   }
 
-  .icon-heart {
-    margin-left: 7.5px;
+  .saved-schools-nav {
+    color: #26abe2;
+    &:hover {
+      background: none;
+    }
   }
 
   .logo_size {
@@ -633,6 +636,18 @@
     top: 0px;
     left: 0px;
     width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1210px) {
+  .un nav > ul > li > a {
+    padding: 5px 5px;
+  }
+}
+
+@media (min-width: 1121px) and (max-width: 1199px) {
+  .un nav > ul > li > a {
+    padding: 5px 15px;
   }
 }
 

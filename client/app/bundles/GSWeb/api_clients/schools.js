@@ -67,6 +67,7 @@ export function find({
   city,
   district,
   district_id,
+  schoolKeys,
   state,
   levelCodes,
   entityTypes,
@@ -78,17 +79,20 @@ export function find({
   extras = [],
   page = 1,
   limit = 25,
-  with_rating = false
+  with_rating = false,
+  schoolList
 } = {}) {
   const data = {
     city,
     district,
     district_id,
+    schoolKeys,
     state,
     q,
     sort,
     limit,
     with_rating,
+    schoolList
   };
   if (levelCodes && levelCodes.length > 0) {
     data.level_code = levelCodes.join(',');
@@ -125,5 +129,13 @@ export function find({
     type: 'GET',
     dataType: 'json',
     timeout: 6000
+  });
+}
+
+export function mySchoolList(props) {
+  return find({
+    ...props,
+    schoolList: 'msl',
+    extras: ['saved_schools']
   });
 }

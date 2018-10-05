@@ -352,7 +352,7 @@ GS.schoolPicker.reviewsChooser = GS.schoolPicker.reviewsChooser || (function() {
   var addParamsAndAnchorToUrl = function (url) {
     url = addMorganStanley(url);
     url = GS.I18n.preserveLanguageParam(url);
-    return addTopicAnchor(url);
+    return url + '#Reviews';
   };
 
   var addMorganStanley = function (url) {
@@ -360,14 +360,6 @@ GS.schoolPicker.reviewsChooser = GS.schoolPicker.reviewsChooser || (function() {
     url = GS.uri.Uri.addQueryParamToUrl('morganstanley', '1', url);
      }
     return url;
-  };
-
-  var addTopicAnchor = function (url) {
-    var topicAnchor = "";
-    if (gon.topic_id) {
-      topicAnchor += "#topic" + gon.topic_id;
-    }
-    return url + topicAnchor;
   };
 
  return {

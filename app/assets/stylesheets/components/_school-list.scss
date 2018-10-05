@@ -43,8 +43,8 @@ section.school-list {
         text-align: center;
         width: 55px;
       }
-      > span:last-of-type {
-        width: calc(100% - 65px);
+      > span:nth-of-type(2) {
+        width: calc(100% - 95px);
       }
       > span {
         vertical-align: top;

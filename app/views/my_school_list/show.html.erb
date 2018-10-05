@@ -1,0 +1,14 @@
+<% content_for :head do %>
+    <link rel="dns-prefetch" href="//maps.googleapis.com">
+<% end %>
+<% content_for :page_javascripts do %>
+    <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+    <%= webpack_javascript_include_tag 'search', defer: true %>
+<% end %>
+<% content_for :page_stylesheets do %>
+    <%= stylesheet_link_tag "search", async: true %>
+<% end %>
+
+<div id="search-page">
+  <%= react_component('MySchoolList', props: { 'layout' => 'MySchoolList' }) %>
+</div>

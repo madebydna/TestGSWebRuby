@@ -11,12 +11,13 @@ class CitiesController < ApplicationController
     set_city_meta_tags
     @top_schools =  top_rated_schools
     @breadcrumbs = breadcrumbs
-    @locality = locality
     @school_levels = school_levels
     @districts = district_content(city_record.id)
+    @reviews = reviews_formatted.reviews_list
+    @locality = locality
+    gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props
     set_page_analytics_data
-    Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
   private
@@ -41,6 +42,29 @@ class CitiesController < ApplicationController
 
   def cities_state_text
     state.downcase == 'dc' ? '' : "#{city_record.name.gs_capitalize_words} #{state_name.gs_capitalize_words} "
+  end
+
+    def reviews
+      @_reviews ||= 
+        Review
+          .active
+            .where(school_id: 
+              School.on_db(city_record.state.downcase) { School.active.where(city: city_record.name).ids },
+              state: city_record.state.downcase)
+              .where(review_question_id: 1)
+                .where.not(comment: nil)
+                  .includes(:answers, :votes, question: :review_topic)
+                    .order(id: :desc)
+                      .limit(3)
+                        .extend(SchoolAssociationPreloading).preload_associated_schools!
+  end
+
+  def reviews_formatted
+    @_reviews_formatted ||= CommunityProfiles::Reviews.new(reviews, review_questions, city_record)
+  end
+
+  def review_questions
+    @_review_questions ||= CommunityProfiles::ReviewQuestions.new(city_record)
   end
 
   # AdvertisingConcerns
@@ -79,7 +103,10 @@ class CitiesController < ApplicationController
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
+        cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:zip] = get_zip
+        cp[:lat] = fetch_district_attr(:lat) || city_record&.lat
+        cp[:lon] = fetch_district_attr(:lon) || city_record&.lon
       end
     end
   end
@@ -102,7 +129,7 @@ class CitiesController < ApplicationController
       },
       {
         text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
-        url: ""
+        url: city_url(city_params(state, city))
       }
     ]
   end

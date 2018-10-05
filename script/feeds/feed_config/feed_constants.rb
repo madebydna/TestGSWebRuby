@@ -14,17 +14,17 @@ module Feeds
           'test_scores' => 'local-gs-test-feed',
           'test_subgroup' => 'local-gs-test-subgroup-feed',
           'test_rating' => 'local-gs-test-rating-feed',
-          'subrating' => 'gs-subrating-feed',
+          'subrating' => 'local-gs-subrating-feed',
           'old_test_gsdata' => 'local-gs-test-feed',
           'old_test_subgroup_gsdata' => 'local-gs-test-subgroup-feed',
-          'new_test_gsdata' => 'new-local-gs-test-feed',
-          'new_test_subgroup_gsdata' => 'new-local-gs-test-subgroup-feed',
+          'new_test_gsdata' => 'local-gs-new-test-feed',
+          'new_test_subgroup_gsdata' => 'local-gs-new-test-subgroup-feed',
           'official_overall' => 'local-gs-official-overall-rating-feed',
           'directory_feed' => 'local-greatschools-feed',
           'google_feed' => 'local-google-feed',
           'city' => 'local-greatschools-city-feed',
           'proficiency_band' => 'gs-proficiency-band',
-          'subrating_description' => 'gs-subrating-description-feed'
+          'subrating_description' => 'local-gs-subrating-description-feed'
 
       }
 
@@ -65,8 +65,8 @@ module Feeds
           'google_feed' => 'listings',
           'city' => 'greatschools-city-feed',
           'proficiency_band' => 'proficiency-band-feed',
-          'feed_test_scores_gsdata' => 'gs-test-gsdata',
-          'feed_test_scores_subgroups_gsdata' => 'gs-test-subgroups-gsdata',
+          'feed_test_scores_gsdata' => 'gs-test-feed',
+          'feed_test_scores_subgroups_gsdata' => 'gs-test-subgroups-feed',
           'subrating' => 'gs-subrating-feed',
           'subrating_description' => 'gs-subrating-description-feed'
       }

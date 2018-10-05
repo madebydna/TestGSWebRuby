@@ -5,10 +5,12 @@
 <% has_data %>
 <% no_data_summary ||= '' %>
 <% share_content = share_content || nil %>
+<% show_alternate_no_data_summary ||= nil %>
 
  <div class="module-header">
    <div class="row">
-     <div class="col-xs-12 col-md-10">
+     <%# bootstrap logic below is to ensure that the alternate no-data-summary fills the container (because there is no share button) %>
+     <div class="col-xs-12 <%= show_alternate_no_data_summary ? 'col-md-12' : 'col-md-10'%>">
        <% if rating.present? && rating != 'NR' %>
          <div class="circle-rating--<%= rating %> circle-rating--medium">
            <%= rating %><span class="rating-circle-small">/10</span>
@@ -27,11 +29,19 @@
              <%= render 'info_circle', content: info_text, element_type: 'toptooltip' %>
            <% end %>
          </div>
-         <% if subtitle.present? %>
-           <span><%= subtitle %></span>
-         <% end %>
-         <% unless has_data %>
-           <%= render 'no_data_for_module', title: title, no_data_summary: no_data_summary %>
+         <% if show_alternate_no_data_summary %>
+             <%# Special handling for certain states. The no_data_for_module partial is not currently easily configurable to support this format %>
+            <div class="ptm no-data-alternate">
+              <span><%= image_tag("/assets/school_profiles/owl.png") %></span>
+              <span><%= no_data_summary %></span>
+            </div>
+         <% else %>
+             <% if subtitle.present? %>
+                <span><%= subtitle %></span>
+             <% end %>
+             <% unless has_data %>
+                 <%= render 'no_data_for_module', title: title, no_data_summary: no_data_summary %>
+             <% end %>
          <% end %>
        </div>
      </div>

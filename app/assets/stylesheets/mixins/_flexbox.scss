@@ -16,6 +16,15 @@
   display: flex;
 }
 
+@mixin flexbox-align-items-center{
+  display: -ms-flexbox;
+    -ms-flex-align: center;
+  display: -webkit-box;
+    -webkit-box-align: center;
+  display: flex;
+    align-items: center;
+}
+
 @mixin flex-column-wrap{
   display: -ms-flexbox; 
     -ms-flex-direction: column;

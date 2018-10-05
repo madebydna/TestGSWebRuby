@@ -93,7 +93,7 @@ $(function() {
   }
 
   // has to go above tooltips.initialize();
-  if (hasDeclinedTour()) {
+  if (hasDeclinedTour() || new RegExp('texas').test(window.location.href)) {
     $('.tour-teaser').addClass('gs-tipso');
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   } else {

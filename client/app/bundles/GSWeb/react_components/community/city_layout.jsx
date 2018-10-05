@@ -78,6 +78,8 @@ class CityLayout extends React.Component {
     viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
+    shouldDisplayReviews: PropTypes.bool,
+    shouldDisplayDistricts: PropTypes.bool
   };
 
   constructor(props) {
@@ -145,7 +147,7 @@ class CityLayout extends React.Component {
     return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
   }
 
-  renderAd(){
+  renderDesktopAd(){
     return this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
       <Ad slot="citypage_first" sizeName="box_or_tall" />
     </div>
@@ -156,7 +158,7 @@ class CityLayout extends React.Component {
   }
 
   renderDistricts(){
-    return this.props.districts.length > 0 && (
+    return this.props.shouldDisplayReviews && (
       <div id="districts">
         <div className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</div>
           {this.props.districtsInCity}
@@ -182,6 +184,27 @@ class CityLayout extends React.Component {
     )
   }
 
+  renderReviews() {
+    return (
+      this.props.shouldDisplayReviews &&
+        <div id="reviews">
+          <div className="rating-container reviews-module">
+            <h3>{t('recent_reviews.title')} {`${this.props.locality.city}`}</h3>
+            {this.props.recentReviews}
+          </div>
+        </div>
+    )
+  }
+  
+  renderMobility(){
+    return(
+      <div id="mobility">
+        <div className="modules-title">{`${t('mobility.title')} ${this.props.locality.city}`}</div>
+        {this.props.mobility}
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="city-body">
@@ -191,11 +214,14 @@ class CityLayout extends React.Component {
         <div className="below-hero">
           {this.renderToc()}
           <div className="community-modules">
+            {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
             {this.renderSchools()}
             {this.renderDistricts()}
+            {this.renderMobility()}
             {this.renderZillow()}
+            {this.renderReviews()}
           </div>
-          {this.renderAd()}
+          {this.renderDesktopAd()}
         </div>
       </div>
     );

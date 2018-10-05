@@ -152,15 +152,9 @@ class TNTestProcessor2017TCAPEOC < GS::ETL::TestProcessor
       .transform('map breakdowns', HashLookup, :breakdown, map_gsdata_breakdown, to: :breakdown_gsdata_id)
       .transform('map subjects', HashLookup, :subject, map_gsdata_academic, to: :academic_gsdata_id) 
       .transform("state_id", WithBlock) do |row|
-       if row[:entity_level] == 'school'
-         row[:district_id] = row[:district_id].rjust(3,'0')
-         row[:state_id] = row[:district_id] + row[:school_id].rjust(4,'0')
-       elsif row[:entity_level] == 'district'
-         row[:state_id] = row[:district_id].rjust(3,'0')
-       else
-         row[:state_id] = 'state'
-       end
-       row
+        grade = gsub((/^0/, ''))
+        row
+      end
    end
 end
   def config_hash
