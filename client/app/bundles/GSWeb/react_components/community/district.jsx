@@ -7,6 +7,7 @@ import SearchBox from "react_components/search_box";
 import TopSchoolsStateful from "./top_schools_stateful";
 import SchoolBrowseLinks from "./school_browse_links";
 import RecentReviews from "./recent_reviews";
+import Mobility from "./mobility";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
@@ -113,6 +114,12 @@ class District extends React.Component {
             locality={this.props.locality}
             size={this.props.viewportSize}
             schoolLevels={this.props.school_levels}
+          />
+        }
+        mobility={
+          <Mobility
+            locality={this.props.locality}
+            pageType="District"
           />
         }
         zillow={

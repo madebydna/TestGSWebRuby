@@ -7,6 +7,7 @@ import { SM } from "util/viewport";
 
 const SchoolList = ({
   schools,
+  saveSchoolCallback,
   isLoading,
   pagination,
   toggleHighlight,
@@ -42,8 +43,8 @@ const SchoolList = ({
               onTouchStart={() => toggleHighlight(s)}
               className={classNameGenerator(s)}
             >
-              <School {...s} />
-            </li> 
+              <School {...s} saveSchoolCallback={saveSchoolCallback} />
+            </li>
           ) : (
             <li
               key={'li' + s.state + s.id + (s.assigned ? 'assigned' : '')}
@@ -51,7 +52,7 @@ const SchoolList = ({
               onMouseLeave={() => toggleHighlight(s)}
               className={classNameGenerator(s)}
             >
-              <School {...s} />
+              <School {...s} saveSchoolCallback={saveSchoolCallback} />
             </li>
           )}
         </React.Fragment>

@@ -80,6 +80,7 @@ module SearchControllerConcerns
     query_type.new(
       city: city,
       state: state,
+      school_keys: school_keys,
       district_id: district_record&.id,
       district_name: district_record&.name,
       location_label: location_label_param,
@@ -96,6 +97,10 @@ module SearchControllerConcerns
     )
   end
 
+  def null_query
+    Search::NullQuery.new
+  end
+
   def decorate_schools(schools)
     schools = assigned_schools + schools if extras.include?('assigned') && page == 1
     extras.each do |extra|
@@ -110,6 +115,21 @@ module SearchControllerConcerns
 
   def cache_keys
     @_cache_keys ||= []
+  end
+
+  def add_saved_schools(schools)
+    #grab saved school keys from the cookie and compare to keys constructed from schools.
+    schools.each do |school|
+      if saved_school_keys&.include?([school.state.downcase, school.id])
+        school.define_singleton_method(:saved_school) do
+          true
+        end
+      else
+        school.define_singleton_method(:saved_school) do
+          false
+        end
+      end
+    end
   end
 
   # methods for adding extras

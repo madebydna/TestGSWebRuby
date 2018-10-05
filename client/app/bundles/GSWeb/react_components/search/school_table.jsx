@@ -1,13 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { t, capitalize } from "util/i18n";
+import { t, capitalize } from 'util/i18n';
 import School from './school';
 import LoadingOverlay from './loading_overlay';
 import SchoolTableRow from './school_table_row';
-import SchoolTableColumnHeader from './school_table_column_header'
+import SchoolTableColumnHeader from './school_table_column_header';
 
-const SchoolTable = ({ schools, isLoading, searchTableViewHeaders, tableView }) => {
-  if (searchTableViewHeaders[tableView].length === 0) {
+const tableHeaders = (headerArray = [], tableView) => {
+  const schoolHeader = [
+    <SchoolTableColumnHeader
+      key={`${tableView}school`}
+      colName={capitalize(t('school'))}
+      classNameTH="school"
+      tooltipContent=""
+    />
+  ];
+  let headers = headerArray.map(hash => (
+    <SchoolTableColumnHeader
+      key={tableView + hash.key}
+      colName={hash.title}
+      tooltipContent={hash.tooltip}
+    />
+  ));
+  headers = schoolHeader.concat(headers);
+  return (
+    <thead>
+      <tr>{headers}</tr>
+    </thead>
+  );
+};
+
+const SchoolTable = ({
+  schools,
+  isLoading,
+  searchTableViewHeaders,
+  tableView = 'Overview'
+}) => {
+  if (
+    searchTableViewHeaders[tableView] === undefined ||
+    searchTableViewHeaders[tableView].length === 0
+  ) {
     tableView = 'Overview';
   }
   return (
@@ -20,29 +52,21 @@ const SchoolTable = ({ schools, isLoading, searchTableViewHeaders, tableView }) 
           numItems={schools.length}
         />
       }
-      <table className={isLoading ? "loading" : ""}>
+      <table className={isLoading ? 'loading' : ''}>
         {tableHeaders(searchTableViewHeaders[tableView], tableView)}
         <tbody>
-          {schools.map(s => <SchoolTableRow tableView={tableView} columns={searchTableViewHeaders[tableView]} key={s.state + s.id + (s.assigned ? 'assigned' : '')} {...s} />)}
+          {schools.map(s => (
+            <SchoolTableRow
+              tableView={tableView}
+              columns={searchTableViewHeaders[tableView]}
+              key={s.state + s.id + (s.assigned ? 'assigned' : '')}
+              {...s}
+            />
+          ))}
         </tbody>
       </table>
     </section>
-  )
-};
-
-const tableHeaders = (headerArray, tableView) => {
-  let schoolHeader = [<SchoolTableColumnHeader key={tableView + 'school'} colName={capitalize(t("school"))} classNameTH='school' tooltipContent="" />];
-  let headers = headerArray.map(hash =>
-    <SchoolTableColumnHeader key={tableView + hash['key']} colName={hash['title']} tooltipContent={hash['tooltip']} />
   );
-  headers = schoolHeader.concat(headers);
-  return (
-    <thead>
-      <tr>
-        {headers}
-      </tr>
-    </thead>
-  )
 };
 
 SchoolTable.propTypes = {

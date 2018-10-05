@@ -11,6 +11,7 @@ es:
     browse_school_blurb_district: Aquí hay un vistazo a las escuelas en distrito
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
+    community_resources: recursos de la comunidad 
     county: condado
     website: Página web
     homes_for_sale: Casas en venta
@@ -84,6 +85,22 @@ es:
     edit: Editar
     close: Cerrar
     learn_more_html: Aprender Mas &raquo;
+    mobility:
+      title: Recursos comunitarios en
+      transportation_narration: Opciones de transporte cerca de las escuelas
+      help: >
+        MobilityScore® le ayuda a comprender lo fácil que es viajar. Funciona en cualquier ubicación o dirección dentro 
+        de los EE. UU. y Canadá y le proporciona una calificación que va desde 0 (sin opciones de movilidad) hasta 100 
+        (excelentes opciones de movilidad). ¡MobilityScore tiene en cuenta todas tus opciones, desde el transporte público 
+        hasta el carsharing, el bikesharing, el ridesharing, las bicicletas e incluso los scooters!
+      sources_html: >
+        <div class="sources-text">
+          <h3>Fuentes de los datos de comunidades y información en GreatSchools </h3>
+          <div>Transporte</div>
+          <p><span>Fuente&#58;</span> MobilityScore&reg;</p>
+        <div>
+      no_score_city: Esta sección muestra las opciones de transporte que se ofrecen en esta ciudad. En este momento, esta información no está disponible.
+      no_score_district: Esta sección muestra las opciones de transporte que se ofrecen en esta distrito. En este momento, esta información no está disponible.
     fatal_error: Se produjo un error inesperado durante la carga de la página. Por favor, intente actualizar la página.
     fewer_filters: Menos filtros
     follow_schools:
@@ -310,10 +327,10 @@ es:
       step8_sources: Fuentes
       step9_html: '<h1>¡Terminado!</h1><div>¿Tiene unos minutos más? Infórmese más en las secciones de Contenido Académico, Igualdad y Ambiente de la escuela.</div><br/><p><button class="tour-cta js-start-second-tour active">Continuar</button><div> <a class="js-close-school-tour" style="cursor: pointer;">No en este momento</a><p/><br/><p>¿Esto estuvo útil? <a href="https://s.qualaroo.com/45194/49372ef1-a8d5-47be-8507-f4a208ece19b" target="_blank">Danos tu opinion</a></p></div>'
     tour2:
-      step1_title_html: '<div class="tutorial-header">Resultados de exámenes</div><br/>'
-      step1: Aquí verá un resumen de los niveles de competencia de esta escuela en materias importantes, en base a resultados de exámenes y comparados con el promedio estatal, con “Consejos para Padres” que puede usar para informarse más.
-      step2_title_html: '<div class="tutorial-header">Preparación universitaria</div><br/>'
-      step2: ¿Cómo prepara esta escuela a sus estudiantes para la Universidad? Esta sección ofrece información sobre exámenes de ingreso a la Universidad, cursos de Ubicación Avanzada (AP), índices de graduación y más.
+      step1_title_html: '<div class="tutorial-header">Preparación universitaria</div><br/>'
+      step1: ¿Cómo prepara esta escuela a sus estudiantes para la Universidad? Esta sección ofrece información sobre exámenes de ingreso a la Universidad, cursos de Ubicación Avanzada (AP), índices de graduación y más.
+      step2_title_html: '<div class="tutorial-header">Resultados de exámenes</div><br/>'
+      step2: Aquí verá un resumen de los niveles de competencia de esta escuela en materias importantes, en base a resultados de exámenes y comparados con el promedio estatal, con “Consejos para Padres” que puede usar para informarse más.
       step3_title_html: '<div class="tutorial-header">Progreso estudiantil</div><br/>'
       step3: El Índice de Progreso de Estudiantes da una idea de cuánto han mejorado académicamente los estudiantes en esta escuela cada año (también conocido como “crecimiento”) en comparación a otras escuelas en el estado.
       step4_title_html: '<div class="tutorial-header">Cursos avanzados</div><br/>'

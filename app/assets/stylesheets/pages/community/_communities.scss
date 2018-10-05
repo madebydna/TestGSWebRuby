@@ -384,3 +384,105 @@ $subtle-gray: #647981;
     }
   }
 }
+
+#mobility{
+  margin-bottom: 20px;
+  .mobility-module{
+    width: 95%;
+    margin-bottom: 5px;
+    border: solid 1px $border-color;
+    padding: 5px;
+    >div{ 
+      padding: 20px;
+      // Add this back when TransitScreen has better coverage
+      // @include flexbox;
+      // @include media-breakpoint-down(sm){
+      //   -webkit-box-orient: vertical;
+      //   -webkit-box-direction: normal;
+      //   -ms-flex-direction: column;
+      //   flex-direction: column;
+      //   >div:first-child{
+      //     margin: auto;
+      //   }
+      // }
+      .scale{
+        @include flexbox-center;
+        height: 30px;
+      }
+      .transportation-content{
+        width: 100%;
+        h3{
+          font-family: "opensans-semibold";
+          font-size: $font-size;
+        }
+        //Remove margin-left when mobility score gets added back
+        >div:last-child{ margin-left: 20px; }
+        a{color: black;}
+        a:hover{ text-decoration: none; }
+        .transportation-container{
+          @include flexbox-align-items-center;
+          p { margin-bottom: 0px; }
+          >img{ 
+            margin-right: 10px;
+            height: 25px;
+          }
+          margin-top: 20px;
+          margin-bottom: 5px;
+        }
+        .agencies{
+          @include flexbox-align-items-center;
+          margin-left: 25px;
+          margin-bottom: 10px;
+          >div, img, p{ margin-right: 10px;}
+          img{ height: 20px; }
+          p { 
+            margin-bottom: 0px;
+            color: $subtle-gray;
+          }
+        }
+      }
+    }
+    //CSS for the Null states
+    .null-state{
+      display: block;
+      font-family: 'opensans-semibold';
+      padding: 20px;
+      margin: auto;
+      h3{ text-align: center; }
+      h4{ font-size: $font-size; }
+      .loading-overlay {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        > .loader {
+          width: 60px;
+          height: 60px;
+          margin: auto;
+          background-image: image-url('search/owl-loader.gif');
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+    }
+  }
+  > a:hover { text-decoration: none;}
+}
+
+.tooltip-content{
+  text-align: left;
+}
+
+.sources-text{
+  div, h3, span{
+    font-family: "opensans-semibold";
+  }
+  h3{
+    margin-bottom: 20px;
+  }
+  div{
+    font-size: $font-size;
+    margin-bottom: 10px;
+  }
+}
+

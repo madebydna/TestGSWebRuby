@@ -1,5 +1,9 @@
 class Hash
 
+  def gs_remove_empty_values
+    delete_if { |k, v| v.blank? }
+  end
+
   def gs_rename_keys!(&block)
     replace gs_rename_keys(&block)
   end

@@ -11,10 +11,10 @@ class CitiesController < ApplicationController
     set_city_meta_tags
     @top_schools =  top_rated_schools
     @breadcrumbs = breadcrumbs
-    @locality = locality
     @school_levels = school_levels
     @districts = district_content(city_record.id)
     @reviews = reviews_formatted.reviews_list
+    @locality = locality
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props
     set_page_analytics_data
@@ -103,7 +103,10 @@ class CitiesController < ApplicationController
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
+        cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:zip] = get_zip
+        cp[:lat] = fetch_district_attr(:lat) || city_record&.lat
+        cp[:lon] = fetch_district_attr(:lon) || city_record&.lon
       end
     end
   end
@@ -126,7 +129,7 @@ class CitiesController < ApplicationController
       },
       {
         text: StructuredMarkup.city_breadcrumb_text(state: state, city: city),
-        url: ""
+        url: city_url(city_params(state, city))
       }
     ]
   end

@@ -3,6 +3,7 @@
 // Requires jQuery.cookie
 
 import memoizeAjaxRequest from './memoize_ajax_request';
+import { get as getCookie } from 'js-cookie';
 
 export const isSignedIn = function() {
   return $.cookie('community_www') != null || $.cookie('community_dev') != null;
@@ -27,3 +28,14 @@ export const getSchoolUserDigest = function() {
     }
   );
 };
+
+export const getSavedSchoolsFromCookie = () => {
+  const savedSchoolsCookie = getCookie(COOKIE_NAME);
+  return savedSchoolsCookie ? JSON.parse(savedSchoolsCookie) : [];
+}
+
+export const updateNavbarHeart = () => {
+  document.querySelector('a.saved-schools-nav span:last-child').innerHTML = `(${getSavedSchoolsFromCookie().length})`;
+}
+
+export const COOKIE_NAME = 'gs_saved_schools';
