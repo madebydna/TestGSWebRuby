@@ -43,10 +43,11 @@ module Pagination
       end
     end
 
-    def prev_page_url(paginated)
+    def prev_page_url(paginated, param_to_remove=nil)
+      params_hash = request.params.except!(param_to_remove)
       unless paginated.first_page?
         url_for(
-          request.params.merge(
+          params_hash.merge(
             page_param_name => paginated.previous_page,
             offset_param_name => nil
           )
@@ -65,10 +66,11 @@ module Pagination
       end
     end
 
-    def next_page_url(paginated)
+    def next_page_url(paginated, param_to_remove=nil)
+      params_hash = request.params.except!(param_to_remove)
       unless paginated.last_page?
         url_for(
-          request.params.merge(
+          params_hash.merge(
             page_param_name => paginated.next_page,
             offset_param_name => nil
           )
