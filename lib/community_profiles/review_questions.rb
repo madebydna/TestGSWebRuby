@@ -1,31 +1,29 @@
-module SchoolProfiles
+module CommunityProfiles
   class ReviewQuestions
+    attr_reader :Community
 
-    attr_reader :school
-
-    def initialize(school)
-      @school = school
+    def initialize(community)
+      @community = community
     end
 
-    # The SchoolProfiles::Reviews class uses this
+    # The CommunityProfiles::Reviews class uses this
     def questions
       @_questions ||= (
-        ReviewQuestion.active
+        ReviewQuestion.active.map{ |q| question_to_hash(q) }
       )
-      @_questions.map{ |q| question_to_hash(q) }
     end
 
-    def school_id
-      school.id
+    def community_id
+      community.id
     end
 
     def state
-      school.state
+      community.state
     end
 
     private
 
-    # The SchoolProfiles::Reviews class uses this so any structural changes should be reflected there
+    # The CommunityProfiles::Reviews class uses this so any structural changes should be reflected there
     def question_to_hash(question)
       {
         response_values: question.response_array,

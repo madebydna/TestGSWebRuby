@@ -1,6 +1,7 @@
 $page-side-padding: 15px;
 $search-primary-blue-on-white: #1dace5;
-$charcoal-gray: #2e3438;
+$charcoal-gray: #2E3438;
+$border-color: #dbe6eb;
 
 @import 'list-and-map';
 @import 'components/dropdown';
@@ -187,6 +188,28 @@ body {
       * + * {
         margin-top: 5px;
       }
+
+      //Overrides css for buttongroup for this set of buttons
+      .table-view-filter{
+        .button-group{
+          button{
+            color: #2ba3dc;
+            border: none;
+            background: none;
+            font-family: "opensans-semibold";
+            border-right: solid 2px $border-color;
+            height: 30px;
+            &.active{
+              background-color: $border-color;
+              color: $charcoal-gray;
+            }
+            &:last-child{
+              border: none;
+            }
+          }
+        }
+      }
+
     }
 
     .pagination-summary {

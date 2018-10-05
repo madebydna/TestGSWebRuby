@@ -1,15 +1,15 @@
-module SchoolProfiles
+module CommunityProfiles
   class Reviews
     include Rails.application.routes.url_helpers
 
-    attr_reader :reviews, :school
+    attr_reader :reviews, :reviews_questions, :community_record
 
-    def initialize(school, review_questions)
-      @school = school
-      @reviews = school.reviews
+    def initialize(reviews, review_questions, community_record)
+      @reviews = reviews
       # review_questions is the ReviewQuestions class in lib
       # .questions is the hash of questions produced from the DB
       @review_questions = review_questions.questions
+      @community_record = community_record
     end
 
     def summary
@@ -27,11 +27,21 @@ module SchoolProfiles
     end
 
     def reviews_list
-      UserReviews.
-        make_instance_for_each_user(reviews.having_comments, school).
-        sort_by { |r| r.most_recent_date }.
-        reverse.
-        map { |user_reviews| user_reviews.build_struct }
+      UserReviews
+        .make_instance_for_each_user(reviews, community_record)
+        .sort_by { |r| r.most_recent_date }
+        .reverse
+        .map.with_index do |user_reviews, idx| 
+          user_reviews.build_struct.merge({
+            school_name: reviews&.dig(idx)&.school&.name,
+            school_url: school_path(nil, 
+                          schoolId: reviews&.dig(idx)&.school_id,
+                          school_name: reviews&.dig(idx)&.school&.name,
+                          city: reviews&.dig(idx)&.school&.city,
+                          state: States.state_name(reviews&.dig(idx)&.school&.state)
+                        )
+          })
+        end
     end
 
     private

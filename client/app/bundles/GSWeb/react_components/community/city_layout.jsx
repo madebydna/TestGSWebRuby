@@ -78,6 +78,8 @@ class CityLayout extends React.Component {
     viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
+    shouldDisplayReviews: PropTypes.bool,
+    shouldDisplayDistricts: PropTypes.bool
   };
 
   constructor(props) {
@@ -156,7 +158,7 @@ class CityLayout extends React.Component {
   }
 
   renderDistricts(){
-    return this.props.districts.length > 0 && (
+    return this.props.shouldDisplayReviews && (
       <div id="districts">
         <div className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</div>
           {this.props.districtsInCity}
@@ -182,6 +184,18 @@ class CityLayout extends React.Component {
     )
   }
 
+  renderReviews() {
+    return (
+      this.props.shouldDisplayReviews &&
+        <div id="reviews">
+          <div className="rating-container reviews-module">
+            <h3>{t('recent_reviews.title')} {`${this.props.locality.city}`}</h3>
+            {this.props.recentReviews}
+          </div>
+        </div>
+    )
+  }
+  
   renderMobility(){
     return(
       <div id="mobility">
@@ -205,6 +219,7 @@ class CityLayout extends React.Component {
             {this.renderDistricts()}
             {this.renderMobility()}
             {this.renderZillow()}
+            {this.renderReviews()}
           </div>
           {this.renderDesktopAd()}
         </div>
