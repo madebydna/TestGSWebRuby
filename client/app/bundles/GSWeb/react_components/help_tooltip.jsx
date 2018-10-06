@@ -2,7 +2,7 @@ import React from 'react';
 import ollie from 'school_profiles/owl_tutorial_prompt.png';
 import { t } from 'util/i18n';
 import OpenableCloseable from './openable_closeable';
-import Links from '../components/links'
+import { links } from '../components/links';
 import { analyticsEvent } from "util/page_analytics";
 
 const renderHelpCircle = (numArr) => (
@@ -47,7 +47,7 @@ const content = close => (
       <span className="bold">{t("search_help.search_suggestions")}</span>
       <br />
     </p>
-    <a href={Links.zendesk} target="_blank">
+    <a href={links.zendesk} target="_blank">
       {t("search_help.send_feedback")}
     </a>
   </div>
