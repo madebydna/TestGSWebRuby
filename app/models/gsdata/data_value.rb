@@ -111,7 +111,7 @@ class DataValue < ActiveRecord::Base
   end
 
   def self.with_configuration(config)
-    where('configuration like ?', "%#{config}%")
+    where('data_values.configuration like ?', "%#{config}%")
   end
 
   def self.find_by_school_and_data_type_tags(school, tags, breakdown_tag_names = [], academic_tag_names = [])
