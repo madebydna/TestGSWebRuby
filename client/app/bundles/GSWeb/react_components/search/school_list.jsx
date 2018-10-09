@@ -13,7 +13,7 @@ const SchoolList = ({
   toggleHighlight,
   size
 }) => {
-  let adSlotPlacementCounter = 0;
+  let numsNonAssignedSchools = 0;
   return (
     <section className="school-list">
       {
@@ -26,7 +26,8 @@ const SchoolList = ({
       }
       <ol className={isLoading ? "loading" : ""}>
         {schools.map((s, index) => {
-          if (s.assigned === null) { adSlotPlacementCounter++; }
+          if (s.assigned === null) { numsNonAssignedSchools++; }
+          console.log(s.assigned)
           return (
             <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
               {index > 0 &&
@@ -39,7 +40,8 @@ const SchoolList = ({
                     container={<li className="ad" />}
                   />
                 )}
-              {adSlotPlacementCounter === 2 &&
+              {/* To place the faux ad after the first non-assigned school search result   */}
+              {numsNonAssignedSchools === 2 &&
                 <div className="ad">
                   <Ad slot="search_sponsoredlisting" sizeName="search_result_item" />
                 </div>
