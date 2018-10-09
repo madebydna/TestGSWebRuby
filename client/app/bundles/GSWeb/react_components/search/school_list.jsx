@@ -40,7 +40,7 @@ const SchoolList = ({
                     container={<li className="ad" />}
                   />
                 )}
-              {/* To place the faux ad after the first non-assigned school search result   */}
+              {/* To place the faux ad before the second non-assigned school search result   */}
               {numsNonAssignedSchools === 2 &&
                 <div className="ad">
                   <Ad slot="search_sponsoredlisting" sizeName="search_result_item" />
