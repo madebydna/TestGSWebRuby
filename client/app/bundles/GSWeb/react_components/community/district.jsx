@@ -129,13 +129,13 @@ class District extends React.Component {
               pageType='district'
           />
         }
-        recentReviews={
-          <RecentReviews 
-            community="district"
-            reviews={this.props.reviews}
-            locality={this.props.locality}
-          />
-        }
+        // recentReviews={
+        //   <RecentReviews 
+        //     community="district"
+        //     reviews={this.props.reviews}
+        //     locality={this.props.locality}
+        //   />
+        // }
         heroData={this.props.heroData}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
