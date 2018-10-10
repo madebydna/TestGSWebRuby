@@ -158,7 +158,7 @@ class CityLayout extends React.Component {
   }
 
   renderDistricts(){
-    return this.props.shouldDisplayReviews && (
+    return this.props.shouldDisplayDistricts && (
       <div id="districts">
         <div className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</div>
           {this.props.districtsInCity}
@@ -219,7 +219,7 @@ class CityLayout extends React.Component {
             {this.renderDistricts()}
             {this.renderMobility()}
             {this.renderZillow()}
-            {this.renderReviews()}
+            {/* {this.renderReviews()} */}
           </div>
           {this.renderDesktopAd()}
         </div>

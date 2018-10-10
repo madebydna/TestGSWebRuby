@@ -639,6 +639,18 @@
   }
 }
 
+@media (min-width: 768px) and (max-width: 1210px) {
+  .un nav > ul > li > a {
+    padding: 5px 5px;
+  }
+}
+
+@media (min-width: 1121px) and (max-width: 1199px) {
+  .un nav > ul > li > a {
+    padding: 5px 15px;
+  }
+}
+
 @media (min-width: 48em) {
   .header_un .menu-icon {
     display: none;

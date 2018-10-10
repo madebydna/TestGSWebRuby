@@ -224,7 +224,7 @@ class DistrictLayout extends React.Component {
             {this.renderSchools()}
             {this.renderMobility()}
             {this.renderZillow()}
-            {this.renderReviews()}
+            {/* {this.renderReviews()} */}
           </div>
           {this.renderDesktopAd()}
         </div>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import { renderAssignedTooltip } from 'react_components/search/tooltips'
 import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
+import { anchorObject } from 'components/links'; 
 import FiveStarRating from '../review/form/five_star_rating';
 import RatingWithTooltip from 'react_components/rating_with_tooltip';
 
@@ -151,15 +152,8 @@ const equityColumns = (columns, ethnicityRatings, profileLink) => {
   let cellStyle = {textAlign: 'center'}
   let content = [] ;
   columns.map(function(hash, index){
-    let deepLinkParams;
-    if(hash['key'] === 'Low Income') { 
-      deepLinkParams = "#Low-income_students";
-    }else{
-      deepLinkParams = "#Race_ethnicity";
-    }
-
     if (ethnicityRatings.hasOwnProperty(hash['key'])){
-      content.push(<td key={index} style={cellStyle}>{drawRating(ethnicityRatings[hash['key']], `${profileLink}${deepLinkParams}`)}</td>);
+      content.push(<td key={index} style={cellStyle}>{drawRating(ethnicityRatings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}</td>);
     }else{
       content.push(<td key={ index } style={cellStyle}>N/A</td>);
     }
@@ -174,17 +168,9 @@ const equityColumns = (columns, ethnicityRatings, profileLink) => {
 const academicColumns = (columns, subratings, profileLink) => {
   let cellStyle = {textAlign: 'center'}
   let content = [] ;
-  const deepLinkParamsObject = {
-    "Test Scores Rating": "#Test_scores",
-    "Academic Progress Rating": "#Academic_progress",
-    "College Readiness Rating": "#College_readiness",
-    "Advanced Courses Rating": "#Advanced_courses",
-    "Equity Overview Rating": "#Equity_overview"
-  }
   columns.map(function(hash, index){
-    let deepLinkParams = deepLinkParamsObject[hash.key]
     if (subratings.hasOwnProperty(hash['key'])){
-      content.push(<td key={index} style={cellStyle}>{drawRating(subratings[hash['key']], `${profileLink}${deepLinkParams}`)}</td>);
+      content.push(<td key={index} style={cellStyle}>{drawRating(subratings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}</td>);
     }else{
       content.push(<td key={ index } style={cellStyle}>N/A</td>);
     }

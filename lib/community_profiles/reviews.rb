@@ -1,6 +1,7 @@
 module CommunityProfiles
   class Reviews
     include Rails.application.routes.url_helpers
+    include UrlHelper
 
     attr_reader :reviews, :reviews_questions, :community_record
 
@@ -31,17 +32,17 @@ module CommunityProfiles
         .make_instance_for_each_user(reviews, community_record)
         .sort_by { |r| r.most_recent_date }
         .reverse
-        .map.with_index do |user_reviews, idx| 
-          user_reviews.build_struct.merge({
-            school_name: reviews&.dig(idx)&.school&.name,
-            school_url: school_path(nil, 
-                          schoolId: reviews&.dig(idx)&.school_id,
-                          school_name: reviews&.dig(idx)&.school&.name,
-                          city: reviews&.dig(idx)&.school&.city,
-                          state: States.state_name(reviews&.dig(idx)&.school&.state)
-                        )
-          })
-        end
+        .map.with_index do |user_reviews, idx|
+        user_reviews.build_struct.merge({
+                                          school_name: reviews&.dig(idx)&.school&.name,
+                                          school_url: school_path(nil,
+                                                                  id: reviews&.dig(idx)&.school_id,
+                                                                  name: reviews&.dig(idx)&.school&.name,
+                                                                  city: reviews&.dig(idx)&.school&.city,
+                                                                  state_name: States.state_name(reviews&.dig(idx)&.school&.state)
+                                          )
+                                        })
+      end
     end
 
     private
