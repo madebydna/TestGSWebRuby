@@ -17,7 +17,7 @@ class DistrictsController < ApplicationController
     @breadcrumbs = breadcrumbs
     @top_schools =  top_rated_schools
     @hero_data = hero_data
-    @reviews = reviews_formatted.reviews_list
+    # @reviews = reviews_formatted.reviews_list
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
     set_ad_targeting_props
@@ -25,8 +25,6 @@ class DistrictsController < ApplicationController
   end
 
   private
-
-  # coordinates=key=7Q0jpitnctkvjAkf
 
   def set_district_meta_tags
     district_params_hash = district_params(state, district_record.city, district)

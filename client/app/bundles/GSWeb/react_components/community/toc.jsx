@@ -47,12 +47,12 @@ const cityTocItems = [
     anchor: '#homes-and-rentals',
     selected: false
   },
-  {
-    key: 'Reviews',
-    label: t(REVIEWS),
-    anchor: '#reviews',
-    selected: false
-  }
+  // {
+  //   key: 'Reviews',
+  //   label: t(REVIEWS),
+  //   anchor: '#reviews',
+  //   selected: false
+  // }
 ]
 
 class Toc extends React.Component {
