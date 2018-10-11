@@ -60,7 +60,7 @@ class LoadGbgUsers < ActiveRecord::Base
         user = User.find_by(email: user_attributes[:email])
         reconcile_user_subscriptions(user, selected_grades)
       else
-        user = User.new(user_attributes.merge({password: Password.generate_password}))
+        user = User.new(user_attributes.merge({password: Password.generate_password, how: 'ausd-load'}))
         user_was_saved = user.save
         if user_was_saved
           new_users << user.id
