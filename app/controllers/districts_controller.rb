@@ -204,6 +204,21 @@ class DistrictsController < ApplicationController
   # StructuredMarkup
   def prepare_json_ld
     breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+    if district_record.present?
+      add_json_ld({
+                      "@context" => "http://schema.org",
+                      "@type" => "EducationalOrganization",
+                      'name' => district_record.name.gs_capitalize_words,
+                      'address' => {
+                          '@type' => 'PostalAddress',
+                          'streetAddress' => district_record.street,
+                          'addressLocality' => district_record.city,
+                          'addressRegion' => district_record.state,
+                          'postalCode' => district_record.zipcode
+                      },
+                      'telephone' => district_record.phone
+                  })
+    end
   end
 
   def redirect_unless_valid_district

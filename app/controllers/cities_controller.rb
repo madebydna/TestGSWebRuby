@@ -137,6 +137,17 @@ class CitiesController < ApplicationController
   # StructuredMarkup
   def prepare_json_ld
     breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+    if city_record.present?
+      add_json_ld({
+                      "@context" => "http://schema.org",
+                      "@type" => "City",
+                      'name' => city,
+                      'address' => {
+                          '@type' => 'PostalAddress',
+                          'addressRegion' => city_record.state,
+                      }
+                  })
+    end
   end
 
   def redirect_unless_valid_city
