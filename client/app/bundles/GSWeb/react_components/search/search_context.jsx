@@ -303,6 +303,9 @@ class SearchProvider extends React.Component {
           page: this.props.page,
           totalPages: this.state.totalPages,
           onPageChanged: compose(
+            () => {
+              this.setState({ adRefreshed: false });
+            },
             this.scrollToTop,
             this.props.updatePage,
             curry(this.trackParams)('Page', this.props.page)
