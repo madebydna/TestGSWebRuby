@@ -17,7 +17,7 @@ class DistrictsController < ApplicationController
     @breadcrumbs = breadcrumbs
     @top_schools =  top_rated_schools
     @hero_data = hero_data
-    # @reviews = reviews_formatted.reviews_list
+    @reviews = reviews_formatted.reviews_list
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
     set_ad_targeting_props
