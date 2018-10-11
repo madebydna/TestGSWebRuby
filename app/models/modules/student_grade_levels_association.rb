@@ -14,4 +14,8 @@ module StudentGradeLevelsAssociation
     grade.delete if grade.present?
   end
 
+  def grades_array
+    student_grade_levels.map {|sgl| sgl.grade }
+  end
+
 end
