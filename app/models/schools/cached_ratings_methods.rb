@@ -42,10 +42,27 @@ module CachedRatingsMethods
     # result.except!('Student progress rating')
   end
 
+  def ethnicity_information
+    {
+      ratings: ethnicity_ratings,
+      students: ethnicity_students
+    }
+  end
+
   def ethnicity_ratings
     fer = formatted_ethnicity_ratings
     fer = {'Low Income' => low_income_rating}.merge(fer) if fer && low_income_rating
     fer
+  end
+
+  def ethnicity_students
+    fes = formatted_ethnicity_students
+    fes = ({'Low Income': low_income_percentage}).merge(fes) if fes && low_income_percentage
+    fes
+  end
+
+  def low_income_percentage
+    free_or_reduced_price_lunch_data&.first&.dig("school_value")&.round
   end
 
   def great_schools_rating
@@ -303,9 +320,40 @@ module CachedRatingsMethods
 
   def formatted_ethnicity_ratings
     ethnicity = ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
+    ethnicity_population = 
     ethnicity.each_with_object({}) do |e, accum|
       accum[e.breakdowns.join(',')] = e.school_value  if e.school_value
     end
+  end
+
+  def formatted_ethnicity_students
+    hash = {}
+    ethnicity_data.each do |ethnicity_object|
+      ethnicity_attribute = ethnicity_mapping_hash[ethnicity_object["breakdown"].to_sym]
+      hash[ethnicity_attribute] = ethnicity_object["school_value"].round if ethnicity_object["school_value"]
+    end
+    hash
+  end
+
+  def ethnicity_mapping_hash
+    {
+      "African American": "African American",
+      "Black": "African American",
+      "White": "White",
+      "Asian or Pacific Islander": "Asian or Pacific Islander",
+      "Asian": "Asian",
+      "All": "All students",
+      "Multiracial": "Two or more races",
+      "Two or more races": "Two or more races",
+      "American Indian/Alaska Native": "American Indian/Alaska Native",
+      "Native American": "American Indian/Alaska Native",
+      "Pacific Islander": "Pacific Islander",
+      "Hawaiian Native/Pacific Islander": "Pacific Islander",
+      "Native Hawaiian or Other Pacific Islander": "Pacific Islander",
+      "Economically disadvantaged": "Low-income",
+      "Low Income": "Low-income",
+      "Hispanic": "Hispanic"
+    }
   end
 
   def rating_weights
