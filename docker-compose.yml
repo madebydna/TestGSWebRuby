@@ -42,6 +42,14 @@ services:
       # create a named volume "node_modules" from /frontend/node_modules in the container to prevent it from syncing back to host
       # basically it overrides a subfolder within the above volume (./client:/frontend)
       - node_modules:/srv/frontend/node_modules
+  solr:
+    build:
+      context: ./solr
+    ports:
+      - '8983:8983'
+    volumes:
+      - ./solr/configsets:/opt/solr/server/solr/configsets
+      - ./solr/solr.xml:/opt/solr/server/solr/solr.xml
 volumes:
   webpack-assets:
     external: false
