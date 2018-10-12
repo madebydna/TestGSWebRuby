@@ -61,10 +61,6 @@ module CachedRatingsMethods
     fes
   end
 
-  def low_income_percentage
-    free_or_reduced_price_lunch_data&.first&.dig("school_value")&.round
-  end
-
   def great_schools_rating
     test_score_weight = (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value']
     if overall_gs_rating.nil? && test_score_weight == '1'
@@ -188,6 +184,10 @@ module CachedRatingsMethods
 
   def low_income_rating_year
     low_income_rating_hash.try(:source_date_valid)
+  end
+
+  def low_income_percentage
+    free_or_reduced_price_lunch_data&.first&.dig("school_value")&.round
   end
 
   def discipline_flag_hash
@@ -321,9 +321,9 @@ module CachedRatingsMethods
   def formatted_ethnicity_ratings
     ethnicity = ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
     ethnicity_population = 
-    ethnicity.each_with_object({}) do |e, accum|
-      accum[e.breakdowns.join(',')] = e.school_value  if e.school_value
-    end
+      ethnicity.each_with_object({}) do |e, accum|
+        accum[e.breakdowns.join(',')] = e.school_value  if e.school_value
+      end
   end
 
   def formatted_ethnicity_students
@@ -337,22 +337,22 @@ module CachedRatingsMethods
 
   def ethnicity_mapping_hash
     {
-      "African American": "African American",
-      "Black": "African American",
-      "White": "White",
-      "Asian or Pacific Islander": "Asian or Pacific Islander",
-      "Asian": "Asian",
-      "All": "All students",
-      "Multiracial": "Two or more races",
-      "Two or more races": "Two or more races",
-      "American Indian/Alaska Native": "American Indian/Alaska Native",
-      "Native American": "American Indian/Alaska Native",
-      "Pacific Islander": "Pacific Islander",
-      "Hawaiian Native/Pacific Islander": "Pacific Islander",
-      "Native Hawaiian or Other Pacific Islander": "Pacific Islander",
-      "Economically disadvantaged": "Low-income",
-      "Low Income": "Low-income",
-      "Hispanic": "Hispanic"
+      :'African American' => "African American",
+      :'Black' => "African American",
+      :'White' => "White",
+      :'Asian or Pacific Islander' => "Asian or Pacific Islander",
+      :'Asian' => "Asian",
+      :'All' => "All students",
+      :'Multiracial' => "Two or more races",
+      :'Two or more races' => "Two or more races",
+      :'American Indian/Alaska Native' => "American Indian/Alaska Native",
+      :'Native American' => "American Indian/Alaska Native",
+      :'Pacific Islander' => "Pacific Islander",
+      :'Hawaiian Native/Pacific Islander' => "Pacific Islander",
+      :'Native Hawaiian or Other Pacific Islander' => "Pacific Islander",
+      :'Economically disadvantaged' => "Low-income",
+      :'Low Income' => "Low-income",
+      :'Hispanic' => "Hispanic"
     }
   end
 

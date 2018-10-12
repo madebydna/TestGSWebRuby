@@ -156,7 +156,15 @@ const equityColumns = (columns, ethnicityInfo, profileLink) => {
       content.push(
         <td key={index} style={cellStyle}>
           {drawRating(ethnicityInfo.ratings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}
-          <p>{ethnicityInfo.students[hash['key']] ? `${ethnicityInfo.students[hash['key']]}% of students` : null}</p>
+          <p className="equity-tagline">
+            {ethnicityInfo.students[hash['key']] ? 
+              <React.Fragment>
+                <span>{ethnicityInfo.students[hash['key']]}%</span><br/> of students
+              </React.Fragment> 
+              : 
+              null
+            }
+          </p>
         </td>
       );
     }else{
