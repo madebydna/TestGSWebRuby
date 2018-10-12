@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import { renderAssignedTooltip } from 'react_components/search/tooltips'
 import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
-import { anchorObject } from 'components/links'; 
+import { links, anchorObject } from 'components/links'; 
 import FiveStarRating from '../review/form/five_star_rating';
 import RatingWithTooltip from 'react_components/rating_with_tooltip';
+import ModalTooltip from "../modal_tooltip";
 
 const renderEnrollment = enrollment => {
   if (enrollment) {
@@ -159,16 +160,24 @@ const equityColumns = (columns, ethnicityInfo, profileLink) => {
           <p className="equity-tagline">
             {ethnicityInfo.students[hash['key']] ? 
               <React.Fragment>
-                <span>{ethnicityInfo.students[hash['key']]}%</span><br/> of students
+                <span>{ethnicityInfo.students[hash['key']]}%</span><br/> {t('of students')}
               </React.Fragment> 
               : 
-              null
+              <React.Fragment>
+                <p className="equity-tagline">{t('percentage of students')}:<br/>
+                N/A</p>
+              </React.Fragment>
             }
           </p>
         </td>
       );
     }else{
-      content.push(<td key={ index } style={cellStyle}>N/A</td>);
+      content.push(
+        <td key={ index } style={cellStyle}>
+          <p>N/A</p>
+          {renderNoInfoTooltip()}
+        </td>
+      );
     }
   });
   return (
@@ -185,7 +194,12 @@ const academicColumns = (columns, subratings, profileLink) => {
     if (subratings.hasOwnProperty(hash['key'])){
       content.push(<td key={index} style={cellStyle}>{drawRating(subratings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}</td>);
     }else{
-      content.push(<td key={ index } style={cellStyle}>N/A</td>);
+      content.push(
+        <td key={ index } style={cellStyle}>
+          <p>N/A</p>
+          {renderNoInfoTooltip()}
+        </td>
+      );
     }
   });
   return (
@@ -194,6 +208,23 @@ const academicColumns = (columns, subratings, profileLink) => {
       </React.Fragment>
   )
 }
+
+const renderNoInfoTooltip = () => {
+  const noInfo =
+    <div className="tooltip-content">
+      <p>{t('no_info')}</p>
+      <a href={links.tableview_faq} target="_blank">
+        {t('top_schools.learn_more')}
+      </a>
+    </div>;
+  return(
+    <div className="scale">
+      <ModalTooltip content={noInfo}>
+        <span className="info-circle icon-info" />
+      </ModalTooltip>
+    </div>
+  )
+};
 
 SchoolTableRow.propTypes = {
   id: PropTypes.number.isRequired,

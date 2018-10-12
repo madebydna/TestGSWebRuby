@@ -5,6 +5,7 @@ es:
     '# of schools': '# of schools'
     '# of students': '# of students'
     in: en
+    no_info: Actualmente esta información night o está disponible. Para más información visite nuestra página de preguntas frecuentes.
     at a glance: de un vistazo
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en
@@ -184,7 +185,8 @@ es:
     wrong_state_error_start_html: '<strong>Estás comparando escuelas en '
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare escuelas ahora&nbsp</a>o<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspdremover escuelas&nbsp</a><strong>para comparar en esta ubicación.'
 #    added for equity
-    of students: '% de estudiantes'
+    percentage of students: '% de estudiantes'
+    of students: 'de estudiantes'
     student: estudiante
     students: estudiantes
     Students: Estudiantes
