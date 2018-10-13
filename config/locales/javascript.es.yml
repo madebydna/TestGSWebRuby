@@ -5,7 +5,8 @@ es:
     '# of schools': '# of schools'
     '# of students': '# of students'
     in: en
-    no_info: Actualmente esta información night o está disponible. Para más información visite nuestra página de preguntas frecuentes.
+    no_info: Actualmente esta información night o está disponible. Para más información
+    visit our FAQ page: visite nuestra página de preguntas frecuentes
     at a glance: de un vistazo
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en

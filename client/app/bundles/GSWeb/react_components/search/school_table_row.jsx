@@ -212,10 +212,11 @@ const academicColumns = (columns, subratings, profileLink) => {
 const renderNoInfoTooltip = () => {
   const noInfo =
     <div className="tooltip-content">
-      <p>{t('no_info')}</p>
-      <a href={links.tableview_faq} target="_blank">
-        {t('top_schools.learn_more')}
-      </a>
+      <p>{t('no_info')} 
+        <a href={links.tableview_faq} target="_blank">
+          {` ${t('visit our FAQ page')}.`}
+        </a>
+      </p>
     </div>;
   return(
     <div className="scale">

@@ -5,7 +5,8 @@ en:
     '# of schools': '# of schools'
     '# of students': '# of students'
     in: in
-    no_info: Currently, this information is unavailable. For more information visit our FAQ page.
+    no_info: Currently, this information is unavailable. For more information
+    visit our FAQ page: visit our FAQ page
     at a glance: at a glance
     assigned_school: Assigned school
     browse_school_blurb: Here's a look at schools in
