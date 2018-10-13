@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import { renderAssignedTooltip } from 'react_components/search/tooltips'
 import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
+import { anchorObject } from 'components/links'; 
 import FiveStarRating from '../review/form/five_star_rating';
 import RatingWithTooltip from 'react_components/rating_with_tooltip';
 
@@ -16,7 +17,7 @@ const renderEnrollment = enrollment => {
 const drawRating = (theRating, linkProfile) => {
   const className = `circle-rating--small circle-rating--${theRating || 'gray'}`;
   return (
-      theRating ? <a href={linkProfile}>
+      theRating ? <a href={`${linkProfile}`}>
             <span className={className}>
               {theRating}
               {theRating && <span className="rating-circle-small">/10</span>}
@@ -152,9 +153,8 @@ const equityColumns = (columns, ethnicityRatings, profileLink) => {
   let content = [] ;
   columns.map(function(hash, index){
     if (ethnicityRatings.hasOwnProperty(hash['key'])){
-      content.push(<td key={ index } style={cellStyle}>{drawRating(ethnicityRatings[hash['key']], profileLink)}</td>);
-    }
-    else{
+      content.push(<td key={index} style={cellStyle}>{drawRating(ethnicityRatings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}</td>);
+    }else{
       content.push(<td key={ index } style={cellStyle}>N/A</td>);
     }
   });
@@ -168,13 +168,12 @@ const equityColumns = (columns, ethnicityRatings, profileLink) => {
 const academicColumns = (columns, subratings, profileLink) => {
   let cellStyle = {textAlign: 'center'}
   let content = [] ;
-    columns.map(function(hash, index){
-     if (subratings.hasOwnProperty(hash['key'])){
-       content.push(<td key={ index } style={cellStyle}>{drawRating(subratings[hash['key']])}</td>);
-     }
-     else{
-       content.push(<td key={ index } style={cellStyle}>N/A</td>);
-     }
+  columns.map(function(hash, index){
+    if (subratings.hasOwnProperty(hash['key'])){
+      content.push(<td key={index} style={cellStyle}>{drawRating(subratings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}</td>);
+    }else{
+      content.push(<td key={ index } style={cellStyle}>N/A</td>);
+    }
   });
   return (
       <React.Fragment>

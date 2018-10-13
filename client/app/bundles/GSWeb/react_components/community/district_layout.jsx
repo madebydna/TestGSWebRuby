@@ -78,7 +78,8 @@ class DistrictLayout extends React.Component {
     viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
-    heroData: PropTypes.object
+    heroData: PropTypes.object,
+    shouldDisplayReviews: PropTypes.bool
   };
 
   constructor(props) {
@@ -198,13 +199,24 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderReviews(){
+    return (
+      this.props.shouldDisplayReviews &&
+      <div id="reviews">
+        <div className="rating-container reviews-module">
+          <h3>Recent school reviews from schools in {`${this.props.locality.name}`}</h3>
+          {this.props.recentReviews}
+        </div>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="district-body">
         {this.props.searchBox}
         {this.renderBreadcrumbs()}
         {this.renderHero()}
-        {/* {this.renderHero()} */}
         <div className="below-hero">
           {this.renderToc()}
           <div className="community-modules">
@@ -212,6 +224,7 @@ class DistrictLayout extends React.Component {
             {this.renderSchools()}
             {this.renderMobility()}
             {this.renderZillow()}
+            {/* {this.renderReviews()} */}
           </div>
           {this.renderDesktopAd()}
         </div>

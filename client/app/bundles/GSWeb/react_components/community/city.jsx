@@ -8,6 +8,7 @@ import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
 import SchoolBrowseLinks from './school_browse_links';
 import DistrictsInCity from "./districts_in_city";
+import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
@@ -23,7 +24,8 @@ class City extends React.Component {
     schools_data: {},
     loadingSchools: false,
     breadcrumbs: [],
-    districts: []
+    districts: [],
+    reviews: []
   };
 
   static propTypes = {
@@ -99,6 +101,8 @@ class City extends React.Component {
       <CityLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schoolCounts={this.props.schools_data.counts}
+        shouldDisplayReviews={this.props.reviews.length > 0}
+        shouldDisplayDistricts={this.props.districts.length > 0}
         topSchools={
           <TopSchoolsStateful
             community="city" 
@@ -135,9 +139,22 @@ class City extends React.Component {
               pageType='city'
           />
         }
+        // recentReviews={
+        //   <RecentReviews
+        //     community="city" 
+        //     reviews={this.props.reviews}
+        //     locality={this.props.locality}
+        //   />
+        // }
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
-        toc={<Toc schools={this.props.schools} districts={this.props.districts} />}
+        toc={
+          <Toc 
+            schools={this.props.schools} 
+            suppressDistricts={this.props.districts.length === 0} 
+            suppressReviews={this.props.reviews.length === 0} 
+          />
+        }
         viewportSize={this.props.viewportSize}
       >
       </CityLayout>

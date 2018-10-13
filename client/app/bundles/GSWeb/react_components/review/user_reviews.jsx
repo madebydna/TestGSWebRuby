@@ -15,6 +15,8 @@ export default class UserReviews extends React.Component {
     avatar: PropTypes.number,
     review_reported_callback: PropTypes.func,
     current_user_reported_reviews: PropTypes.array,
+    school_name: PropTypes.string,
+    school_url: PropTypes.string
   };
 
   constructor(props) {
@@ -46,6 +48,7 @@ export default class UserReviews extends React.Component {
         return (<TopicalReview review={review} key={review.id}
                                reportedCallback={this.handleReviewReported.bind(this, review.id)}
                                userAlreadyReported={userAlreadyReported}
+                               schoolName={this.props.school_name}
         />)
       }, this);
     }
@@ -83,13 +86,13 @@ export default class UserReviews extends React.Component {
       var alreadyReported = this.props.current_user_reported_reviews.indexOf(review.id) >= 0;
       const desktopLabel = alreadyReported ? t('Review Reported') : t('Report Review');
       return (
-          <div className="review-button-bar">
+        <div className="review-button-bar">
           <span className={'button' + (alreadyReported ? ' reported' : '')} onClick={this.handleReportReviewClick.bind(this, review.id)}>
             <span className="icon-flag"></span>
             <span className="hidden-xs-inline pls">{desktopLabel}</span>
             { this.reportReviewMobileLabel(review) }
           </span>
-          </div>
+        </div>
       )
     }
   }
@@ -131,6 +134,11 @@ export default class UserReviews extends React.Component {
     }
     return (
         <div className="type-and-date">
+          {this.props.school_name &&
+            <span>
+              <span>{t('recent_reviews.review_for')} </span> 
+              <a href={this.props.school_url}>{this.props.school_name}</a> <br />
+            </span>}
           { userTypeSentence }
           { this.props.most_recent_date }
         </div>
@@ -149,7 +157,7 @@ export default class UserReviews extends React.Component {
             { this.fiveStarReview() }
             { this.topicalReviews() }
             { this.userTypeAndDate() }
-            { this.buttonBar(this.props.five_star_review) }
+            { this.props.school_name === undefined ? this.buttonBar(this.props.five_star_review) : null }
             { this.reportFiveStarReview() }
           </div>
         </div>

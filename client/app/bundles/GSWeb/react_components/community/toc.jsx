@@ -4,8 +4,9 @@ import { t, capitalize } from 'util/i18n';
 import { scrollToElement } from 'util/scrolling';
 import TocItem from './toc_item';
 
-const SCHOOL_DISTRICTS = 'school districts';
-const SCHOOLS = 'schools';
+const SCHOOL_DISTRICTS = 'school districts'
+const SCHOOLS = 'schools'
+const REVIEWS = 'Reviews'
 const COMMUNITY_RESOURCES = 'community_resources';
 
 
@@ -48,9 +49,9 @@ const cityTocItems = [
   },
   // {
   //   key: 'Reviews',
-  //   label: t('Schools'),
-  //   anchor: '',
-  // selected: false
+  //   label: t(REVIEWS),
+  //   anchor: '#reviews',
+  //   selected: false
   // }
 ]
 
@@ -58,15 +59,15 @@ class Toc extends React.Component {
   static defaultProps = {
     schools: [],
     students: [],
-    districts: [],
-    reviews: []
+    suppressReviews: true,
+    suppressDistricts: true
   };
 
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.object),
     students: PropTypes.arrayOf(PropTypes.object),
-    districts: PropTypes.arrayOf(PropTypes.object),
-    reviews: PropTypes.arrayOf(PropTypes.object)
+    suppressReviews: PropTypes.bool,
+    suppressDistricts: PropTypes.bool
   };
 
   constructor(props) {
@@ -76,9 +77,12 @@ class Toc extends React.Component {
   }
 
   selectTocItems(){
-    let suppressDistricts = this.props.districts.length < 1;
+    const suppressDistricts = this.props.suppressDistricts;
+    const suppressReviews = this.props.suppressReviews;
     return cityTocItems.filter(tocItem=>{
-      if(tocItem.key === SCHOOL_DISTRICTS && suppressDistricts) {
+      if(tocItem.key === SCHOOL_DISTRICTS && suppressDistricts ) {
+        return false;
+      } else if (tocItem.key === REVIEWS && suppressReviews){
         return false;
       }
       return true;

@@ -13,10 +13,11 @@ class CitiesController < ApplicationController
     @breadcrumbs = breadcrumbs
     @school_levels = school_levels
     @districts = district_content(city_record.id)
+    # @reviews = reviews_formatted.reviews_list
     @locality = locality
+    gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props
     set_page_analytics_data
-    Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url'])
   end
 
   private
@@ -41,6 +42,29 @@ class CitiesController < ApplicationController
 
   def cities_state_text
     state.downcase == 'dc' ? '' : "#{city_record.name.gs_capitalize_words} #{state_name.gs_capitalize_words} "
+  end
+
+    def reviews
+      @_reviews ||= 
+        Review
+          .active
+            .where(school_id: 
+              School.on_db(city_record.state.downcase) { School.active.where(city: city_record.name).ids },
+              state: city_record.state.downcase)
+              .where(review_question_id: 1)
+                .where.not(comment: nil)
+                  .includes(:answers, :votes, question: :review_topic)
+                    .order(id: :desc)
+                      .limit(3)
+                        .extend(SchoolAssociationPreloading).preload_associated_schools!
+  end
+
+  def reviews_formatted
+    @_reviews_formatted ||= CommunityProfiles::Reviews.new(reviews, review_questions, city_record)
+  end
+
+  def review_questions
+    @_review_questions ||= CommunityProfiles::ReviewQuestions.new(city_record)
   end
 
   # AdvertisingConcerns
@@ -113,6 +137,17 @@ class CitiesController < ApplicationController
   # StructuredMarkup
   def prepare_json_ld
     breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+    if city_record.present?
+      add_json_ld({
+                      "@context" => "http://schema.org",
+                      "@type" => "City",
+                      'name' => city,
+                      'address' => {
+                          '@type' => 'PostalAddress',
+                          'addressRegion' => city_record.state,
+                      }
+                  })
+    end
   end
 
   def redirect_unless_valid_city

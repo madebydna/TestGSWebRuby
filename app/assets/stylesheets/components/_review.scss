@@ -40,6 +40,9 @@
     margin-top: 10px;
     color: $gray-text-color;
     font-size: $font-size-s1;
+    span {
+      a { font-size: 12px; }
+    }
   }
 
   .topical-review-button-bar {

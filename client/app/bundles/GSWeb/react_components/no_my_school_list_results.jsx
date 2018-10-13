@@ -7,13 +7,13 @@ import Ad from 'react_components/ad';
 const t = translateWithDictionary({
   en: {
     no_results_suggestions: [
-      'Click on the “♥” button next to schools you want to add to the list the search results or school profile page to add schools to the list.',
+      'To add schools, click on the “♥” button next to schools you want to add to the list on search results or school profile pages.',
       'You can then use this list to compare your favorite schools.'
     ]
   },
   es: {
     no_results_suggestions: [
-      'Click on the “♥” button next to schools you want to add to the list the search results or school profile page to add schools to the list.',
+      'To add schools, click on the “♥” button next to schools you want to add to the list on search results or school profile pages.',
       'You can then use this list to compare your favorite schools.'
     ]
   }
