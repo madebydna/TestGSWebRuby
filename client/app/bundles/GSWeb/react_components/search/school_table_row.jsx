@@ -190,7 +190,7 @@ const equityColumns = (columns, ethnicityInfo, profileLink) => {
 const academicColumns = (columns, subratings, profileLink) => {
   let cellStyle = {textAlign: 'center'}
   let content = [] ;
-  columns.map(function(hash, index){
+  columns.forEach(function(hash, index){
     if (subratings.hasOwnProperty(hash['key'])){
       content.push(<td key={index} style={cellStyle}>{drawRating(subratings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}</td>);
     }else{
@@ -240,6 +240,7 @@ SchoolTableRow.propTypes = {
   numReviews: PropTypes.number,
   parentRating: PropTypes.number,
   districtName: PropTypes.string,
+  ethnicityInfo: PropTypes.object,
   links: PropTypes.shape({
     profile: PropTypes.string.isRequired
   }).isRequired
@@ -253,7 +254,8 @@ SchoolTableRow.defaultProps = {
   studentsPerTeacher: null,
   numReviews: null,
   parentRating: null,
-  districtName: null
+  districtName: null,
+  ethnicityInfo: {}
 };
 
 export default SchoolTableRow;

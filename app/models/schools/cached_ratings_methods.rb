@@ -57,7 +57,7 @@ module CachedRatingsMethods
 
   def ethnicity_students
     fes = formatted_ethnicity_students
-    fes = ({'Low Income': low_income_percentage}).merge(fes) if fes && low_income_percentage
+    fes = ({'Low Income': free_and_reduced_lunch.gsub('%','')}).merge(fes) if fes && free_and_reduced_lunch
     fes
   end
 
@@ -184,10 +184,6 @@ module CachedRatingsMethods
 
   def low_income_rating_year
     low_income_rating_hash.try(:source_date_valid)
-  end
-
-  def low_income_percentage
-    free_or_reduced_price_lunch_data&.first&.dig("school_value")&.round
   end
 
   def discipline_flag_hash
