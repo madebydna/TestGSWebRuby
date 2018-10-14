@@ -293,10 +293,16 @@ class MySchoolListLayout extends React.Component {
       );
     }
     return (
-      <div className="menu-item">
-        <span className="label">{t('Sort by')}:</span>
-        {this.props.sortSelect}
-      </div>
+      <React.Fragment>
+        <div className="menu-item">
+          <span className="label">List By:</span>
+          {this.props.stateSelectButtons}
+        </div>
+        <div className="menu-item">
+          <span className="label">{t('Sort by')}:</span>
+          {this.props.sortSelect}
+        </div>
+      </React.Fragment>
     );
   }
 

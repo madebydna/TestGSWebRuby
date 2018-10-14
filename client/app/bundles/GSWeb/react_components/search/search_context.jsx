@@ -107,7 +107,8 @@ class SearchProvider extends React.Component {
       resultSummary: props.resultSummary,
       paginationSummary: props.paginationSummary,
       loadingSchools: false,
-      size: viewportSize()
+      size: viewportSize(),
+      currentStateFilter: null
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
@@ -118,6 +119,7 @@ class SearchProvider extends React.Component {
     this.handleSaveSchoolClick = this.handleSaveSchoolClick.bind(this);
     this.toggleAll = this.toggleAll.bind(this);
     this.toggleOne = this.toggleOne.bind(this);
+    this.updateStateFilter = this.updateStateFilter.bind(this);
   }
 
   componentDidMount() {
@@ -272,6 +274,12 @@ class SearchProvider extends React.Component {
     return newParams;
   };
 
+  updateStateFilter(state) {
+    this.setState({
+      currentStateFilter: state
+    })
+  }
+
   render() {
     return (
       <Provider
@@ -308,7 +316,9 @@ class SearchProvider extends React.Component {
           q: this.props.q,
           locationLabel: this.props.locationLabel,
           searchTableViewHeaders: this.props.searchTableViewHeaders,
-          tableView: this.props.tableView
+          tableView: this.props.tableView,
+          currentStateFilter: this.state.currentStateFilter,
+          updateStateFilter: this.updateStateFilter
         }}
       >
         <DistanceContext.Provider

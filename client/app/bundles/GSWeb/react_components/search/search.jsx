@@ -13,6 +13,7 @@ import SchoolTable from './school_table';
 import EntityTypeDropdown from './entity_type_dropdown';
 import GradeLevelButtons from './grade_level_buttons';
 import ChooseTableButtons from './choose_table_buttons';
+import StateSelectButtons from './state_select_buttons';
 import DistanceFilter from './distance_filter';
 import DistanceContext from './distance_context';
 import Ad from 'react_components/ad';
@@ -88,6 +89,7 @@ class Search extends React.Component {
             entityTypeDropdown={<EntityTypeDropdown />}
             gradeLevelButtons={<GradeLevelButtons />}
             chooseTableButtons={<ChooseTableButtons />}
+            stateSelectButtons={<StateSelectButtons />}
             distanceFilter={
               distance ||
               (this.props.schools[0] &&
