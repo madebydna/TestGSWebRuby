@@ -252,6 +252,10 @@ class MySchoolListLayout extends React.Component {
                   aria-label={t('Close filters')}
                 />
                 <div>
+                  <div className="menu-item">
+                    <span className="label">List By:</span>
+                    {this.props.stateSelectButtons}
+                  </div>
                   <span className="menu-item">
                     <span className="label">{t('Sort by')}:</span>
                     {this.props.sortSelect}
@@ -286,10 +290,16 @@ class MySchoolListLayout extends React.Component {
       return null;
     } else if (this.shouldRenderTable()) {
       return (
-        <div className="menu-item sort-dropdown-table-view">
-          <span className="label">{t('Sort by')}:</span>
-          {this.props.sortSelect}
-        </div>
+        <React.Fragment>
+          <div className="menu-item sort-dropdown-table-view">
+            <span className="label">{t('Sort by')}:</span>
+            {this.props.sortSelect}
+          </div>
+          <div className="menu-item sort-dropdown-table-view">
+            <span className="label">List By:</span>
+            {this.props.stateSelectButtons}
+          </div>
+        </React.Fragment>
       );
     }
     return (
