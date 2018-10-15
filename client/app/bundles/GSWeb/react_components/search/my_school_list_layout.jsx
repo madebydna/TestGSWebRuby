@@ -17,7 +17,7 @@ const t = translateWithDictionary({
   },
   es: {
     title: 'Tus escuelas guardadas',
-    "Show schools in": "Muestra la escuela de",
+    "Show schools in": "Muestre escuelas en",
     "Sort by": "Ordenar por"
   }
 });
