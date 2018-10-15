@@ -11,10 +11,14 @@ import HelpTooltip from '../help_tooltip';
 
 const t = translateWithDictionary({
   en: {
-    title: 'Your saved schools'
+    title: 'Your saved schools',
+    "Show schools in": "Show schools in",
+    "Sort by": "Sort by"
   },
   es: {
-    title: 'Tus escuelas guardadas'
+    title: 'Tus escuelas guardadas',
+    "Show schools in": "Muestra la escuela de",
+    "Sort by": "Ordenar por"
   }
 });
 
@@ -253,7 +257,7 @@ class MySchoolListLayout extends React.Component {
                 />
                 <div>
                   <div className="menu-item">
-                    <span className="label">List By:</span>
+                    <span className="label">{t('Show schools in')}:</span>
                     {this.props.stateSelectButtons}
                   </div>
                   <span className="menu-item">
@@ -275,7 +279,7 @@ class MySchoolListLayout extends React.Component {
         <div className="subheader menu-bar">
           <h1 style={{ fontSize: '20px' }}>{t('title')}</h1>
           {this.props.breadcrumbs}
-          <div className="pagination-summary">{this.props.resultSummary}</div>
+          {/* <div className="pagination-summary">{this.props.resultSummary}</div> */}
           {this.shouldRenderTable() ? (
             <div className="menu-item">{this.props.chooseTableButtons}</div>
           ) : null}
@@ -296,7 +300,7 @@ class MySchoolListLayout extends React.Component {
             {this.props.sortSelect}
           </div>
           <div className="menu-item sort-dropdown-table-view">
-            <span className="label">List By:</span>
+            <span className="label">{t('Show schools in')}:</span>
             {this.props.stateSelectButtons}
           </div>
         </React.Fragment>
@@ -305,7 +309,7 @@ class MySchoolListLayout extends React.Component {
     return (
       <React.Fragment>
         <div className="menu-item">
-          <span className="label">List By:</span>
+          <span className="label">{t('Show schools in')}:</span>
           {this.props.stateSelectButtons}
         </div>
         <div className="menu-item">
