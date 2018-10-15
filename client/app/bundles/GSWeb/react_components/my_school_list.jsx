@@ -22,6 +22,7 @@ export default function() {
           const statesInList = schools.map(s => capitalize(stateName(s.state)))
           const uniqStates = [...new Set(statesInList)].sort()
           if (currentStateFilter === null) { updateStateFilter(uniqStates[0]) }
+          console.log(schools)
           return(
             <MySchoolList
               {...state}
