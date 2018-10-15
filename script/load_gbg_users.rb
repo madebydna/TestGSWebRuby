@@ -16,7 +16,6 @@ require 'benchmark'
 # The script will output a sql file to tmp containing the ids of the new records.
 
 class LoadGbgUsers < ActiveRecord::Base
-  include Password
 
   def self.for(file)
     new(file).load
@@ -71,7 +70,7 @@ class LoadGbgUsers < ActiveRecord::Base
   def sql_for(table, id_array)
     %{
       USE gs_schooldb;
-      DELETE #{table}
+      DELETE FROM #{table}
       WHERE id IN(#{id_array.join(",")});
     }
   end
@@ -79,6 +78,7 @@ class LoadGbgUsers < ActiveRecord::Base
 end
 
 class GbgLoadObject < ActiveRecord::Base
+  include Password
 
   HOW_ACQUIRED_AUSD = 'AUSD'
 
@@ -87,8 +87,8 @@ class GbgLoadObject < ActiveRecord::Base
   def self.for(user_and_grades)
     grades_to_add = user_and_grades[:grades]
     new_user = true
-    if User.exists?(email: user_and_grades[:email])
-      user = User.find_by(email: user_and_grades[:email])
+    user = User.find_by(email: user_and_grades[:email])
+    if user
       grades_to_add -= user.grades_array
       new_user = false
     else
@@ -118,6 +118,10 @@ class GbgLoadObject < ActiveRecord::Base
     }
   end
 
+  def errors
+    @_errors ||= Hash.new({})
+  end
+
   private
 
   attr_reader :user, :grades, :new_user
@@ -141,8 +145,12 @@ class GbgLoadObject < ActiveRecord::Base
   end
 
   def add_greatkidsnews
-    new_subscription = user.add_subscription!('greatkidsnews')
-    new_subscriptions << new_subscription.id
+    begin
+      new_subscription = user.add_subscription!('greatkidsnews')
+      new_subscriptions << new_subscription.id
+    rescue StandardError
+      errors[user.email.to_sym][:subscription_gk_news] = false
+    end
   end
 
   def has_unsubscribed?
@@ -162,8 +170,6 @@ class GbgLoadObject < ActiveRecord::Base
   end
 
 end
-
-# Begin script
 
 def read_command_line_input
   parser = OptionParser.new do |opts|
@@ -192,9 +198,10 @@ def print_gs
 
   DH
 end
-
 # rubocop:enable Layout/IndentHeredoc
 
+
+# Begin script
 @options = OpenStruct.new
 read_command_line_input
 
