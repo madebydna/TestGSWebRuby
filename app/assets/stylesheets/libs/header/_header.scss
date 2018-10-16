@@ -127,6 +127,7 @@
 
   .saved-schools-nav.main{
     @media only screen and (max-width: 767px) {
+      //to hide the icon as one of the hamburger list items
       display: none;
     }
   }
