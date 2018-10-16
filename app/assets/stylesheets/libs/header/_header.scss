@@ -534,7 +534,8 @@
   }
 
   .un .search_icon {
-    // display: table-cell;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     text-align: right;
     padding-right: 10px;
@@ -544,7 +545,7 @@
     top: 10px;
     right: 0;
 
-    // overwrites some styles
+    // Overwrites/Add in some style to the icon
     .saved-schools-nav{
       margin-right: 15px;
       font-size: 15px;
