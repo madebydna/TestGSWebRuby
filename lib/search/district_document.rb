@@ -29,14 +29,13 @@ module Search
       self.class.unique_key(@state, @district_id)
     end
 
-    def field_values
+    def build
       return {} unless district
-      {
-          district_name_text: district.name,
-          state_s: district.state.downcase,
-          city_s: district.city,
-          number_of_schools: district.num_schools,
-      }
+      super
+      add_field(:district_name, district.name, Search::SolrIndexer::Types::TEXT)
+      add_field(:state, district.state.downcase, Search::SolrIndexer::Types::STRING)
+      add_field(:city, district.city, Search::SolrIndexer::Types::STRING)
+      add_field(:number_of_schools, district.num_schools, Search::SolrIndexer::Types::INTEGER)
     end
 
     # impl

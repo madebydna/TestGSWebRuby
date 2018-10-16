@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Sunspot.config.solr.url = 'http://dev-solr8.greatschools.org:8983/solr/main/' #ENV_GLOBAL['solr.ro.server.url']
+Sunspot.config.solr.url = 'http://solr:8983/solr/main/' #ENV_GLOBAL['solr.ro.server.url']
 
 Sunspot.setup(School) do
   string :sortable_name
@@ -10,6 +10,22 @@ Sunspot.setup(School) do
   string :state
   integer :summary_rating
   string :level_codes
+  integer :test_scores_rating
+
+  Breakdown.unique_ethnicity_names.each do |breakdown|
+    field_name = "test_scores_rating_#{breakdown.downcase.gsub(' ', '_')}"
+    integer field_name
+  end
+  Breakdown.unique_socioeconomic_names.each do |breakdown|
+    field_name = "test_scores_rating_#{breakdown.downcase.gsub(" ", "_")}"
+    integer field_name
+  end
+
+  integer :academic_progress_rating
+  integer :college_readiness_rating
+  integer :advanced_courses_rating
+  integer :equity_overview_rating
+
   latlon(:latlon) { Sunspot::Util::Coordinates.new(lat, lon) }
 
   # Remove these after we are totally on Solr 7

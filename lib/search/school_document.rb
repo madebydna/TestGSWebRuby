@@ -17,36 +17,56 @@ module Search
     # retrievable
 
     def self.from_unique_key(key)
-      state, school_id = key.split('-')
+      state, school_id = key.split("-")
       new(state: state, school_id: school_id)
     end
 
     # indexable
-    
+
     def self.type
-      'School'
+      "School"
     end
 
     def unique_key
       self.class.unique_key(@state, @school_id)
     end
 
-    def field_values
-      return {} unless school
-      {
-        name_text: school.name,
-        sortable_name_s: school.name&.downcase,
-        city_s: school.city,
-        school_district_id_i: school.district_id,
-        school_district_name_s: school.district&.name,
-        street_s: school.street&.downcase,
-        zipcode_s: school.zipcode,
-        county_s: school.county&.downcase,
-        state_s: school.state.downcase,
-        latlon_ll: latlon,
-        summary_rating_i: school.great_schools_rating,
-        level_codes_s: school.level_code&.split(',')
-      }
+    def build
+      return unless school
+      super
+
+      test_score_ratings_by_breakdown = school.test_score_ratings_by_breakdown
+
+      add_field(:name, school.name, type: Search::SolrIndexer::Types::TEXT)
+      add_field(:sortable_name, school.name&.downcase)
+      add_field(:city, school.city)
+      add_field(:school_district_id, school.district_id)
+      add_field(:school_district_name, school.district&.name)
+      add_field(:street, school.street&.downcase)
+      add_field(:zipcode, school.zipcode)
+      add_field(:county, school.county&.downcase)
+      add_field(:state, school.state.downcase)
+      add_field(:latlon, latlon, type: Search::SolrIndexer::Types::LAT_LON)
+      add_field(:level_codes, school.level_code&.split(","))
+      add_field(:summary_rating, school.great_schools_rating)
+      [
+        :test_scores_rating,
+        :academic_progress_rating,
+        :college_readiness_rating,
+        :equity_overview_rating,
+      ].each do |rating_name|
+        add_field(rating_name, school.send(rating_name))
+      end
+      add_field(:advanced_courses_rating, school.courses_rating)
+
+      Breakdown.unique_ethnicity_names.each do |breakdown|
+        field_name = "test_scores_rating_#{breakdown.downcase.gsub(" ", "_")}"
+        add_field(field_name, test_score_ratings_by_breakdown.dig(breakdown))
+      end
+      add_field(
+        "#{Breakdown.economically_disadvantaged_name.gsub(" ", "_")}_i",
+        test_score_ratings_by_breakdown[Breakdown.economically_disadvantaged_name]
+      )
     end
 
     # impl
@@ -63,7 +83,7 @@ module Search
         query = SchoolCacheQuery.new.include_cache_keys(CACHE_KEYS).include_schools(@state, @school_id)
         query_results = query.query_and_use_cache_keys
         school_cache_results = SchoolCacheResults.new(CACHE_KEYS, query_results)
-        school_cache_results.decorate_schools([school])
+        school = school_cache_results.decorate_schools([school]).first
         school
       end
     end

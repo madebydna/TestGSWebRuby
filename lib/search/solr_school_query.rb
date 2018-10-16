@@ -50,10 +50,6 @@ module Search
 
     attr_reader :client
 
-    def valid_sort_names
-      ['rating', 'name', 'distance', 'relevance']
-    end
-
     def default_sort_name
       if @q.present?
         'relevance'
@@ -83,7 +79,7 @@ module Search
         'rating' => 'summary_rating',
         'name' => 'sortable_name',
         'relevance' => 'score'
-      }[name]
+      }[name] || name
     end
 
     def q

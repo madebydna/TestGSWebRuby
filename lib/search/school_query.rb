@@ -42,7 +42,7 @@ module Search
       self.lat = lat
       self.lon = lon
       self.radius = radius
-      self.sort_name = sort_name if self.sort_name_valid?(sort_name)
+      self.sort_name = sort_name #if self.sort_name_valid?(sort_name)
       self.sort_direction = sort_direction
       self.limit = limit
       self.offset = offset
@@ -96,10 +96,6 @@ module Search
         raise ArgumentError.new("Not a valid state: #{state}")
       end
       @state = abbreviation
-    end
-
-    def valid_sort_names
-      []
     end
 
     private
