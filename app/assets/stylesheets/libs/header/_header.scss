@@ -125,6 +125,12 @@
     }
   }
 
+  .saved-schools-nav.main{
+    @media only screen and (max-width: 767px) {
+      display: none;
+    }
+  }
+
   .logo_size {
     width: 112px;
     height: 47px;
@@ -528,11 +534,21 @@
   }
 
   .un .search_icon {
-    display: table-cell;
+    // display: table-cell;
+    display: flex;
     text-align: right;
     padding-right: 10px;
     padding-top: 10px;
     vertical-align: middle;
+    position: absolute;
+    top: 10px;
+    right: 0;
+
+    // overwrites some styles
+    .saved-schools-nav{
+      margin-right: 15px;
+      font-size: 15px;
+    }
   }
 
   .un nav {
