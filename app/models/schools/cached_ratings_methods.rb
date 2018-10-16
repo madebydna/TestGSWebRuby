@@ -42,10 +42,10 @@ module CachedRatingsMethods
     # result.except!('Student progress rating')
   end
 
-  def ethnicity_information
+  def ethnicity_information_for_tableview
     {
       ratings: ethnicity_ratings,
-      students: ethnicity_students
+      students: ethnicity_students_for_tableview
     }
   end
 
@@ -55,7 +55,7 @@ module CachedRatingsMethods
     fer
   end
 
-  def ethnicity_students
+  def ethnicity_students_for_tableview
     fes = formatted_ethnicity_students
     fes = ({'Low Income': free_and_reduced_lunch.gsub('%','')}).merge(fes) if fes && free_and_reduced_lunch
     fes
