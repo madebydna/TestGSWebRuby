@@ -2,6 +2,7 @@ import {
   onAdFilled as onMobileOverlayAdFilled,
   onAdNotFilled as onMobileOverlayAdNotFilled
 } from 'components/ads/mobile_overlay';
+import { capitalize } from 'util/i18n';
 import log from 'util/log';
 import { remove } from 'lodash';
 
@@ -20,6 +21,11 @@ const functionSlotDefinitionArray = [];
 const functionAdShowArray = [];
 const googleId = '/1002894/';
 const slotTimers = {};
+
+const slotIdFromName = (name, slotOccurrenceNumber = 1) => {
+  const slotName = capitalize(name).replace(' ', '_');
+  return `${slotName}${slotOccurrenceNumber}_Ad`;
+};
 
 const slotRenderedHandler = function(event) {
   if (event.slot.onRenderEnded) {
@@ -168,7 +174,7 @@ const getSizeMappings = function() {
       .build(),
     thin_banner_mobile: googletag
       .sizeMapping()
-      .addSize([0,0], [[320, 100], [320, 50]])
+      .addSize([0, 0], [[320, 100], [320, 50]])
       .build(),
     thin_banner_or_box: googletag
       .sizeMapping()
@@ -197,7 +203,7 @@ const getSizeMappings = function() {
       .addSize([865, 300], [[728, 90], [630, 250], [630, 100]])
       .addSize([690, 300], [[630, 250], [630, 100], [320, 50]])
       .addSize([0, 0], [[320, 100], [320, 50]])
-      .build(),
+      .build()
   };
 };
 
@@ -220,12 +226,13 @@ const _defineSlot = function($adSlot) {
 };
 
 const defineAdOnce = ({
-  divId,
+  slotOccurrenceNumber = 1,
   slotName,
   dimensions,
   sizeName,
   onRenderEnded
 }) => {
+  const divId = slotIdFromName(slotName, slotOccurrenceNumber);
   if (slots[divId]) {
     // already defined
     slots[divId].onRenderEnded = onRenderEnded;
@@ -312,6 +319,14 @@ const showAd = function(divId) {
   }
 };
 
+const showAdByName = function(name, slotOccurrenceNumber = 1) {
+  showAd(slotIdFromName(name, slotOccurrenceNumber));
+};
+
+const destroyAdByName = function(name, slotOccurrenceNumber = 1) {
+  destroyAd(slotIdFromName(name, slotOccurrenceNumber));
+};
+
 const wrapFunction = function(fn, context, params) {
   return function() {
     fn.apply(context, params);
@@ -395,7 +410,10 @@ export {
   init,
   onInitialize,
   showAd,
+  showAdByName,
   enableAdCloseButtons,
   defineAdOnce,
-  destroyAd
+  destroyAd,
+  destroyAdByName,
+  slotIdFromName
 };
