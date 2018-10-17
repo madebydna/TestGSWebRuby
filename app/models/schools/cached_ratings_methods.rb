@@ -323,8 +323,11 @@ module CachedRatingsMethods
   end
 
   def formatted_ethnicity_students
-    ethnicity_data.each_with_object({}) do |ethnicity_hash, hash|
-      hash[ethnicity_mapping_hash[ethnicity_hash["breakdown"].to_sym]] = ethnicity_hash["school_value"].round if ethnicity_hash["school_value"]
+    ethnicity_data.each_with_object({}) do |ethnicity_information_object, hash|
+      if ethnicity_information_object["school_value"]
+        attribute = ethnicity_mapping_hash[ethnicity_information_object["breakdown"].to_sym]
+        hash[attribute] = ethnicity_information_object["school_value"].round
+      end
     end
   end
 
