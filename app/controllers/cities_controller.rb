@@ -13,7 +13,7 @@ class CitiesController < ApplicationController
     @breadcrumbs = breadcrumbs
     @school_levels = school_levels
     @districts = district_content(city_record.id)
-    # @reviews = reviews_formatted.reviews_list
+    @reviews = reviews_formatted.reviews_list
     @locality = locality
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props

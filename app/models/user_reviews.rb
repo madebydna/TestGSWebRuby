@@ -25,6 +25,14 @@ class UserReviews
     @school = school
   end
 
+  def self.make_instance_for_each_user_per_school(reviews, school)
+    reviews.group_by { |review| [review.member_id, review.school_id] }.
+      values.
+      map do |user_reviews|
+      self.new(user_reviews, school)
+    end
+  end
+
   def self.make_instance_for_each_user(reviews, school)
     reviews.group_by { |review| review.member_id }.
       values.
@@ -74,6 +82,7 @@ class UserReviews
       answer_value: review.numeric_answer_value,
       date_published: review.created,
       id: review.id,
+      school_id: review.school_id,
       links: {
         flag: flag_review_path(review.id)
       }
