@@ -115,8 +115,10 @@ class CitiesController < ApplicationController
     zip = district_content(city_record.id).find do |dc|
       break dc[:zip] if dc[:zip].present?
     end
-    zip ||= @top_schools[:schools][:elementary].find do |s|
-      break s[:address][:zip] if s && s[:address].present? && s[:address][:zip].present?
+    if @top_schools.present?
+      zip ||= @top_schools[:schools][:elementary].find do |s|
+        break s[:address][:zip] if s && s[:address].present? && s[:address][:zip].present?
+      end
     end
     zip
   end
