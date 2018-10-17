@@ -258,7 +258,7 @@ class MySchoolListLayout extends React.Component {
                 <div>
                   <div className="menu-item">
                     <span className="label">{t('Show schools in')}:</span>
-                    {this.props.stateSelectButtons}
+                    {this.props.stateSelect}
                   </div>
                   <span className="menu-item">
                     <span className="label">{t('Sort by')}:</span>
@@ -301,7 +301,7 @@ class MySchoolListLayout extends React.Component {
           </div>
           <div className="menu-item sort-dropdown-table-view">
             <span className="label">{t('Show schools in')}:</span>
-            {this.props.stateSelectButtons}
+            {this.props.stateSelect}
           </div>
         </React.Fragment>
       );
@@ -310,7 +310,7 @@ class MySchoolListLayout extends React.Component {
       <React.Fragment>
         <div className="menu-item">
           <span className="label">{t('Show schools in')}:</span>
-          {this.props.stateSelectButtons}
+          {this.props.stateSelect}
         </div>
         <div className="menu-item">
           <span className="label">{t('Sort by')}:</span>

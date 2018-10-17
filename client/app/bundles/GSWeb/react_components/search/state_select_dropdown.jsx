@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import SearchContext from './search_context';
 import { mySchoolList } from 'api_clients/schools';
 
-const StateSelectButtons = () => {
+const StateSelectDropdown = () => {
   return(
       <SearchContext.Consumer>
         {({ schools, currentStateFilter, updateStateFilter}) => {
@@ -31,4 +31,4 @@ const StateSelectButtons = () => {
   )
 }
 
-export default StateSelectButtons;
+export default StateSelectDropdown;
