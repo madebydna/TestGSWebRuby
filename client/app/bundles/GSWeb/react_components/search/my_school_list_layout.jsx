@@ -329,7 +329,10 @@ class MySchoolListLayout extends React.Component {
           : this.renderMobileMenuBar()}
         {}
         {this.props.noResults ? (
-          this.props.noResults
+          <React.Fragment>
+            {this.props.numOfSchools > 0 && this.renderBreadcrumbsSummarySort()}
+            {this.props.noResults}
+          </React.Fragment>
         ) : (
           <React.Fragment>
             {this.renderBreadcrumbsSummarySort()}
