@@ -17,7 +17,7 @@ class DistrictsController < ApplicationController
     @breadcrumbs = breadcrumbs
     @top_schools =  top_rated_schools
     @hero_data = hero_data
-    @test_scores = district_record.test_scores(district_cache_data_reader)
+    @academics_props = district_record.academics_props(district_cache_data_reader)
     # @reviews = reviews_formatted.reviews_list
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags

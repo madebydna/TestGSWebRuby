@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Breadcrumbs from "react_components/breadcrumbs";
+import SchoolProfileComponent from "react_components/equity/school_profile_component";
 import DistrictLayout from "./district_layout";
 import SearchBox from "react_components/search_box";
 import TopSchoolsStateful from "./top_schools_stateful";
@@ -35,7 +36,8 @@ class District extends React.Component {
       })
     ),
     locality: PropTypes.object,
-    heroData: PropTypes.object
+    heroData: PropTypes.object,
+    academics: PropTypes.object
   };
 
   constructor(props) {
@@ -94,6 +96,7 @@ class District extends React.Component {
   }
 
   render() {
+    let {title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback} = this.props.academics;
     return (
       <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
@@ -120,6 +123,23 @@ class District extends React.Component {
           <Mobility
             locality={this.props.locality}
             pageType="District"
+          />
+        }
+        academics={
+          <SchoolProfileComponent
+            title={title}
+            anchor={anchor}
+            subtitle={subtitle}
+            info_text={info_text}
+            icon_classes={icon_classes}
+            sources={sources}
+            share_content={share_content}
+            rating={rating}
+            data={data}
+            analytics_id={analytics_id}
+            showTabs={showTabs}
+            faq={faq}
+            feedback={feedback}
           />
         }
         zillow={

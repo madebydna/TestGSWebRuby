@@ -100,4 +100,37 @@ class District < ActiveRecord::Base
     @_test_scores ||= SchoolProfiles::Components::DistrictTestScoresComponentGroup.new(school_cache_data_reader: cache_data_reader).to_hash
   end
 
+  def faq_for_academics_module
+    @_faq_test_scores ||= SchoolProfiles::Faq.new(cta: I18n.t(:cta, scope: 'lib.equity.faq.race_ethnicity'),
+                                     content: I18n.t(:content_html, scope: 'lib.equity.faq.race_ethnicity'),
+                                     element_type: 'faq')
+  end
+
+  def data_props_for_academics_module(cache_data_reader)
+    [
+      {
+        title: I18n.t('Test scores', scope: 'lib.equity_gsdata'),
+        anchor: 'Test_scores',
+        data: test_scores(cache_data_reader)
+      }
+    ]
+  end
+
+  def academics_props(cache_data_reader)
+    {
+      title: I18n.t('.academics', scope: 'school_profiles.show'),
+      anchor: 'Academics',
+      analytics_id: 'Academics',
+      subtitle: I18n.t('.Race ethnicity subtitle', scope: 'school_profiles.equity'),
+      info_text: I18n.t('.Race ethnicity tooltip', scope: 'school_profiles.equity'),
+      icon_classes: I18n.t('.Race ethnicity icon', scope: 'school_profiles.equity'),
+      sources: nil, #equity.race_ethnicity_sources
+      share_content: nil, #coupled to school
+      data: data_props_for_academics_module(cache_data_reader),
+      faq: faq_for_academics_module,
+      no_data_summary: I18n.t('.Race ethnicity no data', scope: 'school_profiles.equity'),
+      qualaroo_module_link: nil
+    }
+  end
+
 end

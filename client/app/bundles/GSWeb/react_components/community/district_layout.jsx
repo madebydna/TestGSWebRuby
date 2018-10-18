@@ -125,6 +125,14 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderAcademics(){
+    return (
+      <div id="academics">
+        {this.props.academics}
+      </div>
+    )
+  }
+
   renderMobility() {
     return (
       <div id="mobility">
@@ -223,6 +231,7 @@ class DistrictLayout extends React.Component {
             {this.props.viewportSize < SM && <Ad slot="districtpage_first" sizeName="thin_banner_mobile" />}
             {this.renderSchools()}
             {this.renderMobility()}
+            {this.renderAcademics()}
             {this.renderZillow()}
             {/* {this.renderReviews()} */}
           </div>
