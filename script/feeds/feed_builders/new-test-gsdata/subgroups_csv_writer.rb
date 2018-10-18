@@ -15,7 +15,7 @@ module Feeds
       end
 
       def get_column_titles
-        super << 'breakdowns'
+        super.clone << 'breakdowns'
       end
     end
   end
