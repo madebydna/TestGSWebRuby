@@ -1,0 +1,11 @@
+#School synonyms
+PCS, Public Charter School
+KinderCare, Kinder Care, Kinder-care
+st, saint
+mt, mount
+petite, lapetite, la petite
+preschool, preschools, pre-school, pre-schools, pre school, pre schools, pk, pre k, pre-k, nursery, nursery school, nursery schools, day care, child care, montessori
+headstart, head start, head-start
+ISD, Independent School District
+USD, Unified School District
+sch, school

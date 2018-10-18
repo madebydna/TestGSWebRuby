@@ -51,6 +51,7 @@ class Search extends React.Component {
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     shouldIncludeDistance: PropTypes.bool,
     toggleHighlight: PropTypes.func.isRequired,
+    refreshAdOnScroll: PropTypes.func.isRequired,
     breadcrumbs: PropTypes.arrayOf(
       PropTypes.shape({
         text: PropTypes.string.isRequired,
@@ -115,7 +116,11 @@ class Search extends React.Component {
             }
             tallAd={
               <div className="ad-bar">
-                <Ad slot="Search_160x600" dimensions={[160, 600]} />
+                <Ad
+                  key={`Search_160x600${this.props.page}`}
+                  slot="Search_160x600"
+                  dimensions={[160, 600]}
+                />
               </div>
             }
             numOfSchools={this.props.numOfSchools}
@@ -166,6 +171,7 @@ class Search extends React.Component {
             searchBox={<SearchBox size={this.props.size} />}
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
             noResults={this.noResults()}
+            refreshAdOnScroll={this.props.refreshAdOnScroll}
           />
         )}
       </DistanceContext.Consumer>

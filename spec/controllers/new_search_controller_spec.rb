@@ -1,6 +1,6 @@
 # frozen_string_literal: true 
 
-describe NewSearchController do
+describe SearchController do
   describe '#entity_types' do
     subject { controller.entity_types }
 
