@@ -11,10 +11,14 @@ import HelpTooltip from '../help_tooltip';
 
 const t = translateWithDictionary({
   en: {
-    title: 'Your saved schools'
+    title: 'Your saved schools',
+    "Show schools in": "Show schools in",
+    "Sort by": "Sort by"
   },
   es: {
-    title: 'Tus escuelas guardadas'
+    title: 'Tus escuelas guardadas',
+    "Show schools in": "Muestre escuelas en",
+    "Sort by": "Ordenar por"
   }
 });
 
@@ -108,7 +112,8 @@ class MySchoolListLayout extends React.Component {
     pagination: PropTypes.element,
     resultSummary: PropTypes.string.isRequired,
     noResults: PropTypes.element,
-    chooseTableButtons: PropTypes.element
+    chooseTableButtons: PropTypes.element,
+    numOfSchools: PropTypes.number
   };
 
   static getDerivedStateFromProps(props) {
@@ -252,6 +257,10 @@ class MySchoolListLayout extends React.Component {
                   aria-label={t('Close filters')}
                 />
                 <div>
+                  {this.props.numOfSchools > 0 && <div className="menu-item">
+                    <span className="label">{t('Show schools in')}:</span>
+                    {this.props.stateSelect}
+                  </div>}
                   <span className="menu-item">
                     <span className="label">{t('Sort by')}:</span>
                     {this.props.sortSelect}
@@ -271,7 +280,7 @@ class MySchoolListLayout extends React.Component {
         <div className="subheader menu-bar">
           <h1 style={{ fontSize: '20px' }}>{t('title')}</h1>
           {this.props.breadcrumbs}
-          <div className="pagination-summary">{this.props.resultSummary}</div>
+          {/* <div className="pagination-summary">{this.props.resultSummary}</div> */}
           {this.shouldRenderTable() ? (
             <div className="menu-item">{this.props.chooseTableButtons}</div>
           ) : null}
@@ -286,17 +295,29 @@ class MySchoolListLayout extends React.Component {
       return null;
     } else if (this.shouldRenderTable()) {
       return (
-        <div className="menu-item sort-dropdown-table-view">
-          <span className="label">{t('Sort by')}:</span>
-          {this.props.sortSelect}
-        </div>
+        <React.Fragment>
+          <div className="menu-item sort-dropdown-table-view">
+            <span className="label">{t('Sort by')}:</span>
+            {this.props.sortSelect}
+          </div>
+          <div className="menu-item sort-dropdown-table-view">
+            <span className="label">{t('Show schools in')}:</span>
+            {this.props.stateSelect}
+          </div>
+        </React.Fragment>
       );
     }
     return (
-      <div className="menu-item">
-        <span className="label">{t('Sort by')}:</span>
-        {this.props.sortSelect}
-      </div>
+      <React.Fragment>
+        <div className="menu-item">
+          <span className="label">{t('Show schools in')}:</span>
+          {this.props.stateSelect}
+        </div>
+        <div className="menu-item">
+          <span className="label">{t('Sort by')}:</span>
+          {this.props.sortSelect}
+        </div>
+      </React.Fragment>
     );
   }
 
@@ -308,7 +329,10 @@ class MySchoolListLayout extends React.Component {
           : this.renderMobileMenuBar()}
         {}
         {this.props.noResults ? (
-          this.props.noResults
+          <React.Fragment>
+            {this.props.numOfSchools > 0 && this.renderBreadcrumbsSummarySort()}
+            {this.props.noResults}
+          </React.Fragment>
         ) : (
           <React.Fragment>
             {this.renderBreadcrumbsSummarySort()}

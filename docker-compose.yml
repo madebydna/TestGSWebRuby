@@ -1,0 +1,63 @@
+version: '2.1'
+services:
+  db:
+    image: mysql:5.6
+    expose:
+      - '3306'
+    ports:
+      - '3306'
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    volumes:
+      # the initdb.d is a special directory in the mysql container. All sh and sql files in that dir will get executed on each startup
+      # sync the files in db/schemas to that directory
+      - ./db/schemas:/docker-entrypoint-initdb.d
+  rails:
+    build: .
+    volumes:
+      # Reference a named volume managed by docker-sync. Sync that data to /rails within the container
+      - rails-code:/srv/rails:nocopy
+      # Sync a named volume webpack-assets with /rails/app/assets/webpack in the container
+      - webpack-assets:/srv/rails/app/assets/webpack
+    ports:
+      - '3000:3000'
+    links:
+      - db
+    environment:
+      test_db_host: db
+      test_db_username: root
+      test_db_password: ''
+  frontend:
+    build:
+      context: ./client
+    depends_on:
+      - rails
+    volumes:
+      # sync /app/assets/webpack in the container with a named volume called webpack-assets
+      - webpack-assets:/srv/app/assets/webpack
+      # sync app/assets/images on the host mac to /app/assets/images in the container
+      - ./app/assets/images:/srv/app/assets/images:ro
+      # sync the client dir on the host mac to /frontend in the container
+      - ./client:/srv/frontend
+      # create a named volume "node_modules" from /frontend/node_modules in the container to prevent it from syncing back to host
+      # basically it overrides a subfolder within the above volume (./client:/frontend)
+      - node_modules:/srv/frontend/node_modules
+  solr:
+    build:
+      context: ./solr
+    ports:
+      - '8983:8983'
+    volumes:
+      - ./solr/configsets:/opt/solr/server/solr/configsets
+      - ./solr/solr.xml:/opt/solr/server/solr/solr.xml
+volumes:
+  webpack-assets:
+    external: false
+  images:
+    external: false
+  log:
+    external: false
+  node_modules:
+    external: false
+  rails-code:
+    external: true # defined in docker-sync.yml. docker-sync is used to improve IO speed issues when reading/evaluating ruby files

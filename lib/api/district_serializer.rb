@@ -1,4 +1,9 @@
+# frozen_string_literal: true
+
 class Api::DistrictSerializer
+  include Rails.application.routes.url_helpers
+  include UrlHelper
+
   attr_reader :district
 
   def initialize(district)
@@ -7,6 +12,9 @@ class Api::DistrictSerializer
 
   def to_hash
     rating = district.great_schools_rating if defined? district.great_schools_rating
+    district_params = district_params(district.state, district['city'], district.name)
+    district_params[:trailing_slash] = true
+    district_params[:lang] = I18n.current_non_en_locale
     h = {
       id: district.id,
       districtName: district.try(:name),
@@ -22,6 +30,9 @@ class Api::DistrictSerializer
       rating: rating && rating != 'NR' ? rating : nil,
       state: district.state,
       type: 'district',
+      links: {
+          profile: district_path(district_params),
+      },
       schoolCountsByLevelCode: district.school_counts_by_level_code
     }
     if district.respond_to?(:boundaries)

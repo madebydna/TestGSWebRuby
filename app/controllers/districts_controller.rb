@@ -17,7 +17,7 @@ class DistrictsController < ApplicationController
     @breadcrumbs = breadcrumbs
     @top_schools =  top_rated_schools
     @hero_data = hero_data
-    # @reviews = reviews_formatted.reviews_list
+    @reviews = reviews_formatted.reviews_list
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
     set_ad_targeting_props
@@ -45,7 +45,7 @@ class DistrictsController < ApplicationController
 
 # rubocop:disable Lint/SafeNavigationChain
   def city_key_value(key)
-    (district_content(district_record.city_record&.id)&.first || {}).fetch(key, nil)
+    (district_content(decorated_city)&.first || {}).fetch(key, nil)
   end
 # rubocop:enable Lint/SafeNavigationChain
 
@@ -178,6 +178,10 @@ class DistrictsController < ApplicationController
     @_decorated_district ||= DistrictCache.cached_results_for([district_record], CACHE_KEYS_FOR_READER).decorate_districts([district_record]).first
   end
 
+  def decorated_city
+    @_decorated_city ||= CityCacheDecorator.for_city_and_keys(city_record, 'district_content')
+  end
+
   def reviews
     @_reviews ||= 
       Review
@@ -204,6 +208,21 @@ class DistrictsController < ApplicationController
   # StructuredMarkup
   def prepare_json_ld
     breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+    if district_record.present?
+      add_json_ld({
+                      "@context" => "http://schema.org",
+                      "@type" => "EducationalOrganization",
+                      'name' => district_record.name.gs_capitalize_words,
+                      'address' => {
+                          '@type' => 'PostalAddress',
+                          'streetAddress' => district_record.street,
+                          'addressLocality' => district_record.city,
+                          'addressRegion' => district_record.state,
+                          'postalCode' => district_record.zipcode
+                      },
+                      'telephone' => district_record.phone
+                  })
+    end
   end
 
   def redirect_unless_valid_district

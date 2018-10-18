@@ -34,6 +34,7 @@ class DatabaseConfigurationLoader
     end
 
     self.overwrite_connection_credentials_if_available(config['development'])
+    self.overwrite_test_connection_credentials_if_available(config['test'])
 
     return config
   end
@@ -74,6 +75,50 @@ class DatabaseConfigurationLoader
     gsdata_config = config['gsdata']
     config['gsdata_rw'] ||= config['gsdata']
 
+
+    if gsdata_db_host.present?
+      gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_host if key == 'host'
+      end
+    end
+    if gsdata_db_username.present?
+      gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_username if key == 'username'
+      end
+    end
+    if gsdata_db_password.present?
+      gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_password if key == 'password'
+      end
+    end
+  end
+
+  def self.overwrite_test_connection_credentials_if_available(config)
+    db_host = ENV['test_db_host'] || ENV_GLOBAL['test_db_host']
+    db_username = ENV['test_db_username'] || ENV_GLOBAL['test_db_username']
+    db_password = ENV['test_db_password'] || ENV_GLOBAL['test_db_password']
+    gsdata_db_host = db_host
+    gsdata_db_username = db_username
+    gsdata_db_password = db_password
+
+    if db_host.present?
+      config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = db_host if key == 'host' && hash['database'] != 'gsdata'
+      end
+    end
+    if db_username.present?
+      config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = db_username if key == 'username' && hash['database'] != 'gsdata'
+      end
+    end
+    if db_password.present?
+      config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = db_password if key == 'password' && hash['database'] != 'gsdata'
+      end
+    end
+
+    gsdata_config = config['gsdata']
+    config['gsdata_rw'] ||= config['gsdata']
 
     if gsdata_db_host.present?
       gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
