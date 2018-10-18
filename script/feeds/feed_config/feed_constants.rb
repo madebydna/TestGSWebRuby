@@ -15,17 +15,17 @@ module Feeds
           'test_subgroup' => 'local-gs-test-subgroup-feed',
           'test_rating' => 'local-gs-test-rating-feed',
           'subrating' => 'local-gs-subrating-feed',
+          'subrating_description' => 'local-gs-subrating-description-feed',
           'old_test_gsdata' => 'local-gs-test-feed',
           'old_test_subgroup_gsdata' => 'local-gs-test-subgroup-feed',
           'new_test_gsdata' => 'local-gs-new-test-feed',
           'new_test_subgroup_gsdata' => 'local-gs-new-test-subgroup-feed',
+          'new_test_gsdata_description' => 'local-gs-new-test-description-feed',
           'official_overall' => 'local-gs-official-overall-rating-feed',
           'directory_feed' => 'local-greatschools-feed',
           'google_feed' => 'local-google-feed',
           'city' => 'local-greatschools-city-feed',
           'proficiency_band' => 'gs-proficiency-band',
-          'subrating_description' => 'local-gs-subrating-description-feed'
-
       }
 
       VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description)

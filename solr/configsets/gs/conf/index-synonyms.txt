@@ -1,0 +1,15 @@
+# common grade synonyms
+PK, preschool, pre-k, prek
+K, kindergarten
+first, 1st, 1
+second, 2nd, 2
+third, 3rd, 3
+fourth, 4th, 4
+fifth, 5th, 5
+sixth, 6th, 6
+seventh, 7th, 7
+eighth, 8th, 8
+ninth, 9th, 9
+tenth, 10th, 10
+eleventh, 11th, 11
+twelfth, 12th, 12

@@ -11,8 +11,6 @@ class SearchController < ApplicationController
   layout 'application'
   before_filter :redirect_unless_valid_search_criteria # we need at least a 'q' param or state and city/district
 
-  DEFAULT_VIEW = 'list'
-
   def search
     gon.search = {
       schools: serialized_schools,
@@ -33,13 +31,9 @@ class SearchController < ApplicationController
           'Academic' => academic_header_hash
       }
     end
-    set_search_meta_tags
+    set_meta_tags(Search::MetaTags.from_controller(self).meta_tag_hash)
     set_ad_targeting_props
     set_page_analytics_data
-    set_meta_tags(alternate: {
-      en: url_for(params_for_canonical.merge(lang: nil)),
-      es: url_for(params_for_canonical.merge(lang: :es))
-    })
     response.status = 404 if serialized_schools.empty?
   end
 
@@ -196,129 +190,5 @@ class SearchController < ApplicationController
     %w(geometry)
   end
 
-  # Begin meta-tag code
-
-  def set_search_meta_tags
-    set_meta_tags(robots: 'noindex, nofollow') unless is_browse_url? && page_of_results.present?
-    if %i[zip_code city_browse district_browse address other].include?(search_type)
-      param_to_remove = view == DEFAULT_VIEW ? :view : nil
-      complete_tags = send("#{search_type}_meta_tag_hash".to_sym)
-                        .merge({prev: prev_page_url(page_of_results, param_to_remove),
-                                next: next_page_url(page_of_results, param_to_remove)})
-      send(:set_meta_tags, complete_tags)
-    end
-  end
-
-  def city_browse_meta_tag_hash
-    if %w(il pa).include?(state)
-      meta_description = "#{city_record.name}, #{city_record.state} school districts, public, private and charter school listings" \
-          " and rankings for #{city_record.name}, #{city_record.state}. Find your school district information from Greatschools.org"
-    else
-      meta_description = "View and map all #{city_record.name}, #{city_record.state} schools. Plus, compare or save schools"
-    end
-    {
-      title: "#{city_browse_title} | GreatSchools",
-      description: meta_description,
-      canonical: url_for(search_city_browse_url(
-        params_for_canonical.merge(
-          city: gs_legacy_url_encode(city),
-          state: gs_legacy_url_encode(States.state_name(state))
-        )
-      ))
-    }
-  end
-
-  def district_browse_meta_tag_hash
-    {
-      title: "#{district_browse_title} | GreatSchools",
-      description: "Ratings and parent reviews for all elementary, middle and high schools in the #{district_record.name}, #{city_record.state}",
-      canonical: search_district_browse_url(
-        params_for_canonical.merge(
-          district_name: gs_legacy_url_encode(district),
-          city: gs_legacy_url_encode(city),
-          state: gs_legacy_url_encode(States.state_name(state))
-        )
-      )
-    }
-  end
-
-  def zip_code_meta_tag_hash
-    {
-      title: "#{zip_code_search_title} | GreatSchools",
-      description: "Ratings and parent reviews for all elementary, middle and high schools in #{zip_code}, #{state.upcase}"
-    }
-  end
-
-  def address_meta_tag_hash
-    {
-      title: "#{entity_type_long}#{level_code_long}#{schools_or_preschools} near #{location_label} | GreatSchools",
-    }
-  end
-
-  def other_meta_tag_hash
-    {
-      title: "#{entity_type_long}#{level_code_long}#{schools_or_preschools} matching #{q} | GreatSchools",
-    }
-  end
-
-  def city_browse_title
-    city_type_level_code_text = "#{city_record.name} #{entity_type_long}#{level_code_long}#{schools_or_preschools}"
-    "#{city_type_level_code_text}#{title_pagination_text} - #{city_record.name}, #{city_record.state}"
-  end
-
-  def district_browse_title
-    "#{entity_type_long}#{level_code_long}#{schools_or_preschools} in #{district_record.name}#{title_pagination_text} - #{city_record.name}, #{city_record.state}"
-  end
-
-  def zip_code_search_title
-    "#{entity_type_long}#{level_code_long}#{schools_or_preschools} near #{location_label}#{title_pagination_text} - #{state.upcase}"
-  end
-
-  def title_pagination_text
-    return if offset > page_of_results.total
-    ", #{page_of_results.index_of_first_result}-#{page_of_results.index_of_last_result}"
-  end
-
-  def entity_type_long
-    {
-      'charter' => 'Public Charter ',
-      'public' => 'Public ',
-      'private' => 'Private '
-    }[entity_type]
-  end
-
-  def level_code_long
-    {
-      'e' => 'Elementary ',
-      'm' => 'Middle ',
-      'h' => 'High ',
-      'p' => nil
-    }[level_code]
-  end
-
-  def schools_or_preschools
-    school_preschool_map = Hash.new('Schools').merge('p' => 'Preschools')
-    school_preschool_map[level_code]
-  end
-
-  def params_for_canonical
-    {}.tap do |key|
-      key[grade_level_param_name] = level_codes if level_code.present?
-      key[page_param_name] = given_page  if given_page.present?
-      key[school_type_param_name] = entity_types  if entity_types.present?
-      key[view_param_name] =  view  if view.present? && view != DEFAULT_VIEW
-      key[table_view_param_name] = tableView  if tableView.present?
-    end.compact
-  end
-
-  def params_for_rel_alternate
-    {}.tap do |key|
-      key[grade_level_param_name] = level_codes if level_codes.present?
-      key[page_param_name] = given_page if given_page.present?
-      key[school_type_param_name] = entity_types if entity_types.present?
-      key[view_param_name] = view if view.present? && view != DEFAULT_VIEW
-      key[table_view_param_name] = tableView if tableView.present?
-    end.compact
-  end
 
 end

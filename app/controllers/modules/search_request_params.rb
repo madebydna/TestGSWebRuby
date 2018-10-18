@@ -3,6 +3,21 @@
 module SearchRequestParams
   include UrlHelper
 
+  def state_param_name
+    :state
+  end
+
+  # Raw user-provided state
+  def state_param
+    params[state_param_name]
+  end
+
+  # State that you can use when making URLs
+  def url_state
+    state_param
+  end
+
+  # State abbreviation from user-provided state param
   def state
     state_param = params[:state]
     return nil unless state_param.present?
@@ -14,16 +29,13 @@ module SearchRequestParams
     end
   end
 
+  # lowercase state name from user-provided state param
   def state_name
     States.state_name(state)
   end
 
   def is_browse_url?
     request.path.match? /\/schools/
-  end
-
-  def state_param
-    params[:state]
   end
 
   def q
@@ -97,31 +109,23 @@ module SearchRequestParams
     params[:sort]
   end
 
-  def city
-    params[:city]&.gsub('-', ' ')&.gsub('_', '-')&.gs_capitalize_words
+  def city_param_name
+    :city
   end
 
-  def county_object
-    if defined?(@_county_object)
-      return @_county_object 
-    end
-    @_county_object = city_record&.county
-  end
-
+  # raw user-provided city param (with hyphens and underscores)
   def city_param
-    params[:city]
+    params[city_param_name]
   end
 
-  def district_param
-    params[:district] || params[:district_name]
+  # lowercase city name from user-provided param
+  def city
+    params[city_param_name]&.gsub('-', ' ')&.gsub('_', '-')&.gs_capitalize_words
   end
 
-  def location_label_param 
-    params[:locationLabel] || params[:locationSearchString]
-  end
-
-  def location_label
-    location_label_param.gsub(', USA', '')
+  # city that you can use when making URLs
+  def url_city
+    city_param
   end
 
   def city_record
@@ -130,16 +134,24 @@ module SearchRequestParams
     @_city_object = City.get_city_by_name_and_state(city, state).first
   end
 
-  def school_id
-    params[:id]&.to_i
+
+  def district_param_name
+    :district_name
   end
 
-  def district_id
-    params[:districtId]&.to_i || params[:district_id]&.to_i
+  # raw user-provided district (with hyphens and underscores)
+  def district_param
+    params[:district] || params[district_param_name]
   end
 
+  # lowercase district name from user-provided district param
   def district
     district_param&.gsub('-', ' ')&.gsub('_', '-')&.gs_capitalize_words
+  end
+
+  # district name you can use when making URLs
+  def url_district
+    district_param
   end
 
   def district_record
@@ -152,6 +164,30 @@ module SearchRequestParams
         District.on_db(state).where(name: district).first
       end
     end
+  end
+
+  def district_id
+    params[:districtId]&.to_i || params[:district_id]&.to_i
+  end
+
+  def county_object
+    if defined?(@_county_object)
+      return @_county_object 
+    end
+    @_county_object = city_record&.county
+  end
+
+  def location_label_param 
+    params[:locationLabel] || params[:locationSearchString]
+  end
+
+  def location_label
+    location_label_param.gsub(', USA', '')
+  end
+
+
+  def school_id
+    params[:id]&.to_i
   end
 
   def district_browse?
@@ -272,6 +308,10 @@ module SearchRequestParams
 
   def my_school_list?
     school_list == 'msl'
+  end
+
+  def default_view
+    'list'
   end
 
 end

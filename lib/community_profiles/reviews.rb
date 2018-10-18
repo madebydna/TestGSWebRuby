@@ -29,7 +29,7 @@ module CommunityProfiles
 
     def reviews_list
       UserReviews
-        .make_instance_for_each_user(reviews, community_record)
+        .make_instance_for_each_user_per_school(reviews, community_record)
         .sort_by { |r| r.most_recent_date }
         .reverse
         .map.with_index do |user_reviews, idx|

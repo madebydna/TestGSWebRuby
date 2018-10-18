@@ -1,0 +1,19 @@
+# Cities
+Albuquerque, ABQ
+Baltimore, Balto
+Brooklyn, Bklyn
+Indianapolis, Indpls
+Jacksonville, JAX
+Minneapolis, MPLS
+New York, NYC
+Philadelphia, Philly
+Phoenix, PHX
+Rapid City, Rapid
+Salt Lake City, SLC
+San Francisco, SF
+Washington, DC
+
+# Districts
+Arlington Independent School District, AISD
+Austin Independent School District, AISD
+Academy 20 School District, District 20
