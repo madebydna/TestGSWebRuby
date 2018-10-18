@@ -33,7 +33,8 @@ class Search extends React.Component {
     breadcrumbs: [],
     q: null,
     layout: 'Search',
-    schoolKeys: []
+    schoolKeys: [],
+    numOfSchools: 0
   };
 
   static propTypes = {
@@ -62,7 +63,8 @@ class Search extends React.Component {
     q: PropTypes.string,
     searchTableViewHeaders: PropTypes.object,
     layout: PropTypes.string,
-    schoolKeys: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array))
+    schoolKeys: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array)),
+    numOfSchools: PropTypes.number
   };
 
   componentDidMount() {
@@ -116,6 +118,7 @@ class Search extends React.Component {
                 <Ad slot="Search_160x600" dimensions={[160, 600]} />
               </div>
             }
+            numOfSchools={this.props.numOfSchools}
             schoolList={
               <SchoolList
                 toggleHighlight={this.props.toggleHighlight}

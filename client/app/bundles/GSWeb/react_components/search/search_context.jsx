@@ -288,6 +288,7 @@ class SearchProvider extends React.Component {
           schools: this.state.schools,
           savedSchools: this.state.savedSchools,
           saveSchoolCallback: this.handleSaveSchoolClick,
+          numOfSchools: this.state.schools.length,
           page: this.props.page,
           totalPages: this.state.totalPages,
           onPageChanged: compose(

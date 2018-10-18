@@ -20,7 +20,7 @@ const StateSelectDropdown = () => {
                 keyFunc={d => d}
                 onChange={updateStateFilter}
                 defaultLabel={
-                  (uniqStates.find(obj => obj === currentStateFilter) || uniqStates[0]).label
+                  (uniqStates.find(obj => obj === currentStateFilter) || uniqStates[0])
                 }
                 defaultValue={uniqStates[0]}
               />

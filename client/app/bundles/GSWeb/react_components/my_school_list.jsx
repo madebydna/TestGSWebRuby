@@ -9,7 +9,7 @@ import { t, capitalize } from 'util/i18n';
 class MySchoolList extends Search {
   noResults() {
     return this.props.schools.length === 0 ? (
-      <NoMySchoolListResults resultSummary={this.props.resultSummary} />
+      <NoMySchoolListResults />
     ) : null;
   }
 }
@@ -18,7 +18,7 @@ export default function() {
   return (
     <SearchContext.Provider findSchools={mySchoolList}>
       <SearchContext.Consumer>
-        {({ schools, currentStateFilter, updateStateFilter, ...state }) => {
+        {({ schools, currentStateFilter, updateStateFilter, numOfSchools, ...state }) => {
           const statesInList = schools.map(s => capitalize(stateName(s.state)))
           const uniqStates = [...new Set(statesInList)].sort()
           if (currentStateFilter === null) { updateStateFilter(uniqStates[0]) }
@@ -26,6 +26,7 @@ export default function() {
             <MySchoolList
               {...state}
               schools={schools.filter(s => s.savedSchool && abbreviation(currentStateFilter) === s.state.toLowerCase() )}
+              numOfSchools={numOfSchools}
               layout="MySchoolList"
             />
           )
@@ -34,3 +35,5 @@ export default function() {
     </SearchContext.Provider>
   );
 }
+
+

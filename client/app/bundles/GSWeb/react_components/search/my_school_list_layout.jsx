@@ -112,7 +112,8 @@ class MySchoolListLayout extends React.Component {
     pagination: PropTypes.element,
     resultSummary: PropTypes.string.isRequired,
     noResults: PropTypes.element,
-    chooseTableButtons: PropTypes.element
+    chooseTableButtons: PropTypes.element,
+    numOfSchools: PropTypes.number
   };
 
   static getDerivedStateFromProps(props) {
@@ -256,10 +257,10 @@ class MySchoolListLayout extends React.Component {
                   aria-label={t('Close filters')}
                 />
                 <div>
-                  <div className="menu-item">
+                  {this.props.numOfSchools > 0 && <div className="menu-item">
                     <span className="label">{t('Show schools in')}:</span>
                     {this.props.stateSelect}
-                  </div>
+                  </div>}
                   <span className="menu-item">
                     <span className="label">{t('Sort by')}:</span>
                     {this.props.sortSelect}
