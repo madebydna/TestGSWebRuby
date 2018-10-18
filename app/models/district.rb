@@ -96,4 +96,8 @@ class District < ActiveRecord::Base
    )".squish
   end
 
+  def test_scores(cache_data_reader)
+    @_test_scores ||= SchoolProfiles::Components::DistrictTestScoresComponentGroup.new(school_cache_data_reader: cache_data_reader).to_hash
+  end
+
 end

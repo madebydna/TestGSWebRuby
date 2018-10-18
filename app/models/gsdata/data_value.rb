@@ -230,12 +230,13 @@ class DataValue < ActiveRecord::Base
   end
 
   def self.find_by_district_and_data_type_tags(state, district_id, data_type_tags)
-    state_and_district_values.
+    state_and_district_values
       from(
         DataValue.state_and_district(
           state,
           district_id
-        ), :data_values)
+        ), :data_values
+      )
           .with_data_types
           .with_data_type_tags(data_type_tags)
           .with_breakdowns
@@ -244,6 +245,7 @@ class DataValue < ActiveRecord::Base
           .with_academic_tags
           .with_loads
           .with_sources
+          .with_proficiency_bands
           .group('data_values.id')
   end
 
@@ -282,6 +284,7 @@ class DataValue < ActiveRecord::Base
       data_values.id, data_values.data_type_id, data_types.name, data_types.id as data_type_id,
       #{LoadSource.table_name}.name as source_name, #{Load.table_name}.description, data_values.value, #{Load.table_name}.date_valid, grade, proficiency_band_id, cohort_count,
       group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
+      group_concat(bt.tag ORDER BY bt.tag) as "breakdown_tags",
       group_concat(academics.name ORDER BY academics.name) as "academic_names"
     SQL
     select(state_and_district_values)

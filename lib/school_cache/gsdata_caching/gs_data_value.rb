@@ -47,6 +47,10 @@ class GsdataCaching::GsDataValue
       reject { |dv| dv.academics.present? }.extend(CollectionMethods)
     end
 
+    def having_district_value
+      reject { |dv| dv.district_value.blank?}.extend(CollectionMethods)
+    end
+
     def having_ethnicity_breakdown
       select { |dv| dv.breakdowns.present? && dv.breakdowns == ETHNICITY_BREAKDOWN}.extend(CollectionMethods)
     end
@@ -59,12 +63,25 @@ class GsdataCaching::GsDataValue
       select { |dv| dv.school_value.present? && !dv.school_value_as_float.zero? }.extend(CollectionMethods)
     end
 
+    def having_non_zero_district_value
+      select { |dv| dv.district_value.present? && !dv.district_value_as_float.zero? }.extend(CollectionMethods)
+    end
+
     def any_non_zero_school_values?
       having_non_zero_school_value.any?
+      end
+
+    def any_non_zero_district_values?
+      having_non_zero_district_value.any?
     end
 
     def keep_if_any_non_zero_school_values
       return [].extend(CollectionMethods) unless any_non_zero_school_values?
+      self
+    end
+
+    def keep_if_any_non_zero_district_values
+      return [].extend(CollectionMethods) unless any_non_zero_district_values?
       self
     end
 
@@ -446,6 +463,12 @@ class GsdataCaching::GsDataValue
         .extend(CollectionMethods)
     end
 
+    def ethnicity_district_values
+      self.having__value
+        .select(&:has_ethnicity_tag?)
+        .extend(CollectionMethods)
+    end
+
     def +(other)
       super(other).extend(CollectionMethods)
     end
@@ -475,7 +498,7 @@ class GsdataCaching::GsDataValue
     :label
 
   attr_writer :flags
-  attr_reader :school_cohort_count, :state_cohort_count
+  attr_reader :school_cohort_count, :state_cohort_count, :district_cohort_count
 
   def [](key)
     send(key) if respond_to?(key)
@@ -504,6 +527,11 @@ class GsdataCaching::GsDataValue
   def school_value_as_float
     return school_value if school_value.nil?
     school_value.to_s.scan(/[0-9.]+/).first.to_f
+  end
+
+  def district_value_as_float
+    return district_value if district_value.nil?
+    district_value.to_s.scan(/[0-9.]+/).first.to_f
   end
 
   def state_value_as_float
@@ -537,6 +565,10 @@ class GsdataCaching::GsDataValue
     @state_cohort_count = count.present? ? count.to_i : nil
   end
 
+  def district_cohort_count=(count)
+    @district_cohort_count = count.present? ? count.to_i : nil
+  end
+
   def to_hash
     {
       breakdowns: (breakdowns.is_a?(Array) ? breakdowns.join(',') : breakdowns),
@@ -545,6 +577,7 @@ class GsdataCaching::GsDataValue
       state_value: state_value,
       school_cohort_count: school_cohort_count,
       state_cohort_count: state_cohort_count,
+      district_cohort_count: district_cohort_count,
       district_value: district_value,
       source_year: source_year,
       source_date_valid: source_date_valid,
