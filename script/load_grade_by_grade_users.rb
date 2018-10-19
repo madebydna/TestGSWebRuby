@@ -222,7 +222,7 @@ end
 read_command_line_input
 
 if @options.input_file
-  run_time = Benchmark.measure {LoadGbgUsers.for(@options.input_file)}.real
+  run_time = Benchmark.measure {LoadGradeByGradeUsers.for(@options.input_file)}.real
   puts run_time
   print_gs
 else
