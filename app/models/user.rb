@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
   has_many :saved_searches, foreign_key: 'member_id'
   has_many :review_votes, foreign_key: 'member_id'
   has_many :school_users, foreign_key: 'member_id'
+  has_many :unsubscribed_history, foreign_key: 'member_id', class_name: 'UnsubscribedHistory'  # for table list_unsubscribed
+  has_many :subscription_history, foreign_key: 'member_id', class_name: 'SubscriptionHistory'  # for table list_active_history
 
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }

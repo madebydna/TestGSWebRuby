@@ -1,0 +1,13 @@
+.git
+.idea
+.vscode
+.bundle
+.byebug_history
+tmp
+log
+node_modules
+npm-debug.log*
+npm-error.log*
+app/assets/webpack
+client
+package.json

@@ -30,7 +30,7 @@ const SchoolList = ({
               <Ad
                 slot={`Search_After${index}_300x250`}
                 sizeName="box"
-                idCounter={index / 4}
+                slotOccurrenceNumber={index / 4}
                 key={`ad-${index}`}
                 container={<li className="ad" />}
               />

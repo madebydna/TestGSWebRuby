@@ -17,6 +17,8 @@ require_relative '../feed_builders/new-test-gsdata/data_reader'
 require_relative '../feed_builders/new-test-gsdata/all_students_data_reader'
 require_relative '../feed_builders/new-test-gsdata/xml_writer'
 require_relative '../feed_builders/new-test-gsdata/subgroups_xml_writer'
+require_relative '../feed_builders/new-test-gsdata/csv_writer'
+require_relative '../feed_builders/new-test-gsdata/subgroups_csv_writer'
 
 module Feeds
   class GenerateFeed
@@ -26,7 +28,7 @@ module Feeds
         old_test_gsdata: Feeds::OldTestGsdata::AllStudentsDataReader,
         old_test_subgroup_gsdata: Feeds::OldTestGsdata::DataReader,
         new_test_gsdata: Feeds::NewTestGsdata::AllStudentsDataReader,
-        new_test_subgroup_gsdata: Feeds::NewTestGsdata::DataReader
+        new_test_subgroup_gsdata: Feeds::NewTestGsdata::DataReader,
     }
 
     DATA_WRITERS = {
@@ -46,10 +48,14 @@ module Feeds
             xml: Feeds::OldTestGsdata::SubgroupsXmlWriter
         },
         new_test_gsdata: {
-            xml: Feeds::NewTestGsdata::XmlWriter
+            xml: Feeds::NewTestGsdata::XmlWriter,
+            csv: Feeds::NewTestGsdata::CsvWriter,
+            txt: Feeds::NewTestGsdata::CsvWriter
         },
         new_test_subgroup_gsdata: {
-            xml: Feeds::NewTestGsdata::SubgroupsXmlWriter
+            xml: Feeds::NewTestGsdata::SubgroupsXmlWriter,
+            csv: Feeds::NewTestGsdata::SubgroupsCsvWriter,
+            txt: Feeds::NewTestGsdata::SubgroupsCsvWriter
         },
     }
 

@@ -219,7 +219,7 @@ class CityLayout extends React.Component {
             {this.renderDistricts()}
             {this.renderMobility()}
             {this.renderZillow()}
-            {/* {this.renderReviews()} */}
+            {this.renderReviews()}
           </div>
           {this.renderDesktopAd()}
         </div>

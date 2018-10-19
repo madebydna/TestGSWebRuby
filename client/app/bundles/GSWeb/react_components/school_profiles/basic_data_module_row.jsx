@@ -28,7 +28,7 @@ const BasicDataModuleRow = ({
       }
       else {
         if (percentage > 0) {
-          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({percentage}{t('of students')} )</span>
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({percentage}{t('percentage of students')} )</span>
         }
       }
     }

@@ -125,6 +125,13 @@
     }
   }
 
+  .saved-schools-nav.main{
+    @media only screen and (max-width: 767px) {
+      //to hide the icon as one of the hamburger list items
+      display: none;
+    }
+  }
+
   .logo_size {
     width: 112px;
     height: 47px;
@@ -528,11 +535,22 @@
   }
 
   .un .search_icon {
-    display: table-cell;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     text-align: right;
     padding-right: 10px;
     padding-top: 10px;
     vertical-align: middle;
+    position: absolute;
+    top: 10px;
+    right: 0;
+
+    // Overwrites/Add in some style to the icon
+    .saved-schools-nav{
+      margin-right: 15px;
+      font-size: 15px;
+    }
   }
 
   .un nav {
