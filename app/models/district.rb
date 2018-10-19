@@ -122,7 +122,7 @@ class District < ActiveRecord::Base
       anchor: 'Academics',
       analytics_id: 'Academics',
       subtitle: I18n.t('.Race ethnicity subtitle', scope: 'school_profiles.equity'),
-      info_text: I18n.t('.Race ethnicity tooltip', scope: 'school_profiles.equity'),
+      info_text: nil, #I18n.t('.Race ethnicity tooltip', scope: 'school_profiles.equity')
       icon_classes: I18n.t('.Race ethnicity icon', scope: 'school_profiles.equity'),
       sources: nil, #equity.race_ethnicity_sources
       share_content: nil, #coupled to school

@@ -53,7 +53,7 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
       h[:source_name] = result.source_name
 # rubocop:enable Style/FormatStringToken
       h[:district_value] = result.value
-      h[:state_value] = state_result.value
+      h[:state_value] = state_result.value if state_result && state_result.value
       h[:source_name] = result.source_name
       h[:description] = result.description if result.description
       h[:academics] = academics
@@ -86,7 +86,7 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
   def state_results_hash
     @_state_results_hash ||= begin
       state_values = DataValue
-                       .find_by_state_and_data_type_tags(district.state, DATA_TYPE_TAGS)
+                       .find_by_state_and_data_type_tags(district.state, 'state_test')
                        .where(proficiency_band_id: 1)
 
       state_values.each_with_object({}) do |result, hash|

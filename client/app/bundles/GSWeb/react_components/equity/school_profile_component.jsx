@@ -282,7 +282,7 @@ export default class SchoolProfileComponent extends React.Component {
     return (
       <div data-ga-click-label={this.props.title}>
         <InfoBox content={this.props.sources} element_type="sources">{ t('See notes') }</InfoBox>
-        <GiveUsFeedback content={this.props.qualaroo_module_link} />
+        {this.props.qualaroo_module_link && <GiveUsFeedback content={this.props.qualaroo_module_link} />}
       </div>
     )
   }
@@ -300,7 +300,7 @@ export default class SchoolProfileComponent extends React.Component {
     return (
       <div id={analyticsId}>
         <BasicDataModuleLayout
-          sharing_modal={ this.hasData() && <SharingModal content={this.props.share_content} /> }
+          sharing_modal={ this.hasData() && this.props.share_content && <SharingModal content={this.props.share_content} /> }
           id={this.props.anchor}
           className=''
           icon={ this.icon() }
