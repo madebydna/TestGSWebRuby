@@ -76,7 +76,7 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/search/nearbySearch.page', as: :search_by_zip, to: 'search#by_zip'
 
-  get '/find-schools/', as: :default_search, to: 'search#default_search'
+  get '/find-schools/', as: :default_search, to: redirect('/')
 
   match '/add_school', to: 'add_schools#new', via: :get
   match '/add_school', to: 'add_schools#create', via: :post
