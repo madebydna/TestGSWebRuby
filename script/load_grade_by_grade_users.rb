@@ -65,7 +65,7 @@ class LoadGradeByGradeUsers < ActiveRecord::Base
   end
 
   def add_errors(gbg_load_obj)
-    errors.concat(gbg_load_obj.errors)
+    errors.push(gbg_load_obj.errors)
   end
 
   def write_rollback_sql_to_file
