@@ -58,7 +58,7 @@ const defaultOptions = [
     label: t('Test scores rating (Hispanic)')
   },
   {
-    key: 'test_scores_rating_native_hawaiian_or_pacific_islander',
+    key: 'test_scores_rating_native_hawaiian_or_other_pacific_islander',
     label: t('Test scores rating (Native Hawaiian or Other Pacific Islander)')
   },
   {
