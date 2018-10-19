@@ -15,7 +15,7 @@ require 'benchmark'
 
 # The script will output a sql file to tmp containing the ids of the new records.
 
-class LoadGbgUsers < ActiveRecord::Base
+class LoadGradeByGradeUsers < ActiveRecord::Base
 
   def self.for(file)
     new(file).load
@@ -42,6 +42,10 @@ class LoadGbgUsers < ActiveRecord::Base
     @_new_grades ||= []
   end
 
+  def errors
+    @_errors ||= []
+  end
+
   def load
     CSV.foreach(@file, headers: true) do |row|
       selected_grades = row[4..-1].each_with_index.map {|grade, idx| id_to_grade(idx).to_s if grade.present?}.compact
@@ -49,13 +53,19 @@ class LoadGbgUsers < ActiveRecord::Base
       gbg_load_obj = GbgLoadObject.for(user_and_grades)
       gbg_load_obj&.load_subscriptions
       add_new_records(gbg_load_obj)
+      add_errors(gbg_load_obj)
     end
     write_rollback_sql_to_file
+    write_errors_to_file
   end
 
   def add_new_records(gbg_load_obj)
     return unless gbg_load_obj
     %i(new_users new_subscriptions new_grades).each {|sym| send(sym).concat(gbg_load_obj.new_records_hash[sym])}
+  end
+
+  def add_errors(gbg_load_obj)
+    errors.concat(gbg_load_obj.errors)
   end
 
   def write_rollback_sql_to_file
@@ -64,6 +74,12 @@ class LoadGbgUsers < ActiveRecord::Base
       f.puts sql_for('list_member', new_users)
       f.puts sql_for('list_active', new_subscriptions)
       f.puts sql_for('student', new_grades)
+    end
+  end
+
+  def write_errors_to_file
+    File.open('/tmp/ausd_gbg_load_10_2018_errors.rb', 'w+') do |f|
+      f.print errors
     end
   end
 
@@ -84,15 +100,15 @@ class GbgLoadObject < ActiveRecord::Base
 
   # Much of the load logic depends on whether provided email is already associated with a user. This factory method
   # finds or creates a user and adjusts grades if required before creating a GbgLoadObject instance
-  def self.for(user_and_grades)
-    grades_to_add = user_and_grades[:grades]
+  def self.for(email:, first_name:, last_name:, grades:)
+    grades_to_add = grades
     new_user = true
-    user = User.find_by(email: user_and_grades[:email])
+    user = User.find_by(email: email)
     if user
       grades_to_add -= user.grades_array
       new_user = false
     else
-      user = User.new(user_and_grades.except(:grades).merge({password: Password.generate_password, how: HOW_ACQUIRED_AUSD}))
+      user = User.new(email: email, first_name: first_name, last_name: last_name, password: Password.generate_password, how: HOW_ACQUIRED_AUSD)
       user.save
       return if user.id.nil?
     end

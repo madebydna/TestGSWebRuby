@@ -15,7 +15,7 @@ module StudentGradeLevelsAssociation
   end
 
   def grades_array
-    student_grade_levels.map {|sgl| sgl.grade }
+    student_grade_levels.map(&:grade)
   end
 
 end
