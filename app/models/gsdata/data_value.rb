@@ -245,7 +245,6 @@ class DataValue < ActiveRecord::Base
           .with_academic_tags
           .with_loads
           .with_sources
-          .with_proficiency_bands
           .group('data_values.id')
   end
 

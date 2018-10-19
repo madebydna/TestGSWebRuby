@@ -4,7 +4,7 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
 
   CACHE_KEY = 'test_scores_gsdata'
 
-  DATA_TYPE_TAGS = %w(state_test)
+  DATA_TYPE_TAGS = 'state_test'
 
   def query_results
     @query_results ||=
@@ -18,7 +18,7 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
           )
           .where(proficiency_band_id: 1)
           .with_data_types
-          .with_data_type_tags('state_test')
+          .with_data_type_tags(DATA_TYPE_TAGS)
           .with_breakdowns
           .with_breakdown_tags
           .with_academics
@@ -49,17 +49,19 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
       h[:breakdowns] = breakdowns
       h[:breakdown_tags] = result.breakdown_tags
 # rubocop:disable Style/FormatStringToken
-      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')  #source.data_valid
-      h[:source_name] = result.source_name
+      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
 # rubocop:enable Style/FormatStringToken
+      h[:source_name] = result.source_name
       h[:district_value] = result.value
+# rubocop:disable Style/SafeNavigation
       h[:state_value] = state_result.value if state_result && state_result.value
       h[:source_name] = result.source_name
       h[:description] = result.description if result.description
       h[:academics] = academics
-      h[:grade] = result.grade if result.grade  #data_value.grade
+      h[:grade] = result.grade if result.grade
       h[:district_cohort_count] = result.cohort_count
-      h[:state_cohort_count] = state_result.cohort_count if state_result && state_result.cohort_count  #data_value.cohort_count
+      h[:state_cohort_count] = state_result.cohort_count if state_result && state_result.cohort_count
+# rubocop:enable Style/SafeNavigation
     end
   end
 
@@ -86,7 +88,7 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
   def state_results_hash
     @_state_results_hash ||= begin
       state_values = DataValue
-                       .find_by_state_and_data_type_tags(district.state, 'state_test')
+                       .find_by_state_and_data_type_tags(district.state, DATA_TYPE_TAGS)
                        .where(proficiency_band_id: 1)
 
       state_values.each_with_object({}) do |result, hash|
