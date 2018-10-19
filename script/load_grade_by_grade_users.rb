@@ -53,7 +53,7 @@ class LoadGradeByGradeUsers < ActiveRecord::Base
       gbg_load_obj = GbgLoadObject.for(user_and_grades)
       gbg_load_obj&.load_subscriptions
       add_new_records(gbg_load_obj)
-      add_errors(gbg_load_obj) if gbg_load_obj.errors.present?
+      add_errors(gbg_load_obj)
     end
     write_rollback_sql_to_file
     write_errors_to_file
@@ -65,7 +65,8 @@ class LoadGradeByGradeUsers < ActiveRecord::Base
   end
 
   def add_errors(gbg_load_obj)
-    errors.push(gbg_load_obj.errors)
+    return unless gbg_load_obj
+    errors.push(gbg_load_obj.errors) if gbg_load_obj.errors.present?
   end
 
   def write_rollback_sql_to_file
