@@ -14,7 +14,7 @@ module SearchRequestParams
 
   # State that you can use when making URLs
   def url_state
-    gs_legacy_url_encode(States.state_name(state_param))
+    gs_legacy_url_encode(States.state_name(state))
   end
 
   # State abbreviation from user-provided state param
