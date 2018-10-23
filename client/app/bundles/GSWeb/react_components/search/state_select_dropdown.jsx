@@ -6,12 +6,17 @@ import { name as stateName } from 'util/states';
 import PropTypes from 'prop-types';
 import SearchContext from './search_context';
 import { mySchoolList } from 'api_clients/schools';
+import { startCase } from 'lodash';
+
+const capitalizeStateName = (arrayOfStrings) => console.log(arrayOfStrings) || (
+  arrayOfStrings.map(str => capitalize(str)).join(" ")
+);
 
 const StateSelectDropdown = () => {
   return(
       <SearchContext.Consumer>
         {({ schools, currentStateFilter, updateStateFilter}) => {
-          const statesInList = schools.map(s => capitalize(stateName(s.state)))
+          const statesInList = schools.map(s => startCase(stateName(s.state)))
           const uniqStates = [...new Set(statesInList)].sort()
             return(
               <Select
