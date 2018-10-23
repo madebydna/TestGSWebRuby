@@ -11,9 +11,16 @@
     * Unfortunately a login is required. Sign up for an account on docker.com if you don't already have one
     * Download Docker Desktop (Docker Community Edition for Mac) (500MB) from https://store.docker.com/editions/community/docker-ce-desktop-mac
     * Install and execute. Log in to docker from the app
+  * Open docker for Mac. In the preferences pane:
+    * Find the advanced tab, and enter 172.17.0.0 into the Docker subnet. Save the settings
+    * Also, under the Daemon tab, click advanced and enter the following JSON snippet and save
+      {
+        "debug" : true,
+        "experimental" : true,
+        "bip" : "10.11.12.1/24"
+      }
   * Install docker-sync from command line
-    * brew install docker-sync
-    * (I had to edit the docker-sync gem install there were references to a method that didn't exist)
+    * gem install docker-sync
   * Start the docker containers
     * docker-sync-stack start # It will take much longer the first time... maybe 15+ minutes depending internet etc.
   * Test in browser
