@@ -4,7 +4,6 @@ import SearchContext from './search/search_context';
 import { Search } from './search/search';
 import NoMySchoolListResults from './no_my_school_list_results';
 import { name as stateName, abbreviation } from 'util/states';
-import { t, capitalize } from 'util/i18n';
 import { startCase } from 'lodash';
 
 
