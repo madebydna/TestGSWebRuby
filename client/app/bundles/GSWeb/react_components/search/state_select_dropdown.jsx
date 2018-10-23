@@ -5,14 +5,14 @@ import { name as stateName } from 'util/states';
 import PropTypes from 'prop-types';
 import SearchContext from './search_context';
 import { mySchoolList } from 'api_clients/schools';
-import { startCase } from 'lodash';
+import { startCase, uniq } from 'lodash';
 
 const StateSelectDropdown = () => {
   return(
       <SearchContext.Consumer>
         {({ schools, currentStateFilter, updateStateFilter}) => {
           const statesInList = schools.map(s => startCase(stateName(s.state)))
-          const uniqStates = [...new Set(statesInList)].sort()
+          const uniqStates = uniq(statesInList).sort()
             return(
               <Select
                 objects={uniqStates}

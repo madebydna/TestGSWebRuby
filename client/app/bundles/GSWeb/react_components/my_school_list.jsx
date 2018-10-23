@@ -4,7 +4,7 @@ import SearchContext from './search/search_context';
 import { Search } from './search/search';
 import NoMySchoolListResults from './no_my_school_list_results';
 import { name as stateName, abbreviation } from 'util/states';
-import { startCase } from 'lodash';
+import { startCase, uniq } from 'lodash';
 
 
 class MySchoolList extends Search {
