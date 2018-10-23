@@ -22,7 +22,7 @@
   * Install docker-sync from command line
     * gem install docker-sync
   * Start the docker containers
-    * docker-sync-stack start # It will take much longer the first time... maybe 15+ minutes depending internet etc.
+    * docker-sync-stack start # It will take much longer the first time... maybe 5-10 minutes depending internet etc.
   * Test in browser
     * You should be able to reach the site at http://localhost:3000
 
