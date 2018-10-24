@@ -21,7 +21,7 @@ export default function() {
       <SearchContext.Consumer>
         {({ schools, currentStateFilter, updateStateFilter, numOfSchools, ...state }) => {
           const statesInList = schools.map(s => startCase(stateName(s.state)))
-          const uniqStates = [...new Set(statesInList)].sort()
+          const uniqStates = uniq(statesInList).sort()
           if (currentStateFilter === null) { updateStateFilter(uniqStates[0]) }
           return(
             <MySchoolList
