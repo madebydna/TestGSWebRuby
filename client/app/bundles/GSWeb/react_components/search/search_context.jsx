@@ -212,7 +212,7 @@ class SearchProvider extends React.Component {
     else{
       objectHeart = $('.header_un .search_icon a.saved-schools-nav');
     }
-    if(this.savedSchoolsFindIndex(schoolKey) > 1) {
+    if(this.savedSchoolsFindIndex(schoolKey) > -1) {
       objectHeart.tipso({
         content: t('Saved!'),
         background: '#202124',
