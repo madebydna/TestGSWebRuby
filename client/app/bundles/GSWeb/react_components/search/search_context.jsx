@@ -220,10 +220,12 @@ class SearchProvider extends React.Component {
         position: 'bottom',
         useTitle: false,
         width: 120,
+        speed: 0,
+        offsetY: -10,
         onShow:
             setTimeout(function () {
               objectHeart.tipso('hide');
-            }, 2000)
+            }, 1000)
 
       }).tipso('show');
     }
