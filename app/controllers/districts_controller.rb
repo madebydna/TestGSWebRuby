@@ -39,6 +39,7 @@ class DistrictsController < ApplicationController
   end
 
   def largest_district_in_city?
+    return false if city_record.nil?
     # check city cache for district_content - if district id in first hash of cache is equal to this district id it is the largest district by enrollment
     district_record.id == city_key_value(:id)
   end
