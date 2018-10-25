@@ -24,6 +24,7 @@ import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
 import DistanceContext from './distance_context';
 import { set as setCookie } from 'js-cookie';
+import { t } from 'util/i18n';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -195,13 +196,44 @@ class SearchProvider extends React.Component {
     );
   }
 
+  savedSchoolsFindIndex(schoolKey) {
+    return getSavedSchoolsFromCookie().findIndex(
+        key =>
+            key.id.toString() === schoolKey.id.toString() &&
+            key.state === schoolKey.state
+    );
+  }
+
+  displayHeartMessage(schoolKey){
+    let objectHeart;
+    if (!('ontouchstart' in window)) {
+      objectHeart = $('.header_un .menu_hide_mobile a.saved-schools-nav');
+    }
+    else{
+      objectHeart = $('.header_un .search_icon a.saved-schools-nav');
+    }
+    if(this.savedSchoolsFindIndex(schoolKey) > -1) {
+      objectHeart.tipso({
+        content: t('Saved!'),
+        background: '#202124',
+        color: '#FFFFFF',
+        position: 'bottom',
+        useTitle: false,
+        width: 120,
+        speed: 0,
+        offsetY: -10,
+        onShow:
+            setTimeout(function () {
+              objectHeart.tipso('hide');
+            }, 1000)
+
+      }).tipso('show');
+    }
+  }
+
   updateSavedSchoolsCookie(schoolKey) {
     const savedSchools = getSavedSchoolsFromCookie();
-    const schoolKeyIdx = savedSchools.findIndex(
-      key =>
-        key.id.toString() === schoolKey.id.toString() &&
-        key.state === schoolKey.state
-    );
+    const schoolKeyIdx = this.savedSchoolsFindIndex(schoolKey);
     schoolKeyIdx > -1
       ? savedSchools.splice(schoolKeyIdx, 1)
       : savedSchools.push(schoolKey);
@@ -212,6 +244,7 @@ class SearchProvider extends React.Component {
   handleSaveSchoolClick(schoolKey) {
     this.toggleSchoolProperty([schoolKey], 'savedSchool', this.toggleAll);
     this.updateSavedSchoolsCookie(schoolKey);
+    this.displayHeartMessage(schoolKey);
     updateNavbarHeart();
   }
 
