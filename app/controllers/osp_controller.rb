@@ -1,5 +1,4 @@
 class OspController < ApplicationController
-  include PhotoUploadConcerns
   include PopularCitiesConcerns
   include SchoolHelper
 

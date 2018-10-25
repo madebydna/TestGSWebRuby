@@ -1,6 +1,4 @@
 class EspMembership < ActiveRecord::Base
-  include PhotoUploadConcerns
-
   self.table_name = 'esp_membership'
 
   db_magic :connection => :gs_schooldb
