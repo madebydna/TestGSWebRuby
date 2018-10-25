@@ -97,7 +97,7 @@ class District < ActiveRecord::Base
   end
 
   def test_scores(cache_data_reader)
-    @_test_scores ||= SchoolProfiles::Components::DistrictTestScoresComponentGroup.new(school_cache_data_reader: cache_data_reader).to_hash
+    @_test_scores ||= Components::ComponentGroups::DistrictTestScoresComponentGroup.new(cache_data_reader: cache_data_reader).to_hash
   end
 
   def faq_for_academics_module

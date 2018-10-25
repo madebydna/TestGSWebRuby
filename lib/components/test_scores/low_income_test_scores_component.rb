@@ -1,11 +1,13 @@
-module SchoolProfiles
-  module Components
+# frozen_string_literal: true
+
+module Components
+  module TestScores
     class LowIncomeTestScoresComponent < TestScoresComponent
       def narration
         low_income_hash = normalized_values.values.flatten.find { |h| h[:breakdown] == 'Low-income' } || {}
         all_hash = normalized_values.values.flatten.find { |h| h[:breakdown] == 'All students' } || {}
 
-        yml_key = NarrativeLowIncomeTestScores.yml_key(
+        yml_key = SchoolProfiles::NarrativeLowIncomeTestScores.yml_key(
           low_income_hash[:score],
           low_income_hash[:state_average],
           all_hash[:state_average]

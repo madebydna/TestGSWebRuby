@@ -1,5 +1,7 @@
-module SchoolProfiles
-  module Components
+# frozen_string_literal: true
+
+module Components
+  module TestScores
     class StudentsWithDisabilitiesTestScoresComponent < TestScoresComponent
       def narration
         subject = t(data_type)

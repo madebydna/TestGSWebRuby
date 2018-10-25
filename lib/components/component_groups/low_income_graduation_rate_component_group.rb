@@ -1,21 +1,23 @@
-module SchoolProfiles
-  module Components
-    class LowIncomeGraduationRateComponentGroup < ComponentGroup
-      attr_reader :school_cache_data_reader, :components
+# frozen_string_literal: true
 
-      def initialize(school_cache_data_reader:)
-        @school_cache_data_reader = school_cache_data_reader
+module Components
+  module ComponentGroups
+    class LowIncomeGraduationRateComponentGroup < ComponentGroup
+      attr_reader :cache_data_reader, :components
+
+      def initialize(cache_data_reader:)
+        @cache_data_reader = cache_data_reader
 
         @components = [
-          LowIncomeGraduationRateComponent.new.tap do |component|
-            component.school_cache_data_reader = school_cache_data_reader
+          Components::GraduationRates::LowIncomeGraduationRateComponent.new.tap do |component|
+            component.cache_data_reader = cache_data_reader
             component.data_type = 'Percent of students who meet UC/CSU entrance requirements'
             component.title = 'UC/CSU eligibility'
             component.type = 'bar'
             component.valid_breakdowns = ['All students', 'Economically disadvantaged', 'Not economically disadvantaged']
           end,
-          LowIncomeGraduationRateComponent.new.tap do |component|
-            component.school_cache_data_reader = school_cache_data_reader
+          Components::GraduationRates::LowIncomeGraduationRateComponent.new.tap do |component|
+            component.cache_data_reader = cache_data_reader
             component.data_type = '4-year high school graduation rate'
             component.title = 'Graduation rates'
             component.type = 'bar'

@@ -1,8 +1,8 @@
 module SchoolProfiles
 
   class EthnicityPercentages
-    def initialize(school_cache_data_reader:)
-      @school_cache_data_reader = school_cache_data_reader
+    def initialize(cache_data_reader:)
+      @cache_data_reader = cache_data_reader
     end
 
     NATIVE_AMERICAN = [
@@ -31,7 +31,7 @@ module SchoolProfiles
       @_ethnicity_breakdowns = begin
         ethnicity_breakdown = {}
 
-        @school_cache_data_reader.ethnicity_data.each do | ed |
+        @cache_data_reader.ethnicity_data.each do | ed |
           # Two hacks for mapping pacific islander and native american to test scores values.
           if (PACIFIC_ISLANDER.include? ed['breakdown']) ||
               (PACIFIC_ISLANDER.include? ed['original_breakdown'])

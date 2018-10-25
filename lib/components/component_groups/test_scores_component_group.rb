@@ -1,5 +1,7 @@
-module SharedProfiles
-  module Components
+# frozen_string_literal: true
+
+module Components
+  module ComponentGroups
     class TestScoresComponentGroup < ComponentGroup
       attr_reader :cache_data_reader, :components
 
@@ -8,7 +10,7 @@ module SharedProfiles
       end
 
       def overview
-        test_score_data = TestScoresRatingsComponent.new.tap do |component|
+        test_score_data = Components::TestScores::TestScoresRatingsComponent.new.tap do |component|
           component.cache_data_reader = cache_data_reader
           component.type = 'rating'
         end
@@ -29,7 +31,7 @@ module SharedProfiles
 
       def build_test_components(gs_data_values)
         gs_data_values.all_academics.map do |subject|
-          TestScoresComponent.new.tap do |component|
+          Components::TestScores::TestScoresComponent.new.tap do |component|
             component.cache_data_reader = cache_data_reader
             component.data_type = subject
             component.title = I18n.t(subject, scope: 'lib.equity_test_scores', default: I18n.db_t(subject, default: subject))

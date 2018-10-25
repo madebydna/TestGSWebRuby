@@ -1,20 +1,22 @@
-module SchoolProfiles
-  module Components
-    class AdvancedCourseworkComponentGroup < ComponentGroup
-      attr_reader :school_cache_data_reader, :components
+# frozen_string_literal: true
 
-      def initialize(school_cache_data_reader:)
-        @school_cache_data_reader = school_cache_data_reader
+module Components
+  module ComponentGroups
+    class AdvancedCourseworkComponentGroup < ComponentGroup
+      attr_reader :cache_data_reader, :components
+
+      def initialize(cache_data_reader:)
+        cache_data_reader = cache_data_reader
 
         @components = [
-          RatingsComponent.new.tap do |component|
-            component.school_cache_data_reader = school_cache_data_reader
+          Components::Ratings::RatingsComponent.new.tap do |component|
+            component.cache_data_reader = cache_data_reader
             component.data_type = 'Advanced Course Rating'
             component.title = 'Advanced courses'
             component.type = 'rating'
           end,
           GsdataComponent.new.tap do |component|
-            component.school_cache_data_reader = school_cache_data_reader
+            component.cache_data_reader = cache_data_reader
             component.data_type = 'Percentage AP enrolled grades 9-12'
             component.title = 'Percentage AP enrolled grades 9-12'
             component.type = 'person'
