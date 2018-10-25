@@ -28,10 +28,6 @@ class OspController < ApplicationController
     #If performance becomes an issue, look into making this a bulk single insert.
     submit_time = Time.now
 
-    #approve provisional photos. Make this smarter and not have to use a query
-    q = OspDisplayConfig.joins(:osp_question).where('osp_questions.question_type' => 'photo_upload').first
-    approve_all_images_for_school(@school) if @is_approved_user && DB_PAGE_NAME[params[:page]] == q.try(:page_name)
-
     questions_and_answers.each do |(question_id, response_key, values)|
       save_response!(question_id, response_key, values, submit_time, @esp_membership_id, @is_approved_user)
     end
@@ -44,43 +40,11 @@ class OspController < ApplicationController
     osp_form_responses.each do |osp_form_response|
       create_update_queue_row!(osp_form_response.response)
     end
-    approve_all_images_for_member(params[:membership_id])
     # only java is receiving this html, does not matter that it renders blank page
     EspMembership.find_by(id: params[:membership_id], status: 'approved', active: true).tap do |em|
       SchoolUser.make_from_esp_membership(em) if em
     end
     render text: ''
-  end
-
-  def add_image
-    number_of_images_for_school = SchoolMedia.where(school_id: @school.id, state: @school.state).all_except_inactive.count
-    return render_error_js unless number_of_images_for_school < MAX_NUMBER_OF_IMAGES_FOR_SCHOOL
-
-    begin
-      file = params['imageFile']['0']
-
-      return render_error_js unless valid_file?(file)
-      school_media = create_image!(file)
-
-      #We are approving all photos for the school if an approved user adds a photo
-      #If they add a photo that means they have 'seen' the other photos and has signed off on them
-      approve_all_images_for_school(@school) if @is_approved_user
-      render_success_js(school_media.id)
-    rescue => error
-      GSLogger.error(:osp, error, vars: params, message: 'Failed to add image')
-      render_error_js
-    end
-  end
-
-  #test that unauthorized user can't delete images via directly hitting this action and changing params
-  def delete_image
-    media = SchoolMedia.find(params[:fileId]) rescue (return render_error_js)
-    if can_delete_image?(media)
-      media.update_attributes(status: SchoolMedia::DISABLED, date_updated: Time.now) and render_success_js(media.id)
-    else
-      Rails.logger.error("Was not able to delete osp image. time:#{Time.now} params:#{params}")
-      render_error_js
-    end
   end
 
   protected

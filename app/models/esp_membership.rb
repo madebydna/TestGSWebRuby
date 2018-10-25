@@ -34,7 +34,6 @@ class EspMembership < ActiveRecord::Base
     osp_form_responses.each do |osp_form_response|
       create_update_queue_row!(osp_form_response.response)
     end
-    approve_all_images_for_member(id)
     EspMembership.find_by(id: id, status: 'approved', active: true).tap do |em|
       SchoolUser.make_from_esp_membership(em) if em
     end

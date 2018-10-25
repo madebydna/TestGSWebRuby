@@ -15,7 +15,6 @@
 //= require guided_search
 //= require account_management
 //= require community_scorecards
-//= require dropzone.min
 //= require modals
 //= require page_initializers
 //= require zillow
