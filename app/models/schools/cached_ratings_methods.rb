@@ -42,24 +42,40 @@ module CachedRatingsMethods
     # result.except!('Student progress rating')
   end
 
-  def ethnicity_information_for_tableview
-    {
-      ratings: ethnicity_ratings,
-      students: ethnicity_students_for_tableview
-    }
+  # def ethnicity_information_for_tableview
+  #   {
+  #     ratings: ethnicity_ratings,
+  #     students: ethnicity_students_for_tableview
+  #   }
+  # end
+
+  def ethnicity_information
+    ratings= ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
+    ethnicity_ratings = decorate_ethnicity_object(ratings,"rating")
+    ethnicity_percentage = decorate_ethnicity_object(ethnicity_data,"percentage")
+    ethnicity = []
+    ethnicity_ratings.each do |rating_hash|
+      ethnicity_percentage.each do |percentage_hash|
+        if rating_hash[:label] == percentage_hash[:label]
+          ethnicity << rating_hash.merge(percentage_hash)
+        end
+      end
+    end    
+
+    ethnicity
   end
 
-  def ethnicity_ratings
-    fer = formatted_ethnicity_ratings
-    fer = {'Low Income' => low_income_rating}.merge(fer) if fer && low_income_rating
-    fer
-  end
+  # def ethnicity_ratings
+  #   fer = formatted_ethnicity_ratings
+  #   fer = {'Low Income' => low_income_rating}.merge(fer) if fer && low_income_rating
+  #   fer
+  # end
 
-  def ethnicity_students_for_tableview
-    fes = formatted_ethnicity_students
-    fes = ({'Low Income': free_and_reduced_lunch.gsub('%','')}).merge(fes) if fes && free_and_reduced_lunch
-    fes
-  end
+  # def ethnicity_students_for_tableview
+  #   fes = formatted_ethnicity_students
+  #   fes = ({'Low Income': free_and_reduced_lunch.gsub('%','')}).merge(fes) if fes && free_and_reduced_lunch
+  #   fes
+  # end
 
   def great_schools_rating
     test_score_weight = (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value']
@@ -329,6 +345,26 @@ module CachedRatingsMethods
         hash[attribute] = ethnicity_information_object["school_value"].round
       end
     end
+  end
+
+  def decorate_ethnicity_object(array_of_hashes, key)
+    ethnicity = array_of_hashes.map do |hash|
+      if hash["school_value"]
+        {
+          label: ethnicity_mapping_hash[hash["breakdown"].to_sym],
+          "#{key}": hash["school_value"].to_i
+        }
+      end
+    end.compact
+
+    case key
+    when "rating"
+      ethnicity.unshift({label: 'Low Income', "#{key}": low_income_rating.to_i}) if low_income_rating
+    when "percentage"
+      ethnicity.unshift({label: 'Low Income', "#{key}": free_and_reduced_lunch.gsub('%','').to_f}) if free_and_reduced_lunch
+    end
+
+    ethnicity
   end
 
   def ethnicity_mapping_hash
