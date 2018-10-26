@@ -1,20 +1,44 @@
-media_server: "" # a.k.a. cdn_prefix, the cdn hostname for assets
+# a.k.a. cdn_prefix, the cdn hostname for assets
+media_server: ""
+
+# The hostname and port that Rails will use when generating absolute URLs
 app_host: "localhost"
 app_port: "3000"
+
+# Whether to force rails to use https for absolute URLs. True on qa/prod
 force_ssl: false
+
+# Google API keys
 GOOGLE_MAPS_STATIC_API_KEY: "AIzaSyBv3LfIisMottwdQh3LIZ52KNLKXgoDFas"
 GOOGLE_MAPS_STATIC_SIGNING_KEY: "HNQL8P_a2tbC9mcxe6vpxgtkWUg="
+
+# Facebook API keys
 facebook_app_id: "178930405559082"
 facebook_app_secret: "db1795c48c3b404b7c480e48df3985c2"
+
+# The URLs of the Solr server to use
 solr.ro.server.url: "http://dev.greatschools.org:8580/main/"
 solr.rw.server.url: "http://dev.greatschools.org:8580/main/"
+
+# Solr timeouts in seconds
 solr.ro.timeout.open: 10
 solr.ro.timeout.read: 10
+
+# Google Tag Manager "container" to use
 gtm_container_id: 'GTM-N9TK8P'
-advertising_env: "dev"
+
+# Enable/disable advertising
 advertising_enabled: true
+# Set the "env" prop that gets sent to ad server (dev/prod)
+advertising_env: "dev"
+
+# Path to use for the home page
 home_path: "/"
+
+# Enable/disable Rails ActionMailer. (We don't use ActionMailer though)
 mail_enabled: true
+
+# ExactTarget api keys
 exacttarget_api_key: API_86987
 exacttarget_api_secret: welcome@1
 exacttarget_wsdl: https://webservice.exacttarget.com/etframework.wsdl
@@ -27,13 +51,21 @@ exacttarget_v2_api_key: 12f1dx5e916tjkij5sajei5e
 exacttarget_v2_api_secret: Qrrgd4ITVtssAgiSZNqCwVyn
 exacttarget_v2_api_app_id: 33a5f73d-b3d3-4724-a50c-a21c1277a041
 
+# The URL to route Ajax calls that use the "Homes and rentals" service (Zillow)
 homes_and_rentals_service_url: //office-gsxapi.greatschools.org/homes-and-rentals-service
+
+# The URL to route Ajax calls for the "Mobility" service (TransitScreen)
 mobility_url: //office-gsxapi.greatschools.org/mobility-score-service
 
+# ActiveRecord connection pooling
 connection_pooling_enabled: false
-search_suggest_cache_time: 0 #in seconds ie. Cache-Control: 'max-age=300'
+
+# Set http expires headers
+# in seconds ie. Cache-Control: 'max-age=300'
+search_suggest_cache_time: 0
 district_city_list_cache_time: 86400 # in seconds (24 hrs)
 
+# Recaptcha site key. Looks like this variable is not actually used. Value is hardcoded elsewhere
 recaptcha: '6LeAEEQUAAAAAHuerLWHAGjCbq8nY2tQg90DuMZD'
 
 # Configs for scripts
@@ -47,21 +79,24 @@ feed_log_location : feeds_log.txt
 # The level of feed logs -If no Level set default is DEBUG  .  debug - 0 ,  info -1  , warn -2 ,error -3 , fatal-4 , unknown -5
 feed_log_level : 0
 
-# Used to set database connection credentials locally for school db (not
-# gsdata db)
-#
-# db_host: sw3.greatschools.org
-# db_username: foobarbaz
-# db_password: foobarbaz
-#
-# Sample params for gsdata database:
-# gsdata_db_host: dev-gsdata.greatschools.org
-# gsdata_db_username: foobarbaz
-# gsdata_db_password: foobarbaz
+# The host and credentials to the primary mysql server that Rails reads from when serving web pages
+# Override these in your personal env_global_local.yml file.
+db_host: dev.greatschools.org
+db_username: developer
+db_password: override_in_env_global_local
+
+# The host and credentials to the "gsdata" (data warehouse) mysql server
+# Override these in your personal env_global_local.yml file.
+gsdata_db_host: datadev-gsdata.greatschools.org
+gsdata_db_username: gsdata
+gsdata_db_password: override_in_env_global_local
+
+# Timeouts in seconds for ActiveRecord mysql connections
 db_read_timeout: 20
 db_write_timeout: 20
 db_connect_timeout: 5
 
+# Settings to enable/disable Rails profiling and output directory
 profiling_key: we<3performance
 profiling_output_path: /tmp
 
