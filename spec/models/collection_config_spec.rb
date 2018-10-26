@@ -383,8 +383,8 @@ describe CollectionConfig do
     end
 
     it 'adds the cdn host to each image' do
-      expect(result[:data][0][:logo]).to start_with(ENV_GLOBAL['cdn_host'])
-      expect(result[:data][0][:logo]).to start_with(ENV_GLOBAL['cdn_host'])
+      expect(result[:data][0][:logo]).to start_with(ENV_GLOBAL['media_server'])
+      expect(result[:data][0][:logo]).to start_with(ENV_GLOBAL['media_server'])
     end
   end
 
