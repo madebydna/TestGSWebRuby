@@ -11,11 +11,18 @@
     * Unfortunately a login is required. Sign up for an account on docker.com if you don't already have one
     * Download Docker Desktop (Docker Community Edition for Mac) (500MB) from https://store.docker.com/editions/community/docker-ce-desktop-mac
     * Install and execute. Log in to docker from the app
+  * Open docker for Mac. In the preferences pane:
+    * Find the advanced tab, and enter 172.17.0.0 into the Docker subnet. Save the settings
+    * Also, under the Daemon tab, click advanced and enter the following JSON snippet and save
+      {
+        "debug" : true,
+        "experimental" : true,
+        "bip" : "10.11.12.1/24"
+      }
   * Install docker-sync from command line
-    * brew install docker-sync
-    * (I had to edit the docker-sync gem install there were references to a method that didn't exist)
+    * gem install docker-sync
   * Start the docker containers
-    * docker-sync-stack start # It will take much longer the first time... maybe 15+ minutes depending internet etc.
+    * docker-sync-stack start # It will take much longer the first time... maybe 5-10 minutes depending internet etc.
   * Test in browser
     * You should be able to reach the site at http://localhost:3000
 
@@ -28,26 +35,32 @@
   * To "restart" the containers and volumes
     * docker-sync-stack clean
     * docker-sync-stack start
+  * If rails is having trouble connecting to solr or mysql, you might need to run:
+    * docker-sync-stack stop     # stops the docker containers
+    * docker network prune       # remove the now-unused network interfaces
+    * docker-sync-stack start    # start up docker containers again
   * To bundle install
     * Simply follow the restart instructions above
       * docker-sync-stack clean
       * docker-sync-stack start
   * To install new npm packages
-    * docker-compose run frontend npm install
+    * docker-compose exec frontend npm install
   * To run rspec tests:
     * docker-compose run rails rspec <relative path to the spec file or directory>
   * To run all js tests
     * docker-compose run frontend npm run test
   * To log into one of the docker containers (db, rails, frontend)
-    * docker-compose run db bash
-    * docker-compose run rails bash
-    * docker-compose run frontend bash
+    * docker-compose exec db bash
+    * docker-compose exec rails bash
+    * docker-compose exec frontend bash
   * To rebuild the docker images if the Dockerfile changes, or new packages need to be installed, etc:
     * docker-compose build <service name>
     * e.g...
       * docker-compose build db
       * docker-compose build rails
       * docker-compose build frontend
+  * To clean up unused docker containers
+    * docker container prune
 
 
 # Helpful context

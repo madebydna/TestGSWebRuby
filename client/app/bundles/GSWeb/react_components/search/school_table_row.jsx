@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import { renderAssignedTooltip } from 'react_components/search/tooltips'
 import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
-import { anchorObject } from 'components/links'; 
+import { links, anchorObject } from 'components/links'; 
 import FiveStarRating from '../review/form/five_star_rating';
 import RatingWithTooltip from 'react_components/rating_with_tooltip';
+import ModalTooltip from "../modal_tooltip";
 
 const renderEnrollment = enrollment => {
   if (enrollment) {
@@ -60,7 +61,7 @@ const SchoolTableRow = ({
   columns,
   tableView,
   subratings,
-  ethnicityRatings
+  ethnicityInfo,
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   let addressPhrase = [address.street1, address.city, state, address.zip]
@@ -111,7 +112,7 @@ const SchoolTableRow = ({
     );
   }
   else if (tableView == 'Equity') {
-    content = equityColumns(columns, ethnicityRatings, links.profile);
+    content = equityColumns(columns, ethnicityInfo, links.profile);
   }
 
   else if (tableView == 'Academic') {
@@ -148,14 +149,35 @@ const overviewColumns = (type, grades, enrollmentDisplay, studentPerTeacher, rev
   )
 }
 
-const equityColumns = (columns, ethnicityRatings, profileLink) => {
+const equityColumns = (columns, ethnicityInfo, profileLink) => {
   let cellStyle = {textAlign: 'center'}
   let content = [] ;
-  columns.map(function(hash, index){
-    if (ethnicityRatings.hasOwnProperty(hash['key'])){
-      content.push(<td key={index} style={cellStyle}>{drawRating(ethnicityRatings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}</td>);
+  columns.forEach(function(hash, index){
+    if (ethnicityInfo.ratings.hasOwnProperty(hash['key'])){
+      content.push(
+        <td key={index} style={cellStyle}>
+          {drawRating(ethnicityInfo.ratings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}
+          <p className="percentage-population">
+            {ethnicityInfo.students[hash['key']] ? 
+              <React.Fragment>
+                <span>{ethnicityInfo.students[hash['key']]}%</span><br/> {t('of students')}
+              </React.Fragment> 
+              : 
+              <React.Fragment>
+                <p className="percentage-population">{t('percentage of students')}:<br/>
+                N/A</p>
+              </React.Fragment>
+            }
+          </p>
+        </td>
+      );
     }else{
-      content.push(<td key={ index } style={cellStyle}>N/A</td>);
+      content.push(
+        <td key={ index } style={cellStyle}>
+          <p>N/A</p>
+          {renderNoInfoTooltip()}
+        </td>
+      );
     }
   });
   return (
@@ -168,11 +190,16 @@ const equityColumns = (columns, ethnicityRatings, profileLink) => {
 const academicColumns = (columns, subratings, profileLink) => {
   let cellStyle = {textAlign: 'center'}
   let content = [] ;
-  columns.map(function(hash, index){
+  columns.forEach(function(hash, index){
     if (subratings.hasOwnProperty(hash['key'])){
       content.push(<td key={index} style={cellStyle}>{drawRating(subratings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}</td>);
     }else{
-      content.push(<td key={ index } style={cellStyle}>N/A</td>);
+      content.push(
+        <td key={ index } style={cellStyle}>
+          <p>N/A</p>
+          {renderNoInfoTooltip()}
+        </td>
+      );
     }
   });
   return (
@@ -181,6 +208,24 @@ const academicColumns = (columns, subratings, profileLink) => {
       </React.Fragment>
   )
 }
+
+const renderNoInfoTooltip = () => {
+  const noInfo =
+    <div className="tooltip-content">
+      <p>{t('no_info')} 
+        <a href={links.tableview_faq} target="_blank">
+          {` ${t('visit our FAQ page')}.`}
+        </a>
+      </p>
+    </div>;
+  return(
+    <div className="scale">
+      <ModalTooltip content={noInfo}>
+        <span className="info-circle icon-info" />
+      </ModalTooltip>
+    </div>
+  )
+};
 
 SchoolTableRow.propTypes = {
   id: PropTypes.number.isRequired,
@@ -196,6 +241,7 @@ SchoolTableRow.propTypes = {
   numReviews: PropTypes.number,
   parentRating: PropTypes.number,
   districtName: PropTypes.string,
+  ethnicityInfo: PropTypes.object,
   links: PropTypes.shape({
     profile: PropTypes.string.isRequired
   }).isRequired
@@ -209,7 +255,8 @@ SchoolTableRow.defaultProps = {
   studentsPerTeacher: null,
   numReviews: null,
   parentRating: null,
-  districtName: null
+  districtName: null,
+  ethnicityInfo: {}
 };
 
 export default SchoolTableRow;

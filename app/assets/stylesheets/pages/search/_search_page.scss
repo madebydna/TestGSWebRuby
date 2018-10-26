@@ -36,7 +36,7 @@ body {
     position: relative;
     margin: auto;
 
-    padding: 70px 0 0 0;
+    padding: 130px 0 0 0;
 
     @include media-breakpoint-down(sm) {
       padding: 0;
@@ -618,4 +618,8 @@ body {
     display: inline-block;
     float: right;
   }
+}
+.header_un{
+  position: fixed;
+  z-index: 2;
 }

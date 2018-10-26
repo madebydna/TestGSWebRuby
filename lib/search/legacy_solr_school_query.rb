@@ -58,7 +58,7 @@ module Search
         search.paginate(page: page, per_page: limit)
         search.order_by(sort_field, sort_direction) if sort_field
         search.adjust_solr_params do |params|
-          params[:defType] = browse? ? 'lucene' : 'dismax'
+          params[:defType] = browse? ? 'lucene' : q.present? ? 'dismax' : 'lucene'
           params[:qt] = 'school-search' unless browse?
           # the first criteria is type:School, but that field doesn't exist
           # replace it with the way we filter document types

@@ -11,6 +11,7 @@ describe 'User visits Home Page' do
 
   describe 'user can search for school', js: true do
     context 'succesfully' do
+      before { skip }
       it { is_expected.to have_school_search_button }
       it { is_expected.to have_search_field }
 

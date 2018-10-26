@@ -197,17 +197,20 @@ module StructuredMarkup
     }
   end
 
-  def self.school_hash(school, school_reviews = nil, reviews_on_demand=false)
+  def self.school_hash(school, gs_rating, school_reviews = nil, reviews_on_demand=false)
     hash = {}
     hash["@context"] = "https://schema.org"
     hash["@type"] = "School"
     hash['name'] = school.name
+    hash['description'] = StructuredMarkup.description(school: school, gs_rating: gs_rating)
     hash['address'] = {
+      '@type' => 'PostalAddress',
       'streetAddress' => school.street,
       'addressLocality' => school.city,
       'addressRegion' => school.state,
       'postalCode' => school.zipcode
     }
+    hash['telephone'] = school.phone if school.phone.present?
     same_as = []
     same_as << school.facebook_url if school.facebook_url
     same_as << school.home_page_url if school.home_page_url

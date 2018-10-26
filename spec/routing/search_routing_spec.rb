@@ -23,7 +23,7 @@ describe 'search routing' do
 
   describe "new search" do
     it "should route to new search controller" do
-      expect( get "/search/search.page" ).to route_to('new_search#search')
+      expect( get "/search/search.page" ).to route_to('search#search')
     end
   end
 

@@ -204,7 +204,7 @@ class DistrictLayout extends React.Component {
       this.props.shouldDisplayReviews &&
       <div id="reviews">
         <div className="rating-container reviews-module">
-          <h3>Recent school reviews from schools in {`${this.props.locality.name}`}</h3>
+          <h3>{t('recent_reviews.title')} {`${this.props.locality.name}`}</h3>
           {this.props.recentReviews}
         </div>
       </div>
@@ -224,7 +224,7 @@ class DistrictLayout extends React.Component {
             {this.renderSchools()}
             {this.renderMobility()}
             {this.renderZillow()}
-            {/* {this.renderReviews()} */}
+            {this.renderReviews()}
           </div>
           {this.renderDesktopAd()}
         </div>
