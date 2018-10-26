@@ -157,11 +157,11 @@ const equityColumns = (columns, ethnicityInfo, profileLink) => {
       const ethInfoIdx = keys.indexOf(hash.key);
       content.push(
         <td key={index} style={cellStyle}>
-          {drawRating(ethnicityInfo[ethInfoIdx].rating, `${profileLink}${anchorObject[hash.key]}`)}
+          {drawRating(Math.floor(ethnicityInfo[ethInfoIdx].rating), `${profileLink}${anchorObject[hash.key]}`)}
           <p className="percentage-population">
             {ethnicityInfo[ethInfoIdx].percentage ? 
               <React.Fragment>
-                <span>{ethnicityInfo[ethInfoIdx].percentage}%</span><br/> {t('of students')}
+                <span>{Math.round(ethnicityInfo[ethInfoIdx].percentage)}%</span><br/> {t('of students')}
               </React.Fragment> 
               : 
               <React.Fragment>
