@@ -11,7 +11,7 @@ WORKDIR /srv/rails
 RUN mkdir /srv/rails/log
 
 RUN echo "gem: --no-rdoc --no-ri" > /etc/gemrc
-RUN cp ./config/env_global_local_template.yml ./config/env_global_local.yml
+COPY ./config/env_global_local_template.yml ./config/env_global_local.yml
 
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --binstubs --jobs 10
