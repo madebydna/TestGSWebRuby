@@ -88,7 +88,7 @@ db_password: override_in_env_global_local
 # The host and credentials to the "gsdata" (data warehouse) mysql server
 # Override these in your personal env_global_local.yml file.
 gsdata_db_host: datadev-gsdata.greatschools.org
-gsdata_db_username: gsdata
+gsdata_db_username: developer
 gsdata_db_password: override_in_env_global_local
 
 # Timeouts in seconds for ActiveRecord mysql connections

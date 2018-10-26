@@ -18,5 +18,5 @@ db_password: ASK_FOR_DEVELOPER_PASSWORD
 
 # The host and credentials to the "gsdata" (data warehouse) mysql server
 gsdata_db_host: datadev-gsdata.greatschools.org
-gsdata_db_username: gsdata
+gsdata_db_username: developer
 gsdata_db_password: ASK_FOR_GSDATA_PASSWORD
