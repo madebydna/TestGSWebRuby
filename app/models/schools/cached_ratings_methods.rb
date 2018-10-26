@@ -46,26 +46,7 @@ module CachedRatingsMethods
     ratings= ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
     ethnicity_ratings = decorate_ethnicity_object(ratings,"rating")
     ethnicity_percentages = decorate_ethnicity_object(ethnicity_data,"percentage")
-    rating_keys = ethnicity_ratings.map { |hash| hash[:label] }
-    percentage_keys = ethnicity_percentages.map { |hash| hash[:label] }
-    ethnicity = []
-    ethnicity_ratings.each do |rating_hash|
-      ethnicity_percentages.each do |percentage_hash|
-        if rating_hash[:label] == percentage_hash[:label]
-          ethnicity << rating_hash.merge(percentage_hash)
-        end
-      end
-    end
-
-    unmerged_labels = (rating_keys + percentage_keys) - ethnicity.map { |hash| hash[:label] }
-    ethnicity_ratings.each do |rating_hash|
-      ethnicity << rating_hash if unmerged_labels.include?(rating_hash[:label])
-    end
-    ethnicity_percentages.each do |percentage_hash|
-      ethnicity << percentage_hash if unmerged_labels.include?(percentage_hash[:label])
-    end
-    
-    ethnicity
+    ethnicity = format_ethnicity_object(ethnicity_ratings,ethnicity_percentages)
   end
 
   def great_schools_rating
@@ -321,23 +302,6 @@ module CachedRatingsMethods
     end
   end
 
-  # def formatted_ethnicity_ratings
-  #   ethnicity = ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
-  #   ethnicity_population = 
-  #     ethnicity.each_with_object({}) do |e, accum|
-  #       accum[e.breakdowns.join(',')] = e.school_value  if e.school_value
-  #     end
-  # end
-
-  # def formatted_ethnicity_students
-  #   ethnicity_data.each_with_object({}) do |ethnicity_information_object, hash|
-  #     if ethnicity_information_object["school_value"]
-  #       attribute = ethnicity_mapping_hash[ethnicity_information_object["breakdown"].to_sym]
-  #       hash[attribute] = ethnicity_information_object["school_value"].round
-  #     end
-  #   end
-  # end
-
   def decorate_ethnicity_object(array_of_hashes, key)
     ethnicity = array_of_hashes.map do |hash|
       if hash["school_value"] && hash["school_value"].to_i > 0
@@ -353,6 +317,29 @@ module CachedRatingsMethods
       ethnicity.unshift({label: 'Low Income', "#{key}": low_income_rating.to_i}) if low_income_rating
     when "percentage"
       ethnicity.unshift({label: 'Low Income', "#{key}": free_and_reduced_lunch.gsub('%','').to_f}) if free_and_reduced_lunch
+    end
+
+    ethnicity
+  end
+
+  def format_ethnicity_object(ethnicity_ratings, ethnicity_percentages)
+    rating_keys = ethnicity_ratings.map { |hash| hash[:label] }
+    percentage_keys = ethnicity_percentages.map { |hash| hash[:label] }
+    ethnicity = []
+    ethnicity_ratings.each do |rating_hash|
+      ethnicity_percentages.each do |percentage_hash|
+        if rating_hash[:label] == percentage_hash[:label]
+          ethnicity << rating_hash.merge(percentage_hash)
+        end
+      end
+    end
+
+    unmerged_labels = (rating_keys + percentage_keys) - ethnicity.map { |hash| hash[:label] }
+    ethnicity_ratings.each do |rating_hash|
+      ethnicity << rating_hash if unmerged_labels.include?(rating_hash[:label])
+    end
+    ethnicity_percentages.each do |percentage_hash|
+      ethnicity << percentage_hash if unmerged_labels.include?(percentage_hash[:label])
     end
 
     ethnicity
