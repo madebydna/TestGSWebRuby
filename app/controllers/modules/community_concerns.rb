@@ -172,10 +172,10 @@ module CommunityConcerns
       district_content[key].first['city_value'] if district_content && district_content[key]
     end
 
-    def district_content(city_id)
-      @_district_content ||= begin
-        if CityCache.district_content_cache(city_id).present?
-          dc = CityCache.district_content_cache(city_id).map do |district_content|
+    def district_content(city_with_cache_data)
+      @_district_content ||= Hash.new do |hash, decorated_city|
+        if decorated_city.cache_data['district_content'].present?
+          dc = decorated_city.cache_data['district_content'].map do |district_content|
             {}.tap do |d|
               name = district_content_field(district_content, 'name')
               city = district_content_field(district_content, 'city')
@@ -190,11 +190,12 @@ module CommunityConcerns
               d[:lon] = district_content_field(district_content, 'lon')
             end
           end
-          dc.sort_by { |h| h[:enrollment] ? h[:enrollment] : 0 }.reverse!
+          hash[decorated_city] = dc.sort_by { |h| h[:enrollment] ? h[:enrollment] : 0 }.reverse
         else
-          []
+          hash[decorated_city] = []
         end
       end
+      @_district_content[city_with_cache_data]
     end
 
     def district_enrollment_cache(district_id)
@@ -203,8 +204,8 @@ module CommunityConcerns
       dc_hash['Enrollment'].first['district_value'].to_i if dc_hash && dc_hash['Enrollment'] && dc_hash['Enrollment'].first
     end
 
-    def fetch_district_attr(key)
-      district_content(city_record)&.first&.fetch(key, nil) 
+    def fetch_district_attr(decorated_city, key)
+      district_content(decorated_city)&.first&.fetch(key, nil)
     end
 
 end

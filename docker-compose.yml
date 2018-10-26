@@ -61,3 +61,10 @@ volumes:
     external: false
   rails-code:
     external: true # defined in docker-sync.yml. docker-sync is used to improve IO speed issues when reading/evaluating ruby files
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.11.13.1/24

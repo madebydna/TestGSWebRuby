@@ -1,5 +1,6 @@
 export const links = {
-  zendesk: 'https://greatschools.zendesk.com/hc/en-us/requests/new'
+  zendesk: 'https://greatschools.zendesk.com/hc/en-us/requests/new',
+  tableview_faq: 'https://greatschools.zendesk.com/hc/en-us/articles/360017863772-Searching-for-schools'
 }
 
 export const anchorObject = {

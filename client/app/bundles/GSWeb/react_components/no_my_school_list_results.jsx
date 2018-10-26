@@ -6,20 +6,26 @@ import Ad from 'react_components/ad';
 
 const t = translateWithDictionary({
   en: {
+    'Suggestions': 'Suggestions',
+    no_school_list: 'Your list is empty',
     no_results_suggestions: [
-      'To add schools, click on the “♥” button next to schools you want to add to the list on search results or school profile pages.',
+      'Click on the “♥” button next to the schools from the search results or the school profile page to save your favorite school into this list.',
       'You can then use this list to compare your favorite schools.'
     ]
   },
   es: {
+    'Suggestions': 'Sugerencias',
+    no_school_list: 'Tu lista está vacía',
     no_results_suggestions: [
-      'To add schools, click on the “♥” button next to schools you want to add to the list on search results or school profile pages.',
-      'You can then use this list to compare your favorite schools.'
+      'Haga clic en el botón "♥" al lado de las escuelas en la lista de resultados o en el perfil de la escuela para guardar tu escuela favorita en esta lista.',
+      'Luego puedes usar esta lista para comparar tus escuelas favoritas.'
     ]
   }
 });
 
-const NoMySchoolListResults = ({ resultSummary }) => (
+const resultSummary = t('no_school_list')
+
+const NoMySchoolListResults = () => (
   <div className="no-results">
     <Ad sizeName="thin_banner" slot="Search_NoResults_Top" />
     <div className="body">
@@ -30,7 +36,7 @@ const NoMySchoolListResults = ({ resultSummary }) => (
           dangerouslySetInnerHTML={{ __html: resultSummary }}
         />
         <hr />
-        <p>Suggestions:</p>
+        <p>{t('Suggestions')}:</p>
         <ul>
           {t('no_results_suggestions').map(suggestion => (
             <li key={suggestion}>{suggestion}</li>

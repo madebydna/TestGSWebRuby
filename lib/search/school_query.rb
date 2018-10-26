@@ -116,7 +116,7 @@ module Search
     end
 
     def default_query_string
-      browse? ? '*:*' : 'school'
+      browse? ? '*:*' : nil
     end
   end
 end

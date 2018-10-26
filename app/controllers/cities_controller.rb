@@ -12,8 +12,8 @@ class CitiesController < ApplicationController
     @top_schools =  top_rated_schools
     @breadcrumbs = breadcrumbs
     @school_levels = school_levels
-    @districts = district_content(city_record.id)
-    # @reviews = reviews_formatted.reviews_list
+    @districts = district_content(decorated_city)
+    @reviews = reviews_formatted.reviews_list
     @locality = locality
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props
@@ -92,7 +92,15 @@ class CitiesController < ApplicationController
   end
 
   def school_count(key)
-    CityCache.school_levels(city_record.id)[key].first['city_value'] if CityCache.school_levels(city_record.id) && CityCache.school_levels(city_record.id)[key]
+    cache_school_levels[key].first['city_value'] if cache_school_levels && cache_school_levels[key]
+  end
+
+  def cache_school_levels
+    decorated_city.cache_data['school_levels']
+  end
+
+  def decorated_city
+    @_decorated_city ||= CityCacheDecorator.for_city_and_keys(city_record, 'school_levels', 'district_content')
   end
 
   def locality
@@ -105,18 +113,20 @@ class CitiesController < ApplicationController
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:zip] = get_zip
-        cp[:lat] = fetch_district_attr(:lat) || city_record&.lat
-        cp[:lon] = fetch_district_attr(:lon) || city_record&.lon
+        cp[:lat] = fetch_district_attr(decorated_city, :lat) || city_record&.lat
+        cp[:lon] = fetch_district_attr(decorated_city, :lon) || city_record&.lon
       end
     end
   end
 
   def get_zip
-    zip = district_content(city_record.id).find do |dc|
+    zip = district_content(decorated_city).find do |dc|
       break dc[:zip] if dc[:zip].present?
     end
-    zip ||= @top_schools[:schools][:elementary].find do |s|
-      break s[:address][:zip] if s && s[:address].present? && s[:address][:zip].present?
+    if @top_schools.present?
+      zip ||= @top_schools[:schools][:elementary].find do |s|
+        break s[:address][:zip] if s && s[:address].present? && s[:address][:zip].present?
+      end
     end
     zip
   end
