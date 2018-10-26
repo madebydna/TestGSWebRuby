@@ -151,7 +151,9 @@ describe 'Visitor' do
         "@context" => "https://schema.org",
         "@type" => "School",
         "name" => "Alameda High School",
+        "description" => "Alameda High School is a public school. It has received a GreatSchools rating of  out of 10 based on academic quality.",
         "address" => {
+          "@type" => "PostalAddress",
           "streetAddress" => "123 main st",
           "addressLocality" => "Alameda",
           "addressRegion" => "CA",
@@ -167,8 +169,9 @@ describe 'Visitor' do
         s[:type] == 'application/ld+json'
       end
       expect(scripts).to_not be_blank
-      script = scripts.find { |s| s.native.text.include?(expected_markup) }
+      script = scripts.find { |s| s.native.text.include?('"@type":"School"') }
       expect(script).to_not be_nil
+      expect(script.native.text).to include(expected_markup)
     end
 
     describe 'aggregateRating schema' do
