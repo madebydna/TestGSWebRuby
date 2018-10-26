@@ -46,7 +46,7 @@ module CachedRatingsMethods
     ratings= ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
     ethnicity_ratings = decorate_ethnicity_object(ratings,"rating")
     ethnicity_percentages = decorate_ethnicity_object(ethnicity_data,"percentage")
-    ethnicity = format_ethnicity_object(ethnicity_ratings,ethnicity_percentages)
+    ethnicity = format_ethnicity_array(ethnicity_ratings,ethnicity_percentages)
   end
 
   def great_schools_rating
@@ -314,7 +314,7 @@ module CachedRatingsMethods
 
     case key
     when "rating"
-      ethnicity.unshift({label: 'Low Income', "#{key}": low_income_rating.to_i}) if low_income_rating
+      ethnicity.unshift({label: 'Low Income', "#{key}": low_income_rating}) if low_income_rating
     when "percentage"
       ethnicity.unshift({label: 'Low Income', "#{key}": free_and_reduced_lunch.gsub('%','').to_f}) if free_and_reduced_lunch
     end
@@ -322,7 +322,7 @@ module CachedRatingsMethods
     ethnicity
   end
 
-  def format_ethnicity_object(ethnicity_ratings, ethnicity_percentages)
+  def format_ethnicity_array(ethnicity_ratings, ethnicity_percentages)
     rating_keys = ethnicity_ratings.map { |hash| hash[:label] }
     percentage_keys = ethnicity_percentages.map { |hash| hash[:label] }
     ethnicity = []
