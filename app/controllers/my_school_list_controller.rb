@@ -42,7 +42,7 @@ class MySchoolListController < ApplicationController
   # SearchRequestParams
 
   def school_keys
-    saved_school_keys || []
+    current_user ? merge_school_keys : (saved_school_keys || [])
   end
 
   def default_extras
