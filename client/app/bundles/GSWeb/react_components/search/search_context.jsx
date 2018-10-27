@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { find as findSchools } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
-import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
+import { isEqual, throttle, debounce, difference, castArray, uniqBy } from 'lodash';
 import { compose, curry } from 'lodash/fp';
 import {
   size as viewportSize,
@@ -44,6 +44,7 @@ class SearchProvider extends React.Component {
     district: gonSearch.district,
     state: gonSearch.state,
     schools: gonSearch.schools,
+    schoolKeys: gonSearch.school_keys,
     levelCodes: gonSearch.levelCodes || [],
     entityTypes: gonSearch.entityTypes || [],
     defaultLat: gonSearch.cityLat || 37.8078456,
@@ -72,6 +73,7 @@ class SearchProvider extends React.Component {
     state: PropTypes.string,
     schoolKeys: PropTypes.arrayOf(PropTypes.array),
     schools: PropTypes.arrayOf(PropTypes.object),
+    schoolKeys: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
     defaultLat: PropTypes.number,
@@ -124,6 +126,7 @@ class SearchProvider extends React.Component {
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
     this.handleSaveSchoolClick = this.handleSaveSchoolClick.bind(this);
+    this.mergedSavedSchoolsCookie = this.mergedSavedSchoolsCookie.bind(this);
     this.toggleAll = this.toggleAll.bind(this);
     this.toggleOne = this.toggleOne.bind(this);
     this.updateStateFilter = this.updateStateFilter.bind(this);
@@ -132,6 +135,7 @@ class SearchProvider extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
+    this.mergedSavedSchoolsCookie(this.props.schoolKeys)
   }
 
   componentDidUpdate(prevProps) {
@@ -231,9 +235,22 @@ class SearchProvider extends React.Component {
     }
   }
 
+  mergedSavedSchoolsCookie(schoolKeys){
+    if(schoolKeys){
+      const savedSchools = getSavedSchoolsFromCookie();
+      const allSchools = savedSchools.concat(schoolKeys);
+      const newSavedSchools = uniqBy(allSchools,function(v){
+        return v.state && v.id;
+      });
+      setCookie(COOKIE_NAME, newSavedSchools);
+      updateNavbarHeart();
+    }
+  }
+
   updateSavedSchoolsCookie(schoolKey) {
     const savedSchools = getSavedSchoolsFromCookie();
     const schoolKeyIdx = this.savedSchoolsFindIndex(schoolKey);
+    debugger
     schoolKeyIdx > -1
       ? savedSchools.splice(schoolKeyIdx, 1)
       : savedSchools.push(schoolKey);
