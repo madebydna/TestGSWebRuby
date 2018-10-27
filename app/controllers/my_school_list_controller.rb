@@ -23,6 +23,7 @@ class MySchoolListController < ApplicationController
         'Equity' => equity_header_hash(schools),
         'Academic' => academic_header_hash
       }
+      props[:school_keys] = jsonify_school_keys
     end
 
     set_ad_targeting_props
@@ -42,7 +43,7 @@ class MySchoolListController < ApplicationController
   # SearchRequestParams
 
   def school_keys
-    current_user ? merge_school_keys : (saved_school_keys || [])
+    saved_school_keys || []
   end
 
   def default_extras

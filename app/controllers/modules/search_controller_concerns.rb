@@ -122,10 +122,10 @@ module SearchControllerConcerns
   end
 
   def add_saved_schools(schools)
-    #grab saved school keys from the cookie and compare to keys constructed from schools.
+    # grab saved school keys from the cookie (merged with user's msl if they are logged in)
+    # and compare to keys constructed from schools.
     schools.each do |school|
-      # if saved_school_keys&.include?([school.state.downcase, school.id])
-      if merge_school_keys&.include?([school.state.downcase, school.id])
+      if saved_school_keys&.include?([school.state.downcase, school.id])
         school.define_singleton_method(:saved_school) do
           true
         end
@@ -217,7 +217,18 @@ module SearchControllerConcerns
   end
 
   def merge_school_keys
-    (FavoriteSchool.saved_school_list(current_user.id) + saved_school_keys).uniq
+    (FavoriteSchool.saved_school_list(current_user.id) + cookies_school_keys).uniq
+  end
+
+  def jsonify_school_keys
+    result = []
+    school_keys.map do |school_pair|
+      result << { 
+        "state": school_pair.first.upcase,
+        "id": school_pair.last.to_s
+      }
+    end
+    result
   end
 
 end
