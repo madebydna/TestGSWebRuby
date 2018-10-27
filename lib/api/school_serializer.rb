@@ -41,8 +41,8 @@ class Api::SchoolSerializer
       },
       rating: rating,
       ratingScale: rating ? SchoolProfiles::SummaryRating.scale(rating) : nil,
-      schoolType: school.type,
-      state: school.state,
+      schoolType: 'public' || school.type,
+      state: school.state.upcase,
       type: 'school',
       links: {
         profile: school_path(school, trailing_slash: true, lang: I18n.current_non_en_locale),

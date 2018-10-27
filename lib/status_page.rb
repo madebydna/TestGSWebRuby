@@ -51,7 +51,7 @@ class StatusPage
   def solr_status
     solr_status = false
     begin
-      solr_status = (Solr.new.ping.response[:status] == 200)
+      solr_status = (Solr::Solr.new.ping.response[:status] == 200)
     rescue Exception => e
       Rails.logger.error(e.message)
     end

@@ -2,33 +2,32 @@
 
 module Search
   class SolrAutosuggestQuery
+    include Pagination::Paginatable
     include Rails.application.routes.url_helpers
     include UrlHelper
+    include Solr::Query
 
     attr_accessor :client, :limit
     attr_writer :q
 
     def initialize(q)
       self.q = q
-      @client = Sunspot
       @limit = 250
-    end
-
-    # ['facet_counts']['facet_fields']['zip']
-
-    def solr_result
-      @_solr_result ||= client.search(School, &sunspot_query).instance_variable_get(:@solr_result)
+      @searcher = Solr::Searcher.new
     end
 
     def response
-      solr_result['response']['docs'].map { |r| standardize(r) } + zips
+      @_response ||= @searcher.search(self)
+    end
+
+    def results
+      response.results.map { |r| standardize(r) } + zips
     end
 
     def zips
       #          zip,   count, zip,   count,
       # returns [94612, 5,     94501, 10,    ...]
-      zips_and_counts = solr_result.dig('facet_counts', 'facet_fields', 'zipcode_s') || []
-      zips_and_counts
+      response.facet_counts_for_field('zipcode')
         .each_slice(2)
         .select { |zip, count| count > 0 }
         .map(&:first) # grab only the zip
@@ -39,16 +38,40 @@ module Search
         .map { |zip| {value: zip, type: 'zip'}}
     end
 
-    def q
+    def q_downcased
       @q&.downcase&.strip
     end
 
+    def q_no_whitespace
+      q_downcased.gsub(/\s+/, '')
+    end
+
+    def q_escape_spaces
+      q_downcased.gsub(' ', '\ ')
+    end
+
+    def query_fragments
+      [
+        "sortable_name:#{q_escape_spaces}*",
+        "name:(#{q_downcased}*)",
+        "city_name:(#{q_no_whitespace} #{q_no_whitespace}*)^5.0",
+        "district_name:#{q_escape_spaces}*^8.0"
+      ].tap do |fragments|
+        fragments << "zipcode:#{possible_zip}*" if possible_zip
+      end
+    end
+
+    # Solr::Query
+    def q
+      "#{query_fragments.join(' ')}"
+    end
+
     def standardize(solr_result)
-      city = solr_result['city_s'] || solr_result['city_name_text']
-      state = solr_result['state_s']
+      city = solr_result['city'] || solr_result['city_name']
+      state = solr_result['state']
       state = state.first if state.is_a?(Array)
-      district = solr_result['district_name_text']
-      school_name = solr_result['name_text']
+      district = solr_result['district_name']
+      school_name = solr_result['name']
       type = solr_result['type']&.downcase
       school_id = solr_result['id'].split('-')&.last
 
@@ -90,43 +113,26 @@ module Search
     def search
       @_search ||= begin
         PageOfResults.new(
-          response,
+          results,
           query: self,
-          total: response.size,
+          total: response.total,
           offset: 0,
           limit: limit
         )
       end
     end
 
-    def fields
+    # Solr::Query
+    def field_list
       %w(id
          type
-         name_text
-         school_district_id_i
-         city_s
-         city_name_text
-         state_s
-         district_name_text)
-    end
-
-    def q_no_whitespace
-      q.gsub(/\s+/, '')
-    end
-
-    def q_escape_spaces
-      q.gsub(' ', '\ ')
-    end
-
-    def query_fragments
-      [
-        "sortable_name_s:#{q_escape_spaces}*",
-        "name_text:(#{q}*)",
-        "city_name_text:(#{q_no_whitespace} #{q_no_whitespace}*)^5.0",
-        "district_name_text:#{q_escape_spaces}*^8.0"
-      ].tap do |fragments|
-        fragments << "zipcode_s:#{possible_zip}*" if possible_zip
-      end
+         name
+         school_district_id
+         city
+         city_name
+         state
+         district_name
+        )
     end
 
     def possible_zip
@@ -134,24 +140,24 @@ module Search
         return @_possible_zip
       end
       # 3 to 5 consecutive numbers surrounded by word boundaries
-      @_possible_zip = q.scan(/\b\d{3,5}\b/).sort_by(&:length).last
+      @_possible_zip = q_downcased.scan(/\b\d{3,5}\b/).sort_by(&:length).last
     end
 
-    def sunspot_query
-      lambda do |search|
-        # search.keywords(q)
-        search.keywords("#{query_fragments.join(' ')}")
-        search.paginate(page: 1, per_page: limit)
-        search.adjust_solr_params do |params|
-          params[:fq][0] = nil
-          params[:defType] = 'lucene'
-          params[:fl] = fields.join(',')
-          params[:facet] = true if possible_zip
-          params[:sort] = 'score desc, number_of_schools desc'
-          params['facet.field']='zipcode_s' if possible_zip
-          # facet=on&facet.field=txt
-        end
-      end
+    # Solr::Query
+    def def_type
+      'lucene'
     end
+
+    # Solr::Query
+    def facet_fields
+      return nil
+      'zipcode' if possible_zip
+    end
+
+    # Solr::Query
+    def sort
+      'score desc, number_of_schools desc'
+    end
+
   end
 end

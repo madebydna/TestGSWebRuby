@@ -31,6 +31,7 @@ class SearchController < ApplicationController
           'Academic' => academic_header_hash
       }
     end
+    gon.search['facetFields'] = populated_facet_fields
     set_meta_tags(Search::MetaTags.from_controller(self).meta_tag_hash)
     set_ad_targeting_props
     set_page_analytics_data

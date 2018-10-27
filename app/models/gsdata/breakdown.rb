@@ -17,6 +17,18 @@ class Breakdown < ActiveRecord::Base
     end
   end
 
+  def old_schema_ethnicity_to_ethnicity(ethnicity)
+    h = {
+      'Black' => "African American",
+      'All' => "All students",
+      'Multiracial' => "Two or more races",
+      'Native American' => "American Indian/Alaska Native",
+      'Hawaiian Native/Pacific Islander' => "Pacific Islander",
+      'Native Hawaiian or Other Pacific Islander' => "Pacific Islander"
+    }
+    ethnicity ? (h[ethnicity] || ethnicity) : h
+  end
+
   def self.unique_ethnicity_names
     [
       'Asian',

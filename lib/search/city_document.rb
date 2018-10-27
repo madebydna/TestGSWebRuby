@@ -1,50 +1,62 @@
 # frozen_string_literal: true
 
 module Search
-  class CityDocument
+  class CityDocument < ::Solr::Document
     include Indexable
-    include Retrievable
 
-    def initialize(city:)
+    attr_writer :id
+
+    def self.from_id(id)
+      CityDocument.new(id: id)
+    end
+
+    def self.all_fields
+      [].tap do |array|
+        array << new_field(:city_id, type: FieldTypes::INTEGER) { city.id }
+        array << new_field(:city_name, type: FieldTypes::TEXT) { city.name }
+        array << new_field(:state, type: FieldTypes::STRING) { city.state.downcase }
+        array << new_field(:number_of_schools, type: FieldTypes::INTEGER) { number_of_schools }
+      end
+    end
+
+    define_field_methods(all_fields)
+ 
+    def initialize(city: nil, id: nil)
+      @id = id
       @city = city
     end
 
-    def self.from_id(id)
-      CityDocument.new(City.find_by_id(id))
-    end
-
-    # retrievable
-
-    def self.from_unique_key(key)
-      CityDocument.from_id(key)
-    end
-
     # indexable
-
     def self.type
       'City'
     end
 
+    def id
+      city_id
+    end
+
+    def city
+      @city ||= (
+        raise "Illegal state, need city or ID" unless @id
+        City.find_by_id(id)
+      )
+    end
+
+    def name
+      city_name
+    end
+    
+    private
+
+    # indexable
     def unique_key
-      self.class.unique_key(@city.id)
-    end
-
-    def build
-      return {} unless @city
-      super
-      add_field(:city_name, @city.name, Search::SolrIndexer::Types::TEXT)
-      add_field(:state, @city.state.downcase, Search::SolrIndexer::Types::STRING)
-      add_field(:number_of_schools, number_of_schools, Search::SolrIndexer::Types::INTEGER)
-    end
-
-    # impl
-
-    def self.unique_key(id)
-      "#{id}"
+      id
     end
 
     def number_of_schools
-      School.on_db(@city.state.downcase.to_sym).where(city: @city.name).active.count
+      @number_of_schools ||= (
+        School.on_db(@city.state.downcase.to_sym).where(city: @city.name).active.count
+      )
     end
   end
 end

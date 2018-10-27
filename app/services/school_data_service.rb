@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class SchoolDataService
-  @@solr = Solr.new
+  @@solr = Solr::Solr.new
 
   BASE_PARAMS_MAP = {
     offset: :start,

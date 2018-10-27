@@ -2,7 +2,7 @@ class SearchSuggestSchool < SearchSuggester
   include UrlHelper
 
   def get_results(solr_options)
-    Solr.new.school_name_suggest(solr_options)
+    Solr::Solr.new.school_name_suggest(solr_options)
   end
 
   def process_result(school_search_result)

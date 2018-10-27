@@ -37,6 +37,16 @@ module SearchControllerConcerns
     page_of_results.present?
   end
 
+  def facet_fields
+    @_facet_fields = query.response.facet_fields
+  end
+
+  def populated_facet_fields
+    facet_fields.each_with_object([]) do |(field, values), fields|
+      fields << field if values.each_slice(2).any? { |val, count| count > 0 }
+    end.map { |f| f.sub(/_i$/, '') }
+  end
+
   def query
     if point_given? || area_given? || q.present?
       solr_query

@@ -2,7 +2,7 @@ class SearchSuggestCity < SearchSuggester
   include UrlHelper
 
   def get_results(solr_options)
-    Solr.new.city_name_suggest(solr_options)
+    Solr::Solr.new.city_name_suggest(solr_options)
   end
 
   def process_result(city_search_result)

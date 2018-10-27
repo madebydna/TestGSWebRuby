@@ -3,46 +3,101 @@
 module Search
   class SolrSchoolQuery < SchoolQuery
     include Pagination::Paginatable
-
-    M_TO_KM = 1.60934
+    include Solr::Query
 
     def initialize(*args)
       super(*args)
-      @client = Sunspot
+      @searcher = Solr::Searcher.new
     end
 
     def response
-      @_response ||= client.search(School, &sunspot_query)
+      @_response ||= @searcher.search(self)
     end
 
     def search
       @_search ||= begin
         PageOfResults.new(
-          preserve_distance_from_solr(
-            School.load_all_from_associates(response.results, &:include_district_name)
-          ),
+          response.results.load_external_data!,
           query: self,
-          total: response.results.total_count,
+          total: response.total,
           offset: offset,
           limit: limit
         )
       end
     end
 
-    def preserve_distance_from_solr(schools)
-      hash = response.instance_variable_get(:@solr_result)['response']['docs'].each_with_object({}) do |doc, h|
-        sd = SchoolDocument.from_unique_key(doc['id'].gsub(doc['type']+' ', ''))
-        h[[sd.state.upcase, sd.school_id.to_i]] = doc
-      end
-      schools.map do |s|
-        distance = (hash[[s.state, s.id]] || {})['geodist()']
-        if distance
-          distance /= M_TO_KM
-          s.define_singleton_method(:distance) do
-            distance
-          end
+    # Solr::Query
+    def document_type
+      SchoolDocument
+    end
+
+    # Solr::Query
+    def extra_solr_params
+      return spatial_params(lat, lon, radius, 'latlon') if lat.present? && lon.present?
+    end
+
+    # Solr::Query
+    def def_type
+      browse? ? 'lucene' : 'dismax'
+    end
+
+    # Solr::Query
+    def query_type
+      'school-search' unless browse?
+    end
+
+    # Solr::Query
+    def filters
+      [].tap do |array|
+        array << spatial_filter if lat.present? && lon.present?
+
+        if district_id && district_id > 0
+          array << eq(:school_district_id, district_id)
+        elsif city
+          array << eq(:city, city.downcase)
         end
-        s
+
+        if school_keys.present?
+          fragment = school_keys.each_with_object([]) do |(state, school_id), phrases|
+            phrases << "(+school_database_state:#{state} +school_id:#{school_id})"
+          end.join(' ')
+          array << fragment
+        end
+
+        array << eq(:state, state.downcase) if state
+        array << self.in(:level_codes, level_codes.map(&:downcase)) if level_codes.present?
+        array << self.in(:entity_type, entity_types.map(&:downcase)) if entity_types.present?
+        array << eq(:summary_rating, ratings) if ratings.present?
+      end
+    end
+
+    # Solr::Query
+    def facet_fields
+      [
+        'test_scores_rating',
+        'academic_progress_rating',
+        'college_readiness_rating',
+        'advanced_courses_rating',
+        'equity_overview_rating'
+      ] + Breakdown.unique_ethnicity_names.map do |breakdown|
+        "test_scores_rating_#{breakdown.downcase.gsub(' ', '_')}"
+      end
+    end
+
+    # Solr::Query
+    def field_list
+      [].tap do |fl|
+        fl << '*'
+        fl << 'distance:geodist()' if lat.present? && lon.present?
+      end
+    end
+
+    # Solr::Query
+    def q
+      if @q.present?
+        Solr.require_non_optional_words(@q)
+      else
+        default_query_string
       end
     end
 
@@ -54,7 +109,7 @@ module Search
       if @q.present?
         'relevance'
       elsif lat && lon
-        nil
+        'distance'
       else
         'rating'
       end
@@ -78,68 +133,13 @@ module Search
       {
         'rating' => 'summary_rating',
         'name' => 'sortable_name',
-        'relevance' => 'score'
+        'relevance' => 'score',
+        'distance' => 'geodist()'
       }[name] || name
-    end
-
-    def q
-      if @q.present?
-        Solr.require_non_optional_words(@q)
-      else
-        default_query_string
-      end
     end
 
     def radius_km
       radius.to_f * M_TO_KM
-    end
-
-    def sunspot_query
-      lambda do |search|
-        # Must reference accessor methods, not instance variables!
-        if lat.present? && lon.present?
-          # I can't get the Sunspot API for geospatial searching to work with sorting by geodist.
-          # My theory: Sunspot API puts all the parameters inside the geofilt function call. But when sorting by
-          # geodist, it wants the parameters specified at the top-level. Although passing parameters to the geodist
-          # function is supported according to the docs, I can't actually get that to work in the sort clause
-          # search.with(:latlon).in_radius(lat, lon, 5*1.60934)
-          # search.order_by_geodist(:latlon, lat, lon)
-          search.adjust_solr_params do |params|
-            params[:fq] << '{!geofilt}'
-            params[:sfield] = 'latlon_ll'
-            params[:pt] = "#{lat},#{lon}"
-            params[:d] = radius
-            params[:fl] = '* geodist()'
-            params[:sort] = 'geodist() asc' unless sort_field
-          end
-        else
-          search.keywords(q)
-          if district_id && district_id > 0
-            search.with(:school_district_id, district_id)
-          elsif city
-            search.with(:city, city.downcase)
-          end
-          search.adjust_solr_params do |params|
-            params[:defType] = browse? ? 'lucene' : 'dismax'
-            params[:qt] = 'school-search' unless browse?
-          end
-        end
-        if school_keys.present?
-          fragment = school_keys.each_with_object([]) do |(state, school_id), phrases|
-            phrases << "(+school_database_state:#{state} +school_id:#{school_id})"
-          end.join(' ')
-          search.adjust_solr_params do |params|
-            params[:fq] << fragment
-          end
-        end
-        search.order_by(sort_field, sort_direction) if sort_field
-        search.with(:state, state.downcase) if state
-        search.with(:level_codes, level_codes.map(&:downcase)) if level_codes.present?
-        search.with(:entity_type, entity_types.map(&:downcase)) if entity_types.present?
-        search.with(:summary_rating, ratings) if ratings.present?
-
-        search.paginate(page: page, per_page: limit)
-      end
     end
   end
 end

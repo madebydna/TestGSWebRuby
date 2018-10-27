@@ -27,7 +27,7 @@ module Search
       sort_direction: nil,
       with_rating: false,
       ratings: [],
-      offset: -1,
+      offset: 0,
       limit: 25
     )
       self.id = id

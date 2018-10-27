@@ -227,29 +227,44 @@
       <filter class="solr.SnowballPorterFilterFactory" language="English" protected="./protwords.txt"/>
     </analyzer>
   </fieldType>
-  <field name="Economically_disadvantaged_i_i" type="int" multiValued="false" indexed="true" stored="false"/>
-  <field name="city_name_text" type="text_ss" indexed="true" stored="true"/>
-  <field name="city_s" type="text_location_synonyms" indexed="true" stored="true"/>
-  <field name="college_readiness_rating_i" type="int" multiValued="false" indexed="true" stored="false"/>
-  <field name="county_s" type="string" indexed="true" stored="true"/>
-  <field name="created_d" type="date" default="NOW" indexed="true" stored="true"/>
-  <field name="district_name_text" type="text_ss" indexed="true" stored="true"/>
-  <field name="entity_type_s" type="string" indexed="true" stored="true"/>
-  <field name="equity_overview_rating_i" type="int" multiValued="false" indexed="true" stored="false"/>
+  <field name="Economically_disadvantaged" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="academic_progress_rating" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="advanced_courses_rating" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="city" type="text_location_synonyms" multiValued="false" indexed="true" stored="true"/>
+  <field name="city_id" type="int" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="city_name" type="text_ss" indexed="true" stored="true"/>
+  <field name="college_readiness_rating" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="county" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="created" type="date" default="NOW" indexed="true" stored="true"/>
+  <field name="district_id" type="int" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="district_name" type="text_ss" indexed="true" stored="true"/>
+  <field name="entity_type" type="string" indexed="true" stored="true"/>
+  <field name="equity_overview_rating" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="id" type="string" indexed="true" required="true" stored="true"/>
-  <field name="latlon_ll" type="latLonPointSpatialField" indexed="true" stored="true"/>
-  <field name="level_codes_s" type="string" multiValued="true" indexed="true" stored="true"/>
-  <field name="name_text" type="text_ss" indexed="true" stored="true"/>
+  <field name="latlon" type="latLonPointSpatialField" multiValued="false" indexed="true" stored="true"/>
+  <field name="level_codes" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="name" type="text_ss" multiValued="false" indexed="true" stored="true"/>
   <field name="number_of_schools" type="int" indexed="true" stored="true"/>
-  <field name="school_district_id_i" type="int" indexed="true" stored="true"/>
-  <field name="school_district_name_s" type="string" indexed="true" stored="true"/>
-  <field name="sortable_name_s" type="string" indexed="true" stored="true"/>
-  <field name="state_s" type="string" indexed="true" stored="true"/>
-  <field name="street_s" type="string" multiValued="false" indexed="true" stored="false"/>
-  <field name="summary_rating_i" type="int" multiValued="false" indexed="true" stored="false"/>
-  <field name="test_scores_rating_hispanic_i" type="int" multiValued="false" indexed="true" stored="false"/>
-  <field name="test_scores_rating_i" type="int" multiValued="false" indexed="true" stored="false"/>
-  <field name="test_scores_rating_white_i" type="int" multiValued="false" indexed="true" stored="false"/>
+  <field name="school_district_id" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="school_district_name" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="school_id" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="sortable_name" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="state" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="street" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="summary_rating" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_african_american" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_asian" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_filipino" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_hawaiian" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_hispanic" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_native_american" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_native_hawaiian_or_other_pacific_islander" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_other_ethnicity" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_pacific_islander" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_race_unspecified" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_two_or_more_races" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_white" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="type" type="string" indexed="true" stored="true"/>
-  <field name="zipcode_s" type="string" indexed="true" stored="true"/>
+  <field name="zipcode" type="string" multiValued="false" indexed="true" stored="true"/>
 </schema>
