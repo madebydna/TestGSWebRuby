@@ -239,10 +239,10 @@ class SearchProvider extends React.Component {
     if(schoolKeys){
       const savedSchools = getSavedSchoolsFromCookie();
       const allSchools = savedSchools.concat(schoolKeys);
-      const newSavedSchools = uniqBy(allSchools,function(v){
+      const mergedSavedSchools = uniqBy(allSchools,function(v){
         return v.state && v.id;
       });
-      setCookie(COOKIE_NAME, newSavedSchools);
+      setCookie(COOKIE_NAME, mergedSavedSchools);
       updateNavbarHeart();
     }
   }

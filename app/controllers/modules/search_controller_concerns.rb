@@ -221,6 +221,7 @@ module SearchControllerConcerns
   end
 
   def jsonify_school_keys
+    return [] if school_keys.length < 1
     result = []
     school_keys.map do |school_pair|
       result << { 
