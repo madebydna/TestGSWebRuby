@@ -486,3 +486,10 @@ $subtle-gray: #647981;
   }
 }
 
+@include media-breakpoint-down(xs) {
+  .display-desktop { display:none }
+}
+
+@include media-breakpoint-up(sm) {
+  .display-mobile { display:none }
+}
