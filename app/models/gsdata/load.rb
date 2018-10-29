@@ -23,6 +23,30 @@ class Load < ActiveRecord::Base
     end
   end
 
+  def self.distinct_data_type_ids
+    distinct_data_type_ids = <<-SQL
+      Distinct(data_type_id)
+    SQL
+    select(distinct_data_type_ids)
+  end
+
+  def self.distinct_test_loads
+    distinct_data_type_ids.
+        from(
+            Load
+        .with_data_types
+        .with_data_type_tags('state_test')
+        )
+  end
+
+  def self.with_data_types
+    joins('JOIN data_types on data_type_id = data_types.id')
+  end
+
+  def self.with_data_type_tags(tags)
+    joins("JOIN data_type_tags on data_type_tags.data_type_id = data_types.id").where("data_type_tags.tag = ?", tags)
+  end
+
   def replace_into
     sql_template = %(
     INSERT INTO #{self.class.table_name}(source_id, data_type_id, date_valid, configuration, notes, description, created, updated)

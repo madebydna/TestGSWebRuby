@@ -19,7 +19,7 @@ module SearchTableConcerns
   def equity_header_hash(schools)
     headers = []
     schools.each do |school|
-      headers << school.ethnicity_ratings.keys if school.ethnicity_ratings
+      headers << school&.ethnicity_information.map{ |hash| hash[:label] }
     end
     h = headers.flatten.uniq
     h.map do |title|
