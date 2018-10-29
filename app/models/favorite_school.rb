@@ -21,11 +21,7 @@ class FavoriteSchool < ActiveRecord::Base
     user = User.find_by(id: user_id)
     if user
       schools = FavoriteSchool.where(member_id: user.id)
-      result = []
-      schools.each do |school|
-        result << school&.parses_school
-      end
-      result
+      schools.map { |school| school&.parses_school }
     else
       []
     end

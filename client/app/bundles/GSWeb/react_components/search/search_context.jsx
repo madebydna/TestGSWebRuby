@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { find as findSchools } from 'api_clients/schools';
+import { find as findSchools, updateSchoolList } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray, uniqBy } from 'lodash';
@@ -45,6 +45,7 @@ class SearchProvider extends React.Component {
     state: gonSearch.state,
     schools: gonSearch.schools,
     schoolKeys: gonSearch.school_keys,
+    signedIn: gon.signed_in,
     levelCodes: gonSearch.levelCodes || [],
     entityTypes: gonSearch.entityTypes || [],
     defaultLat: gonSearch.cityLat || 37.8078456,
@@ -74,6 +75,7 @@ class SearchProvider extends React.Component {
     schoolKeys: PropTypes.arrayOf(PropTypes.array),
     schools: PropTypes.arrayOf(PropTypes.object),
     schoolKeys: PropTypes.arrayOf(PropTypes.object),
+    signedIn: PropTypes.bool,
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
     defaultLat: PropTypes.number,
@@ -236,7 +238,7 @@ class SearchProvider extends React.Component {
   }
 
   mergedSavedSchoolsCookie(schoolKeys){
-    if(schoolKeys){
+    if(this.props.signedIn){
       const savedSchools = getSavedSchoolsFromCookie();
       const allSchools = savedSchools.concat(schoolKeys);
       const mergedSavedSchools = uniqBy(allSchools,function(v){
@@ -244,6 +246,7 @@ class SearchProvider extends React.Component {
       });
       setCookie(COOKIE_NAME, mergedSavedSchools);
       updateNavbarHeart();
+      updateSchoolList(mergedSavedSchools);
     }
   }
 

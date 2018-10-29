@@ -272,7 +272,8 @@ LocalizedProfiles::Application.routes.draw do
     resource :widget_logs, only: [:create]
     resources :students
     get '/autosuggest', to: 'autosuggest', action: 'show'
-    post '/save_school', as: :save_school, to: 'saved_schools_controller#create'
+    post '/save_school', as: :save_school, to: 'saved_schools#create'
+    post '/consistentify_saved_schools', as: :merge_schools, to: 'saved_schools#consistentify_schools'
   end
 
   match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs

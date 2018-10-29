@@ -17,6 +17,15 @@ class Api::SavedSchoolsController < ApplicationController
     end
   end
 
+  def consistentify_schools
+    require 'pry'; binding.pry
+    begin
+      schools = (params[:schools] || []).map { |school| [school["state"]&.downcase, school["id"]&.to_i] }
+      db_schools = FavoriteSchool.saved_school_list(current_user)
+    rescue
+    end
+  end
+
   def destroy
     #confirm: remove from list_msl and add to list_active_history?
   end

@@ -139,3 +139,14 @@ export function mySchoolList(props) {
     extras: ['saved_schools']
   });
 }
+
+export function updateSchoolList(schoolList){
+  const data = JSON.stringify({ schools: schoolList});
+  return $.ajax({
+    url: '/gsr/api/consistentify_saved_schools',
+    data,
+    dataType: 'json',
+    contentType: 'application/json',
+    method: 'POST'
+  })
+}
