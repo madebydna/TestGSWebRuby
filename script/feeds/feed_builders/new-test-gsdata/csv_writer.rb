@@ -56,7 +56,7 @@ module Feeds
       def write_test_info(csv)
         @data_reader.each_state_test do |hash|
           test_name = hash['test-name']
-          test_abbr = hash['test-abbr']
+          test_abbr = hash['test-abbrv']
           add_description_to_array(test_name, test_abbr, hash['scale'], hash['most_recent_year'], hash['description'])
           write_state_info(test_name, test_abbr, csv)
           write_district_info(test_name, test_abbr, csv)

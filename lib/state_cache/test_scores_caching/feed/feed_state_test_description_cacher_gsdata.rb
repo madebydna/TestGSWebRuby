@@ -34,7 +34,6 @@ class TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata < TestScores
       if data_value_obj&.first
         hash['scale'] = scale(data_value_obj.first[:proficiency_band_id])
       end
-      hash['level-code'] = 'e,m,h'
       hash
     end
   end
@@ -42,7 +41,7 @@ class TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata < TestScores
   def scale(proficiency_band_id)
     pb_obj = ProficiencyBand.where(id: proficiency_band_id)
     group_id = pb_obj.first[:group_id] if pb_obj&.first
-    group_pbs = ProficiencyBand.where(group_id: group_id, composite_of_pro_null: 1)
+    group_pbs = ProficiencyBand.where(group_id: group_id, composite_of_pro_null: 1).order('group_order ASC')
     scale_keys = group_pbs.map{|pb| pb[:name]}
     scale = scale_keys.size < 3 ? scale_keys.join(' or ') : scale_keys.join(', ')
     "% #{scale}" if scale
