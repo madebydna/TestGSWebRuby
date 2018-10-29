@@ -12,11 +12,17 @@ end.parse!
 
 solr_url = script_args[:solr_url] || ENV_GLOBAL['solr.rw.server.url']
 
-indexer = Search::SolrIndexer.with_rsolr_client(solr_url)
+indexer = 
+  if script_args[:solr_url]
+    Solr::Indexer.with_solr_url(script_args[:solr_url])
+  else
+    Solr::Indexer.with_rw_client
+  end
+
 if script_args[:delete]
-  indexer.delete_all_by_type(Search::CityDocument)
+  indexer.delete_all_by_type(Solr::CityDocument)
 else
-  documents = Search::CityDocumentFactory.new.documents
+  documents = Solr::CityDocument.from_active_cities
   indexer.index(documents)
 end
 indexer.commit

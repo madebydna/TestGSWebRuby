@@ -41,6 +41,10 @@ module SearchControllerConcerns
     @_facet_fields = query.response.facet_fields
   end
 
+  def populated_test_score_fields
+    Solr::SchoolDocument.rating_field_name_to_breakdown.keys & populated_facet_fields
+  end
+
   def populated_facet_fields
     facet_fields.each_with_object([]) do |(field, values), fields|
       fields << field if values.each_slice(2).any? { |val, count| count > 0 }

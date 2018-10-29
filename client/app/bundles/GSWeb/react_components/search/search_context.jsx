@@ -53,6 +53,7 @@ class SearchProvider extends React.Component {
     distance: gonSearch.distance,
     locationLabel: gonSearch.locationLabel,
     sort: gonSearch.sort,
+    sortOptions: gonSearch.sortOptions,
     page: gonSearch.page || 1,
     pageSize: gonSearch.pageSize,
     totalPages: gonSearch.totalPages,
@@ -81,6 +82,7 @@ class SearchProvider extends React.Component {
     distance: PropTypes.number,
     locationLabel: PropTypes.string,
     sort: PropTypes.string,
+    sortOptions: PropTypes.array,
     page: PropTypes.number,
     pageSize: PropTypes.number,
     totalPages: PropTypes.number,
@@ -167,10 +169,6 @@ class SearchProvider extends React.Component {
     );
   }
 
-  shouldIncludeRelevance() {
-    return !!this.props.q;
-  }
-
   updateSchools() {
     this.setState(
       {
@@ -198,36 +196,35 @@ class SearchProvider extends React.Component {
 
   savedSchoolsFindIndex(schoolKey) {
     return getSavedSchoolsFromCookie().findIndex(
-        key =>
-            key.id.toString() === schoolKey.id.toString() &&
-            key.state === schoolKey.state
+      key =>
+        key.id.toString() === schoolKey.id.toString() &&
+        key.state === schoolKey.state
     );
   }
 
-  displayHeartMessage(schoolKey){
+  displayHeartMessage(schoolKey) {
     let objectHeart;
     if (!('ontouchstart' in window)) {
       objectHeart = $('.header_un .menu_hide_mobile a.saved-schools-nav');
-    }
-    else{
+    } else {
       objectHeart = $('.header_un .search_icon a.saved-schools-nav');
     }
-    if(this.savedSchoolsFindIndex(schoolKey) > -1) {
-      objectHeart.tipso({
-        content: t('Saved!'),
-        background: '#202124',
-        color: '#FFFFFF',
-        position: 'bottom',
-        useTitle: false,
-        width: 120,
-        speed: 0,
-        offsetY: -10,
-        onShow:
-            setTimeout(function () {
-              objectHeart.tipso('hide');
-            }, 1000)
-
-      }).tipso('show');
+    if (this.savedSchoolsFindIndex(schoolKey) > -1) {
+      objectHeart
+        .tipso({
+          content: t('Saved!'),
+          background: '#202124',
+          color: '#FFFFFF',
+          position: 'bottom',
+          useTitle: false,
+          width: 120,
+          speed: 0,
+          offsetY: -10,
+          onShow: setTimeout(() => {
+            objectHeart.tipso('hide');
+          }, 1000)
+        })
+        .tipso('show');
     }
   }
 
@@ -330,7 +327,7 @@ class SearchProvider extends React.Component {
   updateStateFilter(state) {
     this.setState({
       currentStateFilter: state
-    })
+    });
   }
 
   render() {
@@ -355,8 +352,6 @@ class SearchProvider extends React.Component {
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
           size: this.state.size,
-          shouldIncludeDistance: this.shouldIncludeDistance(),
-          shouldIncludeRelevance: this.shouldIncludeRelevance(),
           toggleHighlight: this.toggleHighlight,
           lat: this.props.lat,
           lon: this.props.lon,
@@ -414,6 +409,7 @@ class SearchProvider extends React.Component {
               <SortContext.Provider
                 value={{
                   sort: this.props.sort,
+                  sortOptions: this.props.sortOptions,
                   onSortChanged: compose(
                     this.scrollToTop,
                     this.props.updateSort,

@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 module Search
+  # SchoolQuery is an abstract class that needs all the properties neccessary
+  # to be able to find schools by city, lat/lon, etc. But it doesn't specify 
+  # how we'll retreive the data
+  #
+  # SolrSchoolQuery is a specific implementation of SchoolQuery. It will use
+  # Solr to get data, hence includes the Solr::Query module. Including that
+  # module means it will take on the role of a Solr Query in addition to being
+  # a SchoolQuery. It needs to implement Solr-specific behavior like
+  # document_type, def_type, etc
   class SolrSchoolQuery < SchoolQuery
     include Pagination::Paginatable
     include Solr::Query
@@ -18,6 +27,7 @@ module Search
       @_search ||= begin
         PageOfResults.new(
           response.results.load_external_data!,
+          sortable_fields: valid_static_sort_fields + response.populated_facet_fields,
           query: self,
           total: response.total,
           offset: offset,
@@ -28,7 +38,7 @@ module Search
 
     # Solr::Query
     def document_type
-      SchoolDocument
+      Solr::SchoolDocument
     end
 
     # Solr::Query
@@ -104,6 +114,13 @@ module Search
     private
 
     attr_reader :client
+
+    def valid_static_sort_fields
+      %w[name rating].tap do |array|
+        array << 'relevance' if q.present?
+        array << 'distance' if response.results.any?(&:distance) || (lat.present? && lon.present?)
+      end
+    end
 
     def default_sort_name
       if @q.present?

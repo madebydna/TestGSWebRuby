@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Search
-  class SchoolDocument < ::Solr::Document
+module Solr
+  class SchoolDocument < Document
     include Indexable
 
     CACHE_KEYS = %w(ratings)

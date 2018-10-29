@@ -15,5 +15,11 @@ module Solr
     def facet_counts_for_field(field)
       facet_fields[field] || []
     end
+
+    def populated_facet_fields
+      facet_fields.each_with_object([]) do |(field, values), fields|
+        fields << field if values.each_slice(2).any? { |val, count| count > 0 }
+      end.map { |f| f.sub(/_i$/, '') }
+    end
   end
 end

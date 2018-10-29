@@ -1,7 +1,7 @@
 module Solr
   class Searcher
     def self.rsolr
-      @_client ||= RSolr.connect(url: ENV_GLOBAL['solr.ro.server.url'])
+      @_client = Client.ro
     end
 
     def initialize(rsolr: self.class.rsolr)
@@ -21,7 +21,7 @@ module Solr
       Response.new(
         total: res.dig('response', 'numFound'),
         results: docs,
-        **(res['facet_counts'] || {})
+        **(res['facet_counts']&.symbolize_keys || {})
       )
     end
   end

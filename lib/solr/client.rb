@@ -1,11 +1,11 @@
 module Solr
   class Client
     def self.ro
-      @_ro ||= connect(ENV_GLOBAL['solr.ro.server.url'])
+      @_ro ||= connect(ENV_GLOBAL['solr7.ro.server.url'] || ENV_GLOBAL['solr.ro.server.url'])
     end
 
     def self.rw
-      @_rw ||= connect(ENV_GLOBAL['solr.rw.server.url'])
+      @_rw ||= connect(ENV_GLOBAL['solr7.rw.server.url'] || ENV_GLOBAL['solr.rw.server.url'])
     end
 
     def self.connect(url)

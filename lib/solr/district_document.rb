@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Search
-  class DistrictDocument < ::Solr::Document
+module Solr
+  class DistrictDocument < Document
     include Indexable
 
     def self.all_fields

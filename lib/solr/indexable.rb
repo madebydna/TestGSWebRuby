@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Search
+module Solr
   module Indexable
     def self.type
       raise 'Not implemented'

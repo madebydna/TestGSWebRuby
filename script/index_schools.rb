@@ -15,11 +15,16 @@ end.parse!
 
 states = script_args[:states]&.split(',')
 ids = script_args[:ids]&.split(',')
-solr_url = script_args[:solr_url] || ENV_GLOBAL['solr.rw.server.url']
 
-indexer = Search::SolrIndexer.with_rsolr_client(solr_url)
+indexer = 
+  if script_args[:solr_url]
+    Solr::Indexer.with_solr_url(script_args[:solr_url])
+  else
+    Solr::Indexer.with_rw_client
+  end
+
 if script_args[:delete]
-  indexer.delete_all_by_type(Search::SchoolDocument)
+  indexer.delete_all_by_type(Solr::SchoolDocument)
 else
   documents = Search::SchoolDocumentFactory.new(states: states, ids: ids).documents
   indexer.index(documents)

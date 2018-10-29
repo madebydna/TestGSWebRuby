@@ -17,9 +17,9 @@ module SearchTableConcerns
   end
 
   def equity_header_hash(schools)
-    populated_facet_fields
+    populated_test_score_fields
     .map do |field|
-      name = Search::SchoolDocument.rating_field_name_to_breakdown[field]
+      name = Solr::SchoolDocument.rating_field_name_to_breakdown[field]
       name || field.titleize
     end
     .map do |title|

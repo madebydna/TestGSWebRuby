@@ -1,18 +1,22 @@
 # frozen_string_literal: true
 
-module Search
-  class SolrIndexer
+module Solr
+  class Indexer
     attr_reader :client
 
-    def self.with_rsolr_client(url)
+    def self.with_solr_url(url)
       new(solr_client: RSolr.connect(url: url))
+    end
+
+    def self.with_rw_client
+      new(solr_client: Client.rw)
     end
 
     #######################################################################################33
 
     def initialize(solr_client:)
       @client = solr_client
-      @schema = Solr::Schema.with_rw_client
+      @schema = Schema.with_rw_client
     end
 
     def index(indexables)

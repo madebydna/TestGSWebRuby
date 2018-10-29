@@ -1,13 +1,19 @@
 # frozen_string_literal: true
 
-module Search
-  class CityDocument < ::Solr::Document
+module Solr
+  class CityDocument < Document
     include Indexable
 
     attr_writer :id
 
+    def self.from_active_cities
+      City.active.find_each.lazy.flat_map do |city|
+        new(city: city)
+      end
+    end
+
     def self.from_id(id)
-      CityDocument.new(id: id)
+      new(id: id)
     end
 
     def self.all_fields
