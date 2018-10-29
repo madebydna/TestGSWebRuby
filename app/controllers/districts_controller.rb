@@ -28,7 +28,7 @@ class DistrictsController < ApplicationController
   private
 
   def district_cache_data_reader
-    @_district_cache_data_reader ||= DistrictCacheDataReader.new(district_record)
+    @_district_cache_data_reader ||= DistrictCacheDataReader.new(district_record, district_cache_keys: ['test_scores_gsdata', 'district_characteristics'])
   end
 
   def set_district_meta_tags

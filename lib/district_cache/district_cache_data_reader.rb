@@ -130,7 +130,8 @@ class DistrictCacheDataReader
   end
 
   def ethnicity_data
-    flat_test_scores_for_latest_year.select(&:has_ethnicity_tag?)
+    decorated_district.ethnicity_data
+    # flat_test_scores_for_latest_year.select(&:has_ethnicity_tag?)
   end
 
   def low_income_data

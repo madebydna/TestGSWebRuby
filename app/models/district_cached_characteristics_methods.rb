@@ -11,6 +11,15 @@ module DistrictCachedCharacteristicsMethods
     max_year(having_district_value(all_students(enrollment_data)))['district_value']
   end
 
+  def ethnicity_data
+    ethnicity_data = district_characteristics.fetch('Ethnicity', [{}])
+    having_district_value(except_all_students(ethnicity_data))
+  end
+
+  def except_all_students(array_of_hashes)
+    array_of_hashes.compact.reject {|hash| hash['breakdown'].downcase == 'all students'}
+  end
+
   def all_students(array_of_hashes)
     with_all_students_breakdown = array_of_hashes.compact.select {|hash| hash['breakdown'] == 'All students'}
     if with_all_students_breakdown.length > 1

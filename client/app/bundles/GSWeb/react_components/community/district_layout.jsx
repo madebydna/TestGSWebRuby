@@ -230,8 +230,8 @@ class DistrictLayout extends React.Component {
           <div className="community-modules">
             {this.props.viewportSize < SM && <Ad slot="districtpage_first" sizeName="thin_banner_mobile" />}
             {this.renderSchools()}
-            {this.renderMobility()}
             {this.renderAcademics()}
+            {this.renderMobility()}
             {this.renderZillow()}
             {/* {this.renderReviews()} */}
           </div>
