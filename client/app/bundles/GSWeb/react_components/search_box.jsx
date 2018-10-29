@@ -274,7 +274,11 @@ export default class SearchBox extends React.Component {
         });
       }
 
-      suggest(q).done(results => {
+      let qPortionBeforeComma = q;
+      if (matchesStateAbbreviationQuery(q)) {
+        qPortionBeforeComma = q.substr(0, q.indexOf(','));
+      }
+      suggest(qPortionBeforeComma).done(results => {
         const adaptedResults = {
           Addresses: [],
           Zipcodes: [],

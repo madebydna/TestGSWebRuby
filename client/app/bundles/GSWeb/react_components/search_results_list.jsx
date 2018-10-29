@@ -22,7 +22,7 @@ const t = translateWithDictionary({
 });
 
 const boldSearchTerms = (string, substring) => {
-  const tokens = substring.trim().split(/\s+/);
+  const tokens = substring.trim().split(/,|\s+/);
   // The following separates string into chunks of matching and non matching substrings
   // We cannot inject a variable into a regex literal, hence 'new RegExp'. Noteworthy that split returns the matched
   // string when fed a group-capturing regex (compare 'Some string'.split(' '), which returns ['some','string'], not ['some',' ','string']
