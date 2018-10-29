@@ -1,7 +1,6 @@
 //= require ./admin
 //= require ./account_management_init
 //= require ./all_pages_init
-//= require ./city_home_init
 //= require ./city_hub_init
 //= require ./community_spotlights_init
 //= require ./compare_schools_init
@@ -19,6 +18,5 @@
 //= require ./reviews_new_init
 //= require ./search_init
 //= require ./signin_new_init
-//= require ./state_init
 //= require ./email_preferences
 //= require ./login_page_init

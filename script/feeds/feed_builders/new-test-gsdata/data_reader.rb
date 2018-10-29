@@ -120,26 +120,9 @@ module Feeds
 
       def state_test_info
         @_state_test_info ||= begin
-          state_info = {}
-          each_school_result do |hash|
-            state_info[hash['test-id']] ||= {}
-            test_hash = state_info[hash['test-id']]
-            test_hash['test-id'] = hash['test-id']
-            test_hash['test-name'] = hash['test-name']
-            test_hash['test-abbr'] = hash['test-abbr']
-            test_hash['scale'] ||= {}
-            if hash['composite-of-pro-null'] == 1
-              test_hash['scale'][hash['proficiency-band-name']] = 1
-            end
-            test_hash['most-recent-year'] = hash['year'] unless state_info[hash['test-id']]['most-recent-year'] && state_info[hash['test-id']]['most-recent-year'] > hash['year']
-            test_hash['description'] = hash['description']
-          end
-          state_info.each do |(_, hash)|
-            bands = hash['scale'].keys
-            scale = bands.size < 3 ? bands.join(' or ') : bands.join(', ')
-            hash['scale'] = "% #{scale}"
-          end
-          state_info.values
+          state_cache = StateCache.for_state('feed_test_description_gsdata', @state)
+          raise "State test cache not found for feed_test_description_gsdata #{@state}" unless state_cache
+          state_cache.cache_data
         end
       end
 

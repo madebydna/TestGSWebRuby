@@ -118,7 +118,6 @@ const SchoolTableRow = ({
   else if (tableView == 'Academic') {
     content = academicColumns(columns, subratings, links.profile);
   }
-
   return (
       <tr>
         {schoolCard()}
@@ -152,15 +151,17 @@ const overviewColumns = (type, grades, enrollmentDisplay, studentPerTeacher, rev
 const equityColumns = (columns, ethnicityInfo, profileLink) => {
   let cellStyle = {textAlign: 'center'}
   let content = [] ;
+  const keys = ethnicityInfo.map(obj => obj.label);
   columns.forEach(function(hash, index){
-    if (ethnicityInfo.ratings.hasOwnProperty(hash['key'])){
+    if (keys.includes(hash.key)){
+      const ethInfoIdx = keys.indexOf(hash.key);
       content.push(
         <td key={index} style={cellStyle}>
-          {drawRating(ethnicityInfo.ratings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}
+          {drawRating(Math.floor(ethnicityInfo[ethInfoIdx].rating), `${profileLink}${anchorObject[hash.key]}`)}
           <p className="percentage-population">
-            {ethnicityInfo.students[hash['key']] ? 
+            {ethnicityInfo[ethInfoIdx].percentage ? 
               <React.Fragment>
-                <span>{ethnicityInfo.students[hash['key']]}%</span><br/> {t('of students')}
+                <span>{Math.round(ethnicityInfo[ethInfoIdx].percentage)}%</span><br/> {t('of students')}
               </React.Fragment> 
               : 
               <React.Fragment>
@@ -241,7 +242,11 @@ SchoolTableRow.propTypes = {
   numReviews: PropTypes.number,
   parentRating: PropTypes.number,
   districtName: PropTypes.string,
-  ethnicityInfo: PropTypes.object,
+  ethnicityInfo: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string,
+    rating: PropTypes.number,
+    percentage: PropTypes.number
+  })),
   links: PropTypes.shape({
     profile: PropTypes.string.isRequired
   }).isRequired
@@ -256,7 +261,7 @@ SchoolTableRow.defaultProps = {
   numReviews: null,
   parentRating: null,
   districtName: null,
-  ethnicityInfo: {}
+  ethnicityInfo: []
 };
 
 export default SchoolTableRow;

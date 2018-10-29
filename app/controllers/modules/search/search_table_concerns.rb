@@ -18,17 +18,17 @@ module SearchTableConcerns
 
   def equity_header_hash(schools)
     populated_facet_fields
-      .map do |field|
-        name = Search::SchoolDocument.rating_field_name_to_breakdown[field]
-        name || field.titleize
-      end
-      .map do |title|
-        {
-          key: title,
-          title: t(title, default: t(title, scope: 'lib.search', default: title)),
-          tooltip: t(title + '_tooltip', scope:'lib.search', default: '')
-        }
-      end
+    .map do |field|
+      name = Search::SchoolDocument.rating_field_name_to_breakdown[field]
+      name || field.titleize
+    end
+    .map do |title|
+      {
+        key: title,
+        title: t(title, default: t(title, scope: 'lib.search', default: title)),
+        tooltip: t(title + '_tooltip', scope:'lib.search', default: '')
+      }
+    end
   end
 
   def overview_header_hash
