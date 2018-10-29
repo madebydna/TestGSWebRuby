@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Breadcrumbs from "react_components/breadcrumbs";
-import SchoolProfileComponent from "react_components/equity/school_profile_component";
+import DataModule from "react_components/data_module";
 import DistrictLayout from "./district_layout";
 import SearchBox from "react_components/search_box";
 import TopSchoolsStateful from "./top_schools_stateful";
@@ -126,7 +126,7 @@ class District extends React.Component {
           />
         }
         academics={
-          <SchoolProfileComponent
+          <DataModule
             title={title}
             anchor={anchor}
             subtitle={subtitle}

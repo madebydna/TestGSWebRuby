@@ -6,7 +6,7 @@ import 'jquery.cookie';
 import '../vendor/tipso';
 import '../vendor/fastclick';
 import '../vendor/remodal';
-import SchoolProfileComponent from '../react_components/equity/school_profile_component';
+import DataModule from '../react_components/data_module';
 import StudentsWithDisabilities from '../react_components/equity/students_with_disabilities';
 import CollegeReadiness from '../react_components/college_readiness';
 import ReviewDistribution from '../react_components/review_distribution';
@@ -58,7 +58,7 @@ const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 window.store = getStore();
 
 ReactOnRails.register({
-  SchoolProfileComponent,
+  DataModule,
   StudentsWithDisabilities,
   CollegeReadiness,
   ReviewDistribution,
