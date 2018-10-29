@@ -1,10 +1,13 @@
 ---
 en:
   javascript:
+    Saved!: Saved!
     No listings found: No listings found
     '# of schools': '# of schools'
     '# of students': '# of students'
     in: in
+    no_info: Currently, this information is unavailable. For more information
+    visit our FAQ page: visit our FAQ page
     at a glance: at a glance
     assigned_school: Assigned school
     browse_school_blurb: Here's a look at schools in
@@ -184,7 +187,8 @@ en:
     wrong_state_error_start_html: '<strong>You&#39re currently comparing schools in&nbsp'
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare schools now&nbsp</a>or<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspclear schools&nbsp</a><strong>to compare in this location.</strong>'
 #    added for equity
-    of students: '% of students'
+    percentage of students: '% of students'
+    of students: 'of students'
     student: student
     students: students
     Students: Students

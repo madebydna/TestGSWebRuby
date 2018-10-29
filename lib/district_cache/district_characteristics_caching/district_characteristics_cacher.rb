@@ -4,7 +4,7 @@ class DistrictCharacteristicsCacher < DistrictCacher
   include DistrictCacheValidation
 
   CACHE_KEY = 'district_characteristics'
-  DIRECTORY_CENSUS_DATA_TYPES = [17]
+  DIRECTORY_CENSUS_DATA_TYPES = [9,17]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
   # 3 - Master's degree

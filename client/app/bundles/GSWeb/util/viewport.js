@@ -1,5 +1,3 @@
-import { gsGeocode } from '../components/autocomplete/search';
-
 export const XS = 0;
 export const SM = 1;
 export const MD = 2;
@@ -8,7 +6,7 @@ export const LG = 3;
 export const validSizes = [XS, SM, MD, LG];
 
 // inner box of window scroll area, relative to document
-const viewportBox = () => {
+export const viewportBox = () => {
   const top =
     typeof window.pageYOffset === 'undefined'
       ? (document.scrollingElement || document.documentElement).scrollTop
@@ -42,10 +40,13 @@ const boxInDoc = el => {
     bottom,
     left,
     right,
-    height: top - bottom,
+    height: bottom - top,
     width: right - left
   };
 };
+
+export const documentBox = () =>
+  boxInDoc(window.document.querySelector('html'));
 
 export const distanceTo = (box, otherBox) => ({
   top: box.top - otherBox.top,

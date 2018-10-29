@@ -20,10 +20,4 @@ describe 'State Home Page' do
     end
   end
 
-  context 'washington-dc' do
-    include_context 'Given the following city(s) are in the db', [{state: 'dc', name: 'washington'}]
-    with_shared_context 'when visiting /washington-dc' do
-      include_example 'should have redirected to', '/washington-dc/washington/'
-    end
-  end
 end

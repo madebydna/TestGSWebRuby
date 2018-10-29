@@ -125,9 +125,7 @@ RSpec.configure do |config|
   Capybara.app_host = ENV['CAPYBARA_HOST'] || "http://localhost:#{port}"
   Capybara.server_port = port
   ENV_GLOBAL['app_host'] = 'localhost'
-  ENV_GLOBAL['gsweb_host'] = 'localhost'
   ENV_GLOBAL['app_port'] = '3001'
-  ENV_GLOBAL['gsweb_port'] = '3001'
 
   Capybara::Webkit.configure do |config|
     # config.debug = true

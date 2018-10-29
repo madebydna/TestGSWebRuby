@@ -33,6 +33,10 @@ module SearchControllerConcerns
     end
   end
 
+  def any_results?
+    page_of_results.present?
+  end
+
   def query
     if point_given? || area_given? || q.present?
       solr_query

@@ -8,6 +8,7 @@ module Subscriptions
   def add_subscription!(*args)
     subscription = new_subscription *args
     subscription.save!
+    subscription
   end
 
   def safely_add_subscription!(list, school = nil)

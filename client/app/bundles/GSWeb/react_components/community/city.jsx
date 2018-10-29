@@ -139,13 +139,13 @@ class City extends React.Component {
               pageType='city'
           />
         }
-        // recentReviews={
-        //   <RecentReviews
-        //     community="city" 
-        //     reviews={this.props.reviews}
-        //     locality={this.props.locality}
-        //   />
-        // }
+        recentReviews={
+          <RecentReviews
+            community="city" 
+            reviews={this.props.reviews}
+            locality={this.props.locality}
+          />
+        }
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
         toc={
