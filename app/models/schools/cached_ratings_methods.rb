@@ -46,7 +46,7 @@ module CachedRatingsMethods
     ratings= ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
     ethnicity_ratings = decorate_ethnicity_object(ratings,"rating")
     ethnicity_percentages = decorate_ethnicity_object(ethnicity_data,"percentage")
-    ethnicity = format_ethnicity_array(ethnicity_ratings,ethnicity_percentages)
+    format_ethnicity_array(ethnicity_ratings,ethnicity_percentages)
   end
 
   def great_schools_rating
