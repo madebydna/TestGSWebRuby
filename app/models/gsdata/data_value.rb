@@ -288,6 +288,17 @@ class DataValue < ActiveRecord::Base
     select(state_and_district_values)
   end
 
+  def self.state_for_data_type_id(data_type_id)
+    state_only.from(DataValue.where(data_type_id: data_type_id).limit(1))
+  end
+
+  def self.state_only
+    state_only = <<-SQL
+      id, state
+    SQL
+    select(state_only)
+  end
+
   def self.state_and_district_values_with_proficiency_band
     state_and_district_values = <<-SQL
       data_values.id, data_values.data_type_id, data_types.name, #{LoadSource.table_name}.name as source_name, #{Load.table_name}.description, 
