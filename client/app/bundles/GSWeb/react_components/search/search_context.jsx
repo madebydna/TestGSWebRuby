@@ -238,7 +238,7 @@ class SearchProvider extends React.Component {
   }
 
   mergedSavedSchoolsCookie(schoolKeys){
-    if(this.props.signedIn){
+    if(this.props.signedIn && schoolKeys){
       const savedSchools = getSavedSchoolsFromCookie();
       const allSchools = savedSchools.concat(schoolKeys);
       const mergedSavedSchools = uniqBy(allSchools,function(v){
@@ -253,7 +253,6 @@ class SearchProvider extends React.Component {
   updateSavedSchoolsCookie(schoolKey) {
     const savedSchools = getSavedSchoolsFromCookie();
     const schoolKeyIdx = this.savedSchoolsFindIndex(schoolKey);
-    debugger
     schoolKeyIdx > -1
       ? savedSchools.splice(schoolKeyIdx, 1)
       : savedSchools.push(schoolKey);

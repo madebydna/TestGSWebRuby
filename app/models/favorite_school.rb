@@ -27,6 +27,17 @@ class FavoriteSchool < ActiveRecord::Base
     end
   end
 
+  def self.persist_saved_school(school, user_id)
+    saved_school = new
+    saved_school.state = school.state
+    saved_school.school_id = school.id
+    saved_school.list = ['msl', school.level_code.presence].compact.join(',')
+    saved_school.updated = Time.now
+    saved_school.member_id = user_id
+
+    saved_school
+  end
+
   def school
     School.find_by_state_and_id(state, school_id)
   end

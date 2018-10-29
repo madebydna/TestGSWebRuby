@@ -17,12 +17,24 @@ class Api::SavedSchoolsController < ApplicationController
     end
   end
 
+  # this endpoint is only trigger at login/initial merging of schools. Will merge 
+  # together the schools and persist into the database
   def consistentify_schools
-    require 'pry'; binding.pry
     begin
-      schools = (params[:schools] || []).map { |school| [school["state"]&.downcase, school["id"]&.to_i] }
+      saved_schools = (params[:schools] || []).map { |school| [school["state"]&.downcase, school["id"]&.to_i] }
       db_schools = FavoriteSchool.saved_school_list(current_user)
-    rescue
+      # only add new schools since this route will only be reached when signed in
+      (saved_schools - db_schools).each do |school_params|
+        selected_school = School.on_db("#{school_params[0]}").active.find_by!(id: "#{school_params[1]}")
+        school_obj = FavoriteSchool.persist_saved_school(selected_school, current_user.id)
+        school_obj.save!
+      end
+
+      render json: {status: 200}
+    rescue => e
+      GSLogger.error(:misc, e, message:'Error saving school(s)', vars: params)
+      
+      render json: {status: 400}
     end
   end
 
