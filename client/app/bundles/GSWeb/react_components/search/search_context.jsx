@@ -258,9 +258,17 @@ class SearchProvider extends React.Component {
       : savedSchools.push(schoolKey);
     setCookie(COOKIE_NAME, savedSchools);
     if(this.props.signedIn){
-      schoolKeyIdx > -1
-      ? deleteSchool(schoolKey)
-      : addSchool(schoolKey)
+      if(schoolKeyIdx > -1){
+        deleteSchool(schoolKey)
+          .done(e => {
+            e.status === 400 && alert("There was an error deleting a school from your account")
+          })
+      }else{
+        addSchool(schoolKey)
+          .done(e => {
+            e.status === 400 && alert("There was an error adding a school to your account")
+          })
+      }
     }
     analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
   }

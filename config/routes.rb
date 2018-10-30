@@ -273,8 +273,8 @@ LocalizedProfiles::Application.routes.draw do
     resources :students
     get '/autosuggest', to: 'autosuggest', action: 'show'
     # resources :saved_schools, only: [:create, :destroy]
-    post '/save_school', as: :save_school, to: 'saved_schools#create'
-    delete '/delete_school', as: :delete_school, to: 'saved_schools#destroy'
+    post '/save_school', to: 'saved_schools#create'
+    delete '/delete_school', to: 'saved_schools#destroy'
     post '/consistentify_saved_schools', as: :merge_schools, to: 'saved_schools#consistentify_schools'
   end
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::SavedSchoolsController < ApplicationController
+  include SavedSchoolsParams
 
   # def create
   #   begin
@@ -19,15 +20,26 @@ class Api::SavedSchoolsController < ApplicationController
 
   def create
     begin
-      school_state = params[:school]["state"].downcase
-      school_id = params[:school]["id"].to_i
       raise "School Already in List" if db_schools.include?([school_state, school_id])
-      saved_school = School.on_db("#{school_state}").active.find_by!(id: "#{school_id}")
-      school_obj = FavoriteSchool.persist_saved_school(saved_school, current_user.id)
-      school_obj.save!
+      school = School.on_db("#{school_state}").active.find_by!(id: "#{school_id}")
+      saved_school = FavoriteSchool.persist_saved_school(saved_school, current_user.id)
+      saved_school.save!
       render json: {status: 200}
     rescue => e
-      GSLogger.error(:misc, e, message:'Error saving school', vars: params)
+      GSLogger.error(:misc, e, message:'Error adding school', vars: params)
+      render json: {status: 400}
+    end
+  end
+
+  def destroy
+    #confirm: remove from list_msl and add to list_active_history?
+    begin
+      raise "School Not in List" unless db_schools.include?([school_state, school_id])
+      saved_school = FavoriteSchool.where(state: school_state, school_id: school_id, member_id: current_user.id).first!
+      saved_school.destroy!
+      render json: {status: 200}
+    rescue => e
+      GSLogger.error(:misc, e, message:'Error deleting school', vars: params)
       render json: {status: 400}
     end
   end
@@ -47,25 +59,6 @@ class Api::SavedSchoolsController < ApplicationController
       render json: {status: 200}
     rescue => e
       GSLogger.error(:misc, e, message:'Error saving school(s)', vars: params)
-      render json: {status: 400}
-    end
-  end
-
-  def db_schools
-    FavoriteSchool.saved_school_list(current_user)
-  end
-
-  def destroy
-    #confirm: remove from list_msl and add to list_active_history?
-    begin
-      school_state = params[:school]["state"].downcase
-      school_id = params[:school]["id"].to_i
-      raise "School Not in List" unless db_schools.include?([school_state, school_id])
-      school_obj = FavoriteSchool.where(state: school_state, school_id: school_id, member_id: current_user.id).first!
-      school_obj.destroy
-      render json: {status: 200}
-    rescue => e
-      GSLogger.error(:misc, e, message:'Error deleting school', vars: params)
       render json: {status: 400}
     end
   end
