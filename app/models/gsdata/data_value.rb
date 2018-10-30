@@ -16,8 +16,6 @@ class DataValue < ActiveRecord::Base
   belongs_to :source, class_name: '::Gsdata::Source', inverse_of: :data_values
   belongs_to :load, inverse_of: :data_values
   belongs_to :proficiency_band, inverse_of: :data_values
-  
-
 
   def self.from_hash(hash)
     new.tap do |obj|
@@ -286,17 +284,6 @@ class DataValue < ActiveRecord::Base
       group_concat(academics.name ORDER BY academics.name) as "academic_names"
     SQL
     select(state_and_district_values)
-  end
-
-  def self.state_for_data_type_id(data_type_id)
-    state_only.from(DataValue.where(data_type_id: data_type_id).limit(1))
-  end
-
-  def self.state_only
-    state_only = <<-SQL
-      id, state
-    SQL
-    select(state_only)
   end
 
   def self.state_and_district_values_with_proficiency_band
