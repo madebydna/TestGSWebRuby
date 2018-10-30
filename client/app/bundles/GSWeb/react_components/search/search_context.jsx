@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { find as findSchools, updateSchoolList } from 'api_clients/schools';
+import { find as findSchools, updateSchoolList, addSchool, deleteSchool } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray, uniqBy } from 'lodash';
@@ -257,6 +257,11 @@ class SearchProvider extends React.Component {
       ? savedSchools.splice(schoolKeyIdx, 1)
       : savedSchools.push(schoolKey);
     setCookie(COOKIE_NAME, savedSchools);
+    if(this.props.signedIn){
+      schoolKeyIdx > -1
+      ? deleteSchool(schoolKey)
+      : addSchool(schoolKey)
+    }
     analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
   }
 

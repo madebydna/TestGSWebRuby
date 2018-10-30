@@ -148,5 +148,25 @@ export function updateSchoolList(schoolList){
     dataType: 'json',
     contentType: 'application/json',
     method: 'POST'
-  })
+  });
+}
+
+export function addSchool(schoolKey) {
+  const data = { school: schoolKey };
+  return $.ajax({
+    url: '/gsr/api/save_school',
+    data,
+    dataType: 'json',
+    method: 'POST'
+  });
+}
+
+export function deleteSchool(schoolKey) {
+  const data = { school: schoolKey };
+  return $.ajax({
+    url: '/gsr/api/delete_school',
+    data,
+    dataType: 'json',
+    method: 'DELETE'
+  });
 }
