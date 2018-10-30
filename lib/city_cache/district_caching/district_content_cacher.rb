@@ -26,7 +26,7 @@ module DistrictCaching
     end
 
     def districts
-      district_ids = city.schools_within_city.where.not(level: 'UG').uniq {|s| s[:district_id] }.map{|s| s[:district_id]}.reject {|x| x == 0}
+      district_ids = city.schools_within_city.where.not(level: 'UG').map(&:district_id).uniq.reject(&:zero?)
       District.find_by_state_and_ids(city.state, district_ids).active.where(charter_only: 0)
     end
 
