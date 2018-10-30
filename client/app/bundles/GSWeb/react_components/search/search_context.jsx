@@ -263,11 +263,13 @@ class SearchProvider extends React.Component {
           .done(e => {
             e.status === 400 && alert("There was an error deleting a school from your account")
           })
+          .fail(e => alert("There was an error deleting a school from your account"))
       }else{
         addSchool(schoolKey)
           .done(e => {
             e.status === 400 && alert("There was an error adding a school to your account")
           })
+          .fail(e => alert("There was an error adding a school to your account"))
       }
     }
     analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
