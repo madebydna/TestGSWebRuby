@@ -17,7 +17,7 @@ module DistrictCachedCharacteristicsMethods
   end
 
   def except_all_students(array_of_hashes)
-    array_of_hashes.compact.reject {|hash| hash['breakdown'].downcase == 'all students'}
+    array_of_hashes.compact.reject {|hash| hash['breakdown'] == 'All students'}
   end
 
   def all_students(array_of_hashes)

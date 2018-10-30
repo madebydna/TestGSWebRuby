@@ -59,6 +59,7 @@ export default class DataModule extends React.Component {
     }),
     feedback: PropTypes.object,
     qualaroo_module_link: PropTypes.string,
+    suppressIfEmpty: PropTypes.bool
   };
 
   static defaultProps = {
@@ -278,7 +279,7 @@ export default class DataModule extends React.Component {
     )
   }
 
-  footer() {
+  defaultFooter() {
     return (
       <div data-ga-click-label={this.props.title}>
         <InfoBox content={this.props.sources} element_type="sources">{ t('See notes') }</InfoBox>
@@ -291,27 +292,39 @@ export default class DataModule extends React.Component {
     return <NoDataModuleCta moduleName={this.props.title} message={this.props.no_data_summary} />
   }
 
-  render() {
+  handleRender(){
     let analyticsId = this.props.analytics_id;
     if (!this.hasData()) {
       analyticsId += '-empty'; // no data
     }
+    let { suppressIfEmpty } = this.props;
+    if (!this.hasData() && suppressIfEmpty) {
+      return null;
+    }
 
     return (
       <div id={analyticsId}>
-        <BasicDataModuleLayout
-          sharing_modal={ this.hasData() && this.props.share_content && <SharingModal content={this.props.share_content} /> }
-          id={this.props.anchor}
-          className=''
-          icon={ this.icon() }
-          title={ this.title() }
-          subtitle={ this.props.subtitle }
-          no_data_cta={ !this.hasData() && this.noDataCta() }
-          footer={ this.hasData() && this.footer() }
-          body={ this.hasData() && this.activePane() }
-          tabs={ this.hasData() && this.tabsContainer() }
-        />
-      </div>
+      <BasicDataModuleLayout
+        sharing_modal={ this.hasData() && this.props.share_content &&
+        <SharingModal content={this.props.share_content}/> }
+        id={this.props.anchor}
+        className=''
+        icon={ this.icon() }
+        title={ this.title() }
+        subtitle={ this.props.subtitle }
+        no_data_cta={ !this.hasData() && this.noDataCta() }
+        footer={ this.hasData() && (this.props.footer || this.defaultFooter()) }
+        body={ this.hasData() && this.activePane() }
+        tabs={ this.hasData() && this.tabsContainer() }
+      />
+    </div>
+    )
+
+  }
+
+  render() {
+    return (
+      this.handleRender()
     )
   }
 };

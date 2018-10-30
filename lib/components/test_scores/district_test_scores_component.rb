@@ -8,15 +8,10 @@ module Components
       end
 
       def normalized_values
-        # @_normalized_values ||= (
-        # @foo = 123
-        # require 'byebug'
-        # byebug
         cache_data_reader
           .recent_test_scores
           .having_academic(data_type) # data type attribute actually contains the subject here
           .having_all_students_or_all_breakdowns_in(valid_breakdowns)
-          .apply_to_each_data_type_academic_group(&:keep_if_any_subgroups)
           .apply_to_each_data_type_academic_breakdown_group(&:keep_if_any_grade_all)
           .apply_to_each_data_type_academic_group(&:keep_if_any_non_zero_district_values)
           .group_by_data_type
@@ -28,6 +23,7 @@ module Components
               grade_all, other_grades = values_for_subgroup.separate_single_grade_all_from_other
 
               grade_all_rating_score_item = gs_data_value_to_hash(grade_all)
+
               if other_grades.present?
                 grade_all_rating_score_item[:grades] =
                   other_grades.sort_by_grade.map do |gs_data_value|

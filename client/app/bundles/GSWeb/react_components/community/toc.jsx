@@ -4,10 +4,11 @@ import { t, capitalize } from 'util/i18n';
 import { scrollToElement } from 'util/scrolling';
 import TocItem from './toc_item';
 
-const SCHOOL_DISTRICTS = 'school districts'
-const SCHOOLS = 'schools'
-const REVIEWS = 'Reviews'
+const SCHOOL_DISTRICTS = 'school districts';
+const SCHOOLS = 'schools';
+const REVIEWS = 'Reviews';
 const COMMUNITY_RESOURCES = 'community_resources';
+const ACADEMICS = 'academics';
 
 
 const cityTocItems = [
@@ -29,6 +30,12 @@ const cityTocItems = [
   //   anchor: '',
   // selected: false
   // },
+  {
+    key: 'academics',
+    label: capitalize(t(ACADEMICS)),
+    anchor: '#Academics',
+    selected: false
+  },
   {
     key: 'community resources',
     label: capitalize(t(COMMUNITY_RESOURCES)),
@@ -79,10 +86,13 @@ class Toc extends React.Component {
   selectTocItems(){
     const suppressDistricts = this.props.suppressDistricts;
     const suppressReviews = this.props.suppressReviews;
+    const suppressAcademics = this.props.suppressAcademics;
     return cityTocItems.filter(tocItem=>{
       if(tocItem.key === SCHOOL_DISTRICTS && suppressDistricts ) {
         return false;
       } else if (tocItem.key === REVIEWS && suppressReviews){
+        return false;
+      } else if (tocItem.key === ACADEMICS && suppressAcademics) {
         return false;
       }
       return true;

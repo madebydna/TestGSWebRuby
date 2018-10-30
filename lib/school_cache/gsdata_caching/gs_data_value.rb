@@ -315,7 +315,7 @@ class GsdataCaching::GsDataValue
     end
 
     def sort_by_grade
-      sort_by(&:grade)
+      sort_by {|dv| dv.grade.to_i}
     end
 
     def keep_if_any_grade_all

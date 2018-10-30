@@ -17,6 +17,8 @@ import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
 import { analyticsEvent } from "util/page_analytics";
 import Zillow from "./zillow";
+import { t } from '../../util/i18n';
+import InfoBox from 'react_components/school_profiles/info_box';
 
 class District extends React.Component {
   static defaultProps = {
@@ -140,6 +142,17 @@ class District extends React.Component {
             showTabs={showTabs}
             faq={faq}
             feedback={feedback}
+            suppressIfEmpty={true}
+            footer={
+              <div data-ga-click-label={title}>
+                <InfoBox content={sources} element_type="sources">{ t('See notes') }</InfoBox>
+                <div className="module_feedback">
+                  <a href={`https://s.qualaroo.com/45194/a8cbf43f-a102-48f9-b4c8-4e032b2563ec?state=${this.props.locality.stateShort}&districtId=${this.props.locality.district_id}`} className="anchor-button" target="_blank" rel="nofollow">
+                    {t('search_help.send_feedback')}
+                  </a>
+                </div>
+              </div>
+            }
           />
         }
         zillow={
@@ -162,7 +175,8 @@ class District extends React.Component {
         toc={
           <Toc 
             schools={this.props.schools}
-            suppressReviews={this.props.reviews.length === 0} 
+            suppressReviews={this.props.reviews.length === 0}
+            suppressAcademics={data.filter(o => o.data && o.data.length > 0).length < 1}
           />
         }
         viewportSize={this.props.viewportSize}
