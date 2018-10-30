@@ -22,7 +22,7 @@ class Api::SavedSchoolsController < ApplicationController
     begin
       raise "School Already in List" if db_schools.include?([school_state, school_id])
       school = School.on_db("#{school_state}").active.find_by!(id: "#{school_id}")
-      saved_school = FavoriteSchool.persist_saved_school(saved_school, current_user.id)
+      saved_school = FavoriteSchool.created_saved_school_instance(saved_school, current_user.id)
       saved_school.save!
       render json: {status: 200}
     rescue => e
@@ -52,7 +52,7 @@ class Api::SavedSchoolsController < ApplicationController
       # only add new schools since this route will only be reached when signed in
       (saved_schools - db_schools).each do |school_params|
         selected_school = School.on_db("#{school_params[0]}").active.find_by!(id: "#{school_params[1]}")
-        school_obj = FavoriteSchool.persist_saved_school(selected_school, current_user.id)
+        school_obj = FavoriteSchool.created_saved_school_instance(selected_school, current_user.id)
         school_obj.save!
       end
 

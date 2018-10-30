@@ -27,7 +27,7 @@ class FavoriteSchool < ActiveRecord::Base
     end
   end
 
-  def self.persist_saved_school(school, user_id)
+  def self.created_saved_school_instance(school, user_id)
     saved_school = new
     saved_school.state = school.state
     saved_school.school_id = school.id
