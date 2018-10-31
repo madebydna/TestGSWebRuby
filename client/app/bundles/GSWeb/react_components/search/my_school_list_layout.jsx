@@ -223,7 +223,7 @@ class MySchoolListLayout extends React.Component {
 
   renderMobileMenuBar() {
     return (
-      <OpenableCloseable openByDefault={this.props.view === LIST_VIEW}>
+      <OpenableCloseable>
         {(isOpen, { toggle, close }) => (
           <div>
             {this.props.searchBox}
