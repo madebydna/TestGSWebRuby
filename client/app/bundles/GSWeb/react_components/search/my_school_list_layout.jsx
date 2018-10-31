@@ -13,12 +13,16 @@ const t = translateWithDictionary({
   en: {
     title: 'Your saved schools',
     "Show schools in": "Show schools in",
-    "Sort by": "Sort by"
+    "Sort by": "Sort by",
+    "Sign up link": "Sign up",
+    "Sign up rest": "for a free GreatSchools account and access your saved schools from anywhere."
   },
   es: {
     title: 'Tus escuelas guardadas',
     "Show schools in": "Muestre escuelas en",
-    "Sort by": "Ordenar por"
+    "Sort by": "Ordenar por",
+    "Sign up link": "Sign up",
+    "Sign up rest": "for a free GreatSchools account and access your saved schools from anywhere."
   }
 });
 
@@ -279,6 +283,7 @@ class MySchoolListLayout extends React.Component {
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
           <h1 style={{ fontSize: '20px' }}>{t('title')}</h1>
+          <div><a href="#">{t('Sign up link')}</a> {t('Sign up rest')}</div>
           {this.props.breadcrumbs}
           {/* <div className="pagination-summary">{this.props.resultSummary}</div> */}
           {this.shouldRenderTable() ? (
