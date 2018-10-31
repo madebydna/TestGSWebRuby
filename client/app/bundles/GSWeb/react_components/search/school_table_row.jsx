@@ -165,8 +165,7 @@ const equityColumns = (columns, ethnicityInfo, profileLink) => {
               </React.Fragment> 
               : 
               <React.Fragment>
-                <p className="percentage-population">{t('percentage of students')}:<br/>
-                N/A</p>
+                {renderNoInfoTooltip()}
               </React.Fragment>
             }
           </p>
