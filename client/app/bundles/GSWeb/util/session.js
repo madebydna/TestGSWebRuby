@@ -40,10 +40,10 @@ export const updateNavbarHeart = () => {
     node.innerHTML = numSavedSchools !== 0 ? `(${numSavedSchools})` :  null;
   });
   document.querySelectorAll('a.saved-schools-nav span:first-child').forEach(node => {
-    if (numSavedSchools === 0){
-      node.classList.remove("icon-heart-outline");
+    if (numSavedSchools === 0 && node.classList.contains("icon-heart")){
+      node.classList.remove("icon-heart");
       node.classList.add("icon-heart-outline");
-    }else{
+    } else if (numSavedSchools !== 0 && node.classList.contains("icon-heart-outline")){
       node.classList.remove("icon-heart-outline");
       node.classList.add("icon-heart");
     }

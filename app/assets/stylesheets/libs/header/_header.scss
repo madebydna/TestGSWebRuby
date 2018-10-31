@@ -138,7 +138,7 @@
   }
 
   .search_bar {
-    width: 46%;
+    width: 40%;
     padding: 2px 20px;
     vertical-align: middle;
   }
@@ -546,7 +546,7 @@
     top: 10px;
     right: 0;
 
-    // Overwrites/Add in some style to the icon
+    // Overwrites/Add in some style to the icon when in mobile
     .saved-schools-nav{
       margin-left: 18px;
       font-size: 18px;
