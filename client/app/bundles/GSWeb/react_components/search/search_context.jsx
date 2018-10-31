@@ -25,6 +25,7 @@ import SortContext from './sort_context';
 import DistanceContext from './distance_context';
 import { set as setCookie } from 'js-cookie';
 import { t } from 'util/i18n';
+import { showMessageTooltip } from '../../util/message_tooltip';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -205,23 +206,12 @@ class SearchProvider extends React.Component {
   }
 
   displayHeartMessage(schoolKey){
-    let objectHeart = $('.header_un  a.saved-schools-nav').filter(':visible')
+    let objectHeart = $('.header_un  a.saved-schools-nav').filter(':visible');
     if(this.savedSchoolsFindIndex(schoolKey) > -1) {
-      objectHeart.tipso({
-        content: t('Saved!'),
-        background: '#202124',
-        color: '#FFFFFF',
-        position: 'bottom',
-        useTitle: false,
-        width: 120,
-        speed: 0,
-        offsetY: -10,
-        onShow:
-            setTimeout(function () {
-              objectHeart.tipso('hide');
-            }, 1000)
-
-      }).tipso('show');
+      let options = {
+        content: t('Saved!')
+      }
+      showMessageTooltip(objectHeart, options)
     }
   }
 
