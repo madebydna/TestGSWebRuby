@@ -12,6 +12,7 @@ import Mobility from "./mobility";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
+import {schools, academics, communityResources, nearbyHomesForSale, reviews} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
@@ -97,6 +98,22 @@ class District extends React.Component {
     );
   }
 
+  removeReviewsIfEmpty(tocItems){
+    this.props.reviews.length === 0 && tocItems.pop();
+  }
+
+  removeAcademicsIfEmpty(tocItems){
+    let {data} = this.props.academics;
+    data.filter(o => o.data && o.data.length > 0).length < 1 && tocItems.splice(1,1);
+  }
+
+  selectTocItems(){
+    const districtTocItems = [schools, academics, communityResources, nearbyHomesForSale, reviews];
+    this.removeReviewsIfEmpty(districtTocItems);
+    this.removeAcademicsIfEmpty(districtTocItems);
+    return districtTocItems;
+  }
+
   render() {
     let {title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback} = this.props.academics;
     return (
@@ -173,10 +190,8 @@ class District extends React.Component {
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
         toc={
-          <Toc 
-            schools={this.props.schools}
-            suppressReviews={this.props.reviews.length === 0}
-            suppressAcademics={data.filter(o => o.data && o.data.length > 0).length < 1}
+          <Toc
+            tocItems={this.selectTocItems()}
           />
         }
         viewportSize={this.props.viewportSize}

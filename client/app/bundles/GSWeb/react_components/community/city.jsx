@@ -13,6 +13,7 @@ import Mobility from "./mobility";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
+import {schools, schoolDistricts, communityResources, nearbyHomesForSale, reviews} from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
 import '../../vendor/remodal';
 import { find as findSchools } from 'api_clients/schools';
@@ -96,6 +97,21 @@ class City extends React.Component {
     );
   }
 
+  removeReviewsIfEmpty(tocItems){
+    this.props.reviews.length === 0 && tocItems.pop();
+  }
+
+  removeDistrictsIfEmpty(tocItems){
+    this.props.districts.length === 0 && tocItems.splice(1,1)
+  }
+
+  selectTocItems(){
+    const cityTocItems = [schools, schoolDistricts, communityResources, nearbyHomesForSale, reviews];
+    this.removeReviewsIfEmpty(cityTocItems);
+    this.removeDistrictsIfEmpty(cityTocItems);
+    return cityTocItems;
+  }
+
   render() {
     return (
       <CityLayout
@@ -149,10 +165,8 @@ class City extends React.Component {
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
         toc={
-          <Toc 
-            schools={this.props.schools} 
-            suppressDistricts={this.props.districts.length === 0} 
-            suppressReviews={this.props.reviews.length === 0} 
+          <Toc
+            tocItems={this.selectTocItems()}
           />
         }
         viewportSize={this.props.viewportSize}
