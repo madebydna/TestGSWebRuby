@@ -35,7 +35,19 @@ export const getSavedSchoolsFromCookie = () => {
 }
 
 export const updateNavbarHeart = () => {
-  document.querySelectorAll('a.saved-schools-nav span:last-child').forEach(node => node.innerHTML = `(${getSavedSchoolsFromCookie().length})`);
+  const numSavedSchools = getSavedSchoolsFromCookie().length;
+  document.querySelectorAll('a.saved-schools-nav span:last-child').forEach(node => {
+    node.innerHTML = numSavedSchools !== 0 ? `(${numSavedSchools})` :  null;
+  });
+  document.querySelectorAll('a.saved-schools-nav span:first-child').forEach(node => {
+    if (numSavedSchools === 0){
+      node.classList.remove("icon-heart-outline");
+      node.classList.add("icon-heart-outline");
+    }else{
+      node.classList.remove("icon-heart-outline");
+      node.classList.add("icon-heart");
+    }
+  });
 }
 
 export const COOKIE_NAME = 'gs_saved_schools';
