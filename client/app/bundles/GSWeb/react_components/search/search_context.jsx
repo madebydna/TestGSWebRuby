@@ -205,13 +205,7 @@ class SearchProvider extends React.Component {
   }
 
   displayHeartMessage(schoolKey){
-    let objectHeart;
-    if (!('ontouchstart' in window)) {
-      objectHeart = $('.header_un .menu_hide_mobile a.saved-schools-nav');
-    }
-    else{
-      objectHeart = $('.header_un .search_icon a.saved-schools-nav');
-    }
+    let objectHeart = $('.header_un  a.saved-schools-nav').filter(':visible')
     if(this.savedSchoolsFindIndex(schoolKey) > -1) {
       objectHeart.tipso({
         content: t('Saved!'),
