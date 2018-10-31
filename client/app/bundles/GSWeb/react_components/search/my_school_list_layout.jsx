@@ -11,12 +11,12 @@ import HelpTooltip from '../help_tooltip';
 
 const t = translateWithDictionary({
   en: {
-    title: 'Your saved schools',
+    title: 'Your saved schools in',
     "Show schools in": "Show schools in",
     "Sort by": "Sort by"
   },
   es: {
-    title: 'Tus escuelas guardadas',
+    title: 'Tus escuelas guardadas en',
     "Show schools in": "Muestre escuelas en",
     "Sort by": "Ordenar por"
   }
@@ -208,6 +208,12 @@ class MySchoolListLayout extends React.Component {
       <div className="menu-bar filters" ref={this.header}>
         {this.props.searchBox}
         <div style={{ margin: 'auto' }}>
+          <span className="title">
+            <span>{t('title')}</span>
+            <div className="menu-item">
+              <span>: {this.props.stateSelect}</span>
+            </div>
+          </span>
           <span className="menu-item list-map-toggle">
             <div>
               {this.props.listMapTableSelect}
@@ -257,10 +263,10 @@ class MySchoolListLayout extends React.Component {
                   aria-label={t('Close filters')}
                 />
                 <div>
-                  {this.props.numOfSchools > 0 && <div className="menu-item">
+                  {/* {this.props.numOfSchools > 0 && <div className="menu-item">
                     <span className="label">{t('Show schools in')}:</span>
                     {this.props.stateSelect}
-                  </div>}
+                  </div>} */}
                   <span className="menu-item">
                     <span className="label">{t('Sort by')}:</span>
                     {this.props.sortSelect}
@@ -276,9 +282,12 @@ class MySchoolListLayout extends React.Component {
 
   renderBreadcrumbsSummarySort() {
     return (
-      !(this.shouldRenderMap() && this.props.size <= SM) && (
+      !(this.shouldRenderMap()) && (
         <div className="subheader menu-bar">
-          <h1 style={{ fontSize: '20px' }}>{t('title')}</h1>
+          {this.props.numOfSchools > 0 && this.props.size <= SM && <div className="menu-item">
+            <span className="label">{t('Show schools in')}:</span>
+            {this.props.stateSelect}
+          </div>}
           {this.props.breadcrumbs}
           {/* <div className="pagination-summary">{this.props.resultSummary}</div> */}
           {this.shouldRenderTable() ? (
@@ -308,16 +317,10 @@ class MySchoolListLayout extends React.Component {
       );
     }
     return (
-      <React.Fragment>
-        <div className="menu-item">
-          <span className="label">{t('Show schools in')}:</span>
-          {this.props.stateSelect}
-        </div>
-        <div className="menu-item">
-          <span className="label">{t('Sort by')}:</span>
-          {this.props.sortSelect}
-        </div>
-      </React.Fragment>
+      <div className="menu-item">
+        <span className="label">{t('Sort by')}:</span>
+        {this.props.sortSelect}
+      </div>
     );
   }
 
