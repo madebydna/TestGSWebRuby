@@ -463,12 +463,6 @@ class GsdataCaching::GsDataValue
         .extend(CollectionMethods)
     end
 
-    def ethnicity_district_values
-      self.having__value
-        .select(&:has_ethnicity_tag?)
-        .extend(CollectionMethods)
-    end
-
     def +(other)
       super(other).extend(CollectionMethods)
     end

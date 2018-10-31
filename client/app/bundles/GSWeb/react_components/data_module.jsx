@@ -59,7 +59,8 @@ export default class DataModule extends React.Component {
     }),
     feedback: PropTypes.object,
     qualaroo_module_link: PropTypes.string,
-    suppressIfEmpty: PropTypes.bool
+    suppressIfEmpty: PropTypes.bool,
+    footer: PropTypes.node
   };
 
   static defaultProps = {

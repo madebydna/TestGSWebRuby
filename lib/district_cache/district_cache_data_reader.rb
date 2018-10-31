@@ -14,128 +14,8 @@ class DistrictCacheDataReader
     @_decorated_district ||= decorate_district(district)
   end
 
-  def cache_updated_dates
-    decorated_district.cache_data.select {|k, _| k.match(/^_.*_updated$/)}.values.compact
-  end
-
-  def students_enrolled
-    decorated_district.students_enrolled
-  end
-
-  def five_star_rating
-    decorated_district.star_rating
-  end
-
-  def number_of_active_reviews
-    decorated_district.num_reviews
-  end
-
-  def num_ratings
-    decorated_district.num_ratings
-  end
-
-  def test_scores_rating
-    decorated_district.test_scores_rating
-  end
-
-  def historical_test_scores_ratings
-    decorated_district.historical_test_scores_ratings
-  end
-
-  def college_readiness_rating
-    decorated_district.college_readiness_rating
-  end
-
-  def college_readiness_rating_year
-    decorated_district.college_readiness_rating_year
-  end
-
-  def historical_college_readiness_ratings
-    decorated_district.historical_college_readiness_ratings
-  end
-
-  def student_progress_rating
-    decorated_district.student_growth_rating
-  end
-
-  def student_progress_rating_year
-    decorated_district.student_growth_rating_year
-  end
-
-  def student_progress_rating_hash
-    decorated_district.student_growth_rating_hash
-  end
-
-  def college_readiness_rating_hash
-    decorated_district.college_readiness_rating_hash
-  end
-
-  def test_scores_rating_hash
-    decorated_district.test_scores_rating_hash
-  end
-
-  def test_scores_all_rating_hash
-    decorated_district.test_scores_all_rating_hash
-  end
-
-  def equity_overview_rating
-    decorated_district.equity_overview_rating
-  end
-
-  def equity_overview_rating_hash
-    decorated_district.equity_overview_rating_hash
-  end
-
-  def equity_overview_rating_year
-    decorated_district.equity_overview_rating_year
-  end
-
-  def courses_rating
-    decorated_district.courses_rating
-  end
-
-  def courses_rating_array
-    decorated_district.courses_rating_array
-  end
-
-  def courses_academics_rating_array
-    decorated_district.courses_academics_rating_array
-  end
-
-  def courses_rating_year
-    decorated_district.courses_rating_year
-  end
-
-  def academic_progress_rating_hash
-    decorated_district.academic_progress_rating_hash
-  end
-
-  def academic_progress_rating_year
-    decorated_district.academic_progress_rating_year
-  end
-
-  def historical_student_progress_ratings
-    decorated_district.historical_student_growth_ratings
-  end
-
-  def equity_ratings_breakdown(breakdown)
-    if decorated_district.test_scores_all_rating_hash
-      breakdown_results = decorated_district.test_scores_all_rating_hash.select {|bd|
-        bd['breakdown'] == breakdown
-      }
-      if breakdown_results.is_a?(Array) && !breakdown_results.empty?
-        breakdown_results.first['district_value_float']
-      end
-    end
-  end
-
   def ethnicity_data
     decorated_district.ethnicity_data
-    # flat_test_scores_for_latest_year.select(&:has_ethnicity_tag?)
-  end
-
-  def low_income_data
-    decorated_district.free_or_reduced_price_lunch_data
   end
 
   def characteristics_data(*keys)
@@ -234,56 +114,6 @@ class DistrictCacheDataReader
       .extend(GsdataCaching::GsDataValue::CollectionMethods)
   end
 
-  def course_enrollment
-    decorated_courses_data('Course Enrollment')
-  end
-
-  def build_time_object(dt_string)
-    begin
-      year = dt_string[0..3]
-      month = dt_string[4..5]
-      day = dt_string[6..7]
-      hour = dt_string[9..10]
-      minute = dt_string[11..12]
-      Time.new(year, month, day, hour, minute)
-    rescue StandardError => error
-      GSLogger.error(:summary_rating, error, vars: {district: decorated_district.id, state: decorated_district.state}, message: 'Error creating Time object using source_date_time value for Summary Rating')
-      nil
-    end
-  end
-
-  def format_date(dt_object)
-    dt_object.strftime('%b %d, %Y')
-  end
-
-  def discipline_flag?
-    @_discipline_flag ||= (
-    flag_data_value = discipline_attendance_data_values[DISCIPLINE_FLAG]
-    flag_data_value.present? && flag_data_value.district_value == '1'
-    )
-  end
-
-  def attendance_flag?
-    @_attendance_flag ||= (
-    flag_data_value = discipline_attendance_data_values[ABSENCE_FLAG]
-    flag_data_value.present? && flag_data_value.district_value == '1'
-    )
-  end
-
-  def discipline_attendance_data_values
-    @_discipline_attendance_data_values ||= (
-    data_hashes = ratings_data(DISCIPLINE_FLAG, ABSENCE_FLAG)
-    data_hashes.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
-      most_recent_all_students = array_of_hashes
-                                   .map {|hash| GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: data_type_name))}
-                                   .extend(GsdataCaching::GsDataValue::CollectionMethods)
-                                   .for_all_students
-                                   .most_recent
-      output_hash[data_type_name] = most_recent_all_students if most_recent_all_students
-    end
-    )
-  end
-
   # Returns a hash that includes the percentage and sourcing info
   # {
   #   "breakdowns": "Students with disabilities",
@@ -297,10 +127,6 @@ class DistrictCacheDataReader
     decorated_district.gsdata.slice('Percentage of Students Enrolled') || {}
     ).fetch('Percentage of Students Enrolled', [])
     percentages.find {|h| h['breakdowns'] == breakdown}
-  end
-
-  def esp_responses_data(*keys)
-    decorated_district.programs.slice(*keys)
   end
 
   def subject_scores_by_latest_year(breakdown: 'All', grades: 'All', level_codes: nil, subjects: nil)

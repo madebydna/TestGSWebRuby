@@ -185,7 +185,7 @@ class District < ActiveRecord::Base
       info_text: nil, #I18n.t('.Race ethnicity tooltip', scope: 'school_profiles.equity')
       icon_classes: I18n.t('.Race ethnicity icon', scope: 'school_profiles.equity'),
       sources: sources_html(academics_sources), #equity.race_ethnicity_sources
-      share_content: nil, #coupled to school
+      share_content: nil,
       data: data_props_for_academics_module,
       faq: faq_for_academics_module,
       no_data_summary: I18n.t('.Race ethnicity no data', scope: 'school_profiles.equity'),

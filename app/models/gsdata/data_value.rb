@@ -230,7 +230,7 @@ class DataValue < ActiveRecord::Base
   end
 
   def self.find_by_district_and_data_type_tags(state, district_id, data_type_tags)
-    state_and_district_values
+    state_and_district_values.
       from(
         DataValue.state_and_district(
           state,
