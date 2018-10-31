@@ -7,6 +7,8 @@ import Button from 'react_components/button';
 import { t } from 'util/i18n';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import HelpTooltip from '../help_tooltip';
+import { loadMobileOverlayAd } from 'actions/common';
+import MobileOverlayAd from 'react_components/mobile_overlay_ad';
 
 function keepInViewport(
   ref,
@@ -124,6 +126,7 @@ class SearchLayout extends React.Component {
   }
 
   componentDidMount() {
+    loadMobileOverlayAd();
     keepInViewport(this.fixedYLayer, {
       $elementsAbove: [$('.header_un'), $('.search-body .menu-bar')],
       $elementsBelow: [$('.footer')],
@@ -351,6 +354,7 @@ class SearchLayout extends React.Component {
               {this.shouldRenderTable() ? this.renderTableView() : null}
               {this.props.pagination}
             </div>
+            <MobileOverlayAd />
           </React.Fragment>
         )}
       </div>
