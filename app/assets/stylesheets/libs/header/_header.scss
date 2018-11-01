@@ -132,6 +132,16 @@
     }
   }
 
+  .logo + .saved-schools-nav{
+    top: 20px;
+    position: absolute;
+    right: 20px;
+    font-size: 18px;
+    @media (min-width: 768px){
+      display: none;
+    }
+  }
+
   .logo_size {
     width: 112px;
     height: 47px;
@@ -551,7 +561,15 @@
       margin-left: 18px;
       font-size: 18px;
     }
+
   }
+
+  .logo + .search-icon{
+    .saved-schools-nav{
+      display: none;
+    }
+  }
+
 
   .un nav {
     margin: 0;
