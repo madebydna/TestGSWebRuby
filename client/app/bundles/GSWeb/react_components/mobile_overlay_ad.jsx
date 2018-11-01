@@ -4,7 +4,7 @@ import Ad from 'react_components/ad';
 import OpenableCloseable from 'react_components/openable_closeable';
 
 const MobileOverlayAd = ({ loaded }) =>
-  loaded && (
+  loaded ? (
     <OpenableCloseable openByDefault>
       {(isOpen, { close }) =>
         isOpen && (
@@ -26,10 +26,10 @@ const MobileOverlayAd = ({ loaded }) =>
         )
       }
     </OpenableCloseable>
-  );
+  ) : null;
 
 const ConnectedMobileOverlayAd = connect(state => ({
-  loaded: state.common.loadMobileOverlayAd
+  loaded: state.common.shouldLoadMobileOverlayAd
 }))(MobileOverlayAd);
 
 export default ConnectedMobileOverlayAd;
