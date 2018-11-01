@@ -30,15 +30,6 @@ class Load < ActiveRecord::Base
     select(distinct_data_type_ids)
   end
 
-  def self.distinct_test_loads
-    distinct_data_type_ids.
-        from(
-            Load
-        .with_data_types
-        .with_data_type_tags('state_test')
-        )
-  end
-
   def self.with_data_types
     joins('JOIN data_types on data_type_id = data_types.id')
   end

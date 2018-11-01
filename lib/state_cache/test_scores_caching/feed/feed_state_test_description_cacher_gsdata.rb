@@ -6,9 +6,9 @@ class TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata < TestScores
   def query_results
     @query_results ||=
       begin
-        test_data_type_ids = Load.distinct_test_loads.map{|l| l.data_type_id }
+        test_data_type_ids = unique_data_type_ids
         dti_state = test_data_type_ids.map do |dti|
-          state_result = state_for_data_type_id(dti).map{|sdti| sdti.state}
+          state_result = state_for_data_type_id(dti)
           {data_type_id: dti, state: state_result&.first}
         end
         dti_state.select{|arr| arr[:state].upcase == state.upcase}
@@ -16,7 +16,11 @@ class TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata < TestScores
   end
 
   def state_for_data_type_id(dti)
-    DataValue.state_for_data_type_id(dti)
+    DataValue.where(data_type_id: dti).limit(1).map(&:state)
+  end
+
+  def unique_data_type_ids
+    Load.with_data_types.with_data_type_tags('state_test').map(&:data_type_id).uniq
   end
 
   def build_hash_for_cache
@@ -42,7 +46,7 @@ class TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata < TestScores
     pb_obj = ProficiencyBand.where(id: proficiency_band_id)
     group_id = pb_obj.first[:group_id] if pb_obj&.first
     group_pbs = ProficiencyBand.where(group_id: group_id, composite_of_pro_null: 1).order('group_order ASC')
-    scale_keys = group_pbs.map{|pb| pb[:name]}
+    scale_keys = group_pbs.map(&:name)
     scale = scale_keys.size < 3 ? scale_keys.join(' or ') : scale_keys.join(', ')
     "% #{scale}" if scale
   end

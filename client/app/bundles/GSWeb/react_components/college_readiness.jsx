@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SchoolProfileComponent from 'react_components/equity/school_profile_component';
+import DataModule from 'react_components/data_module';
 import EquityContentPane from 'react_components/equity/equity_content_pane';
 import InfoTextAndCircle from 'react_components/info_text_and_circle';
 
@@ -16,7 +16,7 @@ import SharingModal from 'react_components/school_profiles/sharing_modal';
 import Drawer from './drawer';
 import { t } from '../util/i18n';
 
-export default class CollegeReadiness extends SchoolProfileComponent {
+export default class CollegeReadiness extends DataModule {
 
   constructor(props) {
     super(props);
@@ -167,7 +167,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
           title={this.title()}
           subtitle={this.props.subtitle}
           no_data_cta={!this.hasData() && this.noDataCta()}
-          footer={this.hasData() && this.footer()}
+          footer={this.hasData() && this.defaultFooter()}
           body={this.hasData() && this.activePane()}
           tabs={(this.hasData() && this.props.showTabs) ? this.tabsContainer() : undefined}
           csa_badge={this.csaBadge()}
