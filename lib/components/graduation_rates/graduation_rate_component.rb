@@ -1,9 +1,11 @@
-module SchoolProfiles
-  module Components
+# frozen_string_literal: true
+
+module Components
+  module GraduationRates
     class GraduationRateComponent < Component
 
       def normalized_values
-        school_cache_data_reader
+        cache_data_reader
         .characteristics_data(data_type)
         .values
         .flatten

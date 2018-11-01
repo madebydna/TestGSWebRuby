@@ -1,5 +1,7 @@
-module SchoolProfiles
-  module Components
+# frozen_string_literal: true
+
+module Components
+  module GraduationRates
     class LowIncomeGraduationRateComponent < GraduationRateComponent
       def narration
         low_income_hash = normalized_values.find { |h| h[:breakdown] == 'Economically disadvantaged' } || {}

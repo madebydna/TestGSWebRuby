@@ -233,7 +233,8 @@ class DataValue < ActiveRecord::Base
         DataValue.state_and_district(
           state,
           district_id
-        ), :data_values)
+        ), :data_values
+      )
           .with_data_types
           .with_data_type_tags(data_type_tags)
           .with_breakdowns

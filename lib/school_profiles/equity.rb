@@ -12,16 +12,16 @@ module SchoolProfiles
           school_cache_data_reader: school_cache_data_reader
       ).auto_narrative_calculate_and_add
 
-      @graduation_rate = ::SchoolProfiles::Components::GraduationRateComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
-      @test_scores = ::SchoolProfiles::Components::TestScoresComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
-      @advanced_coursework = ::SchoolProfiles::Components::AdvancedCourseworkComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
-      @discipline_and_attendance = ::SchoolProfiles::Components::DisciplineAndAttendanceComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
-      @low_income_test_scores = ::SchoolProfiles::Components::LowIncomeTestScoresComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
-      @low_income_graduation_rate = ::SchoolProfiles::Components::LowIncomeGraduationRateComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
+      @graduation_rate = ::Components::ComponentGroups::GraduationRateComponentGroup.new(cache_data_reader: school_cache_data_reader)
+      @test_scores = ::Components::ComponentGroups::TestScoresComponentGroup.new(cache_data_reader: school_cache_data_reader)
+      @advanced_coursework = ::Components::ComponentGroups::AdvancedCourseworkComponentGroup.new(cache_data_reader: school_cache_data_reader)
+      @discipline_and_attendance = ::Components::ComponentGroups::DisciplineAndAttendanceComponentGroup.new(cache_data_reader: school_cache_data_reader)
+      @low_income_test_scores = ::Components::ComponentGroups::LowIncomeTestScoresComponentGroup.new(cache_data_reader: school_cache_data_reader)
+      @low_income_graduation_rate = ::Components::ComponentGroups::LowIncomeGraduationRateComponentGroup.new(cache_data_reader: school_cache_data_reader)
 
 
-      @students_with_disabilities_test_scores_component_group = ::SchoolProfiles::Components::StudentsWithDisabilitiesTestScoresComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
-      @students_with_disabilities_discipline_and_attendance_group= ::SchoolProfiles::Components::StudentsWithDisabilitiesDisciplineAndAttendanceComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
+      @students_with_disabilities_test_scores_component_group = ::Components::ComponentGroups::StudentsWithDisabilitiesTestScoresComponentGroup.new(cache_data_reader: school_cache_data_reader)
+      @students_with_disabilities_discipline_and_attendance_group= ::Components::ComponentGroups::StudentsWithDisabilitiesDisciplineAndAttendanceComponentGroup.new(cache_data_reader: school_cache_data_reader)
 
     end
 

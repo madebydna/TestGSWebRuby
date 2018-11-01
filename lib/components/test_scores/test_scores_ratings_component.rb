@@ -1,5 +1,7 @@
-module SchoolProfiles
-  module Components
+# frozen_string_literal: true
+
+module Components
+  module TestScores
     class TestScoresRatingsComponent < Component
 
       def narration
@@ -8,7 +10,7 @@ module SchoolProfiles
 
       def normalized_values
         @_normalized_values ||= (
-          school_cache_data_reader.test_scores_all_rating_hash
+          cache_data_reader.test_scores_all_rating_hash
               .map { |h| cache_hash_to_standard_hash(h) }
         )
       end
