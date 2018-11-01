@@ -6,7 +6,7 @@ import memoizeAjaxRequest from './memoize_ajax_request';
 import { get as getCookie } from 'js-cookie';
 
 export const isSignedIn = function() {
-  return $.cookie('community_www') != null || $.cookie('community_dev') != null;
+  return getCookie('community_www') != null || getCookie('community_dev') != null;
 };
 
 export const getSchoolUserDigest = function() {
