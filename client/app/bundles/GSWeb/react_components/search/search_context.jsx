@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { find as findSchools, updateSchoolList, addSchool, deleteSchool } from 'api_clients/schools';
+import { find as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
-import { isEqual, throttle, debounce, difference, castArray, uniqBy } from 'lodash';
+import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
 import { compose, curry } from 'lodash/fp';
 import {
   size as viewportSize,
@@ -14,6 +14,7 @@ import {
 import {
   updateNavbarHeart,
   getSavedSchoolsFromCookie,
+  isSignedIn,
   COOKIE_NAME
 } from 'util/session';
 import '../../vendor/remodal';
@@ -44,7 +45,6 @@ class SearchProvider extends React.Component {
     district: gonSearch.district,
     state: gonSearch.state,
     schools: gonSearch.schools,
-    signedIn: gon.signed_in,
     levelCodes: gonSearch.levelCodes || [],
     entityTypes: gonSearch.entityTypes || [],
     defaultLat: gonSearch.cityLat || 37.8078456,
@@ -72,7 +72,6 @@ class SearchProvider extends React.Component {
     district: PropTypes.string,
     state: PropTypes.string,
     schools: PropTypes.arrayOf(PropTypes.object),
-    signedIn: PropTypes.bool,
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
     defaultLat: PropTypes.number,
@@ -239,7 +238,7 @@ class SearchProvider extends React.Component {
       ? savedSchools.splice(schoolKeyIdx, 1)
       : savedSchools.push(schoolKey);
     setCookie(COOKIE_NAME, savedSchools);
-    if(this.props.signedIn){
+    if(isSignedIn()){
       if(schoolKeyIdx > -1){
         deleteSchool(schoolKey)
           .done(e => {

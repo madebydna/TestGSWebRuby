@@ -275,7 +275,6 @@ LocalizedProfiles::Application.routes.draw do
     # resources :saved_schools, only: [:create, :destroy]
     post '/save_school', to: 'saved_schools#create'
     delete '/delete_school', to: 'saved_schools#destroy'
-    post '/consistentify_saved_schools', as: :merge_schools, to: 'saved_schools#consistentify_schools'
   end
 
   match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs
