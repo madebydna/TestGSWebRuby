@@ -9,6 +9,10 @@ export const isSignedIn = function() {
   return getCookie('community_www') != null || getCookie('community_dev') != null;
 };
 
+export const isNotSignedIn = function() {
+  return !isSignedIn();
+};
+
 export const getSchoolUserDigest = function() {
   var uri = gon.links.school_user_digest;
   var schoolData =  {
