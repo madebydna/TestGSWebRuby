@@ -169,9 +169,9 @@ class MySchoolListLayout extends React.Component {
       (this.props.size > SM && this.props.view !== TABLE_VIEW)
     );
   }
-
-  shouldRenderSignupPrompt() {
-    return isNotSignedIn() && this.renderSignupPrompt();
+  
+  shouldRenderTable() {
+    return this.props.view === TABLE_VIEW;
   }
 
   renderSignupPrompt() {
@@ -180,10 +180,6 @@ class MySchoolListLayout extends React.Component {
         <a href="/gsr/login/" className="open-sans_semibold">{t('Sign up link')}</a> <span className="open-sans_semibold">{t('Sign up rest')}</span>
       </div>
     );
-  }
-
-  shouldRenderTable() {
-    return this.props.view === TABLE_VIEW;
   }
 
   renderTableView() {
@@ -296,7 +292,7 @@ class MySchoolListLayout extends React.Component {
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
           <h1 style={{ fontSize: '20px' }}>{t('title')}</h1>
-          {this.shouldRenderSignupPrompt()}
+          {isNotSignedIn() && this.renderSignupPrompt()}
           {this.props.breadcrumbs}
           {/* <div className="pagination-summary">{this.props.resultSummary}</div> */}
           {this.shouldRenderTable() ? (
