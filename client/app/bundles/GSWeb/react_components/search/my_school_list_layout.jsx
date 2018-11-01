@@ -22,8 +22,8 @@ const t = translateWithDictionary({
     title: 'Tus escuelas guardadas',
     "Show schools in": "Muestre escuelas en",
     "Sort by": "Ordenar por",
-    "Sign up link": "ES: Sign up",
-    "Sign up rest": "ES: for a free GreatSchools account and access your saved schools from anywhere."
+    "Sign up link": "Sign up",
+    "Sign up rest": "for a free GreatSchools account and access your saved schools from anywhere."
   }
 });
 
@@ -170,7 +170,6 @@ class MySchoolListLayout extends React.Component {
     );
   }
 
-  // new
   shouldRenderSignupPrompt() {
     if (!isSignedIn()) {
       return (
