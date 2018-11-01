@@ -1,15 +1,17 @@
-module SchoolProfiles
-  module Components
-    class TestScoresComponentGroup < ComponentGroup
-      attr_reader :school_cache_data_reader, :components
+# frozen_string_literal: true
 
-      def initialize(school_cache_data_reader:)
-        @school_cache_data_reader = school_cache_data_reader
+module Components
+  module ComponentGroups
+    class TestScoresComponentGroup < ComponentGroup
+      attr_reader :cache_data_reader, :components
+
+      def initialize(cache_data_reader:)
+        @cache_data_reader = cache_data_reader
       end
 
       def overview
-        test_score_data = TestScoresRatingsComponent.new.tap do |component|
-          component.school_cache_data_reader = school_cache_data_reader
+        test_score_data = Components::TestScores::TestScoresRatingsComponent.new.tap do |component|
+          component.cache_data_reader = cache_data_reader
           component.type = 'rating'
         end
         test_score_data.to_hash.merge(title: t('Overview'), anchor: 'Overview') if overview_has_data?(test_score_data)
@@ -21,7 +23,7 @@ module SchoolProfiles
 
       def components
         build_test_components(
-          school_cache_data_reader
+          cache_data_reader
             .recent_test_scores
             .having_grade_all
         )
@@ -29,8 +31,8 @@ module SchoolProfiles
 
       def build_test_components(gs_data_values)
         gs_data_values.all_academics.map do |subject|
-          TestScoresComponent.new.tap do |component|
-            component.school_cache_data_reader = school_cache_data_reader
+          Components::TestScores::TestScoresComponent.new.tap do |component|
+            component.cache_data_reader = cache_data_reader
             component.data_type = subject
             component.title = I18n.t(subject, scope: 'lib.equity_test_scores', default: I18n.db_t(subject, default: subject))
             component.type = 'bar'

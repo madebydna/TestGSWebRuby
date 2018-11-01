@@ -1,18 +1,20 @@
-module SchoolProfiles
-  module Components
-    class StudentsWithDisabilitiesTestScoresComponentGroup < ComponentGroup
-      attr_reader :school_cache_data_reader, :components
+# frozen_string_literal: true
 
-      def initialize(school_cache_data_reader:)
-        @school_cache_data_reader = school_cache_data_reader
+module Components
+  module ComponentGroups
+    class StudentsWithDisabilitiesTestScoresComponentGroup < ComponentGroup
+      attr_reader :cache_data_reader, :components
+
+      def initialize(cache_data_reader:)
+        @cache_data_reader = cache_data_reader
       end
 
       def components
-        school_cache_data_reader
+        cache_data_reader
           .recent_test_scores
           .all_academics.map do |subject|
-            StudentsWithDisabilitiesTestScoresComponent.new.tap do |component|
-              component.school_cache_data_reader = school_cache_data_reader
+            Components::TestScores::StudentsWithDisabilitiesTestScoresComponent.new.tap do |component|
+              component.cache_data_reader = cache_data_reader
               component.data_type = subject
               component.title = I18n.t(subject, scope: 'lib.equity_test_scores', default: I18n.db_t(subject, default: subject))
               component.type = 'bar'

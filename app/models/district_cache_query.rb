@@ -28,6 +28,13 @@ class DistrictCacheQuery
     self
   end
 
+  def self.for_district(district)
+    raise ArgumentError.new('District must not be nil') if district.nil?
+    new.tap do |cache_query|
+      cache_query.include_districts(district.state, district.id)
+    end
+  end
+
   def matching_districts_clause
     arel = DistrictCache.arel_table
     q ||= Arel::Nodes::Grouping.new(Arel::Nodes::SqlLiteral.new('false = true')) # false = true prevents needing to special-case code below

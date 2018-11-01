@@ -65,11 +65,11 @@ BasicDataModuleLayout.propTypes = {
   title: PropTypes.object.isRequired,
   titleTooltip: PropTypes.object,
   subtitle: PropTypes.string,
-  body: PropTypes.object.isRequired,
+  body: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   feedback: PropTypes.object,
   footer: PropTypes.object,
   csa_badge: PropTypes.bool,
-  tabs: PropTypes.element
+  tabs: PropTypes.oneOfType([PropTypes.element, PropTypes.bool])
 };
 
 export default BasicDataModuleLayout;
