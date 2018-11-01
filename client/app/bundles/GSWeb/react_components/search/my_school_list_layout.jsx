@@ -8,6 +8,7 @@ import { translateWithDictionary } from 'util/i18n';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import CaptureOutsideClick from './capture_outside_click';
 import HelpTooltip from '../help_tooltip';
+import { isSignedIn } from '../../util/session';
 
 const t = translateWithDictionary({
   en: {
@@ -21,8 +22,8 @@ const t = translateWithDictionary({
     title: 'Tus escuelas guardadas',
     "Show schools in": "Muestre escuelas en",
     "Sort by": "Ordenar por",
-    "Sign up link": "Sign up",
-    "Sign up rest": "for a free GreatSchools account and access your saved schools from anywhere."
+    "Sign up link": "ES: Sign up",
+    "Sign up rest": "ES: for a free GreatSchools account and access your saved schools from anywhere."
   }
 });
 
@@ -169,6 +170,17 @@ class MySchoolListLayout extends React.Component {
     );
   }
 
+  // new
+  shouldRenderSignupPrompt() {
+    if (!isSignedIn()) {
+      return (
+        <div>
+          <a href="/gsr/login/#join" className="open-sans_semibold">{t('Sign up link')}</a> <span className="open-sans_semibold">{t('Sign up rest')}</span>
+        </div>
+      );
+    }
+  }
+
   shouldRenderTable() {
     return this.props.view === TABLE_VIEW;
   }
@@ -283,7 +295,7 @@ class MySchoolListLayout extends React.Component {
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
           <h1 style={{ fontSize: '20px' }}>{t('title')}</h1>
-          <div><a href="#">{t('Sign up link')}</a> {t('Sign up rest')}</div>
+          {this.shouldRenderSignupPrompt()}
           {this.props.breadcrumbs}
           {/* <div className="pagination-summary">{this.props.resultSummary}</div> */}
           {this.shouldRenderTable() ? (
