@@ -27,7 +27,6 @@ const boldSearchTerms = (string, substring) => {
   // We cannot inject a variable into a regex literal, hence 'new RegExp'. Noteworthy that split returns the matched
   // string when fed a group-capturing regex (compare 'Some string'.split(' '), which returns ['some','string'], not ['some',' ','string']
   let cleanTokens = tokens.join('*****').replace(/[^a-zA-Z 0-9\-\,\']+/g,'').split('*****');
-  console.log("cleanTokens: "+ cleanTokens);
   const matchesAndNonMatches = string.split(
     new RegExp(`\\b(${cleanTokens.join('|')})`, 'gi')
   );

@@ -259,9 +259,7 @@ export default class SearchBox extends React.Component {
   }
 
   autoSuggestQuery(q) {
-    // q = q.replace(/[\|&;\$%@"<>\(\)\+,]/g, "");
     q = q.replace(/[^a-zA-Z 0-9\-\,\']+/g,'');
-    console.log("q: "+q);
     if (q.length >= 3) {
       if (matchesAddress(q)) {
         initGoogleMaps(() => {
