@@ -23,7 +23,6 @@ class MySchoolListController < ApplicationController
         'Equity' => equity_header_hash(schools),
         'Academic' => academic_header_hash
       }
-      props[:school_keys] = jsonify_school_keys
     end
 
     set_ad_targeting_props

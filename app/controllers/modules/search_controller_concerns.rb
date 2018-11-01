@@ -220,16 +220,4 @@ module SearchControllerConcerns
     (FavoriteSchool.saved_school_list(current_user.id) + cookies_school_keys).uniq
   end
 
-  def jsonify_school_keys
-    return [] if school_keys.length < 1
-    result = []
-    school_keys.map do |school_pair|
-      result << { 
-        "state": school_pair.first.upcase,
-        "id": school_pair.last.to_s
-      }
-    end
-    result
-  end
-
 end

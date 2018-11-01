@@ -44,7 +44,6 @@ class SearchProvider extends React.Component {
     district: gonSearch.district,
     state: gonSearch.state,
     schools: gonSearch.schools,
-    schoolKeys: gonSearch.school_keys,
     signedIn: gon.signed_in,
     levelCodes: gonSearch.levelCodes || [],
     entityTypes: gonSearch.entityTypes || [],
@@ -72,9 +71,7 @@ class SearchProvider extends React.Component {
     city: PropTypes.string,
     district: PropTypes.string,
     state: PropTypes.string,
-    schoolKeys: PropTypes.arrayOf(PropTypes.array),
     schools: PropTypes.arrayOf(PropTypes.object),
-    schoolKeys: PropTypes.arrayOf(PropTypes.object),
     signedIn: PropTypes.bool,
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
@@ -128,7 +125,6 @@ class SearchProvider extends React.Component {
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
     this.handleSaveSchoolClick = this.handleSaveSchoolClick.bind(this);
-    this.mergedSavedSchoolsCookie = this.mergedSavedSchoolsCookie.bind(this);
     this.toggleAll = this.toggleAll.bind(this);
     this.toggleOne = this.toggleOne.bind(this);
     this.updateStateFilter = this.updateStateFilter.bind(this);
@@ -137,7 +133,6 @@ class SearchProvider extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
-    this.mergedSavedSchoolsCookie(this.props.schoolKeys)
   }
 
   componentDidUpdate(prevProps) {
@@ -234,19 +229,6 @@ class SearchProvider extends React.Component {
             }, 1000)
 
       }).tipso('show');
-    }
-  }
-
-  mergedSavedSchoolsCookie(schoolKeys){
-    if(this.props.signedIn && schoolKeys){
-      const savedSchools = getSavedSchoolsFromCookie();
-      const allSchools = savedSchools.concat(schoolKeys);
-      const mergedSavedSchools = uniqBy(allSchools,function(v){
-        return v.state && v.id;
-      });
-      setCookie(COOKIE_NAME, mergedSavedSchools);
-      updateNavbarHeart();
-      updateSchoolList(mergedSavedSchools);
     }
   }
 

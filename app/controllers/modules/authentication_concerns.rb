@@ -202,4 +202,33 @@ module AuthenticationConcerns
     false
   end
 
+  def consistify_saved_schools(user)
+    # Update the database and cookies to have the same saved schools
+    saved_schools_from_cookies = cookies[:gs_saved_schools] ? JSON.parse(cookies[:gs_saved_schools]).map {|hash| [hash['state']&.downcase, hash['id']&.to_i]} : []
+    begin
+      (saved_schools_from_cookies - fetch_user_saved_schools(user)).each do |school_params|
+        selected_school = School.on_db("#{school_params[0]}").active.find_by!(id: "#{school_params[1]}")
+        school_obj = FavoriteSchool.created_saved_school_instance(selected_school, user.id)
+        school_obj.save!
+      end
+      
+      cookies[:gs_saved_schools] = jsonify_schools_in_cookie(user)
+    rescue => e
+      GSLogger.error(:misc, e, message:'Error saving school(s)', vars: params)
+    end
+  end
+
+  def fetch_user_saved_schools(user)
+    FavoriteSchool.saved_school_list(user)
+  end
+
+  def jsonify_schools_in_cookie(user)
+    (fetch_user_saved_schools(user) || []).each_with_object([]) do |school, result|
+      result << { 
+        "state": school.first.upcase,
+        "id": school.last.to_s
+      }
+    end.to_json
+  end
+
 end

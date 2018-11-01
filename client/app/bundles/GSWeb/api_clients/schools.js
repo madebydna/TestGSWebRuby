@@ -140,17 +140,6 @@ export function mySchoolList(props) {
   });
 }
 
-export function updateSchoolList(schoolList){
-  const data = JSON.stringify({ schools: schoolList});
-  return $.ajax({
-    url: '/gsr/api/consistentify_saved_schools',
-    data,
-    dataType: 'json',
-    contentType: 'application/json',
-    method: 'POST'
-  });
-}
-
 export function addSchool(schoolKey) {
   const data = { school: schoolKey };
   return $.ajax({
