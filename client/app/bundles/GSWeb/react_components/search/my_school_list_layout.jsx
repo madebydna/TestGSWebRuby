@@ -8,7 +8,7 @@ import { translateWithDictionary } from 'util/i18n';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import CaptureOutsideClick from './capture_outside_click';
 import HelpTooltip from '../help_tooltip';
-import { isSignedIn } from '../../util/session';
+import { isNotSignedIn } from '../../util/session';
 
 const t = translateWithDictionary({
   en: {
@@ -171,13 +171,15 @@ class MySchoolListLayout extends React.Component {
   }
 
   shouldRenderSignupPrompt() {
-    if (!isSignedIn()) {
-      return (
-        <div>
-          <a href="/gsr/login/#join" className="open-sans_semibold">{t('Sign up link')}</a> <span className="open-sans_semibold">{t('Sign up rest')}</span>
-        </div>
-      );
-    }
+    return isNotSignedIn() && this.renderSignupPrompt();
+  }
+
+  renderSignupPrompt() {
+    return (
+      <div>
+        <a href="/gsr/login/" className="open-sans_semibold">{t('Sign up link')}</a> <span className="open-sans_semibold">{t('Sign up rest')}</span>
+      </div>
+    );
   }
 
   shouldRenderTable() {
