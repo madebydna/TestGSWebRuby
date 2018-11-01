@@ -8,7 +8,7 @@ class Api::SavedSchoolsController < ApplicationController
     begin
       raise "School Already in List" if fetch_user_saved_schools(current_user).include?([school_state, school_id])
       school = School.on_db("#{school_state}").active.find_by!(id: "#{school_id}")
-      saved_school = FavoriteSchool.created_saved_school_instance(school, current_user.id)
+      saved_school = FavoriteSchool.create_saved_school_instance(school, current_user.id)
       saved_school.save!
       render json: {status: 200}
     rescue => e

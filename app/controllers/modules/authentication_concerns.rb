@@ -208,7 +208,7 @@ module AuthenticationConcerns
     begin
       (saved_schools_from_cookies - fetch_user_saved_schools(user)).each do |school_params|
         selected_school = School.on_db("#{school_params[0]}").active.find_by!(id: "#{school_params[1]}")
-        school_obj = FavoriteSchool.created_saved_school_instance(selected_school, user.id)
+        school_obj = FavoriteSchool.create_saved_school_instance(selected_school, user.id)
         school_obj.save!
       end
       
