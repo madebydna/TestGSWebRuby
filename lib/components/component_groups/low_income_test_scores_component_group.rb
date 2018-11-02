@@ -1,17 +1,19 @@
-module SchoolProfiles
-  module Components
+# frozen_string_literal: true
+
+module Components
+  module ComponentGroups
     class LowIncomeTestScoresComponentGroup < ComponentGroup
-      attr_reader :school_cache_data_reader, :components
+      attr_reader :cache_data_reader, :components
 
       VALID_BREAKDOWNS = ['All students', 'Economically disadvantaged', 'Not economically disadvantaged']
 
-      def initialize(school_cache_data_reader:)
-        @school_cache_data_reader = school_cache_data_reader
+      def initialize(cache_data_reader:)
+        @cache_data_reader = cache_data_reader
       end
 
       def overview
-        test_score_data = LowIncomeTestScoresRatingsComponent.new.tap do |component|
-          component.school_cache_data_reader = school_cache_data_reader
+        test_score_data = Components::Ratings::LowIncomeTestScoresRatingsComponent.new.tap do |component|
+          component.cache_data_reader = cache_data_reader
           component.type = 'rating'
           component.valid_breakdowns = VALID_BREAKDOWNS
         end
@@ -23,11 +25,11 @@ module SchoolProfiles
       end
 
       def components
-        school_cache_data_reader
+        cache_data_reader
           .recent_test_scores
           .all_academics.map do |subject|
-            LowIncomeTestScoresComponent.new.tap do |component|
-              component.school_cache_data_reader = school_cache_data_reader
+            Components::TestScores::LowIncomeTestScoresComponent.new.tap do |component|
+              component.cache_data_reader = cache_data_reader
               component.data_type = subject
               component.title = I18n.t(subject, scope: 'lib.equity_test_scores', default: I18n.db_t(subject, default: subject))
               component.type = 'bar'

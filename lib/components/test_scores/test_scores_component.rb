@@ -1,5 +1,7 @@
-module SchoolProfiles
-  module Components
+# frozen_string_literal: true
+
+module Components
+  module TestScores
     class TestScoresComponent < Component
       def narration
         t('RE Test scores narration', scope: 'lib.equity_gsdata', subject: t(data_type)) # TODO: update scope after moving translations
@@ -10,7 +12,7 @@ module SchoolProfiles
         # @foo = 123
         # require 'byebug'
         # byebug
-          school_cache_data_reader
+          cache_data_reader
             .recent_test_scores
             .having_academic(data_type) # data type attribute actually contains the subject here
             .having_all_students_or_all_breakdowns_in(valid_breakdowns)

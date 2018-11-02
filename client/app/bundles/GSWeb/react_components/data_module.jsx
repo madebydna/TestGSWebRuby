@@ -1,29 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BarGraphBase from './graphs/bar_graph_base';
-import TestScores from './graphs/test_scores';
-import PersonBar from '../visualizations/person_bar';
-import BasicDataModuleRow from '../school_profiles/basic_data_module_row';
-import PlainNumber from './graphs/plain_number';
-import RatingWithBar from './graphs/rating_with_bar';
-import NoDataModuleCta from '../no_data_module_cta';
-import InfoCircle from '../info_circle';
-import InfoTextAndCircle from '../info_text_and_circle'
-import SectionNavigation from './tabs/section_navigation';
-import InfoBox from '../school_profiles/info_box';
-import GiveUsFeedback from '../school_profiles/give_us_feedback';
-import { t } from '../../util/i18n';
+import BarGraphBase from 'react_components/equity/graphs/bar_graph_base';
+import TestScores from 'react_components/equity/graphs/test_scores';
+import PersonBar from 'react_components/visualizations/person_bar';
+import BasicDataModuleRow from 'react_components/school_profiles/basic_data_module_row';
+import PlainNumber from 'react_components/equity/graphs/plain_number';
+import RatingWithBar from 'react_components/equity/graphs/rating_with_bar';
+import NoDataModuleCta from 'react_components/no_data_module_cta';
+import InfoCircle from 'react_components/info_circle';
+import InfoTextAndCircle from 'react_components/info_text_and_circle'
+import SectionNavigation from 'react_components/equity/tabs/section_navigation';
+import InfoBox from 'react_components/school_profiles/info_box';
+import GiveUsFeedback from 'react_components/school_profiles/give_us_feedback';
+import { t } from '../util/i18n';
 import BasicDataModuleLayout from 'react_components/school_profiles/basic_data_module_layout';
 import QuestionMarkTooltip from 'react_components/school_profiles/question_mark_tooltip';
-import { handleAnchor, handleThirdAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString, formatAndJoinAnchors } from '../../components/anchor_router';
-import SectionSubNavigation from './tabs/section_sub_navigation';
-import EquityContentPane from './equity_content_pane';
+import { handleAnchor, handleThirdAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString, formatAndJoinAnchors } from '../components/anchor_router';
+import SectionSubNavigation from 'react_components/equity/tabs/section_sub_navigation';
+import EquityContentPane from 'react_components/equity/equity_content_pane';
 import TabsWithPanes from 'react_components/tabs_with_panes';
 import ModuleTab from 'react_components/school_profiles/module_tab';
 import ModuleSubTab from 'react_components/school_profiles/module_sub_tab';
 import SharingModal from 'react_components/school_profiles/sharing_modal';
 
-export default class SchoolProfileComponent extends React.Component {
+export default class DataModule extends React.Component {
   static propTypes = {
     title: PropTypes.string,
     anchor: PropTypes.string,
@@ -59,6 +59,8 @@ export default class SchoolProfileComponent extends React.Component {
     }),
     feedback: PropTypes.object,
     qualaroo_module_link: PropTypes.string,
+    suppressIfEmpty: PropTypes.bool,
+    footer: PropTypes.node
   };
 
   static defaultProps = {
@@ -278,11 +280,11 @@ export default class SchoolProfileComponent extends React.Component {
     )
   }
 
-  footer() {
+  defaultFooter() {
     return (
       <div data-ga-click-label={this.props.title}>
         <InfoBox content={this.props.sources} element_type="sources">{ t('See notes') }</InfoBox>
-        <GiveUsFeedback content={this.props.qualaroo_module_link} />
+        {this.props.qualaroo_module_link && <GiveUsFeedback content={this.props.qualaroo_module_link} />}
       </div>
     )
   }
@@ -291,27 +293,39 @@ export default class SchoolProfileComponent extends React.Component {
     return <NoDataModuleCta moduleName={this.props.title} message={this.props.no_data_summary} />
   }
 
-  render() {
+  handleRender(){
     let analyticsId = this.props.analytics_id;
     if (!this.hasData()) {
       analyticsId += '-empty'; // no data
     }
+    let { suppressIfEmpty } = this.props;
+    if (!this.hasData() && suppressIfEmpty) {
+      return null;
+    }
 
     return (
       <div id={analyticsId}>
-        <BasicDataModuleLayout
-          sharing_modal={ this.hasData() && <SharingModal content={this.props.share_content} /> }
-          id={this.props.anchor}
-          className=''
-          icon={ this.icon() }
-          title={ this.title() }
-          subtitle={ this.props.subtitle }
-          no_data_cta={ !this.hasData() && this.noDataCta() }
-          footer={ this.hasData() && this.footer() }
-          body={ this.hasData() && this.activePane() }
-          tabs={ this.hasData() && this.tabsContainer() }
-        />
-      </div>
+      <BasicDataModuleLayout
+        sharing_modal={ this.hasData() && this.props.share_content &&
+        <SharingModal content={this.props.share_content}/> }
+        id={this.props.anchor}
+        className=''
+        icon={ this.icon() }
+        title={ this.title() }
+        subtitle={ this.props.subtitle }
+        no_data_cta={ !this.hasData() && this.noDataCta() }
+        footer={ this.hasData() && (this.props.footer || this.defaultFooter()) }
+        body={ this.hasData() && this.activePane() }
+        tabs={ this.hasData() && this.tabsContainer() }
+      />
+    </div>
+    )
+
+  }
+
+  render() {
+    return (
+      this.handleRender()
     )
   }
 };

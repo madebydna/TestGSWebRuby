@@ -1,8 +1,8 @@
 module SchoolProfiles
 
   class EthnicityPercentages
-    def initialize(school_cache_data_reader:)
-      @school_cache_data_reader = school_cache_data_reader
+    def initialize(cache_data_reader:)
+      @cache_data_reader = cache_data_reader
     end
 
     NATIVE_AMERICAN = [
@@ -30,28 +30,41 @@ module SchoolProfiles
     def ethnicities_to_percentages
       @_ethnicity_breakdowns = begin
         ethnicity_breakdown = {}
-
-        @school_cache_data_reader.ethnicity_data.each do | ed |
+        @cache_data_reader.ethnicity_data.each do | ed |
           # Two hacks for mapping pacific islander and native american to test scores values.
           if (PACIFIC_ISLANDER.include? ed['breakdown']) ||
               (PACIFIC_ISLANDER.include? ed['original_breakdown'])
-            PACIFIC_ISLANDER.each { |islander| ethnicity_breakdown[islander] = ed['school_value']}
+            PACIFIC_ISLANDER.each { |islander| ethnicity_breakdown[islander] = ed["#{school_or_district}_value"]}
           elsif (NATIVE_AMERICAN.include? ed['breakdown']) ||
               (NATIVE_AMERICAN.include? ed['original_breakdown'])
-            NATIVE_AMERICAN.each { |native_american| ethnicity_breakdown[native_american] = ed['school_value']}
+            NATIVE_AMERICAN.each { |native_american| ethnicity_breakdown[native_american] = ed["#{school_or_district}_value"]}
           elsif (AFRICAN_AMERICAN.include? ed['breakdown']) ||
               (AFRICAN_AMERICAN.include? ed['original_breakdown'])
-            AFRICAN_AMERICAN.each { |ethnicity| ethnicity_breakdown[ethnicity] = ed['school_value']}
+            AFRICAN_AMERICAN.each { |ethnicity| ethnicity_breakdown[ethnicity] = ed["#{school_or_district}_value"]}
           elsif (ASIAN.include? ed['breakdown']) ||
               (ASIAN.include? ed['original_breakdown'])
-            ASIAN.each { |ethnicity| ethnicity_breakdown[ethnicity] = ed['school_value']}
+            ASIAN.each { |ethnicity| ethnicity_breakdown[ethnicity] = ed["#{school_or_district}_value"]}
           else
-            ethnicity_breakdown[ed['breakdown']] = ed['school_value']
-            ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']
+            ethnicity_breakdown[ed['breakdown']] = ed["#{school_or_district}_value"]
+            ethnicity_breakdown[ed['original_breakdown']] = ed["#{school_or_district}_value"]
           end
         end
         ethnicity_breakdown.compact
       end
     end
+
+    def school_or_district
+      @_school_or_district ||= begin
+        if @cache_data_reader.is_a?(DistrictCacheDataReader)
+          'district'
+        elsif @cache_data_reader.is_a?(SchoolCacheDataReader)
+          'school'
+        else
+          ''
+        end
+      end
+    end
   end
+
+
 end

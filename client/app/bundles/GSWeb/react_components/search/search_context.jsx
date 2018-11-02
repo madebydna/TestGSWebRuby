@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { find as findSchools } from 'api_clients/schools';
+import { find as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
@@ -14,6 +14,7 @@ import {
 import {
   updateNavbarHeart,
   getSavedSchoolsFromCookie,
+  isSignedIn,
   COOKIE_NAME
 } from 'util/session';
 import '../../vendor/remodal';
@@ -25,6 +26,7 @@ import SortContext from './sort_context';
 import DistanceContext from './distance_context';
 import { set as setCookie } from 'js-cookie';
 import { t } from 'util/i18n';
+import { showMessageTooltip } from '../../util/message_tooltip';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -70,7 +72,6 @@ class SearchProvider extends React.Component {
     city: PropTypes.string,
     district: PropTypes.string,
     state: PropTypes.string,
-    schoolKeys: PropTypes.arrayOf(PropTypes.array),
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
@@ -205,29 +206,12 @@ class SearchProvider extends React.Component {
   }
 
   displayHeartMessage(schoolKey){
-    let objectHeart;
-    if (!('ontouchstart' in window)) {
-      objectHeart = $('.header_un .menu_hide_mobile a.saved-schools-nav');
-    }
-    else{
-      objectHeart = $('.header_un .search_icon a.saved-schools-nav');
-    }
+    let objectHeart = $('.header_un  a.saved-schools-nav').filter(':visible');
     if(this.savedSchoolsFindIndex(schoolKey) > -1) {
-      objectHeart.tipso({
-        content: t('Saved!'),
-        background: '#202124',
-        color: '#FFFFFF',
-        position: 'bottom',
-        useTitle: false,
-        width: 120,
-        speed: 0,
-        offsetY: -10,
-        onShow:
-            setTimeout(function () {
-              objectHeart.tipso('hide');
-            }, 1000)
-
-      }).tipso('show');
+      let options = {
+        content: t('Saved!')
+      }
+      showMessageTooltip(objectHeart, options)
     }
   }
 
@@ -238,6 +222,21 @@ class SearchProvider extends React.Component {
       ? savedSchools.splice(schoolKeyIdx, 1)
       : savedSchools.push(schoolKey);
     setCookie(COOKIE_NAME, savedSchools);
+    if(isSignedIn()){
+      if(schoolKeyIdx > -1){
+        deleteSchool(schoolKey)
+          .done(e => {
+            e.status === 400 && alert("There was an error deleting a school from your account.\n Please try again later")
+          })
+          .fail(e => alert("There was an error deleting a school from your account.\n Please try again later"))
+      }else{
+        addSchool(schoolKey)
+          .done(e => {
+            e.status === 400 && alert("There was an error adding a school to your account.\n Please try again later")
+          })
+          .fail(e => alert("There was an error adding a school to your account.\n Please try again later"))
+      }
+    }
     analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
   }
 

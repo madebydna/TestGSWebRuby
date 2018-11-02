@@ -7,16 +7,15 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 let store;
 
 const configureStore = (initialState = {}) => {
-  if(store) {
+  if (store) {
     return store;
   }
 
-  let middlewareApplier = composeWithDevTools(applyMiddleware(
-    thunk,
-    NearbySchoolsMiddleware
-  ));
+  const middlewareApplier = composeWithDevTools(
+    applyMiddleware(thunk, NearbySchoolsMiddleware)
+  );
 
-  let createStoreWithMiddleware = middlewareApplier(createStore);
+  const createStoreWithMiddleware = middlewareApplier(createStore);
 
   store = createStoreWithMiddleware(appReducer, initialState);
   return store;
@@ -24,21 +23,22 @@ const configureStore = (initialState = {}) => {
 
 const getStore = function() {
   return configureStore({
+    common: {},
     school: gon.school,
     search: gon.search
   });
-}
+};
 
 const getState = function() {
   return getStore().getState();
-}
+};
 
 const withCurrentSchool = function(callback) {
-  let school = getStore().getState().school;
-  if(school) {
+  const school = getStore().getState().school;
+  if (school) {
     callback(school.state, school.id, school);
   }
-}
+};
 
 export default configureStore;
-export { getStore, getState, withCurrentSchool }
+export { getStore, getState, withCurrentSchool };

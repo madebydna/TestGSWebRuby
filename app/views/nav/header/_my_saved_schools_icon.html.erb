@@ -1,0 +1,10 @@
+<% saved_schools_in_cookies = cookies[:gs_saved_schools] ? JSON.parse(cookies[:gs_saved_schools]).length : 0 %>
+
+<a class="saved-schools-nav" href="/my-school-list">
+  <% if saved_schools_in_cookies > 0 %>
+    <span class="icon-heart"></span>
+  <% else %>
+    <span class="icon-heart-outline"></span>
+  <% end %>
+  <span></span>
+</a>

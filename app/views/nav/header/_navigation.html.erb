@@ -1,3 +1,5 @@
+<% saved_schools_in_cookies = cookies[:gs_saved_schools] ? JSON.parse(cookies[:gs_saved_schools]).length : 0 %>
+
 <div class="navigation tc">
   <nav class="tc">
     <ul class="menu menu_hide_mobile">
@@ -74,7 +76,16 @@
           </li>
       <% end %>
       <li class=""><a class="hidden-sm jsChangeLanguageLink" href="#"><%= t('.language')%></a></li>
-      <li><a class="saved-schools-nav main" href="/my-school-list"><span class="icon-heart"></span><span></span></a></li>
+      <li>
+        <a class="saved-schools-nav main" href="/my-school-list">
+          <% if saved_schools_in_cookies > 0 %>
+            <span class="icon-heart"></span>
+          <% else %>
+            <span class="icon-heart-outline"></span>
+          <% end %>
+          <span></span>
+        </a>
+      </li>
       <li class="account_nav_out"><a class="js-no_ad" href="/gsr/login/"><%= t('.sign_in') %></a></li>
       <li class="account_nav_in dn">
         <label for="drop-7" class="toggle"><%= t('.my_account') %> </label>

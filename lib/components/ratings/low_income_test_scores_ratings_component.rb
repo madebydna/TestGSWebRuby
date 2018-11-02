@@ -1,9 +1,11 @@
-module SchoolProfiles
-  module Components
+# frozen_string_literal: true
+
+module Components
+  module Ratings
     class LowIncomeTestScoresRatingsComponent < Component
 
       def narration
-        rating = school_cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')
+        rating = cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')
         narration_rating = narration_key(rating)
         t(narration_rating, scope: 'lib.equity_gsdata.LI Test scores overview narration',
           subject: t(data_type), more: SchoolProfilesController.show_more('Low income'),
@@ -20,7 +22,7 @@ module SchoolProfiles
 
       def normalized_values
         @_normalized_values ||= (
-          school_cache_data_reader.test_scores_all_rating_hash
+          cache_data_reader.test_scores_all_rating_hash
               .map { |h| cache_hash_to_standard_hash(h) }
         )
       end

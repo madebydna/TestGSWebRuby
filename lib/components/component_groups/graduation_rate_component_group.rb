@@ -1,28 +1,30 @@
-module SchoolProfiles
-  module Components
-    class GraduationRateComponentGroup < ComponentGroup
-      attr_reader :school_cache_data_reader, :components
+# frozen_string_literal: true
 
-      def initialize(school_cache_data_reader:)
-        @school_cache_data_reader = school_cache_data_reader
+module Components
+  module ComponentGroups
+    class GraduationRateComponentGroup < ComponentGroup
+      attr_reader :cache_data_reader, :components
+
+      def initialize(cache_data_reader:)
+        @cache_data_reader = cache_data_reader
 
         @components = [
-          CollegeReadinessOverall.new.tap do |component|
-            component.school_cache_data_reader = school_cache_data_reader
+          Components::CollegeReadinessOverall.new.tap do |component|
+            component.cache_data_reader = cache_data_reader
             component.data_type = 'College Readiness Rating'
             component.title = 'Overview'
             component.type = 'rating'
             component.narration = I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata')
           end,
-          GraduationRateComponent.new.tap do |component|
-            component.school_cache_data_reader = school_cache_data_reader
+          Components::GraduationRates::GraduationRateComponent.new.tap do |component|
+            component.cache_data_reader = cache_data_reader
             component.data_type = 'Percent of students who meet UC/CSU entrance requirements'
             component.title = 'UC/CSU eligibility'
             component.type = 'bar'
             component.narration = I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata')
           end,
-          GraduationRateComponent.new.tap do |component|
-            component.school_cache_data_reader = school_cache_data_reader
+          Components::GraduationRates::GraduationRateComponent.new.tap do |component|
+            component.cache_data_reader = cache_data_reader
             component.data_type = '4-year high school graduation rate'
             component.title = 'Graduation rates'
             component.type = 'bar'
@@ -37,4 +39,5 @@ module SchoolProfiles
     end
   end
 end
+
 

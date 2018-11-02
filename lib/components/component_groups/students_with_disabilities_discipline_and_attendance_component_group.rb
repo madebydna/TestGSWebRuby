@@ -1,13 +1,15 @@
-module SchoolProfiles
-  module Components
-    class StudentsWithDisabilitiesDisciplineAndAttendanceComponentGroup < ComponentGroup
-      attr_reader :school_cache_data_reader, :components
+# frozen_string_literal: true
 
-      def initialize(school_cache_data_reader:)
-        @school_cache_data_reader = school_cache_data_reader
+module Components
+  module ComponentGroups
+    class StudentsWithDisabilitiesDisciplineAndAttendanceComponentGroup < ComponentGroup
+      attr_reader :cache_data_reader, :components
+
+      def initialize(cache_data_reader:)
+        @cache_data_reader = cache_data_reader
         @components = [
           GsdataComponent.new.tap do |component|
-            component.school_cache_data_reader = school_cache_data_reader
+            component.cache_data_reader = cache_data_reader
             component.data_type = 'Percentage of students suspended out of school'
             component.title = 'Percentage of students suspended out of school'
             component.type = 'person_gray'
@@ -16,7 +18,7 @@ module SchoolProfiles
             component.valid_breakdowns = ['Students with disabilities']
           end,
           GsdataComponent.new.tap do |component|
-            component.school_cache_data_reader = school_cache_data_reader
+            component.cache_data_reader = cache_data_reader
             component.data_type = 'Percentage of students chronically absent (15+ days)'
             component.title = 'Percentage of students chronically absent (15+ days)'
             component.type = 'person_gray'
