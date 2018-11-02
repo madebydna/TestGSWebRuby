@@ -5,26 +5,27 @@ import OpenableCloseable from 'react_components/openable_closeable';
 
 const MobileOverlayAd = ({ loaded }) =>
   loaded ? (
-    <OpenableCloseable openByDefault>
-      {(isOpen, { close }) =>
-        isOpen && (
-          <Ad
-            container={<div className="mobile-ad-sticky-bottom" />}
-            slot="Mobile_overlay"
-            sizeName="mobile_overlay"
-            transitionDuration={1000}
-          >
-            {adElement => (
-              <React.Fragment>
-                <span className="close" onClick={close}>
-                  ×
-                </span>
-                {adElement}
-              </React.Fragment>
-            )}
-          </Ad>
-        )
-      }
+    <OpenableCloseable openByDefault={false}>
+      {(isOpen, { openForDuration, close }) => (
+        <Ad
+          container={
+            <div className={`mobile-ad-sticky-bottom ${isOpen ? '' : 'dn'}`} />
+          }
+          slot="Mobile_overlay"
+          sizeName="mobile_overlay"
+          transitionDuration={1000}
+          onFill={() => openForDuration(15000, 1000)}
+        >
+          {adElement => (
+            <React.Fragment>
+              <span className="close" onClick={close}>
+                ×
+              </span>
+              {adElement}
+            </React.Fragment>
+          )}
+        </Ad>
+      )}
     </OpenableCloseable>
   ) : null;
 
