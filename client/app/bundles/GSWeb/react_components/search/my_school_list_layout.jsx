@@ -295,9 +295,8 @@ class MySchoolListLayout extends React.Component {
 
   renderBreadcrumbsSummarySort() {
     return (
-      !(this.shouldRenderMap()) && (
+      !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
-          <h1 style={{ fontSize: '20px' }}>{t('title')}</h1>
           {isNotSignedIn() && this.renderSignupPrompt()}
           {this.props.numOfSchools > 0 && this.props.size <= SM && <div className="menu-item">
             <span className="label">{t('Show schools in')}:</span>
