@@ -142,6 +142,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/licensing.page', as: :licensing
     get '/about/ratings.page', as: :how_we_rate_schools
     get '/gk/terms/', as: :terms_of_use
+    get '/gk/about/api-terms-use', as: :api_terms_of_use
     get '/gk/review-guidelines', as: :school_review_guidelines
     get '/gk/privacy/', as: :privacy
     get '/gk/faq/', as: :faq
@@ -246,9 +247,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
     get '/gk/ratings/',  as: :ratings
     get '/gk/como-clasificamos/',  as: :ratings_spanish
-    get '/gk/api-terms-use', as: :api_terms_of_use
-
-
     get '/status/error404.page'
   end
 
