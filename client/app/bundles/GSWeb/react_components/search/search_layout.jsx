@@ -5,8 +5,11 @@ import { SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 import { t } from 'util/i18n';
+import { connect } from 'react-redux';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import HelpTooltip from '../help_tooltip';
+import { loadMobileOverlayAd } from 'actions/common';
+import MobileOverlayAd from 'react_components/mobile_overlay_ad';
 
 function keepInViewport(
   ref,
@@ -99,7 +102,8 @@ class SearchLayout extends React.Component {
     resultSummary: PropTypes.string.isRequired,
     noResults: PropTypes.element,
     chooseTableButtons: PropTypes.element,
-    refreshAdOnScroll: PropTypes.func.isRequired
+    refreshAdOnScroll: PropTypes.func.isRequired,
+    loadMobileOverlayAd: PropTypes.func.isRequired
   };
 
   static getDerivedStateFromProps(props) {
@@ -124,6 +128,7 @@ class SearchLayout extends React.Component {
   }
 
   componentDidMount() {
+    this.props.loadMobileOverlayAd();
     keepInViewport(this.fixedYLayer, {
       $elementsAbove: [$('.header_un'), $('.search-body .menu-bar')],
       $elementsBelow: [$('.footer')],
@@ -351,6 +356,7 @@ class SearchLayout extends React.Component {
               {this.shouldRenderTable() ? this.renderTableView() : null}
               {this.props.pagination}
             </div>
+            {this.props.size < SM && <MobileOverlayAd />}
           </React.Fragment>
         )}
       </div>
@@ -358,4 +364,8 @@ class SearchLayout extends React.Component {
   }
 }
 
-export default SearchLayout;
+const ConnectedSearchLayout = connect(null, {
+  loadMobileOverlayAd
+})(SearchLayout);
+
+export default ConnectedSearchLayout;
