@@ -259,6 +259,7 @@ export default class SearchBox extends React.Component {
   }
 
   autoSuggestQuery(q) {
+    q = q.replace(/[^a-zA-Z 0-9\-\,\']+/g,'');
     if (q.length >= 3) {
       if (matchesAddress(q)) {
         initGoogleMaps(() => {
@@ -274,7 +275,11 @@ export default class SearchBox extends React.Component {
         });
       }
 
-      suggest(q).done(results => {
+      let qPortionBeforeComma = q;
+      if (matchesStateAbbreviationQuery(q)) {
+        qPortionBeforeComma = q.substr(0, q.indexOf(','));
+      }
+      suggest(qPortionBeforeComma).done(results => {
         const adaptedResults = {
           Addresses: [],
           Zipcodes: [],

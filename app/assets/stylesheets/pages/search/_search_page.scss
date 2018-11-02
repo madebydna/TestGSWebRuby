@@ -244,6 +244,14 @@ body {
       border-top: 1px solid #ebedee;
       padding: 10px 15px 10px 15px;
       z-index: 1;
+      .title {
+        bottom: 0;
+        margin-left: 15px;
+        span{
+          font-size: 15px;
+          font-family: 'opensans-semibold';
+        }
+      }
     }
 
     .menu-bar.mobile-filters {

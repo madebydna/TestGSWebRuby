@@ -16,8 +16,6 @@ class DataValue < ActiveRecord::Base
   belongs_to :source, class_name: '::Gsdata::Source', inverse_of: :data_values
   belongs_to :load, inverse_of: :data_values
   belongs_to :proficiency_band, inverse_of: :data_values
-  
-
 
   def self.from_hash(hash)
     new.tap do |obj|
@@ -235,7 +233,8 @@ class DataValue < ActiveRecord::Base
         DataValue.state_and_district(
           state,
           district_id
-        ), :data_values)
+        ), :data_values
+      )
           .with_data_types
           .with_data_type_tags(data_type_tags)
           .with_breakdowns

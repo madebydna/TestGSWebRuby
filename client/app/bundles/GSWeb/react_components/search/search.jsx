@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+import { getStore } from 'store/appStore';
 import Breadcrumbs from 'react_components/breadcrumbs';
 import SearchContext from './search_context';
 import SortSelect from './sort_select';
@@ -182,10 +184,12 @@ class Search extends React.Component {
 export { Search };
 export default function() {
   return (
-    <SearchContext.Provider>
-      <SearchContext.Consumer>
-        {state => <Search {...state} />}
-      </SearchContext.Consumer>
-    </SearchContext.Provider>
+    <Provider store={getStore()}>
+      <SearchContext.Provider>
+        <SearchContext.Consumer>
+          {state => <Search {...state} />}
+        </SearchContext.Consumer>
+      </SearchContext.Provider>
+    </Provider>
   );
 }

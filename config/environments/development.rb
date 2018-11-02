@@ -61,8 +61,8 @@ LocalizedProfiles::Application.configure do
   # Don't cache in dev environment
   config.cache_store = :null_store
 
-  if ENV_GLOBAL['cdn_prefix'].present?
-    config.action_controller.asset_host = ENV_GLOBAL['cdn_prefix']
+  if ENV_GLOBAL['media_server'].present?
+    config.action_controller.asset_host = ENV_GLOBAL['media_server']
   else
     config.action_controller.asset_host = 'http://localhost:3000'
   end

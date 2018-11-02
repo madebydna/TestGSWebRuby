@@ -123,8 +123,6 @@ LocalizedProfiles::Application.routes.draw do
   match '/widget/map' => 'widget#map_and_links', via: [:get, :post]
   match '/widget/schoolSearch.page' => 'widget#map', via: [:get, :post]
 
-  get "/interstitial/", to: "interstitial_ad#show", as: "interstitial_ad"
-
   # todo delete this when java is gone
   get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'
 
@@ -144,6 +142,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/licensing.page', as: :licensing
     get '/about/ratings.page', as: :how_we_rate_schools
     get '/gk/terms/', as: :terms_of_use
+    get '/gk/about/api-terms-use', as: :api_terms_of_use
     get '/gk/review-guidelines', as: :school_review_guidelines
     get '/gk/privacy/', as: :privacy
     get '/gk/faq/', as: :faq
@@ -248,9 +247,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
     get '/gk/ratings/',  as: :ratings
     get '/gk/como-clasificamos/',  as: :ratings_spanish
-    get '/gk/api-terms-use', as: :api_terms_of_use
-
-
     get '/status/error404.page'
   end
 
@@ -272,7 +268,9 @@ LocalizedProfiles::Application.routes.draw do
     resource :widget_logs, only: [:create]
     resources :students
     get '/autosuggest', to: 'autosuggest', action: 'show'
-    post '/save_school', as: :save_school, to: 'saved_schools_controller#create'
+    # resources :saved_schools, only: [:create, :destroy]
+    post '/save_school', to: 'saved_schools#create'
+    delete '/delete_school', to: 'saved_schools#destroy'
   end
 
   match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs

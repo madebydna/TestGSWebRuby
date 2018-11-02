@@ -125,6 +125,14 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderAcademics(){
+    return (
+      <div id="academics">
+        {this.props.academics}
+      </div>
+    )
+  }
+
   renderMobility() {
     return (
       <div id="mobility">
@@ -204,7 +212,7 @@ class DistrictLayout extends React.Component {
       this.props.shouldDisplayReviews &&
       <div id="reviews">
         <div className="rating-container reviews-module">
-          <h3>Recent school reviews from schools in {`${this.props.locality.name}`}</h3>
+          <h3>{t('recent_reviews.title')} {`${this.props.locality.name}`}</h3>
           {this.props.recentReviews}
         </div>
       </div>
@@ -222,6 +230,7 @@ class DistrictLayout extends React.Component {
           <div className="community-modules">
             {this.props.viewportSize < SM && <Ad slot="districtpage_first" sizeName="thin_banner_mobile" />}
             {this.renderSchools()}
+            {this.renderAcademics()}
             {this.renderMobility()}
             {this.renderZillow()}
             {this.renderReviews()}

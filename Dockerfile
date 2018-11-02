@@ -11,12 +11,12 @@ WORKDIR /srv/rails
 RUN mkdir /srv/rails/log
 
 RUN echo "gem: --no-rdoc --no-ri" > /etc/gemrc
+COPY ./config/env_global_local_template.yml ./config/env_global_local.yml
 
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --binstubs --jobs 10
 
 EXPOSE 3000
-
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]

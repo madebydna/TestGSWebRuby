@@ -1,18 +1,18 @@
 import React from 'react';
-import { t, capitalize } from 'util/i18n';
 import { SM, validSizes } from 'util/viewport';
 import Select from '../select';
 import { name as stateName } from 'util/states';
 import PropTypes from 'prop-types';
 import SearchContext from './search_context';
 import { mySchoolList } from 'api_clients/schools';
+import { startCase, uniq } from 'lodash';
 
 const StateSelectDropdown = () => {
   return(
       <SearchContext.Consumer>
         {({ schools, currentStateFilter, updateStateFilter}) => {
-          const statesInList = schools.map(s => capitalize(stateName(s.state)))
-          const uniqStates = [...new Set(statesInList)].sort()
+          const statesInList = schools.map(s => startCase(stateName(s.state)))
+          const uniqStates = uniq(statesInList).sort()
             return(
               <Select
                 objects={uniqStates}

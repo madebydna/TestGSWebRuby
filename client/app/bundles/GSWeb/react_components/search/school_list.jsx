@@ -57,6 +57,15 @@ const SchoolList = ({
           )}
         </React.Fragment>
       ))}
+      {(schools.length < 5 && schools.length > 0) && (
+        <Ad
+          slot={`Search_After4_300x250`}
+          sizeName="box"
+          slotOccurrenceNumber={1}
+          key={`ad-${schools.length + 1}`}
+          container={<li className="ad" />}
+        />
+      )}
       {pagination && <li>{pagination}</li>}
     </ol>
   </section>

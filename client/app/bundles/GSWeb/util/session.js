@@ -6,7 +6,11 @@ import memoizeAjaxRequest from './memoize_ajax_request';
 import { get as getCookie } from 'js-cookie';
 
 export const isSignedIn = function() {
-  return $.cookie('community_www') != null || $.cookie('community_dev') != null;
+  return getCookie('community_www') != null || getCookie('community_dev') != null;
+};
+
+export const isNotSignedIn = function() {
+  return !isSignedIn();
 };
 
 export const getSchoolUserDigest = function() {
@@ -35,7 +39,19 @@ export const getSavedSchoolsFromCookie = () => {
 }
 
 export const updateNavbarHeart = () => {
-  document.querySelectorAll('a.saved-schools-nav span:last-child').forEach(node => node.innerHTML = `(${getSavedSchoolsFromCookie().length})`);
+  const numSavedSchools = getSavedSchoolsFromCookie().length;
+  document.querySelectorAll('a.saved-schools-nav span:last-child').forEach(node => {
+    node.innerHTML = numSavedSchools !== 0 ? `(${numSavedSchools})` :  null;
+  });
+  document.querySelectorAll('a.saved-schools-nav span:first-child').forEach(node => {
+    if (numSavedSchools === 0 && node.classList.contains("icon-heart")){
+      node.classList.remove("icon-heart");
+      node.classList.add("icon-heart-outline");
+    } else if (numSavedSchools !== 0 && node.classList.contains("icon-heart-outline")){
+      node.classList.remove("icon-heart-outline");
+      node.classList.add("icon-heart");
+    }
+  });
 }
 
 export const COOKIE_NAME = 'gs_saved_schools';
