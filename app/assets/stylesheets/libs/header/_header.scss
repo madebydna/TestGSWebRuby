@@ -125,13 +125,6 @@
     }
   }
 
-  .saved-schools-nav.main{
-    @media only screen and (max-width: 767px) {
-      //to hide the icon as one of the hamburger list items
-      display: none;
-    }
-  }
-
   .logo + .saved-schools-nav{
     top: 20px;
     position: absolute;
@@ -164,6 +157,13 @@
     margin: 0;
     list-style: none;
     text-decoration: none;
+
+    .saved-schools-nav{
+      @media only screen and (max-width: 767px) {
+        //to hide the icon as one of the hamburger list items
+        display: none;
+      }
+  }
   }
 
   .menu_hide_mobile {
