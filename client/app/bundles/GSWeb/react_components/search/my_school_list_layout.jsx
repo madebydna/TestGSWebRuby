@@ -22,8 +22,8 @@ const t = translateWithDictionary({
     title: 'Tus escuelas guardadas en',
     "Show schools in": "Muestre escuelas en",
     "Sort by": "Ordenar por",
-    "Sign up link": "Sign up",
-    "Sign up rest": "for a free GreatSchools account and access your saved schools from anywhere."
+    "Sign up link": "Regístrate",
+    "Sign up rest": "para obtener una cuenta gratuita de GreatSchools y acceda a tus escuelas guardadas desde cualquier lugar."
   }
 });
 
@@ -177,7 +177,7 @@ class MySchoolListLayout extends React.Component {
   renderSignupPrompt() {
     return (
       <div>
-        <a href="/gsr/login/" className="open-sans_semibold">{t('Sign up link')}</a> <span className="open-sans_semibold">{t('Sign up rest')}</span>
+        <a href="/gsr/login/#join" className="open-sans_semibold">{t('Sign up link')}</a> <span className="open-sans_semibold">{t('Sign up rest')}</span>
       </div>
     );
   }
