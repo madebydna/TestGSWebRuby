@@ -89,14 +89,17 @@ Object.keys(STATE_HASH).forEach(stateName => {
 });
 statesPattern = statesPattern.join('|');
 const cityHomeRegex = new RegExp(`(${statesPattern})\/[^/]+\/?$`);
-const districtHomeRegex = new RegExp(`(${statesPattern})\/[^/]+\/[^/]+\/?$`);
+const districtHomeRegex = new RegExp(
+  `(${statesPattern})\/[^/]+\/[^\\d/]+[^/]*\/?$`
+);
 window.cityHomeRegex = cityHomeRegex;
 
 const referrerMatches = () =>
-  searchRegExp.test(window.document.referrer) ||
-  browseExp.test(window.document.referrer) ||
-  cityHomeRegex.test(window.document.referrer) ||
-  districtHomeRegex.test(window.document.referrer);
+  window.document.referrer.indexOf('greatschools.org') > -1 &&
+  (searchRegExp.test(window.document.referrer) ||
+    browseExp.test(window.document.referrer) ||
+    cityHomeRegex.test(window.document.referrer) ||
+    districtHomeRegex.test(window.document.referrer));
 
 const hasViewedInterstitial = () =>
   getCookie(COOKIE_NAME) === INTERSTITIAL_VIEWED;
