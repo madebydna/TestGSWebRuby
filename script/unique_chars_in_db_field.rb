@@ -6,7 +6,7 @@ end
 
 results = []
 all_states.each do |state|
-  result_arr = School.on_db(state.downcase.to_sym).active.pluck(:name)
+  result_arr = School.on_db(state.downcase.to_sym){School.active.pluck(:name)}
   results << result_arr.join('').chars.to_a.uniq.join('')
 end
 
