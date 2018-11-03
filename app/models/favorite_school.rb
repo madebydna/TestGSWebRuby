@@ -21,7 +21,7 @@ class FavoriteSchool < ActiveRecord::Base
     user = User.find_by(id: user_id)
     if user
       schools = FavoriteSchool.where(member_id: user.id)
-      schools.map { |school| school&.parses_school }
+      schools.map { |school| school&.school_key }
     else
       []
     end
@@ -42,7 +42,7 @@ class FavoriteSchool < ActiveRecord::Base
     School.find_by_state_and_id(state, school_id)
   end
   
-  def parses_school
+  def school_key
     [self.state.downcase, self.school_id]
   end
 end

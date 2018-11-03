@@ -216,8 +216,4 @@ module SearchControllerConcerns
 
   end
 
-  def merge_school_keys
-    (FavoriteSchool.saved_school_list(current_user.id) + cookies_school_keys).uniq
-  end
-
 end
