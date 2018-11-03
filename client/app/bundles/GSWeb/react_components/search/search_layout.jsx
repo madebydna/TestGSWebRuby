@@ -233,7 +233,7 @@ class SearchLayout extends React.Component {
 
   renderMobileMenuBar() {
     return (
-      <OpenableCloseable>
+      <OpenableCloseable openByDefault={false}>
         {(isOpen, { toggle, close }) => (
           <div>
             {this.props.searchBox}
