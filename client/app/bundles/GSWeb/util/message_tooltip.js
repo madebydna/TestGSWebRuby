@@ -15,6 +15,7 @@ export const showMessageTooltip = function(attachToObj, options) {
     onShow:
         setTimeout(function () {
           attachToObj.tipso('hide');
+          attachToObj.tipso('destroy');
         }, 1000)
   };
   let actualOptions = extend({}, defaults, options || {});
