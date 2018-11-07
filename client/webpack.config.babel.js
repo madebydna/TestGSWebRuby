@@ -20,7 +20,6 @@ const config = {
   entry: {
     widget: ['./app/bundles/GSWeb/widget'],
     'mobile-overlay-ad': ['./app/bundles/GSWeb/components/ads/mobile_overlay'],
-    interstitial: ['polyfills', './app/bundles/GSWeb/interstitial'],
     'district-boundaries': [
       'polyfills',
       './app/bundles/GSWeb/district_boundaries'
@@ -224,6 +223,6 @@ if (devBuild) {
 // }
 
 if (process.env.ANALYZE) {
-  config.plugins.push(new BundleAnalyzerPlugin());
+  config.plugins.push(new BundleAnalyzerPlugin({ analyzerHost: '0.0.0.0' }));
 }
 module.exports = config;

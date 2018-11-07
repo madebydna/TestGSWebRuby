@@ -1,8 +1,9 @@
-#search-page {
+ #search-page {
   $map-column-min-height: 615px;
   $xs-list-width: 100%;
   $md-list-width: 370px;
   $lg-list-width: 450px;
+  $charcoal-gray: #a5bcc6;
 
   .school-list ol {
     overflow: visible;
@@ -18,6 +19,16 @@
       margin-top: 7px;
       img{
         width: 100%;
+      }
+    }
+    
+    .percentage-population {
+      color: $charcoal-gray;
+      font-size: 12px;
+      font-family: "opensans-regular";
+      padding-top: 10px;
+      span {
+        font-family: "opensans-semibold";
       }
     }
   }

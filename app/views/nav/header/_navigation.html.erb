@@ -74,7 +74,9 @@
           </li>
       <% end %>
       <li class=""><a class="hidden-sm jsChangeLanguageLink" href="#"><%= t('.language')%></a></li>
-      <li><a class="saved-schools-nav" href="/my-school-list"><span class="icon-heart"></span><span></span></a></li>
+      <li>
+        <%= render 'nav/header/my_saved_schools_icon' %>
+      </li>
       <li class="account_nav_out"><a class="js-no_ad" href="/gsr/login/"><%= t('.sign_in') %></a></li>
       <li class="account_nav_in dn">
         <label for="drop-7" class="toggle"><%= t('.my_account') %> </label>

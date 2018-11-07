@@ -3,7 +3,7 @@ class StateCacher
   attr_accessor :state
 
   # Known data types:
-  # :state_characteristics, :test_scores_gsdata, :feed_test_scores_gsdata
+  # :state_characteristics, :test_scores_gsdata, :feed_test_scores_gsdata, :feed_test_description_gsdata
 
   def initialize(state)
     @state = state
@@ -33,7 +33,8 @@ class StateCacher
     {
         state_characteristics: StateCharacteristicsCacher,
         test_scores_gsdata: TestScoresCaching::StateTestScoresCacherGsdata,
-        feed_test_scores_gsdata: TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata
+        feed_test_scores_gsdata: TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata,
+        feed_test_description_gsdata: TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata,
     }[key.to_s.to_sym]
   end
 
@@ -56,7 +57,8 @@ class StateCacher
     @registered_cachers ||= [
        StateCharacteristicsCacher,
        TestScoresCaching::TestScoresCacherGsdata,
-       TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata
+       TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata,
+       TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata
     ]
   end
 

@@ -27,3 +27,14 @@
     text-align: center;
   }
 }
+
+.mobile-ad-sticky-bottom.ad-reveal-enter {
+  bottom: -1000px;
+  display: none;
+}
+
+.mobile-ad-sticky-bottom.ad-reveal-enter-active,
+.mobile-ad-sticky-bottom.ad-reveal-enter-done {
+  bottom: 0px;
+  display: block;
+}

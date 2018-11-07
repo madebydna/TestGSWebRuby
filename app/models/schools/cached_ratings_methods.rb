@@ -42,23 +42,19 @@ module CachedRatingsMethods
     # result.except!('Student progress rating')
   end
 
-  def ethnicity_ratings
-    fer = formatted_ethnicity_ratings
-    fer = {'Low Income' => low_income_rating}.merge(fer) if fer && low_income_rating
-    fer
+  def ethnicity_information
+    ratings= ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
+    ethnicity_ratings = decorate_ethnicity_object(ratings,"rating")
+    ethnicity_percentages = decorate_ethnicity_object(ethnicity_data,"percentage")
+    format_ethnicity_array(ethnicity_ratings,ethnicity_percentages)
   end
 
   def great_schools_rating
-    test_score_weight = (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value']
-    if overall_gs_rating.nil? && test_score_weight == '1'
-      test_scores_rating
-    else
-      overall_gs_rating
-    end
+    test_score_rating_only? ? test_scores_rating : overall_gs_rating
   end
 
   def test_score_rating_only?
-    rating_for_key('Summary Rating').nil? && (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value'] == '1'
+    overall_gs_rating.nil? && test_score_rating_weight == '1'
   end
 
   def great_schools_rating_year
@@ -301,16 +297,71 @@ module CachedRatingsMethods
     end
   end
 
-  def formatted_ethnicity_ratings
-    ethnicity = ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
-    ethnicity.each_with_object({}) do |e, accum|
-      accum[e.breakdowns.join(',')] = e.school_value  if e.school_value
+  def decorate_ethnicity_object(array_of_hashes, key)
+    ethnicity = array_of_hashes.map do |hash|
+      if hash["school_value"] && hash["school_value"].to_i > 0
+        {
+          label: ethnicity_mapping_hash[hash["breakdown"].to_sym],
+          "#{key}": hash["school_value"].to_f
+        }
+      end
+    end.compact
+
+    case key
+    when "rating"
+      ethnicity.unshift({label: 'Low Income', "#{key}": low_income_rating}) if low_income_rating
+    when "percentage"
+      ethnicity.unshift({label: 'Low Income', "#{key}": free_and_reduced_lunch.gsub('%','').to_f}) if free_and_reduced_lunch
     end
+
+    ethnicity
   end
 
-  def rating_weights
-    cache_data.fetch('gsdata', {}).select do |key, val|
-      key.include?('Summary Rating Weight')
+  def format_ethnicity_array(ethnicity_ratings, ethnicity_percentages)
+    rating_keys = ethnicity_ratings.map { |hash| hash[:label] }
+    percentage_keys = ethnicity_percentages.map { |hash| hash[:label] }
+    ethnicity = []
+    ethnicity_ratings.each do |rating_hash|
+      ethnicity_percentages.each do |percentage_hash|
+        if rating_hash[:label] == percentage_hash[:label]
+          ethnicity << rating_hash.merge(percentage_hash)
+        end
+      end
     end
+
+    unmerged_labels = (rating_keys + percentage_keys) - ethnicity.map { |hash| hash[:label] }
+    ethnicity_ratings.each do |rating_hash|
+      ethnicity << rating_hash if unmerged_labels.include?(rating_hash[:label])
+    end
+    ethnicity_percentages.each do |percentage_hash|
+      ethnicity << percentage_hash if unmerged_labels.include?(percentage_hash[:label])
+    end
+
+    ethnicity
+  end
+
+  def ethnicity_mapping_hash
+    {
+      :'African American' => "African American",
+      :'Black' => "African American",
+      :'White' => "White",
+      :'Asian or Pacific Islander' => "Asian or Pacific Islander",
+      :'Asian' => "Asian",
+      :'All' => "All students",
+      :'Multiracial' => "Two or more races",
+      :'Two or more races' => "Two or more races",
+      :'American Indian/Alaska Native' => "American Indian/Alaska Native",
+      :'Native American' => "American Indian/Alaska Native",
+      :'Pacific Islander' => "Pacific Islander",
+      :'Hawaiian Native/Pacific Islander' => "Pacific Islander",
+      :'Native Hawaiian or Other Pacific Islander' => "Pacific Islander",
+      :'Economically disadvantaged' => "Low-income",
+      :'Low Income' => "Low-income",
+      :'Hispanic' => "Hispanic"
+    }
+  end
+
+  def test_score_rating_weight
+    cache_data.fetch('ratings', {}).fetch('Summary Rating Weight: Test Score Rating', []).first&.fetch('school_value',nil)
   end
 end

@@ -17,7 +17,8 @@ class DistrictsController < ApplicationController
     @breadcrumbs = breadcrumbs
     @top_schools =  top_rated_schools
     @hero_data = hero_data
-    # @reviews = reviews_formatted.reviews_list
+    @academics_props = district_record.academics_props(district_cache_data_reader)
+    @reviews = reviews_formatted.reviews_list
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
     set_ad_targeting_props
@@ -25,6 +26,10 @@ class DistrictsController < ApplicationController
   end
 
   private
+
+  def district_cache_data_reader
+    @_district_cache_data_reader ||= DistrictCacheDataReader.new(district_record, district_cache_keys: ['test_scores_gsdata', 'district_characteristics'])
+  end
 
   def set_district_meta_tags
     district_params_hash = district_params(state, district_record.city, district)
@@ -39,13 +44,14 @@ class DistrictsController < ApplicationController
   end
 
   def largest_district_in_city?
+    return false if city_record.nil?
     # check city cache for district_content - if district id in first hash of cache is equal to this district id it is the largest district by enrollment
     district_record.id == city_key_value(:id)
   end
 
 # rubocop:disable Lint/SafeNavigationChain
   def city_key_value(key)
-    (district_content(district_record.city_record&.id)&.first || {}).fetch(key, nil)
+    (district_content(decorated_city)&.first || {}).fetch(key, nil)
   end
 # rubocop:enable Lint/SafeNavigationChain
 
@@ -178,6 +184,10 @@ class DistrictsController < ApplicationController
     @_decorated_district ||= DistrictCache.cached_results_for([district_record], CACHE_KEYS_FOR_READER).decorate_districts([district_record]).first
   end
 
+  def decorated_city
+    @_decorated_city ||= CityCacheDecorator.for_city_and_keys(city_record, 'district_content')
+  end
+
   def reviews
     @_reviews ||= 
       Review
@@ -204,6 +214,21 @@ class DistrictsController < ApplicationController
   # StructuredMarkup
   def prepare_json_ld
     breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+    if district_record.present?
+      add_json_ld({
+                      "@context" => "http://schema.org",
+                      "@type" => "EducationalOrganization",
+                      'name' => district_record.name.gs_capitalize_words,
+                      'address' => {
+                          '@type' => 'PostalAddress',
+                          'streetAddress' => district_record.street,
+                          'addressLocality' => district_record.city,
+                          'addressRegion' => district_record.state,
+                          'postalCode' => district_record.zipcode
+                      },
+                      'telephone' => district_record.phone
+                  })
+    end
   end
 
   def redirect_unless_valid_district

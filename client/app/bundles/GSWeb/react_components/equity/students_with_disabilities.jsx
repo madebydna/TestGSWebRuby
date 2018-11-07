@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SchoolProfileComponent from 'react_components/equity/school_profile_component';
+import SchoolProfileComponent from 'react_components/data_module';
 import { formatAndJoinAnchors } from '../../components/anchor_router';
 import ModuleTab from 'react_components/school_profiles/module_tab';
 import CommunityFeedback from 'react_components/school_profiles/community_feedback';

@@ -36,7 +36,7 @@ body {
     position: relative;
     margin: auto;
 
-    padding: 70px 0 0 0;
+    padding: 130px 0 0 0;
 
     @include media-breakpoint-down(sm) {
       padding: 0;
@@ -244,6 +244,16 @@ body {
       border-top: 1px solid #ebedee;
       padding: 10px 15px 10px 15px;
       z-index: 1;
+      .title {
+        bottom: 0;
+        margin-left: 15px;
+        margin-right: 15px;
+        
+        span{
+          font-size: 15px;
+          font-family: 'opensans-semibold';
+        }
+      }
     }
 
     .menu-bar.mobile-filters {
@@ -618,4 +628,8 @@ body {
     display: inline-block;
     float: right;
   }
+}
+.header_un{
+  position: fixed;
+  z-index: 2;
 }

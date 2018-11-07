@@ -3,6 +3,7 @@ require 'features/examples/search_page_all_search_type_tests'
 require 'features/examples/search_page_by_location_search_tests'
 
 describe 'search/search_page.html.erb' do
+  before { skip }
   test_group 'Features Shared Across All Search Pages'
   test_group 'By Location Search'
   # ToDo test_group 'City Browse'

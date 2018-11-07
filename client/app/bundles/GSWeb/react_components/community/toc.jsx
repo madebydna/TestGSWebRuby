@@ -4,93 +4,20 @@ import { t, capitalize } from 'util/i18n';
 import { scrollToElement } from 'util/scrolling';
 import TocItem from './toc_item';
 
-const SCHOOL_DISTRICTS = 'school districts'
-const SCHOOLS = 'schools'
-const REVIEWS = 'Reviews'
-const COMMUNITY_RESOURCES = 'community_resources';
-
-
-const cityTocItems = [
-  {
-    key: SCHOOLS,
-    label: t(SCHOOLS),
-    anchor: '#schools',
-    selected: true
-  },
-  {
-    key: SCHOOL_DISTRICTS,
-    label: t(SCHOOL_DISTRICTS),
-    anchor: '#districts',
-    selected: false
-  },
-  // {
-  //   key: 'students',
-  //   label: t('students'),
-  //   anchor: '',
-  // selected: false
-  // },
-  {
-    key: 'community resources',
-    label: capitalize(t(COMMUNITY_RESOURCES)),
-    anchor: '#mobility',
-    selected: false
-  },
-  // {
-  //   key: 'map',
-  //   label: t('Schools'),
-  //   anchor: '',
-  // selected: false
-  // },
-  {
-    key: 'nearby homes for sale & rent',
-    label: t('nearby homes for sale & rent'),
-    anchor: '#homes-and-rentals',
-    selected: false
-  },
-  // {
-  //   key: 'Reviews',
-  //   label: t(REVIEWS),
-  //   anchor: '#reviews',
-  //   selected: false
-  // }
-]
-
 class Toc extends React.Component {
   static defaultProps = {
-    schools: [],
-    students: [],
     suppressReviews: true,
     suppressDistricts: true
   };
 
   static propTypes = {
-    schools: PropTypes.arrayOf(PropTypes.object),
-    students: PropTypes.arrayOf(PropTypes.object),
-    suppressReviews: PropTypes.bool,
-    suppressDistricts: PropTypes.bool
+    tocItems: PropTypes.arrayOf(PropTypes.object).isRequired
   };
 
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.state = {tocItems: this.selectTocItems()};
-  }
-
-  selectTocItems(){
-    const suppressDistricts = this.props.suppressDistricts;
-    const suppressReviews = this.props.suppressReviews;
-    return cityTocItems.filter(tocItem=>{
-      if(tocItem.key === SCHOOL_DISTRICTS && suppressDistricts ) {
-        return false;
-      } else if (tocItem.key === REVIEWS && suppressReviews){
-        return false;
-      }
-      return true;
-    })
-  }
-
-  renderHelp(){
-    // ollie icon and translated 'Help'; ModalTooltip
+    this.state = {tocItems: this.props.tocItems};
   }
 
   unselectAllTocItems(){
@@ -102,10 +29,6 @@ class Toc extends React.Component {
       if (item.key === tocItemKey) {item.selected = true}
       return item;
     })
-  }
-
-  findTocItemSelector(tocItemKey){
-
   }
 
   handleClick(key, selector){

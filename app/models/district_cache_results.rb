@@ -60,7 +60,6 @@ class DistrictCacheResults
       @district_data[[state, district_id]] ||= {}
       @district_data[[state, district_id]][result.name] = cache_value
     end
-    @school_data
   end
 
   def module_for_key(cache_key)
@@ -75,6 +74,8 @@ class DistrictCacheResults
         FeedDistrictCachedCharacteristicsMethods
       when 'district_characteristics'
         DistrictCachedCharacteristicsMethods
+      when 'test_scores_gsdata'
+        DistrictCachedTestScoresMethods
 
     end
   end

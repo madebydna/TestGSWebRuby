@@ -5,9 +5,11 @@ import { SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 import { t } from 'util/i18n';
+import { connect } from 'react-redux';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
-import CaptureOutsideClick from './capture_outside_click';
 import HelpTooltip from '../help_tooltip';
+import { loadMobileOverlayAd } from 'actions/common';
+import MobileOverlayAd from 'react_components/mobile_overlay_ad';
 
 function keepInViewport(
   ref,
@@ -99,7 +101,9 @@ class SearchLayout extends React.Component {
     pagination: PropTypes.element,
     resultSummary: PropTypes.string.isRequired,
     noResults: PropTypes.element,
-    chooseTableButtons: PropTypes.element
+    chooseTableButtons: PropTypes.element,
+    refreshAdOnScroll: PropTypes.func.isRequired,
+    loadMobileOverlayAd: PropTypes.func.isRequired
   };
 
   static getDerivedStateFromProps(props) {
@@ -124,17 +128,28 @@ class SearchLayout extends React.Component {
   }
 
   componentDidMount() {
-    keepInViewport(this.header, {
-      initialTop: 60,
-      setTop: true,
-      setBottom: false
-    });
+    this.props.loadMobileOverlayAd();
     keepInViewport(this.fixedYLayer, {
-      $elementsAbove: [$('.header_un')],
+      $elementsAbove: [$('.header_un'), $('.search-body .menu-bar')],
       $elementsBelow: [$('.footer')],
       setTop: true,
       setBottom: true
     });
+    $(() => {
+      $(window).on(
+        'scroll',
+        throttle(
+          () => this.shouldRenderAd() && this.props.refreshAdOnScroll(),
+          40
+        )
+      );
+    });
+  }
+
+  shouldRenderAd() {
+    return (
+      this.shouldRenderMap() && this.props.size >= SM && this.state.hasShownMap
+    );
   }
 
   shouldRenderMap() {
@@ -206,7 +221,9 @@ class SearchLayout extends React.Component {
           <span className="menu-item list-map-toggle">
             <div>
               {this.props.listMapTableSelect}
-              <span className="ollie-help-icon"><HelpTooltip /></span>
+              <span className="ollie-help-icon">
+                <HelpTooltip />
+              </span>
             </div>
           </span>
         </div>
@@ -216,7 +233,7 @@ class SearchLayout extends React.Component {
 
   renderMobileMenuBar() {
     return (
-      <OpenableCloseable openByDefault={this.props.view === LIST_VIEW}>
+      <OpenableCloseable openByDefault={false}>
         {(isOpen, { toggle, close }) => (
           <div>
             {this.props.searchBox}
@@ -236,7 +253,7 @@ class SearchLayout extends React.Component {
                   />
                 </span>
               </span>
-              <span className='ollie-help-icon'>
+              <span className="ollie-help-icon">
                 <HelpTooltip />
               </span>
             </div>
@@ -251,9 +268,7 @@ class SearchLayout extends React.Component {
                 />
                 <div>
                   <span className="menu-item">
-                    <span className="label">
-                      {t('School type and level')}:
-                    </span>
+                    <span className="label">{t('School type and level')}:</span>
                     {this.props.entityTypeDropdown}
                   </span>
                   <span className="menu-item">
@@ -286,35 +301,32 @@ class SearchLayout extends React.Component {
         <div className="subheader menu-bar">
           {this.props.breadcrumbs}
           <div className="pagination-summary">{this.props.resultSummary}</div>
-          {this.shouldRenderTable() ? 
-            <div className="menu-item">
-              {this.props.chooseTableButtons}
-            </div> : null
-          }
+          {this.shouldRenderTable() ? (
+            <div className="menu-item">{this.props.chooseTableButtons}</div>
+          ) : null}
           {this.renderSortDropDown()}
         </div>
       )
     );
   }
 
-  renderSortDropDown(){
-    if(this.props.size <= SM){
+  renderSortDropDown() {
+    if (this.props.size <= SM) {
       return null;
-    }else if(this.shouldRenderTable()){
+    } else if (this.shouldRenderTable()) {
       return (
         <div className="menu-item sort-dropdown-table-view">
           <span className="label">{t('Sort by')}:</span>
           {this.props.sortSelect}
         </div>
-      )
-    }else{
-      return(
-        <div className="menu-item">
-          <span className="label">{t('Sort by')}:</span>
-          {this.props.sortSelect}
-        </div>
-      )
+      );
     }
+    return (
+      <div className="menu-item">
+        <span className="label">{t('Sort by')}:</span>
+        {this.props.sortSelect}
+      </div>
+    );
   }
 
   render() {
@@ -344,6 +356,7 @@ class SearchLayout extends React.Component {
               {this.shouldRenderTable() ? this.renderTableView() : null}
               {this.props.pagination}
             </div>
+            {this.props.size < SM && <MobileOverlayAd />}
           </React.Fragment>
         )}
       </div>
@@ -351,4 +364,8 @@ class SearchLayout extends React.Component {
   }
 }
 
-export default SearchLayout;
+const ConnectedSearchLayout = connect(null, {
+  loadMobileOverlayAd
+})(SearchLayout);
+
+export default ConnectedSearchLayout;

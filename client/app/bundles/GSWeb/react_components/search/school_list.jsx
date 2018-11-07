@@ -14,7 +14,7 @@ const SchoolList = ({
   size
 }) => {
   let numsNonAssignedSchools = 0;
-  return (
+  return(
     <section className="school-list">
       {
         /* would prefer to just not render overlay if not showing it,
@@ -27,15 +27,14 @@ const SchoolList = ({
       <ol className={isLoading ? "loading" : ""}>
         {schools.map((s, index) => {
           if (s.assigned === null) { numsNonAssignedSchools++; }
-          console.log(s.assigned)
-          return (
+          return(
             <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
               {index > 0 &&
                 index % 4 === 0 && (
                   <Ad
                     slot={`Search_After${index}_300x250`}
                     sizeName="box"
-                    idCounter={index / 4}
+                    slotOccurrenceNumber={index / 4}
                     key={`ad-${index}`}
                     container={<li className="ad" />}
                   />
@@ -57,18 +56,27 @@ const SchoolList = ({
                   <School {...s} saveSchoolCallback={saveSchoolCallback} />
                 </li>
               ) : (
-                  <li
-                    key={'li' + s.state + s.id + (s.assigned ? 'assigned' : '')}
-                    onMouseEnter={() => toggleHighlight(s)}
-                    onMouseLeave={() => toggleHighlight(s)}
-                    className={classNameGenerator(s)}
-                  >
-                    <School {...s} saveSchoolCallback={saveSchoolCallback} />
-                  </li>
-                )}
+                <li
+                  key={'li' + s.state + s.id + (s.assigned ? 'assigned' : '')}
+                  onMouseEnter={() => toggleHighlight(s)}
+                  onMouseLeave={() => toggleHighlight(s)}
+                  className={classNameGenerator(s)}
+                >
+                  <School {...s} saveSchoolCallback={saveSchoolCallback} />
+                </li>
+              )}
             </React.Fragment>
           )
         }
+        )}
+        {(schools.length < 5 && schools.length > 0) && (
+          <Ad
+            slot={`Search_After4_300x250`}
+            sizeName="box"
+            slotOccurrenceNumber={1}
+            key={`ad-${schools.length + 1}`}
+            container={<li className="ad" />}
+          />
         )}
         {pagination && <li>{pagination}</li>}
       </ol>

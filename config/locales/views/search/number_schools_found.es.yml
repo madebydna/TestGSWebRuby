@@ -1,6 +1,6 @@
 es:
   search:
-    Your school list is empty: Your school list is empty
+    Your school list is empty: Tu lista está vacía
     number_schools_found:
       city_browse:
         zero: Su búsqueda no obtuvo resultados en %{city}, %{state}.

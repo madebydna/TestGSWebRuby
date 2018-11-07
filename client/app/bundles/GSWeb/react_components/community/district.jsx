@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Breadcrumbs from "react_components/breadcrumbs";
+import DataModule from "react_components/data_module";
 import DistrictLayout from "./district_layout";
 import SearchBox from "react_components/search_box";
 import TopSchoolsStateful from "./top_schools_stateful";
@@ -11,11 +12,14 @@ import Mobility from "./mobility";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
+import {schools, academics, communityResources, nearbyHomesForSale, reviews} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
 import { analyticsEvent } from "util/page_analytics";
 import Zillow from "./zillow";
+import { t } from '../../util/i18n';
+import InfoBox from 'react_components/school_profiles/info_box';
 
 class District extends React.Component {
   static defaultProps = {
@@ -35,7 +39,8 @@ class District extends React.Component {
       })
     ),
     locality: PropTypes.object,
-    heroData: PropTypes.object
+    heroData: PropTypes.object,
+    academics: PropTypes.object
   };
 
   constructor(props) {
@@ -93,7 +98,24 @@ class District extends React.Component {
     );
   }
 
+  removeReviewsIfEmpty(tocItems){
+    this.props.reviews.length === 0 && tocItems.pop();
+  }
+
+  removeAcademicsIfEmpty(tocItems){
+    let {data} = this.props.academics;
+    data.filter(o => o.data && o.data.length > 0).length < 1 && tocItems.splice(1,1);
+  }
+
+  selectTocItems(){
+    const districtTocItems = [schools, academics, communityResources, nearbyHomesForSale, reviews];
+    this.removeReviewsIfEmpty(districtTocItems);
+    this.removeAcademicsIfEmpty(districtTocItems);
+    return districtTocItems;
+  }
+
   render() {
+    let {title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback} = this.props.academics;
     return (
       <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
@@ -122,6 +144,34 @@ class District extends React.Component {
             pageType="District"
           />
         }
+        academics={
+          <DataModule
+            title={title}
+            anchor={anchor}
+            subtitle={subtitle}
+            info_text={info_text}
+            icon_classes={icon_classes}
+            sources={sources}
+            share_content={share_content}
+            rating={rating}
+            data={data}
+            analytics_id={analytics_id}
+            showTabs={showTabs}
+            faq={faq}
+            feedback={feedback}
+            suppressIfEmpty={true}
+            footer={
+              <div data-ga-click-label={title}>
+                <InfoBox content={sources} element_type="sources">{ t('See notes') }</InfoBox>
+                <div className="module_feedback">
+                  <a href={`https://s.qualaroo.com/45194/a8cbf43f-a102-48f9-b4c8-4e032b2563ec?state=${this.props.locality.stateShort}&districtId=${this.props.locality.district_id}`} className="anchor-button" target="_blank" rel="nofollow">
+                    {t('search_help.send_feedback')}
+                  </a>
+                </div>
+              </div>
+            }
+          />
+        }
         zillow={
           <Zillow
               locality={this.props.locality}
@@ -129,20 +179,19 @@ class District extends React.Component {
               pageType='district'
           />
         }
-        // recentReviews={
-        //   <RecentReviews 
-        //     community="district"
-        //     reviews={this.props.reviews}
-        //     locality={this.props.locality}
-        //   />
-        // }
+        recentReviews={
+          <RecentReviews 
+            community="district"
+            reviews={this.props.reviews}
+            locality={this.props.locality}
+          />
+        }
         heroData={this.props.heroData}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
         toc={
-          <Toc 
-            schools={this.props.schools}
-            suppressReviews={this.props.reviews.length === 0} 
+          <Toc
+            tocItems={this.selectTocItems()}
           />
         }
         viewportSize={this.props.viewportSize}

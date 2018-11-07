@@ -271,7 +271,7 @@ module UrlHelper
   def prepend_http ( url )
     return_url = url
     unless url[/\Ahttp:\/\//] || url[/\Ahttps:\/\//]
-      return_url = "http://#{url}"
+      return_url = "https://#{url}"
     end
     return_url
   end

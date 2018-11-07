@@ -345,7 +345,7 @@ class CollectionConfig < ActiveRecord::Base
           raw_data_str.gsub!(/(\w+)\s:/) { |match| ":#{match[0..-2]}=>" }
           partner[:data] = eval(raw_data_str)[:sponsors]
           partner[:data].each do |partner_data|
-            partner_data[:logo].prepend(ENV_GLOBAL['cdn_host'])
+            partner_data[:logo].prepend(ENV_GLOBAL['media_server'])
           end
         end
       rescue Exception => e

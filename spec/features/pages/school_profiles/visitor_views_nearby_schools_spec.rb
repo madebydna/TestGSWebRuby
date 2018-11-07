@@ -11,7 +11,6 @@ describe 'Visitor' do
 
   scenario 'sees nearby schools module even if there are no high performing or other nearby schools', js:true do
     visit school_path(school)
-    screenshot_and_open_image
     expect(page_object).to have_nearby_schools
   end
 

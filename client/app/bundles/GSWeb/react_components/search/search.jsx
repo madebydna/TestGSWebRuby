@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+import { getStore } from 'store/appStore';
 import Breadcrumbs from 'react_components/breadcrumbs';
 import SearchContext from './search_context';
 import SortSelect from './sort_select';
@@ -13,6 +15,7 @@ import SchoolTable from './school_table';
 import EntityTypeDropdown from './entity_type_dropdown';
 import GradeLevelButtons from './grade_level_buttons';
 import ChooseTableButtons from './choose_table_buttons';
+import StateSelectDropdown from './state_select_dropdown';
 import DistanceFilter from './distance_filter';
 import DistanceContext from './distance_context';
 import Ad from 'react_components/ad';
@@ -32,7 +35,8 @@ class Search extends React.Component {
     breadcrumbs: [],
     q: null,
     layout: 'Search',
-    schoolKeys: []
+    schoolKeys: [],
+    numOfSchools: 0
   };
 
   static propTypes = {
@@ -49,6 +53,7 @@ class Search extends React.Component {
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     shouldIncludeDistance: PropTypes.bool,
     toggleHighlight: PropTypes.func.isRequired,
+    refreshAdOnScroll: PropTypes.func.isRequired,
     breadcrumbs: PropTypes.arrayOf(
       PropTypes.shape({
         text: PropTypes.string.isRequired,
@@ -61,7 +66,8 @@ class Search extends React.Component {
     q: PropTypes.string,
     searchTableViewHeaders: PropTypes.object,
     layout: PropTypes.string,
-    schoolKeys: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array))
+    schoolKeys: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array)),
+    numOfSchools: PropTypes.number
   };
 
   componentDidMount() {
@@ -88,6 +94,7 @@ class Search extends React.Component {
             entityTypeDropdown={<EntityTypeDropdown />}
             gradeLevelButtons={<GradeLevelButtons />}
             chooseTableButtons={<ChooseTableButtons />}
+            stateSelect={<StateSelectDropdown />}
             distanceFilter={
               distance ||
               (this.props.schools[0] &&
@@ -111,9 +118,14 @@ class Search extends React.Component {
             }
             tallAd={
               <div className="ad-bar">
-                <Ad slot="Search_160x600" dimensions={[160, 600]} />
+                <Ad
+                  key={`Search_160x600${this.props.page}`}
+                  slot="Search_160x600"
+                  dimensions={[160, 600]}
+                />
               </div>
             }
+            numOfSchools={this.props.numOfSchools}
             schoolList={
               <SchoolList
                 toggleHighlight={this.props.toggleHighlight}
@@ -161,6 +173,7 @@ class Search extends React.Component {
             searchBox={<SearchBox size={this.props.size} />}
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
             noResults={this.noResults()}
+            refreshAdOnScroll={this.props.refreshAdOnScroll}
           />
         )}
       </DistanceContext.Consumer>
@@ -171,10 +184,12 @@ class Search extends React.Component {
 export { Search };
 export default function() {
   return (
-    <SearchContext.Provider>
-      <SearchContext.Consumer>
-        {state => <Search {...state} />}
-      </SearchContext.Consumer>
-    </SearchContext.Provider>
+    <Provider store={getStore()}>
+      <SearchContext.Provider>
+        <SearchContext.Consumer>
+          {state => <Search {...state} />}
+        </SearchContext.Consumer>
+      </SearchContext.Provider>
+    </Provider>
   );
 }

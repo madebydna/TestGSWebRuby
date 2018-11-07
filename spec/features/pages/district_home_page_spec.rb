@@ -5,6 +5,7 @@ require 'features/examples/top_rated_schools_section_examples'
 require 'features/examples/footer_examples'
 
 describe 'District Home Page' do
+  before { skip }
   let!(:district) { create(:district, state: 'ca', city: 'Alameda', name: 'Alameda City Unified' ,home_page_url:'www.alameda.k12.ca.us') }
   after { clean_dbs :us_geo, :gs_schooldb, :ca }
   subject(:page_object) do
