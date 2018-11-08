@@ -7,6 +7,7 @@ import { SM } from "util/viewport";
 import { t, capitalize } from '../../util/i18n';
 import ModalTooltip from "../modal_tooltip";
 import { links } from 'components/links'; 
+import { checkSponsorSearchResult } from '../../util/advertising';
 
 const SchoolList = ({
   schools,
@@ -17,6 +18,7 @@ const SchoolList = ({
   size
 }) => {
   let numsNonAssignedSchools = 0;
+  checkSponsorSearchResult();
   return(
     <section className="school-list">
       {
@@ -38,7 +40,7 @@ const SchoolList = ({
           const shouldRenderSponsorSchoolAdOnMobile = size <= SM && schools.length >= 8 && numsNonAssignedSchools === 6;
           const shouldRenderSponsorSchoolAdOnDesktop = size > SM && schools.length >= 8 && numsNonAssignedSchools === 4;
           const sponsorSearchResultAd =
-            <li className="sponsored-school-result-ad">
+            <li className="sponsored-school-result-ad dn">
               <div>
                 <span>{t('Sponsored Ad')}</span>
                 <span>
@@ -61,7 +63,7 @@ const SchoolList = ({
                     container={<li className="ad" />}
                   />
                 )}
-              {/* To place the faux ad before the second non-assigned school search result   */}
+              {/* To place the faux ad after a certain amount of non-assigned school search result   */}
               {shouldRenderSponsorSchoolAdOnMobile && sponsorSearchResultAd}
               {shouldRenderSponsorSchoolAdOnDesktop && sponsorSearchResultAd}
               {size > SM ? (

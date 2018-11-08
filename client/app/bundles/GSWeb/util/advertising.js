@@ -406,6 +406,21 @@ function enableAdCloseButtons() {
   });
 }
 
+function checkSponsorSearchResult() {
+  setTimeout(()=>{
+    const searchResult = document.querySelector('.sponsored-school-result-ad')
+    let adLoaded = true;
+    searchResult.querySelectorAll('div').forEach(node => {
+      if (node.classList.contains('dn')){
+        adLoaded = false;
+      }
+    })
+    if (adLoaded){
+      searchResult.classList.remove('dn');
+    }
+  }, 2000)
+}
+
 GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
 GS.ad.showAd = showAd;
 GS.ad.slotRenderedHandler = slotRenderedHandler;
@@ -419,5 +434,6 @@ export {
   defineAdOnce,
   destroyAd,
   destroyAdByName,
-  slotIdFromName
+  slotIdFromName,
+  checkSponsorSearchResult
 };
