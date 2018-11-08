@@ -3,5 +3,6 @@ en:
   modals:
     signup_and_follow_school_modal:
       heading: Yes! Send me email updates about my child's school.
-      title: Saved this school to My School List!
+      title_html: Saved this school to %{title_link}! 
+      title_link_text: My School List
       sf_subheading: Yes! Send me email updates about my child's school.
