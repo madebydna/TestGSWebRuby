@@ -1,3 +1,5 @@
+$school-color: #2bade3;
+
 .gs-modal-dialog {
   max-width: 660px;
   @include media-breakpoint-up(sm) {
@@ -48,7 +50,11 @@
     }
 
     .icon-heart {
-      color: #2ba3dc;
+      color: $school-color;
+    }
+
+    a {
+      font: inherit;
     }
   }
 
