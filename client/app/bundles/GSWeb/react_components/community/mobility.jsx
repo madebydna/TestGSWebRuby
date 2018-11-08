@@ -115,6 +115,12 @@ class Mobility extends React.Component {
           </a>
         </div>
       const sources = t('mobility.sources_html');
+      const transportationsMethods = Object.keys(modes);
+      const renderTransportationArray = [];
+      transportationsMethods.forEach(vehicle=>{
+        const properties = modes[`${vehicle}`]
+        renderTransportationArray.push(this.renderTransportation(vehicle, properties));
+      });
       return(
         <React.Fragment>
           <section className="mobility-module">
@@ -135,12 +141,7 @@ class Mobility extends React.Component {
                 {score !== 0 ? <div className="blue-line"/> : null}
                 <div>
                   <a href={mapURL} rel="nofollow" target="_blank" onClick={() => this.handleGoogleAnalyics('External link', 'Mobility transport') }>
-                    {modes.subway ? this.renderTransportation("subway", modes.subway) : null}
-                    {modes.bus ? this.renderTransportation("bus", modes.bus) : null}
-                    {modes.carshare ? this.renderTransportation("carshare", modes.carshare) : null}
-                    {modes.bikeshare ? this.renderTransportation("bikeshare", modes.bikeshare) : null}
-                    {modes.scootershare ? this.renderTransportation("scootershare", modes.scootershare) : null}
-                    {modes.ridehailing ? this.renderTransportation("ridehailing", modes.ridehailing) : null}
+                    {renderTransportationArray}
                   </a>
                 </div>
               </div>
