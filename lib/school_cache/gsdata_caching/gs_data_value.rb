@@ -335,6 +335,10 @@ class GsdataCaching::GsDataValue
 
     def total_school_cohort_count
       select { |h| h.school_cohort_count.present? }.sum(&:school_cohort_count)
+      end
+
+    def total_district_cohort_count
+      select { |h| h.district_cohort_count.present? }.sum(&:district_cohort_count)
     end
 
     def school_cohort_count_exists?
@@ -351,9 +355,23 @@ class GsdataCaching::GsDataValue
       precision ? avg.round(precision) : avg
     end
 
+    def average_district_value(precision: nil)
+      return nil if empty?
+      avg = average(&:district_value_as_float)
+      precision ? avg.round(precision) : avg
+    end
+
     def average_state_value(precision: nil)
       return nil if empty?
       avg = average(&:state_value_as_float)
+      precision ? avg.round(precision) : avg
+    end
+
+    def weighted_average_district_value(precision: nil)
+      return nil if empty?
+      avg = weighted_average(total_district_cohort_count) do |dv|
+        dv.district_value_as_float * dv.district_cohort_count
+      end
       precision ? avg.round(precision) : avg
     end
 
@@ -377,6 +395,12 @@ class GsdataCaching::GsDataValue
       map(&:school_value).all?(&:numeric?)
     end
 
+    def all_district_values_can_be_numeric?
+      map(&:district_value).all? do |v|
+        v.is_a?(Numeric) || v.try(:scan, /[0-9.]+/)&.first&.to_f
+      end
+    end
+
     def all_school_values_can_be_numeric?
       map(&:school_value).all? do |v|
         v.is_a?(Numeric) || v.try(:scan, /[0-9.]+/)&.first&.to_f
@@ -385,6 +409,10 @@ class GsdataCaching::GsDataValue
 
     def all_state_values_are_numeric?
       map(&:state_value).all?(&:numeric?)
+    end
+
+    def all_have_district_cohort_count?
+      all?(&:has_district_cohort_count?)
     end
 
     def all_have_school_cohort_count?
@@ -549,6 +577,10 @@ class GsdataCaching::GsDataValue
 
   def has_school_cohort_count?
     school_cohort_count.present? && school_cohort_count > 0
+  end
+
+  def has_district_cohort_count?
+    district_cohort_count.present? && district_cohort_count > 0
   end
 
   def school_cohort_count=(count)

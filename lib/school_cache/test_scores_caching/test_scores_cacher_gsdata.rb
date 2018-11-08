@@ -77,7 +77,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
 
   def inject_grade_all(hashes)
     # Stub for TestScoresCaching::GradeAllCalculatorGsdata, which should reference the new gsdata schema columns
-    TestScoresCaching::GradeAllCalculator.new(
+    GradeAllCalculator.new(
       GsdataCaching::GsDataValue.from_array_of_hashes(hashes)
     ).inject_grade_all
   end
