@@ -50,16 +50,11 @@ module CachedRatingsMethods
   end
 
   def great_schools_rating
-    test_score_weight = (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value']
-    if overall_gs_rating.nil? && test_score_weight == '1'
-      test_scores_rating
-    else
-      overall_gs_rating
-    end
+    test_score_rating_only? ? test_scores_rating : overall_gs_rating
   end
 
   def test_score_rating_only?
-    rating_for_key('Summary Rating').nil? && (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value'] == '1'
+    overall_gs_rating.nil? && test_score_rating_weight == '1'
   end
 
   def great_schools_rating_year
@@ -366,9 +361,7 @@ module CachedRatingsMethods
     }
   end
 
-  def rating_weights
-    cache_data.fetch('gsdata', {}).select do |key, val|
-      key.include?('Summary Rating Weight')
-    end
+  def test_score_rating_weight
+    cache_data.fetch('ratings', {}).fetch('Summary Rating Weight: Test Score Rating', []).first&.fetch('school_value',nil)
   end
 end

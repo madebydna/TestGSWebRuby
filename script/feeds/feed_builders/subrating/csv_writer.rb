@@ -8,10 +8,18 @@ module Feeds
       include Feeds::FeedConstants
       include Feeds::FeedHelper
 
-      SUBRATING_LIST = ['Test Scores', 'Advanced Courses', 'College Readiness', 'Equity', 'Academic Progress', 'Student Growth', 'Low Income']
+      SUBRATING_LIST = ['Test Scores',
+                        'Advanced Courses',
+                        'College Readiness',
+                        'Equity',
+                        'Academic Progress',
+                        'Student Growth',
+                        'Low Income',
+                        'Attendance Flag',
+                        'Discipline Flag']
 
       def initialize(data_reader, output_path)
-        @column_titles = %w(School Url).insert(1, *SUBRATING_LIST)
+        @column_titles = %w(Universal-Id Url).insert(1, *SUBRATING_LIST)
         @feed_file_path = output_path
         @data_reader = data_reader
       end
@@ -45,7 +53,7 @@ module Feeds
           school_ratings = []
           school_ratings << school_uid(school_hash[:id])
           SUBRATING_LIST.each do |title|
-            school_ratings << (school_hash[:ratings] && school_hash[:ratings][title] ? school_hash[:ratings][title].school_value : '')
+            school_ratings << (school_hash[:ratings] && school_hash[:ratings][title] ? school_hash[:ratings][title].school_value : nil)
           end
           school_ratings << school_hash[:url]
         end
