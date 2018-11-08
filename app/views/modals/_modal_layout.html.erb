@@ -6,7 +6,12 @@
         <span>&times;</span>
       </span>
       <div class="modal-body">
-        <div class="heading"><%= heading %></div>
+        <div class="heading">
+          <% if modal_css_class == "join-and-login js-email-join-for-school-profile-modal" %>
+            <span class="icon-heart"></span>
+          <% end %>
+          <%= heading %>
+        </div>
         <% if local_assigns[:subheading] %>
           <div class="subheading"><%= subheading %></div>
         <% end %>
