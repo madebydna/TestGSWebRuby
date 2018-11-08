@@ -1,7 +1,7 @@
 <% modal_css_class = params[:modal_css_class] %>
 <%= render 'modals/email_join_modal',
   modal_css_class: modal_css_class,
-  heading: t('.title'),
+  heading: t('.title_html', title_link: link_to(t('.title_link_text'), my_school_list_url)),
   subheading: t('.sf_subheading')
 %>
 
