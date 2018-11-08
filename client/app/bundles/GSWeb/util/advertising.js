@@ -410,13 +410,15 @@ function checkSponsorSearchResult() {
   setTimeout(()=>{
     const searchResult = document.querySelector('.sponsored-school-result-ad')
     let adLoaded = true;
-    searchResult.querySelectorAll('div').forEach(node => {
-      if (node.classList.contains('dn')){
-        adLoaded = false;
+    if (searchResult){
+      searchResult.querySelectorAll('div').forEach(node => {
+        if (node.classList.contains('dn')){
+          adLoaded = false;
+        }
+      })
+      if (adLoaded){
+        searchResult.classList.remove('dn');
       }
-    })
-    if (adLoaded){
-      searchResult.classList.remove('dn');
     }
   }, 2000)
 }
