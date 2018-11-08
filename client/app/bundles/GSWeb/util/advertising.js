@@ -206,9 +206,7 @@ const getSizeMappings = function() {
       .build(),
     search_result_item: googletag
       .sizeMapping()
-      .addSize([1200, 300], [[440, 140]])
-      .addSize([992, 300], [[360, 140]])
-      .addSize([0, 0], [[992,140],[768,140],[440, 140]])
+      .addSize([0, 0], [300,90])
       .build(),
   };
 };

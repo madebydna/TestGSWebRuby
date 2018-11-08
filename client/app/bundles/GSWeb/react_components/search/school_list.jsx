@@ -4,6 +4,9 @@ import Ad from "react_components/ad";
 import School from "./school";
 import LoadingOverlay from "./loading_overlay";
 import { SM } from "util/viewport";
+import { t, capitalize } from '../../util/i18n';
+import ModalTooltip from "../modal_tooltip";
+import { links } from 'components/links'; 
 
 const SchoolList = ({
   schools,
@@ -27,6 +30,25 @@ const SchoolList = ({
       <ol className={isLoading ? "loading" : ""}>
         {schools.map((s, index) => {
           if (s.assigned === null) { numsNonAssignedSchools++; }
+          const content = 
+            <span>
+              <span>{t('sponsored_tooltip_blurb')}</span>
+              <span> <a href={links.sponsored_schools} target='_blank'>{t('top_schools.learn_more')}</a></span>
+            </span>
+          const shouldRenderSponsorSchoolAdOnMobile = size <= SM && schools.length >= 8 && numsNonAssignedSchools === 6;
+          const shouldRenderSponsorSchoolAdOnDesktop = size > SM && schools.length >= 8 && numsNonAssignedSchools === 4;
+          const sponsorSearchResultAd =
+            <li className="sponsored-school-result-ad">
+              <div>
+                <span>{t('Sponsored Ad')}</span>
+                <span>
+                  <ModalTooltip content={content}>
+                    <span className="info-circle icon-info" />
+                  </ModalTooltip>
+                </span>
+              </div>
+              <Ad slot="search_sponsoredlisting" sizeName="search_result_item" />
+            </li>;
           return(
             <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
               {index > 0 &&
@@ -40,11 +62,8 @@ const SchoolList = ({
                   />
                 )}
               {/* To place the faux ad before the second non-assigned school search result   */}
-              {numsNonAssignedSchools === 2 &&
-                <div className="ad">
-                  <Ad slot="search_sponsoredlisting" sizeName="search_result_item" />
-                </div>
-              }
+              {shouldRenderSponsorSchoolAdOnMobile && sponsorSearchResultAd}
+              {shouldRenderSponsorSchoolAdOnDesktop && sponsorSearchResultAd}
               {size > SM ? (
                 <li
                   key={'li' + s.state + s.id + (s.assigned ? 'assigned' : '')}
