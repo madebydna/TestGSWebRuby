@@ -46,6 +46,10 @@
     @include media-breakpoint-up(md) {
       padding: 40px;
     }
+
+    .icon-heart {
+      color: #2ba3dc;
+    }
   }
 
   .close {
