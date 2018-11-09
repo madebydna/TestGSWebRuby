@@ -9,6 +9,26 @@ import ModalTooltip from "../modal_tooltip";
 import { links } from 'components/links'; 
 import { checkSponsorSearchResult } from '../../util/advertising';
 
+const content = 
+  <span>
+    <span>{t('sponsored_tooltip_blurb')}</span>
+    <span> <a href={links.sponsored_schools} target='_blank'>{t('top_schools.learn_more')}</a></span>
+  </span>;
+
+const renderSponsorSearchResultAd = () =>(
+  <li className="sponsored-school-result-ad dn">
+    <div>
+      <span className="sponsor-ad">{t('Sponsored Ad')}</span>
+      <span>
+        <ModalTooltip content={content}>
+          <span className="info-circle icon-info" />
+        </ModalTooltip>
+      </span>
+    </div>
+    <Ad slot="search_sponsoredlisting" sizeName="search_result_item" />
+  </li>
+);
+
 const SchoolList = ({
   schools,
   saveSchoolCallback,
@@ -32,25 +52,8 @@ const SchoolList = ({
       <ol className={isLoading ? "loading" : ""}>
         {schools.map((s, index) => {
           if (s.assigned === null) { numsNonAssignedSchools++; }
-          const content = 
-            <span>
-              <span>{t('sponsored_tooltip_blurb')}</span>
-              <span> <a href={links.sponsored_schools} target='_blank'>{t('top_schools.learn_more')}</a></span>
-            </span>
-          const shouldRenderSponsorSchoolAdOnMobile = size <= SM && schools.length >= 8 && numsNonAssignedSchools === 6;
-          const shouldRenderSponsorSchoolAdOnDesktop = size > SM && schools.length >= 8 && numsNonAssignedSchools === 4;
-          const sponsorSearchResultAd =
-            <li className="sponsored-school-result-ad dn">
-              <div>
-                <span>{t('Sponsored Ad')}</span>
-                <span>
-                  <ModalTooltip content={content}>
-                    <span className="info-circle icon-info" />
-                  </ModalTooltip>
-                </span>
-              </div>
-              <Ad slot="search_sponsoredlisting" sizeName="search_result_item" />
-            </li>;
+          const shouldRenderSponsorSchoolAdOnMobile = numsNonAssignedSchools === 6 && size <= SM && schools.length >= 8; 
+          const shouldRenderSponsorSchoolAdOnDesktop = numsNonAssignedSchools === 4 && size > SM && schools.length >= 8;
           return(
             <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
               {index > 0 &&
@@ -64,8 +67,8 @@ const SchoolList = ({
                   />
                 )}
               {/* To place the faux ad after a certain amount of non-assigned school search result   */}
-              {shouldRenderSponsorSchoolAdOnMobile && sponsorSearchResultAd}
-              {shouldRenderSponsorSchoolAdOnDesktop && sponsorSearchResultAd}
+              {shouldRenderSponsorSchoolAdOnMobile && renderSponsorSearchResultAd()}
+              {shouldRenderSponsorSchoolAdOnDesktop && renderSponsorSearchResultAd()}
               {size > SM ? (
                 <li
                   key={'li' + s.state + s.id + (s.assigned ? 'assigned' : '')}

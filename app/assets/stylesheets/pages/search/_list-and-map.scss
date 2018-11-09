@@ -16,7 +16,7 @@
     //Remove below once I get the code to inject into the ad slot.
     //Here for now for testing purposes
     .sponsored-school-result-ad{
-      height: 140px;
+      height: 107px;
       margin-top: 7px;
       background-color: #f6f9fa;
       div:first-child {
@@ -24,6 +24,9 @@
         font-family: 'opensans-regular';
         color: #0d0d0d;
         font-size: 11px;
+        .sponsor-ad{
+          margin-left: 15px;
+        }
         span + span {
           margin-left: 7px;
         }
