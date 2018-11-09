@@ -62,21 +62,24 @@ module CachedRatingsMethods
     end
   end
 
+  def ethnicity_struct_ratings
+    ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
+  end
+
   def ethnicity_test_score_ratings
-    ratings = ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
-    ratings.each_with_object({}) do |struct, hash|
+    @_ratings ||= ethnicity_struct_ratings.each_with_object({}) do |struct, hash|
       hash[ethnicity_mapping_hash[struct.breakdown.to_sym]] = struct.school_value_as_int if struct.school_value_as_int > 0 
     end
   end
 
   def ethnicity_population_percentages
-    ethnicity_data.each_with_object({}) do |data, hash|
+    @_percentages ||= ethnicity_data.each_with_object({}) do |data, hash|
       hash[ethnicity_mapping_hash[data["breakdown"].to_sym]] = data["school_value"].round if data["school_value"].round > 0
     end
   end
 
   def ethnicity_labels
-    (ethnicity_test_score_ratings.keys + ethnicity_population_percentages.keys).uniq
+    @_labels ||= (ethnicity_test_score_ratings.keys + ethnicity_population_percentages.keys).uniq
   end
 
   def ethnicity_mapping_hash
