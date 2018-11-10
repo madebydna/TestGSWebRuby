@@ -39,6 +39,10 @@ class MySchoolListController < ApplicationController
     end
   end
 
+  def default_limit
+    50
+  end
+
   # SearchRequestParams
 
   def school_keys
