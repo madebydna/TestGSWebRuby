@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class TestScoresCaching::GradeAllCalculator
-  attr_reader :data_values
+class GradeAllCalculator
+  attr_reader :data_values, :school_or_district
   PRECISION = 2
 
   def initialize(data_values = [])
-    @data_values = data_values 
+    @data_values = data_values
   end
 
   def inject_grade_all
@@ -36,7 +36,6 @@ class TestScoresCaching::GradeAllCalculator
       raise ArgumentError.new('test data already contains grade All')
     end
     return nil if data_values.blank?
-
     school_data_values = data_values.having_school_value
     state_data_values = data_values.having_state_value
 
@@ -54,7 +53,7 @@ class TestScoresCaching::GradeAllCalculator
 
     if data_values.all_school_values_can_be_numeric?
       if school_data_values.all_have_school_cohort_count?
-        grade_all_dv.school_value = school_data_values.weighted_average_school_value(precision: PRECISION)
+        grade_all_dv.school_value =  school_data_values.weighted_average_school_value(precision: PRECISION)
         grade_all_dv.school_cohort_count = school_data_values.total_school_cohort_count
         flags << 'n_tested'
       else
@@ -71,10 +70,10 @@ class TestScoresCaching::GradeAllCalculator
         grade_all_dv.state_value = state_data_values.average_state_value
       end
     end
-
     return nil unless grade_all_dv.school_value || grade_all_dv.state_value
     grade_all_dv.flags = flags
     grade_all_dv
   end
-
 end
+
+
