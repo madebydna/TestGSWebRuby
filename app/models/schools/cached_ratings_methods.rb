@@ -42,11 +42,65 @@ module CachedRatingsMethods
     # result.except!('Student progress rating')
   end
 
+  def ethnicity_information_for_tableview
+    ethnicity_information.unshift(
+      {}.tap do |i|
+        i[:label] = "Low-income"
+        i[:rating] = low_income_rating if low_income_rating
+        i[:percentage] = free_and_reduced_lunch.gsub('%','') if free_and_reduced_lunch
+      end
+    )
+  end
+
   def ethnicity_information
-    ratings= ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
-    ethnicity_ratings = decorate_ethnicity_object(ratings,"rating")
-    ethnicity_percentages = decorate_ethnicity_object(ethnicity_data,"percentage")
-    format_ethnicity_array(ethnicity_ratings,ethnicity_percentages)
+    ethnicity_labels.map do |label|
+      {}.tap do |e|
+        e[:label] = label
+        e[:rating] = ethnicity_test_score_ratings["#{label}"] if ethnicity_test_score_ratings["#{label}"]
+        e[:percentage] = ethnicity_population_percentages["#{label}"] if ethnicity_population_percentages["#{label}"]
+      end
+    end
+  end
+
+  def ethnicity_struct_ratings
+    ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
+  end
+
+  def ethnicity_test_score_ratings
+    @_ratings ||= ethnicity_struct_ratings.each_with_object({}) do |struct, hash|
+      hash[ethnicity_mapping_hash[struct.breakdown.to_sym]] = struct.school_value_as_int if struct.school_value_as_int > 0 
+    end
+  end
+
+  def ethnicity_population_percentages
+    @_percentages ||= ethnicity_data.each_with_object({}) do |data, hash|
+      hash[ethnicity_mapping_hash[data["breakdown"].to_sym]] = data["school_value"].round if data["school_value"].round > 0
+    end
+  end
+
+  def ethnicity_labels
+    @_labels ||= (ethnicity_test_score_ratings.keys + ethnicity_population_percentages.keys).uniq
+  end
+
+  def ethnicity_mapping_hash
+    {
+      :'African American' => "African American",
+      :'Black' => "African American",
+      :'White' => "White",
+      :'Asian or Pacific Islander' => "Asian or Pacific Islander",
+      :'Asian' => "Asian",
+      :'All' => "All students",
+      :'Multiracial' => "Two or more races",
+      :'Two or more races' => "Two or more races",
+      :'American Indian/Alaska Native' => "American Indian/Alaska Native",
+      :'Native American' => "American Indian/Alaska Native",
+      :'Pacific Islander' => "Pacific Islander",
+      :'Hawaiian Native/Pacific Islander' => "Pacific Islander",
+      :'Native Hawaiian or Other Pacific Islander' => "Pacific Islander",
+      :'Economically disadvantaged' => "Low-income",
+      :'Low Income' => "Low-income",
+      :'Hispanic' => "Hispanic"
+    }
   end
 
   def great_schools_rating
@@ -295,70 +349,6 @@ module CachedRatingsMethods
     else
       {}
     end
-  end
-
-  def decorate_ethnicity_object(array_of_hashes, key)
-    ethnicity = array_of_hashes.map do |hash|
-      if hash["school_value"] && hash["school_value"].to_i > 0
-        {
-          label: ethnicity_mapping_hash[hash["breakdown"].to_sym],
-          "#{key}": hash["school_value"].to_f
-        }
-      end
-    end.compact
-
-    case key
-    when "rating"
-      ethnicity.unshift({label: 'Low Income', "#{key}": low_income_rating}) if low_income_rating
-    when "percentage"
-      ethnicity.unshift({label: 'Low Income', "#{key}": free_and_reduced_lunch.gsub('%','').to_f}) if free_and_reduced_lunch
-    end
-
-    ethnicity
-  end
-
-  def format_ethnicity_array(ethnicity_ratings, ethnicity_percentages)
-    rating_keys = ethnicity_ratings.map { |hash| hash[:label] }
-    percentage_keys = ethnicity_percentages.map { |hash| hash[:label] }
-    ethnicity = []
-    ethnicity_ratings.each do |rating_hash|
-      ethnicity_percentages.each do |percentage_hash|
-        if rating_hash[:label] == percentage_hash[:label]
-          ethnicity << rating_hash.merge(percentage_hash)
-        end
-      end
-    end
-
-    unmerged_labels = (rating_keys + percentage_keys) - ethnicity.map { |hash| hash[:label] }
-    ethnicity_ratings.each do |rating_hash|
-      ethnicity << rating_hash if unmerged_labels.include?(rating_hash[:label])
-    end
-    ethnicity_percentages.each do |percentage_hash|
-      ethnicity << percentage_hash if unmerged_labels.include?(percentage_hash[:label])
-    end
-
-    ethnicity
-  end
-
-  def ethnicity_mapping_hash
-    {
-      :'African American' => "African American",
-      :'Black' => "African American",
-      :'White' => "White",
-      :'Asian or Pacific Islander' => "Asian or Pacific Islander",
-      :'Asian' => "Asian",
-      :'All' => "All students",
-      :'Multiracial' => "Two or more races",
-      :'Two or more races' => "Two or more races",
-      :'American Indian/Alaska Native' => "American Indian/Alaska Native",
-      :'Native American' => "American Indian/Alaska Native",
-      :'Pacific Islander' => "Pacific Islander",
-      :'Hawaiian Native/Pacific Islander' => "Pacific Islander",
-      :'Native Hawaiian or Other Pacific Islander' => "Pacific Islander",
-      :'Economically disadvantaged' => "Low-income",
-      :'Low Income' => "Low-income",
-      :'Hispanic' => "Hispanic"
-    }
   end
 
   def test_score_rating_weight
