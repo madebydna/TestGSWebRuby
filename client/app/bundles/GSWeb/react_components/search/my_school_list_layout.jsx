@@ -12,15 +12,13 @@ import { isNotSignedIn } from '../../util/session';
 
 const t = translateWithDictionary({
   en: {
-    title: 'Your saved schools in',
-    "Show schools in": "Show schools in",
+    "Your saved schools in": "Your saved schools in",
     "Sort by": "Sort by",
     "Sign up link": "Sign up",
     "Sign up rest": "for a free GreatSchools account and access your saved schools from anywhere."
   },
   es: {
-    title: 'Tus escuelas guardadas en',
-    "Show schools in": "Muestre escuelas en",
+    "Your saved schools in": "Tus escuelas guardadas en",
     "Sort by": "Ordenar por",
     "Sign up link": "Regístrate",
     "Sign up rest": "para obtener una cuenta gratuita de GreatSchools y acceda a tus escuelas guardadas desde cualquier lugar."
@@ -182,6 +180,15 @@ class MySchoolListLayout extends React.Component {
     );
   }
 
+  renderSelectSchoolDropdown(){
+    return(
+      <div className="menu-item">
+        <span className="label saved-schools">{t('Your saved schools in')}:</span>
+        {this.props.stateSelect}
+      </div>
+    )
+  }
+
   renderTableView() {
     return this.props.schoolTable;
   }
@@ -221,12 +228,7 @@ class MySchoolListLayout extends React.Component {
       <div className="menu-bar filters" ref={this.header}>
         {this.props.searchBox}
         <div style={{ margin: 'auto' }}>
-          {this.props.numOfSchools > 0 && <span className="title">
-            <span>{t('title')}</span>
-            <div className="menu-item">
-              <span>: {this.props.stateSelect}</span>
-            </div>
-          </span>}
+          {this.props.numOfSchools > 0 && this.renderSelectSchoolDropdown()}
           <span className="menu-item list-map-toggle">
             <div>
               {this.props.listMapTableSelect}
@@ -277,7 +279,7 @@ class MySchoolListLayout extends React.Component {
                 />
                 <div>
                   {/* {this.props.numOfSchools > 0 && <div className="menu-item">
-                    <span className="label">{t('Show schools in')}:</span>
+                    <span className="label">{t('Your saved schools in')}:</span>
                     {this.props.stateSelect}
                   </div>} */}
                   <span className="menu-item">
@@ -298,10 +300,7 @@ class MySchoolListLayout extends React.Component {
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
           {isNotSignedIn() && this.renderSignupPrompt()}
-          {this.props.numOfSchools > 0 && this.props.size <= SM && <div className="menu-item">
-            <span className="label">{t('Show schools in')}:</span>
-            {this.props.stateSelect}
-          </div>}
+          {this.props.numOfSchools > 0 && this.props.size <= SM && this.renderSelectSchoolDropdown()}
           {this.props.breadcrumbs}
           {/* <div className="pagination-summary">{this.props.resultSummary}</div> */}
           {this.shouldRenderTable() ? (
@@ -322,10 +321,6 @@ class MySchoolListLayout extends React.Component {
           <div className="menu-item sort-dropdown-table-view">
             <span className="label">{t('Sort by')}:</span>
             {this.props.sortSelect}
-          </div>
-          <div className="menu-item sort-dropdown-table-view">
-            <span className="label">{t('Show schools in')}:</span>
-            {this.props.stateSelect}
           </div>
         </React.Fragment>
       );
