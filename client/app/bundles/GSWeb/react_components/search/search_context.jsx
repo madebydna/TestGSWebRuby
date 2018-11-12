@@ -227,12 +227,14 @@ class SearchProvider extends React.Component {
         deleteSchool(schoolKey)
           .done(e => {
             e.status === 400 && alert("There was an error deleting a school from your account.\n Please try again later")
+            e.status === 501 && alert("An issue occurred while removing this school from your list.\n Please sign out and sign back in.")
           })
           .fail(e => alert("There was an error deleting a school from your account.\n Please try again later"))
       }else{
         addSchool(schoolKey)
           .done(e => {
             e.status === 400 && alert("There was an error adding a school to your account.\n Please try again later")
+            e.status === 501 && alert("Your school was stored but not saved.\n Please sign out and sign back in.")
           })
           .fail(e => alert("There was an error adding a school to your account.\n Please try again later"))
       }
