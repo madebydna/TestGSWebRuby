@@ -175,7 +175,7 @@ class MySchoolListLayout extends React.Component {
   renderSignupPrompt() {
     return (
       <div>
-        <a href="/gsr/login/#join" className="open-sans_semibold">{t('Sign up link')}</a> <span className="open-sans_semibold">{t('Sign up rest')}</span>
+        <a href="/gsr/login/#join" className="open-sans_semibold">{t('Sign up link')}</a> <span className="open-sans_regular">{t('Sign up rest')}</span>
       </div>
     );
   }
