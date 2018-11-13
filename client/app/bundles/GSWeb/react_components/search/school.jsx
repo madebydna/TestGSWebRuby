@@ -75,7 +75,7 @@ const School = ({
           </div>
         ) : null}
         {homesForSaleHref && (
-          <div>
+          <div className="homes-for-sale">
             <span key="homes-for-sale" className="icon icon-house" />
             <a
               href={homesForSaleHref}

@@ -86,7 +86,7 @@ const SchoolTableRow = ({
             <br/>
               {addressPhrase && <div className="address">{addressPhrase}</div>}
               {homesForSaleHref && (
-                  <div>
+                  <div className="homes-for-sale">
                     <span className="icon icon-house"/>
                     <a
                         href={homesForSaleHref}
