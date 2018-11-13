@@ -27,7 +27,6 @@ export const signupAndFollowSchool = function(state, schoolId, schoolName) {
     updateProfileHeart(state, schoolId);
     updateNavbarHeart();
 
-    // ternary for heart : if white ? blue : white 
     if (isSignedIn()) {
       schools(state, schoolId)
         .follow({showMessages: false})
