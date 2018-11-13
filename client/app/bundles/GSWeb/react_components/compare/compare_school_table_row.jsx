@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import { renderAssignedTooltip } from 'react_components/search/tooltips'
-import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
+import { clarifySchoolType } from 'util/school';
 import { links, anchorObject } from 'components/links';
 import FiveStarRating from '../review/form/five_star_rating';
 import RatingWithTooltip from 'react_components/rating_with_tooltip';
@@ -64,7 +64,6 @@ const CompareSchoolTableRow = ({
   ethnicityInfo,
   savedSchool,
 }) => {
-  const homesForSaleHref = getHomesForSaleHref(state, address);
   let addressPhrase = [address.street1, address.city, state, address.zip]
     .filter(s => !!s && s.length > 0)
     .join(', ');
@@ -84,20 +83,7 @@ const CompareSchoolTableRow = ({
             </a>
             <br />
             {addressPhrase && <div className="address">{addressPhrase}</div>}
-            {homesForSaleHref && (
-              <div>
-                <span className="icon icon-house" />
-                <a
-                  href={homesForSaleHref}
-                  target="_blank"
-                  className="homes-for-sale-link"
-                >
-                  &nbsp; {t('homes_for_sale')}
-                </a>
-              </div>
-            )}
           </span>
-
         </React.Fragment>
       </td>
     )

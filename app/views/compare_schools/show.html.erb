@@ -18,10 +18,13 @@
 <%= stylesheet_link_tag "compare", async: true %>
 <% end %>
 
-<% @schools.each do |school| %>
-  <%= school[:name] %> 
-  <br/>
+<% @schools.take(2).each do |school| %>
+  <%= school[:name] %> <br />
+  <%= school[:pinned] %> <br />
+  <%= school[:test_score_rating_for_ethnicity] %> <br />
+  <br/><br />
 <% end %>
+
 
 <div id="compare-schools">
   <%= react_component("Compare", props: {

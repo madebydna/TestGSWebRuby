@@ -28,6 +28,86 @@ body {
     }
   }
 
+  .school-table {
+    overflow-x: scroll;
+    width: 100%;
+    background-color: white;
+    position: relative;
+    padding: 5px 15px 10px 15px;
+
+    table {
+      table-layout: fixed;
+      width: 991px;
+
+      @include media-breakpoint-up(lg) {
+        width: 100%;
+      }
+
+      td {
+        position: relative;
+      }
+
+      td,
+      th {
+        border: 1px solid $form-field-border-color;
+        padding: 10px 15px;
+      }
+
+      th {
+        color: $gray-darker;
+        font-weight: normal;
+        text-align: left;
+        background-color: #f1fafd;
+        text-align: center;
+      }
+      th.school {
+        width: 320px;
+        text-align: left;
+      }
+
+      td.school {
+        $active-color: #f6f9fa;
+        $hover-color: #f6f9fa;
+        $border-color: #dbe6eb;
+
+        @include clearfix;
+        span {
+          display: inline-block;
+        }
+        a {
+          font-size: $font-size-l2;
+          font-family: 'opensans-semibold', sans-serif;
+        }
+        a.name {
+          font-size: $font-size-l3;
+        }
+        &:hover {
+          background-color: $hover-color;
+        }
+        &.active {
+          background-color: $active-color;
+        }
+        > span:first-of-type {
+          text-align: center;
+          width: 55px;
+        }
+        > span:last-of-type {
+          width: calc(100% - 100px);
+        }
+        > span {
+          vertical-align: top;
+        }
+        > span + span {
+          margin-left: 15px;
+        }
+        > div {
+          top: 10px;
+          right: 10px;
+          position: absolute;
+        }
+      }
+    }
+  }
 }
 
 // Hides the navbar links
