@@ -2,8 +2,7 @@
   es:
     modals:
       signup_and_follow_school_modal:
-        heading: ¡Sí! Envíeme actualizaciones por correo electrónico sobre la escuela de mi hijo.
-        title_html: ¡Guardé esta escuela en %{title_link}!
-        title_link_text: Mi lista de escuelas
-        sf_subheading: ¡Sí! Envíeme actualizaciones por correo electrónico sobre la escuela de mi hijo.
+        subheading: ¡Sí! Envíeme actualizaciones por correo electrónico sobre la escuela de mi hijo.
+        heading_html: ¡Guardé esta escuela en %{heading_link}!
+        heading_link_text: Mi lista de escuelas
       
