@@ -3,13 +3,13 @@ es:
     Your school list is empty: Tu lista está vacía
     number_schools_found:
       city_browse:
-        zero: Su búsqueda no obtuvo resultados en %{city}, %{state}.
-        one: Mostrando 1 escuela encontrada en %{city}, %{state}
-        other: Mostrando %{first} a %{last} de %{count} escuelas encontradas en %{city}, %{state}
+        zero: Su búsqueda no obtuvo resultados en <a href='%{city_url}?lang=es'>%{city}, %{state}</a>.
+        one: Mostrando 1 escuela encontrada en <a href='%{city_url}?lang=es'>%{city}, %{state}</a>
+        other: Mostrando %{first} a %{last} de %{count} escuelas encontradas en <a href='%{city_url}?lang=es'>%{city}, %{state}</a>
       district_browse:
-        zero: Su búsqueda no obtuvo resultados en %{district}.
-        one: Mostrando 1 escuela encontrada en %{district}
-        other: Mostrando %{first} a %{last} de %{count} escuelas encontradas en %{district}
+        zero: Su búsqueda no obtuvo resultados en <a href='%{district_url}?lang=es'>%{district}</a>.
+        one: Mostrando 1 escuela encontrada en <a href='%{district_url}?lang=es'>%{district}</a>
+        other: Mostrando %{first} a %{last} de %{count} escuelas encontradas en <a href='%{district_url}?lang=es'>%{district}</a>
       distance:
         zero: Su búsqueda no obtuvo resultados cerca %{location}.
         one: Mostrando 1 escuela encontrada cerca %{location}

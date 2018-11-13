@@ -215,6 +215,10 @@ body {
     .pagination-summary {
       font-size: $font-size-l3;
       font-family: 'opensans-semibold';
+      a{
+        font-size: $font-size-l3;
+        font-family: 'opensans-semibold';
+      }
     }
 
     .school-list ol {
