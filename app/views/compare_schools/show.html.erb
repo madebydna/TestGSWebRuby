@@ -15,12 +15,18 @@
 <% end %>
 <% content_for :page_stylesheets do %>
 <%= stylesheet_link_tag "post_load", media: "all", "data-turbolinks-track" => true %>
-<%= stylesheet_link_tag "city", async: true %>
+<%= stylesheet_link_tag "compare", async: true %>
+<% end %>
+
+<% @schools.each do |school| %>
+  <%= school[:name] %> 
+  <br/>
 <% end %>
 
 <div id="compare-schools">
-  <%= react_component("Compare"
-    ) %>
+  <%= react_component("Compare", props: {
+    schools: @schools
+  }) %>
 </div>
 
 <!-- props: {

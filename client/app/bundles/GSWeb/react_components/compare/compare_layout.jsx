@@ -108,14 +108,36 @@ class CompareLayout extends React.Component {
     });
   }
 
-  renderBreadcrumbs() {
-    return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
+  renderBreadcrumbsContainer(){
+    return(
+      <div className="menu-bar">
+        <span className="label">Compare test scores for</span>
+        {this.sortSelect}
+      </div>
+    )
+  }
+
+  renderFilterBar(){
+    return(
+      <div className="subheader">
+        <div className="menu-item sort-dropdown-table-view">
+          <span className="label">{t('Sort by')}:</span>
+          {this.props.sortSelect}
+        </div>
+      </div>
+    )
+  }
+
+  renderSchoolTable(){
+    return this.props.schoolTable;
   }
 
   render() {
     return (
       <React.Fragment>
-        Hello World
+        {this.renderBreadcrumbsContainer()}
+        {this.renderFilterBar()}
+        {this.renderSchoolTable()}
       </React.Fragment>
     );
   }

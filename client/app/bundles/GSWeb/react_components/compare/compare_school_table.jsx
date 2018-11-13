@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { t, capitalize } from 'util/i18n';
-import School from './school';
-import LoadingOverlay from './loading_overlay';
-import SchoolTableRow from './school_table_row';
-import SchoolTableColumnHeader from './school_table_column_header';
+import School from 'react_components/search/school';
+import LoadingOverlay from 'react_components/search/loading_overlay';
+import CompareSchoolTableRow from './compare_school_table_row';
+import SchoolTableColumnHeader from 'react_components/search/school_table_column_header';
 
 const tableHeaders = (headerArray = [], tableView) => {
   const schoolHeader = [
@@ -30,7 +30,7 @@ const tableHeaders = (headerArray = [], tableView) => {
   );
 };
 
-const SchoolTable = ({
+const CompareSchoolTable = ({
   schools,
   isLoading,
   searchTableViewHeaders,
@@ -56,7 +56,7 @@ const SchoolTable = ({
         {tableHeaders(searchTableViewHeaders[tableView], tableView)}
         <tbody>
           {schools.map(s => (
-            <SchoolTableRow
+            <CompareSchoolTableRow
               tableView={tableView}
               columns={searchTableViewHeaders[tableView]}
               key={s.state + s.id + (s.assigned ? 'assigned' : '')}
@@ -69,16 +69,16 @@ const SchoolTable = ({
   );
 };
 
-SchoolTable.propTypes = {
+CompareSchoolTable.propTypes = {
   schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
   isLoading: PropTypes.bool,
   searchTableViewHeaders: PropTypes.object,
   tableView: PropTypes.string
 };
 
-SchoolTable.defaultProps = {
+CompareSchoolTable.defaultProps = {
   isLoading: false,
   tableView: 'Overview',
   searchTableViewHeaders: {}
 };
-export default SchoolTable;
+export default CompareSchoolTable;

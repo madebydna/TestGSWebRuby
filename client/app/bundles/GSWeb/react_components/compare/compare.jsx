@@ -9,7 +9,9 @@ import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import withViewportSize from 'react_components/with_viewport_size';
+import Select from 'react_components/select';
 import CompareQueryParams from './compare_query_params';
+import CompareSchoolTable from './compare_school_table';
 import '../../vendor/remodal';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
@@ -84,6 +86,26 @@ class Compare extends React.Component {
         {paramProps => console.log(paramProps) ||
           <CompareLayout
             searchBox={<SearchBox size={this.props.viewportSize} />}
+            // Dummy Select for Now
+            sortSelect={<Select
+              objects={["Test Score", "Ratings"]}
+              labelFunc={d => d}
+              keyFunc={d => d}
+              onChange={d => updateTableView(d.key)}
+              defaultLabel={
+                "Test Score"
+              }
+              defaultValue={"Test Score"}
+            />}
+            schoolTable={
+              <CompareSchoolTable
+                toggleHighlight={this.props.toggleHighlight}
+                schools={this.props.schools}
+                isLoading={this.props.loadingSchools}
+                searchTableViewHeaders={this.props.searchTableViewHeaders}
+                tableView={this.props.tableView}
+              />
+            }
           >
           </CompareLayout>
         }
