@@ -9,7 +9,7 @@ class CompareSchoolsController < ApplicationController
   include CommunityConcerns
 
   layout "application"
-  before_filter :redirect_unless_schoolId_and_state
+  # before_filter :redirect_unless_schoolId_and_state
 
   def show
 
@@ -53,7 +53,7 @@ class CompareSchoolsController < ApplicationController
   end
 
   def redirect_unless_schoolId_and_state
-    redirect_to :back unless
+    # redirect_to :back unless
   end
 
   # def prepare_schools
