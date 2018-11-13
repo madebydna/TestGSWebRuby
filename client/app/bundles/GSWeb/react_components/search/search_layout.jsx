@@ -356,7 +356,8 @@ class SearchLayout extends React.Component {
               {this.shouldRenderTable() ? this.renderTableView() : null}
               {this.props.pagination}
             </div>
-            {this.props.size < SM && <MobileOverlayAd />}
+            {this.props.size < SM &&
+              !this.shouldRenderMap() && <MobileOverlayAd />}
           </React.Fragment>
         )}
       </div>
