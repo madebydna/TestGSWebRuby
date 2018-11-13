@@ -4,15 +4,15 @@ class CompareSchoolsController < ApplicationController
   # include SearchHelper
   # include SchoolHelper
   # include DataDisplayHelper
+  include CompareControllerConcerns
   include AdvertisingConcerns
   include PageAnalytics
-  include CommunityConcerns
 
   layout "application"
-  before_filter :redirect_unless_schoolId_and_state
+  before_filter :redirect_unless_school_id_and_state
 
   def show
-
+    @schools = serialized_schools
 
     # LEGACY################################################
     # require_state
@@ -40,8 +40,30 @@ class CompareSchoolsController < ApplicationController
 
   private
 
+  # def school
+  #   @_school ||= begin
+  #     if lat && lon
+  #       nil
+  #     else
+  #       School.on_db(state).find(school_id)
+  #     end
+  #   end
+  # end
+
   def state
-    params[:state]
+    #TODO DRY this up - exists in community params as well
+    return nil unless params[:state].present?
+    state_param = params[:state]
+
+    if States.is_abbreviation?(state_param)
+      state_param
+    else
+      States.abbreviation(state_param.gsub('-', ' ').downcase)
+    end
+  end
+
+  def ethnicity
+    params[:breakdown]
   end
 
   def school_id
@@ -52,8 +74,28 @@ class CompareSchoolsController < ApplicationController
     params[:sort]
   end
 
-  def redirect_unless_schoolId_and_state
-    redirect_to :back unless
+  def lat
+    params[:lat]
+  end
+
+  def lon
+    params[:lon]
+  end
+
+  def level_codes
+    params[:gradeLevels]
+  end
+
+  def sort_name
+    params[:sort]
+  end
+
+  def entity_types
+    params[:st] & ['public', 'private', 'charter']
+  end
+
+  def redirect_unless_school_id_and_state
+    redirect_to home_path unless state && school_id
   end
 
   # def prepare_schools
@@ -85,7 +127,28 @@ class CompareSchoolsController < ApplicationController
   #   )
   # end
 
+  def extras
+    default_extras + extras_param
+  end
+
+  def extras_param
+    params[:extras]&.split(',') || []
+  end
+
+  def merge_school_keys
+    (FavoriteSchool.saved_school_list(current_user.id) + cookies_school_keys).uniq
+  end
+
+  def cookies_school_keys
+    # If a user saves a school and then removes it, the cookie will be set as '[]'. Code below will return [] in that case.
+    cookies[:gs_saved_schools] ? JSON.parse(cookies[:gs_saved_schools]).map {|hash| [hash['state']&.downcase, hash['id']&.to_i]} : []
+  end
+
+  def saved_school_keys
+    current_user ? merge_school_keys : cookies_school_keys
+  end
+
   def default_extras
-    %w(summary_rating enrollment review_summary students_per_teacher)
+    %w(ratings characteristics review_summary saved_schools pinned_school ethnicity_test_score_rating)
   end
 end

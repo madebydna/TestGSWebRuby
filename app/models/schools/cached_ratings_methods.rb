@@ -67,7 +67,7 @@ module CachedRatingsMethods
   end
 
   def ethnicity_test_score_ratings
-    @_ratings ||= ethnicity_struct_ratings.each_with_object({}) do |struct, hash|
+    @_ethnicity_test_score_ratings ||= ethnicity_struct_ratings.each_with_object({}) do |struct, hash|
       hash[ethnicity_mapping_hash[struct.breakdown.to_sym]] = struct.school_value_as_int if struct.school_value_as_int > 0 
     end
   end
@@ -76,6 +76,10 @@ module CachedRatingsMethods
     @_percentages ||= ethnicity_data.each_with_object({}) do |data, hash|
       hash[ethnicity_mapping_hash[data["breakdown"].to_sym]] = data["school_value"].round if data["school_value"].round > 0
     end
+  end
+
+  def percentage_of_population_by_ethnicity(ethnicity)
+    ethnicity_population_percentages[ethnicity]
   end
 
   def ethnicity_labels
