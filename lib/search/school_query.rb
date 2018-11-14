@@ -55,6 +55,10 @@ module Search
       raise NotImplementedError
     end
 
+    def state_name
+      States.state_name(state)
+    end
+
     def result_summary(results)
       district_url = district_url(district_params(state_name, city,  district_name)) if state && city && district_name
       city_url = city_url(city_params(state&.upcase, city)) if state && city
