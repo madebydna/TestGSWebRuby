@@ -293,6 +293,10 @@ module SearchRequestParams
     params[:with_rating]
   end
 
+  def merge_school_keys
+    (FavoriteSchool.saved_school_list(current_user.id) + cookies_school_keys).uniq
+  end
+
   def cookies_school_keys
     # If a user saves a school and then removes it, the cookie will be set as '[]'. Code below will return [] in that case.
     cookies[:gs_saved_schools] ? JSON.parse(cookies[:gs_saved_schools]).map {|hash| [hash['state']&.downcase, hash['id']&.to_i]} : []

@@ -66,11 +66,11 @@ module Feeds
 
       def add_description_to_array(test_name, test_abbr, scale, most_recent_year, description)
         test_arr = []
-        test_arr << test_name ? test_name : ''
-        test_arr << test_abbr ? test_abbr : ''
-        test_arr << scale ? scale : ''
-        test_arr << most_recent_year ? most_recent_year : ''
-        test_arr << description ? description : ''
+        test_arr << test_name ? test_name : nil
+        test_arr << test_abbr ? test_abbr : nil
+        test_arr << scale ? scale : nil
+        test_arr << most_recent_year ? most_recent_year : nil
+        test_arr << description ? description : nil
         @data_for_test_description_file << test_arr
       end
 
@@ -113,12 +113,12 @@ module Feeds
         test_arr = []
         test_arr << test_abbr
         test_arr << universal_id
-        test_arr << h['year'] ? h['year'] : ''
-        test_arr << h['subject-name'] ? h['subject-name'] : ''
-        test_arr << h['grade'] ? h['grade'] : ''
-        test_arr << h['score'] ? h['score'] : ''
-        test_arr << h['proficiency-band-name'] ? h['proficiency-band-name'] : ''
-        test_arr << h['number-tested'] ? h['number-tested'] : ''
+        test_arr << h['year'] ? h['year'] : nil
+        test_arr << h['subject-name'] ? h['subject-name'] : nil
+        test_arr << h['grade'] ? h['grade'] : nil
+        test_arr << h['score'] ? h['score'] : nil
+        test_arr << h['proficiency-band-name'] ? h['proficiency-band-name'] : nil
+        test_arr << h['number-tested'] ? h['number-tested'] : nil
         test_arr
       end
 

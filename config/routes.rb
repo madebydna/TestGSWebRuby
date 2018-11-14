@@ -268,7 +268,6 @@ LocalizedProfiles::Application.routes.draw do
     resource :widget_logs, only: [:create]
     resources :students
     get '/autosuggest', to: 'autosuggest', action: 'show'
-    # resources :saved_schools, only: [:create, :destroy]
     post '/save_school', to: 'saved_schools#create'
     delete '/delete_school', to: 'saved_schools#destroy'
   end

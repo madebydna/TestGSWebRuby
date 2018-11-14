@@ -221,12 +221,12 @@ class MySchoolListLayout extends React.Component {
       <div className="menu-bar filters" ref={this.header}>
         {this.props.searchBox}
         <div style={{ margin: 'auto' }}>
-          <span className="title">
+          {this.props.numOfSchools > 0 && <span className="title">
             <span>{t('title')}</span>
             <div className="menu-item">
               <span>: {this.props.stateSelect}</span>
             </div>
-          </span>
+          </span>}
           <span className="menu-item list-map-toggle">
             <div>
               {this.props.listMapTableSelect}

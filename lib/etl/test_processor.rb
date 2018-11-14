@@ -28,9 +28,9 @@ module GS
       SCHOOL_TYPE_STRING = 'public.charter'
       ENTITIES = %w(school state district)
       COLUMN_ORDER = [ :year, :entity_type, :entity_level, :state_id, :school_id, :school_name,
-                       :district_id, :district_name, :test_data_type, :test_data_type_id, :grade,
-                       :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
-                       :proficiency_band_id, :level_code, :number_tested, :value_float]
+                       :district_id, :district_name, :test_data_type, :gsdata_test_data_type_id, :grade,
+                       :subject, :academic_gsdata_id, :breakdown, :breakdown_gsdata_id, :proficiency_band,
+                       :proficiency_band_gsdata_id, :level_code, :number_tested, :value_float]
       GSDATA_COLUMNS = %w[
         source_name date_valid notes 
         description value_float state district_id 
@@ -89,12 +89,12 @@ module GS
         @summary_output_step ||= SummaryOutput.new(%i[
                                                        entity_level
                                                        year
-                                                       test_data_type_id
+                                                       gsdata_test_data_type_id
                                                        grade
                                                        level_code
-                                                       subject_id
-                                                       breakdown_id
-                                                       proficiency_band_id
+                                                       academic_gsdata_id
+                                                       breakdown_gsdata_id
+                                                       proficiency_band_gsdata_id
                                                    ]
         )
       end

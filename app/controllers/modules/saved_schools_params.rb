@@ -4,7 +4,7 @@ module SavedSchoolsParams
   end
 
   def school_id
-    params[:school]["id"].to_i
+    params[:school]["id"]&.to_i
   end
 
 end

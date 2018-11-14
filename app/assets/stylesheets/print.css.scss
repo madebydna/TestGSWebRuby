@@ -7,3 +7,52 @@
 @import "resources/bootstrap/bootstrap/mixins/grid-framework";
 @import "resources/bootstrap/bootstrap/mixins/responsive-visibility";
 @import "gs/print/*";
+$border-color: #dbe6eb;
+@import "variables/variables";
+@import "resources/bootstrap-grid/mixins/*";
+@import "mixins/*";
+@import "gs/mixins/*";
+@import "components/*";
+@import "pages/search/search_page";
+
+@media print {
+  #search-page {
+    .menu-bar {
+      display: none;
+    }
+    .list-map-ad {
+      .pagination-container,
+      .closed {
+        display: none;
+      }
+      .list-column{
+        float: right !important;
+      }
+      .right-column {
+        padding-top: 100px;
+        float: left !important;
+        .right-column-fixed {
+          top: 75px !important;
+        }
+      }
+    }
+  }
+  .homes-for-sale,
+  .ad,
+  .back-to-top,
+  .js-featured,
+  .footer,
+  .header_un {
+    display: none;
+  }
+  .print-logo {
+    width:100%;
+    display: block;
+    margin:auto;
+    .logo {
+      text-align: center;
+      float:none;
+      padding-top:10px;
+    }
+  }
+}

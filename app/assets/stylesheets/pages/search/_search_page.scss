@@ -215,6 +215,10 @@ body {
     .pagination-summary {
       font-size: $font-size-l3;
       font-family: 'opensans-semibold';
+      a{
+        font-size: $font-size-l3;
+        font-family: 'opensans-semibold';
+      }
     }
 
     .school-list ol {
@@ -222,16 +226,7 @@ body {
       @include media-breakpoint-only(xs) {
         padding: 0;
       }
-      li span.icon-heart,
-      span.icon-heart-outline {
-        float: right;
-        width: auto;
-        color: #1dace5;
-        font-size: 17px;
-        &:hover {
-          cursor: pointer;
-        }
-      }
+
     }
 
     .menu-bar.filters {
@@ -247,6 +242,8 @@ body {
       .title {
         bottom: 0;
         margin-left: 15px;
+        margin-right: 15px;
+        
         span{
           font-size: 15px;
           font-family: 'opensans-semibold';
@@ -421,7 +418,18 @@ body {
   .icon-star {
     font-size: 11px;
   }
+  .icon-heart,
+  .icon-heart-outline {
+    float: right;
+    width: auto;
+    color: #1dace5;
+    font-size: 17px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
+
 
 .breadcrumbs {
   .divider {
@@ -473,7 +481,7 @@ body {
       text-align: center;
     }
     th.school {
-      width: 290px;
+      width: 320px;
       text-align: left;
     }
 
@@ -504,13 +512,18 @@ body {
         width: 55px;
       }
       > span:last-of-type {
-        width: calc(100% - 70px);
+        width: calc(100% - 100px);
       }
       > span {
         vertical-align: top;
       }
       > span + span {
         margin-left: 15px;
+      }
+      > div {
+        top: 10px;
+        right: 10px;
+        position: absolute;
       }
     }
   }
