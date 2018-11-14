@@ -9,21 +9,28 @@ import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import CaptureOutsideClick from './capture_outside_click';
 import HelpTooltip from '../help_tooltip';
 import { isNotSignedIn } from '../../util/session';
+import modalManager from '../../components/modals/manager';
 
 const t = translateWithDictionary({
   en: {
     title: 'Your saved schools in',
-    "Show schools in": "Show schools in",
-    "Sort by": "Sort by",
-    "Sign up link": "Sign up",
-    "Sign up rest": "for a free GreatSchools account and access your saved schools from anywhere."
+    'Show schools in': 'Show schools in',
+    'Sort by': 'Sort by',
+    'Sign up link': 'Sign up',
+    'Sign up rest':
+      'for a free GreatSchools account and access your saved schools from anywhere.',
+    'Verify email':
+      'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.'
   },
   es: {
     title: 'Tus escuelas guardadas en',
-    "Show schools in": "Muestre escuelas en",
-    "Sort by": "Ordenar por",
-    "Sign up link": "Regístrate",
-    "Sign up rest": "para obtener una cuenta gratuita de GreatSchools y acceda a tus escuelas guardadas desde cualquier lugar."
+    'Show schools in': 'Muestre escuelas en',
+    'Sort by': 'Ordenar por',
+    'Sign up link': 'Regístrate',
+    'Sign up rest':
+      'para obtener una cuenta gratuita de GreatSchools y acceda a tus escuelas guardadas desde cualquier lugar.',
+    'Verify email':
+      'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.'
   }
 });
 
@@ -138,8 +145,11 @@ class MySchoolListLayout extends React.Component {
     this.fixedYLayer = React.createRef();
     this.header = React.createRef();
     this.state = {
-      hasShownMap: this.shouldRenderMap()
+      hasShownMap: this.shouldRenderMap(),
+      needsToVerifyEmail: false
     };
+
+    this.onSignup = this.onSignup.bind(this);
   }
 
   componentDidMount() {
@@ -169,16 +179,34 @@ class MySchoolListLayout extends React.Component {
       (this.props.size > SM && this.props.view !== TABLE_VIEW)
     );
   }
-  
+
   shouldRenderTable() {
     return this.props.view === TABLE_VIEW;
+  }
+
+  onSignup() {
+    modalManager
+      .showModal('JoinModal')
+      .done(({ is_new_user } = {}) =>
+        this.setState({ needsToVerifyEmail: is_new_user })
+      )
+      .fail(() => {});
   }
 
   renderSignupPrompt() {
     return (
       <div>
-        <a href="/gsr/login/#join" className="open-sans_semibold">{t('Sign up link')}</a> <span className="open-sans_semibold">{t('Sign up rest')}</span>
+        <a onClick={this.onSignup} className="open-sans_semibold">
+          {t('Sign up link')}
+        </a>{' '}
+        <span className="open-sans_semibold">{t('Sign up rest')}</span>
       </div>
+    );
+  }
+
+  renderEmailVerificationMessage() {
+    return (
+      <div className="email-verification-message">{t('Verify email')}</div>
     );
   }
 
@@ -221,12 +249,14 @@ class MySchoolListLayout extends React.Component {
       <div className="menu-bar filters" ref={this.header}>
         {this.props.searchBox}
         <div style={{ margin: 'auto' }}>
-          {this.props.numOfSchools > 0 && <span className="title">
-            <span>{t('title')}</span>
-            <div className="menu-item">
-              <span>: {this.props.stateSelect}</span>
-            </div>
-          </span>}
+          {this.props.numOfSchools > 0 && (
+            <span className="title">
+              <span>{t('title')}</span>
+              <div className="menu-item">
+                <span>: {this.props.stateSelect}</span>
+              </div>
+            </span>
+          )}
           <span className="menu-item list-map-toggle">
             <div>
               {this.props.listMapTableSelect}
@@ -297,11 +327,18 @@ class MySchoolListLayout extends React.Component {
     return (
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
-          {isNotSignedIn() && this.renderSignupPrompt()}
-          {this.props.numOfSchools > 0 && this.props.size <= SM && <div className="menu-item">
-            <span className="label">{t('Show schools in')}:</span>
-            {this.props.stateSelect}
-          </div>}
+          {isNotSignedIn() &&
+            !this.state.needsToVerifyEmail &&
+            this.renderSignupPrompt()}
+          {this.state.needsToVerifyEmail &&
+            this.renderEmailVerificationMessage()}
+          {this.props.numOfSchools > 0 &&
+            this.props.size <= SM && (
+              <div className="menu-item">
+                <span className="label">{t('Show schools in')}:</span>
+                {this.props.stateSelect}
+              </div>
+            )}
           {this.props.breadcrumbs}
           {/* <div className="pagination-summary">{this.props.resultSummary}</div> */}
           {this.shouldRenderTable() ? (
@@ -340,7 +377,7 @@ class MySchoolListLayout extends React.Component {
 
   render() {
     return (
-      <div className="search-body">
+      <div className="search-body" id="my-school-list-page">
         {this.props.size > SM
           ? this.renderDesktopFilterBar()
           : this.renderMobileMenuBar()}
