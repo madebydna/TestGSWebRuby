@@ -35,12 +35,38 @@ module SchoolProfiles
       )
     end
 
+    def race_ethnicity_test_scores_array
+      # For each value in the Overview tab, add in a url to the compare page with the correct query params
+      ts = @test_scores.to_hash
+      ts.map do |component|
+        if component[:anchor] == 'Overview' && component[:values]
+          component[:values] = component[:values].map do |values_hash|
+            values_hash[:link] = compare_schools_path(compare_button_query_params(values_hash))
+            values_hash
+          end
+        end
+        component
+      end
+    end
+
+    def compare_button_query_params(values_hash)
+      school = @school_cache_data_reader.school
+      {
+        state: school.state,
+        schoolId: school.id,
+        lat: school.lat,
+        lon: school.lon,
+        gradeLevels: school.level_code.split(','),
+        breakdown: values_hash[:breakdown]
+      }
+    end
+
     def race_ethnicity_props
       @_race_ethnicity_props ||= [
         {
           title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
           anchor: 'Test_scores',
-          data: @test_scores.to_hash
+          data: race_ethnicity_test_scores_array
         },
         {
           title: I18n.t('College readiness', scope:'lib.equity_gsdata'),

@@ -17,6 +17,7 @@ const BasicDataModuleRow = ({
   children,                 // A visualization to put into this container
   drawerTrigger,            // Any node which when clicked will open drawer
   tooltip_html,              // String containing html, to place inside tooltip to right of label
+  link                      // Displayed in place of drawerTrigger, if it exists
 }) => {
 
   const renderStudentPercentage = function(){
@@ -34,6 +35,10 @@ const BasicDataModuleRow = ({
     }
   }
 
+  const renderLink = () => {
+    return <a className="button" href={link}>Compare</a>
+  }
+
   return (
     <div className="row bar-graph-display">
       <div className="test-score-container clearfix">
@@ -46,7 +51,7 @@ const BasicDataModuleRow = ({
           {children}
         </div>
         <div className="col-xs-3 col-sm-2">
-          {drawerTrigger}
+          {(link && renderLink()) || drawerTrigger}
         </div>
       </div>
     </div>

@@ -17,8 +17,8 @@ module Components
         test_score_data.to_hash.merge(title: t('Overview'), anchor: 'Overview') if overview_has_data?(test_score_data)
       end
 
-      def overview_has_data?(data_values)
-        data_values.values.present? && data_values.values.count > 1
+      def overview_has_data?(ts_rating_component)
+        ts_rating_component.values.present? && ts_rating_component.values.count > 1
       end
 
       def components
