@@ -83,11 +83,7 @@ $(function() {
         toggle.updateButtonTextCallback(t('show_less'), t('see_more_contact'))
     );
     toggle.init().add_onclick();
-
-    // new
-    
   })();
-
 
   const PROFILE_TOUR_COOKIE = 'decline_school_profile_tour'; // referenced in school_profiles_page.rb for specs
 
