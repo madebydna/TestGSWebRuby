@@ -29,11 +29,17 @@ $border-color: #dbe6eb;
         float: right !important;
       }
       .right-column {
-        padding-top: 100px;
+        padding-top: 330px;
         float: left !important;
         .right-column-fixed {
           top: 75px !important;
         }
+      }
+    }
+    .circle-rating--small{
+      color: #000000;
+      .rating-circle-small{
+        font-size: 11px;
       }
     }
   }
