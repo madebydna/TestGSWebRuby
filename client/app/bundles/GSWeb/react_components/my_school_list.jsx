@@ -19,14 +19,11 @@ export default function() {
   return (
     <SearchContext.Provider findSchools={mySchoolList}>
       <SearchContext.Consumer>
-        {({ schools, currentStateFilter, updateStateFilter, numOfSchools, ...state }) => {
-          const statesInList = schools.map(s => startCase(stateName(s.state)))
-          const uniqStates = uniq(statesInList).sort()
-          if (currentStateFilter === null) { updateStateFilter(uniqStates[0]) }
+        {({ schools, mslStates, numOfSchools, ...state }) => {
           return(
             <MySchoolList
               {...state}
-              schools={schools.filter(s => s.savedSchool && abbreviation(currentStateFilter) === s.state.toLowerCase() )}
+              schools={schools.filter(s => s.savedSchool )}
               numOfSchools={numOfSchools}
               layout="MySchoolList"
             />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { SM, validSizes } from 'util/viewport';
 import Select from '../select';
-import { name as stateName } from 'util/states';
+import { name as stateName, abbreviation } from 'util/states';
 import PropTypes from 'prop-types';
 import SearchContext from './search_context';
 import { mySchoolList } from 'api_clients/schools';
@@ -10,19 +10,21 @@ import { startCase, uniq } from 'lodash';
 const StateSelectDropdown = () => {
   return(
       <SearchContext.Consumer>
-        {({ schools, currentStateFilter, updateStateFilter}) => {
-          const statesInList = schools.map(s => startCase(stateName(s.state)))
-          const uniqStates = uniq(statesInList).sort()
+        {({ schools, mslStates, stateSelect, updateStateFilter, updateSchools}) => {
+            const statesInList = mslStates.map(s => startCase(stateName(s)))
+        console.log((statesInList.find(obj => obj === startCase(stateName(stateSelect))) || statesInList[0]))
             return(
               <Select
-                objects={uniqStates}
+                objects={statesInList}
                 labelFunc={d => d}
                 keyFunc={d => d}
-                onChange={updateStateFilter}
+                onChange={d => updateStateFilter(abbreviation(d))}
                 defaultLabel={
-                  (uniqStates.find(obj => obj === currentStateFilter) || uniqStates[0])
+                  (statesInList.find(obj => obj === startCase(stateName(stateSelect))) || statesInList[0])
                 }
-                defaultValue={uniqStates[0]}
+                defaultValue={
+                  (statesInList.find(obj => obj === startCase(stateName(stateSelect))) || statesInList[0])
+                }
               />
             )
           }
