@@ -36,8 +36,8 @@ Rails.application.config.assets.precompile += [
     'admin_tools.css',
     'add_remove_schools.css',
     'city.css',
-    'district.css'
-
+    'district.css',
+    'compare.css',
 ]
 # Add client/assets/ folders to asset pipeline's search path.
 # If you do not want to move existing images and fonts from your Rails app
