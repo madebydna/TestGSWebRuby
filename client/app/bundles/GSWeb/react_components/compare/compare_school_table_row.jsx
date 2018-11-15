@@ -7,6 +7,8 @@ import { links, anchorObject } from 'components/links';
 import FiveStarRating from '../review/form/five_star_rating';
 import RatingWithTooltip from 'react_components/rating_with_tooltip';
 import ModalTooltip from "../modal_tooltip";
+import RatingWithBar from 'react_components/equity/graphs/rating_with_bar';
+import CompareContext from './compare_context';
 
 const renderEnrollment = enrollment => {
   if (enrollment) {
@@ -15,16 +17,6 @@ const renderEnrollment = enrollment => {
   return <span>N/A</span>;
 };
 
-const drawRating = (theRating, linkProfile) => {
-  const className = `circle-rating--small circle-rating--${theRating || 'gray'}`;
-  return (
-    theRating ? <a href={`${linkProfile}`}>
-      <span className={className}>
-        {theRating}
-        {theRating && <span className="rating-circle-small">/10</span>}
-      </span></a> : <span>N/A</span>
-  )
-}
 const numReviewsLink = (numReviews, reviewsUrl) => {
   return (
     numReviews && numReviews > 0 ? (
@@ -84,7 +76,13 @@ const CompareSchoolTableRow = ({
   };
 
   const cohortPercentageForEthnicity = () => {
-    return `${ethnicityInfo.find((ethnicityVal) => ethnicityVal.label === 'Hispanic').percentage.toString()}%`
+    return (
+      <CompareContext.Consumer>
+        {({breakdown}) =>
+          `${ethnicityInfo.find((ethnicityVal) => ethnicityVal.label === breakdown).percentage.toString()}%`
+        }
+      </CompareContext.Consumer>
+    )
   }
 
   let content = compareColumns(cohortPercentageForEthnicity(),testScoreRatingForEthnicity)
@@ -108,8 +106,8 @@ const reviewType = (numReviews, reviews, parentRating) => {
 const compareColumns = (enrollmentForEthnicity, testScoreRatingForEthnicity) => {
   return (
     <React.Fragment>
-      <td>{enrollmentForEthnicity}</td>
-      <td>{testScoreRatingForEthnicity}</td>
+      <td style={{textAlign: 'center'}}>{enrollmentForEthnicity}</td>
+      <td><RatingWithBar score={testScoreRatingForEthnicity} size='small' /></td>
     </React.Fragment>
   )
 };
@@ -149,7 +147,7 @@ CompareSchoolTableRow.propTypes = {
   ethnicityInfo: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string,
     rating: PropTypes.number,
-    percentage: PropTypes.number
+    percentage: PropTypes.string
   })),
   links: PropTypes.shape({
     profile: PropTypes.string.isRequired

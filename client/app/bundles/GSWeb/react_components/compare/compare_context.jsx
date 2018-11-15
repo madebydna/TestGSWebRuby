@@ -51,7 +51,7 @@ class CompareProvider extends React.Component {
     updateSort: PropTypes.func.isRequired,
     updatePage: PropTypes.func.isRequired,
     updateDistance: PropTypes.func.isRequired,
-    searchTableViewHeaders: PropTypes.object,
+    compareTableViewHeaders: PropTypes.object,
   };
 
   static defaultProps = {
@@ -257,6 +257,15 @@ class CompareProvider extends React.Component {
     return newParams;
   };
 
+  generateTableHeaders = () => {
+    let {breakdown} = this.props;
+    return [
+      {title: `% of ${breakdown} Students Enrolled in School`},
+      {title: `Test Score Rating for ${breakdown} Students`}
+    ];
+  }
+
+
   render() {
     return (
       <Provider
@@ -272,7 +281,7 @@ class CompareProvider extends React.Component {
           lon: this.props.lon,
           refreshAdOnScroll: this.refreshAdOnScroll,
           locationLabel: this.props.locationLabel,
-          searchTableViewHeaders: this.props.searchTableViewHeaders,
+          compareTableHeaders: this.generateTableHeaders(),
           breakdown: this.props.breakdown
         }}
       >

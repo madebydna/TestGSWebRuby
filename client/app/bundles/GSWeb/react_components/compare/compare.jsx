@@ -93,7 +93,7 @@ class Compare extends React.Component {
           <CompareSchoolTable
             schools={this.props.schools}
             isLoading={this.props.loadingSchools}
-            searchTableViewHeaders={this.props.searchTableViewHeaders}
+            compareTableHeaders={this.props.compareTableHeaders}
           />
         }
       >
