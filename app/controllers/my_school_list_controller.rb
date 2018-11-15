@@ -44,7 +44,7 @@ class MySchoolListController < ApplicationController
   end
 
   def default_limit
-    5
+    25
   end
 
   # SearchRequestParams

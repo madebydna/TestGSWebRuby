@@ -74,7 +74,8 @@ const SchoolList = ({
 const classNameGenerator = function(s) {
   const active = s.active ? "active" : "";
   const assigned = s.assigned ? " assigned" : "";
-  return active + assigned;
+  const unsaved = s.savedSchool ? "" : " unsaved";
+  return active + assigned + unsaved;
 };
 
 SchoolList.propTypes = {

@@ -106,7 +106,6 @@ class SearchProvider extends React.Component {
       })
     ),
     updateTableView: PropTypes.func.isRequired,
-    updateStateSelect: PropTypes.func.isRequired,
     searchTableViewHeaders: PropTypes.object,
     tableView: PropTypes.string
   };
@@ -334,6 +333,7 @@ class SearchProvider extends React.Component {
   };
 
   updateStateFilter(state) {
+    this.props.updatePage(1)
     this.setState({
       stateSelect: state
     },

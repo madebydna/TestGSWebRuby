@@ -117,10 +117,6 @@ export function queryStringWithNewTableView(tableView) {
   return getQueryStringWithUpdatedParams({ tableView });
 }
 
-export function queryStringWithNewStateSelect(stateSelect) {
-  return getQueryStringWithUpdatedParams({ stateSelect });
-}
-
 export function queryStringWithNewDistance(distance) {
   const page = parsePage(1);
   return getQueryStringWithUpdatedParams({
