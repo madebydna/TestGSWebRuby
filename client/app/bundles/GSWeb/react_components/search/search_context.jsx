@@ -378,9 +378,7 @@ class SearchProvider extends React.Component {
             this.props.updateView,
             curry(this.trackParams)('View', this.props.view)
           ),
-          updateSchools: this.updateSchools,
           updateTableView: this.props.updateTableView,
-          updateStateSelect: this.props.updateStateSelect,
           refreshAdOnScroll: this.refreshAdOnScroll,
           q: this.props.q,
           locationLabel: this.props.locationLabel,
