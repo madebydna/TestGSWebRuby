@@ -12,8 +12,9 @@ class CompareSchoolsController < ApplicationController
   before_filter :redirect_unless_school_id_and_state
 
   def show
-    @schools = serialized_schools
-
+    gon.search = {
+      schools: serialized_schools,
+    }
     # LEGACY################################################
     # require_state
     # set_login_redirect

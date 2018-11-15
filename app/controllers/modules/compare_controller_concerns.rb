@@ -35,7 +35,7 @@ module CompareControllerConcerns
       lon: lon,
       radius: default_compare_radius,
       limit: default_compare_limit,
-      with_rating: true
+      with_rating: 'true'
     )
   end
 

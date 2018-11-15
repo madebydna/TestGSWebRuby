@@ -28,14 +28,18 @@ export default class CompareQueryParams extends React.Component {
       lat: queryParams.getLat(),
       lon: queryParams.getLon(),
       distance: queryParams.getDistance(),
+      breakdown: queryParams.getBreakdown(),
       locationLabel:
         queryParams.getValueForKey('locationLabel') ||
         queryParams.getValueForKey('locationSearchString'),
       sort: queryParams.getSort() || (queryParams.getQ() ? 'relevance' : 'rating'),
       page: queryParams.getPage(),
       q: queryParams.getQ(),
-      updateCompareSchool: (state,id) => {
-        pushQueryString(queryParams.queryStringWithNewStateAndId(state,id));
+      updateLevelCodes: codes => {
+        pushQueryString(queryParams.queryStringWithNewGradeLevels(codes));
+      },
+      updateEntityTypes: types => {
+        pushQueryString(queryParams.queryStringWithNewEntityTypes(types));
       },
       updateSort: sort => {
         pushQueryString(queryParams.queryStringWithNewSort(sort));

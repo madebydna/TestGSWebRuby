@@ -46,21 +46,16 @@ const CompareSchoolTableRow = ({
   state,
   name,
   address,
-  assigned,
   schoolType,
   gradeLevels,
   levelCode,
   enrollment,
   rating,
   ratingScale,
-  studentsPerTeacher,
-  numReviews,
-  parentRating,
-  districtName,
-  links,
+  testScoreRatingForEthnicity, // test score rating for an ethnic breakdown selected by user
+  pinned,  // flag identifying which school user is comparing against
+  links,   // object with link to school profile and deep-linked link to reviews
   columns,
-  tableView,
-  subratings,
   ethnicityInfo,
   savedSchool,
 }) => {
@@ -73,9 +68,8 @@ const CompareSchoolTableRow = ({
 
   const schoolCard = () => {
     return (
-      <td className={`school${assigned ? ' assigned' : ''}`}>
+      <td className='school'>
         <React.Fragment key={state + id}>
-          {assigned && <div>{t('assigned_school')}{renderAssignedTooltip(levelCode)}</div>}
           <span><RatingWithTooltip rating={rating} ratingScale={ratingScale} /></span>
           <span>
             <a href={links.profile} className="name" target="_blank">
@@ -89,23 +83,11 @@ const CompareSchoolTableRow = ({
     )
   };
 
-  let content;
-  if (tableView == 'Overview') {
-    content = overviewColumns(capitalize(clarifySchoolType(schoolType)),
-      gradeLevels,
-      renderEnrollment(enrollment),
-      (studentsPerTeacher ? `${studentsPerTeacher}:1` : 'N/A'),
-      reviewType(numReviews, links.reviews, parentRating),
-      (districtName ? districtName : 'N/A')
-    );
-  }
-  else if (tableView == 'Equity') {
-    content = equityColumns(columns, ethnicityInfo, links.profile);
+  const cohortPercentageForEthnicity = () => {
+    return `${ethnicityInfo.find((ethnicityVal) => ethnicityVal.label === 'Hispanic').percentage.toString()}%`
   }
 
-  else if (tableView == 'Academic') {
-    content = academicColumns(columns, subratings, links.profile);
-  }
+  let content = compareColumns(cohortPercentageForEthnicity(),testScoreRatingForEthnicity)
   return (
     <tr>
       {schoolCard()}
@@ -123,79 +105,14 @@ const reviewType = (numReviews, reviews, parentRating) => {
   )
 }
 
-const overviewColumns = (type, grades, enrollmentDisplay, studentPerTeacher, reviews, district) => {
+const compareColumns = (enrollmentForEthnicity, testScoreRatingForEthnicity) => {
   return (
     <React.Fragment>
-      <td>{type}</td>
-      <td>{grades}</td>
-      <td>{enrollmentDisplay}</td>
-      <td>{studentPerTeacher}</td>
-      <td>{reviews}</td>
-      <td>{district}</td>
+      <td>{enrollmentForEthnicity}</td>
+      <td>{testScoreRatingForEthnicity}</td>
     </React.Fragment>
   )
-}
-
-const equityColumns = (columns, ethnicityInfo, profileLink) => {
-  let cellStyle = { textAlign: 'center' }
-  let content = [];
-  const keys = ethnicityInfo.map(obj => obj.label);
-  columns.forEach(function (hash, index) {
-    if (keys.includes(hash.key)) {
-      const ethInfoIdx = keys.indexOf(hash.key);
-      content.push(
-        <td key={index} style={cellStyle}>
-          {drawRating(ethnicityInfo[ethInfoIdx].rating, `${profileLink}${anchorObject[hash.key]}`)}
-          <p className="percentage-population">
-            {ethnicityInfo[ethInfoIdx].percentage ?
-              <React.Fragment>
-                <span>{ethnicityInfo[ethInfoIdx].percentage}%</span><br /> {t('of students')}
-              </React.Fragment>
-              :
-              <React.Fragment>
-                {renderNoInfoTooltip()}
-              </React.Fragment>
-            }
-          </p>
-        </td>
-      );
-    } else {
-      content.push(
-        <td key={index} style={cellStyle}>
-          <p>N/A</p>
-          {renderNoInfoTooltip()}
-        </td>
-      );
-    }
-  });
-  return (
-    <React.Fragment>
-      {content}
-    </React.Fragment>
-  )
-}
-
-const academicColumns = (columns, subratings, profileLink) => {
-  let cellStyle = { textAlign: 'center' }
-  let content = [];
-  columns.forEach(function (hash, index) {
-    if (subratings.hasOwnProperty(hash['key'])) {
-      content.push(<td key={index} style={cellStyle}>{drawRating(subratings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}</td>);
-    } else {
-      content.push(
-        <td key={index} style={cellStyle}>
-          <p>N/A</p>
-          {renderNoInfoTooltip()}
-        </td>
-      );
-    }
-  });
-  return (
-    <React.Fragment>
-      {content}
-    </React.Fragment>
-  )
-}
+};
 
 const renderNoInfoTooltip = () => {
   const noInfo =

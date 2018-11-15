@@ -1,9 +1,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
 import { getStore } from 'store/appStore';
-import Breadcrumbs from 'react_components/breadcrumbs';
 import CompareLayout from './compare_layout';
+import CompareContext from './compare_context';
 import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
@@ -82,38 +83,40 @@ class Compare extends React.Component {
 
   render() {
     return (
-      <CompareQueryParams>
-        {paramProps => console.log(paramProps) ||
-          <CompareLayout
-            searchBox={<SearchBox size={this.props.viewportSize} />}
-            // Dummy Select for Now
-            sortSelect={<Select
-              objects={["Test Score", "Ratings"]}
-              labelFunc={d => d}
-              keyFunc={d => d}
-              onChange={d => updateTableView(d.key)}
-              defaultLabel={
-                "Test Score"
-              }
-              defaultValue={"Test Score"}
-            />}
-            schoolTable={
-              <CompareSchoolTable
-                toggleHighlight={this.props.toggleHighlight}
-                schools={this.props.schools}
-                isLoading={this.props.loadingSchools}
-                searchTableViewHeaders={this.props.searchTableViewHeaders}
-                tableView={this.props.tableView}
-              />
-            }
-          >
-          </CompareLayout>
+      <CompareLayout
+        searchBox={<SearchBox size={this.props.viewportSize}/>}
+        sortSelect={<Select
+          objects={["Test Score", "Ratings"]}
+          labelFunc={d => d}
+          keyFunc={d => d}
+          onChange={d => d}
+          defaultLabel={
+            "Test Score"
+          }
+          defaultValue={"Test Score"}
+        />}
+        schoolTable={
+          <CompareSchoolTable
+            schools={this.props.schools}
+            isLoading={this.props.loadingSchools}
+            searchTableViewHeaders={this.props.searchTableViewHeaders}
+          />
         }
-      </CompareQueryParams>
+      >
+      </CompareLayout>
     );
   }
 }
 
-const CompareWithViewportSize = withViewportSize('size')(Compare);
-
-export default CompareWithViewportSize;
+export { Compare };
+export default function() {
+  return (
+    <Provider store={getStore()}>
+      <CompareContext.Provider>
+        <CompareContext.Consumer>
+          {state => <Compare {...state} />}
+        </CompareContext.Consumer>
+      </CompareContext.Provider>
+    </Provider>
+  );
+}

@@ -120,6 +120,11 @@ export function getSchoolId() {
   return schoolId;
 }
 
+export function getBreakdown() {
+  const { breakdown } = parse(currentQueryString());
+  return breakdown;
+}
+
 export function queryStringWithNewView(view) {
   return getQueryStringWithUpdatedParams({ view });
 }
