@@ -79,10 +79,13 @@ const updateSavedSchoolsCookie = function(schoolState, schoolId) {
     }
   }
   analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
-}; 
+};
+
+const originalSaveText = document.getElementById('save-text').innerHTML;
 
 export const updateProfileHeart = (schoolState, schoolId) => {
   const heart = document.getElementById('profile-heart');
+  const saveText = document.getElementById('save-text');
 
   const savedSchools = getSavedSchoolsFromCookie();
   const schoolKeyIdx = getSavedSchoolsFromCookie().findIndex(key => 
@@ -90,8 +93,10 @@ export const updateProfileHeart = (schoolState, schoolId) => {
 
   if (schoolKeyIdx > -1) {
     heart.style.setProperty('color', '#2bade3');
+    saveText.innerHTML = t('Saved');
   } else {
     heart.style.removeProperty('color');
+    saveText.innerHTML = originalSaveText;
   }
 }
 
