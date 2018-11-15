@@ -28,6 +28,67 @@ body {
     }
   }
 
+  .menu-bar {
+    .menu-item {
+      display: inline-block;
+      cursor: pointer;
+      // Hide select dropdown on IE10+ browsers
+      select::-ms-expand {
+        display: none;
+      }
+      > * + * {
+        margin-left: 5px;
+      }
+    }
+    .menu-item + .menu-item {
+      @include media-breakpoint-up(xs) {
+        margin-left: 15px;
+      }
+      @include media-breakpoint-up(md) {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .divider {
+      color: rgb(187, 192, 202);
+      padding: 0 5px;
+    }
+
+    position: relative;
+    margin: auto;
+
+    // padding: 130px 0 0 0;
+
+    @include media-breakpoint-down(sm) {
+      padding: 0;
+    }
+
+    @include clearfix;
+
+    select {
+      @include select;
+      background-color: white;
+    }
+    .pagination-container {
+      clear: both;
+      display: flex;
+      align-items: center;
+      padding: 20px 0 15px 0;
+      @include media-breakpoint-down(sm) {
+        justify-content: center;
+      }
+      @include media-breakpoint-down(xs) {
+        background: white;
+      }
+      @include media-breakpoint-up(sm) {
+        .anchor-button {
+          min-width: 40px;
+          padding: 0;
+        }
+      }
+    }
+
   .school-table {
     overflow-x: scroll;
     width: 100%;

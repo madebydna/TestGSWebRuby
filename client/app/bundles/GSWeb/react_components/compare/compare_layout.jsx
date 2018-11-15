@@ -119,7 +119,7 @@ class CompareLayout extends React.Component {
 
   renderFilterBar(){
     return(
-      <div className="subheader">
+      <div className="subheader menu-bar">
         <div className="menu-item sort-dropdown-table-view">
           <span className="label">{t('Sort by')}:</span>
           {this.props.sortSelect}
