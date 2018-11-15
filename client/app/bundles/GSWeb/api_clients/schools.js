@@ -123,6 +123,7 @@ export function find({
   if (currentParams.locationType) {
     data.locationType = currentParams.locationType;
   }
+  debugger
   return $.ajax({
     url: '/gsr/api/schools/',
     data,
@@ -137,6 +138,13 @@ export function mySchoolList(props) {
     ...props,
     schoolList: 'msl',
     extras: ['saved_schools']
+  });
+}
+
+export function findComparedSchool(props){
+  return find({
+    ...props,
+    url: '/compare'
   });
 }
 

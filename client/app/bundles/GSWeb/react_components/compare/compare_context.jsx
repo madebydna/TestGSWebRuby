@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { find as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
+import { findComparedSchool as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
@@ -114,7 +114,7 @@ class CompareProvider extends React.Component {
   // 62 = nav offset on non-mobile
   scrollToTop = () =>
     this.state.size > XS
-      ? document.querySelector('#search-page').scrollIntoView()
+      ? document.querySelector('#compare-schools').scrollIntoView()
       : window.scroll(0, 0);
 
   shouldIncludeDistance() {
@@ -246,7 +246,7 @@ class CompareProvider extends React.Component {
   }
 
   findSchoolsWithReactState(newState = {}) {
-    return this.props.findSchools(
+    return findSchools(
       Object.assign(this.propsForFindSchools(this.props), newState)
     );
   }
