@@ -33,12 +33,12 @@ const tableHeaders = (headerArray = [], tableView) => {
 const CompareSchoolTable = ({
   schools,
   isLoading,
-  searchTableViewHeaders,
+  compareTableHeaders,
   tableView = 'Overview'
 }) => {
   if (
-    searchTableViewHeaders[tableView] === undefined ||
-    searchTableViewHeaders[tableView].length === 0
+    compareTableHeaders[tableView] === undefined ||
+    compareTableHeaders[tableView].length === 0
   ) {
     tableView = 'Overview';
   }
@@ -53,12 +53,12 @@ const CompareSchoolTable = ({
         />
       }
       <table className={isLoading ? 'loading' : ''}>
-        {tableHeaders(searchTableViewHeaders[tableView], tableView)}
+        {tableHeaders(compareTableHeaders, tableView)}
         <tbody>
           {schools.map(s => (
             <CompareSchoolTableRow
               tableView={tableView}
-              columns={searchTableViewHeaders[tableView]}
+              columns={compareTableHeaders}
               key={s.state + s.id + (s.assigned ? 'assigned' : '')}
               {...s}
             />
@@ -72,13 +72,13 @@ const CompareSchoolTable = ({
 CompareSchoolTable.propTypes = {
   schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
   isLoading: PropTypes.bool,
-  searchTableViewHeaders: PropTypes.object,
+  compareTableHeaders: PropTypes.object,
   tableView: PropTypes.string
 };
 
 CompareSchoolTable.defaultProps = {
   isLoading: false,
   tableView: 'Overview',
-  searchTableViewHeaders: {}
+  compareTableHeaders: {}
 };
 export default CompareSchoolTable;
