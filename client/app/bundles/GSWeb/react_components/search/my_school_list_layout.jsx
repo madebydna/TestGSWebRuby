@@ -188,15 +188,15 @@ class MySchoolListLayout extends React.Component {
     modalManager
       .showModal('JoinModal')
       .done(({ is_new_user } = {}) =>
-        this.setState({ needsToVerifyEmail: is_new_user })
+        is_new_user ? this.setState({ needsToVerifyEmail: is_new_user }) : window.location.reload()
       )
       .fail(() => {});
   }
 
   renderSignupPrompt() {
     return (
-      <div>
-        <a onClick={this.onSignup} className="open-sans_semibold">
+      <div className="signup-link">
+        <a href='javascript:void(0)' onClick={this.onSignup} className="open-sans_semibold">
           {t('Sign up link')}
         </a>{' '}
         <span className="open-sans_semibold">{t('Sign up rest')}</span>
