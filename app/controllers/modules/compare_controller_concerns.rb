@@ -51,7 +51,8 @@ module CompareControllerConcerns
     end
     if cache_keys.any?
       schools = SchoolCacheQuery.decorate_schools(schools, *cache_keys)
-      schools = keep_schools_with_ethnicity_test_score_rating(schools).compact
+      schools = filter_by_ethnicity_test_score_rating(schools).compact
+      schools = sort_by_ethnicity_test_score(schools)
     end
     schools
   end
@@ -60,7 +61,14 @@ module CompareControllerConcerns
     @_cache_keys ||= []
   end
 
-  def keep_schools_with_ethnicity_test_score_rating(schools)
+  def sort_by_ethnicity_test_score(schools)
+    # This keeps the pinned school on top
+    pinned_school = schools.select {|school| school.pinned}
+    non_pinned_schools = schools - pinned_school
+    non_pinned_schools.sort_by {|school| school.test_score_rating_for_ethnicity}.reverse.unshift(pinned_school[0])
+  end
+
+  def filter_by_ethnicity_test_score_rating(schools)
     schools.map do |school|
       rating_for_ethnicity = school.ethnicity_test_score_ratings[ethnicity]
       if rating_for_ethnicity
