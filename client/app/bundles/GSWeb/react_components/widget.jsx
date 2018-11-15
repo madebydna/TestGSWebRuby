@@ -34,7 +34,7 @@ export default class Widget extends React.Component {
       state: params.state || 'CA',
       normalizedAddress: params.normalizedAddress || 'Fremont, CA 94536',
       width: params.width || defaultIframeWidth,
-      height: params.height || 368,
+      height: params.height || 500,
       zoom: 13,
       baseUrl: "//" + widgetHost + "/widget/map"
     };
