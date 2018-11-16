@@ -4,5 +4,16 @@ en:
       subtext: >
         Is this district offering opportunity for all its students, or leaving some kids behind?
         Successful districts are working to
-        <a href="https://www.greatschools.org/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">
+        <a href=%{achievement_gap_link}>
         close the achievement gap.</a>
+      faq:
+        cta: Notice something missing or confusing?
+        content_html: >
+          <p><span class="emphasis">Missing a race or ethnicity?</span> When the population of a student group is too small to provide reliable data, it does not show up in the display. This may cause certain races/ethnicities not appearing in some charts within this section.</p>
+          <p><span class="emphasis">How do we come up with the race/ethnicity labels?</span> We display the language used by the State Department of Education to describe student races and ethnicities.</p>
+          <ul>
+          <li>The “All students” number displayed represents the number of students who participated in testing.</li>
+          <li>The “% of students” information reflects the portion of the overall student population that each subgroup represents. For more about student demographics, visit the “Students” section below.</li>
+          </ul>
+          <p><span class="emphasis">How do we decide which subjects to display?</span> Test subjects shown represent those taken by the largest number of students.</p>
+          <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page.</a></p>

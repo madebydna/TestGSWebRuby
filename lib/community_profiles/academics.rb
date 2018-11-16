@@ -2,6 +2,7 @@
 
 module CommunityProfiles
   class Academics
+    include Rails.application.routes.url_helpers
     attr_reader :cache_data_reader
 
     def self.district_academics_props(cache_data_reader)
@@ -17,8 +18,8 @@ module CommunityProfiles
     end
 
     def faq_for_academics_module
-      @_faq_test_scores ||= SchoolProfiles::Faq.new(cta: I18n.t(:cta, scope: 'lib.equity.faq.race_ethnicity'),
-                                                    content: I18n.t(:content_html, scope: 'lib.equity.faq.race_ethnicity'),
+      @_faq_test_scores ||= SchoolProfiles::Faq.new(cta: I18n.t(:cta, scope: 'community.academics.faq'),
+                                                    content: I18n.t(:content_html, scope: 'community.academics.faq'),
                                                     element_type: 'faq')
     end
 
@@ -95,7 +96,7 @@ module CommunityProfiles
         title: I18n.t('.academics', scope: 'school_profiles.show'),
         anchor: 'Academics',
         analytics_id: 'Academics',
-        subtitle: I18n.t('.subtext', scope: 'community.academics'),
+        subtitle: I18n.t('.subtext', scope: 'community.academics', achievement_gap_link: article_achievement_gap_path),
         info_text: nil, #I18n.t('.Race ethnicity tooltip', scope: 'school_profiles.equity')
         icon_classes: I18n.t('.Race ethnicity icon', scope: 'school_profiles.equity'),
         sources: sources_html(academics_sources), #equity.race_ethnicity_sources
