@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'GradeAllCalculator' do
 
   describe '#inject_grade_all' do
-    let (:calculator) { TestScoresCaching::GradeAllCalculator.new(test_scores) }
+    let (:calculator) { SchoolGradeAllCalculator.new(test_scores) }
     let (:new_data_sets) { calculator.inject_grade_all }
     subject { new_data_sets.find { |ds| ds.grade == 'All' } }
 
@@ -86,7 +86,7 @@ describe 'GradeAllCalculator' do
 
   describe '#calculate_grade_all' do
     let(:grade_all_tds) do
-      TestScoresCaching::GradeAllCalculator.new.send(:calculate_grade_all, test_scores)
+      SchoolGradeAllCalculator.new.send(:calculate_grade_all, test_scores)
     end
     subject { grade_all_tds }
 
