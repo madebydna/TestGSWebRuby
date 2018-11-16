@@ -1,8 +1,10 @@
 <% modal_css_class %>
 <% heading %>
+<% subheading %>
 
 <%= render layout: 'modal_layout', locals: {
   heading: heading,
+  subheading: subheading,
   modal_css_class: "join-and-login #{modal_css_class}"
 } do %>
   <%= form_tag(

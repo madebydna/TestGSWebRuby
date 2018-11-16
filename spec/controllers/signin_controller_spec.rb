@@ -107,6 +107,7 @@ describe SigninController do
             user = instance_double(User)
             expect(controller).to receive(:authenticate).and_return([user, nil])
             expect(controller).to receive(:log_user_in).with(user)
+            allow(user).to receive(:id).and_return(1)
             xhr :post, :create, password: 'abc'
           end
 
@@ -141,6 +142,7 @@ describe SigninController do
         subject(:response) { get :create, {password: 'abc'} }
 
         before do
+          allow(user).to receive(:id).and_return(1)
           expect(controller).to receive(:authenticate).and_return([user, nil])
         end
 

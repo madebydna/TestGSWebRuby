@@ -18,9 +18,8 @@ class FavoriteSchool < ActiveRecord::Base
   end
 
   def self.saved_school_list(user_id)
-    user = User.find_by(id: user_id)
-    if user
-      schools = FavoriteSchool.where(member_id: user.id)
+    if user_id
+      schools = FavoriteSchool.where(member_id: user_id)
       schools.map { |school| school&.school_key }
     else
       []

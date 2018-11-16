@@ -7,6 +7,7 @@ import { links, anchorObject } from 'components/links';
 import FiveStarRating from '../review/form/five_star_rating';
 import RatingWithTooltip from 'react_components/rating_with_tooltip';
 import ModalTooltip from "../modal_tooltip";
+import SavedSchoolContext from './saved_school_context';
 
 const renderEnrollment = enrollment => {
   if (enrollment) {
@@ -62,6 +63,7 @@ const SchoolTableRow = ({
   tableView,
   subratings,
   ethnicityInfo,
+  savedSchool,
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   let addressPhrase = [address.street1, address.city, state, address.zip]
@@ -84,7 +86,7 @@ const SchoolTableRow = ({
             <br/>
               {addressPhrase && <div className="address">{addressPhrase}</div>}
               {homesForSaleHref && (
-                  <div>
+                  <div className="homes-for-sale">
                     <span className="icon icon-house"/>
                     <a
                         href={homesForSaleHref}
@@ -96,6 +98,15 @@ const SchoolTableRow = ({
                   </div>
               )}
           </span>
+            {<SavedSchoolContext.Consumer>
+              {( {saveSchoolCallback} ) => {
+                  return <div
+                  onClick={() => saveSchoolCallback( {state, id: id.toString()} )}
+                  className={savedSchool ? 'icon-heart' : 'icon-heart-outline'}
+              />
+            }}
+          </SavedSchoolContext.Consumer>}
+
           </React.Fragment>
         </td>
     )

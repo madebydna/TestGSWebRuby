@@ -4,6 +4,8 @@ module Search
   class SchoolQuery
     include Pagination::Paginatable
     include Sortable
+    include Rails.application.routes.url_helpers
+    include UrlHelper
 
     attr_accessor :q, :district_id, :district_name, :location_label, :city, :level_codes, :entity_types, :id, :lat,
                   :lon, :radius, :with_rating, :school_keys
@@ -53,14 +55,22 @@ module Search
       raise NotImplementedError
     end
 
+    def state_name
+      States.state_name(state)
+    end
+
     def result_summary(results)
+      district_url = district_url(district_params(state_name, city,  district_name)) if state && city && district_name
+      city_url = city_url(city_params(state&.upcase, city)) if state && city
       params = {
         count: results.total,
         first: results.index_of_first_result,
         last: results.index_of_last_result,
         city: city,
+        city_url: city_url,
         state: state&.upcase,
         district: district_name,
+        district_url: district_url,
         search_term: @q.presence,
         location: location_label || @q
       }

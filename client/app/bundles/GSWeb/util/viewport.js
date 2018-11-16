@@ -12,6 +12,7 @@ export const viewportBox = () => {
       ? (document.scrollingElement || document.documentElement).scrollTop
       : window.pageYOffset;
   const bottom = top + window.innerHeight;
+  const middle = top + (window.innerHeight / 2);
   const left =
     typeof window.pageXOffset === 'undefined'
       ? (document.scrollingElement || document.documentElement).scrollLeft
@@ -19,6 +20,7 @@ export const viewportBox = () => {
   const right = window.innerWidth;
   return {
     top,
+    middle,
     bottom,
     left,
     right,
@@ -121,3 +123,5 @@ export function size() {
   }
   return LG;
 }
+
+export const ratioScrolledDown = () => viewportBox().middle / documentBox().height;
