@@ -36,7 +36,7 @@ const BasicDataModuleRow = ({
   }
 
   const renderLink = () => {
-    return <a className="button" href={link}>Compare</a>
+    return <a className="anchor-button" href={link}>Compare</a>
   }
 
   return (
@@ -50,7 +50,7 @@ const BasicDataModuleRow = ({
         <div className="col-xs-9 col-sm-4">
           {children}
         </div>
-        <div className="col-xs-3 col-sm-2">
+        <div className="compare-link">
           {(link && renderLink()) || drawerTrigger}
         </div>
       </div>

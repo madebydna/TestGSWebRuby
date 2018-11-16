@@ -4,7 +4,7 @@ module CompareControllerConcerns
 
   def serialized_schools
     @_serialized_schools ||= schools.map do |school|
-        Api::SchoolSerializer.new(school).to_hash
+        Api::SchoolSerializer.new(school).to_hash if school
     end.compact
   end
 

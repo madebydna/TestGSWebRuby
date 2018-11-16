@@ -49,6 +49,27 @@ module SchoolProfiles
       end
     end
 
+    def ethnicity_mapping_hash
+      {
+        :'African American' => "African American",
+        :'Black' => "African American",
+        :'White' => "White",
+        :'Asian or Pacific Islander' => "Asian or Pacific Islander",
+        :'Asian' => "Asian",
+        :'All' => "All students",
+        :'Multiracial' => "Two or more races",
+        :'Two or more races' => "Two or more races",
+        :'American Indian/Alaska Native' => "American Indian/Alaska Native",
+        :'Native American' => "American Indian/Alaska Native",
+        :'Pacific Islander' => "Pacific Islander",
+        :'Hawaiian Native/Pacific Islander' => "Pacific Islander",
+        :'Native Hawaiian or Other Pacific Islander' => "Pacific Islander",
+        :'Economically disadvantaged' => "Low-income",
+        :'Low Income' => "Low-income",
+        :'Hispanic' => "Hispanic"
+      }
+    end
+
     def compare_button_query_params(values_hash)
       school = @school_cache_data_reader.school
       {
@@ -57,7 +78,7 @@ module SchoolProfiles
         lat: school.lat,
         lon: school.lon,
         gradeLevels: school.level_code.split(','),
-        breakdown: values_hash[:breakdown]
+        breakdown: ethnicity_mapping_hash[values_hash[:breakdown].to_sym]
       }
     end
 
