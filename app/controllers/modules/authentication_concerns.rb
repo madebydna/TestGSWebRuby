@@ -219,7 +219,7 @@ module AuthenticationConcerns
   end
 
   def fetch_user_saved_schools(user)
-    FavoriteSchool.saved_school_list(user)
+    FavoriteSchool.saved_school_list(user.id)
   end
 
   def jsonify_schools_in_cookie(user)
