@@ -7,7 +7,6 @@ class MySchoolListController < ApplicationController
   include SearchTableConcerns
   include AdvertisingConcerns
   include PageAnalytics
-  include States
 
 
   layout 'application'

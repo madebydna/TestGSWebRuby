@@ -333,7 +333,10 @@ module SearchRequestParams
   end
 
   def filtered_school_keys
-    school_keys && school_keys.length > 0  ? saved_school_keys.select {|school_key| school_key[0] == state_select} : nil
+    # schools_keys used here so that this solr parameter will only fire off
+    # from MSL controller or from the MSL API call. In other instances, this params
+    # is undefined/nil
+    school_keys.present? ? saved_school_keys.select {|school_key| school_key[0] == state_select} : nil
   end
 
 end
