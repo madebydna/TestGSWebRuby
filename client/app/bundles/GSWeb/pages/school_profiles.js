@@ -29,7 +29,7 @@ import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
 import StemCourses from '../react_components/school_profiles/stem_courses';
 import * as footer from '../components/footer';
-import { signupAndFollowSchool } from '../util/newsletters';
+import { signupAndFollowSchool, updateProfileHeart } from '../util/newsletters';
 import * as backToTop from '../components/back_to_top';
 import { impressionTracker } from '../util/impression_tracker';
 import { t } from '../util/i18n';
@@ -83,7 +83,11 @@ $(function() {
         toggle.updateButtonTextCallback(t('show_less'), t('see_more_contact'))
     );
     toggle.init().add_onclick();
+
+    // new
+    
   })();
+
 
   const PROFILE_TOUR_COOKIE = 'decline_school_profile_tour'; // referenced in school_profiles_page.rb for specs
 
@@ -409,3 +413,5 @@ $(window).on('load', function() {
     }
   });
 });
+
+document.addEventListener('DOMContentLoaded', () => {updateProfileHeart(gon.school.state, gon.school.id)});

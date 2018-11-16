@@ -203,7 +203,11 @@ const getSizeMappings = function() {
       .addSize([865, 300], [[728, 90], [630, 250], [630, 100]])
       .addSize([690, 300], [[630, 250], [630, 100], [320, 50]])
       .addSize([0, 0], [[320, 100], [320, 50]])
-      .build()
+      .build(),
+    search_result_item: googletag
+      .sizeMapping()
+      .addSize([0, 0], [300,90])
+      .build(),
   };
 };
 
@@ -402,6 +406,23 @@ function enableAdCloseButtons() {
   });
 }
 
+function checkSponsorSearchResult() {
+  setTimeout(()=>{
+    const searchResult = document.querySelector('.sponsored-school-result-ad')
+    let adLoaded = true;
+    if (searchResult){
+      searchResult.querySelectorAll('div').forEach(node => {
+        if (node.classList.contains('dn')){
+          adLoaded = false;
+        }
+      })
+      if (adLoaded){
+        searchResult.classList.remove('dn');
+      }
+    }
+  }, 2000)
+}
+
 GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
 GS.ad.showAd = showAd;
 GS.ad.slotRenderedHandler = slotRenderedHandler;
@@ -415,5 +436,6 @@ export {
   defineAdOnce,
   destroyAd,
   destroyAdByName,
-  slotIdFromName
+  slotIdFromName,
+  checkSponsorSearchResult
 };
