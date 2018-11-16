@@ -300,7 +300,7 @@ class SearchLayout extends React.Component {
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
           {this.props.breadcrumbs}
-          <div className="pagination-summary">{this.props.resultSummary}</div>
+          <div className="pagination-summary" dangerouslySetInnerHTML={{ __html: this.props.resultSummary }} />
           {this.shouldRenderTable() ? (
             <div className="menu-item">{this.props.chooseTableButtons}</div>
           ) : null}
@@ -356,7 +356,8 @@ class SearchLayout extends React.Component {
               {this.shouldRenderTable() ? this.renderTableView() : null}
               {this.props.pagination}
             </div>
-            {this.props.size < SM && <MobileOverlayAd />}
+            {this.props.size < SM &&
+              !this.shouldRenderMap() && <MobileOverlayAd />}
           </React.Fragment>
         )}
       </div>

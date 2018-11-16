@@ -1,3 +1,23 @@
+import { throttle, debounce } from 'lodash';
+import { ratioScrolledDown } from 'util/viewport';
+
+export const scrollHandlers = [];
+
+export const onScroll = (callback) => {
+  scrollHandlers.push(callback)
+}
+
+let handleScroll = () => {
+  scrollHandlers.forEach((handler) => {
+    handler({
+      ratioScrolledDown: ratioScrolledDown()
+    });
+  });
+}
+handleScroll = throttle(handleScroll, 40);
+
+window.addEventListener('scroll', handleScroll)
+
 export function scrollToElement(selector, doneCallback, additionalYOffset=0) {
   if($(selector).length > 0) {
     let y = $(selector).offset().top + additionalYOffset;

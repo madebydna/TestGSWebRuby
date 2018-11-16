@@ -20,6 +20,7 @@ import {
 import '../../vendor/remodal';
 import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
+import SavedSchoolContext from './saved_school_context';
 import ChooseTableContext from './choose_table_context';
 import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
@@ -429,7 +430,13 @@ class SearchProvider extends React.Component {
                       .length
                   }}
                 >
+                  <SavedSchoolContext.Provider
+                      value={{
+                        saveSchoolCallback: this.handleSaveSchoolClick,
+                      }}
+                  >
                   {this.props.children}
+                  </SavedSchoolContext.Provider>
                 </ChooseTableContext.Provider>
               </SortContext.Provider>
             </EntityTypeContext.Provider>

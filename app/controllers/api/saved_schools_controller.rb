@@ -6,7 +6,10 @@ class Api::SavedSchoolsController < ApplicationController
 
   def create
     begin
-      raise "School Already in List" if fetch_user_saved_schools(current_user).include?([school_state, school_id])
+      if fetch_user_saved_schools(current_user).include?([school_state, school_id])
+        GSLogger.error(:misc, e, message:'School already in list', vars: params)
+        render json: {status: 501}
+      end
       school = School.on_db("#{school_state}").active.find_by!(id: "#{school_id}")
       saved_school = FavoriteSchool.create_saved_school_instance(school, current_user.id)
       saved_school.save!
@@ -20,8 +23,11 @@ class Api::SavedSchoolsController < ApplicationController
   def destroy
     #confirm: remove from list_msl and add to list_active_history?
     begin
-      raise "School Not in List" unless fetch_user_saved_schools(current_user).include?([school_state, school_id])
-      saved_school = FavoriteSchool.where(state: school_state, school_id: school_id, member_id: current_user.id).first!
+      unless fetch_user_saved_schools(current_user).include?([school_state, school_id])
+        GSLogger.error(:misc, e, message:'School not in list', vars: params)
+        render json: {status: 501}
+      end
+      saved_school = FavoriteSchool.find_by!(state: school_state, school_id: school_id, member_id: current_user.id)
       saved_school.destroy!
       render json: {status: 200}
     rescue => e

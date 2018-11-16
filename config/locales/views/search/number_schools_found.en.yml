@@ -3,13 +3,13 @@ en:
     Your school list is empty: Your school list is empty
     number_schools_found:
       city_browse:
-        zero: Your search did not return any schools in %{city}, %{state}
-        one: Showing one school found in %{city}, %{state}
-        other: Showing %{first} to %{last} of %{count} schools found in %{city}, %{state}
+        zero: Your search did not return any schools in <a href='%{city_url}'>%{city}, %{state}</a>
+        one: Showing one school found in <a href='%{city_url}'>%{city}, %{state}</a>
+        other: Showing %{first} to %{last} of %{count} schools found in <a href='%{city_url}'>%{city}, %{state}</a>
       district_browse:
-        zero: Your search did not return any schools in %{district}
-        one: Showing one school found in %{district}
-        other: Showing %{first} to %{last} of %{count} schools found in %{district}
+        zero: Your search did not return any schools in <a href='%{district_url}'>%{district}</a>
+        one: Showing one school found in <a href='%{district_url}'>%{district}</a>
+        other: Showing %{first} to %{last} of %{count} schools found in <a href='%{district_url}'>%{district}</a>
       distance:
         zero: Your search did not return any schools near %{location}
         one: Showing one school found near %{location}

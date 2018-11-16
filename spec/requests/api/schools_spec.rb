@@ -90,13 +90,13 @@ describe "Schools API" do
       end
 
       it 'Returns boundary data when asked' do
-        pending
         get "/gsr/api/schools/#{school.id}?state=ca&extras=boundaries"
         expect(status).to eq(200)
         expect(errors).to be_blank
         expect(json).to be_present
         expect(json['boundaries']).to be_present
-        expect(json['boundaries']['O']['coordinates']).to eq(coordinates)
+        expect(json['boundaries']['o']).to be_present
+        expect(json['boundaries']['o']['coordinates']).to eq(coordinates)
       end
     end
   end
@@ -155,12 +155,11 @@ describe "Schools API" do
     end
 
     it 'Obeys limit param' do
-      skip
       count = 1
       stub_solr_schools(
         create_school(:alameda_high_school, name: 'Alameda High School'),
         create_school(:bay_farm_elementary_school),
-        solr_query: "fq=document_type%3Aschool&fq=school_database_state%3Aca&sort=overall_gs_rating+desc&q=school&fl=*+score&defType=dismax&start=0&rows=#{count}&qt=school-search",
+        solr_query: "fq=document_type%3Aschool&fq=school_database_state%3Aca&sort=overall_gs_rating+desc&start=0&rows=#{count}&defType=lucene&qt=school-search&q=*%3A*",
         count: count
       )
 
