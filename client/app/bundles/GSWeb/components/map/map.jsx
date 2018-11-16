@@ -34,6 +34,7 @@ export default class Map extends React.Component {
     const mapOptions = {
       center: new this.props.googleMaps.LatLng(mapCenter.lat, mapCenter.lon),
       zoom: 12,
+      maxZoom: 17, // note this is cleared after bounds are set
       mapTypeId: this.props.googleMaps.MapTypeId.ROADMAP,
       mapTypeControl: false,
       scrollwheel: false,
@@ -149,6 +150,15 @@ export default class Map extends React.Component {
     });
     if (this.state.markersUpdated) {
       this.map.fitBounds(this.bounds);
+      const theMap = this.map;
+      // Clear the maxZoom as soon as bounds have been set
+      if (!this.bounds.isEmpty()) {
+        this.props.googleMaps.event.addListenerOnce(theMap, 'bounds_changed', function() {
+          theMap.setOptions({maxZoom:null});
+        });
+      } else {
+        theMap.setOptions({maxZoom:null});
+      }
       this.setState({
         markersUpdated: false,
       })

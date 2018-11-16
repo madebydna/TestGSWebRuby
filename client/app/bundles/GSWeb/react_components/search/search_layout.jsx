@@ -10,6 +10,7 @@ import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import HelpTooltip from '../help_tooltip';
 import { loadMobileOverlayAd } from 'actions/common';
 import MobileOverlayAd from 'react_components/mobile_overlay_ad';
+import { onScroll } from 'util/scrolling';
 
 function keepInViewport(
   ref,
@@ -128,7 +129,11 @@ class SearchLayout extends React.Component {
   }
 
   componentDidMount() {
-    this.props.loadMobileOverlayAd();
+    onScroll(({ ratioScrolledDown } = {}) => {
+      if(ratioScrolledDown > .5) {
+        this.props.loadMobileOverlayAd();
+      }
+    })
     keepInViewport(this.fixedYLayer, {
       $elementsAbove: [$('.header_un'), $('.search-body .menu-bar')],
       $elementsBelow: [$('.footer')],

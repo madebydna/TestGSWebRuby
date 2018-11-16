@@ -168,11 +168,11 @@ const equityColumns = (columns, ethnicityInfo, profileLink) => {
       const ethInfoIdx = keys.indexOf(hash.key);
       content.push(
         <td key={index} style={cellStyle}>
-          {drawRating(Math.floor(ethnicityInfo[ethInfoIdx].rating), `${profileLink}${anchorObject[hash.key]}`)}
+          {drawRating(ethnicityInfo[ethInfoIdx].rating, `${profileLink}${anchorObject[hash.key]}`)}
           <p className="percentage-population">
             {ethnicityInfo[ethInfoIdx].percentage ? 
               <React.Fragment>
-                <span>{Math.round(ethnicityInfo[ethInfoIdx].percentage)}%</span><br/> {t('of students')}
+                <span>{ethnicityInfo[ethInfoIdx].percentage}%</span><br/> {t('of students')}
               </React.Fragment> 
               : 
               <React.Fragment>
@@ -224,7 +224,7 @@ const renderNoInfoTooltip = () => {
   const noInfo =
     <div className="tooltip-content">
       <p>{t('no_info')} 
-        <a href={links.tableview_faq} target="_blank">
+        <a href={links.tableviewFaq} target="_blank">
           {` ${t('visit our FAQ page')}.`}
         </a>
       </p>
