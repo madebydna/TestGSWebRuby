@@ -95,7 +95,7 @@ module CommunityProfiles
         title: I18n.t('.academics', scope: 'school_profiles.show'),
         anchor: 'Academics',
         analytics_id: 'Academics',
-        subtitle: I18n.t('.Race ethnicity subtitle', scope: 'school_profiles.equity'),
+        subtitle: I18n.t('.subtext', scope: 'community.academics'),
         info_text: nil, #I18n.t('.Race ethnicity tooltip', scope: 'school_profiles.equity')
         icon_classes: I18n.t('.Race ethnicity icon', scope: 'school_profiles.equity'),
         sources: sources_html(academics_sources), #equity.race_ethnicity_sources
