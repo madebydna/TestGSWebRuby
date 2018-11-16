@@ -36,7 +36,6 @@ class Search extends React.Component {
     q: null,
     layout: 'Search',
     schoolKeys: [],
-    numOfSchools: 0
   };
 
   static propTypes = {
@@ -67,7 +66,6 @@ class Search extends React.Component {
     searchTableViewHeaders: PropTypes.object,
     layout: PropTypes.string,
     schoolKeys: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array)),
-    numOfSchools: PropTypes.number
   };
 
   componentDidMount() {
@@ -125,7 +123,7 @@ class Search extends React.Component {
                 />
               </div>
             }
-            numOfSchools={this.props.numOfSchools}
+            numOfSchools={this.props.schools.length}
             schoolList={
               <SchoolList
                 toggleHighlight={this.props.toggleHighlight}

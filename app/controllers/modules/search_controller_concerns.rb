@@ -84,7 +84,7 @@ module SearchControllerConcerns
     query_type.new(
       city: city,
       state: state,
-      school_keys: school_keys,
+      school_keys: filtered_school_keys,
       district_id: district_record&.id,
       district_name: district_record&.name,
       location_label: location_label_param,
