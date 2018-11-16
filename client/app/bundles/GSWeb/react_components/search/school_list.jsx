@@ -12,7 +12,7 @@ import { checkSponsorSearchResult } from '../../util/advertising';
 const content = 
   <span>
     <span>{t('sponsored_tooltip_blurb')}</span>
-    <span> <a href={links.sponsored_schools} target='_blank'>{t('top_schools.learn_more')}</a></span>
+    <span> <a href={links.sponsoredSchools} target='_blank'>{t('top_schools.learn_more')}</a></span>
   </span>;
 
 const renderSponsorSearchResultAd = () =>(

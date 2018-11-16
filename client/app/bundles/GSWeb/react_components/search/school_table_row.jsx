@@ -213,7 +213,7 @@ const renderNoInfoTooltip = () => {
   const noInfo =
     <div className="tooltip-content">
       <p>{t('no_info')} 
-        <a href={links.tableview_faq} target="_blank">
+        <a href={links.tableviewFaq} target="_blank">
           {` ${t('visit our FAQ page')}.`}
         </a>
       </p>

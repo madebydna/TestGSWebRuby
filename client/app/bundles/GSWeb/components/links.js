@@ -1,7 +1,7 @@
 export const links = {
   zendesk: 'https://greatschools.zendesk.com/hc/en-us/requests/new',
-  tableview_faq: 'https://greatschools.zendesk.com/hc/en-us/articles/360017863772-Searching-for-schools',
-  sponsored_schools: 'https://greatschools.zendesk.com/hc/en-us/articles/360018787412-How-we-fund-our-work'
+  tableviewFaq: 'https://greatschools.zendesk.com/hc/en-us/articles/360017863772-Searching-for-schools',
+  sponsoredSchools: 'https://greatschools.zendesk.com/hc/en-us/articles/360018787412-How-we-fund-our-work'
 }
 
 export const anchorObject = {
