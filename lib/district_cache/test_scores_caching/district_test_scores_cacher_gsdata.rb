@@ -31,7 +31,18 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
 
   def build_hash_for_cache
     hashes = query_results.map { |r| result_to_hash(r) }
-    hashes.select {|hash| valid_result_hash? hash }
+    hashes = inject_grade_all(hashes)
+    district_cache_hash = Hash.new { |h, k| h[k] = [] }
+    hashes.each_with_object(district_cache_hash) do |result_hash, cache_hash|
+      result_hash = result_hash.to_hash
+      if valid_result_hash?(result_hash)
+        cache_hash[result_hash[:data_type]] << result_hash.except(*cache_exceptions)
+      end
+    end
+  end
+
+  def cache_exceptions
+    %i(data_type percentage narrative label methodology)
   end
 
   def self.active?
@@ -83,6 +94,12 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
       )
     end
     missing_keys.count.zero?
+  end
+
+  def inject_grade_all(hashes)
+    DistrictGradeAllCalculator.new(
+      GsdataCaching::GsDataValue.from_array_of_hashes(hashes)
+    ).inject_grade_all
   end
 
   def state_results_hash
