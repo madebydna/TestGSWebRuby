@@ -470,8 +470,13 @@ $subtle-gray: #647981;
 }
 
 #Academics {
+  margin-bottom: 20px;
+  .profile-module {border: none}
   .panel {
     margin: 0;
+  }
+  @media (max-width: 767px) {
+    .module_feedback {float: right;}
   }
 }
 

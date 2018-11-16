@@ -137,6 +137,8 @@
     text-align: left;
     margin-top: 5px;
     line-height: 1.7;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     @include media-breakpoint-up(sm) {
       margin-top: 10px;
     }

@@ -223,6 +223,6 @@ if (devBuild) {
 // }
 
 if (process.env.ANALYZE) {
-  config.plugins.push(new BundleAnalyzerPlugin());
+  config.plugins.push(new BundleAnalyzerPlugin({ analyzerHost: '0.0.0.0' }));
 }
 module.exports = config;

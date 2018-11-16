@@ -56,7 +56,7 @@ export default class SearchQueryParams extends React.Component {
       },
       updateTableView: tableView => {
         pushQueryString(queryParams.queryStringWithNewTableView(tableView));
-      }
+      },
     };
 
     return this.props.children(extraProps);

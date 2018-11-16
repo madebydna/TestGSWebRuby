@@ -20,6 +20,7 @@ import {
 import '../../vendor/remodal';
 import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
+import SavedSchoolContext from './saved_school_context';
 import ChooseTableContext from './choose_table_context';
 import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
@@ -54,6 +55,8 @@ class SearchProvider extends React.Component {
     lon: gonSearch.lon,
     distance: gonSearch.distance,
     locationLabel: gonSearch.locationLabel,
+    mslStates: gonSearch.mslStates,
+    stateSelect: gonSearch.stateSelect,
     sort: gonSearch.sort,
     page: gonSearch.page || 1,
     pageSize: gonSearch.pageSize,
@@ -81,6 +84,8 @@ class SearchProvider extends React.Component {
     lon: PropTypes.number,
     distance: PropTypes.number,
     locationLabel: PropTypes.string,
+    mslStates: PropTypes.arrayOf(PropTypes.string),
+    stateSelect: PropTypes.string,
     sort: PropTypes.string,
     page: PropTypes.number,
     pageSize: PropTypes.number,
@@ -116,7 +121,8 @@ class SearchProvider extends React.Component {
       loadingSchools: false,
       size: viewportSize(),
       currentStateFilter: null,
-      adRefreshed: false
+      adRefreshed: false,
+      stateSelect: this.props.stateSelect
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
@@ -267,6 +273,7 @@ class SearchProvider extends React.Component {
       sort: props.sort,
       page: props.page,
       limit: props.pageSize,
+      stateSelect: this.state.stateSelect,
       extras: ['students_per_teacher', 'review_summary'],
       locationLabel: props.locationLabel
     };
@@ -327,9 +334,11 @@ class SearchProvider extends React.Component {
   };
 
   updateStateFilter(state) {
+    this.props.updatePage(1)
     this.setState({
-      currentStateFilter: state
-    })
+      stateSelect: state
+    },
+    () => this.updateSchools())
   }
 
   render() {
@@ -340,6 +349,8 @@ class SearchProvider extends React.Component {
           schools: this.state.schools,
           savedSchools: this.state.savedSchools,
           saveSchoolCallback: this.handleSaveSchoolClick,
+          mslStates: this.props.mslStates,
+          stateSelect: this.props.stateSelect,
           numOfSchools: this.state.schools.length,
           page: this.props.page,
           totalPages: this.state.totalPages,
@@ -429,7 +440,13 @@ class SearchProvider extends React.Component {
                       .length
                   }}
                 >
+                  <SavedSchoolContext.Provider
+                      value={{
+                        saveSchoolCallback: this.handleSaveSchoolClick,
+                      }}
+                  >
                   {this.props.children}
+                  </SavedSchoolContext.Provider>
                 </ChooseTableContext.Provider>
               </SortContext.Provider>
             </EntityTypeContext.Provider>

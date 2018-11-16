@@ -1,9 +1,11 @@
 // TODO: import I18n
 import * as notifications from '../util/notifications';
 import { t, preserveLanguageParam } from '../util/i18n';
-import { isSignedIn } from '../util/session';
+import { isSignedIn, getSavedSchoolsFromCookie, COOKIE_NAME, updateNavbarHeart } from '../util/session';
 import modalManager from '../components/modals/manager';
 import { merge, pick } from 'lodash';
+import { set as setCookie } from 'js-cookie';
+import { findSchools, addSchool, deleteSchool } from '../api_clients/schools';
 
 // Subscribe a user to the GreatNews newsletter.
 // Triggers a join modal if not signed in.
@@ -21,6 +23,11 @@ export const signupAndGetNewsletter = function() {
 // Triggers a signupAndFollow modal if not signed in.
 export const signupAndFollowSchool = function(state, schoolId, schoolName) {
   if (state && schoolId) {
+    updateSavedSchoolsCookie(state, schoolId);
+    updateProfileHeart(state, schoolId);
+    updateNavbarHeart();
+
+    // ternary for heart : if white ? blue : white 
     if (isSignedIn()) {
       schools(state, schoolId)
         .follow({showMessages: false})
@@ -46,6 +53,46 @@ export const signupAndFollowSchool = function(state, schoolId, schoolName) {
     }
   }
 };
+
+const updateSavedSchoolsCookie = function(schoolState, schoolId) {
+  const savedSchools = getSavedSchoolsFromCookie();
+  const schoolKeyIdx = getSavedSchoolsFromCookie().findIndex(key => 
+    key.id.toString() === schoolId.toString() && key.state === schoolState);
+  schoolKeyIdx > -1
+    ? savedSchools.splice(schoolKeyIdx, 1)
+    : savedSchools.push({ state: schoolState, id: schoolId.toString() });
+  setCookie(COOKIE_NAME, savedSchools);
+  const newSchool = { state: schoolState, id: schoolId };
+  if (isSignedIn()) {
+    if (schoolKeyIdx > -1) {
+      deleteSchool(newSchool)
+        .done(e => {
+          e.status === 400 && alert("There was an error deleting a school from your account.\n Please try again later")
+        })
+        .fail(e => alert("There was an error deleting a school from your account.\n Please try again later"))
+    } else {
+      addSchool(newSchool)
+        .done(e => {
+          e.status === 400 && alert("There was an error adding a school to your account.\n Please try again later")
+        })
+        .fail(e => alert("There was an error adding a school to your account.\n Please try again later"))
+    }
+  }
+  analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
+}; 
+
+export const updateProfileHeart = (schoolState, schoolId) => {
+  const heart = document.getElementById('profile-heart');
+  const savedSchools = getSavedSchoolsFromCookie();
+  const schoolKeyIdx = getSavedSchoolsFromCookie().findIndex(key => 
+    key.id.toString() === schoolId.toString() && key.state === schoolState);
+
+  if (schoolKeyIdx > -1) {
+    heart.style.setProperty('color', '#2bade3');
+  } else {
+    heart.style.setProperty('color', 'white');
+  }
+}
 
 const postSubscriptionViaAjax = function(subscriptionParams) {
   return $.ajax({

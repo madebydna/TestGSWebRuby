@@ -12,7 +12,7 @@ import Mobility from "./mobility";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
-import {schools, academics, communityResources, nearbyHomesForSale, reviews} from './toc_config';
+import {schools, academics, ACADEMICS, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
@@ -20,6 +20,7 @@ import { analyticsEvent } from "util/page_analytics";
 import Zillow from "./zillow";
 import { t } from '../../util/i18n';
 import InfoBox from 'react_components/school_profiles/info_box';
+import remove from 'util/array';
 
 class District extends React.Component {
   static defaultProps = {
@@ -98,19 +99,15 @@ class District extends React.Component {
     );
   }
 
-  removeReviewsIfEmpty(tocItems){
-    this.props.reviews.length === 0 && tocItems.pop();
-  }
-
-  removeAcademicsIfEmpty(tocItems){
+  hasAcademicsData(){
     let {data} = this.props.academics;
-    data.filter(o => o.data && o.data.length > 0).length < 1 && tocItems.splice(1,1);
+    return data.filter(o => o.data && o.data.length > 0).length > 0
   }
 
   selectTocItems(){
-    const districtTocItems = [schools, academics, communityResources, nearbyHomesForSale, reviews];
-    this.removeReviewsIfEmpty(districtTocItems);
-    this.removeAcademicsIfEmpty(districtTocItems);
+    let districtTocItems = [schools, academics, communityResources, nearbyHomesForSale, reviews];
+    districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
+    districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     return districtTocItems;
   }
 

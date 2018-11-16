@@ -32,6 +32,8 @@ services:
       context: ./client
     depends_on:
       - rails
+    ports:
+      - '8888:8888'
     volumes:
       # sync /app/assets/webpack in the container with a named volume called webpack-assets
       - webpack-assets:/srv/app/assets/webpack
