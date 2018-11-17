@@ -60,7 +60,8 @@ const CompareSchoolTableRow = ({
 
   const schoolCard = () => {
     return (
-      <td className='school'>
+      <td className={pinned ? 'school pinned' : 'school'}>
+        {pinned && <div>COMPARE THIS SCHOOL TO SCHOOLS BELOW</div>}
         <React.Fragment key={state + id}>
           <span><RatingWithTooltip rating={rating} ratingScale={ratingScale} /></span>
           <span>
@@ -87,7 +88,7 @@ const CompareSchoolTableRow = ({
 
   let content = compareColumns(cohortPercentageForEthnicity(),testScoreRatingForEthnicity)
   return (
-    <tr>
+    <tr className={pinned && 'row-outline'}>
       {schoolCard()}
       {content}
     </tr>
@@ -105,10 +106,16 @@ const reviewType = (numReviews, reviews, parentRating) => {
 
 const compareColumns = (enrollmentForEthnicity, testScoreRatingForEthnicity) => {
   return (
-    <React.Fragment>
-      <td style={{textAlign: 'center'}}>{enrollmentForEthnicity}</td>
-      <td><RatingWithBar score={testScoreRatingForEthnicity} size='small' /></td>
-    </React.Fragment>
+    <CompareContext.Consumer>
+      {({sort}) => (
+        <React.Fragment>
+          <td className="centered">{enrollmentForEthnicity}</td>
+          <td className={sort === 'breakdown-test-score' ? 'yellow-highlight' : ''}>
+            <RatingWithBar score={testScoreRatingForEthnicity} size='small'/>
+          </td>
+        </React.Fragment>
+      )}
+    </CompareContext.Consumer>
   )
 };
 

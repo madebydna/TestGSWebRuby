@@ -104,8 +104,53 @@ body {
         width: 100%;
       }
 
+      .yellow-highlight {
+        background-color: rgba(255, 250, 80, 0.4);
+      }
+
+      th.school.table-headers {
+        width: 40%;
+      }
+
+      th.ethnicity_enrollment.table-headers {
+        width: 15%;
+      }
+
+      th.breakdown-test-score.table-headers {
+        width: 45%;
+      }
+
       td {
         position: relative;
+      }
+
+      .centered {
+        text-align: center;
+      }
+
+      tr.row-outline {
+        border: 2px solid #176997;
+      }
+
+      td.pinned {
+        padding-top: 28px;
+        > div:first-of-type {
+          height: 19px;
+          line-height: 18px;
+          width: 100%;
+          background: #176997;
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-family: 'opensans-bold', Helvetica, Arial;
+          color: white;
+          font-size: $font-size-l2;
+          padding-left: 10px;
+          div {
+            display: inline-block;
+            margin-left: 6px;
+          }
+        }
       }
 
       td,

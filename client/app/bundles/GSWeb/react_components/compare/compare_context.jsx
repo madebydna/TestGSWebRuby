@@ -258,10 +258,10 @@ class CompareProvider extends React.Component {
   };
 
   generateTableHeaders = () => {
-    let {breakdown} = this.props;
+    let {breakdown, sort} = this.props;
     return [
-      {title: `% of ${breakdown} Students Enrolled in School`},
-      {title: `Test Score Rating for ${breakdown} Students`}
+      {title: `% of ${breakdown} Students Enrolled in School`, className: 'ethnicity-enrollment'},
+      {title: `Test Score Rating for ${breakdown} Students`, className: (sort === 'breakdown-test-score' ? 'breakdown-test-score yellow-highlight' : 'breakdown-test-score')}
     ];
   }
 
@@ -282,7 +282,8 @@ class CompareProvider extends React.Component {
           refreshAdOnScroll: this.refreshAdOnScroll,
           locationLabel: this.props.locationLabel,
           compareTableHeaders: this.generateTableHeaders(),
-          breakdown: this.props.breakdown
+          breakdown: this.props.breakdown,
+          sort: this.props.sort
         }}
       >
         <DistanceContext.Provider

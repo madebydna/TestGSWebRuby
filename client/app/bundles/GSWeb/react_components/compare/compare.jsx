@@ -11,7 +11,6 @@ import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import withViewportSize from 'react_components/with_viewport_size';
 import SortSelect from 'react_components/search/sort_select';
-import CompareQueryParams from './compare_query_params';
 import CompareSchoolTable from './compare_school_table';
 import '../../vendor/remodal';
 import { find as findSchools } from 'api_clients/schools';

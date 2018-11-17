@@ -14,6 +14,7 @@ class CompareSchoolsController < ApplicationController
   def show
     gon.search = {
       schools: serialized_schools,
+      sort: sort
     }
     # LEGACY################################################
     # require_state

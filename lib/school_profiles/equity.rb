@@ -78,7 +78,8 @@ module SchoolProfiles
         lat: school.lat,
         lon: school.lon,
         gradeLevels: school.level_code.split(','),
-        breakdown: ethnicity_mapping_hash[values_hash[:breakdown].to_sym]
+        breakdown: ethnicity_mapping_hash[values_hash[:breakdown].to_sym],
+        sort: 'breakdown-test-score'
       }
     end
 

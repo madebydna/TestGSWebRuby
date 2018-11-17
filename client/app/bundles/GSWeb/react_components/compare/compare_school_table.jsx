@@ -19,6 +19,7 @@ const tableHeaders = (headerArray = [], tableView) => {
     <SchoolTableColumnHeader
       key={tableView + hash.key}
       colName={hash.title}
+      classNameTH={hash.className}
       tooltipContent={hash.tooltip}
     />
   ));
@@ -59,7 +60,7 @@ const CompareSchoolTable = ({
             <CompareSchoolTableRow
               tableView={tableView}
               columns={compareTableHeaders}
-              key={s.state + s.id + (s.assigned ? 'assigned' : '')}
+              key={s.state + s.id}
               {...s}
             />
           ))}
