@@ -47,7 +47,7 @@ module CachedRatingsMethods
       {}.tap do |i|
         i[:label] = "Low-income"
         i[:rating] = low_income_rating if low_income_rating
-        i[:percentage] = free_and_reduced_lunch.gsub('%','') if free_and_reduced_lunch
+        i[:percentage] = free_and_reduced_lunch.gsub('%','') if free_and_reduced_lunch && free_and_reduced_lunch != '?'
       end
     )
   end
@@ -68,13 +68,13 @@ module CachedRatingsMethods
 
   def ethnicity_test_score_ratings
     @_ratings ||= ethnicity_struct_ratings.each_with_object({}) do |struct, hash|
-      hash[ethnicity_mapping_hash[struct.breakdown.to_sym]] = struct.school_value_as_int if struct.school_value_as_int > 0 
+      hash[ethnicity_mapping_hash[struct.breakdown.to_sym]] = struct.school_value_as_int if struct.school_value_as_int && struct.school_value_as_int > 0 
     end
   end
 
   def ethnicity_population_percentages
     @_percentages ||= ethnicity_data.each_with_object({}) do |data, hash|
-      hash[ethnicity_mapping_hash[data["breakdown"].to_sym]] = data["school_value"].round if data["school_value"].round > 0
+      hash[ethnicity_mapping_hash[data["breakdown"].to_sym]] = data["school_value"].round if data["school_value"] && data["school_value"].round > 0
     end
   end
 
