@@ -22,9 +22,15 @@ export function renderAd() {
   }
 }
 
+let mobileOverlayShown = false
+
 export function renderAdOnScrollHalfway() {
-  onScroll(({ ratioScrolledDown } = {}) => {
+  onScroll('mobileOverlay', ({ ratioScrolledDown } = {}) => {
+    if(mobileOverlayShown) {
+      return false;
+    }
     if(ratioScrolledDown > .5) {
+      mobileOverlayShown = true;
       renderAd()
     }
   })
