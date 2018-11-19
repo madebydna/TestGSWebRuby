@@ -30,6 +30,7 @@ module CompareControllerConcerns
     end
     query_type.new(
       state: state,
+      sort_name: sort_name,
       level_codes: level_codes,
       lat: lat,
       lon: lon,
@@ -52,7 +53,7 @@ module CompareControllerConcerns
     if cache_keys.any?
       schools = SchoolCacheQuery.decorate_schools(schools, *cache_keys)
       schools = filter_by_ethnicity_test_score_rating(schools).compact
-      schools = sort_by_ethnicity_test_score(schools)
+      schools = sort_by_ethnicity_test_score(schools) if sort == nil
     end
     schools
   end

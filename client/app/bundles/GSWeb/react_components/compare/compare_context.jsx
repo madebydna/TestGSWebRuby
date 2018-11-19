@@ -217,15 +217,19 @@ class CompareProvider extends React.Component {
       district: props.district,
       state: props.state,
       q: props.q,
-      levelCodes: props.levelCodes,
+      levelCodes: [...props.levelCodes],
+      schoolId: props.schoolId,
+      state: props.state,
+      breakdown: props.breakdown,
       entityTypes: props.entityTypes,
       lat: props.lat,
       lon: props.lon,
       distance: props.distance,
       sort: props.sort,
       page: props.page,
-      limit: props.pageSize,
-      extras: ['students_per_teacher', 'review_summary'],
+      // limit: props.pageSize,
+      limit: 100,
+      extras: ["ratings", "characteristics", "review_summary", "saved_schools", "pinned_school", "ethnicity_test_score_rating"],
       locationLabel: props.locationLabel
     };
   }

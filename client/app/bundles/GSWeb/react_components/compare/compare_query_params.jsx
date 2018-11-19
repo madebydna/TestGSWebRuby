@@ -28,6 +28,7 @@ export default class CompareQueryParams extends React.Component {
       lat: queryParams.getLat(),
       lon: queryParams.getLon(),
       distance: queryParams.getDistance(),
+      levelCodes: queryParams.getGradeLevels(),
       breakdown: queryParams.getBreakdown(),
       locationLabel:
         queryParams.getValueForKey('locationLabel') ||

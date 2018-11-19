@@ -4,6 +4,7 @@ class CompareSchoolsController < ApplicationController
   # include SearchHelper
   # include SchoolHelper
   # include DataDisplayHelper
+  include Pagination::PaginatableRequest
   include CompareControllerConcerns
   include AdvertisingConcerns
   include PageAnalytics
@@ -38,6 +39,17 @@ class CompareSchoolsController < ApplicationController
     # set_data_layer_variables
     #
     # @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
+  end
+
+  def fetch_schools
+    render json: {
+      links: {
+        prev: self.prev_offset_url(page_of_results),
+        next: self.next_offset_url(page_of_results),
+      },
+      items: serialized_schools
+    }.merge(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
+    .merge(Api::PaginationSerializer.new(page_of_results).to_hash)
   end
 
   private
@@ -85,7 +97,7 @@ class CompareSchoolsController < ApplicationController
   end
 
   def level_codes
-    params[:gradeLevels]
+    params[:gradeLevels] || params[:level_code].split(",")
   end
 
   def sort_name

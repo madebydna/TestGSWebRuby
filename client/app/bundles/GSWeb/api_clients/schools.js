@@ -80,7 +80,10 @@ export function find({
   page = 1,
   limit = 25,
   with_rating = false,
-  schoolList
+  schoolList,
+  schoolId,
+  breakdown,
+  url = '/gsr/api/schools'
 } = {}) {
   const data = {
     city,
@@ -92,7 +95,10 @@ export function find({
     sort,
     limit,
     with_rating,
-    schoolList
+    schoolList,
+    schoolId,
+    breakdown,
+    url
   };
   if (levelCodes && levelCodes.length > 0) {
     data.level_code = levelCodes.join(',');
@@ -118,14 +124,19 @@ export function find({
   if (locationLabel) {
     data.locationLabel = locationLabel;
   }
+  if (schoolId){
+    data.schoolId = schoolId;
+  }
+  if (breakdown){
+    data.breakdown = breakdown;
+  }
   const currentParams = parse(window.location.search);
   data.lang = currentParams.lang;
   if (currentParams.locationType) {
     data.locationType = currentParams.locationType;
   }
-  debugger
   return $.ajax({
-    url: '/gsr/api/schools/',
+    url: `${url}`,
     data,
     type: 'GET',
     dataType: 'json',
@@ -144,7 +155,7 @@ export function mySchoolList(props) {
 export function findComparedSchool(props){
   return find({
     ...props,
-    url: '/compare'
+    url: '/compare_schools'
   });
 }
 
