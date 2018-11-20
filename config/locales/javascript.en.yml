@@ -153,6 +153,7 @@ en:
     saved_search_validation_error: Please name your search
     strong_fit: 'Strong fit'
     test_scores:
+      title: Test Scores
       advanced: Advanced
       proficient: Proficient
       proficient_or_better: Proficient or better

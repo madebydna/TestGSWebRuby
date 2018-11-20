@@ -53,7 +53,7 @@ module CompareControllerConcerns
     if cache_keys.any?
       schools = SchoolCacheQuery.decorate_schools(schools, *cache_keys)
       schools = filter_by_ethnicity_test_score_rating(schools).compact
-      schools = sort_by_ethnicity_test_score(schools) if sort == nil
+      schools = sort_by_ethnicity_test_score(schools) if sort == nil || sort == 'testscores'
     end
     schools
   end

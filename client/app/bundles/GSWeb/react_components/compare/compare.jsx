@@ -14,6 +14,7 @@ import SortSelect from 'react_components/search/sort_select';
 import CompareSchoolTable from './compare_school_table';
 import '../../vendor/remodal';
 import { find as findSchools } from 'api_clients/schools';
+import { t } from 'util/i18n';
 import { analyticsEvent } from 'util/page_analytics';
 import remove from 'util/array';
 
@@ -87,6 +88,12 @@ class Compare extends React.Component {
         sortSelect={<SortSelect
           includeDistance={this.props.shouldIncludeDistance}
           includeRelevance={this.props.shouldIncludeRelevance}
+          additionalOptions={
+            [{
+              key: 'testscores',
+              label: t('test_scores.title')
+            }]
+          }
         />}
         schoolTable={
           <CompareSchoolTable

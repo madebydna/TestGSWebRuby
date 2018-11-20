@@ -152,6 +152,7 @@ es:
     saved_search_validation_error: Por favor, nombre su búsqueda
     strong_fit: Fuerte
     test_scores:
+      title: Resultados de exámenes
       advanced: Avanzado
       proficient: Competente
       proficient_or_better: Competente o mejor
