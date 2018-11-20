@@ -129,7 +129,7 @@ class SearchLayout extends React.Component {
   }
 
   componentDidMount() {
-    onScroll(({ ratioScrolledDown } = {}) => {
+    onScroll('mobileOverlay', ({ ratioScrolledDown } = {}) => {
       if(ratioScrolledDown > .5) {
         this.props.loadMobileOverlayAd();
       }

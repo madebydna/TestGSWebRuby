@@ -1,14 +1,14 @@
 import { throttle, debounce } from 'lodash';
 import { ratioScrolledDown } from 'util/viewport';
 
-export const scrollHandlers = [];
+export const scrollHandlers = {};
 
-export const onScroll = (callback) => {
-  scrollHandlers.push(callback)
+export const onScroll = (key, callback) => {
+  scrollHandlers[key] = callback;
 }
 
 let handleScroll = () => {
-  scrollHandlers.forEach((handler) => {
+  Object.values(scrollHandlers).forEach((handler) => {
     handler({
       ratioScrolledDown: ratioScrolledDown()
     });
