@@ -9,6 +9,7 @@ import RatingWithTooltip from 'react_components/rating_with_tooltip';
 import ModalTooltip from "../modal_tooltip";
 import RatingWithBar from 'react_components/equity/graphs/rating_with_bar';
 import CompareContext from './compare_context';
+import PieChart from 'react_components/pie_chart';
 
 const renderEnrollment = enrollment => {
   if (enrollment) {
@@ -69,7 +70,7 @@ const CompareSchoolTableRow = ({
               {name}
             </a>
             <br />
-            {addressPhrase && <div className="address">{addressPhrase}</div>}
+            <span>{addressPhrase && <div className="address">{addressPhrase}</div>}</span>
           </span>
         </React.Fragment>
       </td>
@@ -78,11 +79,29 @@ const CompareSchoolTableRow = ({
 
   const cohortPercentageForEthnicity = () => {
     return (
-      <CompareContext.Consumer>
-        {({breakdown}) =>
-          `${ethnicityInfo.find((ethnicityVal) => ethnicityVal.label === breakdown).percentage.toString()}%`
-        }
-      </CompareContext.Consumer>
+      <React.Fragment>
+        <CompareContext.Consumer>
+          {({breakdown}) =>{
+            const percentage = ethnicityInfo.find((ethnicityVal) => ethnicityVal.label === breakdown).percentage;
+            return(
+                <div className="cohort-percentages">
+                  <PieChart slices={[
+                    {
+                      color: '#d3d3d3',
+                      value: percentage
+                    },
+                    {
+                      color: 'gray',
+                      value: 100 - percentage,
+                    },
+                  ]} />
+                  <span>{`${ethnicityInfo.find((ethnicityVal) => ethnicityVal.label === breakdown).percentage.toString()}%`}</span>
+                </div>
+              )
+            }
+          }
+        </CompareContext.Consumer>
+      </React.Fragment>
     )
   }
 
