@@ -94,7 +94,7 @@ PieChart.propTypes = {
 };
 
 PieChart.defaultProps = {
-  borderColor: '#000',
-  borderWidth: 0
+  borderColor: '#333',
+  borderWidth: 0.1
 };
 export default PieChart;

@@ -50,11 +50,6 @@ body {
     }
   }
 
-  .divider {
-      color: rgb(187, 192, 202);
-      padding: 0 5px;
-    }
-
     position: relative;
     margin: auto;
 
@@ -157,6 +152,13 @@ body {
             margin-left: 6px;
           }
         }
+      }
+
+      td .school-types{
+        span:nth-child(-n+2){
+          font-family: 'opensans-semibold';
+        }
+        span:nth-child(2){ margin-right: 15px; }
       }
 
       td,

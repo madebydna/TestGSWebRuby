@@ -71,6 +71,13 @@ const CompareSchoolTableRow = ({
             </a>
             <br />
             <span>{addressPhrase && <div className="address">{addressPhrase}</div>}</span>
+            <div className="school-types">
+              {schoolType && <span>{capitalize(t(`school_types.${schoolType}`))}</span>}
+              {gradeLevels && <span>, {gradeLevels}</span>}
+              {enrollment && <React.Fragment>
+                <span>{`${enrollment.toLocaleString()} ${t('students')}`}</span>
+              </React.Fragment>}
+            </div>
           </span>
         </React.Fragment>
       </td>
