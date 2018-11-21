@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const size = 10;
+const size = 5;
 const radCircumference = Math.PI * 2;
 const center = size / 2;
 const radius = center - 1; // padding to prevent clipping
@@ -60,29 +60,27 @@ function renderPaths(slices) {
   });
 }
 
-class PieChart extends React.Component {
-  render() {
-    const border = this.props.borderWidth > 0 ? (
-      <circle
-        cx={center}
-        cy={center}
-        r={radius}
-        stroke={this.props.borderColor}
-        strokeWidth={this.props.borderWidth}
-        fill='transparent'
-      />
-    ) : null;
+const PieChart = ({ slices, borderWidth }) => {
+  const border = borderWidth > 0 ? (
+    <circle
+      cx={center}
+      cy={center}
+      r={radius}
+      stroke={borderColor}
+      strokeWidth={borderWidth}
+      fill='transparent'
+    />
+  ) : null;
 
-    return (
-      <svg viewBox={`0 0 ${size} ${size}`} height="100px">
-        <g transform={`rotate(-90 ${center} ${center}) translate(0, ${size}) scale(1, -1)`}>
-          {renderPaths(this.props.slices)}
-        </g>
-        {border}
-      </svg>
-    );
-  }
-}
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} height="100px">
+      <g transform={`rotate(-90 ${center} ${center}) translate(0, ${size}) scale(1, -1)`}>
+        {renderPaths(slices)}
+      </g>
+      {border}
+    </svg>
+  );
+};
 
 PieChart.propTypes = {
   slices: PropTypes.arrayOf(PropTypes.shape({
@@ -95,6 +93,7 @@ PieChart.propTypes = {
 
 PieChart.defaultProps = {
   borderColor: '#333',
-  borderWidth: 0.1
+  borderWidth: 0.0
 };
+
 export default PieChart;

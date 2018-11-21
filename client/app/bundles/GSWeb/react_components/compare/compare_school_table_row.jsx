@@ -94,11 +94,11 @@ const CompareSchoolTableRow = ({
                 <div className="cohort-percentages">
                   <PieChart slices={[
                     {
-                      color: '#d3d3d3',
+                      color: 'gray',
                       value: percentage
                     },
                     {
-                      color: 'gray',
+                      color: '#d3d3d3',
                       value: 100 - percentage,
                     },
                   ]} />
