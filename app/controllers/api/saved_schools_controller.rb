@@ -4,6 +4,8 @@ class Api::SavedSchoolsController < ApplicationController
   include AuthenticationConcerns
   include SavedSchoolsParams
 
+  before_action :current_user?
+
   def create
     if fetch_user_saved_schools(current_user).include?([school_state, school_id])
       GSLogger.warn(:misc, e, message:'School already in list', vars: params)
@@ -34,5 +36,9 @@ class Api::SavedSchoolsController < ApplicationController
       GSLogger.warn(message:'School not in list', vars: params)
       render json: {status: 501}
     end
+  end
+
+  def current_user?
+    render json: {status: 200} unless current_user
   end
 end
