@@ -155,6 +155,7 @@ body {
             display: inline-block;
             margin-left: 6px;
           }
+          > div:last-child { top: 20px}
         }
       }
 
@@ -224,6 +225,24 @@ body {
           position: absolute;
         }
       }
+
+      td.school.pinned{
+        // overwrites td.school
+        > div:last-child { top: 20px}
+      }
+    }
+  }
+  .icon-star {
+    font-size: 11px;
+  }
+  .icon-heart,
+  .icon-heart-outline {
+    float: right;
+    width: auto;
+    color: #1dace5;
+    font-size: 17px;
+    &:hover {
+      cursor: pointer;
     }
   }
 }

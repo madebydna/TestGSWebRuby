@@ -10,6 +10,7 @@ import ModalTooltip from "../modal_tooltip";
 import RatingWithBar from 'react_components/equity/graphs/rating_with_bar';
 import CompareContext from './compare_context';
 import PieChart from 'react_components/pie_chart';
+import SavedSchoolContext from 'react_components/search/saved_school_context';
 
 const renderEnrollment = enrollment => {
   if (enrollment) {
@@ -79,6 +80,14 @@ const CompareSchoolTableRow = ({
               </React.Fragment>}
             </div>
           </span>
+          {<SavedSchoolContext.Consumer>
+            {({ saveSchoolCallback }) => {
+              return <div
+                onClick={() => saveSchoolCallback({ state, id: id.toString() })}
+                className={savedSchool ? 'icon-heart' : 'icon-heart-outline'}
+              />
+            }}
+          </SavedSchoolContext.Consumer>}
         </React.Fragment>
       </td>
     )

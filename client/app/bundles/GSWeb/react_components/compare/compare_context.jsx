@@ -84,6 +84,8 @@ class CompareProvider extends React.Component {
     this.findSchoolsWithReactState = this.findSchoolsWithReactState.bind(this);
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.handleSaveSchoolClick = this.handleSaveSchoolClick.bind(this);
+    this.toggleAll = this.toggleAll.bind(this);
+    this.toggleOne = this.toggleOne.bind(this);
     this.refreshAdOnScroll = this.refreshAdOnScroll.bind(this);
   }
 
@@ -253,6 +255,34 @@ class CompareProvider extends React.Component {
     return findSchools(
       Object.assign(this.propsForFindSchools(this.props), newState)
     );
+  }
+
+  toggleOne(school, booleanProp) {
+    const schools = this.state.schools.map(s => {
+      if (s.id === school.id && s.state === school.state) {
+        s[booleanProp] = !s[booleanProp];
+        return s;
+      }
+      s[booleanProp] = false;
+      return s;
+    });
+    return schools;
+  }
+
+  toggleAll(schoolKeys, property) {
+    // debugger
+    return this.state.schools.map(s => {
+      schoolKeys.forEach(key => {
+        if (s.id.toString() === key.id.toString() && s.state === key.state) {
+          s[property] = !s[property];
+        }
+      });
+      return s;
+    });
+  }
+
+  toggleHighlight(school) {
+    this.toggleSchoolProperty(school, 'highlighted', this.toggleOne);
   }
 
   trackParams = (name, oldParams, newParams) => {
