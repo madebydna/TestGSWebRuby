@@ -36,6 +36,8 @@ const CompareSchoolTable = ({
   isLoading,
   compareTableHeaders
 }) => {
+  const pinnedSchool = schools.filter(s=>s.pinned)[0];
+  const otherSchools = schools.filter(s=>!s.pinned);
   return (
     <section className="school-table">
       {
@@ -49,7 +51,8 @@ const CompareSchoolTable = ({
       <table className={isLoading ? 'loading' : undefined}>
         {tableHeaders(compareTableHeaders)}
         <tbody>
-          {schools.map(s => (
+          <CompareSchoolTableRow columns={compareTableHeaders} key={pinnedSchool.state + pinnedSchool.id} {...pinnedSchool}/>
+          {otherSchools.map(s => (
             <CompareSchoolTableRow
               columns={compareTableHeaders}
               key={s.state + s.id}
