@@ -85,6 +85,7 @@ class Compare extends React.Component {
     return (
       <CompareLayout
         searchBox={<SearchBox size={this.props.viewportSize}/>}
+        pinnedSchool={this.props.schools.filter(s=>s.pinned)[0]}
         sortSelect={<SortSelect
           includeDistance={this.props.shouldIncludeDistance}
           includeRelevance={this.props.shouldIncludeRelevance}

@@ -109,10 +109,12 @@ class CompareLayout extends React.Component {
   }
 
   renderBreadcrumbsContainer(){
+    const pinnedSchool = this.props.pinnedSchool
+    const name = <a href={pinnedSchool.links.profile}>{pinnedSchool.name}</a>
     return(
       <div className="menu-bar">
-        <span className="label">Compare test scores for</span>
-        {this.sortSelect}
+        <span className="label">Compare test scores for **TEST SCORE FROM BREAKDOWN**</span>
+         <span> from {name} to nearby schools:</span>
       </div>
     )
   }
