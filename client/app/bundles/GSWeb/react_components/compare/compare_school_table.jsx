@@ -6,10 +6,10 @@ import LoadingOverlay from 'react_components/search/loading_overlay';
 import CompareSchoolTableRow from './compare_school_table_row';
 import SchoolTableColumnHeader from 'react_components/search/school_table_column_header';
 
-const tableHeaders = (headerArray = [], tableView) => {
+const tableHeaders = (headerArray = []) => {
   const schoolHeader = [
     <SchoolTableColumnHeader
-      key={`${tableView}school`}
+      key={`school`}
       colName={capitalize(t('school'))}
       classNameTH="school"
       tooltipContent=""
@@ -17,7 +17,7 @@ const tableHeaders = (headerArray = [], tableView) => {
   ];
   let headers = headerArray.map(hash => (
     <SchoolTableColumnHeader
-      key={tableView + hash.key}
+      key={hash.key}
       colName={hash.title}
       classNameTH={hash.className}
       tooltipContent={hash.tooltip}
@@ -34,15 +34,8 @@ const tableHeaders = (headerArray = [], tableView) => {
 const CompareSchoolTable = ({
   schools,
   isLoading,
-  compareTableHeaders,
-  tableView = 'Overview'
+  compareTableHeaders
 }) => {
-  if (
-    compareTableHeaders[tableView] === undefined ||
-    compareTableHeaders[tableView].length === 0
-  ) {
-    tableView = 'Overview';
-  }
   return (
     <section className="school-table">
       {
@@ -53,12 +46,11 @@ const CompareSchoolTable = ({
           numItems={schools.length}
         />
       }
-      <table className={isLoading ? 'loading' : ''}>
-        {tableHeaders(compareTableHeaders, tableView)}
+      <table className={isLoading ? 'loading' : undefined}>
+        {tableHeaders(compareTableHeaders)}
         <tbody>
           {schools.map(s => (
             <CompareSchoolTableRow
-              tableView={tableView}
               columns={compareTableHeaders}
               key={s.state + s.id}
               {...s}
@@ -73,7 +65,7 @@ const CompareSchoolTable = ({
 CompareSchoolTable.propTypes = {
   schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
   isLoading: PropTypes.bool,
-  compareTableHeaders: PropTypes.object,
+  compareTableHeaders: PropTypes.array,
   tableView: PropTypes.string
 };
 

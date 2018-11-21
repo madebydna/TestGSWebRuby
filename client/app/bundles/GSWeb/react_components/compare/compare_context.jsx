@@ -37,8 +37,8 @@ class CompareProvider extends React.Component {
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
-    lat: PropTypes.number,
-    lon: PropTypes.number,
+    lat: PropTypes.string,
+    lon: PropTypes.string,
     distance: PropTypes.number,
     locationLabel: PropTypes.string,
     sort: PropTypes.string,
@@ -51,7 +51,7 @@ class CompareProvider extends React.Component {
     updateSort: PropTypes.func.isRequired,
     updatePage: PropTypes.func.isRequired,
     updateDistance: PropTypes.func.isRequired,
-    compareTableViewHeaders: PropTypes.object,
+    compareTableViewHeaders: PropTypes.object
   };
 
   static defaultProps = {
@@ -264,8 +264,8 @@ class CompareProvider extends React.Component {
   generateTableHeaders = () => {
     let {breakdown, sort} = this.props;
     return [
-      {title: `% of ${breakdown} Students Enrolled in School`, className: 'ethnicity-enrollment'},
-      {title: `Test Score Rating for ${breakdown} Students`, className: (sort === 'breakdown-test-score' ? 'breakdown-test-score yellow-highlight' : 'breakdown-test-score')}
+      {title: `% of ${breakdown} Students Enrolled in School`, className: 'ethnicity-enrollment', key: 'ethnicity-enrollment'},
+      {title: `Test Score Rating for ${breakdown} Students`, className: (sort === 'breakdown-test-score' ? 'breakdown-test-score yellow-highlight' : 'breakdown-test-score'), key: 'breakdown-test-score'}
     ];
   }
 

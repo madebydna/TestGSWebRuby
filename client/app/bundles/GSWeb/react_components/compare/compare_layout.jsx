@@ -75,7 +75,7 @@ function keepInViewport(
 
 class CompareLayout extends React.Component {
   static propTypes = {
-    viewportSize: PropTypes.oneOf(validSizes).isRequired,
+    size: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
   };
@@ -137,6 +137,7 @@ class CompareLayout extends React.Component {
   render() {
     return (
       <React.Fragment>
+        {this.props.searchBox}
         {this.renderBreadcrumbsContainer()}
         {this.renderFilterBar()}
         {this.renderSchoolTable()}

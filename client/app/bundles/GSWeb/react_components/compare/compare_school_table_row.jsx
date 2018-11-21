@@ -114,7 +114,7 @@ const CompareSchoolTableRow = ({
 
   let content = compareColumns(cohortPercentageForEthnicity(),testScoreRatingForEthnicity)
   return (
-    <tr className={pinned && 'row-outline'}>
+    <tr className={pinned ? 'row-outline' : undefined}>
       {schoolCard()}
       {content}
     </tr>
@@ -136,7 +136,7 @@ const compareColumns = (enrollmentForEthnicity, testScoreRatingForEthnicity) => 
       {({sort}) => (
         <React.Fragment>
           <td className="centered">{enrollmentForEthnicity}</td>
-          <td className={sort === 'breakdown-test-score' ? 'yellow-highlight' : ''}>
+          <td className={sort === 'breakdown-test-score' ? 'yellow-highlight' : undefined}>
             <RatingWithBar score={testScoreRatingForEthnicity} size='small'/>
           </td>
         </React.Fragment>
@@ -180,7 +180,7 @@ CompareSchoolTableRow.propTypes = {
   ethnicityInfo: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string,
     rating: PropTypes.number,
-    percentage: PropTypes.string
+    percentage: PropTypes.number
   })),
   links: PropTypes.shape({
     profile: PropTypes.string.isRequired

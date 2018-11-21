@@ -47,7 +47,7 @@ module CachedRatingsMethods
       {}.tap do |i|
         i[:label] = "Low-income"
         i[:rating] = low_income_rating if low_income_rating
-        i[:percentage] = free_and_reduced_lunch.gsub('%','') if free_and_reduced_lunch
+        i[:percentage] = free_and_reduced_lunch.gsub('%','')&.to_i if free_and_reduced_lunch
       end
     )
   end
@@ -57,7 +57,7 @@ module CachedRatingsMethods
       {}.tap do |e|
         e[:label] = label
         e[:rating] = ethnicity_test_score_ratings["#{label}"] if ethnicity_test_score_ratings["#{label}"]
-        e[:percentage] = ethnicity_population_percentages["#{label}"] if ethnicity_population_percentages["#{label}"]
+        e[:percentage] = ethnicity_population_percentages["#{label}"]&.to_i if ethnicity_population_percentages["#{label}"]
       end
     end
   end

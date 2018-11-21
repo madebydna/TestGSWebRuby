@@ -23,7 +23,7 @@ class Compare extends React.Component {
   };
 
   static propTypes = {
-    viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
+    size: PropTypes.oneOf(validViewportSizes).isRequired
   };
 
   constructor(props) {
@@ -84,8 +84,9 @@ class Compare extends React.Component {
   render() {
     return (
       <CompareLayout
-        searchBox={<SearchBox size={this.props.viewportSize}/>}
+        searchBox={<SearchBox size={this.props.size} />}
         pinnedSchool={this.props.schools.filter(s=>s.pinned)[0]}
+        size={this.props.size}
         sortSelect={<SortSelect
           includeDistance={this.props.shouldIncludeDistance}
           includeRelevance={this.props.shouldIncludeRelevance}
