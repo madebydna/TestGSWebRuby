@@ -37,7 +37,39 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   end
 
   def school_results
-    @_school_results ||= query_results.extend(TestScoreCalculations).select_items_with_max_year!
+    @_school_results ||= begin
+      qr = query_results.extend(TestScoreCalculations).select_items_with_max_year!
+      school_results_filter(qr)
+      # need high school only
+      # state filter
+      # test year needs to match max test year
+    end
+  end
+
+  def query_result_max_year
+    query_results.extend(TestScoreCalculations).max_year
+  end
+
+  def school_results_filter(qr)
+    data_value = qr&.first
+    state = data_value&.state&.downcase
+    data_type_id = data_value&.data_type_id
+    school_id = data_value&.school_id
+    state_filter = %w(ct il mt)
+
+    if state_filter.include?(state) && state.present? && data_type_id.present?
+      state_latest_year = RatingConfiguration.max_year(state,'test', data_type_id)
+      # require 'pry';binding.pry;
+      if state_latest_year && query_result_max_year < state_latest_year
+        school = School.find_by_state_and_id(state, school_id)
+        # require 'pry';binding.pry;
+        if school.high_school?
+          # require 'pry';binding.pry;
+          return []
+        end
+      end
+    end
+    qr
   end
 
   def query_results
