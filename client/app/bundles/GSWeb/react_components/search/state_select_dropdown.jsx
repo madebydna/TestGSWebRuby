@@ -1,28 +1,24 @@
 import React from 'react';
-import { SM, validSizes } from 'util/viewport';
 import Select from '../select';
-import { name as stateName } from 'util/states';
+import { name as stateName, abbreviation } from 'util/states';
 import PropTypes from 'prop-types';
 import SearchContext from './search_context';
-import { mySchoolList } from 'api_clients/schools';
-import { startCase, uniq } from 'lodash';
+import { startCase } from 'lodash';
 
 const StateSelectDropdown = () => {
   return(
       <SearchContext.Consumer>
-        {({ schools, currentStateFilter, updateStateFilter}) => {
-          const statesInList = schools.map(s => startCase(stateName(s.state)))
-          const uniqStates = uniq(statesInList).sort()
+        {({ mslStates, stateSelect, updateStateFilter}) => {
+            const statesInList = mslStates.map(s => startCase(stateName(s)))
+            const filteredState = statesInList.find(obj => obj === startCase(stateName(stateSelect))) || statesInList[0]
             return(
               <Select
-                objects={uniqStates}
+                objects={statesInList}
                 labelFunc={d => d}
                 keyFunc={d => d}
-                onChange={updateStateFilter}
-                defaultLabel={
-                  (uniqStates.find(obj => obj === currentStateFilter) || uniqStates[0])
-                }
-                defaultValue={uniqStates[0]}
+                onChange={d => updateStateFilter(abbreviation(d))}
+                defaultLabel={filteredState}
+                defaultValue={filteredState}
               />
             )
           }
@@ -32,3 +28,14 @@ const StateSelectDropdown = () => {
 }
 
 export default StateSelectDropdown;
+
+StateSelectDropdown.propTypes = {
+  mslStates: PropTypes.arrayOf(PropTypes.string),
+  stateSelect: PropTypes.string,
+  updateStateFilter: PropTypes.func
+};
+
+StateSelectDropdown.defaultProps = {
+  mslStates: [],
+  stateSelect: ""
+};

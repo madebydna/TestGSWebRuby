@@ -2,6 +2,7 @@ Rails.application.config.assets.precompile += [
     'widget_map.js',
     'district-boundaries.css',
     'search.css',
+    'my-saved-school-list.css',
     'widget.css',
     'widget-form.css',
     'wordpress-modals.js',
