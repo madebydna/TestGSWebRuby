@@ -4,12 +4,10 @@ class Cacher
 
   # Known data types:
   # :census
-  # :test_scores
   # :ratings
   # :school_reviews
   # :school_media
   # :esp_response
-  # :feed_test_scores
   # :gsdata
   # :courses
   # :directory
@@ -81,14 +79,11 @@ class Cacher
 
   def self.cacher_for(key)
     {
-        test_scores:      TestScoresCaching::BreakdownsCacher,
         test_scores_gsdata:     TestScoresCaching::TestScoresCacherGsdata,
-        performance:      PerformanceCaching::PerformanceCacher,
         characteristics:  CharacteristicsCaching::CharacteristicsCacher,
         esp_responses:    EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
-        feed_test_scores: FeedTestScoresCacher,
         gsdata:           GsdataCaching::GsdataCacher,
         ratings:         RatingsCaching::GsdataRatingsCacher,
         directory:        DirectoryCaching::DirectoryCacher,
@@ -115,13 +110,11 @@ class Cacher
 
   def self.registered_cachers
     @registered_cachers ||= [
-      TestScoresCaching::BreakdownsCacher,
       TestScoresCaching::TestScoresCacherGsdata,
       CharacteristicsCaching::CharacteristicsCacher,
       EspResponsesCaching::EspResponsesCacher,
       ReviewsCaching::ReviewsSnapshotCacher,
       ProgressBarCaching::ProgressBarCacher,
-      FeedTestScoresCacher,
       TestScoresCaching::FeedTestScoresCacherGsdata,
       TestScoresCaching::FeedOldTestScoresCacherGsdata,
       GsdataCaching::GsdataCacher,
