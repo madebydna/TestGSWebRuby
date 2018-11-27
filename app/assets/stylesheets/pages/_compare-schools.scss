@@ -54,6 +54,12 @@ body {
         margin-left: 20px;
       }
     }
+    &:not(.subheader) {
+      @include media-breakpoint-down(xs) {
+        padding-top: 25px;
+        line-height: 35px;
+      }
+    }
   }
 
     position: relative;
