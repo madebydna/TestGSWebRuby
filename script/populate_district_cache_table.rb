@@ -1,7 +1,7 @@
 had_any_errors = false
 
 def all_cache_keys
-  %w(ratings feed_test_scores district_schools_summary directory_census district_directory feed_district_characteristics district_characteristics test_scores_gsdata feed_test_scores_gsdata)
+  %w(ratings district_schools_summary directory_census district_directory feed_district_characteristics district_characteristics test_scores_gsdata feed_test_scores_gsdata)
 end
 
 def all_states
@@ -11,8 +11,8 @@ end
 def usage
   abort "\n\nUSAGE: rails runner script/populate_district_cache_table (all | [state]:[cache_keys]:[districts_where])
 
-Ex: rails runner script/populate_district_cache_table al:feed_test_scores de:all:9,18,23
-Ex: rails runner script/populate_district_cache_table al:feed_test_scores de:all:\"id IN (9,18,23)\"
+Ex: rails runner script/populate_district_cache_table al:feed_test_scores_gsdata de:all:9,18,23
+Ex: rails runner script/populate_district_cache_table al:feed_test_scores_gsdata de:all:\"id IN (9,18,23)\"
 
 Possible cache keys: #{all_cache_keys.join(', ')}\n\n"
 end
