@@ -17,7 +17,7 @@ class DistrictsController < ApplicationController
     @breadcrumbs = breadcrumbs
     @top_schools =  top_rated_schools
     @hero_data = hero_data
-    @academics_props = district_record.academics_props(district_cache_data_reader)
+    @academics_props = district_academics_module_props
     @reviews = reviews_formatted.reviews_list
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
@@ -26,6 +26,10 @@ class DistrictsController < ApplicationController
   end
 
   private
+
+  def district_academics_module_props
+    CommunityProfiles::Academics.district_academics_props(district_cache_data_reader)
+  end
 
   def district_cache_data_reader
     @_district_cache_data_reader ||= DistrictCacheDataReader.new(district_record, district_cache_keys: ['test_scores_gsdata', 'district_characteristics'])

@@ -1,0 +1,19 @@
+es:
+  community:
+    academics:
+      subtext: >
+        ¿Está esta escuela ofreciendo oportunidades a todos sus estudiantes, o está dejando a algunos atrás?
+        Las escuelas exitosas están trabajando para
+        <a href=%{achievement_gap_link}>
+        eliminar las diferencias en logros académicos.</a>
+      faq:
+        cta: ¿Notas que algo falta o confunde?
+        content_html: >
+          <p><span class="emphasis">¿Falta una raza o etnicidad?</span> Cuando la población de un grupo de estudiantes es demasiado pequeño para ofrecer datos fiables, no aparece en el perfil. Esto puede provocar que ciertas razas o etnicidades no sean incluidos en algunos gráficos dentro de esta sección.</p>
+          <p><span class="emphasis">¿Cómo creamos las etiquetas de raza/etnicidad?</span> Usamos los términos utilizado por el Departamento de Educación del estado para describir la información de la raza/etnicidad del estudiante.</p>
+          <ul>
+          <li>El "Todos los estudiantes" número representa el número de estudiantes que participaron en los exámenes.</li>
+          <li>La información del "% de estudiantes" refleja la porción de la población estudiantil que cada grupo de estudiantes representa. Para obtener más información sobre la demografía de los estudiantes, visite la sección "estudiantes" a continuación.</li>
+          </ul>
+          <p><span class="emphasis">¿Cómo decidimos los temas que vamos a mostrar?</span> Temas del examen que mostramos representan los temas más tomadas por la mayoría de los estudiantes en esta escuela.</p>
+          <p>Todavía tiene preguntas? Visite nuestra <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">página de preguntas frecuentes.</a></p>

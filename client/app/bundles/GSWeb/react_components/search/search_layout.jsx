@@ -10,6 +10,7 @@ import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import HelpTooltip from '../help_tooltip';
 import { loadMobileOverlayAd } from 'actions/common';
 import MobileOverlayAd from 'react_components/mobile_overlay_ad';
+import { onScroll } from 'util/scrolling';
 
 function keepInViewport(
   ref,
@@ -128,7 +129,11 @@ class SearchLayout extends React.Component {
   }
 
   componentDidMount() {
-    this.props.loadMobileOverlayAd();
+    onScroll('mobileOverlay', ({ ratioScrolledDown } = {}) => {
+      if(ratioScrolledDown > .5) {
+        this.props.loadMobileOverlayAd();
+      }
+    })
     keepInViewport(this.fixedYLayer, {
       $elementsAbove: [$('.header_un'), $('.search-body .menu-bar')],
       $elementsBelow: [$('.footer')],
@@ -300,7 +305,7 @@ class SearchLayout extends React.Component {
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
           {this.props.breadcrumbs}
-          <div className="pagination-summary">{this.props.resultSummary}</div>
+          <div className="pagination-summary" dangerouslySetInnerHTML={{ __html: this.props.resultSummary }} />
           {this.shouldRenderTable() ? (
             <div className="menu-item">{this.props.chooseTableButtons}</div>
           ) : null}
@@ -356,7 +361,8 @@ class SearchLayout extends React.Component {
               {this.shouldRenderTable() ? this.renderTableView() : null}
               {this.props.pagination}
             </div>
-            {this.props.size < SM && <MobileOverlayAd />}
+            {this.props.size < SM &&
+              !this.shouldRenderMap() && <MobileOverlayAd />}
           </React.Fragment>
         )}
       </div>

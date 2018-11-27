@@ -104,10 +104,3 @@ General comments:
 .full-width {
   width: 100%; // used in a lot of places including nav, but not profile body
 }
-
-// support for previous bootstrap version  TODO: research, remove, and test
-@media (min-width: $screen-sm-min) {
-  .hidden-xs {
-    display: block;
-  }
-}

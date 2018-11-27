@@ -86,7 +86,7 @@ const SchoolTableRow = ({
             <br/>
               {addressPhrase && <div className="address">{addressPhrase}</div>}
               {homesForSaleHref && (
-                  <div>
+                  <div className="homes-for-sale">
                     <span className="icon icon-house"/>
                     <a
                         href={homesForSaleHref}
@@ -224,7 +224,7 @@ const renderNoInfoTooltip = () => {
   const noInfo =
     <div className="tooltip-content">
       <p>{t('no_info')} 
-        <a href={links.tableview_faq} target="_blank">
+        <a href={links.tableviewFaq} target="_blank">
           {` ${t('visit our FAQ page')}.`}
         </a>
       </p>

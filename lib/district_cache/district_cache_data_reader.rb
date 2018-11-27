@@ -31,29 +31,32 @@ class DistrictCacheDataReader
 
   def flat_test_scores_for_latest_year
     @_flat_test_scores_for_latest_year ||= begin
-      hashes = test_scores.each_with_object([]) do |(data_type, array_of_hashes), array|
-        array.concat(
-          array_of_hashes.map do |test_scores_hash|
-            {
-              data_type: data_type,
-              description: test_scores_hash['description'],
-              source_name: test_scores_hash['source_name'],
-              breakdowns: test_scores_hash['breakdowns'],
-              breakdown_tags: test_scores_hash['breakdown_tags'],
-              source_date_valid: test_scores_hash['source_date_valid'],
-              academics: test_scores_hash['academics'],
-              grade: test_scores_hash['grade'],
-              district_value: test_scores_hash['district_value'],
-              district_cohort_count: test_scores_hash['district_cohort_count'],
-              state_cohort_count: test_scores_hash['state_cohort_count'],
-              state_value: test_scores_hash['state_value'],
-            }
-          end
-        )
+      if test_scores.any? {|test_score| test_score.is_a?(Hash)}
+        array_of_hashes = test_scores.map {|hash| hash.stringify_keys}
+        GsdataCaching::GsDataValue.from_array_of_hashes(array_of_hashes).having_most_recent_date
+      else
+        hashes = test_scores.each_with_object([]) do |(data_type, hash_array), array|
+          array.concat(
+            hash_array.map do |test_scores_hash|
+              {
+                data_type: data_type,
+                description: test_scores_hash['description'],
+                source_name: test_scores_hash['source_name'],
+                breakdowns: test_scores_hash['breakdowns'],
+                breakdown_tags: test_scores_hash['breakdown_tags'],
+                source_date_valid: test_scores_hash['source_date_valid'],
+                academics: test_scores_hash['academics'],
+                grade: test_scores_hash['grade'],
+                district_value: test_scores_hash['district_value'],
+                district_cohort_count: test_scores_hash['district_cohort_count'],
+                state_cohort_count: test_scores_hash['state_cohort_count'],
+                state_value: test_scores_hash['state_value'],
+              }
+            end
+          )
+        end
+        GsdataCaching::GsDataValue.from_array_of_hashes(hashes).having_most_recent_date
       end
-      GsdataCaching::GsDataValue.from_array_of_hashes(hashes).having_most_recent_date
-      # array_of_hashes = test_scores.map {|hash| hash.stringify_keys}
-      # GsdataCaching::GsDataValue.from_array_of_hashes(array_of_hashes).having_most_recent_date
     end
   end
 
