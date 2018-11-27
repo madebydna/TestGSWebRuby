@@ -6,7 +6,7 @@ body {
   .menu-bar {
     background-color: #fff;
     box-shadow: 0px 1px 1px #dddddd;
-    border-top: 1px solid #ebedee;
+    //border-top: 1px solid #ebedee;
     padding: 10px 15px 10px 15px;
     z-index: 1;
     a {
@@ -30,6 +30,8 @@ body {
     * + * {
       margin-top: 5px;
     }
+    background: none;
+    box-shadow: none;
   }
 
   .menu-bar {
@@ -89,21 +91,33 @@ body {
     }
 
   .school-table {
-    overflow-x: scroll;
     width: 100%;
     position: relative;
     padding: 5px 15px 10px 15px;
 
     table {
       table-layout: fixed;
-      width: 991px;
-      background-color: white; 
+      min-width: 991px;
+      background-color: white;
+      margin: auto;
       @include media-breakpoint-up(lg) {
         width: 100%;
       }
 
-      .yellow-highlight {
-        background-color: rgba(255, 250, 80, 0.4);
+      thead tr:nth-child(1) th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+
+      tbody tr:nth-child(1) td {
+        position: sticky;
+        top: 98px;
+        z-index: 2;
+      }
+
+      th.table-headers {
+        height: 98px;
       }
 
       th.school.table-headers {
@@ -138,7 +152,14 @@ body {
       }
 
       tr.row-outline {
-        border: 2px solid #176997;
+        //border: 3px solid #176997;
+        td {
+          background: #94DCF9;
+        }
+      }
+
+      tr td.yellow-highlight {
+        background-color: #FCFFA2;
       }
 
       td.pinned {
@@ -179,13 +200,11 @@ body {
       th {
         color: $gray-darker;
         font-weight: normal;
-        text-align: left;
         background-color: #f1fafd;
         text-align: center;
       }
       th.school {
         width: 320px;
-        text-align: left;
       }
 
       td.school {
@@ -234,6 +253,9 @@ body {
         // overwrites td.school
         > div:last-child { top: 20px}
       }
+    }
+    @media (max-width: 823px) {
+      overflow-x: scroll;
     }
   }
   .icon-star {
