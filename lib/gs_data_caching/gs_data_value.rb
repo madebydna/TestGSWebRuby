@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class represents the inner-most flat hash that is stored
 # in the gsdata cache
 class GsdataCaching::GsDataValue
@@ -157,7 +159,7 @@ class GsdataCaching::GsDataValue
       reduce([]) do |array, dv|
         array.concat(
           (dv.breakdown_tags || '').split(',').map do |tag|
-            dv.clone.tap { |_dv| _dv.breakdown_tags = tag }
+            dv.clone.tap { |dv_| dv_.breakdown_tags = tag }
           end
         )
       end.extend(CollectionMethods)
@@ -500,21 +502,18 @@ class GsdataCaching::GsDataValue
     :academics,
     :academic_tags,
     :academic_types,
-    :grade,
     :proficiency_band_id,
     :proficiency_band_name,
     :cohort_count,
     :school_value,
     :state_value,
     :district_value,
-    :source_year,
     :source_date_valid,
     :source_name,
     :data_type,
     :description,
     :methodology,
     :grade,
-    :academics,
     :percentage,
     :narrative,
     :label
