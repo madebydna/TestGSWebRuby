@@ -11,6 +11,7 @@ import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import withViewportSize from 'react_components/with_viewport_size';
 import SortSelect from 'react_components/search/sort_select';
+import BreakdownSelect from './breakdown_select';
 import CompareSchoolTable from './compare_school_table';
 import '../../vendor/remodal';
 import { find as findSchools } from 'api_clients/schools';
@@ -82,10 +83,11 @@ class Compare extends React.Component {
   }
 
   render() {
+    const pinnedSchool = this.props.schools.filter(s => s.pinned)[0];
     return (
       <CompareLayout
         searchBox={<SearchBox size={this.props.size} />}
-        pinnedSchool={this.props.schools.filter(s=>s.pinned)[0]}
+        pinnedSchool={pinnedSchool}
         size={this.props.size}
         sortSelect={<SortSelect
           includeDistance={this.props.shouldIncludeDistance}
@@ -97,6 +99,10 @@ class Compare extends React.Component {
             }]
           }
         />}
+        breakdownSelect={<BreakdownSelect
+          breakdowns={pinnedSchool.ethnicityBreakdowns}
+        />
+        }
         schoolTable={
           <CompareSchoolTable
             schools={this.props.schools}

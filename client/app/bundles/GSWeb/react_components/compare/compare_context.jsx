@@ -99,7 +99,8 @@ class CompareProvider extends React.Component {
       !isEqual(prevProps.entityTypes, this.props.entityTypes) ||
       !isEqual(prevProps.sort, this.props.sort) ||
       !isEqual(prevProps.page, this.props.page) ||
-      !isEqual(prevProps.distance, this.props.distance)
+      !isEqual(prevProps.distance, this.props.distance) ||
+      !isEqual(prevProps.breakdown, this.props.breakdown)
     ) {
       this.updateSchools();
     }
@@ -294,6 +295,7 @@ class CompareProvider extends React.Component {
   generateTableHeaders = () => {
     let {breakdown, sort} = this.props;
     return [
+      {title: t('Total students enrolled'), className: 'total-enrollment', key: 'total-enrollment'},
       {title: `% of ${breakdown} Students Enrolled in School`, className: 'ethnicity-enrollment', key: 'ethnicity-enrollment'},
       {title: `Test Score Rating for ${breakdown} Students`, className: (sort === 'breakdown-test-score' ? 'breakdown-test-score yellow-highlight' : 'breakdown-test-score'), key: 'breakdown-test-score'}
     ];
@@ -359,6 +361,12 @@ class CompareProvider extends React.Component {
                     this.scrollToTop,
                     this.props.updateSort,
                     curry(this.trackParams)('Sort', this.props.sort)
+                  ),
+                  breakdown: this.props.breakdown,
+                  onBreakdownChanged: compose(
+                    this.scrollToTop,
+                    this.props.updateBreakdown,
+                    curry(this.trackParams)('Breakdown', this.props.breakdown)
                   )
                 }}
               >

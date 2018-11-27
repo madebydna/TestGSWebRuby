@@ -137,6 +137,10 @@ export function queryStringWithNewStateAndId(state, id){
   return getQueryStringWithUpdatedParams({state, id})
 }
 
+export function queryStringWithNewBreakdown(breakdown){
+  return getQueryStringWithUpdatedParams({breakdown})
+}
+
 export function queryStringWithNewDistance(distance) {
   const page = parsePage(1);
   return getQueryStringWithUpdatedParams({

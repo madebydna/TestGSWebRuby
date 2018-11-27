@@ -59,6 +59,7 @@ class Api::SchoolSerializer
       distance = value_from_decorated_school(school, :distance)
       subratings = value_from_decorated_school(school, :subratings)
       ethnicity_information = value_from_decorated_school(school, :ethnicity_information_for_tableview)
+      compare_ethnicity_breakdowns = value_from_decorated_school(school, :ethnicity_breakdowns)
       saved_school = value_from_decorated_school(school, :saved_school)
       h[:boundaries] = school.boundaries if school.respond_to?(:boundaries)
       h[:enrollment] = enrollment&.to_i if enrollment
@@ -68,6 +69,7 @@ class Api::SchoolSerializer
       h[:studentsPerTeacher] = students_per_teacher if students_per_teacher
       h[:subratings] = subratings if subratings
       h[:ethnicityInfo] = ethnicity_information if ethnicity_information
+      h[:ethnicityBreakdowns] = compare_ethnicity_breakdowns if compare_ethnicity_breakdowns && school.respond_to?(:pinned)
       h[:savedSchool] = saved_school if saved_school
     end
   end

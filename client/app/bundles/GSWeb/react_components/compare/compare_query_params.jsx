@@ -51,6 +51,9 @@ export default class CompareQueryParams extends React.Component {
       updateDistance: distance => {
         pushQueryString(queryParams.queryStringWithNewDistance(distance));
       },
+      updateBreakdown: breakdown => {
+        pushQueryString(queryParams.queryStringWithNewBreakdown(breakdown));
+      }
     };
 
     return this.props.children(extraProps);

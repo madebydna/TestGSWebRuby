@@ -120,13 +120,22 @@ const CompareSchoolTableRow = ({
       </React.Fragment>
     )
   }
-
-  let content = compareColumns(cohortPercentageForEthnicity(),testScoreRatingForEthnicity)
+  let content = compareColumns(enrollment,cohortPercentageForEthnicity(),testScoreRatingForEthnicity);  
   return (
-    <tr className={pinned ? 'row-outline' : undefined}>
-      {schoolCard()}
-      {content}
-    </tr>
+    <CompareContext.Consumer>
+      {({ breakdown }) => {
+        let shouldRenderSchoolRow = false;
+        ethnicityInfo.forEach(eth => {
+          if (eth.label === breakdown){
+            shouldRenderSchoolRow = true;
+          }
+        })
+        return shouldRenderSchoolRow && <tr className={pinned ? 'row-outline' : undefined}>
+          {schoolCard()}
+          {content}
+        </tr>
+      }}
+    </CompareContext.Consumer>
   );
 };
 
@@ -139,11 +148,12 @@ const reviewType = (numReviews, reviews, parentRating) => {
   )
 }
 
-const compareColumns = (enrollmentForEthnicity, testScoreRatingForEthnicity) => {
+const compareColumns = (enrollment,enrollmentForEthnicity, testScoreRatingForEthnicity) => {
   return (
     <CompareContext.Consumer>
       {({sort}) => (
         <React.Fragment>
+          <td className="centered">{enrollment.toLocaleString()}</td>
           <td className="centered">{enrollmentForEthnicity}</td>
           <td className={sort === 'breakdown-test-score' ? 'yellow-highlight' : undefined}>
             <RatingWithBar score={testScoreRatingForEthnicity} size='small'/>
