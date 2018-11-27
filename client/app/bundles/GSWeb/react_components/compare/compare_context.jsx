@@ -27,7 +27,7 @@ import DistanceContext from 'react_components/search/distance_context';
 import { set as setCookie } from 'js-cookie';
 import { t } from 'util/i18n';
 import { showMessageTooltip } from '../../util/message_tooltip';
-const gonSearch = (window.gon || {}).search || {};
+const gonCompare = (window.gon || {}).compare || {};
 const { Provider, Consumer } = React.createContext();
 
 class CompareProvider extends React.Component {
@@ -57,7 +57,7 @@ class CompareProvider extends React.Component {
   static defaultProps = {
     lat: null,
     lon: null,
-    schools: gonSearch.schools,
+    schools: gonCompare.schools,
     loadingSchools: false,
     shouldIncludeDistance: false,
     autoSuggestQuery: () => {},
@@ -65,7 +65,8 @@ class CompareProvider extends React.Component {
     q: null,
     layout: 'Search',
     schoolKeys: [],
-    numOfSchools: 0
+    numOfSchools: 0,
+    tableHeaders: gonCompare.tableHeaders
   };
 
   constructor(props) {
@@ -292,16 +293,6 @@ class CompareProvider extends React.Component {
     return newParams;
   };
 
-  generateTableHeaders = () => {
-    let {breakdown, sort} = this.props;
-    return [
-      {title: t('Total students enrolled'), className: 'total-enrollment', key: 'total-enrollment'},
-      {title: `% of ${breakdown} Students Enrolled in School`, className: 'ethnicity-enrollment', key: 'ethnicity-enrollment'},
-      {title: `Test Score Rating for ${breakdown} Students`, className: (sort === 'breakdown-test-score' ? 'breakdown-test-score yellow-highlight' : 'breakdown-test-score'), key: 'breakdown-test-score'}
-    ];
-  }
-
-
   render() {
     return (
       <Provider
@@ -317,7 +308,7 @@ class CompareProvider extends React.Component {
           lon: this.props.lon,
           refreshAdOnScroll: this.refreshAdOnScroll,
           locationLabel: this.props.locationLabel,
-          compareTableHeaders: this.generateTableHeaders(),
+          compareTableHeaders: this.props.tableHeaders,
           breakdown: this.props.breakdown,
           sort: this.props.sort
         }}

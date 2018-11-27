@@ -58,6 +58,10 @@ module CachedRatingsMethods
       .map {|filtered_breakdown| filtered_breakdown[:label]}
   end
 
+  def translated_ethnicity_breakdowns_with_fallback
+    ethnicity_breakdowns.map {|breakdown| I18n.t(breakdown) || breakdown}
+  end
+
   def ethnicity_information
     ethnicity_labels.map do |label|
       {}.tap do |e|

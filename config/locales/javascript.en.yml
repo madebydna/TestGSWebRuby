@@ -1,6 +1,9 @@
 ---
 en:
   javascript:
+    compare_test_scores_for: Compare test scores for
+    from: from
+    to_nearby_schools: to nearby schools
     Academics: Academics
     Saved!: Saved!
     No listings found: No listings found

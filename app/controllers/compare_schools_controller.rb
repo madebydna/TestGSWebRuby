@@ -13,9 +13,10 @@ class CompareSchoolsController < ApplicationController
   before_filter :redirect_unless_school_id_and_state
 
   def show
-    gon.search = {
+    gon.compare = {
       schools: serialized_schools,
-      sort: sort
+      sort: sort,
+      tableHeaders: table_headers
     }
     # LEGACY################################################
     # require_state

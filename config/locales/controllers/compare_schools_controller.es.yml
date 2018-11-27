@@ -1,0 +1,6 @@
+es:
+  controllers:
+    compare_schools_controller:
+      total_students_enrolled: Número de estudiantes
+      percentage_of_students: "% de estudiantes %{ethnicity} matriculados en esta escuela"
+      test_score_rating_for: "Los resultados de exámenes de estudiantes %{ethnicity}"

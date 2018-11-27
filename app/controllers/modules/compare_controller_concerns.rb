@@ -141,4 +141,16 @@ module CompareControllerConcerns
     5
   end
 
+  def translated_ethnicity_with_fallback
+    @_translated_ethnicity ||= I18n.t(ethnicity) || ethnicity
+  end
+
+  def table_headers
+    [
+      {title: I18n.t('total_students_enrolled', scope: 'controllers.compare_schools_controller'), className: 'total-enrollment', key: 'total-enrollment'},
+      {title: I18n.t('percentage_of_students', scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: 'ethnicity-enrollment', key: 'ethnicity-enrollment'},
+      {title: I18n.t('test_score_rating_for', scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: (sort == 'testscores' ? 'breakdown-test-score yellow-highlight' : 'breakdown-test-score'), key: 'breakdown-test-score'}
+    ]
+  end
+
 end

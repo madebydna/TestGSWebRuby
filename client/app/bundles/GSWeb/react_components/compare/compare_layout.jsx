@@ -113,9 +113,9 @@ class CompareLayout extends React.Component {
     const name = <a href={pinnedSchool.links.profile}>{pinnedSchool.name}</a>
     return(
       <div className="menu-bar">
-        <span className="label">Compare test scores for</span>
+        <span className="label">{t('compare_test_scores_for')}</span>
           {this.props.breakdownSelect}
-          <span> from {name} to nearby schools:</span>
+          <span>{t('from')} {name} {t('to_nearby_schools')}:</span>
       </div>
     )
   }
