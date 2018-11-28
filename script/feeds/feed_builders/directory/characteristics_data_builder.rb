@@ -98,13 +98,73 @@ module Feeds
       end
     end
 
-    def self.student_teacher_ratio(data, universal_id, data_type)
+    def self.teacher_experience(data, universal_id, data_type)
+      if data.present? && data.first && data.first[value_var]
+        options = {}
+        options[:value] = (100.00 - data.first[value_var].to_f).round(2)
+        options[:year] = year_from_source_date_valid(data)
+        options[:universal_id] = universal_id
+        build_structure('percentage-of-teachers-with-3-or-more-years-experience', options)
+      end
+    end
+
+    def self.percentage_teachers_certified(data, universal_id, data_type)
+      if data.present? && data.first && data.first[value_var]
+        options = {}
+        options[:value] = data.first[value_var].to_f.round(1)
+        options[:year] = year_from_source_date_valid(data)
+        options[:universal_id] = universal_id
+        build_structure('percentage-of-full-time-teachers-who-are-certified', options)
+      end
+    end
+
+    def self.average_teacher_salary(data, universal_id, data_type)
+      if data.present? && data.first && data.first[value_var]
+        options = {}
+        options[:value] = data.first[value_var].to_f.round(1)
+        options[:year] = year_from_source_date_valid(data)
+        options[:universal_id] = universal_id
+        build_structure('average-teacher-salary', options)
+      end
+    end
+
+    def self.male(data, universal_id, data_type)
       if data.present? && data.first && data.first[value_var]
         options = {}
         options[:value] = data.first[value_var].to_f.round(1)
         options[:year] = data.first['year']
         options[:universal_id] = universal_id
+        build_structure('percentage-male', options)
+      end
+    end
+
+    def self.female(data, universal_id, data_type)
+      if data.present? && data.first && data.first[value_var]
+        options = {}
+        options[:value] = data.first[value_var].to_f.round(1)
+        options[:year] = data.first['year']
+        options[:universal_id] = universal_id
+        build_structure('percentage-female', options)
+      end
+    end
+
+    def self.student_teacher_ratio(data, universal_id, data_type)
+      if data.present? && data.first && data.first[value_var]
+        options = {}
+        options[:value] = data.first[value_var].to_f.round(1)
+        options[:year] = year_from_source_date_valid(data)
+        options[:universal_id] = universal_id
         build_structure('student-teacher-ratio', options)
+      end
+    end
+
+    def self.student_counselor_ratio(data, universal_id, data_type)
+      if data.present? && data.first && data.first[value_var]
+        options = {}
+        options[:value] = data.first[value_var].to_f.round(1)
+        options[:year] = year_from_source_date_valid(data)
+        options[:universal_id] = universal_id
+        build_structure('student-counselor-ratio', options)
       end
     end
 
@@ -114,6 +174,10 @@ module Feeds
 
     def self.capture_misses(key)
       single_data_object(key, 'missed')
+    end
+
+    def self.year_from_source_date_valid(data)
+      data.first['source_date_valid'].to_date.year
     end
 
     def self.value_var

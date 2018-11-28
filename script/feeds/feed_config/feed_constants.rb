@@ -2,9 +2,9 @@ module Feeds
   module FeedConstants
       FEED_CACHE_KEYS = %w(feed_test_scores ratings)
 
-      DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_characteristics)
+      DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_characteristics gsdata)
 
-      DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_district_characteristics)
+      DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_district_characteristics gsdata)
 
       WITH_NO_BREAKDOWN = 'with_no_breakdown'
 
@@ -95,11 +95,12 @@ module Feeds
 
       # this is a white list of keys we are looking for - executes a method to handle type of data
       CHARACTERISTICS_MAPPING = [
-          {
-              key: 'Student teacher ratio',
-              method: 'student_teacher_ratio',
-              google_key: 'Student teacher ratio'
-          },
+          # comes from gsdata now
+          # {
+          #     key: 'Student teacher ratio',
+          #     method: 'student_teacher_ratio',
+          #     google_key: 'Student teacher ratio'
+          # },
           {
               key: 'Head official name',
               method: 'straight_text_value',
@@ -268,6 +269,41 @@ module Feeds
               key: 'Ethnicity',
               method: 'ethnicity',
               google_key: 'Ethnicity'
+          },
+          {
+              key: 'Ratio of teacher salary to total number of teachers',
+              method: 'average_teacher_salary',
+              google_key: 'Average teacher salary'
+          },
+          {
+              key: 'Percentage of full time teachers who are certified',
+              method: 'percentage_teachers_certified',
+              google_key: 'Percentage of full time teachers who are certified'
+          },
+          {
+              key: 'Percentage of teachers with less than three years experience',
+              method: 'teacher_experience',
+              google_key: 'Percentage of teachers with 3 or more years experience'
+          },
+          {
+              key: 'Ratio of students to full time teachers',
+              method: 'student_teacher_ratio',
+              google_key: 'Ratio of students to full time teachers'
+          },
+          {
+              key: 'Ratio of students to full time counselors',
+              method: 'student_counselor_ratio',
+              google_key: 'Ratio of students to full time counselors'
+          },
+          {
+              key: 'Female',
+              method: 'female',
+              google_key: 'Percentage of female students'
+          },
+          {
+              key: 'Male',
+              method: 'male',
+              google_key: 'Percentage of male students'
           }
       ].freeze
 

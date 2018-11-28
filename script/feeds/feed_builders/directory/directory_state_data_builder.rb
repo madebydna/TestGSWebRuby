@@ -5,6 +5,9 @@ module Feeds
 
     DIRECTORY_STATE_KEYS = %w(universal_id state_name state census_info)
 
+    CACHE_KEY_CHARACTERISTICS = 'state_characteristics'
+    CACHE_KEY_GSDATA = 'gsdata'
+
     def self.build_data(state)
       @state = state.upcase
       @universal_id = UniversalId.calculate_universal_id(@state).to_i.to_s
@@ -40,8 +43,23 @@ module Feeds
     end
 
     def self.state_data
-      state_characteristics_data = StateCache.for_state('state_characteristics', @state)
-      state_characteristics_data.cache_data if state_characteristics_data
+      state_gsdata = gsdata
+      state_characteristics_data = characteristics_data
+      if state_gsdata
+        state_gsdata.merge(state_characteristics_data)
+      else
+        state_characteristics_data
+      end
+    end
+
+    def self.characteristics_data
+      state_characteristics_data = StateCache.for_state(CACHE_KEY_CHARACTERISTICS, @state)
+      state_characteristics_data&.cache_data
+    end
+
+    def self.gsdata
+      state_gsdata = StateCache.for_state(CACHE_KEY_GSDATA, @state)
+      state_gsdata&.cache_data
     end
 
   end
