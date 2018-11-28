@@ -366,9 +366,9 @@ class MySchoolListLayout extends React.Component {
   render() {
     return (
       <div className="search-body" id="my-school-list-page">
-        {this.props.size > SM
+        {this.props.numOfSchools > 0 && (this.props.size > SM
           ? this.renderDesktopFilterBar()
-          : this.renderMobileMenuBar()}
+          : this.renderMobileMenuBar())}
         {}
         {this.props.noResults ? (
           <React.Fragment>
