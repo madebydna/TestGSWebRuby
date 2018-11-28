@@ -42,6 +42,7 @@ class CompareProvider extends React.Component {
     distance: PropTypes.number,
     locationLabel: PropTypes.string,
     sort: PropTypes.string,
+    breakdownParam: PropTypes.string,
     page: PropTypes.number,
     pageSize: PropTypes.number,
     resultSummary: PropTypes.string,
@@ -66,7 +67,7 @@ class CompareProvider extends React.Component {
     layout: 'Search',
     schoolKeys: [],
     numOfSchools: 0,
-    tableHeaders: gonCompare.tableHeaders
+    breakdownParam: ''
   };
 
   constructor(props) {
@@ -77,7 +78,9 @@ class CompareProvider extends React.Component {
       loadingSchools: false,
       size: viewportSize(),
       currentStateFilter: null,
-      adRefreshed: false
+      adRefreshed: false,
+      breakdown: gonCompare.breakdown,
+      tableHeaders: gonCompare.tableHeaders
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
@@ -101,7 +104,7 @@ class CompareProvider extends React.Component {
       !isEqual(prevProps.sort, this.props.sort) ||
       !isEqual(prevProps.page, this.props.page) ||
       !isEqual(prevProps.distance, this.props.distance) ||
-      !isEqual(prevProps.breakdown, this.props.breakdown)
+      !isEqual(prevProps.breakdownParam, this.props.breakdownParam)
     ) {
       this.updateSchools();
     }
@@ -135,12 +138,13 @@ class CompareProvider extends React.Component {
   updateSchools() {
     this.setState(
       {
-        loadingSchools: true
+        loadingSchools: true,
+        breakdown: this.props.breakdownParam
       },
       () => {
         const start = Date.now();
         this.findSchoolsWithReactState().done(
-          ({ items: schools, totalPages, paginationSummary, resultSummary }) =>
+          ({ items: schools, totalPages, paginationSummary, resultSummary, tableHeaders }) =>
             setTimeout(
               () =>
                 this.setState({
@@ -148,6 +152,7 @@ class CompareProvider extends React.Component {
                   totalPages,
                   paginationSummary,
                   resultSummary,
+                  tableHeaders,
                   loadingSchools: false
                 }),
               500 - (Date.now() - start)
@@ -224,7 +229,7 @@ class CompareProvider extends React.Component {
       levelCodes: [...props.levelCodes],
       schoolId: props.schoolId,
       state: props.state,
-      breakdown: props.breakdown,
+      breakdown: props.breakdownParam,
       entityTypes: props.entityTypes,
       lat: props.lat,
       lon: props.lon,
@@ -272,7 +277,6 @@ class CompareProvider extends React.Component {
   }
 
   toggleAll(schoolKeys, property) {
-    // debugger
     return this.state.schools.map(s => {
       schoolKeys.forEach(key => {
         if (s.id.toString() === key.id.toString() && s.state === key.state) {
@@ -308,8 +312,8 @@ class CompareProvider extends React.Component {
           lon: this.props.lon,
           refreshAdOnScroll: this.refreshAdOnScroll,
           locationLabel: this.props.locationLabel,
-          compareTableHeaders: this.props.tableHeaders,
-          breakdown: this.props.breakdown,
+          compareTableHeaders: this.state.tableHeaders,
+          breakdown: this.state.breakdown,
           sort: this.props.sort
         }}
       >
@@ -353,11 +357,11 @@ class CompareProvider extends React.Component {
                     this.props.updateSort,
                     curry(this.trackParams)('Sort', this.props.sort)
                   ),
-                  breakdown: this.props.breakdown,
+                  breakdown: this.state.breakdown,
                   onBreakdownChanged: compose(
                     this.scrollToTop,
                     this.props.updateBreakdown,
-                    curry(this.trackParams)('Breakdown', this.props.breakdown)
+                    curry(this.trackParams)('Breakdown', this.state.breakdown)
                   )
                 }}
               >

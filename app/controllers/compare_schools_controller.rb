@@ -15,6 +15,7 @@ class CompareSchoolsController < ApplicationController
   def show
     gon.compare = {
       schools: serialized_schools,
+      breakdown: ethnicity,
       sort: sort,
       tableHeaders: table_headers
     }
@@ -40,6 +41,7 @@ class CompareSchoolsController < ApplicationController
     # set_data_layer_variables
     #
     # @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
+
   end
 
   def fetch_schools
@@ -48,7 +50,8 @@ class CompareSchoolsController < ApplicationController
         prev: self.prev_offset_url(page_of_results),
         next: self.next_offset_url(page_of_results),
       },
-      items: serialized_schools
+      items: serialized_schools,
+      tableHeaders: table_headers
     }.merge(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
     .merge(Api::PaginationSerializer.new(page_of_results).to_hash)
   end
@@ -77,8 +80,21 @@ class CompareSchoolsController < ApplicationController
     end
   end
 
+  # def ethnicity
+  #   require 'pry';binding.pry
+  #   @_ethnicity ||= breakdown_array.include?(params[:breakdown]) ? params[:breakdown] : breakdown_array.sort.first
+  # end
+
   def ethnicity
-    params[:breakdown]
+    pinned_school_ethnicity_breakdowns.include?(params[:breakdown]) ? params[:breakdown] : pinned_school_ethnicity_breakdowns.sort.first
+  end
+
+  def pinned_school_ethnicity_breakdowns
+    @breakdowns ||=begin
+      school = School.on_db("#{state}").find("#{school_id}")
+      school = send("add_ratings", school) if respond_to?("add_ratings", true)
+      SchoolCacheQuery.decorate_schools([school], *cache_keys).first.ethnicity_breakdowns
+    end
   end
 
   def school_id
