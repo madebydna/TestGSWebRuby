@@ -39,13 +39,13 @@ body {
   }
 
   .menu-bar {
+    // Hide select dropdown on IE10+ browsers
+    select::-ms-expand {
+      display: none;
+    }
     .menu-item {
       display: inline-block;
       cursor: pointer;
-      // Hide select dropdown on IE10+ browsers
-      select::-ms-expand {
-        display: none;
-      }
       > * + * {
         margin-left: 5px;
       }
