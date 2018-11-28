@@ -52,6 +52,7 @@ const CompareSchoolTableRow = ({
   columns,
   ethnicityInfo,
   savedSchool,
+  sort
 }) => {
   let addressPhrase = [address.street1, address.city, state, address.zip]
     .filter(s => !!s && s.length > 0)
@@ -60,9 +61,17 @@ const CompareSchoolTableRow = ({
     addressPhrase = null;
   }
 
+  const schoolClass = () => {
+    let baseClass = pinned ? 'school pinned' : 'school';
+    if (['name', 'distance', 'rating'].includes(sort)) {
+      return `${baseClass} yellow-highlight`
+    }
+    return baseClass
+  }
+
   const schoolCard = () => {
     return (
-      <td className={pinned ? 'school pinned' : 'school'}>
+      <td className={schoolClass()}>
         {pinned && <div>COMPARE THIS SCHOOL TO SCHOOLS BELOW</div>}
         <React.Fragment key={state + id}>
           <span><RatingWithTooltip rating={rating} ratingScale={ratingScale} /></span>
@@ -90,6 +99,18 @@ const CompareSchoolTableRow = ({
           </SavedSchoolContext.Consumer>}
         </React.Fragment>
       </td>
+    )
+  };
+
+  const compareColumns = (enrollment, enrollmentForEthnicity, testScoreRatingForEthnicity) => {
+    return (
+      <React.Fragment>
+        <td className="centered">{enrollment.toLocaleString()}</td>
+        <td className="centered">{enrollmentForEthnicity}</td>
+        <td className={sort === 'testscores' ? 'yellow-highlight' : undefined}>
+          <RatingWithBar score={testScoreRatingForEthnicity} size='small'/>
+        </td>
+      </React.Fragment>
     )
   };
 
@@ -147,22 +168,6 @@ const reviewType = (numReviews, reviews, parentRating) => {
     </React.Fragment>
   )
 }
-
-const compareColumns = (enrollment,enrollmentForEthnicity, testScoreRatingForEthnicity) => {
-  return (
-    <CompareContext.Consumer>
-      {({sort}) => (
-        <React.Fragment>
-          <td className="centered">{enrollment.toLocaleString()}</td>
-          <td className="centered">{enrollmentForEthnicity}</td>
-          <td className={sort === 'breakdown-test-score' ? 'yellow-highlight' : undefined}>
-            <RatingWithBar score={testScoreRatingForEthnicity} size='small'/>
-          </td>
-        </React.Fragment>
-      )}
-    </CompareContext.Consumer>
-  )
-};
 
 const renderNoInfoTooltip = () => {
   const noInfo =
