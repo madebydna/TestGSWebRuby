@@ -470,12 +470,18 @@ body {
     }
     @include media-breakpoint-up(md){
       thead tr:nth-child(1) th {
-        position: fixed;
         position: sticky;
         //offset height of navbar and menu-bar
         top: 117.5px;
         z-index: 2;
         box-shadow: 1px 1px 1px -1px #c1d2d9;
+      }
+      // resets on IE11 since issues occurs on fixed table headers
+      @media all and (-ms-high-contrast: none){
+        thead tr:nth-child(1) th  {
+          position: relative;
+          top: 0px;
+        }
       }
     }
 
