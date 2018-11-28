@@ -476,12 +476,13 @@ body {
         z-index: 2;
         box-shadow: 1px 1px 1px -1px #c1d2d9;
       }
-      // resets on IE11 since issues occurs on fixed table headers
+      // remove sticky options from IE10+ since no support for sticky and some 
+      // issues occur when trying to position fix the table headers
       @media all and (-ms-high-contrast: none){
         thead tr:nth-child(1) th  {
           position: relative;
           top: 0px;
-          z-index: 1;
+          z-index: 0;
         }
       }
     }
