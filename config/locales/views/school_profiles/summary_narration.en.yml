@@ -11,7 +11,7 @@ en:
       about: about
       below: below
       Summary Rating_html: >
-        <span class="emphasis">This school is rated %{rating_string} average</span> in school quality compared to other schools in the state. Students here
+        <span class="emphasis">This school is rated %{rating_string} average</span> in school quality compared to other schools in %{state_name}. Students here
       Summary Rating_school_name_html: >
         <span class="emphasis">%{school_name} is rated %{rating_string} average</span> in school quality compared to other schools in %{state_name}. Students here
       Test Scores_html: >
@@ -33,8 +33,8 @@ en:
       Test scores only pre more_html: >
         <span class="emphasis">*This school is rated %{rating_string} average</span> based on how its students perform
       Test scores only post more_html: >
-         on state tests compared with other schools in the state. However, test scores are only one aspect of school quality.
+         on state tests compared with other schools in %{state_name}. However, test scores are only one aspect of school quality.
          <br/><br/>In most states, we show a <a href="%{ratings_path}">Summary Rating</a> which  is based on multiple measures, including
          information like college readiness, student progress, advanced coursework, and how well a school is serving
-         students from all racial/ethnic and socioeconomic groups. <br/><br/>This state does not have sufficient information
+         students from all racial/ethnic and socioeconomic groups. <br/><br/>%{state_name} does not have sufficient information
          for us to generate a Summary Rating, which is why we instead display the school’s Test Score Rating.
