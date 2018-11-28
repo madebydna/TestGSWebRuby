@@ -1,13 +1,14 @@
 module CitiesMetaTagsConcerns
   def cities_show_title
-    state_text = @state[:short].downcase == 'dc' ? '' : "#{@city.titleize} #{@state[:long].titleize} "
+    state_text = @state[:short].downcase == 'dc' ? '' : "#{@city.titleize}, #{@state[:short].upcase} "
     additional_city_text = @state[:short].downcase == 'dc' ? ', DC' : ''
-    "#{@city.titleize}#{additional_city_text} Schools - #{state_text}School Ratings - Public and Private"
+    "Best #{@city.titleize}#{additional_city_text} Schools | #{state_text}School Ratings | Best Schools"
   end
 
   def cities_show_description
-    "Find top-rated #{@city.titleize} schools, read recent parent reviews, "\
-      "and browse private and public schools by grade level in #{@city.titleize}, #{(@state[:long]).titleize} (#{(@state[:short]).upcase})."
+    "Best #{@city.titleize} schools listed by #{@city.titleize} school districts. Browse "\
+      "best elementary, middle, and high schools private and public schools by grade level "\
+        "in #{@city.titleize}, #{(@state[:long]).titleize} (#{(@state[:short]).upcase})."
   end
 
   def cities_enrollment_title
