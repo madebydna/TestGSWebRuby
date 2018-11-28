@@ -481,6 +481,7 @@ body {
         thead tr:nth-child(1) th  {
           position: relative;
           top: 0px;
+          z-index: 1;
         }
       }
     }
