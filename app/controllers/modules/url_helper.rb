@@ -27,7 +27,7 @@ module UrlHelper
   # To revert, use gs_legacy_url_decode
   def gs_legacy_url_encode(param)
     return nil if param.nil?
-    param.downcase.gsub('-', '_').gsub(' ', '-').gsub('/','')
+    param.downcase.gsub('-', '_').gsub(' ', '-')
   end
   alias :gs_legacy_url_city_encode :gs_legacy_url_encode
   alias :gs_legacy_url_city_district_browse_encode :gs_legacy_url_encode
