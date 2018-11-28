@@ -111,7 +111,7 @@ module Feeds
     def self.percentage_teachers_certified(data, universal_id, data_type)
       if data.present? && data.first && data.first[value_var]
         options = {}
-        options[:value] = data.first[value_var].to_f.round(1)
+        options[:value] = data.first[value_var].to_f.round(2)
         options[:year] = year_from_source_date_valid(data)
         options[:universal_id] = universal_id
         build_structure('percentage-of-full-time-teachers-who-are-certified', options)
@@ -121,10 +121,10 @@ module Feeds
     def self.average_teacher_salary(data, universal_id, data_type)
       if data.present? && data.first && data.first[value_var]
         options = {}
-        options[:value] = data.first[value_var].to_f.round(1)
+        options[:value] = data.first[value_var].to_f.round(2)
         options[:year] = year_from_source_date_valid(data)
         options[:universal_id] = universal_id
-        build_structure('average-teacher-salary', options)
+        build_structure('average-salary', options)
       end
     end
 
@@ -151,7 +151,7 @@ module Feeds
     def self.student_teacher_ratio(data, universal_id, data_type)
       if data.present? && data.first && data.first[value_var]
         options = {}
-        options[:value] = data.first[value_var].to_f.round(1)
+        options[:value] = data.first[value_var].to_f.round(2)
         options[:year] = year_from_source_date_valid(data)
         options[:universal_id] = universal_id
         build_structure('student-teacher-ratio', options)
@@ -161,7 +161,7 @@ module Feeds
     def self.student_counselor_ratio(data, universal_id, data_type)
       if data.present? && data.first && data.first[value_var]
         options = {}
-        options[:value] = data.first[value_var].to_f.round(1)
+        options[:value] = data.first[value_var].to_f.round(2)
         options[:year] = year_from_source_date_valid(data)
         options[:universal_id] = universal_id
         build_structure('student-counselor-ratio', options)

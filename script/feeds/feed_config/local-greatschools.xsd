@@ -509,8 +509,6 @@
                     </xs:complexType>
                 </xs:element>
 
-
-
                  <xs:element name="teacher-data" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation>
                         <xs:documentation>
@@ -527,8 +525,6 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-
-
 
                 <xs:element name="percent-students-with-limited-english-proficiency" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation>
@@ -643,6 +639,86 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="percentage-of-full-time-teachers-who-are-certified" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Percentage of full time teachers who are certified
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="percentage-of-teachers-with-3-or-more-years-experience" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Percentage of teachers with less than three years experience
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="student-counselor-ratio" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Ratio of students to full time counselors
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="percentage-female" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Percentage of female students
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="percentage-male" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Percentage of male students
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
                             <xs:element name="value" type="xs:float"/>
                             <xs:element name="year" type="xs:int"/>
                             <xs:element ref="level-code" minOccurs="0"/>

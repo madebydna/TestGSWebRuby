@@ -102,6 +102,11 @@ module Feeds
           #     google_key: 'Student teacher ratio'
           # },
           {
+              key: 'Ratio of students to full time teachers',
+              method: 'student_teacher_ratio',
+              google_key: 'Ratio of students to full time teachers'
+          },
+          {
               key: 'Head official name',
               method: 'straight_text_value',
               data_type: 'head-official-name',
@@ -266,11 +271,6 @@ module Feeds
           #     method: 'class-size'
           # },
           {
-              key: 'Ethnicity',
-              method: 'ethnicity',
-              google_key: 'Ethnicity'
-          },
-          {
               key: 'Ratio of teacher salary to total number of teachers',
               method: 'average_teacher_salary',
               google_key: 'Average teacher salary'
@@ -286,11 +286,6 @@ module Feeds
               google_key: 'Percentage of teachers with 3 or more years experience'
           },
           {
-              key: 'Ratio of students to full time teachers',
-              method: 'student_teacher_ratio',
-              google_key: 'Ratio of students to full time teachers'
-          },
-          {
               key: 'Ratio of students to full time counselors',
               method: 'student_counselor_ratio',
               google_key: 'Ratio of students to full time counselors'
@@ -304,6 +299,11 @@ module Feeds
               key: 'Male',
               method: 'male',
               google_key: 'Percentage of male students'
+          },
+          {
+              key: 'Ethnicity',
+              method: 'ethnicity',
+              google_key: 'Ethnicity'
           }
       ].freeze
 

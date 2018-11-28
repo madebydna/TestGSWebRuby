@@ -43,8 +43,8 @@ module Feeds
     end
 
     def self.state_data
-      state_gsdata = gsdata
-      state_characteristics_data = characteristics_data
+      state_gsdata = gsdata || {}
+      state_characteristics_data = characteristics_data || {}
       if state_gsdata
         state_gsdata.merge(state_characteristics_data)
       else

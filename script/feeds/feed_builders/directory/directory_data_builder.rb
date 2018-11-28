@@ -37,9 +37,9 @@ module Feeds
     end
 
     def self.characteristics_hash_build(hash, cache_keys)
-      state_gsdata = hash[cache_keys[2]]
-      state_characteristics_data = hash[cache_keys[1]]
-      if state_gsdata
+      state_gsdata = hash[cache_keys[2]] || {}
+      state_characteristics_data = hash[cache_keys[1]] || {}
+      if state_gsdata && state_characteristics_data
         state_gsdata.merge(state_characteristics_data)
       else
         state_characteristics_data
@@ -100,7 +100,7 @@ module Feeds
     end
 
     def self.census_info
-      char_data = CharacteristicsDataBuilder.characteristics_format(@characteristics_hash, @universal_id, @model) if @characteristics_hash
+      char_data = CharacteristicsDataBuilder.characteristics_format(@characteristics_hash, @universal_id, @model) if @characteristics_hash.present?
       single_data_object('census-info', char_data) if char_data && char_data.compact.present?
     end
 
