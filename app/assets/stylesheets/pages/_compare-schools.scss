@@ -115,7 +115,7 @@ body {
       }
 
       thead tr:nth-child(1) th {
-        // position: sticky;
+        position: sticky;
         top: -1px;
         z-index: 2;
         box-shadow: 0 1px 1px -1px #c1d2d9;
@@ -127,9 +127,9 @@ body {
         z-index: 2;
         box-shadow: 1px 1px 1px -1px #c1d2d9;
       }
-      //resets on IE11 since issues occurs on fixed table headers
+      // resets on IE11 since issues occurs on fixed table headers
       @media all and (-ms-high-contrast: none){
-        thead tr:nth-child(1) th, tbody tr:nth-child(1) td  {
+        thead tr:nth-child(1) th, tbody tr:nth-child(1) td {
           position: relative;
           top: 0px;
         }
