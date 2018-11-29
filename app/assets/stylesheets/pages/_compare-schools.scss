@@ -39,13 +39,13 @@ body {
   }
 
   .menu-bar {
+    // Hide select dropdown on IE10+ browsers
+    select::-ms-expand {
+      display: none;
+    }
     .menu-item {
       display: inline-block;
       cursor: pointer;
-      // Hide select dropdown on IE10+ browsers
-      select::-ms-expand {
-        display: none;
-      }
       > * + * {
         margin-left: 5px;
       }
@@ -115,7 +115,6 @@ body {
       }
 
       thead tr:nth-child(1) th {
-        position: fixed;
         position: sticky;
         top: -1px;
         z-index: 2;
@@ -123,11 +122,17 @@ body {
       }
 
       tbody tr:nth-child(1) td {
-        position: fixed;
         position: sticky;
         top: 96px;
         z-index: 2;
         box-shadow: 1px 1px 1px -1px #c1d2d9;
+      }
+      // resets on IE11 since issues occurs on fixed table headers
+      @media all and (-ms-high-contrast: none){
+        thead tr:nth-child(1) th, tbody tr:nth-child(1) td {
+          position: relative;
+          top: 0px;
+        }
       }
 
       th.table-headers {
