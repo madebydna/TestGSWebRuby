@@ -29,8 +29,11 @@ const relevanceOption = [
   }
 ]
 
-const SortSelect = ({ includeDistance, includeRelevance }) => {
+const SortSelect = ({ includeDistance, includeRelevance, additionalOptions }) => {
   let options = defaultOptions;
+  if (additionalOptions){
+    options = options.concat(additionalOptions);
+  }
   if (includeDistance) {
     options = options.concat(distanceOptions);
   }

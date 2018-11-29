@@ -1,6 +1,9 @@
 ---
 es:
   javascript:
+    compare_test_scores_for: Compare los resultados de exámenes de estudiantes
+    from : de
+    to_nearby_schools: con las escuelas cercanas
     Academics: Académica
     Saved!: Salvado!
     No listings found: No se encontraron listados
@@ -29,6 +32,8 @@ es:
       - Prueba diferentes o menos palabras.
       - Prueba otras palabras más generales.
       - Prueba otros filtros.
+    no_compare_school_title: No se han encontrado resultados
+    no_compare_school_results: No pudimos encontrar escuelas cercanas con los resultados de los exámenes de estudiantes {breakdown}.
     Close filters: Cerrar los filtros
     school: escuela
     schools: escuelas
@@ -152,6 +157,7 @@ es:
     saved_search_validation_error: Por favor, nombre su búsqueda
     strong_fit: Fuerte
     test_scores:
+      title: Resultados de exámenes
       advanced: Avanzado
       proficient: Competente
       proficient_or_better: Competente o mejor

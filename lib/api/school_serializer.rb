@@ -49,6 +49,8 @@ class Api::SchoolSerializer
         reviews: school_path(school, anchor: 'Reviews', trailing_slash: true, lang: I18n.current_non_en_locale)
       },
       highlighted: false,
+      pinned: (school.pinned if school.respond_to?(:pinned)),
+      testScoreRatingForEthnicity: (school.test_score_rating_for_ethnicity if school.methods.include?(:test_score_rating_for_ethnicity))
     }.tap do |h|
       enrollment = value_from_decorated_school(school, :numeric_enrollment)
       students_per_teacher = value_from_decorated_school(school, :ratio_of_students_to_full_time_teachers)
@@ -57,8 +59,8 @@ class Api::SchoolSerializer
       distance = value_from_decorated_school(school, :distance)
       subratings = value_from_decorated_school(school, :subratings)
       ethnicity_information = value_from_decorated_school(school, :ethnicity_information_for_tableview)
+      compare_ethnicity_breakdowns = value_from_decorated_school(school, :ethnicity_breakdowns)
       saved_school = value_from_decorated_school(school, :saved_school)
-
       h[:boundaries] = school.boundaries if school.respond_to?(:boundaries)
       h[:enrollment] = enrollment&.to_i if enrollment
       h[:parentRating] = five_star_rating if five_star_rating
@@ -67,6 +69,7 @@ class Api::SchoolSerializer
       h[:studentsPerTeacher] = students_per_teacher if students_per_teacher
       h[:subratings] = subratings if subratings
       h[:ethnicityInfo] = ethnicity_information if ethnicity_information
+      h[:ethnicityBreakdowns] = compare_ethnicity_breakdowns if compare_ethnicity_breakdowns && school.respond_to?(:pinned)
       h[:savedSchool] = saved_school if saved_school
     end
   end

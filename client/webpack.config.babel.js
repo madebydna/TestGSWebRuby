@@ -30,6 +30,7 @@ const config = {
     'jquery-loader': ['jquery'],
     'admin-tools': ['./app/bundles/GSWeb/admin_tools'],
     'add-schools': ['./app/bundles/GSWeb/pages/add_schools'],
+    compare: ['polyfills', './app/bundles/GSWeb/compare'],
     search: ['polyfills', './app/bundles/GSWeb/search'],
     'search-box': [
       'polyfills',

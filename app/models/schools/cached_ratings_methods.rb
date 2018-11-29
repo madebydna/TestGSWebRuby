@@ -47,9 +47,20 @@ module CachedRatingsMethods
       {}.tap do |i|
         i[:label] = "Low-income"
         i[:rating] = low_income_rating if low_income_rating
-        i[:percentage] = free_and_reduced_lunch.gsub('%','') if free_and_reduced_lunch && free_and_reduced_lunch != '?'
+        i[:percentage] = free_and_reduced_lunch.gsub('%','')&.to_i if free_and_reduced_lunch
       end
     )
+  end
+
+  def ethnicity_breakdowns
+    ethnicity_information
+      .select {|breakdown| breakdown[:rating] && breakdown[:rating] > 0}
+      .map {|filtered_breakdown| filtered_breakdown[:label]}
+  end
+
+  # Not using for now; will implement when we have better breakdown handling
+  def translated_ethnicity_breakdowns_with_fallback
+    ethnicity_breakdowns.map {|breakdown| I18n.t(breakdown) || breakdown}
   end
 
   def ethnicity_information
@@ -57,18 +68,18 @@ module CachedRatingsMethods
       {}.tap do |e|
         e[:label] = label
         e[:rating] = ethnicity_test_score_ratings["#{label}"] if ethnicity_test_score_ratings["#{label}"]
-        e[:percentage] = ethnicity_population_percentages["#{label}"] if ethnicity_population_percentages["#{label}"]
+        e[:percentage] = ethnicity_population_percentages["#{label}"]&.to_i if ethnicity_population_percentages["#{label}"]
       end
     end
   end
 
   def ethnicity_struct_ratings
-    ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
+    ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_breakdown_tags(['ethnicity', 'all_students']) : []
   end
 
   def ethnicity_test_score_ratings
-    @_ratings ||= ethnicity_struct_ratings.each_with_object({}) do |struct, hash|
-      hash[ethnicity_mapping_hash[struct.breakdown.to_sym]] = struct.school_value_as_int if struct.school_value_as_int && struct.school_value_as_int > 0 
+    @_ethnicity_test_score_ratings ||= ethnicity_struct_ratings.each_with_object({}) do |struct, hash|
+      hash[ethnicity_mapping_hash[struct.breakdown.to_sym]] = struct.school_value_as_int if struct.school_value_as_int && struct.school_value_as_int > 0
     end
   end
 
@@ -76,6 +87,10 @@ module CachedRatingsMethods
     @_percentages ||= ethnicity_data.each_with_object({}) do |data, hash|
       hash[ethnicity_mapping_hash[data["breakdown"].to_sym]] = data["school_value"].round if data["school_value"] && data["school_value"].round > 0
     end
+  end
+
+  def percentage_of_population_by_ethnicity(ethnicity)
+    ethnicity_population_percentages[ethnicity]
   end
 
   def ethnicity_labels
@@ -90,6 +105,7 @@ module CachedRatingsMethods
       :'Asian or Pacific Islander' => "Asian or Pacific Islander",
       :'Asian' => "Asian",
       :'All' => "All students",
+      :'All students' => "All students",
       :'Multiracial' => "Two or more races",
       :'Two or more races' => "Two or more races",
       :'American Indian/Alaska Native' => "American Indian/Alaska Native",
