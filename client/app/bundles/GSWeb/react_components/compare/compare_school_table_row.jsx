@@ -52,7 +52,8 @@ const CompareSchoolTableRow = ({
   columns,
   ethnicityInfo,
   savedSchool,
-  sort
+  sort,
+  breakdown
 }) => {
   let addressPhrase = [address.street1, address.city, state, address.zip]
     .filter(s => !!s && s.length > 0)
@@ -102,61 +103,59 @@ const CompareSchoolTableRow = ({
     )
   };
 
-  const compareColumns = (enrollment, enrollmentForEthnicity, testScoreRatingForEthnicity) => {
+  const cohortPercentageComponent = (percentage) => {
+    return(
+      <div className="cohort-percentages">
+        <PieChart slices={[
+          {
+            color: 'gray',
+            value: percentage
+          },
+          {
+            color: '#d3d3d3',
+            value: 100 - percentage,
+          },
+        ]} />
+        <span>{`${percentage}%`}</span>
+      </div>
+    )
+  };
+
+  const cohortPercentageForEthnicity = () => {
+    const match = ethnicityInfo.find((ethnicityVal) => ethnicityVal.label === breakdown);
+    return match && match.percentage;
+  };
+
+  const compareColumns = () => {
     return (
       <React.Fragment>
         <td className="centered">{enrollment.toLocaleString()}</td>
-        <td className="centered">{enrollmentForEthnicity}</td>
+        {cohortPercentageForEthnicity() && <td className="centered">{cohortPercentageComponent(cohortPercentageForEthnicity())}</td>}
         <td className={sort === 'testscores' ? 'yellow-highlight' : undefined}>
-          <RatingWithBar score={testScoreRatingForEthnicity} size='small'/>
+          <RatingWithBar score={testScoreRatingForEthnicity} size='small' />
         </td>
       </React.Fragment>
     )
   };
 
-  const cohortPercentageForEthnicity = () => {
-    return (
-      <React.Fragment>
-        <CompareContext.Consumer>
-          {({breakdown}) =>{
-            const percentage = ethnicityInfo.find((ethnicityVal) => ethnicityVal.label === breakdown).percentage;
-            return(
-                <div className="cohort-percentages">
-                  <PieChart slices={[
-                    {
-                      color: 'gray',
-                      value: percentage
-                    },
-                    {
-                      color: '#d3d3d3',
-                      value: 100 - percentage,
-                    },
-                  ]} />
-                  <span>{`${ethnicityInfo.find((ethnicityVal) => ethnicityVal.label === breakdown).percentage.toString()}%`}</span>
-                </div>
-              )
-            }
-          }
-        </CompareContext.Consumer>
-      </React.Fragment>
-    )
-  }
-  let content = compareColumns(enrollment,cohortPercentageForEthnicity(),testScoreRatingForEthnicity);  
+
+  const shouldRenderSchoolRow = () => {
+    let renderRow = false;
+    ethnicityInfo.forEach(eth => {
+      if (eth.label === breakdown){
+        renderRow = true;
+      }
+    });
+    return renderRow;
+  };
+
   return (
-    <CompareContext.Consumer>
-      {({ breakdown }) => {
-        let shouldRenderSchoolRow = false;
-        ethnicityInfo.forEach(eth => {
-          if (eth.label === breakdown){
-            shouldRenderSchoolRow = true;
-          }
-        })
-        return shouldRenderSchoolRow && <tr className={pinned ? 'row-outline' : undefined}>
-          {schoolCard()}
-          {content}
-        </tr>
-      }}
-    </CompareContext.Consumer>
+    shouldRenderSchoolRow() && (
+      <tr className={pinned ? 'row-outline' : undefined}>
+        {schoolCard()}
+        {compareColumns()}
+      </tr>
+    )
   );
 };
 

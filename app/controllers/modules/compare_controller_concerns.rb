@@ -146,11 +146,11 @@ module CompareControllerConcerns
   end
 
   def table_headers
-    [
-      {title: I18n.t('total_students_enrolled', scope: 'controllers.compare_schools_controller'), className: 'total-enrollment', key: 'total-enrollment'},
-      {title: I18n.t('percentage_of_students', scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: 'ethnicity-enrollment', key: 'ethnicity-enrollment'},
-      {title: I18n.t('test_score_rating_for', scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: (sort == 'testscores' ? 'breakdown-test-score yellow-highlight' : 'breakdown-test-score'), key: 'breakdown-test-score'}
-    ]
+    Array.new.tap do |arr|
+      arr.push({title: I18n.t('total_students_enrolled', scope: 'controllers.compare_schools_controller'), className: 'total-enrollment', key: 'total-enrollment'})
+      arr.push({title: I18n.t('percentage_of_students', scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: 'ethnicity-enrollment', key: 'ethnicity-enrollment'}) unless ethnicity.downcase === 'all students'
+      arr.push({title: I18n.t('test_score_rating_for', scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: (sort == 'testscores' ? 'testscores yellow-highlight' : 'testscores'), key: 'testscores'})
+    end
   end
 
 end

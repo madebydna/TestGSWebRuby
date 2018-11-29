@@ -73,7 +73,7 @@ module CachedRatingsMethods
   end
 
   def ethnicity_struct_ratings
-    ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_exact_breakdown_tags('ethnicity') : []
+    ratings_by_type['Test Score Rating'].present? ? ratings_by_type['Test Score Rating'].having_breakdown_tags(['ethnicity', 'all_students']) : []
   end
 
   def ethnicity_test_score_ratings
@@ -104,6 +104,7 @@ module CachedRatingsMethods
       :'Asian or Pacific Islander' => "Asian or Pacific Islander",
       :'Asian' => "Asian",
       :'All' => "All students",
+      :'All students' => "All students",
       :'Multiracial' => "Two or more races",
       :'Two or more races' => "Two or more races",
       :'American Indian/Alaska Native' => "American Indian/Alaska Native",

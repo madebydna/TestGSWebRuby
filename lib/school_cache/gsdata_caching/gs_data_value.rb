@@ -153,6 +153,14 @@ class GsdataCaching::GsDataValue
       end.extend(CollectionMethods)
     end
 
+    def having_breakdown_tags(tags)
+      tags = Array.wrap(tags)
+      select do |dv|
+        breakdown_tags = (dv.breakdown_tags || '').split(',')
+        (tags & breakdown_tags).present?
+      end.extend(CollectionMethods)
+    end
+
     def expand_on_breakdown_tags
       reduce([]) do |array, dv|
         array.concat(
