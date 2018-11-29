@@ -64,7 +64,6 @@ class CompareSchoolTable extends React.Component {
     let {schools, isLoading, compareTableHeaders} = this.props;
     const pinnedSchool = schools.filter(s => s.pinned)[0];
     const otherSchools = schools.filter(s => !s.pinned);
-
     return (
       <CompareContext.Consumer>
         {({sort, breakdown}) =>
