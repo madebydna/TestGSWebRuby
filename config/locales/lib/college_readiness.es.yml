@@ -10,6 +10,7 @@ es:
       ACT participation: 'Participación ACT'
       'ACT percent college ready': 'Clasificación para la preparación universitaria ACT'
       'Percentage SAT/ACT participation grades 11-12': 'Índice de participación en SAT/ACT'
+      'Percent of Students who Participated in the SAT/ACT in grades 9-12': 'Índice de participación en SAT/ACT'
       'Percentage AP enrolled grades 9-12': 'Participación en cursos AP'
       '4-year high school graduation rate': 'Índice de graduación de escuelas preparatorias de 4 años'
       Percent of students who meet UC/CSU entrance requirements: Porcentaje de alumnos que cumplen con los requisitos de elegibilidad para UC/CSU
@@ -50,6 +51,7 @@ es:
         'Average SAT score_new': 'El SAT es una prueba de admisión universitaria, que en 2016 tenía un total de 1600 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela.'
         'SAT percent participation': 'El índice  de participación en el SAT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT.'
         'Percentage SAT/ACT participation grades 11-12': 'El índice de participación en SAT/ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT o ACT.'
+        'Percent of Students who Participated in the SAT/ACT in grades 9-12': 'El índice de participación en SAT/ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT o ACT.'
         'SAT percent college ready': 'La clasificación para la preparación universitaria SAT refleja el puntaje mínimo en un SAT Subject Test necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
         'Average ACT score': 'El ACT es un examen de admisión universitaria, cuyo puntaje más alto es de  36 puntos. Esta calificación refleja el puntaje promedio de las calificaciones en el ACT entre  los estudiantes de esta escuela.'
         'ACT participation':  'El índice de participación en el ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el ACT.'

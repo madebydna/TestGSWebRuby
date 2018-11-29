@@ -13,6 +13,7 @@ module SchoolProfiles::CollegeReadinessConfig
   AP_ENROLLED = 'Percentage AP enrolled grades 9-12'
   AP_EXAMS_PASSED = 'Percentage of students passing 1 or more AP exams grades 9-12'
   ACT_SAT_PARTICIPATION = 'Percentage SAT/ACT participation grades 11-12'
+  ACT_SAT_PARTICIPATION_9_12 = 'Percent of Students who Participated in the SAT/ACT in grades 9-12'
   NEW_SAT_STATES = %w(ca ct mi nj co ma il)
   NEW_SAT_YEAR = 2016
   NEW_SAT_RANGE = (400..1600)
@@ -185,6 +186,12 @@ module SchoolProfiles::CollegeReadinessConfig
       :data_key => ACT_SAT_PARTICIPATION,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
+    },
+    {
+      :cache => :gsdata,
+      :data_key => ACT_SAT_PARTICIPATION_9_12,
+      :visualization => 'person',
+      :formatting => %i(round_unless_less_than_1 percent)
     }
   ].freeze
 end
