@@ -72,15 +72,15 @@ module SchoolProfiles
 
     def compare_button_query_params(values_hash)
       school = @school_cache_data_reader.school
-      {
-        state: school.state,
-        schoolId: school.id,
-        lat: school.lat,
-        lon: school.lon,
-        gradeLevels: school.level_code.split(','),
-        breakdown: ethnicity_mapping_hash[values_hash[:breakdown].to_sym],
-        sort: 'testscores'
-      }
+      {}.tap do |hash|
+        hash[:state] = school.state
+        hash[:schoolId] = school.id
+        hash[:lat] = school.lat
+        hash[:lon] = school.lon
+        hash[:gradeLevels] = school.level_code.split(',')
+        hash[:breakdown] = values_hash[:breakdown_in_english]
+        hash[:sort] = 'testscores'
+      end
     end
 
     def race_ethnicity_props

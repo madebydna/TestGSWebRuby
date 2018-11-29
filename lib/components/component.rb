@@ -54,6 +54,7 @@ module Components
     def standard_hash_to_value_hash_ratings(h)
       {
         breakdown: t(h['breakdown']),
+        breakdown_in_english: h['breakdown'],
         label: text_value(h['school_value_text']),
         score: float_value(h['school_value_float']),
         percentage: h['percentage'],

@@ -51,6 +51,7 @@ module Components
       def gs_data_value_to_hash(dv)
         {
           breakdown: t(dv.breakdown),
+          breakdown_in_english: dv.breakdown,
           label: text_value(dv.school_value),
           score: float_value(dv.school_value),
           state_average: float_value(dv.state_value),

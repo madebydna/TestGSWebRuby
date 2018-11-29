@@ -58,6 +58,7 @@ module CachedRatingsMethods
       .map {|filtered_breakdown| filtered_breakdown[:label]}
   end
 
+  # Not using for now; will implement when we have better breakdown handling
   def translated_ethnicity_breakdowns_with_fallback
     ethnicity_breakdowns.map {|breakdown| I18n.t(breakdown) || breakdown}
   end

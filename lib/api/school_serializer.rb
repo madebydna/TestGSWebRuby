@@ -59,7 +59,7 @@ class Api::SchoolSerializer
       distance = value_from_decorated_school(school, :distance)
       subratings = value_from_decorated_school(school, :subratings)
       ethnicity_information = value_from_decorated_school(school, :ethnicity_information_for_tableview)
-      compare_ethnicity_breakdowns = value_from_decorated_school(school, :translated_ethnicity_breakdowns_with_fallback)
+      compare_ethnicity_breakdowns = value_from_decorated_school(school, :ethnicity_breakdowns)
       saved_school = value_from_decorated_school(school, :saved_school)
       h[:boundaries] = school.boundaries if school.respond_to?(:boundaries)
       h[:enrollment] = enrollment&.to_i if enrollment
