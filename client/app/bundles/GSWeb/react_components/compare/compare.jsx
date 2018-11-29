@@ -7,6 +7,7 @@ import CompareLayout from './compare_layout';
 import CompareContext from './compare_context';
 import SearchBox from 'react_components/search_box'
 import NoCompareSchoolListResult from './no_compare_school_list_result';
+import NoResults from 'react_components/search/no_results';
 import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
@@ -83,45 +84,54 @@ class Compare extends React.Component {
     );
   }
   
-  noResults() {
+  noCompareResults() {
     return this.props.schools.length < 2 ? (
       <NoCompareSchoolListResult />
     ) : null;
   }
 
+  noResults(){
+    return this.props.schools.length === 0 && <NoResults/>
+  }
+
   render() {
     const pinnedSchool = this.props.schools.filter(s => s.pinned)[0];
-    return (
-      <CompareLayout
-        searchBox={<SearchBox size={this.props.size} />}
-        pinnedSchool={pinnedSchool}
-        size={this.props.size}
-        sortSelect={<SortSelect
-          includeDistance={this.props.shouldIncludeDistance}
-          includeRelevance={this.props.shouldIncludeRelevance}
-          additionalOptions={
-            [{
-              key: 'testscores',
-              label: t('test_scores.title')
-            }]
-          }
-        />}
-        breakdownSelect={<BreakdownSelect
-          breakdowns={pinnedSchool.ethnicityBreakdowns}
-        />
-        }
-        schoolTable={
-          <CompareSchoolTable
-            schools={this.props.schools}
-            isLoading={this.props.loadingSchools}
-            compareTableHeaders={this.props.compareTableHeaders}
+    if(this.noResults()){
+      return <NoResults />
+    }else{
+      return (
+        <CompareLayout
+          searchBox={<SearchBox size={this.props.size} />}
+          pinnedSchool={pinnedSchool}
+          size={this.props.size}
+          sortSelect={<SortSelect
+            includeDistance={this.props.shouldIncludeDistance}
+            includeRelevance={this.props.shouldIncludeRelevance}
+            additionalOptions={
+              [{
+                key: 'testscores',
+                label: t('test_scores.title')
+              }]
+            }
+          />}
+          breakdownSelect={<BreakdownSelect
+            breakdowns={pinnedSchool.ethnicityBreakdowns}
           />
-        }
-        noResults={this.noResults()}
-      >
-      </CompareLayout>
-    );
-  }
+          }
+          schoolTable={
+            <CompareSchoolTable
+              schools={this.props.schools}
+              isLoading={this.props.loadingSchools}
+              compareTableHeaders={this.props.compareTableHeaders}
+            />
+          }
+          noCompareResults={this.noCompareResults()}
+        >
+        </CompareLayout>
+      );
+    }
+
+    }
 }
 
 export { Compare };

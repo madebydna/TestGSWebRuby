@@ -83,11 +83,13 @@ class CompareSchoolsController < ApplicationController
       school = School.on_db("#{state}").find("#{school_id}")
       school = send("add_ratings", school) if respond_to?("add_ratings", true)
       SchoolCacheQuery.decorate_schools([school], *cache_keys).first.ethnicity_breakdowns
+    rescue
+      []
     end
   end
 
   def school_id
-    params[:schoolId]
+    params[:schoolId]&.to_i
   end
 
   def sort
@@ -95,11 +97,11 @@ class CompareSchoolsController < ApplicationController
   end
 
   def lat
-    params[:lat]
+    params[:lat]&.to_f
   end
 
   def lon
-    params[:lon]
+    params[:lon]&.to_f
   end
 
   def level_codes
