@@ -6,7 +6,9 @@ en:
       'GreatSchools Rating': 'GreatSchools College Readiness Rating'
       'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
       'SAT percent participation': 'SAT participation rate'
+      'SAT percent college ready': 'SAT college readiness rate'
       ACT participation:  'ACT participation rate'
+      'ACT percent college ready': 'ACT college readiness rate'
       'Percentage SAT/ACT participation grades 11-12': 'SAT/ACT participation rate'
       'Percentage AP enrolled grades 9-12': 'AP course participation'
       '4-year high school graduation rate': '4-year high school graduation rate'
@@ -46,8 +48,10 @@ en:
         'Average SAT score_new': 'The SAT is a college admissions test which in 2016 had a total of 1600 possible points. This score reflects the average SAT score for students at this school.'
         'SAT percent participation': 'The SAT participation rate reflects the percentage of eligible students at this school who took the SAT.'
         'Percentage SAT/ACT participation grades 11-12': 'The SAT/ACT participation rate shows the percentage of eligible students at this school who took the SAT or ACT.'
+        'SAT percent college ready': 'The SAT college readiness rate reflects the minimum score needed on an SAT Subject Test to indicate about a 75 percent chance of obtaining a “C” or higher in the corresponding credit-bearing college course. The benchmarks are set based on national-level data.'
         'Average ACT score': 'The ACT is a college admissions test with a total of 36 possible points. This score reflects the average ACT score for students at this school.'
         'ACT participation':  'The ACT participation rate shows the percentage of eligible students at this school who took the ACT.'
+        'ACT percent college ready': 'The ACT college readiness rate reflects the minimum score needed on an ACT subject-area test to indicate about a 75 percent chance of obtaining a “C” or higher in the corresponding credit-bearing college course. The benchmarks are set based on national-level data.'
         'AP Course Participation': 'Advanced Placement classes are rigorous classes with a final exam. The percentage of students taking AP exams may reflect whether the school culture is focused on college.'
         'Percent of students who meet UC/CSU entrance requirements': >
           This is the percentage of graduates from this school who got a “C” or higher in the A-G courses required for
