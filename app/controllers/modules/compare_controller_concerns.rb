@@ -145,12 +145,22 @@ module CompareControllerConcerns
     @_translated_ethnicity ||= I18n.t(ethnicity) || ethnicity
   end
 
+  def cohort_count_header_hash
+    {title: I18n.t('total_students_enrolled', scope: 'controllers.compare_schools_controller'), className: 'total-enrollment', key: 'total-enrollment'}
+  end
+
+  def percentage_of_students_by_breakdown_header_hash
+    return nil if ethnicity.downcase == 'all students'
+    {title: I18n.t('percentage_of_students', scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: 'ethnicity-enrollment', key: 'ethnicity-enrollment'}
+  end
+
+  def test_score_rating_by_ethnicity_header_hash
+    test_score_rating_key = ethnicity.downcase == 'all students' ? 'test_score_rating_for_all_students' : 'test_score_rating_for'
+    {title: I18n.t(test_score_rating_key, scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: (sort == 'testscores' ? 'testscores yellow-highlight' : 'testscores'), key: 'testscores'}
+  end
+
   def table_headers
-    Array.new.tap do |arr|
-      arr.push({title: I18n.t('total_students_enrolled', scope: 'controllers.compare_schools_controller'), className: 'total-enrollment', key: 'total-enrollment'})
-      arr.push({title: I18n.t('percentage_of_students', scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: 'ethnicity-enrollment', key: 'ethnicity-enrollment'}) unless ethnicity.downcase === 'all students'
-      arr.push({title: I18n.t('test_score_rating_for', scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: (sort == 'testscores' ? 'testscores yellow-highlight' : 'testscores'), key: 'testscores'})
-    end
+    [cohort_count_header_hash, percentage_of_students_by_breakdown_header_hash, test_score_rating_by_ethnicity_header_hash].compact
   end
 
 end
