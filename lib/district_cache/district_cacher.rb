@@ -41,7 +41,6 @@ class DistrictCacher
     {
         feed_test_scores_gsdata: TestScoresCaching::Feed::FeedDistrictTestScoresCacherGsdata,
         test_scores_gsdata: TestScoresCaching::DistrictTestScoresCacherGsdata,
-        feed_test_scores: TestScoresCaching::DistrictTestScoresCacher,
         ratings: DistrictRatingsCacher,
         district_schools_summary: DistrictSchoolsSummary::DistrictSchoolsSummaryCacher,
         district_directory: DistrictDirectoryCacher,
@@ -70,7 +69,6 @@ class DistrictCacher
     @registered_cachers ||= [
         TestScoresCaching::Feed::FeedDistrictTestScoresCacherGsdata,
         TestScoresCaching::DistrictTestScoresCacherGsdata,
-        TestScoresCaching::DistrictTestScoresCacher,
         DistrictRatingsCacher,
         DistrictDirectoryCacher,
         FeedDistrictCharacteristicsCacher,

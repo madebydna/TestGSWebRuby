@@ -69,7 +69,7 @@ describe Cacher do
       school_reviews: [ReviewsCaching::ReviewsSnapshotCacher, ProgressBarCaching::ProgressBarCacher],
       school_media: [ProgressBarCaching::ProgressBarCacher],
       census: [CharacteristicsCaching::CharacteristicsCacher],
-      test_scores: [TestScoresCaching::BreakdownsCacher, FeedTestScoresCacher, TestScoresCaching::TestScoresCacherGsdata, TestScoresCaching::Feed::FeedTestScoresCacherGsdata, TestScoresCaching::Feed::FeedOldTestScoresCacherGsdata],
+      test_scores: [TestScoresCaching::TestScoresCacherGsdata, TestScoresCaching::Feed::FeedTestScoresCacherGsdata, TestScoresCaching::Feed::FeedOldTestScoresCacherGsdata],
       gsdata: [GsdataCaching::GsdataCacher],
     }.each do |data_type, cacher_list|
       it "handles the data type #{data_type}" do
