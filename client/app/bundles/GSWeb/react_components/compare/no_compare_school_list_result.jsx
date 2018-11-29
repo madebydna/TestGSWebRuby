@@ -6,8 +6,9 @@ import CompareContext from './compare_context';
 
 const NoCompareSchoolListResult = () => (
   <CompareContext.Consumer>
-    {({ breakdown }) =>
-      <div className="no-results">
+    {({ breakdown }) => {
+      if(breakdown===t("All students")){ breakdown="All"}
+      return <div className="no-results">
         <div className="body">
           <img src={noResultsOwlPng} />
           <div>
@@ -24,7 +25,7 @@ const NoCompareSchoolListResult = () => (
           </div>
         </div>
       </div>
-    }
+    }}
   </CompareContext.Consumer>
 );
 
