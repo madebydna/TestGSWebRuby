@@ -54,6 +54,7 @@ class DistrictGsdataCacher < DistrictCacher
     r = district_results
     r.each_with_object(district_cache_hash) do |result, cache_hash|
       result_hash = result_to_hash(result)
+      validate_result_hash(result_hash, result.data_type_id)
       cache_hash[result.name] << result_hash
     end
   end
@@ -69,7 +70,7 @@ class DistrictGsdataCacher < DistrictCacher
 
   def state_results_hash
     @_state_results_hash ||= begin
-      DataValue.find_by_state_and_data_types(school.state, data_type_ids)
+      DataValue.find_by_state_and_data_types(district.state, data_type_ids)
       .each_with_object({}) do |r, h|
         state_key = r.datatype_breakdown_year
         h[state_key] = r.value
@@ -110,16 +111,16 @@ class DistrictGsdataCacher < DistrictCacher
 
   def validate_result_hash(result_hash, data_type_id)
     result_hash = result_hash.reject { |_,v| v.blank? }
-    required_keys = %i(school_value source_date_valid source_name)
+    required_keys = %i(district_value source_date_valid source_name)
     missing_keys = required_keys - result_hash.keys
     if missing_keys.count > 0
       GSLogger.error(
-        :school_cache,
+        :district_cache,
         message: "#{self.class.name} cache missing required keys",
-        vars: { school: school.id,
-                state: school.state,
+        vars: { state: district.state,
+                district_id: district.id,
+                district: district,
                 data_type_id: data_type_id,
-                breakdowns: result_hash['breakdowns'],
         }
       )
     end

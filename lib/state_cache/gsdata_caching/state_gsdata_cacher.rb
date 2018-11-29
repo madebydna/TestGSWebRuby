@@ -54,7 +54,7 @@ class StateGsdataCacher < StateCacher
     r = state_results
     r.each_with_object(state_cache_hash) do |result, cache_hash|
       result_hash = result_to_hash(result)
-      # validate_result_hash(result_hash, result.data_type_id)
+      validate_result_hash(result_hash, result.data_type_id)
       cache_hash[result.name] << result_hash
     end
   end
@@ -66,30 +66,6 @@ class StateGsdataCacher < StateCacher
   def state_results
     @_school_results ||=
       DataValue.find_by_state_and_data_types(state, data_type_ids)
-  end
-
-  def state_results_hash
-    @_state_results_hash ||= begin
-      DataValue.find_by_state_and_data_types(school.state,
-                                             data_type_ids)
-      .each_with_object({}) do |r, h|
-        state_key = r.datatype_breakdown_year
-        h[state_key] = r.value
-      end
-    end
-  end
-
-  def district_results_hash
-    @_district_results_hash ||= begin
-      district_values = DataValue
-      .find_by_district_and_data_types(school.state,
-                                       school.district_id,
-                                       data_type_ids)
-      district_values.each_with_object({}) do |r, h|
-        district_key = r.datatype_breakdown_year
-        h[district_key] = r.value
-      end
-    end
   end
 
   private
@@ -109,13 +85,10 @@ class StateGsdataCacher < StateCacher
       h[:academics] = academics if academics
       h[:academic_tags] = academic_tags if academic_tags
       h[:academic_types] = academic_types if academic_types
-      # h[:school_value] = result.value
 # rubocop:disable Style/FormatStringToken
       h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
 # rubocop:enable Style/FormatStringToken
       h[:state_value] = result.value
-      # h[:district_value] = district_value if district_value
-      # h[:display_range] = display_range if display_range
       h[:source_name] = result.source_name
       h[:grade] = result.grade if result.grade
       h[:cohort_count] = result.cohort_count if result.cohort_count
@@ -129,27 +102,14 @@ class StateGsdataCacher < StateCacher
     missing_keys = required_keys - result_hash.keys
     if missing_keys.count > 0
       GSLogger.error(
-        :school_cache,
+        :state_cache,
         message: "#{self.class.name} cache missing required keys",
-        vars: { school: school.id,
-                state: school.state,
+        vars: { state: state,
                 data_type_id: data_type_id,
-                breakdowns: result_hash['breakdowns'],
         }
       )
     end
     return missing_keys.count == 0
-  end
-
-
-  def district_value(result)
-    #   will not have district values if school is private
-    return nil if school.private_school?
-    district_results_hash[result.datatype_breakdown_year]
-  end
-
-  def state_value(result)
-    state_results_hash[result.datatype_breakdown_year]
   end
 
   # after display range strategy is chosen will need to update method below

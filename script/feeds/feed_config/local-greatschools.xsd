@@ -665,7 +665,7 @@
                 <xs:element name="percentage-of-teachers-with-3-or-more-years-experience" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation>
                         <xs:documentation>
-                            Percentage of teachers with less than three years experience
+                            Percentage of teachers with three or more years experience
                         </xs:documentation>
                     </xs:annotation>
                     <xs:complexType>
