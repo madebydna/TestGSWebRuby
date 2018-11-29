@@ -32,6 +32,8 @@ es:
       - Prueba diferentes o menos palabras.
       - Prueba otras palabras más generales.
       - Prueba otros filtros.
+    no_compare_school_title: No se han encontrado resultados
+    no_compare_school_results: No pudimos encontrar escuelas cercanas con los resultados de los exámenes de estudiantes {breakdown}.
     Close filters: Cerrar los filtros
     school: escuela
     schools: escuelas

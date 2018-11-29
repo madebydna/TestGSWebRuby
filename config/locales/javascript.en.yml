@@ -32,6 +32,8 @@ en:
       - Try different or fewer keywords.
       - Try more general keywords.
       - Try different search filters (e.g. school types or levels).
+    no_compare_school_title: No results found
+    no_compare_school_results: We couldn’t find nearby schools with test scores from {breakdown} students.
     Close filters: Close filters
     school: school
     schools: schools

@@ -3,6 +3,51 @@ body {
 }
 
 #compare-schools{
+  .no-results {
+    @include media-breakpoint-up(sm) {
+      margin: 15px;
+    }
+
+    .body {
+      padding: 20px;
+      font-size: $font-size-l3;
+      @include media-breakpoint-only(xs) {
+        flex-wrap: wrap;
+      }
+      display: flex;
+      max-width: 991px;
+      background-color: white;
+      @include media-breakpoint-up(sm) {
+        margin: 30px auto;
+        border: 1px solid #c1d2d9;
+        border-radius: $form-field-border-radius;
+      }
+      img {
+        margin: 0 auto 20px auto;
+        @include media-breakpoint-up(sm) {
+          margin: 0 20px 20px 0;
+        }
+        width: 242px;
+        height: 172px;
+      }
+      .heading {
+        font-family: RobotoSlab-Light;
+        font-size: $font-size-l4;
+      }
+      .search-term {
+        font-family: RobotoSlab-Bold;
+        font-size: $font-size-l4;
+      }
+      hr {
+        color: #dbe6eb;
+      }
+      p {
+        font-family: opensans-bold;
+        font-size: $font-size-l3;
+      }
+    }
+  }
+
   .menu-bar {
     background-color: #fff;
     box-shadow: 0px 1px 1px #dddddd;

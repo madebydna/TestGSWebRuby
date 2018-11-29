@@ -6,6 +6,7 @@ import { getStore } from 'store/appStore';
 import CompareLayout from './compare_layout';
 import CompareContext from './compare_context';
 import SearchBox from 'react_components/search_box'
+import NoCompareSchoolListResult from './no_compare_school_list_result';
 import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
@@ -81,6 +82,12 @@ class Compare extends React.Component {
       )
     );
   }
+  
+  noResults() {
+    return this.props.schools.length < 2 ? (
+      <NoCompareSchoolListResult />
+    ) : null;
+  }
 
   render() {
     const pinnedSchool = this.props.schools.filter(s => s.pinned)[0];
@@ -110,6 +117,7 @@ class Compare extends React.Component {
             compareTableHeaders={this.props.compareTableHeaders}
           />
         }
+        noResults={this.noResults()}
       >
       </CompareLayout>
     );
