@@ -35,9 +35,9 @@ class DistrictCacheDataReader
         array_of_hashes = test_scores.map {|hash| hash.stringify_keys}
         GsdataCaching::GsDataValue.from_array_of_hashes(array_of_hashes).having_most_recent_date
       else
-        hashes = test_scores.each_with_object([]) do |(data_type, array_of_hashes), array|
+        hashes = test_scores.each_with_object([]) do |(data_type, hash_array), array|
           array.concat(
-            array_of_hashes.map do |test_scores_hash|
+            hash_array.map do |test_scores_hash|
               {
                 data_type: data_type,
                 description: test_scores_hash['description'],

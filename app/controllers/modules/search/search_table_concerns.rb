@@ -22,7 +22,7 @@ module SearchTableConcerns
       headers << school&.ethnicity_labels
     end
     headers.unshift("Low-income")
-    h = headers.flatten.compact.uniq
+    h = headers.flatten.compact.uniq - ["All students"]
     h.map do |title|
       {
         key: title,

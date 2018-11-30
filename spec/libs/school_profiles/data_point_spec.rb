@@ -9,6 +9,9 @@ describe 'SchoolProfiles::DataPoint::Formatters' do
     it 'handles string that contains decimal value that is greater than 1' do
       expect(SchoolProfiles::DataPoint::Formatters.round_unless_less_than_1('1.51')).to eq(2)
     end
+    it 'handles string that contains decimal value with trailing zero' do
+      expect(SchoolProfiles::DataPoint::Formatters.round_unless_less_than_1('1.50')).to eq(2)
+    end
     it 'handles string "1"' do
       expect(SchoolProfiles::DataPoint::Formatters.round_unless_less_than_1('1')).to eq(1)
     end

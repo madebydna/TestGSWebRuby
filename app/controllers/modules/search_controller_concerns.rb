@@ -80,7 +80,6 @@ module SearchControllerConcerns
     else
       query_type = Search::LegacySolrSchoolQuery
     end
-    
     query_type.new(
       city: city,
       state: state,

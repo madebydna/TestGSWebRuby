@@ -6,6 +6,13 @@
 
   .test-score-container{
     padding: 10px;
+    .compare-link {
+      float: right;
+      .anchor-button {
+        height: 30px;
+        padding: 3px 12px
+      }
+    }
   }
   .bar-graph-container{
     display: table;

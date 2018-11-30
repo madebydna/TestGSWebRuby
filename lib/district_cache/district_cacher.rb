@@ -10,6 +10,7 @@ class DistrictCacher
   # :district_directory
   # :feed_district_characteristics
   # :district_characteristics
+  # :gsdata
 
   def initialize(district)
     @district = district
@@ -40,12 +41,12 @@ class DistrictCacher
     {
         feed_test_scores_gsdata: TestScoresCaching::Feed::FeedDistrictTestScoresCacherGsdata,
         test_scores_gsdata: TestScoresCaching::DistrictTestScoresCacherGsdata,
-        feed_test_scores: TestScoresCaching::DistrictTestScoresCacher,
         ratings: DistrictRatingsCacher,
         district_schools_summary: DistrictSchoolsSummary::DistrictSchoolsSummaryCacher,
         district_directory: DistrictDirectoryCacher,
         feed_district_characteristics: FeedDistrictCharacteristicsCacher,
-        district_characteristics: DistrictCharacteristicsCacher
+        district_characteristics: DistrictCharacteristicsCacher,
+        gsdata: DistrictGsdataCacher
     }[key.to_s.to_sym]
   end
 
@@ -68,11 +69,11 @@ class DistrictCacher
     @registered_cachers ||= [
         TestScoresCaching::Feed::FeedDistrictTestScoresCacherGsdata,
         TestScoresCaching::DistrictTestScoresCacherGsdata,
-        TestScoresCaching::DistrictTestScoresCacher,
         DistrictRatingsCacher,
         DistrictDirectoryCacher,
         FeedDistrictCharacteristicsCacher,
-        DistrictCharacteristicsCacher
+        DistrictCharacteristicsCacher,
+        DistrictGsdataCacher
     ]
   end
 

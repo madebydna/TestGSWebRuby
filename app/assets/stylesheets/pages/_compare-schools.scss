@@ -1,0 +1,375 @@
+body {
+  background-color: #f6f9fa;
+}
+
+#compare-schools{
+  .no-results {
+    @include media-breakpoint-up(sm) {
+      margin: 15px;
+    }
+
+    .body {
+      padding: 20px;
+      font-size: $font-size-l3;
+      @include media-breakpoint-only(xs) {
+        flex-wrap: wrap;
+      }
+      display: flex;
+      max-width: 991px;
+      background-color: white;
+      @include media-breakpoint-up(sm) {
+        margin: 30px auto;
+        border: 1px solid #c1d2d9;
+        border-radius: $form-field-border-radius;
+      }
+      img {
+        margin: 0 auto 20px auto;
+        @include media-breakpoint-up(sm) {
+          margin: 0 20px 20px 0;
+        }
+        width: 242px;
+        height: 172px;
+      }
+      .heading {
+        font-family: RobotoSlab-Light;
+        font-size: $font-size-l4;
+      }
+      .search-term {
+        font-family: RobotoSlab-Bold;
+        font-size: $font-size-l4;
+      }
+      hr {
+        color: #dbe6eb;
+      }
+      p {
+        font-family: opensans-bold;
+        font-size: $font-size-l3;
+      }
+    }
+  }
+
+  .menu-bar {
+    background-color: #fff;
+    box-shadow: 0px 1px 1px #dddddd;
+    padding: 10px 15px 10px 15px;
+    z-index: 1;
+    a {
+      color: #2bade3;
+      font-family: 'opensans-semibold';
+    }
+    .title {
+      bottom: 0;
+      margin-left: 15px;
+      margin-right: 15px;
+      
+      span{
+        font-size: 15px;
+        font-family: 'opensans-semibold';
+      }
+    }
+    select {
+      margin-right: 4px;
+      margin-left: 4px;
+    }
+  }
+
+  .subheader {
+    padding: 5px 15px 10px 15px;
+    * + * {
+      margin-top: 5px;
+    }
+    background: none;
+    box-shadow: none;
+  }
+
+  .menu-bar {
+    // Hide select dropdown on IE10+ browsers
+    select::-ms-expand {
+      display: none;
+    }
+    .menu-item {
+      display: inline-block;
+      cursor: pointer;
+      > * + * {
+        margin-left: 5px;
+      }
+    }
+    .menu-item + .menu-item {
+      @include media-breakpoint-up(xs) {
+        margin-left: 15px;
+      }
+      @include media-breakpoint-up(md) {
+        margin-left: 20px;
+      }
+    }
+    &:not(.subheader) {
+      @include media-breakpoint-down(xs) {
+        padding-top: 25px;
+        line-height: 35px;
+      }
+    }
+  }
+
+    position: relative;
+    margin: auto;
+
+    // padding: 130px 0 0 0;
+
+    @include media-breakpoint-down(sm) {
+      padding: 0;
+    }
+
+    @include clearfix;
+
+    select {
+      @include select;
+      background-color: white;
+    }
+    .pagination-container {
+      clear: both;
+      display: flex;
+      align-items: center;
+      padding: 20px 0 15px 0;
+      @include media-breakpoint-down(sm) {
+        justify-content: center;
+      }
+      @include media-breakpoint-down(xs) {
+        background: white;
+      }
+      @include media-breakpoint-up(sm) {
+        .anchor-button {
+          min-width: 40px;
+          padding: 0;
+        }
+      }
+    }
+
+  .school-table {
+    width: 100%;
+    position: relative;
+    padding: 5px 15px 10px 15px;
+
+    table {
+      table-layout: fixed;
+      min-width: 991px;
+      background-color: white;
+      margin: auto;
+      @include media-breakpoint-up(lg) {
+        width: 100%;
+      }
+
+      thead tr:nth-child(1) th {
+        position: -webkit-sticky;
+        position: sticky;
+        top: -1px;
+        z-index: 2;
+        box-shadow: 0 1px 1px -1px #c1d2d9;
+      }
+
+      tbody tr:nth-child(1) td {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 58px;
+        //Targets Safari only
+        @media not all and (min-resolution:.001dpcm) { 
+          top: -2px;
+        }
+        z-index: 2;
+        box-shadow: 1px 1px 1px -1px #c1d2d9;
+      }
+      // resets on IE11 since issues occurs on fixed table headers
+      @media all and (-ms-high-contrast: none){
+        thead tr:nth-child(1) th, tbody tr:nth-child(1) td {
+          position: relative;
+          top: 0px;
+        }
+      }
+
+      th.table-headers {
+        height: 60px;
+      }
+
+      th.school.table-headers {
+        width: 35%;
+      }
+
+      th.total-enrollment-table-headers{
+        width: 20%;
+      }
+
+      th.ethnicity_enrollment.table-headers {
+        width: 20%;
+      }
+
+      th.testscores.table-headers {
+        width: 25%;
+      }
+
+      td {
+        position: relative;
+      }
+
+      .centered {
+        text-align: center;
+      }
+
+      .cohort-percentages{
+        @include flexbox-center;
+        span{
+          font-family: 'opensans-semibold';
+        }
+      }
+
+      tr.row-outline {
+        //border: 3px solid #176997;
+        td {
+          background: #94DCF9;
+        }
+      }
+
+      tr td.yellow-highlight {
+        background-color: #FCFFA2;
+      }
+
+      td.pinned {
+        padding-top: 28px;
+        > div:first-of-type {
+          height: 19px;
+          line-height: 18px;
+          width: 100%;
+          background: #176997;
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-family: 'opensans-bold', Helvetica, Arial;
+          color: white;
+          font-size: $font-size-l2;
+          padding-left: 10px;
+          div {
+            display: inline-block;
+            margin-left: 6px;
+          }
+          > div:last-child { top: 20px}
+        }
+      }
+
+      td .school-types{
+        span{
+          font-family: 'opensans-semibold';
+        }
+        span:nth-child(2){ margin-right: 15px; }
+      }
+
+      td,
+      th {
+        border: 1px solid $form-field-border-color;
+        padding: 10px 15px;
+      }
+
+      th {
+        color: $gray-darker;
+        font-weight: normal;
+        background-color: #f1fafd;
+        text-align: center;
+      }
+      th.school {
+        width: 320px;
+      }
+
+      td.school {
+        $active-color: #f6f9fa;
+        $hover-color: #f6f9fa;
+        $border-color: #dbe6eb;
+
+        @include clearfix;
+        span {
+          display: inline-block;
+        }
+        a {
+          font-size: $font-size-l2;
+          font-family: 'opensans-semibold', sans-serif;
+        }
+        a.name {
+          font-size: $font-size-l3;
+        }
+        &:hover {
+          background-color: $hover-color;
+        }
+        &.active {
+          background-color: $active-color;
+        }
+        > span:first-of-type {
+          text-align: center;
+          width: 55px;
+        }
+        > span:last-of-type {
+          width: calc(100% - 100px);
+        }
+        > span {
+          vertical-align: top;
+        }
+        > span + span {
+          margin-left: 15px;
+        }
+        > div {
+          top: 10px;
+          right: 10px;
+          position: absolute;
+        }
+      }
+
+      td.school.pinned{
+        // overwrites td.school
+        > div:last-child { top: 20px}
+      }
+    }
+    @media (max-width: 823px) {
+      overflow-x: scroll;
+    }
+  }
+  .icon-star {
+    font-size: 11px;
+  }
+  .icon-heart,
+  .icon-heart-outline {
+    float: right;
+    width: auto;
+    color: #1dace5;
+    font-size: 17px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .loading {
+    opacity: 0.2;
+    filter: blur(4px);
+    background-color: lightgray;
+  }
+
+  .loading-overlay {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    // background: rgba(255,255,255,0.75);
+    > .loader {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      top: 50%;
+      left: 50%;
+      margin: -30px 0 0 -30px;
+      border: 1px solid #c1d2d9;
+      border-radius: 3px;
+      background-image: image-url('search/owl-loader.gif');
+      background-repeat: no-repeat;
+      background-color: white;
+      background-position: center;
+    }
+  }
+}
+
+// Hides the navbar links
+.featured {
+  display: none;
+}

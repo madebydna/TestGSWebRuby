@@ -14,7 +14,7 @@ module Feeds
       data_keys_required  = FeedConstants.const_get("DIRECTORY_#{model.upcase}_KEYS_REQUIRED")
 
       @directory_hash = hash[cache_keys[0]]
-      @characteristics_hash = hash[cache_keys[1]]
+      @characteristics_hash = characteristics_hash_build(hash, cache_keys)
       id = cache_value(@directory_hash, 'id')
       @universal_id = UniversalId.calculate_universal_id(state, FeedConstants.const_get("ENTITY_TYPE_#{model.upcase}"), id)
 
@@ -34,6 +34,16 @@ module Feeds
       end
 
       arr.flatten
+    end
+
+    def self.characteristics_hash_build(hash, cache_keys)
+      state_gsdata = hash[cache_keys[2]] || {}
+      state_characteristics_data = hash[cache_keys[1]] || {}
+      if state_gsdata && state_characteristics_data
+        state_gsdata.merge(state_characteristics_data)
+      else
+        state_characteristics_data
+      end
     end
 
     # //////////////////////////////  DIRECTORY_KEYS_SPECIAL -- REQUIRED ///////////////////////////////////////////////////////////////
@@ -90,7 +100,7 @@ module Feeds
     end
 
     def self.census_info
-      char_data = CharacteristicsDataBuilder.characteristics_format(@characteristics_hash, @universal_id, @model) if @characteristics_hash
+      char_data = CharacteristicsDataBuilder.characteristics_format(@characteristics_hash, @universal_id, @model) if @characteristics_hash.present?
       single_data_object('census-info', char_data) if char_data && char_data.compact.present?
     end
 

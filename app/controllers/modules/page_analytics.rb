@@ -11,6 +11,7 @@ module PageAnalytics
   COUNTY = 'county'
   ENV = 'env'
   COMPFILTER = 'compfilter'
+  SCHOOL_ID = 'school_id'
 
   def set_page_analytics_data
     hash = page_analytics_data
