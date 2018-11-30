@@ -8,9 +8,11 @@ import FiveStarRating from '../review/form/five_star_rating';
 import RatingWithTooltip from 'react_components/rating_with_tooltip';
 import ModalTooltip from "../modal_tooltip";
 import RatingWithBar from 'react_components/equity/graphs/rating_with_bar';
+import Rating from 'components/rating';
 import CompareContext from './compare_context';
 import PieChart from 'react_components/pie_chart';
 import SavedSchoolContext from 'react_components/search/saved_school_context';
+import {XS, SM, MD} from 'util/viewport';
 
 const renderEnrollment = enrollment => {
   if (enrollment) {
@@ -53,7 +55,8 @@ const CompareSchoolTableRow = ({
   ethnicityInfo,
   savedSchool,
   sort,
-  breakdown
+  breakdown,
+  size
 }) => {
   let addressPhrase = [address.street1, address.city, state, address.zip]
     .filter(s => !!s && s.length > 0)
@@ -126,13 +129,17 @@ const CompareSchoolTableRow = ({
     return match && match.percentage;
   };
 
-  const compareColumns = () => {
+  const compareColumns = (size) => {
     return (
       <React.Fragment>
         <td className="centered">{enrollment.toLocaleString()}</td>
         {breakdown !== 'All students' && <td className="centered">{cohortPercentageComponent(cohortPercentageForEthnicity())}</td>}
-        <td className={sort === 'testscores' ? 'yellow-highlight' : undefined}>
-          <RatingWithBar score={testScoreRatingForEthnicity} size='small' />
+        <td className={`${size < MD ? "centered" : undefined} ${sort === 'testscores' ? 'yellow-highlight' : undefined}`}>
+          {size > MD ? 
+            <RatingWithBar score={testScoreRatingForEthnicity} size='small' />
+            :
+            <Rating score={testScoreRatingForEthnicity} size='medium' />
+          }
         </td>
       </React.Fragment>
     )
@@ -153,7 +160,7 @@ const CompareSchoolTableRow = ({
     shouldRenderSchoolRow() && (
       <tr className={pinned ? 'row-outline' : undefined}>
         {schoolCard()}
-        {compareColumns()}
+        {compareColumns(size)}
       </tr>
     )
   );
