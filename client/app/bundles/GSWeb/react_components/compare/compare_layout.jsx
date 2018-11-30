@@ -140,8 +140,8 @@ class CompareLayout extends React.Component {
       <React.Fragment>
         {this.props.searchBox}
         {this.renderBreadcrumbsContainer()}
-        {this.props.noResults ? (
-          this.props.noResults
+        {this.props.noCompareResults ? (
+          this.props.noCompareResults
         ) : (
           <React.Fragment>
             {this.renderFilterBar()}

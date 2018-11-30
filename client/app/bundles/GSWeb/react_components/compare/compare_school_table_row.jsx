@@ -85,9 +85,6 @@ const CompareSchoolTableRow = ({
             <div className="school-types">
               {schoolType && <span>{capitalize(t(`school_types.${schoolType}`))}</span>}
               {gradeLevels && <span>, {gradeLevels}</span>}
-              {enrollment && <React.Fragment>
-                <span>{`${enrollment.toLocaleString()} ${t('students')}`}</span>
-              </React.Fragment>}
             </div>
           </span>
           {<SavedSchoolContext.Consumer>
@@ -104,21 +101,24 @@ const CompareSchoolTableRow = ({
   };
 
   const cohortPercentageComponent = (percentage) => {
-    return(
-      <div className="cohort-percentages">
-        <PieChart slices={[
-          {
-            color: 'gray',
-            value: percentage
-          },
-          {
-            color: '#d3d3d3',
-            value: 100 - percentage,
-          },
-        ]} />
-        <span>{`${percentage}%`}</span>
-      </div>
-    )
+    if(percentage){
+      return(
+        <div className="cohort-percentages">
+          <PieChart slices={[
+            {
+              color: 'gray',
+              value: percentage
+            },
+            {
+              color: '#d3d3d3',
+              value: 100 - percentage,
+            },
+          ]} />
+          <span>{`${percentage}%`}</span>
+        </div>
+      )
+    }
+    return 'N/A'
   };
 
   const cohortPercentageForEthnicity = () => {
@@ -130,7 +130,7 @@ const CompareSchoolTableRow = ({
     return (
       <React.Fragment>
         <td className="centered">{enrollment.toLocaleString()}</td>
-        {cohortPercentageForEthnicity() && <td className="centered">{cohortPercentageComponent(cohortPercentageForEthnicity())}</td>}
+        {breakdown !== 'All students' && <td className="centered">{cohortPercentageComponent(cohortPercentageForEthnicity())}</td>}
         <td className={sort === 'testscores' ? 'yellow-highlight' : undefined}>
           <RatingWithBar score={testScoreRatingForEthnicity} size='small' />
         </td>
