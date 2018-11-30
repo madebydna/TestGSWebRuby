@@ -204,7 +204,7 @@ class CompareProvider extends React.Component {
           .fail(e => alert("There was an error adding a school to your account.\n Please try again later"))
       }
     }
-    analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
+    analyticsEvent('compare', 'saveSchool', schoolKeyIdx > -1);
   }
 
   handleSaveSchoolClick(schoolKey) {

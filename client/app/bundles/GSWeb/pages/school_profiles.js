@@ -52,6 +52,7 @@ import SearchBox from 'react_components/search_box';
 import withViewportSize from 'react_components/with_viewport_size';
 import ProfileInterstitialAd, { shouldShowInterstitial, profileInterstitialLoader } from 'react_components/school_profiles/profile_interstitial_ad';
 import "jquery-unveil";
+import { getParameterByName } from 'util/uri'
 
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 
@@ -161,6 +162,14 @@ $(function() {
     var cat = $(this).data("module") +"::"+ $(this).data("type");
     analyticsEvent('Profile', 'Share', cat);
     return false;
+  });
+
+  $('body').on('click', '.compare-link', function() {
+    var compareUrl = $(this).find('a').attr('href');
+    var breakdown = getParameterByName('breakdown',compareUrl);
+    var state = gon.school.state;
+    var schoolId = gon.school.id;
+    analyticsEvent('Profile', 'CompareSchool', `${schoolId}:${state}:race-ethnicity:${breakdown}`);
   });
 
   $('body').on('click', '.js-subtopicAnswerButton', function () {

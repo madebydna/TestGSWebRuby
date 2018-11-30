@@ -47,15 +47,15 @@ class CompareSchoolsController < ApplicationController
 
   private
 
-  # def school
-  #   @_school ||= begin
-  #     if lat && lon
-  #       nil
-  #     else
-  #       School.on_db(state).find(school_id)
-  #     end
-  #   end
-  # end
+  # PageAnalytics
+  def page_analytics_data
+    {}.tap do |hash|
+      hash[PageAnalytics::PAGE_NAME] = 'GS:Compare:Home'
+      hash[PageAnalytics::STATE] = state.upcase if state
+      hash[PageAnalytics::ENV] = advertising_env
+      hash[PageAnalytics::SCHOOL_ID] = school_id
+    end
+  end
 
   def state
     #TODO DRY this up - exists in community params as well
@@ -69,13 +69,12 @@ class CompareSchoolsController < ApplicationController
     end
   end
 
-  # def ethnicity
-  #   require 'pry';binding.pry
-  #   @_ethnicity ||= breakdown_array.include?(params[:breakdown]) ? params[:breakdown] : breakdown_array.sort.first
-  # end
+  def breakdown
+    params[:breakdown]
+  end
 
   def ethnicity
-    pinned_school_ethnicity_breakdowns.include?(params[:breakdown]) ? params[:breakdown] : pinned_school_ethnicity_breakdowns.sort.first
+    pinned_school_ethnicity_breakdowns.include?(breakdown) ? breakdown : pinned_school_ethnicity_breakdowns.sort.first
   end
 
   def pinned_school_ethnicity_breakdowns

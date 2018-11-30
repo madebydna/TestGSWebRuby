@@ -60,7 +60,9 @@ module CachedRatingsMethods
 
   # Not using for now; will implement when we have better breakdown handling
   def translated_ethnicity_breakdowns_with_fallback
-    ethnicity_breakdowns.map {|breakdown| I18n.t(breakdown) || breakdown}
+    ethnicity_breakdowns.map do |breakdown|
+      I18n.t(breakdown) || breakdown
+    end
   end
 
   def ethnicity_information
