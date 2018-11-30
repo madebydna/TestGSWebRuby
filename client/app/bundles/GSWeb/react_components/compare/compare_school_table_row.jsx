@@ -53,7 +53,8 @@ const CompareSchoolTableRow = ({
   ethnicityInfo,
   savedSchool,
   sort,
-  breakdown
+  breakdown,
+  distance
 }) => {
   let addressPhrase = [address.street1, address.city, state, address.zip]
     .filter(s => !!s && s.length > 0)
@@ -85,6 +86,7 @@ const CompareSchoolTableRow = ({
             <div className="school-types">
               {schoolType && <span>{capitalize(t(`school_types.${schoolType}`))}</span>}
               {gradeLevels && <span>, {gradeLevels}</span>}
+              {distance !== null && distance !== undefined && distance > 0 && <span>{`  | ${distance} ${t('Miles')}`}</span>}
             </div>
           </span>
           {<SavedSchoolContext.Consumer>

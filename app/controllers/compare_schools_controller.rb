@@ -4,6 +4,7 @@ class CompareSchoolsController < ApplicationController
   # include SchoolHelper
 
   include Pagination::PaginatableRequest
+  include SearchRequestParams
   include CompareControllerConcerns
   include AdvertisingConcerns
   include PageAnalytics
@@ -152,6 +153,6 @@ class CompareSchoolsController < ApplicationController
   end
 
   def default_extras
-    %w(ratings characteristics review_summary saved_schools pinned_school ethnicity_test_score_rating)
+    %w(ratings characteristics review_summary saved_schools pinned_school ethnicity_test_score_rating distance)
   end
 end

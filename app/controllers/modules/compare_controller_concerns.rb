@@ -117,7 +117,6 @@ module CompareControllerConcerns
 
   def add_distance(schools)
     return schools unless point_given? || area_given?
-
     schools.each do |school|
       if school.lat && school.lon
         distance =
