@@ -54,6 +54,7 @@ module Components
     def standard_hash_to_value_hash_ratings(h)
       {
         breakdown: t(h['breakdown']),
+        breakdown_in_english: h['breakdown'],
         label: text_value(h['school_value_text']),
         score: float_value(h['school_value_float']),
         percentage: h['percentage'],
@@ -120,11 +121,12 @@ module Components
 
     def text_value(value)
       return value if value.nil?
-      return '<1' if float_value(value) < 1
       # If a precision is set, and the value is a number, then just
       # use stringified float value
-      if value.to_s == value.to_f.to_s && precision
-        return float_value(value).to_s
+      if precision && value =~ /^\s*[\.\d]+\s*$/
+        num = float_value(value)
+        return '<1' if num < 1
+        return num.to_s
       end
       return value.to_s
     end

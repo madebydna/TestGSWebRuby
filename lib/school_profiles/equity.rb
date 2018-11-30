@@ -35,12 +35,60 @@ module SchoolProfiles
       )
     end
 
+    def race_ethnicity_test_scores_array
+      # For each value in the Overview tab, add in a url to the compare page with the correct query params
+      ts = @test_scores.to_hash
+      ts.map do |component|
+        if component[:anchor] == 'Overview' && component[:values]
+          component[:values] = component[:values].map do |values_hash|
+            values_hash[:link] = compare_schools_path(compare_button_query_params(values_hash))
+            values_hash
+          end
+        end
+        component
+      end
+    end
+
+    def ethnicity_mapping_hash
+      {
+        :'African American' => "African American",
+        :'Black' => "African American",
+        :'White' => "White",
+        :'Asian or Pacific Islander' => "Asian or Pacific Islander",
+        :'Asian' => "Asian",
+        :'All' => "All students",
+        :'Multiracial' => "Two or more races",
+        :'Two or more races' => "Two or more races",
+        :'American Indian/Alaska Native' => "American Indian/Alaska Native",
+        :'Native American' => "American Indian/Alaska Native",
+        :'Pacific Islander' => "Pacific Islander",
+        :'Hawaiian Native/Pacific Islander' => "Pacific Islander",
+        :'Native Hawaiian or Other Pacific Islander' => "Pacific Islander",
+        :'Economically disadvantaged' => "Low-income",
+        :'Low Income' => "Low-income",
+        :'Hispanic' => "Hispanic"
+      }
+    end
+
+    def compare_button_query_params(values_hash)
+      school = @school_cache_data_reader.school
+      {}.tap do |hash|
+        hash[:state] = school.state
+        hash[:schoolId] = school.id
+        hash[:lat] = school.lat
+        hash[:lon] = school.lon
+        hash[:gradeLevels] = school.level_code.split(',')
+        hash[:breakdown] = values_hash[:breakdown_in_english]
+        hash[:sort] = 'testscores'
+      end
+    end
+
     def race_ethnicity_props
       @_race_ethnicity_props ||= [
         {
           title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
           anchor: 'Test_scores',
-          data: @test_scores.to_hash
+          data: race_ethnicity_test_scores_array
         },
         {
           title: I18n.t('College readiness', scope:'lib.equity_gsdata'),

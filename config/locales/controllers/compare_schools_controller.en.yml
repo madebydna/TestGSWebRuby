@@ -1,0 +1,7 @@
+en:
+  controllers:
+    compare_schools_controller:
+      total_students_enrolled: Total students enrolled
+      percentage_of_students: "% of %{ethnicity} students enrolled in school"
+      test_score_rating_for: "Test score rating for %{ethnicity} students"
+      test_score_rating_for_all_students: "Test score rating for all students"

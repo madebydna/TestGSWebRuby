@@ -27,7 +27,6 @@ const resultSummary = t('no_school_list')
 
 const NoMySchoolListResults = () => (
   <div className="no-results">
-    <Ad sizeName="thin_banner" slot="Search_NoResults_Top" />
     <div className="body">
       <img src={noResultsOwlPng} />
       <div>
@@ -44,7 +43,6 @@ const NoMySchoolListResults = () => (
         </ul>
       </div>
     </div>
-    <Ad sizeName="thin_banner" slot="Search_NoResults_Bottom" />
   </div>
 );
 

@@ -1,14 +1,14 @@
 had_any_errors = false
 
 def all_cache_keys
-  %w(ratings test_scores feed_test_scores characteristics esp_responses reviews_snapshot progress_bar nearby_schools performance gsdata feed_characteristics directory courses test_scores_gsdata feed_test_scores_gsdata feed_old_test_scores_gsdata)
+  %w(ratings characteristics esp_responses reviews_snapshot progress_bar nearby_schools gsdata feed_characteristics directory courses test_scores_gsdata feed_test_scores_gsdata feed_old_test_scores_gsdata)
 end
 
 def usage
   abort "\n\nUSAGE: rails runner script/populate_school_cache_table (all | [state]:[cache_keys]:[school_where])
 
-Ex: rails runner script/populate_school_cache_table al:test_scores de:all:9,18,23
-Ex: rails runner script/populate_school_cache_table al:test_scores de:all:\"id IN (9,18,23) or level_code like '%h%'\"
+Ex: rails runner script/populate_school_cache_table al:test_scores_gsdata de:all:9,18,23
+Ex: rails runner script/populate_school_cache_table al:test_scores_gsdata de:all:\"id IN (9,18,23) or level_code like '%h%'\"
 
 Possible cache keys: #{all_cache_keys.join(', ')}\n\n"
 end

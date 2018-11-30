@@ -95,6 +95,7 @@ LocalizedProfiles::Application.routes.draw do
   resources :saved_searches, only: [:create, :destroy], path: '/gsr/ajax/saved_search'
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
+  get '/compare_schools', to: 'compare_schools#fetch_schools'
   get '/community/', to: 'community_landing#show',as: :community_landing
 
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
@@ -260,6 +261,7 @@ LocalizedProfiles::Application.routes.draw do
     resource :school_user_digest
     resource :nearby_schools
     resources :schools
+    # get '/compare_schools', to: 'compare_schools#compare_schools', as: :fetch_schools
     get '/reviews_list', to: 'reviews#reviews_list', as: :reviews_list
     resources :reviews do
       get 'count', on: :collection

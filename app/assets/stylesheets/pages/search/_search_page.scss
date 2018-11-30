@@ -454,7 +454,9 @@ body {
 }
 
 .school-table {
-  overflow-x: scroll;
+  @include media-breakpoint-down(sm){
+    overflow-x: auto;
+  }
   width: 100%;
   background-color: white;
   position: relative;
@@ -465,6 +467,25 @@ body {
 
     @include media-breakpoint-up(lg) {
       width: 100%;
+    }
+    @include media-breakpoint-up(md){
+      thead tr:nth-child(1) th {
+        position: sticky;
+        position: -webkit-sticky;
+        //offset height of navbar and menu-bar
+        top: 117.5px;
+        z-index: 2;
+        box-shadow: 1px 1px 1px -1px #c1d2d9;
+      }
+      // remove sticky options from IE10+ since no support for sticky and some 
+      // issues occur when trying to position fix the table headers
+      @media all and (-ms-high-contrast: none){
+        thead tr:nth-child(1) th  {
+          position: relative;
+          top: 0px;
+          z-index: 0;
+        }
+      }
     }
 
     td {

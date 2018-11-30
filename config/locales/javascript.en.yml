@@ -1,8 +1,13 @@
 ---
 en:
   javascript:
+    compare_test_scores_for: Compare test scores for
+    from: from
+    to_nearby_schools: to nearby schools
     Academics: Academics
     Saved!: Saved!
+    Saved: Saved
+    Save: Save
     No listings found: No listings found
     '# of schools': '# of schools'
     '# of students': '# of students'
@@ -29,6 +34,8 @@ en:
       - Try different or fewer keywords.
       - Try more general keywords.
       - Try different search filters (e.g. school types or levels).
+    no_compare_school_title: No results found
+    no_compare_school_results: We couldn’t find nearby schools with test scores from {breakdown} students.
     Close filters: Close filters
     school: school
     schools: schools
@@ -153,6 +160,7 @@ en:
     saved_search_validation_error: Please name your search
     strong_fit: 'Strong fit'
     test_scores:
+      title: Test Scores
       advanced: Advanced
       proficient: Proficient
       proficient_or_better: Proficient or better

@@ -1,7 +1,7 @@
 // TODO: import I18n
 import * as notifications from '../util/notifications';
 import { t, preserveLanguageParam } from '../util/i18n';
-import { isSignedIn, getSavedSchoolsFromCookie, COOKIE_NAME, updateNavbarHeart } from '../util/session';
+import { isSignedIn, isNotSignedIn, getSavedSchoolsFromCookie, COOKIE_NAME, updateNavbarHeart } from '../util/session';
 import modalManager from '../components/modals/manager';
 import { merge, pick } from 'lodash';
 import { set as setCookie } from 'js-cookie';
@@ -27,8 +27,7 @@ export const signupAndFollowSchool = function(state, schoolId, schoolName) {
     updateProfileHeart(state, schoolId);
     updateNavbarHeart();
 
-    // ternary for heart : if white ? blue : white 
-    if (isSignedIn()) {
+    if ((isSignedIn()) && (savedSchoolsFindIndex(state, schoolId) > -1)) {
       schools(state, schoolId)
         .follow({showMessages: false})
         .done(function(){
@@ -42,7 +41,7 @@ export const signupAndFollowSchool = function(state, schoolId, schoolName) {
             );
           }
         });
-    } else {
+    } else if (isNotSignedIn()) {
       modalManager.showModal('SignupAndFollowSchoolModal').done(function(data) {
         schools(state, schoolId).follow({email: data.email});
       }).fail(function(data) {
@@ -54,10 +53,17 @@ export const signupAndFollowSchool = function(state, schoolId, schoolName) {
   }
 };
 
+const savedSchoolsFindIndex = function(schoolState, schoolId) {
+  return getSavedSchoolsFromCookie().findIndex(
+    key =>
+        key.id.toString() === schoolId.toString() &&
+        key.state === schoolState
+  );
+}
+
 const updateSavedSchoolsCookie = function(schoolState, schoolId) {
   const savedSchools = getSavedSchoolsFromCookie();
-  const schoolKeyIdx = getSavedSchoolsFromCookie().findIndex(key => 
-    key.id.toString() === schoolId.toString() && key.state === schoolState);
+  const schoolKeyIdx = savedSchoolsFindIndex(schoolState, schoolId);
   schoolKeyIdx > -1
     ? savedSchools.splice(schoolKeyIdx, 1)
     : savedSchools.push({ state: schoolState, id: schoolId.toString() });
@@ -70,27 +76,25 @@ const updateSavedSchoolsCookie = function(schoolState, schoolId) {
           e.status === 400 && alert("There was an error deleting a school from your account.\n Please try again later")
         })
         .fail(e => alert("There was an error deleting a school from your account.\n Please try again later"))
-    } else {
-      addSchool(newSchool)
-        .done(e => {
-          e.status === 400 && alert("There was an error adding a school to your account.\n Please try again later")
-        })
-        .fail(e => alert("There was an error adding a school to your account.\n Please try again later"))
     }
   }
   analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
-}; 
+};
 
 export const updateProfileHeart = (schoolState, schoolId) => {
   const heart = document.getElementById('profile-heart');
+  const saveText = document.getElementById('save-text');
+
   const savedSchools = getSavedSchoolsFromCookie();
   const schoolKeyIdx = getSavedSchoolsFromCookie().findIndex(key => 
     key.id.toString() === schoolId.toString() && key.state === schoolState);
 
   if (schoolKeyIdx > -1) {
     heart.style.setProperty('color', '#2bade3');
+    saveText.innerHTML = t('Saved');
   } else {
-    heart.style.setProperty('color', 'white');
+    heart.style.removeProperty('color');
+    saveText.innerHTML = t('Save');
   }
 }
 
