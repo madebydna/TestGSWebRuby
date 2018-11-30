@@ -155,7 +155,7 @@ module CompareControllerConcerns
   end
 
   def test_score_rating_by_ethnicity_header_hash
-    return nil if ethnicity.nil? 
+    return nil if ethnicity.nil?
     test_score_rating_key = ethnicity.downcase == 'all students' ? 'test_score_rating_for_all_students' : 'test_score_rating_for'
     {title: I18n.t(test_score_rating_key, scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: (sort == 'testscores' ? 'testscores yellow-highlight' : 'testscores'), key: 'testscores'}
   end
