@@ -6,7 +6,7 @@ module SchoolProfiles
       end
 
       def self.round_unless_less_than_1(value)
-        if ((value.to_i.to_s == value.to_s) || (value.to_f.to_s == value.to_s))
+        if value.is_a?(String) && value.match?(/^\s*[\.\d]+\s*$/)
           value = value.to_f
         end
 
