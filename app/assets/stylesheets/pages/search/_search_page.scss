@@ -471,6 +471,7 @@ body {
     @include media-breakpoint-up(md){
       thead tr:nth-child(1) th {
         position: sticky;
+        position: -webkit-sticky;
         //offset height of navbar and menu-bar
         top: 117.5px;
         z-index: 2;
