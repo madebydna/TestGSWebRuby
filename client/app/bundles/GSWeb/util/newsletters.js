@@ -81,8 +81,6 @@ const updateSavedSchoolsCookie = function(schoolState, schoolId) {
   analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
 };
 
-const originalSaveText = document.getElementById('save-text').innerHTML;
-
 export const updateProfileHeart = (schoolState, schoolId) => {
   const heart = document.getElementById('profile-heart');
   const saveText = document.getElementById('save-text');
@@ -96,7 +94,7 @@ export const updateProfileHeart = (schoolState, schoolId) => {
     saveText.innerHTML = t('Saved');
   } else {
     heart.style.removeProperty('color');
-    saveText.innerHTML = originalSaveText;
+    saveText.innerHTML = t('Save');
   }
 }
 
