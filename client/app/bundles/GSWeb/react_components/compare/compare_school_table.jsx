@@ -66,7 +66,7 @@ class CompareSchoolTable extends React.Component {
     const otherSchools = schools.filter(s => !s.pinned);
     return (
       <CompareContext.Consumer>
-        {({sort, breakdown}) =>
+        {({sort, breakdown, size}) =>
           <section className="school-table">
             {
               /* would prefer to just not render overlay if not showing it,
@@ -83,13 +83,16 @@ class CompareSchoolTable extends React.Component {
                 <CompareSchoolTableRow
                   columns={compareTableHeaders}
                   key={pinnedSchool.state + pinnedSchool.id} {...pinnedSchool}
-                  breakdown={breakdown}/>
+                  breakdown={breakdown}
+                  size={size}
+                />
                 {otherSchools.map(s => (
                   <CompareSchoolTableRow
                     columns={compareTableHeaders}
                     key={s.state + s.id}
                     sort={sort}
                     breakdown={breakdown}
+                    size={size}
                     {...s}
                   />
                 ))}

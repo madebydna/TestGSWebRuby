@@ -159,6 +159,7 @@ body {
       }
 
       thead tr:nth-child(1) th {
+        position: -webkit-sticky;
         position: sticky;
         top: -1px;
         z-index: 2;
@@ -166,8 +167,13 @@ body {
       }
 
       tbody tr:nth-child(1) td {
+        position: -webkit-sticky;
         position: sticky;
-        top: 96px;
+        top: 58px;
+        //Targets Safari only
+        @media not all and (min-resolution:.001dpcm) { 
+          top: -2px;
+        }
         z-index: 2;
         box-shadow: 1px 1px 1px -1px #c1d2d9;
       }
@@ -180,7 +186,7 @@ body {
       }
 
       th.table-headers {
-        height: 98px;
+        height: 60px;
       }
 
       th.school.table-headers {
@@ -188,15 +194,15 @@ body {
       }
 
       th.total-enrollment-table-headers{
-        width: 15%;
+        width: 20%;
       }
 
       th.ethnicity_enrollment.table-headers {
-        width: 15%;
+        width: 20%;
       }
 
       th.testscores.table-headers {
-        width: 40%;
+        width: 25%;
       }
 
       td {
