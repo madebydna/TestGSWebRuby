@@ -12,3 +12,11 @@ ol{
     opacity: 0.5;
   }
 }
+//msl doesn't have that breadcrumb container
+section.school-table{
+  @media (min-width:992px){
+    thead tr:nth-child(1) th {
+      top: 58px;
+    }
+  }
+}
