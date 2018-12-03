@@ -53,7 +53,7 @@ module CompareControllerConcerns
     if cache_keys.any?
       schools = SchoolCacheQuery.decorate_schools(schools, *cache_keys)
       schools = filter_by_ethnicity_test_score_rating(schools).compact
-      schools = sort_by_ethnicity_test_score(schools) if sort == nil || sort == 'testscores'
+      schools = sort_by_ethnicity_test_score(schools) if sort_name.nil? || sort_name == 'testscores'
     end
     schools
   end
@@ -64,9 +64,9 @@ module CompareControllerConcerns
 
   def sort_by_ethnicity_test_score(schools)
     # This keeps the pinned school on top
-    pinned_school = schools.select {|school| school.pinned}
-    non_pinned_schools = schools - pinned_school
-    non_pinned_schools.sort_by {|school| school.test_score_rating_for_ethnicity}.reverse.unshift(pinned_school[0])
+    pinned_school = schools.find {|school| school.pinned}
+    non_pinned_schools = schools - [pinned_school]
+    non_pinned_schools.sort_by {|school| school.test_score_rating_for_ethnicity}.reverse.unshift(pinned_school)
   end
 
   def filter_by_ethnicity_test_score_rating(schools)
@@ -141,7 +141,7 @@ module CompareControllerConcerns
   end
 
   def translated_ethnicity_with_fallback
-    @_translated_ethnicity ||= I18n.t(ethnicity) || ethnicity
+    @_translated_ethnicity ||= I18n.t(ethnicity, default: ethnicity)
   end
 
   def cohort_count_header_hash
@@ -156,7 +156,7 @@ module CompareControllerConcerns
   def test_score_rating_by_ethnicity_header_hash
     return nil if ethnicity.nil?
     test_score_rating_key = ethnicity.downcase == 'all students' ? 'test_score_rating_for_all_students' : 'test_score_rating_for'
-    {title: I18n.t(test_score_rating_key, scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: (sort == 'testscores' ? 'testscores yellow-highlight' : 'testscores'), key: 'testscores'}
+    {title: I18n.t(test_score_rating_key, scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: (sort_name == 'testscores' ? 'testscores yellow-highlight' : 'testscores'), key: 'testscores'}
   end
 
   def table_headers

@@ -1,8 +1,4 @@
 class CompareSchoolsController < ApplicationController
-  # include CompareSchoolsConcerns
-  # include SearchHelper
-  # include SchoolHelper
-
   include Pagination::PaginatableRequest
   include SearchRequestParams
   include CompareControllerConcerns
@@ -17,21 +13,9 @@ class CompareSchoolsController < ApplicationController
     gon.compare = {
       schools: serialized_schools,
       breakdown: ethnicity,
-      sort: sort,
+      sort: sort_name,
       tableHeaders: table_headers
     }
-    # LEGACY################################################
-    # gon.pagename = 'CompareSchoolsPage'
-    # page_title = 'Compare Schools'
-    # gon.pageTitle = page_title
-    #
-    # prepare_schools
-    # set_back_to_search_results_instance_variable
-    #
-    # set_meta_tags title: page_title,
-    #               description:'Compare schools to find the right school for your family',
-    #               robots: 'noindex'
-    # set_data_layer_variables
   end
 
   def fetch_schools
@@ -58,18 +42,6 @@ class CompareSchoolsController < ApplicationController
     end
   end
 
-  def state
-    #TODO DRY this up - exists in community params as well
-    return nil unless params[:state].present?
-    state_param = params[:state]
-
-    if States.is_abbreviation?(state_param)
-      state_param
-    else
-      States.abbreviation(state_param.gsub('-', ' ').downcase)
-    end
-  end
-
   def breakdown
     params[:breakdown]
   end
@@ -92,44 +64,13 @@ class CompareSchoolsController < ApplicationController
     params[:schoolId]&.to_i
   end
 
-  def sort
-    params[:sort]
-  end
-
-  def lat
-    params[:lat]&.to_f
-  end
-
-  def lon
-    params[:lon]&.to_f
-  end
-
   def level_codes
     params[:gradeLevels] || params[:level_code].split(",")
-  end
-
-  def sort_name
-    params[:sort]
-  end
-
-  def entity_types
-    params[:st] & ['public', 'private', 'charter']
   end
 
   def redirect_unless_school_id_and_state
     redirect_to home_path unless state && school_id
   end
-
-  # def set_data_layer_variables
-  #   state = @state.try(:upcase) if @state
-  #
-  #   data_layer_gon_hash.merge!(
-  #     {
-  #       'page_name' => 'GS:Compare',
-  #       'State' => state,
-  #     }
-  #   )
-  # end
 
   def extras
     default_extras + extras_param
@@ -146,10 +87,6 @@ class CompareSchoolsController < ApplicationController
   def cookies_school_keys
     # If a user saves a school and then removes it, the cookie will be set as '[]'. Code below will return [] in that case.
     cookies[:gs_saved_schools] ? JSON.parse(cookies[:gs_saved_schools]).map {|hash| [hash['state']&.downcase, hash['id']&.to_i]} : []
-  end
-
-  def saved_school_keys
-    current_user ? merge_school_keys : cookies_school_keys
   end
 
   def default_extras

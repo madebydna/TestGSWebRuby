@@ -317,65 +317,30 @@ class CompareProvider extends React.Component {
           sort: this.props.sort
         }}
       >
-        <DistanceContext.Provider
-          // compose makes a new function that will call curried trackParams,
-          // followed by this.props.updateDistance (right to left)
+        <SortContext.Provider
           value={{
-            distance: this.props.distance,
-            onChange: compose(
+            sort: this.props.sort,
+            onSortChanged: compose(
               this.scrollToTop,
-              this.props.updateDistance,
-              curry(this.trackParams)('Distance', this.props.distance)
+              this.props.updateSort,
+              curry(this.trackParams)('Sort', this.props.sort)
+            ),
+            breakdown: this.state.breakdown,
+            onBreakdownChanged: compose(
+              this.scrollToTop,
+              this.props.updateBreakdown,
+              curry(this.trackParams)('Breakdown', this.state.breakdown)
             )
           }}
         >
-          <GradeLevelContext.Provider
+          <SavedSchoolContext.Provider
             value={{
-              levelCodes: this.props.levelCodes,
-              onLevelCodesChanged: compose(
-                this.scrollToTop,
-                this.props.updateLevelCodes,
-                curry(this.trackParams)('Grade level', this.props.levelCodes)
-              )
+              saveSchoolCallback: this.handleSaveSchoolClick,
             }}
           >
-            <EntityTypeContext.Provider
-              value={{
-                entityTypes: this.props.entityTypes,
-                onEntityTypesChanged: compose(
-                  this.scrollToTop,
-                  this.props.updateEntityTypes,
-                  curry(this.trackParams)('School type', this.props.entityTypes)
-                )
-              }}
-            >
-              <SortContext.Provider
-                value={{
-                  sort: this.props.sort,
-                  onSortChanged: compose(
-                    this.scrollToTop,
-                    this.props.updateSort,
-                    curry(this.trackParams)('Sort', this.props.sort)
-                  ),
-                  breakdown: this.state.breakdown,
-                  onBreakdownChanged: compose(
-                    this.scrollToTop,
-                    this.props.updateBreakdown,
-                    curry(this.trackParams)('Breakdown', this.state.breakdown)
-                  )
-                }}
-              >
-                <SavedSchoolContext.Provider
-                  value={{
-                    saveSchoolCallback: this.handleSaveSchoolClick,
-                  }}
-                >
-                  {this.props.children}
-                </SavedSchoolContext.Provider>
-              </SortContext.Provider>
-            </EntityTypeContext.Provider>
-          </GradeLevelContext.Provider>
-        </DistanceContext.Provider>
+            {this.props.children}
+          </SavedSchoolContext.Provider>
+        </SortContext.Provider>
       </Provider>
     );
   }

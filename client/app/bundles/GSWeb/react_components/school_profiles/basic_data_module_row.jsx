@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import QuestionMarkTooltip from './question_mark_tooltip';
 import { t } from '../../util/i18n';
+import { getParameterByName } from 'util/uri';
+import { analyticsEvent } from 'util/page_analytics';
 
 // TODOs:
 // - rename subject css class
@@ -35,8 +37,15 @@ const BasicDataModuleRow = ({
     }
   }
 
-  const renderLink = () => {
-    return <a className="anchor-button" href={link}>Compare</a>
+  const handleClick = (link) => {
+    const breakdown = getParameterByName('breakdown',link);
+    const state = window.gon.school.state;
+    const schoolId = window.gon.school.id;
+    analyticsEvent('Profile', 'CompareSchool', `${schoolId}:${state}:race-ethnicity:${breakdown}`);
+  };
+
+  const renderCompareLink = () => {
+    return <a onClick={()=> handleClick(link)} className="anchor-button" href={link}>Compare</a>
   }
 
   return (
@@ -51,7 +60,7 @@ const BasicDataModuleRow = ({
           {children}
         </div>
         <div className="compare-link">
-          {(link && renderLink()) || drawerTrigger}
+          {(link && renderCompareLink()) || drawerTrigger}
         </div>
       </div>
     </div>
