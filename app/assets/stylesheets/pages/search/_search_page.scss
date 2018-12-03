@@ -42,7 +42,7 @@ body {
 
     padding: 130px 0 0 0;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(xs) {
       padding: 0;
     }
 
