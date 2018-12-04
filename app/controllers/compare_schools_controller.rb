@@ -93,12 +93,14 @@ class CompareSchoolsController < ApplicationController
       pinned_school = send("add_ratings", pinned_school) if respond_to?("add_ratings", true)
       SchoolCacheQuery.decorate_schools([pinned_school], *cache_keys).first
     rescue
-      []
+      nil
     end
   end
 
   def pinned_school_ethnicity_breakdowns
-    @breakdowns ||= base_school_for_compare&.ethnicity_breakdowns
+    @breakdowns ||= begin
+      base_school_for_compare&.ethnicity_breakdowns || []
+    end
   end
 
   def school_id
