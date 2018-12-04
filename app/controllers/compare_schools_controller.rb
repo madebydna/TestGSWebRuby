@@ -20,6 +20,7 @@ class CompareSchoolsController < ApplicationController
       sort: sort,
       tableHeaders: table_headers
     }
+    set_compare_meta_tags
     # LEGACY################################################
     # gon.pagename = 'CompareSchoolsPage'
     # page_title = 'Compare Schools'
@@ -58,6 +59,14 @@ class CompareSchoolsController < ApplicationController
     end
   end
 
+  def set_compare_meta_tags
+    set_meta_tags(title: compare_title)
+  end
+
+  def compare_title
+    "Compare #{base_school_for_compare.name} to nearby schools - #{base_school_for_compare.city}, #{state_name.gs_capitalize_words} - #{state.upcase} | GreatSchools"
+  end
+
   def state
     #TODO DRY this up - exists in community params as well
     return nil unless params[:state].present?
@@ -78,14 +87,18 @@ class CompareSchoolsController < ApplicationController
     pinned_school_ethnicity_breakdowns.include?(breakdown) ? breakdown : pinned_school_ethnicity_breakdowns.sort.first
   end
 
-  def pinned_school_ethnicity_breakdowns
-    @breakdowns ||=begin
-      school = School.on_db("#{state}").find("#{school_id}")
-      school = send("add_ratings", school) if respond_to?("add_ratings", true)
-      SchoolCacheQuery.decorate_schools([school], *cache_keys).first.ethnicity_breakdowns
+  def base_school_for_compare
+    @_base_school_for_compare ||= begin
+      pinned_school = School.on_db(state).find(school_id)
+      pinned_school = send("add_ratings", pinned_school) if respond_to?("add_ratings", true)
+      SchoolCacheQuery.decorate_schools([pinned_school], *cache_keys).first
     rescue
       []
     end
+  end
+
+  def pinned_school_ethnicity_breakdowns
+    @breakdowns ||= base_school_for_compare&.ethnicity_breakdowns
   end
 
   def school_id
