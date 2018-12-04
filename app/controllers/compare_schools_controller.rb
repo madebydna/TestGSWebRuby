@@ -64,7 +64,7 @@ class CompareSchoolsController < ApplicationController
   end
 
   def compare_title
-    "Compare #{base_school_for_compare.name} to nearby schools - #{base_school_for_compare.city}, #{state_name.gs_capitalize_words} - #{state.upcase} | GreatSchools"
+    "Compare #{base_school_for_compare&.name} to nearby schools - #{base_school_for_compare&.city}, #{state_name&.gs_capitalize_words} - #{state.upcase} | GreatSchools"
   end
 
   def state
