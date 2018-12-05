@@ -30,6 +30,10 @@ class Load < ActiveRecord::Base
     select(distinct_data_type_ids)
   end
 
+  def self.max_year_for_data_type_id(data_type_id)
+    where(data_type_id: data_type_id).maximum('date_valid')
+  end
+
   def self.with_data_types
     joins('JOIN data_types on data_type_id = data_types.id')
   end
