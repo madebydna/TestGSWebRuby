@@ -20,7 +20,10 @@ class TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata < TestScores
   end
 
   def unique_data_type_ids
-    Load.with_data_types.with_data_type_tags('state_test').map(&:data_type_id).uniq
+    Load.with_data_types.with_data_type_tags('state_test')
+        .with_configuration('feeds')
+        .map(&:data_type_id)
+        .uniq
   end
 
   def build_hash_for_cache

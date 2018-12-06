@@ -30,6 +30,10 @@ class Load < ActiveRecord::Base
     select(distinct_data_type_ids)
   end
 
+  def self.with_configuration(config)
+    where('loads.configuration like ?', "%#{config}%")
+  end
+
   def self.with_data_types
     joins('JOIN data_types on data_type_id = data_types.id')
   end
