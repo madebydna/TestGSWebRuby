@@ -11,7 +11,7 @@ class Api::SavedSchoolsController < ApplicationController
       GSLogger.warn(message:'School already in list', vars: params)
       render json: {status: 501}
     else
-      school = School.on_db("#{school_state}").active.find_by!(id: "#{school_id}")
+      school = School.on_db("#{school_state}").active.find_by(id: "#{school_id}")
       saved_school = FavoriteSchool.create_saved_school_instance(school, current_user.id)
       if saved_school.save
         render json: {status: 200}
