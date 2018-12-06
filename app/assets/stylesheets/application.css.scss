@@ -14,6 +14,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.header_display {
+  display: none;
+}
+
 @import "variables/variables";
 @import "gs/twitter-typeahead";
 @import "gs/ratings";
