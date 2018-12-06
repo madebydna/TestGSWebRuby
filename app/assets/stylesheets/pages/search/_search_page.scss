@@ -42,7 +42,7 @@ body {
 
     padding: 130px 0 0 0;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(xs) {
       padding: 0;
     }
 
@@ -470,11 +470,11 @@ body {
     }
     @include media-breakpoint-up(md){
       thead tr:nth-child(1) th {
-        position: sticky;
         position: -webkit-sticky;
+        position: sticky;
         //offset height of navbar and menu-bar
         top: 117.5px;
-        z-index: 2;
+        z-index: 1;
         box-shadow: 1px 1px 1px -1px #c1d2d9;
       }
       // remove sticky options from IE10+ since no support for sticky and some 
@@ -549,6 +549,10 @@ body {
         top: 10px;
         right: 10px;
         position: absolute;
+      }
+      &.assigned .icon-heart,
+      &.assigned .icon-heart-outline {
+        top: 20px;
       }
     }
   }
