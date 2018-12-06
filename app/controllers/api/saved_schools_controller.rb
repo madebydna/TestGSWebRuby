@@ -8,7 +8,7 @@ class Api::SavedSchoolsController < ApplicationController
 
   def create
     if fetch_user_saved_schools(current_user).include?([school_state, school_id])
-      GSLogger.warn(:misc, e, message:'School already in list', vars: params)
+      GSLogger.warn(message:'School already in list', vars: params)
       render json: {status: 501}
     else
       school = School.on_db("#{school_state}").active.find_by!(id: "#{school_id}")
