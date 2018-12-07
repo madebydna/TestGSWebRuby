@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Account from './account';
 import { getCurrentSession } from 'api_clients/session';
+import Account from './account';
 
 class AccountContext extends React.Component {
   static propTypes = {};
@@ -17,7 +16,16 @@ class AccountContext extends React.Component {
   }
 
   retrieveSession() {
-    getCurrentSession().done(currentUser => {
+    getCurrentSession({
+      fields: [
+        'email',
+        'firstName',
+        'schoolUsers',
+        'subscriptions',
+        'mightHaveOsps',
+        'studentGradeLevels'
+      ]
+    }).done(currentUser => {
       this.setState({
         currentUser
       });
@@ -26,14 +34,7 @@ class AccountContext extends React.Component {
 
   render() {
     return this.state.currentUser ? (
-      <Account
-        currentUser={this.state.currentUser}
-        ospDashboardUrl="/official-school-profile/dashboard.page"
-        stateLocale="en"
-        cityLocale="en"
-        mySchoolListUrl="/my-school-list/"
-        changePasswordUrl="/account/password/"
-      />
+      <Account mySchoolListUrl="/my-school-list/" {...this.state.currentUser} />
     ) : null;
   }
 }

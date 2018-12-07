@@ -11,4 +11,10 @@ class AccountManagementController < ApplicationController
     )
     render 'show'
   end
+
+  private
+
+  def set_global_ad_targeting_through_gon
+    # override default behavior. dont need to check property table
+  end
 end

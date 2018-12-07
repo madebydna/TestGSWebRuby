@@ -1,11 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmailSettings from './email_settings';
+import withViewportSize from 'react_components/with_viewport_size';
 import OpenableCloseable from 'react_components/openable_closeable';
+import SearchBox from 'react_components/search_box';
+import { validSizes as validViewportSizes } from 'util/viewport';
+import EmailSettings from './email_settings';
 import ChangePasswordForm from './change_password_form';
 import GradeLevelCheckboxes from './grade_level_checkboxes';
 
-const Account = ({ currentUser, ospDashboardUrl, mySchoolListUrl }) => (
+const ospDashboardUrl = '/official-school-profile/dashboard/';
+const mySchoolListUrl = '/my-school-list/';
+
+const Account = ({
+  size,
+  email,
+  firstName,
+  mightHaveOsps,
+  studentGradeLevels,
+  subscriptions
+}) => (
   <div
     style={{
       maxWidth: '1200px',
@@ -13,19 +26,18 @@ const Account = ({ currentUser, ospDashboardUrl, mySchoolListUrl }) => (
       marginRight: 'auto'
     }}
   >
+    <SearchBox size={size} />
     <div className="mvl">
       <div className="row limit-width-1200 ">
         <div className="col-xs-12 clearfix phm">
-          <div className="fr font-size-large mam notranslate">
-            {currentUser.firstName}
+          <div className="fr mam" style={{ fontSize: '18px' }}>
+            {firstName || email}
           </div>
         </div>
       </div>
     </div>
 
-    {(true ||
-      currentUser.provisionalOrApprovedOspUser ||
-      currentUser.isEspSuperuser) && (
+    {mightHaveOsps && (
       <div>
         <div className="drawer">
           <div className="heading">
@@ -69,7 +81,7 @@ const Account = ({ currentUser, ospDashboardUrl, mySchoolListUrl }) => (
             What grade levels are you interested in?
           </div>
           <br />
-          <GradeLevelCheckboxes grades={currentUser.studentGradeLevels} />
+          <GradeLevelCheckboxes grades={studentGradeLevels} />
         </div>
       </div>
     </div>
@@ -94,9 +106,7 @@ const Account = ({ currentUser, ospDashboardUrl, mySchoolListUrl }) => (
                 />
               </div>
             </div>
-            {isOpen && (
-              <EmailSettings userSubscriptions={currentUser.subscriptions} />
-            )}
+            {isOpen && <EmailSettings subscriptions={subscriptions} />}
           </React.Fragment>
         )}
       </OpenableCloseable>
@@ -124,4 +134,19 @@ const Account = ({ currentUser, ospDashboardUrl, mySchoolListUrl }) => (
   </div>
 );
 
-export default Account;
+Account.propTypes = {
+  size: PropTypes.oneOf(validViewportSizes).isRequired,
+  email: PropTypes.string.isRequired,
+  firstName: PropTypes.string,
+  mightHaveOsps: PropTypes.bool.isRequired,
+  studentGradeLevels: PropTypes.arrayOf(PropTypes.string),
+  subscriptions: PropTypes.arrayOf(PropTypes.object)
+};
+
+Account.defaultProps = {
+  firstName: null,
+  studentGradeLevels: [],
+  subscriptions: []
+};
+
+export default withViewportSize({ propName: 'size' })(Account);

@@ -1,12 +1,12 @@
 // Requires gon
 import memoizeAjaxRequest from 'util/memoize_ajax_request';
 
-export const getCurrentSession = function() {
+export const getCurrentSession = function(options) {
   const uri = '/gsr/api/session';
   if (uri === undefined) {
     throw new Error('uri is undefined in getCurrentSession');
   }
-  return memoizeAjaxRequest('session', () => $.get(uri, null, 'json')).then(
+  return memoizeAjaxRequest('session', () => $.get(uri, options, 'json')).then(
     ({ user } = {}) => user,
     ({ responseJSON = {} } = {}) => responseJSON.errors // array of error strings
   );

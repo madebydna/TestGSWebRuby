@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Account from './account';
 import { changePassword } from 'api_clients/session';
 
 class ChangePasswordForm extends React.Component {

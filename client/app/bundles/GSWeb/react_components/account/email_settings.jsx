@@ -20,25 +20,24 @@ const shouldGroupList = list =>
   list === 'mystat_private' ||
   list === 'mystat_unverified';
 
-const EmailSettings = ({ userSubscriptions = [] }) => {
+const EmailSettings = ({ subscriptions }) => {
   const subscriptionIncludesGreatNews =
-    userSubscriptions.filter(sub => sub.list === 'greatnews').length > 0;
+    subscriptions.filter(sub => sub.list === 'greatnews').length > 0;
   const subscriptionIncludesSponsor =
-    userSubscriptions.filter(sub => sub.list === 'sponsor').length > 0;
+    subscriptions.filter(sub => sub.list === 'sponsor').length > 0;
   const subscriptionIncludesMyStat =
-    userSubscriptions.filter(sub => sub.list === 'mystat').length > 0;
+    subscriptions.filter(sub => sub.list === 'mystat').length > 0;
   const subscriptionIncludesMyStatPrivate =
-    userSubscriptions.filter(sub => sub.list === 'mystat_private').length > 0;
+    subscriptions.filter(sub => sub.list === 'mystat_private').length > 0;
   const subscriptionIncludesMyStatUnverified =
-    userSubscriptions.filter(sub => sub.list === 'mystat_unverified').length >
-    0;
+    subscriptions.filter(sub => sub.list === 'mystat_unverified').length > 0;
 
   let lastList = null;
   return (
     <div>
       {
         <div className="limit-width-1200 mtl">
-          {userSubscriptions.map(subscription => {
+          {subscriptions.map(subscription => {
             const content = (
               <div className="pbl" key={subscription.id}>
                 {!shouldGroupList(subscription.list) && (
@@ -117,6 +116,10 @@ const EmailSettings = ({ userSubscriptions = [] }) => {
       }
     </div>
   );
+};
+
+EmailSettings.propTypes = {
+  subscriptions: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default EmailSettings;
