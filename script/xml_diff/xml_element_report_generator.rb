@@ -18,7 +18,7 @@ module XmlDiff
     def compare(other_hash)
       @parser.parse.each_with_object({}) do |(name, count), memo|
         other_count = other_hash[name]
-        if other_count
+        if other_count && other_count != 0
           memo[name] = (other_count - count).abs / other_count
         else
           memo[name] = 1
