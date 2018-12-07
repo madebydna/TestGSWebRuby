@@ -12,4 +12,4 @@
 //= require ./velocity.min
 //= require ./velocity.ui
 //= require ./words
-
+//= require ./js.cookie
