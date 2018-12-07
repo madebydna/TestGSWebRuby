@@ -3,11 +3,11 @@ var GS = GS || {};
 GS.schoolProfiles = GS.schoolProfiles || (function($) {
 
     var shouldShowSignUpForSchoolModal = function() {
-     return $.cookie('profileModal') != 'true' && !GS.session.isSignedIn();
+     return Cookies.get('profileModal') != 'true' && !GS.session.isSignedIn();
     };
 
     var setSignUpForSchoolModalCookie = function() {
-      $.cookie('profileModal', 'true', {expires: 1, path: '/' });
+      Cookies.set('profileModal', 'true', {expires: 1, path: '/' });
     };
 
     var showSignUpForSchoolModalAfterDelay = function (custom_modal_delay) {
