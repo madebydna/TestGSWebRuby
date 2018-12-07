@@ -2,19 +2,24 @@
 import memoizeAjaxRequest from 'util/memoize_ajax_request';
 
 export const getCurrentSession = function() {
-  var uri = gon.links.session;
+  const uri = '/gsr/api/session';
   if (uri === undefined) {
     throw new Error('uri is undefined in getCurrentSession');
   }
-  return memoizeAjaxRequest(
-    'session',
-    function() {
-      return $.get(uri, null, 'json')
-    }
-  ).then(
-    ({user} = {}) => user,
-    ({responseJSON = {}} = {}) => responseJSON.errors // array of error strings
+  return memoizeAjaxRequest('session', () => $.get(uri, null, 'json')).then(
+    ({ user } = {}) => user,
+    ({ responseJSON = {} } = {}) => responseJSON.errors // array of error strings
   );
 };
 
-
+export const changePassword = password =>
+  $.ajax({
+    url: '/account/password/',
+    data: {
+      new_password: password,
+      confirm_password: password
+    },
+    type: 'PUT',
+    dataType: 'json',
+    timeout: 6000
+  });
