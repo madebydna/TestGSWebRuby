@@ -23,3 +23,4 @@
 //= require ./util/spinny_wheel
 //= require ./util/window.sizing
 //= require ./page_initializers/header_init
+//= require resources/js.cookie.js
