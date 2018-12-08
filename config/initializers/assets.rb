@@ -3,6 +3,7 @@ Rails.application.config.assets.precompile += [
     'district-boundaries.css',
     'search.css',
     'my-saved-school-list.css',
+    'account.css',
     'widget.css',
     'widget-form.css',
     'wordpress-modals.js',
