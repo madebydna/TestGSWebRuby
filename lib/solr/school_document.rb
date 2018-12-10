@@ -96,7 +96,7 @@ module Solr
     attr_accessor :distance
 
     def initialize(state: nil, school_id: nil, school: nil)
-      @state = state
+      @state = state&.downcase
       @school_id = school_id
       @school = school
     end
