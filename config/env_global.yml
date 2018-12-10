@@ -21,8 +21,8 @@ solr.ro.server.url: "http://dev.greatschools.org:8580/main/"
 solr.rw.server.url: "http://dev.greatschools.org:8580/main/"
 
 # The URLs of the new Solr 7 host
-solr7.ro.server.url: "http://dev-solr8.greatschools.org:8580/main/"
-solr7.rw.server.url: "http://dev-solr8.greatschools.org:8580/main/"
+solr7.ro.server.url: "http://dev-solr8.greatschools.org:8983/main/"
+solr7.rw.server.url: "http://dev-solr8.greatschools.org:8983/main/"
 
 # Solr timeouts in seconds
 solr.ro.timeout.open: 10
