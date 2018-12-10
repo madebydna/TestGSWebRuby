@@ -5,8 +5,12 @@ import { SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 import { t } from 'util/i18n';
+import { connect } from 'react-redux';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import HelpTooltip from '../help_tooltip';
+import { loadMobileOverlayAd } from 'actions/common';
+import MobileOverlayAd from 'react_components/mobile_overlay_ad';
+import { onScroll } from 'util/scrolling';
 
 function keepInViewport(
   ref,
@@ -99,7 +103,8 @@ class SearchLayout extends React.Component {
     resultSummary: PropTypes.string.isRequired,
     noResults: PropTypes.element,
     chooseTableButtons: PropTypes.element,
-    refreshAdOnScroll: PropTypes.func.isRequired
+    refreshAdOnScroll: PropTypes.func.isRequired,
+    loadMobileOverlayAd: PropTypes.func.isRequired
   };
 
   static getDerivedStateFromProps(props) {
@@ -124,6 +129,11 @@ class SearchLayout extends React.Component {
   }
 
   componentDidMount() {
+    onScroll('mobileOverlay', ({ ratioScrolledDown } = {}) => {
+      if(ratioScrolledDown > .5) {
+        this.props.loadMobileOverlayAd();
+      }
+    })
     keepInViewport(this.fixedYLayer, {
       $elementsAbove: [$('.header_un'), $('.search-body .menu-bar')],
       $elementsBelow: [$('.footer')],
@@ -228,7 +238,7 @@ class SearchLayout extends React.Component {
 
   renderMobileMenuBar() {
     return (
-      <OpenableCloseable openByDefault={this.props.view === LIST_VIEW}>
+      <OpenableCloseable openByDefault={false}>
         {(isOpen, { toggle, close }) => (
           <div>
             {this.props.searchBox}
@@ -295,7 +305,7 @@ class SearchLayout extends React.Component {
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
           {this.props.breadcrumbs}
-          <div className="pagination-summary">{this.props.resultSummary}</div>
+          <div className="pagination-summary" dangerouslySetInnerHTML={{ __html: this.props.resultSummary }} />
           {this.shouldRenderTable() ? (
             <div className="menu-item">{this.props.chooseTableButtons}</div>
           ) : null}
@@ -351,6 +361,8 @@ class SearchLayout extends React.Component {
               {this.shouldRenderTable() ? this.renderTableView() : null}
               {this.props.pagination}
             </div>
+            {this.props.size < SM &&
+              !this.shouldRenderMap() && <MobileOverlayAd />}
           </React.Fragment>
         )}
       </div>
@@ -358,4 +370,8 @@ class SearchLayout extends React.Component {
   }
 }
 
-export default SearchLayout;
+const ConnectedSearchLayout = connect(null, {
+  loadMobileOverlayAd
+})(SearchLayout);
+
+export default ConnectedSearchLayout;

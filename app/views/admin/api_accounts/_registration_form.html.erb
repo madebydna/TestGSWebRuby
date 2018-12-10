@@ -48,7 +48,7 @@
       <%= f.hidden_field :registration, value: true %>
     <br>
     <div>
-      <label><input type="checkbox" id="tou" class="api_tou">I agree to the GreatSchools <a>Terms of Use</a></label>
+      <label><input type="checkbox" id="tou" class="api_tou">I agree to the GreatSchools <a href="<%= api_terms_of_use_path %>">Terms of Use</a></label>
       <label><input type="checkbox" id="payment" class="api_tou">I agree to pay for all overage fees that range between $0.08/call to $0.01/call once I exceed the 3,000 daily call limit.</label>
     </div>
     <div class="api_submit">

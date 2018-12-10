@@ -8,6 +8,7 @@ import {
   onInitialize as onAdvertisingInitialize,
   slotIdFromName
 } from 'util/advertising.js';
+import { CSSTransition } from 'react-transition-group';
 
 class Ad extends React.Component {
   static propTypes = {
@@ -18,7 +19,8 @@ class Ad extends React.Component {
     ghostTextEnabled: PropTypes.bool,
     container: PropTypes.element,
     dimensions: PropTypes.arrayOf(PropTypes.number),
-    children: PropTypes.func
+    children: PropTypes.func,
+    transitionDuration: PropTypes.number
   };
 
   static defaultProps = {
@@ -28,7 +30,8 @@ class Ad extends React.Component {
     ghostTextEnabled: true,
     container: <div />,
     dimensions: [1, 1], // width, height
-    children: null
+    children: null,
+    transitionDuration: 1000
   };
 
   constructor(props) {
@@ -100,10 +103,20 @@ class Ad extends React.Component {
         )}
       </React.Fragment>
     );
-    return React.cloneElement(container, {
-      className: newContainerClassName,
-      children: this.props.children ? this.props.children(adElement) : adElement
-    });
+    return (
+      <CSSTransition
+        classNames="ad-reveal"
+        in={this.state.adRenderEnded}
+        timeout={this.props.transitionDuration}
+      >
+        {React.cloneElement(container, {
+          className: `${newContainerClassName}`,
+          children: this.props.children
+            ? this.props.children(adElement)
+            : adElement
+        })}
+      </CSSTransition>
+    );
   }
 }
 

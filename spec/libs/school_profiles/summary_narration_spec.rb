@@ -8,6 +8,7 @@ describe SchoolProfiles::SummaryNarration do
 
   describe '#test_scores_only_after_more' do
     subject { summary_narration.test_scores_only_after_more }
+    before { allow(school).to receive(:state).and_return('nj') }
     it { is_expected.to_not be_empty }
   end
 

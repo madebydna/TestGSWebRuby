@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { find as findSchools } from 'api_clients/schools';
+import { find as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
@@ -14,17 +14,20 @@ import {
 import {
   updateNavbarHeart,
   getSavedSchoolsFromCookie,
+  isSignedIn,
   COOKIE_NAME
 } from 'util/session';
 import '../../vendor/remodal';
 import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
+import SavedSchoolContext from './saved_school_context';
 import ChooseTableContext from './choose_table_context';
 import EntityTypeContext from './entity_type_context';
 import SortContext from './sort_context';
 import DistanceContext from './distance_context';
 import { set as setCookie } from 'js-cookie';
 import { t } from 'util/i18n';
+import { showMessageTooltip } from '../../util/message_tooltip';
 
 const { Provider, Consumer } = React.createContext();
 const { gon } = window;
@@ -52,8 +55,9 @@ class SearchProvider extends React.Component {
     lon: gonSearch.lon,
     distance: gonSearch.distance,
     locationLabel: gonSearch.locationLabel,
+    mslStates: gonSearch.mslStates,
+    stateSelect: gonSearch.stateSelect,
     sort: gonSearch.sort,
-    sortOptions: gonSearch.sortOptions,
     page: gonSearch.page || 1,
     pageSize: gonSearch.pageSize,
     totalPages: gonSearch.totalPages,
@@ -71,7 +75,6 @@ class SearchProvider extends React.Component {
     city: PropTypes.string,
     district: PropTypes.string,
     state: PropTypes.string,
-    schoolKeys: PropTypes.arrayOf(PropTypes.array),
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
@@ -81,8 +84,9 @@ class SearchProvider extends React.Component {
     lon: PropTypes.number,
     distance: PropTypes.number,
     locationLabel: PropTypes.string,
+    mslStates: PropTypes.arrayOf(PropTypes.string),
+    stateSelect: PropTypes.string,
     sort: PropTypes.string,
-    sortOptions: PropTypes.array,
     page: PropTypes.number,
     pageSize: PropTypes.number,
     totalPages: PropTypes.number,
@@ -117,7 +121,8 @@ class SearchProvider extends React.Component {
       loadingSchools: false,
       size: viewportSize(),
       currentStateFilter: null,
-      adRefreshed: false
+      adRefreshed: false,
+      stateSelect: this.props.stateSelect
     };
     this.updateSchools = debounce(this.updateSchools.bind(this), 500, {
       leading: true
@@ -169,6 +174,10 @@ class SearchProvider extends React.Component {
     );
   }
 
+  shouldIncludeRelevance() {
+    return !!this.props.q;
+  }
+
   updateSchools() {
     this.setState(
       {
@@ -196,35 +205,19 @@ class SearchProvider extends React.Component {
 
   savedSchoolsFindIndex(schoolKey) {
     return getSavedSchoolsFromCookie().findIndex(
-      key =>
-        key.id.toString() === schoolKey.id.toString() &&
-        key.state === schoolKey.state
+        key =>
+            key.id.toString() === schoolKey.id.toString() &&
+            key.state === schoolKey.state
     );
   }
 
-  displayHeartMessage(schoolKey) {
-    let objectHeart;
-    if (!('ontouchstart' in window)) {
-      objectHeart = $('.header_un .menu_hide_mobile a.saved-schools-nav');
-    } else {
-      objectHeart = $('.header_un .search_icon a.saved-schools-nav');
-    }
-    if (this.savedSchoolsFindIndex(schoolKey) > -1) {
-      objectHeart
-        .tipso({
-          content: t('Saved!'),
-          background: '#202124',
-          color: '#FFFFFF',
-          position: 'bottom',
-          useTitle: false,
-          width: 120,
-          speed: 0,
-          offsetY: -10,
-          onShow: setTimeout(() => {
-            objectHeart.tipso('hide');
-          }, 1000)
-        })
-        .tipso('show');
+  displayHeartMessage(schoolKey){
+    let objectHeart = $('.header_un  a.saved-schools-nav').filter(':visible');
+    if(this.savedSchoolsFindIndex(schoolKey) > -1) {
+      let options = {
+        content: t('Saved!')
+      }
+      showMessageTooltip(objectHeart, options)
     }
   }
 
@@ -235,6 +228,21 @@ class SearchProvider extends React.Component {
       ? savedSchools.splice(schoolKeyIdx, 1)
       : savedSchools.push(schoolKey);
     setCookie(COOKIE_NAME, savedSchools);
+    if(isSignedIn()){
+      if(schoolKeyIdx > -1){
+        deleteSchool(schoolKey)
+          .done(e => {
+            e.status === 400 && alert("There was an error deleting a school from your account.\n Please try again later")
+          })
+          .fail(e => alert("There was an error deleting a school from your account.\n Please try again later"))
+      }else{
+        addSchool(schoolKey)
+          .done(e => {
+            e.status === 400 && alert("There was an error adding a school to your account.\n Please try again later")
+          })
+          .fail(e => alert("There was an error adding a school to your account.\n Please try again later"))
+      }
+    }
     analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
   }
 
@@ -265,6 +273,7 @@ class SearchProvider extends React.Component {
       sort: props.sort,
       page: props.page,
       limit: props.pageSize,
+      stateSelect: this.state.stateSelect,
       extras: ['students_per_teacher', 'review_summary'],
       locationLabel: props.locationLabel
     };
@@ -325,9 +334,11 @@ class SearchProvider extends React.Component {
   };
 
   updateStateFilter(state) {
+    this.props.updatePage(1)
     this.setState({
-      currentStateFilter: state
-    });
+      stateSelect: state
+    },
+    () => this.updateSchools())
   }
 
   render() {
@@ -338,6 +349,8 @@ class SearchProvider extends React.Component {
           schools: this.state.schools,
           savedSchools: this.state.savedSchools,
           saveSchoolCallback: this.handleSaveSchoolClick,
+          mslStates: this.props.mslStates,
+          stateSelect: this.props.stateSelect,
           numOfSchools: this.state.schools.length,
           page: this.props.page,
           totalPages: this.state.totalPages,
@@ -352,6 +365,8 @@ class SearchProvider extends React.Component {
           paginationSummary: this.state.paginationSummary,
           resultSummary: this.state.resultSummary,
           size: this.state.size,
+          shouldIncludeDistance: this.shouldIncludeDistance(),
+          shouldIncludeRelevance: this.shouldIncludeRelevance(),
           toggleHighlight: this.toggleHighlight,
           lat: this.props.lat,
           lon: this.props.lon,
@@ -409,7 +424,6 @@ class SearchProvider extends React.Component {
               <SortContext.Provider
                 value={{
                   sort: this.props.sort,
-                  sortOptions: this.props.sortOptions,
                   onSortChanged: compose(
                     this.scrollToTop,
                     this.props.updateSort,
@@ -426,7 +440,13 @@ class SearchProvider extends React.Component {
                       .length
                   }}
                 >
+                  <SavedSchoolContext.Provider
+                      value={{
+                        saveSchoolCallback: this.handleSaveSchoolClick,
+                      }}
+                  >
                   {this.props.children}
+                  </SavedSchoolContext.Provider>
                 </ChooseTableContext.Provider>
               </SortContext.Provider>
             </EntityTypeContext.Provider>

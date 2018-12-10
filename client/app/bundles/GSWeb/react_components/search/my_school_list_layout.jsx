@@ -8,17 +8,25 @@ import { translateWithDictionary } from 'util/i18n';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import CaptureOutsideClick from './capture_outside_click';
 import HelpTooltip from '../help_tooltip';
+import { isNotSignedIn } from '../../util/session';
+import modalManager from '../../components/modals/manager';
 
 const t = translateWithDictionary({
   en: {
-    title: 'Your saved schools',
-    "Show schools in": "Show schools in",
-    "Sort by": "Sort by"
+    "Your saved schools in": "Your saved schools in",
+    "Sort by": "Sort by",
+    "Sign up link": "Sign up",
+    "Sign up rest": "for a free GreatSchools account and access your saved schools from anywhere.",
+    'Verify email':
+      'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.',
   },
   es: {
-    title: 'Tus escuelas guardadas',
-    "Show schools in": "Muestre escuelas en",
-    "Sort by": "Ordenar por"
+    "Your saved schools in": "Tus escuelas guardadas en",
+    "Sort by": "Ordenar por",
+    "Sign up link": "Regístrate",
+    "Sign up rest": "para obtener una cuenta gratuita de GreatSchools y acceda a tus escuelas guardadas desde cualquier lugar.",
+    'Verify email':
+      'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.'
   }
 });
 
@@ -133,8 +141,11 @@ class MySchoolListLayout extends React.Component {
     this.fixedYLayer = React.createRef();
     this.header = React.createRef();
     this.state = {
-      hasShownMap: this.shouldRenderMap()
+      hasShownMap: this.shouldRenderMap(),
+      needsToVerifyEmail: false
     };
+
+    this.onSignup = this.onSignup.bind(this);
   }
 
   componentDidMount() {
@@ -167,6 +178,41 @@ class MySchoolListLayout extends React.Component {
 
   shouldRenderTable() {
     return this.props.view === TABLE_VIEW;
+  }
+
+  onSignup() {
+    modalManager
+      .showModal('JoinModal')
+      .done(({ is_new_user } = {}) =>
+        is_new_user ? this.setState({ needsToVerifyEmail: is_new_user }) : window.location.reload()
+      )
+      .fail(() => {});
+  }
+
+  renderSignupPrompt() {
+    return (
+      <div className="signup-link">
+        <a href='javascript:void(0)' onClick={this.onSignup} className="open-sans_semibold">
+          {t('Sign up link')}
+        </a>{' '}
+        <span className="open-sans_regular">{t('Sign up rest')}</span>
+      </div>
+    );
+  }
+
+  renderEmailVerificationMessage() {
+    return (
+      <div className="email-verification-message">{t('Verify email')}</div>
+    );
+  }
+
+  renderSelectSchoolDropdown(){
+    return(
+      <div className="menu-item">
+        <span className="label saved-schools">{t('Your saved schools in')}:</span>
+        {this.props.stateSelect}
+      </div>
+    )
   }
 
   renderTableView() {
@@ -208,6 +254,7 @@ class MySchoolListLayout extends React.Component {
       <div className="menu-bar filters" ref={this.header}>
         {this.props.searchBox}
         <div style={{ margin: 'auto' }}>
+          {this.props.numOfSchools > 0 && this.renderSelectSchoolDropdown()}
           <span className="menu-item list-map-toggle">
             <div>
               {this.props.listMapTableSelect}
@@ -223,7 +270,7 @@ class MySchoolListLayout extends React.Component {
 
   renderMobileMenuBar() {
     return (
-      <OpenableCloseable openByDefault={this.props.view === LIST_VIEW}>
+      <OpenableCloseable>
         {(isOpen, { toggle, close }) => (
           <div>
             {this.props.searchBox}
@@ -257,10 +304,10 @@ class MySchoolListLayout extends React.Component {
                   aria-label={t('Close filters')}
                 />
                 <div>
-                  {this.props.numOfSchools > 0 && <div className="menu-item">
-                    <span className="label">{t('Show schools in')}:</span>
+                  {/* {this.props.numOfSchools > 0 && <div className="menu-item">
+                    <span className="label">{t('Your saved schools in')}:</span>
                     {this.props.stateSelect}
-                  </div>}
+                  </div>} */}
                   <span className="menu-item">
                     <span className="label">{t('Sort by')}:</span>
                     {this.props.sortSelect}
@@ -278,7 +325,12 @@ class MySchoolListLayout extends React.Component {
     return (
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
-          <h1 style={{ fontSize: '20px' }}>{t('title')}</h1>
+          {isNotSignedIn() &&
+            !this.state.needsToVerifyEmail &&
+            this.renderSignupPrompt()}
+          {this.state.needsToVerifyEmail &&
+            this.renderEmailVerificationMessage()}
+            {this.props.numOfSchools > 0 && this.props.size <= SM && this.renderSelectSchoolDropdown()}
           {this.props.breadcrumbs}
           {/* <div className="pagination-summary">{this.props.resultSummary}</div> */}
           {this.shouldRenderTable() ? (
@@ -300,33 +352,23 @@ class MySchoolListLayout extends React.Component {
             <span className="label">{t('Sort by')}:</span>
             {this.props.sortSelect}
           </div>
-          <div className="menu-item sort-dropdown-table-view">
-            <span className="label">{t('Show schools in')}:</span>
-            {this.props.stateSelect}
-          </div>
         </React.Fragment>
       );
     }
     return (
-      <React.Fragment>
-        <div className="menu-item">
-          <span className="label">{t('Show schools in')}:</span>
-          {this.props.stateSelect}
-        </div>
-        <div className="menu-item">
-          <span className="label">{t('Sort by')}:</span>
-          {this.props.sortSelect}
-        </div>
-      </React.Fragment>
+      <div className="menu-item">
+        <span className="label">{t('Sort by')}:</span>
+        {this.props.sortSelect}
+      </div>
     );
   }
 
   render() {
     return (
-      <div className="search-body">
-        {this.props.size > SM
+      <div className="search-body" id="my-school-list-page">
+        {this.props.numOfSchools > 0 && (this.props.size > SM
           ? this.renderDesktopFilterBar()
-          : this.renderMobileMenuBar()}
+          : this.renderMobileMenuBar())}
         {}
         {this.props.noResults ? (
           <React.Fragment>

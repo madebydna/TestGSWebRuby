@@ -202,7 +202,7 @@
     <xs:element name="scale">
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:minLength value="1"/>
+                <xs:minLength value="0"/>
                 <xs:maxLength value="500"/>
             </xs:restriction>
         </xs:simpleType>

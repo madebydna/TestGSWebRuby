@@ -13,12 +13,14 @@ import Mobility from "./mobility";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
+import {schools, schoolDistricts, SCHOOL_DISTRICTS, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
 import '../../vendor/remodal';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
 import Zillow from "./zillow";
-const { gon } = window;
+import remove from 'util/array';
+
 class City extends React.Component {
   static defaultProps = {
     schools_data: {},
@@ -96,6 +98,13 @@ class City extends React.Component {
     );
   }
 
+  selectTocItems(){
+    let cityTocItems = [schools, schoolDistricts, communityResources, nearbyHomesForSale, reviews];
+    cityTocItems = remove(cityTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
+    cityTocItems = remove(cityTocItems, (tocItem)=> tocItem.key === SCHOOL_DISTRICTS && this.props.districts.length === 0);
+    return cityTocItems;
+  }
+
   render() {
     return (
       <CityLayout
@@ -149,10 +158,8 @@ class City extends React.Component {
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
         toc={
-          <Toc 
-            schools={this.props.schools} 
-            suppressDistricts={this.props.districts.length === 0} 
-            suppressReviews={this.props.reviews.length === 0} 
+          <Toc
+            tocItems={this.selectTocItems()}
           />
         }
         viewportSize={this.props.viewportSize}

@@ -35,4 +35,29 @@ describe FavoriteSchool do
     end
   end
 
+  describe '#methods to persists favorite schools for users' do
+    before(:each) do
+      clean_dbs :gs_schooldb
+    end
+    let(:cristo_hs) { FactoryGirl.build(:cristo_rey_new_york_high_school) }
+    let(:head_start) { FactoryGirl.build(:washington_dc_ps_head_start) }
+    let(:new_user) { FactoryGirl.build(:verified_user, id: 3) }
+
+    it "should create a favorite school instance for persisting into the database" do
+      [cristo_hs, head_start].each do |school|
+        saved_school = FavoriteSchool.create_saved_school_instance(school, new_user.id)
+        saved_school.save
+        expect([saved_school.state, saved_school.school_id]).to eq([school.state, school.id])
+      end
+    end
+
+    it 'should return a list of saved schools if given an user id' do
+      [cristo_hs, head_start].each do |school|
+        saved_school = FavoriteSchool.create_saved_school_instance(school, new_user.id)
+        saved_school.save
+      end
+      expect(FavoriteSchool.saved_school_list(new_user.id)).to eq([[cristo_hs.state&.downcase, cristo_hs.id], [head_start.state&.downcase, head_start.id]])
+    end
+  end
+
 end

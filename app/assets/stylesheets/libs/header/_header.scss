@@ -125,9 +125,12 @@
     }
   }
 
-  .saved-schools-nav.main{
-    @media only screen and (max-width: 767px) {
-      //to hide the icon as one of the hamburger list items
+  .logo + .saved-schools-nav{
+    top: 20px;
+    position: absolute;
+    right: 20px;
+    font-size: 18px;
+    @media (min-width: 768px){
       display: none;
     }
   }
@@ -138,7 +141,7 @@
   }
 
   .search_bar {
-    width: 46%;
+    width: 44%;
     padding: 2px 20px;
     vertical-align: middle;
   }
@@ -154,6 +157,13 @@
     margin: 0;
     list-style: none;
     text-decoration: none;
+
+    .saved-schools-nav{
+      @media only screen and (max-width: 767px) {
+        //to hide the icon as one of the hamburger list items
+        display: none;
+      }
+  }
   }
 
   .menu_hide_mobile {
@@ -546,11 +556,12 @@
     top: 10px;
     right: 0;
 
-    // Overwrites/Add in some style to the icon
+    // Overwrites/Add in some style to the icon when in mobile
     .saved-schools-nav{
       margin-left: 18px;
       font-size: 18px;
     }
+
   }
 
   .un nav {

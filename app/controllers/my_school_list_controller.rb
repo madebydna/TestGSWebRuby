@@ -18,6 +18,9 @@ class MySchoolListController < ApplicationController
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
       props[:resultSummary] = I18n.t('.search.Your school list is empty') if serialized_schools.empty?
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
+      props[:mslStates] = msl_states
+      props[:stateSelect] = state_select
+      # props.merge!()
       props[:searchTableViewHeaders] = {
         'Overview' => overview_header_hash,
         'Equity' => equity_header_hash(schools),
@@ -37,6 +40,10 @@ class MySchoolListController < ApplicationController
     else
       null_query
     end
+  end
+
+  def default_limit
+    25
   end
 
   # SearchRequestParams

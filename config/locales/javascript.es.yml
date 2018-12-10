@@ -1,7 +1,13 @@
 ---
 es:
   javascript:
+    compare_test_scores_for: Compare los resultados de exámenes de estudiantes
+    from : de
+    to_nearby_schools: con las escuelas cercanas
+    Academics: Académica
     Saved!: Salvado!
+    Saved: Salvado
+    Save: Guardar
     No listings found: No se encontraron listados
     '# of schools': '# of schools'
     '# of students': '# of students'
@@ -28,6 +34,8 @@ es:
       - Prueba diferentes o menos palabras.
       - Prueba otras palabras más generales.
       - Prueba otros filtros.
+    no_compare_school_title: No se han encontrado resultados
+    no_compare_school_results: No pudimos encontrar escuelas cercanas con los resultados de los exámenes de estudiantes {breakdown}.
     Close filters: Cerrar los filtros
     school: escuela
     schools: escuelas
@@ -153,6 +161,7 @@ es:
     saved_search_validation_error: Por favor, nombre su búsqueda
     strong_fit: Fuerte
     test_scores:
+      title: Resultados de exámenes
       advanced: Avanzado
       proficient: Competente
       proficient_or_better: Competente o mejor
@@ -197,6 +206,8 @@ es:
     State avg: Promedio del estado
     State average: Promedio del estado
     School value: Valor de la escuela
+    Sponsored Ad: Listado Patrocindao
+    sponsored_tooltip_blurb: Los listados patrocinados son anuncios pagados. Como organización sin fines de lucro, esta publicidad ayuda a que nuestro sitio sea gratuito para millones de padres. Aprende más.
     RE Test scores narration: >
       Esto muestra resultados de diferentes razas y etnicidades en un examen de {subject} dado a los estudiantes
       una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el

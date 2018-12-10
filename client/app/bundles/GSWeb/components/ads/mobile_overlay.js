@@ -1,4 +1,5 @@
 import { showAd, enableAdCloseButtons } from 'util/advertising';
+import { onScroll } from 'util/scrolling';
 
 const adDomId = 'Mobile_overlay_Ad';
 const containerSelector = '.mobile-ad-sticky-bottom';
@@ -20,7 +21,23 @@ export function renderAd() {
     onAdNotFilled();
   }
 }
+
+let mobileOverlayShown = false
+
+export function renderAdOnScrollHalfway() {
+  onScroll('mobileOverlay', ({ ratioScrolledDown } = {}) => {
+    if(mobileOverlayShown) {
+      return false;
+    }
+    if(ratioScrolledDown > .5) {
+      mobileOverlayShown = true;
+      renderAd()
+    }
+  })
+}
+
 window.GS_renderMobileOverlayAd = renderAd; // TODO: remove after other pages use webpack
+window.GS_renderMobileOverlayAdOnScroll = renderAdOnScrollHalfway; // TODO: remove after other pages use webpack
 
 export function revealContainer() {
   $(containerSelector).css('position', 'fixed');

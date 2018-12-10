@@ -91,7 +91,8 @@ module SchoolProfiles
     def summary_rating
       rating = @school_cache_data_reader.gs_rating
       rating_string, level = rating_three_levels(rating) if rating.present?
-      rating.present? ? I18n.t('school_profiles.summary_narration.Summary Rating_html', rating_string: rating_string, level: level ) : ''
+      state_name = States.abbr_to_label(@school.state)
+      rating.present? ? I18n.t('school_profiles.summary_narration.Summary Rating_html', rating_string: rating_string, level: level, state_name: state_name) : ''
     end
 
     def test_scores_only_before_more
@@ -101,7 +102,8 @@ module SchoolProfiles
     end
 
     def test_scores_only_after_more
-      I18n.t('school_profiles.summary_narration.Test scores only post more_html', ratings_path: ratings_path_for_lang)
+      state_name = States.abbr_to_label(@school.state)
+      I18n.t('school_profiles.summary_narration.Test scores only post more_html', ratings_path: ratings_path_for_lang, state_name: state_name)
     end
 
     def test_scores_rating

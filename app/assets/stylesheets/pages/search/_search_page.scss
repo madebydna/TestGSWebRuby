@@ -27,6 +27,10 @@ body {
     margin-top: 10px;
   }
 
+  .saved-schools{
+    font-family: 'opensans-semibold'; 
+  }
+
   .search-body {
     .divider {
       color: rgb(187, 192, 202);
@@ -38,7 +42,7 @@ body {
 
     padding: 130px 0 0 0;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(xs) {
       padding: 0;
     }
 
@@ -215,6 +219,10 @@ body {
     .pagination-summary {
       font-size: $font-size-l3;
       font-family: 'opensans-semibold';
+      a{
+        font-size: $font-size-l3;
+        font-family: 'opensans-semibold';
+      }
     }
 
     .school-list ol {
@@ -222,16 +230,7 @@ body {
       @include media-breakpoint-only(xs) {
         padding: 0;
       }
-      li span.icon-heart,
-      span.icon-heart-outline {
-        float: right;
-        width: auto;
-        color: #1dace5;
-        font-size: 17px;
-        &:hover {
-          cursor: pointer;
-        }
-      }
+
     }
 
     .menu-bar.filters {
@@ -244,6 +243,16 @@ body {
       border-top: 1px solid #ebedee;
       padding: 10px 15px 10px 15px;
       z-index: 1;
+      .title {
+        bottom: 0;
+        margin-left: 15px;
+        margin-right: 15px;
+        
+        span{
+          font-size: 15px;
+          font-family: 'opensans-semibold';
+        }
+      }
     }
 
     .menu-bar.mobile-filters {
@@ -413,7 +422,18 @@ body {
   .icon-star {
     font-size: 11px;
   }
+  .icon-heart,
+  .icon-heart-outline {
+    float: right;
+    width: auto;
+    color: #1dace5;
+    font-size: 17px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
+
 
 .breadcrumbs {
   .divider {
@@ -434,7 +454,9 @@ body {
 }
 
 .school-table {
-  overflow-x: scroll;
+  @include media-breakpoint-down(sm){
+    overflow-x: auto;
+  }
   width: 100%;
   background-color: white;
   position: relative;
@@ -445,6 +467,25 @@ body {
 
     @include media-breakpoint-up(lg) {
       width: 100%;
+    }
+    @include media-breakpoint-up(md){
+      thead tr:nth-child(1) th {
+        position: -webkit-sticky;
+        position: sticky;
+        //offset height of navbar and menu-bar
+        top: 117.5px;
+        z-index: 1;
+        box-shadow: 1px 1px 1px -1px #c1d2d9;
+      }
+      // remove sticky options from IE10+ since no support for sticky and some 
+      // issues occur when trying to position fix the table headers
+      @media all and (-ms-high-contrast: none){
+        thead tr:nth-child(1) th  {
+          position: relative;
+          top: 0px;
+          z-index: 0;
+        }
+      }
     }
 
     td {
@@ -465,7 +506,7 @@ body {
       text-align: center;
     }
     th.school {
-      width: 290px;
+      width: 320px;
       text-align: left;
     }
 
@@ -496,13 +537,22 @@ body {
         width: 55px;
       }
       > span:last-of-type {
-        width: calc(100% - 70px);
+        width: calc(100% - 100px);
       }
       > span {
         vertical-align: top;
       }
       > span + span {
         margin-left: 15px;
+      }
+      > div {
+        top: 10px;
+        right: 10px;
+        position: absolute;
+      }
+      &.assigned .icon-heart,
+      &.assigned .icon-heart-outline {
+        top: 20px;
       }
     }
   }

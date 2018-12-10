@@ -30,13 +30,12 @@ class Load < ActiveRecord::Base
     select(distinct_data_type_ids)
   end
 
-  def self.distinct_test_loads
-    distinct_data_type_ids.
-        from(
-            Load
-        .with_data_types
-        .with_data_type_tags('state_test')
-        )
+  def self.with_configuration(config)
+    where('loads.configuration like ?', "%#{config}%")
+  end
+
+  def self.max_year_for_data_type_id(data_type_id)
+    where(data_type_id: data_type_id).maximum('date_valid')
   end
 
   def self.with_data_types

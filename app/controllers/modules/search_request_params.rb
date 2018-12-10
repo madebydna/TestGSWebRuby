@@ -302,9 +302,19 @@ module SearchRequestParams
     params[:with_rating]
   end
 
-  def saved_school_keys
+  #myschoollist params
+
+  def merge_school_keys
+    (FavoriteSchool.saved_school_list(current_user.id) + cookies_school_keys).uniq
+  end
+
+  def cookies_school_keys
     # If a user saves a school and then removes it, the cookie will be set as '[]'. Code below will return [] in that case.
     cookies[:gs_saved_schools] ? JSON.parse(cookies[:gs_saved_schools]).map {|hash| [hash['state']&.downcase, hash['id']&.to_i]} : []
+  end
+
+  def saved_school_keys
+    current_user ? merge_school_keys : cookies_school_keys
   end
 
   def school_keys
@@ -326,4 +336,20 @@ module SearchRequestParams
   def default_view
     'list'
   end
+
+  def msl_states
+    saved_school_keys.map {|school_key| school_key[0]}.uniq.sort
+  end
+
+  def state_select
+    params[:stateSelect] || msl_states[0]
+  end
+
+  def filtered_school_keys
+    # schools_keys used here so that this solr parameter will only fire off
+    # from MSL controller or from the MSL API call. In other instances, this params
+    # is undefined/nil
+    school_keys.present? ? saved_school_keys.select {|school_key| school_key[0] == state_select} : nil
+  end
+
 end

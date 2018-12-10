@@ -40,6 +40,16 @@ export function copyParams(paramsArray, sourceUrl, targetUrl) {
   return target;
 }
 
+export function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
 /**
  * Written for GS-12127. When necessary, make ajax calls prepend result of this method to relative path, in order
  * to override any <base> tag that's on the page, *if* the base tag specifies a host that is different than current

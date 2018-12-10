@@ -95,6 +95,7 @@ LocalizedProfiles::Application.routes.draw do
   resources :saved_searches, only: [:create, :destroy], path: '/gsr/ajax/saved_search'
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
+  get '/compare_schools', to: 'compare_schools#fetch_schools'
   get '/community/', to: 'community_landing#show',as: :community_landing
 
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
@@ -142,6 +143,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/licensing.page', as: :licensing
     get '/about/ratings.page', as: :how_we_rate_schools
     get '/gk/terms/', as: :terms_of_use
+    get '/gk/about/api-terms-use', as: :api_terms_of_use
     get '/gk/review-guidelines', as: :school_review_guidelines
     get '/gk/privacy/', as: :privacy
     get '/gk/faq/', as: :faq
@@ -246,9 +248,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
     get '/gk/ratings/',  as: :ratings
     get '/gk/como-clasificamos/',  as: :ratings_spanish
-    get '/gk/api-terms-use', as: :api_terms_of_use
-
-
     get '/status/error404.page'
   end
 
@@ -262,6 +261,7 @@ LocalizedProfiles::Application.routes.draw do
     resource :school_user_digest
     resource :nearby_schools
     resources :schools
+    # get '/compare_schools', to: 'compare_schools#compare_schools', as: :fetch_schools
     get '/reviews_list', to: 'reviews#reviews_list', as: :reviews_list
     resources :reviews do
       get 'count', on: :collection
@@ -270,7 +270,8 @@ LocalizedProfiles::Application.routes.draw do
     resource :widget_logs, only: [:create]
     resources :students
     get '/autosuggest', to: 'autosuggest', action: 'show'
-    post '/save_school', as: :save_school, to: 'saved_schools_controller#create'
+    post '/save_school', to: 'saved_schools#create'
+    delete '/delete_school', to: 'saved_schools#destroy'
   end
 
   match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs

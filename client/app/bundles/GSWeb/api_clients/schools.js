@@ -80,7 +80,11 @@ export function find({
   page = 1,
   limit = 25,
   with_rating = false,
-  schoolList
+  schoolList,
+  schoolId,
+  breakdown,
+  url = '/gsr/api/schools',
+  stateSelect
 } = {}) {
   const data = {
     city,
@@ -92,7 +96,11 @@ export function find({
     sort,
     limit,
     with_rating,
-    schoolList
+    schoolList,
+    schoolId,
+    breakdown,
+    url,
+    stateSelect
   };
   if (levelCodes && levelCodes.length > 0) {
     data.level_code = levelCodes.join(',');
@@ -118,13 +126,22 @@ export function find({
   if (locationLabel) {
     data.locationLabel = locationLabel;
   }
+  if (schoolId) {
+    data.schoolId = schoolId;
+  }
+  if (breakdown) {
+    data.breakdown = breakdown;
+  }
+  if (stateSelect) {
+    data.stateSelect = stateSelect
+  }
   const currentParams = parse(window.location.search);
   data.lang = currentParams.lang;
   if (currentParams.locationType) {
     data.locationType = currentParams.locationType;
   }
   return $.ajax({
-    url: '/gsr/api/schools/',
+    url: `${url}`,
     data,
     type: 'GET',
     dataType: 'json',
@@ -137,5 +154,32 @@ export function mySchoolList(props) {
     ...props,
     schoolList: 'msl',
     extras: ['saved_schools']
+  });
+}
+
+export function findComparedSchool(props){
+  return find({
+    ...props,
+    url: '/compare_schools'
+  });
+}
+
+export function addSchool(schoolKey) {
+  const data = { school: schoolKey };
+  return $.ajax({
+    url: '/gsr/api/save_school',
+    data,
+    dataType: 'json',
+    method: 'POST'
+  });
+}
+
+export function deleteSchool(schoolKey) {
+  const data = { school: schoolKey };
+  return $.ajax({
+    url: '/gsr/api/delete_school',
+    data,
+    dataType: 'json',
+    method: 'DELETE'
   });
 }

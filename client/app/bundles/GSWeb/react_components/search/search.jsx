@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+import { getStore } from 'store/appStore';
 import Breadcrumbs from 'react_components/breadcrumbs';
 import SearchContext from './search_context';
 import SortSelect from './sort_select';
@@ -34,7 +36,6 @@ class Search extends React.Component {
     q: null,
     layout: 'Search',
     schoolKeys: [],
-    numOfSchools: 0
   };
 
   static propTypes = {
@@ -65,7 +66,6 @@ class Search extends React.Component {
     searchTableViewHeaders: PropTypes.object,
     layout: PropTypes.string,
     schoolKeys: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array)),
-    numOfSchools: PropTypes.number
   };
 
   componentDidMount() {
@@ -118,7 +118,7 @@ class Search extends React.Component {
                 />
               </div>
             }
-            numOfSchools={this.props.numOfSchools}
+            numOfSchools={this.props.schools.length}
             schoolList={
               <SchoolList
                 toggleHighlight={this.props.toggleHighlight}
@@ -177,10 +177,12 @@ class Search extends React.Component {
 export { Search };
 export default function() {
   return (
-    <SearchContext.Provider>
-      <SearchContext.Consumer>
-        {state => <Search {...state} />}
-      </SearchContext.Consumer>
-    </SearchContext.Provider>
+    <Provider store={getStore()}>
+      <SearchContext.Provider>
+        <SearchContext.Consumer>
+          {state => <Search {...state} />}
+        </SearchContext.Consumer>
+      </SearchContext.Provider>
+    </Provider>
   );
 }

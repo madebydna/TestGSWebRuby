@@ -78,6 +78,7 @@ SchoolTable.propTypes = {
 
 SchoolTable.defaultProps = {
   isLoading: false,
-  tableView: 'Overview'
+  tableView: 'Overview',
+  searchTableViewHeaders: {}
 };
 export default SchoolTable;

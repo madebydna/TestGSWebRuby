@@ -37,7 +37,34 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   end
 
   def school_results
-    @_school_results ||= query_results.extend(TestScoreCalculations).select_items_with_max_year!
+    @_school_results ||= begin
+      qr = query_results.extend(TestScoreCalculations).select_items_with_max_year!
+      school_results_filter(qr)
+    end
+  end
+
+  def query_result_max_year
+    query_results.extend(TestScoreCalculations).max_year
+  end
+
+  # This code is in support of JT-7249 - hopefully this will answer any questions
+  def school_results_filter(qr)
+    data_value = qr&.first
+    state = data_value&.state&.downcase
+    data_type_id = data_value&.data_type_id
+    school_id = data_value&.school_id
+    state_filter = %w(ct il mt)
+
+    if state_filter.include?(state) && state.present? && data_type_id.present?
+      state_latest_year = Load.max_year_for_data_type_id( data_type_id)
+      if state_latest_year && query_result_max_year < state_latest_year.year
+        school = School.find_by_state_and_id(state, school_id)
+        if school.high_school?
+          return []
+        end
+      end
+    end
+    qr
   end
 
   def query_results
@@ -77,7 +104,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
 
   def inject_grade_all(hashes)
     # Stub for TestScoresCaching::GradeAllCalculatorGsdata, which should reference the new gsdata schema columns
-    TestScoresCaching::GradeAllCalculator.new(
+    SchoolGradeAllCalculator.new(
       GsdataCaching::GsDataValue.from_array_of_hashes(hashes)
     ).inject_grade_all
   end

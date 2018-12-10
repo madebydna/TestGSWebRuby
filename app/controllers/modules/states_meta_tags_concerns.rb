@@ -9,11 +9,11 @@ module StatesMetaTagsConcerns
   end
 
   def states_show_title
-    "#{state_long_name_with_caps} Schools - #{state_long_name_with_caps} State School Ratings - Public and Private"
+    "2019 #{state_long_name_with_caps} Schools | #{state_long_name_with_caps} Schools | Public & Private Schools"
   end
 
   def states_show_description
-    "#{state_long_name_with_caps} school information: Test scores, school parent reviews and more. Plus, get expert advice to help find the right school for your child."
+    "2019 #{state_long_name_with_caps} school rankings, all #{@state[:short].upcase} public and private schools in #{state_long_name_with_caps} ranked. Click here for #{state_long_name_with_caps} school information plus read ratings and reviews for #{state_long_name_with_caps} schools."
   end
 
   def states_community_title

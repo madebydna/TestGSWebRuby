@@ -6,11 +6,14 @@ module SchoolProfiles::CollegeReadinessConfig
   UC_CSU_ENTRANCE = 'Percent of students who meet UC/CSU entrance requirements'
   SAT_SCORE = 'Average SAT score'
   SAT_PARTICIPATION = 'SAT percent participation'
+  SAT_PERCENT_COLLEGE_READY = 'SAT percent college ready'
   ACT_SCORE = 'Average ACT score'
   ACT_PARTICIPATION = 'ACT participation'
+  ACT_PERCENT_COLLEGE_READY = 'ACT percent college ready'
   AP_ENROLLED = 'Percentage AP enrolled grades 9-12'
   AP_EXAMS_PASSED = 'Percentage of students passing 1 or more AP exams grades 9-12'
   ACT_SAT_PARTICIPATION = 'Percentage SAT/ACT participation grades 11-12'
+  ACT_SAT_PARTICIPATION_9_12 = 'Percent of Students who Participated in the SAT/ACT in grades 9-12'
   NEW_SAT_STATES = %w(ca ct mi nj co ma il)
   NEW_SAT_YEAR = 2016
   NEW_SAT_RANGE = (400..1600)
@@ -143,6 +146,12 @@ module SchoolProfiles::CollegeReadinessConfig
     },
     {
       :cache => :characteristics,
+      :data_key => SAT_PERCENT_COLLEGE_READY,
+      :visualization => 'bar',
+      :formatting => %i(round_unless_less_than_1 percent)
+    },
+    {
+      :cache => :characteristics,
       :data_key => ACT_SCORE,
       :visualization => 'bar',
       :formatting => [:round],
@@ -153,6 +162,12 @@ module SchoolProfiles::CollegeReadinessConfig
       :data_key => ACT_PARTICIPATION,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
+    },
+    {
+      :cache => :characteristics,
+      :data_key => ACT_PERCENT_COLLEGE_READY,
+      :visualization => 'bar',
+      :formatting => %i(round_unless_less_than_1 percent)
     },
     {
       :cache => :gsdata,
@@ -171,6 +186,12 @@ module SchoolProfiles::CollegeReadinessConfig
       :data_key => ACT_SAT_PARTICIPATION,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
+    },
+    {
+      :cache => :gsdata,
+      :data_key => ACT_SAT_PARTICIPATION_9_12,
+      :visualization => 'person',
+      :formatting => %i(round_unless_less_than_1 percent)
     }
   ].freeze
 end

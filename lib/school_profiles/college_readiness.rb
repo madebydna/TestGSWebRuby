@@ -51,10 +51,24 @@ module SchoolProfiles
     end
 
     def handle_ACT_SAT_to_display!(hash)
-      act_content = enforce_latest_year_school_value_for_data_types!(hash, ACT_SCORE, ACT_PARTICIPATION)
-      sat_content = enforce_latest_year_school_value_for_data_types!(hash, SAT_SCORE, SAT_PARTICIPATION)
+      act_content = enforce_latest_year_school_value_for_data_types!(hash, ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY)
+      sat_content = enforce_latest_year_school_value_for_data_types!(hash, SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY)
       if act_content || sat_content
-        remove_crdc_breakdown!(hash, ACT_SAT_PARTICIPATION)
+        remove_crdc_breakdown!(hash, ACT_SAT_PARTICIPATION, ACT_SAT_PARTICIPATION_9_12)
+      else
+        enforce_latest_year_gsdata!(hash, ACT_SAT_PARTICIPATION, ACT_SAT_PARTICIPATION_9_12)
+        part912 = hash.slice(ACT_SAT_PARTICIPATION_9_12).values.flatten.select(&:all_students?).flatten
+        remove_crdc_breakdown!(hash, ACT_SAT_PARTICIPATION) if part912.present?
+      end
+    end
+
+    def enforce_latest_year_gsdata!(hash, *data_types)
+      data_type_hashes = hash.slice(*data_types).values.flatten.select(&:all_students?).flatten.extend(GsdataCaching::GsDataValue::CollectionMethods)
+      max_year = data_type_hashes.year_of_most_recent
+      data_type_hashes.each do |v|
+        if v.year < max_year
+          v.school_value = nil
+        end
       end
     end
 

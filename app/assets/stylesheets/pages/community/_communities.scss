@@ -20,7 +20,7 @@ $subtle-gray: #647981;
     @include flexbox-center;
     position: fixed;
     position: -webkit-sticky;
-    position:sticky;
+    position: sticky;
     width: 100%;
     top: 80px;
     z-index:1;
@@ -469,6 +469,17 @@ $subtle-gray: #647981;
   > a:hover { text-decoration: none;}
 }
 
+#Academics {
+  margin-bottom: 20px;
+  .profile-module {border: none}
+  .panel {
+    margin: 0;
+  }
+  @media (max-width: 767px) {
+    .module_feedback {float: right;}
+  }
+}
+
 .tooltip-content{
   text-align: left;
 }
@@ -486,3 +497,10 @@ $subtle-gray: #647981;
   }
 }
 
+@include media-breakpoint-down(xs) {
+  .display-desktop { display:none }
+}
+
+@include media-breakpoint-up(sm) {
+  .display-mobile { display:none }
+}

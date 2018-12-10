@@ -17,12 +17,14 @@ module SearchTableConcerns
   end
 
   def equity_header_hash(schools)
-    populated_test_score_fields
-    .map do |field|
-      name = Solr::SchoolDocument.rating_field_name_to_breakdown[field]
-      name || field.titleize
-    end
-    .map do |title|
+    h = populated_test_score_fields
+      .map do |field|
+        name = Solr::SchoolDocument.rating_field_name_to_breakdown[field]
+        name || field.titleize
+      end
+    # h = h.unshift("Low-income")
+    # h = h.flatten.compact.uniq - ["All students"]
+    h.map do |title|
       {
         key: title,
         title: t(title, default: t(title, scope: 'lib.search', default: title)),

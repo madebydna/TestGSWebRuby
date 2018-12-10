@@ -32,16 +32,19 @@ class CitiesController < ApplicationController
 
   def cities_title
     additional_city_text = state.downcase == 'dc' ? ', DC' : ''
-    "#{city_record.name.gs_capitalize_words}#{additional_city_text} Schools - #{cities_state_text}School Ratings - Public and Private"
+    city_state_text = "#{city_record.name.gs_capitalize_words}, #{state.upcase} "
+    "Best #{city_record.name.gs_capitalize_words}#{additional_city_text} Schools | #{city_state_text}School Ratings | Best Schools"
   end
 
   def cities_description
-    "Find top-rated #{city_record.name} schools, read recent parent reviews, "+
-      "and browse private and public schools by grade level in #{city_record.name}, #{state_name.gs_capitalize_words} (#{state.upcase})."
+    state_text = state.downcase == 'dc' ? "#{state.upcase}" : "#{state_name.gs_capitalize_words}"
+    "Best #{city_record.name} schools listed by #{city_record.name} school districts. Browse "+
+      "best elementary, middle, and high schools private and public schools by grade level "+
+        "in #{city_record.name}, #{state_text} (#{state.upcase})."    
   end
 
   def cities_state_text
-    state.downcase == 'dc' ? '' : "#{city_record.name.gs_capitalize_words} #{state_name.gs_capitalize_words} "
+    state.downcase == 'dc' ? '' : "#{city_record.name.gs_capitalize_words}, #{state.upcase} "
   end
 
     def reviews

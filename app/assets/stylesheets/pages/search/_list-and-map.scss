@@ -1,9 +1,12 @@
-#search-page {
+ #search-page {
   $map-column-min-height: 615px;
   $xs-list-width: 100%;
   $md-list-width: 370px;
   $lg-list-width: 450px;
   $charcoal-gray: #a5bcc6;
+  $hightlighted: #f6f9fa;
+  $off-black: #0d0d0d;
+  $small-font: 11px;
 
   .school-list ol {
     overflow: visible;
@@ -12,6 +15,28 @@
   .school-list, .school-table {
     img {
       width: 55%;
+    }
+    .sponsored-school-result-ad{
+      height: 107px;
+      margin-top: 7px;
+      background-color: $hightlighted;
+      div:first-child {
+        text-transform: uppercase;
+        color: $off-black;
+        font-size: $small-font;
+        .sponsor-ad{
+          margin-left: 15px;
+        }
+        span + span {
+          margin-left: 7px;
+        }
+      }
+
+      .tac{
+        text-align: left;
+        margin-top: 5px;
+      }
+
     }
 
     .percentage-population {

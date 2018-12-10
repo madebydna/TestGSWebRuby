@@ -95,5 +95,4 @@ class District < ActiveRecord::Base
      )
    )".squish
   end
-
 end

@@ -30,6 +30,7 @@ const config = {
     'jquery-loader': ['jquery'],
     'admin-tools': ['./app/bundles/GSWeb/admin_tools'],
     'add-schools': ['./app/bundles/GSWeb/pages/add_schools'],
+    compare: ['polyfills', './app/bundles/GSWeb/compare'],
     search: ['polyfills', './app/bundles/GSWeb/search'],
     'search-box': [
       'polyfills',
@@ -223,6 +224,6 @@ if (devBuild) {
 // }
 
 if (process.env.ANALYZE) {
-  config.plugins.push(new BundleAnalyzerPlugin());
+  config.plugins.push(new BundleAnalyzerPlugin({ analyzerHost: '0.0.0.0' }));
 }
 module.exports = config;

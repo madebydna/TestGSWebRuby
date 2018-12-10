@@ -2,7 +2,7 @@ class FeedCharacteristicsCaching::FeedCharacteristicsCacher < Cacher
   include CacheValidation
 
   CACHE_KEY = 'feed_characteristics'
-  DIRECTORY_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 129, 131, 133]
+  DIRECTORY_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 123, 124, 129, 131, 133]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
   # 3 - Master's degree
@@ -22,6 +22,8 @@ class FeedCharacteristicsCaching::FeedCharacteristicsCacher < Cacher
   # 41 - Head official name
   # 42 - Head official email
   # 103 - at least 5 years teaching experience
+  # 123 - Female
+  # 124 - Male
   # 129 - Teachers with no valid license
   # 131 - Percent classes taught by highly qualified teachers
   # 133 - Teachers with valid license
