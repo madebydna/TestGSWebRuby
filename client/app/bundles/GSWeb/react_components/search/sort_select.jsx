@@ -123,23 +123,11 @@ const t = translateWithDictionary(
   )
 );
 
-const SortSelect = ({
-  includeDistance,
-  includeRelevance,
-  additionalOptions
-}) => {
-  let options = defaultOptions;
-  if (additionalOptions) {
-    options = options.concat(additionalOptions);
-  }
-  if (includeDistance) {
-    options = options.concat(distanceOptions);
-  }
-  includeRelevance && (options = options.concat(relevanceOption));
-
-  return (
-    <SortContext.Consumer>
-      {({ sort, onSortChanged }) => (
+const SortSelect = () => (
+  <SortContext.Consumer>
+    {({ sort, onSortChanged, sortOptions }) => {
+      const options = sortOptions.map(k => ({ key: k, label: t(k) }));
+      return (
         <Select
           objects={options}
           labelFunc={d => d.label}
@@ -150,10 +138,10 @@ const SortSelect = ({
           }
           defaultValue={sort}
         />
-      )}
-    </SortContext.Consumer>
-  );
-};
+      );
+    }}
+  </SortContext.Consumer>
+);
 
 export default SortSelect;
 
