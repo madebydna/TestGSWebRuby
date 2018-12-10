@@ -26,6 +26,7 @@ indexer =
 if script_args[:delete]
   indexer.delete_all_by_type(Solr::SchoolDocument)
 else
+  puts "Starting school indexer for states: #{states.join(', ')}"
   documents = Search::SchoolDocumentFactory.new(states: states, ids: ids).documents
   indexer.index(documents)
 end
