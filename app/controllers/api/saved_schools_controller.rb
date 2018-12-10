@@ -40,7 +40,6 @@ class Api::SavedSchoolsController < ApplicationController
   end
 
   def current_user?
-    binding.pry
     render json: {status: 200} unless current_user
   end
 end
