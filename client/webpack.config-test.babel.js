@@ -14,6 +14,21 @@ export default {
     new webpack.DefinePlugin({window: {}})
   ],
   module: {
+    rules: [
+      {
+        test: require.resolve('jquery'),
+        use: [
+          {
+            loader: 'expose-loader',
+            options: 'jQuery'
+          },
+          {
+            loader: 'expose-loader',
+            options: '$'
+          }
+        ]
+      }
+    ],
     loaders: [
       {
         test: /\.jsx$/,

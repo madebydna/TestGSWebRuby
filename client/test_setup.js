@@ -37,12 +37,16 @@ const jsdom = require('jsdom').jsdom;
 const enzyme = require('enzyme');
 const Adapter = require('enzyme-adapter-react-16');
 
+// expose jquery for components that depends on it
+const jquery = require('jquery');
+
 enzyme.configure({ adapter: new Adapter() });
 
 const exposedProperties = ['window', 'navigator', 'document'];
 global.document = jsdom('');
 global.navigator = { userAgent: 'node.js' };
 global.window = document.defaultView;
+global.$ = jquery;
 Object.keys(document.defaultView).forEach(property => {
   if (typeof global[property] === 'undefined') {
     exposedProperties.push(property);
