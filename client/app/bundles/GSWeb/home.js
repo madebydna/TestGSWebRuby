@@ -1,5 +1,6 @@
 import 'jquery';
 import 'jquery.cookie';
+import 'js-cookie';
 import 'vendor/fastclick';
 import 'vendor/remodal';
 import { init as initHeader } from 'header';

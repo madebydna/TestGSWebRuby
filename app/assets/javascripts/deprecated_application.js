@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery.cookie.js
+//= require ./resources/js.cookie.js
 //= require dataTables/jquery.dataTables
 //= require lodash
 //= require ./util/util
@@ -23,4 +24,3 @@
 //= require ./util/spinny_wheel
 //= require ./util/window.sizing
 //= require ./page_initializers/header_init
-//= require resources/js.cookie.js
