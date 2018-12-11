@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { parse, extract } from 'query-string';
 import QuestionMarkTooltip from './question_mark_tooltip';
-import { t } from '../../util/i18n';
-import { getParameterByName } from 'util/uri';
 import { analyticsEvent } from 'util/page_analytics';
+import { t } from '../../util/i18n';
 
 // TODOs:
 // - rename subject css class
@@ -37,11 +37,11 @@ const BasicDataModuleRow = ({
     }
   }
 
-  const handleClick = (link) => {
-    const breakdown = getParameterByName('breakdown',link);
-    const state = window.gon.school.state;
-    const schoolId = window.gon.school.id;
-    analyticsEvent('Profile', 'CompareSchool', `${schoolId}:${state}:race-ethnicity:${breakdown}`);
+  const handleClick = (compareLink) => {
+    const parsedQueryString = parse(extract(compareLink));
+    const ethnicity = parsedQueryString.breakdown;
+    const { state, id } = window.gon.school;
+    analyticsEvent('Profile', 'CompareSchool', `${id}:${state}:race-ethnicity:${ethnicity}`);
   };
 
   const renderCompareLink = () => {
