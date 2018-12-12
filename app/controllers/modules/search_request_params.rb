@@ -289,8 +289,15 @@ module SearchRequestParams
     params['locationType'] == 'street_address'
   end
 
+  def cast_to_boolean(str)
+    {
+      'true' => true,
+      'false' => false
+    }[str]
+  end
+
   def with_rating
-    params[:with_rating]
+    cast_to_boolean(params[:with_rating]&.downcase)
   end
 
   #myschoollist params
