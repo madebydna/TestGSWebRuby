@@ -18,12 +18,9 @@ import {
   COOKIE_NAME
 } from 'util/session';
 import '../../vendor/remodal';
-import CompareQueryParams from './compare_query_params';
-import GradeLevelContext from 'react_components/search/grade_level_context';
+import SearchQueryParams from 'react_components/search/search_query_params';
 import SavedSchoolContext from 'react_components/search/saved_school_context';
-import EntityTypeContext from 'react_components/search/entity_type_context';
 import SortContext from 'react_components/search/sort_context';
-import DistanceContext from 'react_components/search/distance_context';
 import { set as setCookie } from 'js-cookie';
 import { t } from 'util/i18n';
 import { showMessageTooltip } from '../../util/message_tooltip';
@@ -47,11 +44,8 @@ class CompareProvider extends React.Component {
     pageSize: PropTypes.number,
     resultSummary: PropTypes.string,
     children: PropTypes.element.isRequired,
-    updateLevelCodes: PropTypes.func.isRequired,
-    updateEntityTypes: PropTypes.func.isRequired,
     updateSort: PropTypes.func.isRequired,
     updatePage: PropTypes.func.isRequired,
-    updateDistance: PropTypes.func.isRequired,
     compareTableViewHeaders: PropTypes.object
   };
 
@@ -192,14 +186,12 @@ class CompareProvider extends React.Component {
         deleteSchool(schoolKey)
           .done(e => {
             e.status === 400 && alert("There was an error deleting a school from your account.\n Please try again later")
-            e.status === 501 && alert("An issue occurred while removing this school from your list.\n Please sign out and sign back in.")
           })
           .fail(e => alert("There was an error deleting a school from your account.\n Please try again later"))
       }else{
         addSchool(schoolKey)
           .done(e => {
             e.status === 400 && alert("There was an error adding a school to your account.\n Please try again later")
-            e.status === 501 && alert("Your school was stored but not saved.\n Please sign out and sign back in.")
           })
           .fail(e => alert("There was an error adding a school to your account.\n Please try again later"))
       }
@@ -230,7 +222,6 @@ class CompareProvider extends React.Component {
       schoolId: props.schoolId,
       state: props.state,
       breakdown: props.breakdownParam,
-      entityTypes: props.entityTypes,
       lat: props.lat,
       lon: props.lon,
       distance: props.distance,
@@ -347,9 +338,9 @@ class CompareProvider extends React.Component {
 }
 
 const CompareProviderWithQueryParams = props => (
-  <CompareQueryParams>
+  <SearchQueryParams>
     {paramProps => <CompareProvider {...paramProps} {...props} />}
-  </CompareQueryParams>
+  </SearchQueryParams>
 );
 export { CompareProvider };
 export default {
