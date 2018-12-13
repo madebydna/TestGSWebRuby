@@ -2,7 +2,6 @@
 //= require ./bootstrap_select
 //= require ./fastclick
 //= require ./handlebars-v4.0.2
-//  require ./jquery.cookie
 //= require ./js.cookie
 //= require ./jquery.touchSwipe
 //  require ./omniture

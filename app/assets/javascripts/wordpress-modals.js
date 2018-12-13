@@ -1,5 +1,4 @@
 //= require_self
-//= require jquery.cookie.js
 //= require ./resources/js.cookie.js
 //= require jquery_ujs
 //= require util/uri
