@@ -43,10 +43,9 @@ describe FavoriteSchool do
     let(:head_start) { FactoryGirl.build(:washington_dc_ps_head_start) }
     let(:new_user) { FactoryGirl.build(:verified_user, id: 3) }
 
-    it "should create a favorite school instance for persisting into the database" do
+    it "should create a favorite school instance" do
       [cristo_hs, head_start].each do |school|
         saved_school = FavoriteSchool.create_saved_school_instance(school, new_user.id)
-        saved_school.save
         expect([saved_school.state, saved_school.school_id]).to eq([school.state, school.id])
       end
     end
@@ -57,6 +56,7 @@ describe FavoriteSchool do
         saved_school.save
       end
       expect(FavoriteSchool.saved_school_list(new_user.id)).to eq([[cristo_hs.state&.downcase, cristo_hs.id], [head_start.state&.downcase, head_start.id]])
+      expect(FavoriteSchool.count).to eq(2) 
     end
   end
 
