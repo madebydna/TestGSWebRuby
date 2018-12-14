@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
 import { expect } from 'chai';
-import { before, describe, describe as context, it } from 'mocha';
+import { describe, describe as context, it } from 'mocha';
 
 import RecentReviews from 'react_components/community/recent_reviews';
 import ReviewsList from 'react_components/review/reviews_list';
@@ -27,7 +26,7 @@ describe('<RecentReviews/>', ()=> {
     });
   })
 
-  context('RecentReviews component handles props correctly', () => {
+  context('RecentReviews component handles community prop correctly', () => {
     it('Handles community prop correctly', () => {
       const recentReview = shallow(<RecentReviews community="city" />)
       expect(recentReview.find('p').text()).to.equal("recent_reviews.city_blurb")
