@@ -11,13 +11,17 @@ class Api::SavedSchoolsController < ApplicationController
       GSLogger.warn(message:'School already in list', vars: params)
       render json: {status: 501}
     else
-      school = School.on_db("#{school_state}").active.find_by(id: "#{school_id}")
+      school = School.on_db(school_state).active.find_by(id: school_id)
       if school
         saved_school = FavoriteSchool.create_saved_school_instance(school, current_user.id)
-        saved_school.save
-        render json: {status: 200}
+        if saved_school.save
+          render json: {status: 200}
+        else
+          GSLogger.error(message:'Error saving school', vars: params)
+          render json: {status: 400}
+        end
       else
-        GSLogger.error(message:'Error adding school', vars: params)
+        GSLogger.error(message:"Couldn't locate school", vars: params)
         render json: {status: 400}
       end
     end
