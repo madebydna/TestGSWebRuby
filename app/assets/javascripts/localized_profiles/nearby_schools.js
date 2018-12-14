@@ -62,15 +62,15 @@ GS.nearbySchools = (function() {
     // This gon variable is set in the HTML partial. If it is not set, we'll
     // default it to false, since that means the partial is not on the page.
     var moduleOnPage = gon.showNearbySchoolsSticky || false;
-    return moduleOnPage && $.cookie('hideNearbySchoolsFor') !== stateAndSchool;
+    return moduleOnPage && Cookies.get('hideNearbySchoolsFor') !== stateAndSchool;
   };
 
   var setHideNearbySchoolsCookie = function() {
-    $.cookie('hideNearbySchoolsFor', stateAndSchool, {expires: 1, path: '/' });
+    Cookies.set('hideNearbySchoolsFor', stateAndSchool, {expires: 1, path: '/' });
   };
 
   var clearHideSchoolsCookie = function() {
-    $.removeCookie('hideNearbySchoolsFor', { path: '/' });
+    Cookies.remove('hideNearbySchoolsFor', { path: '/' });
   };
 
   return {

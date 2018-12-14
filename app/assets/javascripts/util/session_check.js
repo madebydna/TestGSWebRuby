@@ -19,7 +19,7 @@ GS.session_check = GS.session_check || function($) {
     };
 
     var parseSessionCookie = function () {
-        var session_cache_value = $.cookie('SESSION_CACHE');
+        var session_cache_value = Cookies.get('SESSION_CACHE');
         if (session_cache_value != null &&  session_cache_value != ""){
             session_array = session_cache_value.split(INTRA_COOKIE_DELIMETER);
             if(session_array.length < 6){
