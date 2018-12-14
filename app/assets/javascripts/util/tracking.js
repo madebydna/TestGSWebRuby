@@ -5,9 +5,9 @@ GS.track.cookieName = 'OmnitureTracking';
 
 GS.track.getOmnitureCookie = function() {
     var omnitureCookie = {};
-    if (!(_.isEmpty($.cookie(GS.track.cookieName)))) {
+    if (!(_.isEmpty(Cookies.get(GS.track.cookieName)))) {
         try {
-            omnitureCookie = JSON.parse($.cookie(GS.track.cookieName));
+            omnitureCookie = JSON.parse(Cookies.get(GS.track.cookieName));
         } catch (e) {
             GS.util.log('Error parsing omniture tracking cookie');
         }
@@ -18,7 +18,7 @@ GS.track.getOmnitureCookie = function() {
 GS.track.setOmnitureCookie = function(omnitureCookie){
     if (!(_.isEmpty(omnitureCookie))) {
         try {
-            $.cookie(GS.track.cookieName,JSON.stringify(omnitureCookie),{path: '/',domain: ".greatschools.org"});
+            Cookies.set(GS.track.cookieName,JSON.stringify(omnitureCookie),{path: '/',domain: ".greatschools.org"});
         } catch (e) {
             GS.util.log('Error stringifying omniture tracking cookie');
         }
@@ -248,7 +248,7 @@ GS.track.setOmnitureData = function() {
     GS.track.setEVars(evars);
     GS.track.setLists(lists);
 
-    $.removeCookie(GS.track.cookieName, { path: '/' ,domain: ".greatschools.org"});
+    Cookies.remove(GS.track.cookieName, { path: '/' ,domain: ".greatschools.org"});
 };
 
 GS.track.getOmnitureObject = function () {

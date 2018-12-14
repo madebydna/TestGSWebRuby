@@ -2,7 +2,7 @@ GS.search = GS.search || {};
 
 GS.search.setShowFiltersCookieHandler = GS.search.setShowFiltersCookieHandler || function(className) {
     $('body').on('click', className, function() {
-        $.cookie('showFiltersMenu', 'true', {path: '/'});
+        Cookies.set('showFiltersMenu', 'true', {path: '/'});
     });
 };
 
@@ -596,10 +596,10 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 
     var disableSavedSearchOnLoad = function() {
-        if ($.cookie('saved_search') === 'success') {
+        if (Cookies.get('saved_search') === 'success') {
             disableSavedSearch();
             changeSavedSearchText();
-            $.removeCookie("saved_search", { path: '/' });
+            Cookies.remove("saved_search", { path: '/' });
         }
     };
 

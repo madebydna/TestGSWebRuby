@@ -42,7 +42,7 @@ module Feeds
         state_cache = StateCache.for_state('feed_test_scores_gsdata', @state)
         raise "State cache not found for #{@state}" unless state_cache
         cache_hash = state_cache.cache_data
-        yield cache_hash[test_name].select(&cache_filter)
+        yield cache_hash[test_name]&.select(&cache_filter)
       end
 
       def each_district_result_for_test_name(test_name)
@@ -52,7 +52,7 @@ module Feeds
           district_id = district_cache.district_id
           test_hash = district_cache.cache_data
           next unless test_hash[test_name].present?
-          yield test_hash[test_name].select(&cache_filter), district_id
+          yield test_hash[test_name]&.select(&cache_filter), district_id
         end
       end
 

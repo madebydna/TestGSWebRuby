@@ -20,11 +20,12 @@ class RecentReviews extends React.Component {
         school_name: PropTypes.string
       })
     ),
-    state: PropTypes.string,
-    schoolId: PropTypes.number,
-    questions: PropTypes.arrayOf(PropTypes.object),
-    locality: PropTypes.object,
-    community: PropTypes.string
+    community: PropTypes.string.isRequired
+  };
+
+  static defaultProps = {
+    reviews: [],
+    community: ""
   };
 
   constructor(props) {

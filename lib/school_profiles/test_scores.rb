@@ -9,7 +9,7 @@ module SchoolProfiles
     N_TESTED = 'n_tested'
     STRAIGHT_AVG = 'straight_avg'
     N_TESTED_AND_STRAIGHT_AVG = 'n_tested_and_straight_avg'
-    STATES_WITHOUT_HS_STANDARDIZED_TESTS = %w(wi nv ct mt il)
+    STATES_WITHOUT_HS_STANDARDIZED_TESTS = %w(ct il mt)
 
     def initialize(school, school_cache_data_reader:)
       @school = school
@@ -32,13 +32,13 @@ module SchoolProfiles
     end
 
     def show_alternate_no_data_summary?
-      !visible? && @school.level_code == 'h'
+      !visible? && @school.high_school?
     end
 
     # Added to the 'Notice something missing or confusing?' modal when the conditions are met. For states that use
     # college entrance exams instead of standardized tests.
     def standardized_tests_clarification_note
-      if visible? && @school.level_code == 'h' && STATES_WITHOUT_HS_STANDARDIZED_TESTS.include?(@school.state.downcase)
+      if visible? && @school.high_school? && STATES_WITHOUT_HS_STANDARDIZED_TESTS.include?(@school.state.downcase)
         alternate_no_data_summary
       end
     end

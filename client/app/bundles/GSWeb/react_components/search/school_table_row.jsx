@@ -19,11 +19,18 @@ const renderEnrollment = enrollment => {
 const drawRating = (theRating, linkProfile) => {
   const className = `circle-rating--small circle-rating--${theRating || 'gray'}`;
   return (
-      theRating ? <a href={`${linkProfile}`}>
-            <span className={className}>
-              {theRating}
-              {theRating && <span className="rating-circle-small">/10</span>}
-            </span></a> : <span>N/A</span>
+      theRating ? 
+        <a href={`${linkProfile}`}>
+          <span className={className}>
+            {theRating}
+            {theRating && <span className="rating-circle-small">/10</span>}
+          </span>
+        </a> 
+        : 
+        <span>
+          <span>N/A</span>
+          {renderNoInfoTooltip()}
+        </span>
       )
 }
 const numReviewsLink = (numReviews, reviewsUrl) => {
@@ -170,13 +177,9 @@ const equityColumns = (columns, ethnicityInfo, profileLink) => {
         <td key={index} style={cellStyle}>
           {drawRating(ethnicityInfo[ethInfoIdx].rating, `${profileLink}${anchorObject[hash.key]}`)}
           <p className="percentage-population">
-            {ethnicityInfo[ethInfoIdx].percentage ? 
+            {ethnicityInfo[ethInfoIdx].percentage && 
               <React.Fragment>
                 <span>{ethnicityInfo[ethInfoIdx].percentage}%</span><br/> {t('of students')}
-              </React.Fragment> 
-              : 
-              <React.Fragment>
-                {renderNoInfoTooltip()}
               </React.Fragment>
             }
           </p>

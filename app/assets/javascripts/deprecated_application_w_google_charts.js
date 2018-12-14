@@ -11,7 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require jquery.cookie.js
+//= require ./resources/js.cookie.js
 //= require dataTables/jquery.dataTables
 //= require lodash
 //= require ./util/util
