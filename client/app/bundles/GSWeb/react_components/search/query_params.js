@@ -115,9 +115,9 @@ export function getState() {
   return state;
 }
 
-export function getSchoolId() {
-  let { schoolId } = parse(currentQueryString());
-  return schoolId;
+export function getId() {
+  let { id } = parse(currentQueryString());
+  return id;
 }
 
 export function getBreakdown() {

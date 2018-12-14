@@ -81,7 +81,7 @@ export function find({
   limit = 25,
   with_rating = false,
   schoolList,
-  schoolId,
+  id,
   breakdown,
   url = '/gsr/api/schools',
   stateSelect
@@ -97,7 +97,7 @@ export function find({
     limit,
     with_rating,
     schoolList,
-    schoolId,
+    id,
     breakdown,
     url,
     stateSelect
@@ -126,8 +126,8 @@ export function find({
   if (locationLabel) {
     data.locationLabel = locationLabel;
   }
-  if (schoolId) {
-    data.schoolId = schoolId;
+  if (id) {
+    data.id = id;
   }
   if (breakdown) {
     data.breakdown = breakdown;

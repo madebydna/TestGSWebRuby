@@ -216,7 +216,7 @@ class CompareProvider extends React.Component {
       state: props.state,
       q: props.q,
       levelCodes: [...props.levelCodes],
-      schoolId: props.schoolId,
+      id: props.id,
       state: props.state,
       breakdown: props.breakdownParam,
       lat: props.lat,

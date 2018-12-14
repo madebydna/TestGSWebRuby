@@ -255,11 +255,6 @@ module SearchControllerConcerns
     end.compact
   end
 
-  # will eliminate when i find out how to change link
-  def school_id
-    params[:schoolId]&.to_i
-  end
-
   def translated_ethnicity_with_fallback
     @_translated_ethnicity ||= I18n.t(ethnicity, default: ethnicity)
   end

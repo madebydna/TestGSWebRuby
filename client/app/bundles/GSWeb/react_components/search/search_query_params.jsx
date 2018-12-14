@@ -29,7 +29,7 @@ export default class SearchQueryParams extends React.Component {
       lon: queryParams.getLon(),
       distance: queryParams.getDistance(),
       state: queryParams.getState(),
-      schoolId: queryParams.getSchoolId(),
+      id: queryParams.getId(),
       breakdownParam: queryParams.getBreakdown(),
       locationLabel:
       queryParams.getValueForKey('locationLabel') ||
