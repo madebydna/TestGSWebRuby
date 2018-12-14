@@ -133,7 +133,7 @@ export function find({
     data.breakdown = breakdown;
   }
   if (stateSelect) {
-    data.stateSelect = stateSelect
+    data.stateSelect = stateSelect;
   }
   const currentParams = parse(window.location.search);
   data.lang = currentParams.lang;
@@ -141,7 +141,7 @@ export function find({
     data.locationType = currentParams.locationType;
   }
   return $.ajax({
-    url: `${url}`,
+    url: '/gsr/api/schools',
     data,
     type: 'GET',
     dataType: 'json',
@@ -154,13 +154,6 @@ export function mySchoolList(props) {
     ...props,
     schoolList: 'msl',
     extras: ['saved_schools']
-  });
-}
-
-export function findComparedSchool(props){
-  return find({
-    ...props,
-    url: '/compare_schools'
   });
 }
 

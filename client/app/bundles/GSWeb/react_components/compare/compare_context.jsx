@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { findComparedSchool as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
+import { find as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
@@ -36,7 +36,6 @@ class CompareProvider extends React.Component {
     entityTypes: PropTypes.arrayOf(PropTypes.string),
     lat: PropTypes.string,
     lon: PropTypes.string,
-    distance: PropTypes.number,
     locationLabel: PropTypes.string,
     sort: PropTypes.string,
     breakdownParam: PropTypes.string,
@@ -58,7 +57,6 @@ class CompareProvider extends React.Component {
     autoSuggestQuery: () => {},
     breadcrumbs: [],
     q: null,
-    layout: 'Search',
     schoolKeys: [],
     numOfSchools: 0,
     breakdownParam: ''
@@ -215,7 +213,6 @@ class CompareProvider extends React.Component {
   propsForFindSchools(props) {
     return {
       city: props.city,
-      district: props.district,
       state: props.state,
       q: props.q,
       levelCodes: [...props.levelCodes],
@@ -224,13 +221,13 @@ class CompareProvider extends React.Component {
       breakdown: props.breakdownParam,
       lat: props.lat,
       lon: props.lon,
-      distance: props.distance,
       sort: props.sort,
       page: props.page,
-      // limit: props.pageSize,
       limit: 100,
-      extras: ["ratings", "characteristics", "review_summary", "saved_schools", "pinned_school", "ethnicity_test_score_rating"],
-      locationLabel: props.locationLabel
+      radius: 5,
+      extras: ["summary_rating", "enrollment", "review_summary", "saved_schools", "pinned_school", "ethnicity_test_score_rating", "distance"],
+      locationLabel: props.locationLabel,
+      with_rating: true
     };
   }
 
