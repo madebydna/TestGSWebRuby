@@ -41,7 +41,7 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
             addActiveToggleStateFor('list');
             removeActiveToggleStateFor('map');
             switchListMapViewTextForMobile('list', 'map');
-            $.cookie('map_view', 'false', { path: '/' });
+            Cookies.set('map_view', 'false', { path: '/' });
         };
 
         var showMapView = function () {
@@ -51,7 +51,7 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
             addActiveToggleStateFor('map');
             removeActiveToggleStateFor('list');
             switchListMapViewTextForMobile('map', 'list');
-            $.cookie('map_view', 'true', { path: '/' });
+            Cookies.set('map_view', 'true', { path: '/' });
         };
 
         var mapHeightForMobile = function () {
@@ -67,8 +67,8 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
 
 
     var init = function () {
-        if ($.cookie('map_view') == 'undefined') {
-            $.cookie('map_view', 'false', { path: '/' });
+        if (Cookies.get('map_view') == 'undefined') {
+            Cookies.set('map_view', 'false', { path: '/' });
         }
         $(elemListViewToggle).on('click', function() {
             hideMapView();
@@ -78,7 +78,7 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
                 addActiveToggleStateFor('list')
             },
             function () {
-                if ($.cookie('map_view') === 'true') {
+                if (Cookies.get('map_view') === 'true') {
                     removeActiveToggleStateFor('list');
                 }
             }
@@ -91,7 +91,7 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
                 addActiveToggleStateFor('map')
             },
             function () {
-                if ($.cookie('map_view') === 'false') {
+                if (Cookies.get('map_view') === 'false') {
                     removeActiveToggleStateFor('map');
                 }
             }
@@ -106,7 +106,7 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
         });
 
         if ($(elemMapCanvas).length > 0) {
-            if ( $.cookie('map_view') === 'true' && $(document).width() > GS.window.sizing.maxMobileWidth) {
+            if ( Cookies.get('map_view') === 'true' && $(document).width() > GS.window.sizing.maxMobileWidth) {
                 showMapView();
             }
             else {

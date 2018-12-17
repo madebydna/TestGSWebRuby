@@ -29,6 +29,6 @@ GS.hubs.clearLocalUserCookies = function() {
   for(var i = 0; i < localUserCookieNames.length; i++) {
     var opts = { path: '/' };
     if (!isDeveloperWorkstation) opts['domain'] = '.greatschools.org';
-    $.removeCookie(localUserCookieNames[i], opts);
+    Cookies.remove(localUserCookieNames[i], opts);
   }
 }

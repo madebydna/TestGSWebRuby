@@ -1,5 +1,5 @@
 //= require_self
-//= require jquery.cookie.js
+//= require ./resources/js.cookie.js
 //= require jquery_ujs
 //= require util/uri
 //= require util/i18n
@@ -21,7 +21,7 @@ GS = GS || {};
 GS.session = GS.session || (function(gon) {
 
   var isSignedIn = function() {
-    return $.cookie('community_www') != null || $.cookie('community_dev') != null;
+    return Cookies.get('community_www') != null || Cookies.get('community_dev') != null;
   };
 
   return {

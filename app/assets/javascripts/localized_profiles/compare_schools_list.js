@@ -52,7 +52,7 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
     };
 
     var syncDataWithCookies = function() {
-        $.cookie('compareSchools', JSON.stringify(schools), {path:'/'});
+        Cookies.set('compareSchools', JSON.stringify(schools), {path:'/'});
     };
 
     var removeSchool = function(id) {
@@ -98,7 +98,7 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
 
     //grabs data from cookies and stores into schools and state variable
     var getDataFromCookies = function() {
-        var schoolsFromCookie = $.cookie('compareSchools');
+        var schoolsFromCookie = Cookies.get('compareSchools');
         if (typeof schoolsFromCookie === 'string') {
             schools = JSON.parse(schoolsFromCookie);
             if (schools.length > maxNumberOfSchools) {
