@@ -31,9 +31,9 @@ describe('<RecentReviews/>', ()=> {
       const recentReview = shallow(<RecentReviews community="city" />)
       expect(recentReview.find('p').text()).to.equal("recent_reviews.city_blurb")
       recentReview.setProps({community: 'district'})
-      expect(recentReview.setProps({ community: 'district' }).find('p').text()).to.equal("recent_reviews.district_blurb")
+      expect(recentReview.find('p').text()).to.equal("recent_reviews.district_blurb")
       recentReview.setProps({ community: 'random' })
-      expect(recentReview.setProps({ community: 'district' }).find('p').text()).to.equal("recent_reviews.district_blurb")
+      expect(recentReview.find('p').text()).to.equal("recent_reviews.district_blurb")
     });
   });
 });
