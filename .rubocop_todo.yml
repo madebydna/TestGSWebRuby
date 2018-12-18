@@ -381,7 +381,6 @@ Rails/ReadWriteAttribute:
     - 'app/models/modules/lookup_data_preloading.rb'
     - 'app/models/modules/password.rb'
     - 'app/models/profile_config/category_data.rb'
-    - 'app/models/reported_entity.rb'
     - 'app/models/review.rb'
     - 'app/models/review_flag.rb'
     - 'app/models/review_question.rb'

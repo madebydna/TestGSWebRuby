@@ -224,10 +224,6 @@ class School < ActiveRecord::Base
     school_metadata[:overallRating].presence
   end
 
-  def school_ratings
-    SchoolRating.where(state: state, school_id: id)
-  end
-
   def state_name
     States.state_name(state)
   end

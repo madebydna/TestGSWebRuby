@@ -36,7 +36,6 @@ production: &production
 <%%= define_db(abbreviation.downcase, '_' + abbreviation.downcase, true, 'mysql_production') %>
 <%% end %>
 <%%= define_db('gs_schooldb', 'gs_schooldb', true, 'mysql_production') %>
-<%%= define_db('surveys', 'surveys', true, 'mysql_production') %>
 <%%= define_db('community', 'community', true, 'mysql_production') %>
 
 migrations-production: &migrations-production

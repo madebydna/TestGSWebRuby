@@ -31,59 +31,6 @@ shared_examples_for 'a controller that can save a review' do
       expect(error).to be_present
     end
 
-    context 'with a user with no existing review' do
-      before(:each) do
-        allow_any_instance_of(SchoolRating).to receive(:save).and_return true
-        allow(controller).to receive(:update_existing_review).and_return nil, nil
-      end
-
-      it 'should successfully save a review' do
-        expect_any_instance_of(SchoolRating).to receive(:save)
-        controller.send :save_review, current_user, review_params
-      end
-
-      it 'should return the saved review' do
-        review, error = controller.send :save_review,
-                                        current_user,
-                                        review_params
-        expect(review).to be_a(SchoolRating)
-      end
-
-      it 'should not return any error' do
-        review, error = controller.send :save_review,
-                                        current_user,
-                                        review_params
-        expect(error).to be_nil
-      end
-
-      it 'should set current_user onto review' do
-        review, error = controller.send :save_review,
-                                        current_user,
-                                        review_params
-        expect(review.user).to eq current_user
-      end
-
-      it 'should return an error if object can\'t be saved' do
-        allow_any_instance_of(SchoolRating).to receive(:save).and_return false
-        allow_any_instance_of(SchoolRating).to receive(:errors) {
-          double(full_messages: ['error message'])
-        }
-        review, error = controller.send :save_review,
-                                        current_user,
-                                        review_params
-        expect(error).to eq 'error message'
-      end
-
-      it 'should return an error if something else goes wrong' do
-        allow(controller).to receive(:review_from_params).and_raise(RuntimeError)
-
-        review, error = controller.send :save_review,
-                                        current_user,
-                                        review_params
-        expect(error).to be_present
-      end
-    end
-
     context 'with a user with an existing review' do
       before(:each) do
         allow(controller).to receive(:update_existing_review).and_return existing_review,
@@ -127,20 +74,6 @@ shared_examples_for 'a controller that can save a review' do
     it 'should fail gracefully with error if given bad arguments' do
       review, error = controller.send :save_review, current_user, {}
       expect(error).to be_present
-    end
-
-    context 'with a user with no existing review' do
-      before(:each) do
-        allow(current_user).to receive(:active_reviews_for_school).and_return []
-      end
-
-      it 'should return nil review and nil error' do
-        review, error = controller.send :update_existing_review,
-                                        current_user,
-                                        review_params
-        expect(review).to be_nil
-        expect(error).to be_nil
-      end
     end
 
     context 'with a user with one existing review' do
@@ -200,11 +133,6 @@ shared_examples_for 'a controller that can save a review' do
 
     before(:each) do
       allow(School).to receive(:find_by_state_and_id).and_return school
-    end
-
-    it 'should return a review' do
-      expect(controller.send :review_from_params, review_params).
-        to be_a(SchoolRating)
     end
 
     it 'should return nil if invalid params supplied' do

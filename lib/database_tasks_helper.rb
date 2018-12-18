@@ -39,9 +39,6 @@ class DatabaseTasksHelper
       ethnicity
       language
     ),
-    surveys_tables: %w(
-      school_rating
-    ),
     community_tables: %w(
       reported_content
       alert_words
@@ -52,7 +49,6 @@ class DatabaseTasksHelper
       _ca: :state_tables,
       _dc: :state_tables,
       gs_schooldb: :gs_schooldb_tables,
-      surveys: :surveys_tables,
       community: :community_tables
   }.stringify_keys!
 
