@@ -1,5 +1,4 @@
 //= require ./admin
-//= require ./account_management_init
 //= require ./all_pages_init
 //= require ./city_hub_init
 //= require ./community_spotlights_init
