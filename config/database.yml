@@ -77,14 +77,6 @@ development: &development
     <<: *mysql_ro_server
     database: us_geo
     legacy: true
-  gscms_pub_rw:
-    <<: *mysql_rw_server
-    database: gscms_pub
-    legacy: true
-  gscms_pub:
-    <<: *mysql_ro_server
-    database: gscms_pub
-    legacy: true
   gsdata:
     <<: *mysql_gsdata
     database: gsdata
@@ -147,14 +139,6 @@ test: &test
   us_geo:
     <<: *test_db
     database: us_geo_test
-    legacy: true
-  gscms_pub_rw:
-    <<: *test_db
-    database: gscms_pub_test
-    legacy: true
-  gscms_pub:
-    <<: *test_db
-    database: gscms_pub_test
     legacy: true
   api_rw:
     <<: *test_db
