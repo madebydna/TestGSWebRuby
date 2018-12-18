@@ -13,7 +13,6 @@ namespace :gsweb do
         'gs_schooldb',
         '_ca',
         'community',
-        'surveys',
         'us_geo'
 
       Rake::Task['db:legacy:schema'].invoke(false, *development_dbs_to_create)

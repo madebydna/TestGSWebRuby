@@ -53,12 +53,6 @@ module ReviewControllerConcerns
       handle_save(old_review)
     end
 
-    def update_existing_review
-      review = existing_review
-      review.attributes = review_attributes
-      handle_save(review)
-    end
-
     def handle_save(review)
       errors = []
       errors += self.errors.dup

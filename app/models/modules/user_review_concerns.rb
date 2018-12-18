@@ -21,10 +21,6 @@ module UserReviewConcerns
     has_many :reviews_user_flagged, class_name: 'Review', through: :review_flags, source: :review
   end
 
-  def active_reviews_for_school(*args)
-    Review.find_by_school(*args).where(member_id: self.id)
-  end
-
   def reviews_for_school(*args)
     Review.find_by_school(*args).unscope(where: :active).where(member_id: self.id).order(created: :desc).includes(:answers)
   end

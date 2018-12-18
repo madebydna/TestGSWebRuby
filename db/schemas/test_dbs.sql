@@ -1708,23 +1708,6 @@ CREATE TABLE `review_flags` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `review_flags_migration_logs`
---
-
-DROP TABLE IF EXISTS `review_flags_migration_logs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `review_flags_migration_logs` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `reported_entity_id` int(11) DEFAULT NULL,
-  `review_flag_id` int(11) DEFAULT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=152543 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `review_mappings`
 --
 
@@ -3452,26 +3435,6 @@ CREATE TABLE `raise_your_hand_feature` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `reported_entity`
---
-
-DROP TABLE IF EXISTS `reported_entity`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `reported_entity` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `reporter_id` int(11) NOT NULL,
-  `reported_entity_type` varchar(32) NOT NULL,
-  `reported_entity_id` int(11) NOT NULL,
-  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `active` tinyint(4) NOT NULL DEFAULT '1',
-  `reason` text,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=183727 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `user_content`
 --
 
@@ -3493,14 +3456,6 @@ CREATE TABLE `user_content` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=90103 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Current Database: `surveys`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `surveys_test` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `surveys_test`;
 
 --
 -- Table structure for table `gs10868_duplicate_reviews`

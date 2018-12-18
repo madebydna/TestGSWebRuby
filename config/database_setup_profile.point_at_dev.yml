@@ -82,14 +82,6 @@ development: &development
     <<: *mysql_ro_server_to_use_in_development
     database: gs_schooldb
     legacy: true
-  surveys_rw:
-    <<: *mysql_rw_server_to_use_in_development
-    database: surveys
-    legacy: true
-  surveys:
-    <<: *mysql_ro_server_to_use_in_development
-    database: surveys
-    legacy: true
   community_rw:
     <<: *mysql_rw_server_to_use_in_development
     database: community
@@ -145,14 +137,6 @@ test: &test
   gs_schooldb:
     <<: *mysql_localhost_rw
     database: gs_schooldb_test
-    legacy: true
-  surveys_rw:
-    <<: *mysql_localhost_rw
-    database: surveys_test
-    legacy: true
-  surveys:
-    <<: *mysql_localhost_rw
-    database: surveys_test
     legacy: true
   community_rw:
     <<: *mysql_localhost_rw

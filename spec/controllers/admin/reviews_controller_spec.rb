@@ -108,15 +108,6 @@ describe Admin::ReviewsController do
         get :moderation, review_moderation_search_string: 'someone@domain.com'
       end
 
-      it 'should look for reviews by IP if IP is provided' do
-        pending 'TODO: Figure out IPs for topical reviews'
-        expect(SchoolRating).to receive(:by_ip).and_return valid_reviews
-
-        get :moderation, review_moderation_search_string: '12.2.3.3'
-        expect(assigns[:banned_ip]).to_not be_nil
-        expect(controller.instance_variable_get(:@banned_ip).ip).to eq('12.2.3.3')
-      end
-
     end
 
   end

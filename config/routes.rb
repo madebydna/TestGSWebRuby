@@ -324,9 +324,6 @@ LocalizedProfiles::Application.routes.draw do
     get  '/users/search'
 
     resources :held_school
-    resources :reported_entity do
-      put 'deactivate', on: :member
-    end
 
     resources :data_load_schedules, path: '/data-planning'
 
