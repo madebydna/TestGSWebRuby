@@ -70,18 +70,18 @@ const Account = ({
           <span>My Profile</span>
           <span className="icon i-32-open-arrow-head" />
         </div>
-      </div>
-      <div className="body">
-        Tell us a little more about yourself so we can send you updates about
-        your community. This information will not be displayed publicly on the
-        site.
-        <div className="grade-level-checkboxes">
-          <br />
-          <div className="open-sans_sb">
-            What grade levels are you interested in?
+        <div className="body">
+          Tell us a little more about yourself so we can send you updates about
+          your community. This information will not be displayed publicly on the
+          site.
+          <div className="grade-level-checkboxes">
+            <br />
+            <div className="open-sans_sb">
+              What grade levels are you interested in?
+            </div>
+            <br />
+            <GradeLevelCheckboxes grades={studentGradeLevels} />
           </div>
-          <br />
-          <GradeLevelCheckboxes grades={studentGradeLevels} />
         </div>
       </div>
     </div>
@@ -95,19 +95,15 @@ const Account = ({
     <div>
       <OpenableCloseable>
         {(isOpen, { toggle }) => (
-          <React.Fragment>
-            <div className="drawer">
-              <div className="heading" onClick={toggle}>
-                <span>Email Subscriptions</span>
-                <span
-                  className={`icon i-32-${
-                    isOpen ? 'open' : 'close'
-                  }-arrow-head`}
-                />
-              </div>
+          <div className="drawer">
+            <div className="heading" onClick={toggle}>
+              <span>Email Subscriptions</span>
+              <span
+                className={`icon i-32-${isOpen ? 'open' : 'close'}-arrow-head`}
+              />
             </div>
             {isOpen && <EmailSettings subscriptions={subscriptions} />}
-          </React.Fragment>
+          </div>
         )}
       </OpenableCloseable>
     </div>

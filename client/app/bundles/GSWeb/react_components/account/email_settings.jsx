@@ -36,7 +36,7 @@ const EmailSettings = ({ subscriptions }) => {
   return (
     <div>
       {
-        <div className="limit-width-1200 mtl">
+        <div className="body mtl">
           {subscriptions.map(subscription => {
             const content = (
               <div className="pbl" key={subscription.id}>

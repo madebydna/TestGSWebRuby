@@ -25,6 +25,7 @@ class Api::SubscriptionsController < ApplicationController
 
     if subscription && @current_user.subscriptions.any? {|s| s.id == subscription.id}
       success = !!subscription.destroy
+      success &&= SubscriptionHistory.from_subscription(subscription).save
 
       if success
         render status: :ok, json: { errors: [] }
