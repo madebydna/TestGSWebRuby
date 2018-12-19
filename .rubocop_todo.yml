@@ -511,7 +511,6 @@ Layout/BlockEndNewline:
     - 'app/models/table_data.rb'
     - 'lib/district_cache/district_display_range.rb'
     - 'lib/school_cache/display_range.rb'
-    - 'spec/decorators/school_compare_decorator_spec.rb'
     - 'spec/helpers/section_helper_spec.rb'
     - 'spec/libs/data_loading/data_files/data_load_mapping_spec.rb'
     - 'spec/libs/school_cache/progress_bar_caching/progress_bar_cacher_spec.rb'
@@ -520,7 +519,6 @@ Layout/BlockEndNewline:
     - 'spec/services/search_suggest_city_spec.rb'
     - 'spec/services/search_suggest_district_spec.rb'
     - 'spec/services/search_suggest_school_spec.rb'
-    - 'spec/views/compare_schools/school_description_modules/_line_data.html.erb_spec.rb'
 
 # Offense count: 309
 # Cop supports --auto-correct.
@@ -650,7 +648,6 @@ Style/EachWithObject:
 # SupportedStyles: empty, nil, both
 Style/EmptyElse:
   Exclude:
-    - 'app/controllers/modules/compare_schools_concerns.rb'
     - 'app/controllers/modules/hubs/hub_concerns.rb'
     - 'app/controllers/modules/school_params_concerns.rb'
     - 'app/controllers/modules/search_meta_tags_concerns.rb'
