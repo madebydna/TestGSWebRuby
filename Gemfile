@@ -111,10 +111,6 @@ gem 'rubyntlm', '~> 0.4.0'
 gem 'prawn'
 gem 'prawn-table', '~> 0.1.2'
 
-# A simple HTTP and REST client for Ruby
-# USED: In PhotoUploadConcerns (OSP)
-gem 'rest-client', '2.0.2'
-
 # Retrieve the binding of a method's caller.
 # USED: By GsLogger. See AT-873
 gem 'binding_of_caller', '~> 0.7.2'
