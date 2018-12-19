@@ -434,7 +434,6 @@ Style/Alias:
 Layout/AlignArray:
   Exclude:
     - 'app/services/school_data_validator.rb'
-    - 'lib/school_cache/progress_bar_caching/progress_bar_cacher.rb'
     - 'spec/models/collection_config_spec.rb'
     - 'spec/models/data_readers/details_overview_data_reader_spec.rb'
     - 'spec/models/data_readers/esp_data_reader_spec.rb'
@@ -511,7 +510,6 @@ Layout/BlockEndNewline:
     - 'lib/school_cache/display_range.rb'
     - 'spec/helpers/section_helper_spec.rb'
     - 'spec/libs/data_loading/data_files/data_load_mapping_spec.rb'
-    - 'spec/libs/school_cache/progress_bar_caching/progress_bar_cacher_spec.rb'
     - 'spec/models/external_content/construct_from_hash_spec.rb'
     - 'spec/models/table_data_spec.rb'
     - 'spec/services/search_suggest_city_spec.rb'

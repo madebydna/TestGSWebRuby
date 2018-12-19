@@ -65,9 +65,8 @@ describe Cacher do
 
   describe '#cachers_for_data_type' do
     {
-      esp_response: [EspResponsesCaching::EspResponsesCacher, ProgressBarCaching::ProgressBarCacher],
-      school_reviews: [ReviewsCaching::ReviewsSnapshotCacher, ProgressBarCaching::ProgressBarCacher],
-      school_media: [ProgressBarCaching::ProgressBarCacher],
+      esp_response: [EspResponsesCaching::EspResponsesCacher],
+      school_reviews: [ReviewsCaching::ReviewsSnapshotCacher],
       census: [CharacteristicsCaching::CharacteristicsCacher],
       test_scores: [TestScoresCaching::TestScoresCacherGsdata, TestScoresCaching::Feed::FeedTestScoresCacherGsdata, TestScoresCaching::Feed::FeedOldTestScoresCacherGsdata],
       gsdata: [GsdataCaching::GsdataCacher],
@@ -85,9 +84,6 @@ describe Cacher do
       esp_cacher = Object.new
       expect(EspResponsesCaching::EspResponsesCacher).to receive(:new).and_return esp_cacher
       expect(esp_cacher).to receive(:cache)
-      progress_cacher = Object.new
-      expect(ProgressBarCaching::ProgressBarCacher).to receive(:new).and_return progress_cacher
-      expect(progress_cacher).to receive(:cache)
       expect(ReviewsCaching::ReviewsSnapshotCacher).to_not receive(:new)
       expect(CharacteristicsCaching::CharacteristicsCacher).to_not receive(:new)
       Cacher.create_caches_for_data_type(school, :esp_response)
@@ -96,9 +92,6 @@ describe Cacher do
       esp_cacher = Object.new
       expect(EspResponsesCaching::EspResponsesCacher).to receive(:new).and_raise "Error caching esp_response"
       expect(esp_cacher).to_not receive(:cache)
-      progress_cacher = Object.new
-      expect(ProgressBarCaching::ProgressBarCacher).to receive(:new).and_return progress_cacher
-      expect(progress_cacher).to receive(:cache)
       Cacher.create_caches_for_data_type(school, :esp_response)
     end
   end
