@@ -457,6 +457,7 @@ body {
   @include media-breakpoint-down(sm){
     overflow-x: auto;
   }
+  z-index: 0;
   width: 100%;
   background-color: white;
   position: relative;
