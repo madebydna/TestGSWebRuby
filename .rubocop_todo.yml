@@ -462,7 +462,6 @@ Layout/AlignParameters:
 Style/AndOr:
   Exclude:
     - 'app/controllers/admin/data_load_schedules_controller.rb'
-    - 'app/controllers/guided_search_controller.rb'
     - 'app/controllers/modules/session_concerns.rb'
     - 'app/controllers/modules/user_validation_concerns.rb'
     - 'app/controllers/osp_controller.rb'
@@ -768,7 +767,6 @@ Style/IdenticalConditionalBranches:
 # Offense count: 7
 Style/IfInsideElse:
   Exclude:
-    - 'app/controllers/guided_search_controller.rb'
     - 'app/controllers/modules/review_controller_concerns.rb'
     - 'app/controllers/modules/url_helper.rb'
     - 'app/decorators/modules/write_pdf_concerns.rb'
@@ -1377,7 +1375,6 @@ Style/WordArray:
 # Cop supports --auto-correct.
 Style/ZeroLengthPredicate:
   Exclude:
-    - 'app/controllers/search_ajax_controller.rb'
     - 'app/services/school_search_service.rb'
     - 'script/commit_hooks/hooks/designer_access.rb'
     - 'script/http_archive_analyzer.rb'
