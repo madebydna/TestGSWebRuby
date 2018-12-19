@@ -105,12 +105,6 @@ gem 'savon', '~> 2.6.0'
 # Required by savon gem
 gem 'rubyntlm', '~> 0.4.0'
 
-# Prawn is a fast, tiny, and nimble PDF generator for Ruby
-# USED: By PYOC (see pyoc_controller and pyoc_pdf)
-# TODO: Kill PYOC and remove gems
-gem 'prawn'
-gem 'prawn-table', '~> 0.1.2'
-
 # Retrieve the binding of a method's caller.
 # USED: By GsLogger. See AT-873
 gem 'binding_of_caller', '~> 0.7.2'

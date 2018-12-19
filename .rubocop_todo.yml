@@ -467,7 +467,6 @@ Style/AndOr:
     - 'app/controllers/osp_controller.rb'
     - 'app/controllers/search_controller.rb'
     - 'app/controllers/signin_controller.rb'
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/models/city_search_result.rb'
     - 'app/models/search/filter_builder.rb'
     - 'lib/data_loading/data_files/data_file_mapping.rb'
@@ -769,7 +768,6 @@ Style/IfInsideElse:
   Exclude:
     - 'app/controllers/modules/review_controller_concerns.rb'
     - 'app/controllers/modules/url_helper.rb'
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/helpers/configured_table_helper.rb'
     - 'app/models/table_data.rb'
 
@@ -860,7 +858,6 @@ Style/LineEndConcatenation:
 # Cop supports --auto-correct.
 Style/MethodCallWithoutArgsParentheses:
   Exclude:
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/models/district_cache.rb'
     - 'app/models/schools/school.rb'
     - 'app/models/schools/school_cache.rb'
@@ -892,7 +889,6 @@ Naming/MethodName:
 # SupportedStyles: symmetrical, new_line, same_line
 Layout/MultilineArrayBraceLayout:
   Exclude:
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/services/school_data_validator.rb'
     - 'lib/status_page.rb'
     - 'spec/models/data_readers/details_overview_data_reader_spec.rb'
@@ -977,7 +973,6 @@ Style/Next:
 # Configuration parameters: IncludeSemanticChanges.
 Style/NonNilCheck:
   Exclude:
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'config/initializers/extensions/db_charmer.rb'
     - 'features/step_definitions/web_steps.rb'
     - 'features/support/env.rb'
@@ -1216,7 +1211,6 @@ Layout/SpaceBeforeComma:
 # Configuration parameters: AllowForAlignment.
 Layout/SpaceBeforeFirstArg:
   Exclude:
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'config/routes.rb'
     - 'spec/controllers/modules/flash_message_concerns_spec.rb'
     - 'spec/controllers/modules/url_helper_spec.rb'
@@ -1249,7 +1243,6 @@ Layout/SpaceInsideParens:
 # SupportedStyles: space, no_space
 Layout/SpaceInsideStringInterpolation:
   Exclude:
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/decorators/review_topic_decorator.rb'
     - 'app/models/review.rb'
     - 'app/models/schools/school_rating.rb'

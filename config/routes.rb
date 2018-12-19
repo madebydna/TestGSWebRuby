@@ -17,12 +17,6 @@ LocalizedProfiles::Application.routes.draw do
   get '/reviews/', as: :review_choose_school, to: 'review_school_chooser#show'
   get '/morgan-stanley/', as: :morgan_stanley, to: 'review_school_chooser#morgan_stanley'
 
-
-
-  
-
-  #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
-
     # This city regex allows for all characters except /
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
   city_regex = /[^\/]+/
@@ -285,9 +279,6 @@ LocalizedProfiles::Application.routes.draw do
 
     get '/style-guide/', to: 'style_guide#index'
     get '/style-guide/:category/:page', to: 'style_guide#render_page'
-    get '/pyoc', to: 'pyoc#print_pdf'
-    get '/choose-pyoc', to: 'pyoc#choose'
-
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
     get '/first-active-school-url-per-state', to: 'first_active_school_url_per_state#show'
