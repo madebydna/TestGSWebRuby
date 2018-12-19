@@ -37,7 +37,7 @@ shared_context 'with three inactive reviews' do
     end
   end
   after do
-    clean_dbs :surveys, :gs_schooldb, :community
+    clean_dbs :gs_schooldb, :community
     clean_models :ca, School
   end
 end
@@ -62,7 +62,7 @@ describe 'Review moderation page' do
     let!(:school) { FactoryGirl.create(:alameda_high_school) }
     let!(:reviews) { FactoryGirl.create_list(:review, 3, :flagged, school: school, user: user) }
     after do
-      clean_dbs :surveys, :gs_schooldb, :community
+      clean_dbs :gs_schooldb, :community
       clean_models :ca, School
     end
 

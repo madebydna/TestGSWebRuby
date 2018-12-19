@@ -1,4 +1,17 @@
+<% content_for :head do %>
+    <link rel="dns-prefetch" href="//maps.googleapis.com">
+<% end %>
 
-<%= render partial: 'nav' %>
+<% content_for :page_javascripts do %>
+    <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+    <%= webpack_javascript_include_tag 'account', defer: true %>
+<% end %>
 
-<%= render 'personalized_profile'%>
+<% content_for :page_stylesheets do %>
+    <%= stylesheet_link_tag "post_load", async: true %>
+    <%= stylesheet_link_tag "account", async: true %>
+<% end %>
+
+<div id="account-page">
+  <%= react_component('AccountContext') %>
+</div>

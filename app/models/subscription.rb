@@ -28,6 +28,18 @@ class Subscription < ActiveRecord::Base
                                                 'Receive tips and updates about new features that help you make the best use of your GreatSchools school profile.', nil, false)
   }
 
+  def name
+    Subscription.subscription_product(list).name
+  end
+
+  def long_name
+    Subscription.subscription_product(list).long_name
+  end
+
+  def description
+    Subscription.subscription_product(list).description
+  end
+
   def self.subscription_product(list)
     SUBSCRIPTIONS[list.to_sym]
   end

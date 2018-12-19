@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CitiesController do
-  after(:each) { clean_dbs :gs_schooldb, :surveys }
+  after(:each) { clean_dbs :gs_schooldb }
 
   let(:url_state) { 'california' }
   let(:state) { 'CA' }

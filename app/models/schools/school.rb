@@ -69,7 +69,11 @@ class School < ActiveRecord::Base
 
     schools = 
       state_to_id_map.flat_map do |(state, ids)|
-        yield(find_by_state_and_ids(state, ids)).to_a
+        if block_given?
+          yield(find_by_state_and_ids(state, ids)).to_a
+        else
+          find_by_state_and_ids(state, ids).to_a
+        end
       end
 
     schools.each do |school|
@@ -218,10 +222,6 @@ class School < ActiveRecord::Base
 
   def great_schools_rating
     school_metadata[:overallRating].presence
-  end
-
-  def school_ratings
-    SchoolRating.where(state: state, school_id: id)
   end
 
   def state_name
@@ -384,6 +384,13 @@ class School < ActiveRecord::Base
           state: state,
           school_id: id
       ).present?
+  end
+
+  def self.preload_schools_onto_associates(associates)
+    schools = School.load_all_from_associates(associates).map { |s| [[s.state, s.id], s] }.to_h
+    associates.each do |associate|
+      associate.school = schools[[associate.state, associate.school_id]]
+    end
   end
 
   # def notes
