@@ -301,7 +301,6 @@ Rails/ActionFilter:
   Exclude:
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/community_controller.rb'
-    - 'app/controllers/community_spotlights_controller.rb'
     - 'app/controllers/signin_controller.rb'
     - 'app/controllers/wordpress_interface_controller.rb'
 
@@ -1318,7 +1317,6 @@ Layout/TrailingBlankLines:
 # SupportedStyles: comma, consistent_comma, no_comma
 Style/TrailingCommaInArguments:
   Exclude:
-    - 'app/controllers/community_spotlights_controller.rb'
     - 'app/controllers/osp_controller.rb'
     - 'spec/factories/user.rb'
     - 'spec/models/modules/cached_category_data_concerns_spec.rb'

@@ -115,7 +115,6 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
   get '/gsr/ajax/search/calculate_fit', as: :search_calculate_fit, to: 'search_ajax#calculate_school_fit'
   get '/gsr/user/account_subscriptions', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
-  get '/gsr/ajax/community-scorecard/get-school-data', to: 'community_scorecards_ajax#get_school_data'
   get '/gsr/footer', to: 'footer#show'
   get '/gsr/header', to: 'header#show'
 
@@ -402,16 +401,6 @@ LocalizedProfiles::Application.routes.draw do
   get '/admin/gsr/osp-search', to: 'osp_moderation#osp_search', as: :osp_search
   get '/admin/gsr/osp/:id', to: 'osp_moderation#edit', as: :osp_edit
   post '/admin/gsr/osp/:id', to: 'osp_moderation#update_osp_list_member', as: :osp_update_list_member
-
-  scope '/community/:collection_id-:collection_name',
-    as: :community,
-    constraints: {
-      collection_id: /\d+/,
-      collection_name: /.+/,
-    } do
-      get 'spotlight', to: 'community_spotlights#show', as: :spotlight
-      get '', to: 'community#home', as: :home
-    end
 
   get '/join', :to => 'signin#new_join', :as => :join
   get '/gsr/login', :to => 'signin#new', :as => :signin

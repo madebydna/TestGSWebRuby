@@ -1,7 +1,6 @@
 //= require ./admin
 //= require ./all_pages_init
 //= require ./city_hub_init
-//= require ./community_spotlights_init
 //= require ./compare_schools_init
 //= require ./details_init
 //= require ./district_home_init

@@ -12,7 +12,6 @@
 //= require google_maps
 //= require localized_profiles
 //= require guided_search
-//= require community_scorecards
 //= require dropzone.min
 //= require modals
 //= require page_initializers
