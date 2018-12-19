@@ -3,7 +3,6 @@
 //= require auth
 //= require autocomplete
 //= require jquery_ujs
-//= require wiselinks
 //= require resources
 //= require resources/remodal
 // require ./localized_profiles/search_results
