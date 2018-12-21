@@ -2,7 +2,7 @@
 
 import { getStore } from '../store/appStore';
 
-import 'jquery.cookie';
+import 'js-cookie';
 import '../vendor/tipso';
 import '../vendor/fastclick';
 import '../vendor/remodal';

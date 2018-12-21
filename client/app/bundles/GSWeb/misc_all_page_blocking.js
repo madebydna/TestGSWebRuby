@@ -1,6 +1,6 @@
 // import $ from 'jquery';
 import * as jquerycookie from 'jquery.cookie';
-import { get as getCookie } from 'js-cookie';
+import { get as getCookie, remove as removeCookie } from 'js-cookie';
 import { updateNavbarHeart } from 'util/session';
 // do not import any addition dependencies for this blocking JS
 
@@ -22,7 +22,7 @@ dataLayer.push(gon.data_layer_hash);
 
 (function() {
   let gaCookie = {};
-  const cval = $.cookie('GATracking');
+  const cval = getCookie('GATracking');
   if (cval && cval != '') {
     try {
       gaCookie = JSON.parse(cval);
@@ -46,8 +46,8 @@ dataLayer.push(gon.data_layer_hash);
     });
   }
 
-  $.removeCookie('GATracking', { domain: '.greatschools.org', path: '/' });
-  $.removeCookie('GATracking', { path: '/' });
+  removeCookie('GATracking', { domain: '.greatschools.org', path: '/' });
+  removeCookie('GATracking', { path: '/' });
   document.addEventListener('DOMContentLoaded', () => {updateNavbarHeart()}, false);
 })();
 

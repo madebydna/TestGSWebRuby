@@ -1,5 +1,6 @@
 import EmailJoinModal from './email_join_modal';
 import { create } from 'lodash';
+import { get as getCookie } from 'js-cookie';
 
 const SignupAndFollowSchoolModal = function($, options) {
   EmailJoinModal.call(this, $, options);
@@ -8,7 +9,7 @@ const SignupAndFollowSchoolModal = function($, options) {
   this.cssClass = options.cssClass || 'js-email-join-for-school-profile-modal';
   this.modalUrl = '/gsr/modals/signup_and_follow_school_modal';
   this.deferred.always(function(){
-        $.cookie('profileModal', 'true', {expires: 1, path: '/' });
+        getCookie('profileModal', 'true', {expires: 1, path: '/' });
     });
   this.eventTrackingConfig = {
     'default': {

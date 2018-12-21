@@ -17,12 +17,6 @@ LocalizedProfiles::Application.routes.draw do
   get '/reviews/', as: :review_choose_school, to: 'review_school_chooser#show'
   get '/morgan-stanley/', as: :morgan_stanley, to: 'review_school_chooser#morgan_stanley'
 
-
-
-  
-
-  #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
-
     # This city regex allows for all characters except /
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
   city_regex = /[^\/]+/
@@ -107,15 +101,11 @@ LocalizedProfiles::Application.routes.draw do
    get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
 
   post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
-  post  '/gsr/ajax/esp/add_image', to: 'osp#add_image' , as: :osp_add_image
-  delete  '/gsr/ajax/esp/delete_image', to: 'osp#delete_image' , as: :osp_delete_image
 
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
   get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
-  get '/gsr/ajax/search/calculate_fit', as: :search_calculate_fit, to: 'search_ajax#calculate_school_fit'
   get '/gsr/user/account_subscriptions', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
-  get '/gsr/ajax/community-scorecard/get-school-data', to: 'community_scorecards_ajax#get_school_data'
   get '/gsr/footer', to: 'footer#show'
   get '/gsr/header', to: 'header#show'
 
@@ -269,6 +259,7 @@ LocalizedProfiles::Application.routes.draw do
     resources :districts
     resource :widget_logs, only: [:create]
     resources :students
+    resources :subscriptions, only: [:create, :destroy]
     get '/autosuggest', to: 'autosuggest', action: 'show'
     post '/save_school', to: 'saved_schools#create'
     delete '/delete_school', to: 'saved_schools#destroy'
@@ -288,9 +279,6 @@ LocalizedProfiles::Application.routes.draw do
 
     get '/style-guide/', to: 'style_guide#index'
     get '/style-guide/:category/:page', to: 'style_guide#render_page'
-    get '/pyoc', to: 'pyoc#print_pdf'
-    get '/choose-pyoc', to: 'pyoc#choose'
-
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
     get '/first-active-school-url-per-state', to: 'first_active_school_url_per_state#show'
@@ -324,9 +312,6 @@ LocalizedProfiles::Application.routes.draw do
     get  '/users/search'
 
     resources :held_school
-    resources :reported_entity do
-      put 'deactivate', on: :member
-    end
 
     resources :data_load_schedules, path: '/data-planning'
 
@@ -405,16 +390,6 @@ LocalizedProfiles::Application.routes.draw do
   get '/admin/gsr/osp/:id', to: 'osp_moderation#edit', as: :osp_edit
   post '/admin/gsr/osp/:id', to: 'osp_moderation#update_osp_list_member', as: :osp_update_list_member
 
-  scope '/community/:collection_id-:collection_name',
-    as: :community,
-    constraints: {
-      collection_id: /\d+/,
-      collection_name: /.+/,
-    } do
-      get 'spotlight', to: 'community_spotlights#show', as: :spotlight
-      get '', to: 'community#home', as: :home
-    end
-
   get '/join', :to => 'signin#new_join', :as => :join
   get '/gsr/login', :to => 'signin#new', :as => :signin
 
@@ -424,7 +399,9 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'states#show'
     get 'browse', to: 'states#foobar', as: :browse
     get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
-    get 'guided-search', to: 'guided_search#show', as: :guided_search
+    get 'guided-search', to: redirect { |params, _|
+      "/#{params[:state]}/"
+    }
     get 'events', to: 'states#events', as: :events
 
 
@@ -481,7 +458,9 @@ LocalizedProfiles::Application.routes.draw do
     get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
     get 'enrollment', to: 'cities#enrollment', as: :enrollment
     get 'schools', to: 'error#page_not_found', as: :browse
-    get 'guided-search', to: 'guided_search#show', as: :guided_search
+    get 'guided-search', to: redirect { |params, _|
+      "/#{params[:state]}/#{params[:city]}/"
+    }, as: :guided_search
 
     scope '/enrollment', as: :enrollment do
       get '/:tab', to: 'cities#enrollment'

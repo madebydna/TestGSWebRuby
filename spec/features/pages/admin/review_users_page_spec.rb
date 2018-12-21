@@ -39,7 +39,7 @@ describe 'Review users page' do
       end
 
       after do
-        clean_dbs :gs_schooldb, :surveys, :community
+        clean_dbs :gs_schooldb, :community
       end
 
       it 'Should show a list of reviews' do

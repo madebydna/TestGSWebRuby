@@ -7,6 +7,7 @@ describe Api::SavedSchoolsController do
     end
     let(:user) { FactoryGirl.build(:user) }
     let(:school) { FactoryGirl.build(:school) }
+    let(:favorite_school) { FactoryGirl.build(:favorite_school, member_id: user.id) }
 
     context "with valid attributes" do
       it "saves the favorite school in the database" do
@@ -19,13 +20,21 @@ describe Api::SavedSchoolsController do
     end
     
     context "with invalid attributes" do
-      it "does not save the new favorite school in the database" do
+      it "when the specified school is not found" do
         Api::SavedSchoolsController.any_instance.stub(:current_user).and_return(user)
         allow(School).to receive_message_chain(:active,:find_by).and_return(nil)
         allow(FavoriteSchool).to receive_message_chain(:create_saved_school_instance).and_return(FavoriteSchool.new)
         post :create, school: {state: "ca", id: 15}
         expect(JSON.parse(response.body).dig("status")).to eq(400)
         expect(FavoriteSchool.count).to eq(0) 
+      end
+
+      it "when the parameters of the saved school instance is incorrect" do
+        Api::SavedSchoolsController.any_instance.stub(:current_user).and_return(user)
+        allow(School).to receive_message_chain(:active,:find_by).and_return(school)
+        allow(FavoriteSchool).to receive_message_chain(:create_saved_school_instance).and_return(favorite_school)
+        favorite_school.state = nil
+        expect{favorite_school.save}.to raise_error(ActiveRecord::StatementInvalid)
       end
     end
   end

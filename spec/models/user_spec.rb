@@ -60,11 +60,6 @@ describe User do
         subject.active_reviews_for_school(state: state, school_id: school_id)
       end
 
-      it 'should raise error for invalid arguments' do
-        expect(SchoolRating).to_not receive(:where)
-        expect{ subject.active_reviews_for_school(nil) }.to raise_error(ArgumentError)
-      end
-
       context 'with saved school and an active and inactive review' do
         let(:user) { FactoryGirl.create(:verified_user) }
         let(:school) { FactoryGirl.create(:alameda_high_school) }
