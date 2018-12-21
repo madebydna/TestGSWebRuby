@@ -1,6 +1,0 @@
----
-es:
-  search:
-    assigned_school_not_valid:
-      label: Escuela asignada
-      search_using_home_address_to_see_assigned_schools: Para ver qué escuela es su escuela asignada, buscar utilizando su domicilio

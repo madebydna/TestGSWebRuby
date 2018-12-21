@@ -3,16 +3,13 @@
 //= require auth
 //= require autocomplete
 //= require jquery_ujs
-//= require wiselinks
 //= require resources
 //= require resources/remodal
-//= require ./localized_profiles/search_results
+// require ./localized_profiles/search_results
 //= require util
 //= require search
 //= require google_maps
 //= require localized_profiles
-//= require guided_search
-//= require community_scorecards
 //= require dropzone.min
 //= require modals
 //= require page_initializers

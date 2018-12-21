@@ -1,14 +1,13 @@
-.border-right-light-grey{
+.border-right-light-grey {
   border-right: $border-light-grey;
 }
 
 .input-field-sm {
-  width: 300px
+  width: 300px;
 }
 
 .input-field-lg {
   resize: vertical;
-
 }
 
 label {
@@ -29,10 +28,6 @@ label {
   }
 }
 
-.btn-group.guided_search{
-  display: inline-block;
-}
-
 .btn-group.btn-group-inline {
   display: inline-block;
 }
@@ -45,13 +40,11 @@ label {
   width: 100%;
   height: 39px;
   resize: none;
-
 }
 
-@media only screen and (max-width : 480px) {
+@media only screen and (max-width: 480px) {
   .form-control.input-field-md {
     width: 100%;
     height: 60px;
   }
-
 }

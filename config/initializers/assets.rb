@@ -14,7 +14,6 @@ Rails.application.config.assets.precompile += [
     'home_page.css',
     'deprecated_application.css',
     'deprecated_application.js',
-    'deprecated_application_w_google_charts.js',
     'deprecated_post_load.js',
     'deprecated_post_load.css',
     'deprecated_print.css',

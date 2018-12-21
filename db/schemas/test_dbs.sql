@@ -1598,39 +1598,6 @@ CREATE TABLE `property` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `pyoc_user_school_mapping`
---
-
-DROP TABLE IF EXISTS `pyoc_user_school_mapping`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pyoc_user_school_mapping` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `school_id` int(11) NOT NULL,
-  `state` varchar(2) NOT NULL,
-  `pyoc_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `pyoc_id_fk` (`pyoc_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=293196 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `pyoc_users`
---
-
-DROP TABLE IF EXISTS `pyoc_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pyoc_users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `member_id` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `member_id_fk` (`member_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=53476 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `remove_school_submissions`
 --
 

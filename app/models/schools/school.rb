@@ -329,7 +329,7 @@ class School < ActiveRecord::Base
     level_code == 'h'
   end
 
-  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses progress_bar test_scores nearby_schools ratings)
+  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses test_scores nearby_schools ratings)
 
   def cache_results
 

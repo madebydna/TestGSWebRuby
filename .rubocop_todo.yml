@@ -301,7 +301,6 @@ Rails/ActionFilter:
   Exclude:
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/community_controller.rb'
-    - 'app/controllers/community_spotlights_controller.rb'
     - 'app/controllers/signin_controller.rb'
     - 'app/controllers/wordpress_interface_controller.rb'
 
@@ -435,7 +434,6 @@ Style/Alias:
 Layout/AlignArray:
   Exclude:
     - 'app/services/school_data_validator.rb'
-    - 'lib/school_cache/progress_bar_caching/progress_bar_cacher.rb'
     - 'spec/models/collection_config_spec.rb'
     - 'spec/models/data_readers/details_overview_data_reader_spec.rb'
     - 'spec/models/data_readers/esp_data_reader_spec.rb'
@@ -463,13 +461,11 @@ Layout/AlignParameters:
 Style/AndOr:
   Exclude:
     - 'app/controllers/admin/data_load_schedules_controller.rb'
-    - 'app/controllers/guided_search_controller.rb'
     - 'app/controllers/modules/session_concerns.rb'
     - 'app/controllers/modules/user_validation_concerns.rb'
     - 'app/controllers/osp_controller.rb'
     - 'app/controllers/search_controller.rb'
     - 'app/controllers/signin_controller.rb'
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/models/city_search_result.rb'
     - 'app/models/search/filter_builder.rb'
     - 'lib/data_loading/data_files/data_file_mapping.rb'
@@ -512,16 +508,13 @@ Layout/BlockEndNewline:
     - 'app/models/table_data.rb'
     - 'lib/district_cache/district_display_range.rb'
     - 'lib/school_cache/display_range.rb'
-    - 'spec/decorators/school_compare_decorator_spec.rb'
     - 'spec/helpers/section_helper_spec.rb'
     - 'spec/libs/data_loading/data_files/data_load_mapping_spec.rb'
-    - 'spec/libs/school_cache/progress_bar_caching/progress_bar_cacher_spec.rb'
     - 'spec/models/external_content/construct_from_hash_spec.rb'
     - 'spec/models/table_data_spec.rb'
     - 'spec/services/search_suggest_city_spec.rb'
     - 'spec/services/search_suggest_district_spec.rb'
     - 'spec/services/search_suggest_school_spec.rb'
-    - 'spec/views/compare_schools/school_description_modules/_line_data.html.erb_spec.rb'
 
 # Offense count: 309
 # Cop supports --auto-correct.
@@ -651,7 +644,6 @@ Style/EachWithObject:
 # SupportedStyles: empty, nil, both
 Style/EmptyElse:
   Exclude:
-    - 'app/controllers/modules/compare_schools_concerns.rb'
     - 'app/controllers/modules/hubs/hub_concerns.rb'
     - 'app/controllers/modules/school_params_concerns.rb'
     - 'app/controllers/modules/search_meta_tags_concerns.rb'
@@ -772,10 +764,8 @@ Style/IdenticalConditionalBranches:
 # Offense count: 7
 Style/IfInsideElse:
   Exclude:
-    - 'app/controllers/guided_search_controller.rb'
     - 'app/controllers/modules/review_controller_concerns.rb'
     - 'app/controllers/modules/url_helper.rb'
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/helpers/configured_table_helper.rb'
     - 'app/models/table_data.rb'
 
@@ -866,7 +856,6 @@ Style/LineEndConcatenation:
 # Cop supports --auto-correct.
 Style/MethodCallWithoutArgsParentheses:
   Exclude:
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/models/district_cache.rb'
     - 'app/models/schools/school.rb'
     - 'app/models/schools/school_cache.rb'
@@ -898,7 +887,6 @@ Naming/MethodName:
 # SupportedStyles: symmetrical, new_line, same_line
 Layout/MultilineArrayBraceLayout:
   Exclude:
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/services/school_data_validator.rb'
     - 'lib/status_page.rb'
     - 'spec/models/data_readers/details_overview_data_reader_spec.rb'
@@ -983,7 +971,6 @@ Style/Next:
 # Configuration parameters: IncludeSemanticChanges.
 Style/NonNilCheck:
   Exclude:
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'config/initializers/extensions/db_charmer.rb'
     - 'features/step_definitions/web_steps.rb'
     - 'features/support/env.rb'
@@ -1222,7 +1209,6 @@ Layout/SpaceBeforeComma:
 # Configuration parameters: AllowForAlignment.
 Layout/SpaceBeforeFirstArg:
   Exclude:
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'config/routes.rb'
     - 'spec/controllers/modules/flash_message_concerns_spec.rb'
     - 'spec/controllers/modules/url_helper_spec.rb'
@@ -1255,7 +1241,6 @@ Layout/SpaceInsideParens:
 # SupportedStyles: space, no_space
 Layout/SpaceInsideStringInterpolation:
   Exclude:
-    - 'app/decorators/modules/write_pdf_concerns.rb'
     - 'app/decorators/review_topic_decorator.rb'
     - 'app/models/review.rb'
     - 'app/models/schools/school_rating.rb'
@@ -1318,7 +1303,6 @@ Layout/TrailingBlankLines:
 # SupportedStyles: comma, consistent_comma, no_comma
 Style/TrailingCommaInArguments:
   Exclude:
-    - 'app/controllers/community_spotlights_controller.rb'
     - 'app/controllers/osp_controller.rb'
     - 'spec/factories/user.rb'
     - 'spec/models/modules/cached_category_data_concerns_spec.rb'
@@ -1382,7 +1366,6 @@ Style/WordArray:
 # Cop supports --auto-correct.
 Style/ZeroLengthPredicate:
   Exclude:
-    - 'app/controllers/search_ajax_controller.rb'
     - 'app/services/school_search_service.rb'
     - 'script/commit_hooks/hooks/designer_access.rb'
     - 'script/http_archive_analyzer.rb'
