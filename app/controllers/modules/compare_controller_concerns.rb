@@ -137,6 +137,7 @@ module CompareControllerConcerns
   end
 
   def default_compare_radius
+    #in miles
     5
   end
 
