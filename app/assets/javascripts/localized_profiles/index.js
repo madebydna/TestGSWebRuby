@@ -1,15 +1,11 @@
 //= require ./advertising_reviews
 //= require ./all
 //= require ./choosing_schools
-//= require ./city_hub
-//= require ./compare_schools
-//= require ./compare_schools_list
-//= require ./compare_schools_popup
-//= require ./data_viz
+GS.uri = GS.uri || {};
+GS.hubs = GS.hubs || {};
 //= require ./header_ui
 //= require ./reviews
 //= require ./school_static_map
-// require ./search_results
 //= require ./test_scores
 // require ./visualcharts
 //= require ./nearby_schools

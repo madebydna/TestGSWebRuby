@@ -76,8 +76,6 @@ class SchoolCacheResults
         CachedReviewsSnapshotMethods
       when 'esp_responses'
         CachedProgramsMethods
-      when 'progress_bar'
-        CachedProgressBarMethods
       when 'test_scores_gsdata'
         CachedTestScoresMethods
       when 'feed_test_scores'

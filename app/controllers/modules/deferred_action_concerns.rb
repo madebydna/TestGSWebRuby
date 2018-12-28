@@ -3,7 +3,6 @@ module DeferredActionConcerns
   include ReviewControllerConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns
-  include SavedSearchesConcerns
   protected
 
   ALLOWED_DEFERRED_ACTIONS = %w(

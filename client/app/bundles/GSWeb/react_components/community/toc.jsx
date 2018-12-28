@@ -6,8 +6,7 @@ import TocItem from './toc_item';
 
 class Toc extends React.Component {
   static defaultProps = {
-    suppressReviews: true,
-    suppressDistricts: true
+    tocItems: []
   };
 
   static propTypes = {

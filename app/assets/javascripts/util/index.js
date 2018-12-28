@@ -9,7 +9,6 @@
 //= require ./handlebars
 // require ./i18n
 //= require ./localStorage
-//= require ./photo_upload
 //= require ./popup
 //  require ./responsive_images
 //= require ./selectpicker

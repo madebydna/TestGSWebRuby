@@ -6,7 +6,7 @@ class SchoolCache < ActiveRecord::Base
   ETHNICITY = :Ethnicity
   ENROLLMENT = :Enrollment
 
-  KEYS = %i(characteristics esp_responses nearby_schools progress_bar ratings reviews_snapshot feed_test_scores directory feed_characteristics courses test_scores_gsdata)
+  KEYS = %i(characteristics esp_responses nearby_schools ratings reviews_snapshot feed_test_scores directory feed_characteristics courses test_scores_gsdata)
 
   def self.for_school(name, school_id, state)
     SchoolCache.where(name: name, school_id: school_id, state: state).first()

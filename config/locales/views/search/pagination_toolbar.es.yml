@@ -1,5 +1,0 @@
----
-es:
-  search:
-    pagination_toolbar:
-      pagination_info: Escuelas %{first} a %{last} de %{total}
