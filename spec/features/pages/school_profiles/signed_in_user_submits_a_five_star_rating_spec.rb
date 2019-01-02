@@ -21,7 +21,6 @@ describe "Signed in and verified user", js:true do
         stub_request(:get, "localhost:3001/gsr/api/school_user_digest?state=#{school.state}&school_id=#{school.id}")
           .to_return(status: 200, body: "", headers: {})
 
-        page_object.set_school_profile_tour_cookie
         visit school_path(school)
       end
 

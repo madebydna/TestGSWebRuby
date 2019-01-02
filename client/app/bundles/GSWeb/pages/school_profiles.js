@@ -86,25 +86,9 @@ $(function() {
     toggle.init().add_onclick();
   })();
 
-  const PROFILE_TOUR_COOKIE = 'decline_school_profile_tour'; // referenced in school_profiles_page.rb for specs
-
-  function hasDeclinedTour() {
-    let pattern = "^(.*;)?\\s*" + PROFILE_TOUR_COOKIE + "\\s*=true";
-    return new RegExp(pattern).test(document.cookie);
-  }
-
   // has to go above tooltips.initialize();
-  if (hasDeclinedTour() || new RegExp('texas').test(window.location.href)) {
-    $('.tour-teaser').addClass('gs-tipso');
-    $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
-  } else {
-    if($('.js-school-profile-tour-modal').length > 0) {
-      registerInterrupt('profileTour', function(nextInterrupt) {
-        // minimizeQualarooNudges();
-        $('.js-school-profile-tour-modal').removeClass('hidden');
-      });
-    }
-  }
+  $('.tour-teaser').addClass('gs-tipso');
+  $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
 
   registerInterrupt('interstitial', (nextInterrupt) => {
     if(shouldShowInterstitial()) {
@@ -255,7 +239,6 @@ $(function() {
   $('body').on('click', '#close-school-tour', function() {
     $('.school-profile-tour-modal').remove();
     $('.tour-teaser').tipso({content: '<div><div><h3><img src="' + owlPng + '"/> Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
-    setCookie(PROFILE_TOUR_COOKIE, true);
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   });
 
@@ -344,7 +327,6 @@ $(function() {
     scrollToElement('body');
     introJs.startFirstTutorial();
     // Don't show the tour modal if the user takes the tour
-    setCookie(PROFILE_TOUR_COOKIE, true);
     return false;
   }).show();
 
