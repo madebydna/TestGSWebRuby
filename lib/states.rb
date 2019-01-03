@@ -76,6 +76,11 @@ module States
     path.gsub(' ', '-') if path
   end
 
+  def self.capitalize_any_state_names(string)
+    regexp = Regexp.new('\b' << state_hash.keys.join('\b|\b') << '\b', 'i')
+    string.gsub(regexp, &:titleize)
+  end
+
   def self.state_name(str)
     return nil unless str.present?
     str = str.downcase

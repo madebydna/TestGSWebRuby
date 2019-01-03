@@ -42,7 +42,7 @@ module Search
         if lat && lon
           search.keywords(spatial_query)
         else
-          search.keywords(q)
+          search.keywords(States.capitalize_any_state_names(q))
         end
         search.with(:citykeyword, city.downcase) if city && !district_id
         search.with(:school_database_state, state.downcase) if state

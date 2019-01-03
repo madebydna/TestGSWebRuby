@@ -11,7 +11,11 @@ describe('<RecentReviews/>', ()=> {
 
   it('contains a ReviewsList component', () => {
     expect(wrapper.containsMatchingElement(<ReviewsList />));
-  })
+  });
+
+  it('should not display more than 3 recent reviews', () => {
+    expect(wrapper.find('.user-reviews-container').length).to.be.at.most(3);
+  });
 
   context('contains a button for end users to add a review', () => {
     const addAReview = wrapper.find('.add-review-container');
@@ -24,7 +28,7 @@ describe('<RecentReviews/>', ()=> {
     it('has the correct href when clicked',() => {
       expect(addAReview.find('a').at(0).props().href).to.equal('/reviews/');
     });
-  })
+  });
 
   context('RecentReviews component handles community prop correctly', () => {
     it('Handles community prop correctly', () => {
