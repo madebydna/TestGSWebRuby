@@ -34,31 +34,29 @@
     font-size: $people-height;
     line-height: $people-height;
     display: inline-block;
-    //height: $people-height;
-  }
-  .person-progress > .background {
-    color: $background-gray;
-    top: 0;
-    left: 0;
-    //position: absolute;
-    //display: inline-block;
-    height:30px;
-    overflow: hidden;
-  }
-  .person-progress span {
-    display: inline-block;
-  }
-  .person-progress > .foreground {
-   position: absolute;
-   top: 0;
-   left: 0;
-   overflow: hidden;
-    height:30px;
 
+    > .background {
+      color: $background-gray;
+      top: 0;
+      left: 0;
+      height: 30px;
+      overflow: hidden;
+    }
+    span {
+      display: inline-block;
+    }
+    > .foreground {
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      height: 30px;
+
+    }
   }
   > .state-average{
+    padding: 10px 0 0;
     font-family: 'opensans-regular';
     line-height: 18px;
-    padding-top: 10px;
   }
 }
