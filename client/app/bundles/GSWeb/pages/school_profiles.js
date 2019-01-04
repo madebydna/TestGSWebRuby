@@ -118,6 +118,7 @@ $(function() {
   enableAutoAnchoring({
     'Test_scores': '#TestScores .profile-module',
     'College_readiness': '#CollegeReadiness .profile-module',
+    'College_success': '#CollegeSuccess .profile-module',
     'Advanced_courses': '#AdvancedCourses .profile-module',
     'Low-income_students': '#EquityLowIncome .profile-module',
     'Race_ethnicity': '#EquityRaceEthnicity .profile-module',
