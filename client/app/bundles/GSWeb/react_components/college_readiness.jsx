@@ -169,7 +169,6 @@ export default class CollegeReadiness extends DataModule {
           no_data_cta={!this.hasData() && this.noDataCta()}
           footer={this.hasData() && this.defaultFooter()}
           body={this.hasData() && this.activePane()}
-          tabs={(this.hasData() && this.props.showTabs) ? this.tabsContainer() : undefined}
           csa_badge={this.csaBadge()}
           csaCallout={this.csaCallout()}
         />

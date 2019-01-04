@@ -1,0 +1,20 @@
+<% college_success %>
+
+<div class="profile-section-slot">
+  <%= react_component('CollegeReadiness', props: {
+      title: t('.title'),
+      anchor: 'College_success',
+      analytics_id: 'CollegeSuccess',
+      subtitle:  t('.subtitle_html'),
+      icon_classes: 'icon-graduation',
+      info_text: nil,
+      sources: college_success.sources,
+      feedback: college_success.feedback_data,
+      share_content: college_success.share_content,
+      data: college_success.props,
+      showTabs: false,
+      faq: college_success.faq,
+      no_data_summary: nil,
+      qualaroo_module_link: college_success.qualaroo_module_link})  %>
+</div>
+

@@ -195,7 +195,7 @@ module SchoolProfiles
 
     def components
       @_components ||= (
-      tabs.map {|tab| SchoolProfiles::CollegeReadinessComponent.new(tab, @school_cache_data_reader) }
+      tabs.map {|tab| SchoolProfiles::CollegeReadinessComponent.new('college_readiness', @school_cache_data_reader) }
       )
     end
 

@@ -79,6 +79,7 @@ class SchoolProfilesController < ApplicationController
         sp.summary_narration = summary_narration
         sp.test_scores = test_scores
         sp.college_readiness = college_readiness
+        sp.college_success = college_success
         sp.student_progress = student_progress
         sp.reviews = reviews
         sp.review_questions = review_questions
@@ -182,6 +183,12 @@ class SchoolProfilesController < ApplicationController
 
   def college_readiness
     @_college_readiness ||= SchoolProfiles::CollegeReadiness.new(
+      school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
+  def college_success
+    @_college_success ||= SchoolProfiles::CollegeSuccess.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
