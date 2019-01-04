@@ -185,9 +185,8 @@ module SearchRequestParams
     location_label_param.gsub(', USA', '')
   end
 
-
   def school_id
-    params[:id]&.to_i
+    params[:id]&.to_i || params[:schoolId]&.to_i
   end
 
   def district_browse?
