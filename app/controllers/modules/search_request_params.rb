@@ -72,8 +72,12 @@ module SearchRequestParams
     params[:lon]&.to_f
   end
 
+  def default_radius
+    5
+  end
+
   def radius
-    radius_param || 5
+    radius_param || default_radius
   end
 
   def radius_param

@@ -242,7 +242,9 @@ module SearchControllerConcerns
     # This keeps the pinned school on top
     pinned_school = schools.find {|school| school.pinned}
     non_pinned_schools = schools - [pinned_school]
-    non_pinned_schools.sort_by {|school| school.test_score_rating_for_ethnicity}.reverse.unshift(pinned_school)
+    non_pinned_schools = non_pinned_schools.sort_by {|school| [school.test_score_rating_for_ethnicity, -1 * school.distance] }.reverse
+    non_pinned_schools.unshift(pinned_school) if pinned_school
+    non_pinned_schools
   end
 
   def filter_by_ethnicity_test_score_rating(schools)

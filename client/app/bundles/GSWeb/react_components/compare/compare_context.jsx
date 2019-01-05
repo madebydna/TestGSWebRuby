@@ -26,16 +26,20 @@ import { t } from 'util/i18n';
 import { showMessageTooltip } from '../../util/message_tooltip';
 const gonCompare = (window.gon || {}).compare || {};
 const { Provider, Consumer } = React.createContext();
+import DistanceFilter from 'react_components/search/distance_filter';
+import DistanceContext from 'react_components/search/distance_context';
 
 class CompareProvider extends React.Component {
   static propTypes = {
     findSchools: PropTypes.func,
     state: PropTypes.string,
+    id: PropTypes.number,
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
     lat: PropTypes.string,
     lon: PropTypes.string,
+    distance: PropTypes.number,
     locationLabel: PropTypes.string,
     sort: PropTypes.string,
     breakdownParam: PropTypes.string,
@@ -224,7 +228,7 @@ class CompareProvider extends React.Component {
       sort: props.sort,
       page: props.page,
       limit: 100,
-      radius: 5,
+      distance: props.distance,
       extras: ["summary_rating", "enrollment", "review_summary", "saved_schools", "pinned_school", "ethnicity_test_score_rating", "distance"],
       locationLabel: props.locationLabel,
       with_rating: true
@@ -305,30 +309,43 @@ class CompareProvider extends React.Component {
           sort: this.props.sort
         }}
       >
-        <SortContext.Provider
+        <DistanceContext.Provider
+            // compose makes a new function that will call curried trackParams,
+            // followed by this.props.updateDistance (right to left)
           value={{
-            sort: this.props.sort,
-            onSortChanged: compose(
+            distance: this.props.distance,
+            onChange: compose(
               this.scrollToTop,
-              this.props.updateSort,
-              curry(this.trackParams)('Sort', this.props.sort)
-            ),
-            breakdown: this.state.breakdown,
-            onBreakdownChanged: compose(
-              this.scrollToTop,
-              this.props.updateBreakdown,
-              curry(this.trackParams)('Breakdown', this.state.breakdown)
+              this.props.updateDistance,
+              curry(this.trackParams)('Distance', this.props.distance)
             )
           }}
         >
-          <SavedSchoolContext.Provider
+          <SortContext.Provider
             value={{
-              saveSchoolCallback: this.handleSaveSchoolClick,
+              sort: this.props.sort,
+              onSortChanged: compose(
+                this.scrollToTop,
+                this.props.updateSort,
+                curry(this.trackParams)('Sort', this.props.sort)
+              ),
+              breakdown: this.state.breakdown,
+              onBreakdownChanged: compose(
+                this.scrollToTop,
+                this.props.updateBreakdown,
+                curry(this.trackParams)('Breakdown', this.state.breakdown)
+              )
             }}
           >
-            {this.props.children}
-          </SavedSchoolContext.Provider>
-        </SortContext.Provider>
+            <SavedSchoolContext.Provider
+              value={{
+                saveSchoolCallback: this.handleSaveSchoolClick,
+              }}
+            >
+              {this.props.children}
+            </SavedSchoolContext.Provider>
+          </SortContext.Provider>
+        </DistanceContext.Provider>
       </Provider>
     );
   }

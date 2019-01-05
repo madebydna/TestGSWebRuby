@@ -16,10 +16,38 @@ class CompareSchoolsController < ApplicationController
       sort: sort_name,
       tableHeaders: table_headers
     }
+    @radius = radius
     set_compare_meta_tags
   end
 
   private
+
+  # SearchControllerConcerns
+  def solr_query
+    if params[:solr7]
+      query_type = Search::SolrSchoolQuery
+    else
+      query_type = Search::LegacySolrSchoolQuery
+    end
+    query_type.new(
+      city: city,
+      state: state,
+      school_keys: filtered_school_keys,
+      district_id: district_record&.id,
+      district_name: district_record&.name,
+      location_label: location_label_param,
+      level_codes: level_codes,
+      entity_types: entity_types,
+      lat: lat,
+      lon: lon,
+      radius: radius,
+      q: q,
+      offset: offset,
+      limit: limit,
+      sort_name: 'distance',
+      with_rating: with_rating
+    )
+  end
 
   # PageAnalytics
   def page_analytics_data
@@ -45,22 +73,19 @@ class CompareSchoolsController < ApplicationController
   
   # solr params that overwrites
   def limit
-    default_compare_limit
-  end
-
-  def radius
-    default_compare_radius
+    default_limit
   end
 
   def with_rating
     true
   end
 
-  def default_compare_limit
+  def default_limit
     100
   end
 
-  def default_compare_radius
+  # SearchRequestParams
+  def default_radius
     5
   end
 

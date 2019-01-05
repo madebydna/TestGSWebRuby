@@ -20,6 +20,8 @@ import { find as findSchools } from 'api_clients/schools';
 import { t } from 'util/i18n';
 import { analyticsEvent } from 'util/page_analytics';
 import remove from 'util/array';
+import DistanceFilter from 'react_components/search/distance_filter';
+import DistanceContext from 'react_components/search/distance_context';
 
 class Compare extends React.Component {
   static defaultProps = {
@@ -100,6 +102,8 @@ class Compare extends React.Component {
       return <NoResults />
     }else{
       return (
+        <DistanceContext.Consumer>
+        {({ distance, onChange }) => (
         <CompareLayout
           searchBox={<SearchBox size={this.props.size} />}
           pinnedSchool={pinnedSchool}
@@ -118,6 +122,7 @@ class Compare extends React.Component {
             breakdowns={pinnedSchool.ethnicityBreakdowns}
           />
           }
+          distanceFilter={ <DistanceFilter distance={distance} onChange={onChange} /> }
           schoolTable={
             <CompareSchoolTable
               schools={this.props.schools}
@@ -128,6 +133,7 @@ class Compare extends React.Component {
           noCompareResults={this.noCompareResults()}
         >
         </CompareLayout>
+        )}</DistanceContext.Consumer>
       );
     }
 
