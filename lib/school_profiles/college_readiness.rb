@@ -172,7 +172,7 @@ module SchoolProfiles
     end
 
     def tabs
-      @_tabs ||= TABS.keys
+      ['college_readiness']
     end
 
     def get_props(component)
@@ -195,7 +195,7 @@ module SchoolProfiles
 
     def components
       @_components ||= (
-      tabs.map {|tab| SchoolProfiles::CollegeReadinessComponent.new('college_readiness', @school_cache_data_reader) }
+      tabs.map {|tab| SchoolProfiles::CollegeReadinessComponent.new(tab, @school_cache_data_reader) }
       )
     end
 
@@ -205,10 +205,6 @@ module SchoolProfiles
 
     def props
       @_props ||= components.map {|component| get_props(component)}.reject(&:empty?)
-    end
-
-    def school_csa_badge?
-      school_cache_data_reader.csa_badge?
     end
 
     private

@@ -100,6 +100,10 @@ module SchoolProfiles
       I18n.t(key.to_sym, scope: 'lib.college_readiness.data_point_info_texts')
     end
 
+    def school_csa_badge?
+      school_cache_data_reader.csa_badge?
+    end
+
     def visible?
       props.present?
     end

@@ -171,7 +171,11 @@ class SchoolProfilesController < ApplicationController
   end
 
   def toc
-    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, equity_overview, students, teachers_staff, courses, stem_courses, academic_progress, school)
+    SchoolProfiles::Toc.new(test_scores: test_scores, college_readiness: college_readiness,
+                            college_success: college_success, student_progress: student_progress, equity: equity,
+                            equity_overview: equity_overview, students: students,
+                            teachers_staff: teachers_staff, courses: courses, stem_courses: stem_courses,
+                            academic_progress: academic_progress, school: school)
   end
 
   def test_scores
