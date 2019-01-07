@@ -3,7 +3,7 @@ en:
   javascript:
     compare_test_scores_for: Compare test scores for
     from: from
-    to_nearby_schools: to nearby schools
+    to_nearby_schools: to nearby schools within
     Academics: Academics
     Saved!: Saved!
     Saved: Saved
@@ -36,6 +36,7 @@ en:
       - Try different search filters (e.g. school types or levels).
     no_compare_school_title: No results found
     no_compare_school_results: We couldn’t find nearby schools with test scores from {breakdown} students.
+    try_increasing_distance: Try increasing the distance for nearby schools.
     Close filters: Close filters
     school: school
     schools: schools
