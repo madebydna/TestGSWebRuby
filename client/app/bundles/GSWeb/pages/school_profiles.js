@@ -369,6 +369,7 @@ $(window).on('load', function() {
   var moduleIds = [
     '#TestScores',
     '#CollegeReadiness',
+    '#CollegeSuccess',
     '#StudentProgress',
     '#AdvancedCourses',
     '#EquityOverview',
