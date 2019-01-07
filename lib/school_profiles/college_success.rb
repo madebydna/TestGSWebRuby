@@ -39,8 +39,6 @@ module SchoolProfiles
       end
     end
 
-    # TODO DRY THIS UP
-
     def sources
       content = '<div class="sourcing">'
       content += '<h1>' + data_label('title') + '</h1>'
