@@ -9,12 +9,12 @@ import { findSchools, addSchool, deleteSchool } from '../api_clients/schools';
 
 // Subscribe a user to the GreatNews newsletter.
 // Triggers a join modal if not signed in.
-export const signupAndGetNewsletter = function() {
+export const signupAndGetNewsletter = function(modalOptions) {
   if (isSignedIn()) {
     greatNewsSignUp();
   } else {
     modalManager
-      .showModal('EmailJoinModal')
+      .showModal('EmailJoinModal', modalOptions)
       .done(greatNewsSignUp);
   }
 };
