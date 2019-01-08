@@ -28,7 +28,7 @@ module SchoolProfiles
       arr = []
       if @school.level_code =~ /h/
         arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
-        arr << {column: 'Academics', label: 'college_success', present: true, anchor: 'College_success', badge: @college_success.school_csa_badge?}
+        arr << {column: 'Academics', label: 'college_success', present: true, anchor: 'College_success', badge: @college_success.school_csa_badge?} if @college_success.visible?
       end
 
       arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}

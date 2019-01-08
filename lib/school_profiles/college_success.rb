@@ -75,7 +75,7 @@ module SchoolProfiles
     end
 
     def share_content
-      share_tooltip_modal('College_readiness', @school_cache_data_reader.school)
+      share_tooltip_modal('College_success', @school_cache_data_reader.school)
     end
 
     def faq

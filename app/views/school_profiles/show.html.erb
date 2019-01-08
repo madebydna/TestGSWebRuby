@@ -43,9 +43,11 @@
                 <div class="profile-section-slot">
                   <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
                 </div>
-                <div class="profile-section-slot">
-                  <%= render 'college_success', college_success: @school_profile.college_success %>
-                </div>
+                <% if @school_profile.college_success.visible? %>
+                    <div class="profile-section-slot">
+                      <%= render 'college_success', college_success: @school_profile.college_success %>
+                    </div>
+                <% end %>
               <% end %>
 
               <div class="profile-section-slot">

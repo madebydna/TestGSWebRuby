@@ -49,7 +49,6 @@ export default class CollegeReadiness extends DataModule {
       } else if (title == 'College success' || 'Éxito universitario') {
         return <div>
           {panes[0]}
-          <ShareYourFeedbackCollegeReadiness buttonText={this.props.feedback.button_text} questionText={this.props.feedback.feedback_cta} buttonClicked={this.goToQualaroo} />
         </div>;
       }
     }
@@ -155,6 +154,11 @@ export default class CollegeReadiness extends DataModule {
     let analyticsId = this.props.analytics_id;
     if (!this.hasData()) {
       analyticsId += '-empty'; // no data
+    }
+
+    let { suppressIfEmpty } = this.props;
+    if (!this.hasData() && suppressIfEmpty) {
+      return null;
     }
 
     return (
