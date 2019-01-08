@@ -18,6 +18,7 @@ en:
     assigned_school: Assigned school
     browse_school_blurb: Here's a look at schools in
     browse_school_blurb_district: Here's a look at the district
+    calendar: calendar
     city_hero_html: <div class="city-hero-narrative">{city} is a city in {county} county, {stateLong}</div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} is a city in {stateLong}</div>
     community_resources: community resources
