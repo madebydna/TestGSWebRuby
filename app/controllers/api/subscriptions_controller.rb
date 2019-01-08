@@ -6,7 +6,7 @@ class Api::SubscriptionsController < ApplicationController
   before_action :login_required
 
   def create
-    unless Subscription.is_invalid?(list) || @current_user.has_signedup?(list, state: state, school_id: school_id)
+    unless Subscription.is_invalid?(list) || @current_user.has_signedup?(list, school)
       @current_user.add_subscription!(list, school)
       subscription_id = @current_user.subscription_id(list)
     end
