@@ -115,7 +115,8 @@ module Components
     def float_value(value)
       return value if value.nil?
       float = value.to_s.scan(/[0-9.]+/).first.to_f
-      float.round(precision) if precision
+      float = float.round(precision) if precision
+      float
     end
 
     def text_value(value)
