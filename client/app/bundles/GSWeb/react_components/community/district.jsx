@@ -12,7 +12,7 @@ import Mobility from "./mobility";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
-import {schools, academics, ACADEMICS, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
+import {schools, academics, ACADEMICS, calendar, CALENDAR, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
@@ -104,13 +104,15 @@ class District extends React.Component {
     return data.filter(o => o.data && o.data.length > 0).length > 0
   }
 
+  // AC_TODO: Remove calendar from TOC if there is no data for a particular district
   selectTocItems(){
-    let districtTocItems = [schools, academics, communityResources, nearbyHomesForSale, reviews];
+    let districtTocItems = [schools, academics, calendar, communityResources, nearbyHomesForSale, reviews];
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     return districtTocItems;
   }
 
+  // AC_TODO: Add calendar component below
   render() {
     let {title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback} = this.props.academics;
     return (
@@ -169,6 +171,9 @@ class District extends React.Component {
             }
           />
         }
+        // calendar={
+
+        // } 
         zillow={
           <Zillow
               locality={this.props.locality}
