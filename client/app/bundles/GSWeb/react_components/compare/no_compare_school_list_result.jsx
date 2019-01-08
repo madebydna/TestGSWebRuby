@@ -10,7 +10,9 @@ const NoCompareSchoolListResult = () => (
       if(breakdown===t("All students")){ breakdown="All"}
       return <div className="no-results">
         <div className="body">
-          <img src={noResultsOwlPng} />
+          <div>
+            <img src={noResultsOwlPng} />
+          </div>
           <div>
             <hr />
             <p>{t('no_compare_school_results', { parameters: { breakdown: t(breakdown) }})}</p>
