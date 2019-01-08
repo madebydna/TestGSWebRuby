@@ -115,15 +115,16 @@ module Components
     def float_value(value)
       return value if value.nil?
       float = value.to_s.scan(/[0-9.]+/).first.to_f
-      float = float.round(precision) if precision
-      float
+      newfloat = float.round(precision) if precision
+      puts "#{float} ------------------------> #{newfloat}"
+      newfloat
     end
 
     def text_value(value)
       return value if value.nil?
       # If a precision is set, and the value is a number, then just
       # use stringified float value
-      if precision && value =~ /^\s*[\.\d]+\s*$/
+      if precision && value.to_s =~ /^\s*[\.\d]+\s*$/
         num = float_value(value)
         return '<1' if num < 1
         return num.to_s
