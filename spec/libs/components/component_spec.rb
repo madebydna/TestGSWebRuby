@@ -48,5 +48,19 @@ describe Components::Component do
         it { is_expected.to eq(expected_output) }
       end
     end
+
+    describe '#float_value' do
+      context "without precision" do
+        subject { Components::Component.new(precision: nil).float_value(value) }
+        {
+          '15.3' => 15.3,
+        }.each do |input, expected_output|
+          context "With a value \"#{input}\"" do
+            let (:value) { input }
+            it { is_expected.to eq(expected_output) }
+          end
+        end
+      end
+    end
   end
 end
