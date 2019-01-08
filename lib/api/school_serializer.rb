@@ -25,7 +25,7 @@ class Api::SchoolSerializer
     {
       id: school.id,
       districtId: school.district_id,
-      districtName: school['district_name'] || District.on_db(school.state.downcase)&.find_by(id: school.district_id)&.name,
+      districtName: school['district_name'] || school&.district_name,
       levelCode: school.level_code,
       lat: school.lat,
       lon: school.lon,

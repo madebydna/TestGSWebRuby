@@ -195,7 +195,12 @@ module SearchControllerConcerns
   def assigned_schools
     @_assigned_schools ||=
       if location_given? && street_address?
-        attendance_zone_query.search_by_level
+        schools = attendance_zone_query.search_by_level
+        schools.each do |school|
+          district = District.on_db(school.state.downcase)&.find_by(id: school.district_id)&.name
+          school.define_singleton_method(:district_name) {district}
+        end
+        schools
       else
         []
       end
