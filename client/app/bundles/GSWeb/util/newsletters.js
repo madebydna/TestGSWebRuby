@@ -73,7 +73,8 @@ const updateSavedSchoolsCookie = function(schoolState, schoolId) {
     if (schoolKeyIdx > -1) {
       deleteSchool(newSchool)
         .done(e => {
-          e.status === 400 && alert("There was an error deleting a school from your account.\n Please try again later")
+          e.status === 400 && alert("There was an error deleting a school from your account.\n Please try again later");
+          e.status === 501 && alert("There was an issue deleting the school from your account.\n Please log out and sign back in. Thank you.");
         })
         .fail(e => alert("There was an error deleting a school from your account.\n Please try again later"))
     }
