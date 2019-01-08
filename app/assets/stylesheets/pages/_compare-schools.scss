@@ -17,7 +17,6 @@ body {
       display: flex;
       max-width: 991px;
       background-color: white;
-      align-items: center;
       @include media-breakpoint-up(sm) {
         margin: 30px auto;
         border: 1px solid #c1d2d9;
