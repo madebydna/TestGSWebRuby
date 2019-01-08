@@ -6,8 +6,8 @@ class Api::SubscriptionsController < ApplicationController
   before_action :login_required
 
   def create
-    unless @current_user.has_signedup?(list)
-      @current_user.add_subscription!(list)
+    unless Subscription.is_invalid?(list) || @current_user.has_signedup?(list, state: state, school_id: school_id)
+      @current_user.add_subscription!(list, school)
       subscription_id = @current_user.subscription_id(list)
     end
     render json: {'id' => subscription_id}
@@ -43,4 +43,16 @@ class Api::SubscriptionsController < ApplicationController
     params[:list]
   end
 
+  def school_id
+    params[:schoolId]
+  end
+
+  def state
+    params[:state]
+  end
+
+  def school
+    return nil unless state && school_id
+    @_school ||= School.on_db(state.downcase).find_by(id: school_id)
+  end
 end

@@ -21,6 +21,10 @@ module Subscriptions
   def new_subscription(list, school = nil)
     now = Time.now
 
+    if school && list == 'mystat'
+      list = 'mystat_private' if school.private_school?
+    end
+
     subscription_product = Subscription.subscription_product list
 
     raise "Subscription #{list} not valid" if subscription_product.nil?
@@ -52,9 +56,9 @@ module Subscriptions
     end
   end
 
-  def has_signedup?(list)
-    subscriptions.any? do |subscription|
-      subscription.list == list
+  def has_signedup?(list, state: nil, school_id: nil)
+    subscriptions.any? do |s|
+      s.list == list && (state.nil? || s.state == state) && (school_id.nil? || s.school_id == school_id)
     end
   end
 

@@ -1,4 +1,7 @@
-import { signupAndGetNewsletter } from '../util/newsletters';
+import {
+  signupAndGetNewsletter,
+  signUpForGreatNewsAndMss
+} from '../util/newsletters';
 import { translateWithDictionary } from 'util/i18n';
 
 const newsletterLinkSelector = '.js-send-me-updates-button-footer';
@@ -21,9 +24,13 @@ export function setupNewsletterLink() {
     }
 
     if (schoolId && stateAbbreviation) {
-      signupAndGetNewsletter({
-        heading: t("Send me email updates about my child's school")
-      });
+      signUpForGreatNewsAndMss(
+        {
+          heading: t("Send me email updates about my child's school")
+        },
+        stateAbbreviation,
+        schoolId
+      );
     } else {
       signupAndGetNewsletter();
     }

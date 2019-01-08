@@ -1,11 +1,18 @@
 // TODO: import I18n
 import * as notifications from '../util/notifications';
 import { t, preserveLanguageParam } from '../util/i18n';
-import { isSignedIn, isNotSignedIn, getSavedSchoolsFromCookie, COOKIE_NAME, updateNavbarHeart } from '../util/session';
+import {
+  isSignedIn,
+  isNotSignedIn,
+  getSavedSchoolsFromCookie,
+  COOKIE_NAME,
+  updateNavbarHeart
+} from '../util/session';
 import modalManager from '../components/modals/manager';
 import { merge, pick } from 'lodash';
 import { set as setCookie } from 'js-cookie';
 import { findSchools, addSchool, deleteSchool } from '../api_clients/schools';
+import { addSubscription } from '../api_clients/subscriptions';
 
 // Subscribe a user to the GreatNews newsletter.
 // Triggers a join modal if not signed in.
@@ -16,6 +23,22 @@ export const signupAndGetNewsletter = function(modalOptions) {
     modalManager
       .showModal('EmailJoinModal', modalOptions)
       .done(greatNewsSignUp);
+  }
+};
+
+export const signUpForGreatNewsAndMss = function(
+  modalOptions,
+  state,
+  schoolId
+) {
+  if (isSignedIn()) {
+    greatNewsSignUp();
+    addSubscription('mystat', state, schoolId);
+  } else {
+    modalManager.showModal('EmailJoinModal', modalOptions).done(() => {
+      greatNewsSignUp();
+      addSubscription('mystat', state, schoolId);
+    });
   }
 };
 
