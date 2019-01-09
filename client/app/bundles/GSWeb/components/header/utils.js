@@ -32,13 +32,16 @@ const toggleClass = function(el, className) {
 
 const toggleSearch = function(evt) {
   var menu = document.getElementsByClassName('search_bar');
+  const searchOverlay = document.querySelector('.search-overlay')
   var arrayLength = menu.length;
   for (var i = 0; i < arrayLength; i++) {
     if (hasClass(menu[i], 'search_hide_mobile')) {
       removeClass(menu[i], 'search_hide_mobile')
+      removeClass(searchOverlay, 'dn')
     }
     else {
       addClass(menu[i], 'search_hide_mobile')
+      addClass(searchOverlay, 'dn')
     }
   }
 };

@@ -393,7 +393,7 @@
 
 .un .mobile-toggle-button {
   display: inline-block;
-  width: 50%;
+  width: 45%;
   height: 46px;
   border: solid #b8b8b8;
   border-width: 1px 1px 0px 0px;
@@ -401,6 +401,11 @@
   color: darkgrey;
   padding: 10px 0px;
   border-top-right-radius: 4px;
+}
+
+.un .cancel{
+  width: 10%;
+  text-align: center;
 }
 
 .un .mobile-toggle-button:first-of-type {
@@ -711,9 +716,19 @@
     border-bottom: solid 1px #eeeeee;
   }
 
+  .search-overlay{
+    @media (max-width: 768px) {
+      height: 100vh;
+      background-color: white;
+    }
+  }
+
   .un .search_bar {
     width: auto;
     padding-bottom: 10px;
+    @media (max-width: 768px) {
+      margin-top: -60px;
+    }
   }
 
   .un ul.menu li.featured_visible_mobile {

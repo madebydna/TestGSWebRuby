@@ -477,7 +477,7 @@ export default class SearchBox extends React.Component {
                 ))
               }
             </Selectable>
-
+            <div className="mobile-toggle-button cancel">X</div>
             <div style={{ flexGrow: 2 }}>
               {this.inputBox({ open, close })}
               {isOpen &&
