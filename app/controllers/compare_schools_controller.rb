@@ -17,7 +17,7 @@ class CompareSchoolsController < ApplicationController
       tableHeaders: table_headers
     }
     @radius = radius
-    set_compare_meta_tags
+    set_meta_tags(MetaTag::CompareMetaTags.new(self).meta_tag_hash)
   end
 
   private
@@ -57,14 +57,6 @@ class CompareSchoolsController < ApplicationController
       hash[PageAnalytics::ENV] = advertising_env
       hash[PageAnalytics::SCHOOL_ID] = school_id
     end
-  end
-
-  def set_compare_meta_tags
-    set_meta_tags(title: compare_title)
-  end
-
-  def compare_title
-    "Compare #{base_school_for_compare&.name} to nearby schools - #{base_school_for_compare&.city}, #{state_name&.gs_capitalize_words} - #{state.upcase} | GreatSchools"
   end
 
   def breakdown
