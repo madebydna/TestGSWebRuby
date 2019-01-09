@@ -39,7 +39,6 @@ describe 'while signed in as facebook user', type: :feature, remote: true do
     pending 'Facebook login fails'
     fail
     # sign_in_as_ssprouse
-    # SchoolProfilesPage.new.set_school_profile_tour_cookie
     # visit('/california/alameda/1-Alameda-High-School/')
     # first('.five-star-question-cta__star').click
     # within('.review-form') do
@@ -59,7 +58,6 @@ describe 'while signed in as facebook user', type: :feature, remote: true do
   it 'when I save the school the right newsletters are saved and it is added to my school list' do
     pending 'Facebook login fails'
     sign_in_as_ssprouse
-    SchoolProfilesPage.new.set_school_profile_tour_cookie
     visit('/california/alameda/1-Alameda-High-School/')
     first('.js-followThisSchool').click
     expect(page).to have_text('Good news! You’re signed up to receive our newsletter and updates on Alameda High School')
