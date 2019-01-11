@@ -38,12 +38,14 @@ export const deleteSubscription = id =>
     timeout: 6000
   });
 
-export const addSubscription = list =>
+export const addSubscription = (list, state, schoolId) =>
   $.ajax({
     url: `/gsr/api/subscriptions/`,
     type: 'POST',
     data: {
-      list
+      list,
+      state,
+      schoolId
     },
     dataType: 'json',
     timeout: 6000
