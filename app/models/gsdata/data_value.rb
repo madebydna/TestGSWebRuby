@@ -35,6 +35,10 @@ class DataValue < ActiveRecord::Base
     end
   end
 
+  def self.default_configuration
+    %w(none web)
+  end
+
   # def load_object_by_tags(tags, configuration)
   #   Load.with_data_types.with_data_type_tags(tags)
   #       .with_configuration(configuration)
@@ -43,7 +47,7 @@ class DataValue < ActiveRecord::Base
   # end
 
 # rubocop:disable Style/FormatStringToken
-  def self.find_by_school_and_data_types_with_academics(school, data_types, configuration='none')
+  def self.find_by_school_and_data_types_with_academics(school, data_types, configuration= default_configuration)
     loads = data_type_ids_to_loads(data_types, configuration )
     dvs = school_values_with_academics.
         from(
@@ -62,7 +66,7 @@ class DataValue < ActiveRecord::Base
 # .with_loads
 # .with_sources
 
-  def self.find_by_school_and_data_types_with_academics_all_students_and_grade_all(school, data_types, configuration='none')
+  def self.find_by_school_and_data_types_with_academics_all_students_and_grade_all(school, data_types, configuration= default_configuration)
     loads = data_type_ids_to_loads(data_types, configuration )
     dvs = school_values_with_academics.
         from(
@@ -81,7 +85,7 @@ class DataValue < ActiveRecord::Base
 # .with_loads
 # .with_sources
 
-  def self.find_by_school_and_data_types(school, data_types, configuration='none')
+  def self.find_by_school_and_data_types(school, data_types, configuration= default_configuration)
     loads = data_type_ids_to_loads(data_types, configuration )
     dvs = school_values.
       from(
@@ -98,7 +102,7 @@ class DataValue < ActiveRecord::Base
 # .with_loads
 # .with_sources
 
-  def self.find_by_school_and_data_types_with_proficiency_band_name(school, data_types, tags, configuration='none', breakdown_tag_names = [], academic_tag_names = [] )
+  def self.find_by_school_and_data_types_with_proficiency_band_name(school, data_types, tags, configuration= default_configuration, breakdown_tag_names = [], academic_tag_names = [] )
     loads = data_type_ids_and_tags_to_loads(data_types, tags, configuration )
     dvs = school_values_with_academics_with_proficiency_band_names.
         from(
@@ -119,11 +123,11 @@ class DataValue < ActiveRecord::Base
 # .with_loads
 # .with_sources
 
-  def self.find_by_school_and_data_types_and_config(school, data_types, configuration='none', breakdown_tag_names=[])
+  def self.find_by_school_and_data_types_and_config(school, data_types, configuration=default_configuration, breakdown_tag_names=[])
     find_by_school_and_data_types(school, data_types, configuration)
   end
 
-  def self.find_by_school_and_data_type_tags(school, tags, configuration='none', breakdown_tag_names = [], academic_tag_names = [])
+  def self.find_by_school_and_data_type_tags(school, tags, configuration=default_configuration, breakdown_tag_names = [], academic_tag_names = [])
     loads = data_type_tags_to_loads(tags, configuration )
     dvs = school_values_with_academics.
       from(
@@ -185,7 +189,7 @@ class DataValue < ActiveRecord::Base
     select(school_values_with_academics)
   end
 
-  def self.find_by_state_and_data_types(state, data_types, configuration='none')
+  def self.find_by_state_and_data_types(state, data_types, configuration= default_configuration)
     loads = data_type_ids_to_loads(data_types, configuration )
     dvs = state_and_district_values.
       from(
@@ -204,7 +208,7 @@ class DataValue < ActiveRecord::Base
 # .with_loads
 # .with_sources
 
-  def self.find_by_state_and_data_type_tags(state, data_type_tags, configuration='none')
+  def self.find_by_state_and_data_type_tags(state, data_type_tags, configuration= default_configuration)
     loads = data_type_tags_to_loads(data_type_tags, configuration)
     dvs = state_and_district_values.
       from(DataValue.state_and_data_type_tags(state, load_ids(loads)), :data_values)
@@ -220,7 +224,7 @@ class DataValue < ActiveRecord::Base
 # .with_loads
 # .with_sources
 
-  def self.find_by_district_and_data_types(state, district_id, data_types, configuration='none')
+  def self.find_by_district_and_data_types(state, district_id, data_types, configuration= default_configuration)
     loads = data_type_ids_to_loads(data_types, configuration )
     dvs = state_and_district_values.
       from(
@@ -240,7 +244,7 @@ class DataValue < ActiveRecord::Base
 # .with_loads
 # .with_sources
 
-  def self.find_by_district_and_data_type_tags(state, district_id, data_type_tags, configuration='none')
+  def self.find_by_district_and_data_type_tags(state, district_id, data_type_tags, configuration= default_configuration)
     loads = data_type_tags_to_loads(data_type_tags, configuration)
     dvs = state_and_district_values.
       from(
@@ -262,7 +266,7 @@ class DataValue < ActiveRecord::Base
 # .with_loads
 # .with_sources
 
-  def self.find_by_state_and_data_type_tags_with_proficiency_band_name(state, data_type_tags, configuration='none')
+  def self.find_by_state_and_data_type_tags_with_proficiency_band_name(state, data_type_tags, configuration= default_configuration)
     loads = data_type_tags_to_loads(data_type_tags, configuration)
     dvs = state_and_district_values_with_proficiency_band.
         from(DataValue.state_and_data_type_tags(state, load_ids(loads)), :data_values)
@@ -278,7 +282,7 @@ class DataValue < ActiveRecord::Base
 # .with_sources
 
 
-  def self.find_by_district_and_data_type_tags_with_proficiency_band_name(state, district_id, data_type_tags, configuration='none')
+  def self.find_by_district_and_data_type_tags_with_proficiency_band_name(state, district_id, data_type_tags, configuration= default_configuration)
     loads = data_type_tags_to_loads(data_type_tags, configuration)
     dvs = state_and_district_values_with_proficiency_band.
         from(
@@ -395,15 +399,15 @@ class DataValue < ActiveRecord::Base
   #   joins('JOIN loads on loads.id = load_id')
   # end
 
-  def self.data_type_ids_to_loads(data_type_ids, configuration = nil)
+  def self.data_type_ids_to_loads(data_type_ids, configuration= default_configuration)
     Load.with_data_types.with_data_type_ids(data_type_ids).with_configuration(configuration)
   end
 
-  def self.data_type_tags_to_loads(tags, configuration = nil)
+  def self.data_type_tags_to_loads(tags, configuration = default_configuration)
     Load.with_data_types.with_data_type_tags(tags).with_configuration(configuration)
   end
 
-  def self.data_type_ids_and_tags_to_loads(data_type_ids, tags, configuration = nil)
+  def self.data_type_ids_and_tags_to_loads(data_type_ids, tags, configuration = default_configuration)
     Load.with_data_types.with_data_type_ids(data_type_ids).with_data_type_tags(tags).with_configuration(configuration)
   end
 
