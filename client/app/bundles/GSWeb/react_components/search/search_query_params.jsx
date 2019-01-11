@@ -28,6 +28,9 @@ export default class SearchQueryParams extends React.Component {
       lat: queryParams.getLat(),
       lon: queryParams.getLon(),
       distance: queryParams.getDistance(),
+      state: queryParams.getState(),
+      id: queryParams.getId(),
+      breakdownParam: queryParams.getBreakdown(),
       locationLabel:
       queryParams.getValueForKey('locationLabel') ||
       queryParams.getValueForKey('locationSearchString'),
@@ -57,6 +60,9 @@ export default class SearchQueryParams extends React.Component {
       updateTableView: tableView => {
         pushQueryString(queryParams.queryStringWithNewTableView(tableView));
       },
+      updateBreakdown: breakdown => {
+        pushQueryString(queryParams.queryStringWithNewBreakdown(breakdown));
+      }
     };
 
     return this.props.children(extraProps);

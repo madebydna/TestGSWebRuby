@@ -116,6 +116,7 @@ class CompareLayout extends React.Component {
         <span className="label">{t('compare_test_scores_for')}</span>
           {this.props.breakdownSelect}
           <span>{t('from')} {name} {t('to_nearby_schools')}:</span>
+          {this.props.distanceFilter}
       </div>
     )
   }

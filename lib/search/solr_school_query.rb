@@ -96,7 +96,7 @@ module Search
             params[:sort] = 'geodist() asc' unless sort_field
           end
         else
-          search.keywords(q)
+          search.keywords(States.capitalize_any_state_names(q))
           if district_id && district_id > 0
             search.with(:school_district_id, district_id)
           elsif city

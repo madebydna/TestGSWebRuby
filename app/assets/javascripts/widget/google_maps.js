@@ -1,4 +1,4 @@
-var googleMapsScriptURL = '//maps.googleapis.com/maps/api/js?key=AIzaSyBjTd2dueHtfNdsOhXvo_3HQJfyYlkEv98&amp;libraries=geometry&amp;sensor=false';
+var googleMapsScriptURL = '//maps.googleapis.com/maps/api/js?v=3.34&key=AIzaSyBjTd2dueHtfNdsOhXvo_3HQJfyYlkEv98&amp;libraries=geometry&amp;sensor=false';
 var callbackFunction = 'GS.googleMap.applyAjaxInitCallbacks';
 // .getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
 

@@ -106,18 +106,20 @@ export function getView() {
 
 export function getTableView() {
   let { tableView } = parse(currentQueryString());
-  tableView = ["Overview", "Academic", "Equity"].includes(tableView) ? tableView : 'Overview';
+  tableView = ['Overview', 'Academic', 'Equity'].includes(tableView)
+    ? tableView
+    : 'Overview';
   return tableView;
 }
 
 export function getState() {
-  let { state } = parse(currentQueryString());
+  const { state } = parse(currentQueryString());
   return state;
 }
 
-export function getSchoolId() {
-  let { schoolId } = parse(currentQueryString());
-  return schoolId;
+export function getId() {
+  const { id, schoolId } = parse(currentQueryString());
+  return id || schoolId;
 }
 
 export function getBreakdown() {
@@ -133,12 +135,12 @@ export function queryStringWithNewTableView(tableView) {
   return getQueryStringWithUpdatedParams({ tableView });
 }
 
-export function queryStringWithNewStateAndId(state, id){
-  return getQueryStringWithUpdatedParams({state, id})
+export function queryStringWithNewStateAndId(state, id) {
+  return getQueryStringWithUpdatedParams({ state, id });
 }
 
-export function queryStringWithNewBreakdown(breakdown){
-  return getQueryStringWithUpdatedParams({breakdown})
+export function queryStringWithNewBreakdown(breakdown) {
+  return getQueryStringWithUpdatedParams({ breakdown });
 }
 
 export function queryStringWithNewDistance(distance) {

@@ -3,7 +3,7 @@ es:
   javascript:
     compare_test_scores_for: Compare los resultados de exámenes de estudiantes
     from : de
-    to_nearby_schools: con las escuelas cercanas
+    to_nearby_schools: con las escuelas cercanas dentro
     Academics: Académica
     Saved!: Salvado!
     Saved: Salvado
@@ -36,6 +36,7 @@ es:
       - Prueba otros filtros.
     no_compare_school_title: No se han encontrado resultados
     no_compare_school_results: No pudimos encontrar escuelas cercanas con los resultados de los exámenes de estudiantes {breakdown}.
+    try_increasing_distance: Try increasing the distance for nearby schools.
     Close filters: Cerrar los filtros
     school: escuela
     schools: escuelas

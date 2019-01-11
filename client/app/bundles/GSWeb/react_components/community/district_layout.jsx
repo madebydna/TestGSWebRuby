@@ -121,14 +121,14 @@ class DistrictLayout extends React.Component {
 
   renderDesktopAd(){
     return (
-      this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
+      this.props.viewportSize > SM && <div className="ad-bar sticky" >
         <Ad slot="districtpage_first" sizeName="box_or_tall" />
       </div>
     )
   }
 
   renderToc(){
-    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
+    return this.props.viewportSize > XS && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
   }
 
   renderSchools() {

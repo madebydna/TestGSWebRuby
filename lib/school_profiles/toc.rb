@@ -7,14 +7,16 @@ module SchoolProfiles
 
     DEEP_LINK_HASH_SEPARATOR = '*'
 
-    def initialize(test_scores, college_readiness, student_progress, equity, equity_overview, students, teacher_staff, courses, stem_courses, academic_progress, school)
+    def initialize(test_scores:, college_readiness:, college_success:, student_progress:, equity:, equity_overview:,
+                   students:, teachers_staff:, courses:, stem_courses:, academic_progress:, school:)
       @test_scores = test_scores
       @college_readiness = college_readiness
+      @college_success = college_success
       @student_progress = student_progress
       @equity = equity
       @equity_overview = equity_overview
       @students = students
-      @teacher_staff = teacher_staff
+      @teacher_staff = teachers_staff
       @courses = courses
       @stem_courses = stem_courses
       @academic_progress = academic_progress
@@ -25,7 +27,8 @@ module SchoolProfiles
       hash = {}
       arr = []
       if @school.level_code =~ /h/
-        arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness', badge: @college_readiness.school_csa_badge?}
+        arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
+        arr << {column: 'Academics', label: 'college_success', present: true, anchor: 'College_success', badge: @college_success.school_csa_badge?} if @college_success.visible?
       end
 
       arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}

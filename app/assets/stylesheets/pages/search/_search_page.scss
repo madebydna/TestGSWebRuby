@@ -164,6 +164,7 @@ body {
 
     .menu-bar {
       .menu-item {
+        margin-top: 10px;
         display: inline-block;
         cursor: pointer;
         // Hide select dropdown on IE10+ browsers
@@ -173,13 +174,13 @@ body {
         > * + * {
           margin-left: 5px;
         }
-      }
-      .menu-item + .menu-item {
+
+        //.menu-item + .menu-item {
         @include media-breakpoint-up(xs) {
-          margin-left: 15px;
+          margin-right: 15px;
         }
         @include media-breakpoint-up(md) {
-          margin-left: 20px;
+          margin-right: 20px;
         }
       }
       .sort-dropdown-table-view {
@@ -235,7 +236,7 @@ body {
 
     .menu-bar.filters {
       position: fixed;
-      top: 60px;
+      top: 50px;
       left: 0;
       right: 0;
       background-color: #fff;

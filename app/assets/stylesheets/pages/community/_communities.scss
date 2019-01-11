@@ -56,117 +56,113 @@ $subtle-gray: #647981;
 }
 
 .below-hero {
-    width: 100%;
-    @include flex-justify-center;
-    @media screen and (max-width: 1200px) and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      -ms-flex-pack: start;
+  position: relative;
+  margin: auto;
+  padding: 0px 10px;
+  max-width: 1170px;
+  @include media-breakpoint-up(sm) {
+    padding: 0px 15px;
+  }
+
+  .community-modules {
+    display: inline-block;
+    width: calc(100% - 570px);
+
+    margin-top: 20px;
+    > div {
+      margin-bottom: 20px;
     }
-    .community-modules {
-      max-width: 600px;
-      display: inline-block;
-      margin-top: 20px;
-      > div {
-        margin-bottom: 20px;
-      }
-      .modules-title {
-        font-family: 'opensans-bold';
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 20px;
-      }
-      @include media-breakpoint-down(md) {
-        width: calc(100vw - 350px);
-        margin: 0;
-        padding: 20px;
-      }
-      @include media-breakpoint-down(sm) {
-        > div {
-          margin: auto;
-          .top-school-module {
-            width: 100%;
-          }
-        }
-      }
-      @include media-breakpoint-only(xs) {
-        width: 100%;
-      }
+
+    @include media-breakpoint-down(sm) {
+      width: calc(100% - 255px);
     }
-    .sticky {
-      margin-top: 15px;
-      margin-right: 20px;
-      position: -webkit-sticky;
-      position: sticky;
-      @media screen and (min-width: 992px) and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        margin-top: 20px;
-      }
-      //target ie10
-      @media screen and (min-width:0\0) {
-        position: static;
-        vertical-align: top;
-      }
+
+    @include media-breakpoint-down(xs) {
+      width: 100%;
+      margin-left: 0;
     }
-    //Targets ie11 only
-    @media all and (-ms-high-contrast: none){
-     *::-ms-backdrop, .sticky{ position: fixed; }
+
+    .modules-title {
+      font-family: 'opensans-bold';
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
     }
-    .ad-bar {
-      width: 300px;
-      height: 600px;
-      display: inline-block;
-      margin-left: 20px;
+  }
+
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+
+    //target ie10
+    @media screen and (min-width:0\0) {
+      position: static;
+      vertical-align: top;
     }
-    //CSS for shared portion between City and District pages.
-    .toc {
+  }
+
+  //Targets ie11 only
+  @media all and (-ms-high-contrast: none){
+   *::-ms-backdrop, .sticky{ position: fixed; }
+  }
+
+  .ad-bar {
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px 0 0 20px;
+    top:60px;
+  }
+
+  //CSS for shared portion between City and District pages.
+  .toc {
+    margin: 20px 20px 0 0;
+    display: inline-block;
+    width: 230px;
+    vertical-align: top;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
       height: 100%;
-      display: inline-block;
-      width: 230px;
-      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        margin-left: -250px;
-        height: auto;
-      }
-      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+      li {
+        color: $school-color;
+        font-size: 14px;
         height: 100%;
-        li {
-          color: $school-color;
-          font-size: 14px;
+        //Targets IE10
+        @media screen and (min-width:0\0) {
+          height: 50px;
+        }
+        &:hover {
+          cursor: pointer;
+        }
+        div {
           height: 100%;
-          //Targets IE10
-          @media screen and (min-width:0\0) {
-            height: 50px;
-          }
-          &:hover {
-            cursor: pointer;
-          }
-          div {
-            height: 100%;
-            padding: 16px 0px;
-            margin: 0 20px;
-          }
+          padding: 16px 0px;
+          margin: 0 20px;
         }
-        //Targets ie11 only
-        @media all and (-ms-high-contrast: none){
-          *::-ms-backdrop, li{ height: 100%; }
+      }
+      //Targets ie11 only
+      @media all and (-ms-high-contrast: none){
+        *::-ms-backdrop, li{ height: 100%; }
+      }
+      li + li {
+        div {
+          border-top: 1px solid $border-color;
         }
-        li + li {
-          div {
-            border-top: 1px solid $border-color;
-          }
-        }
-        li.selected {
-          color: black;
-          background-color: $gray-light-blue;
-          border-left: 5px solid $school-color;
-          div {
-            margin-left: 15px;
-          }
+      }
+      li.selected {
+        color: black;
+        background-color: $gray-light-blue;
+        border-left: 5px solid $school-color;
+        div {
+          margin-left: 15px;
         }
       }
     }
   }
+}
 
 // Class to help draw blueish-gray lines
 .blue-line{
@@ -189,7 +185,7 @@ $subtle-gray: #647981;
     padding: 2px 0 0 2px;
     > div{
       margin-top: 20px;
-      width: 95%;
+      width: 100%;
       h3 {
         font-size: $font-size;
         font-family: 'opensans-semibold';
@@ -497,10 +493,10 @@ $subtle-gray: #647981;
   }
 }
 
-@include media-breakpoint-down(xs) {
-  .display-desktop { display:none }
-}
-
-@include media-breakpoint-up(sm) {
-  .display-mobile { display:none }
-}
+//@include media-breakpoint-down(xs) {
+//  .display-desktop { display:none }
+//}
+//
+//@include media-breakpoint-up(sm) {
+//  .display-mobile { display:none }
+//}

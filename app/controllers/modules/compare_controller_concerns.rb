@@ -30,13 +30,13 @@ module CompareControllerConcerns
     end
     query_type.new(
       state: state,
-      sort_name: sort_name,
+      sort_name: 'distance',
       level_codes: level_codes,
       lat: lat,
       lon: lon,
       radius: default_compare_radius,
       limit: default_compare_limit,
-      with_rating: 'true'
+      with_rating: 'true',
     )
   end
 
@@ -66,7 +66,7 @@ module CompareControllerConcerns
     # This keeps the pinned school on top
     pinned_school = schools.select {|school| school.pinned}
     non_pinned_schools = schools - pinned_school
-    non_pinned_schools.sort_by {|school| school.test_score_rating_for_ethnicity}.reverse.unshift(pinned_school[0])
+    non_pinned_schools.sort_by {|school| [school.test_score_rating_for_ethnicity, -1 * school.distance] }.reverse.unshift(pinned_school[0])
   end
 
   def filter_by_ethnicity_test_score_rating(schools)
@@ -138,7 +138,7 @@ module CompareControllerConcerns
 
   def default_compare_radius
     #in miles
-    5
+    100
   end
 
   def translated_ethnicity_with_fallback

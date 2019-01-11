@@ -39,7 +39,7 @@ export default class FiveStarRating extends React.Component {
       );
     }
     return (
-      <div className="five-star-rating__stars--med">
+      <div className="five-star-rating__stars fsr-medium">
         <span className="five-stars">
           {filled}
           {empty}

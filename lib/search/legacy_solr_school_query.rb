@@ -42,13 +42,13 @@ module Search
         if lat && lon
           search.keywords(spatial_query)
         else
-          search.keywords(q)
+          search.keywords(States.capitalize_any_state_names(q))
         end
         search.with(:citykeyword, city.downcase) if city && !district_id
         search.with(:school_database_state, state.downcase) if state
         search.with(:school_grade_level, level_codes.map(&:downcase)) if level_codes.present?
         search.with(:school_type, entity_types.map(&:downcase)) if entity_types.present?
-        search.with(:overall_gs_rating, (1..10).to_a) if with_rating == "true"
+        search.with(:overall_gs_rating, (1..10).to_a) if with_rating
         if district_id && district_id > 0
           search.with(:school_district_id, district_id) if district_id
         end

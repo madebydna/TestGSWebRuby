@@ -74,7 +74,7 @@ module SchoolProfiles
       school = @school_cache_data_reader.school
       {}.tap do |hash|
         hash[:state] = school.state
-        hash[:schoolId] = school.id
+        hash[:id] = school.id
         hash[:lat] = school.lat
         hash[:lon] = school.lon
         hash[:gradeLevels] = school.level_code.split(',')
