@@ -4,7 +4,7 @@ import Selectable from 'react_components/selectable';
 import Dropdown from 'react_components/search/dropdown';
 import { createPortal } from 'react-dom';
 import { reduce, debounce, cloneDeep } from 'lodash';
-import { SM, validSizes, viewport } from 'util/viewport';
+import { SM, XS, validSizes, viewport } from 'util/viewport';
 import { geocode } from 'components/geocoding';
 import suggest from 'api_clients/autosuggest';
 import { parse, stringify } from 'query-string';
@@ -135,7 +135,8 @@ export default class SearchBox extends React.Component {
         Cities: [],
         Districts: [],
         Schools: []
-      }
+      },
+      displayMobileSearch: false
     };
     this.submit = this.submit.bind(this);
     this.geocodeAndSubmit = this.geocodeAndSubmit.bind(this);
@@ -369,12 +370,61 @@ export default class SearchBox extends React.Component {
     </form>
   );
 
+  inputBoxHomePageMobile = ({ open, close }) => (
+    <form
+      action="#"
+      onSubmit={e => {
+        e.preventDefault();
+        return false;
+      }}
+    >
+      {/* Form and action makes iOS button say 'Go' */}
+      <input
+        onKeyDown={e => this.handleKeyDown(e, { close })}
+        onChange={this.onTextChanged({ open, close })}
+        type="text"
+        className="full-width pam search_form_field"
+        placeholder={this.placeholderText()}
+        value={this.state.searchTerm}
+        maxLength={60}
+        onFocus={this.toggleSearchBoxState}
+      />
+    </form>
+  );
+
+  toggleSearchBoxState = (e, shouldClose=false) => {
+    if (!this.state.displayMobileSearch && !shouldClose){
+      this.setState({
+        displayMobileSearch: true
+      })
+    } else if (this.state.displayMobileSearch && shouldClose){
+      this.setState({
+        displayMobileSearch: false
+      })
+    }
+  }
+
   searchButton = () => (
     <div className="search_bar_button" onClick={this.geocodeAndSubmit}>
       <button type="submit" className="search_form_button">
         <span className="search_icon_image_white" />
       </button>
     </div>
+  );
+
+  searchButtonWithCancelButton = () => (
+    <React.Fragment>
+      <div className="search_bar_button" onClick={this.geocodeAndSubmit}>
+        <button type="submit" className="search_form_button">
+          <span className="search_icon_image_white" />
+        </button>
+      </div>
+      <div className="search_bar_button" onClick={e => this.toggleSearchBoxState(e, true)}>
+        <button className="search_form_button">
+          <span style={{fontSize: 22}}>X</span>
+        </button>
+      </div>
+    </React.Fragment>
   );
 
   resetSearchTermButton = close => (
@@ -450,6 +500,93 @@ export default class SearchBox extends React.Component {
     );
   }
 
+  renderHomePageMobile(element, renderDropdown = true) {
+    if (!this.state.displayMobileSearch){
+      return createPortal(
+        <OpenableCloseable>
+          {(isOpen, { open, close } = {}) => (
+            <div className="search-box">
+              {renderDropdown ? (
+                <Dropdown
+                  mouseOver
+                  options={options}
+                  onSelect={opt => {
+                    this.setState({ type: opt.key });
+                  }}
+                  activeOption={options.find(opt => opt.key === this.state.type)}
+                />
+              ) : null}
+              <CaptureOutsideClick
+                callback={() => {
+                  this.resetSelectedListItem();
+                  close();
+                }}
+              >
+                {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
+                <div style={{ flexGrow: 2 }}>
+                  {this.inputBoxHomePageMobile({ open, close })}
+                  {isOpen &&
+                    this.shouldRenderResults() && (
+                      <div className="search-results-list">
+                        {this.searchResultsList({ close })}
+                      </div>
+                    )}
+                </div>
+              </CaptureOutsideClick>
+              {this.renderResetSearchTermButton() &&
+                this.resetSearchTermButton(close)}
+              {this.searchButton()}
+            </div>
+          )}
+        </OpenableCloseable>,
+        element
+      );
+    }else{
+      return createPortal(
+        <React.Fragment>
+          <OpenableCloseable>
+            {(isOpen, { open, close } = {}) => (
+              <div className="search-box search-mode-homepage">
+                {renderDropdown ? (
+                  <Dropdown
+                    mouseOver
+                    options={options}
+                    onSelect={opt => {
+                      this.setState({ type: opt.key });
+                    }}
+                    activeOption={options.find(opt => opt.key === this.state.type)}
+                  />
+                ) : null}
+                <CaptureOutsideClick
+                  callback={() => {
+                    this.resetSelectedListItem();
+                    close();
+                  }}
+                >
+                  {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
+                  <div style={{ flexGrow: 2 }}>
+                    {this.inputBoxHomePageMobile({ open, close })}
+                    {isOpen &&
+                      this.shouldRenderResults() && (
+                        <div className="search-results-list">
+                          {this.searchResultsList({ close })}
+                        </div>
+                      )}
+                  </div>
+                </CaptureOutsideClick>
+                {this.renderResetSearchTermButton() &&
+                  this.resetSearchTermButton(close)}
+                {this.searchButtonWithCancelButton()}
+              </div>
+            )}
+          </OpenableCloseable>
+          <div className="home-page-overlay"/>
+        </React.Fragment>,
+        element
+      );
+    }
+  }
+
   renderMobile(element) {
     return createPortal(
       <OpenableCloseable>
@@ -502,8 +639,10 @@ export default class SearchBox extends React.Component {
 
   render() {
     let element = window.document.querySelector('#home-page .input-group');
-    if (element) {
+    if (element && this.props.size > XS) {
       return this.renderDesktop(element, false);
+    } else if (element && this.props.size <= XS){
+      return this.renderHomePageMobile(element, false)
     }
 
     element = window.document.querySelector('.dt-desktop');

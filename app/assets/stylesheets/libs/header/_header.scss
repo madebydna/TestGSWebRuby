@@ -723,6 +723,20 @@
     }
   }
 
+  .home-page-overlay{
+    @media (max-width: 768px) {
+      height: 100vh;
+      position: fixed;
+      top:0;
+      bottom:0;
+      left:0;
+      right:0;
+      z-index: 4;
+      background-color: white;
+      opacity: .9;
+    }
+  }
+
   .un .search_bar {
     width: auto;
     padding-bottom: 10px;
