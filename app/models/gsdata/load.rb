@@ -32,7 +32,17 @@ class Load < ActiveRecord::Base
   end
 
   def self.with_configuration(config)
-    where('loads.configuration like ?', "%#{config}%")
+    q = "loads.configuration like '%#{config}%'"
+    if config.is_a?(Array)
+      q =''
+      config.each_with_index  do | c, i |
+        if i > 0
+          q += ' or '
+        end
+       q += "loads.configuration like '%#{c}%'"
+      end
+    end
+    where(q)
   end
 
   def self.max_year_for_data_type_id(data_type_id)
