@@ -28,6 +28,7 @@ class GsdataCaching::LoadDataValue
     end
   end
 
+
   def load_hash(load_id)
     @load_array_hashes.find { |load| load.load_id == load_id}
   end
