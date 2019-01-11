@@ -42,7 +42,6 @@ class DataValue < ActiveRecord::Base
   def self.find_by_school_and_data_types_with_academics(school, data_types, configuration= default_configuration)
     subset_load_ids = state_and_school_load_ids.school_and_data_types_no_load(school.state, school.id).pluck(:load_id)
     a = []
-    # require 'pry'; binding.pry;
     if subset_load_ids.present?
       loads = data_type_ids_to_loads(data_types, configuration, subset_load_ids )
       dvs = school_values_with_academics.
