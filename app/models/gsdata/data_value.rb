@@ -23,13 +23,13 @@ class DataValue < ActiveRecord::Base
       obj.state = hash['state']
       obj.school_id = hash['school_id']
       obj.district_id = hash['district_id']
-      # obj.data_type_id = hash['data_type_id']
-      # obj.configuration = hash['configuration']
+      obj.data_type_id = hash['data_type_id']
+      obj.configuration = hash['configuration']
       obj.grade = hash['grade']
       obj.cohort_count = hash['cohort_count']
       obj.proficiency_band_id = hash['proficiency_band_id']
       obj.active = hash['active']
-      # obj.source = hash['source']
+      obj.source = hash['source']
       obj.data_values_to_breakdowns = hash['data_values_to_breakdowns']
       obj.data_values_to_academics = hash['data_values_to_academics']
     end
@@ -300,7 +300,7 @@ class DataValue < ActiveRecord::Base
 
   def self.state_and_district_values
     state_and_district_values = <<-SQL
-      data_values.id, data_values.load_id,
+      data_values.id, data_values.load_id, data_values.state,
       data_values.value, grade, proficiency_band_id, cohort_count,
       group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(bt.tag ORDER BY bt.tag) as "breakdown_tags",
@@ -311,7 +311,7 @@ class DataValue < ActiveRecord::Base
 
   def self.state_and_district_values_with_proficiency_band
     state_and_district_values = <<-SQL
-      data_values.id, data_values.load_id, data_values.value, grade, proficiency_band_id, 
+      data_values.id, data_values.load_id, data_values.value, data_values.state, grade, proficiency_band_id, 
       proficiency_bands.name as proficiency_band_name, cohort_count,
       group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
       group_concat(breakdowns.id ORDER BY breakdowns.id) as "breakdown_id_list",
@@ -490,9 +490,9 @@ class DataValue < ActiveRecord::Base
     data_type_id == 176
   end
 
-  def source_date_valid
-    date_valid
-  end
+  # def source_date_valid
+  #   date_valid
+  # end
 
   def self.with_academics
     joins(<<-SQL
