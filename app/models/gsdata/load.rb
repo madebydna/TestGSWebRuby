@@ -9,6 +9,7 @@ class Load < ActiveRecord::Base
   belongs_to :load_source, foreign_key: :source_id, inverse_of: :loads
   has_many :data_values
 
+
   def self.from_hash(hash)
     hash = hash.stringify_keys
     new.tap do |obj|
