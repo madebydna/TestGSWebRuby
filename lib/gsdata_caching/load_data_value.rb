@@ -1,0 +1,65 @@
+# frozen_string_literal: true
+
+# combines the load and data value model results
+class GsdataCaching::LoadDataValue
+  def initialize(loads, data_values)
+    @loads = loads
+    @data_values = data_values
+  end
+
+  def merge
+    @load_array_hashes = @loads.map do |load|
+      build_load_hash(load)
+    end
+
+    @data_values.map do |data_value|
+      to_hash(data_value)
+    end
+  end
+
+  def build_load_hash(load)
+    OpenStruct.new.tap do |obj|
+      obj.load_id = load.id
+      obj.source_name = load.load_source&.name
+      obj.data_type_id = load.data_type_id
+      obj.configuration = load.configuration
+      obj.date_valid = load.date_valid
+      obj.description = load.description
+    end
+  end
+
+  def load_hash(load_id)
+    @load_array_hashes.find { |load| load.load_id == load_id}
+  end
+
+  def to_hash(data_value)
+    load = load_hash(data_value.load_id)
+    OpenStruct.new.tap do |obj|
+      obj.value = data_value.value
+      obj.state = data_value.state
+      obj.school_id = data_value.school_id if data_value.respond_to? :school_id
+      obj.district_id = data_value.district_id if data_value.respond_to? :district_id
+      obj.grade = data_value.grade if data_value.respond_to? :grade
+      obj.cohort_count = data_value.cohort_count if data_value.respond_to? :cohort_count
+      obj.proficiency_band_id = data_value.proficiency_band_id if data_value.respond_to? :proficiency_band_id
+      obj.active = data_value.active  if data_value.respond_to? :active
+      obj.data_values_to_breakdowns = data_value.data_values_to_breakdowns if data_value.respond_to? :data_values_to_breakdowns
+      obj.data_values_to_academics = data_value.data_values_to_academics if data_value.respond_to? :data_values_to_academics
+      obj.proficiency_band_name = data_value.proficiency_band_name if data_value.respond_to? :proficiency_band_name
+      obj.composite_of_pro_null = data_value.composite_of_pro_null if data_value.respond_to? :composite_of_pro_null
+      obj.breakdown_names = data_value.breakdown_names if data_value.respond_to? :breakdown_names
+      obj.breakdown_id_list = data_value.breakdown_id_list if data_value.respond_to? :breakdown_id_list
+      obj.breakdown_tags = data_value.breakdown_tags if data_value.respond_to? :breakdown_tags
+      obj.breakdown_count = data_value.breakdown_count if data_value.respond_to? :breakdown_count
+      obj.academic_names = data_value.academic_names if data_value.respond_to? :academic_names
+      obj.academic_tags = data_value.academic_tags if data_value.respond_to? :academic_tags
+      obj.academic_count = data_value.academic_count if data_value.respond_to? :academic_count
+      obj.academic_types = data_value.academic_types if data_value.respond_to? :academic_types
+      obj.data_type_id = load.data_type_id
+      obj.configuration = load.configuration
+      obj.source = load.source_name
+      obj.date_valid = load.date_valid
+      obj.description = load.description
+    end
+  end
+end

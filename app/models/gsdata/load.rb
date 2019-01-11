@@ -38,12 +38,21 @@ class Load < ActiveRecord::Base
     where(data_type_id: data_type_id).maximum('date_valid')
   end
 
+  # can take a data_type_id or an array of data_type_ids
+  def self.with_data_type_ids(data_type_ids)
+    where(:data_type_id => data_type_ids)
+  end
+
   def self.with_data_types
     joins('JOIN data_types on data_type_id = data_types.id')
   end
 
   def self.with_data_type_tags(tags)
     joins("JOIN data_type_tags on data_type_tags.data_type_id = data_types.id").where("data_type_tags.tag = ?", tags)
+  end
+
+  def self.with_sources
+    joins("JOIN #{LoadSource.table_name} on #{LoadSource.table_name}.id = source_id")
   end
 
   def replace_into
