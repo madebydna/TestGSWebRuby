@@ -79,6 +79,7 @@ class SchoolProfilesController < ApplicationController
         sp.summary_narration = summary_narration
         sp.test_scores = test_scores
         sp.college_readiness = college_readiness
+        sp.college_success = college_success
         sp.student_progress = student_progress
         sp.reviews = reviews
         sp.review_questions = review_questions
@@ -170,7 +171,11 @@ class SchoolProfilesController < ApplicationController
   end
 
   def toc
-    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, equity_overview, students, teachers_staff, courses, stem_courses, academic_progress, school)
+    SchoolProfiles::Toc.new(test_scores: test_scores, college_readiness: college_readiness,
+                            college_success: college_success, student_progress: student_progress, equity: equity,
+                            equity_overview: equity_overview, students: students,
+                            teachers_staff: teachers_staff, courses: courses, stem_courses: stem_courses,
+                            academic_progress: academic_progress, school: school)
   end
 
   def test_scores
@@ -182,6 +187,12 @@ class SchoolProfilesController < ApplicationController
 
   def college_readiness
     @_college_readiness ||= SchoolProfiles::CollegeReadiness.new(
+      school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
+  def college_success
+    @_college_success ||= SchoolProfiles::CollegeSuccess.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
