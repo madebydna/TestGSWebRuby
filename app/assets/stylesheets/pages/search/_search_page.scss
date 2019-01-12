@@ -667,7 +667,6 @@ body {
   margin-left: 15px;
   position: relative;
   @include media-breakpoint-down(sm) {
-    display: inline-block;
     float: right;
     margin-left: 0;
     margin-top: 10px;
