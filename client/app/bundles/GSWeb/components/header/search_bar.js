@@ -14,7 +14,6 @@ let contentSearchForm;
 let contentSearchInput;
 let schoolSearchMobileButton;
 let contentSearchMobileButton;
-let searchOverlay;
 
 const assignElements = function() {
   desktopSearchToggle = document.getElementsByClassName("js-desktop-search-toggle")[0];
@@ -29,8 +28,6 @@ const assignElements = function() {
   contentSearchInput = document.querySelector('.js-nav-content-search-input');
   schoolSearchMobileButton = document.getElementsByClassName('js-choose-school-search')[0];
   contentSearchMobileButton = document.getElementsByClassName('js-choose-content-search')[0];
-
-  searchOverlay = document.querySelector('.search-overlay');
 }
 
 const displaySearch = function(searchTypeSelector) {
