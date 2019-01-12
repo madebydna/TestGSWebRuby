@@ -102,10 +102,13 @@
   }
   
   .search-mode-homepage{
+    // Class added to search box to allow mobile user to have more room to search
+    // Overwrites CSS from search-box class
     margin-top: -185px;
     z-index: 5;
     margin-left: -10px;
     width: 100%;
+    flex-wrap: nowrap;
     input{
       border: 1px solid #b8b8b8;
     }
