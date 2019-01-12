@@ -5,11 +5,8 @@ var initMobileMenuEvents = function() {
   var mobilenav = document.getElementsByClassName("menu-btn");
   mobilenav[0].addEventListener("click", toggleNav, false);
   var mobileNavSearch = document.getElementsByClassName("search_icon_image");
-  const closeButton = document.querySelector('.un .cancel')
+  
   mobileNavSearch[0].addEventListener("click", toggleSearch, false);
-  if (closeButton){
-    closeButton.addEventListener("click", toggleSearch, false);
-  }
 };
 
 var initDropdown = function() {
