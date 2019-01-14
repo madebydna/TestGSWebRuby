@@ -107,7 +107,11 @@
     margin-top: -185px;
     z-index: 5;
     margin-left: -10px;
-    width: 105%;
+    // width: 93%;
+    width: 100%;
+    @media (max-width: 320px){
+      width: 110%;
+    }
     input{
       border: 1px solid #b8b8b8;
     }
