@@ -44,7 +44,7 @@ class Load < ActiveRecord::Base
     end
     where(q)
   end
-
+  
   def self.with_configuration_new(config)
     q = "loads.configuration like '%#{config}%'"
     if config.is_a?(Array)
