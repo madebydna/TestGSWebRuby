@@ -45,6 +45,17 @@ class Load < ActiveRecord::Base
     where(q)
   end
 
+def self.data_type_ids_to_loads(data_type_ids, configuration= default_configuration)
+  load_and_source_and_data_type.from(Load.with_data_type_ids(data_type_ids).with_configuration(configuration), :loads).with_data_types.with_sources
+end
+  def self.load_and_source_and_data_type
+    load_and_source_and_data_type_values = <<-SQL
+      loads.id, loads.data_type_id, loads.configuration,
+      loads.date_valid, loads.description, (sources_new.name) as "source_name", (data_types.name) as "data_type_name"
+    SQL
+    select(load_and_source_and_data_type_values)
+  end
+
   def self.max_year_for_data_type_id(data_type_id)
     where(data_type_id: data_type_id).maximum('date_valid')
   end
@@ -65,6 +76,17 @@ class Load < ActiveRecord::Base
   def self.with_sources
     joins("JOIN #{LoadSource.table_name} on #{LoadSource.table_name}.id = source_id")
   end
+  #
+  # def self.state_and_district_values
+  #   state_and_district_values = <<-SQL
+  #     data_values.id, data_values.load_id, data_values.state,
+  #     data_values.value, grade, proficiency_band_id, cohort_count,
+  #     group_concat(breakdowns.name ORDER BY breakdowns.name) as "breakdown_names",
+  #     group_concat(bt.tag ORDER BY bt.tag) as "breakdown_tags",
+  #     group_concat(academics.name ORDER BY academics.name) as "academic_names"
+  #   SQL
+  #   select(state_and_district_values)
+  # end
 
   def replace_into
     sql_template = %(

@@ -8,12 +8,10 @@ class DataValue < ActiveRecord::Base
   attr_accessible :value, :state, :school_id, :district_id, :active, :breakdowns, :academics, :grade,
                   :cohort_count, :proficiency_band_id, :load_id
 
-  # belongs_to :data_type
   has_many :data_values_to_breakdowns, inverse_of: :data_value
   has_many :breakdowns, through: :data_values_to_breakdowns, inverse_of: :data_values
   has_many :data_values_to_academics, inverse_of: :data_value
   has_many :academics, through: :data_values_to_academics, inverse_of: :data_values
-  # belongs_to :source, class_name: '::Gsdata::Source', inverse_of: :data_values
   belongs_to :load, inverse_of: :data_values
   belongs_to :proficiency_band, inverse_of: :data_values
 
@@ -86,7 +84,7 @@ class DataValue < ActiveRecord::Base
 # .with_sources
 
   def self.find_by_school_and_data_types(school, data_types, configuration= default_configuration)
-    loads = data_type_ids_to_loads(data_types, configuration )
+    loads = Load.data_type_ids_to_loads(data_types, configuration)
     dvs = school_values.
       from(
         DataValue.school_and_data_types(school.state,
@@ -400,7 +398,8 @@ class DataValue < ActiveRecord::Base
   # end
 
   def self.data_type_ids_to_loads(data_type_ids, configuration= default_configuration)
-    Load.with_data_types.with_data_type_ids(data_type_ids).with_configuration(configuration)
+    Load.data_type_ids_to_loads(data_type_ids, configuration)
+    # Load.load_and_source_and_data_type.from(Load.with_data_type_ids(data_type_ids).with_configuration(configuration), :loads).with_data_types
   end
 
   def self.data_type_tags_to_loads(tags, configuration = default_configuration)

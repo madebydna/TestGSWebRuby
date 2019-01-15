@@ -21,12 +21,12 @@ class GsdataCaching::LoadDataValue
     # require 'pry'; binding.pry;
     OpenStruct.new.tap do |obj|
       obj.load_id = load.id
-      obj.source_name = load.load_source&.name
+      obj.source_name = load.source_name
       obj.data_type_id = load.data_type_id
       obj.configuration = load.configuration
       obj.date_valid = load.date_valid
       obj.description = load.description
-      obj.name = load.data_type&.name
+      obj.name = load.data_type_name
     end
   end
 
@@ -46,8 +46,8 @@ class GsdataCaching::LoadDataValue
       obj.cohort_count = data_value.cohort_count if data_value.respond_to? :cohort_count
       obj.proficiency_band_id = data_value.proficiency_band_id if data_value.respond_to? :proficiency_band_id
       obj.active = data_value.active  if data_value.respond_to? :active
-      obj.data_values_to_breakdowns = data_value.data_values_to_breakdowns if data_value.respond_to? :data_values_to_breakdowns
-      obj.data_values_to_academics = data_value.data_values_to_academics if data_value.respond_to? :data_values_to_academics
+      # obj.data_values_to_breakdowns = data_value.data_values_to_breakdowns if data_value.respond_to? :data_values_to_breakdowns
+      # obj.data_values_to_academics = data_value.data_values_to_academics if data_value.respond_to? :data_values_to_academics
       obj.proficiency_band_name = data_value.proficiency_band_name if data_value.respond_to? :proficiency_band_name
       obj.composite_of_pro_null = data_value.composite_of_pro_null if data_value.respond_to? :composite_of_pro_null
       obj.breakdown_names = data_value.breakdown_names if data_value.respond_to? :breakdown_names
