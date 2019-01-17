@@ -167,11 +167,11 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   def district_value(result)
     #   will not have district values if school is private
     return nil unless school.district_id.positive?
-    district_results_hash[result.datatype_breakdown_year]
+    district_results_hash[DataValue.datatype_breakdown_year(result)]
   end
 
   def state_result(result)
-    state_results_hash[result.datatype_breakdown_year]
+    state_results_hash[DataValue.datatype_breakdown_year(result)]
   end
 
 
