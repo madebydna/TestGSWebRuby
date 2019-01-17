@@ -45,9 +45,24 @@ class Load < ActiveRecord::Base
     where(q)
   end
 
-def self.data_type_ids_to_loads(data_type_ids, configuration= default_configuration)
-  load_and_source_and_data_type.from(Load.with_data_type_ids(data_type_ids).with_configuration(configuration), :loads).with_data_types.with_sources
-end
+  def self.data_type_ids_to_loads(data_type_ids, configuration)
+    load_and_source_and_data_type.
+        from(
+            Load.with_data_type_ids(data_type_ids)
+                .with_configuration(configuration),
+            :loads)
+        .with_data_types.with_sources
+  end
+
+  def self.data_type_tags_to_loads(tags, configuration)
+    l = load_and_source_and_data_type
+        .with_data_types.with_data_type_tags(tags).with_sources
+            # .with_configuration(configuration)
+      # require 'pry';binding.pry;
+    l
+
+  end
+
   def self.load_and_source_and_data_type
     load_and_source_and_data_type_values = <<-SQL
       loads.id, loads.data_type_id, loads.configuration,
