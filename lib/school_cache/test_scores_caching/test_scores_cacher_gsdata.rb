@@ -7,7 +7,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
 
   CACHE_EXCEPTIONS = :data_type, :percentage, :narrative, :label, :methodology
 
-      def data_type_tags
+  def data_type_tags
     self.class::DATA_TYPE_TAGS
   end
 
@@ -72,7 +72,6 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
       begin
         DataValue
           .find_by_school_and_data_type_tags(school, data_type_tags)
-          .where(proficiency_band_id: 1)
       end
   end
 
@@ -80,7 +79,6 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     @_state_results_hash ||= begin
       state_values = DataValue
         .find_by_state_and_data_type_tags(school.state, DATA_TYPE_TAGS)
-        .where(proficiency_band_id: 1)
 
       state_values.each_with_object({}) do |result, hash|
         state_key = result.datatype_breakdown_year
@@ -93,7 +91,6 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     @_district_results_hash ||= begin
       district_values = DataValue
         .find_by_district_and_data_type_tags(school.state, school.district_id, DATA_TYPE_TAGS)
-        .where(proficiency_band_id: 1)
 
       district_values.each_with_object({}) do |result, hash|
         district_key = result.datatype_breakdown_year
@@ -135,7 +132,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
       h[:state_value] = state_result.value if state_result && state_result.value #data_type.value
 
       h[:district_value] = district_value if district_value   #data_type.value
-      h[:source_name] = result.source_name    #source.name
+      h[:source_name] = result.source    #source.name
       h[:description] = result.description if result.description    #source.description
       h[:school_cohort_count] = result.cohort_count if result.cohort_count #data_value.cohort_count
       h[:academics] = academics # if academics   #data_value.academics.pluck(:name).join(',')
