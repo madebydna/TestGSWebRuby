@@ -112,7 +112,6 @@ class District extends React.Component {
     return districtTocItems;
   }
 
-  // AC_TODO: Add calendar component below
   render() {
     let {title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback} = this.props.academics;
     return (
@@ -174,6 +173,7 @@ class District extends React.Component {
         calendar={
           <Calendar 
             locality={this.props.locality}
+            pageType="District"
           />
         } 
         zillow={

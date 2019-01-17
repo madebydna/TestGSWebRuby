@@ -67,7 +67,6 @@ class DistrictLayout extends React.Component {
     )
   }
 
-  // AC_TODO: Implement this.props.calendar
   renderCalendar() {
     return (
       <div id="calendar">
@@ -163,7 +162,6 @@ class DistrictLayout extends React.Component {
     )
   }
 
-  // AC_TODO: Add {this.renderCalendar()} above Mobility
   render() {
     return (
       <div className="district-body">

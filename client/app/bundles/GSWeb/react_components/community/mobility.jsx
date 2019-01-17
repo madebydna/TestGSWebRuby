@@ -22,7 +22,7 @@ class Mobility extends React.Component {
     super(props);
     this.state={
       isLoading: true,
-      didFail: true,
+      didFail: false,
       data: {},
       error: ""
     }
