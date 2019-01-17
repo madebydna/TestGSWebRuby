@@ -78,10 +78,10 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   def state_results_hash
     @_state_results_hash ||= begin
       state_values = DataValue
-        .find_by_state_and_data_type_tags(school.state, DATA_TYPE_TAGS)
+        .find_by_state_and_data_type_tags_and_proficiency_is_one(school.state, DATA_TYPE_TAGS)
 
       state_values.each_with_object({}) do |result, hash|
-        state_key = result.datatype_breakdown_year
+        state_key = DataValue.datatype_breakdown_year(result)
         hash[state_key] = result
       end
     end
@@ -90,10 +90,10 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   def district_results_hash
     @_district_results_hash ||= begin
       district_values = DataValue
-        .find_by_district_and_data_type_tags(school.state, school.district_id, DATA_TYPE_TAGS)
+        .find_by_district_and_data_type_tags_and_proficiency_is_one(school.state, school.district_id, DATA_TYPE_TAGS)
 
       district_values.each_with_object({}) do |result, hash|
-        district_key = result.datatype_breakdown_year
+        district_key = DataValue.datatype_breakdown_year(result)
         hash[district_key] = result.value
       end
     end
