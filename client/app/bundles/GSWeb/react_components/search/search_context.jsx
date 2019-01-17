@@ -47,6 +47,7 @@ class SearchProvider extends React.Component {
     district: gonSearch.district,
     state: gonSearch.state,
     schools: gonSearch.schools,
+    schoolMarkers: gonSearch.schoolMarkers,
     levelCodes: gonSearch.levelCodes || [],
     entityTypes: gonSearch.entityTypes || [],
     defaultLat: gonSearch.cityLat || 37.8078456,
@@ -76,6 +77,7 @@ class SearchProvider extends React.Component {
     district: PropTypes.string,
     state: PropTypes.string,
     schools: PropTypes.arrayOf(PropTypes.object),
+    schoolMarkers: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
     defaultLat: PropTypes.number,
@@ -115,6 +117,7 @@ class SearchProvider extends React.Component {
     super(props);
     this.state = {
       schools: props.schools,
+      schoolMarkers: props.schoolMarkers,
       totalPages: props.totalPages,
       resultSummary: props.resultSummary,
       paginationSummary: props.paginationSummary,
@@ -349,6 +352,7 @@ class SearchProvider extends React.Component {
         value={{
           loadingSchools: this.state.loadingSchools,
           schools: this.state.schools,
+          schoolMarkers: this.state.schoolMarkers,
           savedSchools: this.state.savedSchools,
           saveSchoolCallback: this.handleSaveSchoolClick,
           mslStates: this.props.mslStates,

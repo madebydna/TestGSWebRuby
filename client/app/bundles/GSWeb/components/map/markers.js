@@ -10,7 +10,8 @@ import {
   createPinWithoutRating,
   createAssignedPinWithoutRating,
   addressPin,
-  createAssignedHighlightedPinWithRating
+  createAssignedHighlightedPinWithRating,
+  createSmallPinMarker
 } from './map_pin_assets';
 
 export const PUBLIC_SCHOOL = 'PUBLIC_SCHOOL';
@@ -36,7 +37,10 @@ export default function createMarkerFactory(googleMaps) {
       );
     },
 
-    selectPin(rating, color, highlighted, assigned, address) {
+    selectPin(rating, color, highlighted, assigned, address, schoolId) {
+      if (schoolId) {
+        return createSmallPinMarker(rating);
+      }
       if (assigned && rating && !highlighted) {
         return createAssignedPinWithRating(rating, color);
       }
@@ -66,13 +70,16 @@ export default function createMarkerFactory(googleMaps) {
       highlighted,
       svg = true,
       assigned,
-      address
+      address,
+      schoolId
     ) {
       // svg flag intended to permit backwards compatibility while we decide which assets to use for district boundaries tool
       const position = new googleMaps.LatLng(lat, lon);
       const color = mapPinColor(rating);
       let size = null;
-      if (address) {
+      if (schoolId){
+        size = new googleMaps.Size(15,15);
+      }else if(address){
         size = new googleMaps.Size(25, 34); // address pin
       } else if (assigned && rating) {
         size = new googleMaps.Size(59, 75);
@@ -98,7 +105,8 @@ export default function createMarkerFactory(googleMaps) {
                 color,
                 highlighted,
                 assigned,
-                address
+                address,
+                schoolId
               ),
               scaledSize: size
             }
@@ -130,8 +138,9 @@ export default function createMarkerFactory(googleMaps) {
   };
 
   return {
-    createMarker: (type, ...otherArgs) =>
+    createMarker: (type, ...otherArgs) => {
       // ... captures remaining args so they can be passed through to method call below
-      markerFactories[type].createMarker(...otherArgs)
+      return markerFactories[type].createMarker(...otherArgs)
+    }
   };
 }

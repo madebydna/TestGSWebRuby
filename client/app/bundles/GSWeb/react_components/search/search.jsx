@@ -36,10 +36,12 @@ class Search extends React.Component {
     q: null,
     layout: 'Search',
     schoolKeys: [],
+    schoolMarkers: []
   };
 
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.object),
+    schoolMarkers: PropTypes.arrayOf(PropTypes.object),
     resultSummary: PropTypes.string.isRequired,
     defaultLat: PropTypes.number.isRequired,
     defaultLon: PropTypes.number.isRequired,
@@ -76,6 +78,10 @@ class Search extends React.Component {
     return this.props.schools.length === 0 ? (
       <NoResults resultSummary={this.props.resultSummary} />
     ) : null;
+  }
+
+  schoolMarkersSelection(){
+    return this.props.schoolMarkers.length > 0 ? this.props.schoolMarkers : this.props.schools
   }
 
   render() {
@@ -163,7 +169,7 @@ class Search extends React.Component {
                     ? { lat: this.props.lat, lon: this.props.lon }
                     : null
                 }
-                schools={this.props.schools}
+                schools={this.schoolMarkersSelection()}
                 isLoading={this.props.loadingSchools}
                 locationLabel={this.props.locationLabel}
               />

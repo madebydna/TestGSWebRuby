@@ -9,8 +9,8 @@ import DefaultMapMarker from 'components/map/default_map_marker';
 import MapMarker from 'components/map/map_marker';
 import createInfoWindow from '../../components/map/info_window';
 
-const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other }) => (
-  <React.Fragment>
+const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other }) => {
+  return <React.Fragment>
     {
       /* would prefer to just not render overlay if not showing it,
     but then loader gif has delay, and we would need to preload it */
@@ -26,16 +26,16 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
       <GoogleMapsInitializer>
         {(isInitialized, googleMaps) =>
           isInitialized && (
-            <Map googleMaps={googleMaps} changeLocation={() => {}} markerDigest={schools.map(school => school.state + school.id).sort((a,b)=>(a-b)).join('-')} {...other}>
+            <Map googleMaps={googleMaps} changeLocation={() => {}} markerDigest={schools.map(school => school.state + (school.id || school.schoo_id)).sort((a,b)=>(a-b)).join('-')} {...other}>
               {({ googleMaps, map, openInfoWindow, fitBounds }) => {
                 const markers = createMarkersFromSchools(
-                  schools,
-                  {},
-                  map,
-                  null,
-                  openInfoWindow,
-                  googleMaps
-                );
+                   schools,
+                   {},
+                   map,
+                   null,
+                   openInfoWindow,
+                   googleMaps
+                 );
                 if (locationMarker) {
                   markers.push(
                     <MapMarker
@@ -68,10 +68,11 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
       </GoogleMapsInitializer>
     </div>
   </React.Fragment>
-);
+};
 
 SearchMap.propTypes = {
   schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
+  schoolMarkers: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
   locationMarker: PropTypes.object
 };

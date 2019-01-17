@@ -165,6 +165,21 @@ const addressPin = svg(
   </g>`
 );
 
+const createSmallPinMarker = (rating) => {
+  return svg(
+    15,
+    15,
+    `<circle
+      cx="7.5"
+      cy="7.5"
+      r="5"
+      fill="${mapPinColor(rating)}"
+      stroke="${WHITE}"
+      strole-width="2"
+    />`
+  )
+}
+
 export {
   mapPinColor,
   createDefaultPinWithRating,
@@ -173,5 +188,6 @@ export {
   createPinWithoutRating,
   createAssignedPinWithoutRating,
   addressPin,
-  createAssignedHighlightedPinWithRating
+  createAssignedHighlightedPinWithRating,
+  createSmallPinMarker
 };

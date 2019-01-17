@@ -14,6 +14,7 @@ class SearchController < ApplicationController
   def search
     gon.search = {
       schools: serialized_schools,
+      schoolMarkers: school_markers
     }.tap do |props|
       props['state'] = state
       if lat && lon

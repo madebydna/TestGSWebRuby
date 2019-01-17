@@ -218,7 +218,29 @@ module SearchControllerConcerns
     school.ratings
   end
 
-  #Compare extra methods
+  # Mock call to get data to the front end.
+  def school_markers
+    schools =
+    if district_browse?
+      School.on_db(district_record.state&.downcase).active.where(district_id: district_record)
+    elsif city_browse?
+      School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase)
+    else
+      []
+    end
+
+    schools.map do |school|
+      {}.tap do |hash|
+        hash['school_id'] = school.id
+        hash['lat'] = school.lat
+        hash['lon'] = school.lon
+        hash['state'] = school.state&.downcase
+        hash['rating'] = rand(10) +  1
+      end
+    end
+  end
+
+  #Compare Schools methods
   def add_pinned_school(schools)
     schools.select do |school|
       pinned_school_boolean = school.id == school_id.to_i && school.state.downcase == state.downcase ? true : false
