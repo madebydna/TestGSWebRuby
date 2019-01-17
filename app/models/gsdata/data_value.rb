@@ -374,6 +374,18 @@ class DataValue < ActiveRecord::Base
     where(state_subquery_sql, state, load_ids)
   end
 
+  def self.state_and_data_type_tags_and_proficiency_is_one(state, load_ids)
+    state_subquery_sql = <<-SQL
+      state = ?
+      AND district_id IS NULL
+      AND school_id IS NULL
+      AND load_id IN (?)
+      AND active = 1
+      AND proficiency_band_id = 1
+    SQL
+    where(state_subquery_sql, state, load_ids)
+  end
+
   def self.state_and_data_type_tags(state, load_ids)
     state_subquery_sql = <<-SQL
       state = ?
