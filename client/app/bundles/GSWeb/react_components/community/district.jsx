@@ -9,6 +9,7 @@ import TopSchoolsStateful from "./top_schools_stateful";
 import SchoolBrowseLinks from "./school_browse_links";
 import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
+import Calendar from "./calendar";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
@@ -171,9 +172,11 @@ class District extends React.Component {
             }
           />
         }
-        // calendar={
-
-        // } 
+        calendar={
+          <Calendar 
+            locality={this.props.locality}
+          />
+        } 
         zillow={
           <Zillow
               locality={this.props.locality}

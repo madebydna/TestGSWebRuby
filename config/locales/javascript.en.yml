@@ -23,6 +23,10 @@ en:
     city_hero_no_county_html: <div class="city-hero-narrative">{city} is a city in {stateLong}</div>
     community_resources: community resources
     county: county
+    date: Date
+    district_calendar: District Calendar
+    district_calendar_no_results: Currently, this information is not available.
+    event: Event
     website: Website
     homes_for_sale: Homes for sale
     nearby homes for sale & rent: nearby homes for sale & rent

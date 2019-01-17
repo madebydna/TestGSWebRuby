@@ -57,7 +57,7 @@ homes_and_rentals_service_url: //office-gsxapi.greatschools.org/homes-and-rental
 # The URL to route Ajax calls for the "Mobility" service (TransitScreen)
 mobility_url: //office-gsxapi.greatschools.org/mobility-score-service
 
-# The URL to route Ajax calls for the Calendar service (Tandem)
+# The URL to route Ajax calls for the "Calendar" service (Tandem)
 calendar_service_url: //office-gsxapi.greatschools.org/calendar-service
 
 # ActiveRecord connection pooling

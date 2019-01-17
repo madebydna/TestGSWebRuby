@@ -67,6 +67,16 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  // AC_TODO: Implement this.props.calendar
+  renderCalendar() {
+    console.log("Calendar component included");
+    return (
+      <div id="calendar">
+        {this.props.calendar}
+      </div>
+    )
+  }
+
   renderMobility() {
     return (
       <div id="mobility">
@@ -153,6 +163,7 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  // AC_TODO: Add {this.renderCalendar()} above Mobility
   render() {
     return (
       <div className="district-body">
@@ -165,6 +176,7 @@ class DistrictLayout extends React.Component {
             {this.props.viewportSize < SM && <Ad slot="districtpage_first" sizeName="thin_banner_mobile" />}
             {this.renderSchools()}
             {this.renderAcademics()}
+            {this.renderCalendar()}
             {this.renderMobility()}
             {this.renderZillow()}
             {this.renderReviews()}

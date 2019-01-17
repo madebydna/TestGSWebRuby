@@ -23,6 +23,10 @@ es:
     city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
     community_resources: recursos de la comunidad 
     county: condado
+    date: Date
+    district_calendar: District Calendar
+    district_calendar_no_results: En este momento, esta información no está disponible.
+    event: Event
     website: Página web
     homes_for_sale: Casas en venta
     nearby homes for sale & rent: Casas cercanas en venta y alquiler
