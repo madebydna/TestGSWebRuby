@@ -69,9 +69,9 @@ class DistrictLayout extends React.Component {
 
   // AC_TODO: Implement this.props.calendar
   renderCalendar() {
-    console.log("Calendar component included");
     return (
       <div id="calendar">
+        <div className="modules-title">{t('district_calendar')}</div>
         {this.props.calendar}
       </div>
     )

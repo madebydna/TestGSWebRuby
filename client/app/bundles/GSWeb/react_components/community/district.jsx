@@ -105,7 +105,6 @@ class District extends React.Component {
     return data.filter(o => o.data && o.data.length > 0).length > 0
   }
 
-  // AC_TODO: Remove calendar from TOC if there is no data for a particular district
   selectTocItems(){
     let districtTocItems = [schools, academics, calendar, communityResources, nearbyHomesForSale, reviews];
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
