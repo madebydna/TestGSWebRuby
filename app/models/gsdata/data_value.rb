@@ -220,10 +220,10 @@ class DataValue < ActiveRecord::Base
 # .with_loads
 # .with_sources
 
-  def self.find_by_state_and_data_type_tags(state, data_type_tags, configuration= default_configuration)
+  def self.find_by_state_and_data_type_tags_and_proficiency_is_one(state, data_type_tags, configuration= default_configuration)
     loads = data_type_tags_to_loads(data_type_tags, configuration)
     dvs = state_and_district_values.
-      from(DataValue.state_and_data_type_tags(state, load_ids(loads)), :data_values)
+      from(DataValue.state_and_data_type_tags_and_proficiency_is_one(state, load_ids(loads)), :data_values)
         .with_breakdowns
         .with_breakdown_tags
         .with_academics
@@ -269,11 +269,11 @@ class DataValue < ActiveRecord::Base
 # .with_loads
 # .with_sources
 
-  def self.find_by_district_and_data_type_tags(state, district_id, data_type_tags, configuration= default_configuration)
+  def self.find_by_district_and_data_type_tags_and_proficiency_is_one(state, district_id, data_type_tags, configuration= default_configuration)
     loads = data_type_tags_to_loads(data_type_tags, configuration)
     dvs = state_and_district_values.
       from(
-        DataValue.state_and_district_and_data_types(
+        DataValue.state_and_district_and_data_types_and_proficiency_is_one(
           state,
           district_id,
           load_ids(loads)
@@ -284,6 +284,24 @@ class DataValue < ActiveRecord::Base
           .with_academics
           .with_academic_tags
           .group('data_values.id')
+    GsdataCaching::LoadDataValue.new(loads, dvs).merge
+  end
+
+  def self.find_by_district_and_data_type_tags(state, district_id, data_type_tags, configuration= default_configuration)
+    loads = data_type_tags_to_loads(data_type_tags, configuration)
+    dvs = state_and_district_values.
+        from(
+            DataValue.state_and_district_and_data_types(
+                state,
+                district_id,
+                load_ids(loads)
+            ), :data_values
+        )
+              .with_breakdowns
+              .with_breakdown_tags
+              .with_academics
+              .with_academic_tags
+              .group('data_values.id')
     GsdataCaching::LoadDataValue.new(loads, dvs).merge
   end
 # .with_data_types
@@ -414,6 +432,18 @@ class DataValue < ActiveRecord::Base
     where(state_subquery_sql, state)
   end
 
+  def self.state_and_data_type_tags_and_proficiency_is_one(state, load_ids)
+    state_subquery_sql = <<-SQL
+      state = ?
+      AND district_id IS NULL
+      AND school_id IS NULL
+      AND load_id IN (?)
+      AND active = 1
+      AND proficiency_band_id = 1
+    SQL
+    where(state_subquery_sql, state, load_ids)
+  end
+
   def self.state_and_data_type_tags(state, load_ids)
     state_subquery_sql = <<-SQL
       state = ?
@@ -442,6 +472,19 @@ class DataValue < ActiveRecord::Base
       AND school_id IS NULL
       AND load_id IN (?)
       AND active = 1
+    SQL
+    # data_types = Array.wrap(data_type_ids)
+    where(district_subquery, state, district_id,  load_ids)
+  end
+
+  def self.state_and_district_and_data_types_and_proficiency_is_one(state, district_id, load_ids)
+    district_subquery = <<-SQL
+      state = ?
+      AND district_id = ?
+      AND school_id IS NULL
+      AND load_id IN (?)
+      AND active = 1
+      AND proficiency_band_id = 1
     SQL
     # data_types = Array.wrap(data_type_ids)
     where(district_subquery, state, district_id,  load_ids)
@@ -576,6 +619,10 @@ class DataValue < ActiveRecord::Base
 
   def datatype_breakdown_year
     [data_type_id, breakdown_names, date_valid, try(:academic_names), grade]
+  end
+
+  def self.datatype_breakdown_year(obj)
+    [obj.data_type_id, obj.breakdown_names, obj.date_valid, try(obj.academic_names), obj.grade]
   end
 
 end
