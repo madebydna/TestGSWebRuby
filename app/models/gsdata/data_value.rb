@@ -328,6 +328,19 @@ class DataValue < ActiveRecord::Base
     where(school_subquery_sql, state, school_id, load_ids)
   end
 
+  def self.school_and_data_types_and_proficiency(state, school_id, load_ids)
+    school_subquery_sql = <<-SQL
+      state = ?
+      AND district_id IS NULL
+      AND school_id = ?
+      AND load_id IN (?)
+      AND active = 1
+      AND proficiency_band_id = 1
+    SQL
+    # data_types = Array.wrap(data_type_ids)
+    where(school_subquery_sql, state, school_id, load_ids)
+  end
+
   def self.state_and_data_types(state, load_ids)
     state_subquery_sql = <<-SQL
       state = ?
@@ -413,10 +426,6 @@ class DataValue < ActiveRecord::Base
   # def self.data_type_tags_to_loads(tags, configuration = default_configuration)
   #   Load.data_type_tags_to_loads(tags, configuration)
   #   # Load.with_data_types.with_data_type_tags(tags).with_configuration(configuration)
-  # end
-
-  # def self.data_type_ids_and_tags_to_loads(data_type_ids, tags, configuration = default_configuration)
-  #   Load.with_data_types.with_data_type_ids(data_type_ids).with_data_type_tags(tags).with_configuration(configuration)
   # end
 
   def self.load_ids(loads)

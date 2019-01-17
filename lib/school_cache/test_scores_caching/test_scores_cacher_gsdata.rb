@@ -79,7 +79,6 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     @_state_results_hash ||= begin
       state_values = DataValue
         .find_by_state_and_data_type_tags_and_proficiency_is_one(school.state, DATA_TYPE_TAGS)
-
       state_values.each_with_object({}) do |result, hash|
         state_key = DataValue.datatype_breakdown_year(result)
         hash[state_key] = result
