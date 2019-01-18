@@ -18,13 +18,15 @@ class GsdataCaching::LoadDataValue
   end
 
   def build_load_hash(load)
-    # require 'pry'; binding.pry;
     OpenStruct.new.tap do |obj|
+      # require 'pry'; binding.pry;
       obj.load_id = load.id
       obj.source_name = load.source_name
       obj.data_type_id = load.data_type_id
       obj.configuration = load.configuration
-      obj.date_valid = load.date_valid
+      # rubocop:disable Style/FormatStringToken
+      obj.date_valid = load.date_valid.strftime('%Y%m%d %T')
+      # rubocop:enable Style/FormatStringToken
       obj.description = load.description
       obj.name = load.data_type_name
     end
@@ -36,9 +38,7 @@ class GsdataCaching::LoadDataValue
   end
 
   def to_hash(data_value)
-    # require 'pry'; binding.pry;
     load = load_hash(data_value.load_id)
-    # require 'pry'; binding.pry;
     OpenStruct.new.tap do |obj|
       obj.value = data_value.value
       obj.state = data_value.state

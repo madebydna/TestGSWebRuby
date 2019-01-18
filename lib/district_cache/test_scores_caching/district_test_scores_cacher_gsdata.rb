@@ -109,14 +109,14 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
                        .where(proficiency_band_id: 1)
 
       state_values.each_with_object({}) do |result, hash|
-        state_key = result.datatype_breakdown_year
+        state_key = DataValue.datatype_breakdown_year(result)
         hash[state_key] = result
       end
     end
   end
 
   def state_result(result)
-    state_results_hash[result.datatype_breakdown_year]
+    state_results_hash[DataValue.datatype_breakdown_year(result)]
   end
 
 end
