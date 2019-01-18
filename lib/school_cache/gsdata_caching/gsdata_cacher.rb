@@ -51,7 +51,6 @@ class GsdataCaching::GsdataCacher < Cacher
   def build_hash_for_cache
     school_cache_hash = Hash.new { |h, k| h[k] = [] }
     r = school_results
-    # require 'pry'; binding.pry;
     r.each_with_object(school_cache_hash) do |result, cache_hash|
       result_hash = result_to_hash(result)
       validate_result_hash(result_hash, result.data_type_id)
@@ -73,7 +72,7 @@ class GsdataCaching::GsdataCacher < Cacher
       DataValue.find_by_state_and_data_types(school.state,
                                              data_type_ids)
       .each_with_object({}) do |r, h|
-        state_key = r.datatype_breakdown_year
+        state_key = DataValue.datatype_breakdown_year(r)
         h[state_key] = r.value
       end
     )
@@ -86,7 +85,7 @@ class GsdataCaching::GsdataCacher < Cacher
                                        school.district_id,
                                        data_type_ids)
       district_values.each_with_object({}) do |r, h|
-        district_key = r.datatype_breakdown_year
+        district_key = DataValue.datatype_breakdown_year(r)
         h[district_key] = r.value
       end
     )
@@ -112,7 +111,7 @@ class GsdataCaching::GsdataCacher < Cacher
       h[:academic_tags] = academic_tags if academic_tags
       h[:academic_types] = academic_types if academic_types
       h[:school_value] = result.value
-      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
+      h[:source_date_valid] = result.date_valid
       h[:state_value] = state_value if state_value
       h[:district_value] = district_value if district_value
       h[:display_range] = district_value if display_range
@@ -145,11 +144,11 @@ class GsdataCaching::GsdataCacher < Cacher
   def district_value(result)
     #   will not have district values if school is private
     return nil if school.private_school?
-    district_results_hash[result.datatype_breakdown_year]
+    district_results_hash[DataValue.datatype_breakdown_year(result)]
   end
 
   def state_value(result)
-    state_results_hash[result.datatype_breakdown_year]
+    state_results_hash[DataValue.datatype_breakdown_year(result)]
   end
 
   # after display range strategy is chosen will need to update method below

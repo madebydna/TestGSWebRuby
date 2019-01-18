@@ -11,9 +11,9 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     self.class::DATA_TYPE_TAGS
   end
 
-  def data_type_ids
-    @_data_type_ids ||= DataTypeTag.data_type_ids_for(data_type_tags).uniq
-  end
+  # def data_type_ids
+  #   @_data_type_ids ||= DataTypeTag.data_type_ids_for(data_type_tags).uniq
+  # end
 
   def build_hash_for_cache
     hashes = school_results.map { |r| result_to_hash(r) }
@@ -71,7 +71,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     @query_results ||=
       begin
         DataValue
-          .find_by_school_and_data_type_tags(school, data_type_tags)
+          .find_by_school_and_data_type_tags_proficiency_is_one(school, data_type_tags, %w(none web feeds))
       end
   end
 
@@ -126,7 +126,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
       h[:breakdown_tags] = breakdown_tags # if breakdown_tags
       h[:school_value] = result.value  #data_value.value
 # rubocop:disable Style/FormatStringToken
-      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')  #source.data_valid
+      h[:source_date_valid] = result.date_valid  #source.data_valid
 # rubocop:enable Style/FormatStringToken
 # rubocop:disable Style/SafeNavigation
       h[:state_value] = state_result.value if state_result && state_result.value #data_type.value

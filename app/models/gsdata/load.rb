@@ -55,11 +55,11 @@ class Load < ActiveRecord::Base
   end
 
   def self.data_type_tags_to_loads(tags, configuration)
-    l = load_and_source_and_data_type
+    load_and_source_and_data_type
         .with_data_types.with_data_type_tags(tags).with_sources
             # .with_configuration(configuration)
       # require 'pry';binding.pry;
-    l
+
 
   end
 

@@ -17,8 +17,7 @@ class TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata < TestScoresCachi
     @query_results ||=
       begin
         DataValue
-          .find_by_state_and_data_type_tags_with_proficiency_band_name(state, 'state_test')
-          .with_configuration('feeds')
+          .find_by_state_and_data_type_tags_with_proficiency_band_name(state, 'state_test', 'feeds')
       end
   end
 
@@ -55,7 +54,7 @@ class TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata < TestScoresCachi
       h[:breakdowns] = breakdowns # if breakdowns
       h[:breakdown_id] = result.breakdown_id_list
       h[:school_value] = result.value  #data_value.value
-      h[:source_date_valid] = result.source_date_valid.strftime('%Y')  #source.data_valid
+      h[:source_date_valid] = result.date_valid  #source.data_valid
       h[:proficiency_band_name] = result.proficiency_band_name
       h[:proficiency_band_id] = result.proficiency_band_id
       h[:school_cohort_count] = result.cohort_count if result.cohort_count #data_value.cohort_count

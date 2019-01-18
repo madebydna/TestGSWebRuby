@@ -18,8 +18,7 @@ class TestScoresCaching::FeedOldTestScoresCacherGsdata < TestScoresCaching::Test
     @query_results ||=
       begin
         DataValue
-            .find_by_school_and_data_types_with_proficiency_band_name(school, data_type_ids, data_type_tags, 'feeds')
-            .with_configuration('feeds')
+            .find_by_school_and_data_type_tags(school, data_type_tags, 'feeds')
       end
   end
 
@@ -59,7 +58,7 @@ class TestScoresCaching::FeedOldTestScoresCacherGsdata < TestScoresCaching::Test
       h[:breakdown_ids] = result.breakdown_id_list
       h[:school_value] = result.value  #data_value.value
 
-      h[:source_date_valid] = result.source_date_valid.strftime('%Y')  #source.data_valid
+      h[:source_date_valid] = result.date_valid #source.data_valid
       h[:proficiency_band_name] = result.proficiency_band_name
       h[:proficiency_band_id] = result.proficiency_band_id
       h[:composite_of_pro_null] = result.composite_of_pro_null
