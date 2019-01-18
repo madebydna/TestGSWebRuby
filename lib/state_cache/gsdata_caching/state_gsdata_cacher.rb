@@ -86,7 +86,7 @@ class StateGsdataCacher < StateCacher
       h[:academic_tags] = academic_tags if academic_tags
       h[:academic_types] = academic_types if academic_types
 # rubocop:disable Style/FormatStringToken
-      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
+      h[:source_date_valid] = result.date_valid
 # rubocop:enable Style/FormatStringToken
       h[:state_value] = result.value
       h[:source_name] = result.source_name
