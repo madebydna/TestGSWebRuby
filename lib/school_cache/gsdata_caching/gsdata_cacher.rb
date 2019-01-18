@@ -51,7 +51,6 @@ class GsdataCaching::GsdataCacher < Cacher
   def build_hash_for_cache
     school_cache_hash = Hash.new { |h, k| h[k] = [] }
     r = school_results
-    # require 'pry'; binding.pry;
     r.each_with_object(school_cache_hash) do |result, cache_hash|
       result_hash = result_to_hash(result)
       cache_hash[result.name] << result_hash if validate_result_hash(result_hash, result.data_type_id)

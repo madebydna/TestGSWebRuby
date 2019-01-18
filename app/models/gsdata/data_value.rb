@@ -125,6 +125,7 @@ class DataValue < ActiveRecord::Base
               .group('data_values.id')
     GsdataCaching::LoadDataValue.new(loads, dvs).merge
   end
+
 # rubocop:enable Style/FormatStringToken
 
   def self.school_values_with_academics_with_proficiency_band_names
@@ -207,7 +208,6 @@ class DataValue < ActiveRecord::Base
     GsdataCaching::LoadDataValue.new(loads, dvs).merge
   end
 
-  # gsdata - district
   def self.find_by_district_and_data_types(state, district_id, data_types, configuration= default_configuration)
     loads = Load.data_type_ids_to_loads(data_types, configuration )
     dvs = state_and_district_values.

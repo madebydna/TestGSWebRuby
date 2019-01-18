@@ -50,7 +50,6 @@ class TestScoresCaching::FeedTestScoresCacherGsdata < TestScoresCaching::TestSco
       h[:breakdowns] = breakdowns # if breakdowns
       h[:breakdown_tags] = breakdown_tags # if breakdown_tags
       h[:school_value] = result.value  #data_value.value
-
       h[:source_date_valid] = result.date_valid&.to_date&.year&.to_s  #source.data_valid
       h[:proficiency_band_name] = result.proficiency_band_name
 # rubocop:disable Style/SafeNavigation

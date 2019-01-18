@@ -18,9 +18,7 @@ class GsdataCaching::LoadDataValue
   end
 
   def build_load_hash(load)
-    # require 'pry'; binding.pry;
     OpenStruct.new.tap do |obj|
-      # require 'pry';binding.pry
       obj.load_id = load.id
       obj.source_name = load.source_name
       obj.data_type_id = load.data_type_id
@@ -40,9 +38,7 @@ class GsdataCaching::LoadDataValue
   end
 
   def to_hash(data_value)
-    # require 'pry'; binding.pry;
     load = load_hash(data_value.load_id)
-    # require 'pry'; binding.pry;
     OpenStruct.new.tap do |obj|
       obj.value = data_value.value
       obj.state = data_value.state
