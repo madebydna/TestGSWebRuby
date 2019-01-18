@@ -19,6 +19,7 @@ class DistrictsController < ApplicationController
     @hero_data = hero_data
     @academics_props = district_academics_module_props
     @reviews = reviews_formatted.reviews_list
+    @translations = translations
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
     set_ad_targeting_props
@@ -26,6 +27,12 @@ class DistrictsController < ApplicationController
   end
 
   private
+
+  def translations
+    {}.tap do |hash|
+      hash[:inPartnershipWith] = I18n.t('in_partnership_with', scope: 'partners.partner_logo').capitalize
+    end
+  end
 
   def district_academics_module_props
     CommunityProfiles::Academics.district_academics_props(district_cache_data_reader)

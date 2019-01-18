@@ -5,7 +5,7 @@ export const SCHOOL_DISTRICTS = 'school districts';
 export const SCHOOLS = 'schools';
 export const REVIEWS = 'Reviews';
 export const COMMUNITY_RESOURCES = 'community_resources';
-export const ACADEMICS = 'academics';
+export const ACADEMICS = 'Academics';
 
 const schools = {
   key: SCHOOLS,
@@ -23,7 +23,7 @@ const schoolDistricts = {
 
 const academics = {
   key: 'academics',
-  label: capitalize(t(ACADEMICS)),
+  label: t(ACADEMICS),
   anchor: '#Academics',
   selected: false
 }
