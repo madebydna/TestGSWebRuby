@@ -66,7 +66,8 @@ class Load < ActiveRecord::Base
   def self.load_and_source_and_data_type
     load_and_source_and_data_type_values = <<-SQL
       loads.id, loads.data_type_id, loads.configuration,
-      loads.date_valid, loads.description, (sources_new.name) as "source_name", (data_types.name) as "data_type_name"
+      loads.date_valid, loads.description, (sources_new.name) as "source_name", (data_types.name) as "data_type_name", 
+      (data_types.short_name) as "short_name"
     SQL
     select(load_and_source_and_data_type_values)
   end

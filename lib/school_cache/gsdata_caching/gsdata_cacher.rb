@@ -53,8 +53,7 @@ class GsdataCaching::GsdataCacher < Cacher
     r = school_results
     r.each_with_object(school_cache_hash) do |result, cache_hash|
       result_hash = result_to_hash(result)
-      validate_result_hash(result_hash, result.data_type_id)
-      cache_hash[result.name] << result_hash
+      cache_hash[result.name] << result_hash if validate_result_hash(result_hash, result.data_type_id)
     end
   end
 
@@ -115,7 +114,7 @@ class GsdataCaching::GsdataCacher < Cacher
       h[:state_value] = state_value if state_value
       h[:district_value] = district_value if district_value
       h[:display_range] = district_value if display_range
-      h[:source_name] = result.source_name
+      h[:source_name] = result.source
       h[:grade] = result.grade if result.grade
       h[:cohort_count] = result.cohort_count if result.cohort_count
       h[:proficiency_band_id] = result.proficiency_band_id if result.proficiency_band_id
