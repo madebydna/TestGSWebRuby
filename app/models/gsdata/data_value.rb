@@ -141,7 +141,7 @@ class DataValue < ActiveRecord::Base
 # test scores gsdata - feeds!!!! all proficiencies
   def self.find_by_school_and_data_type_tags(school, tags, configuration=default_configuration, breakdown_tag_names = [], academic_tag_names = [])
     loads = data_type_tags_to_loads(tags, configuration )
-    dvs = school_values_with_academics.
+    dvs = school_values_with_academics_with_proficiency_band_names.
         from(
             DataValue.school_and_data_types(school.state,
                                             school.id,
