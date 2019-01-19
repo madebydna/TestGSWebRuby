@@ -89,7 +89,7 @@ class StateGsdataCacher < StateCacher
       h[:source_date_valid] = result.date_valid
 # rubocop:enable Style/FormatStringToken
       h[:state_value] = result.value
-      h[:source_name] = result.source_name
+      h[:source_name] = result.source
       h[:grade] = result.grade if result.grade
       h[:cohort_count] = result.cohort_count if result.cohort_count
       h[:proficiency_band_id] = result.proficiency_band_id if result.proficiency_band_id
