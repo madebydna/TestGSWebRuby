@@ -20,10 +20,19 @@ class TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata < TestScores
   end
 
   def unique_load_ids
-    Load.with_data_types.with_data_type_tags('state_test')
+    ids = Load.with_data_types.with_data_type_tags('state_test')
         .with_configuration('feeds')
         .map(&:id)
         .uniq
+    filter_to_most_recent_load_id_by_data_type_id(ids)
+  end
+
+  def filter_to_most_recent_load_id_by_data_type_id(ids)
+    Load.find_by_sql("select loads1.data_type_id, loads1.id, loads1.date_valid from gsdata.loads loads1 INNER JOIN
+                      (select loads2.data_type_id, MAX(loads2.date_valid) as dv from gsdata.loads loads2
+                        where id in ( #{ids.join(',')})
+                        group by loads2.data_type_id) most_recent_load
+                      on loads1.data_type_id = most_recent_load.data_type_id and loads1.date_valid = most_recent_load.dv")
   end
 
   def build_hash_for_cache
