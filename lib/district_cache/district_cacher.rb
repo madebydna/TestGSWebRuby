@@ -4,7 +4,7 @@ class DistrictCacher
 
   # Known data types:
   # :feed_test_scores_gsdata
-  # :feed_test_scores - old not used
+  # :test_scores_gsdata
   # :ratings - old not used
   # :district_schools_summary
   # :district_directory
