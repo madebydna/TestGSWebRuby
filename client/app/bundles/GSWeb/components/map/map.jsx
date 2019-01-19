@@ -21,7 +21,7 @@ export default class Map extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { markersUpdated: true };
+    this.state = { markersUpdated: true, zoomLevel: null };
     this.openInfoWindow = this.openInfoWindow.bind(this);
     this.fitBounds = this.fitBounds.bind(this);
   }
@@ -105,6 +105,9 @@ export default class Map extends React.Component {
       this.onResize.bind(this)
     );
     this.map.addListener('click', this.onClick.bind(this));
+    this.map.addListener('zoom_changed', () => {
+      this.state.mounted && this.setState({ zoomLevel: this.map.getZoom()})
+    })
     this.setState({ mapCenter: this.map.getCenter(), mounted: true });
   }
 
@@ -179,7 +182,8 @@ export default class Map extends React.Component {
             googleMaps: this.props.googleMaps,
             map: this.map,
             openInfoWindow: this.openInfoWindow,
-            fitBounds: this.fitBounds
+            fitBounds: this.fitBounds,
+            zoomLevel: this.state.zoomLevel
           })}
       </div>
     );

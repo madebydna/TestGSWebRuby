@@ -26,15 +26,16 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
       <GoogleMapsInitializer>
         {(isInitialized, googleMaps) =>
           isInitialized && (
-            <Map googleMaps={googleMaps} changeLocation={() => {}} markerDigest={schools.map(school => school.state + (school.id || school.schoo_id)).sort((a,b)=>(a-b)).join('-')} {...other}>
-              {({ googleMaps, map, openInfoWindow, fitBounds }) => {
+            <Map googleMaps={googleMaps} changeLocation={() => {}} markerDigest={schools.filter(s=>s.schoolType).map(school => school.state + school.id).sort((a,b)=>(a-b)).join('-')} {...other}>
+              {({ googleMaps, map, openInfoWindow, fitBounds, zoomLevel }) => {
                 const markers = createMarkersFromSchools(
                    schools,
                    {},
                    map,
                    null,
                    openInfoWindow,
-                   googleMaps
+                   googleMaps,
+                   zoomLevel
                  );
                 if (locationMarker) {
                   markers.push(
@@ -71,8 +72,7 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
 };
 
 SearchMap.propTypes = {
-  schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
-  schoolMarkers: PropTypes.arrayOf(PropTypes.object),
+  schools: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool,
   locationMarker: PropTypes.object
 };

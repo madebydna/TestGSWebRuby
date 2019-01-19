@@ -37,9 +37,12 @@ export default function createMarkerFactory(googleMaps) {
       );
     },
 
-    selectPin(rating, color, highlighted, assigned, address, schoolId) {
-      if (schoolId) {
+    selectPin(rating, color, highlighted, assigned, address, zoomLevel, lightWeight, propertiesCount) {
+      if (propertiesCount === 6 || (lightWeight && zoomLevel < 15)){
         return createSmallPinMarker(rating);
+      }
+      if(lightWeight){
+        return createDefaultPinWithRating(rating, color, assigned);
       }
       if (assigned && rating && !highlighted) {
         return createAssignedPinWithRating(rating, color);
@@ -71,14 +74,19 @@ export default function createMarkerFactory(googleMaps) {
       svg = true,
       assigned,
       address,
-      schoolId
+      zoomLevel,
+      lightWeight,
+      propertiesCount
     ) {
       // svg flag intended to permit backwards compatibility while we decide which assets to use for district boundaries tool
       const position = new googleMaps.LatLng(lat, lon);
       const color = mapPinColor(rating);
       let size = null;
-      if (schoolId){
+      // We know that the light weight pins have less information
+      if ((lightWeight && zoomLevel < 15) || propertiesCount === 6){
         size = new googleMaps.Size(15,15);
+      }else if(lightWeight){
+        size = new googleMaps.Size(40, 50);
       }else if(address){
         size = new googleMaps.Size(25, 34); // address pin
       } else if (assigned && rating) {
@@ -87,7 +95,7 @@ export default function createMarkerFactory(googleMaps) {
         size = new googleMaps.Size(59, 58);
       } else if (!assigned && rating) {
         size = new googleMaps.Size(40, 50);
-      } else if (!assigned && !rating) {
+      }else if (!assigned && !rating) {
         size = new googleMaps.Size(26, 33);
       }
       let zIndex = 1;
@@ -106,7 +114,9 @@ export default function createMarkerFactory(googleMaps) {
                 highlighted,
                 assigned,
                 address,
-                schoolId
+                zoomLevel,
+                lightWeight,
+                propertiesCount
               ),
               scaledSize: size
             }

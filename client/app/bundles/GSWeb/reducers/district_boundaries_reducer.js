@@ -7,7 +7,6 @@ import { SET_LAT_LON, SET_LEVEL, ADD_SCHOOL_TYPE, REMOVE_SCHOOL_TYPE,
 // derive something such as boundary coordinates
 export const getSchools = state => {
   let schools = Object.values(state.schools);
-
   // always include the currently selected school in the list
   let school = getSchool(state);
 

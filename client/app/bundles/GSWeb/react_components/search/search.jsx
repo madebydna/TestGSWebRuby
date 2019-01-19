@@ -70,6 +70,12 @@ class Search extends React.Component {
     schoolKeys: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array)),
   };
 
+  constructor(props){
+    super(props);
+    this.setMapDisplayState = this.setMapDisplayState.bind(this);
+    this.state = { shouldDisplayFullMarkers: false}
+  }
+
   componentDidMount() {
     initAdvertising();
   }
@@ -80,8 +86,18 @@ class Search extends React.Component {
     ) : null;
   }
 
+  setMapDisplayState(boolean){
+    this.setState({ shouldDisplayFullMarkers: boolean})
+  }
+
   schoolMarkersSelection(){
-    return this.props.schoolMarkers.length > 0 ? this.props.schoolMarkers : this.props.schools
+    const schools = this.props.schools;
+    let schoolMarkers = this.props.schoolMarkers
+    schools.forEach(s=>{
+      const idTag = s.state.toLowerCase() + s.id;
+      schoolMarkers[idTag] = { ...schoolMarkers[idTag],...s};
+    })
+    return Object.values(schoolMarkers);
   }
 
   render() {
@@ -172,6 +188,7 @@ class Search extends React.Component {
                 schools={this.schoolMarkersSelection()}
                 isLoading={this.props.loadingSchools}
                 locationLabel={this.props.locationLabel}
+                setMapDisplayState={this.setMapDisplayState}
               />
             }
             searchBox={<SearchBox size={this.props.size} />}

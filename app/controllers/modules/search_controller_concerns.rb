@@ -229,17 +229,20 @@ module SearchControllerConcerns
       []
     end
 
-    schools.map do |school|
-      {}.tap do |hash|
-        hash['school_id'] = school.id
+    all_markers = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
+    schools.each do |school|
+      all_markers["#{school.state&.downcase}#{school.id}"].tap do |hash|
+        hash['id'] = school.id
         hash['lat'] = school.lat
         hash['lon'] = school.lon
         hash['state'] = school.state&.downcase
         hash['rating'] = rand(10) +  1
+        hash['lightWeight'] = true
       end
     end
+    all_markers
   end
-
+  
   #Compare Schools methods
   def add_pinned_school(schools)
     schools.select do |school|
