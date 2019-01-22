@@ -24,7 +24,7 @@ const schoolDistricts = {
 const academics = {
   key: 'academics',
   label: t(ACADEMICS),
-  anchor: '#Academics',
+  anchor: '#academics',
   selected: false
 }
 
