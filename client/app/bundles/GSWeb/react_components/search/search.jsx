@@ -90,9 +90,9 @@ class Search extends React.Component {
     this.setState({ shouldDisplayFullMarkers: boolean})
   }
 
-  schoolMarkersSelection(){
+  getSchoolsDetails(){
     const schools = this.props.schools;
-    let schoolMarkers = this.props.schoolMarkers
+    let schoolMarkers = this.props.schoolMarkers;
     schools.forEach(s=>{
       const idTag = s.state.toLowerCase() + s.id;
       schoolMarkers[idTag] = { ...schoolMarkers[idTag],...s};
@@ -185,7 +185,7 @@ class Search extends React.Component {
                     ? { lat: this.props.lat, lon: this.props.lon }
                     : null
                 }
-                schools={this.schoolMarkersSelection()}
+                schools={this.getSchoolsDetails()}
                 isLoading={this.props.loadingSchools}
                 locationLabel={this.props.locationLabel}
                 setMapDisplayState={this.setMapDisplayState}

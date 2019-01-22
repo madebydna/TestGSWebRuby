@@ -225,6 +225,8 @@ module SearchControllerConcerns
       School.on_db(district_record.state&.downcase).active.where(district_id: district_record)
     elsif city_browse?
       School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase)
+    # elsif zip_code_search?
+    #   School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase)
     else
       []
     end
@@ -237,7 +239,7 @@ module SearchControllerConcerns
         hash['lon'] = school.lon
         hash['state'] = school.state&.downcase
         hash['rating'] = rand(10) +  1
-        hash['lightWeight'] = true
+        hash['locationQuery'] = true
       end
     end
     all_markers

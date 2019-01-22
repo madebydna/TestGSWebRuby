@@ -19,7 +19,7 @@ export default class MapMarker extends DefaultMapMarker {
     address: PropTypes.bool,
     animation: PropTypes.number,
     zoomLevel: PropTypes.number,
-    lightWeight: PropTypes.bool,
+    locationQuery: PropTypes.bool,
     propertiesCount: PropTypes.number
   };
 
@@ -62,7 +62,7 @@ export default class MapMarker extends DefaultMapMarker {
       this.props.assigned,
       this.props.address,
       this.props.zoomLevel,
-      this.props.lightWeight,
+      this.props.locationQuery,
       this.props.propertiesCount
     );
     if (this.props.animation) {
@@ -101,7 +101,7 @@ const createMarkersFromSchools = (
         assigned: s.assigned,
         googleMaps,
         zoomLevel,
-        lightWeight: s.lightWeight,
+        locationQuery: s.locationQuery,
         propertiesCount: Object.values(s).length,
         map,
         key: `s${s.state}${s.id}${s.assigned}${s.highlighted}`,
