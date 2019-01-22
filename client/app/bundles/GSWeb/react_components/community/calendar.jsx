@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { t } from "util/i18n";
 import { findDistrictCalendarWithNCES as fetchDistrictCalendar } from "../../api_clients/calendar";
-// import analyticsEvent or anything else?
+import InfoBox from "../school_profiles/info_box";
 import LoadingOverlay from "../search/loading_overlay";
-import Drawer from '../drawer';
+import Drawer from "../drawer";
 
 class Calendar extends React.Component {
   static propTypes = {
@@ -28,9 +28,8 @@ class Calendar extends React.Component {
 
     this.renderCalendarEvent = this.renderCalendarEvent.bind(this);
   };
-// TODO: Error handling!
 
-  dataFromJson(json) {
+  getDataFromJson(json) {
     let events = [];
     if (json[0] === 'vcalendar' && json.length > 2) {
       for (let i=2; i < json.length; i++) {
@@ -65,7 +64,7 @@ class Calendar extends React.Component {
     fetchDistrictCalendar(this.props.locality.calendarURL, this.props.locality.nces_code)
       .done($jsonRes => this.setState({
         isLoading: false,
-        data: this.dataFromJson($jsonRes)
+        data: this.getDataFromJson($jsonRes)
       }))
       .fail(error => this.setState({
         isLoading: false,
@@ -116,25 +115,32 @@ class Calendar extends React.Component {
       return (
         <section className="calendar-module">
           <div className="null-state">
-            <h4>{t('district_calendar_no_results')}</h4>
+            <h4>{ t('district_calendar_no_results') }</h4>
           </div>
         </section>
       )
     } else {
+      const sources = t('district_calendar_sources_html');
         return (
-          <section className="calendar-module">
-            <div className="calendar-content">
-              { this.renderCalendarHeader() }
-              { calendarEventsInitial }
-              { calendarEventsForDrawer.length > 0 && 
-                <div className="rating-container__more-items">
-                  <Drawer
-                    content={ calendarEventsForDrawer }
-                  />
-                </div>
-              }
-            </div>
-          </section>
+          <React.Fragment>
+            <section className="calendar-module">
+              <div className="calendar-content">
+                { this.renderCalendarHeader() }
+                { calendarEventsInitial }
+                { calendarEventsForDrawer.length > 0 && 
+                  <div className="rating-container__more-items">
+                    <Drawer
+                      content={ calendarEventsForDrawer }
+                      trackingCategory={ `${this.props.pageType}` }
+                      trackingAction={ "Show More" }
+                      trackingLabel={ "Calendar" }
+                    />
+                  </div>
+                }
+              </div>
+            </section>
+            <InfoBox content={sources} element_type="sources" >{ t('See notes') }</InfoBox>
+          </React.Fragment>
         )
     }
   }
