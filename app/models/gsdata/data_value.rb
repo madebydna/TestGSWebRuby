@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ruby-prof'
+
 class DataValue < ActiveRecord::Base
   self.table_name = 'data_values'
 
@@ -208,6 +210,7 @@ class DataValue < ActiveRecord::Base
     GsdataCaching::LoadDataValue.new(loads, dvs).merge
   end
 
+  # gsdata - district
   def self.find_by_district_and_data_types(state, district_id, data_types, configuration= default_configuration)
     loads = Load.data_type_ids_to_loads(data_types, configuration )
     dvs = state_and_district_values.
@@ -337,7 +340,6 @@ class DataValue < ActiveRecord::Base
       AND active = 1
       AND proficiency_band_id = 1
     SQL
-    # data_types = Array.wrap(data_type_ids)
     where(school_subquery_sql, state, school_id, load_ids)
   end
 
