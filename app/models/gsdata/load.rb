@@ -113,7 +113,8 @@ class Load < ActiveRecord::Base
 
   def self.data_type_tags_to_loads(tags, configuration)
     config = configuration.is_a?(Array) ? configuration.join(',') : configuration
-    hash_key = tags + config
+    t = tags.is_a?(Array) ? tags.join(',') : tags
+    hash_key = t + config
     @_data_type_tags_to_loads ||= {}
     @_data_type_tags_to_loads[hash_key] ||= begin
     load_and_source_and_data_type.
