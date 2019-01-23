@@ -39,7 +39,7 @@ export default class MapMarker extends DefaultMapMarker {
       this.props.highlighted,
       this.props.svg,
       this.props.assigned,
-      this.props.address
+      this.props.address,
     );
     if (this.props.animation) {
       this.marker.setAnimation(this.props.animation);
@@ -67,7 +67,8 @@ const createMarkersFromSchools = (
   map,
   selectSchool,
   openInfoWindow,
-  googleMaps
+  googleMaps,
+  callback
 ) =>
   schools.map(s => (
     <MapMarker
@@ -82,12 +83,12 @@ const createMarkersFromSchools = (
         googleMaps,
         map,
         key: `s${s.state}${s.id}${s.assigned}${s.highlighted}`,
-        openInfoWindow: m => openInfoWindow(createInfoWindow(s), m),
+        openInfoWindow: m => openInfoWindow(createInfoWindow({...s, savedSchoolCB: callback}), m),
         onClick: m => {
           if (selectSchool) {
             selectSchool();
           }
-          openInfoWindow(createInfoWindow(s), m);
+          openInfoWindow(createInfoWindow({ ...s, savedSchoolCB: callback }), m);
         },
         selected: s === selectedSchool,
         type:

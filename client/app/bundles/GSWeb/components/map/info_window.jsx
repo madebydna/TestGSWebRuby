@@ -70,6 +70,12 @@ export default function createInfoWindow(entity) {
             {ratingText}
           </div>
           {ratingScale}
+          {/* Saved School heart container that only appears during SchoolSearchResult */}
+          {entity.savedSchoolCB && <div
+            data-state={entity.state}
+            data-id={entity.id}
+            className={entity.savedSchool ? 'icon-heart info-heart' : 'icon-heart-outline info-heart'}
+          />}
         </div>
       );
     }
