@@ -25,33 +25,37 @@ en:
           podcasts: Podcasts
         parenting:
           title: Parenting
-          raising_kids: Raising kids
-          parenting_dilemmas: Parenting dilemmas
-          emotional_smarts: Emotional smarts
-          health_and_development: Health & development
-          smart_strategies: Smart strategies
-          early_learning: Early learning
-          school_life: School life
-          finding_the_right_school: Finding the right school
-          education_trends: Education trends
-          road_to_college: Road to college
-          academics: Academics
-          reading: Reading
-          math: Math
-          writing: Writing
-          science: Science
-          arts: Arts
-          stem: STEM
-          social_studies: Social studies
-          milestones: Milestones
-          state_test_guide: State Test Guide
-          learning_issues: Learning issues
-          learning_disabilities: Learning disabilities
-          gifted: Gifted
-          attention_disorders: Attention disorders
-          reading_disorders: Reading disorders
-          special_needs: Special needs
-          book_lists: Book lists
-          worksheets: Worksheets
-          podcasts: Podcasts
-          back_to_school: Back to school
+          menu:
+            - Raising kids:
+              - Parenting dilemmas: /gk/category/dilemmas/
+              - Emotional smarts: /gk/emotional-smarts/
+              - Health & development: /gk/category/health/
+              - Smart strategies: /gk/category/smart-strategies/
+              - Early learning: /gk/category/early-learning/
+            - School life:
+              - Finding the right school: /gk/category/find-a-school-skills/
+              - Education trends: /gk/category/education-trends/
+              - Road to college: /gk/road-to-college/
+              - College Prep, 9th grade: /gk/9th-college-prep/
+              - College Prep, 10th grade: /gk/10th-grade-college-prep/
+              - College Prep, 11th grade: /gk/11th-grade-college-prep/
+              - College Prep, 12th grade: /gk/12th-grade-college-prep/
+            - Academics:
+              - Reading: /gk/category/academics/reading-2/
+              - Math: /gk/category/academics/math-2/
+              - Writing: /gk/category/academics/writing-2/
+              - Science: /gk/category/academics/science/
+              - Arts: /gk/category/academics/arts/
+              - STEM: /gk/category/academics/stem/
+              - Social studies: /gk/category/academics/social-studies/
+              - Milestones: /gk/milestones/
+              - State Test Guide: /gk/common-core-test-guide/
+            - Learning issues:
+              - Learning disabilities: /gk/category/learning-disabilities/
+              - Gifted: /gk/category/gifted/
+              - Attention disorders: /gk/category/attention-disorders/
+              - Reading disorders: /gk/category/reading-disorders/
+              - Special needs: /gk/category/special-needs/
+            - Book lists: /gk/book-lists/
+            - Worksheets: /gk/worksheets/
+            - Podcasts: /gk/articles/like-a-sponge/

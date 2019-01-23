@@ -26,6 +26,30 @@ es:
           podcasts: Podcasts
         parenting:
           title: Crianza
+          menu:
+            - Crianza:
+              - Crianza: /gk/category/crianza/?lang=es
+              - Carácter: /gk/category/caracter-es/?lang=es
+              - Consejos rápidos: /gk/category/consejos-rapidos-para-mamas-y-papas/?lang=es
+              - Salud: /gk/category/salud/?lang=es
+              - Cerebro del niño: /gk/category/cerebro-del-nino/?lang=es
+              - Acoso: /gk/category/acoso/?lang=es
+            - Vida escolar:
+              - Vida escolar: /gk/category/vida-escolar/?lang=es
+              - Encontrar una buena escuela: /gk/category/encontrar-una-buena-escuela/?lang=es
+              - Tarea: /gk/category/tarea/?lang=es
+              - Tendencias educativas: /gk/category/tendencias-educativas/?lang=es
+              - Preparación universitaria: /gk/category/preparacion-universitaria/?lang=es
+              - Guía del Examen Estatal: /gk/common-core-test-guide/?lang=es
+            - Aprendizaje:
+              - Lectura: /gk/category/lectura/?lang=es
+              - Matemáticas: /gk/category/academics/matematicas/?lang=es
+              - Escritura: /gk/category/escritura/?lang=es
+              - Aprendizaje temprano: /gk/category/aprendizaje-de-ninos-preescolares/?lang=es
+              - Dificultades de aprendizaje y de atención: /gk/category/dificultades-de-aprendizaje-y-de-atencion/?lang=es
+              - Videos Milestones: /gk/milestones/?lang=es
+            - Libros para niños: /gk/book-lists/?lang=es
+            - Hojas de trabajo (en inglés): /gk/worksheets/
           raising_kids: Raising kids
           parenting_dilemmas: Parenting dilemmas
           emotional_smarts: Emotional smarts
