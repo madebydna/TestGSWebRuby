@@ -30,25 +30,57 @@ class Calendar extends React.Component {
   };
 
   getDataFromJson(json) {
-    let events = [];
+    let validEvents = [];
+    let currentDate = this.formatDateObject(new Date());
+
     if (json[0] === 'vcalendar' && json.length > 2) {
-      for (let i=2; i < json.length; i++) {
-        if (json[i][0] === 'vevent' && Array.isArray(json[i][1])) {
-          let event = json[i][1];
-          let startDate = this.formatShortDateString(this.getValueFromEventArray(event, 'dtstart'));
+      let jsonEvents = json.filter(element => element[0] === 'vevent');
+
+      for (let i = 0; i < jsonEvents.length; i++) {
+        if (Array.isArray(jsonEvents[i][1])) {
+          let event = jsonEvents[i][1];
           let name = this.getValueFromEventArray(event, 'summary');
-          if (startDate && name) {
-            let eventData = { startDate: startDate, name: name };
-            events.push(eventData);
+          let startDate = this.parseDateString(this.getValueFromEventArray(event, 'dtstart'));
+
+          if (name && startDate && this.eventIsFutureDate(currentDate, startDate)) {
+            let startDateFormatted = this.formatShortDateString(startDate);
+            let eventData = { startDate: startDateFormatted, name: name };
+            validEvents.push(eventData);
           }
-        } 
+        }
       }
     }
-    return events;
+    return validEvents;
   };
 
-  formatShortDateString(date) {
-    return new Date(date + ' PST').toLocaleDateString("en-US");
+  // Removes time from date object so we can compare MM/DD/YY 
+  formatDateObject(date) {
+    return [date.getFullYear(), date.getMonth() + 1, date.getDate()];
+  }
+
+  parseDateString(date) {
+    return date.split("-").map(value => parseInt(value));
+  }
+
+  eventIsFutureDate(today, eventDateArray) {
+    let [todayYear, todayMonth, todayDate] = today; 
+    let [eventYear, eventMonth, eventDate] = eventDateArray;
+    
+    if (eventYear > todayYear) {
+      return true;
+    } else if ((eventYear === todayYear) && (eventMonth > todayMonth)) {
+      return true;
+    } else if ((eventYear === todayYear) && (eventMonth === todayMonth) && (eventDate >= todayDate)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  formatShortDateString(dateArray) {
+    let [eventYear, eventMonth, eventDate] = dateArray;
+    
+    return `${eventMonth}/${eventDate}/${eventYear}`;
   }
 
   getValueFromEventArray(event, valueName) {
@@ -97,6 +129,8 @@ class Calendar extends React.Component {
     )
   }
 
+  // TODO: Check class name for rating container
+  // Look into lazy loading for drawer - modify Drawer to match Openable Closable? use inherent React state
   render() {
     let calendarEvents = this.state.data;
     let calendarEventsInitial = calendarEvents.slice(0,5).map(event => this.renderCalendarEvent(event));
