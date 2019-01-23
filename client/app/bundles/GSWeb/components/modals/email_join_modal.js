@@ -2,6 +2,7 @@ import BaseModal from './base_modal';
 import { sponsorsSignUp, gradeByGradeSignUp } from '../../util/newsletters';
 import { create, assign, merge } from 'lodash';
 import { runValidations as runFormValidations } from 'components/validating_forms';
+import { addQueryParamToUrl } from 'util/uri';
 
 const EmailJoinModal = function($, options) {
   // Call BaseModal's constructor first, using this modal as the context
@@ -11,6 +12,18 @@ const EmailJoinModal = function($, options) {
   // set properties specific to this modal
   this.cssClass = options.cssClass || 'js-email-join-modal';
   this.modalUrl = '/gsr/modals/email_join_modal';
+  this.heading = options.heading;
+  this.subheading = options.subheading;
+  if (this.heading) {
+    this.modalUrl = addQueryParamToUrl('heading', this.heading, this.modalUrl);
+  }
+  if (this.subheading) {
+    this.modalUrl = addQueryParamToUrl(
+      'subheading',
+      this.subheading,
+      this.modalUrl
+    );
+  }
 
   this.eventTrackingConfig = {
     //'place where modal triggered': {

@@ -41,6 +41,14 @@ class ApplicationController < ActionController::Base
     super
   end
 
+  def asset_full_url(file)
+    path = file.starts_with?('/') ? file : '/'+file
+    scheme = ENV_GLOBAL['force_ssl'] == 'true' ? 'https' : 'http'
+    host = ENV_GLOBAL['app_host'].presence || 'www.greatschools.org'
+    port = ENV_GLOBAL['app_port'].presence
+    ["#{scheme}://#{host}", port].reject(&:blank?).join(':') + path
+  end
+
   protected
 
   rescue_from Exception, :with => :exception_handler
@@ -73,13 +81,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def asset_full_url(file)
-    path = file.starts_with?('/') ? file : '/'+file
-    scheme = ENV_GLOBAL['force_ssl'] == 'true' ? 'https' : 'http'
-    host = ENV_GLOBAL['app_host'].presence || 'www.greatschools.org'
-    port = ENV_GLOBAL['app_port'].presence
-    ["#{scheme}://#{host}", port].reject(&:blank?).join(':') + path
-  end
 
   def host
     return request.headers['X-Forwarded-Host'] if request.headers['X-Forwarded-Host'].present?

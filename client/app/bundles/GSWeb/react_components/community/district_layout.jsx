@@ -6,6 +6,7 @@ import Button from 'react_components/button';
 import Ad from 'react_components/ad';
 import { t, capitalize } from 'util/i18n';
 import { keepInViewport } from 'util/sticky';
+import xq from 'community/xq-sm.png';
 
 class DistrictLayout extends React.Component {
   static propTypes = {
@@ -135,6 +136,12 @@ class DistrictLayout extends React.Component {
     return (
       <div id="schools">
         <div className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</div>
+        <div className="xq-partnership">
+          {this.props.translations.inPartnershipWith}
+          <a href='https://xqsuperschool.org/school-board-thing' target="_blank">
+            <img src={xq} alt='xq-icon' />
+          </a>
+        </div>
         {this.props.browseSchools}
         {this.props.schoolCounts.all > 0 ? this.props.topSchools: null}
       </div>

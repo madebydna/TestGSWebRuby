@@ -3,6 +3,7 @@ module Qualaroo
   QUALAROO_MODULE_KEY = {
       :test_scores => '1547acf4-6133-4d98-b2e0-5eb28ca1ec04',
       :college_readiness => '34aea707-ec71-4130-b6bb-2864e0528c64',
+      :college_success => 'cb0e676f-324a-4a74-bc02-72ddf1a2ddd6',
       :advanced_coursework => 'd8fa4702-59cd-435c-a922-9409acaf81c8',
       :advanced_stem => '6a8ccb75-0c22-4433-a220-97db8fd509df',
       :race_ethnicity => 'a0e5e5a5-d6d6-45c6-99e4-4e1e06863f89',
