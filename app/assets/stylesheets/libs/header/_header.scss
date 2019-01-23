@@ -775,6 +775,14 @@
   .buffer {
     margin: 0 20em;
   }
+
+  .un nav a {
+    line-height: 18px;
+  }
+
+  .un nav ul ul a {
+    padding: 10px 10px;
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
