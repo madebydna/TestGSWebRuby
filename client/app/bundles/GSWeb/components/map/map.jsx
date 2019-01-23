@@ -24,6 +24,7 @@ export default class Map extends React.Component {
     this.state = { markersUpdated: true };
     this.openInfoWindow = this.openInfoWindow.bind(this);
     this.fitBounds = this.fitBounds.bind(this);
+    this.handleHeartContainerEvents = this.handleHeartContainerEvents.bind(this);
   }
 
   createGoogleMap($elem) {
@@ -52,8 +53,26 @@ export default class Map extends React.Component {
     const infoWindow = new this.props.googleMaps.InfoWindow({
       content
     });
+    this.handleHeartContainerEvents(infoWindow);
     infoWindow.open(this.map, marker);
     this.infoWindow = infoWindow;
+  }
+
+  handleHeartContainerEvents(infoWindow){
+    const savedHeartCB = this.props.heartContainerCB
+    this.props.googleMaps.event.addDomListener(infoWindow, 'domready', () => {
+      const heartContainer = document.querySelector('.info-heart');
+      heartContainer && heartContainer.addEventListener('click', function (e) {
+        savedHeartCB({ state: this.dataset.state, id: this.dataset.id });
+        if (heartContainer.classList.contains('icon-heart')) {
+          heartContainer.classList.add('icon-heart-outline')
+          heartContainer.classList.remove('icon-heart')
+        } else {
+          heartContainer.classList.add('icon-heart')
+          heartContainer.classList.remove('icon-heart-outline')
+        }
+      })
+    })
   }
 
   closeInfoWindow() {
