@@ -129,8 +129,6 @@ class Calendar extends React.Component {
     )
   }
 
-  // TODO: Check class name for rating container
-  // Look into lazy loading for drawer - modify Drawer to match Openable Closable? use inherent React state
   render() {
     let calendarEvents = this.state.data;
     let calendarEventsInitial = calendarEvents.slice(0,5).map(event => this.renderCalendarEvent(event));
