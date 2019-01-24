@@ -52,6 +52,11 @@ export default function createInfoWindow(entity) {
         <div className="rating-container">
           <img src={unratedSchoolIcon} />
           <div className="rating-scale">{t('Currently unrated')}</div>
+          {entity.savedSchoolCB && <div
+            data-state={entity.state}
+            data-id={entity.id}
+            className={entity.savedSchool ? 'icon-heart info-heart' : 'icon-heart-outline info-heart'}
+          />}
         </div>
       );
     }
