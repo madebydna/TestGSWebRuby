@@ -29,7 +29,7 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
           <SavedSchoolContext.Consumer>
             {({ saveSchoolCallback }) => (
               isInitialized && (
-                <Map googleMaps={googleMaps} heartContainerCB={saveSchoolCallback} changeLocation={() => {}} markerDigest={schools.map(school => school.state + school.id).sort((a,b)=>(a-b)).join('-')} {...other}>
+                <Map googleMaps={googleMaps} heartClickCallback={saveSchoolCallback} changeLocation={() => {}} markerDigest={schools.map(school => school.state + school.id).sort((a,b)=>(a-b)).join('-')} {...other}>
                   {({ googleMaps, map, openInfoWindow, fitBounds }) => {
                     const markers = createMarkersFromSchools(
                       schools,

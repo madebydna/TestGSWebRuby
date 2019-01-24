@@ -9,7 +9,8 @@ export default class Map extends React.Component {
     hidden: PropTypes.bool,
     lat: PropTypes.number,
     lon: PropTypes.number,
-    markerDigest: PropTypes.string
+    markerDigest: PropTypes.string,
+    heartClickCallback: PropTypes.func
   };
 
   static defaultProps = {
@@ -24,7 +25,7 @@ export default class Map extends React.Component {
     this.state = { markersUpdated: true };
     this.openInfoWindow = this.openInfoWindow.bind(this);
     this.fitBounds = this.fitBounds.bind(this);
-    this.handleHeartContainerEvents = this.handleHeartContainerEvents.bind(this);
+    this.handleHeartClickCallback = this.handleHeartClickCallback.bind(this);
   }
 
   createGoogleMap($elem) {
@@ -53,17 +54,17 @@ export default class Map extends React.Component {
     const infoWindow = new this.props.googleMaps.InfoWindow({
       content
     });
-    this.handleHeartContainerEvents(infoWindow);
+    this.handleHeartClickCallback(infoWindow);
     infoWindow.open(this.map, marker);
     this.infoWindow = infoWindow;
   }
 
-  handleHeartContainerEvents(infoWindow){
-    const savedHeartCB = this.props.heartContainerCB
+  handleHeartClickCallback(infoWindow){
+    const heartClickCallback = this.props.heartClickCallback
     this.props.googleMaps.event.addDomListener(infoWindow, 'domready', () => {
-      const heartContainer = document.querySelector('.info-heart');
+      const heartContainer = document.querySelector('.js-info-heart');
       heartContainer && heartContainer.addEventListener('click', function (e) {
-        savedHeartCB({ state: this.dataset.state, id: this.dataset.id });
+        heartClickCallback({ state: this.dataset.state, id: this.dataset.id });
         if (heartContainer.classList.contains('icon-heart')) {
           heartContainer.classList.add('icon-heart-outline')
           heartContainer.classList.remove('icon-heart')

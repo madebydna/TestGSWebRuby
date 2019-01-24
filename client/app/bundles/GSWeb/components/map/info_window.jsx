@@ -52,10 +52,10 @@ export default function createInfoWindow(entity) {
         <div className="rating-container">
           <img src={unratedSchoolIcon} />
           <div className="rating-scale">{t('Currently unrated')}</div>
-          {entity.savedSchoolCB && <div
+          {entity.savedSchoolCallback && <div
             data-state={entity.state}
             data-id={entity.id}
-            className={entity.savedSchool ? 'icon-heart info-heart' : 'icon-heart-outline info-heart'}
+            className={entity.savedSchool ? 'icon-heart js-info-heart' : 'icon-heart-outline js-info-heart'}
           />}
         </div>
       );
@@ -76,10 +76,10 @@ export default function createInfoWindow(entity) {
           </div>
           {ratingScale}
           {/* Saved School heart container that only appears during SchoolSearchResult */}
-          {entity.savedSchoolCB && <div
+          {entity.savedSchoolCallback && <div
             data-state={entity.state}
             data-id={entity.id}
-            className={entity.savedSchool ? 'icon-heart info-heart' : 'icon-heart-outline info-heart'}
+            className={entity.savedSchool ? 'icon-heart js-info-heart' : 'icon-heart-outline js-info-heart'}
           />}
         </div>
       );
