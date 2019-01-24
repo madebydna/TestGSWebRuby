@@ -149,13 +149,8 @@ class MySchoolListLayout extends React.Component {
   }
 
   componentDidMount() {
-    keepInViewport(this.header, {
-      initialTop: 60,
-      setTop: true,
-      setBottom: false
-    });
     keepInViewport(this.fixedYLayer, {
-      $elementsAbove: [$('.header_un')],
+      $elementsAbove: [$('.header_un'), $('.search-body .menu-bar')],
       $elementsBelow: [$('.footer')],
       setTop: true,
       setBottom: true

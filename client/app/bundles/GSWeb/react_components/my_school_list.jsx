@@ -21,7 +21,7 @@ export default function() {
     <SearchContext.Provider findSchools={mySchoolList}>
       <SearchContext.Consumer>
         {({ schools, ...state }) => (
-          <MySchoolList {...state} schools={schools} layout="MySchoolList" />
+          <MySchoolList {...state} schools={schools.filter(s=>s.savedSchool)} layout="MySchoolList" />
         )}
       </SearchContext.Consumer>
     </SearchContext.Provider>
