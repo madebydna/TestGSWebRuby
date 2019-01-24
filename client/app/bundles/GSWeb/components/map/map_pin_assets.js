@@ -172,7 +172,7 @@ const createSmallPinMarker = (rating) => {
     `<circle
       cx="7.5"
       cy="7.5"
-      r="5"
+      r="4"
       fill="${mapPinColor(rating)}"
       stroke="${WHITE}"
       strole-width="2"
