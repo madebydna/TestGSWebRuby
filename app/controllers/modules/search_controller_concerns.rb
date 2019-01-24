@@ -38,7 +38,9 @@ module SearchControllerConcerns
   end
 
   def query
-    if point_given? || area_given? || q.present?
+    if filtered_school_keys != nil && filtered_school_keys.length == 0
+      null_query
+    elsif point_given? || area_given? || q.present?
       solr_query
     elsif state.present? && (school_id.present? || district_id.present?)
       school_sql_query
