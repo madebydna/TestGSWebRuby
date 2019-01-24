@@ -83,12 +83,12 @@ const createMarkersFromSchools = (
         googleMaps,
         map,
         key: `s${s.state}${s.id}${s.assigned}${s.highlighted}`,
-        openInfoWindow: m => openInfoWindow(createInfoWindow({...s, savedSchoolCB: callback}), m),
+        openInfoWindow: m => openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: callback}), m),
         onClick: m => {
           if (selectSchool) {
             selectSchool();
           }
-          openInfoWindow(createInfoWindow({ ...s, savedSchoolCB: callback }), m);
+          openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: callback }), m);
         },
         selected: s === selectedSchool,
         type:
