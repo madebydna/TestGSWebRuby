@@ -25,6 +25,11 @@
                data-ga-click-label="Summary Auto-narrative">... <%= more %></a>
             <span class="js-moreReveal  more-reveal">
              <%= arr[2..arr.length].join(' ').html_safe %>
+              <% if I18n.locale == :es %>
+                <br/><br/>
+                <%= image_tag "/assets/school_profiles/owl.png" %>
+                <span class="speech-bubble left">Este al día sobre que esperar este año escolar. <a href="/catalog/newsletters-spanish/">Aprenda más >></a></span>
+              <% end %>
             </span>
         <% else %>
             <%= arr.join(' ').html_safe %>
