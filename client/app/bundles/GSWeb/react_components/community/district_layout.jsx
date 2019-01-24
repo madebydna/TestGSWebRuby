@@ -120,6 +120,12 @@ class DistrictLayout extends React.Component {
     return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
   }
 
+  renderBoxAd() {
+    return <div id="second-ad">
+      <Ad slot="districtpage_second" sizeName="box"/>
+    </div>
+  }
+
   renderDesktopAd(){
     return (
       this.props.viewportSize > SM && <div className="ad-bar sticky" >
@@ -171,6 +177,7 @@ class DistrictLayout extends React.Component {
           <div className="community-modules">
             {this.props.viewportSize < SM && <Ad slot="districtpage_first" sizeName="thin_banner_mobile" />}
             {this.renderSchools()}
+            {this.renderBoxAd()}
             {this.renderAcademics()}
             {this.renderMobility()}
             {this.renderZillow()}
