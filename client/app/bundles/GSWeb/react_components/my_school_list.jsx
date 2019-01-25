@@ -18,10 +18,10 @@ class MySchoolList extends Search {
 
 export default function() {
   return (
-    <SearchContext.Provider findSchools={mySchoolList}>
+    <SearchContext.Provider findSchools={mySchoolList} layout="MySchoolList">
       <SearchContext.Consumer>
         {({ schools, ...state }) => (
-          <MySchoolList {...state} schools={schools.filter(s=>s.savedSchool)} layout="MySchoolList" />
+          <MySchoolList {...state} schools={schools.filter(s=>s.savedSchool)} />
         )}
       </SearchContext.Consumer>
     </SearchContext.Provider>

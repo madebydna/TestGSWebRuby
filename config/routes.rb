@@ -263,6 +263,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/autosuggest', to: 'autosuggest', action: 'show'
     post '/save_school', to: 'saved_schools#create'
     delete '/delete_school', to: 'saved_schools#destroy'
+    post '/log_saved_school', to: 'saved_schools_log#create'
   end
 
   match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs
