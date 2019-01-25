@@ -226,11 +226,9 @@ class SearchProvider extends React.Component {
     const savedSchools = getSavedSchoolsFromCookie();
     const schoolKeyIdx = this.savedSchoolsFindIndex(schoolKey);
     let removeSchool = schoolKeyIdx > -1; 
-    schoolKeyIdx > -1
-      ? savedSchools.splice(schoolKeyIdx, 1)
-      : savedSchools.push(schoolKey);
+    removeSchool ? savedSchools.splice(schoolKeyIdx, 1) : savedSchools.push(schoolKey);
     let locationKey = `${this.props.layout}-${this.props.view}`
-    logSchool(schoolKey, (removeSchool ? 'remove' : 'remove'), locationKey)
+    logSchool(schoolKey, (removeSchool ? 'remove' : 'add'), locationKey)
     setCookie(COOKIE_NAME, savedSchools);
     if(isSignedIn()){
       if(schoolKeyIdx > -1){
