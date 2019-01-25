@@ -183,7 +183,7 @@ export { Search };
 export default function() {
   return (
     <Provider store={getStore()}>
-      <SearchContext.Provider>
+      <SearchContext.Provider layout={'Search'}>
         <SearchContext.Consumer>
           {state => <Search {...state} />}
         </SearchContext.Consumer>

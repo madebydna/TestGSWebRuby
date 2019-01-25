@@ -1,21 +1,44 @@
 // TODO: import I18n
 import * as notifications from '../util/notifications';
 import { t, preserveLanguageParam } from '../util/i18n';
-import { isSignedIn, isNotSignedIn, getSavedSchoolsFromCookie, COOKIE_NAME, updateNavbarHeart } from '../util/session';
+import {
+  isSignedIn,
+  isNotSignedIn,
+  getSavedSchoolsFromCookie,
+  COOKIE_NAME,
+  updateNavbarHeart
+} from '../util/session';
 import modalManager from '../components/modals/manager';
 import { merge, pick } from 'lodash';
 import { set as setCookie } from 'js-cookie';
-import { findSchools, addSchool, deleteSchool } from '../api_clients/schools';
+import { findSchools, addSchool, deleteSchool, logSchool } from '../api_clients/schools';
+import { addSubscription } from '../api_clients/subscriptions';
 
 // Subscribe a user to the GreatNews newsletter.
 // Triggers a join modal if not signed in.
-export const signupAndGetNewsletter = function() {
+export const signupAndGetNewsletter = function(modalOptions) {
   if (isSignedIn()) {
     greatNewsSignUp();
   } else {
     modalManager
-      .showModal('EmailJoinModal')
+      .showModal('EmailJoinModal', modalOptions)
       .done(greatNewsSignUp);
+  }
+};
+
+export const signUpForGreatNewsAndMss = function(
+  modalOptions,
+  state,
+  schoolId
+) {
+  if (isSignedIn()) {
+    greatNewsSignUp();
+    addSubscription('mystat', state, schoolId);
+  } else {
+    modalManager.showModal('EmailJoinModal', modalOptions).done(() => {
+      greatNewsSignUp();
+      addSubscription('mystat', state, schoolId);
+    });
   }
 };
 
@@ -64,9 +87,11 @@ const savedSchoolsFindIndex = function(schoolState, schoolId) {
 const updateSavedSchoolsCookie = function(schoolState, schoolId) {
   const savedSchools = getSavedSchoolsFromCookie();
   const schoolKeyIdx = savedSchoolsFindIndex(schoolState, schoolId);
+  let removeSchool = schoolKeyIdx > -1 
   schoolKeyIdx > -1
     ? savedSchools.splice(schoolKeyIdx, 1)
     : savedSchools.push({ state: schoolState, id: schoolId.toString() });
+  logSchool({state: schoolState, id: schoolId}, (removeSchool ? 'remove' : 'add'), 'school-profile')
   setCookie(COOKIE_NAME, savedSchools);
   const newSchool = { state: schoolState, id: schoolId };
   if (isSignedIn()) {

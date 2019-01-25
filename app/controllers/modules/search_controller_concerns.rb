@@ -38,7 +38,9 @@ module SearchControllerConcerns
   end
 
   def query
-    if point_given? || area_given? || q.present?
+    if filtered_school_keys != nil && filtered_school_keys.length == 0
+      null_query
+    elsif point_given? || area_given? || q.present?
       solr_query
     elsif state.present? && (school_id.present? || district_id.present?)
       school_sql_query
@@ -195,7 +197,12 @@ module SearchControllerConcerns
   def assigned_schools
     @_assigned_schools ||=
       if location_given? && street_address?
-        attendance_zone_query.search_by_level
+        schools = attendance_zone_query.search_by_level
+        schools.each do |school|
+          district = District.on_db(school.state.downcase)&.find_by(id: school.district_id)&.name
+          school.define_singleton_method(:district_name) {district}
+        end
+        schools
       else
         []
       end

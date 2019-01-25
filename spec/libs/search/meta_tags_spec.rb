@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require 'search/meta_tags.rb';
+require 'meta_tag/meta_tags.rb'
+require 'meta_tag/city_browse_meta_tags.rb'
 
-describe Search::CityBrowseMetaTags do
+describe MetaTag::CityBrowseMetaTags do
   let(:city) { FactoryGirl.build(:city, name: 'San Francisco', state: 'ca') }
   let(:entity_type) { %w[public] }
   let(:level_code) { %w[e] }
@@ -22,7 +23,7 @@ describe Search::CityBrowseMetaTags do
       )
     )
   end
-  let(:tags) { Search::CityBrowseMetaTags.new(controller) }
+  let(:tags) { MetaTag::CityBrowseMetaTags.new(controller) }
 
   describe '#title' do
     subject { tags.title }

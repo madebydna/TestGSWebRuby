@@ -39,7 +39,8 @@ GS.nav.language = GS.nav.language || (function(){
     while (i--) {
       var anchor = navAnchors[i];
       var href = anchor.href;
-      if (href !== '#' && isSpanish()) {
+      var className = anchor.className;
+      if (href !== '#' && className !== 'nolang' && isSpanish()) {
         anchor.href = GS.nav.queryParamsUtils.updateUrlParameter(href, 'lang', GS.nav.queryParamsUtils.getQueryParam('lang'));
       }
     }
