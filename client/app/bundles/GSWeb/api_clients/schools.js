@@ -176,3 +176,14 @@ export function deleteSchool(schoolKey) {
     method: 'DELETE'
   });
 }
+
+export function logSchool(schoolKey, action, location) {
+  const data = { saved_schools_log: {state: schoolKey.state, school_id: schoolKey.id, action, location}};
+  return $.ajax({
+    url: '/gsr/api/log_saved_school',
+    data,
+    dataType: 'json',
+    method: 'POST'
+  })
+}
+
