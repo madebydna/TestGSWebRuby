@@ -29,7 +29,7 @@ class Calendar extends React.Component {
     this.renderCalendarEvent = this.renderCalendarEvent.bind(this);
   };
 
-  getDataFromJson(json) {
+  parseEventsPayload(json) {
     let validEvents = [];
     let currentDate = this.formatDateObject(new Date());
 
@@ -96,7 +96,7 @@ class Calendar extends React.Component {
     fetchDistrictCalendar(this.props.locality.calendarURL, this.props.locality.nces_code)
       .done($jsonRes => this.setState({
         isLoading: false,
-        data: this.getDataFromJson($jsonRes)
+        data: this.parseEventsPayload($jsonRes)
       }))
       .fail(error => this.setState({
         isLoading: false,

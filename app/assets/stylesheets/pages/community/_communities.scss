@@ -474,8 +474,8 @@ $subtle-gray: #647981;
     border: solid 1px $border-color;
 
     @include media-breakpoint-down(xs) {
-      padding: 10px 10px;
-      margin: 10px 0 5px 0;
+      padding: 10px;
+      margin: 10px 0 5px;
       border-left: none;
       border-right: none;
     }    
