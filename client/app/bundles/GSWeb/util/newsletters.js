@@ -11,7 +11,7 @@ import {
 import modalManager from '../components/modals/manager';
 import { merge, pick } from 'lodash';
 import { set as setCookie } from 'js-cookie';
-import { findSchools, addSchool, deleteSchool } from '../api_clients/schools';
+import { findSchools, addSchool, deleteSchool, logSchool } from '../api_clients/schools';
 import { addSubscription } from '../api_clients/subscriptions';
 
 // Subscribe a user to the GreatNews newsletter.
@@ -87,9 +87,11 @@ const savedSchoolsFindIndex = function(schoolState, schoolId) {
 const updateSavedSchoolsCookie = function(schoolState, schoolId) {
   const savedSchools = getSavedSchoolsFromCookie();
   const schoolKeyIdx = savedSchoolsFindIndex(schoolState, schoolId);
+  let removeSchool = schoolKeyIdx > -1 
   schoolKeyIdx > -1
     ? savedSchools.splice(schoolKeyIdx, 1)
     : savedSchools.push({ state: schoolState, id: schoolId.toString() });
+  logSchool({state: schoolState, id: schoolId}, (removeSchool ? 'remove' : 'add'), 'school-profile')
   setCookie(COOKIE_NAME, savedSchools);
   const newSchool = { state: schoolState, id: schoolId };
   if (isSignedIn()) {
