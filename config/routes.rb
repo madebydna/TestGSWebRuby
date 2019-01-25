@@ -263,6 +263,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/autosuggest', to: 'autosuggest', action: 'show'
     post '/save_school', to: 'saved_schools#create'
     delete '/delete_school', to: 'saved_schools#destroy'
+    post '/log_saved_school', to: 'saved_schools_log#create'
   end
 
   match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs
@@ -317,7 +318,6 @@ LocalizedProfiles::Application.routes.draw do
 
     get '/duplicate-membership', to: 'osp_demigod#show'
     post '/duplicate-membership', to: 'osp_demigod#create'
-    get '/update_queue', to: 'update_queue#index'
   end
   post '/gsr/ajax/wordpress_submit', to: 'wordpress_interface#call_from_wordpress', as: :call_from_wordpress
   post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review
