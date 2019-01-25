@@ -68,6 +68,15 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderCalendar() {
+    return (
+      <div id="calendar">
+        <div className="modules-title">{t('district_calendar')}</div>
+        {this.props.calendar}
+      </div>
+    )
+  }
+
   renderMobility() {
     return (
       <div id="mobility">
@@ -179,6 +188,7 @@ class DistrictLayout extends React.Component {
             {this.renderSchools()}
             {this.renderBoxAd()}
             {this.renderAcademics()}
+            {this.renderCalendar()}
             {this.renderMobility()}
             {this.renderZillow()}
             {this.renderReviews()}

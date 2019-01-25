@@ -112,6 +112,7 @@ class DistrictsController < ApplicationController
         cp[:city] = district_record.city
         cp[:lat] = district_record&.lat
         cp[:lon] = district_record&.lon
+        cp[:nces_code] = district_record.nces_code
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
         cp[:searchResultBrowseUrl] = search_district_browse_path(
@@ -121,6 +122,7 @@ class DistrictsController < ApplicationController
           trailing_slash: true
         )
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
+        cp[:calendarURL] = ENV_GLOBAL['calendar_service_url']
         cp[:zipCode] = district_record.mail_zipcode[0..4]
         cp[:phone] = district_record.phone if district_record.phone.present?
         cp[:districtUrl] = prepend_http district_record.home_page_url if district_record.home_page_url.present?
