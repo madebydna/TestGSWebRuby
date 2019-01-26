@@ -86,7 +86,8 @@ const createMarkersFromSchools = (
   selectSchool,
   openInfoWindow,
   googleMaps,
-  zoomLevel
+  zoomLevel,
+  callback
 ) =>
   schools.map(s => (
     <MapMarker
@@ -105,12 +106,12 @@ const createMarkersFromSchools = (
         propertiesCount: Object.values(s).length,
         map,
         key: `s${s.state}${s.id}${s.assigned}${s.highlighted}`,
-        openInfoWindow: m => openInfoWindow(createInfoWindow(s), m),
+        openInfoWindow: m => openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: callback}), m),
         onClick: m => {
           if (selectSchool) {
             selectSchool();
           }
-          openInfoWindow(createInfoWindow(s), m);
+          openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: callback }), m);
         },
         selected: s === selectedSchool,
         type:

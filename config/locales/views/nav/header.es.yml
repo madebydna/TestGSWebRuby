@@ -24,35 +24,30 @@ es:
           parent_power: Padres Poderosos
           innovative_schools: Escuelas innovadoras
           podcasts: Podcasts
+          college_prep: College Prep Timeline
         parenting:
           title: Crianza
-          raising_kids: Raising kids
-          parenting_dilemmas: Parenting dilemmas
-          emotional_smarts: Emotional smarts
-          health_and_development: Health & development
-          smart_strategies: Smart strategies
-          early_learning: Aprendizaje Temprano
-          school_life: School life
-          finding_the_right_school: Finding the right school
-          education_trends: Education trends
-          road_to_college: Road to college
-          academics: Academics
-          reading: Reading
-          math: Math
-          writing: Writing
-          science: Science
-          arts: Arts
-          stem: STEM
-          social_studies: Social studies
-          milestones: Milestones
-          state_test_guide: Prueba de Guía Estado
-          learning_issues: Learning issues
-          learning_disabilities: Learning disabilities
-          gifted: Gifted
-          attention_disorders: Attention disorders
-          reading_disorders: Reading disorders
-          special_needs: Special needs
-          book_lists: Book lists
-          worksheets: Worksheets
-          podcasts: Podcasts
-          back_to_school: Regreso a Clases
+          menu:
+            - Crianza:
+              - Crianza: /gk/category/crianza/?lang=es
+              - Carácter: /gk/category/caracter-es/?lang=es
+              - Consejos rápidos: /gk/category/consejos-rapidos-para-mamas-y-papas/?lang=es
+              - Salud: /gk/category/salud/?lang=es
+              - Cerebro del niño: /gk/category/cerebro-del-nino/?lang=es
+              - Acoso: /gk/category/acoso/?lang=es
+            - Vida escolar:
+              - Vida escolar: /gk/category/vida-escolar/?lang=es
+              - Encontrar una buena escuela: /gk/category/encontrar-una-buena-escuela/?lang=es
+              - Tarea: /gk/category/tarea/?lang=es
+              - Tendencias educativas: /gk/category/tendencias-educativas/?lang=es
+              - Preparación universitaria: /gk/category/preparacion-universitaria/?lang=es
+              - Guía del Examen Estatal: /gk/common-core-test-guide/?lang=es
+            - Aprendizaje:
+              - Lectura: /gk/category/lectura/?lang=es
+              - Matemáticas: /gk/category/academics/matematicas/?lang=es
+              - Escritura: /gk/category/escritura/?lang=es
+              - Aprendizaje temprano: /gk/category/aprendizaje-de-ninos-preescolares/?lang=es
+              - Dificultades de aprendizaje y de atención: /gk/category/dificultades-de-aprendizaje-y-de-atencion/?lang=es
+              - Videos Milestones: /gk/milestones/?lang=es
+            - Libros para niños: /gk/book-lists/?lang=es
+            - Hojas de trabajo (en inglés): /gk/worksheets/

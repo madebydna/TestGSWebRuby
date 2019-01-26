@@ -18,10 +18,21 @@ es:
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en
     browse_school_blurb_district: Aquí hay un vistazo a las escuelas en distrito
+    calendar: calendario
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
     community_resources: recursos de la comunidad 
     county: condado
+    date: Fecha
+    district_calendar: Calendario del distrito
+    district_calendar_no_results: En este momento, esta información no está disponible.
+    district_calendar_sources_html: >
+      <div class="sources-text">
+        <h3>Las fuentes de datos y información de los perfiles de distritos de GreatSchools</h3>
+        <div>Calendario</div>
+        <p><span>Fuente&#58;</span> Tandem</p>
+      </div>
+    event: Evento
     website: Página web
     homes_for_sale: Casas en venta
     nearby homes for sale & rent: Casas cercanas en venta y alquiler
@@ -292,6 +303,7 @@ es:
     general_information_tooltip: Esto muestra los resultados para los estudiantes con discapacidades en un examen de Ciencia dado a los estudiantes una vez al año.
     General Information: Información general
     profile_data_sources_and_info: 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
+    district_data_sources_and_info: 'Las fuentes de datos y informacion de los perfiles de distritos de GreatSchools'
     subjects: Materias
     rating_html: 'Calificación&nbsp;'
     courses: cursos

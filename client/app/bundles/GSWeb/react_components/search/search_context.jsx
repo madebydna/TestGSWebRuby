@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { find as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
+import { find as findSchools, addSchool, deleteSchool, logSchool } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
@@ -102,6 +102,7 @@ class SearchProvider extends React.Component {
     updatePage: PropTypes.func.isRequired,
     updateDistance: PropTypes.func.isRequired,
     updateView: PropTypes.func.isRequired,
+    layout: PropTypes.string,
     breadcrumbs: PropTypes.arrayOf(
       PropTypes.shape({
         text: PropTypes.string.isRequired,
@@ -227,9 +228,10 @@ class SearchProvider extends React.Component {
   updateSavedSchoolsCookie(schoolKey) {
     const savedSchools = getSavedSchoolsFromCookie();
     const schoolKeyIdx = this.savedSchoolsFindIndex(schoolKey);
-    schoolKeyIdx > -1
-      ? savedSchools.splice(schoolKeyIdx, 1)
-      : savedSchools.push(schoolKey);
+    let removeSchool = schoolKeyIdx > -1; 
+    removeSchool ? savedSchools.splice(schoolKeyIdx, 1) : savedSchools.push(schoolKey);
+    let locationKey = `${this.props.layout}-${this.props.view}`
+    logSchool(schoolKey, (removeSchool ? 'remove' : 'add'), locationKey)
     setCookie(COOKIE_NAME, savedSchools);
     if(isSignedIn()){
       if(schoolKeyIdx > -1){
@@ -392,7 +394,8 @@ class SearchProvider extends React.Component {
           searchTableViewHeaders: this.props.searchTableViewHeaders,
           tableView: this.props.tableView,
           currentStateFilter: this.state.currentStateFilter,
-          updateStateFilter: this.updateStateFilter
+          updateStateFilter: this.updateStateFilter,
+          layout: this.props.layout
         }}
       >
         <DistanceContext.Provider
@@ -448,7 +451,7 @@ class SearchProvider extends React.Component {
                 >
                   <SavedSchoolContext.Provider
                       value={{
-                        saveSchoolCallback: this.handleSaveSchoolClick,
+                        saveSchoolCallback: this.handleSaveSchoolClick
                       }}
                   >
                   {this.props.children}

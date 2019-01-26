@@ -8,6 +8,7 @@ import LoadingOverlay from './loading_overlay';
 import DefaultMapMarker from 'components/map/default_map_marker';
 import MapMarker from 'components/map/map_marker';
 import createInfoWindow from '../../components/map/info_window';
+import SavedSchoolContext from './saved_school_context';
 
 const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other }) => {
   return <React.Fragment>
@@ -25,46 +26,51 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
     >
       <GoogleMapsInitializer>
         {(isInitialized, googleMaps) =>
-          isInitialized && (
-            <Map googleMaps={googleMaps} changeLocation={() => {}} markerDigest={schools.filter(s=>s.schoolType).map(school => school.state + school.id).sort((a,b)=>(a-b)).join('-')} {...other}>
-              {({ googleMaps, map, openInfoWindow, fitBounds, zoomLevel }) => {
-                const markers = createMarkersFromSchools(
-                   schools,
-                   {},
-                   map,
-                   null,
-                   openInfoWindow,
-                   googleMaps,
-                   zoomLevel
-                 );
-                if (locationMarker) {
-                  markers.push(
-                    <MapMarker
-                      {...{
-                        ...locationMarker,
-                        type: 'PUBLIC_SCHOOL',
-                        svg: true,
-                        address: true,
-                        animation: googleMaps.Animation.DROP,
-                        key: `locationMarkerl${locationMarker.lat}l${
-                          locationMarker.lon
-                        }`,
-                        onClick: m => {
-                          openInfoWindow(`${locationLabel.replace(', USA', '')}`, m);
-                        },
-                        map,
-                        googleMaps
-                      }}
-                    />
-                  );
-                }
-                if (fitBounds) {
-                  fitBounds(markers);
-                }
-                return markers;
-              }}
-            </Map>
-          )
+          <SavedSchoolContext.Consumer>
+            {({ saveSchoolCallback }) => (
+              isInitialized && (
+                <Map googleMaps={googleMaps} heartClickCallback={saveSchoolCallback} changeLocation={() => {}} markerDigest={schools.filter(s=>s.schoolType).map(school => school.state + school.id).sort((a,b)=>(a-b)).join('-')} {...other}>
+                  {({ googleMaps, map, openInfoWindow, fitBounds, zoomLevel }) => {
+                    const markers = createMarkersFromSchools(
+                      schools,
+                      {},
+                      map,
+                      null,
+                      openInfoWindow,
+                      googleMaps,
+                      zoomLevel,
+                      saveSchoolCallback
+                    );
+                    if (locationMarker) {
+                      markers.push(
+                        <MapMarker
+                          {...{
+                            ...locationMarker,
+                            type: 'PUBLIC_SCHOOL',
+                            svg: true,
+                            address: true,
+                            animation: googleMaps.Animation.DROP,
+                            key: `locationMarkerl${locationMarker.lat}l${
+                              locationMarker.lon
+                            }`,
+                            onClick: m => {
+                              openInfoWindow(`${locationLabel.replace(', USA', '')}`, m);
+                            },
+                            map,
+                            googleMaps
+                          }}
+                        />
+                      );
+                    }
+                    if (fitBounds) {
+                      fitBounds(markers);
+                    }
+                    return markers;
+                  }}
+                </Map>
+              )
+            )}
+          </SavedSchoolContext.Consumer>
         }
       </GoogleMapsInitializer>
     </div>

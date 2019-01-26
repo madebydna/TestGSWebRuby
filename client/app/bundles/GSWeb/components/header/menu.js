@@ -5,6 +5,7 @@ var initMobileMenuEvents = function() {
   var mobilenav = document.getElementsByClassName("menu-btn");
   mobilenav[0].addEventListener("click", toggleNav, false);
   var mobileNavSearch = document.getElementsByClassName("search_icon_image");
+  
   mobileNavSearch[0].addEventListener("click", toggleSearch, false);
 };
 

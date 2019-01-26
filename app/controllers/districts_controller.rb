@@ -19,6 +19,7 @@ class DistrictsController < ApplicationController
     @hero_data = hero_data
     @academics_props = district_academics_module_props
     @reviews = reviews_formatted.reviews_list
+    @translations = translations
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
     set_ad_targeting_props
@@ -26,6 +27,12 @@ class DistrictsController < ApplicationController
   end
 
   private
+
+  def translations
+    {}.tap do |hash|
+      hash[:inPartnershipWith] = I18n.t('in_partnership_with', scope: 'partners.partner_logo').capitalize
+    end
+  end
 
   def district_academics_module_props
     CommunityProfiles::Academics.district_academics_props(district_cache_data_reader)
@@ -105,6 +112,7 @@ class DistrictsController < ApplicationController
         cp[:city] = district_record.city
         cp[:lat] = district_record&.lat
         cp[:lon] = district_record&.lon
+        cp[:nces_code] = district_record.nces_code
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
         cp[:searchResultBrowseUrl] = search_district_browse_path(
@@ -114,6 +122,7 @@ class DistrictsController < ApplicationController
           trailing_slash: true
         )
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
+        cp[:calendarURL] = ENV_GLOBAL['calendar_service_url']
         cp[:zipCode] = district_record.mail_zipcode[0..4]
         cp[:phone] = district_record.phone if district_record.phone.present?
         cp[:districtUrl] = prepend_http district_record.home_page_url if district_record.home_page_url.present?

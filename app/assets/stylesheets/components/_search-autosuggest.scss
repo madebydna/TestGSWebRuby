@@ -100,6 +100,40 @@
       margin-left: 0;
     }
   }
+  
+  .search-mode-homepage{
+    // Class added to search box to allow mobile user to have more room to search
+    // Overwrites CSS from search-box class
+    @media (min-width: 549px){
+      margin-top: -150px;
+    }
+    @media (max-width: 548px){
+      margin-top: -185px;
+    }
+    z-index: 5;
+    margin-left: -10px;
+    width: 100%;
+    // For small phone screen widths
+    @media (max-width: 320px){
+      width: 110%;
+    }
+    input{
+      border: 1px solid #b8b8b8;
+    }
+    .search_bar_button{
+      button{
+        padding: 8px 12px;
+        border-radius: 0px;
+      }
+      &:last-child {
+        margin-left: 5px;
+        button{
+          background-color: #999;
+        }
+      }
+    }
+  }
+
 
   .search-results-list {
     @include media-breakpoint-down(sm) {
