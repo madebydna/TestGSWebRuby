@@ -395,13 +395,13 @@ export default class SearchBox extends React.Component {
           <span className="search_icon_image_white" />
         </button>
       </div>
-      {this.state.displayMobileSearchModal && this.props.size <= XS &&
+      {/* {this.state.displayMobileSearchModal && this.props.size <= XS &&
         <div className="search_bar_button" onClick={e => this.toggleSearchBoxModal(e, true)}>
           <button className="search_form_button">
             <span style={{ fontSize: 22 }}>X</span>
           </button>
         </div>
-      }
+      } */}
     </React.Fragment>
   );
 
@@ -486,7 +486,9 @@ export default class SearchBox extends React.Component {
   }
 
   renderSearchBox(element, renderDropdown = true){
-    const searchBoxName = this.state.displayMobileSearchModal === true ? 'search-box search-mode-homepage' : 'search-box';
+    // Need to fix on real iphone devices
+    // const searchBoxName = this.state.displayMobileSearchModal === true ? 'search-box search-mode-homepage' : 'search-box';
+    const searchBoxName = this.state.displayMobileSearchModal === true ? 'search-box' : 'search-box';
     return createPortal(
       <OpenableCloseable>
         {(isOpen, { open, close } = {}) => (
@@ -550,7 +552,7 @@ export default class SearchBox extends React.Component {
     let element = window.document.querySelector('#home-page .input-group');
     if(element && this.props.pageType === 'Home'){
       if (this.props.size <= XS){
-        return this.renderSearchBoxModal(element, false);
+        return this.renderSearchBox(element, false);
       }else{
         return this.renderSearchBox(element, false);
       }
