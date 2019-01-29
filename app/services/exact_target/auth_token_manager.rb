@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require 'rubygems'
 require 'json'
@@ -13,11 +15,8 @@ class ExactTarget
     # This gets the token if needed and returns a new token good for an hour
     # v1/requestToken
     def fetch_access_token
-      if access_token_from_db.present?
-        return access_token_from_db
-      else
-        fetch_new_access_token
-      end
+      at = access_token_from_db
+      at.present? ? at : fetch_new_access_token
     end
 
     def self.fetch_new_access_token
