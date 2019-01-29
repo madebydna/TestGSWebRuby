@@ -17,7 +17,8 @@ const mapPinColor = rating =>
     7: 'rgb(135,179,30)',
     8: 'rgb(108,168,31)',
     9: 'rgb(84,158,34)',
-    10: 'rgb(68,146,36)'
+    10: 'rgb(68,146,36)',
+    null: 'gray'
   }[rating]);
 
 const assignedPath = `<path fill="rgb(23,105,151)" d="M32.968 19l-3.655 3.655L25.658 19H0V0h59v19H32.968z"/>
@@ -180,6 +181,21 @@ const createSmallPinMarker = (rating) => {
   )
 }
 
+const createMediumPinMarker = (rating) => {
+  return svg(
+    20,
+    20,
+    `<circle
+      cx="10"
+      cy="10"
+      r="7"
+      fill="${mapPinColor(rating)}"
+      stroke="${WHITE}"
+      strole-width="2"
+    />`
+  )
+}
+
 export {
   mapPinColor,
   createDefaultPinWithRating,
@@ -189,5 +205,6 @@ export {
   createAssignedPinWithoutRating,
   addressPin,
   createAssignedHighlightedPinWithRating,
-  createSmallPinMarker
+  createSmallPinMarker,
+  createMediumPinMarker
 };

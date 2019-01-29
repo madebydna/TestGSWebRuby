@@ -11,10 +11,6 @@ import createInfoWindow from '../../components/map/info_window';
 import SavedSchoolContext from './saved_school_context';
 import { debounce } from 'lodash';
 
-const loadMoreSchools = (schools, markers, style, map) => {
-
-}
-
 const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other }) => {
   return <React.Fragment>
     {
@@ -36,7 +32,14 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
               isInitialized && (
                 <Map googleMaps={googleMaps} heartClickCallback={saveSchoolCallback} changeLocation={() => {}} markerDigest={schools.filter(s=>s.schoolType).map(school => school.state + school.id).sort((a,b)=>(a-b)).join('-')} {...other}>
                   {({ googleMaps, map, openInfoWindow, fitBounds, zoomLevel }) => {
-                    const style = zoomLevel >= 15 ? 'large' : 'small';
+                    let style;
+                      if (zoomLevel > 14){
+                        style = 'large';
+                      }else if(zoomLevel > 12){
+                        style = 'medium';
+                      }else{
+                        style = 'small';
+                      }
                     const markers = createMarkersFromSchools(
                       schools,
                       {},

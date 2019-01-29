@@ -11,7 +11,8 @@ import {
   createAssignedPinWithoutRating,
   addressPin,
   createAssignedHighlightedPinWithRating,
-  createSmallPinMarker
+  createSmallPinMarker,
+  createMediumPinMarker
 } from './map_pin_assets';
 
 export const PUBLIC_SCHOOL = 'PUBLIC_SCHOOL';
@@ -40,6 +41,9 @@ export default function createMarkerFactory(googleMaps) {
     selectPin(rating, color, highlighted, assigned, address, style, locationQuery) {
       if (locationQuery && style === 'small'){
         return createSmallPinMarker(rating);
+      }
+      if (locationQuery && style === 'medium'){
+        return createMediumPinMarker(rating);
       }
       if(locationQuery && rating){
         return createDefaultPinWithRating(rating, color, assigned);
@@ -84,6 +88,8 @@ export default function createMarkerFactory(googleMaps) {
       // We know that the light weight pins have less information
       if (locationQuery && style === 'small'){
         size = new googleMaps.Size(15,15);
+      } else if (locationQuery && style == 'medium'){
+        size = new googleMaps.Size(20, 20);
       }else if(locationQuery){
         size = new googleMaps.Size(40, 50);
       }else if(address){

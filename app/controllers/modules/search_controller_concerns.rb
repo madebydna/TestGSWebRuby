@@ -230,16 +230,15 @@ module SearchControllerConcerns
   def school_markers
     schools =
     if district_browse?
-      School.on_db(district_record.state&.downcase).active.where(district_id: district_record)
+      School.on_db(district_record.state&.downcase).active.where(district_id: district_record).not(type: 'private').where.not(type: 'private')
     elsif city_browse?
-      School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase)
+      School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase).where.not(type: 'private')
     # elsif zip_code_search?
     #   School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase)
     #   School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase)
     else
       []
     end
-
     all_markers = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
     schools.each do |school|
       all_markers["#{school.state&.downcase}#{school.id}"].tap do |hash|
