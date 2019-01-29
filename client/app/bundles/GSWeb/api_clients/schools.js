@@ -141,7 +141,7 @@ export function find({
     data.locationType = currentParams.locationType;
   }
   return $.ajax({
-    url: '/gsr/api/schools',
+    url,
     data,
     type: 'GET',
     dataType: 'json',
@@ -154,6 +154,13 @@ export function mySchoolList(props) {
     ...props,
     schoolList: 'msl',
     extras: ['saved_schools']
+  });
+}
+
+export function findMoreSchools(props) {
+  return find({
+    ...props,
+    url: '/gsr/api/get_schools'
   });
 }
 

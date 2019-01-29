@@ -85,7 +85,9 @@ module SearchControllerConcerns
     query_type.new(
       city: city,
       state: state,
-      school_keys: filtered_school_keys,
+      # school_keys: filtered_school_keys,
+      # need to fix this TODO
+      school_keys: school_markers_more,
       district_id: district_record&.id,
       district_name: district_record&.name,
       location_label: location_label_param,
@@ -100,6 +102,10 @@ module SearchControllerConcerns
       sort_name: sort_name,
       with_rating: with_rating
     )
+  end
+
+  def school_markers_more
+    params[:schoolKeys]&.values
   end
 
   def null_query
@@ -228,6 +234,7 @@ module SearchControllerConcerns
     elsif city_browse?
       School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase)
     # elsif zip_code_search?
+    #   School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase)
     #   School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase)
     else
       []

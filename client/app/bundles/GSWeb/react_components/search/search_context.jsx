@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { find as findSchools, addSchool, deleteSchool, logSchool } from 'api_clients/schools';
+import { find as findSchools, addSchool, deleteSchool, logSchool, findMoreSchools } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
-import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
+import { isEqual, throttle, debounce, difference, castArray, cloneDeep } from 'lodash';
 import { compose, curry } from 'lodash/fp';
 import {
   size as viewportSize,
@@ -139,6 +139,9 @@ class SearchProvider extends React.Component {
     this.toggleOne = this.toggleOne.bind(this);
     this.updateStateFilter = this.updateStateFilter.bind(this);
     this.refreshAdOnScroll = this.refreshAdOnScroll.bind(this);
+    this.tempFindMoreSchools = debounce(this.tempFindMoreSchools.bind(this), 500, {
+      leading: false
+    });
   }
 
   componentDidMount() {
@@ -348,6 +351,32 @@ class SearchProvider extends React.Component {
     () => this.updateSchools())
   }
 
+  tempFindMoreSchools(arrayofArrays){
+    const schoolPins = cloneDeep(this.state.schoolMarkers);
+    const schoolKeys = arrayofArrays.filter(arr => {
+      return Object.values(schoolPins[`${arr[0]}${arr[1]}`]).length === 6
+    })
+    findMoreSchools(
+      {
+        schoolKeys: schoolKeys,
+        state: this.props.schools[0].state.toLowerCase()
+      }
+    ).done(
+      ({ items: schoolMarkers, state: state }) => {
+        schoolMarkers.forEach(s=>{
+          const idTag = `${state.toLowerCase()}${s.id}`;
+          schoolPins[idTag] = { ...schoolPins[idTag], ...s};          
+        })
+        return setTimeout(
+          () =>
+            this.setState({
+              schoolMarkers: schoolPins,
+            }),
+          1
+        )
+      })
+  }
+
   render() {
     return (
       <Provider
@@ -451,7 +480,8 @@ class SearchProvider extends React.Component {
                 >
                   <SavedSchoolContext.Provider
                       value={{
-                        saveSchoolCallback: this.handleSaveSchoolClick
+                        saveSchoolCallback: this.handleSaveSchoolClick,
+                        tempFindMoreSchools: this.tempFindMoreSchools
                       }}
                   >
                   {this.props.children}

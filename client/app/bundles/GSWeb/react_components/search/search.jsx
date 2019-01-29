@@ -36,12 +36,12 @@ class Search extends React.Component {
     q: null,
     layout: 'Search',
     schoolKeys: [],
-    schoolMarkers: []
+    schoolMarkers: {}
   };
 
   static propTypes = {
     schools: PropTypes.arrayOf(PropTypes.object),
-    schoolMarkers: PropTypes.arrayOf(PropTypes.object),
+    schoolMarkers: PropTypes.object,
     resultSummary: PropTypes.string.isRequired,
     defaultLat: PropTypes.number.isRequired,
     defaultLon: PropTypes.number.isRequired,

@@ -37,11 +37,11 @@ export default function createMarkerFactory(googleMaps) {
       );
     },
 
-    selectPin(rating, color, highlighted, assigned, address, zoomLevel, locationQuery, propertiesCount) {
-      if (propertiesCount === 6 || (locationQuery && zoomLevel < 15)){
+    selectPin(rating, color, highlighted, assigned, address, style, locationQuery) {
+      if (locationQuery && style === 'small'){
         return createSmallPinMarker(rating);
       }
-      if(locationQuery){
+      if(locationQuery && rating){
         return createDefaultPinWithRating(rating, color, assigned);
       }
       if (assigned && rating && !highlighted) {
@@ -74,16 +74,15 @@ export default function createMarkerFactory(googleMaps) {
       svg = true,
       assigned,
       address,
-      zoomLevel,
-      locationQuery,
-      propertiesCount
+      style,
+      locationQuery
     ) {
       // svg flag intended to permit backwards compatibility while we decide which assets to use for district boundaries tool
       const position = new googleMaps.LatLng(lat, lon);
       const color = mapPinColor(rating);
       let size = null;
       // We know that the light weight pins have less information
-      if ((locationQuery && zoomLevel < 15) || propertiesCount === 6){
+      if (locationQuery && style === 'small'){
         size = new googleMaps.Size(15,15);
       }else if(locationQuery){
         size = new googleMaps.Size(40, 50);
@@ -114,9 +113,8 @@ export default function createMarkerFactory(googleMaps) {
                 highlighted,
                 assigned,
                 address,
-                zoomLevel,
-                locationQuery,
-                propertiesCount
+                style,
+                locationQuery
               ),
               scaledSize: size
             }

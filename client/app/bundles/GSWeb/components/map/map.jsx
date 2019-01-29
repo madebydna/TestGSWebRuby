@@ -24,7 +24,7 @@ export default class Map extends React.Component {
     super(props);
     this.state = { markersUpdated: true, zoomLevel: null };
     this.openInfoWindow = this.openInfoWindow.bind(this);
-    this.fitBounds = this.fitBounds.bind(this);
+    this.fitBounds = once(this.fitBounds.bind(this));
     this.handleHeartClickCallback = this.handleHeartClickCallback.bind(this);
   }
 
@@ -140,30 +140,30 @@ export default class Map extends React.Component {
     }
   }
 
-  renderPolygons() {
-    return this.props.polygons.map(component =>
-      React.cloneElement(component, {
-        googleMaps: this.props.googleMaps,
-        map: this.map
-      })
-    );
-  }
+  // renderPolygons() {
+  //   return this.props.polygons.map(component =>
+  //     React.cloneElement(component, {
+  //       googleMaps: this.props.googleMaps,
+  //       map: this.map
+  //     })
+  //   );
+  // }
 
-  renderMarkers() {
-    return this.props.markers.map(component =>
-      React.cloneElement(component, {
-        googleMaps: this.props.googleMaps,
-        map: this.map,
-        onClick: m => {
-          component.props.onClick();
-          this.openInfoWindow(component.props.createInfoWindow(), m);
-        },
-        openInfoWindow: m => {
-          this.openInfoWindow(component.props.createInfoWindow(), m);
-        }
-      })
-    );
-  }
+  // renderMarkers() {
+  //   return this.props.markers.map(component =>
+  //     React.cloneElement(component, {
+  //       googleMaps: this.props.googleMaps,
+  //       map: this.map,
+  //       onClick: m => {
+  //         component.props.onClick();
+  //         this.openInfoWindow(component.props.createInfoWindow(), m);
+  //       },
+  //       openInfoWindow: m => {
+  //         this.openInfoWindow(component.props.createInfoWindow(), m);
+  //       }
+  //     })
+  //   );
+  // }
 
   fitBounds(markers) {
     markers.forEach(m => {

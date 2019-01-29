@@ -22,6 +22,13 @@ class Api::SchoolsController < ApplicationController
     .merge(Api::PaginationSerializer.new(page_of_results).to_hash)
   end
 
+  def get_schools
+    render json: {
+      items: serialized_schools,
+      state: state
+    }
+  end
+
   def require_valid_params
     unless q || point_given? || area_given? || school_keys.present?
       return require_state
