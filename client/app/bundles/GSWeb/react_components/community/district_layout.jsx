@@ -153,8 +153,8 @@ class DistrictLayout extends React.Component {
         <div className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</div>
         <div className="xq-partnership">
           {this.props.translations.inPartnershipWith}
-          <a href='https://xqsuperschool.org/school-board-thing' target="_blank">
-            <img src={xq} alt='xq-icon' />
+          <a href='https://xqsuperschool.org/school-board-thing' target="_blank" rel="nofollow">
+            <img src={xq} alt='xq icon' />
           </a>
         </div>
         {this.props.browseSchools}
