@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require 'rubygems'
 require 'json'
@@ -64,7 +66,7 @@ class ExactTarget
     end
 
     def access_token_uri
-      URI('https://auth.exacttargetapis.com/v1/requestToken')
+      URI("#{ENV_GLOBAL['exacttarget_v2_api_auth_uri']}/v1/requestToken")
     end
 
     def post_json(uri, send_hash, request)
