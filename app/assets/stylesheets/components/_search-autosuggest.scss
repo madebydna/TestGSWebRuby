@@ -104,15 +104,15 @@
   .search-mode-homepage{
     // Class added to search box to allow mobile user to have more room to search
     // Overwrites CSS from search-box class
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    // @media (min-width: 549px){
-    //   margin-top: -150px;
-    // }
-    // @media (max-width: 548px){
-    //   margin-top: -185px;
-    // }
+    // position: fixed;
+    // top: 10px;
+    // left: 10px;
+    @media (min-width: 549px){
+      margin-top: -150px;
+    }
+    @media (max-width: 548px){
+      margin-top: -185px;
+    }
     z-index: 5;
     margin-left: -10px;
     width: 95%;
