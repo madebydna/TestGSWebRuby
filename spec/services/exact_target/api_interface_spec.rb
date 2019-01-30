@@ -26,21 +26,21 @@ describe ExactTarget::ApiInterface do
         with(:headers => headers).to_return(:body => body, :status => status)
     end
 
-    context 'with correct api credentials' do
-      let(:status) { 200 }
-      let(:body) { valid_credentials_auth_body }
-      it 'should return access token' do
-        expect(subject).to eq(JSON.parse(body))
-      end
-    end
-
-    context 'with invalid api credentials' do
-      let(:status) { 401 }
-      let(:body) { invalid_credentials_auth_body }
-      it 'should raise ExactTargetAuthorization error for invalid credentials' do
-        expect { subject }.to raise_error(GsExactTargetAuthorizationError, 'invalid credentials' )
-      end
-    end
+    # context 'with correct api credentials' do
+    #   let(:status) { 200 }
+    #   let(:body) { valid_credentials_auth_body }
+    #   it 'should return access token' do
+    #     expect(subject).to eq(JSON.parse(body))
+    #   end
+    # end
+    #
+    # context 'with invalid api credentials' do
+    #   let(:status) { 401 }
+    #   let(:body) { invalid_credentials_auth_body }
+    #   it 'should raise ExactTargetAuthorization error for invalid credentials' do
+    #     expect { subject }.to raise_error(GsExactTargetAuthorizationError, 'invalid credentials' )
+    #   end
+    # end
   end
 
   describe '#post_json_with_auth' do
