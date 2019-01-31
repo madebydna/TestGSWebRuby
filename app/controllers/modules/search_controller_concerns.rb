@@ -104,6 +104,24 @@ module SearchControllerConcerns
     )
   end
 
+  def solr_query_for_all_markers
+    Search::LegacySolrSchoolQuery.new(
+      city: city,
+      state: state,
+      district_id: district_record&.id,
+      district_name: district_record&.name,
+      location_label: location_label_param,
+      level_codes: level_codes,
+      entity_types: ["public", "charter"],
+      lat: lat,
+      lon: lon,
+      radius: radius,
+      q: q,
+      offset: offset,
+      limit: 2000
+    )
+  end
+
   def school_markers_more
     params[:schoolKeys]&.values
   end
@@ -227,18 +245,22 @@ module SearchControllerConcerns
   end
 
   # Mock call to get data to the front end.
+  # Data Structure
+  # {
+  # id: integer
+  # lat: float
+  # lon: float
+  # state: string
+  # rating: integer
+  # locationQuery: boolean
+  # }
   def school_markers
     schools =
-    if district_browse?
-      School.on_db(district_record.state&.downcase).active.where(district_id: district_record).not(type: 'private').where.not(type: 'private')
-    elsif city_browse?
-      School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase).where.not(type: 'private')
-    # elsif zip_code_search?
-    #   School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase)
-    #   School.on_db(city_record.state&.downcase).active.where(city: city_record.name, state: city_record.state&.downcase)
-    else
-      []
-    end
+      if district_browse? || city_browse? || zip_code_search?
+        solr_query_for_all_markers
+      else
+        []
+      end.search
     all_markers = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
     schools.each do |school|
       all_markers["#{school.state&.downcase}#{school.id}"].tap do |hash|
@@ -246,7 +268,7 @@ module SearchControllerConcerns
         hash['lat'] = school.lat
         hash['lon'] = school.lon
         hash['state'] = school.state&.downcase
-        hash['rating'] = rand(10) +  1
+        hash['rating'] = school&.great_schools_rating || nil
         hash['locationQuery'] = true
       end
     end

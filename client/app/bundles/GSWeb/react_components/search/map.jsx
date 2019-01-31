@@ -53,16 +53,14 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
                     // event listener for changing bounds
                     if(style && style === 'large'){
                       map.addListener('bounds_changed', () => {
-                        if (style === 'large'){
-                          const a = map.getBounds();
-                          const seen = markers
-                            .filter(m => {
-                              const b = new googleMaps.LatLng(m.props.lat, m.props.lon)
-                              return a.contains(b);
-                            })
-                            .map(s => [schools[0].state.toLowerCase(),s.props.schoolId])
-                          tempFindMoreSchools(seen)
-                        }
+                        const a = map.getBounds();
+                        const seen = markers
+                          .filter(m => {
+                            const b = new googleMaps.LatLng(m.props.lat, m.props.lon)
+                            return m.props.schoolId && a.contains(b);
+                          })
+                          .map(s => [schools[0].state.toLowerCase(),s.props.schoolId])
+                        tempFindMoreSchools(seen)
                       })
                     }
                     if (locationMarker) {
