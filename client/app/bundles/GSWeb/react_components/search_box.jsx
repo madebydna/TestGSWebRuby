@@ -154,7 +154,7 @@ export default class SearchBox extends React.Component {
     if (this.state.displayMobileSearchModal === true && prevState.displayMobileSearchModal !== this.state.displayMobileSearchModal){
       setTimeout(()=>{
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-      },500)
+      }, 100)
     }
   }
 
