@@ -449,7 +449,6 @@ class DataValue < ActiveRecord::Base
   # def self.load_ids_dv(loads)
   #   loads&.map(&:load_id)
   # end
-
   # def self.load_source_name(load)
   #   load&.load_source&.name
   # end
