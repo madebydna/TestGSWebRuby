@@ -77,7 +77,7 @@ class SearchProvider extends React.Component {
     district: PropTypes.string,
     state: PropTypes.string,
     schools: PropTypes.arrayOf(PropTypes.object),
-    schoolMarkers: PropTypes.arrayOf(PropTypes.object),
+    schoolMarkers: PropTypes.object,
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
     defaultLat: PropTypes.number,
@@ -351,21 +351,23 @@ class SearchProvider extends React.Component {
     () => this.updateSchools())
   }
 
-  tempFindMoreSchools(arrayofArrays){
+  tempFindMoreSchools(arrayofArrays, openInfoWindowOnStartUp = false){
     const schoolPins = cloneDeep(this.state.schoolMarkers);
     const schoolKeys = arrayofArrays.filter(arr => {
       return Object.values(schoolPins[`${arr[0]}${arr[1]}`]).length === 6
-    })
+    });
     findMoreSchools(
       {
         schoolKeys: schoolKeys,
         state: this.props.schools[0].state.toLowerCase()
       }
     ).done(
-      ({ items: schoolMarkers, state: state }) => {
-        schoolMarkers.forEach(s=>{
+      ({ items: schoolMarkers, state }) => {
+        schoolMarkers.forEach(s => {
           const idTag = `${state.toLowerCase()}${s.id}`;
-          schoolPins[idTag] = { ...schoolPins[idTag], ...s};          
+          //openInfoWindowOnStartUp is a boolean that is passed into the school markers
+          // and open the infoBox immediate if it is true
+          schoolPins[idTag] = { ...schoolPins[idTag], openInfoWindowOnStartUp, ...s};          
         })
         return setTimeout(
           () =>
@@ -374,7 +376,7 @@ class SearchProvider extends React.Component {
             }),
           1
         )
-      })
+      });
   }
 
   render() {

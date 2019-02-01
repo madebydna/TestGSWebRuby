@@ -48,7 +48,8 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
                       openInfoWindow,
                       googleMaps,
                       style,
-                      saveSchoolCallback
+                      saveSchoolCallback,
+                      tempFindMoreSchools
                     );
                     // event listener for changing bounds
                     if(style && style === 'large'){

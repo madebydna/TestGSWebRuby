@@ -112,7 +112,7 @@ module SearchControllerConcerns
       district_name: district_record&.name,
       location_label: location_label_param,
       level_codes: level_codes,
-      entity_types: ["public", "charter"],
+      entity_types: entity_types,
       lat: lat,
       lon: lon,
       radius: radius,
@@ -244,23 +244,13 @@ module SearchControllerConcerns
     school.ratings
   end
 
-  # Mock call to get data to the front end.
-  # Data Structure
-  # {
-  # id: integer
-  # lat: float
-  # lon: float
-  # state: string
-  # rating: integer
-  # locationQuery: boolean
-  # }
   def school_markers
     schools =
       if district_browse? || city_browse? || zip_code_search?
-        solr_query_for_all_markers
+        solr_query_for_all_markers.search.reverse
       else
         []
-      end.search
+      end
     all_markers = Hash.new{|h,k| h[k]=Hash.new(&h.default_proc) }
     schools.each do |school|
       all_markers["#{school.state&.downcase}#{school.id}"].tap do |hash|

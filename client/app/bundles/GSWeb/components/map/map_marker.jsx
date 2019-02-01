@@ -52,9 +52,12 @@ export default class MapMarker extends DefaultMapMarker {
     this.marker.setMap(this.props.map);
     google.maps.event.addListener(this.marker, 'click', () => {
       this.props.onClick(this.marker);
-      this.props.openInfoWindow(this.marker);
+      // this.props.openInfoWindow(this.marker);
     });
     if (this.props.selected) {
+      this.props.openInfoWindow(this.marker);
+    }
+    if(this.props.openInfoWindowOnStartUp){
       this.props.openInfoWindow(this.marker);
     }
   }
@@ -74,10 +77,12 @@ const createMarkersFromSchools = (
   openInfoWindow,
   googleMaps,
   style,
-  callback
+  savedHeartCallback,
+  findSchoolCallback
 ) =>
-  schools.map(s => (
-    <MapMarker
+  schools.map(s => {
+    const shouldFetchSchoolDetails = Object.values(s).length < 10;
+    return <MapMarker
       {...{
         title: s.name,
         schoolId: s.id,
@@ -92,20 +97,25 @@ const createMarkersFromSchools = (
         locationQuery: s.locationQuery,
         map,
         key: `s${s.state}${s.id}${s.assigned}${s.highlighted}${style}${Object.values(s).length}`,
-        openInfoWindow: m => openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: callback}), m),
+        openInfoWindow: m => openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: savedHeartCallback}), m),
         onClick: m => {
-          if (selectSchool) {
-            selectSchool();
+          if(shouldFetchSchoolDetails){
+            findSchoolCallback([[s.state, s.id]], true)
+          }else{
+            if (selectSchool) {
+              selectSchool();
+            }
+            openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: savedHeartCallback }), m);
           }
-          openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: callback }), m);
         },
         selected: s === selectedSchool,
         type:
           s.schoolType === 'private'
             ? Markers.PRIVATE_SCHOOL
-            : Markers.PUBLIC_SCHOOL
+            : Markers.PUBLIC_SCHOOL,
+        openInfoWindowOnStartUp: s.openInfoWindowOnStartUp
       }}
     />
-  ));
+  });
 
 export { createMarkersFromSchools };

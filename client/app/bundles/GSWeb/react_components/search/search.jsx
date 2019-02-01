@@ -20,7 +20,8 @@ import DistanceFilter from './distance_filter';
 import DistanceContext from './distance_context';
 import Ad from 'react_components/ad';
 import { init as initAdvertising } from 'util/advertising';
-import { XS, validSizes as validViewportSizes } from 'util/viewport';
+import { XS, SM, validSizes as validViewportSizes } from 'util/viewport';
+import { cloneDeep } from 'lodash';
 import SearchBox from '../search_box';
 import NoResults from './no_results';
 
@@ -92,12 +93,26 @@ class Search extends React.Component {
 
   getSchoolsDetails(){
     const schools = this.props.schools;
-    let schoolMarkers = this.props.schoolMarkers;
-    schools.forEach(s=>{
-      const idTag = s.state.toLowerCase() + s.id;
-      schoolMarkers[idTag] = { ...schoolMarkers[idTag],...s};
-    })
-    return Object.values(schoolMarkers);
+    let schoolMarkers = cloneDeep(this.props.schoolMarkers);
+    if(Object.values(schoolMarkers).length > 0){
+      schools.forEach(s=>{
+        const idTag = s.state.toLowerCase() + s.id;
+        schoolMarkers[idTag] = { ...schoolMarkers[idTag],...s};
+      })
+      return Object.values(schoolMarkers);
+    }else{
+      return schools;
+    }
+  }
+
+  shouldDisplayPaginationButtons(){
+    if(Object.values(this.props.schoolMarkers).length === 0){
+      return true;
+    }else if(this.props.view === 'list' || this.props.size > SM){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   render() {
@@ -165,7 +180,7 @@ class Search extends React.Component {
               />
             }
             pagination={
-              this.props.totalPages > 1 ? (
+              this.props.totalPages > 1 && this.shouldDisplayPaginationButtons() ? (
                 <div className="pagination-container">
                   <div className="pagination-buttons button-group">
                     <PaginationButtons
