@@ -43,24 +43,32 @@ class DataValue < ActiveRecord::Base
 # rubocop:disable Style/FormatStringToken
   def self.find_by_school_and_data_types_with_academics(school, data_types, configuration= default_configuration)
     # RubyProf.start
-    loads = @loads_find_by_school_and_data_types_with_academics ||= (Load.data_type_ids_to_loads(data_types, configuration ))
-    dvs = school_values_with_academics.
-        from(
-            DataValue.school_and_data_types(school.state,
-                                            school.id,
-                                            load_ids(loads)), :data_values)
-        .with_academics
-        .with_academic_tags
-        .with_breakdowns
-        .with_breakdown_tags
-        .group('data_values.id')
-        .having("(breakdown_count + academic_count) < 3 OR breakdown_names like '%All students except 504 category%'")
-    a = GsdataCaching::LoadDataValue.new(loads, dvs).merge
-#     result = RubyProf.stop
-#
-# # print a flat profile to text
-#     printer = RubyProf::FlatPrinter.new(result)
-#     printer.print(STDOUT, :min_percent => 1)
+    # loads = data_type_ids_to_loads(data_types, configuration )
+    subset_load_ids = load_ids_dv(state_and_school_load_ids.school_and_data_types_no_load(school.state, school.id))
+    a = []
+    # require 'pry'; binding.pry;
+    if subset_load_ids.present?
+      loads = data_type_ids_to_loads(data_types, configuration, subset_load_ids )
+      dvs = school_values_with_academics.
+          from(
+              DataValue.school_and_data_types(school.state,
+                                              school.id,
+                                              load_ids(loads)), :data_values)
+          .with_academics
+          .with_academic_tags
+          .with_breakdowns
+          .with_breakdown_tags
+          .group('data_values.id')
+          .having("(breakdown_count + academic_count) < 3 OR breakdown_names like '%All students except 504 category%'")
+      a = GsdataCaching::LoadDataValue.new(loads, dvs).merge
+  #     result = RubyProf.stop
+  #
+  # # print a flat profile to text
+  #     printer = RubyProf::FlatPrinter.new(result)
+  #     printer.print(STDOUT, :min_percent => 1)
+
+    end
+    # require 'pry'; binding.pry;
     a
   end
 
@@ -157,6 +165,13 @@ class DataValue < ActiveRecord::Base
       count(distinct(breakdowns.name)) as "breakdown_count"
     SQL
     select(school_values)
+  end
+
+  def self.state_and_school_load_ids
+    state_and_school_load_ids = <<-SQL
+      distinct load_id
+    SQL
+    select(state_and_school_load_ids)
   end
 
   def self.school_values_with_academics
@@ -303,6 +318,16 @@ class DataValue < ActiveRecord::Base
     where(school_subquery_sql, state, school_id, load_ids)
   end
 
+  def self.school_and_data_types_no_load(state, school_id)
+    school_subquery_sql = <<-SQL
+      state = ?
+      AND district_id IS NULL
+      AND school_id = ?
+      AND active = 1
+    SQL
+    where(school_subquery_sql, state, school_id)
+  end
+
   def self.school_and_data_types_and_proficiency(state, school_id, load_ids)
     school_subquery_sql = <<-SQL
       state = ?
@@ -408,6 +433,10 @@ class DataValue < ActiveRecord::Base
 
   def self.load_ids(loads)
     loads&.map(&:id)
+  end
+
+  def self.load_ids_dv(loads)
+    loads&.map(&:load_id)
   end
 
   # def self.load_source_name(load)
@@ -517,6 +546,43 @@ class DataValue < ActiveRecord::Base
 
   def self.datatype_breakdown_year(obj)
     [obj.data_type_id, obj.breakdown_names, obj.date_valid, obj.academic_names, obj.grade]
+  end
+
+  def self.data_type_ids_to_loads(data_type_ids, configuration, subset_load_ids )
+    # config = configuration.is_a?(Array) ? configuration.join(',') : configuration
+    dtis = data_type_ids.join(',')
+    sli = subset_load_ids.join(',')
+    # hash_key = dtis + config + sli
+    # @_data_type_ids_to_loads ||= {}
+    # @_data_type_ids_to_loads[hash_key] ||= begin
+      find_by_sql("select loads.id,
+        loads.data_type_id,
+        loads.configuration,
+        loads.date_valid,
+        loads.description,
+        (sources_new.name) as 'source_name',
+        (data_types.name) as 'data_type_name',
+        (data_types.short_name) as 'data_type_short_name'
+        from loads, sources_new, data_types
+        where loads.data_type_id = data_types.id and loads.source_id = sources_new.id
+        and loads.data_type_id in (#{dtis})
+        and loads.id in (#{sli})
+        and (#{with_configuration_new(configuration)})")
+    # end
+  end
+
+  def self.with_configuration_new(config)
+    q = "loads.configuration like '%#{config}%'"
+    if config.is_a?(Array)
+      q =''
+      config.each_with_index  do | c, i |
+        if i > 0
+          q += ' or '
+        end
+        q += "loads.configuration like '%#{c}%'"
+      end
+    end
+    q
   end
 
 end
