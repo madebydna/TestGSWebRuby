@@ -41,64 +41,6 @@ describe User do
       expect(user.time_added).to_not be_nil
     end
 
-    describe '#active_reviews_for_school' do
-      let(:state) { 'ca' }
-      let(:school_id) { 10 }
-      let(:school) { FactoryGirl.build(:school, id: school_id, state: state) }
-
-      it 'should support a school hash parameter' do
-        relation = double
-        expect(Review).to receive(:where).with(active: true, school_state: state, school_id: school_id).and_return(relation)
-        expect(relation).to receive(:where).with(member_id: subject.id)
-        subject.active_reviews_for_school(school: school)
-      end
-
-      it 'should support state + school_id parameters' do
-        relation = double
-        expect(Review).to receive(:where).with(active: true, school_state: state, school_id: school_id).and_return(relation)
-        expect(relation).to receive(:where).with(member_id: subject.id)
-        subject.active_reviews_for_school(state: state, school_id: school_id)
-      end
-
-      it 'should raise error for invalid arguments' do
-        expect(SchoolRating).to_not receive(:where)
-        expect{ subject.active_reviews_for_school(nil) }.to raise_error(ArgumentError)
-      end
-
-      context 'with saved school and an active and inactive review' do
-        let(:user) { FactoryGirl.create(:verified_user) }
-        let(:school) { FactoryGirl.create(:alameda_high_school) }
-        let(:review1) do
-          review1 = FactoryGirl.create(:five_star_review, user: user, school: school)
-          review1.moderated = true
-          review1.deactivate
-          review1.save
-          review1
-        end
-        let(:review2) do
-          review2 = FactoryGirl.create(:five_star_review, user: user, school: school)
-          review2.moderated = true
-          review2.activate
-          review2.save
-          review2
-        end
-        let(:reviews) do
-          [
-            review1,
-            review2
-          ]
-        end
-        after do
-          clean_models User, Review
-          clean_models :ca, School
-        end
-
-        it 'should return only active reviews' do
-          expect(user.active_reviews_for_school(school)).to eq([review2])
-        end
-      end
-    end
-
     describe '#reviews_for_school' do
       context 'with saved school and an active and inactive review' do
         let!(:user) { FactoryGirl.create(:verified_user) }

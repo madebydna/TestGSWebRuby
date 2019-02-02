@@ -1,7 +1,7 @@
 had_any_errors = false
 
 def all_cache_keys
-  %w(ratings characteristics esp_responses reviews_snapshot progress_bar nearby_schools gsdata feed_characteristics directory courses test_scores_gsdata feed_test_scores_gsdata feed_old_test_scores_gsdata)
+  %w(ratings characteristics esp_responses reviews_snapshot nearby_schools gsdata feed_characteristics directory courses test_scores_gsdata feed_test_scores_gsdata feed_old_test_scores_gsdata)
 end
 
 def usage

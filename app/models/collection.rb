@@ -22,10 +22,6 @@ class Collection < ActiveRecord::Base
     config[:url_name]
   end
 
-  def has_spotlight?
-    url_name.present?
-  end
-
   def scorecard_fields
     config[:scorecard_fields]
   end

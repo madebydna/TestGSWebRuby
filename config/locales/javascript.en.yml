@@ -3,7 +3,7 @@ en:
   javascript:
     compare_test_scores_for: Compare test scores for
     from: from
-    to_nearby_schools: to nearby schools
+    to_nearby_schools: to nearby schools within
     Academics: Academics
     Saved!: Saved!
     Saved: Saved
@@ -18,10 +18,21 @@ en:
     assigned_school: Assigned school
     browse_school_blurb: Here's a look at schools in
     browse_school_blurb_district: Here's a look at the district
+    calendar: calendar
     city_hero_html: <div class="city-hero-narrative">{city} is a city in {county} county, {stateLong}</div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} is a city in {stateLong}</div>
     community_resources: community resources
     county: county
+    date: Date
+    district_calendar: District Calendar
+    district_calendar_no_results: Currently, this information is not available.
+    district_calendar_sources_html: >
+      <div class="sources-text">
+        <h3>GreatSchools district data sources & information</h3>
+        <div>Calendar</div>
+        <p><span>Sources&#58;</span> Tandem</p>
+      </div>
+    event: Event
     website: Website
     homes_for_sale: Homes for sale
     nearby homes for sale & rent: nearby homes for sale & rent
@@ -36,6 +47,7 @@ en:
       - Try different search filters (e.g. school types or levels).
     no_compare_school_title: No results found
     no_compare_school_results: We couldn’t find nearby schools with test scores from {breakdown} students.
+    try_increasing_distance: Try increasing the distance for nearby schools.
     Close filters: Close filters
     school: school
     schools: schools
@@ -292,6 +304,7 @@ en:
     general_information_tooltip: Here you can learn about this school’s hours, enrollment, sports, classes and more.
     General Information: General information
     profile_data_sources_and_info: 'GreatSchools profile data sources &amp; information'
+    district_data_sources_and_info: 'GreatSchools district data sources &amp; information'
     subjects: Subjects
     rating_html: 'Rating&nbsp;'
     courses: courses

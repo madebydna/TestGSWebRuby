@@ -1,6 +1,12 @@
 class Api::StudentsController < ApplicationController
   SUPPORTED_GRADES = ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
 
+  before_action :require_login, only: [:show]
+
+  def show
+    render(status: :ok, json: { grades: current_user.map(&:grade) })
+  end
+
   def create
     unless user
       render json: { errors: ['Must provide valid user email to add student grades'] }, status: 404

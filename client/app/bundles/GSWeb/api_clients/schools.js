@@ -81,7 +81,7 @@ export function find({
   limit = 25,
   with_rating = false,
   schoolList,
-  schoolId,
+  id,
   breakdown,
   url = '/gsr/api/schools',
   stateSelect
@@ -97,7 +97,7 @@ export function find({
     limit,
     with_rating,
     schoolList,
-    schoolId,
+    id,
     breakdown,
     url,
     stateSelect
@@ -126,14 +126,14 @@ export function find({
   if (locationLabel) {
     data.locationLabel = locationLabel;
   }
-  if (schoolId) {
-    data.schoolId = schoolId;
+  if (id) {
+    data.id = id;
   }
   if (breakdown) {
     data.breakdown = breakdown;
   }
   if (stateSelect) {
-    data.stateSelect = stateSelect
+    data.stateSelect = stateSelect;
   }
   const currentParams = parse(window.location.search);
   data.lang = currentParams.lang;
@@ -141,7 +141,7 @@ export function find({
     data.locationType = currentParams.locationType;
   }
   return $.ajax({
-    url: `${url}`,
+    url: '/gsr/api/schools',
     data,
     type: 'GET',
     dataType: 'json',
@@ -154,13 +154,6 @@ export function mySchoolList(props) {
     ...props,
     schoolList: 'msl',
     extras: ['saved_schools']
-  });
-}
-
-export function findComparedSchool(props){
-  return find({
-    ...props,
-    url: '/compare_schools'
   });
 }
 
@@ -183,3 +176,14 @@ export function deleteSchool(schoolKey) {
     method: 'DELETE'
   });
 }
+
+export function logSchool(schoolKey, action, location) {
+  const data = { saved_schools_log: {state: schoolKey.state, school_id: schoolKey.id, action, location}};
+  return $.ajax({
+    url: '/gsr/api/log_saved_school',
+    data,
+    dataType: 'json',
+    method: 'POST'
+  })
+}
+

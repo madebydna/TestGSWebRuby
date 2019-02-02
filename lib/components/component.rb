@@ -123,7 +123,7 @@ module Components
       return value if value.nil?
       # If a precision is set, and the value is a number, then just
       # use stringified float value
-      if precision && value =~ /^\s*[\.\d]+\s*$/
+      if precision && value.to_s =~ /^\s*[\.\d]+\s*$/
         num = float_value(value)
         return '<1' if num < 1
         return num.to_s

@@ -7,16 +7,21 @@ gem 'rails', '4.2.8'
 gem 'mysql2', '0.4.10'
 
 # This gem provides jQuery and the jQuery-ujs driver for your Rails 3+ application.
+# Used by pages that use JS through rails asset pipeline and not webpack/react
+# Such as review moderation pages and reviews landing page 
 gem 'jquery-rails'
+
 # This gem provides jquery-cookie.js assets for your Rails 3 application.
 # This has been deprecated in favor of js-cookie
 # USED: many places. Search for $.cookie
 gem 'jquery-cookie-rails'
+
 # This gem packages the jQuery DataTables plugin for easy use with the Rails 3.1+ asset pipleine.
 # It provides all the basic DataTables files, and a few of the extras.
 # USED: reviews_moderation_init.js
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 
+# Used in moderation.html.erb for review moderation
 gem 'kaminari', '0.16.1'
 
 # Provide various react builds to your asset bundle
@@ -51,11 +56,6 @@ gem 'lodash-rails'
 
 # for passing vars from ruby rails to javascript
 gem 'gon'
-
-# Wiselinks gives us History.js for changing browser URLs
-# USED: In deprecated_post_load.js
-# TODO: If this is just for History.js, let's just use that library and drop the gem
-gem 'wiselinks'
 
 # USED: In FB authentication. See SigninController or related
 gem 'mini_fb'
@@ -104,16 +104,6 @@ gem 'savon', '~> 2.6.0'
 # Ruby/NTLM provides message creator and parser for the NTLM authentication.
 # Required by savon gem
 gem 'rubyntlm', '~> 0.4.0'
-
-# Prawn is a fast, tiny, and nimble PDF generator for Ruby
-# USED: By PYOC (see pyoc_controller and pyoc_pdf)
-# TODO: Kill PYOC and remove gems
-gem 'prawn'
-gem 'prawn-table', '~> 0.1.2'
-
-# A simple HTTP and REST client for Ruby
-# USED: In PhotoUploadConcerns (OSP)
-gem 'rest-client', '2.0.2'
 
 # Retrieve the binding of a method's caller.
 # USED: By GsLogger. See AT-873

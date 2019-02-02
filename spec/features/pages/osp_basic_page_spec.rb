@@ -57,6 +57,7 @@ describe 'OSP Basic Page' do
   end
 
   with_shared_context 'signed in approved osp user for school', 'ca', 1 do
+    before { skip }
     with_shared_context 'visit OSP page with inactive school', js: true do
         include_example 'should have element with text', '.flash_notice', 'Exceptional Death Eaters Academy may no longer exist. If you feel this is incorrect, please contact us.'
         include_example 'should have link text on page', 'contact us'
@@ -261,29 +262,6 @@ describe 'OSP Basic Page' do
         end
         with_shared_context 'within button(s) with the text(s)', 'No dress code' do
           include_example 'should contain the active class'
-        end
-      end
-    end
-  end
-
-  with_shared_context 'Basic High School' do
-    with_shared_context 'Visit Compare Page', js: true do
-      with_shared_context 'the compare page value of', 'Before care' do
-        include_example 'should eql the expected text', 'n/a'
-      end
-    end
-  end
-
-  with_shared_context 'with a basic set of osp questions in db' do
-    with_shared_context 'visit OSP page' do
-      with_shared_context 'click Before Care and Canoe button options', js: true do
-        with_shared_context 'submit the osp form' do
-          include_context 'then run the queue daemon', :ca
-          with_shared_context 'Visit Compare Page' do
-            with_shared_context 'the compare page value of', 'Before care' do
-              include_example 'should contain the expected text', 'Yes'
-            end
-          end
         end
       end
     end

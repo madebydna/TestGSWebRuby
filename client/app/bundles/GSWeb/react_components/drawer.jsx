@@ -15,18 +15,19 @@ const Drawer = createReactClass({
     openLabel: PropTypes.string,
     closedLabel: PropTypes.string,
     trackingCategory: PropTypes.string,
-    trackingAction: PropTypes.string
+    trackingAction: PropTypes.string,
+    trackingLabel: PropTypes.string
   },
 
   handleClick: function() {
     if(this.state.open) {
-      analyticsEvent(this.props.trackingCategory, this.props.trackingAction+' Less');
+      analyticsEvent(this.props.trackingCategory, this.props.trackingAction+' Less', this.props.trackingLabel);
       // this.props.onClose.call();
 
       this.setState({open: false});
     } else {
       // this.props.onOpen.call();
-      analyticsEvent(this.props.trackingCategory, this.props.trackingAction+' More' );
+      analyticsEvent(this.props.trackingCategory, this.props.trackingAction+' More', this.props.trackingLabel);
       this.setState({open: true});
     }
   },

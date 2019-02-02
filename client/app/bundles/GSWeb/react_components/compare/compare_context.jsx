@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { findComparedSchool as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
+import { find as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
@@ -18,22 +18,22 @@ import {
   COOKIE_NAME
 } from 'util/session';
 import '../../vendor/remodal';
-import CompareQueryParams from './compare_query_params';
-import GradeLevelContext from 'react_components/search/grade_level_context';
+import SearchQueryParams from 'react_components/search/search_query_params';
 import SavedSchoolContext from 'react_components/search/saved_school_context';
-import EntityTypeContext from 'react_components/search/entity_type_context';
 import SortContext from 'react_components/search/sort_context';
-import DistanceContext from 'react_components/search/distance_context';
 import { set as setCookie } from 'js-cookie';
 import { t } from 'util/i18n';
 import { showMessageTooltip } from '../../util/message_tooltip';
 const gonCompare = (window.gon || {}).compare || {};
 const { Provider, Consumer } = React.createContext();
+import DistanceFilter from 'react_components/search/distance_filter';
+import DistanceContext from 'react_components/search/distance_context';
 
 class CompareProvider extends React.Component {
   static propTypes = {
     findSchools: PropTypes.func,
     state: PropTypes.string,
+    id: PropTypes.number,
     schools: PropTypes.arrayOf(PropTypes.object),
     levelCodes: PropTypes.arrayOf(PropTypes.string),
     entityTypes: PropTypes.arrayOf(PropTypes.string),
@@ -47,11 +47,8 @@ class CompareProvider extends React.Component {
     pageSize: PropTypes.number,
     resultSummary: PropTypes.string,
     children: PropTypes.element.isRequired,
-    updateLevelCodes: PropTypes.func.isRequired,
-    updateEntityTypes: PropTypes.func.isRequired,
     updateSort: PropTypes.func.isRequired,
     updatePage: PropTypes.func.isRequired,
-    updateDistance: PropTypes.func.isRequired,
     compareTableViewHeaders: PropTypes.object
   };
 
@@ -64,7 +61,6 @@ class CompareProvider extends React.Component {
     autoSuggestQuery: () => {},
     breadcrumbs: [],
     q: null,
-    layout: 'Search',
     schoolKeys: [],
     numOfSchools: 0,
     breakdownParam: ''
@@ -191,15 +187,15 @@ class CompareProvider extends React.Component {
       if(schoolKeyIdx > -1){
         deleteSchool(schoolKey)
           .done(e => {
-            e.status === 400 && alert("There was an error deleting a school from your account.\n Please try again later")
-            e.status === 501 && alert("An issue occurred while removing this school from your list.\n Please sign out and sign back in.")
+            e.status === 400 && alert("There was an error deleting a school from your account.\n Please try again later");
+            e.status === 501 && alert("There was an issue deleting the school from your account.\n Please log out and sign back in. Thank you.");
           })
           .fail(e => alert("There was an error deleting a school from your account.\n Please try again later"))
       }else{
         addSchool(schoolKey)
           .done(e => {
-            e.status === 400 && alert("There was an error adding a school to your account.\n Please try again later")
-            e.status === 501 && alert("Your school was stored but not saved.\n Please sign out and sign back in.")
+            e.status === 400 && alert("There was an error adding a school to your account.\n Please try again later");
+            e.status === 501 && alert("There was an issue adding the school to your account.\n Please log out and sign back in. Thank you.");
           })
           .fail(e => alert("There was an error adding a school to your account.\n Please try again later"))
       }
@@ -223,23 +219,21 @@ class CompareProvider extends React.Component {
   propsForFindSchools(props) {
     return {
       city: props.city,
-      district: props.district,
       state: props.state,
       q: props.q,
       levelCodes: [...props.levelCodes],
-      schoolId: props.schoolId,
+      id: props.id,
       state: props.state,
       breakdown: props.breakdownParam,
-      entityTypes: props.entityTypes,
       lat: props.lat,
       lon: props.lon,
-      distance: props.distance,
       sort: props.sort,
       page: props.page,
-      // limit: props.pageSize,
       limit: 100,
-      extras: ["ratings", "characteristics", "review_summary", "saved_schools", "pinned_school", "ethnicity_test_score_rating"],
-      locationLabel: props.locationLabel
+      distance: props.distance,
+      extras: ["summary_rating", "enrollment", "review_summary", "saved_schools", "pinned_school", "ethnicity_test_score_rating", "distance"],
+      locationLabel: props.locationLabel,
+      with_rating: true
     };
   }
 
@@ -318,8 +312,8 @@ class CompareProvider extends React.Component {
         }}
       >
         <DistanceContext.Provider
-          // compose makes a new function that will call curried trackParams,
-          // followed by this.props.updateDistance (right to left)
+            // compose makes a new function that will call curried trackParams,
+            // followed by this.props.updateDistance (right to left)
           value={{
             distance: this.props.distance,
             onChange: compose(
@@ -329,52 +323,30 @@ class CompareProvider extends React.Component {
             )
           }}
         >
-          <GradeLevelContext.Provider
+          <SortContext.Provider
             value={{
-              levelCodes: this.props.levelCodes,
-              onLevelCodesChanged: compose(
+              sort: this.props.sort,
+              onSortChanged: compose(
                 this.scrollToTop,
-                this.props.updateLevelCodes,
-                curry(this.trackParams)('Grade level', this.props.levelCodes)
+                this.props.updateSort,
+                curry(this.trackParams)('Sort', this.props.sort)
+              ),
+              breakdown: this.state.breakdown,
+              onBreakdownChanged: compose(
+                this.scrollToTop,
+                this.props.updateBreakdown,
+                curry(this.trackParams)('Breakdown', this.state.breakdown)
               )
             }}
           >
-            <EntityTypeContext.Provider
+            <SavedSchoolContext.Provider
               value={{
-                entityTypes: this.props.entityTypes,
-                onEntityTypesChanged: compose(
-                  this.scrollToTop,
-                  this.props.updateEntityTypes,
-                  curry(this.trackParams)('School type', this.props.entityTypes)
-                )
+                saveSchoolCallback: this.handleSaveSchoolClick,
               }}
             >
-              <SortContext.Provider
-                value={{
-                  sort: this.props.sort,
-                  onSortChanged: compose(
-                    this.scrollToTop,
-                    this.props.updateSort,
-                    curry(this.trackParams)('Sort', this.props.sort)
-                  ),
-                  breakdown: this.state.breakdown,
-                  onBreakdownChanged: compose(
-                    this.scrollToTop,
-                    this.props.updateBreakdown,
-                    curry(this.trackParams)('Breakdown', this.state.breakdown)
-                  )
-                }}
-              >
-                <SavedSchoolContext.Provider
-                  value={{
-                    saveSchoolCallback: this.handleSaveSchoolClick,
-                  }}
-                >
-                  {this.props.children}
-                </SavedSchoolContext.Provider>
-              </SortContext.Provider>
-            </EntityTypeContext.Provider>
-          </GradeLevelContext.Provider>
+              {this.props.children}
+            </SavedSchoolContext.Provider>
+          </SortContext.Provider>
         </DistanceContext.Provider>
       </Provider>
     );
@@ -382,9 +354,9 @@ class CompareProvider extends React.Component {
 }
 
 const CompareProviderWithQueryParams = props => (
-  <CompareQueryParams>
+  <SearchQueryParams>
     {paramProps => <CompareProvider {...paramProps} {...props} />}
-  </CompareQueryParams>
+  </SearchQueryParams>
 );
 export { CompareProvider };
 export default {

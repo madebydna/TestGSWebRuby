@@ -22,11 +22,10 @@ class Api::SchoolSerializer
     rating = rating && rating != 'NR' ? rating.to_i : nil
     # rating_subrating_hash = build_rating_subrating_hash
     # rating_ethnicity_hash = school.subratings
-
     {
       id: school.id,
       districtId: school.district_id,
-      districtName: school['district_name'],
+      districtName: school['district_name'] || school&.try(:district_name),
       levelCode: school.level_code,
       lat: school.lat,
       lon: school.lon,

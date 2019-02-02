@@ -81,14 +81,20 @@ class CityLayout extends React.Component {
     return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
   }
 
+  renderBoxAd() {
+    return <div id="second-ad">
+      <Ad slot="citypage_second" sizeName="box"/>
+    </div>
+  }
+
   renderDesktopAd(){
-    return this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
-      <Ad slot="citypage_first" sizeName="box_or_tall" />
+    return this.props.viewportSize > SM && <div className="ad-bar sticky" >
+        <Ad slot="citypage_first" sizeName="box_or_tall" />
     </div>
   }
 
   renderToc(){
-    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
+    return this.props.viewportSize > XS && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
   }
 
   renderDistricts(){
@@ -146,15 +152,18 @@ class CityLayout extends React.Component {
         {this.renderBreadcrumbs()}
         {this.renderHero()}
         <div className="below-hero">
-          {this.renderToc()}
-          <div className="community-modules">
-            {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
-            {this.renderSchools()}
-            {this.renderDistricts()}
-            {this.renderMobility()}
-            {this.renderZillow()}
-            {this.renderReviews()}
-          </div>
+          {/*<div className="content">*/}
+            {this.renderToc()}
+            <div className="community-modules">
+              {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
+              {this.renderSchools()}
+              {this.renderBoxAd()}
+              {this.renderDistricts()}
+              {this.renderMobility()}
+              {this.renderZillow()}
+              {this.renderReviews()}
+            </div>
+          {/*</div>*/}
           {this.renderDesktopAd()}
         </div>
       </div>

@@ -28,7 +28,9 @@ const resultSummary = t('no_school_list')
 const NoMySchoolListResults = () => (
   <div className="no-results">
     <div className="body">
-      <img src={noResultsOwlPng} />
+      <div>
+        <img src={noResultsOwlPng} />
+      </div>
       <div>
         <span
           className="heading"

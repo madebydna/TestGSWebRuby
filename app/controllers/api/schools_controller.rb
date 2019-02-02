@@ -16,7 +16,8 @@ class Api::SchoolsController < ApplicationController
         prev: self.prev_offset_url(page_of_results),
         next: self.next_offset_url(page_of_results),
       },
-      items: serialized_schools
+      items: serialized_schools,
+      tableHeaders: breakdown.present? ? table_headers : nil 
     }.merge(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
     .merge(Api::PaginationSerializer.new(page_of_results).to_hash)
   end

@@ -52,6 +52,11 @@ export default function createInfoWindow(entity) {
         <div className="rating-container">
           <img src={unratedSchoolIcon} />
           <div className="rating-scale">{t('Currently unrated')}</div>
+          {entity.savedSchoolCallback && <div
+            data-state={entity.state}
+            data-id={entity.id}
+            className={entity.savedSchool ? 'icon-heart js-info-heart' : 'icon-heart-outline js-info-heart'}
+          />}
         </div>
       );
     }
@@ -70,6 +75,12 @@ export default function createInfoWindow(entity) {
             {ratingText}
           </div>
           {ratingScale}
+          {/* Saved School heart container that only appears during SchoolSearchResult */}
+          {entity.savedSchoolCallback && <div
+            data-state={entity.state}
+            data-id={entity.id}
+            className={entity.savedSchool ? 'icon-heart js-info-heart' : 'icon-heart-outline js-info-heart'}
+          />}
         </div>
       );
     }

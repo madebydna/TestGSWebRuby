@@ -6,6 +6,7 @@ import Button from 'react_components/button';
 import Ad from 'react_components/ad';
 import { t, capitalize } from 'util/i18n';
 import { keepInViewport } from 'util/sticky';
+import xq from 'community/xq-sm.png';
 
 class DistrictLayout extends React.Component {
   static propTypes = {
@@ -67,6 +68,15 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderCalendar() {
+    return (
+      <div id="calendar">
+        <div className="modules-title">{t('district_calendar')}</div>
+        {this.props.calendar}
+      </div>
+    )
+  }
+
   renderMobility() {
     return (
       <div id="mobility">
@@ -119,22 +129,34 @@ class DistrictLayout extends React.Component {
     return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
   }
 
+  renderBoxAd() {
+    return <div id="second-ad">
+      <Ad slot="districtpage_second" sizeName="box"/>
+    </div>
+  }
+
   renderDesktopAd(){
     return (
-      this.props.viewportSize > XS && <div className="ad-bar sticky" ref={this.ad}>
+      this.props.viewportSize > SM && <div className="ad-bar sticky" >
         <Ad slot="districtpage_first" sizeName="box_or_tall" />
       </div>
     )
   }
 
   renderToc(){
-    return this.props.viewportSize > MD && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
+    return this.props.viewportSize > XS && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
   }
 
   renderSchools() {
     return (
       <div id="schools">
         <div className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</div>
+        <div className="xq-partnership">
+          {this.props.translations.inPartnershipWith}
+          <a href='https://xqsuperschool.org/school-board-thing' target="_blank">
+            <img src={xq} alt='xq-icon' />
+          </a>
+        </div>
         {this.props.browseSchools}
         {this.props.schoolCounts.all > 0 ? this.props.topSchools: null}
       </div>
@@ -164,7 +186,9 @@ class DistrictLayout extends React.Component {
           <div className="community-modules">
             {this.props.viewportSize < SM && <Ad slot="districtpage_first" sizeName="thin_banner_mobile" />}
             {this.renderSchools()}
+            {this.renderBoxAd()}
             {this.renderAcademics()}
+            {this.renderCalendar()}
             {this.renderMobility()}
             {this.renderZillow()}
             {this.renderReviews()}

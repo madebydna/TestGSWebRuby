@@ -33,7 +33,7 @@ class SearchController < ApplicationController
       }
     end
     gon.search['facetFields'] = populated_facet_fields
-    set_meta_tags(Search::MetaTags.from_controller(self).meta_tag_hash)
+    set_meta_tags(choose_meta_tag_implementation.new(self).meta_tag_hash)
     set_ad_targeting_props
     set_page_analytics_data
     response.status = 404 if serialized_schools.empty?
@@ -65,6 +65,20 @@ class SearchController < ApplicationController
   ## end legacy search code
 
   private
+
+  def choose_meta_tag_implementation
+    if district_browse?
+      MetaTag::DistrictBrowseMetaTags
+    elsif city_browse?
+      MetaTag::CityBrowseMetaTags
+    elsif zip_code_search?
+      MetaTag::ZipMetaTags
+    elsif street_address?
+      MetaTag::AddressMetaTags
+    else
+      MetaTag::OtherMetaTags
+    end
+  end
 
   def set_cache_headers_for_legacy_suggest
     cache_time = ENV_GLOBAL['search_suggest_cache_time'] || 0

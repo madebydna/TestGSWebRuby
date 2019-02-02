@@ -91,7 +91,12 @@ class UserController < ApplicationController
         result = obj.errors.full_messages.first
       end
     end
-    render json: {'error_msg' => result, 'grade_level' => grade_level}
+
+    render json: {
+      error_msg: result,
+      'grade_level': grade_level,
+      gradeLevels: current_user.student_grade_levels.map(&:grade)
+    }
 
   end
 
@@ -108,8 +113,11 @@ class UserController < ApplicationController
         result = "User profile failed to update grade level info  for user #{current_user.email} "
       end
     end
-    render json: {'error_msg' => result, 'grade_level' => grade_level}
 
-
+    render json: {
+      'error_msg': result,
+      'grade_level': grade_level,
+      gradeLevels: current_user.student_grade_levels.map(&:grade)
+    }
   end
 end

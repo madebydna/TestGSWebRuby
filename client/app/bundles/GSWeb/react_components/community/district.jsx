@@ -9,10 +9,11 @@ import TopSchoolsStateful from "./top_schools_stateful";
 import SchoolBrowseLinks from "./school_browse_links";
 import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
+import Calendar from "./calendar";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
-import {schools, academics, ACADEMICS, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
+import {schools, academics, ACADEMICS, calendar, CALENDAR, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
@@ -105,7 +106,7 @@ class District extends React.Component {
   }
 
   selectTocItems(){
-    let districtTocItems = [schools, academics, communityResources, nearbyHomesForSale, reviews];
+    let districtTocItems = [schools, academics, calendar, communityResources, nearbyHomesForSale, reviews];
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     return districtTocItems;
@@ -118,6 +119,7 @@ class District extends React.Component {
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schoolCounts={this.props.schools_data.counts}
         shouldDisplayReviews={this.props.reviews.length > 0}
+        translations={this.props.translations}
         topSchools={
           <TopSchoolsStateful
             community="district"
@@ -169,6 +171,12 @@ class District extends React.Component {
             }
           />
         }
+        calendar={
+          <Calendar 
+            locality={this.props.locality}
+            pageType="District"
+          />
+        } 
         zillow={
           <Zillow
               locality={this.props.locality}

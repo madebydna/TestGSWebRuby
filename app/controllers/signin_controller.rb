@@ -53,12 +53,11 @@ class SigninController < ApplicationController
     else
       user, error = authenticate  # log in
     end
-    
-    # merges saved_schools from cookies with saved_schools from db for user
-    consistify_saved_schools(user) if user
-
     # successful login or registration is determined by presence of error
     handle_registration_and_login_error(error) and return if error
+
+    # merges saved_schools from cookies with saved_schools from db for user
+    consistify_saved_schools(user) if user
 
     log_user_in(user)
     executed_deferred_action

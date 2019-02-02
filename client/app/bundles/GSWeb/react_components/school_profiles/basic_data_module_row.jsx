@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { parse, extract } from 'query-string';
 import QuestionMarkTooltip from './question_mark_tooltip';
+import { analyticsEvent } from 'util/page_analytics';
 import { t } from '../../util/i18n';
 
 // TODOs:
@@ -35,8 +37,15 @@ const BasicDataModuleRow = ({
     }
   }
 
-  const renderLink = () => {
-    return <a className="anchor-button" href={link}>Compare</a>
+  const handleClick = (compareLink) => {
+    const parsedQueryString = parse(extract(compareLink));
+    const ethnicity = parsedQueryString.breakdown;
+    const { state, id } = window.gon.school;
+    analyticsEvent('Profile', 'CompareSchool', `${id}:${state}:race-ethnicity:${ethnicity}`);
+  };
+
+  const renderCompareLink = () => {
+    return <a onClick={()=> handleClick(link)} className="anchor-button" href={link}>Compare</a>
   }
 
   return (
@@ -51,7 +60,7 @@ const BasicDataModuleRow = ({
           {children}
         </div>
         <div className="compare-link">
-          {(link && renderLink()) || drawerTrigger}
+          {(link && renderCompareLink()) || drawerTrigger}
         </div>
       </div>
     </div>

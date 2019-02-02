@@ -72,6 +72,10 @@ module SearchRequestParams
     params[:lon]&.to_f
   end
 
+  def default_radius
+    5
+  end
+
   def radius
     r = radius_param || 5
     if max_radius
@@ -82,7 +86,7 @@ module SearchRequestParams
   end
 
   def max_radius
-    nil
+    radius_param || default_radius
   end
 
   def radius_param
@@ -194,9 +198,8 @@ module SearchRequestParams
     location_label_param.gsub(', USA', '')
   end
 
-
   def school_id
-    params[:id]&.to_i
+    params[:id]&.to_i || params[:schoolId]&.to_i
   end
 
   def district_browse?
@@ -298,8 +301,15 @@ module SearchRequestParams
     params['locationType'] == 'street_address'
   end
 
+  def cast_to_boolean(str)
+    {
+      'true' => true,
+      'false' => false
+    }[str]
+  end
+
   def with_rating
-    params[:with_rating]
+    cast_to_boolean(params[:with_rating]&.downcase)
   end
 
   #myschoollist params
@@ -348,8 +358,34 @@ module SearchRequestParams
   def filtered_school_keys
     # schools_keys used here so that this solr parameter will only fire off
     # from MSL controller or from the MSL API call. In other instances, this params
-    # is undefined/nil
+    # is nil/undefined
     school_keys.present? ? saved_school_keys.select {|school_key| school_key[0] == state_select} : nil
+  end
+
+  #CompareSchools params
+  def breakdown
+    params[:breakdown]
+  end
+
+  def ethnicity
+    pinned_school_ethnicity_breakdowns.include?(breakdown) ? breakdown : pinned_school_ethnicity_breakdowns.sort.first
+  end
+
+  def base_school_for_compare
+    @_base_school_for_compare ||= begin
+      pinned_school = School.on_db(state).find(school_id)
+      pinned_school = send("add_summary_rating", pinned_school) if respond_to?("add_summary_rating", true)
+      pinned_school = send("add_enrollment", pinned_school) if respond_to?("add_enrollment", true)
+      SchoolCacheQuery.decorate_schools([pinned_school], *cache_keys).first
+    rescue
+      nil
+    end
+  end
+
+  def pinned_school_ethnicity_breakdowns
+    @breakdowns ||= begin
+      base_school_for_compare&.ethnicity_breakdowns || []
+    end
   end
 
 end

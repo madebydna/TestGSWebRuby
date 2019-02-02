@@ -52,7 +52,9 @@ module SearchControllerConcerns
   end
 
   def query
-    if point_given? || area_given? || q.present?
+    if filtered_school_keys != nil && filtered_school_keys.length == 0
+      null_query
+    elsif point_given? || area_given? || q.present?
       solr_query
     elsif state.present? && (school_id.present? || district_id.present?)
       school_sql_query
@@ -122,6 +124,8 @@ module SearchControllerConcerns
     end
     if cache_keys.any?
       schools = SchoolCacheQuery.decorate_schools(schools, *cache_keys)
+      schools = filter_by_ethnicity_test_score_rating(schools).compact if breakdown.present?
+      schools = sort_by_ethnicity_test_score(schools) if breakdown.present? && (sort_name.nil? || sort_name == 'testscores')
     end
     schools
   end
@@ -203,7 +207,12 @@ module SearchControllerConcerns
   def assigned_schools
     @_assigned_schools ||=
       if location_given? && street_address?
-        attendance_zone_query.search_by_level
+        schools = attendance_zone_query.search_by_level
+        schools.each do |school|
+          district = District.on_db(school.state.downcase)&.find_by(id: school.district_id)&.name
+          school.define_singleton_method(:district_name) {district}
+        end
+        schools
       else
         []
       end
@@ -221,8 +230,71 @@ module SearchControllerConcerns
     school.ratings
   end
 
-  def add_ethincity_hash
+  #Compare extra methods
+  def add_pinned_school(schools)
+    schools.select do |school|
+      pinned_school_boolean = school.id == school_id.to_i && school.state.downcase == state.downcase ? true : false
+      school.define_singleton_method(:pinned) {pinned_school_boolean}
+    end
+    schools
+  end
 
+  def add_saved_schools(schools)
+    # grab saved school keys from the cookie (merged with user's msl if they are logged in)
+    # and compare to keys constructed from schools.
+    schools.each do |school|
+      if saved_school_keys&.include?([school.state.downcase, school.id])
+        school.define_singleton_method(:saved_school) do
+          true
+        end
+      else
+        school.define_singleton_method(:saved_school) do
+          false
+        end
+      end
+    end
+  end
+
+  def sort_by_ethnicity_test_score(schools)
+    # This keeps the pinned school on top
+    pinned_school = schools.find {|school| school.pinned}
+    non_pinned_schools = schools - [pinned_school]
+    non_pinned_schools = non_pinned_schools.sort_by {|school| [school.test_score_rating_for_ethnicity, -1 * school.distance] }.reverse
+    non_pinned_schools.unshift(pinned_school) if pinned_school
+    non_pinned_schools
+  end
+
+  def filter_by_ethnicity_test_score_rating(schools)
+    schools.map do |school|
+      rating_for_ethnicity = school.ethnicity_test_score_ratings[ethnicity]
+      if rating_for_ethnicity
+        school.define_singleton_method(:test_score_rating_for_ethnicity) {rating_for_ethnicity}
+        school
+      end
+    end.compact
+  end
+
+  def translated_ethnicity_with_fallback
+    @_translated_ethnicity ||= I18n.t(ethnicity, default: ethnicity)
+  end
+
+  def cohort_count_header_hash
+    {title: I18n.t('total_students_enrolled', scope: 'controllers.compare_schools_controller'), className: 'total-enrollment', key: 'total-enrollment'}
+  end
+
+  def percentage_of_students_by_breakdown_header_hash
+    return nil if ethnicity.nil? || ethnicity.downcase == 'all students'
+    {title: I18n.t('percentage_of_students', scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: 'ethnicity-enrollment', key: 'ethnicity-enrollment'}
+  end
+
+  def test_score_rating_by_ethnicity_header_hash
+    return nil if ethnicity.nil?
+    test_score_rating_key = ethnicity.downcase == 'all students' ? 'test_score_rating_for_all_students' : 'test_score_rating_for'
+    {title: I18n.t(test_score_rating_key, scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: (sort_name == 'testscores' ? 'testscores yellow-highlight' : 'testscores'), key: 'testscores'}
+  end
+
+  def table_headers
+    [cohort_count_header_hash, percentage_of_students_by_breakdown_header_hash, test_score_rating_by_ethnicity_header_hash].compact
   end
 
 end
