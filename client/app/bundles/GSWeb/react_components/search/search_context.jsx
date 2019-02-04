@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { find as findSchools, addSchool, deleteSchool, logSchool, findMoreSchools } from 'api_clients/schools';
+import { find as findSchools, addSchool, deleteSchool, logSchool, findMarkers } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray, cloneDeep } from 'lodash';
@@ -135,7 +135,6 @@ class SearchProvider extends React.Component {
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
     this.handleSaveSchoolClick = this.handleSaveSchoolClick.bind(this);
-    this.removeInfoWindowOnStartUp = this.removeInfoWindowOnStartUp.bind(this);
     this.toggleAll = this.toggleAll.bind(this);
     this.toggleOne = this.toggleOne.bind(this);
     this.updateStateFilter = this.updateStateFilter.bind(this);
@@ -143,6 +142,7 @@ class SearchProvider extends React.Component {
     this.updateMarkers = debounce(this.updateMarkers.bind(this), 500, {
       leading: false
     });
+    this.removeInfoWindowOnStartUp = this.removeInfoWindowOnStartUp.bind(this);
   }
 
   componentDidMount() {
@@ -360,7 +360,7 @@ class SearchProvider extends React.Component {
     const schoolKeys = arrayofArrays.filter(arr => {
       return Object.values(schoolPins[`${arr[0]}${arr[1]}`]).length === 6 && !schoolsHash[`${arr[0]}${arr[1]}`]
     });
-    findMoreSchools(
+    findMarkers(
       {
         schoolKeys: schoolKeys,
         state: this.props.schools[0].state.toLowerCase()
@@ -383,10 +383,10 @@ class SearchProvider extends React.Component {
       });
   }
 
-  removeInfoWindowOnStartUp(schoolKey){
+  removeInfoWindowOnStartUp([state, id]){
     const schoolPins = cloneDeep(this.state.schoolMarkers);
-    schoolPins[`${schoolKey[0]}${schoolKey[1]}`] = {
-      ...schoolPins[`${schoolKey[0]}${schoolKey[1]}`], 
+    schoolPins[`${state}${id}`] = {
+      ...schoolPins[`${state}${id}`], 
       openInfoWindowOnStartUp: false 
     }
     this.setState({schoolMarkers: schoolPins});

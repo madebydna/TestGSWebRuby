@@ -12,6 +12,7 @@ class MySchoolListController < ApplicationController
   layout 'application'
 
   def show
+    params[:schoolList] = 'msl'
     gon.search = {
       schools: serialized_schools
     }.tap do |props|

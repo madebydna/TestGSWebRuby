@@ -53,7 +53,11 @@ class Api::SchoolsController < ApplicationController
   end
 
   def school_keys
-    return saved_school_keys if my_school_list?
+    if my_school_list?
+      return saved_school_keys
+    else
+      params[:schoolKeys]&.values
+    end
   end
 
 end

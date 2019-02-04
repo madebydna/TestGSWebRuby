@@ -18,7 +18,7 @@ const mapPinColor = rating =>
     8: 'rgb(108,168,31)',
     9: 'rgb(84,158,34)',
     10: 'rgb(68,146,36)',
-    null: 'gray',
+    0: 'gray',
     'assigned': 'rgb(23,105,151)'
   }[rating]);
 

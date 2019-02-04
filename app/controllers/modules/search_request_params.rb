@@ -319,7 +319,7 @@ module SearchRequestParams
   end
 
   def school_keys
-    params[:schoolKeys] || []
+    params[:schoolKeys]&.values || []
   end
 
   def school_list

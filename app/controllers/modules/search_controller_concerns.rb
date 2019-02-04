@@ -85,9 +85,7 @@ module SearchControllerConcerns
     query_type.new(
       city: city,
       state: state,
-      # school_keys: filtered_school_keys,
-      # need to fix this TODO
-      school_keys: school_markers_more,
+      school_keys: my_school_list? ? filtered_school_keys : school_keys,
       district_id: district_record&.id,
       district_name: district_record&.name,
       location_label: location_label_param,
@@ -122,9 +120,9 @@ module SearchControllerConcerns
     )
   end
 
-  def school_markers_more
-    params[:schoolKeys]&.values
-  end
+  # def school_markers_more
+  #   params[:schoolKeys]&.values
+  # end
 
   def null_query
     Search::NullQuery.new

@@ -157,7 +157,7 @@ export function mySchoolList(props) {
   });
 }
 
-export function findMoreSchools(props) {
+export function findMarkers(props) {
   return find({
     ...props,
     url: '/gsr/api/get_schools'
