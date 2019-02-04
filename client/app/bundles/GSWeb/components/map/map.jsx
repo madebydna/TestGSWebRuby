@@ -12,7 +12,7 @@ export default class Map extends React.Component {
     markerDigest: PropTypes.string,
     heartClickCallback: PropTypes.func,
     removeInfoWindowOnStartUp: PropTypes.func,
-    shouldContFitbound: PropTypes.bool
+    shouldFitboundOnNewMarkers: PropTypes.bool
   };
 
   static defaultProps = {
@@ -20,7 +20,7 @@ export default class Map extends React.Component {
     lat: null,
     lon: null,
     markerDigest: '',
-    shouldContFitbound: false
+    shouldFitboundOnNewMarkers: false
   };
 
   constructor(props) {
@@ -136,7 +136,7 @@ export default class Map extends React.Component {
       this.state.mounted && this.setState({ zoomLevel: this.map.getZoom()})
     })
     this.setState({ mapCenter: this.map.getCenter(), mounted: true });
-    if(this.props.shouldContFitbound){
+    if(this.props.shouldFitboundOnNewMarkers){
       this.fitBounds = (this.fitBounds.bind(this));
     }else{
       this.fitBounds = once(this.fitBounds.bind(this));
@@ -151,7 +151,7 @@ export default class Map extends React.Component {
     if (this.props.markerDigest !== prevProps.markerDigest) {
       this.setState({ markersUpdated: true});
     }
-    if(prevProps.shouldContFitbound !== this.props.shouldContFitbound){
+    if(prevProps.shouldFitboundOnNewMarkers !== this.props.shouldFitboundOnNewMarkers){
       this.fitBounds = this.fitBounds.bind(this);
     }
   }
