@@ -12,7 +12,6 @@ import SavedSchoolContext from './saved_school_context';
 import { debounce } from 'lodash';
 
 const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, shouldContFitbound, ...other }) => {
-  debugger
   return <React.Fragment>
     {
       /* would prefer to just not render overlay if not showing it,

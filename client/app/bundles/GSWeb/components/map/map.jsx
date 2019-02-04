@@ -27,11 +27,6 @@ export default class Map extends React.Component {
     super(props);
     this.state = { markersUpdated: true, zoomLevel: null };
     this.openInfoWindow = this.openInfoWindow.bind(this);
-    if (this.props.shouldFitbound){
-      this.fitBounds = this.fitBounds.bind(this);
-    }else{
-      this.fitBounds = once(this.fitBounds.bind(this));
-    }
     this.handleHeartClickCallback = this.handleHeartClickCallback.bind(this);
   }
 
@@ -141,6 +136,12 @@ export default class Map extends React.Component {
       this.state.mounted && this.setState({ zoomLevel: this.map.getZoom()})
     })
     this.setState({ mapCenter: this.map.getCenter(), mounted: true });
+    if(this.props.shouldContFitbound){
+      this.fitBounds = (this.fitBounds.bind(this));
+    }else{
+      this.fitBounds = once(this.fitBounds.bind(this));
+    }
+
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -149,6 +150,9 @@ export default class Map extends React.Component {
     }
     if (this.props.markerDigest !== prevProps.markerDigest) {
       this.setState({ markersUpdated: true});
+    }
+    if(prevProps.shouldContFitbound !== this.props.shouldContFitbound){
+      this.fitBounds = this.fitBounds.bind(this);
     }
   }
 
