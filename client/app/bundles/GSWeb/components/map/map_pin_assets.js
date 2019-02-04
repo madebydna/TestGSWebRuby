@@ -18,7 +18,8 @@ const mapPinColor = rating =>
     8: 'rgb(108,168,31)',
     9: 'rgb(84,158,34)',
     10: 'rgb(68,146,36)',
-    null: 'gray'
+    null: 'gray',
+    'assigned': 'rgb(23,105,151)'
   }[rating]);
 
 const assignedPath = `<path fill="rgb(23,105,151)" d="M32.968 19l-3.655 3.655L25.658 19H0V0h59v19H32.968z"/>

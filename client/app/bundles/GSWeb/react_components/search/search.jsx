@@ -97,7 +97,7 @@ class Search extends React.Component {
     if(Object.values(schoolMarkers).length > 0){
       schools.forEach(s=>{
         const idTag = s.state.toLowerCase() + s.id;
-        schoolMarkers[idTag] = { ...schoolMarkers[idTag],...s};
+        schoolMarkers[idTag] = {...s,...schoolMarkers[idTag]};
       })
       return Object.values(schoolMarkers);
     }else{

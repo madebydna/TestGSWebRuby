@@ -58,7 +58,7 @@ export default class MapMarker extends DefaultMapMarker {
       this.props.openInfoWindow(this.marker);
     }
     if(this.props.openInfoWindowOnStartUp){
-      this.props.openInfoWindow(this.marker);
+      this.props.openInfoWindow(this.marker, true);
     }
   }
 
@@ -82,6 +82,7 @@ const createMarkersFromSchools = (
 ) =>
   schools.map(s => {
     const shouldFetchSchoolDetails = Object.values(s).length < 10;
+    const schoolInfo = {state: s.state, id: s.id};
     return <MapMarker
       {...{
         title: s.name,
@@ -97,7 +98,7 @@ const createMarkersFromSchools = (
         locationQuery: s.locationQuery,
         map,
         key: `s${s.state}${s.id}${s.assigned}${s.highlighted}${style}${Object.values(s).length}`,
-        openInfoWindow: m => openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: savedHeartCallback}), m),
+        openInfoWindow: (m, boolean = false) => openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: savedHeartCallback }), m, {openOnStartUpDone: boolean, ...schoolInfo}),
         onClick: m => {
           if(shouldFetchSchoolDetails){
             findSchoolCallback([[s.state, s.id]], true)
@@ -105,7 +106,7 @@ const createMarkersFromSchools = (
             if (selectSchool) {
               selectSchool();
             }
-            openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: savedHeartCallback }), m);
+            openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: savedHeartCallback }), m, { ...schoolInfo });
           }
         },
         selected: s === selectedSchool,

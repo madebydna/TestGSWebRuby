@@ -135,6 +135,7 @@ class SearchProvider extends React.Component {
     this.handleWindowResize = throttle(this.handleWindowResize, 200).bind(this);
     this.toggleHighlight = this.toggleHighlight.bind(this);
     this.handleSaveSchoolClick = this.handleSaveSchoolClick.bind(this);
+    this.removeInfoWindowOnStartUp = this.removeInfoWindowOnStartUp.bind(this);
     this.toggleAll = this.toggleAll.bind(this);
     this.toggleOne = this.toggleOne.bind(this);
     this.updateStateFilter = this.updateStateFilter.bind(this);
@@ -193,13 +194,14 @@ class SearchProvider extends React.Component {
       () => {
         const start = Date.now();
         this.findSchoolsWithReactState().done(
-          ({ items: schools, totalPages, paginationSummary, resultSummary }) =>
+          ({ items: schools, schoolMarkers, totalPages, paginationSummary, resultSummary }) =>
             setTimeout(
               () =>
                 this.setState({
                   schools,
                   totalPages,
                   paginationSummary,
+                  schoolMarkers,
                   resultSummary,
                   loadingSchools: false
                 }),
@@ -353,8 +355,10 @@ class SearchProvider extends React.Component {
 
   tempFindMoreSchools(arrayofArrays, openInfoWindowOnStartUp = false){
     const schoolPins = cloneDeep(this.state.schoolMarkers);
+    const schoolsHash = {};
+    this.state.schools.forEach(s => schoolsHash[`${s.state.toLowerCase()}${s.id}`] = true);
     const schoolKeys = arrayofArrays.filter(arr => {
-      return Object.values(schoolPins[`${arr[0]}${arr[1]}`]).length === 6
+      return Object.values(schoolPins[`${arr[0]}${arr[1]}`]).length === 6 && !schoolsHash[`${arr[0]}${arr[1]}`]
     });
     findMoreSchools(
       {
@@ -367,7 +371,7 @@ class SearchProvider extends React.Component {
           const idTag = `${state.toLowerCase()}${s.id}`;
           //openInfoWindowOnStartUp is a boolean that is passed into the school markers
           // and open the infoBox immediate if it is true
-          schoolPins[idTag] = { ...schoolPins[idTag], openInfoWindowOnStartUp, ...s};          
+          schoolPins[idTag] = { ...s, ...schoolPins[idTag], openInfoWindowOnStartUp };          
         })
         return setTimeout(
           () =>
@@ -377,6 +381,15 @@ class SearchProvider extends React.Component {
           1
         )
       });
+  }
+
+  removeInfoWindowOnStartUp(schoolKey){
+    const schoolPins = cloneDeep(this.state.schoolMarkers);
+    schoolPins[`${schoolKey[0]}${schoolKey[1]}`] = {
+      ...schoolPins[`${schoolKey[0]}${schoolKey[1]}`], 
+      openInfoWindowOnStartUp: false 
+    }
+    this.setState({schoolMarkers: schoolPins});
   }
 
   render() {
@@ -483,7 +496,8 @@ class SearchProvider extends React.Component {
                   <SavedSchoolContext.Provider
                       value={{
                         saveSchoolCallback: this.handleSaveSchoolClick,
-                        tempFindMoreSchools: this.tempFindMoreSchools
+                        tempFindMoreSchools: this.tempFindMoreSchools,
+                        removeInfoWindowOnStartUp: this.removeInfoWindowOnStartUp
                       }}
                   >
                   {this.props.children}

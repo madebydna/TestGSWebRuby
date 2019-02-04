@@ -10,7 +10,9 @@ export default class Map extends React.Component {
     lat: PropTypes.number,
     lon: PropTypes.number,
     markerDigest: PropTypes.string,
-    heartClickCallback: PropTypes.func
+    heartClickCallback: PropTypes.func,
+    tempFindMoreSchools: PropTypes.func,
+    removeInfoWindowOnStartUp: PropTypes.func
   };
 
   static defaultProps = {
@@ -49,7 +51,7 @@ export default class Map extends React.Component {
     return new this.props.googleMaps.Map($elem, mapOptions);
   }
 
-  openInfoWindow(content, marker) {
+  openInfoWindow(content, marker, {openOnStartUpDone=false, state, id }) {
     this.closeInfoWindow();
     const infoWindow = new this.props.googleMaps.InfoWindow({
       content
@@ -57,6 +59,11 @@ export default class Map extends React.Component {
     this.handleHeartClickCallback(infoWindow);
     infoWindow.open(this.map, marker);
     this.infoWindow = infoWindow;
+    if (openOnStartUpDone){
+      this.infoWindow.addListener('closeclick', (e)=>{
+        this.props.removeInfoWindowOnStartUp([state,id]);
+      })
+    }
   }
 
   handleHeartClickCallback(infoWindow){

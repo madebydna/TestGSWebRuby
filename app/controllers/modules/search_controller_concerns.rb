@@ -246,7 +246,7 @@ module SearchControllerConcerns
 
   def school_markers
     schools =
-      if district_browse? || city_browse? || zip_code_search?
+      if district_browse? || city_browse? || zip_code_search? || street_address?
         solr_query_for_all_markers.search.reverse
       else
         []

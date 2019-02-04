@@ -28,9 +28,14 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
       <GoogleMapsInitializer>
         {(isInitialized, googleMaps) =>
           <SavedSchoolContext.Consumer>
-            {({ saveSchoolCallback, tempFindMoreSchools }) => (
+            {({ saveSchoolCallback, tempFindMoreSchools, removeInfoWindowOnStartUp }) => (
               isInitialized && (
-                <Map googleMaps={googleMaps} heartClickCallback={saveSchoolCallback} changeLocation={() => {}} markerDigest={schools.filter(s=>s.schoolType).map(school => school.state + school.id).sort((a,b)=>(a-b)).join('-')} {...other}>
+                <Map googleMaps={googleMaps} 
+                  heartClickCallback={saveSchoolCallback} 
+                  tempFindMoreSchools={tempFindMoreSchools} 
+                  removeInfoWindowOnStartUp={removeInfoWindowOnStartUp} 
+                  changeLocation={() => {}} 
+                  markerDigest={schools.filter(s=>s.schoolType).map(school => school.state + school.id).sort((a,b)=>(a-b)).join('-')} {...other}>
                   {({ googleMaps, map, openInfoWindow, fitBounds, zoomLevel }) => {
                     let style;
                       if (zoomLevel > 14){
@@ -53,7 +58,7 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
                     );
                     // event listener for changing bounds
                     if(style && style === 'large'){
-                      map.addListener('bounds_changed', () => {
+                      map.addListener('bounds_changed', (style) => {
                         const a = map.getBounds();
                         const seen = markers
                           .filter(m => {
@@ -61,8 +66,14 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
                             return m.props.schoolId && a.contains(b);
                           })
                           .map(s => [schools[0].state.toLowerCase(),s.props.schoolId])
-                        tempFindMoreSchools(seen)
+                        tempFindMoreSchools(seen);
                       })
+                    }
+                    if (style && style !== 'large') { 
+                      // TODO: clear listeners for bounds changed when not zoomed in
+                      // not ideal as I would like to just remove that single listener
+                      // but removeListener wasn't working. May need to revisit
+                      googleMaps.event.clearListeners(map, 'bounds_changed');
                     }
                     if (locationMarker) {
                       markers.push(

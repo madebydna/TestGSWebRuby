@@ -39,15 +39,27 @@ export default function createMarkerFactory(googleMaps) {
     },
 
     selectPin(rating, color, highlighted, assigned, address, style, locationQuery) {
+      if (locationQuery && rating && highlighted) {
+        return createHighlightedPinWithRating(rating, color);
+      }
+      if (locationQuery && !rating && highlighted){
+        return createPinWithoutRating(highlighted);
+      }
+      if (locationQuery && style === 'small' && assigned) {
+        return createSmallPinMarker("assigned");
+      }
       if (locationQuery && style === 'small'){
         return createSmallPinMarker(rating);
+      }
+      if (locationQuery && style === 'medium' && assigned) {
+        return createMediumPinMarker("assigned");
       }
       if (locationQuery && style === 'medium'){
         return createMediumPinMarker(rating);
       }
-      if(locationQuery && rating){
-        return createDefaultPinWithRating(rating, color, assigned);
-      }
+      // if(locationQuery && rating){
+      //   return createDefaultPinWithRating(rating, color, assigned);
+      // }
       if (assigned && rating && !highlighted) {
         return createAssignedPinWithRating(rating, color);
       }
@@ -83,13 +95,16 @@ export default function createMarkerFactory(googleMaps) {
     ) {
       // svg flag intended to permit backwards compatibility while we decide which assets to use for district boundaries tool
       const position = new googleMaps.LatLng(lat, lon);
-      const color = mapPinColor(rating);
+      let color = mapPinColor(rating);
       let size = null;
-      // We know that the light weight pins have less information
-      if (locationQuery && style === 'small'){
+      if (locationQuery && highlighted){
+        size = new googleMaps.Size(40, 50);
+      } else if (locationQuery && style === 'small'){
         size = new googleMaps.Size(15,15);
       } else if (locationQuery && style == 'medium'){
         size = new googleMaps.Size(20, 20);
+      } else if (locationQuery && assigned) {
+        size = new googleMaps.Size(59, 75);
       }else if(locationQuery){
         size = new googleMaps.Size(40, 50);
       }else if(address){
