@@ -11,21 +11,27 @@ export default class Map extends React.Component {
     lon: PropTypes.number,
     markerDigest: PropTypes.string,
     heartClickCallback: PropTypes.func,
-    removeInfoWindowOnStartUp: PropTypes.func
+    removeInfoWindowOnStartUp: PropTypes.func,
+    shouldContFitbound: PropTypes.bool
   };
 
   static defaultProps = {
     hidden: false,
     lat: null,
     lon: null,
-    markerDigest: ''
+    markerDigest: '',
+    shouldContFitbound: false
   };
 
   constructor(props) {
     super(props);
     this.state = { markersUpdated: true, zoomLevel: null };
     this.openInfoWindow = this.openInfoWindow.bind(this);
-    this.fitBounds = once(this.fitBounds.bind(this));
+    if (this.props.shouldFitbound){
+      this.fitBounds = this.fitBounds.bind(this);
+    }else{
+      this.fitBounds = once(this.fitBounds.bind(this));
+    }
     this.handleHeartClickCallback = this.handleHeartClickCallback.bind(this);
   }
 

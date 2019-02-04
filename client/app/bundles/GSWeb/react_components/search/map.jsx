@@ -11,7 +11,8 @@ import createInfoWindow from '../../components/map/info_window';
 import SavedSchoolContext from './saved_school_context';
 import { debounce } from 'lodash';
 
-const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other }) => {
+const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, shouldContFitbound, ...other }) => {
+  debugger
   return <React.Fragment>
     {
       /* would prefer to just not render overlay if not showing it,
@@ -33,7 +34,8 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
                 <Map googleMaps={googleMaps} 
                   heartClickCallback={saveSchoolCallback} 
                   updateMarkers={updateMarkers} 
-                  removeInfoWindowOnStartUp={removeInfoWindowOnStartUp} 
+                  removeInfoWindowOnStartUp={removeInfoWindowOnStartUp}
+                  shouldContFitbound={shouldContFitbound} 
                   changeLocation={() => {}} 
                   markerDigest={schools.filter(s=>s.schoolType).map(school => school.state + school.id).sort((a,b)=>(a-b)).join('-')} {...other}>
                   {({ googleMaps, map, openInfoWindow, fitBounds, zoomLevel }) => {
