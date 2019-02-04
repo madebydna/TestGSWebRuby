@@ -11,7 +11,6 @@ export default class Map extends React.Component {
     lon: PropTypes.number,
     markerDigest: PropTypes.string,
     heartClickCallback: PropTypes.func,
-    tempFindMoreSchools: PropTypes.func,
     removeInfoWindowOnStartUp: PropTypes.func
   };
 

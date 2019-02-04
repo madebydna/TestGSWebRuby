@@ -258,7 +258,7 @@ module SearchControllerConcerns
         hash['lat'] = school.lat
         hash['lon'] = school.lon
         hash['state'] = school.state&.downcase
-        hash['rating'] = school&.great_schools_rating || nil
+        hash['rating'] = school&.great_schools_rating.to_i || nil
         hash['locationQuery'] = true
       end
     end

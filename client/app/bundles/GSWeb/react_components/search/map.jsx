@@ -28,23 +28,23 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
       <GoogleMapsInitializer>
         {(isInitialized, googleMaps) =>
           <SavedSchoolContext.Consumer>
-            {({ saveSchoolCallback, tempFindMoreSchools, removeInfoWindowOnStartUp }) => (
+            {({ saveSchoolCallback, updateMarkers, removeInfoWindowOnStartUp }) => (
               isInitialized && (
                 <Map googleMaps={googleMaps} 
                   heartClickCallback={saveSchoolCallback} 
-                  tempFindMoreSchools={tempFindMoreSchools} 
+                  updateMarkers={updateMarkers} 
                   removeInfoWindowOnStartUp={removeInfoWindowOnStartUp} 
                   changeLocation={() => {}} 
                   markerDigest={schools.filter(s=>s.schoolType).map(school => school.state + school.id).sort((a,b)=>(a-b)).join('-')} {...other}>
                   {({ googleMaps, map, openInfoWindow, fitBounds, zoomLevel }) => {
                     let style;
-                      if (zoomLevel > 14){
-                        style = 'large';
-                      }else if(zoomLevel > 12){
-                        style = 'medium';
-                      }else{
-                        style = 'small';
-                      }
+                    if (zoomLevel > 14){
+                      style = 'large';
+                    }else if(zoomLevel > 12){
+                      style = 'medium';
+                    }else{
+                      style = 'small';
+                    }
                     const markers = createMarkersFromSchools(
                       schools,
                       {},
@@ -54,7 +54,7 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
                       googleMaps,
                       style,
                       saveSchoolCallback,
-                      tempFindMoreSchools
+                      updateMarkers
                     );
                     // event listener for changing bounds
                     if(style && style === 'large'){
@@ -66,7 +66,7 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, ...other
                             return m.props.schoolId && a.contains(b);
                           })
                           .map(s => [schools[0].state.toLowerCase(),s.props.schoolId])
-                        tempFindMoreSchools(seen);
+                        updateMarkers(seen);
                       })
                     }
                     if (style && style !== 'large') { 

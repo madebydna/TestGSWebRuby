@@ -140,7 +140,7 @@ class SearchProvider extends React.Component {
     this.toggleOne = this.toggleOne.bind(this);
     this.updateStateFilter = this.updateStateFilter.bind(this);
     this.refreshAdOnScroll = this.refreshAdOnScroll.bind(this);
-    this.tempFindMoreSchools = debounce(this.tempFindMoreSchools.bind(this), 500, {
+    this.updateMarkers = debounce(this.updateMarkers.bind(this), 500, {
       leading: false
     });
   }
@@ -353,7 +353,7 @@ class SearchProvider extends React.Component {
     () => this.updateSchools())
   }
 
-  tempFindMoreSchools(arrayofArrays, openInfoWindowOnStartUp = false){
+  updateMarkers(arrayofArrays, openInfoWindowOnStartUp = false){
     const schoolPins = cloneDeep(this.state.schoolMarkers);
     const schoolsHash = {};
     this.state.schools.forEach(s => schoolsHash[`${s.state.toLowerCase()}${s.id}`] = true);
@@ -496,7 +496,7 @@ class SearchProvider extends React.Component {
                   <SavedSchoolContext.Provider
                       value={{
                         saveSchoolCallback: this.handleSaveSchoolClick,
-                        tempFindMoreSchools: this.tempFindMoreSchools,
+                        updateMarkers: this.updateMarkers,
                         removeInfoWindowOnStartUp: this.removeInfoWindowOnStartUp
                       }}
                   >
