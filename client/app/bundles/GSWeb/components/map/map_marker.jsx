@@ -20,7 +20,6 @@ export default class MapMarker extends DefaultMapMarker {
     animation: PropTypes.number,
     style: PropTypes.string,
     locationQuery: PropTypes.bool,
-    propertiesCount: PropTypes.number
   };
 
   constructor(props) {
