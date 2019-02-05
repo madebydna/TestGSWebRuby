@@ -64,7 +64,8 @@ module Search
           search_city_browse_path(
             state: gs_legacy_url_encode(States.state_name(state)),
             city: gs_legacy_url_encode(city),
-            trailing_slash: true
+            trailing_slash: true,
+            st: ['public_charter', 'public', 'charter']
           )
         elsif type == 'district'
           search_district_browse_path(

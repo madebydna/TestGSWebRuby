@@ -201,7 +201,6 @@ export default class SearchBox extends React.Component {
         this.submit();
         return;
       }
-
       geocode(searchTerm)
         .then(json => json[0])
         .done(
@@ -221,10 +220,12 @@ export default class SearchBox extends React.Component {
               params.locationLabel = `${city}, ${state} ${zip}`;
               params.locationType = 'zip';
               params.state = state;
+              params.st = ['public_charter', 'public', 'charter'];
             } else {
               params.locationLabel = normalizedAddress;
               params.locationType = 'street_address';
               params.state = state;
+              params.st = ['public_charter', 'public', 'charter'];
             }
             window.location.href = newSearchResultsPageUrl(params);
           }
