@@ -1,5 +1,5 @@
 subscriptions = @user.subscriptions
-School.preload_schools_onto_associates(subscriptions)
+School.preload_schools_onto_associates(subscriptions.reject { |sub| sub.state.empty? || sub.school_id == 0 })
 def include?(field)
   params[:fields].blank? || params[:fields].include?(field.to_s)
 end
