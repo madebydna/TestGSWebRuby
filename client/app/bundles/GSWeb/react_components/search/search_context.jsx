@@ -373,12 +373,13 @@ class SearchProvider extends React.Component {
           // and open the infoBox immediate if it is true
           schoolPins[idTag] = { ...s, ...schoolPins[idTag], openInfoWindowOnStartUp };          
         })
+        const start = Date.now();
         return setTimeout(
           () =>
             this.setState({
               schoolMarkers: schoolPins,
             }),
-          1
+          500 - (Date.now() - start)
         )
       });
   }
