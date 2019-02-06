@@ -24,7 +24,6 @@ class Api::SchoolsController < ApplicationController
   end
 
   def get_schools
-    require 'pry'; binding.pry
     render json: {
       items: serialized_schools,
       state: state
