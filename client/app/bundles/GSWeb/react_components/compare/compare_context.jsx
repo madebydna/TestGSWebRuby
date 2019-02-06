@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { find as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
-import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
+import { isEqual, throttle, debounce, difference, castArray, uniqBy } from 'lodash';
 import { compose, curry } from 'lodash/fp';
 import {
   size as viewportSize,
@@ -131,6 +131,9 @@ class CompareProvider extends React.Component {
     return !!this.props.q;
   }
 
+  // This function is an API call to the backend to retrieve other schools to compare asynchronously.
+  // It perform two calls, one to retrieve the pinned school which is needed for CompareSchools#Show
+  // and the other call to retrieve the other schools
   updateSchools() {
     this.setState(
       {
@@ -139,21 +142,32 @@ class CompareProvider extends React.Component {
       },
       () => {
         const start = Date.now();
-        this.findSchoolsWithReactState().done(
-          ({ items: schools, totalPages, paginationSummary, resultSummary, tableHeaders }) =>
-            setTimeout(
-              () =>
-                this.setState({
-                  schools,
-                  totalPages,
-                  paginationSummary,
-                  resultSummary,
-                  tableHeaders,
-                  loadingSchools: false
-                }),
-              500 - (Date.now() - start)
-            )
-        );
+        const extras = ["summary_rating", "enrollment", "review_summary", "saved_schools", "pinned_school", "ethnicity_test_score_rating", "distance"];
+        findSchools({ state: this.props.state, id: this.props.id, extras, breakdown: this.props.breakdownParam, limit:1},{}).done(
+          ({items: pinnedSchool}) => {
+            this.findSchoolsWithReactState().done(
+              ({ items: schools, totalPages, paginationSummary, resultSummary, tableHeaders }) =>{
+                schools.push(pinnedSchool[0]);
+                schools = uniqBy(schools, function(e){
+                  return e.id;
+                });
+                return setTimeout(
+                  () =>
+                    this.setState({
+                      schools,
+                      totalPages,
+                      paginationSummary,
+                      resultSummary,
+                      tableHeaders,
+                      loadingSchools: false
+                    }),
+                  500 - (Date.now() - start)
+                )
+              }
+            );
+          }
+        )
+
       }
     );
   }

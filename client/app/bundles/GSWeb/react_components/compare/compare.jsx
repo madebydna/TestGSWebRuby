@@ -44,47 +44,6 @@ class Compare extends React.Component {
     this.state.size > XS
       ? document.querySelector('#compare-schools').scrollIntoView()
       : window.scroll(0, 0);
-
-  updateSchools() {
-    this.setState(
-      {
-        loadingSchools: true
-      },
-      () => {
-        const start = Date.now();
-        this.findSchoolsWithReactState().done(
-          ({ items: schools, totalPages, paginationSummary, resultSummary }) =>
-            setTimeout(
-              () =>
-                this.setState({
-                  schools,
-                  totalPages,
-                  paginationSummary,
-                  resultSummary,
-                  loadingSchools: false
-                }),
-              500 - (Date.now() - start)
-            )
-        );
-      }
-    );
-  }
-
-  // school finder methods, based on obj state
-
-  findTopRatedSchoolsWithReactState(newState = {}) {
-    return findSchools(
-      Object.assign(
-        {
-          city: this.props.city,
-          state: this.props.state,
-          levelCodes: this.props.levelCodes,
-          extras: ['students_per_teacher', 'review_summary']
-        },
-        newState
-      )
-    );
-  }
   
   noCompareResults() {
     return this.props.schools.length < 2 ? (
