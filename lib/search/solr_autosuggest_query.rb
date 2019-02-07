@@ -32,8 +32,7 @@ module Search
         .select { |zip, count| count > 0 }
         .map(&:first) # grab only the zip
         .select do |zip|
-          first_numbers = q.match(/^(\d+)/).try(:[],0)
-          zip.present? && first_numbers.present? && zip.start_with?(first_numbers)
+          zip.present? && possible_zip.present? && zip.start_with?(possible_zip)
         end # can have empty string
         .map { |zip| {value: zip, type: 'zip'}}
     end
@@ -150,7 +149,6 @@ module Search
 
     # Solr::Query
     def facet_fields
-      return nil
       'zipcode' if possible_zip
     end
 

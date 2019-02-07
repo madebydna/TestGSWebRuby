@@ -13,7 +13,7 @@ OptionParser.new do |opts|
   opts.on_tail("-h", "--help", "Show this message") { puts opts; exit }
 end.parse!
 
-states = script_args[:states]&.split(',')
+states = (script_args[:states] || States.abbreviations.join(',')).split(',')
 ids = script_args[:ids]&.split(',')
 
 indexer = 
