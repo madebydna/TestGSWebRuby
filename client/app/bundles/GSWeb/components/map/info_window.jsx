@@ -88,7 +88,7 @@ export default function createInfoWindow(entity) {
   };
 
   const addressString = `${entity.address.street1}, ${entity.address.city}, ${
-    entity.state
+    entity.state.toUpperCase()
   } ${entity.address.zip}`;
   const contentString = (
     <div className="info-window">
