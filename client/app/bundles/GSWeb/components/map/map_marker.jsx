@@ -100,7 +100,7 @@ const createMarkersFromSchools = (
         openInfoWindow: (m, boolean = false) => openInfoWindow(createInfoWindow({ ...s, savedSchoolCallback: savedHeartCallback }), m, {openOnStartUpDone: boolean, ...schoolInfo}),
         onClick: m => {
           if(shouldFetchSchoolDetails){
-            findSchoolCallback([[s.state, s.id]], true)
+            findSchoolCallback([s.state, s.id], true)
           }else{
             if (selectSchool) {
               selectSchool();

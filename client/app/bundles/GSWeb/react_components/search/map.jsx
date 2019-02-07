@@ -33,11 +33,11 @@ const SearchMap = ({ schools, isLoading, isInfoWindowLoading, locationMarker, lo
       <GoogleMapsInitializer>
         {(isInitialized, googleMaps) =>
           <SavedSchoolContext.Consumer>
-            {({ saveSchoolCallback, updateMarkers, removeInfoWindowOnStartUp }) => (
+            {({ saveSchoolCallback, updateMarker, removeInfoWindowOnStartUp }) => (
               isInitialized && (
                 <Map googleMaps={googleMaps} 
                   heartClickCallback={saveSchoolCallback} 
-                  updateMarkers={updateMarkers} 
+                  updateMarker={updateMarker} 
                   removeInfoWindowOnStartUp={removeInfoWindowOnStartUp}
                   shouldFitboundOnNewMarkers={shouldFitboundOnNewMarkers} 
                   changeLocation={() => {}} 
@@ -60,7 +60,7 @@ const SearchMap = ({ schools, isLoading, isInfoWindowLoading, locationMarker, lo
                       googleMaps,
                       style,
                       saveSchoolCallback,
-                      updateMarkers
+                      updateMarker
                     );
                     // event listener for changing bounds
                     // if(style && style === 'large'){
@@ -73,7 +73,7 @@ const SearchMap = ({ schools, isLoading, isInfoWindowLoading, locationMarker, lo
                     //       })
                     //       .map(s => [schools[0].state.toLowerCase(),s.props.schoolId])
                     //       console.log(seen)
-                    //     updateMarkers(seen);
+                    //     updateMarker(seen);
                     //   })
                     // }
                     // if (style && style !== 'large') { 
