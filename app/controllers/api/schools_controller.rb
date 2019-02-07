@@ -17,17 +17,10 @@ class Api::SchoolsController < ApplicationController
         next: self.next_offset_url(page_of_results),
       },
       items: serialized_schools,
-      schoolMarkers: school_markers,
-      tableHeaders: breakdown.present? ? table_headers : nil 
+      tableHeaders: breakdown.present? ? table_headers : nil,
+      state: state 
     }.merge(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
     .merge(Api::PaginationSerializer.new(page_of_results).to_hash)
-  end
-
-  def get_schools
-    render json: {
-      items: serialized_schools,
-      state: state
-    }
   end
 
   def require_valid_params

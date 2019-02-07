@@ -157,13 +157,6 @@ export function mySchoolList(props) {
   });
 }
 
-export function findMarkers(props) {
-  return find({
-    ...props,
-    url: '/gsr/api/get_schools'
-  });
-}
-
 export function addSchool(schoolKey) {
   const data = { school: schoolKey };
   return $.ajax({

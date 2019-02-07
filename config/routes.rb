@@ -251,7 +251,6 @@ LocalizedProfiles::Application.routes.draw do
     resource :school_user_digest
     resource :nearby_schools
     resources :schools
-    get '/get_schools', to: 'schools#get_schools'
     get '/reviews_list', to: 'reviews#reviews_list', as: :reviews_list
     resources :reviews do
       get 'count', on: :collection

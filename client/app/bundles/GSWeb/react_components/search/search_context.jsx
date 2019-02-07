@@ -364,7 +364,7 @@ class SearchProvider extends React.Component {
         loadingMarker: true
       },
       () => {
-        findMarkers(
+        findSchools(
           {
             schoolKeys: schoolKeys,
             state: this.props.schools[0].state.toLowerCase()
