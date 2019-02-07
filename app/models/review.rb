@@ -64,7 +64,7 @@ class Review < ActiveRecord::Base
   after_save :auto_moderate, unless: '@moderated == true'
   after_save :send_thank_you_email_if_published
   after_save do
-    log_review_changed(state, school_id, member_id)
+    log_review_changed(self)
   end
 
   def should_run_unique_active_reviews?

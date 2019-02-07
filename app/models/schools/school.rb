@@ -386,6 +386,10 @@ class School < ActiveRecord::Base
       ).present?
   end
 
+  def mss_subscribers
+    Subscription.mss_subscribers_for_school(self)
+  end
+
   def self.preload_schools_onto_associates(associates)
     schools = School.load_all_from_associates(associates).map { |s| [[s.state, s.id], s] }.to_h
     associates.each do |associate|

@@ -8,6 +8,10 @@ class UserEmailSender
    @user = user
   end
 
+  def send_review_mss(school, review_snippet)
+    review_url = school_reviews_url(school)
+    ReviewPublishedMssEmail.deliver_to_user(@user, school, review_snippet, review_url)
+  end
 
   def send_thank_you_email_for_school(school)
     school_user = SchoolUser.find_by_school_and_user(school, user)
