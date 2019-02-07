@@ -69,7 +69,7 @@ module Search
 
         if school_keys.present?
           fragment = school_keys.each_with_object([]) do |(state, school_id), phrases|
-            phrases << "(+school_database_state:#{state} +school_id:#{school_id})"
+            phrases << "(+state:#{state} +school_id:#{school_id})"
           end.join(' ')
           array << fragment
         end
