@@ -224,6 +224,7 @@ class MySchoolListLayout extends React.Component {
           key="right-column"
           className={`right-column ${this.shouldRenderMap() ? ' ' : 'closed'}`}
         >
+          <div className="print-only-page-break"></div>
           <div className="right-column-fixed" ref={this.fixedYLayer}>
             <div className="ad-column">{ad}</div>
             <div className="map-column">{map}</div>
