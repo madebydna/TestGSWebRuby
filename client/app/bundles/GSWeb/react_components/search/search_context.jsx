@@ -370,8 +370,8 @@ class SearchProvider extends React.Component {
             state: this.props.schools[0].state.toLowerCase()
           }
         ).done(
-          ({ items: schoolMarkers, state }) => {
-            schoolMarkers.forEach(s => {
+          ({ items: detailedSchoolPins, state }) => {
+            detailedSchoolPins.forEach(s => {
               const idTag = `${state.toLowerCase()}${s.id}`;
               //openInfoWindowOnStartUp is a boolean that is passed into the school markers
               // and open the infoBox immediate if it is true
