@@ -25,8 +25,8 @@ es:
           <p>Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
       'Graduating seniors pursuing 4 year college/university': Estudiantes de último año que buscan una universidad de 4 años
       'Graduating seniors pursuing 2 year college/university': Estudiantes de último año que buscan una universidad de 2 años
-      'Graduating seniors pursuing other college': Estudiantes de último año matriculados en otra universidad
-      'Percent Enrolled in College Immediately Following High School': Estudiantes de último año matriculados en la universidad
+      'Graduating seniors pursuing other college': Graduados matriculados en otros programas universitarios
+      'Percent Enrolled in College Immediately Following High School': Graduados matriculados en la universidad
       'Percent Needing Remediation for College': Graduados que necesitan remediación en la universidad
       'Graduates needing English remediation in college': Graduados que necesitan remediación en inglés en la universidad
       'Graduates needing Math remediation in college': Graduados que necesitan remediación en matemáticas en la universidad
@@ -75,7 +75,7 @@ es:
         'Graduates needing Reading remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de lectura básicas o correctivas, que no cuentan para un título universitario.
         'Graduates needing Writing remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de escritura básicas o correctivas, que no cuentan para un título universitario.
         'Percent Enrolled in College and Returned for a Second Year': 'Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año de universidad y regresaron por segundo año consecutivo.'
-        'Percent enrolled in any institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 16 meses de su graduación.'
+        'Percent enrolled in any institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 16 meses de haberse graduado.'
         'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de dos años de educación superior dentro de los 16 meses de su graduación.'
         'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de 4 años de educación superior dentro de los 16 meses de su graduación.'
         'Percent of students who will attend out-of-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades fuera del estado.'
