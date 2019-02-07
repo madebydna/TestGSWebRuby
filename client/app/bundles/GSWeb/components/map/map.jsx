@@ -60,9 +60,7 @@ export default class Map extends React.Component {
     infoWindow.open(this.map, marker);
     this.infoWindow = infoWindow;
     if (openOnStartUpDone){
-      this.infoWindow.addListener('closeclick', (e)=>{
-        this.props.removeInfoWindowOnStartUp([state,id]);
-      })
+      this.props.removeInfoWindowOnStartUp([state,id]);
     }
   }
 
@@ -141,7 +139,6 @@ export default class Map extends React.Component {
     }else{
       this.fitBounds = once(this.fitBounds.bind(this));
     }
-
   }
 
   componentDidUpdate(prevProps, prevState) {

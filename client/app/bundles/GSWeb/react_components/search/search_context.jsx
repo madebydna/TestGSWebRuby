@@ -123,6 +123,7 @@ class SearchProvider extends React.Component {
       resultSummary: props.resultSummary,
       paginationSummary: props.paginationSummary,
       loadingSchools: false,
+      loadingMarker: false,
       size: viewportSize(),
       currentStateFilter: null,
       adRefreshed: false,
@@ -355,33 +356,39 @@ class SearchProvider extends React.Component {
 
   updateMarkers(arrayofArrays, openInfoWindowOnStartUp = false){
     const schoolPins = cloneDeep(this.state.schoolMarkers);
-    const schoolsHash = {};
-    this.state.schools.forEach(s => schoolsHash[`${s.state.toLowerCase()}${s.id}`] = true);
     const schoolKeys = arrayofArrays.filter(arr => {
-      return Object.values(schoolPins[`${arr[0]}${arr[1]}`]).length === 6 && !schoolsHash[`${arr[0]}${arr[1]}`]
+      return Object.values(schoolPins[`${arr[0]}${arr[1]}`]).length === 6;
     });
-    findMarkers(
+    this.setState(
       {
-        schoolKeys: schoolKeys,
-        state: this.props.schools[0].state.toLowerCase()
+        loadingMarker: true
+      },
+      () => {
+        findMarkers(
+          {
+            schoolKeys: schoolKeys,
+            state: this.props.schools[0].state.toLowerCase()
+          }
+        ).done(
+          ({ items: schoolMarkers, state }) => {
+            schoolMarkers.forEach(s => {
+              const idTag = `${state.toLowerCase()}${s.id}`;
+              //openInfoWindowOnStartUp is a boolean that is passed into the school markers
+              // and open the infoBox immediate if it is true
+              schoolPins[idTag] = { ...s, ...schoolPins[idTag], openInfoWindowOnStartUp };
+            })
+            const start = Date.now();
+            return setTimeout(
+              () =>
+                this.setState({
+                  schoolMarkers: schoolPins,
+                  loadingMarker: false
+                }),
+              1
+            )
+          });
       }
-    ).done(
-      ({ items: schoolMarkers, state }) => {
-        schoolMarkers.forEach(s => {
-          const idTag = `${state.toLowerCase()}${s.id}`;
-          //openInfoWindowOnStartUp is a boolean that is passed into the school markers
-          // and open the infoBox immediate if it is true
-          schoolPins[idTag] = { ...s, ...schoolPins[idTag], openInfoWindowOnStartUp };          
-        })
-        const start = Date.now();
-        return setTimeout(
-          () =>
-            this.setState({
-              schoolMarkers: schoolPins,
-            }),
-          500 - (Date.now() - start)
-        )
-      });
+    )
   }
 
   removeInfoWindowOnStartUp([state, id]){
@@ -398,6 +405,7 @@ class SearchProvider extends React.Component {
       <Provider
         value={{
           loadingSchools: this.state.loadingSchools,
+          loadingMarker: this.state.loadingMarker,
           schools: this.state.schools,
           schoolMarkers: this.state.schoolMarkers,
           savedSchools: this.state.savedSchools,

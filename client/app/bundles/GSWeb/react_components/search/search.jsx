@@ -202,6 +202,7 @@ class Search extends React.Component {
                 }
                 schools={this.getSchoolsDetails()}
                 isLoading={this.props.loadingSchools}
+                isInfoWindowLoading={this.props.loadingMarker}
                 locationLabel={this.props.locationLabel}
                 setMapDisplayState={this.setMapDisplayState}
                 shouldFitboundOnNewMarkers={this.props.layout === 'MySchoolList'}

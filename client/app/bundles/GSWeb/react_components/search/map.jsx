@@ -11,7 +11,7 @@ import createInfoWindow from '../../components/map/info_window';
 import SavedSchoolContext from './saved_school_context';
 import { debounce } from 'lodash';
 
-const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, shouldFitboundOnNewMarkers, ...other }) => {
+const SearchMap = ({ schools, isLoading, isInfoWindowLoading, locationMarker, locationLabel, shouldFitboundOnNewMarkers, ...other }) => {
   return <React.Fragment>
     {
       /* would prefer to just not render overlay if not showing it,
@@ -19,6 +19,11 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, shouldFi
       <LoadingOverlay
         visible={isLoading && schools.length > 0}
         numItems={schools.length}
+      />
+    }
+    {
+      <LoadingOverlay
+        visible={isInfoWindowLoading}
       />
     }
     <div
@@ -58,24 +63,25 @@ const SearchMap = ({ schools, isLoading, locationMarker, locationLabel, shouldFi
                       updateMarkers
                     );
                     // event listener for changing bounds
-                    if(style && style === 'large'){
-                      map.addListener('bounds_changed', (style) => {
-                        const a = map.getBounds();
-                        const seen = markers
-                          .filter(m => {
-                            const b = new googleMaps.LatLng(m.props.lat, m.props.lon)
-                            return m.props.schoolId && a.contains(b);
-                          })
-                          .map(s => [schools[0].state.toLowerCase(),s.props.schoolId])
-                        updateMarkers(seen);
-                      })
-                    }
-                    if (style && style !== 'large') { 
-                      // TODO: clear listeners for bounds changed when not zoomed in
-                      // not ideal as I would like to just remove that single listener
-                      // but removeListener wasn't working. May need to revisit
-                      googleMaps.event.clearListeners(map, 'bounds_changed');
-                    }
+                    // if(style && style === 'large'){
+                    //   map.addListener('bounds_changed', (style) => {
+                    //     const a = map.getBounds();
+                    //     const seen = markers
+                    //       .filter(m => {
+                    //         const b = new googleMaps.LatLng(m.props.lat, m.props.lon)
+                    //         return m.props.schoolId && a.contains(b);
+                    //       })
+                    //       .map(s => [schools[0].state.toLowerCase(),s.props.schoolId])
+                    //       console.log(seen)
+                    //     updateMarkers(seen);
+                    //   })
+                    // }
+                    // if (style && style !== 'large') { 
+                    //   // TODO: clear listeners for bounds changed when not zoomed in
+                    //   // not ideal as I would like to just remove that single listener
+                    //   // but removeListener wasn't working. May need to revisit
+                    //   googleMaps.event.clearListeners(map, 'bounds_changed');
+                    // }
                     if (locationMarker) {
                       markers.push(
                         <MapMarker
