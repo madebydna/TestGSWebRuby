@@ -42,9 +42,7 @@ class DataValue < ActiveRecord::Base
   # ratings
 # rubocop:disable Style/FormatStringToken
   def self.find_by_school_and_data_types_with_academics(school, data_types, configuration= default_configuration)
-    # RubyProf.start
-    # loads = data_type_ids_to_loads(data_types, configuration )
-    subset_load_ids = load_ids_dv(state_and_school_load_ids.school_and_data_types_no_load(school.state, school.id))
+    subset_load_ids = state_and_school_load_ids.school_and_data_types_no_load(school.state, school.id).pluck(:load_id)
     a = []
     # require 'pry'; binding.pry;
     if subset_load_ids.present?
@@ -61,14 +59,7 @@ class DataValue < ActiveRecord::Base
           .group('data_values.id')
           .having("(breakdown_count + academic_count) < 3 OR breakdown_names like '%All students except 504 category%'")
       a = GsdataCaching::LoadDataValue.new(loads, dvs).merge
-  #     result = RubyProf.stop
-  #
-  # # print a flat profile to text
-  #     printer = RubyProf::FlatPrinter.new(result)
-  #     printer.print(STDOUT, :min_percent => 1)
-
     end
-    # require 'pry'; binding.pry;
     a
   end
 
@@ -435,9 +426,9 @@ class DataValue < ActiveRecord::Base
     loads&.map(&:id)
   end
 
-  def self.load_ids_dv(loads)
-    loads&.map(&:load_id)
-  end
+  # def self.load_ids_dv(loads)
+  #   loads&.map(&:load_id)
+  # end
 
   # def self.load_source_name(load)
   #   load&.load_source&.name
