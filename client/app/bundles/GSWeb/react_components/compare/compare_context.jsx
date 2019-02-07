@@ -42,6 +42,7 @@ class CompareProvider extends React.Component {
     distance: PropTypes.number,
     locationLabel: PropTypes.string,
     sort: PropTypes.string,
+    sortOptions: PropTypes.array,
     breakdownParam: PropTypes.string,
     page: PropTypes.number,
     pageSize: PropTypes.number,
@@ -63,7 +64,8 @@ class CompareProvider extends React.Component {
     q: null,
     schoolKeys: [],
     numOfSchools: 0,
-    breakdownParam: ''
+    breakdownParam: '',
+    sortOptions: gonCompare.sortOptions
   };
 
   constructor(props) {
@@ -326,6 +328,7 @@ class CompareProvider extends React.Component {
           <SortContext.Provider
             value={{
               sort: this.props.sort,
+              sortOptions: this.props.sortOptions,
               onSortChanged: compose(
                 this.scrollToTop,
                 this.props.updateSort,
