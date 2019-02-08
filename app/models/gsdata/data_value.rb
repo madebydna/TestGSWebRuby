@@ -127,7 +127,6 @@ class DataValue < ActiveRecord::Base
               .group('data_values.id')
     GsdataCaching::LoadDataValue.new(loads, dvs).merge
   end
-
 # rubocop:enable Style/FormatStringToken
 
   def self.school_values_with_academics_with_proficiency_band_names
@@ -331,18 +330,6 @@ class DataValue < ActiveRecord::Base
     where(school_subquery_sql, state, school_id, load_ids)
   end
 
-  def self.school_and_data_types_and_proficiency(state, school_id, load_ids)
-    school_subquery_sql = <<-SQL
-      state = ?
-      AND district_id IS NULL
-      AND school_id = ?
-      AND load_id IN (?)
-      AND active = 1
-      AND proficiency_band_id = 1
-    SQL
-    where(school_subquery_sql, state, school_id, load_ids)
-  end
-
   def self.state_and_data_types(state, load_ids)
     state_subquery_sql = <<-SQL
       state = ?
@@ -363,18 +350,6 @@ class DataValue < ActiveRecord::Base
   #   SQL
   #   where(state_subquery_sql, state)
   # end
-
-  def self.state_and_data_type_tags_and_proficiency_is_one(state, load_ids)
-    state_subquery_sql = <<-SQL
-      state = ?
-      AND district_id IS NULL
-      AND school_id IS NULL
-      AND load_id IN (?)
-      AND active = 1
-      AND proficiency_band_id = 1
-    SQL
-    where(state_subquery_sql, state, load_ids)
-  end
 
   def self.state_and_data_type_tags_and_proficiency_is_one(state, load_ids)
     state_subquery_sql = <<-SQL
