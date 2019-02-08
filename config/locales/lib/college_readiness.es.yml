@@ -27,16 +27,33 @@ es:
       'Graduating seniors pursuing 2 year college/university': Estudiantes de último año que buscan una universidad de 2 años
       'Graduating seniors pursuing other college': Graduados matriculados en otros programas universitarios
       'Percent Enrolled in College Immediately Following High School': Graduados matriculados en la universidad
+      'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': Graduados matriculados en una universidad pública o un programa vocacional
+      'Percent enrolled in any postsecondary institution within 12 months after graduation': Graduados matriculados en la universidad o un programa vocacional
+      'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation': Graduados matriculados en una universidad de 2 años o un programa vocacional
+      'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad de 2 años o un programa vocacional
+      'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública de 2 años o un programa vocacional
+      'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation': Graduados matriculados en una universidad de 4  años o un programa vocacional
+      'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad de 4  años o un programa vocacional
+      'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública de 4  años o un programa vocacional
+      'Percent enrolled in any in-state postsecondary institution within 12 months after graduation': Graduados matriculados en una universidad pública del estado de o un programa vocacional
+      'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública del estado de o un programa vocacional
+      'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública del estado de o un programa vocacional
+      'Percent enrolled in any postsecondary institution within 24 months after graduation': Graduados matriculados en la universidad o un programa vocacional
+      'Percent enrolled in any postsecondary institution within 6 months after graduation': Graduados matriculados en la universidad o un programa vocacional
+      'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Graduados matriculados en la universidad o un programa vocacional
+      'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública del estado de o un programa vocacional
+      'Percent Enrolled in a public 4 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 4 años por un segundo año
+      'Percent Enrolled in a public 2 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 2 años por un segundo año
       'Percent Needing Remediation for College': Graduados que necesitan remediación en la universidad
       'Graduates needing English remediation in college': Graduados que necesitan remediación en inglés en la universidad
       'Graduates needing Math remediation in college': Graduados que necesitan remediación en matemáticas en la universidad
       'Graduates needing Science remediation in college': Graduados que necesitan remediación en ciencia en la universidad
       'Graduates needing Reading remediation in college': Graduados que necesitan remediación en lectura en la universidad
       'Graduates needing Writing remediation in college': Graduados que necesitan remediación de escritura en la universidad
-      'Percent Enrolled in College and Returned for a Second Year': Graduados que regresaron a la universidad por segundo año
+      'Percent Enrolled in College and Returned for a Second Year': Graduados que regresaron a la universidad por un segundo año
       'Percent enrolled in any institution of higher learning in the last 0-16 months': Graduados matriculados en programas universitarios o vocacionales
-      'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': Graduados explorando estudios universitarios o vocacionales de 2 años
-      'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': Graduados explorando estudios universitarios o vocacionales de 4 años
+      'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': Graduados explorando universidades de 2 años o un programa vocacional
+      'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': Graduados explorando universidades de 4 años o un programa vocacional
       'Percent of students who will attend out-of-state colleges': Graduados asistiendo la universidad fuera del estado
       'Percent of students who will attend in-state colleges': Graduados asistiendo la universidad estatal
       csa_badge_html: >
@@ -76,8 +93,25 @@ es:
         'Graduates needing Writing remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de escritura básicas o correctivas, que no cuentan para un título universitario.
         'Percent Enrolled in College and Returned for a Second Year': 'Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año de universidad y regresaron por segundo año consecutivo.'
         'Percent enrolled in any institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 16 meses de haberse graduado.'
-        'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de dos años de educación superior dentro de los 16 meses de su graduación.'
-        'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de 4 años de educación superior dentro de los 16 meses de su graduación.'
+        'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública de educación superior del estado dentro de los 12 meses de haberse graduado.
+        'Percent enrolled in any postsecondary institution within 12 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 12 meses de haberse graduado.
+        'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior de 2 años dentro de los 6 meses de haberse graduado
+        'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior de 2 años inmediatamente después de la escuela secundaria.
+        'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública del estado de educación superior de 2 años inmediatamente después de la escuela secundaria.
+        'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de educación superior de 4 años dentro de los 6 meses de haberse graduado
+        'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de educación superior de 4 años inmediatamente después de la escuela secundaria.
+        'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución pública del estado de educación superior de 4 años inmediatamente después de la escuela secundaria.
+        'Percent enrolled in any in-state postsecondary institution within 12 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública del estado de educación superior dentro de los 12 meses de haberse graduado.
+        'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública del estado de educación superior inmediatamente después de la escuela secundaria.
+        'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública fuera del estado de educación superior inmediatamente después de la escuela secundaria.
+        'Percent enrolled in any postsecondary institution within 24 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 24 meses de haberse graduado.
+        'Percent enrolled in any postsecondary institution within 6 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 6 meses de haberse graduado.
+        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución pública de educación superior del estado, o que tienen la intención de inscribirse en una institución fuera del estado o una institución privada del estado dentro de los 18 meses de haberse graduado.
+        'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública del estado de educación superior inmediatamente después de la escuela secundaria.
+        'Percent Enrolled in a public 4 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 4 años y regresaron por un segundo año consecutivo.
+        'Percent Enrolled in a public 2 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 2 años y regresaron por un segundo año consecutivo.
+        'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de dos años de educación superior dentro de los 16 meses de haberse graduado.'
+        'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de 4 años de educación superior dentro de los 16 meses de haberse graduado.'
         'Percent of students who will attend out-of-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades fuera del estado.'
         'Percent of students who will attend in-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades estatales.'
       narration:

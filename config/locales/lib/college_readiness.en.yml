@@ -23,8 +23,8 @@ en:
           <p>When information is missing in our display, it's most likely because this school did not offer an AP course or participate in one of the two college readiness tests, the ACT or SAT (some states mandate which college readiness test schools use). It's also possible that the missing data was not included in the data we received from the state.</p>
           <p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page.</a></p>
-      'Graduating seniors pursuing 4 year college/university': 'Graduating seniors pursuing 4-year college'
-      'Graduating seniors pursuing 2 year college/university': 'Graduating seniors pursuing 2-year college'
+      'Graduating seniors pursuing 4 year college/university': 'Graduates pursuing 4-year college'
+      'Graduating seniors pursuing 2 year college/university': 'Graduates pursuing 2-year college'
       'Graduating seniors pursuing other college': 'Graduates pursuing other college programs'
       'Percent Enrolled in College Immediately Following High School': 'Graduates pursuing college'
       'Percent Needing Remediation for College': 'Graduates needing remediation in college'
@@ -35,10 +35,27 @@ en:
       'Graduates needing Writing remediation in college': 'Graduates needing Writing remediation in college'
       'Percent Enrolled in College and Returned for a Second Year': 'Graduates who returned to college for a second year'
       'Percent enrolled in any institution of higher learning in the last 0-16 months': 'Graduates pursuing college or vocational program'
+      'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': Graduates pursuing public college or vocational program
+      'Percent enrolled in any postsecondary institution within 12 months after graduation': Graduates pursuing college or vocational program
+      'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation': Graduates pursuing 2-year college or vocational program
+      'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation': Graduates pursuing 2-year college or vocational program
+      'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation': Graduates pursuing public 2-year college or vocational program
+      'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation': Graduates pursuing 4-year college or vocational program
+      'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation': Graduates pursuing 4-year college or vocational program
+      'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation': Graduates pursuing in-state public 4-year college or vocational program
+      'Percent enrolled in any in-state postsecondary institution within 12 months after graduation': Graduates pursuing in-state college or vocational program
+      'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation': Graduates pursuing in-state college or vocational program
+      'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation': Graduates pursuing out-of-state college or vocational program
+      'Percent enrolled in any postsecondary institution within 24 months after graduation': Graduates pursuing college or vocational program
+      'Percent enrolled in any postsecondary institution within 6 months after graduation': Graduates pursuing college or vocational program
+      'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Graduates pursuing college or vocational program
+      'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': Graduates pursuing in-state public college or vocational program
+      'Percent Enrolled in a public 4 year college and Returned for a Second Year': Graduates who returned to public 4-year college for a second year
+      'Percent Enrolled in a public 2 year college and Returned for a Second Year': Graduates who returned to public 2-year college for a second year
       'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'Graduates pursuing 2-year college or vocational program'
-      'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Graduates pursuing a 4-year college or vocational program'
-      'Percent of students who will attend out-of-state colleges': 'Graduates attending out-of-state college'
-      'Percent of students who will attend in-state colleges': 'Graduates attending in-state college'
+      'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Graduates pursuing 4-year college or vocational program'
+      'Percent of students who will attend out-of-state colleges': 'Graduates pursuing out-of-state college'
+      'Percent of students who will attend in-state colleges': 'Graduates pursuing in-state college'
       csa_badge_html: >
         <p>This school has earned a College Success Award based on its success in preparing students for college and
         ultimately career. The College Success Awards recognize public high schools that stand out in ​getting students
@@ -73,6 +90,23 @@ en:
         'Graduates needing Writing remediation in college': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Writing classes in college, which do not count towards a degree.'
         'Percent Enrolled in College and Returned for a Second Year': 'This reflects the percentage of graduates from this school who completed their first year of college and returned for a second year.'
         'Percent enrolled in any institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 16 months of graduation.'
+        'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning within 12 months of graduation.
+        'Percent enrolled in any postsecondary institution within 12 months after graduation': This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 12 months of graduation.
+        'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation': This reflects the percentage of graduates from this school who enrolled in any 2-year institution of higher learning within 6 months of graduation.
+        'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any 2-year institution of higher learning immediately following high school.
+        'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any 2-year public in-state institution of higher learning immediately following high school.
+        'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation': This reflects the percentage of graduates from this school who enrolled in a 4-year institution of higher learning within 6 months of graduation.
+        'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation': This reflects the percentage of  graduates from this school who enrolled in any 4-year institution of higher learning immediately following high school.
+        'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of  graduates from this school who enrolled in any in-state public 4-year institution of higher learning immediately following high school.
+        'Percent enrolled in any in-state postsecondary institution within 12 months after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state institution of higher learning within 12 months of graduation.
+        'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state institution of higher learning immediately following high school.
+        'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any out-of-state institution of higher learning immediately following high school.
+        'Percent enrolled in any postsecondary institution within 24 months after graduation': This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 24 months of graduation.
+        'Percent enrolled in any postsecondary institution within 6 months after graduation': This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 6 months of graduation.
+        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning, or who intend to enroll in any out-of-state institution or in-state private institution within 18 months of graduation.
+        'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning immediately following high school.
+        'Percent Enrolled in a public 4 year college and Returned for a Second Year': This reflects the percentage of graduates from this school who completed their first year in a public 4-year college and returned for a second year.
+        'Percent Enrolled in a public 2 year college and Returned for a Second Year': This reflects the percentage of graduates from this school who completed their first year in a public 2-year college and returned for a second year.
         'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in a 2-year institution of higher learning within 16 months of graduation.'
         'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in a 4-year institution of higher learning within 16 months of graduation.'
         'Percent of students who will attend out-of-state colleges': 'This reflects the percentage of graduates from this school who are enrolled in out-of-state colleges or universities.'
