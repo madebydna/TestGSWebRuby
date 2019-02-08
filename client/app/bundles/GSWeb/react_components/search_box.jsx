@@ -412,7 +412,7 @@ export default class SearchBox extends React.Component {
   );
 
   resetSearchTermButton = close => (
-    <span
+    <div
       className="search-term-reset-button"
       onClick={() => {
         analyticsEvent(
@@ -425,7 +425,7 @@ export default class SearchBox extends React.Component {
       }}
     >
       x
-    </span>
+    </div>
   );
 
   renderResetSearchTermButton() {
@@ -471,6 +471,8 @@ export default class SearchBox extends React.Component {
             </Selectable>
             <div style={{ flexGrow: 2 }}>
               {this.inputBox({ open, close })}
+              {this.renderResetSearchTermButton() &&
+                this.resetSearchTermButton(close)}
               {isOpen &&
                 this.shouldRenderResults() && (
                   <div
@@ -481,8 +483,6 @@ export default class SearchBox extends React.Component {
                   </div>
                 )}
             </div>
-            {this.renderResetSearchTermButton() &&
-              this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
@@ -516,6 +516,8 @@ export default class SearchBox extends React.Component {
               {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
               <div style={{ flexGrow: 2 }}>
                 {this.inputBox({ open, close })}
+                {this.renderResetSearchTermButton() &&
+              this.resetSearchTermButton(close)}
                 {isOpen &&
                   this.shouldRenderResults() && (
                     <div className="search-results-list">
@@ -524,8 +526,6 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
-            {this.renderResetSearchTermButton() &&
-              this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
