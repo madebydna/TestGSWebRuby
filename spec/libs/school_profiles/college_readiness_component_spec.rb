@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe 'CollegeReadinessComponent' do
-  before { skip }
   let(:school) { double("school") }
   let(:school_cache_data_reader) { double("school_cache_data_reader") }
   subject(:college_readiness) do
@@ -49,24 +48,28 @@ describe 'CollegeReadinessComponent' do
                 {
                     'breakdown' => 'All students',
                     'school_value' => 1600,
-                    'state_average' => 1400
+                    'state_average' => 1400,
+                    'year' => 2016
                 }
             ],
             '4-year high school graduation rate' => [
                 {
                     'breakdown' => 'Asian',
                     'school_value' => 60,
-                    'state_average' => 61
+                    'state_average' => 61,
+                    'year' => 2016
                 },
                 {
                     'breakdown' => 'All students',
                     'school_value' => 50,
-                    'state_average' => 51
+                    'state_average' => 51,
+                    'year' => 2016
                 },
                 {
                     'breakdown' => 'White',
                     'school_value' => 40,
-                    'state_average' => 41
+                    'state_average' => 41,
+                    'year' => 2016
                 }
             ],
             'Average ACT score' => [

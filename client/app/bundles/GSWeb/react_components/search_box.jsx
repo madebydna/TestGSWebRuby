@@ -151,6 +151,11 @@ export default class SearchBox extends React.Component {
         autoSuggestResultsCount: this.autoSuggestResultsCount()
       });
     }
+    if (this.state.displayMobileSearchModal === true && prevState.displayMobileSearchModal !== this.state.displayMobileSearchModal){
+      setTimeout(()=>{
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+      }, 100)
+    }
   }
 
   shouldRenderResults() {
@@ -196,7 +201,6 @@ export default class SearchBox extends React.Component {
         this.submit();
         return;
       }
-
       geocode(searchTerm)
         .then(json => json[0])
         .done(
@@ -216,10 +220,12 @@ export default class SearchBox extends React.Component {
               params.locationLabel = `${city}, ${state} ${zip}`;
               params.locationType = 'zip';
               params.state = state;
+              params.st = ['public_charter', 'public', 'charter'];
             } else {
               params.locationLabel = normalizedAddress;
               params.locationType = 'street_address';
               params.state = state;
+              params.st = ['public_charter', 'public', 'charter'];
             }
             window.location.href = newSearchResultsPageUrl(params);
           }
@@ -395,18 +401,18 @@ export default class SearchBox extends React.Component {
           <span className="search_icon_image_white" />
         </button>
       </div>
-      {/* {this.state.displayMobileSearchModal && this.props.size <= XS &&
+      {this.state.displayMobileSearchModal && this.props.size <= XS &&
         <div className="search_bar_button" onClick={e => this.toggleSearchBoxModal(e, true)}>
           <button className="search_form_button">
             <span style={{ fontSize: 22 }}>X</span>
           </button>
         </div>
-      } */}
+      }
     </React.Fragment>
   );
 
   resetSearchTermButton = close => (
-    <span
+    <div
       className="search-term-reset-button"
       onClick={() => {
         analyticsEvent(
@@ -419,7 +425,7 @@ export default class SearchBox extends React.Component {
       }}
     >
       x
-    </span>
+    </div>
   );
 
   renderResetSearchTermButton() {
@@ -465,6 +471,8 @@ export default class SearchBox extends React.Component {
             </Selectable>
             <div style={{ flexGrow: 2 }}>
               {this.inputBox({ open, close })}
+              {this.renderResetSearchTermButton() &&
+                this.resetSearchTermButton(close)}
               {isOpen &&
                 this.shouldRenderResults() && (
                   <div
@@ -475,8 +483,6 @@ export default class SearchBox extends React.Component {
                   </div>
                 )}
             </div>
-            {this.renderResetSearchTermButton() &&
-              this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
@@ -486,9 +492,7 @@ export default class SearchBox extends React.Component {
   }
 
   renderSearchBox(element, renderDropdown = true){
-    // Need to fix on real iphone devices
-    // const searchBoxName = this.state.displayMobileSearchModal === true ? 'search-box search-mode-homepage' : 'search-box';
-    const searchBoxName = this.state.displayMobileSearchModal === true ? 'search-box' : 'search-box';
+    const searchBoxName = this.state.displayMobileSearchModal === true ? 'search-box search-mode-homepage' : 'search-box';
     return createPortal(
       <OpenableCloseable>
         {(isOpen, { open, close } = {}) => (
@@ -512,6 +516,8 @@ export default class SearchBox extends React.Component {
               {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
               <div style={{ flexGrow: 2 }}>
                 {this.inputBox({ open, close })}
+                {this.renderResetSearchTermButton() &&
+              this.resetSearchTermButton(close)}
                 {isOpen &&
                   this.shouldRenderResults() && (
                     <div className="search-results-list">
@@ -520,8 +526,6 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
-            {this.renderResetSearchTermButton() &&
-              this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
@@ -552,7 +556,7 @@ export default class SearchBox extends React.Component {
     let element = window.document.querySelector('#home-page .input-group');
     if(element && this.props.pageType === 'Home'){
       if (this.props.size <= XS){
-        return this.renderSearchBox(element, false);
+        return this.renderSearchBoxModal(element, false);
       }else{
         return this.renderSearchBox(element, false);
       }

@@ -17,6 +17,12 @@ $border-color: #dbe6eb;
 
 @media print {
   #search-page {
+    * {
+      font-family: $font-family-sans-serif;
+    }
+    a {
+      text-decoration: none;
+    }
     .menu-bar {
       display: none;
     }
@@ -36,11 +42,35 @@ $border-color: #dbe6eb;
         }
       }
     }
-    .circle-rating--small{
+    .circle-rating--small {
       color: #000000;
-      .rating-circle-small{
+      color-adjust: exact; // Overrides user settings for printing background colors
+      -webkit-print-color-adjust: exact;
+      .rating-circle-small {
         font-size: 11px;
       }
+    }
+    .scale {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .info-circle {
+      display: none;
+    }
+    .print-only-page-break {
+      display: block;
+      height: 10px;
+      page-break-after: always;
+    }
+  }
+  #compare-schools {
+    .compare-schools-pinned-header {
+      margin-top: -11px;
+      left: 3px;
+    }
+    .label {
+      border: none;
     }
   }
   .homes-for-sale,
@@ -48,7 +78,8 @@ $border-color: #dbe6eb;
   .back-to-top,
   .js-featured,
   .footer,
-  .header_un {
+  .header_un,
+  .sponsored-school-result-ad {
     display: none;
   }
   .print-logo {

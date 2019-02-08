@@ -6,8 +6,7 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
   def query_results
     @query_results ||=
       begin
-        DataValue.find_by_state_and_data_type_tags(state, 'state_test')
-          .with_configuration('feeds')
+        DataValue.find_by_state_and_data_type_tags_with_proficiency_band_name(state, 'state_test', 'feeds')
       end
   end
 
@@ -29,11 +28,11 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
       h[:data_type] = result.name
       h[:breakdowns] = breakdowns
 # rubocop:disable Style/FormatStringToken
-      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
+      h[:source_date_valid] = result.date_valid
 # rubocop:enable Style/FormatStringToken
       h[:value] = result.value
-      # h[:source_name] = result.source_name
-      # h[:description] = result.description if result.description
+      h[:source_name] = result.source_name
+      h[:description] = result.description if result.description
       h[:academics] = academics
       h[:grade] = result.grade if result.grade
       h[:cohort_count] = result.cohort_count
@@ -46,12 +45,12 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
     missing_keys = required_keys - result_hash.keys
     if missing_keys.count.positive?
       GSLogger.error(
-        :school_cache,
+        :state_cache,
         nil,
         message: "#{self.class.name} cache missing required keys",
 
-        vars: { school: district.id,
-                state: district.state,
+        vars: {
+                state: result_hash[:state],
                 data_type: result_hash[:data_type],
                 breakdowns: result_hash[:breakdowns],
         }

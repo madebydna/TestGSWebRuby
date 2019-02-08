@@ -6,30 +6,39 @@ class TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata < TestScores
   def query_results
     @query_results ||=
       begin
-        test_data_type_ids = unique_data_type_ids
-        dti_state = test_data_type_ids.map do |dti|
-          state_result = state_for_data_type_id(dti)
-          {data_type_id: dti, state: state_result&.first}
+        load_ids = unique_load_ids
+        load_id_state = load_ids.map do |li|
+          state_result = state_for_load_id(li)
+          {load_id: li, state: state_result&.first}
         end
-        dti_state.select{|arr| arr[:state].upcase == state.upcase}
+        load_id_state.select{|arr| arr[:state].upcase == state.upcase}
       end
   end
 
-  def state_for_data_type_id(dti)
-    DataValue.where(data_type_id: dti).limit(1).map(&:state)
+  def state_for_load_id(li)
+    DataValue.where(load_id: li).limit(1).map(&:state)
   end
 
-  def unique_data_type_ids
-    Load.with_data_types.with_data_type_tags('state_test')
+  def unique_load_ids
+    ids = Load.with_data_types.with_data_type_tags('state_test')
         .with_configuration('feeds')
-        .map(&:data_type_id)
+        .map(&:id)
         .uniq
+    filter_to_most_recent_load_id_by_data_type_id(ids)
+  end
+
+  def filter_to_most_recent_load_id_by_data_type_id(ids)
+    Load.find_by_sql("select loads1.data_type_id, loads1.id, loads1.date_valid from gsdata.loads loads1 INNER JOIN
+                      (select loads2.data_type_id, MAX(loads2.date_valid) as dv from gsdata.loads loads2
+                        where id in ( #{ids.join(',')})
+                        group by loads2.data_type_id) most_recent_load
+                      on loads1.data_type_id = most_recent_load.data_type_id and loads1.date_valid = most_recent_load.dv")
   end
 
   def build_hash_for_cache
     query_results.map do |obj|
       hash = {}
-      loads_data_info = Load.where(data_type_id: obj[:data_type_id]).order(date_valid: :desc)&.first
+      loads_data_info = Load.where(id: obj[:load_id]).order(date_valid: :desc)&.first
       hash['most-recent-year'] = loads_data_info&.date_valid&.year
       hash['description'] = loads_data_info&.description
       data_type_info = loads_data_info&.data_type

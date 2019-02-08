@@ -72,7 +72,7 @@ class DistrictGsdataCacher < DistrictCacher
     @_state_results_hash ||= begin
       DataValue.find_by_state_and_data_types(district.state, data_type_ids)
       .each_with_object({}) do |r, h|
-        state_key = r.datatype_breakdown_year
+        state_key = DataValue.datatype_breakdown_year(r)
         h[state_key] = r.value
       end
     end
@@ -97,7 +97,7 @@ class DistrictGsdataCacher < DistrictCacher
       h[:academic_tags] = academic_tags if academic_tags
       h[:academic_types] = academic_types if academic_types
 # rubocop:disable Style/FormatStringToken
-      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
+      h[:source_date_valid] = result.date_valid
 # rubocop:enable Style/FormatStringToken
       h[:state_value] = state_value if state_value
       h[:district_value] = result.value
@@ -119,7 +119,7 @@ class DistrictGsdataCacher < DistrictCacher
         message: "#{self.class.name} cache missing required keys",
         vars: { state: district.state,
                 district_id: district.id,
-                district: district,
+                district_name: district.name,
                 data_type_id: data_type_id,
         }
       )
@@ -128,7 +128,7 @@ class DistrictGsdataCacher < DistrictCacher
   end
 
   def state_value(result)
-    state_results_hash[result.datatype_breakdown_year]
+    state_results_hash[DataValue.datatype_breakdown_year(result)]
   end
 
   # after display range strategy is chosen will need to update method below

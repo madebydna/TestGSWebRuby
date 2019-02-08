@@ -135,16 +135,16 @@ class Cacher
   end
 
   def self.create_cache(school, cache_key)
-    begin
+    # begin
       cacher_class = cacher_for(cache_key)
       return unless cacher_class.active?
       cacher = cacher_class.new(school)
       cacher.cache
-    rescue => error
-      error_vars = { cache_key: cache_key, school_state: school.state, school_id: school.id, shard: school.shard_state }
-      GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
-      raise
-    end
+    # rescue => error
+    #   error_vars = { cache_key: cache_key, school_state: school.state, school_id: school.id, shard: school.shard_state }
+    #   GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
+    #   raise
+    # end
   end
 
 ### BEGIN RATINGS CACHE CODE

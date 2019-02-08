@@ -12,14 +12,17 @@
 }
 
 .search-term-reset-button {
+  position: absolute;
+  right: 0;
+  top: 0;
   font-family: 'opensans-regular';
   font-size: 25px;
   color: #777;
   display: inline-block;
   line-height: 42px;
   padding: 0 15px;
-  border-top: 1px solid #b8b8b8;
-  border-bottom: 1px solid #b8b8b8;
+  // border-top: 1px solid #b8b8b8;
+  // border-bottom: 1px solid #b8b8b8;
   &:hover {
     cursor: pointer;
   }
