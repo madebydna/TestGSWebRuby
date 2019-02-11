@@ -6,8 +6,8 @@
 
 <% content_for :page_javascripts do %>
   <%= webpack_javascript_include_tag "commons", defer: true %>
+  <%= webpack_javascript_include_tag "react-redux", defer: true %>
   <%= webpack_javascript_include_tag "home", defer: true %>
-  <%= webpack_javascript_include_tag "search-box", defer: true %>
 <% end %>
 
 <% content_for :page_stylesheets do %>
