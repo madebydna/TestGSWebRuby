@@ -10,15 +10,12 @@ OptionParser.new do |opts|
   opts.on("-p PORT", "--port PORT", String, 'Port of the solr server. Defaults to 8983') { |h| script_args[:port] = p }
   opts.on("-c CORE", "--core CORE", String, 'Name of the of Solr core to index to. Usually [main|prep]. Default to prep') { |c| script_args[:core] = c }
   opts.on("-s STATES", "--states STATES", String, 'comma separated states to index') { |s| script_args[:states] = s }
-  opts.on("-i IDS", "--ids IDS", String, 'comma separated IDs to index') { |i| script_args[:ids] = i }
-  opts.on("-d", "--delete DELETE", String, 'delete documents matching specified criteria') { |b| script_args[:delete] = b }
   opts.on("-w", "--[no-]wipe", 'Whether to wipe the core first. Defaults to false') { |b| script_args[:wipe] = b }
   opts.on("-x", "--[no-]swap", 'Whether to swap the main and prep cores after done indexing. Defaults to false') { |b| script_args[:swap] = b }
   opts.on_tail("-h", "--help", "Show this message") { puts opts; exit }
 end.parse!
 
 states = (script_args[:states] || States.abbreviations.join(',')).split(',')
-ids = script_args[:ids]&.split(',')
 host = script_args[:host] || 'localhost'
 port = script_args[:port] || 8983
 core = script_args[:core] || 'prep'
@@ -37,15 +34,29 @@ indexer =
   else
     Solr::Indexer.with_rw_client
   end
-          
+
 indexer.delete_all if should_wipe_core
 
-if script_args[:delete]
-  indexer.delete_all_by_type(Solr::DistrictDocument)
-else
-  documents = Search::DistrictDocumentFactory.new(states: states, ids: ids).documents
-  indexer.index(documents)
-end
-
+puts "Starting city indexer for states: #{states.join(', ')}"
+documents = Solr::CityDocument.from_active_cities(states: states)
+indexer.index(documents)
 indexer.commit
+
+puts "Starting district indexer for states: #{states.join(', ')}"
+documents = Search::DistrictDocumentFactory.new(states: states).documents
+indexer.index(documents)
+indexer.commit
+
+puts "Starting school indexer for states: #{states.join(', ')}"
+documents = Search::SchoolDocumentFactory.new(states: states).documents
+indexer.index(documents)
+indexer.commit
+
+
 indexer.optimize
+
+if should_swap_cores
+  solr_swap_command_path = "/solr/admin/cores?action=SWAP&core=main&other=prep"
+  require 'open-uri'
+  response = open("http://#{host}:#{port}#{solr_swap_command_path}").read
+end

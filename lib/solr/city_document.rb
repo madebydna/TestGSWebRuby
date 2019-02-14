@@ -6,8 +6,11 @@ module Solr
 
     attr_writer :id
 
-    def self.from_active_cities
-      City.active.find_each.lazy.flat_map do |city|
+    def self.from_active_cities(states: nil)
+      criteria = {}.tap do |h|
+        h[:state] = states if states
+      end
+      City.where(**criteria).active.find_each.lazy.flat_map do |city|
         new(city: city)
       end
     end
