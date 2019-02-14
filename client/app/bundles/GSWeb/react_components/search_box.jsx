@@ -204,7 +204,7 @@ export default class SearchBox extends React.Component {
       geocode(searchTerm)
         .then(json => json[0])
         .done(
-          ({ lat, lon, city, state, zip, normalizedAddress, level } = {}) => {
+          ({ lat, lon, city, state, zip, normalizedAddress, level, neighborhood, sublocality } = {}) => {
             let params = {};
             if (city && state && level === 'city') {
               window.location.href = newCityBrowsePageUrl(state, city, params);
@@ -217,7 +217,7 @@ export default class SearchBox extends React.Component {
               params.q = searchTerm;
             }
             if (matchesZip(searchTerm) && !matchesAddress(searchTerm)) {
-              params.locationLabel = `${city}, ${state} ${zip}`;
+              params.locationLabel = `${city || sublocality || neighborhood}, ${state} ${zip}`;
               params.locationType = 'zip';
               params.state = state;
               params.st = ['public_charter', 'public', 'charter'];
