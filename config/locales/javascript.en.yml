@@ -66,9 +66,9 @@ en:
     Currently unrated: Currently unrated
     rating_description_html: >
       <p style="text-align: left;">GreatSchools’ Summary Rating provides an overall snapshot of school quality. Ratings follow a 1-10 scale:
-      <ul style="text-align: left;"><li>ratings between 1-3 signal “below average”</li>
-      <li>4-7 indicate “average”</li>
-      <li>ratings of 8-10 are “above average”</li></ul></p>
+      <ul style="text-align: left;"><li>ratings between 1-4 signal “below average”</li>
+      <li>5-6 indicate “average”</li>
+      <li>ratings of 7-10 are “above average”</li></ul></p>
     no_rating_description_html: >
       <p style="text-align: left;">
       GreatSchools’ Summary Rating provides an overall snapshot of school quality.
@@ -216,7 +216,6 @@ en:
     students: students
     Students: Students
     State avg: 'State avg:'
-    State average: State average
     School value: School value
     Sponsored Ad: Sponsored Listing
     sponsored_tooltip_blurb: Sponsored listings are paid advertisements. As a nonprofit, advertising helps make it possible to provide our site free to millions of parents. 

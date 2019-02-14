@@ -152,7 +152,9 @@ export default class SearchBox extends React.Component {
       });
     }
     if (this.state.displayMobileSearchModal === true && prevState.displayMobileSearchModal !== this.state.displayMobileSearchModal){
-      window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+      setTimeout(()=>{
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+      }, 100)
     }
   }
 
@@ -199,11 +201,10 @@ export default class SearchBox extends React.Component {
         this.submit();
         return;
       }
-
       geocode(searchTerm)
         .then(json => json[0])
         .done(
-          ({ lat, lon, city, state, zip, normalizedAddress, level } = {}) => {
+          ({ lat, lon, city, state, zip, normalizedAddress, level, neighborhood, sublocality } = {}) => {
             let params = {};
             if (city && state && level === 'city') {
               window.location.href = newCityBrowsePageUrl(state, city, params);
@@ -216,13 +217,15 @@ export default class SearchBox extends React.Component {
               params.q = searchTerm;
             }
             if (matchesZip(searchTerm) && !matchesAddress(searchTerm)) {
-              params.locationLabel = `${city}, ${state} ${zip}`;
+              params.locationLabel = `${city || sublocality || neighborhood}, ${state} ${zip}`;
               params.locationType = 'zip';
               params.state = state;
+              params.st = ['public_charter', 'public', 'charter'];
             } else {
               params.locationLabel = normalizedAddress;
               params.locationType = 'street_address';
               params.state = state;
+              params.st = ['public_charter', 'public', 'charter'];
             }
             window.location.href = newSearchResultsPageUrl(params);
           }
@@ -409,7 +412,7 @@ export default class SearchBox extends React.Component {
   );
 
   resetSearchTermButton = close => (
-    <span
+    <div
       className="search-term-reset-button"
       onClick={() => {
         analyticsEvent(
@@ -422,7 +425,7 @@ export default class SearchBox extends React.Component {
       }}
     >
       x
-    </span>
+    </div>
   );
 
   renderResetSearchTermButton() {
@@ -468,6 +471,8 @@ export default class SearchBox extends React.Component {
             </Selectable>
             <div style={{ flexGrow: 2 }}>
               {this.inputBox({ open, close })}
+              {this.renderResetSearchTermButton() &&
+                this.resetSearchTermButton(close)}
               {isOpen &&
                 this.shouldRenderResults() && (
                   <div
@@ -478,8 +483,6 @@ export default class SearchBox extends React.Component {
                   </div>
                 )}
             </div>
-            {this.renderResetSearchTermButton() &&
-              this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}
@@ -513,6 +516,8 @@ export default class SearchBox extends React.Component {
               {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
               <div style={{ flexGrow: 2 }}>
                 {this.inputBox({ open, close })}
+                {this.renderResetSearchTermButton() &&
+              this.resetSearchTermButton(close)}
                 {isOpen &&
                   this.shouldRenderResults() && (
                     <div className="search-results-list">
@@ -521,8 +526,6 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
-            {this.renderResetSearchTermButton() &&
-              this.resetSearchTermButton(close)}
             {this.searchButton()}
           </div>
         )}

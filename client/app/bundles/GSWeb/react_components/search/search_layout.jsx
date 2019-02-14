@@ -189,6 +189,7 @@ class SearchLayout extends React.Component {
           key="right-column"
           className={`right-column ${this.shouldRenderMap() ? ' ' : 'closed'}`}
         >
+          <div className="print-only-page-break"></div>
           <div className="right-column-fixed" ref={this.fixedYLayer}>
             <div className="ad-column">{ad}</div>
             <div className="map-column">{map}</div>
@@ -305,7 +306,7 @@ class SearchLayout extends React.Component {
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
           {this.props.breadcrumbs}
-          <div className="pagination-summary" dangerouslySetInnerHTML={{ __html: this.props.resultSummary }} />
+          <div className="pagination-summary" >{this.props.resultSummary}</div>
           {this.shouldRenderTable() ? (
             <div className="menu-item">{this.props.chooseTableButtons}</div>
           ) : null}

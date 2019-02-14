@@ -9,23 +9,27 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
   def query_results
     @query_results ||=
       begin
-        DataValue.state_and_district_values
-          .from(
-            DataValue.state_and_district(
-              district.state,
-              district.id
-            ), :data_values
-          )
-          .where(proficiency_band_id: 1)
-          .with_data_types
-          .with_data_type_tags(DATA_TYPE_TAGS)
-          .with_breakdowns
-          .with_breakdown_tags
-          .with_academics
-          .with_academic_tags
-          .with_loads
-          .with_sources
-          .group('data_values.id')
+        DataValue.find_by_district_and_data_type_tags_and_proficiency_is_one(district.state,
+                                                                             district.id,
+                                                                             DATA_TYPE_TAGS,
+                                                                             %w(none web feeds))
+        # DataValue.state_and_district_values
+        #   .from(
+        #     DataValue.state_and_district(
+        #       district.state,
+        #       district.id
+        #     ), :data_values
+        #   )
+        #   .where(proficiency_band_id: 1)
+        #   .with_data_types
+        #   .with_data_type_tags(DATA_TYPE_TAGS)
+        #   .with_breakdowns
+        #   .with_breakdown_tags
+        #   .with_academics
+        #   .with_academic_tags
+        #   .with_loads
+        #   .with_sources
+        #   .group('data_values.id')
       end
   end
 
@@ -60,13 +64,13 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
       h[:breakdowns] = breakdowns
       h[:breakdown_tags] = result.breakdown_tags
 # rubocop:disable Style/FormatStringToken
-      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
+      h[:source_date_valid] = result.date_valid
 # rubocop:enable Style/FormatStringToken
       h[:source_name] = result.source_name
       h[:district_value] = result.value
 # rubocop:disable Style/SafeNavigation
       h[:state_value] = state_result.value if state_result && state_result.value
-      h[:source_name] = result.source_name
+      h[:source_name] = result.source
       h[:description] = result.description if result.description
       h[:academics] = academics
       h[:grade] = result.grade if result.grade
@@ -105,18 +109,16 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
   def state_results_hash
     @_state_results_hash ||= begin
       state_values = DataValue
-                       .find_by_state_and_data_type_tags(district.state, DATA_TYPE_TAGS)
-                       .where(proficiency_band_id: 1)
-
+                       .find_by_state_and_data_type_tags_and_proficiency_is_one(district.state, DATA_TYPE_TAGS, 'all')
       state_values.each_with_object({}) do |result, hash|
-        state_key = result.datatype_breakdown_year
+        state_key = DataValue.datatype_breakdown_year(result)
         hash[state_key] = result
       end
     end
   end
 
   def state_result(result)
-    state_results_hash[result.datatype_breakdown_year]
+    state_results_hash[DataValue.datatype_breakdown_year(result)]
   end
 
 end

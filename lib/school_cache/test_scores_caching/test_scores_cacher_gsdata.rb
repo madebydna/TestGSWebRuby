@@ -7,13 +7,13 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
 
   CACHE_EXCEPTIONS = :data_type, :percentage, :narrative, :label, :methodology
 
-      def data_type_tags
+  def data_type_tags
     self.class::DATA_TYPE_TAGS
   end
 
-  def data_type_ids
-    @_data_type_ids ||= DataTypeTag.data_type_ids_for(data_type_tags).uniq
-  end
+  # def data_type_ids
+  #   @_data_type_ids ||= DataTypeTag.data_type_ids_for(data_type_tags).uniq
+  # end
 
   def build_hash_for_cache
     hashes = school_results.map { |r| result_to_hash(r) }
@@ -71,19 +71,16 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     @query_results ||=
       begin
         DataValue
-          .find_by_school_and_data_type_tags(school, data_type_tags)
-          .where(proficiency_band_id: 1)
+          .find_by_school_and_data_type_tags_proficiency_is_one(school, data_type_tags, 'all')
       end
   end
 
   def state_results_hash
     @_state_results_hash ||= begin
       state_values = DataValue
-        .find_by_state_and_data_type_tags(school.state, DATA_TYPE_TAGS)
-        .where(proficiency_band_id: 1)
-
+        .find_by_state_and_data_type_tags_and_proficiency_is_one(school.state, DATA_TYPE_TAGS, 'all')
       state_values.each_with_object({}) do |result, hash|
-        state_key = result.datatype_breakdown_year
+        state_key = DataValue.datatype_breakdown_year(result)
         hash[state_key] = result
       end
     end
@@ -92,11 +89,9 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   def district_results_hash
     @_district_results_hash ||= begin
       district_values = DataValue
-        .find_by_district_and_data_type_tags(school.state, school.district_id, DATA_TYPE_TAGS)
-        .where(proficiency_band_id: 1)
-
+        .find_by_district_and_data_type_tags_and_proficiency_is_one(school.state, school.district_id, DATA_TYPE_TAGS, 'all')
       district_values.each_with_object({}) do |result, hash|
-        district_key = result.datatype_breakdown_year
+        district_key = DataValue.datatype_breakdown_year(result)
         hash[district_key] = result.value
       end
     end
@@ -129,13 +124,13 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
       h[:breakdown_tags] = breakdown_tags # if breakdown_tags
       h[:school_value] = result.value  #data_value.value
 # rubocop:disable Style/FormatStringToken
-      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')  #source.data_valid
+      h[:source_date_valid] = result.date_valid  #source.data_valid
 # rubocop:enable Style/FormatStringToken
 # rubocop:disable Style/SafeNavigation
       h[:state_value] = state_result.value if state_result && state_result.value #data_type.value
 
       h[:district_value] = district_value if district_value   #data_type.value
-      h[:source_name] = result.source_name    #source.name
+      h[:source_name] = result.source    #source.name
       h[:description] = result.description if result.description    #source.description
       h[:school_cohort_count] = result.cohort_count if result.cohort_count #data_value.cohort_count
       h[:academics] = academics # if academics   #data_value.academics.pluck(:name).join(',')
@@ -170,11 +165,11 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   def district_value(result)
     #   will not have district values if school is private
     return nil unless school.district_id.positive?
-    district_results_hash[result.datatype_breakdown_year]
+    district_results_hash[DataValue.datatype_breakdown_year(result)]
   end
 
   def state_result(result)
-    state_results_hash[result.datatype_breakdown_year]
+    state_results_hash[DataValue.datatype_breakdown_year(result)]
   end
 
 

@@ -41,6 +41,12 @@ export function geocode(searchInput) {
               geocodeResult.country =
                 results[x].address_components[i].short_name;
             }
+            if (results[x].address_components[i].types.contains('neighborhood')) {
+              geocodeResult.neighborhood = results[x].address_components[i].long_name;
+            }
+            if (results[x].address_components[i].types.contains('sublocality')) {
+              geocodeResult.sublocality = results[x].address_components[i].long_name;
+            }
           }
           if (results[x].address_components[0].types[0] === 'locality') {
             geocodeResult.level = 'city';

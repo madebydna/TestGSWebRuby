@@ -65,19 +65,19 @@ parsed_arguments.each do |args|
       puts "     doing #{cache_key}"
       if schools_where
         School.on_db(state.downcase.to_sym).where(schools_where).each do |school|
-          begin
+          # begin
             Cacher.create_cache(school, cache_key)
-          rescue => error
-            puts "School #{school.state}-#{school.id} : #{error}"
-            if error.try(:original_exception)&.class == Mysql2::Error && retries < 2
-              puts "Mysql2 error. Reloading connections"
-              sleep 10.seconds
-              ActiveRecord::Base.connection_handler.clear_reloadable_connections!
-              retries += 1
-              retry
-            end
-            had_any_errors = true
-          end
+          # rescue => error
+          #   puts "School #{school.state}-#{school.id} : #{error}"
+          #   if error.try(:original_exception)&.class == Mysql2::Error && retries < 2
+          #     puts "Mysql2 error. Reloading connections"
+          #     sleep 10.seconds
+          #     ActiveRecord::Base.connection_handler.clear_reloadable_connections!
+          #     retries += 1
+          #     retry
+          #   end
+          #   had_any_errors = true
+          # end
         end
       else
         School.on_db(state.downcase.to_sym).all.each do |school|

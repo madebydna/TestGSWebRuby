@@ -1,8 +1,11 @@
 class DistrictBoundariesController < ApplicationController
+  include PageAnalytics
+  
   layout "application"
 
   def show
     set_seo_meta_tags
+    set_page_analytics_data
   end
 
   def meta_title
@@ -29,4 +32,20 @@ class DistrictBoundariesController < ApplicationController
                   canonical: district_boundary_url
   end
 
+  def state
+    params[:state]
+  end
+
+  def school_id
+    params[:schoolId]
+  end
+
+  # PageAnalytics
+  def page_analytics_data
+    {}.tap do |hash|
+      hash[PageAnalytics::PAGE_NAME] = 'GS:DistrictBoundaryTool'
+      hash[PageAnalytics::STATE] = state
+      hash[PageAnalytics::SCHOOL_ID] = school_id
+    end
+  end
 end
