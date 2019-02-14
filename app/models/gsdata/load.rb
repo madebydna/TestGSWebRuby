@@ -32,6 +32,7 @@ class Load < ActiveRecord::Base
   end
 
   def self.with_configuration(config)
+    return where('') if config == 'all'
     q = "loads.configuration like '%#{config}%'"
     if config.is_a?(Array)
       q =''
@@ -46,9 +47,10 @@ class Load < ActiveRecord::Base
   end
 
   def self.with_configuration_new(config)
-    q = "loads.configuration like '%#{config}%'"
+    return '' if config == 'all'
+    q = "and loads.configuration like '%#{config}%'"
     if config.is_a?(Array)
-      q =''
+      q ='and '
       config.each_with_index  do | c, i |
         if i > 0
           q += ' or '
@@ -70,7 +72,7 @@ class Load < ActiveRecord::Base
         from gsdata.loads, gsdata.sources_new, gsdata.data_types, gsdata.data_type_tags
         where loads.data_type_id = data_types.id and loads.source_id = sources_new.id
         and data_type_tags.data_type_id = data_types.id and data_type_tags.tag = #{tags}
-        and (#{with_configuration_new(configuration)})")
+         (#{with_configuration_new(configuration)})")
     end
   end
 
@@ -112,11 +114,7 @@ class Load < ActiveRecord::Base
   end
 
   def self.data_type_tags_to_loads(tags, configuration)
-    config = configuration.is_a?(Array) ? configuration.join(',') : configuration
-    t = tags.is_a?(Array) ? tags.join(',') : tags
-    hash_key = t + config
-    @_data_type_tags_to_loads ||= {}
-    @_data_type_tags_to_loads[hash_key] ||= begin
+
     load_and_source_and_data_type.
         from(
             Load.with_configuration(configuration)
@@ -124,14 +122,14 @@ class Load < ActiveRecord::Base
             .with_data_type_tags(tags),
             :loads)
         .with_data_types.with_sources
-                                         end
+
   end
 
   def self.load_and_source_and_data_type
     load_and_source_and_data_type_values = <<-SQL
       loads.id, loads.data_type_id, loads.configuration,
       loads.date_valid, loads.description, (sources_new.name) as "source_name", 
-      (data_types.name) as "data_type_name", (data_types.short_name) as "short_name"
+      (data_types.name) as "data_type_name", (data_types.short_name) as "data_type_short_name"
     SQL
     select(load_and_source_and_data_type_values)
   end
