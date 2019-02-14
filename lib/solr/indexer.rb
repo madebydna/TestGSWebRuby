@@ -41,6 +41,10 @@ module Solr
       client.delete_by_query("type:#{indexable_class.type}")
     end
 
+    def delete_all
+      client.delete_by_query("*:*")
+    end
+
     def commit
       client.commit
     end
