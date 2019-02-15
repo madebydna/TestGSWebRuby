@@ -3,9 +3,7 @@
 import { getStore } from '../store/appStore';
 
 import 'js-cookie';
-import '../vendor/tipso';
 import '../vendor/fastclick';
-import '../vendor/remodal';
 import DataModule from '../react_components/data_module';
 import StudentsWithDisabilities from '../react_components/equity/students_with_disabilities';
 import CollegeReadiness from '../react_components/college_readiness';
@@ -16,19 +14,16 @@ import Courses from '../react_components/courses';
 import { makeDrawersWithSelector } from '../components/drawer';
 import { generateEthnicityChart } from '../components/ethnicity_pie_chart';
 import { fixToTopWhenBelowY } from '../util/fix_to_top_when_below_y';
-import * as tooltips from '../util/tooltip';
 import { generateSubgroupPieCharts } from '../components/subgroup_charts';
 import * as stickyRightRail from '../components/sticky_right_rail';
 import * as schoolProfileStickyCTA from '../components/school_profile_sticky_cta';
 import * as schoolProfileStickyCTAMobile from '../components/school_profile_sticky_cta_mobile';
 import { viewport } from '../util/viewport';
-import * as remodal from '../util/remodal';
 import OspSchoolInfo from '../react_components/osp_school_info';
 import TopicalReviewSummary from '../react_components/topical_review_summary';
 import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
 import StemCourses from '../react_components/school_profiles/stem_courses';
-import * as footer from '../components/footer';
 import { signupAndFollowSchool, updateProfileHeart } from '../util/newsletters';
 import * as backToTop from '../components/back_to_top';
 import { impressionTracker } from '../util/impression_tracker';
@@ -38,7 +33,6 @@ import * as introJs from '../components/introJs';
 import { scrollToElement } from '../util/scrolling';
 import { enableAutoAnchoring, initAnchorHashUpdater, scrollToAnchor } from '../components/anchor_router';
 import { assign } from 'lodash';
-import { init as initHeader } from '../header';
 import * as validatingInputs from 'components/validating_inputs';
 import owlPng from 'school_profiles/owl.png';
 import { minimizeNudges as minimizeQualarooNudges } from 'util/qualaroo';
@@ -52,6 +46,7 @@ import SearchBox from 'react_components/search_box';
 import withViewportSize from 'react_components/with_viewport_size';
 import ProfileInterstitialAd, { shouldShowInterstitial, profileInterstitialLoader } from 'react_components/school_profiles/profile_interstitial_ad';
 import "jquery-unveil";
+import commonPageInit from '../common';
 
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 
@@ -74,7 +69,7 @@ ReactOnRails.register({
 });
 
 $(function() {
-  initHeader();
+  commonPageInit();
 
   (function() {
     var toggle = assign(new Toggle($('#hero').find('.school-contact')));
@@ -116,13 +111,10 @@ $(function() {
   });
   generateEthnicityChart(gon.ethnicity);
   makeDrawersWithSelector($('.js-drawer'));
-  tooltips.initialize();
-  remodal.init();
   generateSubgroupPieCharts();
   stickyRightRail.init();
   schoolProfileStickyCTA.init();
   schoolProfileStickyCTAMobile.init();
-  footer.setupNewsletterLink();
   backToTop.init();
 
   $('.js-followThisSchool').on('click', function () {
@@ -235,24 +227,6 @@ $(function() {
   });
 
   let $body = $('body');
-
-  $body.on('click', '.multi-select-button-group button', function() {
-    var $label = $(this);
-    var $hiddenField = $label.closest('fieldset').find('input[type=hidden]');
-    var values = $hiddenField.val().split(',');
-    if ($hiddenField.val() == "") {
-      values = [];
-    }
-    var value = $label.data('value').toString();
-    var index = values.indexOf(value);
-    if(index == -1) {
-      values.push(value);
-    } else {
-      values.splice(index, 1);
-    }
-    $hiddenField.val(values.join(','));
-    $label.toggleClass('active');
-  });
 
   // used by test scores in school profiles
   $body.on('click', '.js-test-score-details', function () {

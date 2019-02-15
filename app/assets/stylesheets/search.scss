@@ -52,6 +52,10 @@
 
 @import 'pages/search/_search_page';
 
+// needed for newsletter modals to be styled correctly
+@import 'components/join-form';
+@import 'gs/objects/modal_layout';
+
 .back-to-top {
   display: none;
 }

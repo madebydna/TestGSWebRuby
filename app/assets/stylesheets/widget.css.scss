@@ -1,8 +1,24 @@
+// bootstrap
+@import 'resources/bootstrap/smaller_bootstrap';
+
+// variables, mixins, base styles
+@import 'variables/variables';
+@import 'mixins/*';
+@import 'gs/mixins'; // deprecated
+@import 'gs/form';
+@import 'base/spacing';
+@import 'base/typography';
+
 @import "resources/bootstrap/bootstrap/mixins/_clearfix";
-@import "fonts/gs-icon-font";
-@import "variables/ratings";
-@import "mixins/circle-rating";
-@import "mixins/diamond-rating";
 @import "libs/widget/*";
 @import "gs/ratings";
 @import "components/five-stars";
+
+@import 'resources/tipso'; // used on school profiles
+@import 'resources/remodal'; // used on profiles / used by modals
+@import 'gs/modal_tooltip'; // used on profiles / used by modals
+@import 'resources/remodal-default-theme'; // used on profiles / used by modals
+
+// needed for newsletter modals to be styled correctly
+@import 'components/join-form';
+@import 'gs/objects/modal_layout';

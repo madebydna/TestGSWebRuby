@@ -18,26 +18,27 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const config = {
   mode: devBuild ? 'development' : 'production',
   entry: {
-    widget: ['./app/bundles/GSWeb/widget'],
+    widget: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/widget'],
     'mobile-overlay-ad': ['./app/bundles/GSWeb/components/ads/mobile_overlay'],
     'district-boundaries': [
       'polyfills',
+      './app/bundles/GSWeb/common',
       './app/bundles/GSWeb/district_boundaries'
     ],
-    'school-profiles': ['polyfills', './app/bundles/GSWeb/school_profiles'],
-    home: ['./app/bundles/GSWeb/home'],
+    'school-profiles': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/school_profiles'],
+    home: ['./app/bundles/GSWeb/common', './app/bundles/GSWeb/home'],
     'commons-blocking-loader': ['./app/bundles/GSWeb/misc_all_page_blocking'],
     'jquery-loader': ['jquery'],
     'admin-tools': ['./app/bundles/GSWeb/admin_tools'],
     'add-schools': ['./app/bundles/GSWeb/pages/add_schools'],
-    compare: ['polyfills', './app/bundles/GSWeb/compare'],
-    search: ['polyfills', './app/bundles/GSWeb/search'],
+    compare: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/compare'],
+    search: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/search'],
     'search-box': [
       'polyfills',
       './app/bundles/GSWeb/react_components/search_box_wrapper'
     ],
-    community: ['polyfills', './app/bundles/GSWeb/community'],
-    account: ['polyfills', './app/bundles/GSWeb/account']
+    community: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/community'],
+    account: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/account']
   },
 
   optimization: {
