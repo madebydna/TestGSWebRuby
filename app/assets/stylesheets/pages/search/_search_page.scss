@@ -506,6 +506,8 @@ body {
       text-align: left;
       background-color: #f1fafd;
       text-align: center;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
     th.school {
       width: 320px;
