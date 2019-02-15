@@ -23,11 +23,7 @@ module CompareControllerConcerns
   end
 
   def solr_query
-    if params[:solr7]
-      query_type = Search::SolrSchoolQuery
-    else
-      query_type = Search::LegacySolrSchoolQuery
-    end
+    query_type = Search::SolrSchoolQuery
     query_type.new(
       state: state,
       sort_name: 'distance',
