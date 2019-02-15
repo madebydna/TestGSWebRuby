@@ -8,13 +8,13 @@ class Api::NearbySchoolsController < ApplicationController
   before_filter :require_school
 
   def show
-    @array_of_nearby_school_hashes = serialized_schools_except_self
+    @array_of_nearby_school_hashes = serialized_schools
     expires_in(CACHE_TIME, public: true, must_revalidate: true)
     render 'api/nearby_schools/show'
   end
 
-  def serialized_schools_except_self
-    serialized_schools.reject { |s| s[:id] == school.id }
+  def serialized_schools
+    super.reject { |s| s[:id] == school.id }
   end
 
   protected 
@@ -32,7 +32,7 @@ class Api::NearbySchoolsController < ApplicationController
   # SearchControllerConcerns
 
   def default_extras
-    %w(summary_rating review_summary)
+    %w(summary_rating review_summary enrollment)
   end
 
   def not_default_extras

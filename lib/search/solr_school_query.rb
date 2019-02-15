@@ -77,7 +77,7 @@ module Search
         array << eq(:state, state.downcase) if state
         array << self.in(:level_codes, level_codes.map(&:downcase)) if level_codes.present?
         array << self.in(:entity_type, entity_types.map(&:downcase)) if entity_types.present?
-        array << eq(:summary_rating, ratings) if ratings.present?
+        array << self.in(:summary_rating, ratings) if ratings.present?
       end
     end
 
@@ -105,7 +105,7 @@ module Search
     # Solr::Query
     def q
       if @q.present?
-        Solr.require_non_optional_words(@q)
+        require_non_optional_words(@q)
       else
         default_query_string
       end

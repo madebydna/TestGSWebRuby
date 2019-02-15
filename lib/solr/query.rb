@@ -5,7 +5,7 @@ module Solr
     attr_accessor :field_list, :filters, :extra_solr_params
 
     def params
-      fq = filters
+      fq = filters.clone
       fq << eq('type', document_type.type) if document_type
       h = {
         defType: def_type,
@@ -58,12 +58,22 @@ module Solr
     end
 
     def eq(field, value)
-      "#{field}:#{value}"
+      "#{field}:#{escape_spaces(value)}"
     end
 
     def in(field, values)
-      values = Array.wrap(values)
+      values = Array.wrap(values).map { |v| escape_spaces(v) }
       "#{field}:(#{values.join(' OR ')})"
+    end
+
+    private
+
+    def escape_spaces(phrase)
+      phrase.gsub(' ', '\ ')
+    end
+
+    def require_non_optional_words(*args)
+      ::Solr::Solr.require_non_optional_words(*args)
     end
   end
 end

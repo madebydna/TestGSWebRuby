@@ -40,7 +40,7 @@ class Api::SchoolSerializer
       },
       rating: rating,
       ratingScale: rating ? SchoolProfiles::SummaryRating.scale(rating) : nil,
-      schoolType: 'public' || school.type,
+      schoolType: school.type,
       state: school.state.upcase,
       type: 'school',
       links: {
