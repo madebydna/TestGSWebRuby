@@ -17,7 +17,6 @@ import {
   isSignedIn,
   COOKIE_NAME
 } from 'util/session';
-import '../../vendor/remodal';
 import SearchQueryParams from './search_query_params';
 import GradeLevelContext from './grade_level_context';
 import SavedSchoolContext from './saved_school_context';

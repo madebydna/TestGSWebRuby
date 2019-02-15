@@ -17,7 +17,6 @@ import {
   isSignedIn,
   COOKIE_NAME
 } from 'util/session';
-import '../../vendor/remodal';
 import SearchQueryParams from 'react_components/search/search_query_params';
 import SavedSchoolContext from 'react_components/search/saved_school_context';
 import SortContext from 'react_components/search/sort_context';

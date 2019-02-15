@@ -4,12 +4,9 @@ import DistrictBoundaries from './react_components/district_boundaries/district_
 import DistrictBoundariesLegend from './react_components/district_boundaries/district_boundaries_legend';
 import ConnectedDistrictBoundaries from './react_components/district_boundaries/connected_district_boundaries.jsx';
 import { getValueOfQueryParam } from './util/uri';
-import * as tooltips from './util/tooltip';
-import * as remodal from './util/remodal';
-import './vendor/tipso';
-import { init as initHeader } from './header';
 import SearchBox from 'react_components/search_box';
 import withViewportSize from 'react_components/with_viewport_size';
+import commonPageInit from './common';
 
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 
@@ -38,9 +35,4 @@ ReactOnRails.register({
   SearchBoxWrapper
 });
 
-$(() => {
-  initHeader();
-  ReactOnRails.reactOnRailsPageLoaded();
-  tooltips.initialize();
-  remodal.init();
-});
+$(commonPageInit);
