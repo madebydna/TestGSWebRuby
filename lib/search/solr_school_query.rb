@@ -125,8 +125,6 @@ module Search
     def default_sort_name
       if @q.present?
         'relevance'
-      elsif lat && lon
-        'distance'
       else
         'rating'
       end
