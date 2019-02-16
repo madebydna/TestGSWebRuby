@@ -4,7 +4,7 @@ class DistrictCharacteristicsCacher < DistrictCacher
   include DistrictCacheValidation
 
   CACHE_KEY = 'district_characteristics'
-  DIRECTORY_CENSUS_DATA_TYPES = [9,17]
+  DIRECTORY_CENSUS_DATA_TYPES = [9, 17, 102, 296, 298, 319, 325, 417, 419]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
   # 3 - Master's degree
@@ -23,10 +23,17 @@ class DistrictCharacteristicsCacher < DistrictCacher
   # 33 - Percent classes taught by non-highly qualified teachers
   # 41 - Head official name
   # 42 - Head official email
+  # 102 - ACT participation 
   # 103 - at least 5 years teaching experience
   # 129 - Teachers with no valid license
   # 131 - Percent classes taught by highly qualified teachers
   # 133 - Teachers with valid license
+  # 296 - SAT percent college ready  
+  # 298 - 4-year high school graduation rate
+  # 319 - Average ACT score
+  # 325 - ACT percent college ready 
+  # 417 - Percent of Students Passing AP/IB Exams 
+  # 419 - Percent of students who meet UC/CSU entrance requirements 
 
   def self.listens_to?(data_type)
     data_type == :district_characteristics

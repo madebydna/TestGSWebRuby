@@ -18,6 +18,7 @@ class DistrictsController < ApplicationController
     @top_schools =  top_rated_schools
     @hero_data = hero_data
     @academics_props = district_academics_module_props
+    @college_readiness_props = college_readiness
     @reviews = reviews_formatted.reviews_list
     @translations = translations
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
@@ -138,6 +139,21 @@ class DistrictsController < ApplicationController
         hs[:grades] = GradeLevelConcerns.human_readable_level(district_record.level)
         hs[:narration] = build_header_narration
       end
+    end
+  end
+
+  def college_readiness_data
+    @_college_readiness_hash ||= district_cache_data_reader.college_readiness
+  end
+
+  def college_readiness
+    @_college_readiness ||= {}.tap do |h|
+      h["title"] = t('school_profiles.college_readiness.title')
+      h["analytics_id"] = 'CollegeReadiness'
+      h["data"] = college_readiness_data
+      h["subtitle"] = t('school_profiles.college_readiness.subtitle_html')
+      h['icon_classes'] = 'icon-graduation'
+      h["info_text"] = t('school_profiles.college_readiness.tooltip_html')
     end
   end
 
