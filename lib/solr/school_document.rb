@@ -102,7 +102,7 @@ module Solr
     end
 
     # indexable
-    def self.type
+    def self.document_type
       "School"
     end
 

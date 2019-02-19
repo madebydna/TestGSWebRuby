@@ -44,8 +44,8 @@ module Solr
         type_and_unique_key
       )
       write_field(
-        Field.new(:type, type: FieldTypes::STRING, required: true),
-        self.type
+        Field.new(:document_type, type: FieldTypes::STRING, required: true),
+        self.document_type
       )
       write_document_fields
     end

@@ -27,9 +27,9 @@ module Solr
           data: query.params
         )
         docs = res.dig('response', 'docs')
-        if query.document_type
-          docs.map! { |doc| query.document_type.from_hash(doc) }
-          docs.extend(query.document_type.const_get('CollectionMethods'))
+        if query.document_class
+          docs.map! { |doc| query.document_class.from_hash(doc) }
+          docs.extend(query.document_class.const_get('CollectionMethods'))
         end
         Response.new(
           total: res.dig('response', 'numFound'),

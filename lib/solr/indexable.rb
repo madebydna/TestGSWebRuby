@@ -2,12 +2,12 @@
 
 module Solr
   module Indexable
-    def self.type
+    def self.document_type
       raise 'Not implemented'
     end
 
-    def type
-      self.class.type
+    def document_type
+      self.class.document_type
     end
 
     def write_field(field, value)
@@ -27,7 +27,7 @@ module Solr
     end
 
     def type_and_unique_key
-      "#{type} #{unique_key}"
+      "#{document_type} #{unique_key}"
     end
 
     def unique_key

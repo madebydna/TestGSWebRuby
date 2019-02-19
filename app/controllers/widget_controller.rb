@@ -189,7 +189,7 @@ class WidgetController < ApplicationController
       gradeRange: school.delete(:gradeLevels),
       street: school.dig(:address, :street1),
       zipcode: school.dig(:address, :zip),
-      schoolType: school_types_map[school[:schoolType].downcase].gs_capitalize_first,
+      schoolType: school_types_map[school[:schoolType].downcase]&.gs_capitalize_first,
       state: school[:state].downcase,
       gsRating: school.delete(:rating),
       preschool: school[:levelCode] == 'p',

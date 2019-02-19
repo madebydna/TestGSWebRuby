@@ -37,7 +37,7 @@ module Search
     end
 
     # Solr::Query
-    def document_type
+    def document_class
       Solr::SchoolDocument
     end
 
