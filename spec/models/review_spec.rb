@@ -564,4 +564,36 @@ describe Review do
       review.save
     end
   end
+
+  describe '#comment_snippet' do
+    let (:review) { FactoryGirl.create(:review) }
+    let (:comment) { nil }
+
+    subject { review.comment_snippet }
+
+    before { review.comment = comment }
+
+    context 'when review has no comment' do
+      it { is_expected.to be_empty }
+    end
+
+    context 'when review is less than 100 characters' do
+      let (:comment) { (['This is a review.'] * 5).join(' ') }
+      it { is_expected.to eq(comment) }
+    end
+
+    context 'when review is more than 100 characters' do
+      let (:comment) { (['This is a review.'] * 6).join(' ') }
+      it { is_expected.to satisfy('be truncated to 100 characters') { |s| s.length <= 100 } }
+
+      it { is_expected.to end_with('...') }
+    end
+
+    context 'when review has long words' do
+      let (:comment) { (['antidisestablishmentarianism'] * 10).join(' ') }
+      it { is_expected.to satisfy('be truncated to 100 characters') { |s| s.length <= 100 } }
+
+      it { is_expected.to end_with('antidisestablishmentarianism...') }
+    end
+  end
 end

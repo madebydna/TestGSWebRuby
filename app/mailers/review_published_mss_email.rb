@@ -5,12 +5,13 @@ class ReviewPublishedMssEmail < AbstractExactTargetMailer
   include UrlHelper
 
   EMAIL_BATCH_SIZE = 50
-  self.exact_target_email_key = 'TBD' #TODO
+  self.exact_target_email_key = '2019_new_review_notifier'
   self.priority = 'Low' # Valid options = Low | Medium | High
 
-  def initialize(school, review_snippet)
+  def initialize(school, review_snippet, user_type)
     @school = school
     @snippet = review_snippet
+    @user_type = user_type
   end
 
   def trigger_email
@@ -19,7 +20,8 @@ class ReviewPublishedMssEmail < AbstractExactTargetMailer
       ReviewPublishedMssEmail.deliver(emails,
                                       reviewUrl: school_url,
                                       schoolName: @school.name,
-                                      reviewSnippet: @snippet)
+                                      reviewSnippet: @snippet,
+                                      userType: @user_type)
     end
   end
 end

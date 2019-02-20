@@ -320,4 +320,9 @@ class Review < ActiveRecord::Base
     "group by school_id";
   end
 
+  def comment_snippet
+    return '' unless has_comment?
+    comment.truncate(100, separator: ' ')
+  end
+
 end

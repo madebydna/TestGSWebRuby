@@ -16,12 +16,12 @@ class ReviewLoading::Loader < ReviewLoading::Base
         if review_update.action == ACTION_BUILD_CACHE
           # do nothing
         elsif review_update.action == ACTION_TRIGGER_MSS
-          ReviewPublishedMssEmail.new(school, review_update.review_snippet).trigger_email
+          ReviewPublishedMssEmail.new(school, review_update.review_snippet, review_update.user_type).trigger_email
         end
       rescue Exception => e
         raise e.message
       ensure
-        unless census_update.action == ACTION_TRIGGER_MSS
+        unless review_update.action == ACTION_TRIGGER_MSS
           Cacher.create_caches_for_data_type(school, DATA_TYPE)
         end
       end

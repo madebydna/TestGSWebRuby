@@ -2,19 +2,22 @@ module UpdateQueueConcerns
   extend ActiveSupport::Concern
 
   def log_review_changed(review)
-    state_abbr = review.state_abbr
+    state_abbr = review.state
     school_id = review.school_id
     member_id = review.member_id
     blobs = []
 
-    if review.active? && review.overall? && review.has_comment?
-      comment = review.comment
+    if review.active? && review.overall? && review.comment_snippet.present?
+      snippet = review.comment_snippet
+      user_type = review.user_type
+      user_type = 'user' if user_type.nil? || user_type == 'unknown'
       blobs << {
           action: :trigger_mss,
           entity_type: :school,
           entity_id: school_id,
           entity_state: state_abbr,
-          review_snippet: comment
+          review_snippet: snippet,
+          user_type: user_type
       }
     end
 
