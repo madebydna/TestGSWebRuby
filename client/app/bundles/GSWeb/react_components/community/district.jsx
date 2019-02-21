@@ -47,6 +47,9 @@ class District extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      academicModuleActiveTab: 'Overview'
+    }
   }
 
   componentDidMount() {
@@ -114,6 +117,7 @@ class District extends React.Component {
 
   render() {
     let {title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback} = this.props.academics;
+    debugger
     return (
       <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}

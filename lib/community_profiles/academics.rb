@@ -91,6 +91,12 @@ module CommunityProfiles
       end
     end
 
+     def college_readiness
+      @_college_readiness ||= CommunityProfiles::CollegeReadiness.new(
+        school_cache_data_reader: @cache_data_reader
+      )
+    end
+
     def district_academics_props
       {
         title: I18n.t('.academics', scope: 'school_profiles.show'),
@@ -101,7 +107,7 @@ module CommunityProfiles
         icon_classes: I18n.t('.Race ethnicity icon', scope: 'school_profiles.equity'),
         sources: sources_html(academics_sources), #equity.race_ethnicity_sources
         share_content: nil,
-        data: data_props_for_district_academics_module,
+        data: data_props_for_district_academics_module + college_readiness.props,
         faq: faq_for_academics_module,
         no_data_summary: I18n.t('.Race ethnicity no data', scope: 'school_profiles.equity'),
         qualaroo_module_link: nil

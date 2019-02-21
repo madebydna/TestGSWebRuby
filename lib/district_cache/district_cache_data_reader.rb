@@ -19,7 +19,7 @@ class DistrictCacheDataReader
   end
 
   def characteristics_data(*keys)
-    decorated_district.characteristics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
+    decorated_district.district_characteristics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
       array_of_hashes = array_of_hashes.select {|h| h.has_key?('source')}
       hash[k] = array_of_hashes if array_of_hashes.present?
     end
@@ -99,9 +99,9 @@ class DistrictCacheDataReader
     end
   end
 
-  def college_readiness
-    decorated_district.college_readiness_hash
-  end
+  # def college_readiness
+  #   decorated_district.college_readiness_hash
+  # end
 
   def consistify_breakdowns
     lambda do |h|
@@ -203,14 +203,6 @@ class DistrictCacheDataReader
     query_results = district_cache_query.query
     district_cache_results = DistrictCacheResults.new(DISTRICT_CACHE_KEYS, query_results)
     district_cache_results.decorate_district(district)
-  end
-
-  def college_readiness_rating
-    decorated_district.college_readiness_rating
-  end
-
-  def college_readiness_rating_hash
-    decorated_district.college_readiness_rating_hash
   end
 
   private
