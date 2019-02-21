@@ -11,39 +11,9 @@
   -webkit-appearance: none;
 }
 
-// .search-term-reset-button {
-//   position: absolute;
-//   right: 0;
-//   top: 0;
-//   font-family: 'opensans-regular';
-//   font-size: 25px;
-//   color: #777;
-//   display: inline-block;
-//   line-height: 42px;
-//   padding: 0 15px;
-//   &:hover {
-//     cursor: pointer;
-//   }
-// }
-
 .search-term-reset-button {
   position: absolute;
   right: 0px;
-  top: 0;
-  font-family: 'opensans-regular';
-  font-size: 25px;
-  color: #777;
-  display: inline-block;
-  line-height: 42px;
-  padding: 0 15px;
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.search-term-reset-button-home {
-  position: absolute;
-  right: 0;
   top: 0;
   font-family: 'opensans-regular';
   font-size: 25px;
