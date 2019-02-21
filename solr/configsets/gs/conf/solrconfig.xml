@@ -1093,6 +1093,7 @@
   <!-- ping/healthcheck -->
   <requestHandler name="/admin/ping" class="PingRequestHandler">
     <lst name="defaults">
+      <str name="df">id</str>
       <str name="qt">standard</str>
       <str name="q">solrpingquery</str>
       <str name="echoParams">all</str>

@@ -11,5 +11,9 @@ module Solr
     def self.connect(url)
       RSolr.connect(url: url)
     end
+
+    def self.ro_up?
+      ro.get('admin/ping')&.response&.fetch(:status) == 200
+    end
   end
 end

@@ -49,12 +49,12 @@ class StatusPage
   end
 
   def solr_status
-    solr_status = false
+    solr_up = false
     begin
-      solr_status = (Solr::Solr.new.ping.response[:status] == 200)
+      solr_up = Solr::Client.ro_up?
     rescue Exception => e
       Rails.logger.error(e.message)
     end
-    solr_status
+    solr_up
   end
 end
