@@ -64,7 +64,7 @@ class Review < ActiveRecord::Base
   after_save :auto_moderate, unless: '@moderated == true'
   after_save :send_thank_you_email_if_published
   after_save do
-    log_review_changed(state, school_id, member_id)
+    log_review_changed(self)
   end
 
   def should_run_unique_active_reviews?
@@ -318,6 +318,11 @@ class Review < ActiveRecord::Base
     "and r.active=1 and r.review_question_id=1 " +
     "and answer_value between 1 and 5 "+
     "group by school_id";
+  end
+
+  def comment_snippet
+    return '' unless has_comment?
+    comment.truncate(100, separator: ' ')
   end
 
 end

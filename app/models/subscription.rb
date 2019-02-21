@@ -60,4 +60,8 @@ class Subscription < ActiveRecord::Base
     end
   end
 
+  def self.mss_subscribers_for_school(school)
+    User.where(id: Subscription.where(state: school.state, school_id: school.id, list: 'mystat')
+                       .pluck(:member_id).uniq)
+  end
 end
