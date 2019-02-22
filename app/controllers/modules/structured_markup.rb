@@ -51,7 +51,7 @@ module StructuredMarkup
     end
 
     def default_json_ld_data
-      [StructuredMarkup.organization_hash]
+      []
     end
   end
 
