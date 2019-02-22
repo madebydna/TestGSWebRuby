@@ -2,6 +2,9 @@ import {
   signupAndGetNewsletter,
   signUpForGreatNewsAndMss
 } from '../util/newsletters';
+import * as validatingInputs from 'components/validating_inputs';
+import { attachJQueryEventHandlers as attachMultiSelectButtonGroupEventHandlers } from 'util/multi_select_button_group';
+
 import { translateWithDictionary } from 'util/i18n';
 
 const newsletterLinkSelector = '.js-send-me-updates-button-footer';
@@ -14,6 +17,11 @@ const t = translateWithDictionary({
 });
 
 export function setupNewsletterLink() {
+  $(() => {
+    validatingInputs.addFilteringEventListener('body');
+    attachMultiSelectButtonGroupEventHandlers();
+  })
+
   $(newsletterLinkSelector).on('click', () => {
     let stateAbbreviation;
     let schoolId;

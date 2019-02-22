@@ -226,12 +226,86 @@ body {
       }
     }
 
+    .csa-badge-sm {
+      width: 25px;
+    }
+
+    .csa-badge-md {
+      width: 36px;
+    }
+
+    .csa-winner-popover-container {
+      position: relative;
+      display: inline-block;
+      margin: 5px 0;
+    }
+
+    .csa-winner {
+      color: #647981;
+    }
+
+    .csa-winner-header {
+      margin: 0 8px;
+    }
+
+    .csa-winner-popover {
+      display: none;
+      position: absolute;
+      left: 10px;
+      background-color: #FFFFFF;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.4);
+      border: 1px solid rgba(0,0,0,0.3);
+      width: 235px;
+      z-index: 4;
+    }
+
+    .csa-winner-popover:before, .csa-winner-popover:after {
+      position: absolute;
+      display: block;
+      height: 0;
+      width: 0;
+      content: "";
+      left: 30px;
+    }
+
+    .csa-winner-popover:before {
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 6px solid rgba(0,0,0,0.3);
+      margin-left: -5px;
+      top: -6px;
+      z-index: 4;
+    }
+
+    .csa-winner-popover:after {
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 5px solid #FFFFFF;
+      margin-left: -3px;
+      top: -5px;
+      z-index: 5;
+    }
+
+    .csa-winner-popover-container:hover {
+      .csa-winner-popover {
+        display: block;
+      }
+    }
+
+    .csa-winner-popover-content {
+      display: flex;
+      margin: 20px 15px;
+    }
+
+    .csa-winner-popover-text {
+      padding-left: 10px;
+    }
+
     .school-list ol {
       padding: 0 10px 0 0;
       @include media-breakpoint-only(xs) {
         padding: 0;
       }
-
     }
 
     .menu-bar.filters {
@@ -506,6 +580,8 @@ body {
       text-align: left;
       background-color: #f1fafd;
       text-align: center;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
     th.school {
       width: 320px;

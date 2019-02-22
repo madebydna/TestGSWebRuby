@@ -198,7 +198,8 @@ class DataValue < ActiveRecord::Base
 
   # test scores gsdata - state
   def self.find_by_state_and_data_type_tags_and_proficiency_is_one(state, data_type_tags, configuration= default_configuration)
-    loads = Load.data_type_tags_to_loads(data_type_tags, configuration)
+    subset_load_ids = state_and_school_load_ids.state_and_data_types_no_load(state).pluck(:load_id)
+    loads = data_type_tags_to_loads(data_type_tags, configuration, subset_load_ids)
     dvs = state_and_district_values.
       from(DataValue.state_and_data_type_tags_and_proficiency_is_one(state, load_ids(loads)), :data_values)
         .with_breakdowns
@@ -229,7 +230,8 @@ class DataValue < ActiveRecord::Base
 
   # test scores gsdata - district
   def self.find_by_district_and_data_type_tags_and_proficiency_is_one(state, district_id, data_type_tags, configuration= default_configuration)
-    loads = Load.data_type_tags_to_loads(data_type_tags, configuration)
+    subset_load_ids = state_and_school_load_ids.state_and_district_no_load(state, district_id).pluck(:load_id)
+    loads = data_type_tags_to_loads(data_type_tags, configuration, subset_load_ids)
     dvs = state_and_district_values.
       from(
         DataValue.state_and_district_and_data_types_and_proficiency_is_one(
@@ -316,6 +318,26 @@ class DataValue < ActiveRecord::Base
       AND active = 1
     SQL
     where(school_subquery_sql, state, school_id)
+  end
+
+  def self.state_and_data_types_no_load(state)
+    school_subquery_sql = <<-SQL
+      state = ?
+      AND district_id IS NULL
+      AND school_id IS NULL
+      AND active = 1
+    SQL
+    where(school_subquery_sql, state)
+  end
+
+  def self.state_and_district_no_load(state, district_id)
+    school_subquery_sql = <<-SQL
+      state = ?
+      AND district_id = ?
+      AND school_id IS NULL
+      AND active = 1
+    SQL
+    where(school_subquery_sql, state, district_id)
   end
 
   def self.school_and_data_types_and_proficiency(state, school_id, load_ids)
@@ -538,9 +560,6 @@ class DataValue < ActiveRecord::Base
     # config = configuration.is_a?(Array) ? configuration.join(',') : configuration
     dtis = data_type_ids.join(',')
     sli = subset_load_ids.join(',')
-    # hash_key = dtis + config + sli
-    # @_data_type_ids_to_loads ||= {}
-    # @_data_type_ids_to_loads[hash_key] ||= begin
       find_by_sql("select loads.id,
         loads.data_type_id,
         loads.configuration,
@@ -557,16 +576,39 @@ class DataValue < ActiveRecord::Base
     # end
   end
 
+  def self.data_type_tags_to_loads(data_type_tags, configuration, subset_load_ids )
+    dtts = data_type_tags.is_a?(Array) ? data_type_tags.join(',') : data_type_tags
+    sli = subset_load_ids.join(',')
+    find_by_sql("select loads.id,
+        loads.data_type_id,
+        loads.configuration,
+        loads.date_valid,
+        loads.description,
+        (sources_new.name) as 'source_name',
+        (data_types.name) as 'data_type_name',
+        (data_types.short_name) as 'data_type_short_name'
+        from loads
+        JOIN data_types on data_type_id = data_types.id
+        JOIN data_type_tags on data_type_tags.data_type_id = data_types.id
+        JOIN sources_new on sources_new.id = loads.source_id
+        where data_type_tags.tag in ('#{dtts}')
+        and loads.id in (#{sli})
+        #{with_configuration_new(configuration)}");
+    # end
+  end
+
   def self.with_configuration_new(config)
-    q = "loads.configuration like '%#{config}%'"
+    return '' if config == 'all'
+    q = "and loads.configuration like '%#{config}%'"
     if config.is_a?(Array)
-      q =''
+      q ='and ('
       config.each_with_index  do | c, i |
         if i > 0
           q += ' or '
         end
         q += "loads.configuration like '%#{c}%'"
       end
+      q += ')'
     end
     q
   end

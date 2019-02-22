@@ -15,7 +15,6 @@ import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
 import {schools, academics, ACADEMICS, calendar, CALENDAR, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
-import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
 import { analyticsEvent } from "util/page_analytics";
 import Zillow from "./zillow";

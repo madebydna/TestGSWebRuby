@@ -1,6 +1,6 @@
 class ReviewLoading::Update
 
-  attr_accessor :data_type, :entity_id, :entity_state, :state, :update_blob, :value, :member_id, :source, :action
+  attr_accessor :data_type, :entity_id, :entity_state, :state, :update_blob, :value, :member_id, :source, :action, :review_snippet, :user_type
 
   def initialize(data_type, update_blob)
     @data_type = data_type

@@ -308,7 +308,7 @@ export default class ReviewForm extends React.Component {
 
   handleReviewJoinModalFailure(error = 'Something went wrong logging you in') {
     if(error == 'closed') {
-      error = 'You\'re review won\'t be saved until you click the submit button and log in.';
+      error = 'Your review won\'t be saved until you click the submit button and log in.';
     }
     this.setState({
       disabled: false,

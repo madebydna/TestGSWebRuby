@@ -1,10 +1,7 @@
 import ReactOnRails from "react-on-rails";
 import District from "./react_components/community/district";
 import City from "./react_components/community/city";
-import * as tooltips from "./util/tooltip";
-import * as remodal from "./util/remodal";
-import "./vendor/tipso";
-import { init as initHeader } from "./header";
+import commonPageInit from './common';
 
 ReactOnRails.register({
   District,
@@ -12,10 +9,7 @@ ReactOnRails.register({
 });
 
 $(() => {
-  initHeader();
-  ReactOnRails.reactOnRailsPageLoaded();
-  tooltips.initialize();
-  remodal.init();
+  commonPageInit();
   $('body').on('click', '.js-test-score-details', function () {
     var grades = $(this).closest('.bar-graph-display').parent().find('.grades');
     if(grades.css('display') == 'none') {

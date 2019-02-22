@@ -3,7 +3,16 @@ require 'savon'
 class ExactTarget
   cattr_accessor :last_delivery_args
 
+  # Sample observer
+  # class SavonObserver
+  #   def notify(operation_name, builder, globals, locals)
+  #     puts builder.to_s # Dump raw XML of SOAP request
+  #     nil
+  #   end
+  # end
+
   def initialize
+    # Savon.observers << SavonObserver.new
     @client = Savon.client(
       wsdl: ENV_GLOBAL['exacttarget_wsdl'],
       ssl_verify_mode: :none,
@@ -33,6 +42,7 @@ class ExactTarget
   end
 
   def send_triggered_email(key, recipient, attributes = {}, from = nil, priority = 'Medium')
+    recipients = Array.wrap(recipient)
     if Rails.env.test?
       capture_delivery(
         key: key,
@@ -42,28 +52,54 @@ class ExactTarget
         priority: priority
       )
     else
-      soap_body = build_soap_body(key, recipient, attributes, from, priority)
+      final_recipients = is_live_server? ? recipients : recipients.select(&method(:internal_recipient?))
+      if final_recipients.size < recipients.size
+        Rails.logger.debug("Suppressing delivery to #{recipients.size - final_recipients.size} recipient(s) because I am not running on www")
+      end
+      soap_body = build_soap_body(key, final_recipients, attributes, from, priority)
       send_request(:create, soap_body)
     end
   end
 
   private
 
-  def build_soap_body(key, recipient, attributes = {}, from = nil, priority = 'Medium')
+  def is_live_server?
+    ENV_GLOBAL['app_host'] =~ /www\.greatschools\.org/
+  end
+
+  def internal_recipient?(recipient)
+    recipient =~ /@greatschools\.(org|net)/
+  end
+
+  def build_soap_body(key, recipients, attributes = {}, from = nil, priority = 'Medium')
     # convert rest to wsdl:Attributes Name fields
-    wsdl_attr = []
-    # Special case verification links to wrap them in a CDATA block. Recommendation by ExactTarget support
-    # The ! after the element name instructs Savon not to escape the value
-    attributes.each do |k,v|
+    wsdl_attr = attributes.map do |k,v|
+      # Special case verification links to wrap them in a CDATA block. Recommendation by ExactTarget support
+      # The ! after the element name instructs Savon not to escape the value
       if k == :VERIFICATION_LINK
-        wsdl_attr << {'Name' => k, 'Value!' => "<![CDATA[#{v}]]>"}
+        {'Name' => k, 'Value!' => "<![CDATA[#{v}]]>"}
       else
-        wsdl_attr << {'Name' => k, 'Value' => v}
+        {'Name' => k, 'Value' => v}
+      end
+    end
+
+    subscriber_hash_array = Array.wrap(recipients).map do |email|
+      {
+          email_address: email,
+          subscriber_key: email,
+          attributes: wsdl_attr
+      }.tap do |h|
+        if from.present?
+          h[:owner] = {
+              from_address: from[:address],
+              from_name: from[:name]
+          }
+        end
       end
     end
 
     # create JSON-like hashes that hold values
-    soap_body = {
+    {
       options: {
         queue_priority: priority,
         request_type: 'Asynchronous'
@@ -73,21 +109,9 @@ class ExactTarget
         triggered_send_definition: {
           customer_key: key
         },
-        subscribers: {
-          email_address: recipient,
-          subscriber_key: recipient,
-          attributes: wsdl_attr
-        },
+        subscribers: subscriber_hash_array,
       }
     }
-
-    if from.present?
-      soap_body[:objects][:subscribers][:owner] = {
-        from_address: from[:address],
-        from_name: from[:name]
-      }
-    end
-    soap_body
   end
 
   def send_request(type, body)

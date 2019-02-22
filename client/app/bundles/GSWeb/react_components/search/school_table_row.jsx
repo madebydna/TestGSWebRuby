@@ -8,6 +8,8 @@ import FiveStarRating from '../review/form/five_star_rating';
 import RatingWithTooltip from 'react_components/rating_with_tooltip';
 import ModalTooltip from "../modal_tooltip";
 import SavedSchoolContext from './saved_school_context';
+import csaBadgeSm from 'search/csa-award-sm.png';
+import csaBadgeMd from 'search/csa-award-md.png';
 
 const renderEnrollment = enrollment => {
   if (enrollment) {
@@ -49,6 +51,38 @@ const fiveStars = numFilled => (
   <FiveStarRating questionId={1} value={numFilled} onClick={() => {}} />
 );
 
+const renderCsaBadgePopover = (years, links) => {
+  let csaYears = years.join(", ");
+
+  return (
+    <div className="csa-winner-popover-container">
+      <div className="csa-winner">
+        <img 
+          src={csaBadgeSm} 
+          className="csa-badge-sm"
+          alt="csa-badge-icon"
+        /> 
+        <span className="csa-winner-header">{t('award_winner')}</span>
+        <span className="info-circle icon-info"></span>
+      </div>
+
+      <div className="csa-winner-popover">
+        <div className="csa-winner-popover-content">
+          <img 
+            src={csaBadgeMd} 
+            className="csa-badge-md"
+            alt="csa-badge-icon"
+          />
+          <div className="csa-winner-popover-text">
+            <a href={links.collegeSuccess} target="_blank">College Success Award</a>
+            <div>{csaYears}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const SchoolTableRow = ({
   id,
   state,
@@ -71,6 +105,7 @@ const SchoolTableRow = ({
   subratings,
   ethnicityInfo,
   savedSchool,
+  csaAwardYears
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   let addressPhrase = [address.street1, address.city, state, address.zip]
@@ -91,6 +126,7 @@ const SchoolTableRow = ({
               {name}
             </a>
             <br/>
+              {csaAwardYears.length > 0 && renderCsaBadgePopover(csaAwardYears, links)}
               {addressPhrase && <div className="address">{addressPhrase}</div>}
               {homesForSaleHref && (
                   <div className="homes-for-sale">

@@ -2,6 +2,17 @@ require 'net/http'
 require 'open-uri'
 require 'json'
 
+# district_tandem_results | CREATE TABLE `district_tandem_results` (
+#   `id` int(11) NOT NULL AUTO_INCREMENT,
+#   `state` varchar(20) DEFAULT NULL,
+#   `district_id` int(11) DEFAULT NULL,
+#   `district_name` varchar(250) DEFAULT NULL,
+#   `nces` varchar(30) DEFAULT NULL,
+#   `results` mediumtext,
+#   `status` varchar(40) DEFAULT NULL,
+#   PRIMARY KEY (`id`)
+# ) ENGINE=InnoDB AUTO_INCREMENT=19610 DEFAULT CHARSET=utf8mb4
+
 BASE_URL = 'https://api.tandem.co/rest/index.php'
 
 State.all.each do |state|
