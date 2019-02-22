@@ -106,7 +106,7 @@ $(function() {
     'Teachers_staff': '#TeachersStaff',
     'Reviews': '#Reviews',
     'Neighborhood': '#Neighborhood',
-    'Academic_progress': '#AcademicProgress .rating-container__rating',
+    'Academic_progress': '#AcademicProgress',
     'Equity_overview': '#EquityOverview'
   });
   generateEthnicityChart(gon.ethnicity);

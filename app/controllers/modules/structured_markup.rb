@@ -235,7 +235,11 @@ module StructuredMarkup
         levels_description = levels_str.length > 2 ? "grades #{levels_str}" : "grade #{levels_str}"
         snippet << " that serves #{levels_description}"
       end
-      snippet << ". It has received a GreatSchools rating of #{gs_rating} out of 10 based on academic quality." unless gs_rating.nil?
+      if gs_rating.present?
+        snippet << ". It has received a GreatSchools rating of #{gs_rating} out of 10 based on academic quality."
+      else
+        snippet << ". This school does not qualify for a GreatSchools rating because there is not sufficient academic data to generate one."
+      end
     end
     snippet.presence
   end

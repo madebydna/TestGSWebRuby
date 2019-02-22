@@ -94,6 +94,7 @@
 
   .school-info {
     padding: 15px 0 10px 0;
+    position:relative;
   }
 
   .school-info__item:first-of-type {
@@ -164,6 +165,9 @@
     border-left: 1px solid rgba(255, 255, 255, .17);
     @include media-breakpoint-down(xs)  {
       padding: 0 10px;
+    }
+    @include media-breakpoint-up(lg)  {
+      padding: 0 31px;
     }
     font-size: $font-size-l4;
     font-family: 'opensans-semibold';

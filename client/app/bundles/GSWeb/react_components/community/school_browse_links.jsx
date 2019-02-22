@@ -32,22 +32,22 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
   const browseLinkData = [
     {
       name: `${t("Preschools")}`,
-      queryParams: [{key: "gradeLevels", val: "p"}], 
+      queryParams: [{ key: "gradeLevels%5B%5D", val: "p"}], 
       schoolNumber: schoolLevels.preschool,
     },
     {
       name: `${t("Elementary schools")}`, 
-      queryParams: [{key: "gradeLevels", val: "e"}], 
+      queryParams: [{ key: "gradeLevels%5B%5D", val: "e"}], 
       schoolNumber: schoolLevels.elementary,
     },
     {
       name: `${t("Middle schools")}`,
-      queryParams: [{key: "gradeLevels", val: "m"}],
+      queryParams: [{ key: "gradeLevels%5B%5D", val: "m"}],
       schoolNumber: schoolLevels.middle,
     },
     {
       name: `${t("High schools")}`,
-      queryParams: [{key: "gradeLevels", val: "h"}],
+      queryParams: [{ key: "gradeLevels%5B%5D", val: "h"}],
       schoolNumber: schoolLevels.high,
     },
     {

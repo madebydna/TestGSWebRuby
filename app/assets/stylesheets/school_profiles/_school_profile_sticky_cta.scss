@@ -94,9 +94,13 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
 #hero {
 
   .blue-background-hero {
+    position: absolute;
+    right: 0;
+    bottom: 15px;
     border-top: solid 1px $cta_button_border;
     border-bottom: solid 1px $cta_button_border;
     border-right: solid 1px $cta_button_border;
+
     @include media-breakpoint-down(md) {
       display: none;
     }

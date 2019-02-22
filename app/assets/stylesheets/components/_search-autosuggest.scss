@@ -28,7 +28,7 @@
     }
   }
 
-  div:first-child{
+  .search-input-box{
     //to set up container for absolute position of the search term reset button
     position: relative;
   }
@@ -122,12 +122,16 @@
     @media (max-width: 320px){
       width: 110%;
     }
+    @media (max-width: 548px){
+      .search-results-list{
+        width: 130%;
+      }
+    }
     input{
       border: 1px solid #b8b8b8;
       font-size: 16px;
     }
     .search_bar_button{
-      flex-grow: 1;
       button{
         width: 100%;
         padding: 8px 12px;
@@ -135,7 +139,6 @@
       }
       &:last-child {
         margin-left: 5px;
-        flex-grow: 1;
         button{
           background-color: #999;
           width: 100%;
