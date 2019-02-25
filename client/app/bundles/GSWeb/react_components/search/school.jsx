@@ -10,11 +10,45 @@ import {
 } from 'util/school';
 import { get as getCookie, set as setCookie } from 'js-cookie';
 import { COOKIE_NAME } from './search_context';
+import csaBadgeSm from 'search/csa-award-sm.png';
+import csaBadgeMd from 'search/csa-award-md.png';
 
 const joinWithSeparator = (arrayOfElements, separator) =>
   arrayOfElements
     .filter(e => !!e)
     .reduce((list, current) => [list, separator, current]);
+
+const renderCsaBadgePopover = (years, links) => {
+  let csaYears = years.join(", ");
+
+  return (
+    <div className="csa-winner-popover-container">
+      <div className="csa-winner">
+        <img 
+          src={csaBadgeSm} 
+          className="csa-badge-sm"
+          alt="csa-badge-icon"
+        /> 
+        <span className="csa-winner-header">{t('award_winner')}</span>
+        <span className="info-circle icon-info"></span>
+      </div>
+
+      <div className="csa-winner-popover">
+        <div className="csa-winner-popover-content">
+          <img 
+            src={csaBadgeMd} 
+            className="csa-badge-md"
+            alt="csa-badge-icon"
+          />
+          <div className="csa-winner-popover-text">
+            <a href={links.collegeSuccess} target="_blank">College Success Award</a>
+            <div>{csaYears}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const School = ({
   id,
@@ -32,7 +66,8 @@ const School = ({
   assigned,
   links,
   saveSchoolCallback,
-  savedSchool
+  savedSchool,
+  csaAwardYears
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   let addressPhrase = [address.street1, address.city, state, address.zip]
@@ -57,6 +92,7 @@ const School = ({
           {name}
         </a>
         <br />
+        {csaAwardYears.length > 0 && renderCsaBadgePopover(csaAwardYears, links)}
         {addressPhrase && <div className="address">{addressPhrase}</div>}
         <div>
           {joinWithSeparator(
