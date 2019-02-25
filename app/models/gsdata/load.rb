@@ -48,15 +48,16 @@ class Load < ActiveRecord::Base
 
   def self.with_configuration_new(config)
     return '' if config == 'all'
-    q = "and loads.configuration like '%#{config}%'"
+    q = " and loads.configuration like '%#{config}%'"
     if config.is_a?(Array)
-      q ='and '
+      q =' and ('
       config.each_with_index  do | c, i |
         if i > 0
           q += ' or '
         end
         q += "loads.configuration like '%#{c}%'"
       end
+      q += ')'
     end
     q
   end
@@ -93,7 +94,7 @@ class Load < ActiveRecord::Base
         from loads, sources_new, data_types
         where loads.data_type_id = data_types.id and loads.source_id = sources_new.id
         and loads.data_type_id in (#{dtis})
-        and (#{with_configuration_new(configuration)})")
+        #{with_configuration_new(configuration)}")
       end
   end
 
