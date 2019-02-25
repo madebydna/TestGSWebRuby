@@ -19,7 +19,6 @@ module SchoolProfiles
       @low_income_test_scores = ::Components::ComponentGroups::LowIncomeTestScoresComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @low_income_graduation_rate = ::Components::ComponentGroups::LowIncomeGraduationRateComponentGroup.new(cache_data_reader: school_cache_data_reader)
 
-
       @students_with_disabilities_test_scores_component_group = ::Components::ComponentGroups::StudentsWithDisabilitiesTestScoresComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @students_with_disabilities_discipline_and_attendance_group= ::Components::ComponentGroups::StudentsWithDisabilitiesDisciplineAndAttendanceComponentGroup.new(cache_data_reader: school_cache_data_reader)
 

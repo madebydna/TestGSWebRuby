@@ -198,6 +198,24 @@ module CommunityProfiles
       @_props ||= components.map {|component| get_props(component)}.reject(&:empty?)
     end
 
+    def ethnicities_to_percentages
+      SchoolProfiles::EthnicityPercentages.new(
+        cache_data_reader: @school_cache_data_reader
+      ).ethnicities_to_percentages
+    end
+
+        # TODO: refactor / test
+    def value_to_s(value, precision=0)
+      return nil if value.nil?
+      return value.scan(/\d+/) if value.instance_of?(String) && value.present?
+      num = value.to_f.round(precision)
+      if precision.zero? && num < 1
+        '<1'
+      else
+        num.to_s
+      end
+    end
+
     private
 
     def with_school_values

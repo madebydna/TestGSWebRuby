@@ -143,11 +143,12 @@ export default class DataModule extends React.Component {
       if (values.length > 0) {
         let display_type = type || 'bar';
         let component = [];
+        debugger
         if (display_type == 'plain') {
           component = <PlainNumber values={values}/>
         } else if (display_type == 'person') {
           component = <div>
-            {values.map((value, index) =>
+            {values.map((value, index) => console.log({...value}) || 
               <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                 <PersonBar {...value} />
               </BasicDataModuleRow>)

@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Breadcrumbs from "react_components/breadcrumbs";
-import DataModule from "react_components/data_module";
+import Academics from './academics';
 import DistrictLayout from "./district_layout";
 import SearchBox from "react_components/search_box";
 import TopSchoolsStateful from "./top_schools_stateful";
@@ -17,12 +17,9 @@ import {schools, academics, ACADEMICS, calendar, CALENDAR, communityResources, n
 import withViewportSize from "react_components/with_viewport_size";
 import "../../vendor/remodal";
 import { find as findSchools } from "api_clients/schools";
-import { analyticsEvent } from "util/page_analytics";
 import Zillow from "./zillow";
-import { t } from '../../util/i18n';
-import InfoBox from 'react_components/school_profiles/info_box';
 import remove from 'util/array';
-
+import { t } from '../../util/i18n';
 class District extends React.Component {
   static defaultProps = {
     schools_data: {},
@@ -116,8 +113,6 @@ class District extends React.Component {
   }
 
   render() {
-    let {title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback} = this.props.academics;
-    debugger
     return (
       <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
@@ -148,32 +143,33 @@ class District extends React.Component {
           />
         }
         academics={
-          <DataModule
-            title={title}
-            anchor={anchor}
-            subtitle={subtitle}
-            info_text={info_text}
-            icon_classes={icon_classes}
-            sources={sources}
-            share_content={share_content}
-            rating={rating}
-            data={data}
-            analytics_id={analytics_id}
-            showTabs={showTabs}
-            faq={faq}
-            feedback={feedback}
-            suppressIfEmpty={true}
-            footer={
-              <div data-ga-click-label={title}>
-                <InfoBox content={sources} element_type="sources">{ t('See notes') }</InfoBox>
-                <div className="module_feedback">
-                  <a href={`https://s.qualaroo.com/45194/a8cbf43f-a102-48f9-b4c8-4e032b2563ec?state=${this.props.locality.stateShort}&districtId=${this.props.locality.district_id}`} className="anchor-button" target="_blank" rel="nofollow">
-                    {t('search_help.send_feedback')}
-                  </a>
-                </div>
-              </div>
-            }
-          />
+          <Academics academics={this.props.academics} locality={this.props.locality} />
+          // <DataModule
+          //   title={title}
+          //   anchor={anchor}
+          //   subtitle={subtitle}
+          //   info_text={info_text}
+          //   icon_classes={icon_classes}
+          //   sources={sources}
+          //   share_content={share_content}
+          //   rating={rating}
+          //   data={data}
+          //   analytics_id={analytics_id}
+          //   showTabs={showTabs}
+          //   faq={faq}
+          //   feedback={feedback}
+          //   suppressIfEmpty={true}
+          //   footer={
+          //     <div data-ga-click-label={title}>
+          //       <InfoBox content={sources} element_type="sources">{ t('See notes') }</InfoBox>
+          //       <div className="module_feedback">
+          //         <a href={`https://s.qualaroo.com/45194/a8cbf43f-a102-48f9-b4c8-4e032b2563ec?state=${this.props.locality.stateShort}&districtId=${this.props.locality.district_id}`} className="anchor-button" target="_blank" rel="nofollow">
+          //           {t('search_help.send_feedback')}
+          //         </a>
+          //       </div>
+          //     </div>
+          //   }
+          // />
         }
         calendar={
           <Calendar 

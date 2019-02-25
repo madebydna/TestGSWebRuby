@@ -108,6 +108,7 @@ module CommunityProfiles
         sources: sources_html(academics_sources), #equity.race_ethnicity_sources
         share_content: nil,
         data: data_props_for_district_academics_module + college_readiness.props,
+        # data: college_readiness.props,
         faq: faq_for_academics_module,
         no_data_summary: I18n.t('.Race ethnicity no data', scope: 'school_profiles.equity'),
         qualaroo_module_link: nil

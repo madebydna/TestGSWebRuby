@@ -169,6 +169,7 @@ module CommunityProfiles
           item.data_type = data_type
           item.year = hash['year'] || ((hash['source_date_valid'] || '')[0..3]).presence || hash['source_year']
           item.subgroup = hash['breakdown']
+          item.subgroup_percentage = breakdown_percentage(hash) if breakdown_percentage(hash)
           if data_type == SAT_SCORE
             item.info_text = data_label_info_text(sat_score_info_text_key(state, item.year))
             item.range = sat_score_range(state, item.year)
@@ -187,8 +188,8 @@ module CommunityProfiles
       end.compact
     end
 
-    def data_value_hash
-      @_data_value_hash ||= data_values.map do |score_item|
+    def data_value_hash_overview
+      @_data_value_hash_overview ||= data_values.map do |score_item|
         {label: score_item.score.format.to_s.chomp('%'),
          score: score_item.score.value.to_i,
          breakdown: score_item.label,
@@ -204,15 +205,44 @@ module CommunityProfiles
       end
     end
 
+    def data_value_hash
+      @_data_value_hash ||= data_values.map do |score_item|
+        {label: score_item.score.format.to_s.chomp('%'),
+         score: score_item.score.value.to_i,
+         breakdown: score_item.subgroup,
+         percentage: score_item.subgroup_percentage,
+         display_percentages: score_item.subgroup_percentage,
+         data_type: score_item.data_type,
+         subgroup: score_item.subgroup,
+         state_average: score_item.state_average.value.present? ? score_item.state_average.value.to_i : nil,
+         state_average_label: score_item.state_average.value.present? ? score_item.state_average.value.to_f.round.to_s : nil,
+         display_type: score_item.visualization,
+         lower_range: (score_item.range.first if score_item.range),
+         upper_range: (score_item.range.last if score_item.range),
+        }
+      end
+    end
+
     def college_data_array
-      overview_data = data_value_hash.select {|dv| (dv[:data_type] == FOUR_YEAR_GRADE_RATE && dv[:subgroup] == 'All students') || data_types_in_the_overview.include?(dv[:data_type])}
-      uc_csu_data = data_value_hash.select {|dv| dv[:data_type] == UC_CSU_ENTRANCE }
-      graduation_data = data_value_hash.select {|dv| dv[:data_type] == FOUR_YEAR_GRADE_RATE }
+      overview_data = data_value_hash_overview.select {|dv| (dv[:data_type] == FOUR_YEAR_GRADE_RATE && dv[:subgroup] == 'All students') || data_types_in_the_overview.include?(dv[:data_type])}
+      uc_csu_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == UC_CSU_ENTRANCE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
+      graduation_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == FOUR_YEAR_GRADE_RATE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
+                                   
       @_college_data_array ||= [
-        { narration: "N/A", title: 'Overview', values: overview_data},
-        { narration: "N/A", title: 'UC/CSU eligibility', values: uc_csu_data},
-        { narration: "N/A", title: 'Graduation Rates', values: graduation_data}
+        { narration: "Learn about how to help your child graduate ready for college.", title: 'Overview', values: overview_data,  anchor: 'College readiness'},
+        { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: 'UC/CSU eligibility', values: uc_csu_data, anchor: 'UC/CSU eligibility' },
+        { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: 'Graduation Rates', values: graduation_data, anchor: 'Graduation rates'}
       ]
+    end
+
+    def sort_with_all_students_first(student_hash)
+      student_hash.sort_by! {|h| h[:subgroup]}
+      index = student_hash.index {|h| h[:subgroup] == 'All students'}
+      if index
+        all_student = student_hash.delete_at(index)
+        student_hash.unshift(all_student)
+      end
+      student_hash
     end
 
     def csa_badge?
@@ -291,6 +321,10 @@ module CommunityProfiles
 
     def with_school_values
       ->(h) {h['school_value'].present?}
+    end
+
+    def breakdown_percentage(dv)
+      value_to_s(ethnicities_to_percentages[dv.breakdown])
     end
   end
 end
