@@ -69,7 +69,7 @@ $border-color: #dbe6eb;
     .print-only-page-break {
       display: block;
       height: 10px;
-      page-break-after: always !important;
+      page-break-after: always;
       width: 100%;
       clear: both;
     }
