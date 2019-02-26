@@ -227,6 +227,13 @@ module CachedRatingsMethods
     rating_year_for_key('College Readiness Rating')
   end
 
+  def csa_award_winner_years
+    return [] unless ratings_by_type['CSA Badge'].present?
+
+    ratings_by_type['CSA Badge']
+      .map { |award| award[:source_year] }
+  end
+
   def low_income_rating_hash
     rating_object_for_key('Test Score Rating', 'Economically disadvantaged')
   end

@@ -42,7 +42,8 @@ class DataValue < ActiveRecord::Base
   # ratings
 # rubocop:disable Style/FormatStringToken
   def self.find_by_school_and_data_types_with_academics(school, data_types, configuration= default_configuration)
-    subset_load_ids = state_and_school_load_ids.school_and_data_types_no_load(school.state, school.id).pluck(:load_id)
+    # require 'pry';binding.pry
+    subset_load_ids = state_and_school_load_ids.school_and_data_types_no_load(school.state, school.id).pluck(:load_id).uniq
     a = []
     if subset_load_ids.present?
       loads = data_type_ids_to_loads(data_types, configuration, subset_load_ids )
@@ -558,6 +559,7 @@ class DataValue < ActiveRecord::Base
 
   def self.data_type_ids_to_loads(data_type_ids, configuration, subset_load_ids )
     # config = configuration.is_a?(Array) ? configuration.join(',') : configuration
+    # require 'pry'; binding.pry
     dtis = data_type_ids.join(',')
     sli = subset_load_ids.join(',')
       find_by_sql("select loads.id,
@@ -572,7 +574,7 @@ class DataValue < ActiveRecord::Base
         where loads.data_type_id = data_types.id and loads.source_id = sources_new.id
         and loads.data_type_id in (#{dtis})
         and loads.id in (#{sli})
-        and (#{with_configuration_new(configuration)})")
+        #{with_configuration_new(configuration)}")
     # end
   end
 
@@ -599,14 +601,14 @@ class DataValue < ActiveRecord::Base
 
   def self.with_configuration_new(config)
     return '' if config == 'all'
-    q = "and loads.configuration like '%#{config}%'"
+    q = " and loads.configuration like '%#{config}%'"
     if config.is_a?(Array)
-      q ='and ('
+      q = ' and ('
       config.each_with_index  do | c, i |
         if i > 0
           q += ' or '
         end
-        q += "loads.configuration like '%#{c}%'"
+        q += " loads.configuration like '%#{c}%' "
       end
       q += ')'
     end

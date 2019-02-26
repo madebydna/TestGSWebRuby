@@ -123,19 +123,6 @@ describe 'Visitor' do
   end
 
   describe 'structured markup' do
-    scenario 'organization schema' do
-      school = create(:school_with_new_profile)
-      visit school_path(school)
-      scripts = all('script', visible: false).select do |s|
-        s[:type] == 'application/ld+json'
-      end
-      expect(scripts).to_not be_blank
-      script = scripts.find do |s|
-        s.native.text.include?(StructuredMarkup.organization_hash.to_json)
-      end
-      expect(script).to_not be_nil
-    end
-
     scenario 'school schema' do
       school = create(
         :school_with_new_profile,
