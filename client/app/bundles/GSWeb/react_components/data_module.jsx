@@ -143,7 +143,6 @@ export default class DataModule extends React.Component {
       if (values.length > 0) {
         let display_type = type || 'bar';
         let component = [];
-        debugger
         if (display_type == 'plain') {
           component = <PlainNumber values={values}/>
         } else if (display_type == 'person') {
