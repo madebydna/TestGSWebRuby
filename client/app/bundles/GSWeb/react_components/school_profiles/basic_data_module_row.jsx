@@ -21,7 +21,7 @@ const BasicDataModuleRow = ({
   tooltip_html,              // String containing html, to place inside tooltip to right of label
   link                      // Displayed in place of drawerTrigger, if it exists
 }) => {
-  debugger
+
 
   const renderStudentPercentage = function(){
     if(display_percentages){
