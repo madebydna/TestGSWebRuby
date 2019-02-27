@@ -175,6 +175,8 @@ export default class DistrictBoundaries extends React.Component {
   }
 
   schoolMarkers(otherProps = {}) {
+    const utmCampaignCode = 'districtbrowsemap';
+
     return this.props.schools.map(s => (
       <MapMarker
         {...markerProps(s)}
@@ -182,7 +184,7 @@ export default class DistrictBoundaries extends React.Component {
         {...{
           key: `s${s.state}${s.id}`,
           openInfoWindow: m =>
-            otherProps.openInfoWindow(createInfoWindow(s), m),
+            otherProps.openInfoWindow(createInfoWindow({ ...s, campaignCode: utmCampaignCode }), m),
           onClick: () => this.props.selectSchool(s.id, s.state),
           selected: this.isSchoolSelected(s),
           type:

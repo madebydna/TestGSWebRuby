@@ -9,7 +9,7 @@ import {
 } from 'util/school';
 
 export default function createInfoWindow(entity) {
-  const homesForSaleHref = getHomesForSaleHref(entity.state, entity.address);
+  const homesForSaleHref = getHomesForSaleHref(entity.state, entity.address, entity.campaignCode);
 
   const schoolLevels = entity => {
     const levelNameMap = {
