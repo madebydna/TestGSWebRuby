@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { capitalize, t } from 'util/i18n';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import { selectSchool } from '../../actions/district_boundaries';
@@ -73,7 +74,7 @@ class SchoolList extends React.Component {
           </a>
           <br />
           <a href="javascript:void(0);" onClick={this.onClickMap(school)}>
-            <span className="icon icon-location active" />View in map
+            <span className="icon icon-location active" />{t('view_in_map')}
           </a>
         </span>
       </li>
@@ -89,7 +90,7 @@ class SchoolList extends React.Component {
       return (
         <section className={`school-list ${  this.props.className}`}>
           <SpinnyWheel>
-            <h3>Schools in district</h3>
+            <h3>{t('schools_in_district')}</h3>
             {this.renderSchools()}
           </SpinnyWheel>
         </section>
@@ -97,7 +98,7 @@ class SchoolList extends React.Component {
     } 
       return (
         <section className={`school-list ${  this.props.className}`}>
-          <h3>Schools in district</h3>
+          <h3>{t('schools_in_district')}</h3>
           {this.renderSchools()}
         </section>
       );
