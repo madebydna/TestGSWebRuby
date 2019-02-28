@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { capitalize, t } from 'util/i18n';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import { selectSchool } from '../../actions/district_boundaries';
@@ -11,6 +12,7 @@ import {
 } from '../../reducers/district_boundaries_reducer';
 import DistrictBoundariesLegend from './district_boundaries_legend';
 import SpinnyWheel from '../spinny_wheel';
+import { getHomesForSaleHref } from '../../util/school';
 
 class SchoolList extends React.Component {
   static defaultProps = {
@@ -64,6 +66,8 @@ class SchoolList extends React.Component {
     ) {
       liClass = 'active';
     }
+    const utmCampaignCode = 'districtbrowsemap';
+    const homesForSaleHref = getHomesForSaleHref(school.state, school.address, utmCampaignCode);
     return (
       <li key={school.state + school.id} className={liClass}>
         <span>{school.rating && this.renderRating(school.rating)}</span>
@@ -72,9 +76,27 @@ class SchoolList extends React.Component {
             {school.name}
           </a>
           <br />
-          <a href="javascript:void(0);" onClick={this.onClickMap(school)}>
-            <span className="icon icon-location active" />View in map
-          </a>
+          <div className="district-boundary-school-links">
+            <a 
+              href="javascript:void(0);" 
+              onClick={this.onClickMap(school)}
+              className="view-school-in-map-link"
+            >
+              <span className="icon icon-location active" />View in map
+            </a>
+            {homesForSaleHref && (
+              <a
+                href={homesForSaleHref}
+                target="_blank"
+                className="homes-for-sale-link"
+              >
+                <span className="homes-for-sale">
+                  <span key="homes-for-sale" className="icon icon-house active" />
+                    {t('homes_for_sale')}
+                </span>
+              </a>
+            )}
+          </div>
         </span>
       </li>
     );
