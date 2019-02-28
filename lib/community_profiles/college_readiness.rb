@@ -158,7 +158,6 @@ module CommunityProfiles
       str = '<div>'
       str << '<h4>' + data_label(hash['data_type']) + '</h4>'
       str << "<p>#{data_label_info_text(hash['data_type'])}</p>"
-      # require 'pry'; binding.pry
       if year && source
         str << '<p><span class="emphasis">' + data_label('source')+ '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
       else
