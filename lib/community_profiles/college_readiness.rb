@@ -134,14 +134,18 @@ module CommunityProfiles
 
     def sources
       content = '<div class="sourcing">'
-      content << '<h1>' + data_label('title') + '</h1>'
-      if rating.present? && rating != 'NR'
-        content << rating_source(year: rating_year, label: data_label('GreatSchools Rating'),
-                                 description: rating_description, methodology: rating_methodology,
-                                 more_anchor: 'collegereadinessrating')
-      end
+      # content << '<h1>' + data_label('title') + '</h1>'
+      # if rating.present? && rating != 'NR'
+      #   content << rating_source(year: rating_year, label: data_label('GreatSchools Rating'),
+      #                            description: rating_description, methodology: rating_methodology,
+      #                            more_anchor: 'collegereadinessrating')
+      # end
 
-      data_array = components.map(&:data_type_hashes).reduce(:+)
+      data_array = components.map(&:data_type_hashes)
+                             .reduce(:+)
+                             .sort_by {|h| h.year}
+                             .reverse
+                             .uniq {|h| h.data_type}
       content << data_array.reduce('') do |string, hash|
         string << sources_text(hash)
       end
@@ -154,6 +158,7 @@ module CommunityProfiles
       str = '<div>'
       str << '<h4>' + data_label(hash['data_type']) + '</h4>'
       str << "<p>#{data_label_info_text(hash['data_type'])}</p>"
+      # require 'pry'; binding.pry
       if year && source
         str << '<p><span class="emphasis">' + data_label('source')+ '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
       else

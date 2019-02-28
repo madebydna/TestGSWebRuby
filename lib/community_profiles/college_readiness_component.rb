@@ -209,7 +209,7 @@ module CommunityProfiles
       @_data_value_hash ||= data_values.map do |score_item|
         {label: score_item.score.format.to_s.chomp('%'),
          score: score_item.score.value.to_i,
-         breakdown: score_item.subgroup,
+         breakdown: I18n.t(score_item.subgroup, scope: 'lib.equity_gsdata'),
          percentage: score_item.subgroup_percentage,
          display_percentages: score_item.subgroup_percentage,
          data_type: score_item.data_type,
@@ -227,17 +227,24 @@ module CommunityProfiles
       overview_data = data_value_hash_overview.select {|dv| (dv[:data_type] == FOUR_YEAR_GRADE_RATE && dv[:subgroup] == 'All students') || data_types_in_the_overview.include?(dv[:data_type])}
       uc_csu_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == UC_CSU_ENTRANCE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
       graduation_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == FOUR_YEAR_GRADE_RATE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
-                                   
+      # Data hashes to send to frontend
+      overview_data_hash = render_module_pane?(overview_data) ? { narration: I18n.t('subtitle_html', scope: 'school_profiles.college_readiness'), title: I18n.t('Overview', scope: 'lib.equity_gsdata'), values: overview_data,  anchor: 'College readiness', type: 'mixed_variety'} : nil
+      uc_csu_data_hash = render_module_pane?(uc_csu_data) ? { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: I18n.t('UC/CSU eligibility', scope: 'lib.equity_gsdata'), values: uc_csu_data, anchor: 'UC/CSU eligibility' } : nil
+      graduation_data_hash = render_module_pane?(graduation_data) ? { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: I18n.t('Graduation rates', scope: 'lib.equity_gsdata'), values: graduation_data, anchor: 'Graduation rates'} : nil
       @_college_data_array ||= [
-        { narration: "Learn about how to help your child graduate ready for college.", title: 'Overview', values: overview_data,  anchor: 'College readiness'},
-        { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: 'UC/CSU eligibility', values: uc_csu_data, anchor: 'UC/CSU eligibility' },
-        { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: 'Graduation Rates', values: graduation_data, anchor: 'Graduation rates'}
-      ]
+        overview_data_hash,
+        uc_csu_data_hash,
+        graduation_data_hash
+      ].compact
+    end
+
+    def render_module_pane?(data)
+      data.length > 0
     end
 
     def sort_with_all_students_first(student_hash)
       student_hash.sort_by! {|h| h[:subgroup]}
-      index = student_hash.index {|h| h[:subgroup] == 'All students'}
+      index = student_hash.index {|h| h[:subgroup] == 'All students' }
       if index
         all_student = student_hash.delete_at(index)
         student_hash.unshift(all_student)
@@ -304,7 +311,7 @@ module CommunityProfiles
     end
 
     def empty_data?
-      college_data_array[0][:values].empty?
+      college_data_array.empty?
     end
 
     def cache_accessor

@@ -45,7 +45,6 @@ module Components
       end
 
       def gs_data_value_to_hash(dv)
-        # require 'pry'; binding.pry
         {
           breakdown: t(dv.breakdown),
           label: text_value(dv.district_value),
