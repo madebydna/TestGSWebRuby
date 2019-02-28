@@ -220,7 +220,7 @@ class SearchLayout extends React.Component {
 
           {this.props.distanceFilter ? (
             <span className="menu-item">
-              <span className="label">Distance:</span>
+              <span className="label">{t('Distance')}:</span>
               <span>{this.props.distanceFilter}</span>
             </span>
           ) : null}
