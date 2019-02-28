@@ -31,6 +31,16 @@
     @include media-breakpoint-up(lg) {
       width: $list-width;
     }
+
+    .district-boundary-school-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .view-school-in-map-link {
+        padding-right: 20px;
+      }
+    }
   }
 
 
