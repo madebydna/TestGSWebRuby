@@ -99,10 +99,6 @@ class DistrictCacheDataReader
     end
   end
 
-  # def college_readiness
-  #   decorated_district.college_readiness_hash
-  # end
-
   def consistify_breakdowns
     lambda do |h|
       h = h.clone

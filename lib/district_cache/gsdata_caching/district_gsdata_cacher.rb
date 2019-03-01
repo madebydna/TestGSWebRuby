@@ -21,7 +21,7 @@ class DistrictGsdataCacher < DistrictCacher
 
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
 
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154, 318].freeze
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154].freeze
 
   # BREAKDOWN_TAG_NAMES = %w(
   #   ethnicity
