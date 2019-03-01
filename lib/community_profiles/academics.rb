@@ -93,7 +93,7 @@ module CommunityProfiles
 
      def college_readiness
       @_college_readiness ||= CommunityProfiles::CollegeReadiness.new(
-        school_cache_data_reader: @cache_data_reader
+        cache_data_reader: @cache_data_reader
       )
     end
 

@@ -1,6 +1,6 @@
 module CommunityProfiles
   class CollegeReadiness
-    attr_reader :school_cache_data_reader
+    attr_reader :cache_data_reader
     include Qualaroo
     include SharingTooltipModal
     include RatingSourceConcerns
@@ -8,16 +8,16 @@ module CommunityProfiles
 
     TABS = {'college_readiness' => CHAR_CACHE_ACCESSORS, 'college_success' => CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS}
 
-    def initialize(school_cache_data_reader:)
-      @school_cache_data_reader = school_cache_data_reader
+    def initialize(cache_data_reader:)
+      @cache_data_reader = cache_data_reader
     end
 
     def share_content
-      share_tooltip_modal('College_readiness', @school_cache_data_reader.school)
+      share_tooltip_modal('College_readiness', @cache_data_reader.school)
     end
 
     def qualaroo_module_link
-      qualaroo_iframe(:college_readiness, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
+      qualaroo_iframe(:college_readiness, @cache_data_reader.school.state, @cache_data_reader.school.id.to_s)
     end
 
     def faq
@@ -27,7 +27,7 @@ module CommunityProfiles
     end
 
     def rating
-      ((1..10).to_a & [@school_cache_data_reader.college_readiness_rating]).first
+      ((1..10).to_a & [@cache_data_reader.college_readiness_rating]).first
     end
 
     def show_historical_ratings?
@@ -99,8 +99,8 @@ module CommunityProfiles
     end
 
     def qualaroo_params
-      state = @school_cache_data_reader.school.state.upcase
-      school = @school_cache_data_reader.school.id.to_s
+      state = @cache_data_reader.school.state.upcase
+      school = @cache_data_reader.school.id.to_s
       '?' + 'school=' + school + '&' + 'state=' + state
     end
 
@@ -124,22 +124,8 @@ module CommunityProfiles
       NEW_SAT_STATES.include?(state.to_s.downcase) && year.to_i >= NEW_SAT_YEAR
     end
 
-    def rating_description
-      @school_cache_data_reader.college_readiness_rating_hash.try(:description)
-    end
-
-    def rating_methodology
-      @school_cache_data_reader.college_readiness_rating_hash.try(:methodology)
-    end
-
     def sources
       content = '<div class="sourcing">'
-      # content << '<h1>' + data_label('title') + '</h1>'
-      # if rating.present? && rating != 'NR'
-      #   content << rating_source(year: rating_year, label: data_label('GreatSchools Rating'),
-      #                            description: rating_description, methodology: rating_methodology,
-      #                            more_anchor: 'collegereadinessrating')
-      # end
 
       data_array = components.map(&:data_type_hashes)
                              .reduce(:+)
@@ -168,7 +154,7 @@ module CommunityProfiles
     end
 
     def rating_year
-      @school_cache_data_reader.college_readiness_rating_year.to_s
+      @cache_data_reader.college_readiness_rating_year.to_s
     end
 
     def visible?
@@ -190,12 +176,8 @@ module CommunityProfiles
 
     def components
       @_components ||= (
-      tabs.map {|tab| CommunityProfiles::CollegeReadinessComponent.new(tab, @school_cache_data_reader) }
+        tabs.map {|tab| CommunityProfiles::CollegeReadinessComponent.new(tab, @cache_data_reader) }
       )
-    end
-
-    def has_college_success?
-      props.any? {|component| component[:anchor] == 'College_success' }
     end
 
     def props
@@ -204,7 +186,7 @@ module CommunityProfiles
 
     def ethnicities_to_percentages
       SchoolProfiles::EthnicityPercentages.new(
-        cache_data_reader: @school_cache_data_reader
+        cache_data_reader: @cache_data_reader
       ).ethnicities_to_percentages
     end
 
