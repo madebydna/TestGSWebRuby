@@ -71,4 +71,10 @@ class HomeController < ApplicationController
     @_greatkids_content ||= ExternalContent.try(:homepage_features)
   end
 
+  private
+
+  # StructuredMarkup
+  def prepare_json_ld
+    add_json_ld(StructuredMarkup.organization_hash)
+  end
 end

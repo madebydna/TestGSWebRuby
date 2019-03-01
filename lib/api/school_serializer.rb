@@ -38,6 +38,7 @@ class Api::SchoolSerializer
         zip: school['zipcode'],
         city: school['city']
       },
+      csaAwardYears: school.csa_award_winner_years,
       rating: rating,
       ratingScale: rating ? SchoolProfiles::SummaryRating.scale(rating) : nil,
       schoolType: school.type,
@@ -45,7 +46,8 @@ class Api::SchoolSerializer
       type: 'school',
       links: {
         profile: school_path(school, trailing_slash: true, lang: I18n.current_non_en_locale),
-        reviews: school_path(school, anchor: 'Reviews', trailing_slash: true, lang: I18n.current_non_en_locale)
+        reviews: school_path(school, anchor: 'Reviews', trailing_slash: true, lang: I18n.current_non_en_locale),
+        collegeSuccess: school_path(school, anchor: 'College_success', trailing_slash: true, lang: I18n.current_non_en_locale)
       },
       highlighted: false,
       pinned: (school.pinned if school.respond_to?(:pinned)),
