@@ -333,7 +333,7 @@ class DataValue < ActiveRecord::Base
     select(state_and_district_values_with_proficiency_band)
   end
 
-############################################ Where filters State and Districts ########################################
+############################################ Where filters ########################################
 #
 
   def self.filter_query(state, district_id, school_id, load_ids = nil, proficiency = nil)
