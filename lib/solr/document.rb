@@ -24,6 +24,8 @@ module Solr
       )
     end
 
+    DOCUMENT_TYPE = new_field(:document_type, type: FieldTypes::STRING) { self.document_type }
+
     def self.define_field_method(field, block)
       attr_writer(field.name)
       define_method(field.name) do
@@ -35,7 +37,9 @@ module Solr
     end
 
     def self.define_field_methods(*fields)
-      fields.flatten.each { |f| define_field_method(f, f.block) }
+      (
+        [Document::DOCUMENT_TYPE] + fields.flatten
+      ).each { |f| define_field_method(f, f.block) }
     end
 
     def write_fields

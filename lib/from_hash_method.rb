@@ -10,7 +10,7 @@ module FromHashMethod
           begin
             instance.send("#{k}=", v)
           rescue => e
-            GSLogger.error(:misc, e, message: "Tried to invoke unknown method #{k} on #{self.name}")
+            GSLogger.error(:misc, e, message: "Tried to invoke unknown method #{k}= on #{self.name}")
           end
         end
       end

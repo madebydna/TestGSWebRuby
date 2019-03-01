@@ -6,7 +6,7 @@ module Solr
 
     def params
       fq = filters.clone
-      fq << eq('type', document_class.document_type) if document_class
+      fq << eq('document_type', document_class.document_type) if document_class
       h = {
         defType: def_type,
         qt: query_type,
