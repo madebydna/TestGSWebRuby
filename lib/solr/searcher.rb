@@ -37,7 +37,8 @@ module Solr
           **(res['facet_counts']&.symbolize_keys || {})
         )
       rescue => e
-        raise "Exception when querying solr #{print_request(query)}"
+        puts "Exception when querying solr #{print_request(query)}"
+        raise e
       end
     end
   end

@@ -2,8 +2,6 @@
 
 module Solr
   class SchoolDocument < Document
-    include Indexable
-
     CACHE_KEYS = %w(ratings)
 
     module CollectionMethods

@@ -2,8 +2,6 @@
 
 module Solr
   class CityDocument < Document
-    include Indexable
-
     attr_writer :id
 
     def self.from_active_cities(states: nil)

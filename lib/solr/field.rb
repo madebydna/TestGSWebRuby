@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Solr
   class Field
     attr_accessor :name, :type, :stored, :indexed, :required, :multi_valued

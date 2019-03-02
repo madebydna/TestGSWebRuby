@@ -28,10 +28,7 @@ module Solr
     end
 
     def index_one(indexable)
-      solr_field_values = indexable.field_values.each_with_object({}) do |(f, v), hash|
-        hash[f.name] = v
-      end
-      client.add(solr_field_values)
+      client.add(indexable.field_values)
     end
 
     def delete_all_by_type(indexable_class)

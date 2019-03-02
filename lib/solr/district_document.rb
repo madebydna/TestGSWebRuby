@@ -2,8 +2,6 @@
 
 module Solr
   class DistrictDocument < Document
-    include Indexable
-
     def self.all_fields
       [].tap do |array|
         array << new_field(:district_id, type: FieldTypes::INTEGER) { district.id }
