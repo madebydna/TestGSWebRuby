@@ -47,6 +47,8 @@ import withViewportSize from 'react_components/with_viewport_size';
 import ProfileInterstitialAd, { shouldShowInterstitial, profileInterstitialLoader } from 'react_components/school_profiles/profile_interstitial_ad';
 import "jquery-unveil";
 import commonPageInit from '../common';
+import { throttle, debounce } from 'lodash';
+import { boxInDoc, relativeToViewport, relativeToViewportTop, firstInViewport, keepInViewport } from 'util/viewport';
 
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 
@@ -196,6 +198,21 @@ $(function() {
       }
     );
   });
+
+  keepInViewport('.my-box', {
+    elementsAboveFunc: () => {
+      // get list of titles in reverse order. reverse() mutates the array
+      let titles = [].slice.call(window.document.querySelectorAll('.section-title')).reverse();
+      let titleToPutAdBelow = titles.find(el => relativeToViewport(el).top < 420)
+      titleToPutAdBelow = titleToPutAdBelow || firstInViewport([].slice.call(window.document.querySelectorAll('.section-title')));
+      return [titleToPutAdBelow] || [];
+    },
+    elementsBelowFunc: () => [].slice.call(window.document.querySelectorAll('.js-Profiles_Third_Ad-wrapper')),
+    setTop: true,
+    setBottom: true
+  });
+
+
 
   $('body').on('click', '.js-moreRevealLink', function () {
     $(this).hide();
