@@ -52,7 +52,7 @@ module Solr
         self.class.required_fields +
         self.class.all_fields
       ).each_with_object({}) do |field, hash|
-        hash[field.name] = send(field.name)
+        hash[field.name] = send(field.attr_name)
       end
     end
   end
