@@ -32,7 +32,7 @@ module Solr
     end
 
     DOCUMENT_TYPE = new_field(:document_type, type: FieldTypes::STRING) { self.class.document_type }
-    ID = new_field(:document_id, type: FieldTypes::STRING, required: true, field_name: :id) { "#{document_type} #{id}" }
+    ID = new_field(:document_id, type: FieldTypes::STRING, required: true, field_name: :id) { "#{document_type} #{unique_key}" }
 
     def self.required_fields
       [ID, DOCUMENT_TYPE]
