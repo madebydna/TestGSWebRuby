@@ -211,7 +211,7 @@ module CommunityProfiles
       @_data_value_hash ||= data_values.map do |score_item|
         {label: score_item.score.format.to_s.chomp('%'),
          score: score_item.score.value.to_i,
-         breakdown: I18n.t(score_item.subgroup, scope: 'lib.equity_gsdata'),
+         breakdown: I18n.t(score_item.subgroup, scope: 'lib.breakdowns'),
          percentage: score_item.subgroup_percentage,
          display_percentages: score_item.subgroup_percentage,
          data_type: score_item.data_type,
@@ -231,9 +231,9 @@ module CommunityProfiles
         uc_csu_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == UC_CSU_ENTRANCE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
         graduation_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == FOUR_YEAR_GRADE_RATE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
         # Data hashes to send to frontend
-        overview_data_hash = render_pane?(overview_data) ? { narration: I18n.t('subtitle_html', scope: 'school_profiles.college_readiness'), title: I18n.t('Overview', scope: 'lib.equity_gsdata'), values: overview_data,  anchor: 'College readiness', type: 'mixed_variety'} : nil
-        uc_csu_data_hash = render_pane?(uc_csu_data) ? { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: I18n.t('UC/CSU eligibility', scope: 'lib.equity_gsdata'), values: uc_csu_data, anchor: 'UC/CSU eligibility' } : nil
-        graduation_data_hash = render_pane?(graduation_data) ? { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: I18n.t('Graduation rates', scope: 'lib.equity_gsdata'), values: graduation_data, anchor: 'Graduation rates'} : nil
+        overview_data_hash = has_data?(overview_data) ? { narration: I18n.t('subtitle_html', scope: 'school_profiles.college_readiness'), title: I18n.t('Overview', scope: 'lib.equity_gsdata'), values: overview_data,  anchor: 'College readiness', type: 'mixed_variety'} : nil
+        uc_csu_data_hash = has_data?(uc_csu_data) ? { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: I18n.t('UC/CSU eligibility', scope: 'lib.equity_gsdata'), values: uc_csu_data, anchor: 'UC/CSU eligibility' } : nil
+        graduation_data_hash = has_data?(graduation_data) ? { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: I18n.t('Graduation rates', scope: 'lib.equity_gsdata'), values: graduation_data, anchor: 'Graduation rates'} : nil
         [overview_data_hash,
           uc_csu_data_hash,
           graduation_data_hash
@@ -241,7 +241,7 @@ module CommunityProfiles
       end
     end
 
-    def render_pane?(data)
+    def has_data?(data)
       data.length > 0
     end
 
