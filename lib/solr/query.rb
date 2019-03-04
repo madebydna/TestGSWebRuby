@@ -70,7 +70,7 @@ module Solr
     private
 
     def escape_spaces(phrase)
-      phrase.gsub(' ', '\ ')
+      phrase.to_s.gsub(' ', '\ ')
     end
 
     def require_non_optional_words(*args)
