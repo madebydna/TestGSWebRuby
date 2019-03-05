@@ -71,7 +71,7 @@ module Search
       state = state.first if state.is_a?(Array)
       district = solr_result['district_name']
       school_name = solr_result['name']
-      type = solr_result['type']&.downcase
+      type = solr_result['document_type']&.downcase
       school_id = solr_result['id'].split('-')&.last
 
       url = 
@@ -124,7 +124,7 @@ module Search
     # Solr::Query
     def field_list
       %w(id
-         type
+         document_type
          name
          school_district_id
          city
