@@ -3,6 +3,7 @@ module CachedRatingsMethods
   NO_RATING_TEXT = 'NR'
   GREATSCHOOLS_RATINGS_NAMES = ['GreatSchools rating','Test score rating', 'Student growth rating', 'College readiness rating', 'Climate rating']
   HISTORICAL_RATINGS_KEYS = %w(year school_value_float)
+  CSA_BADGE = 'CSA Badge'
 
   # 151: Advanced Course Rating
   # 155: Test Score Rating
@@ -228,9 +229,9 @@ module CachedRatingsMethods
   end
 
   def csa_award_winner_years
-    return [] unless ratings_by_type['CSA Badge'].present?
+    return [] unless ratings_by_type[CSA_BADGE].present?
 
-    ratings_by_type['CSA Badge']
+    ratings_by_type[CSA_BADGE]
       .map { |award| award[:source_year] }
   end
 

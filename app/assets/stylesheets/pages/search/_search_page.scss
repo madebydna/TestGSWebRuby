@@ -2,6 +2,7 @@ $page-side-padding: 15px;
 $search-primary-blue-on-white: #1dace5;
 $charcoal-gray: #2E3438;
 $border-color: #dbe6eb;
+$subtle-gray: #647981;
 
 @import 'list-and-map';
 @import 'components/dropdown';
@@ -241,7 +242,7 @@ body {
     }
 
     .csa-winner {
-      color: #647981;
+      color: $subtle-gray;
     }
 
     .csa-winner-header {
