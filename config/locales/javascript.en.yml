@@ -163,7 +163,7 @@ en:
       charter: charter
       private: private
       public: public
-    search: Buscar
+    search: Search
     search_form:
       long_placeholder: Find a great school
       short_placeholder: City, zip, address or school
