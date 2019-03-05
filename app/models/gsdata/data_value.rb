@@ -60,19 +60,21 @@ class DataValue < ActiveRecord::Base
     a = []
     if school_load_ids.present?
       loads = Load.data_type_ids_to_loads(data_types, configuration, school_load_ids )
-      dvs = school_values_with_academics.
-          from(
-              DataValue.filter_query(school.state,
-                                    'null',
-                                     school.id,
-                                     load_ids(loads)), :data_values)
-          .with_academics
-          .with_academic_tags
-          .with_breakdowns
-          .with_breakdown_tags
-          .group('data_values.id')
-          .having("(breakdown_count + academic_count) < 3 OR breakdown_names like '%All students except 504 category%'")
-      a = GsdataCaching::LoadDataValue.new(loads, dvs).merge
+      if loads.present?
+        dvs = school_values_with_academics.
+            from(
+                DataValue.filter_query(school.state,
+                                      'null',
+                                       school.id,
+                                       load_ids(loads)), :data_values)
+            .with_academics
+            .with_academic_tags
+            .with_breakdowns
+            .with_breakdown_tags
+            .group('data_values.id')
+            .having("(breakdown_count + academic_count) < 3 OR breakdown_names like '%All students except 504 category%'")
+        a = GsdataCaching::LoadDataValue.new(loads, dvs).merge
+      end
     end
     a
   end
