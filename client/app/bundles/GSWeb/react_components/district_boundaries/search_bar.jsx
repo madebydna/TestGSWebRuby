@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { capitalize, t } from 'util/i18n';
 import ButtonGroup from '../buttongroup';
 import Select from '../select';
 import * as Geocoding from '../../components/geocoding';
@@ -120,27 +121,27 @@ export default class SearchBar extends React.Component {
 
   render() {
     let searchInput = null;
-    let searchButton = <button name="submit-search" onClick={this.search}>Search</button>;
+    let searchButton = <button name="submit-search" onClick={this.search}>{t('search')}</button>;
     if(this.props.loading) {
       searchInput = <SpinnyWheel><input name="search-term" type="text" defaultValue={this.state.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/></SpinnyWheel>
     } else {
-      searchInput = <input name="search-term" type="text" placeholder="Enter an address to see schools" defaultValue={this.state.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
+      searchInput = <input name="search-term" type="text" placeholder={t('enter_an_address_to_see_schools')} defaultValue={this.state.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
     }
 
     return (
       <div className="filter-bar">
         <div className="search-input-and-filter-button">
           <div className="search-input">
-            <label>Search</label>
+            <label>{t('search')}</label>
             { searchInput }
             { searchButton }
-            <div className="icon active icon-house"> <a href={this.homesForSaleHref()} target="_blank">Nearby homes for sale</a></div>
+            <div className="icon active icon-house"> <a href={this.homesForSaleHref()} target="_blank">{t('nearby_homes_for_sale')}</a></div>
           </div>
           <button onClick={this.toggleFilters} >Filters</button>
         </div>
 
         <div className="toggle-bar">
-          <span className="icon active icon-house"> <a href={this.homesForSaleHref()} target="_blank">Nearby homes for sale</a></span>
+          <span className="icon active icon-house"> <a href={this.homesForSaleHref()} target="_blank">{t('nearby_homes_for_sale')}</a></span>
 
           <div className="list-map-toggle">
             <a href="javascript:void(0);" className="show-list" onClick={this.onClickListView}>
@@ -157,7 +158,7 @@ export default class SearchBar extends React.Component {
         <div className={this.state.showFilters ? "filters open" : "filters"}>
           <hr/>
           <div className="filter district-select">
-            <label>Districts { this.state.searchLocation ? 'near ' + this.state.searchLocation : '' }</label>
+            <label>{t('districts')} { this.state.searchLocation ? 'near ' + this.state.searchLocation : '' }</label>
             <Select objects={this.props.districts}
               labelFunc={d => d.name}
               keyFunc={d => d.state + d.id}
@@ -167,17 +168,17 @@ export default class SearchBar extends React.Component {
             />
           </div>
           <div className="filter grade-filter">
-            <label>School Grade</label>
+            <label>{t('school_grade')}</label>
             <ButtonGroup
               activeOption={this.props.level}
-              options={{e: 'Elementary', m: 'Middle', h: 'High'}}
+              options={{e: t('Elementary'), m: t('Middle'), h: t('High')}}
               onSelect={this.props.setLevel} />
           </div>
           <div className="filter">
-            <label className="type-filter">Additional school type</label>
+            <label className="type-filter">{t('additional_school_type')}</label>
             <div>
-              <Checkbox value="charter" label="Charter" onClick={this.handleSchoolType} />
-              <Checkbox value="private" label="Private" onClick={this.handleSchoolType} />
+              <Checkbox value="charter" label={t('Charter')} onClick={this.handleSchoolType} />
+              <Checkbox value="private" label={t('school_types.Private')} onClick={this.handleSchoolType} />
             </div>
           </div>
         </div>
