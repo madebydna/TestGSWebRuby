@@ -8,8 +8,8 @@ import {
   schoolTypePhrase
 } from 'util/school';
 
-export default function createInfoWindow(entity) {
-  const homesForSaleHref = getHomesForSaleHref(entity.state, entity.address, entity.campaignCode);
+export default function createInfoWindow(entity, campaignCode) {
+  const homesForSaleHref = getHomesForSaleHref(entity.state, entity.address, campaignCode);
 
   const schoolLevels = entity => {
     const levelNameMap = {
