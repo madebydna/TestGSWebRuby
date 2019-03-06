@@ -199,13 +199,14 @@ $(function() {
     );
   });
 
-  keepInViewport('.my-box', {
+  keepInViewport('.left-rail-jumpy-ad', {
     elementsAboveFunc: () => {
       // get list of titles in reverse order. reverse() mutates the array
-      let titles = [].slice.call(window.document.querySelectorAll('.section-title')).reverse();
-      let titleToPutAdBelow = titles.find(el => relativeToViewport(el).top < 420)
-      titleToPutAdBelow = titleToPutAdBelow || firstInViewport([].slice.call(window.document.querySelectorAll('.section-title')));
-      return [titleToPutAdBelow] || [];
+      let titles = [].slice.call(window.document.querySelectorAll('.section-title'));
+      let titlesReversed = [].slice.call(window.document.querySelectorAll('.section-title')).reverse();
+      let titleToPutAdBelow = titlesReversed.find(el => relativeToViewport(el).top < 480);
+      titleToPutAdBelow = titleToPutAdBelow || firstInViewport(titles);
+      return titleToPutAdBelow || [];
     },
     elementsBelowFunc: () => [].slice.call(window.document.querySelectorAll('.js-Profiles_Third_Ad-wrapper')),
     setTop: true,
