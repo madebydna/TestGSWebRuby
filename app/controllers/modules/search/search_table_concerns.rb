@@ -17,12 +17,13 @@ module SearchTableConcerns
   end
 
   def equity_header_hash(schools)
-    headers = []
-    schools.each do |school|
-      headers << school&.ethnicity_labels
-    end
-    headers.unshift("Low-income")
-    h = headers.flatten.compact.uniq - ["All students"]
+    h = populated_test_score_fields
+      .map do |field|
+        name = Solr::SchoolDocument.rating_field_name_to_breakdown[field]
+        name || field.titleize
+      end
+    # h = h.unshift("Low-income")
+    # h = h.flatten.compact.uniq - ["All students"]
     h.map do |title|
       {
         key: title,

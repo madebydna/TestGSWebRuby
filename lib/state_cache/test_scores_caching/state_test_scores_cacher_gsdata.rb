@@ -6,7 +6,7 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
   def query_results
     @query_results ||=
       begin
-        DataValue.find_by_state_and_data_type_tags_with_proficiency_band_name(state, 'state_test', 'feeds')
+        DataValue.find_by_state_and_data_type_tags_with_proficiency_band_name(state, 'state_test', %w(feeds) )
       end
   end
 

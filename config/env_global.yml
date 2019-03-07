@@ -20,6 +20,10 @@ facebook_app_secret: "db1795c48c3b404b7c480e48df3985c2"
 solr.ro.server.url: "http://dev.greatschools.org:8580/main/"
 solr.rw.server.url: "http://dev.greatschools.org:8580/main/"
 
+# The URLs of the new Solr 7 host
+solr7.ro.server.url: "http://dev-solr1.greatschools.org:8983/solr/main/"
+solr7.rw.server.url: "http://dev-solr1.greatschools.org:8983/solr/main/"
+
 # Solr timeouts in seconds
 solr.ro.timeout.open: 10
 solr.ro.timeout.read: 10

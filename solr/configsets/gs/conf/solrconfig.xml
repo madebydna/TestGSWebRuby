@@ -66,6 +66,13 @@
   <lib path="../a-jar-that-does-not-exist.jar" /> 
   -->
 
+  <!-- An example of Solr's implicit default behavior if no
+      no schemaFactory is explicitly defined.
+ -->
+  <schemaFactory class="ManagedIndexSchemaFactory">
+    <bool name="mutable">true</bool>
+    <str name="managedSchemaResourceName">managed-schema</str>
+  </schemaFactory>
 
 
 
@@ -1086,6 +1093,7 @@
   <!-- ping/healthcheck -->
   <requestHandler name="/admin/ping" class="PingRequestHandler">
     <lst name="defaults">
+      <str name="df">id</str>
       <str name="qt">standard</str>
       <str name="q">solrpingquery</str>
       <str name="echoParams">all</str>

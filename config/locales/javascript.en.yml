@@ -161,7 +161,9 @@ en:
     school_types:
       Private: Private
       Public charter: Public charter
+      Charter: Public charter
       Public district: Public district
+      Public: Public district
       charter: charter
       private: private
       public: public

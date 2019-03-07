@@ -268,6 +268,8 @@ LocalizedProfiles::Application.routes.draw do
 
   match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs
 
+  get '/admin/gsr/widget-test', to: 'widget#test'
+
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
     resources :api_accounts, except: [:show, :destroy]
     post '/api_accounts/create_api_key', to: 'api_accounts#create_api_key', as: :create_api_key
