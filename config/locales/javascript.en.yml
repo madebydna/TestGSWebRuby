@@ -101,7 +101,9 @@ en:
     School type and level: School type and level
     schools: schools
     school districts: school districts
+    Public school: Public school
     Public schools: Public schools
+    Private school: Private school
     Private schools: Private schools
     Public & private schools: Public & private schools
     Public charter schools: Public charter schools
@@ -211,6 +213,9 @@ en:
       Add a review: Add a review
     State average: State average
     too_many_schools_error_html: '<strong>You&#39ve already selected 4 schools to compare.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspCompare schools.</a>'
+    not_rated_school: Not rated school
+    school_boundary: School boundary
+    district_boundary: District boundary
     view_legend: View legend
     view_less: View less »
     view_more: View more »
