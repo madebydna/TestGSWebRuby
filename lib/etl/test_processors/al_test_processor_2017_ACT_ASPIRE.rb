@@ -34,32 +34,32 @@ class ALTestProcessor2017ACTASPIRE < GS::ETL::TestProcessor
 
   source("grade_03.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
-      grade: '03'
+      grade: '3'
     })
   end
   source("grade_04.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
-      grade: '04'
+      grade: '4'
     })
   end
     source("grade_05.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
-      grade: '05'
+      grade: '5'
     })
   end
     source("grade_06.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
-      grade: '06'
+      grade: '6'
     })
   end
     source("grade_07.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
-      grade: '07'
+      grade: '7'
     })
   end
     source("grade_08.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
-      grade: '08'
+      grade: '8'
     })
   end
     source("grade_10.txt",[], col_sep: "\t") do |s|
