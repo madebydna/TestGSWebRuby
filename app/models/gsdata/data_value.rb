@@ -56,7 +56,7 @@ class DataValue < ActiveRecord::Base
 # ratings
 # rubocop:disable Style/FormatStringToken
   def self.find_by_school_and_data_types_with_academics(school, data_types, configuration= default_configuration)
-    school_load_ids = filter_query(school.state, 'null', school.id).pluck(:load_id).uniq
+    school_load_ids = filter_query(school.state, nil, school.id).pluck(:load_id).uniq
     a = []
     if school_load_ids.present?
       loads = Load.data_type_ids_to_loads(data_types, configuration, school_load_ids )
@@ -64,7 +64,7 @@ class DataValue < ActiveRecord::Base
         dvs = school_values_with_academics.
             from(
                 DataValue.filter_query(school.state,
-                                      'null',
+                                      nil,
                                        school.id,
                                        load_ids(loads)), :data_values)
             .with_academics
@@ -85,7 +85,7 @@ class DataValue < ActiveRecord::Base
     dvs = school_values_with_academics.
         from(
             DataValue.filter_query(school.state,
-                                  'null',
+                                  nil,
                                    school.id,
                                    load_ids(loads)), :data_values)
         .with_academics
@@ -103,7 +103,7 @@ class DataValue < ActiveRecord::Base
     dvs = school_values.
       from(
         DataValue.filter_query(school.state,
-                                        'null',
+                                        nil,
                                         school.id,
                                         load_ids(loads)), :data_values)
           .with_breakdowns
@@ -119,7 +119,7 @@ class DataValue < ActiveRecord::Base
     dvs = school_values_with_academics.
       from(
         DataValue.filter_query(school.state,
-                               'null',
+                               nil,
                                school.id,
                                load_ids(loads),
                                true), :data_values)
@@ -138,7 +138,7 @@ class DataValue < ActiveRecord::Base
     dvs = school_values_with_academics_with_proficiency_band_names.
         from(
             DataValue.filter_query(school.state,
-                                   'null',
+                                   nil,
                                    school.id,
                                    load_ids(loads)), :data_values)
               .with_academics
@@ -208,8 +208,8 @@ class DataValue < ActiveRecord::Base
     dvs = state_and_district_values.
       from(
         DataValue.filter_query(state,
-                                'null',
-                                'null',
+                                nil,
+                                nil,
                                 load_ids(loads)), :data_values)
           .with_breakdowns
           .with_breakdown_tags
@@ -221,13 +221,13 @@ class DataValue < ActiveRecord::Base
 
   # test scores gsdata - state
   def self.find_by_state_and_data_type_tags_and_proficiency_is_one(state, data_type_tags, configuration= default_configuration)
-    state_load_ids = filter_query(state, 'null', 'null', nil, nil).pluck(:load_id).uniq
+    state_load_ids = filter_query(state, nil, nil, nil, nil).pluck(:load_id).uniq
     loads = Load.data_type_tags_to_loads(data_type_tags, configuration, state_load_ids)
     dvs = state_and_district_values.
       from(
             DataValue.filter_query(state,
-                                   'null',
-                                   'null',
+                                   nil,
+                                   nil,
                                    load_ids(loads),
                                    true), :data_values)
         .with_breakdowns
@@ -246,7 +246,7 @@ class DataValue < ActiveRecord::Base
         DataValue.filter_query(
                                 state,
                                 district_id,
-                                'null',
+                                nil,
                                 load_ids(loads)
                               ), :data_values)
           .with_breakdowns
@@ -259,13 +259,13 @@ class DataValue < ActiveRecord::Base
 
   # test scores gsdata - district
   def self.find_by_district_and_data_type_tags_and_proficiency_is_one(state, district_id, data_type_tags, configuration= default_configuration)
-    subset_load_ids = filter_query(state, district_id, 'null').pluck(:load_id).uniq
+    subset_load_ids = filter_query(state, district_id, nil).pluck(:load_id).uniq
     loads = Load.data_type_tags_to_loads(data_type_tags, configuration, subset_load_ids)
     dvs = state_and_district_values.
       from(
         DataValue.filter_query(state,
                                 district_id,
-                                'null',
+                                nil,
                                 load_ids(loads),
                                 true), :data_values)
           .with_breakdowns
@@ -283,8 +283,8 @@ class DataValue < ActiveRecord::Base
         from(
             DataValue.filter_query(
                 state,
-                'null',
-                'null',
+                nil,
+                nil,
                 load_ids(loads)), :data_values)
         .with_breakdowns
         .with_academics
@@ -301,7 +301,7 @@ class DataValue < ActiveRecord::Base
             DataValue.filter_query(
                 state,
                 district_id,
-                'null',
+                nil,
                 load_ids(loads)
             ), :data_values)
         .with_breakdowns
@@ -340,48 +340,48 @@ class DataValue < ActiveRecord::Base
 
   def self.filter_query(state, district_id, school_id, load_ids = nil, proficiency = nil)
     q = []
-    q  << filter_by_state(state)
-    q  << filter_by_district(district_id)
-    q  << filter_by_school(school_id)
-    q  << filter_by_load_ids(load_ids)
-    q  << filter_by_proficiency_band_one(proficiency)
-    q  << filter_by_active
+    q  << build_state_clause(state)
+    q  << build_district_clause(district_id)
+    q  << build_school_clause(school_id)
+    q  << build_load_ids_clause(load_ids)
+    q  << build_proficiency_band_one_clause(proficiency)
+    q  << build_active_clause
 
     school_subquery_sql = q.compact.join(' AND ')
     where(school_subquery_sql)
   end
 
-  def self.filter_by_state(state)
+  def self.build_state_clause(state)
     "state = '#{state}'"
   end
 
-  def self.filter_by_district(district)
-    if district == 'null'
+  def self.build_district_clause(district)
+    if district.nil?
       'district_id IS NULL'
     elsif district.present?
       "district_id = '#{district}'"
     end
   end
 
-  def self.filter_by_school(school)
-    if school == 'null'
+  def self.build_school_clause(school)
+    if school.nil?
       'school_id IS NULL'
     elsif school.present?
       "school_id = '#{school}'"
     end
   end
 
-  def self.filter_by_load_ids(load_ids)
+  def self.build_load_ids_clause(load_ids)
     if load_ids.present?
       "load_id IN (#{load_ids.join(',')})"
     end
   end
 
-  def self.filter_by_active
+  def self.build_active_clause
     'active = 1'
   end
 
-  def self.filter_by_proficiency_band_one(proficiency)
+  def self.build_proficiency_band_one_clause(proficiency)
     'proficiency_band_id = 1' if proficiency.present?
   end
 

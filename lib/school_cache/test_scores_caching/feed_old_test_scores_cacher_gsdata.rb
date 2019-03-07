@@ -18,7 +18,7 @@ class TestScoresCaching::FeedOldTestScoresCacherGsdata < TestScoresCaching::Test
     @query_results ||=
       begin
         DataValue
-            .find_by_school_and_data_type_tags(school, data_type_tags, 'feeds')
+            .find_by_school_and_data_type_tags(school, data_type_tags, %w(feeds) )
       end
   end
 
