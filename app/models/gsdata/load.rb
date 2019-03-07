@@ -67,16 +67,14 @@ class Load < ActiveRecord::Base
   end
 
   def self.with_configuration_string(config)
-    config_all = ['all', '']
-    return '' if config_all.include?(config)
+    return '' if %w(all '').any? { |value| config.include?(value)}
     q = config.map{ | c | "loads.configuration like '%#{c}%'" }
     ' and (' + q.join(' or ') + ')'
   end
 
   # used by feed test description cache builds
   def self.with_configuration(config)
-    config_all = ['all', '']
-    return where('') if config_all.include?(config)
+    return where('') if %w(all '').any? { |value| config.include?(value)}
     q = config.map{ | c | "loads.configuration like '%#{c}%'" }
     where(q.join(' or '))
   end
