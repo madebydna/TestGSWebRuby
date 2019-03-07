@@ -1,6 +1,7 @@
 en:
   lib:
     equity_gsdata:
+      Overview: Overview
       Graduation rates: Graduation rates
       College readiness: College readiness
       RE Test scores narration: >
@@ -83,8 +84,13 @@ en:
       African American: Black
       Black: Black
       White: White
+      Asian: Asian
       Asian or Pacific Islander: Asian or Pacific Islander
+      Hispanic: Hispanic
+      Native American or Native Alaskan: Native American or Native Alaskan
+      Filipino: Filipino
       All: All students
+      All students: All students
       Multiracial: Two or more races
       Two or more races: Two or more races
       American Indian/Alaska Native: American Indian/Alaska Native

@@ -22,6 +22,7 @@ const BasicDataModuleRow = ({
   link                      // Displayed in place of drawerTrigger, if it exists
 }) => {
 
+
   const renderStudentPercentage = function(){
     if(display_percentages){
       if(percentage == '200' || breakdown == 'All students' || breakdown == 'Todos los estudiantes'){
