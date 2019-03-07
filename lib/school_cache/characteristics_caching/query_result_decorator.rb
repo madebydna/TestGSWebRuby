@@ -48,7 +48,14 @@ class CharacteristicsCaching::QueryResultDecorator
   end
 
   def state_average
-    data_set_with_values.state_value
+    # Needed since rails associations is not working properly with sharded databases
+    CensusDataSet.on_db(state&.downcase)
+                 .with_data_types(data_type_id)
+                 .includes(:census_data_state_values)
+                 .references(:census_data_state_values)
+                 .select {|x| x== data_set_with_values}
+                 .first
+                 .state_value
   end
 
   def breakdown_id

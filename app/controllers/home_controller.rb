@@ -13,10 +13,10 @@ class HomeController < ApplicationController
 
     @canonical_url = home_url
     # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
-    set_meta_tags title: 'School Ratings & Reviews for Public & Private Schools: GreatSchools',
+    set_meta_tags title: t('home.controller.meta_title'),
                   og: {
                       title: "K-12 school quality information and parenting resources",
-                      description: "We're an independent nonprofit that provides parenting resources and in-depth school quality information families can use to choose the right school and support their child's learning and development.",
+                      description: t('home.controller.meta_description'),
                       site_name: 'GreatSchools.org',
                       image: {
                         url: asset_full_url('assets/share/logo-ollie-large.png'),

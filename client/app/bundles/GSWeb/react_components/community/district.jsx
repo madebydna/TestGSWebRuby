@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Breadcrumbs from "react_components/breadcrumbs";
 import DataModule from "react_components/data_module";
+import InfoBox from 'react_components/school_profiles/info_box';
 import DistrictLayout from "./district_layout";
 import SearchBox from "react_components/search_box";
 import TopSchoolsStateful from "./top_schools_stateful";
@@ -16,12 +17,9 @@ import Toc from "./toc";
 import {schools, academics, ACADEMICS, calendar, CALENDAR, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
-import { analyticsEvent } from "util/page_analytics";
 import Zillow from "./zillow";
-import { t } from '../../util/i18n';
-import InfoBox from 'react_components/school_profiles/info_box';
 import remove from 'util/array';
-
+import { t } from '../../util/i18n';
 class District extends React.Component {
   static defaultProps = {
     schools_data: {},
@@ -46,6 +44,9 @@ class District extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      academicModuleActiveTab: 'Overview'
+    }
   }
 
   componentDidMount() {
@@ -112,7 +113,7 @@ class District extends React.Component {
   }
 
   render() {
-    let {title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback} = this.props.academics;
+    let { title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback } = this.props.academics;
     return (
       <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}

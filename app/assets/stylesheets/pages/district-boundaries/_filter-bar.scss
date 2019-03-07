@@ -2,7 +2,7 @@
   .filter-bar {
     padding: 10px;
     @include media-breakpoint-up(sm) {
-      padding: 10px 10px 20px 10px;
+      padding: 10px 10px 15px 10px;
     }
 
     .search-input, .filter {
@@ -73,8 +73,14 @@
       }
 
       > .icon-house {
+        margin-top: 9px;
+
         @include media-breakpoint-down(sm) {
           display: none;
+        }
+        a {
+          font-weight: bold;
+          font-size: 14px;
         }
       }
     }
