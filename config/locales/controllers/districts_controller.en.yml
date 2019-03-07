@@ -2,3 +2,6 @@ en:
   controllers:
     districts_controller:
       District header narration: is the largest public school district in the city of
+      meta_title: >-
+        %{district_name}%{additional_district_text} School District in %{city}, %{state}. | GreatSchools
+      meta_description: Information to help parents choose the right public school for their children in the %{district_name}.

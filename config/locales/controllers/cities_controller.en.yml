@@ -7,3 +7,6 @@ en:
       choosing_a_school: Choosing a School
       enrollment_information: Enrollment Information
       programs: Programs
+      meta_title: Best %{city_name}%{additional_city_text} Schools | %{city_and_state}School Ratings | Best Schools
+      meta_description: >-
+        Best %{city_name} schools listed by %{city_name} school districts. Browse best elementary, middle, and high schools private and public schools by grade level in %{city_name}, %{state_text} (%{state_abbrev}).

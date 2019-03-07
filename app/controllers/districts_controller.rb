@@ -68,11 +68,12 @@ class DistrictsController < ApplicationController
 
   def districts_title
     additional_district_text = state.downcase == 'dc' ? ', DC' : ''
-    "#{district_record.name.gs_capitalize_words}#{additional_district_text} School District in #{district_record.city}, #{district_record.state}. | GreatSchools"
+
+    t('controllers.districts_controller.meta_title', district_name: district_record.name.gs_capitalize_words, additional_district_text: additional_district_text, city: district_record.city, state: district_record.state)
   end
 
   def districts_description
-    "Information to help parents choose the right public school for their children in the #{district_record.name.gs_capitalize_words}."
+    t('controllers.districts_controller.meta_description', district_name: district_record.name.gs_capitalize_words)
   end
 
   def districts_state_text
