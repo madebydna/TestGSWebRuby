@@ -26,7 +26,7 @@ class Load < ActiveRecord::Base
 
   def self.data_type_ids_to_loads(data_type_ids, configuration, subset_load_ids = nil)
     dtis = data_type_ids.join(',')
-    sli = subset_load_ids.present? ? subset_load_ids.join(',') : nil
+    sli = subset_load_ids.presence&.join(',')
     find_by_sql("select loads.id,
       loads.data_type_id,
       loads.configuration,
@@ -44,7 +44,7 @@ class Load < ActiveRecord::Base
 
   def self.data_type_tags_to_loads(data_type_tags, configuration, subset_load_ids = nil)
     dtts = data_type_tags.is_a?(Array) ? data_type_tags.join(',') : data_type_tags
-    sli = subset_load_ids.present? ? subset_load_ids.join(',') : nil
+    sli = subset_load_ids.presence&.join(',')
     find_by_sql("select loads.id,
       loads.data_type_id,
       loads.configuration,
@@ -69,28 +69,15 @@ class Load < ActiveRecord::Base
   def self.with_configuration_string(config)
     config_all = ['all', '']
     return '' if config_all.include?(config)
-    q = []
-    if config.is_a?(Array)
-      config.each do | c |
-        q << "loads.configuration like '%#{c}%'"
-      end
-    else
-      q << "loads.configuration like '%#{config}%'"
-    end
+    q = config.map{ | c | "loads.configuration like '%#{c}%'" }
     ' and (' + q.join(' or ') + ')'
   end
 
   # used by feed test description cache builds
   def self.with_configuration(config)
-    return where('') if config == 'all'
-    q = []
-    if config.is_a?(Array)
-      config.each_with_index  do | c, i |
-        q << "loads.configuration like '%#{c}%'"
-      end
-    else
-      q << "loads.configuration like '%#{config}%'"
-    end
+    config_all = ['all', '']
+    return where('') if config_all.include?(config)
+    q = config.map{ | c | "loads.configuration like '%#{c}%'" }
     where(q.join(' or '))
   end
 
