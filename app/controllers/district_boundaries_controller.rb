@@ -9,11 +9,11 @@ class DistrictBoundariesController < ApplicationController
   end
 
   def meta_title
-    'What School District Are You In? District Boundary Map | GreatSchools'
+    t('district_boundaries.controller.meta_title')
   end
 
   def meta_description
-    'See what school district you are in by providing your zip code or address in our interactive map.'
+    t('district_boundaries.controller.meta_description')
   end
 
   def open_graph

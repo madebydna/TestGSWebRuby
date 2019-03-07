@@ -1,5 +1,8 @@
 es:
   district_boundaries:
     show:
-      heading: See What School District You Are In
-      subheading_html: See what school district you are in and research the schools in your neighborhood with our interactive map tool. Enter an address to see what schools public, private, to charter schools are available. Go ahead and give it a spin.
+      heading: Vea En Qué Distrito Escolar Estas
+      subheading_html: Vea en qué distrito escolar se encuentra e investigue las escuelas en tu vecindario con nuestro mapa interactivo. Ingrese una dirección para ver qué escuelas públicas, privadas y escuelas chárter están disponibles. Adelante, pruébalo.
+    controller:
+      meta_title: ¿En qué distrito escolar estás? Mapa de límites del distrito | GreatSchools
+      meta_description: Vea en qué distrito escolar te encuentras ingresando tu código postal o dirección en nuestro mapa interactivo.

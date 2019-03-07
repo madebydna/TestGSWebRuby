@@ -33,9 +33,17 @@ en:
         <div>Calendar</div>
         <p><span>Sources&#58;</span> Tandem</p>
       </div>
+    districts: Districts
+    schools_in_district: Schools in district
+    school_grade: School Grade
+    additional_school_type: Additional school type
+    enter_an_address_to_see_schools: Enter an address to see schools
+    search_or_click_map_for_districts: Search or click map for districts
+    view_in_map: View in map
     event: Event
     website: Website
     homes_for_sale: Homes for sale
+    nearby_homes_for_sale: Nearby homes for sale
     nearby homes for sale & rent: nearby homes for sale & rent
     Mile: Mile
     Miles: Miles
@@ -94,7 +102,9 @@ en:
     School type and level: School type and level
     schools: schools
     school districts: school districts
+    Public school: Public school
     Public schools: Public schools
+    Private school: Private school
     Private schools: Private schools
     Public & private schools: Public & private schools
     Public charter schools: Public charter schools
@@ -158,6 +168,7 @@ en:
       charter: charter
       private: private
       public: public
+    search: Search
     search_form:
       long_placeholder: Find a great school
       short_placeholder: City, zip, address or school
@@ -205,6 +216,10 @@ en:
       Add a review: Add a review
     State average: State average
     too_many_schools_error_html: '<strong>You&#39ve already selected 4 schools to compare.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspCompare schools.</a>'
+    not_rated_school: Not rated school
+    school_boundary: School boundary
+    district_boundary: District boundary
+    view_legend: View legend
     view_less: View less »
     view_more: View more »
     weak_fit: Weak fit

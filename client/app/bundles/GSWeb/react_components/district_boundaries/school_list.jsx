@@ -82,7 +82,7 @@ class SchoolList extends React.Component {
               onClick={this.onClickMap(school)}
               className="view-school-in-map-link"
             >
-              <span className="icon icon-location active" />View in map
+              <span className="icon icon-location active" />{t('view_in_map')}
             </a>
             {homesForSaleHref && (
               <a
@@ -111,7 +111,7 @@ class SchoolList extends React.Component {
       return (
         <section className={`school-list ${  this.props.className}`}>
           <SpinnyWheel>
-            <h3>Schools in district</h3>
+            <h3>{t('schools_in_district')}</h3>
             {this.renderSchools()}
           </SpinnyWheel>
         </section>
@@ -119,7 +119,7 @@ class SchoolList extends React.Component {
     } 
       return (
         <section className={`school-list ${  this.props.className}`}>
-          <h3>Schools in district</h3>
+          <h3>{t('schools_in_district')}</h3>
           {this.renderSchools()}
         </section>
       );
