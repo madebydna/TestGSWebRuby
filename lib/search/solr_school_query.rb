@@ -111,16 +111,16 @@ module Search
       end
     end
 
-    private
-
-    attr_reader :client
-
     def valid_static_sort_fields
       %w[name rating].tap do |array|
         array << 'relevance' if q.present?
         array << 'distance' if response.results.any?(&:distance) || (lat.present? && lon.present?)
       end
     end
+
+    private
+
+    attr_reader :client
 
     def default_sort_name
       if @q.present?

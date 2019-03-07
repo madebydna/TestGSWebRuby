@@ -54,7 +54,7 @@ const ratingFieldDictionary = Object.keys(ratingDictionary.es).reduce(
 
 const breakdownDictionary = {
   en: {
-    'African American': 'Black',
+    'Black': 'African American',
     All: 'All students',
     Multiracial: 'Two or more races',
     'Native American': 'American Indian/Alaska Native',
