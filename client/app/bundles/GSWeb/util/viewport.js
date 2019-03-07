@@ -170,12 +170,10 @@ export function keepInViewport(
     setTop = true,
     setBottom = true,
     shrink = false,
+    hideIfNoSpace = false
   } = {}
 ) {
-  // save the target element's originally defined relative top
-  if (initialTop === null && window.document.querySelector(selector)) {
-    initialTop = relativeToViewportTop(window.document.querySelector(selector)).top;
-  }
+  let initialVisibility = null;
 
   const updateElementPosition = function updateElementPosition() {
     const target = window.document.querySelector(selector);
@@ -188,9 +186,16 @@ export function keepInViewport(
     if (!target) {
       return;
     }
+    target.style.visibility = '';
+    // save the target element's originally defined relative top and display property
     if (initialTop === null) {
       initialTop = targetRelativeToViewport.top;
     }
+    if(initialVisibility === null) {
+      initialVisibility = target.style.visibility;
+    }
+    let newVisibility = initialVisibility;
+
     if (setTop) {
       const minTop = elementsAbove.reduce(
         (max, e) => Math.max(max, relativeToViewportTop(e).bottom),
@@ -223,10 +228,14 @@ export function keepInViewport(
         } 
         if (overlap > 0) {
           newRelativeTop -= overlap;
+          if(hideIfNoSpace) {
+            newVisibility = 'hidden';
+          }
         }
       }
     }
 
+    target.style.visibility = newVisibility;
     if (newRelativeTop !== null) {
       target.style.top = `${newRelativeTop}px`
     }

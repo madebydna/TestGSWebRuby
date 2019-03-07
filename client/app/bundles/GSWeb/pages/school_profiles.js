@@ -210,7 +210,8 @@ $(function() {
     },
     elementsBelowFunc: () => [].slice.call(window.document.querySelectorAll('.js-Profiles_Third_Ad-wrapper')),
     setTop: true,
-    setBottom: true
+    setBottom: true,
+    hideIfNoSpace: true
   });
 
 
