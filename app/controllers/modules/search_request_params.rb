@@ -215,7 +215,7 @@ module SearchRequestParams
   end
 
   def city_browse?
-    state && city && !district
+    state.present? && city.present? && district.blank?
   end
 
   def zip_code_search?
