@@ -73,8 +73,6 @@ class DistrictsController < ApplicationController
   end
 
   def districts_description
-    # "Information to help parents choose the right public school for their children in the #{district_record.name.gs_capitalize_words}."
-
     t('controllers.districts_controller.meta_description', district_name: district_record.name.gs_capitalize_words)
   end
 
