@@ -6,6 +6,7 @@ import PersonBar from 'react_components/visualizations/person_bar';
 import BasicDataModuleRow from 'react_components/school_profiles/basic_data_module_row';
 import PlainNumber from 'react_components/equity/graphs/plain_number';
 import RatingWithBar from 'react_components/equity/graphs/rating_with_bar';
+import BarGraphCustomRanges from 'react_components/equity/graphs/bar_graph_custom_ranges';
 import NoDataModuleCta from 'react_components/no_data_module_cta';
 import InfoCircle from 'react_components/info_circle';
 import InfoTextAndCircle from 'react_components/info_text_and_circle'
@@ -178,6 +179,8 @@ export default class DataModule extends React.Component {
               </BasicDataModuleRow>)
             }
           </div>
+        } else if (display_type == 'mixed_variety'){
+          component = this.createMixedDataComponent(values);
         } else {
           component = <div>
             {values.map((value, index) =>
@@ -191,6 +194,47 @@ export default class DataModule extends React.Component {
       }
     }
     return null;
+  }
+
+  createMixedDataComponent(values){
+    let customScoreRanges = ["Average SAT score", "Calificación media de los SAT", "Average ACT score", "Calificación media de ACT"];
+    let dataRows = <div>
+      {values.map((value,index) => {
+        if (customScoreRanges.indexOf(value.breakdown) >= 0){
+          return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                  <BarGraphCustomRanges {...value} />
+                 </BasicDataModuleRow>;
+        }else{
+          switch (value.display_type){
+            case 'plain':
+              return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                      <PlainNumber {...value} />
+                     </BasicDataModuleRow>;
+            case 'person':
+              return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                       <PersonBar {...value} />
+                     </BasicDataModuleRow>;
+            case 'person reversed':
+              return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                       <PersonBar {...value} invertedRatings={true} />
+                     </BasicDataModuleRow>;
+            case 'person_gray':
+              return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                       <PersonBar {...value} use_gray={true} />
+                     </BasicDataModuleRow>;
+            case 'rating':
+              return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                       <RatingWithBar {...value} />
+                     </BasicDataModuleRow>;
+            default:
+              return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                       <BarGraphBase {...value} />
+                     </BasicDataModuleRow>;
+          }
+        }
+      })}
+    </div>
+    return dataRows;
   }
 
   handleTabClick(index) {

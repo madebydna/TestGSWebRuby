@@ -38,6 +38,7 @@ es:
     school_grade: Grado escolar
     additional_school_type: Tipos de escuelas adicionales
     enter_an_address_to_see_schools: Escribe una dirección para ver las escuelas
+    search_or_click_map_for_districts: Busca o haga clic en el mapa para los distritos escolares
     view_in_map: Vea en el mapa
     event: Evento
     website: Página web
@@ -100,7 +101,9 @@ es:
     School type and level: Tipo de escuela y grado
     schools: escuelas
     school districts: Distritos escolares
+    Public school: Escuela pública
     Public schools: Escuelas públicas
+    Private school: Escuela privada
     Private schools: Escuelas privadas
     Public & private schools: Escuelas públicas y privadas
     Public charter schools: Escuelas públicas chárter
@@ -158,7 +161,9 @@ es:
     school_types:
       Private: Privada
       Public charter: Charter pública
+      Charter: Charter pública
       Public district: Distrito pública
+      Public: Distrito pública
       charter: charter
       private: privada
       public: pública
@@ -211,6 +216,9 @@ es:
       Add a review: Agrega un comentario
     State average: Promedio estatal
     too_many_schools_error_html: '<strong>Ya ha seleccionado 4 escuelas para comparar.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspComparar las escuelas.</a>'
+    not_rated_school: Escuela sin clasificación
+    school_boundary: Límite de la escuela
+    district_boundary: Límite de el distrito escolar
     view_legend: Vea la leyenda
     view_less: Ver menos »
     view_more: Ver más »

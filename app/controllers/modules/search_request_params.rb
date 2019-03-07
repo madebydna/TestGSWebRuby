@@ -77,6 +77,15 @@ module SearchRequestParams
   end
 
   def radius
+    r = radius_param || 5
+    if max_radius
+      [max_radius, r].min
+    else
+      r
+    end
+  end
+
+  def max_radius
     radius_param || default_radius
   end
 
@@ -135,7 +144,7 @@ module SearchRequestParams
   def city_record
     return nil unless city
     return @_city_record if defined? @_city_record
-    @_city_object = City.get_city_by_name_and_state(city, state).first
+    @_city_object = City.get_city_by_name_and_state(city, state)
   end
 
 
@@ -206,7 +215,7 @@ module SearchRequestParams
   end
 
   def city_browse?
-    state && city && !district
+    state.present? && city.present? && district.blank?
   end
 
   def zip_code_search?
@@ -328,6 +337,10 @@ module SearchRequestParams
 
   def my_school_list?
     school_list == 'msl'
+  end
+
+  def ratings
+    params[:overall_gs_rating] || []
   end
 
   def default_view

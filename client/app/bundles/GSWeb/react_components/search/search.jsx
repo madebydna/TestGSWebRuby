@@ -100,12 +100,7 @@ class Search extends React.Component {
                   <DistanceFilter distance={distance} onChange={onChange} />
               ) : null
             }
-            sortSelect={
-              <SortSelect
-                includeDistance={this.props.shouldIncludeDistance}
-                includeRelevance={this.props.shouldIncludeRelevance}
-              />
-            }
+            sortSelect={<SortSelect />}
             resultSummary={this.props.resultSummary}
             listMapTableSelect={
               <ListMapTableSelect

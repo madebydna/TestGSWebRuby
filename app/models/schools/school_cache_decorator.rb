@@ -11,16 +11,16 @@ class SchoolCacheDecorator
     @cache_data = cache_data
   end
 
-  def method_missing(meth, *args)
-    if @school.respond_to?(meth) 
-      @school.send(meth, *args)
+  def method_missing(meth, *args, &block)
+    if @school.respond_to?(meth, true)
+      @school.send(meth, *args, &block)
     else
       super
     end
   end
 
-  def respond_to?(meth)
-    @school.respond_to?(meth)
+  def respond_to_missing?(*args)
+    @school.respond_to?(*args) || super
   end
 
   def zip

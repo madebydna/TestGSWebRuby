@@ -6,7 +6,7 @@ class ThankYouForReviewEmail < AbstractExactTargetMailer
 
   def self.deliver_to_user(user, school, school_review_page_url)
     exact_target_email_attributes = {
-      HTML__reviewLink: "<a href=\"#{school_review_page_url}\">your review</a>",
+      HTML__reviewLink: school_review_page_url,
       schoolName: school.name
     }
 

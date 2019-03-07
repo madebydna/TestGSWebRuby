@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-describe Search::SolrIndexer do
+describe Solr::Indexer do
 
   let(:solr_client_double) do
     double(add: nil, commit: nil, optimize: nil)
   end
-  let(:indexer) { Search::SolrIndexer.new(solr_client: solr_client_double) }
+  let(:indexer) { Solr::Indexer.new(solr_client: solr_client_double) }
 
-  describe '.with_rsolr_client' do
-    it 'returns a SolrIndexer with a client connection' do
+  describe '.with_solr_url' do
+    it 'returns a Indexer with a client connection' do
       unimportant_url = 'a url'
       mock_rsolr = double
       expect(mock_rsolr).to receive(:connect).with(url: unimportant_url).and_return(solr_client_double)
       stub_const('RSolr', mock_rsolr)
-      indexer = Search::SolrIndexer.with_rsolr_client(unimportant_url)
+      indexer = Solr::Indexer.with_solr_url(unimportant_url)
       expect(indexer.client).to be(solr_client_double)
     end
   end
@@ -53,9 +53,9 @@ describe Search::SolrIndexer do
     end
 
     context 'when given SchoolDocument' do
-      let(:indexable_class) { Search::SchoolDocument }
+      let(:indexable_class) { Solr::SchoolDocument }
       it 'tells the client to delete all items of that type' do
-        expected_query = "type:#{Search::SchoolDocument.type}"
+        expected_query = "type:#{Solr::SchoolDocument.type}"
         expect(solr_client_double).to receive(:delete_by_query).with(expected_query)
         subject
       end

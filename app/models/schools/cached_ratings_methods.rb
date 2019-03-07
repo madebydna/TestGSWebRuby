@@ -3,6 +3,7 @@ module CachedRatingsMethods
   NO_RATING_TEXT = 'NR'
   GREATSCHOOLS_RATINGS_NAMES = ['GreatSchools rating','Test score rating', 'Student growth rating', 'College readiness rating', 'Climate rating']
   HISTORICAL_RATINGS_KEYS = %w(year school_value_float)
+  CSA_BADGE = 'CSA Badge'
 
   # 151: Advanced Course Rating
   # 155: Test Score Rating
@@ -143,6 +144,17 @@ module CachedRatingsMethods
     test_scores_rating_hash_map_to_old_format(rating_object_for_key('Test Score Rating'), 'Test Score Rating')
   end
 
+  # Returns hash of breakdown to test score rating (int)
+  # Using latest ratings
+  def test_score_ratings_by_breakdown
+    return {} unless ratings_by_type['Test Score Rating'].present?
+    ratings_by_type['Test Score Rating']
+      .having_most_recent_date
+      .each_with_object({}) do |dv, ratings|
+        ratings[dv.breakdown] = dv.school_value_as_int
+      end
+  end
+
   def test_scores_all_rating_hash
     test_scores_rating_hash_loop_through_and_update(ratings_by_type['Test Score Rating'], 'Test Score Rating')
   end
@@ -228,9 +240,9 @@ module CachedRatingsMethods
   end
 
   def csa_award_winner_years
-    return [] unless ratings_by_type['CSA Badge'].present?
+    return [] unless ratings_by_type[CSA_BADGE].present?
 
-    ratings_by_type['CSA Badge']
+    ratings_by_type[CSA_BADGE]
       .map { |award| award[:source_year] }
   end
 

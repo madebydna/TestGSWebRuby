@@ -2,7 +2,7 @@ class SearchSuggestDistrict < SearchSuggester
   include UrlHelper
 
   def get_results(solr_options)
-    Solr.new.district_name_suggest(solr_options)
+    Solr::Solr.new.district_name_suggest(solr_options)
   end
 
   def process_result(district_search_result)

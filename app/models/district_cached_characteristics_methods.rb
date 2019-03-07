@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module DistrictCachedCharacteristicsMethods
-
   def district_characteristics
     cache_data.fetch('district_characteristics', {})
   end

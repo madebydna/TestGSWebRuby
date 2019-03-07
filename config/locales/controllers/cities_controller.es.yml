@@ -7,3 +7,6 @@ es:
       choosing_a_school: Cómo escoger una escuela
       enrollment_information: Información de Inscripción
       programs: Programas
+      meta_title: Las mejores escuelas en %{city_name}%{additional_city_text} | %{city_and_state}Clasificaciones de escuelas | Las mejores escuelas
+      meta_description: >-
+        Las mejores escuelas en %{city_name} numeradas por los distritos escolares de %{city_name}. Busque las mejores escuelas primarias, intermedias y secundarias privadas y públicas por nivel de grado en %{city_name}, %{state_text} (%{state_abbrev}).

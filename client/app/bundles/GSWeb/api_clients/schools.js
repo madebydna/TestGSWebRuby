@@ -3,6 +3,8 @@ import { without } from 'lodash';
 import { parse } from 'query-string';
 
 export function findById(id, options) {
+  const currentParams = parse(window.location.search);
+  options.lang = currentParams.lang;
   return $.ajax({
     url: `/gsr/api/schools/${id.toString()}`,
     data: options,
@@ -13,6 +15,8 @@ export function findById(id, options) {
 }
 
 export function findByDistrict(districtId, options) {
+  const currentParams = parse(window.location.search);
+  options.lang = currentParams.lang;
   return $.ajax({
     url: '/gsr/api/schools/',
     data: Object.assign(
@@ -28,6 +32,8 @@ export function findByDistrict(districtId, options) {
 }
 
 export function findByLatLon(lat, lon, options) {
+  const currentParams = parse(window.location.search);
+  options.lang = currentParams.lang;
   return $.ajax({
     url: '/gsr/api/schools/',
     data: Object.assign(
@@ -45,6 +51,8 @@ export function findByLatLon(lat, lon, options) {
 }
 
 export function findNearLatLon(lat, lon, radius, options) {
+  const currentParams = parse(window.location.search);
+  options.lang = currentParams.lang;
   return $.ajax({
     url: '/gsr/api/schools/',
     data: Object.assign(

@@ -12,7 +12,7 @@ class District < ActiveRecord::Base
   end
   
   def city_record
-    City.get_city_by_name_and_state(city, state).first
+    City.get_city_by_name_and_state(city, state)
   end
 
   def self.find_by_state_and_ids(state, ids = [])

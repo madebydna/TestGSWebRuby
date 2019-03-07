@@ -8,6 +8,12 @@ module Search
       super(*args)
     end
 
+    def response
+      OpenStruct.new(
+        facet_fields: []
+      )
+    end
+
     def search 
       @_search ||= begin
         PageOfResults.new(
