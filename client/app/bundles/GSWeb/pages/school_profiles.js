@@ -204,6 +204,8 @@ $(function() {
       // get list of titles in reverse order. reverse() mutates the array
       let titles = [].slice.call(window.document.querySelectorAll('.section-title'));
       let titlesReversed = [].slice.call(window.document.querySelectorAll('.section-title')).reverse();
+      // we want the ad below the section title that's farthest down the document, but
+      // one that's within 480px of the top of the viewport
       let titleToPutAdBelow = titlesReversed.find(el => relativeToViewport(el).top < 480);
       titleToPutAdBelow = titleToPutAdBelow || firstInViewport(titles);
       return titleToPutAdBelow || [];
