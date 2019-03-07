@@ -222,20 +222,26 @@ class DataValue < ActiveRecord::Base
   # test scores gsdata - state
   def self.find_by_state_and_data_type_tags_and_proficiency_is_one(state, data_type_tags, configuration= default_configuration)
     state_load_ids = filter_query(state, nil, nil, nil, nil).pluck(:load_id).uniq
-    loads = Load.data_type_tags_to_loads(data_type_tags, configuration, state_load_ids)
-    dvs = state_and_district_values.
-      from(
-            DataValue.filter_query(state,
-                                   nil,
-                                   nil,
-                                   load_ids(loads),
-                                   true), :data_values)
-        .with_breakdowns
-        .with_breakdown_tags
-        .with_academics
-        .with_academic_tags
-        .group('data_values.id')
-    GsdataCaching::LoadDataValue.new(loads, dvs).merge
+    a = []
+    if state_load_ids.present?
+      loads = Load.data_type_tags_to_loads(data_type_tags, configuration, state_load_ids)
+      if loads.present?
+        dvs = state_and_district_values.
+          from(
+                DataValue.filter_query(state,
+                                       nil,
+                                       nil,
+                                       load_ids(loads),
+                                       true), :data_values)
+            .with_breakdowns
+            .with_breakdown_tags
+            .with_academics
+            .with_academic_tags
+            .group('data_values.id')
+        a = GsdataCaching::LoadDataValue.new(loads, dvs).merge
+      end
+    end
+    a
   end
 
   # gsdata - district
@@ -260,20 +266,26 @@ class DataValue < ActiveRecord::Base
   # test scores gsdata - district
   def self.find_by_district_and_data_type_tags_and_proficiency_is_one(state, district_id, data_type_tags, configuration= default_configuration)
     subset_load_ids = filter_query(state, district_id, nil).pluck(:load_id).uniq
-    loads = Load.data_type_tags_to_loads(data_type_tags, configuration, subset_load_ids)
-    dvs = state_and_district_values.
-      from(
-        DataValue.filter_query(state,
-                                district_id,
-                                nil,
-                                load_ids(loads),
-                                true), :data_values)
-          .with_breakdowns
-          .with_breakdown_tags
-          .with_academics
-          .with_academic_tags
-          .group('data_values.id')
-    GsdataCaching::LoadDataValue.new(loads, dvs).merge
+    a = []
+    if subset_load_ids.present?
+      loads = Load.data_type_tags_to_loads(data_type_tags, configuration, subset_load_ids)
+      if loads.present?
+        dvs = state_and_district_values.
+          from(
+            DataValue.filter_query(state,
+                                    district_id,
+                                    nil,
+                                    load_ids(loads),
+                                    true), :data_values)
+              .with_breakdowns
+              .with_breakdown_tags
+              .with_academics
+              .with_academic_tags
+              .group('data_values.id')
+        a = GsdataCaching::LoadDataValue.new(loads, dvs).merge
+      end
+    end
+    a
   end
 
   # test scores gsdata - state - feeds
