@@ -15,7 +15,7 @@ class CompareSchoolsController < ApplicationController
       breakdown: ethnicity,
       sort: sort_name,
       tableHeaders: table_headers,
-    }.merge(Api::SortOptionSerializer.new(page_of_results.sortable_fields).to_hash)
+    }.merge(Api::SortOptionSerializer.new(solr_query.valid_static_sort_fields).to_hash)
     @radius = radius
     set_meta_tags(MetaTag::CompareMetaTags.new(self).meta_tag_hash)
   end

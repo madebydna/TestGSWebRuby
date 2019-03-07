@@ -17,7 +17,7 @@ class Breakdown < ActiveRecord::Base
     end
   end
 
-  def old_schema_ethnicity_to_ethnicity(ethnicity)
+  def self.canonical_ethnicity_name(ethnicity)
     h = {
       'Black' => "African American",
       'All' => "All students",
@@ -26,7 +26,7 @@ class Breakdown < ActiveRecord::Base
       'Hawaiian Native/Pacific Islander' => "Pacific Islander",
       'Native Hawaiian or Other Pacific Islander' => "Pacific Islander"
     }
-    ethnicity ? (h[ethnicity] || ethnicity) : h
+    h[ethnicity] || ethnicity
   end
 
   def self.unique_ethnicity_names
