@@ -27,7 +27,7 @@ class Api::DistrictSerializer
         zip: district['zipcode'],
         city: district['city']
       },
-      rating: rating && rating != 'NR' ? rating : nil,
+      # rating: rating && rating != 'NR' ? rating : nil,
       state: district.state,
       type: 'district',
       links: {
