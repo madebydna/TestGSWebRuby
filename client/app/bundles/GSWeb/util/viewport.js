@@ -242,8 +242,8 @@ export function keepInViewport(
   };
 
   onDomContentLoaded(() => {
-    window.addEventListener("scroll", throttle(updateElementPosition, 40));
-    window.addEventListener("resize", throttle(updateElementPosition, 40));
+    window.addEventListener("scroll", throttle(updateElementPosition, 10));
+    window.addEventListener("resize", throttle(updateElementPosition, 10));
   })
 
   updateElementPosition();
