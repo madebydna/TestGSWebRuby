@@ -104,7 +104,7 @@ module Search
 
     # Solr::Query
     def q
-      if @q.present?
+      if @q.present? && !browse?
         require_non_optional_words(@q)
       else
         default_query_string
