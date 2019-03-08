@@ -53,8 +53,8 @@ module Search
       [
         "sortable_name:#{q_escape_spaces}*",
         "name:(#{q_downcased}*)",
-        "city_name:(#{q_no_whitespace} #{q_no_whitespace}*)^5.0",
-        "district_name:#{q_escape_spaces}*^8.0"
+        "city_name:(#{require_non_optional_words(q_downcased)}*)^5.0",
+        "district_name:(#{require_non_optional_words(q_downcased)}*)^8.0"
       ].tap do |fragments|
         fragments << "zipcode:#{possible_zip}*" if possible_zip
       end
