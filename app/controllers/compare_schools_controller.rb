@@ -14,8 +14,8 @@ class CompareSchoolsController < ApplicationController
       schools: serialized_schools,
       breakdown: ethnicity,
       sort: sort_name,
-      tableHeaders: table_headers
-    }
+      tableHeaders: table_headers,
+    }.merge(Api::SortOptionSerializer.new(solr_query.valid_static_sort_fields).to_hash)
     @radius = radius
     set_meta_tags(MetaTag::CompareMetaTags.new(self).meta_tag_hash)
   end
@@ -24,11 +24,7 @@ class CompareSchoolsController < ApplicationController
 
   # SearchControllerConcerns
   def solr_query
-    if params[:solr7]
-      query_type = Search::SolrSchoolQuery
-    else
-      query_type = Search::LegacySolrSchoolQuery
-    end
+    query_type = Search::SolrSchoolQuery
     query_type.new(
       city: city,
       state: state,

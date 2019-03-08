@@ -12,7 +12,7 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
         DataValue.find_by_district_and_data_type_tags_and_proficiency_is_one(district.state,
                                                                              district.id,
                                                                              DATA_TYPE_TAGS,
-                                                                             %w(none web feeds))
+                                                                             %w(all))
         # DataValue.state_and_district_values
         #   .from(
         #     DataValue.state_and_district(
@@ -109,7 +109,7 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
   def state_results_hash
     @_state_results_hash ||= begin
       state_values = DataValue
-                       .find_by_state_and_data_type_tags_and_proficiency_is_one(district.state, DATA_TYPE_TAGS, 'all')
+                       .find_by_state_and_data_type_tags_and_proficiency_is_one(district.state, DATA_TYPE_TAGS, %w(all) )
       state_values.each_with_object({}) do |result, hash|
         state_key = DataValue.datatype_breakdown_year(result)
         hash[state_key] = result

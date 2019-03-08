@@ -57,6 +57,7 @@ class SearchProvider extends React.Component {
     mslStates: gonSearch.mslStates,
     stateSelect: gonSearch.stateSelect,
     sort: gonSearch.sort,
+    sortOptions: gonSearch.sortOptions,
     page: gonSearch.page || 1,
     pageSize: gonSearch.pageSize,
     totalPages: gonSearch.totalPages,
@@ -86,6 +87,7 @@ class SearchProvider extends React.Component {
     mslStates: PropTypes.arrayOf(PropTypes.string),
     stateSelect: PropTypes.string,
     sort: PropTypes.string,
+    sortOptions: PropTypes.array,
     page: PropTypes.number,
     pageSize: PropTypes.number,
     totalPages: PropTypes.number,
@@ -205,19 +207,19 @@ class SearchProvider extends React.Component {
 
   savedSchoolsFindIndex(schoolKey) {
     return getSavedSchoolsFromCookie().findIndex(
-        key =>
-            key.id.toString() === schoolKey.id.toString() &&
-            key.state === schoolKey.state
+      key =>
+        key.id.toString() === schoolKey.id.toString() &&
+        key.state === schoolKey.state
     );
   }
 
-  displayHeartMessage(schoolKey){
-    let objectHeart = $('.header_un  a.saved-schools-nav').filter(':visible');
-    if(this.savedSchoolsFindIndex(schoolKey) > -1) {
-      let options = {
+  displayHeartMessage(schoolKey) {
+    const objectHeart = $('.header_un  a.saved-schools-nav').filter(':visible');
+    if (this.savedSchoolsFindIndex(schoolKey) > -1) {
+      const options = {
         content: t('Saved!')
-      }
-      showMessageTooltip(objectHeart, options)
+      };
+      showMessageTooltip(objectHeart, options);
     }
   }
 
@@ -229,21 +231,29 @@ class SearchProvider extends React.Component {
     let locationKey = `${this.props.layout}-${this.props.view}`
     logSchool(schoolKey, (removeSchool ? 'remove' : 'add'), locationKey)
     setCookie(COOKIE_NAME, savedSchools);
-    if(isSignedIn()){
-      if(schoolKeyIdx > -1){
+    if (isSignedIn()) {
+      if (schoolKeyIdx > -1) {
         deleteSchool(schoolKey)
           .done(e => {
             e.status === 400 && alert("There was an error deleting a school from your account.\n Please try again later");
             e.status === 501 && alert("There was an issue deleting the school from your account.\n Please log out and sign back in. Thank you.");
           })
-          .fail(e => alert("There was an error deleting a school from your account.\n Please try again later"))
-      }else{
+          .fail(e =>
+            alert(
+              'There was an error deleting a school from your account.\n Please try again later'
+            )
+          );
+      } else {
         addSchool(schoolKey)
           .done(e => {
             e.status === 400 && alert("There was an error adding a school to your account.\n Please try again later");
             e.status === 501 && alert("There was an issue adding the school to your account.\n Please log out and sign back in. Thank you.");
           })
-          .fail(e => alert("There was an error adding a school to your account.\n Please try again later"))
+          .fail(e =>
+            alert(
+              'There was an error adding a school to your account.\n Please try again later'
+            )
+          );
       }
     }
     analyticsEvent('search', 'saveSchool', schoolKeyIdx > -1);
@@ -337,11 +347,13 @@ class SearchProvider extends React.Component {
   };
 
   updateStateFilter(state) {
-    this.props.updatePage(1)
-    this.setState({
-      stateSelect: state
-    },
-    () => this.updateSchools())
+    this.props.updatePage(1);
+    this.setState(
+      {
+        stateSelect: state
+      },
+      () => this.updateSchools()
+    );
   }
 
   render() {
@@ -428,6 +440,7 @@ class SearchProvider extends React.Component {
               <SortContext.Provider
                 value={{
                   sort: this.props.sort,
+                  sortOptions: this.props.sortOptions,
                   onSortChanged: compose(
                     this.scrollToTop,
                     this.props.updateSort,
@@ -445,11 +458,11 @@ class SearchProvider extends React.Component {
                   }}
                 >
                   <SavedSchoolContext.Provider
-                      value={{
-                        saveSchoolCallback: this.handleSaveSchoolClick
-                      }}
+                    value={{
+                      saveSchoolCallback: this.handleSaveSchoolClick
+                    }}
                   >
-                  {this.props.children}
+                    {this.props.children}
                   </SavedSchoolContext.Provider>
                 </ChooseTableContext.Provider>
               </SortContext.Provider>

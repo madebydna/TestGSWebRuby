@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Remodal from 'react_components/remodal';
+import { capitalize, t } from 'util/i18n';
 
 const DistrictBoundariesLegend = ({ legendContainerForCtaId, ...rest }) => {
   const content = (
@@ -8,22 +9,22 @@ const DistrictBoundariesLegend = ({ legendContainerForCtaId, ...rest }) => {
       <div id="" style={{ display: 'none' }} />
       <ul className="legend">
         <li>
-          <span />District
+          <span />{t('District')}
         </li>
         <li>
-          <span />Private school
+          <span />{t('Private school')}
         </li>
         <li>
-          <span />Public school
+          <span />{t('Public school')}
         </li>
         <li>
-          <span />Not rated school
+          <span />{t('not_rated_school')}
         </li>
         <li>
-          <span />School boundary
+          <span />{t('school_boundary')}
         </li>
         <li>
-          <span />District boundary
+          <span />{t('district_boundary')}
         </li>
       </ul>
       <div className="attribution">
@@ -34,7 +35,7 @@ const DistrictBoundariesLegend = ({ legendContainerForCtaId, ...rest }) => {
   );
   return (
     <Remodal content={content}>
-      <button>View legend</button>
+      <button>{t('view_legend')}</button>
     </Remodal>
   );
 };

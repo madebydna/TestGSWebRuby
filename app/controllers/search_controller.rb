@@ -24,6 +24,7 @@ class SearchController < ApplicationController
       props[:district] = district_record.name if district_record
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
+      props.merge!(Api::SortOptionSerializer.new(page_of_results.sortable_fields).to_hash)
       props[:breadcrumbs] = should_include_breadcrumbs? ? search_breadcrumbs : []
       props[:searchTableViewHeaders] = {
           'Overview' => overview_header_hash,
@@ -31,6 +32,7 @@ class SearchController < ApplicationController
           'Academic' => academic_header_hash
       }
     end
+    gon.search['facetFields'] = populated_facet_fields
     set_meta_tags(choose_meta_tag_implementation.new(self).meta_tag_hash)
     set_ad_targeting_props
     set_page_analytics_data

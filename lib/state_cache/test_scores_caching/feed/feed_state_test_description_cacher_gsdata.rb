@@ -21,7 +21,7 @@ class TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata < TestScores
 
   def unique_load_ids
     ids = Load.with_data_types.with_data_type_tags('state_test')
-        .with_configuration('feeds')
+        .with_configuration( %w(feeds) )
         .map(&:id)
         .uniq
     filter_to_most_recent_load_id_by_data_type_id(ids)

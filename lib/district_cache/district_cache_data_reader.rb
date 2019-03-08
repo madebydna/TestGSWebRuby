@@ -19,7 +19,7 @@ class DistrictCacheDataReader
   end
 
   def characteristics_data(*keys)
-    decorated_district.characteristics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
+    decorated_district.district_characteristics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
       array_of_hashes = array_of_hashes.select {|h| h.has_key?('source')}
       hash[k] = array_of_hashes if array_of_hashes.present?
     end

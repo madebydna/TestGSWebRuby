@@ -16,9 +16,9 @@
 
   <form id="command" name="searchForm" class="dn" action="/widget/map/" method="post" onsubmit="return GS.widget.submitSearch();">
     <input id="filter_p_value" name="preschoolFilterChecked" type="hidden" value="false">
-    <input id="filter_e_value" name="elementaryFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:elementaryFilterChecked) || @params_hash[:elementaryFilterChecked] == 'true') ? true : false %>">
-    <input id="filter_m_value" name="middleFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:middleFilterChecked) || @params_hash[:middleFilterChecked] == 'true') ? true : false %>">
-    <input id="filter_h_value" name="highFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:highFilterChecked) || @params_hash[:highFilterChecked] == 'true') ? true : false %>">
+    <input id="filter_e_value" name="elementaryFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:elementaryFilterChecked) || @params_hash[:elementaryFilterChecked] == 'true') %>">
+    <input id="filter_m_value" name="middleFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:middleFilterChecked) || @params_hash[:middleFilterChecked] == 'true') %>">
+    <input id="filter_h_value" name="highFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:highFilterChecked) || @params_hash[:highFilterChecked] == 'true') %>">
     <input id="width" name="width" type="hidden" value="<%= @params_hash[:width] %>">
     <input id="height" name="height" type="hidden" value="<%= @params_hash[:height] %>">
     <input id="textColor" name="textColor" type="hidden" value="<%= @params_hash[:textColor] %>">

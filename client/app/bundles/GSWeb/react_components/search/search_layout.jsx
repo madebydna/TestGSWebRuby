@@ -220,7 +220,7 @@ class SearchLayout extends React.Component {
 
           {this.props.distanceFilter ? (
             <span className="menu-item">
-              <span className="label">Distance:</span>
+              <span className="label">{t('Distance')}:</span>
               <span>{this.props.distanceFilter}</span>
             </span>
           ) : null}
@@ -306,7 +306,7 @@ class SearchLayout extends React.Component {
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
           {this.props.breadcrumbs}
-          <div className="pagination-summary" dangerouslySetInnerHTML={{ __html: this.props.resultSummary }}/>
+          <div className="pagination-summary" dangerouslySetInnerHTML={{ __html: this.props.resultSummary }} />
           {this.shouldRenderTable() ? (
             <div className="menu-item">{this.props.chooseTableButtons}</div>
           ) : null}

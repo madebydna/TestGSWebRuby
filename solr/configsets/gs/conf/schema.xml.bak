@@ -620,29 +620,43 @@ any data added to them will be ignored outright.  -->
             when adding a document.
         -->
 
-        <field indexed="true" stored="true" name="id"                      type="string" required="true" />
-        <field indexed="true" stored="true" name="type"                    type="string" />
-        <field indexed="true" stored="true" name="created_d"               type="date" default="NOW" />
-
-        <field indexed="true" stored="true" name="name_text"               type="text_ss" />
-        <field indexed="true" stored="true" name="sortable_name_s"         type="string" />
-        <field indexed="true" stored="true" name="city_s"                  type="text_location_synonyms" />
-        <field indexed="true" stored="true" name="school_district_id_i"    type="int" />
-        <field indexed="true" stored="true" name="school_district_name_s"  type="string" />
-        <field indexed="true" stored="true" name="street_s"                type="string" />
-        <field indexed="true" stored="true" name="zipcode_s"               type="string" />
-        <field indexed="true" stored="true" name="county_s"                type="string" />
-        <field indexed="true" stored="true" name="state_s"                 type="string" />
-        <field indexed="true" stored="true" name="latlon_ll"               type="latLonPointSpatialField" />
-        <field indexed="true" stored="true" name="summary_rating_i"        type="int" docValues="true" />
-
-        <field indexed="true" stored="true" name="entity_type_s"           type="string" />
-        <field indexed="true" stored="true" name="level_codes_s"           type="string" multiValued="true" />
-
-        <field indexed="true" stored="true" name="city_name_text"          type="text_ss" />
-        <field indexed="true" stored="true" name="district_name_text"      type="text_ss" />
-
-        <field indexed="true" stored="true" name="number_of_schools"       type="int" />
+        <field indexed="true"  stored="true"  type="string" required="true"           name="id"                                                                       />
+        <field indexed="true"  stored="true"  type="string"                           name="type"                                                                     />
+        <field indexed="true"  stored="true"  type="date" default="NOW"               name="created_d"                                                                />
+        <field indexed="true"  stored="true"  type="text_ss"                          name="name_text"                                                                />
+        <field indexed="true"  stored="true"  type="string"                           name="sortable_name_s"                                                          />
+        <field indexed="true"  stored="true"  type="text_location_synonyms"           name="city_s"                                                                   />
+        <field indexed="true"  stored="true"  type="int"                              name="school_district_id_i"                                                     />
+        <field indexed="true"  stored="true"  type="string"                           name="school_district_name_s"                                                   />
+        <field indexed="true"  stored="true"  type="string"                           name="street_s"                                                                 />
+        <field indexed="true"  stored="true"  type="string"                           name="zipcode_s"                                                                />
+        <field indexed="true"  stored="true"  type="string"                           name="county_s"                                                                 />
+        <field indexed="true"  stored="true"  type="string"                           name="state_s"                                                                  />
+        <field indexed="true"  stored="true"  type="latLonPointSpatialField"          name="latlon_ll"                                                                />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="summary_rating_i"                                                         />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_i"                                                     />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_asian_i"                                               />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_african_american_i"                                    />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_filipino_i"                                            />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_hawaiian_i"                                            />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_hispanic_i"                                            />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_native_american_i"                                     />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_native_hawaiian_or_other_pacific_islander_i"           />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_other_ethnicity_i"                                     />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_pacific_islander_i"                                    />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_race_unspecified_i"                                    />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_two_or_more_races_i"                                   />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_white_i"                                               />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="test_scores_rating_economically_disadvantaged_i"                                               />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="academic_progress_rating_i"                                               />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="college_readiness_rating_i"                                               />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="advanced_courses_rating_i"                                                />
+        <field indexed="true"  stored="true"  type="int" docValues="true"             name="equity_overview_rating_i"                                                 />
+        <field indexed="true"  stored="true"  type="string"                           name="entity_type_s"                                                            />
+        <field indexed="true"  stored="true"  type="string" multiValued="true"        name="level_codes_s"                                                            />
+        <field indexed="true"  stored="true"  type="text_ss"                          name="city_name_text"                                                           />
+        <field indexed="true"  stored="true"  type="text_ss"                          name="district_name_text"                                                       />
+        <field indexed="true"  stored="true"  type="int"                              name="number_of_schools"                                                        />
 
         <!-- school fields -->
         <!-- <field name="school_spell" type="textSpell"/> -->

@@ -1,12 +1,12 @@
 import React from 'react';
 import { t, capitalize } from 'util/i18n';
 
-const getHomesForSaleHref = (state, address) => {
+const getHomesForSaleHref = (state, address, campaignCode = 'schoolsearch') => {
   if (state && address && address.zip) {
     // let homesForSaleHref = null;
     return `https://www.zillow.com/${state}-${
       address.zip.split('-')[0]
-    }?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=schoolsearch`;
+    }?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=${campaignCode}`;
     // return homesForSaleHref;
   }
   return null;

@@ -37,16 +37,31 @@ module SearchControllerConcerns
     page_of_results.present?
   end
 
+  def facet_fields
+    @_facet_fields = query.response.facet_fields
+  end
+
+  def populated_test_score_fields
+    Solr::SchoolDocument.rating_field_name_to_breakdown.keys & populated_facet_fields
+  end
+
+  def populated_facet_fields
+    facet_fields.each_with_object([]) do |(field, values), fields|
+      fields << field if values.each_slice(2).any? { |val, count| count > 0 }
+    end.map { |f| f.sub(/_i$/, '') }
+  end
+
   def query
-    if filtered_school_keys != nil && filtered_school_keys.length == 0
-      null_query
-    elsif point_given? || area_given? || q.present?
-      solr_query
-    elsif state.present? && (school_id.present? || district_id.present?)
-      school_sql_query
-    else
-      solr_query
-    end
+    @_query ||=
+      if filtered_school_keys != nil && filtered_school_keys.length == 0
+        null_query
+      elsif point_given? || area_given? || q.present?
+        solr_query
+      elsif state.present? && (school_id.present? || district_id.present?)
+        school_sql_query
+      else
+        solr_query
+      end
   end
 
   def attendance_zone_query
@@ -77,11 +92,7 @@ module SearchControllerConcerns
   end
 
   def solr_query
-    if params[:solr7]
-      query_type = Search::SolrSchoolQuery
-    else
-      query_type = Search::LegacySolrSchoolQuery
-    end
+    query_type = Search::SolrSchoolQuery
     query_type.new(
       city: city,
       state: state,
@@ -180,7 +191,7 @@ module SearchControllerConcerns
     return schools unless point_given? || area_given?
 
     schools.each do |school|
-      if school.lat && school.lon
+      if school.lat && school.lon && !school.singleton_class.method_defined?(:distance)
         distance = 
           Geo::Coordinate.new(school.lat, school.lon).distance_to(
             Geo::Coordinate.new(lat.to_f, lon.to_f)

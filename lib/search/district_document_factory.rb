@@ -15,7 +15,7 @@ module Search
             [state].product(ids) # [state, id] pairs
           end
       lazy_enum.map do |state, district_id|
-        DistrictDocument.new(state: state, district_id: district_id)
+        Solr::DistrictDocument.new(state: state, district_id: district_id)
       end
     end
 

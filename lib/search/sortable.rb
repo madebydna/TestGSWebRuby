@@ -11,10 +11,6 @@ module Search
 
     def sort_name=(name)
       return unless name
-      options = valid_sort_names.join(', ')
-      unless sort_name_valid?(name)
-        raise ArgumentError.new("Sort name '#{name}' not present in (#{options}) in #{self.class.name}")
-      end
       @sort_name = name
     end
 
@@ -35,9 +31,9 @@ module Search
       map_sort_direction(sort_name, @sort_direction) || default_sort_direction
     end
 
-    def sort_name_valid?(name)
-      valid_sort_names.include?(name)
-    end
+    # def sort_name_valid?(name)
+    #   valid_sort_names.include?(name)
+    # end
 
     def sort_direction_valid?(direction)
       valid_sort_directions.include?(direction)
@@ -46,17 +42,17 @@ module Search
     private
 
     def valid_sort_directions
-      ['asc', 'desc']
+      ["asc", "desc"]
     end
-    
+
     def sort_name
       @sort_name || default_sort_name
     end
 
-    def valid_sort_names
-      raise NotImplementedError.new("#valid_sort_names not implemented in #{self.class.name}")
-      # e.g. ['rating', 'school_name']
-    end
+    # def valid_sort_names
+    #   raise NotImplementedError.new("#valid_sort_names not implemented in #{self.class.name}")
+    #   # e.g. ['rating', 'school_name']
+    # end
 
     def default_sort_name
       nil

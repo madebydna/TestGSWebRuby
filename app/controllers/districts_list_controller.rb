@@ -34,7 +34,7 @@ class DistrictsListController < ApplicationController
 
   def set_seo_meta_tags
     set_meta_tags title: meta_title,
-                  canonical: districts_list_url(state_name: dcl.state_names[:routing], state_abbr: state)
+                  canonical: remove_query_params_from_url(districts_list_url(state_name: dcl.state_names[:routing], state_abbr: state), [:lang])
   end
 
 end

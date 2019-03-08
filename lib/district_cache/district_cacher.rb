@@ -41,7 +41,7 @@ class DistrictCacher
     {
         feed_test_scores_gsdata: TestScoresCaching::Feed::FeedDistrictTestScoresCacherGsdata,
         test_scores_gsdata: TestScoresCaching::DistrictTestScoresCacherGsdata,
-        ratings: DistrictRatingsCacher,
+        # ratings: DistrictRatingsCacher,
         district_schools_summary: DistrictSchoolsSummary::DistrictSchoolsSummaryCacher,
         district_directory: DistrictDirectoryCacher,
         feed_district_characteristics: FeedDistrictCharacteristicsCacher,

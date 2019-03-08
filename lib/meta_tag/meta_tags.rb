@@ -43,7 +43,7 @@ module MetaTag
     end
 
     def robots
-      'noindex, nofollow' unless is_browse_url? && any_results?
+      'noindex' unless is_browse_url? && any_results?
     end
 
     def prev_url

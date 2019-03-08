@@ -23,6 +23,9 @@ $border-color: #dbe6eb;
     a {
       text-decoration: none;
     }
+    .ad-column {
+      display: none;
+    }
     .menu-bar {
       display: none;
     }
@@ -31,14 +34,19 @@ $border-color: #dbe6eb;
       .closed {
         display: none;
       }
-      .list-column{
+      .list-column {
         float: right !important;
+        width: 100%;
       }
       .right-column {
-        padding-top: 330px;
+        // padding-top: 330px;
         float: left !important;
+        width: 100%;
         .right-column-fixed {
           top: 75px !important;
+          clear: both;
+          page-break-inside: avoid;
+          position: relative;
         }
       }
     }
@@ -62,6 +70,8 @@ $border-color: #dbe6eb;
       display: block;
       height: 10px;
       page-break-after: always;
+      width: 100%;
+      clear: both;
     }
   }
   #compare-schools {

@@ -42,3 +42,9 @@ en:
         Our K-12 newsletters offer parents research-backed insights, tips, and actionable ways to support
         their child’s growth and development throughout the school year, starting in kindergarten and continuing
         all the way through the end of 12th grade.
+    controller:
+      meta_title: 'School Ratings & Reviews for Public & Private Schools: GreatSchools'
+      og_title: K-12 school quality information and parenting resources
+      og_description: >-
+        We're an independent nonprofit that provides parenting resources and in-depth school quality information families can use to choose the right school and support their child's learning and development.
+      twitter_description: View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education.

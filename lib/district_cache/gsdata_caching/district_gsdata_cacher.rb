@@ -17,6 +17,7 @@ class DistrictGsdataCacher < DistrictCacher
   # 149: Percentage of teachers with less than three years experience
   # 152: Number of advanced courses per student
   # 154: Percentage of Students Enrolled
+  # 318: Percent of Students who Participated in the SAT/ACT in grades 9-12
 
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
 

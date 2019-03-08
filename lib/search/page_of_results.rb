@@ -15,13 +15,16 @@ module Search
       )
     end
 
-    def initialize(results, query:nil, total:, offset:, limit:)
+    attr_accessor :sortable_fields
+
+    def initialize(results, query:nil, total:, offset:, limit:, sortable_fields: [])
       # by default delegate to results, by way of SimpleDelegator
       super(results) 
       @query = query
       self.total = total
       self.offset = offset
       self.limit = limit
+      self.sortable_fields = sortable_fields
     end
 
     def pagination_summary
