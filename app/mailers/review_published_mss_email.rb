@@ -15,7 +15,7 @@ class ReviewPublishedMssEmail < AbstractExactTargetMailer
   end
 
   def trigger_email
-    school_url = school_reviews_url(@school)
+    school_url = school_reviews_url(@school, anchor: 'Reviews')
     @school.mss_subscribers.map(&:email).uniq.each_slice(EMAIL_BATCH_SIZE) do |emails|
       ReviewPublishedMssEmail.deliver(emails,
                                       reviewUrl: school_url,
