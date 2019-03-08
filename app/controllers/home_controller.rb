@@ -15,8 +15,8 @@ class HomeController < ApplicationController
     # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
     set_meta_tags title: t('home.controller.meta_title'),
                   og: {
-                      title: "K-12 school quality information and parenting resources",
-                      description: t('home.controller.meta_description'),
+                      title: t('home.controller.og_title'),
+                      description: t('home.controller.og_description'),
                       site_name: 'GreatSchools.org',
                       image: {
                         url: asset_full_url('assets/share/logo-ollie-large.png'),
@@ -26,14 +26,14 @@ class HomeController < ApplicationController
                         type: 'image/png',
                         alt: 'GreatSchools is a non profit organization providing school quality information'
                       },
-                      type: 'place',
+                      type: 'website',
                       url: home_url
                   },
                   twitter: {
                       image: asset_full_url('assets/share/GreatSchoolsLogo-social-optimized.png'),
                       card: 'Summary',
                       site: '@GreatSchools',
-                      description: 'View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education.'
+                      description: t('home.controller.twitter_description')
                   }
     @homepage_banner_prop = PropertyConfig.get_property('homePageGreatKidsMilestoneBannerActive', 'false')
     gon.pagename = "Homepage"

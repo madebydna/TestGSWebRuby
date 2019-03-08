@@ -49,5 +49,7 @@ es:
         Kinder y continuando hasta el final del 12º grado.
     controller:
       meta_title: 'Clasificaciones de escuelas y evaluaciones para escuelas públicas y privadas: GreatSchools'
-      meta_description: >-
+      og_title: 'Clasificaciones de escuelas y evaluaciones para escuelas públicas y privadas: GreatSchools'
+      og_description: >-
         Somos una organización independiente sin fines de lucro que proporciona recursos para padres e información sobre la calidad de la escuela que las familias pueden usar para elegir la escuela adecuada y apoyar el aprendizaje y desarrollo de sus hijos.
+      twitter_description: 'Clasificaciones de escuelas y evaluaciones para escuelas públicas y privadas: GreatSchools'
