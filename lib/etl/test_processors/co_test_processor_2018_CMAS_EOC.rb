@@ -9,19 +9,20 @@ class COTestProcessor2018CMASEOC < GS::ETL::TestProcessor
 
   map_gsdata_breakdown = {
     'All Students' => 1,
-    # 'Black/African American' => 17,
-    # 'Hispanic' => 19,
-    # 'Asian' => 16,
-    # 'White' => 21,
-    # 'Native American/Alaskan Native' => 18,
-    # 'Native Hawaiian/Pacific Islander' => 20,
-    # '2 or More Races' => 22,
-    # 'Economically Disadvantaged' => 23,
-    # 'Non-Economically Disadvantaged' => 24,
-    # 'LEP' => 32,
-    # 'Special Education' => 27,
-    # 'Female' => 26,
-    # 'Male' => 25
+    'Black' => 17,
+    'Hispanic' => 19,
+    'Asian' => 16,
+    'White' => 21,
+    'American Indian or Alaska Native' => 18,
+    'Hawaiian/Pacific Islander' => 20,
+    'Two or More Races' => 22,
+    'Free/Reduced Lunch Eligible' => 23,
+    'Not Free/Reduced Lunch Eligible' => 24,
+    'LEP - Limited English Proficient' => 32,
+    'IEP' => 27,
+    'No IEP' => 30,
+    'Female' => 26,
+    'Male' => 25
   }
 
   map_gsdata_academic = {
@@ -49,6 +50,81 @@ class COTestProcessor2018CMASEOC < GS::ETL::TestProcessor
       subject: 'Science'
     })
   end
+  source("frl_ela.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'English Language Arts'
+    })
+  end
+  source("frl_math.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'Mathematics'
+    })
+  end
+  source("frl_science.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'Science'
+    })
+  end
+  source("gender_ela.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'English Language Arts'
+    })
+  end
+  source("gender_math.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'Mathematics'
+    })
+  end
+  source("gender_science.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'Science'
+    })
+  end
+  source("lep_ela.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'English Language Arts'
+    })
+  end
+  source("lep_math.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'Mathematics'
+    })
+  end
+  source("lep_science.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'Science'
+    })
+  end
+  source("ethnicity_ela.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'English Language Arts'
+    })
+  end
+  source("ethnicity_math.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'Mathematics'
+    })
+  end
+  source("ethnicity_science.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'Science'
+    })
+  end  
+  source("iep_ela.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'English Language Arts'
+    })
+  end
+  source("iep_math.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'Mathematics'
+    })
+  end
+  source("iep_science.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      subject: 'Science'
+    })
+  end
 
   shared do |s|
     s.transform("Rename columns", MultiFieldRenamer,
@@ -57,9 +133,16 @@ class COTestProcessor2018CMASEOC < GS::ETL::TestProcessor
         content: :subject,
         n_of_valid_scores: :number_tested,
         district_code: :district_id,
+        district_number: :district_id,
         school_code: :school_id,
+        school_number: :school_id,
         level: :entity_level,
-        p_met_or_exceeded_expectations: :value_float
+        p_met_or_exceeded_expectations: :value_float,
+        free_reduced_lunch_status: :breakdown,
+        gender: :breakdown,
+        language_proficiency: :breakdown,
+        ethnicity: :breakdown,
+        special_program: :breakdown
       })
     .transform('Fill missing default fields', Fill, {
       year: 2018,
@@ -72,8 +155,10 @@ class COTestProcessor2018CMASEOC < GS::ETL::TestProcessor
       description: 'In 2017-2018, students in Colorado took the CMAS assessment for English Language Arts, Math, and Science.'
     })
     .transform("Skip number_tested < 16", DeleteRows, :number_tested, '< 16')
+    .transform("Skip * values", DeleteRows, :value_float, '*')
+    .transform("Skip lep breakdowns", DeleteRows, :breakdown, 'NEP - Non English Proficient','FEP - Fluent English Proficient','PHLOTE/FELL/NA','Unreported','Not Reported')
     .transform("Assign grade and sbueject", WithBlock) do |row|
-      if row[:grade].include?('Mathematics') or row[:grade].include?('English Language Arts') 
+      if row[:grade].include?('Mathematics') or row[:grade].include?('English Language Arts') or row[:grade].include?('ELA') 
         row[:grade] = row[:grade][-1]
       elsif row[:grade] == 'All Grades'
         row[:grade] = 'All'
@@ -89,6 +174,15 @@ class COTestProcessor2018CMASEOC < GS::ETL::TestProcessor
       end
       row
     end
+    .transform("Tag delete data", WithBlock) do |row|
+      if (row[:grade] != 'All' and row[:subject] == 'Science' and row[:breakdown] == 'IEP') or 
+        (row[:grade] != 'All' and row[:subject] == 'Science' and row[:breakdown] == 'No IEP') or 
+        (row[:grade] != 'All' and row[:subject] == 'Science' and row[:breakdown] == 'LEP - Limited English Proficient') 
+        row[:value_float] = 'delete'
+      end
+      row
+    end
+    .transform("Skip delete values", DeleteRows, :value_float, 'delete')
     .transform("Adding column gsdata breakdown_id from breadown", HashLookup, :breakdown, map_gsdata_breakdown, to: :breakdown_gsdata_id)
     .transform("Adding column gsdata academics_id from subject", HashLookup, :subject, map_gsdata_academic, to: :academic_gsdata_id)
     .transform("Adding column gsdataproficiency_band_id from proficiency band", HashLookup, :proficiency_band, map_gsdata_prof_band_id, to: :proficiency_band_gsdata_id)
