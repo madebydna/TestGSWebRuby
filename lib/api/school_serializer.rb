@@ -66,7 +66,7 @@ class Api::SchoolSerializer
       h[:enrollment] = enrollment&.to_i if enrollment
       h[:parentRating] = five_star_rating if five_star_rating
       h[:numReviews] = num_reviews if num_reviews
-      h[:distance] = distance if distance
+      h[:distance] = distance.round(2) if distance
       h[:studentsPerTeacher] = students_per_teacher if students_per_teacher
       h[:subratings] = subratings if subratings
       h[:ethnicityInfo] = ethnicity_information if ethnicity_information

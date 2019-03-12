@@ -4,6 +4,13 @@ module Solr
 
     attr_accessor :field_list, :filters, :extra_solr_params
 
+    QUERY_TYPE_BOOSTS = {
+      'school-search' => {
+        qf: 'entity_type^3.5 zipcode^3.0 name^2.5 city^2.5 district_name^2.5 state^1.0 school_name_synonyms',
+        pf: 'zipcode^5.0 name^4.5 city^4.5 district_name^4.5 street^2.3'
+      }
+    }
+
     def params
       fq = filters.clone
       fq << eq('document_type', document_class.document_type) if document_class
@@ -19,11 +26,15 @@ module Solr
         sort: sort
       }.tap do |params|
         params[:'facet.field'] = facet_fields if facet_fields.present?
-      end.merge(extra_solr_params || {})
+      end.merge(query_type_boost_params).merge(extra_solr_params || {})
 
       adjustments.each_with_object(h) do |block, adjusted_params|
         block.call(adjusted_params)
       end
+    end
+
+    def query_type_boost_params
+      QUERY_TYPE_BOOSTS[query_type.to_s] || {}
     end
 
     def document_class

@@ -43,6 +43,8 @@ module Solr
 
     # instance methods for each document
 
+    attr_writer :distance
+
     def unique_key
       raise "Not implemented. Define #{__method__} in #{self.class.name}"
     end
@@ -53,6 +55,12 @@ module Solr
         self.class.all_fields
       ).each_with_object({}) do |field, hash|
         hash[field.name] = send(field.attr_name)
+      end
+    end
+
+    def distance
+      if @distance
+        @distance / Query::M_TO_KM
       end
     end
   end
