@@ -8,10 +8,8 @@ module Solr
       @rsolr = rsolr
     end
 
-    def print_request(query)
-      req = @rsolr.build_request('select', query.params)
-      uri = req[:uri]
-      uri.query = req.except(:uri,:query,:method,:path,:params).to_params
+    def print_request(res)
+      uri = res.request[:uri].to_s + '&' + res.request[:data]
       puts '-' * 60
       puts "Solr query:\n"
       puts uri.to_s
@@ -21,11 +19,11 @@ module Solr
 
     def search(query)
       begin
-        print_request(query)
         res = @rsolr.post(
           'select',
           data: query.params
         )
+        print_request(res)
         docs = res.dig('response', 'docs')
         if query.document_class
           docs.map! { |doc| query.document_class.from_hash(doc) }
@@ -37,7 +35,7 @@ module Solr
           **(res['facet_counts']&.symbolize_keys || {})
         )
       rescue => e
-        puts "Exception when querying solr #{print_request(query)}"
+        puts "Exception when querying solr"
         raise e
       end
     end

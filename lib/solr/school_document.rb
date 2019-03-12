@@ -91,7 +91,6 @@ module Solr
     define_field_methods(all_fields)
 
     attr_writer :id, :type, :school, :created
-    attr_accessor :distance
 
     def initialize(state: nil, school_id: nil, school: nil)
       @state = state&.downcase

@@ -49,6 +49,7 @@ class Api::NearbySchoolsController < ApplicationController
       ratings: ratings,
       radius: 100,
       offset: offset,
+      sort_name: 'distance',
       limit: 10
     )
   end
