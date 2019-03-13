@@ -78,7 +78,7 @@ class ALTestProcessor2017ACTASPIRE < GS::ETL::TestProcessor
       proficiency_band: 'proficient and above',
       gsdata_test_data_type_id: 262,
       notes: 'DXT-2720: AL ACT Aspire',
-      description: 'In 2016-2017, students in Alabama took the ACT Aspire. The ACT Aspire is a standards-based assessment system that gauges student progression from grades 3-8, and grade 10 in english and math, and grades 5, 7, and 10 in science. TheThe ACT Aspire is administered to grades 3-8 and grade 10 students in Alabama public schools.'
+      description: 'In 2016-2017, students in Alabama took the ACT Aspire. The ACT Aspire is a standards-based assessment system that gauges student progression from grades 3-8, and grade 10 in english and math, and grades 5, 7, and 10 in science. The ACT Aspire is administered to grades 3-8 and grade 10 students in Alabama public schools.'
     })
     .transform('Rename column headers', MultiFieldRenamer,{
     system_name: :district_name,
@@ -88,33 +88,59 @@ class ALTestProcessor2017ACTASPIRE < GS::ETL::TestProcessor
     })
     .transform("Skip missing values", DeleteRows, :tested_percentage, '*')
     .transform("Skip migrant and nonmigrant", DeleteRows, :breakdown, 'Migrant', 'Non-Migrant')
+    .transform("Convert strings to numbers", WithBlock) do |row|
+      if row[:in_need_of_support_percentage] == '< 1%' || row[:in_need_of_support_percentage] == '~'
+        row[:in_need_of_support_percentage] = 'missing' 
+      else       
+        row[:in_need_of_support_percentage]=row[:in_need_of_support_percentage].to_f
+      end
+      row
+    end
+    .transform("Convert strings to numbers", WithBlock) do |row|
+      if row[:close_percentage] == '< 1%' || row[:close_percentage] == '~'
+        row[:close_percentage] = 'missing' 
+      else       
+        row[:close_percentage]=row[:close_percentage].to_f
+      end
+      row
+    end
+    .transform("Convert strings to numbers", WithBlock) do |row|
+      if row[:ready_percentage] == '< 1%' || row[:ready_percentage] == '~'
+        row[:ready_percentage] = 'missing' 
+      else       
+        row[:ready_percentage]=row[:ready_percentage].to_f
+      end
+      row
+    end
+    .transform("Convert strings to numbers", WithBlock) do |row|
+      if row[:exceeding_percentage] == '< 1%' || row[:exceeding_percentage] == '~'
+        row[:exceeding_percentage] = 'missing' 
+      else       
+        row[:exceeding_percentage]=row[:exceeding_percentage].to_f
+      end
+      row
+    end
     .transform("Calc prof and above", WithBlock) do |row|
-      if row[:ready_percentage]=~ /^\/d/ and row[:exceeding_percentage]=~ /^\/d/
-        row[:value_float] = row[:ready_percentage].to_f+row[:exceeding_percentage].to_f
-      elsif row[:in_need_of_support_percentage]=~ /^\/d/ and row[:close_percentage]=~ /^\/d/
-        row[:value_float] = 100 - row[:in_need_of_support_percentage].to_f - row[:close_percentage].to_f
+      if row[:ready_percentage].is_a?(Numeric) && row[:exceeding_percentage].is_a?(Numeric)
+        row[:value_float] = row[:ready_percentage]+row[:exceeding_percentage]
+      elsif row[:in_need_of_support_percentage].is_a?(Numeric) && row[:close_percentage].is_a?(Numeric)
+        row[:value_float] = 100 - row[:in_need_of_support_percentage] - row[:close_percentage] 
       end
       row
     end
     .transform("fix special cases for prof and above", WithBlock) do |row|
-          if row[:value_float] < 0
+          if row[:value_float].nil?
+            row[:value_float]=row[:value_float]
+          elsif row[:value_float] < 0
             row[:value_float] = 0
           elsif row[:value_float] > 100
             row[:value_float] = 100
-          elsif 0 <= row[:value_float] <= 1
+          elsif row[:value_float].between?(0,1)
             row[:value_float]=row[:value_float].round(2)
           end
      row
     end
     .transform("Skip missing prof and above values", DeleteRows, :value_float, nil)
-    .transform("Make breakdown strings", WithBlock) do |row|
-      row[:breakdown] = row[:breakdown].to_s
-      row
-    end
-    .transform("Make subject strings", WithBlock) do |row|
-      row[:subject] = row[:subject].to_s
-      row
-    end
     .transform("Assign entity level", WithBlock) do |row|
       if row[:school_id] == '0000' && row[:district_id] == '000'
         row[:entity_level] = 'state'
