@@ -469,7 +469,7 @@ export default class SearchBox extends React.Component {
                 ))
               }
             </Selectable>
-            <div className="search-input-box" style={{ flexGrow: 2 }}>
+            <div className="search-input-box">
               {this.inputBox({ open, close })}
               {this.renderResetSearchTermButton() &&
                 this.resetSearchTermButton(close)}
@@ -514,7 +514,7 @@ export default class SearchBox extends React.Component {
               }}
             >
               {/* DIV IS REQUIRED FOR CAPTUREOUTSIDECLICK TO GET A PROPER REF */}
-              <div className="search-input-box" style={{ flexGrow: 2 }}>
+              <div className="search-input-box">
                 {this.inputBox({ open, close })}
                 {this.renderResetSearchTermButton() &&
                   this.resetSearchTermButton(close)}
