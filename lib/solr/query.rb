@@ -70,7 +70,7 @@ module Solr
     end
 
     def eq(field, value)
-      "#{field}:#{escape_spaces(value)}"
+      "#{field}:\"#{value}\""
     end
 
     def in(field, values)
