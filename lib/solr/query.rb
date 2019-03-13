@@ -64,7 +64,7 @@ module Solr
     def spatial_params(lat, lon, radius, lat_lon_field)
       {
         pt: "#{lat},#{lon}",
-        d: radius,
+        d: radius * M_TO_KM,
         sfield: lat_lon_field
       }
     end
