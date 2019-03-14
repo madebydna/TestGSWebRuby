@@ -12,7 +12,7 @@ module Search
 
     def initialize(q)
       self.q = q
-      @limit = 250
+      @limit = 5
       @searcher = Solr::Searcher.new
     end
 
@@ -49,11 +49,24 @@ module Search
       q_downcased.gsub(' ', '\ ')
     end
 
+    def extra_solr_params
+      {
+        'group' => true,
+        'group.query' => [
+          "document_type:School",
+          "document_type:City",
+          "document_type:District"
+        ],
+        'group.limit' => limit
+      }
+    end
+
     def query_fragments
       [
         "sortable_name:#{q_escape_spaces}*",
         "name:(#{q_downcased}*)",
         "city_name:(#{require_non_optional_words(q_downcased)}*)^5.0",
+        "city_name:(\"#{q_downcased}*\")^5.0",
         "district_name:(#{require_non_optional_words(q_downcased)}*)^8.0"
       ].tap do |fragments|
         fragments << "zipcode:#{possible_zip}*" if possible_zip
