@@ -8,12 +8,14 @@ import { translateWithDictionary } from 'util/i18n';
 const dictionary = {
   en: {
     rating: 'GreatSchools Rating',
+    testscores: 'Test Scores',
     name: 'School name',
     relevance: 'Relevance',
-    distance: 'Distance'
+    distance: 'Distance',
   },
   es: {
     rating: 'Calificación de GreatSchools',
+    testscores: 'Resultados de exámenes',
     name: 'Nombre de escuela',
     relevance: 'Pertinencia',
     distance: 'Distancia'

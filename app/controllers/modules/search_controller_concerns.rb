@@ -109,7 +109,9 @@ module SearchControllerConcerns
       offset: offset,
       limit: limit,
       sort_name: sort_name,
-      with_rating: with_rating
+      with_rating: with_rating,
+      test_scores_rating: breakdown.present? ? (1..10).to_a : nil,
+      rating_subgroup: (/^all\b/i.match?(breakdown) ? nil : breakdown)
     )
   end
 
@@ -125,10 +127,19 @@ module SearchControllerConcerns
     end
     if cache_keys.any?
       schools = SchoolCacheQuery.decorate_schools(schools, *cache_keys)
-      schools = filter_by_ethnicity_test_score_rating(schools).compact if breakdown.present?
-      schools = sort_by_ethnicity_test_score(schools) if breakdown.present? && (sort_name.nil? || sort_name == 'testscores')
+      add_test_score_rating_for_ethnicity_method(schools) if breakdown.present?
     end
     schools
+  end
+
+  def add_test_score_rating_for_ethnicity_method(schools)
+    subgroup = breakdown.downcase
+    subgroup = nil if /^all\b/i.match?(subgroup)
+    test_scores_field = Solr::SchoolDocument.rating_subgroup_field_name('test_scores_rating', subgroup)
+
+    schools.each do |school|
+      school.define_singleton_method(:test_score_rating_for_ethnicity) { school.send(:try, test_scores_field) }
+    end
   end
 
   def cache_keys
