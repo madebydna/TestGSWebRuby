@@ -140,8 +140,28 @@ module SchoolProfiles
         data_values = hashes.flatten.compact
         data_values.select! {|dv| included_data_types.include?(dv['data_type'])}
         data_values.reject! {|dv| dv['year'].to_i < DATA_CUTOFF_YEAR} if cache_accessor == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS
+        data_values = select_post_secondary_max_year(data_values) if cache_accessor == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS
         data_values.sort_by {|o| included_data_types.index(o['data_type'])}
       end
+    end
+
+    def select_post_secondary_max_year(data_values)
+      # get max year for the post secondary group
+      # select on this group of entries based on max year
+      # map and return value or nil then compact
+      # content CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS
+      # only filter by max year on this list POST_SECONDARY_GROUP_MAX_YEAR_FILTER
+      # require 'pry'; binding.pry;
+      # data_values.reject! {|dv| dv['year'].to_i < DATA_CUTOFF_YEAR}
+      post_secondary_data = data_values.select { | dv | POST_SECONDARY_GROUP_MAX_YEAR_FILTER.include?(dv['data_type']) }
+      max_year = post_secondary_data.map(&:year).compact.max
+      data_values.map do | dv |
+        if POST_SECONDARY_GROUP_MAX_YEAR_FILTER.include?(dv['data_type'])
+          dv['year'] == max_year ? dv : nil
+        else
+          dv
+        end
+      end.compact
     end
 
     def data_values
@@ -229,7 +249,7 @@ module SchoolProfiles
 
     def narration_for_value
       lambda do |c|
-        translation = I18n.t(c.data_type, scope: 'lib.college_readiness.narration.college_success', default: nil).html_safe
+        translation = I18n.t(c.data_type, scope: 'lib.college_readiness.narration.college_success', default: nil)&.html_safe
         if translation.present? && c.school_value.present? && c.state_average.present?
           "<li>#{comparison_word(c.data_type, c.school_value, c.state_average)} #{translation}</li>"
         end

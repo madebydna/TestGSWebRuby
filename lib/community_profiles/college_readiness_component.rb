@@ -293,7 +293,7 @@ module CommunityProfiles
 
     def narration_for_value
       lambda do |c|
-        translation = I18n.t(c.data_type, scope: 'lib.college_readiness.narration.college_success', default: nil).html_safe
+        translation = I18n.t(c.data_type, scope: 'lib.college_readiness.narration.college_success', default: nil)&.html_safe
         if translation.present? && c.school_value.present? && c.state_average.present?
           "<li>#{comparison_word(c.data_type, c.school_value, c.state_average)} #{translation}</li>"
         end
