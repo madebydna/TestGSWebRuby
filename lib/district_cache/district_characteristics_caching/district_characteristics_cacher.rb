@@ -88,7 +88,7 @@ class DistrictCharacteristicsCacher < DistrictCacher
   end
 
   def data_attributes
-    %i(breakdown district_created grade district_value source year subject_id state_average)
+    %i(breakdown district_created grade district_value source year subject_id state_average subject)
   end
 
   def build_hash_for_cache

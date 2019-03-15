@@ -268,6 +268,7 @@ export default class DataModule extends React.Component {
   activePane() {
     let dataForActiveTab = this.filteredData()[this.state.active];
 
+    // if `item.title` is undefined, then the pane buttons will not appear
     let subTabs = dataForActiveTab.data.map((item, index) => {
       let anchorLink = formatAndJoinAnchors(this.props.anchor, dataForActiveTab.anchor, item.anchor)
       return <ModuleSubTab {...item} key={index} anchorLink={anchorLink} />
@@ -346,7 +347,6 @@ export default class DataModule extends React.Component {
     if (!this.hasData() && suppressIfEmpty) {
       return null;
     }
-
     return (
       <div id={analyticsId}>
       <BasicDataModuleLayout

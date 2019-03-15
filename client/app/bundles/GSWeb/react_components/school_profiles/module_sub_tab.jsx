@@ -13,6 +13,10 @@ const ModuleSubTab = ({
   if (anchorLink.length > 0) {
     addJSHashUpdate = ' js-updateLocationHash';
   }
+  // TODO: Refactor or make new components using button groups
+  // Hide the tab if the item doesn't have a title
+  if(title === undefined) {return null;}
+
   return (
     <a
       href="javascript:void(0)"
