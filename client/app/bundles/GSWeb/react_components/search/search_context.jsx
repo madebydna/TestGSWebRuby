@@ -61,12 +61,15 @@ class SearchProvider extends React.Component {
     page: gonSearch.page || 1,
     pageSize: gonSearch.pageSize,
     totalPages: gonSearch.totalPages,
+    total: gonSearch.total,
     resultSummary: gonSearch.resultSummary,
     paginationSummary: gonSearch.paginationSummary,
     breadcrumbs: gonSearch.breadcrumbs || [],
     view: gonSearch.view || LIST_VIEW,
     searchTableViewHeaders: gonSearch.searchTableViewHeaders || {},
-    tableView: 'Overview'
+    tableViewOptions: gonSearch.tableViewOptions,
+    tableView: 'Overview',
+    csaYears: []
   };
 
   static propTypes = {
@@ -91,6 +94,7 @@ class SearchProvider extends React.Component {
     page: PropTypes.number,
     pageSize: PropTypes.number,
     totalPages: PropTypes.number,
+    total: PropTypes.number,
     resultSummary: PropTypes.string,
     paginationSummary: PropTypes.string,
     view: PropTypes.oneOf(validViews),
@@ -110,7 +114,12 @@ class SearchProvider extends React.Component {
     ),
     updateTableView: PropTypes.func.isRequired,
     searchTableViewHeaders: PropTypes.object,
-    tableView: PropTypes.string
+    tableViewOptions: PropTypes.arrayOf(PropTypes.shape({
+      key: PropTypes.string,
+      label: PropTypes.string
+    })),
+    tableView: PropTypes.string,
+    csaYears: PropTypes.arrayOf(PropTypes.number)
   };
 
   constructor(props) {
@@ -118,6 +127,7 @@ class SearchProvider extends React.Component {
     this.state = {
       schools: props.schools,
       totalPages: props.totalPages,
+      total: props.total,
       resultSummary: props.resultSummary,
       paginationSummary: props.paginationSummary,
       loadingSchools: false,
@@ -149,7 +159,8 @@ class SearchProvider extends React.Component {
       !isEqual(prevProps.entityTypes, this.props.entityTypes) ||
       !isEqual(prevProps.sort, this.props.sort) ||
       !isEqual(prevProps.page, this.props.page) ||
-      !isEqual(prevProps.distance, this.props.distance)
+      !isEqual(prevProps.distance, this.props.distance) ||
+      !isEqual(prevProps.csaYears, this.props.csaYears)
     ) {
       this.updateSchools();
     }
@@ -288,7 +299,8 @@ class SearchProvider extends React.Component {
       limit: props.pageSize,
       stateSelect: this.state.stateSelect,
       extras: ['students_per_teacher', 'review_summary'],
-      locationLabel: props.locationLabel
+      locationLabel: props.locationLabel,
+      csaYears: props.csaYears
     };
   }
 
@@ -369,6 +381,8 @@ class SearchProvider extends React.Component {
           numOfSchools: this.state.schools.length,
           page: this.props.page,
           totalPages: this.state.totalPages,
+          total: this.props.total,
+          state: this.props.state,
           onPageChanged: compose(
             () => {
               this.setState({ adRefreshed: false });
@@ -400,9 +414,11 @@ class SearchProvider extends React.Component {
           locationLabel: this.props.locationLabel,
           searchTableViewHeaders: this.props.searchTableViewHeaders,
           tableView: this.props.tableView,
+          tableViewOptions: this.props.tableViewOptions,
           currentStateFilter: this.state.currentStateFilter,
           updateStateFilter: this.updateStateFilter,
-          layout: this.props.layout
+          layout: this.props.layout,
+          csaYears: this.props.csaYears
         }}
       >
         <DistanceContext.Provider

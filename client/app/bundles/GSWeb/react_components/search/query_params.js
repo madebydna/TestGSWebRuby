@@ -1,7 +1,6 @@
 import { castArray } from 'lodash';
 import { parse, stringify } from 'query-string';
 import { validViews as validSearchViews } from 'react_components/search/search_context';
-import { schoolDistricts } from '../community/toc_config';
 
 function currentQueryString() {
   return window.location.search;
@@ -127,6 +126,11 @@ export function getBreakdown() {
   return breakdown;
 }
 
+export function getCsaYears() {
+  const { csaYears } = parse(currentQueryString());
+  return csaYears ? castArray(csaYears) : undefined
+}
+
 export function queryStringWithNewView(view) {
   return getQueryStringWithUpdatedParams({ view });
 }
@@ -141,6 +145,15 @@ export function queryStringWithNewStateAndId(state, id) {
 
 export function queryStringWithNewBreakdown(breakdown) {
   return getQueryStringWithUpdatedParams({ breakdown });
+}
+
+export function queryStringWithNewCsaYears(csaYears) {
+  const existingParams = parse(currentQueryString());
+  const newParams = Object.assign(existingParams, {
+    csaYears,
+    page: parsePage(1)
+  });
+  return stringify(newParams)
 }
 
 export function queryStringWithNewDistance(distance) {
