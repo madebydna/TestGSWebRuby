@@ -40,6 +40,7 @@ module Solr
       @_rating_fields ||= (
         [].tap do |array|
           array << new_field(:summary_rating, type: FieldTypes::INTEGER) { school.great_schools_rating }
+          array << new_field(:csa_badge, type: FieldTypes::INTEGER, multi_valued: true) { school.csa_award_winner_years }
           [
             :test_scores_rating,
             :academic_progress_rating,
