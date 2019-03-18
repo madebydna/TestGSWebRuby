@@ -78,6 +78,9 @@ module Search
         array << self.in(:level_codes, level_codes.map(&:downcase)) if level_codes.present?
         array << self.in(:entity_type, entity_types.map(&:downcase)) if entity_types.present?
         array << self.in(:summary_rating, ratings) if ratings.present?
+
+        test_scores_rating_field = Solr::SchoolDocument.rating_subgroup_field_name('test_scores_rating', rating_subgroup)
+        array << self.in(test_scores_rating_field, test_scores_rating) if test_scores_rating.present?
       end
     end
 
@@ -149,7 +152,8 @@ module Search
         'rating' => 'summary_rating',
         'name' => 'sortable_name',
         'relevance' => 'score',
-        'distance' => 'geodist()'
+        'distance' => 'geodist()',
+        'testscores' => Solr::SchoolDocument.rating_subgroup_field_name('test_scores_rating', rating_subgroup)
       }[name] || name
     end
 
