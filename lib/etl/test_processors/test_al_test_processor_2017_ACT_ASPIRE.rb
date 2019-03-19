@@ -88,18 +88,27 @@ class ALTestProcessor2017ACTASPIRE < GS::ETL::TestProcessor
     })
     .transform("Skip missing values", DeleteRows, :tested_percentage, '*')
     .transform("Skip migrant and nonmigrant", DeleteRows, :breakdown, 'Migrant', 'Non-Migrant')
-    .transform("Calc prof and above, ignore missing values", WithBlock) do |row|
+    .transform("Calc prof and above", WithBlock) do |row|
       if row[:ready_percentage] =~ /^\d/ && row[:exceeding_percentage] =~ /^\d/
         row[:value_float] = row[:ready_percentage].to_f+row[:exceeding_percentage].to_f
       elsif row[:in_need_of_support_percentage] =~ /^\d/ && row[:close_percentage] =~ /^\d/
         row[:value_float] = 100 - row[:in_need_of_support_percentage].to_f - row[:close_percentage].to_f
+      else 
+        row[:value_float]=row[:exceeding_percentage]
       end
       row
     end
+    .transform("return class", WithBlock) do |row|
+       row[:class]=row[:value_float].class
+       row
+    end
+    .transform('test',WithBlock) do |row|
+        row
+        require 'byebug'
+       byebug
+    end 
     .transform("fix special cases for prof and above", WithBlock) do |row|
-          if row[:value_float].nil?
-            row[:value_float]=row[:value_float]
-          elsif row[:value_float] < 0
+          if row[:value_float] < 0
             row[:value_float] = 0
           elsif row[:value_float] > 100
             row[:value_float] = 100
@@ -107,7 +116,7 @@ class ALTestProcessor2017ACTASPIRE < GS::ETL::TestProcessor
             row[:value_float]=row[:value_float].round(2)
           end
      row
-    end
+   end
     .transform("Skip missing prof and above values", DeleteRows, :value_float, nil)
     .transform("Assign entity level", WithBlock) do |row|
       if row[:school_id] == '0000' && row[:district_id] == '000'
