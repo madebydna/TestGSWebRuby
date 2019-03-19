@@ -202,7 +202,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: '289', 
        subject: 'ela',
        academic_gsdata_id: 4,
-       grade: 3
+       grade: 3,
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -264,7 +265,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'ela',
        academic_gsdata_id: 4,
-       grade: 4
+       grade: 4, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -326,7 +328,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'ela',
        academic_gsdata_id: 4,
-       grade: 5
+       grade: 5, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -388,7 +391,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'ela',
        academic_gsdata_id: 4,
-       grade: 6
+       grade: 6, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -450,7 +454,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'ela',
        academic_gsdata_id: 4,
-       grade: 7
+       grade: 7, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -512,7 +517,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'ela',
        academic_gsdata_id: 4,
-       grade: 8
+       grade: 8, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -574,7 +580,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'ela',
        academic_gsdata_id: 4,
-       grade: 10
+       grade: 10, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -636,7 +643,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'ela',
        academic_gsdata_id: 4,
-       grade: 11
+       grade: 11, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -698,7 +706,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'math',
        academic_gsdata_id: 5,
-       grade: 3
+       grade: 3, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -760,7 +769,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'math',
        academic_gsdata_id: 5,
-       grade: 4
+       grade: 4, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -822,7 +832,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'math',
        academic_gsdata_id: 5,
-       grade: 5
+       grade: 5, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -884,7 +895,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'math',
        academic_gsdata_id: 5,
-       grade: 6
+       grade: 6, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -946,7 +958,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'math',
        academic_gsdata_id: 5,
-       grade: 7
+       grade: 7, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -1008,7 +1021,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'math',
        academic_gsdata_id: 5,
-       grade: 8
+       grade: 8, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -1076,7 +1090,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        test_data_type: 'NJ PARCC',
        gsdata_test_data_type_id: 298,
        subject: 'Algebra I',
-       academic_gsdata_id: 6
+       academic_gsdata_id: 6, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -1145,7 +1160,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        test_data_type: 'NJ PARCC',
        gsdata_test_data_type_id: 298,
        subject: 'Algebra II',
-       academic_gsdata_id: 10
+       academic_gsdata_id: 10, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -1214,7 +1230,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        test_data_type: 'NJ PARCC',
        gsdata_test_data_type_id: 298,
        subject: 'Geometry',
-       academic_gsdata_id: 8
+       academic_gsdata_id: 8, 
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
      {
@@ -1277,7 +1294,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 286,
        subject: 'Science',
        academic_gsdata_id: 19,
-       grade: 4
+       grade: 4, 
+       description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:total_prof_and_above, :total_p_scie,:total_ap_scie)
    .transform('prof and above',SumValues,:ge_prof_and_above, :ge_p_scie,:ge_ap_scie)
@@ -1353,7 +1371,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 286,
        subject: 'Science',
        academic_gsdata_id: 19,
-       grade: 4
+       grade: 4, 
+       description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:f_prof_and_above, :f_p_scie,:f_ap_scie)
    .transform('prof and above',SumValues,:m_prof_and_above, :m_p_scie,:m_ap_scie)
@@ -1423,7 +1442,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 286,
        subject: 'Science',
        academic_gsdata_id: 19,
-       grade: 4
+       grade: 4, 
+       description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:w_prof_and_above, :w_p_scie,:w_ap_scie)
    .transform('prof and above',SumValues,:b_prof_and_above, :b_p_scie,:b_ap_scie)
@@ -1505,7 +1525,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 286,
        subject: 'Science',
        academic_gsdata_id: 19,
-       grade: 4
+       grade: 4, 
+       description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:ecdis_y_prof_and_above, :ecdis_y_p_scie,:ecdis_y_ap_scie)
    .transform('prof and above',SumValues,:ecdis_n_prof_and_above, :ecdis_n_p_scie,:ecdis_n_ap_scie)
@@ -1575,7 +1596,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 286,
        subject: 'Science',
        academic_gsdata_id: 19,
-       grade: 8
+       grade: 8, 
+       description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:total_prof_and_above, :total_p_scie,:total_ap_scie)
    .transform('prof and above',SumValues,:ge_prof_and_above, :ge_p_scie,:ge_ap_scie)
@@ -1651,7 +1673,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 286,
        subject: 'Science',
        academic_gsdata_id: 19,
-       grade: 8
+       grade: 8, 
+       description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:f_prof_and_above, :f_p_scie,:f_ap_scie)
    .transform('prof and above',SumValues,:m_prof_and_above, :m_p_scie,:m_ap_scie)
@@ -1721,7 +1744,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 286,
        subject: 'Science',
        academic_gsdata_id: 19,
-       grade: 8
+       grade: 8, 
+       description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:w_prof_and_above, :w_p_scie,:w_ap_scie)
    .transform('prof and above',SumValues,:b_prof_and_above, :b_p_scie,:b_ap_scie)
@@ -1803,7 +1827,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 286,
        subject: 'Science',
        academic_gsdata_id: 19,
-       grade: 8
+       grade: 8, 
+       description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:ecdis_y_prof_and_above, :ecdis_y_p_scie,:ecdis_y_ap_scie)
    .transform('prof and above',SumValues,:ecdis_n_prof_and_above, :ecdis_n_p_scie,:ecdis_n_ap_scie)
@@ -1873,7 +1898,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 288,
        subject: 'Biology I',
        academic_gsdata_id: 22,
-       grade: 'All'
+       grade: 'All', 
+       description: 'In 2016-2017 New Jersey used the New Jersey Biology Competency Test (NJBCT) to assess students in Biology.  The New Jersey Biology Competency Test (NJBCT) is standards-based, which means it measures how well students are mastering specific skills defined by the state of New Jersey.  The goal is for all students to score at or above the proficient level on the test.'
      })
    .transform('prof and above',SumValues,:total_prof_and_above, :total_p_scie,:total_ap_scie)
    .transform('prof and above',SumValues,:ge_prof_and_above, :ge_p_scie,:ge_ap_scie)
@@ -1949,7 +1975,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 288,
        subject: 'Biology I',
        academic_gsdata_id: 22,
-       grade: 'All'
+       grade: 'All', 
+       description: 'In 2016-2017 New Jersey used the New Jersey Biology Competency Test (NJBCT) to assess students in Biology.  The New Jersey Biology Competency Test (NJBCT) is standards-based, which means it measures how well students are mastering specific skills defined by the state of New Jersey.  The goal is for all students to score at or above the proficient level on the test.'
      })
    .transform('prof and above',SumValues,:f_prof_and_above, :f_p_scie,:f_ap_scie)
    .transform('prof and above',SumValues,:m_prof_and_above, :m_p_scie,:m_ap_scie)
@@ -2019,7 +2046,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 288,
        subject: 'Biology I',
        academic_gsdata_id: 22,
-       grade: 'All'
+       grade: 'All', 
+       description: 'In 2016-2017 New Jersey used the New Jersey Biology Competency Test (NJBCT) to assess students in Biology.  The New Jersey Biology Competency Test (NJBCT) is standards-based, which means it measures how well students are mastering specific skills defined by the state of New Jersey.  The goal is for all students to score at or above the proficient level on the test.'
      })
    .transform('prof and above',SumValues,:w_prof_and_above, :w_p_scie,:w_ap_scie)
    .transform('prof and above',SumValues,:b_prof_and_above, :b_p_scie,:b_ap_scie)
@@ -2101,7 +2129,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 288,
        subject: 'Biology I',
        academic_gsdata_id: 22,
-       grade: 'All'
+       grade: 'All', 
+       description: 'In 2016-2017 New Jersey used the New Jersey Biology Competency Test (NJBCT) to assess students in Biology.  The New Jersey Biology Competency Test (NJBCT) is standards-based, which means it measures how well students are mastering specific skills defined by the state of New Jersey.  The goal is for all students to score at or above the proficient level on the test.'
      })
    .transform('prof and above',SumValues,:ecdis_y_prof_and_above, :ecdis_y_p_scie,:ecdis_y_ap_scie)
    .transform('prof and above',SumValues,:ecdis_n_prof_and_above, :ecdis_n_p_scie,:ecdis_n_ap_scie)
