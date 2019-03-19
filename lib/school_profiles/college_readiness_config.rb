@@ -37,6 +37,38 @@ module SchoolProfiles::CollegeReadinessConfig
                            'Graduates needing Math remediation in college']
 # Order matters - items display in configured order
 
+  POST_SECONDARY = ['Percent enrolled in any public in-state postsecondary institution within 12 months after graduation',
+                    'Percent enrolled in any postsecondary institution within 12 months after graduation',
+                    'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation',
+                    'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation',
+                    'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any in-state postsecondary institution within 12 months after graduation',
+                    'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any postsecondary institution within 24 months after graduation',
+                    'Percent enrolled in any postsecondary institution within 6 months after graduation',
+                    'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation',
+                    'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation']
+  SECOND_YEAR = ['Percent Enrolled in a public 4 year college and Returned for a Second Year',
+                 'Percent Enrolled in a public 2 year college and Returned for a Second Year']
+
+
+
+  POST_SECONDARY_GROUP_MAX_YEAR_FILTER = [SENIORS_FOUR_YEAR,
+                                          SENIORS_TWO_YEAR,
+                                          SENIORS_ENROLLED_OTHER,
+                                          SENIORS_ENROLLED,
+                                          GRADUATES_COLLEGE_VOCATIONAL,
+                                          GRADUATES_TWO_YEAR,
+                                          GRADUATES_FOUR_YEAR,
+                                          GRADUATES_OUT_OF_STATE,
+                                          GRADUATES_IN_STATE] + POST_SECONDARY
+
+  FORMATTING_ROUND_LESS_THAN_ONE_PERCENT = %i(round_unless_less_than_1 percent)
+  
 # characteristics cache accessors for college success pane
 # at the end of this constant we add on the remediation subgroups, which are currently set to be displayed as person_gray
   CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS = [
@@ -44,67 +76,67 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :characteristics,
       :data_key => SENIORS_ENROLLED,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => GRADUATES_COLLEGE_VOCATIONAL,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => SENIORS_FOUR_YEAR,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => SENIORS_TWO_YEAR,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => SENIORS_ENROLLED_OTHER,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => GRADUATES_TWO_YEAR,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => GRADUATES_FOUR_YEAR,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => GRADUATES_OUT_OF_STATE,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => GRADUATES_IN_STATE,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => GRADUATES_REMEDIATION,
       :visualization => 'person_gray',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => GRADUATES_PERSISTENCE,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     }
   ].concat(
     REMEDIATION_SUBGROUPS.map do |data_key|
@@ -112,9 +144,27 @@ module SchoolProfiles::CollegeReadinessConfig
         :cache => :characteristics,
         :data_key => data_key,
         :visualization => 'person_gray',
-        :formatting => [:round_unless_less_than_1, :percent]
+        :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
       }
     end
+  ).concat(
+      POST_SECONDARY.map do |data_key|
+        {
+            :cache => :characteristics,
+            :data_key => data_key,
+            :visualization => 'person',
+            :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
+        }
+      end
+  ).concat(
+      SECOND_YEAR.map do |data_key|
+        {
+            :cache => :characteristics,
+            :data_key => data_key,
+            :visualization => 'person',
+            :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
+        }
+      end
   )
 
 # characteristics cache accessors for college readiness pane
@@ -123,13 +173,13 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :characteristics,
       :data_key => FOUR_YEAR_GRADE_RATE,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => UC_CSU_ENTRANCE,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
@@ -142,7 +192,7 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :characteristics,
       :data_key => SAT_PARTICIPATION,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
@@ -161,7 +211,7 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :characteristics,
       :data_key => ACT_PARTICIPATION,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
@@ -185,7 +235,7 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :gsdata,
       :data_key => ACT_SAT_PARTICIPATION,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :gsdata,

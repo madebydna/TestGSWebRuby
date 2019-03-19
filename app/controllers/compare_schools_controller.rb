@@ -15,34 +15,16 @@ class CompareSchoolsController < ApplicationController
       breakdown: ethnicity,
       sort: sort_name,
       tableHeaders: table_headers,
-    }.merge(Api::SortOptionSerializer.new(solr_query.valid_static_sort_fields).to_hash)
+    }.merge(Api::SortOptionSerializer.new(solr_query.valid_static_sort_fields + ['testscores']).to_hash)
     @radius = radius
     set_meta_tags(MetaTag::CompareMetaTags.new(self).meta_tag_hash)
   end
 
   private
 
-  # SearchControllerConcerns
-  def solr_query
-    query_type = Search::SolrSchoolQuery
-    query_type.new(
-      city: city,
-      state: state,
-      school_keys: filtered_school_keys,
-      district_id: district_record&.id,
-      district_name: district_record&.name,
-      location_label: location_label_param,
-      level_codes: level_codes,
-      entity_types: entity_types,
-      lat: lat,
-      lon: lon,
-      radius: radius,
-      q: q,
-      offset: offset,
-      limit: limit,
-      sort_name: 'distance',
-      with_rating: with_rating
-    )
+  # SearchRequestParams
+  def sort_name
+    super || 'distance'
   end
 
   # PageAnalytics

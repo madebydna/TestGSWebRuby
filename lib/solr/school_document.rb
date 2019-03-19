@@ -70,6 +70,10 @@ module Solr
       )
     end
 
+    def self.rating_subgroup_field_name(rating_type, breakdown)
+      [rating_type, breakdown].compact.join('_').downcase.gsub(" ", "_")
+    end
+
     def self.all_fields
       self.directory_fields +
       self.rating_fields +

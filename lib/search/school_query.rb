@@ -8,7 +8,7 @@ module Search
     include UrlHelper
 
     attr_accessor :q, :district_id, :district_name, :location_label, :city, :level_codes, :entity_types, :id, :lat,
-                  :lon, :radius, :with_rating, :ratings, :school_keys
+                  :lon, :radius, :with_rating, :ratings, :school_keys, :test_scores_rating, :rating_subgroup
     attr_reader :state
 
     def initialize(
@@ -29,6 +29,8 @@ module Search
       sort_direction: nil,
       with_rating: false,
       ratings: [],
+      test_scores_rating: nil,
+      rating_subgroup: nil,
       offset: 0,
       limit: 25
     )
@@ -51,6 +53,8 @@ module Search
       self.with_rating = with_rating
       self.ratings = ratings
       self.school_keys = school_keys
+      self.test_scores_rating = test_scores_rating
+      self.rating_subgroup = rating_subgroup
     end
 
     def search
