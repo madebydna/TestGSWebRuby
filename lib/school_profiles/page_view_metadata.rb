@@ -26,6 +26,9 @@ module SchoolProfiles
         'district_id' => school.district.present? ? school.district.id.to_s : "",
         'template'    => SCHOOL_PROFILE_TEMPLATE,
         'number_of_reviews_with_comments' =>  school_reviews_count,
+        # untruncated values
+        'city_long'   => school.city,
+        'address'    => school.mail_street
       }
     end
   end
