@@ -8,18 +8,6 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
 		@year=2017
 	end
 
-	#map_subject = {
-	#	'math' => 5,
-	#	'ela' => 4,
-	#	'algebrai' => 6,
-	#	'englishii' => 21,
-	#	'Math' => 5,
-	#	'alg1' => 6,
-	#	'ELA' => 4,
-	#	'English II' => 21,
-  # 'biology i' => 22
-	#}
-
 	map_prof_band = {
 		l1_percent: 13,
 		l2_percent: 14,
@@ -205,7 +193,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 3,
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -268,7 +256,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 4, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -331,12 +319,12 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 5, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
      })
-  .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
+   .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
    .transform('delete * rows', DeleteRows, :l1_percent, '*')
    .transform('prof and above',SumValues,:prof_and_above, :l4_percent,:l5_percent)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :l1_percent, :l2_percent, :l3_percent, :l4_percent, :l5_percent, :prof_and_above)
@@ -394,7 +382,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 6, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+    .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -520,12 +508,12 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 8, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
      })
-    .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
+   .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
    .transform('delete * rows', DeleteRows, :l1_percent, '*')
    .transform('prof and above',SumValues,:prof_and_above, :l4_percent,:l5_percent)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :l1_percent, :l2_percent, :l3_percent, :l4_percent, :l5_percent, :prof_and_above)
@@ -583,7 +571,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 10, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -646,7 +634,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 11, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -709,7 +697,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 3, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -772,12 +760,12 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 4, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
      })
-    .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
+   .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
    .transform('delete * rows', DeleteRows, :l1_percent, '*')
    .transform('prof and above',SumValues,:prof_and_above, :l4_percent,:l5_percent)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :l1_percent, :l2_percent, :l3_percent, :l4_percent, :l5_percent, :prof_and_above)
@@ -835,7 +823,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 5, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -898,7 +886,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 6, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -961,7 +949,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 7, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -1024,7 +1012,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        grade: 8, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -1093,7 +1081,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        academic_gsdata_id: 6, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -1163,7 +1151,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        academic_gsdata_id: 10, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -1233,7 +1221,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        academic_gsdata_id: 8, 
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -2163,10 +2151,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
 		{
 			gsdata_source_id: 34,
 			state:'nj',
-      source_name: 'New Jersey Department of Education',
-      date_valid: '2017-01-01 00:00:00',
-      notes:'DXT-2987 NJ 2017 PARCC ASK NJBCT test load',
-			url: 'http://www.state.nj.us/education/',
+            source_name: 'New Jersey Department of Education',
+            date_valid: '2017-01-01 00:00:00',
+            notes: 'DXT-2987 NJ 2017 PARCC ASK NJBCT test load',
+			url:  'http://www.state.nj.us/education/',
 			file: 'nj/2017/nj.2017.1.public.charter.[level].txt',
 			level: nil,
 			school_type: 'public,charter'
