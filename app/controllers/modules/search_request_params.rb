@@ -388,4 +388,15 @@ module SearchRequestParams
     end
   end
 
+  def csa_years
+    ensure_array_param(:csaYears)
+  end
+
+  private
+
+  def ensure_array_param(param_name, delim = ',') 
+    v = params[param_name] || []
+    v.is_a?(Array) ? v : v.split(delim)
+  end
+
 end
