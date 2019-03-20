@@ -59,7 +59,7 @@ module CommunityProfiles
       end
 
       (2000..2022).to_a.each do |year|
-        attr_accessor "school_value_#{year}"
+        attr_accessor "district_value_#{year}"
         attr_accessor "state_average_#{year}"
         attr_accessor "district_average_#{year}"
         attr_accessor "performance_level_#{year}"
@@ -242,7 +242,7 @@ module CommunityProfiles
         uc_csu_data_hash = has_data?(uc_csu_data) ? { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: I18n.t('UC/CSU eligibility', scope: 'lib.equity_gsdata'), values: uc_csu_data, anchor: 'UC/CSU eligibility' } : nil
         graduation_data_hash = has_data?(graduation_data) ? { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: I18n.t('Graduation rates', scope: 'lib.equity_gsdata'), values: graduation_data, anchor: 'Graduation rates'} : nil
         # no title for college success since we don't want the sub panels to render in React
-        college_success_hash = has_data?(college_success_data) ? { narration: I18n.t('info_text', scope: 'lib.college_readiness'), values: college_success_data, type: 'mixed_variety'} : nil
+        college_success_hash = has_data?(college_success_data) ? { narration: I18n.t('district_scoped_info_text', scope: 'lib.college_readiness'), values: college_success_data, type: 'mixed_variety', footer: default_college_success_narration} : nil
         [overview_data_hash,
           uc_csu_data_hash,
           graduation_data_hash,
@@ -304,15 +304,15 @@ module CommunityProfiles
     def narration_for_value
       lambda do |c|
         translation = I18n.t(c.data_type, scope: 'lib.college_readiness.narration.college_success', default: nil).html_safe
-        if translation.present? && c.school_value.present? && c.state_average.present?
-          "<li>#{comparison_word(c.data_type, c.school_value, c.state_average)} #{translation}</li>"
+        if translation.present? && c.district_value.present? && c.state_average.present?
+          "<li>#{comparison_word(c.data_type, c.district_value, c.state_average)} #{translation}</li>"
         end
       end
     end
 
-    def comparison_word(data_type, school_value, state_value)
+    def comparison_word(data_type, district_value, state_value)
       is_persistence = data_type == GRADUATES_PERSISTENCE
-      diff = school_value - state_value
+      diff = district_value - state_value
       if (diff).abs <= 2.0
         key = is_persistence ? :about : :average
       elsif diff > 0
@@ -339,8 +339,8 @@ module CommunityProfiles
       @_scope ||= 'school_profiles.' + @tab
     end
 
-    def with_school_values
-      ->(h) {h['school_value'].present?}
+    def with_district_values
+      ->(h) {h['district_value'].present?}
     end
 
     def breakdown_percentage(dv)

@@ -7,6 +7,8 @@ en:
       'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
       'SAT percent participation': 'SAT participation rate'
       'SAT percent college ready': 'SAT college readiness rate'
+      district_scoped_info_text: "<p style='font-family:opensans-semibold'>Are graduates from this district prepared to succeed in college? This section looks at important signs of college readiness.</p>
+      <p>See the schools in this state that won a <a href='/gk/csa-winners/' target='_blank'>College Success Award</a> for excellence in preparing students for college.</p>"
       ACT participation:  'ACT participation rate'
       'ACT percent college ready': 'ACT college readiness rate'
       'Percentage SAT/ACT participation grades 11-12': 'SAT/ACT participation rate'
