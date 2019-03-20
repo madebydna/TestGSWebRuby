@@ -8,25 +8,13 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
 		@year=2017
 	end
 
-	#map_subject = {
-	#	'math' => 5,
-	#	'ela' => 4,
-	#	'algebrai' => 6,
-	#	'englishii' => 21,
-	#	'Math' => 5,
-	#	'alg1' => 6,
-	#	'ELA' => 4,
-	#	'English II' => 21,
-  # 'biology i' => 22
-	#}
-
 	map_prof_band = {
-		l1_percent: 13,
-		l2_percent: 14,
-		l3_percent: 15,
-		l4_percent: 16,
-		l5_percent: 17,
-		prof_and_above: 1,
+	l1_percent: 13,
+	l2_percent: 14,
+	l3_percent: 15,
+	l4_percent: 16,
+	l5_percent: 17,
+    prof_and_above: 1,
     total_pp_scie: 2,
     total_p_scie: 3,
     total_ap_scie: 4,
@@ -97,7 +85,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
 		'AMERICAN INDIAN' => 18,
 		'NON-ECON. DISADVANTAGED' => 24,
 		'NATIVE HAWAIIAN' => 41,
-    'PACIFIC ISLANDER' => 37,
+        'PACIFIC ISLANDER' => 37,
 		'STUDENTS WITH DISABILITIES' => 27,
 		'WHITE' => 21
 	}
@@ -193,23 +181,6 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
      end
      row
    end
-   .transform("Fill Columns",Fill,
-     {
-       year: 2017,
-       entity_type: 'public_charter',
-       level_code: 'e,m,h',
-       test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: '289', 
-       subject: 'ela',
-       academic_gsdata_id: 4,
-       grade: 3,
-       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
-     })
-   s.transform("Rename columns",MultiFieldRenamer,
-     {
-       subgroup_type: :breakdown,
-       valid_scores: :number_tested
-     })
    .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
    .transform('delete * rows', DeleteRows, :l1_percent, '*')
    .transform('prof and above band',SumValues,:prof_and_above, :l4_percent,:l5_percent)
@@ -252,7 +223,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -266,9 +237,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'ela',
        academic_gsdata_id: 4,
        grade: 4, 
+	   notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -315,7 +287,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -329,14 +301,15 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'ela',
        academic_gsdata_id: 4,
        grade: 5, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
      })
-  .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
+   .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
    .transform('delete * rows', DeleteRows, :l1_percent, '*')
    .transform('prof and above',SumValues,:prof_and_above, :l4_percent,:l5_percent)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :l1_percent, :l2_percent, :l3_percent, :l4_percent, :l5_percent, :prof_and_above)
@@ -378,7 +351,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -392,9 +365,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'ela',
        academic_gsdata_id: 4,
        grade: 6, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+    .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -441,7 +415,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -455,6 +429,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'ela',
        academic_gsdata_id: 4,
        grade: 7, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
    s.transform("Rename columns",MultiFieldRenamer,
@@ -504,7 +479,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -518,72 +493,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'ela',
        academic_gsdata_id: 4,
        grade: 8, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
-     {
-       subgroup_type: :breakdown,
-       valid_scores: :number_tested
-     })
-    .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
-   .transform('delete * rows', DeleteRows, :l1_percent, '*')
-   .transform('prof and above',SumValues,:prof_and_above, :l4_percent,:l5_percent)
-   .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :l1_percent, :l2_percent, :l3_percent, :l4_percent, :l5_percent, :prof_and_above)
-   .transform("mapping proficiency bands",
-     HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
-   .transform('delete unwanted subgroup', DeleteRows, :breakdown, 'OTHER')
-   .transform('delete unwanted subgroup', DeleteRows, :breakdown, 'SE ACCOMMODATION')
-   .transform('delete unwanted subgroup', DeleteRows, :breakdown, 'FORMER - ELL')
-   .transform('delete unwanted subgroup', DeleteRows, :breakdown, 'CURRENT - ELL')
-   .transform('mapping breakdown', HashLookup, :breakdown, map_breakdown, to: :breakdown_gsdata_id)
-   .transform("removing DFG rows", DeleteRows, :district_name, 'skip')
- end
-
- source('ELA10.txt',[],col_sep:"\t")  do |s|
-   s.transform("setting entity level", WithBlock) do |row|
-     if row[:county_code] == 'STATE'
-       row[:entity_level] = 'state'
-     elsif row[:school_name].nil?
-       row [:entity_level] = 'district'
-     else row[:entity_level] = 'school'
-     end
-     row
-   end
-   .transform("removing DFG rows", WithBlock) do |row|
-     if row[:entity_level] == 'district' and row[:district_name].nil?
-       row[:district_name] = 'skip'
-     else row[:district_name] = row[:district_name]
-     end
-     row
-   end
-   .transform("padding ids",WithBlock) do |row|
-     row[:district_id] = '%04i' % (row[:district_code].to_i)
-     row[:school_id] = '%03i' % (row[:school_code].to_i)
-     row[:county_code] = '%02i' % (row[:county_code].to_i)
-     row
-   end
-   .transform("state id", WithBlock) do |row|
-     if row[:entity_level] == 'school'
-       row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
-     elsif row[:entity_level] == 'district'
-       row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
-     end
-     row
-   end
-   .transform("Fill Columns",Fill,
-     {
-       year: 2017,
-       entity_type: 'public_charter',
-       level_code: 'e,m,h',
-       test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'ela',
-       academic_gsdata_id: 4,
-       grade: 10, 
-       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
-     })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -602,7 +515,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform("removing DFG rows", DeleteRows, :district_name, 'skip')
  end
 
- source('ELA11.txt',[],col_sep:"\t")  do |s|
+ source('ELA010.txt',[],col_sep:"\t")  do |s|
    s.transform("setting entity level", WithBlock) do |row|
      if row[:county_code] == 'STATE'
        row[:entity_level] = 'state'
@@ -630,7 +543,71 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
+     end
+     row
+   end
+   .transform("Fill Columns",Fill,
+     {
+       year: 2017,
+       entity_type: 'public_charter',
+       level_code: 'e,m,h',
+       test_data_type: 'NJ PARCC',
+       gsdata_test_data_type_id: 298,
+       subject: 'ela',
+       academic_gsdata_id: 4,
+       grade: 10, 
+       notes: 'DXT-2557: NJ NJ PARCC',
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
+     })
+   .transform("Rename columns",MultiFieldRenamer,
+     {
+       subgroup_type: :breakdown,
+       valid_scores: :number_tested
+     })
+   .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
+   .transform('delete * rows', DeleteRows, :l1_percent, '*')
+   .transform('prof and above',SumValues,:prof_and_above, :l4_percent,:l5_percent)
+   .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :l1_percent, :l2_percent, :l3_percent, :l4_percent, :l5_percent, :prof_and_above)
+   .transform("mapping proficiency bands",
+     HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
+   .transform('delete unwanted subgroup', DeleteRows, :breakdown, 'OTHER')
+   .transform('delete unwanted subgroup', DeleteRows, :breakdown, 'SE ACCOMMODATION')
+   .transform('delete unwanted subgroup', DeleteRows, :breakdown, 'FORMER - ELL')
+   .transform('delete unwanted subgroup', DeleteRows, :breakdown, 'CURRENT - ELL')
+   .transform('mapping breakdown', HashLookup, :breakdown, map_breakdown, to: :breakdown_gsdata_id)
+   .transform("removing DFG rows", DeleteRows, :district_name, 'skip')
+ end
+
+ source('ELA011.txt',[],col_sep:"\t")  do |s|
+   s.transform("setting entity level", WithBlock) do |row|
+     if row[:county_code] == 'STATE'
+       row[:entity_level] = 'state'
+     elsif row[:school_name].nil?
+       row [:entity_level] = 'district'
+     else row[:entity_level] = 'school'
+     end
+     row
+   end
+   .transform("removing DFG rows", WithBlock) do |row|
+     if row[:entity_level] == 'district' and row[:district_name].nil?
+       row[:district_name] = 'skip'
+     else row[:district_name] = row[:district_name]
+     end
+     row
+   end
+   .transform("padding ids",WithBlock) do |row|
+     row[:district_id] = '%04i' % (row[:district_code].to_i)
+     row[:school_id] = '%03i' % (row[:school_code].to_i)
+     row[:county_code] = '%02i' % (row[:county_code].to_i)
+     row
+   end
+   .transform("state id", WithBlock) do |row|
+     if row[:entity_level] == 'school'
+       row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
+     elsif row[:entity_level] == 'district'
+       row[:state_id] = row[:county_code]+row[:district_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -644,9 +621,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'ela',
        academic_gsdata_id: 4,
        grade: 11, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -693,7 +671,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -707,9 +685,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'math',
        academic_gsdata_id: 5,
        grade: 3, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -756,7 +735,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -770,14 +749,15 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'math',
        academic_gsdata_id: 5,
        grade: 4, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
      })
-    .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
+   .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
    .transform('delete * rows', DeleteRows, :l1_percent, '*')
    .transform('prof and above',SumValues,:prof_and_above, :l4_percent,:l5_percent)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :l1_percent, :l2_percent, :l3_percent, :l4_percent, :l5_percent, :prof_and_above)
@@ -819,7 +799,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -833,9 +813,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'math',
        academic_gsdata_id: 5,
        grade: 5, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -882,7 +863,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -896,9 +877,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'math',
        academic_gsdata_id: 5,
        grade: 6, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -945,7 +927,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -959,9 +941,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'math',
        academic_gsdata_id: 5,
        grade: 7, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -1008,7 +991,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1022,9 +1005,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'math',
        academic_gsdata_id: 5,
        grade: 8, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -1061,7 +1045,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
      row
    end
    .transform("Removing grade rows", WithBlock) do |row|
-     if row[:subgroup_type].include? "GRADE"
+     if row[:subgroup_type] =~ /GRADE/
        row[:grade] = 'skip'
      else row[:grade] = 'All'
      end
@@ -1078,7 +1062,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1091,9 +1075,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'Algebra I',
        academic_gsdata_id: 6, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -1131,7 +1116,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
      row
    end
    .transform("Removing grade rows", WithBlock) do |row|
-     if row[:subgroup_type].include? "GRADE"
+     if row[:subgroup_type] =~ /GRADE/
        row[:grade] = 'skip'
      else row[:grade] = 'All'
      end
@@ -1148,7 +1133,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1161,9 +1146,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'Algebra II',
        academic_gsdata_id: 10, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -1201,7 +1187,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
      row
    end
    .transform("Removing grade rows", WithBlock) do |row|
-     if row[:subgroup_type].include? "GRADE"
+     if row[:subgroup_type] =~ /GRADE/
        row[:grade] = 'skip'
      else row[:grade] = 'All'
      end
@@ -1218,7 +1204,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1231,9 +1217,10 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        gsdata_test_data_type_id: 298,
        subject: 'Geometry',
        academic_gsdata_id: 8, 
+       notes: 'DXT-2557: NJ NJ PARCC',
        description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
      })
-   s.transform("Rename columns",MultiFieldRenamer,
+   .transform("Rename columns",MultiFieldRenamer,
      {
        subgroup_type: :breakdown,
        valid_scores: :number_tested
@@ -1281,7 +1268,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1295,6 +1282,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Science',
        academic_gsdata_id: 19,
        grade: 4, 
+       notes: 'DXT-2557: NJ NJ ASK',
        description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:total_prof_and_above, :total_p_scie,:total_ap_scie)
@@ -1307,13 +1295,13 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 1
-       row[:number_tested] = row[:total_valid_scale_scie]
+       row[:number_tested] = row[:total_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 30
-       row[:number_tested] = row[:ge_valid_scale_scie]
+       row[:number_tested] = row[:ge_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 27
-       row[:number_tested] = row[:se_valid_scale_scie]
+       row[:number_tested] = row[:se_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 32
-       row[:number_tested] = row[:lep_valid_scale_scie]
+       row[:number_tested] = row[:lep_enroll_scie]
      end
      row
    end
@@ -1358,7 +1346,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1372,6 +1360,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Science',
        academic_gsdata_id: 19,
        grade: 4, 
+       notes: 'DXT-2557: NJ NJ ASK',
        description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:f_prof_and_above, :f_p_scie,:f_ap_scie)
@@ -1382,9 +1371,9 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 26
-       row[:number_tested] = row[:f_valid_scale_scie]
+       row[:number_tested] = row[:f_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 25
-       row[:number_tested] = row[:m_valid_scale_scie]
+       row[:number_tested] = row[:m_enroll_scie]
      end
      row
    end
@@ -1429,7 +1418,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1443,6 +1432,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Science',
        academic_gsdata_id: 19,
        grade: 4, 
+       notes: 'DXT-2557: NJ NJ ASK',
        description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:w_prof_and_above, :w_p_scie,:w_ap_scie)
@@ -1457,17 +1447,17 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 21
-       row[:number_tested] = row[:w_valid_scale_scie]
+       row[:number_tested] = row[:w_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 17
-       row[:number_tested] = row[:b_valid_scale_scie]
+       row[:number_tested] = row[:b_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 16
-       row[:number_tested] = row[:a_valid_scale_scie]
+       row[:number_tested] = row[:a_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 37
-       row[:number_tested] = row[:p_valid_scale_scie]
+       row[:number_tested] = row[:p_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 19
-       row[:number_tested] = row[:h_valid_scale_scie]
+       row[:number_tested] = row[:h_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 18
-       row[:number_tested] = row[:i_valid_scale_scie]
+       row[:number_tested] = row[:i_enroll_scie]
      end
      row
    end
@@ -1512,7 +1502,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1526,6 +1516,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Science',
        academic_gsdata_id: 19,
        grade: 4, 
+       notes: 'DXT-2557: NJ NJ ASK',
        description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:ecdis_y_prof_and_above, :ecdis_y_p_scie,:ecdis_y_ap_scie)
@@ -1536,9 +1527,9 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 23
-       row[:number_tested] = row[:ecdis_y_valid_scale_scie]
+       row[:number_tested] = row[:ecdis_y_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 24
-       row[:number_tested] = row[:ecdis_n_valid_scale_scie]
+       row[:number_tested] = row[:ecdis_n_enroll_scie]
      end
      row
    end
@@ -1583,7 +1574,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1597,6 +1588,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Science',
        academic_gsdata_id: 19,
        grade: 8, 
+       notes: 'DXT-2557: NJ NJ ASK',
        description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:total_prof_and_above, :total_p_scie,:total_ap_scie)
@@ -1609,13 +1601,13 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 1
-       row[:number_tested] = row[:total_valid_scale_scie]
+       row[:number_tested] = row[:total_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 30
-       row[:number_tested] = row[:ge_valid_scale_scie]
+       row[:number_tested] = row[:ge_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 27
-       row[:number_tested] = row[:se_valid_scale_scie]
+       row[:number_tested] = row[:se_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 32
-       row[:number_tested] = row[:lep_valid_scale_scie]
+       row[:number_tested] = row[:lep_enroll_scie]
      end
      row
    end
@@ -1660,7 +1652,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1674,6 +1666,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Science',
        academic_gsdata_id: 19,
        grade: 8, 
+       notes: 'DXT-2557: NJ NJ ASK',
        description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:f_prof_and_above, :f_p_scie,:f_ap_scie)
@@ -1684,9 +1677,9 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 26
-       row[:number_tested] = row[:f_valid_scale_scie]
+       row[:number_tested] = row[:f_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 25
-       row[:number_tested] = row[:m_valid_scale_scie]
+       row[:number_tested] = row[:m_enroll_scie]
      end
      row
    end
@@ -1731,7 +1724,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1745,6 +1738,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Science',
        academic_gsdata_id: 19,
        grade: 8, 
+       notes: 'DXT-2557: NJ NJ ASK',
        description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:w_prof_and_above, :w_p_scie,:w_ap_scie)
@@ -1759,17 +1753,17 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 21
-       row[:number_tested] = row[:w_valid_scale_scie]
+       row[:number_tested] = row[:w_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 17
-       row[:number_tested] = row[:b_valid_scale_scie]
+       row[:number_tested] = row[:b_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 16
-       row[:number_tested] = row[:a_valid_scale_scie]
+       row[:number_tested] = row[:a_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 37
-       row[:number_tested] = row[:p_valid_scale_scie]
+       row[:number_tested] = row[:p_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 19
-       row[:number_tested] = row[:h_valid_scale_scie]
+       row[:number_tested] = row[:h_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 18
-       row[:number_tested] = row[:i_valid_scale_scie]
+       row[:number_tested] = row[:i_enroll_scie]
      end
      row
    end
@@ -1814,7 +1808,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1828,6 +1822,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Science',
        academic_gsdata_id: 19,
        grade: 8, 
+       notes: 'DXT-2557: NJ NJ ASK',
        description: 'In 2016-2017 New Jersey used the New Jersey Assessment of Skills and Knowledge (NJ ASK) to test students in grades 4 and 8 in science.  The NJ ASK is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of New Jersey.  The goal is for all students to score at or above the proficient level.'
      })
    .transform('prof and above',SumValues,:ecdis_y_prof_and_above, :ecdis_y_p_scie,:ecdis_y_ap_scie)
@@ -1838,9 +1833,9 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 23
-       row[:number_tested] = row[:ecdis_y_valid_scale_scie]
+       row[:number_tested] = row[:ecdis_y_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 24
-       row[:number_tested] = row[:ecdis_n_valid_scale_scie]
+       row[:number_tested] = row[:ecdis_n_enroll_scie]
      end
      row
    end
@@ -1885,7 +1880,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1899,6 +1894,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Biology I',
        academic_gsdata_id: 22,
        grade: 'All', 
+       notes: 'DXT-2557: NJ NJBCT',
        description: 'In 2016-2017 New Jersey used the New Jersey Biology Competency Test (NJBCT) to assess students in Biology.  The New Jersey Biology Competency Test (NJBCT) is standards-based, which means it measures how well students are mastering specific skills defined by the state of New Jersey.  The goal is for all students to score at or above the proficient level on the test.'
      })
    .transform('prof and above',SumValues,:total_prof_and_above, :total_p_scie,:total_ap_scie)
@@ -1911,13 +1907,13 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 1
-       row[:number_tested] = row[:total_valid_scale_scie]
+       row[:number_tested] = row[:total_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 30
-       row[:number_tested] = row[:ge_valid_scale_scie]
+       row[:number_tested] = row[:ge_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 27
-       row[:number_tested] = row[:se_valid_scale_scie]
+       row[:number_tested] = row[:se_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 32
-       row[:number_tested] = row[:lep_valid_scale_scie]
+       row[:number_tested] = row[:lep_enroll_scie]
      end
      row
    end
@@ -1934,7 +1930,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform("removing DFG rows", DeleteRows, :district_name, 'skip')
  end
 
- source('nbjct_gender.txt',[],col_sep:"\t")  do |s|
+ source('njbct_gender.txt',[],col_sep:"\t")  do |s|
    s.transform("setting entity level", WithBlock) do |row|
      if row[:county_code] == "ST"
        row[:entity_level] = 'state'
@@ -1962,7 +1958,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -1976,6 +1972,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Biology I',
        academic_gsdata_id: 22,
        grade: 'All', 
+       notes: 'DXT-2557: NJ NJBCT',
        description: 'In 2016-2017 New Jersey used the New Jersey Biology Competency Test (NJBCT) to assess students in Biology.  The New Jersey Biology Competency Test (NJBCT) is standards-based, which means it measures how well students are mastering specific skills defined by the state of New Jersey.  The goal is for all students to score at or above the proficient level on the test.'
      })
    .transform('prof and above',SumValues,:f_prof_and_above, :f_p_scie,:f_ap_scie)
@@ -1986,9 +1983,9 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 26
-       row[:number_tested] = row[:f_valid_scale_scie]
+       row[:number_tested] = row[:f_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 25
-       row[:number_tested] = row[:m_valid_scale_scie]
+       row[:number_tested] = row[:m_enroll_scie]
      end
      row
    end
@@ -2005,7 +2002,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform("removing DFG rows", DeleteRows, :district_name, 'skip')
  end
 
- source('nbjct_ethnic.txt',[],col_sep:"\t")  do |s|
+ source('njbct_ethnic.txt',[],col_sep:"\t")  do |s|
    s.transform("setting entity level", WithBlock) do |row|
      if row[:county_code] == "ST"
        row[:entity_level] = 'state'
@@ -2033,7 +2030,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -2047,6 +2044,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Biology I',
        academic_gsdata_id: 22,
        grade: 'All', 
+       notes: 'DXT-2557: NJ NJBCT',
        description: 'In 2016-2017 New Jersey used the New Jersey Biology Competency Test (NJBCT) to assess students in Biology.  The New Jersey Biology Competency Test (NJBCT) is standards-based, which means it measures how well students are mastering specific skills defined by the state of New Jersey.  The goal is for all students to score at or above the proficient level on the test.'
      })
    .transform('prof and above',SumValues,:w_prof_and_above, :w_p_scie,:w_ap_scie)
@@ -2061,17 +2059,17 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 21
-       row[:number_tested] = row[:w_valid_scale_scie]
+       row[:number_tested] = row[:w_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 17
-       row[:number_tested] = row[:b_valid_scale_scie]
+       row[:number_tested] = row[:b_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 16
-       row[:number_tested] = row[:a_valid_scale_scie]
+       row[:number_tested] = row[:a_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 37
-       row[:number_tested] = row[:p_valid_scale_scie]
+       row[:number_tested] = row[:p_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 19
-       row[:number_tested] = row[:h_valid_scale_scie]
+       row[:number_tested] = row[:h_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 18
-       row[:number_tested] = row[:i_valid_scale_scie]
+       row[:number_tested] = row[:i_enroll_scie]
      end
      row
    end
@@ -2088,7 +2086,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform("removing DFG rows", DeleteRows, :district_name, 'skip')
  end
 
- source('nbjct_econ.txt',[],col_sep:"\t")  do |s|
+ source('njbct_econ.txt',[],col_sep:"\t")  do |s|
    s.transform("setting entity level", WithBlock) do |row|
      if row[:county_code] == "ST"
        row[:entity_level] = 'state'
@@ -2116,7 +2114,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        row[:state_id] = row[:county_code]+row[:district_id]+row[:school_id]
      elsif row[:entity_level] == 'district'
        row[:state_id] = row[:county_code]+row[:district_id]
-     else row[:state_id] = row[:state_id]
+     else row[:state_id] = 'state'
      end
      row
    end
@@ -2130,6 +2128,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        subject: 'Biology I',
        academic_gsdata_id: 22,
        grade: 'All', 
+       notes: 'DXT-2557: NJ NJBCT',
        description: 'In 2016-2017 New Jersey used the New Jersey Biology Competency Test (NJBCT) to assess students in Biology.  The New Jersey Biology Competency Test (NJBCT) is standards-based, which means it measures how well students are mastering specific skills defined by the state of New Jersey.  The goal is for all students to score at or above the proficient level on the test.'
      })
    .transform('prof and above',SumValues,:ecdis_y_prof_and_above, :ecdis_y_p_scie,:ecdis_y_ap_scie)
@@ -2140,9 +2139,9 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 23
-       row[:number_tested] = row[:ecdis_y_valid_scale_scie]
+       row[:number_tested] = row[:ecdis_y_enroll_scie]
      elsif row[:breakdown_gsdata_id] == 24
-       row[:number_tested] = row[:ecdis_n_valid_scale_scie]
+       row[:number_tested] = row[:ecdis_n_enroll_scie]
      end
      row
    end
@@ -2163,10 +2162,9 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
 		{
 			gsdata_source_id: 34,
 			state:'nj',
-      source_name: 'New Jersey Department of Education',
-      date_valid: '2017-01-01 00:00:00',
-      notes:'DXT-2987 NJ 2017 PARCC ASK NJBCT test load',
-			url: 'http://www.state.nj.us/education/',
+            source_name: 'New Jersey Department of Education',
+            date_valid: '2017-01-01 00:00:00',
+			url:  'http://www.state.nj.us/education/',
 			file: 'nj/2017/nj.2017.1.public.charter.[level].txt',
 			level: nil,
 			school_type: 'public,charter'
