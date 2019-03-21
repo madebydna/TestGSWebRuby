@@ -19,14 +19,33 @@ const renderSchoolItem = ({name, rating, links, districtName, numReviews, parent
         </div>
       </div>
       <div className="school-info">
-        <a href={links.profile}>
-          {name}
-        </a>
+        { renderSchoolName(name, links, currentTab) }
         { renderSchoolItemContent(currentTab, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears) }
       </div>
     </div>
     <div className="blue-line" />
   </React.Fragment>;
+}
+
+const renderSchoolName = (name, links, currentTab) => {
+  const tabs = {
+    0: t('top_schools.top_schools'),
+    1: t('csa_winners')
+  }
+  
+  if (tabs[currentTab] === t('csa_winners')) {
+    return (
+      <a href={links.collegeSuccess}>
+        {name}
+      </a>
+    );
+  } else {
+    return (
+      <a href={links.profile}>
+        {name}
+      </a>
+    );
+  }
 }
 
 const renderSchoolItemContent = (currentTab, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears) => {
@@ -40,6 +59,7 @@ const renderSchoolItemContent = (currentTab, links, districtName, numReviews, pa
       <div>
         {renderCsaYears(csaAwardYears)}
         <p className="students">{capitalize(t(`school_types.${schoolType}`))}, {gradeLevels} | {enrollment} {t("students")}</p>
+        {renderDistrictName(districtName)}
       </div>
     )
   } else {
