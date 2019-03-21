@@ -92,11 +92,7 @@ module CommunityProfiles
         if school_value_present?(h["district_value_#{max_year}"])
           return_value = true
         else
-<<<<<<< HEAD
-          h.school_value = nil if h.respond_to?(:school_value)
-=======
           h.district_value = nil
->>>>>>> JT-8002
         end
       end
       return_value

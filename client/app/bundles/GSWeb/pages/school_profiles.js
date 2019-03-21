@@ -47,6 +47,8 @@ import withViewportSize from 'react_components/with_viewport_size';
 import ProfileInterstitialAd, { shouldShowInterstitial, profileInterstitialLoader } from 'react_components/school_profiles/profile_interstitial_ad';
 import "jquery-unveil";
 import commonPageInit from '../common';
+import { throttle, debounce } from 'lodash';
+import { boxInDoc, relativeToViewport, relativeToViewportTop, firstInViewport, keepInViewport } from 'util/viewport';
 
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 
@@ -196,6 +198,25 @@ $(function() {
       }
     );
   });
+
+  keepInViewport('.left-rail-jumpy-ad', {
+    elementsAboveFunc: () => {
+      // get list of titles in reverse order. reverse() mutates the array
+      let titles = [].slice.call(window.document.querySelectorAll('.section-title'));
+      let titlesReversed = [].slice.call(window.document.querySelectorAll('.section-title')).reverse();
+      // we want the ad below the section title that's farthest down the document, but
+      // one that's within 480px of the top of the viewport
+      let titleToPutAdBelow = titlesReversed.find(el => relativeToViewport(el).top < 480);
+      titleToPutAdBelow = titleToPutAdBelow || firstInViewport(titles);
+      return titleToPutAdBelow || [];
+    },
+    elementsBelowFunc: () => [].slice.call(window.document.querySelectorAll('.js-Profiles_Third_Ad-wrapper')),
+    setTop: true,
+    setBottom: true,
+    hideIfNoSpace: true
+  });
+
+
 
   $('body').on('click', '.js-moreRevealLink', function () {
     $(this).hide();
