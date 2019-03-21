@@ -5,6 +5,7 @@ import TopSchoolTableRow from './top_school_table_row';
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
 import { addQueryParamToUrl } from 'util/uri';
+// TODO: Replace temporary placeholder csaBadgeMd with correct CSA badge once it is ready
 import csaBadgeMd from 'search/csa-award-md.png';
 
 const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
