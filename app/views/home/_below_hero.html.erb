@@ -32,7 +32,7 @@
   </div>
 
   <div>
-    <a href="<%= about_path(lang: nil) %>"><button class="learn-more blue-background"><%= t('home.show.learn-more') %></button></a>
+    <a href="<%= about_path %>"><button class="learn-more blue-background"><%= t('home.show.learn-more') %></button></a>
   </div>
 
   <div class="highlights-module">
@@ -46,7 +46,7 @@
         <p><%= t('home.show.school-quality') %></p>
         <p><%= t('home.show.gs-summary-rating_html') %></p>
         <p><%= t('home.show.gs-summary-rating-text') %></p>
-        <a href="<%= ratings_path(lang: nil) %>"><button class="learn-more white-background"><%= t('home.show.learn-more') %></button></a>
+        <a href="<%= ratings_path %>"><button class="learn-more white-background"><%= t('home.show.learn-more') %></button></a>
       </div>
       <div class="col-xs-12 col-md-6 pull-right">
         <%= image_tag image_path('home/summary-rating.png') %>
