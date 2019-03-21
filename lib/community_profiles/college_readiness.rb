@@ -89,10 +89,10 @@ module CommunityProfiles
       end.flatten
       max_year = data_type_hashes.map { |dts| dts.year }.max
       data_type_hashes.each do |h|
-        if school_value_present?(h["district_value_#{max_year}"])
+        if school_value_present?(h["school_value_#{max_year}"])
           return_value = true
         else
-          h.district_value = nil
+          h.school_value = nil if h.respond_to?(:school_value)
         end
       end
       return_value

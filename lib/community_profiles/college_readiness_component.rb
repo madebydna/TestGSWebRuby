@@ -141,7 +141,7 @@ module CommunityProfiles
       @_data_type_hashes ||= begin
         hashes = characteristics_data
         return [] if hashes.blank?
-        handle_ACT_SAT_to_display!(hashes)
+        # handle_ACT_SAT_to_display!(hashes)
         hashes = hashes.map do |key, array|
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
             # This is for characteristics
