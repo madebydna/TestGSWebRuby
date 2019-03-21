@@ -27,6 +27,8 @@ module SchoolProfiles::CollegeReadinessConfig
                     'Graduating seniors pursuing 2 year college/university',
                     'Percent of students who will attend out-of-state colleges',
                     'Percent of students who will attend in-state colleges',
+                    'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation',
+                    'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation',
                     'Percent Enrolled in College Immediately Following High School',
                     'Percent enrolled in any institution of higher learning in the last 0-16 months',
                     'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months',
@@ -43,9 +45,7 @@ module SchoolProfiles::CollegeReadinessConfig
                     'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation',
                     'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation',
                     'Percent enrolled in any postsecondary institution within 24 months after graduation',
-                    'Percent enrolled in any postsecondary institution within 6 months after graduation',
-                    'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation',
-                    'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation']
+                    'Percent enrolled in any postsecondary institution within 6 months after graduation']
   REMEDIATION_SUBGROUPS = ['Percent Needing Remediation for College',
                            'Graduates needing Reading remediation in college',
                            'Graduates needing Writing remediation in college',
