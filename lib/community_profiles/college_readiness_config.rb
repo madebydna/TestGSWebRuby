@@ -47,61 +47,61 @@ module CommunityProfiles::CollegeReadinessConfig
       :formatting => [:round_unless_less_than_1, :percent]
     },
     {
-      :cache => :characteristics,
+      :cache => :district_characteristics,
       :data_key => GRADUATES_COLLEGE_VOCATIONAL,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
     },
     {
-      :cache => :characteristics,
+      :cache => :district_characteristics,
       :data_key => SENIORS_FOUR_YEAR,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
     },
     {
-      :cache => :characteristics,
+      :cache => :district_characteristics,
       :data_key => SENIORS_TWO_YEAR,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
     },
     {
-      :cache => :characteristics,
+      :cache => :district_characteristics,
       :data_key => SENIORS_ENROLLED_OTHER,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
     },
     {
-      :cache => :characteristics,
+      :cache => :district_characteristics,
       :data_key => GRADUATES_TWO_YEAR,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
     },
     {
-      :cache => :characteristics,
+      :cache => :district_characteristics,
       :data_key => GRADUATES_FOUR_YEAR,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
     },
     {
-      :cache => :characteristics,
+      :cache => :district_characteristics,
       :data_key => GRADUATES_OUT_OF_STATE,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
     },
     {
-      :cache => :characteristics,
+      :cache => :district_characteristics,
       :data_key => GRADUATES_IN_STATE,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
     },
     {
-      :cache => :characteristics,
+      :cache => :district_characteristics,
       :data_key => GRADUATES_REMEDIATION,
       :visualization => 'person_gray',
       :formatting => [:round_unless_less_than_1, :percent]
     },
     {
-      :cache => :characteristics,
+      :cache => :district_characteristics,
       :data_key => GRADUATES_PERSISTENCE,
       :visualization => 'person',
       :formatting => [:round_unless_less_than_1, :percent]
@@ -109,7 +109,7 @@ module CommunityProfiles::CollegeReadinessConfig
   ].concat(
     REMEDIATION_SUBGROUPS.map do |data_key|
       {
-        :cache => :characteristics,
+        :cache => :district_characteristics,
         :data_key => data_key,
         :visualization => 'person_gray',
         :formatting => [:round_unless_less_than_1, :percent]
