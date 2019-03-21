@@ -58,7 +58,7 @@ module SchoolProfiles
         subject == 'All subjects'
       end
 
-      (2000..2022).to_a.each do |year|
+      (2009..2030).to_a.each do |year|
         attr_accessor "school_value_#{year}"
         attr_accessor "state_average_#{year}"
         attr_accessor "district_average_#{year}"
@@ -146,13 +146,6 @@ module SchoolProfiles
     end
 
     def select_post_secondary_max_year(data_values)
-      # get max year for the post secondary group
-      # select on this group of entries based on max year
-      # map and return value or nil then compact
-      # content CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS
-      # only filter by max year on this list POST_SECONDARY_GROUP_MAX_YEAR_FILTER
-      # require 'pry'; binding.pry;
-      # data_values.reject! {|dv| dv['year'].to_i < DATA_CUTOFF_YEAR}
       post_secondary_data = data_values.select { | dv | POST_SECONDARY_GROUP_MAX_YEAR_FILTER.include?(dv['data_type']) }
       max_year = post_secondary_data.map(&:year).compact.max
       data_values.map do | dv |
