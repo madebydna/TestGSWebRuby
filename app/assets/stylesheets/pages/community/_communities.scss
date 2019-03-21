@@ -192,9 +192,29 @@ $subtle-gray: #647981;
       }
       > p, > h3, > a {
         padding: 0 20px;
-        }
       }
     }
+    .csa-top-schools-blurb {
+      display: flex;
+      margin-left: 20px;
+    }
+  }
+
+  .profile-module {
+    font-size: $font-size;
+
+    .tab-buttons {
+      margin: 5px 20px;
+    }
+
+    .top-schools-csa {
+      margin: 3px 0 0;
+    }
+
+    .top-schools-csa > span {
+      font-family: 'opensans-semibold';
+    }
+  }
   .grade-filter {
     @include flex-justify-center;
     .button-group {

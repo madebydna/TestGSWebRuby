@@ -6,7 +6,7 @@ import FiveStarRating from "../review/form/five_star_rating";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t, capitalize } from "util/i18n";
 
-const renderSchoolItem = ({name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType}) => {
+const renderSchoolItem = ({name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears, currentTab}) => {
   const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
   return <React.Fragment>
     <div className="content-container">
@@ -22,13 +22,35 @@ const renderSchoolItem = ({name, rating, links, districtName, numReviews, parent
         <a href={links.profile}>
           {name}
         </a>
-        {renderDistrctName(districtName)}
-        <p className="students">{capitalize(t(`school_types.${schoolType}`))}, {gradeLevels} | {enrollment} {t("students")}</p>
-        {renderReviews(numReviews, parentRating, links)}
+        { renderSchoolItemContent(currentTab, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears) }
       </div>
     </div>
     <div className="blue-line" />
   </React.Fragment>;
+}
+
+const renderSchoolItemContent = (currentTab, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears) => {
+  const tabs = {
+    0: t('top_schools.top_schools'),
+    1: t('csa_winners')
+  }
+
+  if (tabs[currentTab] === t('csa_winners')) {
+    return (
+      <div>
+        {renderCsaYears(csaAwardYears)}
+        <p className="students">{capitalize(t(`school_types.${schoolType}`))}, {gradeLevels} | {enrollment} {t("students")}</p>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        {renderDistrictName(districtName)}
+        <p className="students">{capitalize(t(`school_types.${schoolType}`))}, {gradeLevels} | {enrollment} {t("students")}</p>
+        {renderReviews(numReviews, parentRating, links)}
+      </div>
+    )
+  }
 }
 
 const renderReviews = (numReviews, parentRating, links) => {
@@ -42,9 +64,18 @@ const renderReviews = (numReviews, parentRating, links) => {
     </div>;
 }
 
-const renderDistrctName = (districtName) => (
+const renderDistrictName = (districtName) => (
   <p className="school-district">{districtName}</p>
 )
+
+const renderCsaYears = (csaAwardYears) => {
+  let csaYears = csaAwardYears.join(", ");
+  return (
+    <div className="top-schools-csa">
+      <span>CSA winner: </span> {csaYears} 
+    </div>
+  );
+}
 
 const TopSchoolTableRow = (props) => (
   <div className="school-list-item">
