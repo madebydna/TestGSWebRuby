@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalize, t } from 'util/i18n';
 import { renderAssignedTooltip } from 'react_components/search/tooltips'
-import { getHomesForSaleHref, clarifySchoolType } from 'util/school';
+import { getHomesForSaleHref, clarifySchoolType, getDistrictHref } from 'util/school';
 import { links, anchorObject } from 'components/links'; 
 import FiveStarRating from '../review/form/five_star_rating';
 import RatingWithTooltip from 'react_components/rating_with_tooltip';
@@ -14,6 +14,16 @@ import csaBadgeMd from 'search/csa-award-md.png';
 const renderEnrollment = enrollment => {
   if (enrollment) {
     return enrollment;
+  }
+  return <span>N/A</span>;
+};
+
+const renderDistrict = (district_name, district_link) => {
+  if (district_name && district_link) {
+    return <a href={district_link}>{district_name}</a>;
+  }
+  else if(district_name) {
+    return <span>{district_name}</span>
   }
   return <span>N/A</span>;
 };
@@ -108,6 +118,7 @@ const SchoolTableRow = ({
   csaAwardYears
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
+  const districtLink = getDistrictHref(state, address.city, districtName);
   let addressPhrase = [address.street1, address.city, state, address.zip]
       .filter(s => !!s && s.length > 0)
       .join(', ');
@@ -162,7 +173,7 @@ const SchoolTableRow = ({
         renderEnrollment(enrollment),
         (studentsPerTeacher ? `${studentsPerTeacher}:1` : 'N/A'),
         reviewType(numReviews, links.reviews, parentRating),
-        (districtName ? districtName : 'N/A')
+        renderDistrict(districtName, districtLink)
     );
   }
   else if (tableView == 'Equity') {
