@@ -7,7 +7,7 @@ es:
       'Rating text': 'Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.'
       'SAT percent participation': 'Participación SAT'
       'SAT percent college ready': 'Clasificación para la preparación universitaria SAT Subject Test'
-      district_scoped_info_text: "<p style='font-family:opensans-semibold'>Are graduates from this district prepared to succeed in college? This section looks at important signs of college readiness.</p>
+      district_scoped_info_text: "<p style='font-family:opensans-semibold'>¿Los graduados de esta escuela están preparados para tener éxito en la universidad? Esta sección analiza los signos importantes de la preparación para la universidad.</p>
       <p>Ve las escuelas en este estado que ganaron un <a href='/gk/csa-winners/' target='_blank'>College Success Award</a> por su excelencia en la preparación de estudiantes para la universidad.</p>"
       ACT participation: 'Participación ACT'
       'ACT percent college ready': 'Clasificación para la preparación universitaria ACT'
@@ -126,6 +126,9 @@ es:
           lower: <span class="emphasis">por debajo</span>
           intro: >
             <div class="auto-narration"><span class="content">En comparación con los promedios estatales, los estudiantes que se gradúan de esta escuela tienen: </span>
+            <ul>
+          district_intro: >
+            <div class="auto-narration"><span class="content">En comparación con los promedios estatales, los estudiantes que se gradúan de esta distrito tienen: </span>
             <ul>
           outro: </ul>%{end_more}</div>
           'Percent Enrolled in College Immediately Following High School': de los índices de matriculación universitaria

@@ -124,6 +124,9 @@ en:
           intro: >
             <div class="auto-narration"><span class="content">Compared to state averages, students who graduate from this school have: </span>
             <ul>
+          district_intro: >
+            <div class="auto-narration"><span class="content">Compared to state averages, students who graduate from this district have: </span>
+            <ul>
           outro: </ul>%{end_more}</div>
           'Percent Enrolled in College Immediately Following High School': college enrollment rates
           'Percent enrolled in any institution of higher learning in the last 0-16 months': college enrollment rates

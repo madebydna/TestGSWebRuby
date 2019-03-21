@@ -242,7 +242,8 @@ module CommunityProfiles
         uc_csu_data_hash = has_data?(uc_csu_data) ? { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: I18n.t('UC/CSU eligibility', scope: 'lib.equity_gsdata'), values: uc_csu_data, anchor: 'UC/CSU eligibility' } : nil
         graduation_data_hash = has_data?(graduation_data) ? { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: I18n.t('Graduation rates', scope: 'lib.equity_gsdata'), values: graduation_data, anchor: 'Graduation rates'} : nil
         # no title for college success since we don't want the sub panels to render in React
-        college_success_hash = has_data?(college_success_data) ? { narration: I18n.t('district_scoped_info_text', scope: 'lib.college_readiness'), values: college_success_data, type: 'mixed_variety', footer: default_college_success_narration} : nil
+        # college_success_hash = has_data?(college_success_data) ? { narration: I18n.t('district_scoped_info_text', scope: 'lib.college_readiness'), values: college_success_data, type: 'mixed_variety'} : nil
+        college_success_hash = has_data?(college_success_data) ? { narration: I18n.t('district_scoped_info_text', scope: 'lib.college_readiness') + college_success_narration, values: college_success_data, type: 'mixed_variety'} : nil
         [overview_data_hash,
           uc_csu_data_hash,
           graduation_data_hash,
@@ -294,11 +295,11 @@ module CommunityProfiles
 
       return default_college_success_narration unless narratives.present?
 
-      intro = I18n.t(:intro, scope: 'lib.college_readiness.narration.college_success', default: '').html_safe
+      intro = I18n.t(:district_intro, scope: 'lib.college_readiness.narration.college_success', default: '').html_safe
       outro = I18n.t(:outro, scope: 'lib.college_readiness.narration.college_success', default: '',
                      end_more: SchoolProfilesController.show_more_end).html_safe
-
-      "#{intro}#{narratives.first}#{SchoolProfilesController.show_more('College Success')}#{narratives.drop(1).join}#{outro}"
+      # "#{intro}#{narratives.first}#{SchoolProfilesController.show_more('College Success')}#{narratives.drop(1).join}#{outro}"
+      "#{intro}#{narratives.join}#{outro}"
     end
 
     def narration_for_value
