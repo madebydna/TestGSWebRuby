@@ -22,7 +22,7 @@ export default class EquityContentPane extends React.Component {
   hasColumnHeader() {
     return ['Overview', 'UC/CSU eligibility', 'Graduation rates', 'Advanced_coursework', 'Advanced courses',
       'Percentage AP enrolled grades 9-12', 'Percentage of students suspended out of school', 'College readiness',
-      'Percentage of students chronically absent (15+ days)'].indexOf(this.props.anchor) == -1;
+      'Percentage of students chronically absent (15+ days)', undefined].indexOf(this.props.anchor) === -1;
   }
 
   getColumnHeader() {

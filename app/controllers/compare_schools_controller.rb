@@ -18,6 +18,7 @@ class CompareSchoolsController < ApplicationController
     }.merge(Api::SortOptionSerializer.new(solr_query.valid_static_sort_fields + ['testscores']).to_hash)
     @radius = radius
     set_meta_tags(MetaTag::CompareMetaTags.new(self).meta_tag_hash)
+    set_page_analytics_data
   end
 
   private

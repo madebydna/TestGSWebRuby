@@ -18,104 +18,79 @@ module SchoolProfiles::CollegeReadinessConfig
   NEW_SAT_YEAR = 2016
   NEW_SAT_RANGE = (400..1600)
   OLD_SAT_RANGE = (600..2400)
-# Constants for college success pane
-  SENIORS_FOUR_YEAR = 'Graduating seniors pursuing 4 year college/university'
-  SENIORS_TWO_YEAR = 'Graduating seniors pursuing 2 year college/university'
-  SENIORS_ENROLLED_OTHER = 'Graduating seniors pursuing other college'
-  SENIORS_ENROLLED = 'Percent Enrolled in College Immediately Following High School'
   GRADUATES_REMEDIATION = 'Percent Needing Remediation for College'
   GRADUATES_PERSISTENCE = 'Percent Enrolled in College and Returned for a Second Year'
-  GRADUATES_COLLEGE_VOCATIONAL = 'Percent enrolled in any institution of higher learning in the last 0-16 months'
-  GRADUATES_TWO_YEAR = 'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months'
-  GRADUATES_FOUR_YEAR = 'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months'
-  GRADUATES_OUT_OF_STATE = 'Percent of students who will attend out-of-state colleges'
-  GRADUATES_IN_STATE = 'Percent of students who will attend in-state colleges'
-  REMEDIATION_SUBGROUPS = ['Graduates needing Reading remediation in college',
+# Constants for college success pane
+# Order matters - items display in configured order
+  POST_SECONDARY = ['Graduating seniors pursuing other college',
+                    'Graduating seniors pursuing 4 year college/university',
+                    'Graduating seniors pursuing 2 year college/university',
+                    'Percent of students who will attend out-of-state colleges',
+                    'Percent of students who will attend in-state colleges',
+                    'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation',
+                    'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation',
+                    'Percent Enrolled in College Immediately Following High School',
+                    'Percent enrolled in any institution of higher learning in the last 0-16 months',
+                    'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months',
+                    'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months',
+                    'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation',
+                    'Percent enrolled in any postsecondary institution within 12 months after graduation',
+                    'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation',
+                    'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation',
+                    'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any in-state postsecondary institution within 12 months after graduation',
+                    'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation',
+                    'Percent enrolled in any postsecondary institution within 24 months after graduation',
+                    'Percent enrolled in any postsecondary institution within 6 months after graduation']
+  REMEDIATION_SUBGROUPS = ['Percent Needing Remediation for College',
+                           'Graduates needing Reading remediation in college',
                            'Graduates needing Writing remediation in college',
                            'Graduates needing English remediation in college',
                            'Graduates needing Science remediation in college',
                            'Graduates needing Math remediation in college']
-# Order matters - items display in configured order
+  SECOND_YEAR = ['Percent Enrolled in College and Returned for a Second Year',
+                 'Percent Enrolled in a public 4 year college and Returned for a Second Year',
+                 'Percent Enrolled in a public 2 year college and Returned for a Second Year']
 
+
+
+  POST_SECONDARY_GROUP_MAX_YEAR_FILTER = POST_SECONDARY
+
+  FORMATTING_ROUND_LESS_THAN_ONE_PERCENT = %i(round_unless_less_than_1 percent)
+  
 # characteristics cache accessors for college success pane
 # at the end of this constant we add on the remediation subgroups, which are currently set to be displayed as person_gray
-  CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS = [
-    {
-      :cache => :characteristics,
-      :data_key => SENIORS_ENROLLED,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => GRADUATES_COLLEGE_VOCATIONAL,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => SENIORS_FOUR_YEAR,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => SENIORS_TWO_YEAR,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => SENIORS_ENROLLED_OTHER,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => GRADUATES_TWO_YEAR,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => GRADUATES_FOUR_YEAR,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => GRADUATES_OUT_OF_STATE,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => GRADUATES_IN_STATE,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => GRADUATES_REMEDIATION,
-      :visualization => 'person_gray',
-      :formatting => [:round_unless_less_than_1, :percent]
-    },
-    {
-      :cache => :characteristics,
-      :data_key => GRADUATES_PERSISTENCE,
-      :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
-    }
-  ].concat(
-    REMEDIATION_SUBGROUPS.map do |data_key|
+  CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS =
+    POST_SECONDARY.map do |data_key|
       {
-        :cache => :characteristics,
-        :data_key => data_key,
-        :visualization => 'person_gray',
-        :formatting => [:round_unless_less_than_1, :percent]
+          :cache => :characteristics,
+          :data_key => data_key,
+          :visualization => 'person',
+          :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
       }
-    end
-  )
+    end.concat(
+      REMEDIATION_SUBGROUPS.map do |data_key|
+        {
+          :cache => :characteristics,
+          :data_key => data_key,
+          :visualization => 'person_gray',
+          :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
+        }
+      end
+    ).concat(
+      SECOND_YEAR.map do |data_key|
+        {
+            :cache => :characteristics,
+            :data_key => data_key,
+            :visualization => 'person',
+            :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
+        }
+      end
+    )
 
 # characteristics cache accessors for college readiness pane
   CHAR_CACHE_ACCESSORS = [
@@ -123,13 +98,13 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :characteristics,
       :data_key => FOUR_YEAR_GRADE_RATE,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
       :data_key => UC_CSU_ENTRANCE,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
@@ -142,7 +117,7 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :characteristics,
       :data_key => SAT_PARTICIPATION,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
@@ -161,7 +136,7 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :characteristics,
       :data_key => ACT_PARTICIPATION,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :characteristics,
@@ -185,7 +160,7 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :gsdata,
       :data_key => ACT_SAT_PARTICIPATION,
       :visualization => 'person',
-      :formatting => [:round_unless_less_than_1, :percent]
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :gsdata,

@@ -2,6 +2,9 @@
 
 class Api::AutosuggestController < ApplicationController
   include SearchRequestParams
+  include Api::Authorization
+
+  before_action :require_authorization
 
   def show
     return render json: {} unless q.present?

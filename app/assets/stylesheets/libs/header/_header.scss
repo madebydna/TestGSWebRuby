@@ -11,6 +11,12 @@
   -webkit-appearance: none;
 }
 
+.search-input-box{
+  //to set up container for absolute position of the search term reset button
+  position: relative;
+  flex-grow: 2;
+}
+
 .search-term-reset-button {
   position: absolute;
   right: 0px;

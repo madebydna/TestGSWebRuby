@@ -64,7 +64,7 @@ class ExactTarget
   private
 
   def is_live_server?
-    ENV_GLOBAL['app_host'] =~ /www\.greatschools\.org/
+    (ENV_GLOBAL['app_host'] =~ /www\.greatschools\.org/).present?
   end
 
   def internal_recipient?(recipient)

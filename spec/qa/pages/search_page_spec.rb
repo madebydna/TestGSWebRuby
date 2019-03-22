@@ -73,7 +73,7 @@ describe 'Search page' do
       subject(:page_object) do
         visit_page('/california/alameda/schools').sort_dropdown
       end
-      ['School name', 'GreatSchools Rating'].each do |option|
+      ['School Name', 'GreatSchools Rating'].each do |option|
         it { is_expected.to have_css('option', text: option)}
       end
     end
@@ -83,7 +83,7 @@ describe 'Search page' do
         visit_page('/search/search.page?lat=37.770&lon=-122.276')
           .sort_dropdown
       end
-      ['School name', 'GreatSchools Rating', 'Distance'].each do |option|
+      ['School Name', 'GreatSchools Rating', 'Distance'].each do |option|
         it { is_expected.to have_css('option', text: option)}
       end
     end
@@ -92,7 +92,7 @@ describe 'Search page' do
       subject(:page_object) do
         visit_page('/search/search.page?q=lowell').sort_dropdown
       end
-      ['School name', 'GreatSchools Rating', 'Relevance'].each do |option|
+      ['School Name', 'GreatSchools Rating', 'Relevance'].each do |option|
         it { is_expected.to have_css('option', text: option)}
       end
     end

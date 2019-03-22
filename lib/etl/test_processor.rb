@@ -283,6 +283,9 @@ module GS
           if district_ids[row[:state_id]].nil? and !queue_hash.key?(row[:state_id])
             queue_hash[row[:state_id]] = true
             @queue_file.write_queue(row)
+            row[:district_id] = 'ADD NEW DISTRICT'
+          elsif district_ids[row[:state_id]].nil?
+            row[:district_id] = 'ADD NEW DISTRICT'
           elsif district_ids[row[:state_id]]
             row[:district_id] = district_ids[row[:state_id]]
           end
@@ -315,6 +318,9 @@ module GS
           if school_ids[row[:state_id]].nil? and !queue_hash.key?(row[:state_id])
             queue_hash[row[:state_id]] = true
             @queue_file.write_queue(row)
+            row[:school_i] = 'ADD NEW SCHOOL'
+          elsif school_ids[row[:state_id]].nil?
+            row[:school_i] = 'ADD NEW SCHOOL'
           elsif school_ids[row[:state_id]]
             row[:school_id] = school_ids[row[:state_id]]
           end
