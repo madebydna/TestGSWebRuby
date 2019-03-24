@@ -107,7 +107,7 @@ export default function createInfoWindow(entity, campaignCode) {
                 <div className="address">{addressString}</div>
                 <div className="school-subinfo">
                   {schoolTypePhrase(entity.schoolType, entity.gradeLevels)}
-                  {entity.enrollment && (
+                  {entity.enrollment !== 0 && (
                     <span>
                       <span className="divider"> | </span>
                       <span>{studentsPhrase(entity.enrollment)}</span>
