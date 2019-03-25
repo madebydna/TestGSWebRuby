@@ -52,12 +52,12 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
     },
     {
       name: `${t("Public district schools")}`,
-      queryParams: [{ key: "st%5B%5D", val: "public_charter"},{key: "st", val:"public"}],
+      queryParams: [{ key: "st%5B%5D", val: "public_charter"},{key: "st%5B%5D", val:"public"}],
       schoolNumber: schoolLevels.public,
     },
     {
       name: `${t("Public charter schools")}`,
-      queryParams: [{ key: "st%5B%5D", val:"public_charter"},{key: "st", val: "charter"}],
+      queryParams: [{ key: "st%5B%5D", val:"public_charter"},{key: "st%5B%5D", val: "charter"}],
       schoolNumber: schoolLevels.charter,
     },
     {
