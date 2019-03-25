@@ -128,7 +128,7 @@ module CommunityProfiles
     end
 
     def data_types_in_the_overview
-      [SAT_PERCENT_COLLEGE_READY, ACT_PERCENT_COLLEGE_READY, SAT_PARTICIPATION, ACT_PARTICIPATION, ACT_SCORE, SAT_SCORE, AP_ENROLLED, AP_EXAMS_PASSED, SAT_PERCENT_COLLEGE_READY]
+      [FOUR_YEAR_GRADE_RATE, SAT_PERCENT_COLLEGE_READY, ACT_PERCENT_COLLEGE_READY, SAT_PARTICIPATION, ACT_PARTICIPATION, ACT_SCORE, SAT_SCORE, AP_ENROLLED, AP_EXAMS_PASSED, SAT_PERCENT_COLLEGE_READY]
     end
 
     def college_success_datatypes
@@ -233,7 +233,7 @@ module CommunityProfiles
 
     def college_data_array
       @_college_data_array ||= begin
-        overview_data = data_value_hash_overview.select {|dv| (dv[:data_type] == FOUR_YEAR_GRADE_RATE && dv[:subgroup] == 'All students') || data_types_in_the_overview.include?(dv[:data_type])}
+        overview_data = data_value_hash_overview.select {|dv| data_types_in_the_overview.include?(dv[:data_type]) && dv[:subgroup] == 'All students'}
         uc_csu_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == UC_CSU_ENTRANCE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
         graduation_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == FOUR_YEAR_GRADE_RATE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
         college_success_data = data_value_hash_overview.select {|dv| college_success_datatypes.include?(dv[:data_type])}
