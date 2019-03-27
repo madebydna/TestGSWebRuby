@@ -236,7 +236,7 @@ module CommunityProfiles
         overview_data = data_value_hash_overview.select {|dv| data_types_in_the_overview.include?(dv[:data_type]) && dv[:subgroup] == 'All students'}
         uc_csu_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == UC_CSU_ENTRANCE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
         graduation_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == FOUR_YEAR_GRADE_RATE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
-        college_success_data = data_value_hash_overview.select {|dv| college_success_datatypes.include?(dv[:data_type])}
+        college_success_data = data_value_hash_overview.select {|dv| college_success_datatypes.include?(dv[:data_type]) && dv[:subgroup] == 'All students'}
         # College readiness module - Data hashes to send to frontend
         overview_data_hash = has_data?(overview_data) ? { narration: I18n.t('subtitle_html', scope: 'school_profiles.college_readiness'), title: I18n.t('Overview', scope: 'lib.equity_gsdata'), values: overview_data,  anchor: 'College readiness', type: 'mixed_variety'} : nil
         uc_csu_data_hash = has_data?(uc_csu_data) ? { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: I18n.t('UC/CSU eligibility', scope: 'lib.equity_gsdata'), values: uc_csu_data, anchor: 'UC/CSU eligibility' } : nil
@@ -291,7 +291,7 @@ module CommunityProfiles
     def college_success_narration
       return default_college_success_narration unless data_type_hashes.all? {|c| c.state_average.present?}
 
-      narratives = data_type_hashes.map(&narration_for_value).compact
+      narratives = data_type_hashes.select{ |dh| dh["breakdown"] == 'All students'}.map(&narration_for_value).compact
 
       return default_college_success_narration unless narratives.present?
 
