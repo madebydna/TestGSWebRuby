@@ -29,7 +29,8 @@ class DistrictBoundariesController < ApplicationController
     set_meta_tags title: meta_title,
                   description: meta_description,
                   og: open_graph,
-                  canonical: district_boundary_url
+                  canonical: district_boundary_url,
+                  alternate: {en: url_for(lang: nil), es: url_for(lang: :es)}
   end
 
   def state
