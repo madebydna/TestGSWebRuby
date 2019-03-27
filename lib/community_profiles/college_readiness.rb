@@ -204,8 +204,8 @@ module CommunityProfiles
 
     private
 
-    def with_school_values
-      ->(h) { h.has_key?('school_value') && h['school_value'].present? }
+    def with_district_values
+      ->(h) { h.has_key?('district_value') && h['district_value'].present? }
     end
   end
 end

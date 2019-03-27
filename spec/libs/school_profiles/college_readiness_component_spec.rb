@@ -463,7 +463,7 @@ describe 'CollegeSuccessComponent' do
   end
 
   describe '#narration_for_value' do
-    let(:value) { OpenStruct.new(data_type: SchoolProfiles::CollegeReadinessConfig::SENIORS_FOUR_YEAR, school_value: 38.5, state_average: 34.9) }
+    let(:value) { OpenStruct.new(data_type: 'Graduating seniors pursuing 4 year college/university', school_value: 38.5, state_average: 34.9) }
     subject { college_readiness.narration_for_value.call(value) }
 
     context 'for regular data' do
@@ -483,7 +483,7 @@ describe 'CollegeSuccessComponent' do
     end
 
     context 'for persistence data' do
-      before { value.data_type = SchoolProfiles::CollegeReadinessConfig::GRADUATES_PERSISTENCE }
+      before { value.data_type = 'Percent Enrolled in College and Returned for a Second Year' }
       it 'should detect higher' do
         expect(subject).to include('higher')
       end

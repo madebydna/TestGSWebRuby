@@ -2,8 +2,9 @@ class Api::SchoolsController < ApplicationController
   include Pagination::PaginatableRequest
   include SearchRequestParams
   include SearchControllerConcerns
+  include Api::Authorization
 
-  before_action :require_valid_params
+  before_action :require_valid_params, :require_authorization
 
   def show
     hash = serialized_schools.first || {}

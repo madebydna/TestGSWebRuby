@@ -28,12 +28,6 @@
     }
   }
 
-  .search-input-box{
-    //to set up container for absolute position of the search term reset button
-    position: relative;
-    flex-grow: 2;
-  }
-
   .search-results-list-item {
     cursor: pointer;
   }

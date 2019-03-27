@@ -97,6 +97,12 @@ module CommunityProfiles
       )
     end
 
+    def college_success
+      @_college_success ||= CommunityProfiles::CollegeSuccess.new(
+        cache_data_reader: @cache_data_reader
+      )
+    end
+
     def district_academics_props
       {
         title: I18n.t('.academics', scope: 'school_profiles.show'),
@@ -105,10 +111,9 @@ module CommunityProfiles
         subtitle: I18n.t('.subtext', scope: 'community.academics', achievement_gap_link: article_achievement_gap_path),
         info_text: nil, #I18n.t('.Race ethnicity tooltip', scope: 'school_profiles.equity')
         icon_classes: I18n.t('.Race ethnicity icon', scope: 'school_profiles.equity'),
-        sources: sources_html(academics_sources) + college_readiness.sources, #equity.race_ethnicity_sources
+        sources: sources_html(academics_sources) + college_readiness.sources + college_success.sources, #equity.race_ethnicity_sources
         share_content: nil,
-        data: data_props_for_district_academics_module + college_readiness.props,
-        # data: college_readiness.props,
+        data: data_props_for_district_academics_module + college_readiness.props + college_success.props,
         faq: faq_for_academics_module,
         no_data_summary: I18n.t('.Race ethnicity no data', scope: 'school_profiles.equity'),
         qualaroo_module_link: nil

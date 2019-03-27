@@ -1,4 +1,4 @@
-require_relative "../test_processor"
+require_rELAtive "../test_processor"
 GS::ETL::Logging.disable
 
 class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
@@ -87,7 +87,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
 		'NATIVE HAWAIIAN' => 41,
         'PACIFIC ISLANDER' => 37,
 		'STUDENTS WITH DISABILITIES' => 27,
-		'WHITE' => 21
+		'WHITE' => 21, 
+
 	}
 
   map_prof_to_breakdown = {
@@ -149,6 +150,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
     ecdis_n_prof_and_above: 1
   }
 
+
  source('ELA03.txt',[],col_sep:"\t")  do |s|
    s.transform("setting entity level", WithBlock) do |row|
      if row[:county_code] == 'STATE'
@@ -181,6 +183,24 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
      end
      row
    end
+   .transform("Fill Columns",Fill,
+     {
+       year: 2017,
+       entity_type: 'public_charter',
+       level_code: 'e,m,h',
+       test_data_type: 'NJ PARCC',
+       gsdata_test_data_type_id: '289', 
+       subject: 'ELA',
+       academic_gsdata_id: 4,
+       grade: 3,
+       notes: 'DXT-2557: NJ NJ PARCC',
+       description: 'Statewide assessments have been used for decades in New Jersey and are designed to measure student progress toward achieving our academic standards. PARCC is a multi-state consortium that allows states, including New Jersey, to pool resources and expertise to develop a meaningful, comparable high-quality assessment - one that can be used to guide our efforts to continually improve our educational system by supporting teaching and learning, identifying struggling schools, informing teacher development, and providing parents with feedback on their own child\'s strengths and challenges.'
+     })
+   .transform("Rename columns",MultiFieldRenamer,
+     {
+       subgroup_type: :breakdown,
+       valid_scores: :number_tested
+     })
    .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
    .transform('delete * rows', DeleteRows, :l1_percent, '*')
    .transform('prof and above band',SumValues,:prof_and_above, :l4_percent,:l5_percent)
@@ -233,8 +253,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'ela',
+       gsdata_test_data_type_id: 289,
+       subject: 'ELA',
        academic_gsdata_id: 4,
        grade: 4, 
 	   notes: 'DXT-2557: NJ NJ PARCC',
@@ -297,8 +317,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'ela',
+       gsdata_test_data_type_id: 289,
+       subject: 'ELA',
        academic_gsdata_id: 4,
        grade: 5, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -361,8 +381,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'ela',
+       gsdata_test_data_type_id: 289,
+       subject: 'ELA',
        academic_gsdata_id: 4,
        grade: 6, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -425,8 +445,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'ela',
+       gsdata_test_data_type_id: 289,
+       subject: 'ELA',
        academic_gsdata_id: 4,
        grade: 7, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -489,8 +509,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'ela',
+       gsdata_test_data_type_id: 289,
+       subject: 'ELA',
        academic_gsdata_id: 4,
        grade: 8, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -553,8 +573,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'ela',
+       gsdata_test_data_type_id: 289,
+       subject: 'ELA',
        academic_gsdata_id: 4,
        grade: 10, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -617,8 +637,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'ela',
+       gsdata_test_data_type_id: 289,
+       subject: 'ELA',
        academic_gsdata_id: 4,
        grade: 11, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -681,8 +701,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'math',
+       gsdata_test_data_type_id: 289,
+       subject: 'Math',
        academic_gsdata_id: 5,
        grade: 3, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -745,8 +765,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'math',
+       gsdata_test_data_type_id: 289,
+       subject: 'Math',
        academic_gsdata_id: 5,
        grade: 4, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -809,8 +829,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'math',
+       gsdata_test_data_type_id: 289,
+       subject: 'Math',
        academic_gsdata_id: 5,
        grade: 5, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -873,8 +893,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'math',
+       gsdata_test_data_type_id: 289,
+       subject: 'Math',
        academic_gsdata_id: 5,
        grade: 6, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -937,8 +957,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'math',
+       gsdata_test_data_type_id: 289,
+       subject: 'Math',
        academic_gsdata_id: 5,
        grade: 7, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -1001,8 +1021,8 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
-       subject: 'math',
+       gsdata_test_data_type_id: 289,
+       subject: 'Math',
        academic_gsdata_id: 5,
        grade: 8, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -1072,7 +1092,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
+       gsdata_test_data_type_id: 289,
        subject: 'Algebra I',
        academic_gsdata_id: 6, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -1143,7 +1163,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
+       gsdata_test_data_type_id: 289,
        subject: 'Algebra II',
        academic_gsdata_id: 10, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -1214,7 +1234,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
        entity_type: 'public_charter',
        level_code: 'e,m,h',
        test_data_type: 'NJ PARCC',
-       gsdata_test_data_type_id: 298,
+       gsdata_test_data_type_id: 289,
        subject: 'Geometry',
        academic_gsdata_id: 8, 
        notes: 'DXT-2557: NJ NJ PARCC',
@@ -1290,9 +1310,11 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:se_prof_and_above, :se_p_scie,:se_ap_scie)
    .transform('prof and above',SumValues,:lep_prof_and_above, :lep_p_scie,:lep_ap_scie)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :total_prof_and_above, :total_pp_scie, :total_p_scie, :total_ap_scie, :ge_prof_and_above, :ge_pp_scie, :ge_p_scie, :ge_ap_scie, :se_prof_and_above, :se_pp_scie, :se_p_scie, :se_ap_scie, :lep_prof_and_above, :lep_pp_scie, :lep_p_scie, :lep_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
-   .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
+   .transform('mapping prof breakdown id', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
+   .transform('mapping breakdown', HashLookup, :breakdown, map_breakdown, to: :breakdown_gsdata_id)
    .transform("mapping number tested", WithBlock) do |row|
      if row[:breakdown_gsdata_id] == 1
        row[:number_tested] = row[:total_enroll_scie]
@@ -1366,6 +1388,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:f_prof_and_above, :f_p_scie,:f_ap_scie)
    .transform('prof and above',SumValues,:m_prof_and_above, :m_p_scie,:m_ap_scie)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :f_prof_and_above, :f_pp_scie, :f_p_scie, :f_ap_scie, :m_prof_and_above, :m_pp_scie, :m_p_scie, :m_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
@@ -1442,6 +1465,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:h_prof_and_above, :h_p_scie,:h_ap_scie)
    .transform('prof and above',SumValues,:i_prof_and_above, :i_p_scie,:i_ap_scie)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :w_prof_and_above, :w_pp_scie, :w_p_scie, :w_ap_scie, :b_prof_and_above, :b_pp_scie, :b_p_scie, :b_ap_scie, :a_prof_and_above, :a_pp_scie, :a_p_scie, :a_ap_scie, :p_prof_and_above, :p_pp_scie, :p_p_scie, :p_ap_scie, :h_prof_and_above, :h_pp_scie, :h_p_scie, :h_ap_scie, :i_prof_and_above, :i_pp_scie, :i_p_scie, :i_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
@@ -1522,6 +1546,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:ecdis_y_prof_and_above, :ecdis_y_p_scie,:ecdis_y_ap_scie)
    .transform('prof and above',SumValues,:ecdis_n_prof_and_above, :ecdis_n_p_scie,:ecdis_n_ap_scie)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :ecdis_y_prof_and_above, :ecdis_y_pp_scie, :ecdis_y_p_scie, :ecdis_y_ap_scie, :ecdis_n_prof_and_above, :ecdis_n_pp_scie, :ecdis_n_p_scie, :ecdis_n_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
@@ -1595,6 +1620,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:ge_prof_and_above, :ge_p_scie,:ge_ap_scie)
    .transform('prof and above',SumValues,:se_prof_and_above, :se_p_scie,:se_ap_scie)
    .transform('prof and above',SumValues,:lep_prof_and_above, :lep_p_scie,:lep_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :total_prof_and_above, :total_pp_scie, :total_p_scie, :total_ap_scie, :ge_prof_and_above, :ge_pp_scie, :ge_p_scie, :ge_ap_scie, :se_prof_and_above, :se_pp_scie, :se_p_scie, :se_ap_scie, :lep_prof_and_above, :lep_pp_scie, :lep_p_scie, :lep_ap_scie)
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
@@ -1672,6 +1698,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:f_prof_and_above, :f_p_scie,:f_ap_scie)
    .transform('prof and above',SumValues,:m_prof_and_above, :m_p_scie,:m_ap_scie)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :f_prof_and_above, :f_pp_scie, :f_p_scie, :f_ap_scie, :m_prof_and_above, :m_pp_scie, :m_p_scie, :m_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
@@ -1748,6 +1775,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:h_prof_and_above, :h_p_scie,:h_ap_scie)
    .transform('prof and above',SumValues,:i_prof_and_above, :i_p_scie,:i_ap_scie)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :w_prof_and_above, :w_pp_scie, :w_p_scie, :w_ap_scie, :b_prof_and_above, :b_pp_scie, :b_p_scie, :b_ap_scie, :a_prof_and_above, :a_pp_scie, :a_p_scie, :a_ap_scie, :p_prof_and_above, :p_pp_scie, :p_p_scie, :p_ap_scie, :h_prof_and_above, :h_pp_scie, :h_p_scie, :h_ap_scie, :i_prof_and_above, :i_pp_scie, :i_p_scie, :i_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
@@ -1828,6 +1856,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:ecdis_y_prof_and_above, :ecdis_y_p_scie,:ecdis_y_ap_scie)
    .transform('prof and above',SumValues,:ecdis_n_prof_and_above, :ecdis_n_p_scie,:ecdis_n_ap_scie)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :ecdis_y_prof_and_above, :ecdis_y_pp_scie, :ecdis_y_p_scie, :ecdis_y_ap_scie, :ecdis_n_prof_and_above, :ecdis_n_pp_scie, :ecdis_n_p_scie, :ecdis_n_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
@@ -1902,6 +1931,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:se_prof_and_above, :se_p_scie,:se_ap_scie)
    .transform('prof and above',SumValues,:lep_prof_and_above, :lep_p_scie,:lep_ap_scie)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :total_prof_and_above, :total_pp_scie, :total_p_scie, :total_ap_scie, :ge_prof_and_above, :ge_pp_scie, :ge_p_scie, :ge_ap_scie, :se_prof_and_above, :se_pp_scie, :se_p_scie, :se_ap_scie, :lep_prof_and_above, :lep_pp_scie, :lep_p_scie, :lep_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
@@ -1978,6 +2008,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:f_prof_and_above, :f_p_scie,:f_ap_scie)
    .transform('prof and above',SumValues,:m_prof_and_above, :m_p_scie,:m_ap_scie)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :f_prof_and_above, :f_pp_scie, :f_p_scie, :f_ap_scie, :m_prof_and_above, :m_pp_scie, :m_p_scie, :m_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
@@ -2054,6 +2085,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:h_prof_and_above, :h_p_scie,:h_ap_scie)
    .transform('prof and above',SumValues,:i_prof_and_above, :i_p_scie,:i_ap_scie)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :w_prof_and_above, :w_pp_scie, :w_p_scie, :w_ap_scie, :b_prof_and_above, :b_pp_scie, :b_p_scie, :b_ap_scie, :a_prof_and_above, :a_pp_scie, :a_p_scie, :a_ap_scie, :p_prof_and_above, :p_pp_scie, :p_p_scie, :p_ap_scie, :h_prof_and_above, :h_pp_scie, :h_p_scie, :h_ap_scie, :i_prof_and_above, :i_pp_scie, :i_p_scie, :i_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)
@@ -2134,6 +2166,7 @@ class NJTestProcessor2017PARCCASKNJBCT < GS::ETL::TestProcessor
    .transform('prof and above',SumValues,:ecdis_y_prof_and_above, :ecdis_y_p_scie,:ecdis_y_ap_scie)
    .transform('prof and above',SumValues,:ecdis_n_prof_and_above, :ecdis_n_p_scie,:ecdis_n_ap_scie)
    .transform('transposing prof bands', Transposer, :proficiency_band, :value_float, :ecdis_y_prof_and_above, :ecdis_y_pp_scie, :ecdis_y_p_scie, :ecdis_y_ap_scie, :ecdis_n_prof_and_above, :ecdis_n_pp_scie, :ecdis_n_p_scie, :ecdis_n_ap_scie)
+   .transform('delete * rows in value_float', DeleteRows, :value_float, '*')
    .transform("mapping proficiency bands",
      HashLookup, :proficiency_band, map_prof_band, to: :proficiency_band_gsdata_id)
    .transform('mapping breakdown', HashLookup, :proficiency_band, map_prof_to_breakdown, to: :breakdown_gsdata_id)

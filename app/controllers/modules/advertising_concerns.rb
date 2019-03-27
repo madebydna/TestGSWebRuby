@@ -78,8 +78,19 @@ module AdvertisingConcerns
 
   module AdvertisingFormatterHelper
     module_function
+    def unformatted_keys
+      %w(address city_long)
+    end
+
     def formatted_gon_hash
-      HashWithSetterCallback.new { |key, value| [key, format_ad_setTargeting(value)] }
+      HashWithSetterCallback.new do |key, value|
+        # untruncated format if key is found from array of untruncated keys
+        if unformatted_keys.include?(key)
+          [key, value]
+        else
+          [key, format_ad_setTargeting(value)]
+        end
+      end
     end
 
     def format_ad_setTargeting(value)

@@ -1,3 +1,6 @@
+import { throttle, debounce, castArray, compact } from 'lodash';
+import invariant from 'fbjs/lib/invariant';
+
 export const XS = 0;
 export const SM = 1;
 export const MD = 2;
@@ -30,7 +33,8 @@ export const viewportBox = () => {
 };
 
 // calculate outer box relative to document
-const boxInDoc = el => {
+export const boxInDoc = el => {
+  invariant(el, 'Cannot get bounding rectangle for missing element');
   const rect = el.getBoundingClientRect();
   const top = rect.top + viewportBox().top;
   const bottom = top + rect.height;
@@ -62,7 +66,7 @@ export const intersection = (box, otherBox) => {
   const bottom = Math.min(box.bottom, otherBox.bottom);
   const left = Math.max(box.left, otherBox.left);
   const right = Math.min(box.right, otherBox.right);
-  if (top >= bottom && right >= left) {
+  if (bottom >= top && right >= left) {
     return {
       top,
       bottom,
@@ -74,6 +78,7 @@ export const intersection = (box, otherBox) => {
 };
 
 const boxEquals = (box, otherBox) =>
+  !!box && !!otherBox &&
   box.top === otherBox.top &&
   box.bottom === otherBox.bottom &&
   box.left === otherBox.left &&
@@ -93,8 +98,9 @@ export const amountElementBottomBelowViewport = el =>
 export const elementInViewport = el =>
   isIntersection(boxInDoc(el), viewportBox());
 
-export const elementEntirelyInViewport = el =>
-  boxContains(viewportBox(), boxInDoc(el));
+export const elementEntirelyInViewport = el => {
+  return boxContains(viewportBox(), boxInDoc(el));
+}
 
 export const maxTopVsViewport = el =>
   Math.max(boxInDoc(el).top, viewportBox().top);
@@ -112,6 +118,24 @@ export function viewport() {
   return { width: e[`${a}Width`], height: e[`${a}Height`] };
 }
 
+export const relativeToViewport = el => distanceTo(boxInDoc(el), viewportBox());
+
+export const relativeToViewportTop = el => {
+  invariant(el, 'Cannot get bounding rectangle for missing element');
+  const viewportRect = viewportBox();
+  const elementBox = boxInDoc(el);
+
+  const top = elementBox.top - viewportRect.top;
+  const bottom = elementBox.bottom - viewportRect.top;
+  const left = elementBox.left - viewportRect.left;
+  const right = elementBox.right - viewportRect.left;
+  const height = bottom - top;
+  const width = right - left;
+  return {
+    top, bottom, left, right, height, width
+  }
+};
+
 export function size() {
   const width = viewport().width;
   if (width < 768) {
@@ -125,3 +149,102 @@ export function size() {
 }
 
 export const ratioScrolledDown = () => viewportBox().middle / documentBox().height;
+
+export const firstInViewport = els => els.find(el => elementEntirelyInViewport(el));
+
+const onDomContentLoaded = callback => {
+  if (window.document.readyState === "loading") {
+    window.document.addEventListener("DOMContentLoaded", callback);
+  } else {
+    callback();
+  }
+}
+
+// this is the 2nd implementation of this function, meant to be more generic than original one in search code
+export function keepInViewport(
+  selector,
+  {
+    initialTop = null,
+    elementsAboveFunc = () => {},
+    elementsBelowFunc = () => {},
+    setTop = true,
+    setBottom = true,
+    shrink = false,
+    hideIfNoSpace = false
+  } = {}
+) {
+  let initialVisibility = null;
+
+  const updateElementPosition = function updateElementPosition() {
+    const target = window.document.querySelector(selector);
+    const targetRelativeToViewport = relativeToViewportTop(target);
+    const targetRelativeToDoc = boxInDoc(target);
+    const elementsAbove = compact(castArray(elementsAboveFunc()));
+    const elementsBelow = compact(castArray(elementsBelowFunc()));
+    let newRelativeTop = null;
+
+    if (!target) {
+      return;
+    }
+    target.style.visibility = '';
+    // save the target element's originally defined relative top and display property
+    if (initialTop === null) {
+      initialTop = targetRelativeToViewport.top;
+    }
+    if(initialVisibility === null) {
+      initialVisibility = target.style.visibility;
+    }
+    let newVisibility = initialVisibility;
+
+    if (setTop) {
+      const minTop = elementsAbove.reduce(
+        (max, e) => Math.max(max, relativeToViewportTop(e).bottom),
+        0
+      );
+      newRelativeTop = Math.max(initialTop - viewportBox().top, minTop);
+    }
+
+    // fixed Math.min(minSoFar, e.offset().top) from e.position()
+    // fixed height to be outerHeight
+    // $offset().top is unreliable...doesnt include margins
+    if (setBottom) {
+      // there can be multiple items we want to keep below the target.
+      // this finds the top of the highest one
+      let bottom = elementsBelow.reduce(
+        (minSoFar, e) => Math.min(minSoFar, boxInDoc(e).top),
+        documentBox().height
+      );
+      if (shrink) {
+        // if the target is able to be resized if needed, we can shorten it
+        // so that it stays between the elements above and elements below as the page is scrolled
+        bottom = Math.max(viewportBox().bottom - bottom, 0);
+        target.style.bottom = `${bottom}px`;
+      } else {
+        // if we can't shrink the target, and the bottom of the target encounters the top
+        // of elements we want to keep below, then we'll push the target up and out of the viewport
+        let overlap = targetRelativeToDoc.bottom - bottom;
+        if (newRelativeTop !== null) {
+          overlap += newRelativeTop - targetRelativeToViewport.top;
+        } 
+        if (overlap > 0) {
+          newRelativeTop -= overlap;
+          if(hideIfNoSpace) {
+            newVisibility = 'hidden';
+          }
+        }
+      }
+    }
+
+    target.style.visibility = newVisibility;
+    if (newRelativeTop !== null) {
+      target.style.top = `${newRelativeTop}px`
+    }
+  };
+
+  onDomContentLoaded(() => {
+    window.addEventListener("scroll", throttle(updateElementPosition, 10));
+    window.addEventListener("resize", throttle(updateElementPosition, 10));
+  })
+
+  updateElementPosition();
+}

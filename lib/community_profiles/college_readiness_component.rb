@@ -39,7 +39,7 @@ module CommunityProfiles
         end
       end
       attr_accessor :breakdown, :original_breakdown, :district_value,
-                    :year, :subject, :data_type, :source, :district_created, :subject_id,
+                    :year, :subject, :data_type, :source, :district_created, :subject_id, :subject,
                     :performance_level,  :narrative, :grade, :district_average, :state_average
 
       def [](key)
@@ -59,7 +59,7 @@ module CommunityProfiles
       end
 
       (2000..2022).to_a.each do |year|
-        attr_accessor "school_value_#{year}"
+        attr_accessor "district_value_#{year}"
         attr_accessor "state_average_#{year}"
         attr_accessor "district_average_#{year}"
         attr_accessor "performance_level_#{year}"
@@ -128,14 +128,20 @@ module CommunityProfiles
     end
 
     def data_types_in_the_overview
-      [SAT_PERCENT_COLLEGE_READY, ACT_PERCENT_COLLEGE_READY, SAT_PARTICIPATION, ACT_PARTICIPATION, ACT_SCORE, SAT_SCORE, AP_ENROLLED, AP_EXAMS_PASSED, SAT_PERCENT_COLLEGE_READY]
+      [FOUR_YEAR_GRADE_RATE, SAT_PERCENT_COLLEGE_READY, ACT_PERCENT_COLLEGE_READY, SAT_PARTICIPATION, ACT_PARTICIPATION, ACT_SCORE, SAT_SCORE, AP_ENROLLED, AP_EXAMS_PASSED, SAT_PERCENT_COLLEGE_READY]
+    end
+
+    def college_success_datatypes
+      [SENIORS_FOUR_YEAR, SENIORS_TWO_YEAR, SENIORS_ENROLLED_OTHER, SENIORS_ENROLLED, GRADUATES_REMEDIATION,
+       GRADUATES_PERSISTENCE, GRADUATES_COLLEGE_VOCATIONAL,GRADUATES_TWO_YEAR, GRADUATES_FOUR_YEAR,
+       GRADUATES_OUT_OF_STATE, GRADUATES_IN_STATE] + REMEDIATION_SUBGROUPS
     end
 
     def data_type_hashes
       @_data_type_hashes ||= begin
         hashes = characteristics_data
         return [] if hashes.blank?
-        handle_ACT_SAT_to_display!(hashes)
+        # handle_ACT_SAT_to_display!(hashes)
         hashes = hashes.map do |key, array|
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
             # This is for characteristics
@@ -227,17 +233,18 @@ module CommunityProfiles
 
     def college_data_array
       @_college_data_array ||= begin
-        overview_data = data_value_hash_overview.select {|dv| (dv[:data_type] == FOUR_YEAR_GRADE_RATE && dv[:subgroup] == 'All students') || data_types_in_the_overview.include?(dv[:data_type])}
+        overview_data = data_value_hash_overview.select {|dv| data_types_in_the_overview.include?(dv[:data_type]) && dv[:subgroup] == 'All students'}
         uc_csu_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == UC_CSU_ENTRANCE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
         graduation_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == FOUR_YEAR_GRADE_RATE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
-        # Data hashes to send to frontend
-        overview_data_hash = has_data?(overview_data) ? { narration: I18n.t('subtitle_html', scope: 'school_profiles.college_readiness'), title: I18n.t('Overview', scope: 'lib.equity_gsdata'), values: overview_data,  anchor: 'College readiness', type: 'mixed_variety'} : nil
-        uc_csu_data_hash = has_data?(uc_csu_data) ? { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: I18n.t('UC/CSU eligibility', scope: 'lib.equity_gsdata'), values: uc_csu_data, anchor: 'UC/CSU eligibility' } : nil
-        graduation_data_hash = has_data?(graduation_data) ? { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: I18n.t('Graduation rates', scope: 'lib.equity_gsdata'), values: graduation_data, anchor: 'Graduation rates'} : nil
-        [overview_data_hash,
-          uc_csu_data_hash,
-          graduation_data_hash
-        ].compact
+        college_success_data = data_value_hash_overview.select {|dv| college_success_datatypes.include?(dv[:data_type]) && dv[:subgroup] == 'All students'}
+        # College readiness module - Data hashes to send to frontend
+        data_array = []
+        data_array << { narration: I18n.t('subtitle_html', scope: 'school_profiles.college_readiness'), title: I18n.t('Overview', scope: 'lib.equity_gsdata'), values: overview_data,  anchor: 'College readiness', type: 'mixed_variety'} if has_data?(overview_data)
+        data_array << { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: I18n.t('UC/CSU eligibility', scope: 'lib.equity_gsdata'), values: uc_csu_data, anchor: 'UC/CSU eligibility' } if has_data?(uc_csu_data)
+        data_array << { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: I18n.t('Graduation rates', scope: 'lib.equity_gsdata'), values: graduation_data, anchor: 'Graduation rates'} if has_data?(graduation_data)
+        # no title for college success since we don't want the sub panels to render in React
+        data_array << { narration: I18n.t('district_scoped_info_text', scope: 'lib.college_readiness') + college_success_narration, values: college_success_data, type: 'mixed_variety'} if has_data?(college_success_data)
+        data_array.compact
       end
     end
 
@@ -280,29 +287,29 @@ module CommunityProfiles
     def college_success_narration
       return default_college_success_narration unless data_type_hashes.all? {|c| c.state_average.present?}
 
-      narratives = data_type_hashes.map(&narration_for_value).compact
+      narratives = data_type_hashes.select{ |dh| dh["breakdown"] == 'All students'}.map(&narration_for_value).compact
 
       return default_college_success_narration unless narratives.present?
 
-      intro = I18n.t(:intro, scope: 'lib.college_readiness.narration.college_success', default: '').html_safe
+      intro = I18n.t(:district_intro, scope: 'lib.college_readiness.narration.college_success', default: '').html_safe
       outro = I18n.t(:outro, scope: 'lib.college_readiness.narration.college_success', default: '',
                      end_more: SchoolProfilesController.show_more_end).html_safe
-
-      "#{intro}#{narratives.first}#{SchoolProfilesController.show_more('College Success')}#{narratives.drop(1).join}#{outro}"
+      # "#{intro}#{narratives.first}#{SchoolProfilesController.show_more('College Success')}#{narratives.drop(1).join}#{outro}"
+      "#{intro}#{narratives.join}#{outro}"
     end
 
     def narration_for_value
       lambda do |c|
-        translation = I18n.t(c.data_type, scope: 'lib.college_readiness.narration.college_success', default: nil)&.html_safe
-        if translation.present? && c.school_value.present? && c.state_average.present?
-          "<li>#{comparison_word(c.data_type, c.school_value, c.state_average)} #{translation}</li>"
+        translation = I18n.t(c.data_type, scope: 'lib.college_readiness.narration.college_success', default: nil).html_safe
+        if translation.present? && c.district_value.present? && c.state_average.present?
+          "<li>#{comparison_word(c.data_type, c.district_value, c.state_average)} #{translation}</li>"
         end
       end
     end
 
-    def comparison_word(data_type, school_value, state_value)
+    def comparison_word(data_type, district_value, state_value)
       is_persistence = data_type == GRADUATES_PERSISTENCE
-      diff = school_value - state_value
+      diff = district_value - state_value
       if (diff).abs <= 2.0
         key = is_persistence ? :about : :average
       elsif diff > 0
@@ -329,8 +336,8 @@ module CommunityProfiles
       @_scope ||= 'school_profiles.' + @tab
     end
 
-    def with_school_values
-      ->(h) {h['school_value'].present?}
+    def with_district_values
+      ->(h) {h['district_value'].present?}
     end
 
     def breakdown_percentage(dv)

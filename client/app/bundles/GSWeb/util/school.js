@@ -1,5 +1,7 @@
 import React from 'react';
 import { t, capitalize } from 'util/i18n';
+import { name } from 'util/states';
+import { legacyUrlEncode } from 'util/uri';
 
 const getHomesForSaleHref = (state, address, campaignCode = 'schoolsearch') => {
   if (state && address && address.zip) {
@@ -8,6 +10,17 @@ const getHomesForSaleHref = (state, address, campaignCode = 'schoolsearch') => {
       address.zip.split('-')[0]
     }?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=${campaignCode}`;
     // return homesForSaleHref;
+  }
+  return null;
+};
+
+const getDistrictHref = (state, city, district) => {
+  if (state && city && district) {
+    let s = encodeURIComponent(legacyUrlEncode(name(state)));
+    let c = encodeURIComponent(legacyUrlEncode(city));
+    let d = encodeURIComponent(legacyUrlEncode(district));
+
+    return `/${s}/${c}/${d}/`;
   }
   return null;
 };
@@ -50,5 +63,6 @@ export {
   studentsPhrase,
   schoolTypePhrase,
   clarifySchoolType,
-  levelCodeLong
+  levelCodeLong,
+  getDistrictHref
 };

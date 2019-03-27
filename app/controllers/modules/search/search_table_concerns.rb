@@ -22,7 +22,7 @@ module SearchTableConcerns
         name = Solr::SchoolDocument.rating_field_name_to_breakdown[field]
         name || field.titleize
       end
-    # h = h.unshift("Low-income")
+    h = h.unshift("Low-income")
     # h = h.flatten.compact.uniq - ["All students"]
     h.map do |title|
       {
