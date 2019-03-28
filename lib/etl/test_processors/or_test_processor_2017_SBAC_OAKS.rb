@@ -292,6 +292,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
         test_data_type: 'OAKS',
         gsdata_test_data_type_id: 250,
         entity_level: 'state', 
+        academic_gsdata_id: 19,
         notes: 'DXT-2651: OR OAKS',
         description: 'In 2016-2017 Oregon used the Oregon Assessment of Knowledge and Skills (OAKS) to test students in grades 5, 8 and 11 in science.  The OAKS is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of Oregon.  The goal is for all students to score at or above the state standard.'
     })
@@ -313,6 +314,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
         test_data_type: 'OAKS',
         gsdata_test_data_type_id: 250,
         entity_level: 'district',
+        academic_gsdata_id: 19,
         percent_proficient_(level_3_or_4): :percent_proficient_(level_4_or_5), 
         notes: 'DXT-2651: OR OAKS',
         description: 'In 2016-2017 Oregon used the Oregon Assessment of Knowledge and Skills (OAKS) to test students in grades 5, 8 and 11 in science.  The OAKS is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of Oregon.  The goal is for all students to score at or above the state standard.'
@@ -337,6 +339,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
         test_data_type: 'OAKS',
         gsdata_test_data_type_id: 250,
         entity_level: 'school', 
+        academic_gsdata_id: 19,
         notes: 'DXT-2651: OR OAKS',
         description: 'In 2016-2017 Oregon used the Oregon Assessment of Knowledge and Skills (OAKS) to test students in grades 5, 8 and 11 in science.  The OAKS is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of Oregon.  The goal is for all students to score at or above the state standard.'
     })
@@ -358,6 +361,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
         test_data_type: 'OAKS',
         gsdata_test_data_type_id: 250,
         entity_level: 'school', 
+        academic_gsdata_id: 19,
         notes: 'DXT-2651: OR OAKS',
         description: 'In 2016-2017 Oregon used the Oregon Assessment of Knowledge and Skills (OAKS) to test students in grades 5, 8 and 11 in science.  The OAKS is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of Oregon.  The goal is for all students to score at or above the state standard.'
     })
