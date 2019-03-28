@@ -5,9 +5,11 @@ import ModalTooltip from "../modal_tooltip";
 import FiveStarRating from "../review/form/five_star_rating";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t, capitalize } from "util/i18n";
+import { getDistrictHref } from 'util/school';
 
-const renderSchoolItem = ({name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears, currentTab}) => {
+const renderSchoolItem = ({name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears, currentTab, address, state}) => {
   const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
+  const districtLink = getDistrictHref(state, address.city, districtName);
   return <React.Fragment>
     <div className="content-container">
       <div>
@@ -20,7 +22,7 @@ const renderSchoolItem = ({name, rating, links, districtName, numReviews, parent
       </div>
       <div className="school-info">
         { renderSchoolName(name, links, currentTab) }
-        { renderSchoolItemContent(currentTab, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears) }
+        { renderSchoolItemContent(currentTab, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears, districtLink) }
       </div>
     </div>
     <div className="blue-line" />
@@ -48,7 +50,7 @@ const renderSchoolName = (name, links, currentTab) => {
   }
 }
 
-const renderSchoolItemContent = (currentTab, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears) => {
+const renderSchoolItemContent = (currentTab, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears, districtLink) => {
   const tabs = {
     0: t('top_schools.top_schools'),
     1: t('csa_winners')
@@ -59,13 +61,13 @@ const renderSchoolItemContent = (currentTab, links, districtName, numReviews, pa
       <div>
         {renderCsaYears(csaAwardYears)}
         <p className="students">{capitalize(t(`school_types.${schoolType}`))}, {gradeLevels} | {enrollment} {t("students")}</p>
-        {renderDistrictName(districtName)}
+        {renderDistrictName(districtName, districtLink)}
       </div>
     )
   } else {
     return (
       <div>
-        {renderDistrictName(districtName)}
+        {renderDistrictName(districtName, districtLink)}
         <p className="students">{capitalize(t(`school_types.${schoolType}`))}, {gradeLevels} | {enrollment} {t("students")}</p>
         {renderReviews(numReviews, parentRating, links)}
       </div>
@@ -84,9 +86,17 @@ const renderReviews = (numReviews, parentRating, links) => {
     </div>;
 }
 
-const renderDistrictName = (districtName) => (
-  <p className="school-district">{districtName}</p>
-)
+const renderDistrictName = (districtName, districtLink) => {
+  if (districtName && districtLink) {
+    return (
+      <a href={districtLink}>{districtName}</a>
+    );
+  } else if (districtName) {
+    return (
+      <p className="school-district">{districtName}</p>
+    );
+  }
+};
 
 const renderCsaYears = (csaAwardYears) => {
   let csaYears = csaAwardYears.join(", ");

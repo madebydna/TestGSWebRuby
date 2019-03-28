@@ -232,7 +232,10 @@ $subtle-gray: #647981;
       // Class to help render five star ratings
       .five-star-review{
         a { color: $school-color; }
-        span { display: inline-block; }
+        span { 
+          display: inline-block; 
+          font-size: $font-size-base;
+        }
         .five-star-rating{ margin-left: 15px; }
       }
       .content-container{
@@ -248,6 +251,9 @@ $subtle-gray: #647981;
             margin-bottom: 5px;
           }
           a, p { margin: 3px 0 0; }
+          a {
+            color: $school-color;
+          }
           > a {
             font-family: "opensans-semibold";
             color: $school-color;
