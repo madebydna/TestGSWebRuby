@@ -350,7 +350,7 @@ class DataValue < ActiveRecord::Base
 ############################################ Where filters ########################################
 #
 
-  def self.filter_query(state, district_id, school_id, load_ids = nil, proficiency = nil)
+  def self.filter_query(state, district_id = nil, school_id = nil, load_ids = nil, proficiency = nil)
     q = []
     q  << build_state_clause(state)
     q  << build_district_clause(district_id)
