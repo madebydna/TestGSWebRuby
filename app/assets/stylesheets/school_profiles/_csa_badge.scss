@@ -1,0 +1,12 @@
+#csa-badge{
+  margin-top: 10px;
+
+  .csa-container{
+    @include flexbox;
+    align-items: center;
+
+    img {
+      margin-right: 10px;
+    }
+  }
+}
