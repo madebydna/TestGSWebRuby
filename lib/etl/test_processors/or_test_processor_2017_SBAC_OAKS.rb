@@ -403,6 +403,10 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       elsif row[:value_float] == '< 5.0%'
         row[:value_float] = '5'
         row[:number_tested] = ''
+      elsif row[:value_float].to_f < 0
+        row[:value_float] = 0
+      elsif row[:value_float].to_f > 100
+        row[:value_float] = 100
       end
       row
     end
