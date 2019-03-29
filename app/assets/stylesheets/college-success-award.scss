@@ -1,0 +1,13 @@
+@import "school_profiles/sharing_modal";
+
+.csa-title {
+  img {
+    display: inline-block;
+  }
+  span {
+    display: inline-block;
+    max-width: calc(100% - 110px);
+    padding-left: 20px;
+    vertical-align: middle;
+  }
+}

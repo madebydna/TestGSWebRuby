@@ -1,5 +1,5 @@
 import React from 'react';
-import { humanName as stateName } from 'util/states';
+import { titleizedName as stateName } from 'util/states';
 import SearchBox from 'react_components/search_box';
 import TableTabs from 'react_components/search/table_tabs';
 import SearchContext from './search/search_context';
@@ -25,7 +25,7 @@ class CollegeSuccessAward extends Search {
             success in preparing students for college and ultimately career. The College Success awards 
             recognize public high schools that stand out in getting students enrolled in - and staying 
             with - college.  `}
-        <a href="">Learn more. (NEEDS URL)</a>
+        <a href="/gk/csa-winners/">Learn more</a>.
       </div>
     );
   }
@@ -38,7 +38,7 @@ class CollegeSuccessAward extends Search {
     return (
       <TableTabs
         options={this.props.tableViewOptions}
-        activeOption={getCsaYears()[0]}
+        activeOption={getCsaYears() ? getCsaYears()[0] : this.props.tableViewOptions[this.props.tableViewOptions.length-1].key.toString()}
         onChange={year => pushQueryString(queryStringWithNewCsaYears([year]))}
       />
     );
@@ -50,7 +50,7 @@ export default function() {
     <SearchContext.Provider layout="CollegeSuccessAward">
       <SearchContext.Consumer>
         {({ schools, ...state }) => (
-          <CollegeSuccessAward {...state} schools={schools} />
+          <CollegeSuccessAward {...state} schools={schools.map(s => ({...s, address: ({...s.address, zip: undefined, street1: undefined})}))} />
         )}
       </SearchContext.Consumer>
     </SearchContext.Provider>

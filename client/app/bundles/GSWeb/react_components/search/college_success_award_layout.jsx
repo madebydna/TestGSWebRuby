@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Provider, connect } from 'react-redux';
 import { throttle, debounce } from 'lodash';
-import { SM, validSizes } from 'util/viewport';
+import { titleizedName } from 'util/states';
+import { XS, SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
 import { translateWithDictionary } from 'util/i18n';
@@ -11,21 +13,24 @@ import HelpTooltip from '../help_tooltip';
 import { isNotSignedIn } from '../../util/session';
 import modalManager from '../../components/modals/manager';
 import SharingModal from '../school_profiles/sharing_modal';
+import logo from 'college_success_award.png';
 
 const t = translateWithDictionary({
   en: {
-    "Your saved schools in": "Your saved schools in",
-    "Sort by": "Sort by",
-    "Sign up link": "Sign up",
-    "Sign up rest": "for a free GreatSchools account and access your saved schools from anywhere.",
+    'Your saved schools in': 'Your saved schools in',
+    'Sort by': 'Sort by',
+    'Sign up link': 'Sign up',
+    'Sign up rest':
+      'for a free GreatSchools account and access your saved schools from anywhere.',
     'Verify email':
-      'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.',
+      'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.'
   },
   es: {
-    "Your saved schools in": "Tus escuelas guardadas en",
-    "Sort by": "Ordenar por",
-    "Sign up link": "Regístrate",
-    "Sign up rest": "para obtener una cuenta gratuita de GreatSchools y acceda a tus escuelas guardadas desde cualquier lugar.",
+    'Your saved schools in': 'Tus escuelas guardadas en',
+    'Sort by': 'Ordenar por',
+    'Sign up link': 'Regístrate',
+    'Sign up rest':
+      'para obtener una cuenta gratuita de GreatSchools y acceda a tus escuelas guardadas desde cualquier lugar.',
     'Verify email':
       'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.'
   }
@@ -96,12 +101,13 @@ function keepInViewport(
   updateElementPosition();
 }
 
-class MySchoolListLayout extends React.Component {
+class CollegeSuccessAwardLayout extends React.Component {
   static defaultProps = {
     breadcrumbs: null,
     distanceFilter: null,
     pagination: null,
-    noResults: null
+    noResults: null,
+    stateName: null
   };
 
   static propTypes = {
@@ -122,7 +128,8 @@ class MySchoolListLayout extends React.Component {
     resultSummary: PropTypes.string.isRequired,
     noResults: PropTypes.element,
     chooseTableButtons: PropTypes.element,
-    numOfSchools: PropTypes.number
+    numOfSchools: PropTypes.number,
+    stateName: PropTypes.string
   };
 
   static getDerivedStateFromProps(props) {
@@ -168,6 +175,7 @@ class MySchoolListLayout extends React.Component {
   shouldRenderList() {
     return (
       this.props.view === LIST_VIEW ||
+      this.props.size == XS ||
       (this.props.size > SM && this.props.view !== TABLE_VIEW)
     );
   }
@@ -179,8 +187,11 @@ class MySchoolListLayout extends React.Component {
   onSignup() {
     modalManager
       .showModal('JoinModal')
-      .done(({ is_new_user } = {}) =>
-        is_new_user ? this.setState({ needsToVerifyEmail: is_new_user }) : window.location.reload()
+      .done(
+        ({ is_new_user } = {}) =>
+          is_new_user
+            ? this.setState({ needsToVerifyEmail: is_new_user })
+            : window.location.reload()
       )
       .fail(() => {});
   }
@@ -191,12 +202,14 @@ class MySchoolListLayout extends React.Component {
     );
   }
 
-  renderSelectSchoolDropdown(){
-    return(
+  renderSelectSchoolDropdown() {
+    return (
       <div className="menu-item">
-        <span className="label saved-schools">{t('Your saved schools in')}:</span>
+        <span className="label saved-schools">
+          {t('Your saved schools in')}:
+        </span>
       </div>
-    )
+    );
   }
 
   renderTableView() {
@@ -213,7 +226,7 @@ class MySchoolListLayout extends React.Component {
           key="right-column"
           className={`right-column ${this.shouldRenderMap() ? ' ' : 'closed'}`}
         >
-          <div className="print-only-page-break"></div>
+          <div className="print-only-page-break" />
           <div className="right-column-fixed" ref={this.fixedYLayer}>
             <div className="ad-column">{ad}</div>
             <div className="map-column">{map}</div>
@@ -308,10 +321,26 @@ class MySchoolListLayout extends React.Component {
           {this.props.breadcrumbs}
           {this.shouldRenderTable() ? (
             <React.Fragment>
-              {this.props.csaSummary}
-              
-              <SharingModal sharing_content={<div>hi</div>} />
+              {!this.shouldRenderList() && (
+                <div className="csa-title">
+                  <img
+                    src={logo}
+                    alt="College Success Awards logo"
+                    width={this.props.size === XS ? '80px' : '120px'}
+                  />
+                  <span>{this.props.csaSummary}</span>
+                </div>
+              )}
               <div className="menu-item">{this.props.chooseTableButtons}</div>
+              <div className="menu-item" style={{ marginTop: '24px' }}>
+                <SharingModal
+                  url={window.location.href}
+                  pageName="College Success Awards"
+                  title={`${titleizedName(
+                    this.props.stateName
+                  )} College Success Awards`}
+                />
+              </div>
             </React.Fragment>
           ) : null}
           {this.renderSortDropDown()}
@@ -344,9 +373,10 @@ class MySchoolListLayout extends React.Component {
   render() {
     return (
       <div className="search-body" id="my-school-list-page">
-        {this.props.numOfSchools > 0 && (this.props.size > SM
-          ? this.renderDesktopFilterBar()
-          : this.renderMobileMenuBar())}
+        {this.props.numOfSchools > 0 &&
+          (this.props.size > SM
+            ? this.renderDesktopFilterBar()
+            : this.renderMobileMenuBar())}
         {}
         {false && this.props.noResults ? (
           <React.Fragment>
@@ -362,7 +392,16 @@ class MySchoolListLayout extends React.Component {
                   this.shouldRenderList() ? ' ' : 'closed'
                 }`}
               >
-                {this.props.csaSummary}
+                {this.shouldRenderList() ? (
+                  <div className="csa-title">
+                    <img
+                      src={logo}
+                      alt="College Success Awards logo"
+                      width={this.props.size <= SM ? '75px' : '100px'}
+                    />
+                    <span>{this.props.csaSummary}</span>
+                  </div>
+                ) : null}
                 {this.props.schoolList}
               </div>
               {this.renderMapAndAdContainer(
@@ -379,4 +418,12 @@ class MySchoolListLayout extends React.Component {
   }
 }
 
-export default MySchoolListLayout;
+const ConnectedCollegeSuccessAwardLayout = connect(state => ({
+  stateName: state.common.stateName
+}))(CollegeSuccessAwardLayout);
+
+export default props => (
+  <Provider store={window.store}>
+    <ConnectedCollegeSuccessAwardLayout {...props} />
+  </Provider>
+);

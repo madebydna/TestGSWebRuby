@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { LOAD_MOBILE_OVERLAY_AD } from 'actions/common';
+import { findStateNameInUrl } from 'util/uri';
 import schoolReducer from './school_reducer';
 import nearbySchoolsReducer from './nearby_schools_reducer';
 import districtBoundariesReducer from './district_boundaries_reducer';
@@ -8,7 +9,8 @@ import searchReducer from './search_reducer';
 const commonReducer = (state, action) => {
   if (typeof state === 'undefined') {
     return {
-      shouldLoadMobileOverlayAd: false
+      shouldLoadMobileOverlayAd: false,
+      stateName: findStateNameInUrl(window.location.pathname)
     };
   }
 

@@ -115,15 +115,22 @@ const SchoolTableRow = ({
   subratings,
   ethnicityInfo,
   savedSchool,
-  csaAwardYears
+  csaAwardYears,
+  percentLowIncome,
+  percentCollegePersistent
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   const districtLink = getDistrictHref(state, address.city, districtName);
-  let addressPhrase = [address.street1, address.city, state, address.zip]
-      .filter(s => !!s && s.length > 0)
-      .join(', ');
-  if (!address.city || !state) {
-    addressPhrase = null;
+  const districtAnchor = <a href={districtLink}>{districtName}</a>
+
+  let addressPhrase = null;
+  if(address.street1) {
+    addressPhrase = [address.street1, address.city, state, address.zip]
+        .filter(s => !!s && s.length > 0)
+        .join(', ');
+    if (!address.city || !state) {
+      addressPhrase = null;
+    }
   }
 
   const schoolCard = () => {
@@ -183,6 +190,11 @@ const SchoolTableRow = ({
   else if (tableView == 'Academic') {
     content = academicColumns(columns, subratings, links.profile);
   }
+
+  else {
+    content = <React.Fragment>{columns.map(col => <td>{eval(col.key)}</td>) }</React.Fragment>
+  }
+
   return (
       <tr>
         {schoolCard()}

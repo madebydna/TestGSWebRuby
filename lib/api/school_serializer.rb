@@ -51,7 +51,9 @@ class Api::SchoolSerializer
       },
       highlighted: false,
       pinned: (school.pinned if school.respond_to?(:pinned)),
-      testScoreRatingForEthnicity: (school.test_score_rating_for_ethnicity if school.methods.include?(:test_score_rating_for_ethnicity))
+      testScoreRatingForEthnicity: (school.test_score_rating_for_ethnicity if school.methods.include?(:test_score_rating_for_ethnicity)),
+      percentLowIncome: school.free_and_reduced_lunch,
+      percentCollegePersistent: school.stays_2nd_year
     }.tap do |h|
       enrollment = value_from_decorated_school(school, :numeric_enrollment)
       students_per_teacher = value_from_decorated_school(school, :ratio_of_students_to_full_time_teachers)
