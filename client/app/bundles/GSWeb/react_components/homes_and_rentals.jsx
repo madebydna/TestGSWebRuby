@@ -151,7 +151,7 @@ export default class HomesAndRentals extends React.Component {
     return (
       <div id={this.props.domId}>
         <div className="title-bar">
-          <h2 className="title">{this.title()}</h2>
+          <div className="title">{this.title()}</div>
           <div className="tabs">{this.renderTabs()}</div>
         </div>
         <div className="tiles">{this.renderHomesAndRentals()}</div>

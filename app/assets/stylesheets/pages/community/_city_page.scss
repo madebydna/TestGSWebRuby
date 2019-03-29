@@ -2,6 +2,11 @@
 $line-height-community: 1.428571429;
 
 #hero{
+  h1 {
+    margin: 0;
+    padding: 0;
+    line-height: $line-height-community;
+  }
   div{
     max-width: 500px;
     .icon-city {
@@ -15,11 +20,6 @@ $line-height-community: 1.428571429;
       font-size: 24px;
     }
 
-    h1 {
-      margin: 0;
-      padding: 0;
-      line-height: $line-height-community;
-    }
 
     .city-hero-narrative {
       font-size: $font-size;
