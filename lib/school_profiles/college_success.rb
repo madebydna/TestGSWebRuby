@@ -26,6 +26,16 @@ module SchoolProfiles
       }
     end
 
+    def csa_awards
+      return [] unless cs_component.csa_badge?
+
+      cs_component.csa_awards
+    end
+
+    def csa_award_winning_years
+      csa_awards.map { |award| Date.parse(award["source_date_valid"]).year }
+    end
+
     def props
       return [] if cs_component.empty_data?
       @_props ||= begin

@@ -353,6 +353,10 @@ module SchoolProfiles
       decorated_school.ratings.has_key?(CSA_BADGE)
     end
 
+    def csa_awards
+      decorated_school.ratings[CSA_BADGE]
+    end
+
     # Returns a hash that includes the percentage and sourcing info
     # {
     #   "breakdowns": "Students with disabilities",

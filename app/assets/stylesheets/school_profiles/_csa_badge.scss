@@ -5,6 +5,10 @@
     @include flexbox;
     align-items: center;
 
+    a {
+      font-family: 'opensans-semibold';
+    }
+
     img {
       margin-right: 10px;
     }
