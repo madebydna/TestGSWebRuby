@@ -155,4 +155,8 @@ const manager = (function ($) {
 
 })($);
 
+window.GS = window.GS || {};
+window.GS.modal = window.GS.modal || {};
+window.GS.modal.manager = window.GS.modal.manager || manager;
+
 export default manager;

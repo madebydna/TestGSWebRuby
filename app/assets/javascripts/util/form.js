@@ -359,11 +359,11 @@ $(function() {
     }, 1);
   };
 
-  var sportsToolTip = function() {
-    // TODO This should not be so global. Should only be called on pages that
-    // need this.
-    $('[data-toggle="tooltip"]').tooltip();
-  };
+  // var sportsToolTip = function() {
+  //   // TODO This should not be so global. Should only be called on pages that
+  //   // need this.
+  //   $('[data-toggle="tooltip"]').tooltip();
+  // };
 
   $('.js-guidedSearchSportsIconsButton').on('click', function() {
     var self = $(this);
@@ -388,7 +388,7 @@ $(function() {
   });
 
   GS.forms.toggleCheckboxForCollapsibleBoxOnLoad = toggleCheckboxForCollapsibleBoxOnLoad;
-  GS.forms.sportsToolTip = sportsToolTip;
+  // GS.forms.sportsToolTip = sportsToolTip;
   GS.forms.checkFancyCheckbox = checkFancyCheckbox;
   GS.forms.checkSportsIcon = checkSportsIcon;
 });
@@ -564,5 +564,5 @@ GS.forms.elements = (function() {
 
 $(document).ready(function() {
   GS.forms.toggleCheckboxForCollapsibleBoxOnLoad();
-  GS.forms.sportsToolTip();
+  // GS.forms.sportsToolTip();
 });

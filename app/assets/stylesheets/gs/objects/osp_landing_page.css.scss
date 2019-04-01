@@ -171,4 +171,12 @@
     max-width: 600px;
   }
 
+  .search-box {
+    position: relative;
+    @media (max-width: 991px) {
+      margin: 0; 
+      width: 100%
+    }
+  }
+
 }

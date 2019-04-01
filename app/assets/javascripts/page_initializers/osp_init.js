@@ -31,7 +31,7 @@ $(function() {
       }
     );
 
-    GS.schoolPicker.initSchoolpickerAndAutocomplete();
+    // GS.schoolPicker.initSchoolpickerAndAutocomplete();
     GS.gsParsleyValidations.init();
 
     var $datepicker = $('.datepicker');

@@ -11,6 +11,5 @@
 //= require google_maps
 //= require localized_profiles
 //= require dropzone.min
-//= require modals
 //= require page_initializers
 //= require zillow

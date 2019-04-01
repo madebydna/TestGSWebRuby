@@ -6,6 +6,7 @@ if(gon.pagename == 'signin/new'){
     var SIGNIN_HIER = 'Account,LogIn';
 
     $(function () {
+        return;
         
         if (location.hash.substr(1) == "join") {
             $('.tab-pane').button('toggle');

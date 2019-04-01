@@ -24,11 +24,16 @@ class Api::AutosuggestController < ApplicationController
       hash['Cities'] = grouped_results['city']&.take(5)
       hash['Districts'] = grouped_results['district']&.take(5) || []
       hash['Zipcodes'] = q.match?(/\d{3}+/) ? grouped_results['zip']&.take(5) : []
+      hash.slice!(*types) if types.present?
     end
   end
 
   def set_cache_headers_for_suggest
     cache_time = ENV_GLOBAL['search_suggest_cache_time'] || 0
     expires_in cache_time, public: true
+  end
+
+  def types
+    @_types ||= params[:types] || []
   end
 end

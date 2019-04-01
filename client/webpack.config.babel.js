@@ -38,7 +38,11 @@ const config = {
       './app/bundles/GSWeb/react_components/search_box_wrapper'
     ],
     community: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/community'],
-    account: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/account']
+    account: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/account'],
+    'official-school-profile': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/official_school_profile'],
+    'reviews-page': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/reviews_page'],
+    'signin-page': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/signin_page'],
+    'default-page-just-layout': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/default_page_just_layout'],
   },
 
   optimization: {
