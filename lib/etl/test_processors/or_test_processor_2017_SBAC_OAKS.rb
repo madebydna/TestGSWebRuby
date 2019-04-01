@@ -66,11 +66,11 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
-    .transform('test',WithBlock) do |row|
-       row
-       require 'byebug'
-       byebug
-     end   
+    # .transform('test',WithBlock) do |row|
+    #    row
+    #    require 'byebug'
+    #    byebug
+    #  end   
   end
 
   source("pagr_schools_ela_raceethnicity_1617.txt",[], col_sep: "\t") do |s|
