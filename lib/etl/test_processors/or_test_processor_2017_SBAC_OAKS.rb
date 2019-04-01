@@ -36,7 +36,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
     :"percent_level_2" => 6,
     :"percent_level_3" => 7,
     :"percent_level_4" => 8,
-    :"percent_proficient_(level_3_or_4)" => 1,
+    :"percent_proficient_level_3_or_4" => 1,
   }
 
   oaks_key_map_pro = {
@@ -45,7 +45,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
     :"percent_level_3" => 15,
     :"percent_level_4" => 16,
     :"percent_level_5" => 17,
-    :"percent_proficient_(level_4_or_5)" => 1,
+    :"percent_proficient_level_4_or_5" => 1,
   }
 
   source("pagr_schools_ela_all_1617.txt",[], col_sep: "\t") do |s|
@@ -63,9 +63,14 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
+    .transform('test',WithBlock) do |row|
+       row
+       require 'byebug'
+       byebug
+     end   
   end
 
   source("pagr_schools_ela_raceethnicity_1617.txt",[], col_sep: "\t") do |s|
@@ -83,7 +88,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -103,7 +108,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -123,7 +128,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -143,7 +148,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -163,7 +168,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -183,7 +188,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -203,7 +208,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -223,7 +228,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -243,7 +248,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -263,7 +268,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -283,7 +288,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_proficient_(level_3_or_4)"
+       :"percent_proficient_level_3_or_4"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -305,7 +310,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_3",
        :"percent_level_4",
        :"percent_level_5",
-       :"percent_proficient_(level_4_or_5)"
+       :"percent_proficient_level_4_or_5"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -327,7 +332,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_3",
        :"percent_level_4",
        :"percent_level_5",
-       :"percent_proficient_(level_4_or_5)"
+       :"percent_proficient_level_4_or_5"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -349,7 +354,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_3",
        :"percent_level_4",
        :"percent_level_5",
-       :"percent_proficient_(level_4_or_5)"
+       :"percent_proficient_level_4_or_5"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_gsdata_id)
   end
@@ -371,7 +376,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_3",
        :"percent_level_4",
        :"percent_level_5",
-       :"percent_proficient_(level_4_or_5)"
+       :"percent_proficient_level_4_or_5"
       )
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_gsdata_id)
   end
