@@ -4,7 +4,7 @@ $line-height-community: 1.428571429;
   height: 100%;
   div {
     max-width: 1170px;
-    h1 {
+    .district-hero-title {
       margin: 0;
       padding: 0;
       line-height: $line-height-community;
@@ -65,10 +65,12 @@ $line-height-community: 1.428571429;
     .content {
       font-size: 14px;
     }
-    h1 {
-      font-size: 24px;
-      margin: 15px;
-      max-width: 300px;
+    div {
+      .district-hero-title {
+        font-size: $font-size-h1;
+        margin: 15px auto;
+        max-width: 300px;
+      }
     }
     div.district-hero-contact-info {
       padding-bottom: 20px;

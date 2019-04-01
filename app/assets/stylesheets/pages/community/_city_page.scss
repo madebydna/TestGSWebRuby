@@ -2,7 +2,7 @@
 $line-height-community: 1.428571429;
 
 #hero{
-  h1 {
+  .city-hero-title {
     margin: 0;
     padding: 0;
     line-height: $line-height-community;
@@ -24,6 +24,14 @@ $line-height-community: 1.428571429;
     .city-hero-narrative {
       font-size: $font-size;
       font-weight: normal;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    .city-hero-title {
+      font-size: $font-size-h1;
+      margin: 15px auto;
+      max-width: 300px;
     }
   }
 }
