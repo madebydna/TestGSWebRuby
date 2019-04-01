@@ -21,8 +21,18 @@ module SchoolProfiles
 
     def csa_props
       return {} unless cs_component.csa_badge?
+      years_of_awards = csa_award_winning_years.length
+      blurb =
+        case years_of_awards
+        when 1
+          csa_award_winning_years.join
+        when 2
+          csa_award_winning_years.join(" #{translate("and")} ")
+        else
+          csa_award_winning_years[0..-2].join(', ') + " #{translate("and")} " + csa_award_winning_years.last.to_s
+        end
       {
-        csa_badge: I18n.t(:csa_badge_html, scope: 'lib.college_readiness').html_safe
+        csa_badge: I18n.t(:csa_badge_html, scope: 'lib.college_readiness', blurb: blurb).html_safe
       }
     end
 

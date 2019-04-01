@@ -1,6 +1,7 @@
 en:
   lib:
     college_readiness:
+      and: and
       info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and AP coursework when available.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
       'title': 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools College Readiness Rating'
@@ -59,9 +60,7 @@ en:
       'Percent of students who will attend out-of-state colleges': 'Graduates pursuing out-of-state college'
       'Percent of students who will attend in-state colleges': 'Graduates pursuing in-state college'
       csa_badge_html: >
-        <p>This school has earned a College Success Award based on its success in preparing students for college and
-        ultimately career. The College Success Awards recognize public high schools that stand out in ​getting students
-        enrolled in - and staying with - college. <a href="/gk/csa-winners/">Learn more</a>.</p>
+        <p>This school has earned a %{blurb} College Success Award based on its success in preparing students for college and ultimately career. <a href="/gk/csa-winners/">Learn more</a>.</p>
       data_point_info_texts:
         '4-year high school graduation rate': 'Graduation rates reflect how many students graduate from this school on time.'
         'Average SAT score': 'The SAT is a college admissions test which in 2015 had a total of 2400 possible points. This score reflects the average SAT score for students at this school. In 2016 the SAT changed to a 1600 point scale. Check back soon for updated information for this school.'
