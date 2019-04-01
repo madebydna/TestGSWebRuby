@@ -1,11 +1,13 @@
 import ReactOnRails from "react-on-rails";
 import District from "./react_components/community/district";
 import City from "./react_components/community/city";
+import State from "./react_components/community/state";
 import commonPageInit from './common';
 
 ReactOnRails.register({
   District,
-  City
+  City,
+  State
 });
 
 $(() => {
