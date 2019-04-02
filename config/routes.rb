@@ -535,29 +535,6 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'school_profiles#show'
   end
 
-  #Handle old city homepage structure
-  get '/city/:city/:state_abbr(/*other)', to: 'cities_list#old_homepage', constraints: {
-      city: /[^\/]+/
-  }
-
-  #Handle City SEO pages
-  get '/schools/cities/:state_name/:state_abbr/', to: 'cities_list#show', as: 'cities_list'
-
-  scope '/schools/cities/:state_name/:state_abbr/:letter', as: 'cities_list_paginated' do
-    get '', to: redirect { |params, _|
-      "/schools/cities/#{params[:state_name]}/#{params[:state_abbr]}/"
-    }
-  end
-
-  #Handle District SEO pages
-  get '/schools/districts/:state_name/:state_abbr/', to: 'districts_list#show', as: 'districts_list'
-
-  scope '/schools/districts/:state_name/:state_abbr/:letter', as: 'districts_list_paginated' do
-    get '', to: redirect { |params, _|
-      "/schools/districts/#{params[:state_name]}/#{params[:state_abbr]}/"
-    }
-  end
-
   #Handle old School list SEO pages (has to come below cities_list and districts_list routes)
   get '/schools/:state_name/:state_abbr/', to: 'schools_list#show', as: :schools_list
 
