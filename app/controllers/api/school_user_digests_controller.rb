@@ -1,4 +1,7 @@
 class Api::SchoolUserDigestsController < ApplicationController
+  include Api::Authorization
+
+  before_action :require_authorization
 
   def show
     headers['X-Robots-Tag'] = 'noindex, nofollow'
