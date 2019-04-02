@@ -19,6 +19,7 @@ es:
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en
     browse_school_blurb_district: Aquí hay un vistazo a las escuelas en distrito
+    browse_schools: Escuelas de navegación
     calendar: calendario
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
