@@ -14,6 +14,10 @@ class StatesController < ApplicationController
   layout 'application'
 
   def show
+
+    @state_name = States.capitalize_any_state_names(params['state'])
+
+    @state_school_count = School.on_db(States.abbreviation(params['state'])).all.active.count
     write_meta_tags
     @cities = popular_cities
     gon.pagename = 'GS:State:Home'
@@ -32,6 +36,14 @@ class StatesController < ApplicationController
       ad_setTargeting_through_gon
       data_layer_through_gon
     # end
+  end
+
+  def school_count
+    School.on_db(States.abbreviation(params['state'])).all.active.count
+  end
+
+  def school_state_title
+    States.capitalize_any_state_names(params['state'])
   end
 
   # TODO This should be in either at StateHubsController or a HubsController
