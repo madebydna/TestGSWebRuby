@@ -402,10 +402,10 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
     .transform("Prof special cases", WithBlock,) do |row|
       if row[:value_float] == '> 95.0%'
         row[:value_float] = '95'
-        row[:number_tested] = ''
+        row[:number_tested] = nil
       elsif row[:value_float] == '< 5.0%'
         row[:value_float] = '5'
-        row[:number_tested] = ''
+        row[:number_tested] = nil
       elsif row[:value_float].to_f < 0
         row[:value_float] = 0
       elsif row[:value_float].to_f > 100
