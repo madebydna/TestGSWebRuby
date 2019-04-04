@@ -40,6 +40,12 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
      'NMSBA' => 244
    }
 
+  source("test.txt",[], col_sep: "\t") do |s|
+   s.transform("Fill grade all", Fill,{
+    grade: 'All'
+   })
+ end
+
  source("ACC_Webfiles_2017_Proficiencies_All_ByStateByDistrictBySchool.txt",[], col_sep: "\t") do |s|
    s.transform("Fill grade all", Fill,{
     grade: 'All'
@@ -102,30 +108,19 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
      end
      row
     end
-    .transform('remove "" in num tested',WithBlock,) do |row|
-     unless row[:number_tested].nil?
-            row[:number_tested] = row[:number_tested].gsub(/[\"]/, '')
-     end
-     row
-   end
    .transform("Delete rows where number tested is less than 10 and blank ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
    .transform("fix special cases for prof and above", WithBlock) do |row|
           if row[:value_float].nil?
             row[:value_float]=row[:value_float]
-          elsif row[:value_float] == '<= 1'
-            row[:value_float] == '1'
-          elsif row[:value_float] == ' >=95'
-            row[:value_float] == '95'
-          elsif row[:value_float] == '>=95'
-            row[:value_float] == '95'
-          end
+          elsif row[:value_float] == "<= 1"
+            row[:value_float] = '1'
+          elsif row[:value_float] == " >=95"
+            row[:value_float] = '95'
+          elsif row[:value_float] == ">=95"
+            row[:value_float] = '95'
+      end
      row
     end
-   .transform('test',WithBlock) do |row|
-       row
-       require 'byebug'
-       byebug
-     end  
     .transform("Skip missing prof and above values", DeleteRows, :value_float, nil)
     .transform("Skip range values", DeleteRows, :value_float, '>= 80', '<= 10', '<= 20', '>= 90', '<= 5', '<= 2', ' >= 90', ' >= 80')
     .transform("Set entity", WithBlock) do |row|
