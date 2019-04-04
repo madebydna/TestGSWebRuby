@@ -117,23 +117,24 @@ class StateLayout extends React.Component {
   renderCsaModule() {
     const csaStateLink = this.props.locality.stateCsaUrl;
 
-
-    return (
-      <div>
-        <h3>{t('award_winners')}</h3>
+    if (this.props.csaModule) {
+      return (
         <div>
-          <span>Image</span>
-          <p>
-            <span dangerouslySetInnerHTML={{__html: t("csa_district_schools_info_html")}}/>
-          </p>
+          <h3>{t('award_winners')}</h3>
+          <div>
+            <span>Image</span>
+            <p>
+              <span dangerouslySetInnerHTML={{__html: t("csa_district_schools_info_html")}}/>
+            </p>
+          </div>
+          <div className="more-school-btn">
+            <a href={csaStateLink}>
+              <button>{t('see_all_winning_schools')}</button>
+            </a>
+          </div>
         </div>
-        <div className="more-school-btn">
-          <a href={csaStateLink}>
-            <button>{t('see_all_winning_schools')}</button>
-          </a>
-        </div>
-      </div>
-    );
+      );
+    }
   }
 
   // renderZillow(){

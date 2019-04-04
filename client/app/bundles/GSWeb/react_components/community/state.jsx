@@ -139,15 +139,16 @@ class State extends React.Component {
                   districts={this.props.districts}
               />
             }
-            zillow={
-              <Zillow
-                  locality={this.props.locality}
-                  utmCampaign='citypage'
-                  pageType='city'
-              />
-            }
+            // zillow={
+            //   <Zillow
+            //       locality={this.props.locality}
+            //       utmCampaign='citypage'
+            //       pageType='city'
+            //   />
+            // }
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
             locality={this.props.locality}
+            csaModule={this.props.csa_module}
             toc={
               <Toc
                   tocItems={this.selectTocItems()}
