@@ -12,7 +12,7 @@ module PopularCitiesConcerns
   def browse_top_cities
     return @_browse_top_cities if defined?(@_browse_top_cities)
     @_browse_top_cities = (
-      City.popular_cities(@state[:short], limit: 7)
+      City.popular_cities(@state[:short], limit: 7, alphabetical: false)
     )
   end
 
