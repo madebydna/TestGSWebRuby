@@ -147,7 +147,7 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
         row[:state_id] = '%06i' % (row[:code].to_i)
         row[:school_id] = row[:code]
         row[:school_name] = row[:school]
-        row[:district_id] = row[:state_id].slice!(0,3)
+        row[:district_id] = row[:state_id].slice(0,3)
         row[:district_name] = row[:state_or_district]
      end
      row
