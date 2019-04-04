@@ -6,6 +6,7 @@ class StatesController < ApplicationController
   # include HubConcerns
   include CommunityTabConcerns
   include PopularCitiesConcerns
+  include CommunityConcerns
 
   before_action :set_city_state
   # before_action :set_hub
@@ -16,13 +17,17 @@ class StatesController < ApplicationController
   # state name (long and short), count of schools, top cities, conditional render of CSA module (only if state is a CSA state) - link to state CSA page, largest school districts in state - link to all districts in state, 
 
   def show
-    require 'pry'
-    binding.pry
-
+    
+    
     @locality = locality 
     @cities = cities_data
     @school_count = school_count 
-
+    @csa_years = [2018, 2019]
+    
+    require 'pry'
+    binding.pry
+    
+    a = page_of_results
     write_meta_tags
     gon.pagename = 'GS:State:Home'
     # if @hub

@@ -43,7 +43,6 @@ module CommunityConcerns
         elementary = fetch_top_rated_schools('e')
         middle = fetch_top_rated_schools('m')
         high = fetch_top_rated_schools('h')
-        # AC_TODO: Add additional param to fetch top rated schools -> check for CSA
         csa = fetch_top_rated_csa_schools
         {
           schools: {
@@ -80,7 +79,7 @@ module CommunityConcerns
           with_rating: 'true',
           csa_years: csa_years.presence
         )
-      else
+      elsif params[:city]
         query_type.new(
           city: city,
           state: state,
@@ -90,8 +89,14 @@ module CommunityConcerns
           sort_name: 'rating',
           with_rating: 'true',
           csa_years: csa_years.presence
+          )
+      else
+        query_type.new(
+          state: locality[:nameShort],
+          limit: 1,
+          csa_years: csa_years.presence
         )
-      end
+        end
     end
 
     def default_top_schools_limit
