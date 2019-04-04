@@ -16,7 +16,9 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
      'Asian' => 16,
      'Caucasian' => 21,
      'Economically Disadvanta³d' => 23,
-     'English Langua³ Learners, Current' => 32,
+     'Economically Disadvantaged' => 23,
+     '"English Language Learners, Current"' => 32,
+     '"English Langua³ Learners, Current"' => 32,
      'Female' => 26,
      'Hispanic' => 19,
      'Male' => 25,
@@ -47,7 +49,7 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
  end
 
   source('ACC_Webfiles_2017_Proficiencies_All_ByStateByDistrictBySchoolByGrade.txt',[], col_sep: "\t") do |s|
-   s.transform("Removing grades KN,1,2", DeleteRows,:grade,'KN','1','2','12')
+   s.transform("Removing grades KN,1,2", DeleteRows,:grade,'K','1','2','12')
  end
 
   shared do |s|
@@ -80,7 +82,7 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
     HashLookup, :test_data_type, map_nm_test_id, to: :gsdata_test_data_type_id)
     .transform("Filling in description", WithBlock) do |row|
      if row[:gsdata_test_data_type_id] == 245
-       row[:description] = 'In 2016-2017, New Mexico used the PARCC assessment to test students in grades 3-11 in Math and Reading.'
+       row[:description] = 'In 2016-2017, New Mexico used the PARCC assessment to test students in grades 3-12 in Math and grades 3-11 in Reading.'
      elsif row[:gsdata_test_data_type_id] == 244
        row[:description] = 'In 2016-2017, New Mexico used the New Mexico Standards-Based Assessment (NMSBA) to test students in grades 4, 7 and 11 in Science.'
      end
@@ -102,19 +104,28 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
      end
      row
     end
+    .transform('remove "" in num tested',WithBlock,) do |row|
+     unless row[:number_tested].nil?
+            row[:number_tested] = row[:number_tested].tr('"','')
+     end
+     if row[:number_tested].nil?
+        row[:number_tested] = 'skip'
+     end
+     row
+   end
    .transform("Delete rows where number tested is less than 10 and blank ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
    .transform("fix special cases for prof and above", WithBlock) do |row|
           if row[:value_float].nil?
             row[:value_float]=row[:value_float]
-          elsif row[:value_float] == '≤ 1'
+          elsif row[:value_float] == '² 1'
             row[:value_float] == '1'
-          elsif row[:value_float] == '≥95'
+          elsif row[:value_float] == '³95'
             row[:value_float] == '95'
           end
      row
     end
     .transform("Skip missing prof and above values", DeleteRows, :value_float, nil)
-    .transform("Skip range values", DeleteRows, :value_float, '³ 80', '² 10', '² 20', '³ 90', '² 5', '² 2')
+    .transform("Skip range values", DeleteRows, :value_float, '³ 80', '² 10', '² 20', '³ 90', '² 5', '² 2', ' Â³ 80', ' Â³ 90')
     .transform("Skip range values", DeleteRows, :value_float, ' ≥ 80', '≤ 10', '≤ 20', ' ≥ 90', '≤ 5', '≤ 2')
     .transform("Set entity", WithBlock) do |row|
      if row[:state_or_district] == 'Statewide'
@@ -136,6 +147,8 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
         row[:state_id] = '%06i' % (row[:code].to_i)
         row[:school_id] = row[:code]
         row[:school_name] = row[:school]
+        row[:district_id] = row[:state_id].slice!(0,3)
+        row[:district_name] = row[:state_or_district]
      end
      row
    end
