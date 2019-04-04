@@ -9,12 +9,12 @@
 
 <div class="community-page">
   <%= react_component("State", props: {
+      cities: @cities,
+      schoolCount: @school_count,
       schools_data: @top_schools,
       breadcrumbs: @breadcrumbs,
       locality: @locality,
-      districts: @districts,
-      school_levels: @school_levels,
-      reviews: @reviews
+      districts: @districts
   }) %>
 </div>
 
