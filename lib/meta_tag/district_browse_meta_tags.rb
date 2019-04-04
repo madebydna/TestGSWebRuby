@@ -19,5 +19,9 @@ module MetaTag
         )
       )
     end
+
+    def robots
+      'noindex'
+    end
   end
 end

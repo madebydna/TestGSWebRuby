@@ -1,4 +1,5 @@
-equire_relative "../test_processor"
+require_relative "../test_processor"
+GS::ETL::Logging.disable
 
 class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
 
@@ -54,8 +55,8 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       entity_level: 'school', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+    })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -64,7 +65,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
 
   source("pagr_schools_ela_raceethnicity_1617.txt",[], col_sep: "\t") do |s|
@@ -74,8 +75,8 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       entity_level: 'school', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+    })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -84,7 +85,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
   
   source("pagr_schools_ela_tot_ecd_ext_gnd_lep_1617.txt",[], col_sep: "\t") do |s|
@@ -94,8 +95,8 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       entity_level: 'school', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+    })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -104,7 +105,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+   .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
 
   source("pagr_schools_ela_ine_mig_swa_swd_tag_1617.txt",[], col_sep: "\t") do |s|
@@ -114,8 +115,8 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       entity_level: 'school', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+    })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -124,7 +125,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
 
   source("pagr_Districts_ELA_1617.txt",[], col_sep: "\t") do |s|
@@ -134,8 +135,8 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       entity_level: 'district', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+    })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -144,18 +145,18 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
 
-    source("pagr_State_ELA_1617.txt",[], col_sep: "\t") do |s|
+  source("pagr_State_ELA_1617.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
       gsdata_test_data_type_id: 251,
       test_data_type: 'OR SBAC',
       entity_level: 'state', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+    })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -164,7 +165,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
 
   source("pagr_schools_MATH_all_1617.txt",[], col_sep: "\t") do |s|
@@ -174,8 +175,8 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       entity_level: 'school', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+    })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -184,7 +185,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
 
   source("pagr_schools_MATH_raceethnicity_1617.txt",[], col_sep: "\t") do |s|
@@ -194,8 +195,8 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       entity_level: 'school', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+    })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -204,7 +205,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
 
   source("pagr_schools_MATH_tot_ecd_ext_gnd_lep_1617.txt",[], col_sep: "\t") do |s|
@@ -214,8 +215,8 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       entity_level: 'school', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+    })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -224,7 +225,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
 
   source("pagr_schools_MATH_ine_mig_swa_swd_tag_1617.txt",[], col_sep: "\t") do |s|
@@ -234,8 +235,8 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       entity_level: 'school', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+    })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -244,7 +245,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
 
   source("pagr_Districts_MATH_1617.txt",[], col_sep: "\t") do |s|
@@ -254,8 +255,8 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       entity_level: 'district', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+     })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -264,7 +265,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
 
   source("pagr_State_MATH_1617.txt",[], col_sep: "\t") do |s|
@@ -274,8 +275,8 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       entity_level: 'state', 
       notes: 'DXT-2651: OR SBAC',
       description: 'Oregon now has K-12 learning standards aligned with the expectations of colleges and employers. These standards are designed to provide students with the knowledge and skills they need at each step along their educational journey so they can graduate high school prepared for future success. These tests move beyond the rote memorization and fill in the bubble format of past multiple choice tests. Students were asked to write, reason, think critically, and solve multi-step problems that better reflect classroom learning and the real world. Students who receive a 3 or 4 on the test (on a 4-point scale) are considered on track to graduate high school college- and career-ready. Those who receive a 1 or a 2 will receive additional support to help them reach this new higher standard.'
-  })
-  .transform('Transpose value columns', Transposer,
+    })
+    .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
        :"percent_level_1",
@@ -284,7 +285,7 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_4",
        :"percent_proficient_(level_3_or_4)"
       )
-  .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, sbac_key_map_pro, to: :proficiency_band_gsdata_id)
   end
 
   source("pagr_State_SCIENCE_1617.txt",[], col_sep: "\t") do |s|
@@ -303,10 +304,10 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_level_5"
+       :"percent_level_5",
        :"percent_proficient_(level_4_or_5)"
       )
-    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_gsdata_id)
   end
   
   source("pagr_Districts_SCIENCE_1617.txt",[], col_sep: "\t") do |s|
@@ -314,13 +315,10 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
         test_data_type: 'OAKS',
         gsdata_test_data_type_id: 250,
         entity_level: 'district',
-        academic_gsdata_id: 19,
-        percent_proficient_(level_3_or_4): :percent_proficient_(level_4_or_5), 
+        academic_gsdata_id: 19, 
         notes: 'DXT-2651: OR OAKS',
         description: 'In 2016-2017 Oregon used the Oregon Assessment of Knowledge and Skills (OAKS) to test students in grades 5, 8 and 11 in science.  The OAKS is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of Oregon.  The goal is for all students to score at or above the state standard.'
     })
-    .transform('Calculate Prof and Above', WithBlock,) do |row|
-      row[:percent_proficient_(level_4_or_5)]=row[:percent_level_5]+row[:percent_level_4]
     .transform('Transpose value columns', Transposer,
        :proficiency_band,
        :value_float,
@@ -328,13 +326,13 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_level_5"
+       :"percent_level_5",
        :"percent_proficient_(level_4_or_5)"
       )
-    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_gsdata_id)
   end
   
-  source("pagr_school_science_raceethnicity_1617.txt",[], col_sep: "\t") do |s|
+  source("pagr_schools_science_raceethnicity_1617.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
         test_data_type: 'OAKS',
         gsdata_test_data_type_id: 250,
@@ -350,13 +348,13 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_level_5"
+       :"percent_level_5",
        :"percent_proficient_(level_4_or_5)"
       )
-    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_gsdata_id)
   end
   
-  source("pagr_school_science_tot_othergroups_1617.txt",[], col_sep: "\t") do |s|
+  source("pagr_schools_science_tot_othergroups_1617.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
         test_data_type: 'OAKS',
         gsdata_test_data_type_id: 250,
@@ -372,10 +370,10 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
        :"percent_level_2",
        :"percent_level_3",
        :"percent_level_4",
-       :"percent_level_5"
+       :"percent_level_5",
        :"percent_proficient_(level_4_or_5)"
       )
-    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, oaks_key_map_pro, to: :proficiency_band_gsdata_id)
   end
   
   shared do |s|
@@ -403,12 +401,16 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       elsif row[:value_float] == '< 5.0%'
         row[:value_float] = '5'
         row[:number_tested] = ''
+      elsif row[:value_float].to_f < 0
+        row[:value_float] = 0
+      elsif row[:value_float].to_f > 100
+        row[:value_float] = 100
       end
       row
     end
-    .transform("Adding column breakdown_id from breadown", HashLookup, :breakdown, key_map_bd, to: :breakdown_id)
+    .transform("Adding column breakdown_id from breadown", HashLookup, :breakdown, key_map_bd, to: :breakdown_gsdata_id)
     .transform("Adding column subject_id from subject",
-      HashLookup, :subject, key_map_sub, to: :subject_id)
+      HashLookup, :subject, key_map_sub, to: :academic_gsdata_id)
     .transform("Edit grade", WithBlock,) do |row|
       if row[:grade] == 'All Grades'
         row[:grade] = 'All'
@@ -418,29 +420,26 @@ class ORTestProcessor2017SBACOAKS < GS::ETL::TestProcessor
       row
     end
     .transform("Creating StateID", WithBlock) do |row|
-      if row[:school_id] == 'district'
-        row[:entity_level] ='district'
+      if row[:entity_level] == 'district'
         row[:state_id] = row[:district_id].rjust(14,'0')
-      elsif row[:school_id] == 'state'
-        row[:entity_level] ='state'
-      else
-        row[:entity_level] ='school'
-        row[:district_id] = row[:district_id].rjust(14,'0')
+      elsif row[:entity_level] == 'state'
+        row[:state_id] ='state'
+      elsif row[:entity_level] == 'school'
         row[:state_id] = row[:school_id].rjust(20,'0')
       end
       row
     end
-    .transform('Fill missing ids and names with entity_level', WithBlock) do |row|
-      [:state_id, :school_id, :district_id, :school_name, :district_name].each do |col|
-        row[col] ||= row[:entity_level]
-      end
-      row
-    end
+    # .transform('Fill missing ids and names with entity_level', WithBlock) do |row|
+    #   [:state_id, :school_id, :district_id, :school_name, :district_name].each do |col|
+    #     row[col] ||= row[:entity_level]
+    #   end
+    #   row
+    # end
   end
 
   def config_hash
     {
-        source_id: 42,
+        gsdata_source_id: 42,
         state: 'or',
         source_name: 'Oregon Department of Education',
         date_valid: '2017-01-01 00:00:00',
