@@ -78,7 +78,7 @@ class CollegeSuccessAwardController < ApplicationController
   end
 
   def csa_available_years
-    csa_available_years_query.response.facet_fields['csa_badge'].each_slice(2).map(&:first)
+    csa_available_years_query.response.facet_fields['csa_badge'].each_slice(2).map(&:first).map(&:to_i).sort.reverse
   end
 
   def csa_available_years_query
@@ -103,7 +103,7 @@ class CollegeSuccessAwardController < ApplicationController
   private
 
   def default_csa_year
-    csa_available_years.sort.last
+    csa_available_years.first
   end
 
   def choose_meta_tag_implementation
