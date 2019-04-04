@@ -139,13 +139,6 @@ class State extends React.Component {
                   districts={this.props.districts}
               />
             }
-            zillow={
-              <Zillow
-                  locality={this.props.locality}
-                  utmCampaign='citypage'
-                  pageType='city'
-              />
-            }
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
             locality={this.props.locality}
             toc={
