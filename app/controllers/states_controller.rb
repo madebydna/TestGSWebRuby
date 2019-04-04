@@ -13,13 +13,17 @@ class StatesController < ApplicationController
   before_action :set_login_redirect
   layout 'application'
 
+  # state name (long and short), count of schools, top cities, conditional render of CSA module (only if state is a CSA state) - link to state CSA page, largest school districts in state - link to all districts in state, 
+
   def show
+    require 'pry'
+    binding.pry
 
-    @state_name = States.capitalize_any_state_names(params['state'])
+    @locality = locality 
+    @cities = cities_data
+    @school_count = school_count 
 
-    @state_school_count = School.on_db(States.abbreviation(params['state'])).all.active.count
     write_meta_tags
-    @cities = popular_cities
     gon.pagename = 'GS:State:Home'
     # if @hub
     #   state_hub
@@ -246,5 +250,41 @@ class StatesController < ApplicationController
   #   end
   #   gon.pagename = page_name
   # end
+
+  def locality 
+    @_locality ||= begin
+      Hash.new.tap do |cp|
+        cp[:nameLong] = States.capitalize_any_state_names(params['state'])
+        cp[:nameShort] = States.abbreviation(params['state']).upcase
+        cp[:citiesBrowseUrl] = cities_list_path(
+          state_name: gs_legacy_url_encode(States.state_name(params['state'])),
+          state_abbr: States.abbreviation(params['state']),
+          trailing_slash: true
+        )
+        cp[:stateCsaUrl] = state_college_success_awards_list_path(
+          state: gs_legacy_url_encode(States.state_name(params['state']))
+        )
+      end
+    end
+  end 
+
+  def cities_data
+    top_cities = browse_top_cities
+
+    @_cities_data ||= begin
+      top_cities.map do |city|
+        Hash.new.tap do |cp|
+          cp[:name] = city.name 
+          cp[:population] = city.population
+          cp[:state] = city.state 
+          cp[:url] = city_path(
+            state: gs_legacy_url_encode(States.state_name(city.state)),
+            city: gs_legacy_url_encode(city.name),
+            trailing_slash: true
+          )
+        end
+      end 
+    end
+  end 
 
 end
