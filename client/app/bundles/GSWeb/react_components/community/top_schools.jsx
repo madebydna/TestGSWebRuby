@@ -79,14 +79,15 @@ const TopSchoolsModuleListLayout = (currentTab, schoolList, handleGradeLevel, co
   }
 
   if (tabs[currentTab] === t('csa_winners')) {
+    // const csaStateLink = `/${locality.stateLong}/college-success-award`;
     return (
       <div>
         <hr />
         {schoolList}
         <div className="more-school-btn">
-          <a href="/gk/csa-winners/">
+          {/* <a href={csaStateLink}> */}
             <button>{t('see_all_winning_schools')}</button>
-          </a>
+          {/* </a> */}
         </div>
       </div>
     );
