@@ -106,7 +106,7 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
     end
     .transform('remove "" in num tested',WithBlock,) do |row|
      unless row[:number_tested].nil?
-            row[:number_tested] = row[:number_tested].tr('"','')
+            row[:number_tested] = row[:number_tested].gsub(/[\"]/, '')
      end
      if row[:number_tested].nil?
         row[:number_tested] = 'skip'
@@ -119,14 +119,13 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
             row[:value_float]=row[:value_float]
           elsif row[:value_float] == '² 1'
             row[:value_float] == '1'
-          elsif row[:value_float] == '³95'
+          elsif row[:value_float] == ' ³95'
             row[:value_float] == '95'
           end
      row
     end
     .transform("Skip missing prof and above values", DeleteRows, :value_float, nil)
-    .transform("Skip range values", DeleteRows, :value_float, '³ 80', '² 10', '² 20', '³ 90', '² 5', '² 2', ' Â³ 80', ' Â³ 90')
-    .transform("Skip range values", DeleteRows, :value_float, ' ≥ 80', '≤ 10', '≤ 20', ' ≥ 90', '≤ 5', '≤ 2')
+    .transform("Skip range values", DeleteRows, :value_float, ' ³ 80', '² 10', '² 20', ' ³ 90', '² 5', '² 2')
     .transform("Set entity", WithBlock) do |row|
      if row[:state_or_district] == 'Statewide'
        row[:entity_level] = 'state'
