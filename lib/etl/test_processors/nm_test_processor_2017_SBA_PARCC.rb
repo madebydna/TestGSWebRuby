@@ -106,9 +106,6 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
      unless row[:number_tested].nil?
             row[:number_tested] = row[:number_tested].gsub(/[\"]/, '')
      end
-     if row[:number_tested].nil?
-        row[:number_tested] = 'skip'
-     end
      row
    end
    .transform("Delete rows where number tested is less than 10 and blank ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
@@ -124,6 +121,11 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
           end
      row
     end
+   .transform('test',WithBlock) do |row|
+       row
+       require 'byebug'
+       byebug
+     end  
     .transform("Skip missing prof and above values", DeleteRows, :value_float, nil)
     .transform("Skip range values", DeleteRows, :value_float, '>= 80', '<= 10', '<= 20', '>= 90', '<= 5', '<= 2', ' >= 90', ' >= 80')
     .transform("Set entity", WithBlock) do |row|
