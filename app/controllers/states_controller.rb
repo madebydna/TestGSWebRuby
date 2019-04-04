@@ -23,11 +23,8 @@ class StatesController < ApplicationController
     @cities = cities_data
     @school_count = school_count 
     @csa_years = [2018, 2019]
-    
-    require 'pry'
-    binding.pry
-    
-    a = page_of_results
+    @csa_module = page_of_results.present?
+
     write_meta_tags
     gon.pagename = 'GS:State:Home'
     # if @hub

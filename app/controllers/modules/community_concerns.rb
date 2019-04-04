@@ -94,7 +94,7 @@ module CommunityConcerns
         query_type.new(
           state: locality[:nameShort],
           limit: 1,
-          csa_years: csa_years.presence
+          csa_years: @csa_years.presence
         )
         end
     end
