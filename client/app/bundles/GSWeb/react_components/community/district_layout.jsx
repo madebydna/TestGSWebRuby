@@ -71,7 +71,7 @@ class DistrictLayout extends React.Component {
   renderCalendar() {
     return (
       <div id="calendar">
-        <div className="modules-title">{t('district_calendar')}</div>
+        <h2 className="modules-title">{t('district_calendar')}</h2>
         {this.props.calendar}
       </div>
     )
@@ -80,7 +80,7 @@ class DistrictLayout extends React.Component {
   renderMobility() {
     return (
       <div id="mobility">
-        <div className="modules-title">{`${t('mobility.title')} ${this.props.locality.name}`}</div>
+        <h2 className="modules-title">{`${t('mobility.title')} ${this.props.locality.name}`}</h2>
         {this.props.mobility}
       </div>
     )
@@ -93,7 +93,7 @@ class DistrictLayout extends React.Component {
       <div id="hero">
         <div>
           <div className="icon-nearby_2"></div>
-          <div className="district-hero-title">{name}</div>
+          <h1 className="district-hero-title">{name}</h1>
           <div className="district-hero-contact-info">
             {address && <span className="content">{address}, {city}, {stateShort} {zipCode}</span>}
             {phone && <span className="badge-and-content phone">
@@ -150,7 +150,7 @@ class DistrictLayout extends React.Component {
   renderSchools() {
     return (
       <div id="schools">
-        <div className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</div>
+        <h2 className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</h2>
         <div className="xq-partnership">
           {this.props.translations.inPartnershipWith}
           <a href='https://xqsuperschool.org/school-board-thing' target="_blank" rel="nofollow">
