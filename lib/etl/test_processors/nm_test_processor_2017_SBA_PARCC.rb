@@ -15,10 +15,8 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
      'American Indian' => 18,
      'Asian' => 16,
      'Caucasian' => 21,
-     'Economically Disadvanta³d' => 23,
      'Economically Disadvantaged' => 23,
      '"English Language Learners, Current"' => 32,
-     '"English Langua³ Learners, Current"' => 32,
      'Female' => 26,
      'Hispanic' => 19,
      'Male' => 25,
@@ -117,15 +115,17 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
    .transform("fix special cases for prof and above", WithBlock) do |row|
           if row[:value_float].nil?
             row[:value_float]=row[:value_float]
-          elsif row[:value_float] == '² 1'
+          elsif row[:value_float] == '<= 1'
             row[:value_float] == '1'
-          elsif row[:value_float] == ' ³95'
+          elsif row[:value_float] == ' >=95'
+            row[:value_float] == '95'
+          elsif row[:value_float] == '>=95'
             row[:value_float] == '95'
           end
      row
     end
     .transform("Skip missing prof and above values", DeleteRows, :value_float, nil)
-    .transform("Skip range values", DeleteRows, :value_float, ' ³ 80', '² 10', '² 20', ' ³ 90', '² 5', '² 2')
+    .transform("Skip range values", DeleteRows, :value_float, '>= 80', '<= 10', '<= 20', '>= 90', '<= 5', '<= 2', ' >= 90', ' >= 80')
     .transform("Set entity", WithBlock) do |row|
      if row[:state_or_district] == 'Statewide'
        row[:entity_level] = 'state'
