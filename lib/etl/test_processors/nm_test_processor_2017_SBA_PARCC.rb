@@ -39,12 +39,6 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
      'NMSBA' => 244
    }
 
-  source("test.txt",[], col_sep: "\t") do |s|
-   s.transform("Fill grade all", Fill,{
-    grade: 'All'
-   })
- end
-
  source("ACC_Webfiles_2017_Proficiencies_All_ByStateByDistrictBySchool.txt",[], col_sep: "\t") do |s|
    s.transform("Fill grade all", Fill,{
     grade: 'All'
@@ -52,7 +46,7 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
  end
 
   source('ACC_Webfiles_2017_Proficiencies_All_ByStateByDistrictBySchoolByGrade.txt',[], col_sep: "\t") do |s|
-   s.transform("Removing grades KN,1,2", DeleteRows,:grade,'K','1','2','12')
+   s.transform("Removing grades KN,1,2", DeleteRows,:grade,'K','1','2')
  end
 
   shared do |s|
