@@ -47,7 +47,7 @@ module Feeds
                         # Generates test info tag
                         write_xml_tag(@state_ratings_info_for_feed, 'test-rating', xml)
                         write_school_info(xml)
-                        write_district_info(xml)
+                        # write_district_info(xml)
                   end
                   }
 
