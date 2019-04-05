@@ -108,6 +108,12 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
      end
      row
     end
+    .transform("Remove "" in number_tested", WithBlock) do |row|
+      unless row[:number_tested].nil?
+          row[:number_tested] = row[:number_tested].gsub(/[\"]/, '')
+     end
+     row
+    end
    .transform("Delete rows where number tested is less than 10 and blank ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
    .transform("fix special cases for prof and above", WithBlock) do |row|
           if row[:value_float].nil?
