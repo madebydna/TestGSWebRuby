@@ -208,6 +208,10 @@ module SchoolProfiles
       school_cache_data_reader.csa_badge?
     end
 
+    def csa_awards
+      school_cache_data_reader.csa_awards
+    end
+
     def narration
       return nil unless visible?
       if @tab.to_sym == :college_success

@@ -159,7 +159,7 @@ class TNTestProcessor2017TCAPEOC < GS::ETL::TestProcessor
 end
   def config_hash
     {
-        source_id: 34,
+        gsdata_source_id: 34,
         state: 'tn',
         source_name: 'Tennessee Department of Education',
         date_valid: '2017-01-01 00:00:00',
