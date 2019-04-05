@@ -5,8 +5,7 @@ import TopSchoolTableRow from './top_school_table_row';
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
 import { addQueryParamToUrl } from 'util/uri';
-// TODO: Replace temporary placeholder csaBadgeMd with correct CSA badge once it is ready
-import csaBadgeMd from 'search/csa-award-md.png';
+import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
 const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
   if (community === 'city') {
@@ -49,8 +48,8 @@ const TopSchoolsInfo = (currentTab) => {
     return (
       <div className="csa-top-schools-blurb">
         <img 
-          src={csaBadgeMd} 
-          className="csa-badge-md"
+          src={csaBadgeGenLg} 
+          className="csa-badge-gen-lg"
           alt="csa-badge-icon"
         />
         <p>
@@ -149,7 +148,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
         <div className="top-school-info">
           { TopSchoolsInfo(currentTab) }
         </div>
-        <br/>
+        {tabs[currentTab] === t('csa_winners') ? null : <br/>}
         { TopSchoolsModuleListLayout(currentTab, schoolList, handleGradeLevel, community, schoolLevels, levelCodes, locality, seeSchoolMap) }
       </div>
     </div>

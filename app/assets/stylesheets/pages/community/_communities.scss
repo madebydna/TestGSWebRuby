@@ -202,7 +202,12 @@ $line-height-community: 1.428571429;
     }
     .csa-top-schools-blurb {
       display: flex;
-      margin-left: 20px;
+      margin: 0 20px;
+      align-items: center;
+
+      p {
+        margin: 0 20px;
+      }
     }
   }
 
@@ -219,6 +224,17 @@ $line-height-community: 1.428571429;
 
     .top-schools-csa > span {
       font-family: 'opensans-semibold';
+    }
+
+    @include media-breakpoint-only(xs) {
+      border-bottom: none;
+      border-top: none;
+      margin-left: 0;
+      margin-right: 0;
+
+      .tab-buttons {
+        margin: 5px 10px;
+      }
     }
   }
   .grade-filter {
