@@ -1,5 +1,4 @@
 require_relative "../test_processor"
-GS::ETL::Logging.disable
 
 class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
 
