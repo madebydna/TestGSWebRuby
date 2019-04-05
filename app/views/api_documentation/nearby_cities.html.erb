@@ -54,8 +54,8 @@
         </tr>
         <tr>
           <td>sort</td>
-          <td>How to sort the results. Defaults to "distance". Other options are "name" to sort by city name in alphabetical order, and "rating" to sort by GS city rating, highest first.</td>
-          <td>Valid values: "distance", "name", "rating"</td>
+          <td>How to sort the results. Defaults to "distance". Other options are "name" to sort by city name in alphabetical order.</td>
+          <td>Valid values: "distance", "name"</td>
         </tr>
       </tbody>
     </table>
@@ -63,8 +63,8 @@
     Examples of usage:
     <div class="example_url">https://api.greatschools.org/cities/nearby/CA/San-Francisco?key=[yourAPIKey]</div>
     Returns cities within 15 miles of San Francisco.
-    <div class="example_url">https://api.greatschools.org/cities/nearby/CA/San-Francisco?key=[yourAPIKey]&amp;radius=5&amp;sort=rating</div>
-    Returns cities within 5 miles of San Francisco, ordered by highest GS city rating first.
+    <div class="example_url">https://api.greatschools.org/cities/nearby/CA/San-Francisco?key=[yourAPIKey]&amp;radius=5&amp;sort=name</div>
+    Returns cities within 5 miles of San Francisco, ordered alphabetically.
   </div>
   <div class="call">
     <h3>Sample Request</h3>
@@ -77,7 +77,6 @@
 &lt;cities&gt;
     &lt;city&gt;
         &lt;name&gt;Lamont&lt;/name&gt;
-        &lt;rating&gt;3&lt;/rating&gt;
         &lt;totalSchools&gt;5&lt;/totalSchools&gt;
         &lt;elementarySchools&gt;3&lt;/elementarySchools&gt;
         &lt;middleSchools&gt;2&lt;/middleSchools&gt;
@@ -88,7 +87,6 @@
     &lt;/city&gt;
     &lt;city&gt;
         &lt;name&gt;Arvin&lt;/name&gt;
-        &lt;rating&gt;3&lt;/rating&gt;
         &lt;totalSchools&gt;6&lt;/totalSchools&gt;
         &lt;elementarySchools&gt;4&lt;/elementarySchools&gt;
         &lt;middleSchools&gt;2&lt;/middleSchools&gt;
