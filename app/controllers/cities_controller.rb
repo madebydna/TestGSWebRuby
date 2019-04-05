@@ -114,6 +114,7 @@ class CitiesController < ApplicationController
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
+        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name))
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:zip] = get_zip
         cp[:lat] = fetch_district_attr(decorated_city, :lat) || city_record&.lat
