@@ -65,7 +65,7 @@ export default class CollegeReadiness extends DataModule {
         <div className="panel clearfix">
           <div className="row">
             <div className="col-xs-12 col-sm-4 csa-image">
-              <img src={require('school_profiles/csa-badge-module.png')}/>
+              <img src={require('school_profiles/csa_generic_badge_lg_icon.png')}/>
             </div>
             <div className="col-xs-12 col-sm-8 csa-text">
               <span dangerouslySetInnerHTML={{__html: badge}}/>
