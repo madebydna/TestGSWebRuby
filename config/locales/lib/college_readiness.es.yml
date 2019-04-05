@@ -1,6 +1,7 @@
 es:
   lib:
     college_readiness:
+      and: o
       info_text: "<p>Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.</p><p><a href='/gk/como-clasificamos/?lang=es#collegereadinessrating' target='_blank'>Infórmese más sobre esta calificación.</a></p>"
       'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'GreatSchools Rating': 'Calificaciones de GreatSchools de la Preparación Universitaria'
@@ -59,11 +60,7 @@ es:
       'Percent of students who will attend out-of-state colleges': Graduados asistiendo la universidad fuera del estado
       'Percent of students who will attend in-state colleges': Graduados asistiendo la universidad estatal
       csa_badge_html: >
-        <p>Esta escuela ha ganado un College Success Award, un premio basado en su éxito en preparar a los estudiantes
-        para la universidad y finalmente para su carrera. Los College Success Awards reconocen a las escuelas
-        secundarias públicas que se sobresalen a lograr que los estudiantes se matriculen y permanezcan en la
-        universidad. <a href="/gk/csa-winners/">Obtenga más información. Nota: información solo está disponible en inglés.
-        </a></p>
+        <p>Esta escuela ha ganado un <span style='font-family:opensans-semibold'>%{blurb} College Success Award</span> basado en su éxito en preparar a los estudiantes para la universidad y finalmente para su carrera. <a href="/gk/csa-winners/">Obtenga más información</a>.</p> 
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
         'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'

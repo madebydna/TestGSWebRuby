@@ -1,0 +1,23 @@
+<% title = t("school_profiles.toc.college_success") %>
+<% csa_badge = college_success.school_csa_badge? %>
+<% years = college_success.csa_award_winning_years %>
+
+<% if csa_badge %>
+  <div id="csa-badge">
+    <div class="csa-container">
+      <%= image_tag image_path('search/csa-award-md.png') %>
+      <div>
+        <a href="#College_success"
+          class="js-gaClick"
+          data-ga-click-category='Profile'
+          data-ga-click-action='CSA Link Clicked'
+          data-ga-click-label='<%= title %>'>
+          College Success Award
+        </a>
+        <p>
+          <%= years.join(", ") %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>

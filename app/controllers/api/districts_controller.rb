@@ -1,6 +1,9 @@
 class Api::DistrictsController < ApplicationController
   include ApiPagination
+  include Api::Authorization
   helper_method :next, :prev
+
+  before_action :require_authorization
 
   self.pagination_max_limit = 2000
   self.pagination_default_limit = 10

@@ -20,6 +20,7 @@
         <div class="profile-section">
           <%= render 'summary_narration' if @school_profile.summary_narration.present? %>
         </div>
+        <%= render 'csa_badge', college_success: @school_profile.college_success %>
         <div class="profile-section">
           <%= render 'toc' %>
         </div>

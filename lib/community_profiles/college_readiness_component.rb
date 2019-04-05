@@ -238,17 +238,13 @@ module CommunityProfiles
         graduation_data = sort_with_all_students_first(data_value_hash.select {|dv| dv[:data_type] == FOUR_YEAR_GRADE_RATE && EthnicityBreakdowns.ethnicity_breakdown?(dv[:subgroup]) })
         college_success_data = data_value_hash_overview.select {|dv| college_success_datatypes.include?(dv[:data_type]) && dv[:subgroup] == 'All students'}
         # College readiness module - Data hashes to send to frontend
-        overview_data_hash = has_data?(overview_data) ? { narration: I18n.t('subtitle_html', scope: 'school_profiles.college_readiness'), title: I18n.t('Overview', scope: 'lib.equity_gsdata'), values: overview_data,  anchor: 'College readiness', type: 'mixed_variety'} : nil
-        uc_csu_data_hash = has_data?(uc_csu_data) ? { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: I18n.t('UC/CSU eligibility', scope: 'lib.equity_gsdata'), values: uc_csu_data, anchor: 'UC/CSU eligibility' } : nil
-        graduation_data_hash = has_data?(graduation_data) ? { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: I18n.t('Graduation rates', scope: 'lib.equity_gsdata'), values: graduation_data, anchor: 'Graduation rates'} : nil
+        data_array = []
+        data_array << { narration: I18n.t('subtitle_html', scope: 'school_profiles.college_readiness'), title: I18n.t('Overview', scope: 'lib.equity_gsdata'), values: overview_data,  anchor: 'College readiness', type: 'mixed_variety'} if has_data?(overview_data)
+        data_array << { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: I18n.t('UC/CSU eligibility', scope: 'lib.equity_gsdata'), values: uc_csu_data, anchor: 'UC/CSU eligibility' } if has_data?(uc_csu_data)
+        data_array << { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: I18n.t('Graduation rates', scope: 'lib.equity_gsdata'), values: graduation_data, anchor: 'Graduation rates'} if has_data?(graduation_data)
         # no title for college success since we don't want the sub panels to render in React
-        # college_success_hash = has_data?(college_success_data) ? { narration: I18n.t('district_scoped_info_text', scope: 'lib.college_readiness'), values: college_success_data, type: 'mixed_variety'} : nil
-        college_success_hash = has_data?(college_success_data) ? { narration: I18n.t('district_scoped_info_text', scope: 'lib.college_readiness') + college_success_narration, values: college_success_data, type: 'mixed_variety'} : nil
-        [overview_data_hash,
-          uc_csu_data_hash,
-          graduation_data_hash,
-          college_success_hash
-        ].compact
+        data_array << { narration: I18n.t('district_scoped_info_text', scope: 'lib.college_readiness') + college_success_narration, values: college_success_data, type: 'mixed_variety'} if has_data?(college_success_data)
+        data_array.compact
       end
     end
 

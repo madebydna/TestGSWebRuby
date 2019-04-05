@@ -6,14 +6,12 @@ module Feeds
   module TestRatingFeedTransformer
     include Feeds::FeedConstants
 
-    def transpose_state_master_data_ratings_for_feed(state_master_data,state)
-      state_master_data.try(:map) do |data|
+    def transpose_state_master_data_ratings_for_feed(state_master_data,state, rating_id)
         {
-            :id => transpose_test_id(state,data[:data_type_id]),
-            :year => data[:year],
-            :description => transpose_ratings_description(data[:data_type_id],state)
+            :id => transpose_test_id(state,rating_id),
+            :year => state_master_data['year'],
+            :description => state_master_data['description']
         }
-      end
     end
 
     def transpose_data_for_xml(state,ratings_data = [],entity,entity_level)

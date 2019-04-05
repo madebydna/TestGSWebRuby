@@ -1,0 +1,16 @@
+#csa-badge{
+  margin-top: 10px;
+
+  .csa-container{
+    @include flexbox;
+    align-items: center;
+
+    a {
+      font-family: 'opensans-semibold';
+    }
+
+    img {
+      margin-right: 10px;
+    }
+  }
+}

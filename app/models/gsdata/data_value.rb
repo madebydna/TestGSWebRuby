@@ -221,7 +221,7 @@ class DataValue < ActiveRecord::Base
 
   # test scores gsdata - state
   def self.find_by_state_and_data_type_tags_and_proficiency_is_one(state, data_type_tags, configuration= default_configuration)
-    state_load_ids = filter_query(state, nil, nil, nil, nil).pluck(:load_id).uniq
+    state_load_ids = filter_query(state).pluck(:load_id).uniq
     a = []
     if state_load_ids.present?
       loads = Load.data_type_tags_to_loads(data_type_tags, configuration, state_load_ids)
@@ -265,7 +265,7 @@ class DataValue < ActiveRecord::Base
 
   # test scores gsdata - district
   def self.find_by_district_and_data_type_tags_and_proficiency_is_one(state, district_id, data_type_tags, configuration= default_configuration)
-    subset_load_ids = filter_query(state, district_id, nil).pluck(:load_id).uniq
+    subset_load_ids = filter_query(state, district_id).pluck(:load_id).uniq
     a = []
     if subset_load_ids.present?
       loads = Load.data_type_tags_to_loads(data_type_tags, configuration, subset_load_ids)
@@ -350,7 +350,7 @@ class DataValue < ActiveRecord::Base
 ############################################ Where filters ########################################
 #
 
-  def self.filter_query(state, district_id, school_id, load_ids = nil, proficiency = nil)
+  def self.filter_query(state, district_id = nil, school_id = nil, load_ids = nil, proficiency = nil)
     q = []
     q  << build_state_clause(state)
     q  << build_district_clause(district_id)
