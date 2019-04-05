@@ -7,7 +7,6 @@ import { logWidgetCodeRequest } from '../api_clients/widget_logs';
 import ValidatingInput from './validating_input';
 import * as validations from '../components/validations';
 import { putIntoQueryString } from '../util/uri';
-import {  filters }from 'lodash';
 
 
 export default class Widget extends React.Component {
