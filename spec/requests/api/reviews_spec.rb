@@ -1,12 +1,22 @@
 require 'spec_helper'
 
 describe 'Reviews API' do
-  after { clean_dbs :gs_schooldb, :ca }
+  before(:all) do
+    head '/'
+    puts '*' * 100
+    @csrf_token = request.cookie_jar.fetch(:csrf_token)
+  end
+
+  def get(path, hash={})
+    super(path, hash, { 'X-CSRF-Token' => @csrf_token })
+  end
 
   let(:json) { JSON.parse(response.body) }
   let(:count) { JSON.parse(response.body)['result'] }
   let(:status) { response.status }
   let(:errors) { json['errors'] }
+
+  after { clean_dbs :gs_schooldb, :ca }
 
   describe '#count' do
     it 'handles case where no reviews in db and no filters given' do
