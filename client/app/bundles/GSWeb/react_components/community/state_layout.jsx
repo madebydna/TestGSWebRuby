@@ -6,6 +6,7 @@ import Button from 'react_components/button';
 import Ad from 'react_components/ad';
 import { t, capitalize } from 'util/i18n';
 import { keepInViewport } from 'util/sticky';
+import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
 class StateLayout extends React.Component {
   static propTypes = {
@@ -64,7 +65,7 @@ class StateLayout extends React.Component {
   renderHero(){
     return (<div id="hero">
       <div>
-        <div className="icon-city"></div>
+        {/* <div className="icon-city"></div> */}
         <div className="city-hero-title">{this.heroTitle()}</div>
         {this.heroNarration()}
         <div className="city-hero-stats"></div>
@@ -122,7 +123,11 @@ class StateLayout extends React.Component {
         <div>
           <h3>{t('award_winners')}</h3>
           <div>
-            <span>Image</span>
+            <img 
+              src={csaBadgeGenLg}
+              className="csa-badge-gen-lg"
+              alt="csa-badge-icon"
+            />
             <p>
               <span dangerouslySetInnerHTML={{__html: t("csa_district_schools_info_html")}}/>
             </p>

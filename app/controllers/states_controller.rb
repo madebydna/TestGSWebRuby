@@ -263,6 +263,11 @@ class StatesController < ApplicationController
           state_abbr: States.abbreviation(params['state']),
           trailing_slash: true
         )
+        cp[:districtsBrowseUrl] = districts_list_path(
+          state_name: gs_legacy_url_encode(States.state_name(params['state'])),
+          state_abbr: States.abbreviation(params['state']),
+          trailing_slash: true
+        )
         cp[:stateCsaUrl] = state_college_success_awards_list_path(
           state: gs_legacy_url_encode(States.state_name(params['state']))
         )

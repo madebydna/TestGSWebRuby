@@ -27,7 +27,7 @@ class State extends React.Component {
     breadcrumbs: [],
     districts: [],
     // reviews: [],
-    cities: {},
+    cities: [],
     csa_module: false
   };
 

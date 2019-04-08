@@ -26,13 +26,22 @@ module Feeds
     def generate_feed
       # xsd_schema ='greatschools-test-rating.xsd'
       #Get State Rating Master Data
-      state_ratings_info =get_ratings_master_data(@state, @ratings_id_for_feed)
+      state_ratings_info =get_ratings_master_data(@state)
+      @state_rating_type = state_ratings_info['type']
+
       # Translating State Ratings Master  data to XML for State
-      @state_ratings_info_for_feed = transpose_state_master_data_ratings_for_feed(state_ratings_info, @state)
+      @state_ratings_info_for_feed = transpose_state_master_data_ratings_for_feed(state_ratings_info, @state, name_to_data_type_id[@state_rating_type])
 
       # Write to XML File
       generate_xml_rating_feed
       # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
+    end
+
+    def name_to_data_type_id
+      {
+          'Summary Rating' => 174,
+          'Test Score Rating' => 164
+      }
     end
 
     def generate_xml_rating_feed
@@ -43,21 +52,19 @@ module Feeds
         xml.tag!(root_element,
                  {'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
                   :'xsi:noNamespaceSchemaLocation' => @schema}) do
-
                         # Generates test info tag
-                        write_xml_tag(@state_ratings_info_for_feed, 'test-rating', xml)
+                        write_xml_tag([@state_ratings_info_for_feed], 'test-rating', xml)
                         write_school_info(xml)
                         # write_district_info(xml)
                   end
                   }
-
     end
 
     def write_district_info(xml)
       @district_batches.each_with_index do |district_batch, index|
         Feeds::FeedLog.log.debug "District batch Start #{Time.now} for Batch Number #{index+1}"
         districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
-        district_data_for_feed = process_district_batch_data_for_feed(districts_decorated_with_cache_results, @ratings_id_for_feed)
+        district_data_for_feed = process_district_batch_data_for_feed(districts_decorated_with_cache_results, @state_rating_type)
         write_xml_tag(district_data_for_feed, 'test-rating-value', xml)
         Feeds::FeedLog.log.debug  "District Batch end #{Time.now} for Batch Number #{index+1}"
       end
@@ -67,7 +74,7 @@ module Feeds
       @school_batches.each_with_index do |school_batch, index|
         Feeds::FeedLog.log.debug  "School batch Start #{Time.now} for Batch Number #{index+1}"
         schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
-        school_data_for_feed = process_school_batch_data_for_feed(schools_decorated_with_cache_results, @ratings_id_for_feed)
+        school_data_for_feed = process_school_batch_data_for_feed(schools_decorated_with_cache_results, @state_rating_type)
         write_xml_tag(school_data_for_feed, 'test-rating-value', xml)
         Feeds::FeedLog.log.debug "School Batch end #{Time.now} for Batch Number #{index+1}"
       end
@@ -81,9 +88,9 @@ module Feeds
       districts_cache_data.try(:map) { |district| process_district_data_for_feed(district, ratings_id_for_feed) }.flatten
     end
 
-    def process_school_data_for_feed(school, ratings_id_for_feed)
+    def process_school_data_for_feed(school, ratings_type)
       Feeds::FeedLog.log.debug "School (from test_rating_feed#process_school_data_for_feed): #{school}"
-      school_rating_id_cache_data = get_school_data_for_ratings(school, ratings_id_for_feed)
+      school_rating_id_cache_data = get_school_data_for_ratings(school, ratings_type)
       transpose_data_for_xml(@state, school_rating_id_cache_data, school, ENTITY_TYPE_SCHOOL)
     end
 

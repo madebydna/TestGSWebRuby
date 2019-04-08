@@ -1,12 +1,13 @@
 import { EMAIL_AVAILABLE, runAsyncValidation } from 'components/validations';
 
 const INPUT_SELECTOR = '.js-validating-input';
-const EVENT_TYPES = 'change';
+const EVENT_TYPES = 'change.validations';
 const ASYNC_VALIDATIONS_DATA_ATTRIBUTE = 'async-validations';
 const VALIDATION_ERRORS_CLASS = 'js-validation-errors';
 const VALIDATION_ERRORS_SELECTOR = '.' + VALIDATION_ERRORS_CLASS;
 
 const addFilteringEventListener = function(selector) {
+  $(selector).off(EVENT_TYPES, INPUT_SELECTOR);
   $(selector).on(EVENT_TYPES, INPUT_SELECTOR, (event) => {
     return runValidations(event.currentTarget);
   });
