@@ -1,9 +1,10 @@
 const { $ } = window;
 
-export default function suggest(q, { limit = 25 } = {}) {
+export default function suggest(q, { limit = 25, types = [] } = {}) {
   const data = {
     q,
-    limit
+    limit,
+    types
   };
   return $.ajax({
     url: '/gsr/api/autosuggest/',

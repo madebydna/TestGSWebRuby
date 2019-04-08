@@ -15,6 +15,7 @@ Rails.application.config.assets.precompile += [
     'deprecated_application.css',
     'deprecated_application.js',
     'deprecated_post_load.js',
+    'deprecated_post_load_adapter.js',
     'deprecated_post_load.css',
     'deprecated_print.css',
     'footer.css',

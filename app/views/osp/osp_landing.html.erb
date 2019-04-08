@@ -1,3 +1,8 @@
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'official-school-profile', defer: true %>
+<% end %>
+
 <div class="osp-pages">
   <div class="osp-school-picker-module">
   <div class="container">
@@ -127,3 +132,5 @@
     </div>
   </div>
 </div>
+
+<%= react_component('SearchBoxWrapper') %>

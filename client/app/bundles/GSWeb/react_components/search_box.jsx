@@ -45,7 +45,7 @@ const matchesAddress = string =>
 const matchesAddressOrZip = string =>
   matchesAddress(string) || matchesZip(string);
 
-const t = translateWithDictionary({
+export const t = translateWithDictionary({
   // entries not needed if text matches key
   en: {},
   es: {
@@ -67,7 +67,7 @@ const options = [
   }
 ];
 
-const keyMap = {
+export const keyMap = {
   ArrowUp: -1,
   ArrowDown: 1
 };
@@ -112,12 +112,20 @@ export default class SearchBox extends React.Component {
   static propTypes = {
     size: PropTypes.oneOf(validSizes),
     defaultType: PropTypes.string,
-    pageType: PropTypes.string
+    resultTypes: PropTypes.arrayOf(PropTypes.string),
+    pageType: PropTypes.string,
+    listType: PropTypes.element,
+    showSearchAllOption: PropTypes.bool,
+    showSearchButton: PropTypes.bool
   };
   static defaultProps = {
     size: 2,
     defaultType: 'schools',
-    pageType: 'Default'
+    resultTypes: [],
+    pageType: 'Default',
+    listType: SearchResultsList,
+    showSearchAllOption: true,
+    showSearchButton: true
   };
 
   constructor(props) {
@@ -126,7 +134,14 @@ export default class SearchBox extends React.Component {
     this.resetSelectedListItem = this.resetSelectedListItem.bind(this);
     this.resetSearchTerm = this.resetSearchTerm.bind(this);
     this.manageSelectedListItem = this.manageSelectedListItem.bind(this);
-    this.state = {
+    this.state = this.defaultState(props);
+    this.submit = this.submit.bind(this);
+    this.geocodeAndSubmit = this.geocodeAndSubmit.bind(this);
+    this.autoSuggestQuery = debounce(this.autoSuggestQuery.bind(this), 200);
+  }
+
+  defaultState(props) {
+    return {
       searchTerm: '',
       type: props.defaultType,
       selectedListItem: -1,
@@ -140,9 +155,6 @@ export default class SearchBox extends React.Component {
       },
       displayMobileSearchModal: false
     };
-    this.submit = this.submit.bind(this);
-    this.geocodeAndSubmit = this.geocodeAndSubmit.bind(this);
-    this.autoSuggestQuery = debounce(this.autoSuggestQuery.bind(this), 200);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -151,10 +163,13 @@ export default class SearchBox extends React.Component {
         autoSuggestResultsCount: this.autoSuggestResultsCount()
       });
     }
-    if (this.state.displayMobileSearchModal === true && prevState.displayMobileSearchModal !== this.state.displayMobileSearchModal){
-      setTimeout(()=>{
-        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-      }, 100)
+    if (
+      this.state.displayMobileSearchModal === true &&
+      prevState.displayMobileSearchModal !== this.state.displayMobileSearchModal
+    ) {
+      setTimeout(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      }, 100);
     }
   }
 
@@ -204,7 +219,17 @@ export default class SearchBox extends React.Component {
       geocode(searchTerm)
         .then(json => json[0])
         .done(
-          ({ lat, lon, city, state, zip, normalizedAddress, level, neighborhood, sublocality } = {}) => {
+          ({
+            lat,
+            lon,
+            city,
+            state,
+            zip,
+            normalizedAddress,
+            level,
+            neighborhood,
+            sublocality
+          } = {}) => {
             let params = {};
             if (city && state && level === 'city') {
               window.location.href = newCityBrowsePageUrl(state, city, params);
@@ -217,7 +242,9 @@ export default class SearchBox extends React.Component {
               params.q = searchTerm;
             }
             if (matchesZip(searchTerm) && !matchesAddress(searchTerm)) {
-              params.locationLabel = `${city || sublocality || neighborhood}, ${state} ${zip}`;
+              params.locationLabel = `${city ||
+                sublocality ||
+                neighborhood}, ${state} ${zip}`;
               params.locationType = 'zip';
               params.state = state;
               params.st = ['public_charter', 'public', 'charter'];
@@ -267,43 +294,55 @@ export default class SearchBox extends React.Component {
     };
   }
 
+  transformResult(category, result) {
+    return result;
+  }
+
+  onQueryMatchesAddress(q) {
+    initGoogleMaps(() => {
+      getAddressPredictions(q, addresses => {
+        const newResults = cloneDeep(this.state.autoSuggestResults);
+        newResults.Addresses = addresses.map(address => ({
+          type: 'address',
+          title: address,
+          value: address
+        }));
+        this.setState({ autoSuggestResults: newResults });
+      });
+    });
+  }
+
   autoSuggestQuery(q) {
-    q = q.replace(/[^a-zA-Z 0-9\-\,\']+/g,'');
+    q = q.replace(/[^a-zA-Z 0-9\-\,\']+/g, '');
     if (q.length >= 3) {
       if (matchesAddress(q)) {
-        initGoogleMaps(() => {
-          getAddressPredictions(q, addresses => {
-            const newResults = cloneDeep(this.state.autoSuggestResults);
-            newResults.Addresses = addresses.map(address => ({
-              type: 'address',
-              title: address,
-              value: address
-            }));
-            this.setState({ autoSuggestResults: newResults });
-          });
-        });
+        this.onQueryMatchesAddress(q);
       }
 
       let qPortionBeforeComma = q;
       if (matchesStateAbbreviationQuery(q)) {
         qPortionBeforeComma = q.substr(0, q.indexOf(','));
       }
-      suggest(qPortionBeforeComma).done(results => {
-        const adaptedResults = {
-          Addresses: [],
-          Zipcodes: [],
-          Cities: [],
-          Districts: [],
-          Schools: []
-        };
-        Object.keys(results).forEach(category => {
-          (results[category] || []).forEach(result => {
-            adaptedResults[category].push(result);
+      suggest(qPortionBeforeComma, { types: this.props.resultTypes }).done(
+        results => {
+          const adaptedResults = {
+            Addresses: [],
+            Zipcodes: [],
+            Cities: [],
+            Districts: [],
+            Schools: []
+          };
+          Object.keys(results).forEach(category => {
+            (results[category] || []).forEach(result => {
+              adaptedResults[category].push(
+                this.transformResult(category, result)
+              );
+            });
           });
-        });
-        adaptedResults.Addresses = this.state.autoSuggestResults.Addresses;
-        this.setState({ autoSuggestResults: adaptedResults });
-      });
+          adaptedResults.Addresses = this.state.autoSuggestResults.Addresses;
+          this.setState({ autoSuggestResults: adaptedResults });
+        }
+      );
     } else {
       this.setState({ autoSuggestResults: {} });
     }
@@ -358,8 +397,11 @@ export default class SearchBox extends React.Component {
   }
 
   inputBox = ({ open, close }) => {
-    const onFocusValue = this.props.pageType === 'Home' && this.props.size <= XS ? this.toggleSearchBoxModal : null;
-    return( 
+    const onFocusValue =
+      this.props.pageType === 'Home' && this.props.size <= XS
+        ? this.toggleSearchBoxModal
+        : null;
+    return (
       <form
         action="#"
         onSubmit={e => {
@@ -379,20 +421,20 @@ export default class SearchBox extends React.Component {
           onFocus={onFocusValue}
         />
       </form>
-    )
+    );
   };
 
-  toggleSearchBoxModal = (e, shouldBeClose=false) => {
-    if (!this.state.displayMobileSearchModal && !shouldBeClose){
+  toggleSearchBoxModal = (e, shouldBeClose = false) => {
+    if (!this.state.displayMobileSearchModal && !shouldBeClose) {
       this.setState({
         displayMobileSearchModal: true
-      })
-    } else if (this.state.displayMobileSearchModal && shouldBeClose){
+      });
+    } else if (this.state.displayMobileSearchModal && shouldBeClose) {
       this.setState({
         displayMobileSearchModal: false
-      })
+      });
     }
-  }
+  };
 
   searchButton = () => (
     <React.Fragment>
@@ -401,18 +443,22 @@ export default class SearchBox extends React.Component {
           <span className="search_icon_image_white" />
         </button>
       </div>
-      {this.state.displayMobileSearchModal && this.props.size <= XS &&
-        <div className="search_bar_button" onClick={e => this.toggleSearchBoxModal(e, true)}>
-          <button className="search_form_button">
-            <span style={{ fontSize: 22 }}>X</span>
-          </button>
-        </div>
-      }
+      {this.state.displayMobileSearchModal &&
+        this.props.size <= XS && (
+          <div
+            className="search_bar_button"
+            onClick={e => this.toggleSearchBoxModal(e, true)}
+          >
+            <button className="search_form_button">
+              <span style={{ fontSize: 22 }}>X</span>
+            </button>
+          </div>
+        )}
     </React.Fragment>
   );
 
-  resetSearchTermButton = (close) => {
-    return <div
+  resetSearchTermButton = close => (
+    <div
       className="search-term-reset-button"
       onClick={() => {
         analyticsEvent(
@@ -426,21 +472,25 @@ export default class SearchBox extends React.Component {
     >
       x
     </div>
-  };
+  );
 
   renderResetSearchTermButton() {
-    return this.state.searchTerm.length > 0;
+    return this.state.searchTerm && this.state.searchTerm.length > 0;
   }
 
-  searchResultsList = ({ close }) => (
-    <SearchResultsList
-      listGroups={this.state.autoSuggestResults}
-      searchTerm={this.state.searchTerm}
-      onSelect={this.selectAndSubmit(close)}
-      selectedListItem={this.state.selectedListItem}
-      navigateToSelectedListItem={this.state.navigateToSelectedListItem}
-    />
-  );
+  searchResultsList = ({ close }) => {
+    const ListType = this.props.listType;
+    return (
+      <ListType
+        listGroups={this.state.autoSuggestResults}
+        searchTerm={this.state.searchTerm}
+        onSelect={this.selectAndSubmit(close)}
+        selectedListItem={this.state.selectedListItem}
+        navigateToSelectedListItem={this.state.navigateToSelectedListItem}
+        showSearchAllOption={this.props.showSearchAllOption}
+      />
+    );
+  };
 
   renderMobileSearchBox(element) {
     return createPortal(
@@ -483,7 +533,7 @@ export default class SearchBox extends React.Component {
                   </div>
                 )}
             </div>
-            {this.searchButton()}
+            {this.props.showSearchButton && this.searchButton()}
           </div>
         )}
       </OpenableCloseable>,
@@ -491,9 +541,12 @@ export default class SearchBox extends React.Component {
     );
   }
 
-  renderSearchBox(element, renderDropdown = true){
-    const searchBoxName = this.state.displayMobileSearchModal === true ? 'search-box search-mode-homepage' : 'search-box';
-    return createPortal(
+  searchBoxElement(renderDropdown = true) {
+    const searchBoxName =
+      this.state.displayMobileSearchModal === true
+        ? 'search-box search-mode-homepage'
+        : 'search-box';
+    return (
       <OpenableCloseable>
         {(isOpen, { open, close } = {}) => (
           <div className={searchBoxName}>
@@ -526,25 +579,27 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
-            {this.searchButton()}
+            {this.props.showSearchButton && this.searchButton()}
           </div>
         )}
-      </OpenableCloseable>,
-      element
+      </OpenableCloseable>
     );
+  }
+
+  renderSearchBox(element, renderDropdown = true) {
+    return createPortal(this.searchBoxElement(renderDropdown), element);
   }
 
   renderSearchBoxModal(element, renderDropdown = true) {
     if (!this.state.displayMobileSearchModal) {
       return this.renderSearchBox(element, false);
-    } else {
-      return(
-        <React.Fragment>
-          {this.renderSearchBox(element, false)}
-          <div className="home-page-overlay" />
-        </React.Fragment>
-      );
     }
+    return (
+      <React.Fragment>
+        {this.renderSearchBox(element, false)}
+        <div className="home-page-overlay" />
+      </React.Fragment>
+    );
   }
 
   render() {
@@ -554,13 +609,12 @@ export default class SearchBox extends React.Component {
     // renderSearchBoxModal is used only on the homepage where special handling kicks in from
     // a handheld device
     let element = window.document.querySelector('#home-page .input-group');
-    if(element && this.props.pageType === 'Home'){
-      if (this.props.size <= XS){
+    if (element && this.props.pageType === 'Home') {
+      if (this.props.size <= XS) {
         return this.renderSearchBoxModal(element, false);
-      }else{
-        return this.renderSearchBox(element, false);
       }
-    } 
+      return this.renderSearchBox(element, false);
+    }
 
     element = window.document.querySelector('.dt-desktop');
     if (this.props.size <= SM) {
