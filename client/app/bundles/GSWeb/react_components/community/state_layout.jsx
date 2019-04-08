@@ -66,7 +66,7 @@ class StateLayout extends React.Component {
     return (<div id="hero">
       <div>
         {/* <div className="icon-city"></div> */}
-        <div className="city-hero-title">{this.heroTitle()}</div>
+        <h1 className="city-hero-title">{this.heroTitle()}</h1>
         {this.heroNarration()}
         <div className="city-hero-stats"></div>
       </div>
@@ -120,9 +120,9 @@ class StateLayout extends React.Component {
 
     if (this.props.csaModule) {
       return (
-        <div>
+        <div className="csa-state-module">
           <h3>{t('award_winners')}</h3>
-          <div>
+          <div className="csa-state-blurb">
             <img 
               src={csaBadgeGenLg}
               className="csa-badge-gen-lg"
