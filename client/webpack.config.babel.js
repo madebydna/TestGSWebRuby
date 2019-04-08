@@ -15,6 +15,9 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
+// ! If you add a new JS file to entry object you probably need to edit
+// ! assets.rb in order for the file to be served by Rails on
+// ! prod/QA/single-stack machines
 const config = {
   mode: devBuild ? 'development' : 'production',
   entry: {
