@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'Reviews API' do
   before(:all) do
     head '/'
-    puts '*' * 100
     @csrf_token = request.cookie_jar.fetch(:csrf_token)
   end
 
