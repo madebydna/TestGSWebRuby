@@ -34,13 +34,13 @@ const SchoolTable = ({
   schools,
   isLoading,
   searchTableViewHeaders,
-  tableView = 2018
+  tableView = searchTableViewHeaders[0]
 }) => {
   if (
     searchTableViewHeaders[tableView] === undefined ||
     searchTableViewHeaders[tableView].length === 0
   ) {
-    tableView = 2018;
+    tableView = searchTableViewHeaders[0];
   }
   return (
     <section className="school-table">

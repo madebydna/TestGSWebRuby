@@ -33,35 +33,10 @@ class CollegeSuccessAwardController < ApplicationController
         end
       })
       props[:breadcrumbs] = breadcrumbs
-      props[:searchTableViewHeaders] = {
-        2018 => [
-          {
-            key: 'schoolType',
-            title: 'Type',
-            tooltip: nil 
-          },
-          {
-            key: 'enrollment',
-            title: 'Total enrolled',
-            tooltip: nil
-          },
-          {
-            key: 'percentLowIncome',
-            title: '% Low income',
-            tooltip: nil
-          },
-          {
-            key: 'percentCollegePersistent',
-            title: 'Persistence %',
-            tooltip: nil
-          },
-          {
-            key: 'districtAnchor',
-            title: 'District',
-            tooltip: nil
-          }
-        ]
-      }
+      props[:searchTableViewHeaders] =
+        csa_available_years.each_with_object({}) do | year, hash |
+          hash[year] = table_headers(year)
+        end
       props[:view] = view || default_view
     end
     gon.search['facetFields'] = populated_facet_fields
@@ -71,6 +46,37 @@ class CollegeSuccessAwardController < ApplicationController
     # set_page_analytics_data
     # response.status = 404 if serialized_schools.empty?
   end
+
+  def table_headers(year)
+    [
+      {
+          key: 'schoolType',
+          title: 'Type',
+          tooltip: nil
+      },
+      {
+          key: 'enrollment',
+          title: 'Total enrolled',
+          tooltip: nil
+      },
+      {
+          key: 'percentLowIncome',
+          title: '% Low income',
+          tooltip: nil
+      },
+      {
+          key: 'percentCollegePersistent',
+          title: 'Persistence %',
+          tooltip: nil
+      },
+      {
+          key: 'districtAnchor',
+          title: 'District',
+          tooltip: nil
+      }
+    ]
+  end
+
 
   # SearchRequestParams
   def default_view
