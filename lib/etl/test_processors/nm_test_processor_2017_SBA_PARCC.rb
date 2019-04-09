@@ -56,7 +56,6 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
       level_code: 'e,m,h',
       proficiency_band_gsdata_id: 1,
       proficiency_band: 'proficient and above',
-      notes: 'DXT-2878: NM PARCC SBA test',
     })
     .transform('Rename column headers', MultiFieldRenamer,{
       group: :breakdown,
@@ -80,8 +79,10 @@ class NMTestProcessor2017SBAPARCC < GS::ETL::TestProcessor
     .transform("Filling in description", WithBlock) do |row|
      if row[:gsdata_test_data_type_id] == 245
        row[:description] = 'In 2016-2017, New Mexico used the PARCC assessment to test students in grades 3-12 in Math and grades 3-11 in Reading.'
+       row[:notes] = 'DXT-2878: NM NM PARCC'
      elsif row[:gsdata_test_data_type_id] == 244
        row[:description] = 'In 2016-2017, New Mexico used the New Mexico Standards-Based Assessment (NMSBA) to test students in grades 4, 7 and 11 in Science.'
+       row[:notes] = 'DXT-2878: NM NMSBA'
      end
      row
     end
