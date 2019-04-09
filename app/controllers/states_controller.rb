@@ -18,7 +18,7 @@ class StatesController < ApplicationController
 
   def show
     
-    
+    @breadcrumbs = breadcrumbs 
     @locality = locality 
     @cities = cities_data
     @school_count = school_count 
@@ -252,6 +252,16 @@ class StatesController < ApplicationController
   #   end
   #   gon.pagename = page_name
   # end
+
+  def breadcrumbs
+    canonical_state_params = state_params(params['state'])
+    @_state_breadcrumbs ||= [
+      {
+        text: StructuredMarkup.state_breadcrumb_text(params['state']),
+        url: state_url(state_params(params['state']))
+      }
+    ]
+  end
 
   def locality 
     @_locality ||= begin

@@ -93,11 +93,12 @@ class StateLayout extends React.Component {
     return this.props.viewportSize > XS && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
   }
 
+  // AC_TODO: Add translations
   renderDistricts(){
     return this.props.shouldDisplayDistricts && (
       <div id="districts">
-        <div className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</div>
-          {this.props.districtsInCity}
+        <div className="modules-title">{`Largest school districts in ${this.props.locality.nameLong}`}</div>
+          {this.props.districtsInState}
       </div>
     )
   }
@@ -142,10 +143,14 @@ class StateLayout extends React.Component {
     }
   }
 
-  // renderZillow(){
+  // renderReviews() {
   //   return (
-  //       <div>
-  //         {this.props.zillow}
+  //     this.props.shouldDisplayReviews &&
+  //       <div id="reviews">
+  //         <div className="rating-container reviews-module">
+  //           <h3>{t('recent_reviews.title')} {`${this.props.locality.city}`}</h3>
+  //           {this.props.recentReviews}
+  //         </div>
   //       </div>
   //   )
   // }
@@ -154,7 +159,7 @@ class StateLayout extends React.Component {
     return (
       <div className="city-body">
         {this.props.searchBox}
-        {/* {this.renderBreadcrumbs()} */}
+        {this.renderBreadcrumbs()}
         {this.renderHero()}
         <div className="below-hero">
           {/*<div className="content">*/}
@@ -163,9 +168,9 @@ class StateLayout extends React.Component {
               {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
               {this.renderCities()}
               {this.renderCsaModule()}
-              {/* {this.renderBoxAd()}
+              {/* {this.renderBoxAd()} */}
               {this.renderDistricts()}
-              {this.renderZillow()} */}
+              {/* {this.renderReviews()} */}
             </div>
           {/*</div>*/}
           {this.renderDesktopAd()}

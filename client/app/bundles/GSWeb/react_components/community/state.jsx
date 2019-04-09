@@ -7,13 +7,13 @@ import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
 import CityBrowseLinks from './city_browse_links';
-import DistrictsInCity from "./districts_in_city";
-// import RecentReviews from "./recent_reviews";
+import DistrictsInState from "./districts_in_state";
+import RecentReviews from "./recent_reviews";
 // import Mobility from "./mobility";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
-import {browseSchools, schoolDistricts,  nearbyHomesForSale} from './toc_config';
+import {browseSchools, schoolDistricts} from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
@@ -26,7 +26,7 @@ class State extends React.Component {
     loadingSchools: false,
     breadcrumbs: [],
     districts: [],
-    // reviews: [],
+    reviews: [],
     cities: [],
     csa_module: false
   };
@@ -103,7 +103,7 @@ class State extends React.Component {
   }
 
   selectTocItems(){
-    let stateTocItems = [browseSchools, schoolDistricts, nearbyHomesForSale];
+    let stateTocItems = [browseSchools, schoolDistricts];
     // AC_TODO: Might need the check below?
     // cityTocItems = remove(cityTocItems, (tocItem)=> tocItem.key === SCHOOL_DISTRICTS && this.props.districts.length === 0);
     return stateTocItems;
@@ -113,8 +113,23 @@ class State extends React.Component {
     console.warn(this.props.cities);
     return (
         <StateLayout
-            searchBox={<SearchBox size={this.props.viewportSize} />}
+            locality={this.props.locality}
             schoolCount={this.props.schoolCount}
+            toc={
+              <Toc
+                  tocItems={this.selectTocItems()}
+              />
+            }
+            searchBox={<SearchBox size={this.props.viewportSize} />}
+            browseCities={
+              <CityBrowseLinks
+                  community="state"
+                  locality={this.props.locality}
+                  size={this.props.viewportSize}
+                  cities={this.props.cities}
+              />
+            }
+            csaModule={this.props.csa_module}
             shouldDisplayDistricts={true || this.props.districts.length > 0}
             topSchools={
               <TopSchoolsStateful
@@ -125,18 +140,11 @@ class State extends React.Component {
                   schoolLevels={2 || this.props.schools_data.counts}
               />
             }
-            browseCities={
-              <CityBrowseLinks
-                  community="state"
-                  locality={this.props.locality}
-                  size={this.props.viewportSize}
-                  cities={this.props.cities}
-              />
-            }
             districts={this.props.districts}
-            districtsInCity={
-              <DistrictsInCity
+            districtsInState={
+              <DistrictsInState
                   districts={this.props.districts}
+                  locality={this.props.locality}
               />
             }
             // zillow={
@@ -146,14 +154,14 @@ class State extends React.Component {
             //       pageType='city'
             //   />
             // }
+            // recentReviews={
+            //   <RecentReviews
+            //     community="city" 
+            //     reviews={this.props.reviews}
+            //     locality={this.props.locality}
+            //   />
+            // }
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
-            locality={this.props.locality}
-            csaModule={this.props.csa_module}
-            toc={
-              <Toc
-                  tocItems={this.selectTocItems()}
-              />
-            }
             viewportSize={this.props.viewportSize}
         >
         </StateLayout>
