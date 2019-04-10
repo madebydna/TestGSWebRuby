@@ -60,7 +60,7 @@ module CachedRatingsMethods
   end
 
    Breakdown.unique_ethnicity_names.each do |ethnicity|
-    define_method("test_scores_rating_#{ethnicity.downcase}") do
+    define_method("test_scores_rating_#{ethnicity.downcase.gsub(" ", "_")}") do
       send(:test_score_ratings_by_breakdown)[ethnicity]
     end
   end
