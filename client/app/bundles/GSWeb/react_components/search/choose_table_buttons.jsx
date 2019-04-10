@@ -23,7 +23,7 @@ const renderTableButtonsFilters = (
     return (
       <div className="table-view-filter">
         <ButtonGroup
-          options={optionsObject}
+          options={options}
           activeOption={
             Object.keys(optionsObject).includes(tableView)
               ? tableView
@@ -67,39 +67,6 @@ const ChooseTableButtons = ({ options }) => (
     }}
   </ChooseTableContext.Consumer>
 );
-
-const renderTableButtonsFilters = (tableView, updateTableView, size) => {
-    if (size > SM) {
-        return (
-            <div className="table-view-filter">
-                <ButtonGroup
-                    options={optionsArray}
-                    activeOption={
-                        Object.keys(optionsObject).includes(tableView) ? tableView : "Overview"
-                    }
-                    onSelect={updateTableView}
-                />
-            </div>
-        )
-    } else {
-        return (
-            <ChooseTableContext.Consumer>
-                {({ tableView, updateTableView }) => (
-                    <Select
-                        objects={optionsArray}
-                        labelFunc={d => d.label}
-                        keyFunc={d => d.key}
-                        onChange={d => updateTableView(d.key)}
-                        defaultLabel={
-                            (optionsArray.find(obj => obj.key === tableView) || optionsArray[0]).label
-                        }
-                        defaultValue={tableView}
-                    />
-                )}
-            </ChooseTableContext.Consumer>
-        )
-    }
-};
 
 ChooseTableButtons.propTypes = {
   options: PropTypes.arrayOf(

@@ -19,7 +19,7 @@ const TableTabs = ({ options, activeOption, onChange }) => {
     return (
       <div className="table-view-filter">
         <ButtonGroup
-          options={optionsObject}
+          options={options}
           activeOption={
             Object.keys(optionsObject).includes(activeOption)
               ? activeOption
