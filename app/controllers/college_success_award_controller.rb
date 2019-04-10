@@ -35,7 +35,7 @@ class CollegeSuccessAwardController < ApplicationController
       props[:breadcrumbs] = breadcrumbs
       props[:searchTableViewHeaders] =
         csa_available_years.each_with_object({}) do | year, hash |
-          hash[year] = table_headers(year)
+          hash[year] = table_headers_arr(year)
         end
       props[:view] = view || default_view
     end
@@ -47,7 +47,8 @@ class CollegeSuccessAwardController < ApplicationController
     # response.status = 404 if serialized_schools.empty?
   end
 
-  def table_headers(year)
+  def table_headers_arr(year)
+    # get the state values by year
     [
       {
           key: 'schoolType',
