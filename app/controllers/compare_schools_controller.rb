@@ -33,6 +33,7 @@ class CompareSchoolsController < ApplicationController
     query_type.new(school_keys: [[state,school_id]]).search
   end
 
+  # SearchControllerConcerns
   def schools
     @_schools ||= begin
       pinned_school = fetch_pinned_school
