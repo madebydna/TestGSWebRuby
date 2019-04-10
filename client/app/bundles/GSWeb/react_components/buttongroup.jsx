@@ -12,11 +12,8 @@ const ButtonGroup = ({
   label,
   allowDeselect
 }) => {
-  const newOpts = Object.keys(options).map(key => ({
-    key,
-    value: key,
-    label: options[key]
-  }));
+  // default value to key if value not in an option
+  const newOpts = options.map(o => ({value:o.key, ...o}))
 
   return (
     <span className="button-group" role="group" aria-label={label}>
@@ -46,7 +43,7 @@ const ButtonGroup = ({
 };
 
 ButtonGroup.propTypes = {
-  options: PropTypes.object.isRequired,
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSelect: PropTypes.func.isRequired,
   activeOption: PropTypes.oneOfType([
     PropTypes.string,

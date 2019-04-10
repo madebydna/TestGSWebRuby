@@ -51,7 +51,7 @@ const renderTableButtonsFilters = (tableView, updateTableView, size) => {
         return (
             <div className="table-view-filter">
                 <ButtonGroup
-                    options={optionsObject}
+                    options={optionsArray}
                     activeOption={
                         Object.keys(optionsObject).includes(tableView) ? tableView : "Overview"
                     }
