@@ -38,7 +38,7 @@ class CollegeSuccessAward extends Search {
     return (
       <TableTabs
         options={this.props.tableViewOptions}
-        activeOption={getCsaYears() ? getCsaYears()[0] : this.props.tableViewOptions[0].key.toString()}
+        activeOption={getCsaYears() ? parseInt(getCsaYears()[0]) : parseInt(this.props.tableViewOptions[0].key)}
         onChange={year => pushQueryString(queryStringWithNewCsaYears([year]))}
       />
     );
