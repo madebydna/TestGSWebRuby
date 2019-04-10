@@ -16,7 +16,7 @@ class OspLandingController < ApplicationController
       }
     )
 
-    render 'osp/osp_landing', layout: 'deprecated_application'
+    render 'osp/osp_landing', layout: 'application'
   end
 
   def dashboard

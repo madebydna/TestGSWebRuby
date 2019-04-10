@@ -114,16 +114,15 @@ export default class Zillow extends React.Component {
   }
 
   renderTabs() {
-    const tabs = this.tabNames.reduce(
-        (accum, name, index) => ({ ...accum, [index]: name }),
-        {}
+    const tabs = this.tabNames.map(
+      (label, index) => ({key: index, label }),
     );
     return (
-        <ButtonGroup
-            activeOption={this.state.tabIndex.toString()}
-            options={tabs}
-            onSelect={this.tabSwitched.bind(this)}
-        />
+      <ButtonGroup
+        activeOption={this.state.tabIndex}
+        options={tabs}
+        onSelect={this.tabSwitched.bind(this)}
+      />
     );
   }
 
@@ -162,7 +161,7 @@ export default class Zillow extends React.Component {
     return (
         <div id={this.props.domId} className="city">
           <div className="title-bar">
-            <div className="title city">{this.title()}</div>
+            <h2 className="title city">{this.title()}</h2>
             <div className="tabs">{this.renderTabs()}</div>
           </div>
           <div className="tiles">{this.renderHomesAndRentals()}</div>

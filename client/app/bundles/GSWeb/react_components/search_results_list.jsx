@@ -81,7 +81,8 @@ const SearchResultsList = ({
   selectedListItem,
   onSelect,
   listGroups,
-  searchTerm
+  searchTerm,
+  showSearchAllOption
 }) => {
   const groupNameListItem = name => (
     <li key={`category ${name}`} className="search-results-list-group-name">
@@ -113,7 +114,7 @@ const SearchResultsList = ({
   // The last <li> is always an option to do a full search using the current search term (i.e. without clicking the search icon)
   const allResultsListItem = () => (
     <li
-      className="search-results-list-item"
+      className="search-results-show-all-option"
       onClick={() => {
         analyticsEvent('autosuggest', 'search all results', searchTerm);
         onSelect({ value: searchTerm });
@@ -138,7 +139,7 @@ const SearchResultsList = ({
   return (
     <ul>
       {renderList()}
-      {allResultsListItem()}
+      {showSearchAllOption && allResultsListItem()}
     </ul>
   );
 };
@@ -147,7 +148,12 @@ SearchResultsList.propTypes = {
   onSelect: PropTypes.func.isRequired,
   selectedListItem: PropTypes.number,
   listGroups: PropTypes.object,
-  searchTerm: PropTypes.string
+  searchTerm: PropTypes.string,
+  showSearchAllOption: PropTypes.bool
 };
+
+SearchResultsList.defaultProps = {
+  showSearchAllOption: true
+}
 
 export default SearchResultsList;

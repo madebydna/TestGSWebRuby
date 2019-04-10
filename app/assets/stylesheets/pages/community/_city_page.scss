@@ -1,13 +1,16 @@
 // City specific css on the hero header
+$line-height-community: 1.428571429;
+
 #hero{
+  .city-hero-title {
+    margin: 0;
+    padding: 0;
+    line-height: $line-height-community;
+  }
   div{
     max-width: 500px;
     .icon-city {
       font-size: 24px;
-    }
-    .city-hero-title {
-      font-size: 36px;
-      font-family: 'RobotoSlab-Bold';
     }
     .city-hero-narrative {
       font-size: $font-size;
@@ -16,13 +19,19 @@
     .icon-city {
       font-size: 24px;
     }
-    .city-hero-title {
-      font-size: 36px;
-      font-family: 'RobotoSlab-Bold';
-    }
+
+
     .city-hero-narrative {
       font-size: $font-size;
       font-weight: normal;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    .city-hero-title {
+      font-size: $font-size-h1;
+      margin: 15px auto;
+      max-width: 300px;
     }
   }
 }

@@ -29,6 +29,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   DATA_TYPE_IDS = %w(151 155 156 157 158 159 160 175 176 177 178 179 180 181 182 183 184 185 186 187).freeze
 
   ADVANCED_COURSEWORK_DATA_TYPE_ID = 151
+  CSA_AWARD_DATA_TYPE_ID = 187
   ALL_STUDENTS = 'All Students'
   COURSE_SUBJECT_GROUP = 'course_subject_group'
   BREAKDOWN_TAG_ETHNICITY = 'ethnicity'
@@ -45,8 +46,10 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
       # filter out some data values
       r = r.group_by(&:data_type_id).reduce([]) do |accum, (data_type_id, data_values)|
         most_recent_date = data_values.map(&:date_valid).max
-        # remove all data values except those with most recent date
-        data_values.select! { |dv| dv.date_valid == most_recent_date }
+        # remove all data values except those with most recent date except for CSA awards (data_type_id 187)
+         if data_type_id != CSA_AWARD_DATA_TYPE_ID
+          data_values.select! { |dv| dv.date_valid == most_recent_date }
+         end
         # select correct advanced coursework data values
         if data_type_id == ADVANCED_COURSEWORK_DATA_TYPE_ID
           data_values.select! do |dv|

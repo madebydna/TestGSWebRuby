@@ -13,7 +13,6 @@ import { merge, pick } from 'lodash';
 import { set as setCookie } from 'js-cookie';
 import { findSchools, addSchool, deleteSchool, logSchool } from '../api_clients/schools';
 import { addSubscription } from '../api_clients/subscriptions';
-
 // Subscribe a user to the GreatNews newsletter.
 // Triggers a join modal if not signed in.
 export const signupAndGetNewsletter = function(modalOptions) {

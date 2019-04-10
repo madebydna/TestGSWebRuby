@@ -1,3 +1,5 @@
+<% component_name ||= 'OspSearchBox' %>
+
 <div class="js-autocompleteContainer clearfix">
   <% #don't see your school      %>
   <div class="subtitle-sm tac" style="height:35px;">
@@ -11,9 +13,11 @@
   <% #autocomplete search bar      %>
   <div class="search-bar-osp js-autocompleteFieldContainer ma picker-border">
     <div class="full-width">
-      <input type="text"
-             class='typeahead-school-picker search-text full-width pam'
-             placeholder="<%= t('.placeholder') %>">
+      <%= react_component(component_name, props: {
+  resultTypes: ['Schools'],
+  showSearchAllOption: false,
+  showSearchButton: false
+}) %>
     </div>
   </div>
 

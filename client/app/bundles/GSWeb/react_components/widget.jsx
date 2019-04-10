@@ -8,6 +8,7 @@ import ValidatingInput from './validating_input';
 import * as validations from '../components/validations';
 import { putIntoQueryString } from '../util/uri';
 
+
 export default class Widget extends React.Component {
   constructor(params) {
     super(params);
@@ -75,7 +76,8 @@ export default class Widget extends React.Component {
       'zoom'
     ];
     let q = '';
-    params.forEach(k => q = putIntoQueryString(q, k, encodeURIComponent(this.state[k]), true));
+    params.filter(k => this.state[k])
+      .forEach(k => q = putIntoQueryString(q, k, encodeURIComponent(this.state[k]), true));
 
     return this.state.baseUrl + q;
   }
@@ -92,6 +94,8 @@ export default class Widget extends React.Component {
             lat: lat,
             lon: lon,
             normalizedAddress: normalizedAddress,
+            cityName: undefined,
+            state: undefined,
             geocoding: false
           });
         }

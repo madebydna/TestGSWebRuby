@@ -94,6 +94,8 @@
 @import 'lib/transform';
 @import 'components/mobile-overlay-ad';
 @import 'components/search-autosuggest';
+@import 'gs/objects/review_school_chooser';
+@import 'gs/objects/osp_landing_page';
 
 // footer-specific
 @import 'gs/objects/footer';
@@ -126,6 +128,7 @@
 @import 'school_profiles/tour_button';
 @import 'school_profiles/summary_rating_tooltip';
 @import 'school_profiles/sharing_modal';
+@import 'school_profiles/csa_badge.scss';
 @import 'gs/osp-school-info';
 
 @import 'pages/district-boundaries/district_boundaries_page';

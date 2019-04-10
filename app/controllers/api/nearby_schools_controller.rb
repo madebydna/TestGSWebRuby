@@ -2,10 +2,11 @@ class Api::NearbySchoolsController < ApplicationController
   include Pagination::PaginatableRequest
   include SearchRequestParams
   include SearchControllerConcerns
+  include Api::Authorization
   
   CACHE_TIME = 12.hours
 
-  before_filter :require_school
+  before_filter :require_school, :require_authorization
 
   def show
     @array_of_nearby_school_hashes = serialized_schools

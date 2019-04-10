@@ -28,6 +28,19 @@ class CompareSchoolsController < ApplicationController
     super || 'distance'
   end
 
+  def fetch_pinned_school
+    query_type = Search::SolrSchoolQuery
+    query_type.new(school_keys: [[state,school_id]]).search
+  end
+
+  def schools
+    @_schools ||= begin
+      pinned_school = fetch_pinned_school
+      results = (page_of_results + pinned_school).uniq
+      decorate_schools(results)
+    end
+  end
+
   # PageAnalytics
   def page_analytics_data
     {}.tap do |hash|

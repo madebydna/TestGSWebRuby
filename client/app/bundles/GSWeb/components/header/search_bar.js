@@ -104,19 +104,19 @@ const toggleSearchBar= function(evt) {
 };
 
 const setDesktopSearchToggleMenuHandler = function() {
-  desktopSearchToggle.addEventListener("click", toggleDesktopSearchMenu, false);
+  // desktopSearchToggle.addEventListener("click", toggleDesktopSearchMenu, false);
 };
 
 const setDesktopSearchBarToggleHandler = function() {
-  desktopSearchDropdownItem.addEventListener("click", toggleSearchBar, false);
+  // desktopSearchDropdownItem.addEventListener("click", toggleSearchBar, false);
 };
 
 const setMobileChooseSearchButtonHandler = function() {
-  schoolSearchMobileButton.addEventListener("click", toggleSearchBar, false);
+  // schoolSearchMobileButton.addEventListener("click", toggleSearchBar, false);
 };
 
 const setMobileChooseContentButtonHandler = function() {
-  contentSearchMobileButton.addEventListener("click", toggleSearchBar, false);
+  // contentSearchMobileButton.addEventListener("click", toggleSearchBar, false);
 };
 
 const initializeSearchBar = function() {
@@ -156,11 +156,11 @@ const includesParam = function(key,val=undefined){
 }
 
 const setContentSearchBarSubmitHandler = function () {
-  contentSearchForm.addEventListener("submit", submitContentSearch, false);
+  // contentSearchForm.addEventListener("submit", submitContentSearch, false);
 };
 
 const setSchoolSearchBarSubmitHandler = function() {
-  schoolSearchForm.addEventListener("submit", submitSchoolSearch, false)
+  // schoolSearchForm.addEventListener("submit", submitSchoolSearch, false)
 };
 
 const addInput = function(name, val, formElement) {
@@ -227,14 +227,14 @@ const relevanssiRemovePunct  = function (contentSearchString) {
 };
 
 const init = function() {
-  assignElements();
-  setDesktopSearchToggleMenuHandler();
-  setDesktopSearchBarToggleHandler();
-  setMobileChooseContentButtonHandler();
-  setMobileChooseSearchButtonHandler();
-  setContentSearchBarSubmitHandler();
-  setSchoolSearchBarSubmitHandler();
-  initializeSearchBar();
+  // assignElements();
+  // setDesktopSearchToggleMenuHandler();
+  // setDesktopSearchBarToggleHandler();
+  // setMobileChooseContentButtonHandler();
+  // setMobileChooseSearchButtonHandler();
+  // setContentSearchBarSubmitHandler();
+  // setSchoolSearchBarSubmitHandler();
+  // initializeSearchBar();
 };
 
 export { init }

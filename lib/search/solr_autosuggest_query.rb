@@ -111,6 +111,10 @@ module Search
           ) + '/'
         end
 
+        if type == 'school'
+          osp_url = osp_registration_path(schoolId: school_id, state: state)
+        end
+
         {
           city: city,
           state: state.upcase,
@@ -119,6 +123,7 @@ module Search
         }.tap do |hash|
           hash[:school] = school_name if type == 'school'
           hash[:district] = district if type == 'district'
+          hash[:ospUrl] = osp_url if type == 'school'
         end
     end
 

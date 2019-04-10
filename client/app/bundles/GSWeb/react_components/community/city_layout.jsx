@@ -70,7 +70,7 @@ class CityLayout extends React.Component {
     return (<div id="hero">
       <div>
         <div className="icon-city"></div>
-        <div className="city-hero-title">{this.heroTitle()}</div>
+        <h1 className="city-hero-title">{this.heroTitle()}</h1>
         {this.heroNarration()}
         <div className="city-hero-stats"></div>
       </div>
@@ -100,7 +100,7 @@ class CityLayout extends React.Component {
   renderDistricts(){
     return this.props.shouldDisplayDistricts && (
       <div id="districts">
-        <div className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</div>
+        <h2 className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</h2>
           {this.props.districtsInCity}
       </div>
     )
@@ -109,7 +109,7 @@ class CityLayout extends React.Component {
   renderSchools(){
     return (
       <div id="schools">
-        <div className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</div>
+        <h2 className="modules-title">{`${this.props.locality.city} ${t('at a glance')}`}</h2>
         {this.props.browseSchools}
         {this.props.topSchools}
       </div>
@@ -139,7 +139,7 @@ class CityLayout extends React.Component {
   renderMobility(){
     return(
       <div id="mobility">
-        <div className="modules-title">{`${t('mobility.title')} ${this.props.locality.city}`}</div>
+        <h2 className="modules-title">{`${t('mobility.title')} ${this.props.locality.city}`}</h2>
         {this.props.mobility}
       </div>
     )

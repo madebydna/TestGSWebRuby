@@ -1,36 +1,8 @@
-GS.omniture =
-  GS.omniture ||
-  (function() {
-    //Track the start of "review a school".OM-263
-    var track_reviews = function(driver) {
-      GS.track.setSPropsAndEvarsInCookies(
-        'review_updates_mss_traffic_driver',
-        driver,
-        'evars'
-      );
-      GS.track.setEventsInCookies('review_updates_mss_start_event');
-      GS.track.setSPropsAndEvarsInCookies(
-        'custom_completion_sprop',
-        'PublishReview',
-        'sprops'
-      );
-    };
-
-    return {
-      track_reviews: track_reviews
-    };
-  })();
-
-//Reads the omniture variables from gon and cookies and sets them.
-GS.track.setOmnitureData();
-
 $(function() {
-  GS.util.BackToTop.init();
-
   // Bootstrap select init call. Transforms some selects into pretty Bootstrap
   // ones. https://silviomoreto.github.io/bootstrap-select/
-  $('.selectpicker').selectpicker({ style: 'btn-dropdown' });
-  GS.selectpicker.updateDataAttributes();
+  // $('.selectpicker').selectpicker({ style: 'btn-dropdown' });
+  // GS.selectpicker.updateDataAttributes();
 
   $.ajaxSetup({ cache: true });
 

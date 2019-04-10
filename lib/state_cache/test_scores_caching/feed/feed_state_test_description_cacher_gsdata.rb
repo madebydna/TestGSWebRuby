@@ -3,49 +3,40 @@
 class TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata < TestScoresCaching::StateTestScoresCacherGsdata
   CACHE_KEY = 'feed_test_description_gsdata'
 
+
+  # first get all the load ids for the state
+  # second get all the state_test results for that state
+  # third filter load ids to the most recent year for each data_type_id
   def query_results
     @query_results ||=
       begin
-        load_ids = unique_load_ids
-        load_id_state = load_ids.map do |li|
-          state_result = state_for_load_id(li)
-          {load_id: li, state: state_result&.first}
-        end
-        load_id_state.select{|arr| arr[:state].upcase == state.upcase}
+        load_ids_for_state = DataValue.filter_query(state).pluck(:load_id).uniq
+        state_test_load_ids = Load.data_type_tags_to_loads(%w(state_test), %w(feeds), load_ids_for_state).map(&:id).uniq
+        filter_to_most_recent_load_id_by_data_type_id(state_test_load_ids)
       end
   end
 
-  def state_for_load_id(li)
-    DataValue.where(load_id: li).limit(1).map(&:state)
-  end
-
-  def unique_load_ids
-    ids = Load.with_data_types.with_data_type_tags('state_test')
-        .with_configuration( %w(feeds) )
-        .map(&:id)
-        .uniq
-    filter_to_most_recent_load_id_by_data_type_id(ids)
-  end
-
+  # added the last line to maintain state filter - reversed process to first get state ids then get most recent.
   def filter_to_most_recent_load_id_by_data_type_id(ids)
     Load.find_by_sql("select loads1.data_type_id, loads1.id, loads1.date_valid from gsdata.loads loads1 INNER JOIN
                       (select loads2.data_type_id, MAX(loads2.date_valid) as dv from gsdata.loads loads2
                         where id in ( #{ids.join(',')})
                         group by loads2.data_type_id) most_recent_load
-                      on loads1.data_type_id = most_recent_load.data_type_id and loads1.date_valid = most_recent_load.dv")
+                      on loads1.data_type_id = most_recent_load.data_type_id and loads1.date_valid = most_recent_load.dv
+                      and loads1.id in ( #{ids.join(',')} )")
   end
 
   def build_hash_for_cache
     query_results.map do |obj|
       hash = {}
-      loads_data_info = Load.where(id: obj[:load_id]).order(date_valid: :desc)&.first
+      loads_data_info = Load.where(id: obj[:id]).order(date_valid: :desc)&.first
       hash['most-recent-year'] = loads_data_info&.date_valid&.year
       hash['description'] = loads_data_info&.description
       data_type_info = loads_data_info&.data_type
       hash['test-id'] = data_type_info&.id
       hash['test-name'] = data_type_info&.name
       hash['test-abbrv'] = data_type_info&.short_name
-      data_value_obj = DataValue.where("load_id = ? && proficiency_band_id > 1", loads_data_info.id).limit(1).reorder(nil)
+      data_value_obj = DataValue.where("load_id = ? && proficiency_band_id > 1", loads_data_info&.id).limit(1).reorder(nil)
       hash['scale'] = ''
       if data_value_obj&.first
         hash['scale'] = scale(data_value_obj.first[:proficiency_band_id])

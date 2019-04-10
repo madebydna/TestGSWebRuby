@@ -174,3 +174,12 @@ const convertFacebookSigninDataToGSSigninData = function(facebookData) {
 const signinUsingFacebookData = function(facebookData) {
   return $.post(GS_FACEBOOK_AUTH_URL, convertFacebookSigninDataToGSSigninData(facebookData));
 };
+
+// ! Modifying window directly like this is bad and only 
+// ! being added until we can migrate rest of signin behavior to webpack managed assets
+window.GS = window.GS || {};
+window.GS.auth = window.GS.auth || {};
+window.GS.auth.signinUsingFacebookData = signinUsingFacebookData;
+
+window.GS.facebook = window.GS.facebook || {};
+window.GS.facebook.signinToFacebookThenGreatSchools = signinToFacebookThenGreatSchools;
