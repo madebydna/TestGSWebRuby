@@ -17,15 +17,15 @@ const renderCitiesListItem = (linkData) => (
 const cityBrowseLinks = ({locality, size, community, cities}) => {
   let blueLine;
 
-  const browseLinkData = cities.concat(
-    {
-      name: `See all cities`,
-      state: locality.nameShort, 
-      url: locality.citiesBrowseUrl
-    }
-  );
+  // const browseLinkData = cities.concat(
+  //   {
+  //     name: `See all cities`,
+  //     state: locality.nameShort, 
+  //     url: locality.citiesBrowseUrl
+  //   }
+  // );
   
-  const renderStateCities = browseLinkData.map((linkData, idx) => (
+  const renderStateCities = cities.map((linkData, idx) => (
     <li className="school-type-li" key={linkData.name}>
       {renderCitiesListItem(linkData)}
       {size > MD ? 
@@ -45,6 +45,14 @@ const cityBrowseLinks = ({locality, size, community, cities}) => {
       <ul>
         {renderedList}
       </ul>
+      <div className="state-cities-module">
+        <div className="blue-line" />
+      </div>
+      <div className="more-school-btn">
+        <a href={locality.citiesBrowseUrl}>
+          <button>See All Cities</button>
+        </a>
+      </div>
     </section>
   );
 }
