@@ -2,27 +2,26 @@
 
 class StateDistrictLargestCacher < StateCacher
   include GradeLevelConcerns
-  # include DistrictCachedCharacteristicsMethods
+  include CommunityConcerns
 
   CACHE_KEY = 'district_largest'
 
   def build_hash_for_cache
     district_ids.map do |district_id|
-      district = District.find_by_state_and_ids(state, district_id)
-      district.enrollment # maybe???
+      district = District.find_by_state_and_ids(state, district_id).first
       {}.tap do |hash|
-        hash['name'] = [{ city_value: district.name }]
-        hash['school_count'] = [{ city_value: district.num_schools }]
-        hash['id'] = [{ city_value: district.id }]
-        hash['lat'] = [{ city_value: district.lat }]
-        hash['lon'] = [{ city_value: district.lon }]
-        hash['levels'] = [{ city_value: GradeLevelConcerns.human_readable_level(district.level) }]
-        hash['city'] = [{ city_value: district.city }]
-        hash['zip'] = [{ city_value: district.zipcode }]
+        hash['name'] = district.name 
+        hash['id'] = district.id 
+        hash['enrollment'] = district_enrollment_cache(district_id)
+        hash['city'] = district.city 
+        hash['state'] = district.state 
+        hash['levels'] = GradeLevelConcerns.human_readable_level(district.level)
+        hash['school_count'] = district.num_schools
       end
     end
   end
 
+  # AC_TODO: Refactor this to use district_enrollment_cache method to retrieve enrollment values
   def district_ids
     district_ids = District.ids_by_state(state)
     dc_sorted_ids = district_ids.sort do |dc_id1, dc_id2|
@@ -32,7 +31,7 @@ class StateDistrictLargestCacher < StateCacher
       d2 = enrollment_all_students(dc2)
       district_enrollment_value(d1) <=> district_enrollment_value(d2)
     end
-    dc_sorted_ids.slice(0,4) # fix this
+    dc_sorted_ids[-5..-1].reverse
   end
 
   def enrollment_all_students(district_characteristics_cache)

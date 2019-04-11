@@ -21,6 +21,7 @@ class StatesController < ApplicationController
     @breadcrumbs = breadcrumbs 
     @locality = locality 
     @cities = cities_data
+    @districts = districts_data
     @school_count = school_count 
     @csa_years = [2018, 2019]
     @csa_module = page_of_results.present?
@@ -302,6 +303,26 @@ class StatesController < ApplicationController
         end
       end 
     end
+  end 
+
+  def districts_data 
+    stateShort = States.abbreviation(params['state'])
+    largest_districts = JSON.parse(StateCache.for_state('district_largest', stateShort).value)
+
+    @_districts_data ||= begin 
+      largest_districts.map do |district|
+        Hash.new.tap do |cp| 
+          cp[:name] = district['name']
+          cp[:enrollment] = district['enrollment']
+          cp[:city] = district['city']
+          cp[:state] = district['state']
+          cp[:grades] = district['levels']
+          cp[:numSchools] = district['school_count']
+          cp[:url] = district_url(district_params(district['state'], district['city'], district['name']))
+        end 
+      end 
+    end
+
   end 
 
 end
