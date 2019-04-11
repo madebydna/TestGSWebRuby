@@ -3,22 +3,25 @@ import PropTypes from "prop-types";
 import { t, capitalize } from "util/i18n";
 
 const DistrictsInState = ({districts, locality}) => {
-  // const districtItems = districts.map((district, idx )=> (
-  //   <li key={district.districtName}>
-  //     <a href={district.url}>{district.districtName}</a>
-  //     <div>
-  //       {district.enrollment ? <span><span>{district.enrollment.toLocaleString()} {t("students")}<span className="display-desktop"> | </span></span><div className="display-mobile"></div></span> : null}
-  //       <span>{t("Grades")}: {district.grades} | </span>
-  //       <span>{district.numSchools} {district.numSchools === 1 ? t("school" ): t("schools")}</span>
-  //     </div>
-  //     {idx !== districts.length - 1 ? <div className="blue-line" /> : null}
-  //   </li>
-  // ));
-  return(
+  const districtItems = districts.map((district, idx ) => (
+    <li key={district.name}>
+      <a href={district.url}>{district.name}</a>
+      <div>
+        {district.enrollment ? <span>{district.enrollment.toLocaleString()} {t("students")}<span className="display-desktop"> | </span></span> : null}
+        <span>{district.city}, {district.state}</span>
+        <br />
+        <span>{t("Grades")}: {district.grades} | </span>
+        <span>{district.numSchools.toLocaleString()} {district.numSchools === 1 ? t("school" ): t("schools")}</span>
+      </div>
+      <div className="blue-line" />
+    </li>
+  ));
+  return (
     <section className="districts-in-city-module">
       <ul>
-        {"list" || districtItems}
+        {districtItems}
       </ul>
+
       <div className="more-school-btn">
         <a href={locality.districtsBrowseUrl}>
           <button>See All Districts</button>
