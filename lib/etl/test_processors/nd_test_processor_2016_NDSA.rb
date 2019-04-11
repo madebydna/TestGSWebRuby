@@ -151,3 +151,5 @@ class NDTestProcessor2016NDSA < GS::ETL::TestProcessor
     }
   end
 end
+
+NDTestProcessor2016NDSA.new(ARGV[0], max: nil).run
