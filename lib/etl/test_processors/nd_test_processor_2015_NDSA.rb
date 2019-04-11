@@ -8,58 +8,56 @@ class NDTestProcessor2015NDSA < GS::ETL::TestProcessor
   end
 
 
-   map_nd_breakdown = {
-     'All' => 1,
-     'Black' => 17,
-     'Native American' => 18,
-     'Asian American' => 16,
-     'White' => 21,
-     'Low Income' => 23,
-     'English Learner' => 32,
-     'Female' => 26,
-     'Hispanic' => 19,
-     'Male' => 25,
-     'IEP (student with disabilities)' => 27,
-     'Native Hawaiian or Pacific Islander' => 20,
-     'Non-English Learner' => 33,
-     'Non-IEP' => 30,
-     'Non-Low Income' => 24,
-   }
+  map_nd_breakdown = {
+    'All' => 1,
+    'Black' => 17,
+    'Native American' => 18,
+    'Asian American' => 16,
+    'White' => 21,
+    'Low Income' => 23,
+    'English Learner' => 32,
+    'Female' => 26,
+    'Hispanic' => 19,
+    'Male' => 25,
+    'IEP (student with disabilities)' => 27,
+    'Native Hawaiian or Pacific Islander' => 20,
+    'Non-English Learner' => 33,
+    'Non-IEP' => 30,
+    'Non-Low Income' => 24,
+  }
 
-   map_nd_subject = {
-     :reading => 2,
-     :math => 5,
-     :science => 19
-   }
-
-
- source("State_Level_NDSA_15.txt",[], col_sep: "\t") do |s|
-   s.transform("Fill values", Fill,{
-    entity_level: 'state'
-    })
- end
+  map_nd_subject = {
+    'Reading' => 2,
+    'Math' => 5,
+    'Science' => 19
+  }
 
   source("School_Level_NDSA_15.txt",[], col_sep: "\t") do |s|
-   s.transform("Fill values", Fill,{
+    s.transform("Fill values", Fill,{
     entity_level: 'school'
-   })
+    })
     .transform('Rename column headers', MultiFieldRenamer,{
-     entity_name: :school_name,
-     entity_id: :school_id
+     entity_name: :school_name
     })
  end
 
   source("District_Level_NDSA_15.txt",[], col_sep: "\t") do |s|
    s.transform("Fill values", Fill,{
     entity_level: 'district'
-   })
+    })
    .transform('Rename column headers', MultiFieldRenamer,{
-     entity_name: :district_name,
-     entity_id: :district_id
+     entity_name: :district_name
     })
  end
 
-shared do |s|
+  source("State_Level_NDSA_15.txt",[], col_sep: "\t") do |s|
+   s.transform("Fill values", Fill,{
+    entity_level: 'state'
+    })
+  end
+
+
+ shared do |s|
     s.transform('Fill missing default fields', Fill, {
       entity_type: 'public_charter',
       level_code: 'e,m,h',
@@ -90,17 +88,17 @@ shared do |s|
      row
    end
    .transform("Delete rows where number tested is less than 10 and blank ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
-    .transform("Calc prof and above, ignore missing values", WithBlock) do |row|
-      if row[:pct_students_proficient] =~ /\-/ && row[:pct_students_advanced] =~ /\-/
+   .transform("Calc prof and above, ignore missing values", WithBlock) do |row|
+      if !(row[:pct_students_proficient] =~ /\-/ && row[:pct_students_advanced] =~ /\-/)
         row[:value_float] = row[:pct_students_proficient].to_f+row[:pct_students_advanced].to_f
         row[:value_float] = 100*row[:value_float]
-      elsif row[:pct_students_novice] =~ /\-/ && row[:pct_students_partially_proficient] =~ /\-/
+      elsif !(row[:pct_students_novice] =~ /\-/ && row[:pct_students_partially_proficient] =~ /\-/)
         row[:value_float] = 1 - row[:pct_students_novice].to_f - row[:pct_students_partially_proficient].to_f
         row[:value_float] = 100*row[:value_float]
       end
       row
     end
-    .transform("fix special cases for prof and above", WithBlock) do |row|
+   .transform("fix special cases for prof and above", WithBlock) do |row|
           if row[:value_float].nil?
             row[:value_float]=row[:value_float]
           elsif row[:value_float] < 0
@@ -112,26 +110,27 @@ shared do |s|
           end
      row
     end
-    .transform("Skip missing prof and above values", DeleteRows, :value_float, nil)
-    .transform("Creating StateID for schools and state", WithBlock) do |row|
+   .transform("Skip missing prof and above values", DeleteRows, :value_float, nil)
+   .transform("Creating StateID for schools and state", WithBlock) do |row|
      if row[:entity_level] == 'school'
+        row[:school_id] = row[:state_id]
+        row[:state_id] = '0' + row[:state_id]
         if row[:school_type] == 'Middle'
-          row[:state_id] = row[:state_id] + 2
+          row[:state_id] = row[:state_id] + '2'
         elsif row[:school_type] == 'Elementary'
-          row[:state_id] = row[:state_id] + 1
+          row[:state_id] = row[:state_id] + '1'
         elsif row[:school_type] == 'Secondary'
-          row[:state_id] = row[:state_id] + 3
-      elsif row[:entity_level] == 'state'
+          row[:state_id] = row[:state_id] + '3'
+        end
+     elsif row[:entity_level] == 'district'
+        row[:district_id] = row[:state_id]
+        row[:state_id] = '0' + row[:state_id]
+     elsif row[:entity_level] == 'state'
         row[:state_id] = 'state'
-      end
      end
      row
-   end
-   .transform("bye bug", WithBlock) do |row|
-    require 'byebug'
-    byebug
+    end
   end
-end
 
 
 
