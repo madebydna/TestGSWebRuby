@@ -1,10 +1,10 @@
 require_relative "../test_processor"
 
-class NDTestProcessor2015NDSA < GS::ETL::TestProcessor
+class NDTestProcessor2016NDSA < GS::ETL::TestProcessor
 
   def initialize(*args)
     super
-    @year = 2015
+    @year = 2016
   end
 
 
@@ -32,7 +32,7 @@ class NDTestProcessor2015NDSA < GS::ETL::TestProcessor
     'Science' => 19
   }
 
-  source("School_Level_NDSA_15.txt",[], col_sep: "\t") do |s|
+  source("School_Level_NDSA_16.txt",[], col_sep: "\t") do |s|
     s.transform("Fill values", Fill,{
     entity_level: 'school'
     })
@@ -41,7 +41,7 @@ class NDTestProcessor2015NDSA < GS::ETL::TestProcessor
     })
  end
 
-  source("District_Level_NDSA_15.txt",[], col_sep: "\t") do |s|
+  source("District_Level_NDSA_16.txt",[], col_sep: "\t") do |s|
    s.transform("Fill values", Fill,{
     entity_level: 'district'
     })
@@ -50,7 +50,7 @@ class NDTestProcessor2015NDSA < GS::ETL::TestProcessor
     })
  end
 
-  source("State_Level_NDSA_15.txt",[], col_sep: "\t") do |s|
+  source("State_Level_NDSA_16.txt",[], col_sep: "\t") do |s|
    s.transform("Fill values", Fill,{
     entity_level: 'state'
     })
@@ -65,9 +65,9 @@ class NDTestProcessor2015NDSA < GS::ETL::TestProcessor
       proficiency_band: 'proficient and above',
       test_data_type: 'NDSA',
       gsdata_test_data_type_id: 206,
-      year: 2015,
-      description: 'In 2014-15, North Dakota used the North Dakota State Assessment (NDSA) to test students in grades 3 through 8 and 11 in reading and math, and in science in grades 4, 8 and 11. Results represent students enrolled in the school for the entire academic year. The NDSA is a standards-based test, which means it measures how well students are mastering the specific skills defined for each grade by the state of North Dakota. The goal is for all students to score at or above the proficient level.',
-      notes: 'DXT-3040: ND 2015 NDSA'
+      year: 2016,
+      description: 'In 2015-16, North Dakota used the North Dakota State Assessment (NDSA) to test students in grades 3 through 8 and 11 in reading and math, and in science in grades 4, 8 and 11. Results represent students enrolled in the school for the entire academic year. The NDSA is a standards-based test, which means it measures how well students are mastering the specific skills defined for each grade by the state of North Dakota. The goal is for all students to score at or above the proficient level.',
+      notes: 'DXT-3040: ND 2016 NDSA'
     })
     .transform('Rename column headers', MultiFieldRenamer,{
       subgroup_desc: :breakdown,
@@ -139,13 +139,11 @@ class NDTestProcessor2015NDSA < GS::ETL::TestProcessor
         gsdata_source_id: 38,
         state: 'nd',
         source_name: 'North Dakota Department of Public Instruction',
-        date_valid: '2015-01-01 00:00:00',
+        date_valid: '2016-01-01 00:00:00',
         url: 'https://insights.nd.gov/Data',
-        file: 'nd/2015/output/nd.2015.1.public.charter.[level].txt',
+        file: 'nd/2016/output/nd.2016.1.public.charter.[level].txt',
         level: nil,
         school_type: 'public,charter'
     }
   end
 end
-
-NDTestProcessor2015NDSA.new(ARGV[0], max: nil).run
