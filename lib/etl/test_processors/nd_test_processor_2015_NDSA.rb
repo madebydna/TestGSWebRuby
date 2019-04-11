@@ -64,7 +64,7 @@ class NDTestProcessor2015NDSA < GS::ETL::TestProcessor
       proficiency_band_gsdata_id: 1,
       proficiency_band: 'proficient and above',
       test_data_type: 'NDSA',
-      test_data_type_id: 206,
+      gsdata_test_data_type_id: 206,
       year: 2015,
       description: 'In 2014-2015 North Dakota used the North Dakota State Assessment (NDSA) to test students in grades 3 through 8 and 11 in reading and math, and in science in grades 4, 8 and 11.  2015 science results are unavailable at present.  Results represent students enrolled in the school for the entire academic year.  The NDSA is a standards-based test, which means it measures how well students are mastering the specific skills defined for each grade by the state of North Dakota.  The goal is for all students to score at or above the proficient level.',
       notes: 'DXT-3040: ND 2015 NDSA'
