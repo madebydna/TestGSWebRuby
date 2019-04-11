@@ -73,7 +73,7 @@ const TopSchools = ({ schools, handleGradeLevel, size, levelCodes, community, sc
       <hr />
       {schoolList}
       <div className="more-school-btn">
-        <a href={addQueryParamToUrl('gradeLevels', levelCodes, locality.searchResultBrowseUrl)}>
+      <a href={addQueryParamToUrl('gradeLevels%5B%5D', levelCodes, locality.searchResultBrowseUrl)}>
           <button>{seeSchoolMap[levelCodes]}</button>
         </a>
       </div>
