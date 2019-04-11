@@ -13,7 +13,7 @@ const DistrictsInState = ({districts, locality}) => {
         <span>{t("Grades")}: {district.grades} | </span>
         <span>{district.numSchools.toLocaleString()} {district.numSchools === 1 ? t("school" ): t("schools")}</span>
       </div>
-      <div className="blue-line" />
+      {idx !== districts.length - 1 ? <div className="blue-line" /> : null}
     </li>
   ));
   return (
@@ -21,6 +21,10 @@ const DistrictsInState = ({districts, locality}) => {
       <ul>
         {districtItems}
       </ul>
+
+      <div className="districts-in-state-module">
+        <div className="blue-line" />
+      </div>
 
       <div className="more-school-btn">
         <a href={locality.districtsBrowseUrl}>

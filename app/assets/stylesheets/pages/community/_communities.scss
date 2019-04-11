@@ -230,6 +230,13 @@ $line-height-community: 1.428571429;
   text-align: left;
 }
 
+.districts-in-state-module {
+  padding: 0 10px;
+  .blue-line {
+    margin-left: 0;
+  }
+}
+
 .more-school-btn {
   margin-bottom: 20px;
   @include flexbox-center;
@@ -370,6 +377,12 @@ $line-height-community: 1.428571429;
     color: #333;
     font-size: 16px;
     font-family: 'opensans-semibold';
+  }
+  .state-cities-module {
+    padding: 0 15px;
+    .blue-line {
+      margin-left: 0;
+    }
   }
   ul{
     @include flex-column-wrap;
