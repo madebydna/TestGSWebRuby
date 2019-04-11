@@ -81,7 +81,7 @@ const CompareSchoolTableRow = ({
         <React.Fragment key={state + id}>
           <span><RatingWithTooltip rating={rating} ratingScale={ratingScale} /></span>
           <span>
-            <a href={links.profile} className="name" target="_blank">
+            <a href={links.profile} className="name">
               {name}
             </a>
             <br />
