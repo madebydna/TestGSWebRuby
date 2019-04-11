@@ -114,7 +114,6 @@ class NDTestProcessor2015NDSA < GS::ETL::TestProcessor
    .transform("Creating StateID for schools and state", WithBlock) do |row|
      if row[:entity_level] == 'school'
         row[:school_id] = row[:state_id]
-        row[:state_id] = row[:state_id].rjust("0", 10)
         if row[:school_type] == 'Middle'
           row[:state_id] = row[:state_id] + '2'
         elsif row[:school_type] == 'Elementary'
@@ -122,9 +121,10 @@ class NDTestProcessor2015NDSA < GS::ETL::TestProcessor
         elsif row[:school_type] == 'Secondary'
           row[:state_id] = row[:state_id] + '3'
         end
+        row[:state_id] = row[:state_id].rjust(10,'0')
      elsif row[:entity_level] == 'district'
         row[:district_id] = row[:state_id]
-        row[:state_id] = '0' + row[:state_id]
+        row[:state_id] = row[:state_id].rjust(5,'0')
      elsif row[:entity_level] == 'state'
         row[:state_id] = 'state'
      end
