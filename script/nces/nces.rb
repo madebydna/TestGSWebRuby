@@ -1,9 +1,8 @@
 #! /usr/bin/env ruby
 
-# frozen_string_literal: true
-
 require 'net/http'
 require 'json'
+require 'cgi'
 
 class Hash
   def slice(*keys)
@@ -122,7 +121,7 @@ class SchoolQuery
 
   def to_s
     raise "Empty query" unless @criteria && !@criteria.empty?
-    "?f=#{@format}&where=#{CGI.escape(@criteria)}&returnGeometry=#{@geometry}&outFields=#{@fields.join(',')}"
+    "?f=#{@format}&where=#{::CGI.escape(@criteria)}&returnGeometry=#{@geometry}&outFields=#{@fields.join(',')}"
   end
 end
 
