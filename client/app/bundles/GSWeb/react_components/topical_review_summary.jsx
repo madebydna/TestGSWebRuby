@@ -50,7 +50,7 @@ export default class TopicalReviewSummary extends React.Component {
           <div className="topical-review-summary">
             <div className="row">
               <div className="col-xs-12 col-lg-3">
-                <div className="topical-title">{this.props.title}</div>
+                <h2 className="topical-title">{this.props.title}</h2>
               </div>
               <div className="col-xs-12 col-lg-9 topical_items">
                 {this.renderItems()}

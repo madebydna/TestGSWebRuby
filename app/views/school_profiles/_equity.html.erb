@@ -3,7 +3,7 @@
 <div id="Equity" class="equity-container profile-section rs-equity">
   <div class="row">
     <div class="col-xs-12 col-lg-3">
-      <div class="section-title">
+      <h2 class="section-title">
         <%= title %>
         <% if @school.state == 'CA' %>
           <%= link_to 'http://innovateschools.org/greatschools/' do %>
@@ -15,7 +15,7 @@
               data: {src: image_path('innovate_logo_desktop.png')}) %>
           <% end %>
         <% end %>
-      </div>
+      </h2>
     </div>
     <div class="col-xs-12 col-lg-9">
       <% if equity_overview.has_rating? %>

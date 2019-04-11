@@ -104,7 +104,7 @@ export default class Courses extends React.Component {
               <div className="col-xs-12 col-md-10">
                 { ratingHtml }
                 <div className="title-container">
-                  <span className="title">{t('Advanced courses')} </span>
+                  <h3 className="title">{t('Advanced courses')} </h3>
                   <a data-remodal-target="modal_info_box"
                      data-content-type="info_box"
                      data-ga-click-element-type='toptooltip'
@@ -165,7 +165,7 @@ export default class Courses extends React.Component {
               <span className="icon-user"></span>
             </div>
             <div className="title-container">
-              <div className="title">{t('Advanced courses')}</div>
+              <h3 className="title">{t('Advanced courses')}</h3>
               <span dangerouslySetInnerHTML={{__html: t('advanced_courses_subheading_html')}}></span>
               <NoDataModuleCta moduleName="Advanced courses" message={this.props.no_data_summary}/>
             </div>
