@@ -20,13 +20,13 @@ class CollegeSuccessAward extends Search {
 
   renderCsaSummary() {
     return (
-      <div>
+      <span>
         {`In ${stateName(this.props.state)}, ${this.props.total} public schools earned a College Success Award in ${this.props.csaYears[0]} based on their 
             success in preparing students for college and ultimately career. The College Success awards 
             recognize public high schools that stand out in getting students enrolled in - and staying 
             with - college.  `}
         <a href="/gk/csa-winners/">Learn more</a>.
-      </div>
+      </span>
     );
   }
 

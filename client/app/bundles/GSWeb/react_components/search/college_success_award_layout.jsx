@@ -13,7 +13,7 @@ import HelpTooltip from '../help_tooltip';
 import { isNotSignedIn } from '../../util/session';
 import modalManager from '../../components/modals/manager';
 import SharingModal from '../school_profiles/sharing_modal';
-import logo from 'college_success_award.png';
+import logo from 'school_profiles/csa_generic_badge_lg_icon.png';
 
 const t = translateWithDictionary({
   en: {
@@ -323,12 +323,12 @@ class CollegeSuccessAwardLayout extends React.Component {
             <React.Fragment>
               {!this.shouldRenderList() && (
                 <div className="csa-title">
-                  <img
-                    src={logo}
-                    alt="College Success Awards logo"
-                    width={this.props.size === XS ? '80px' : '120px'}
-                  />
-                  <span>{this.props.csaSummary}</span>
+                  <div className="owl-image">
+                    <img
+                      src={logo}
+                      alt="College Success Awards logo"
+                  /></div>
+                  <div className="owl-content">{this.props.csaSummary}</div>
                 </div>
               )}
               <div className="menu-item">{this.props.chooseTableButtons}</div>
@@ -341,6 +341,9 @@ class CollegeSuccessAwardLayout extends React.Component {
                   )} College Success Awards`}
                 />
               </div>
+              <div className="menu-item" style={{ marginTop: '24px' }}>
+                {this.renderPrintPageLink()}
+              </div>
             </React.Fragment>
           ) : null}
           {this.renderSortDropDown()}
@@ -348,6 +351,19 @@ class CollegeSuccessAwardLayout extends React.Component {
       )
     );
   }
+
+  renderPrintPageLink(){
+    return (
+      <a href={"/catalog/csa/2019_" + this.toTitleCase(this.props.stateName) + "_Winners.pdf"}><span className='icon-fax' /><span>Print</span></a>
+    )
+  }
+  toTitleCase = (phrase) => {
+    return phrase
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join('_');
+  };
 
   renderSortDropDown() {
     if (this.props.size <= SM) {
@@ -393,13 +409,12 @@ class CollegeSuccessAwardLayout extends React.Component {
                 }`}
               >
                 {this.shouldRenderList() ? (
-                  <div className="csa-title">
-                    <img
+                    <div className="csa-title clearfix">
+                    <div className='owl-image'><img
                       src={logo}
                       alt="College Success Awards logo"
-                      width={this.props.size <= SM ? '75px' : '100px'}
-                    />
-                    <span>{this.props.csaSummary}</span>
+                    /></div>
+                    <div className='owl-content'>{this.props.csaSummary}</div>
                   </div>
                 ) : null}
                 {this.props.schoolList}
