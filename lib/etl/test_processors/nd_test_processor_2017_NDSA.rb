@@ -32,12 +32,6 @@ class NDTestProcessor2017NDSA < GS::ETL::TestProcessor
     'Science' => 19
   }
 
-  source("State_Level_NDSA_17.txt",[], col_sep: "\t") do |s|
-   s.transform("Fill values", Fill,{
-    entity_level: 'state'
-    })
-  end
-
   source("School_Level_NDSA_17.txt",[], col_sep: "\t") do |s|
     s.transform("Fill values", Fill,{
     entity_level: 'school'
@@ -55,6 +49,12 @@ class NDTestProcessor2017NDSA < GS::ETL::TestProcessor
      entity_name: :district_name
     })
  end
+
+  source("State_Level_NDSA_17.txt",[], col_sep: "\t") do |s|
+   s.transform("Fill values", Fill,{
+    entity_level: 'state'
+    })
+  end
 
  shared do |s|
     s.transform('Fill missing default fields', Fill, {
