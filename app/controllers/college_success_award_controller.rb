@@ -23,9 +23,9 @@ class CollegeSuccessAwardController < ApplicationController
       end
       props.merge!(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
       props.merge!(Api::PaginationSerializer.new(page_of_results).to_hash)
-      props.merge!(Api::SortOptionSerializer.new(page_of_results.sortable_fields).to_hash)
+      props.merge!(Api::SortOptionSerializer.new(page_of_results.sortable_fields - ['csa_badge']).to_hash)
       props.merge!({
-        tableViewOptions: csa_available_years.map do |year|
+        tableViewOptions: (csa_available_years).map do |year|
           {
             key: year,
             label: "#{year} winners"
@@ -33,19 +33,52 @@ class CollegeSuccessAwardController < ApplicationController
         end
       })
       props[:breadcrumbs] = breadcrumbs
-      props[:searchTableViewHeaders] = {
-          'Overview' => overview_header_hash,
-          'Equity' => equity_header_hash(schools),
-          'Academic' => academic_header_hash
-      }
+      props[:searchTableViewHeaders] =
+        csa_available_years.each_with_object({}) do | year, hash |
+          hash[year] = college_success_award_header_arr(year)
+        end
       props[:view] = view || default_view
     end
     gon.search['facetFields'] = populated_facet_fields
+    gon.search['csaYears'] = csa_available_years
     # set_meta_tags(choose_meta_tag_implementation.new(self).meta_tag_hash)
     # set_ad_targeting_props
     # set_page_analytics_data
     # response.status = 404 if serialized_schools.empty?
   end
+
+  # def table_headers_arr(year)
+  #   # get the state values by year
+  #   [
+  #     {
+  #         key: 'schoolType',
+  #         title: 'Type',
+  #         tooltip: nil
+  #     },
+  #     {
+  #         key: 'enrollment',
+  #         title: 'Total enrolled',
+  #         tooltip: nil
+  #     },
+  #     {
+  #         key: 'percentLowIncome',
+  #         title: '% Low income',
+  #         tooltip: nil
+  #     },
+  #     generate_remediation_hash,
+  #     {
+  #         key: 'percentCollegePersistent',
+  #         title: 'Persistence %',
+  #         tooltip: nil
+  #     },
+  #     {
+  #         key: 'districtAnchor',
+  #         title: 'District',
+  #         tooltip: nil
+  #     }
+  #   ].compact
+  # end
+
 
   # SearchRequestParams
   def default_view
@@ -53,13 +86,22 @@ class CollegeSuccessAwardController < ApplicationController
   end
 
   def csa_available_years
-    facet_fields['csa_badge'].each_slice(2).map(&:first)
+    csa_available_years_query.response.facet_fields['csa_badge'].each_slice(2).map(&:first).map(&:to_i).sort.reverse
+  end
+
+  def csa_available_years_query
+    Search::CSAQuery.new(
+      state: state,
+      csa_years: (2018..2030).to_a,
+      offset: 0,
+      limit: 1
+    )
   end
 
   def solr_query
     Search::CSAQuery.new(
       state: state,
-      csa_years: (csa_years.presence || [2018]),
+      csa_years: (csa_years.presence || default_csa_year),
       offset: offset,
       limit: limit,
       sort_name: sort_name
@@ -67,6 +109,10 @@ class CollegeSuccessAwardController < ApplicationController
   end
 
   private
+
+  def default_csa_year
+    csa_available_years.first
+  end
 
   def choose_meta_tag_implementation
     raise 'Not implemented'
@@ -141,6 +187,5 @@ class CollegeSuccessAwardController < ApplicationController
   def not_default_extras
     %w(geometry)
   end
-
 
 end
