@@ -99,7 +99,9 @@ class TopSchoolsStateful extends React.Component {
   }
 
   render() {
-    if (this.state.active === 1) {
+    const TAB_CSA = 1;
+
+    if (this.state.active === TAB_CSA) {
       return (
         <CsaTopSchools
           schools={this.props.schoolsData.csa}
