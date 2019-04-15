@@ -55,6 +55,9 @@ const capitalize = function(string) {
   return string;
 };
 
+const titleize = input =>
+  input.toLowerCase().replace(/(?:^|\s|-)\S/g, x => x.toUpperCase());
+
 const preserveLanguageParam = function(url) {
   const current_url = getHref();
   return copyParam('lang', current_url, url);
@@ -91,6 +94,9 @@ const currentLocale = function() {
   return locale || defaultLocale;
 };
 
+const localeQueryParams = () =>
+  currentLocale() === defaultLocale ? {} : { lang: currentLocale() };
+
 // TODO: move this somewhere else ?
 if (window.hasOwnProperty('gon') && gon.hasOwnProperty('translations')) {
   setTranslationsHash(gon.translations);
@@ -101,7 +107,9 @@ export {
   getTranslationsHash,
   translate as t,
   capitalize,
+  titleize,
   currentLocale,
+  localeQueryParams,
   preserveLanguageParam,
   initLanguageLinkListener,
   translateWithDictionary

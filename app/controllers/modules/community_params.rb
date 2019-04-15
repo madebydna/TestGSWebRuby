@@ -45,6 +45,14 @@ module CommunityParams
     params[:levelCode] = level_code
   end
 
+  def csa_years
+    ensure_array_param(:csaYears)
+  end
+
+  def set_csa_winner_param(current_year)
+    params[:csaYears] = current_year || []
+  end
+
   def extras
     default_extras + extras_param
   end
@@ -55,6 +63,13 @@ module CommunityParams
 
   def default_extras
     []
+  end
+
+  private
+
+  def ensure_array_param(param_name, delim = ',') 
+    v = params[param_name] || []
+    v.is_a?(Array) ? v : v.split(delim)
   end
 
 end

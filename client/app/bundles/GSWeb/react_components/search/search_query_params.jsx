@@ -4,7 +4,7 @@ import * as queryParams from './query_params';
 import createHistory from 'history/createBrowserHistory';
 
 const history = createHistory();
-const pushQueryString = qs => {
+export const pushQueryString = qs => {
   history.push({
     search: qs
   });
@@ -39,6 +39,7 @@ export default class SearchQueryParams extends React.Component {
       q: queryParams.getQ(),
       view: queryParams.getView(),
       tableView: queryParams.getTableView(),
+      csaYears: queryParams.getCsaYears(),
       updateLevelCodes: codes => {
         pushQueryString(queryParams.queryStringWithNewGradeLevels(codes));
       },
@@ -62,6 +63,9 @@ export default class SearchQueryParams extends React.Component {
       },
       updateBreakdown: breakdown => {
         pushQueryString(queryParams.queryStringWithNewBreakdown(breakdown));
+      },
+      updateCsaYears: years => {
+        pushQueryString(queryParams.queryStringWithNewCsaYears(years));
       }
     };
 

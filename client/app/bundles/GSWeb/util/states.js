@@ -1,5 +1,6 @@
 // TODO: Import lodash functions
 import { invert, values, isString } from 'lodash';
+import { titleize } from 'util/i18n';
 
 const statesHash = {
   alabama: 'al',
@@ -93,4 +94,6 @@ const name = function(str) {
   return abbreviationHash[str.toLowerCase()];
 };
 
-export { anyStateNameRegex, isStateName, abbreviation, name };
+const humanName = str => titleize(name(str));
+
+export { anyStateNameRegex, isStateName, abbreviation, name, humanName };

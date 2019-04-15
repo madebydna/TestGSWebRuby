@@ -36,6 +36,7 @@ const config = {
     'add-schools': ['./app/bundles/GSWeb/pages/add_schools'],
     compare: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/compare'],
     search: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/search'],
+    'college-success-award': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/college_success_award'],
     'search-box': [
       'polyfills',
       './app/bundles/GSWeb/react_components/search_box_wrapper'

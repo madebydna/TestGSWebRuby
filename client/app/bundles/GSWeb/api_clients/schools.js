@@ -92,7 +92,8 @@ export function find({
   id,
   breakdown,
   url = '/gsr/api/schools',
-  stateSelect
+  stateSelect,
+  csaYears
 } = {}) {
   const data = {
     city,
@@ -108,7 +109,8 @@ export function find({
     id,
     breakdown,
     url,
-    stateSelect
+    stateSelect,
+    csaYears
   };
   if (levelCodes && levelCodes.length > 0) {
     data.level_code = levelCodes.join(',');
@@ -142,6 +144,9 @@ export function find({
   }
   if (stateSelect) {
     data.stateSelect = stateSelect;
+  }
+  if (csaYears) {
+    data.csaYears = csaYears;
   }
   const currentParams = parse(window.location.search);
   data.lang = currentParams.lang;

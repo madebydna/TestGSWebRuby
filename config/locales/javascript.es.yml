@@ -398,3 +398,6 @@ es:
       step12: '<div><img alt="" height="42" src="/assets/school_profiles/owl.png" style="vertical-align: sub;" width="39" />&nbsp;<h1 style="display:inline-block;">&nbsp;¡Terminado!</h1></div><div><p>Gracias por ver nuestros nuevos perfiles.&nbsp;&nbsp;</p><p>¿Esto estuvo útil? <a id="school-tour-feedback" style="cursor: pointer;">Danos tu opinion</a></p><p>¿Su hijo va a la escuela?<a href="#Reviews" class="js-close-school-tour">Incluya su opinión sobre esta escuela</p><p><button class="tour-cta active js-close-school-tour">Terminado</button></p></div></div>'
     csa_callout_html: >
       <span class="csa-callout-text">¡Esta escuela ha ganado un College Success Award! <a href='#College_readiness*College_success'>Vea más detalles.</a></span>
+    csa_district_schools_info_html: Los <a href="/gk/csa-winners/">College Success Awards</a> reconocen a las escuelas secundarias públicas que se sobresalen a lograr que los estudiantes se matriculen y permanezcan en la universidad.
+    see_all_winning_schools: Ver todos los ganadoras
+    csa_winners: Ganadores de College Success Award
