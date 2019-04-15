@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TopSchools from "./top_schools";
+import CsaTopSchools from "./csa_top_schools";
 import School from "react_components/search/school";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
 import * as APISchools from 'api_clients/schools';
@@ -38,7 +39,7 @@ class TopSchoolsStateful extends React.Component {
     this.renderTabsContainer = this.renderTabsContainer.bind(this);
   }
 
-  initialSchoolLoad({elementary, middle, high, csa}){
+  initialSchoolLoad({ elementary, middle, high, csa }) {
     if (elementary.length > 0) {
       this.state = {
         levelCodes: 'e',
@@ -56,7 +57,6 @@ class TopSchoolsStateful extends React.Component {
       }
     } else if (csa.length > 0) {
       this.state = {
-        levelCodes: 'h',
         schools: csa
       }
     }
@@ -75,13 +75,7 @@ class TopSchoolsStateful extends React.Component {
   }
 
   handleTabClick(index) {
-    this.setState({active: index});
-    if(index === 1) {
-      this.setState({
-        levelCodes: 'h',
-        schools: this.props.schoolsData.csa
-      })
-    }
+    this.setState({ active: index });
   }
   
   tabs() {
@@ -105,20 +99,31 @@ class TopSchoolsStateful extends React.Component {
   }
 
   render() {
-    return (
-       <TopSchools
-        schools={this.state.schools}
-        schoolLevels={this.props.schoolLevels}
-        handleGradeLevel={this.handleGradeLevel}
-        handleTabClick={this.handleTabClick}
-        renderTabsContainer={this.renderTabsContainer}
-        size={this.props.size}
-        levelCodes={this.state.levelCodes}
-        community={this.props.community}
-        locality={this.props.locality}
-        currentTab={this.state.active}
-      />
-    );
+    if (this.state.active === 1) {
+      return (
+        <CsaTopSchools
+          schools={this.props.schoolsData.csa}
+          handleTabClick={this.handleTabClick}
+          renderTabsContainer={this.renderTabsContainer}
+          size={this.props.size}
+          locality={this.props.locality}
+        />
+      );
+    } else {
+      return (
+         <TopSchools
+          schools={this.state.schools}
+          schoolLevels={this.props.schoolLevels}
+          handleGradeLevel={this.handleGradeLevel}
+          handleTabClick={this.handleTabClick}
+          renderTabsContainer={this.renderTabsContainer}
+          size={this.props.size}
+          levelCodes={this.state.levelCodes}
+          community={this.props.community}
+          locality={this.props.locality}
+        />
+      );
+    }
   }
 }
 

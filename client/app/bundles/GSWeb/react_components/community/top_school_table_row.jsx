@@ -7,9 +7,10 @@ import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t, capitalize } from "util/i18n";
 import { getDistrictHref } from 'util/school';
 
-const renderSchoolItem = ({name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears, currentTab, address, state}) => {
+const renderSchoolItem = ({ name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears, currentTab, address, state }) => {
   const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
   const districtLink = getDistrictHref(state, address.city, districtName);
+
   return <React.Fragment>
     <div className="content-container">
       <div>
@@ -89,7 +90,9 @@ const renderReviews = (numReviews, parentRating, links) => {
 const renderDistrictName = (districtName, districtLink) => {
   if (districtName && districtLink) {
     return (
-      <a href={districtLink}>{districtName}</a>
+      <p className="school-district">
+        <a href={districtLink}>{districtName}</a>
+      </p>
     );
   } else if (districtName) {
     return (

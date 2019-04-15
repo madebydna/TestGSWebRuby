@@ -5,7 +5,6 @@ import TopSchoolTableRow from './top_school_table_row';
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
 import { addQueryParamToUrl } from 'util/uri';
-import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
 const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
   if (community === 'city') {
@@ -31,83 +30,8 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
   }
 }
 
-const TopSchoolsInfo = (currentTab) => {
-  let blurb;
-  const tabs = {
-    0: t('top_schools.top_schools'),
-    1: t('csa_winners')
-  }
-
-  if (tabs[currentTab] === t('csa_winners')) {
-    blurb = "csa_district_schools_info_html";
-  } else {
-    blurb = "top_schools.top_schools_blurbs";
-  }
-
-  if (tabs[currentTab] === t('csa_winners')) {
-    return (
-      <div className="csa-top-schools-blurb">
-        <img 
-          src={csaBadgeGenLg} 
-          className="csa-badge-gen-lg"
-          alt="csa-badge-icon"
-        />
-        <p>
-          <span dangerouslySetInnerHTML={{__html: t(blurb)}}/>
-        </p>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <p>
-          <span dangerouslySetInnerHTML={{__html: t(blurb)}}/>
-          <a href="/gk/ratings">{t('top_schools.learn_more')}</a>
-        </p>
-      </div>
-    );
-  }
-  
-
-}
-
-const TopSchoolsModuleListLayout = (currentTab, schoolList, handleGradeLevel, community, schoolLevels, levelCodes, locality, seeSchoolMap) => {
-  const tabs = {
-    0: t('top_schools.top_schools'),
-    1: t('csa_winners')
-  }
-
-  if (tabs[currentTab] === t('csa_winners')) {
-    const csaStateLink = locality.stateCsaBrowseUrl;
-    return (
-      <div>
-        <hr />
-        {schoolList}
-        <div className="more-school-btn">
-          <a href={csaStateLink}>
-            <button>{t('see_all_winning_schools')}</button>
-          </a>
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        {renderButtons(handleGradeLevel, community, schoolLevels, levelCodes)}
-        <hr />
-        {schoolList}
-        <div className="more-school-btn">
-          <a href={addQueryParamToUrl('gradeLevels', levelCodes, locality.searchResultBrowseUrl)}>
-            <button>{seeSchoolMap[levelCodes]}</button>
-          </a>
-        </div>
-      </div>
-    );
-  }
-}
-
 // this displays the list of top schools
-const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, levelCodes, community, schoolLevels, locality, currentTab }) => {
+const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, levelCodes, community, schoolLevels, locality }) => {
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
@@ -118,10 +42,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
   const noSchoolsMapDistrict = {
     "e": t("top_schools.no_elemDistrict"), "m": t("top_schools.no_midDistrict"), "h": t("top_schools.no_highDistrict")
   }
-  const tabs = {
-    0: t('top_schools.top_schools'),
-    1: t('csa_winners')
-  }
+
   if (schools.length === 0) {
     schoolList = <section className="no-schools">
                     <div>
@@ -135,7 +56,6 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
               key={school.state + school.id}
               {...school}
               size={size}
-              currentTab={currentTab}
             />
           ))}
         </section>;
@@ -146,10 +66,22 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
       <div className="profile-module">
         { renderTabsContainer() }
         <div className="top-school-info">
-          { TopSchoolsInfo(currentTab) }
+          <div>
+            <p>
+              <span dangerouslySetInnerHTML={{__html: t('top_schools.top_schools_blurbs')}}/>
+              <a href="/gk/ratings">{t('top_schools.learn_more')}</a>
+            </p>
+          </div>
         </div>
-        {tabs[currentTab] === t('csa_winners') ? null : <br/>}
-        { TopSchoolsModuleListLayout(currentTab, schoolList, handleGradeLevel, community, schoolLevels, levelCodes, locality, seeSchoolMap) }
+        <br/>
+        {renderButtons(handleGradeLevel, community, schoolLevels, levelCodes)}
+        <hr />
+        {schoolList}
+        <div className="more-school-btn">
+          <a href={addQueryParamToUrl('gradeLevels', levelCodes, locality.searchResultBrowseUrl)}>
+            <button>{seeSchoolMap[levelCodes]}</button>
+          </a>
+        </div>
       </div>
     </div>
   );
