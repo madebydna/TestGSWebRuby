@@ -9,7 +9,7 @@ module StatesMetaTagsConcerns
   end
 
   def states_show_title
-    "2019 #{state_long_name_with_caps} Schools | #{state_long_name_with_caps} Schools | Public & Private Schools"
+    "2019 #{state_long_name_with_caps} Schools | Ratings & Reviews for Public, Charter, and Private Schools"
   end
 
   def states_show_description
