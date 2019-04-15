@@ -14,9 +14,11 @@ class StatesController < ApplicationController
   before_action :set_login_redirect
   layout 'application'
 
-  # state name (long and short), count of schools, top cities, conditional render of CSA module (only if state is a CSA state) - link to state CSA page, largest school districts in state - link to all districts in state, 
-
   def show
+    #PT-1205 Special case for dc to redirect to /washington-dc/washington city page
+    if params['state'] == 'washington-dc' || params['state'] == 'dc'
+      return redirect_to city_path('washington-dc', 'washington'), status: 301
+    end
     
     @breadcrumbs = breadcrumbs 
     @locality = locality 
@@ -31,12 +33,8 @@ class StatesController < ApplicationController
     # if @hub
     #   state_hub
     # else
-      #PT-1205 Special case for dc to redirect to /washington-dc/washington city page
-      if @state[:short] == 'dc'
-        return redirect_to city_path('washington-dc', 'washington'), status: 301
-      end
       @params_hash = parse_array_query_string(request.query_string)
-      gon.state_abbr = @state[:short]
+      gon.state_abbr = States.abbreviation(params['state'])
       @ad_page_name = :State_Home_Standard
       @show_ads = PropertyConfig.advertising_enabled?
       gon.show_ads = show_ads?
