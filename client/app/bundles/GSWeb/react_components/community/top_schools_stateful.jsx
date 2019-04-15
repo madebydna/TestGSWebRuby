@@ -7,8 +7,6 @@ import { SM, validSizes as validViewportSizes } from "util/viewport";
 import * as APISchools from 'api_clients/schools';
 import SectionNavigation from '../equity/tabs/section_navigation';
 import ModuleTab from 'react_components/school_profiles/module_tab';
-import DataModule from 'react_components/data_module';
-import { handleAnchor, handleThirdAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString, formatAndJoinAnchors } from '../../components/anchor_router';
 import { t } from "util/i18n";
 
 class TopSchoolsStateful extends React.Component {
