@@ -158,6 +158,7 @@ class Search extends React.Component {
                 saveSchoolCallback={this.props.saveSchoolCallback}
                 isLoading={this.props.loadingSchools}
                 size={this.props.size}
+                shouldRemoveAds={this.props.size <= XS && this.props.layout === 'CollegeSuccessAward'}
               />
             }
             schoolTable={

@@ -117,11 +117,15 @@ const SchoolTableRow = ({
   savedSchool,
   csaAwardYears,
   percentLowIncome,
-  percentCollegePersistent
+  percentCollegePersistent,
+  remediationData
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   const districtLink = getDistrictHref(state, address.city, districtName);
   const districtAnchor = <a href={districtLink}>{districtName}</a>
+  const percentCollegeRemediation = <div>{remediationData}</div>
+  const percentCollegeRemediationenglish = <div>{remediationData.split(',')[0]}</div>
+  const percentCollegeRemediationmath = <div>{remediationData.split(',')[1]}</div>
 
   let addressPhrase = null;
   if(address.street1) {
@@ -280,6 +284,10 @@ const academicColumns = (columns, subratings, profileLink) => {
       {content}
       </React.Fragment>
   )
+}
+
+const collegeSuccessColumns = (columns, remediationData) => {
+
 }
 
 const renderNoInfoTooltip = () => {
