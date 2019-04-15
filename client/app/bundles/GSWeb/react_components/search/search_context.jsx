@@ -69,7 +69,7 @@ class SearchProvider extends React.Component {
     searchTableViewHeaders: gonSearch.searchTableViewHeaders || {},
     tableViewOptions: gonSearch.tableViewOptions,
     tableView: 'Overview',
-    csaYears: []
+    csaYears: gonSearch.csaYears
   };
 
   static propTypes = {
