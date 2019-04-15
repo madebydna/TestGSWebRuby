@@ -7,7 +7,7 @@ import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t, capitalize } from "util/i18n";
 import { getDistrictHref } from 'util/school';
 
-const renderSchoolItem = ({ name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears, currentTab, address, state }) => {
+const renderSchoolItem = ({ name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, address, state }) => {
   const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
   const districtLink = getDistrictHref(state, address.city, districtName);
 
@@ -22,58 +22,16 @@ const renderSchoolItem = ({ name, rating, links, districtName, numReviews, paren
         </div>
       </div>
       <div className="school-info">
-        { renderSchoolName(name, links, currentTab) }
-        { renderSchoolItemContent(currentTab, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears, districtLink) }
-      </div>
-    </div>
-    <div className="blue-line" />
-  </React.Fragment>;
-}
-
-const renderSchoolName = (name, links, currentTab) => {
-  const tabs = {
-    0: t('top_schools.top_schools'),
-    1: t('csa_winners')
-  }
-  
-  if (tabs[currentTab] === t('csa_winners')) {
-    return (
-      <a href={links.collegeSuccess}>
-        {name}
-      </a>
-    );
-  } else {
-    return (
-      <a href={links.profile}>
-        {name}
-      </a>
-    );
-  }
-}
-
-const renderSchoolItemContent = (currentTab, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears, districtLink) => {
-  const tabs = {
-    0: t('top_schools.top_schools'),
-    1: t('csa_winners')
-  }
-
-  if (tabs[currentTab] === t('csa_winners')) {
-    return (
-      <div>
-        {renderCsaYears(csaAwardYears)}
-        <p className="students">{capitalize(t(`school_types.${schoolType}`))}, {gradeLevels} | {enrollment} {t("students")}</p>
-        {renderDistrictName(districtName, districtLink)}
-      </div>
-    )
-  } else {
-    return (
-      <div>
+        <a href={links.profile}>
+          {name}
+        </a>
         {renderDistrictName(districtName, districtLink)}
         <p className="students">{capitalize(t(`school_types.${schoolType}`))}, {gradeLevels} | {enrollment} {t("students")}</p>
         {renderReviews(numReviews, parentRating, links)}
       </div>
-    )
-  }
+    </div>
+    <div className="blue-line" />
+  </React.Fragment>;
 }
 
 const renderReviews = (numReviews, parentRating, links) => {
@@ -101,21 +59,11 @@ const renderDistrictName = (districtName, districtLink) => {
   }
 };
 
-const renderCsaYears = (csaAwardYears) => {
-  let csaYears = csaAwardYears.join(", ");
-  return (
-    <div className="top-schools-csa">
-      <span>CSA winner: </span> {csaYears} 
-    </div>
-  );
-}
-
 const TopSchoolTableRow = (props) => (
   <div className="school-list-item">
     {renderSchoolItem(props)}
   </div>
 );
-
 
 TopSchoolTableRow.propTypes = {
   id: PropTypes.number.isRequired,

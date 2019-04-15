@@ -6,7 +6,7 @@ import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t, capitalize } from "util/i18n";
 import { getDistrictHref } from 'util/school';
 
-const renderSchoolItem = ({ name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, csaAwardYears, address, state }) => {
+const renderSchoolItem = ({ name, rating, links, districtName, enrollment, gradeLevels, schoolType, csaAwardYears, address, state }) => {
   const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
   const districtLink = getDistrictHref(state, address.city, districtName);
 
