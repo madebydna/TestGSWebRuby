@@ -31,7 +31,7 @@ class StateDistrictLargestCacher < StateCacher
       d2 = enrollment_all_students(dc2)
       district_enrollment_value(d1) <=> district_enrollment_value(d2)
     end
-    dc_sorted_ids[-5..-1].reverse
+    dc_sorted_ids.length >= 5 ? dc_sorted_ids[-5..-1].reverse : dc_sorted_ids.reverse 
   end
 
   def enrollment_all_students(district_characteristics_cache)
