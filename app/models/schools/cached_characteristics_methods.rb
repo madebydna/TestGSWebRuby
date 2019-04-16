@@ -114,10 +114,10 @@ module CachedCharacteristicsMethods
       if filtered_data.present?
         "#{filtered_data.first["school_value"].round(0)}%"
       else
-        remediation_data.select! {|rd| rd["subject"] == "English" || rd["subject"] == "Math"}
-                        .sort! {|rd| rd["subject"]}
-                        .map {|d| "#{d['school_value'].round(0)}%" }
-                        .join(',')
+        remediation_data.select {|rd| rd["subject"] == "English" || rd["subject"] == "Math"}
+                        &.sort {|rd1,rd2| rd1["subject"] <=> rd2["subject"]}
+                        &.map {|d| "#{d['school_value'].round(0)}%" }
+                        &.join(',')
       end
     else
       style_school_value_as_percent('Percent Needing Remediation for College')
