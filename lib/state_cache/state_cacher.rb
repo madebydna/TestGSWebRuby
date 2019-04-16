@@ -3,7 +3,8 @@ class StateCacher
   attr_accessor :state
 
   # Known data types:
-  # :state_characteristics, :test_scores_gsdata, :feed_test_scores_gsdata, :feed_test_description_gsdata, :gsdata, :ratings
+  # :state_characteristics, :test_scores_gsdata, :feed_test_scores_gsdata, :feed_test_description_gsdata, :gsdata, :ratings :district_largest
+
 
   def initialize(state)
     @state = state
@@ -37,6 +38,7 @@ class StateCacher
         feed_test_description_gsdata: TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata,
         gsdata: StateGsdataCacher,
         ratings: StateRatingCacher,
+        district_largest: StateDistrictLargestCacher,
     }[key.to_s.to_sym]
   end
 
@@ -63,6 +65,7 @@ class StateCacher
        TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata,
        StateGsdataCacher,
        StateRatingCacher,
+       StateDistrictLargestCacher,
     ]
   end
 

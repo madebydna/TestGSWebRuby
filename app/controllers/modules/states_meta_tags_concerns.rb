@@ -8,12 +8,16 @@ module StatesMetaTagsConcerns
     state_name
   end
 
+  def state_school_count 
+    School.on_db(@state[:short]).all.active.count
+  end 
+
   def states_show_title
-    "2019 #{state_long_name_with_caps} Schools | #{state_long_name_with_caps} Schools | Public & Private Schools"
+    t('.title', state_long_name_with_caps: state_long_name_with_caps)
   end
 
   def states_show_description
-    "2019 #{state_long_name_with_caps} school rankings, all #{@state[:short].upcase} public and private schools in #{state_long_name_with_caps} ranked. Click here for #{state_long_name_with_caps} school information plus read ratings and reviews for #{state_long_name_with_caps} schools."
+    "GreatSchools has ratings & reviews for #{state_school_count} #{state_long_name_with_caps} elementary, middle, & high schools. Find the best public, charter, or private school for your child."
   end
 
   def states_community_title
