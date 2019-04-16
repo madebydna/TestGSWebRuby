@@ -123,6 +123,45 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
      HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   end
 
+  source("1617_BUILDING_ECON_DIS.txt",[],col_sep: "\t") do |s|
+   s.transform("Transpose subject grade columns", 
+    Transposer, 
+      :subject,:value_float,
+      :reading_3,:math_3,
+      :reading_4,:math_4,:social_studies_4,
+      :reading_5,:math_5,:science_5,
+      :reading_6,:math_6,:social_studies_6,
+      :reading_7,:math_7,
+      :reading_8,:math_8,:science_8,
+      :ela_i_eoc,:ela_ii_eoc,:integrated_math_i_eoc,:integrated_math_ii_eoc,:algebra_i_eoc,:geometry_eoc,:biology_eoc,:physical_science_eoc,:government_eoc,:history_eoc)
+    .transform("Adding grades",WithBlock) do |row|
+     row[:grade] = row[:subject][/([^\_]+)$/]
+     row
+    end
+    .transform("",WithBlock) do |row|
+     if row[:grade] == 'eoc'
+       row[:grade] = 'All'
+       row[:subject] = row[:subject].to_s.gsub!('_eoc','')
+     elsif row[:grade] != 'All'
+       row[:grade] = row[:grade]
+       row[:subject] = row[:subject][/^[^\_[0-9]]*/]
+     else row[:subject] = row[:subject]
+     end
+     row
+    end
+    .transform('remove NC value rows', DeleteRows, :value_float, 'NC')
+    .transform("map >95", HashLookup, :value_float, {'>95.0' => '95'} )
+    .transform("Adding subject ids",
+     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
+    .transform('Fill missing default fields', Fill, {
+      entity_level: 'school'
+    })
+    .transform('Rename column headers', MultiFieldRenamer,{
+      student_group: :breakdown,
+    })
+    .transform("Adding breakdown ids",
+     HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
+  end
   shared do |s|
      s.transform('Fill missing default fields', Fill, {
       year: 2017,
@@ -144,7 +183,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
      elsif row[:entity_level] == 'school'
         row[:state_id] = row[:building_irn]
         row[:school_id] = row[:building_irn]
-        row[:school_name] = row[:buliding_name]
+        row[:school_name] = row[:building_name]
         row[:district_id] = row[:district_irn]
      end
      row
