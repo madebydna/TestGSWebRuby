@@ -29,7 +29,7 @@ map_oh_subject_type = {
   'history' => 82
 }
 
-map_oh_breakdown_id = {
+map_oh_breakdown_gsdata_id = {
   'NonDisabled' => 30,
   'Disabled' => 27,
   'Disadvantaged' => 23,
@@ -45,32 +45,14 @@ map_oh_breakdown_id = {
   'LEP' => 32
 }
 
-map_data_type = {
-  '3' => 'OST',
-  '4' => 'OST',
-  '5' => 'OST',
-  '6' => 'OST',
-  '7' => 'OST',
-  '8' => 'OST',
-  'All' => 'OST'
-}
 
-map_data_type_id = {
-  '3' => '256',
-  '4' => '256',
-  '5' => '256',
-  '6' => '256',
-  '7' => '256',
-  '8' => '256',
-  'All' => '256'
-}
 
 source("achieve_state.txt",[],col_sep: "\t") do |s|
   s.transform("Set state entity level", Fill, {entity_level: 'state'})
   .transform("Transpose subject grade columns", 
     Transposer, 
       :subject,:value_float,
-      :reading_3,:math_3,
+      'Reading 3rd Grade 2016-17 % at or above Proficient - Building','Math 3rd Grade 2016-17 % at or above Proficient -Building',
       :reading_4,:math_4,:social_studies_4,
       :reading_5,:math_5,:science_5,
       :reading_6,:math_6,:social_studies_6,
@@ -97,12 +79,12 @@ source("achieve_state.txt",[],col_sep: "\t") do |s|
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     level_code: 'e,m,h',
     year: 2017,
-    breakdown: 'all',
-    breakdown_id: 1
+    breakdown: 'All Students',
+    breakdown_gsdata_id: 1
   })
   .transform('remove NC value rows', DeleteRows, :value_float, 'NC')
   .transform("map >95", HashLookup, :value_float, {'>95.0' => '-95'} )
@@ -154,13 +136,13 @@ source("Achieve_School.txt",[],col_sep: "\t") do |s|
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     number_tested: nil,
     level_code: 'e,m,h',
     year: 2017,
-    breakdown: 'all',
-    breakdown_id: 1
+    breakdown: 'All Students',
+    breakdown_gsdata_id: 1
   })
   .transform('remove NC value rows', DeleteRows, :value_float, 'NC')
   .transform("map >95", HashLookup, :value_float, {'>95.0' => '-95'} )
@@ -212,11 +194,11 @@ source("achieve_disab.txt",[],col_sep: "\t") do |s|
   .transform("Adding subject ids",
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform("Adding breakdown ids",
-    HashLookup, :breakdown, map_oh_breakdown_id, to: :breakdown_id)
+    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     level_code: 'e,m,h',
     year: 2017
   })
@@ -271,11 +253,11 @@ source("achieve_econ.txt",[],col_sep: "\t") do |s|
   .transform("Adding subject ids",
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform("Adding breakdown ids",
-    HashLookup, :breakdown, map_oh_breakdown_id, to: :breakdown_id)
+    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     level_code: 'e,m,h',
     year: 2017
   })
@@ -330,11 +312,11 @@ source("achieve_ethnic.txt",[],col_sep: "\t") do |s|
   .transform("Adding subject ids",
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform("Adding breakdown ids",
-    HashLookup, :breakdown, map_oh_breakdown_id, to: :breakdown_id)
+    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     level_code: 'e,m,h',
     year: 2017
   })
@@ -396,11 +378,11 @@ source("achieve_gender.txt",[],col_sep: "\t") do |s|
   .transform("Adding subject ids",
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform("Adding breakdown ids",
-    HashLookup, :breakdown, map_oh_breakdown_id, to: :breakdown_id)
+    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     level_code: 'e,m,h',
     year: 2017
   })
@@ -462,11 +444,11 @@ source("achieve_lep.txt",[],col_sep: "\t") do |s|
   .transform("Adding subject ids",
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform("Adding breakdown ids",
-    HashLookup, :breakdown, map_oh_breakdown_id, to: :breakdown_id)
+    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     level_code: 'e,m,h',
     year: 2017
   })
@@ -526,13 +508,13 @@ source("achieve_district.txt",[],col_sep: "\t") do |s|
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     number_tested: nil,
     level_code: 'e,m,h',
     year: 2017,
-    breakdown: 'all',
-    breakdown_id: 1
+    breakdown: 'All Students',
+    breakdown_gsdata_id: 1
   })
   .transform('remove NC value rows', DeleteRows, :value_float, 'NC')
   .transform("map >95", HashLookup, :value_float, {'>95.0' => '-95'} )
@@ -583,11 +565,11 @@ source("achieve_district_disab.txt",[],col_sep: "\t") do |s|
   .transform("Adding subject ids",
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform("Adding breakdown ids",
-    HashLookup, :breakdown, map_oh_breakdown_id, to: :breakdown_id)
+    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     level_code: 'e,m,h',
     year: 2017
   })
@@ -640,11 +622,11 @@ source("achieve_district_econ.txt",[],col_sep: "\t") do |s|
   .transform("Adding subject ids",
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform("Adding breakdown ids",
-    HashLookup, :breakdown, map_oh_breakdown_id, to: :breakdown_id)
+    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     level_code: 'e,m,h',
     year: 2017
   })
@@ -697,11 +679,11 @@ source("achieve_district_ethnic.txt",[],col_sep: "\t") do |s|
   .transform("Adding subject ids",
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform("Adding breakdown ids",
-    HashLookup, :breakdown, map_oh_breakdown_id, to: :breakdown_id)
+    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     level_code: 'e,m,h',
     year: 2017
   })
@@ -754,11 +736,11 @@ source("achieve_district_gender.txt",[],col_sep: "\t") do |s|
   .transform("Adding subject ids",
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform("Adding breakdown ids",
-    HashLookup, :breakdown, map_oh_breakdown_id, to: :breakdown_id)
+    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     level_code: 'e,m,h',
     year: 2017
   })
@@ -811,11 +793,11 @@ source("achieve_district_lep.txt",[],col_sep: "\t") do |s|
   .transform("Adding subject ids",
     HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
   .transform("Adding breakdown ids",
-    HashLookup, :breakdown, map_oh_breakdown_id, to: :breakdown_id)
+    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   .transform('Fill missing default fields', Fill, {
     entity_type: 'public_charter',
-    proficiency_band: 'null',
-    proficiency_band_id: 'null',
+    proficiency_band: 'Proficiency and Above',
+    proficiency_band_gsdata_id: 1,
     level_code: 'e,m,h',
     year: 2017
   })
@@ -848,7 +830,9 @@ end
 
   def config_hash
     {
-        source_id: 40,
+        gsdata_source_id: 40,
+        source_name: 'Ohio Department of Education',
+        date_valid: '2017-01-01 00:00:00',
         state: 'oh',
         notes: 'DXT-2876: OH OST 2017 test load.',
         url: 'https://reportcard.education.ohio.gov/download',
