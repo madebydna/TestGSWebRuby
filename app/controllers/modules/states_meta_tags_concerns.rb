@@ -13,7 +13,7 @@ module StatesMetaTagsConcerns
   end 
 
   def states_show_title
-    "2019 #{state_long_name_with_caps} Schools: Public & Private School Ratings & Reviews"
+    t('.title', state_long_name_with_caps: state_long_name_with_caps)
   end
 
   def states_show_description

@@ -118,7 +118,11 @@ $line-height-community: 1.428571429;
       }
 
       .csa-state-module-divider {
-        padding: 0 10px;
+        padding: 0 15px;
+
+        .blue-line {
+          margin-left: 0;
+        }
       }
 
       // AC_TODO: Refactor more-school-btn

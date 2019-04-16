@@ -110,7 +110,6 @@ class State extends React.Component {
   }
 
   render() {
-    console.warn(this.props.cities);
     return (
         <StateLayout
             locality={this.props.locality}

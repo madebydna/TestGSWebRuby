@@ -44,10 +44,9 @@ class StateLayout extends React.Component {
     });
   }
 
-  // AC_TODO: Add Spanish translation for Schools
   heroTitle(){
     let {nameLong} = this.props.locality;
-    return `${nameLong} Schools`;
+    return t('state.state_hero_title', { parameters: { state: nameLong }});
   }
 
   // AC_TODO: Add Spanish translation for hero blurb
@@ -57,7 +56,7 @@ class StateLayout extends React.Component {
 
     return <div
         dangerouslySetInnerHTML={{
-          __html: t('state_hero_html', { parameters: { nameLong, schoolCount } })
+          __html: t('state.state_hero_narrative_html', { parameters: { nameLong, schoolCount } })
         }}
       />;
   }
