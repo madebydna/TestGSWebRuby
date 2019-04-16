@@ -133,6 +133,9 @@ class StateLayout extends React.Component {
               <span dangerouslySetInnerHTML={{__html: t("csa_district_schools_info_html")}}/>
             </p>
           </div>
+          <div className="csa-state-module-divider">
+            <div className="blue-line" />
+          </div>
           <div className="more-school-btn">
             <a href={csaStateLink}>
               <button>{t('see_all_winning_schools')}</button>
