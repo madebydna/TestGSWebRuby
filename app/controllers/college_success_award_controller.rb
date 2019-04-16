@@ -41,7 +41,7 @@ class CollegeSuccessAwardController < ApplicationController
     end
     gon.search['facetFields'] = populated_facet_fields
     gon.search['csaYears'] = csa_available_years
-    # set_meta_tags(choose_meta_tag_implementation.new(self).meta_tag_hash)
+    set_meta_tags(choose_meta_tag_implementation.new(self).meta_tag_hash)
     # set_ad_targeting_props
     # set_page_analytics_data
     # response.status = 404 if serialized_schools.empty?
@@ -115,7 +115,7 @@ class CollegeSuccessAwardController < ApplicationController
   end
 
   def choose_meta_tag_implementation
-    raise 'Not implemented'
+    MetaTag::CollegeSuccessAwardsMetaTags
   end
 
   def breadcrumbs
@@ -163,7 +163,7 @@ class CollegeSuccessAwardController < ApplicationController
       hash[PageAnalytics::SEARCH_TERM] = q if q
       hash[PageAnalytics::SEARCH_TYPE] = search_type
       hash[PageAnalytics::SEARCH_HAS_RESULTS] = page_of_results.any?
-      hash[PageAnalytics::PAGE_NAME] = 'GS:SchoolSearchResults'
+      hash[PageAnalytics::PAGE_NAME] = 'GS:CSAAwardWinners'
     end
   end
 

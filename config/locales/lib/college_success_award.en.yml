@@ -1,0 +1,4 @@
+en:
+  lib:
+    college_success_award:
+      title: "%{year} College Success Award Winners from %{state}"
