@@ -80,9 +80,9 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
       district_irn: :district_id
     })
     .transform('Fill missing default fields', Fill, {
-      entity_level: 'school'
+      entity_level: 'school',
       breakdown: 'All Students',
-      breakdown_gsdata_id: 1
+      breakdown_gsdata_id: 1,
       year: 2017,
       entity_type: 'public_charter',
       level_code: 'e,m,h',
