@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module CommunityConcerns
-    CSA_CURRENT_YEAR = [2018]
-
     def serialized_schools
       schools.map do |school|
         Api::SchoolSerializer.new(school).to_hash
@@ -34,8 +32,7 @@ module CommunityConcerns
     end
 
     def fetch_top_rated_csa_schools
-      set_level_code_params('h')
-      set_csa_winner_param(CSA_CURRENT_YEAR)
+      set_csa_winner_param('*')
       serialized_schools
     end 
 
