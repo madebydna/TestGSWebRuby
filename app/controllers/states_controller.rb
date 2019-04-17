@@ -305,7 +305,11 @@ class StatesController < ApplicationController
 
   def districts_data 
     stateShort = States.abbreviation(params['state'])
-    largest_districts = JSON.parse(StateCache.for_state('district_largest', stateShort).value)
+    if StateCache.for_state('district_largest', stateShort).value
+      largest_districts = JSON.parse(StateCache.for_state('district_largest', stateShort).value)
+    else 
+      largest_districts = {}
+    end
 
     @_districts_data ||= begin 
       largest_districts.map do |district|

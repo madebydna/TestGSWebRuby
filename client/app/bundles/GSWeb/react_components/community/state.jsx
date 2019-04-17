@@ -129,7 +129,7 @@ class State extends React.Component {
               />
             }
             csaModule={this.props.csa_module}
-            shouldDisplayDistricts={true || this.props.districts.length > 0}
+            shouldDisplayDistricts={this.props.districts.length > 0}
             topSchools={
               <TopSchoolsStateful
                   community="city"
