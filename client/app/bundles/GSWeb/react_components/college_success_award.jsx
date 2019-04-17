@@ -50,7 +50,7 @@ export default function() {
     <SearchContext.Provider layout="CollegeSuccessAward">
       <SearchContext.Consumer>
         {({ schools, ...state }) => (
-          <CollegeSuccessAward {...state} schools={schools.map(s => ({...s, address: ({...s.address, zip: undefined, street1: undefined})}))} />
+          <CollegeSuccessAward {...state} tableView='CSA-2019' schools={schools.map(s => ({...s, address: ({...s.address, zip: undefined, street1: undefined})}))} />
         )}
       </SearchContext.Consumer>
     </SearchContext.Provider>

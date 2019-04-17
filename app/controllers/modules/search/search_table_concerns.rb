@@ -63,7 +63,21 @@ module SearchTableConcerns
           title: '% Low income',
           tooltip: nil
       },
-      generate_remediation_hash,
+      {
+        key: 'percentCollegeRemediation',
+        title: "College Remediation",
+        tooltip: nil
+      },
+      {
+        key: 'percentCollegeRemediationEnglish',
+        title: "College Remediation: English",
+        tooltip: nil
+      },
+      {
+        key: 'percentCollegeRemediationMath',
+        title: "College Remediation: Math",
+        tooltip: nil
+      },
       {
           key: 'percentCollegePersistent',
           title: 'Persistence %',
@@ -77,26 +91,26 @@ module SearchTableConcerns
     ].compact
   end
 
-  def generate_remediation_hash
-    remediation_data = serialized_schools.map { |d| d[:remediationData] }.flatten
-    any_subject_breakdown = remediation_data.any? { |rd| rd["subject"] && rd["subject"] != 'All subjects' }
-    if any_subject_breakdown
-      remediation_data.map {|r| r["subject"]}.compact
-                                             .uniq
-                                             .map do |header|
-                                                {
-                                                  key: "percentCollegeRemediation#{header.downcase}",
-                                                  title: COLLEGE_REMEDIATION_HEADER_NAMES[header.downcase],
-                                                  tooltip: nil
-                                                }
-                                              end
-    else
-      {
-        key: 'percentCollegeRemediation',
-        title: "College Remediation",
-        tooltip: nil
-      }
-    end
-  end
+  # def generate_remediation_hash
+  #   remediation_data = serialized_schools.map { |d| d[:remediationData] }.flatten
+  #   any_subject_breakdown = remediation_data.any? { |rd| rd["subject"] && rd["subject"] != 'All subjects' }
+  #   if any_subject_breakdown
+  #     remediation_data.map {|r| r["subject"]}.compact
+  #                                            .uniq
+  #                                            .map do |header|
+  #                                               {
+  #                                                 key: "percentCollegeRemediation#{header.downcase}",
+  #                                                 title: COLLEGE_REMEDIATION_HEADER_NAMES[header.downcase],
+  #                                                 tooltip: nil
+  #                                               }
+  #                                             end
+  #   else
+  #     {
+  #       key: 'percentCollegeRemediation',
+  #       title: "College Remediation",
+  #       tooltip: nil
+  #     }
+  #   end
+  # end
 
 end

@@ -167,7 +167,7 @@ class Search extends React.Component {
                 schools={this.props.schools}
                 isLoading={this.props.loadingSchools}
                 searchTableViewHeaders={this.props.searchTableViewHeaders}
-                tableView={2018 || this.props.tableView}
+                tableView={this.props.tableView}
               />
             }
             pagination={

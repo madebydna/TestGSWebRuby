@@ -36,7 +36,7 @@ class Api::SchoolsController < ApplicationController
   # extra items returned even if not requested (besides school fields etc)
   # SearchRequestParams
   def default_extras
-    %w(summary_rating distance assigned enrollment)
+    %w(summary_rating distance assigned enrollment remediation)
   end
 
   # extras requiring specific ask, otherwise removed from response

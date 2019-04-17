@@ -35,7 +35,7 @@ class CollegeSuccessAwardController < ApplicationController
       props[:breadcrumbs] = breadcrumbs
       props[:searchTableViewHeaders] =
         csa_available_years.each_with_object({}) do | year, hash |
-          hash[year] = college_success_award_header_arr(year)
+          hash["CSA-#{year}"] = college_success_award_header_arr(year)
         end
       props[:view] = view || default_view
     end
@@ -86,7 +86,7 @@ class CollegeSuccessAwardController < ApplicationController
   end
 
   def csa_available_years
-    csa_available_years_query.response.facet_fields['csa_badge'].each_slice(2).map(&:first).map(&:to_i).sort.reverse
+    csa_available_years_query.response.facet_fields['csa_badge'].each_slice(2).select {|x| x[1] > 0}.map(&:first).map(&:to_i).sort.reverse
   end
 
   def csa_available_years_query
@@ -179,13 +179,17 @@ class CollegeSuccessAwardController < ApplicationController
   # extra items returned even if not requested (besides school fields etc)
   # SearchRequestParams
   def default_extras
-    %w(summary_rating distance assigned enrollment students_per_teacher review_summary saved_schools all_ratings)
+    %w(summary_rating distance assigned enrollment students_per_teacher review_summary saved_schools all_ratings remediation)
   end
 
   # extras requiring specific ask, otherwise removed from response
   # SearchRequestParams
   def not_default_extras
     %w(geometry)
+  end
+
+  def with_required_subjects()
+    
   end
 
 end

@@ -123,9 +123,6 @@ const SchoolTableRow = ({
   const homesForSaleHref = getHomesForSaleHref(state, address);
   const districtLink = getDistrictHref(state, address.city, districtName);
   const districtAnchor = <a href={districtLink}>{districtName}</a>
-  const percentCollegeRemediation = <div>{remediationData}</div>
-  const percentCollegeRemediationenglish = <div>{remediationData.split(',')[0]}</div>
-  const percentCollegeRemediationmath = <div>{remediationData.split(',')[1]}</div>
 
   let addressPhrase = null;
   if(address.street1) {
@@ -136,6 +133,18 @@ const SchoolTableRow = ({
       addressPhrase = null;
     }
   }
+
+  const renderRemediationValue = (remediationData, type) => {
+    const remedObj = remediationData.find(rd => rd.subject === type)
+    if (remedObj){
+      return <div>{remedObj.school_value}</div>
+    }else{
+      return <div>N/A</div>
+    }
+  };
+  const percentCollegeRemediation = renderRemediationValue(remediationData, 'All subjects')
+  const percentCollegeRemediationEnglish = renderRemediationValue(remediationData, 'English')
+  const percentCollegeRemediationMath = renderRemediationValue(remediationData, 'Math')
 
   const schoolCard = () => {
     return (
@@ -196,6 +205,7 @@ const SchoolTableRow = ({
   }
 
   else {
+    if (columns === undefined) {debugger }
     content = <React.Fragment>{columns.map(col => <td>{eval(col.key)}</td>) }</React.Fragment>
   }
 
@@ -286,10 +296,6 @@ const academicColumns = (columns, subratings, profileLink) => {
   )
 }
 
-const collegeSuccessColumns = (columns, remediationData) => {
-
-}
-
 const renderNoInfoTooltip = () => {
   const noInfo =
     <div className="tooltip-content">
@@ -341,7 +347,8 @@ SchoolTableRow.defaultProps = {
   numReviews: null,
   parentRating: null,
   districtName: null,
-  ethnicityInfo: []
+  ethnicityInfo: [],
+  remediationData: []
 };
 
 export default SchoolTableRow;

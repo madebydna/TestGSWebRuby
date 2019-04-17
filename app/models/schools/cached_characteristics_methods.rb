@@ -2,6 +2,7 @@ module CachedCharacteristicsMethods
 
   NO_DATA_SYMBOL = '?'
   NO_ETHNICITY_SYMBOL = 'n/a'
+  REMEDIATION_SUBJECTS_FOR_CSA = ['All subjects', 'English', 'Math']
 
   def characteristics
     cache_data['characteristics'] || {}
@@ -107,21 +108,41 @@ module CachedCharacteristicsMethods
   end
 
   def graduates_remediation
-    remediation_data = characteristics['Percent Needing Remediation for College']
-    return [] unless remediation_data
-    if remediation_data.length > 1
-      filtered_data = remediation_data.select {|rd| rd["subject"] == "All subjects"}
-      if filtered_data.present?
-        "#{filtered_data.first["school_value"].round(0)}%"
-      else
-        remediation_data.select {|rd| rd["subject"] == "English" || rd["subject"] == "Math"}
-                        &.sort {|rd1,rd2| rd1["subject"] <=> rd2["subject"]}
-                        &.map {|d| "#{d['school_value'].round(0)}%" }
-                        &.join(',')
+    # create three variables and supress if something isn't present
+    @_graduates_remediation ||= characteristics['Percent Needing Remediation for College']
+    # remediation_data = characteristics['Percent Needing Remediation for College']
+    # return [] unless remediation_data
+    # if remediation_data.length > 1
+    #   filtered_data = remediation_data.select {|rd| rd["subject"] == "All subjects"}
+    #   if filtered_data.present?
+    #     "#{filtered_data.first["school_value"].round(0)}%"
+    #   else
+    #     remediation_data.select {|rd| rd["subject"] == "English" || rd["subject"] == "Math"}
+    #                     &.sort {|rd1,rd2| rd1["subject"] <=> rd2["subject"]}
+    #                     &.map {|d| "#{d['school_value'].round(0)}%" }
+    #                     &.join(',')
+    #   end
+    # else
+    #   # check for variables instead
+    #   style_school_value_as_percent('Percent Needing Remediation for College')
+    # end
+  end
+
+  def graduates_remediation_for_college_success_awards
+    data = graduates_remediation.select { |data| data["subject"] == nil || REMEDIATION_SUBJECTS_FOR_CSA.include?(data["subject"])}
+    data.map do |datum|
+      {}.tap do |hash|
+        if datum["subject"]
+          hash["subject"] = datum["subject"]
+          hash["school_value"] = "#{datum["school_value"].round(0)}%"
+          hash["state_average"] = "#{datum["state_average"].round(0)}%"
+        else
+          hash["subject"] = "All subjects"
+          hash["school_value"] = "#{datum["school_value"].round(0)}%"
+          hash["state_average"] = "#{datum["state_average"].round(0)}%"
+        end
       end
-    else
-      style_school_value_as_percent('Percent Needing Remediation for College')
-    end
+    end     
   end
 
   def style_school_value_as_percent(data_name)
