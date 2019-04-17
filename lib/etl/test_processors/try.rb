@@ -46,7 +46,245 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
  }
 
 
-  source("1617_BUILDING_ACHIEVEMENT.txt",[],col_sep: "\t") do |s|
+  # source("1617_BUILDING_ACHIEVEMENT.txt",[],col_sep: "\t") do |s|
+  #  s.transform("Transpose subject grade columns", 
+  #    Transposer, 
+  #     :subject,:value_float,
+  #     :reading_3,:math_3,
+  #     :reading_4,:math_4,:social_studies_4,
+  #     :reading_5,:math_5,:science_5,
+  #     :reading_6,:math_6,:social_studies_6,
+  #     :reading_7,:math_7,
+  #     :reading_8,:math_8,:science_8,
+  #     :english_i_hs,:english_ii_hs,:math_i_hs,:math_ii_hs,:algebra_i_hs,:geometry_hs,:biology_hs,:physical_science_hs,:government_hs,:history_hs)
+  #   .transform('remove NC value rows', DeleteRows, :value_float, 'NC')
+  #   .transform("Adding grades",WithBlock) do |row|
+  #    row[:grade] = row[:subject][/([^\_]+)$/]
+  #    row
+  #   end
+  #   .transform("",WithBlock) do |row|
+  #     if row[:grade] == 'hs'
+  #      row[:grade] = 'All'
+  #      row[:subject] = row[:subject].to_s.gsub!('_hs','')
+  #     elsif row[:grade] != 'All'
+  #      row[:grade] = row[:grade]
+  #      row[:subject] = row[:subject][/^[^\_[0-9]]*/]
+  #     else row[:subject] = row[:subject]
+  #     end
+  #    row
+  #   end
+  #   .transform("Adding subject ids",
+  #    HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
+  #   .transform('Fill missing default fields', Fill, {
+  #     entity_level: 'school',
+  #     breakdown: 'All Students',
+  #     breakdown_gsdata_id: 1
+  #   })
+  # end
+
+
+  # source("1617_BUILDING_DISABLED.txt",[],col_sep: "\t") do |s|
+  #  s.transform("Transpose subject grade columns", 
+  #   Transposer, 
+  #     :subject,:value_float,
+  #     :reading_3,:math_3,
+  #     :reading_4,:math_4,:social_studies_4,
+  #     :reading_5,:math_5,:science_5,
+  #     :reading_6,:math_6,:social_studies_6,
+  #     :reading_7,:math_7,
+  #     :reading_8,:math_8,:science_8,
+  #     :ela_i_eoc,:ela_ii_eoc,:integrated_math_i_eoc,:integrated_math_ii_eoc,:algebra_i_eoc,:geometry_eoc,:biology_eoc,:physical_science_eoc,:government_eoc,:history_eoc)
+  #   .transform("Adding grades",WithBlock) do |row|
+  #    row[:grade] = row[:subject][/([^\_]+)$/]
+  #    row
+  #   end
+  #   .transform("",WithBlock) do |row|
+  #    if row[:grade] == 'eoc'
+  #      row[:grade] = 'All'
+  #      row[:subject] = row[:subject].to_s.gsub!('_eoc','')
+  #    elsif row[:grade] != 'All'
+  #      row[:grade] = row[:grade]
+  #      row[:subject] = row[:subject][/^[^\_[0-9]]*/]
+  #    else row[:subject] = row[:subject]
+  #    end
+  #    row
+  #   end
+  #   .transform('remove NC value rows', DeleteRows, :value_float, 'NC')
+  #   .transform("map >95", HashLookup, :value_float, {'>95.0' => '95'} )
+  #   .transform("Adding subject ids",
+  #    HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
+  #   .transform('Fill missing default fields', Fill, {
+  #     entity_level: 'school'
+  #   })
+  #   .transform('Rename column headers', MultiFieldRenamer,{
+  #     student_group: :breakdown,
+  #   })
+  #   .transform("Adding breakdown ids",
+  #    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
+  # end
+
+  # source("1617_BUILDING_ECON_DIS.txt",[],col_sep: "\t") do |s|
+  #  s.transform("Transpose subject grade columns", 
+  #   Transposer, 
+  #     :subject,:value_float,
+  #     :reading_3,:math_3,
+  #     :reading_4,:math_4,:social_studies_4,
+  #     :reading_5,:math_5,:science_5,
+  #     :reading_6,:math_6,:social_studies_6,
+  #     :reading_7,:math_7,
+  #     :reading_8,:math_8,:science_8,
+  #     :ela_i_eoc,:ela_ii_eoc,:integrated_math_i_eoc,:integrated_math_ii_eoc,:algebra_i_eoc,:geometry_eoc,:biology_eoc,:physical_science_eoc,:government_eoc,:history_eoc)
+  #   .transform("Adding grades",WithBlock) do |row|
+  #    row[:grade] = row[:subject][/([^\_]+)$/]
+  #    row
+  #   end
+  #   .transform("",WithBlock) do |row|
+  #    if row[:grade] == 'eoc'
+  #      row[:grade] = 'All'
+  #      row[:subject] = row[:subject].to_s.gsub!('_eoc','')
+  #    elsif row[:grade] != 'All'
+  #      row[:grade] = row[:grade]
+  #      row[:subject] = row[:subject][/^[^\_[0-9]]*/]
+  #    else row[:subject] = row[:subject]
+  #    end
+  #    row
+  #   end
+  #   .transform('remove NC value rows', DeleteRows, :value_float, 'NC')
+  #   .transform("map >95", HashLookup, :value_float, {'>95.0' => '95'} )
+  #   .transform("Adding subject ids",
+  #    HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
+  #   .transform('Fill missing default fields', Fill, {
+  #     entity_level: 'school'
+  #   })
+  #   .transform('Rename column headers', MultiFieldRenamer,{
+  #     student_group: :breakdown,
+  #   })
+  #   .transform("Adding breakdown ids",
+  #    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
+  # end
+
+
+  # source("1617_BUILDING_ETHNIC.txt",[],col_sep: "\t") do |s|
+  #  s.transform("Transpose subject grade columns", 
+  #   Transposer, 
+  #     :subject,:value_float,
+  #     :reading_3,:math_3,
+  #     :reading_4,:math_4,:social_studies_4,
+  #     :reading_5,:math_5,:science_5,
+  #     :reading_6,:math_6,:social_studies_6,
+  #     :reading_7,:math_7,
+  #     :reading_8,:math_8,:science_8,
+  #     :ela_i_eoc,:ela_ii_eoc,:integrated_math_i_eoc,:integrated_math_ii_eoc,:algebra_i_eoc,:geometry_eoc,:biology_eoc,:physical_science_eoc,:government_eoc,:history_eoc)
+  #   .transform("Adding grades",WithBlock) do |row|
+  #    row[:grade] = row[:subject][/([^\_]+)$/]
+  #    row
+  #   end
+  #   .transform("",WithBlock) do |row|
+  #    if row[:grade] == 'eoc'
+  #      row[:grade] = 'All'
+  #      row[:subject] = row[:subject].to_s.gsub!('_eoc','')
+  #    elsif row[:grade] != 'All'
+  #      row[:grade] = row[:grade]
+  #      row[:subject] = row[:subject][/^[^\_[0-9]]*/]
+  #    else row[:subject] = row[:subject]
+  #    end
+  #    row
+  #   end
+  #   .transform('remove NC and nil value rows', DeleteRows, :value_float, 'NC', nil)
+  #   .transform("map >95", HashLookup, :value_float, {'>95.0' => '95'} )
+  #   .transform("Adding subject ids",
+  #    HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
+  #   .transform('Fill missing default fields', Fill, {
+  #     entity_level: 'school'
+  #   })
+  #   .transform('Rename column headers', MultiFieldRenamer,{
+  #     student_group: :breakdown,
+  #   })
+  #   .transform("Adding breakdown ids",
+  #    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
+  # end
+
+  # source("1617_BUILDING_GENDER.txt",[],col_sep: "\t") do |s|
+  #  s.transform("Transpose subject grade columns", 
+  #   Transposer, 
+  #     :subject,:value_float,
+  #     :reading_3,:math_3,
+  #     :reading_4,:math_4,:social_studies_4,
+  #     :reading_5,:math_5,:science_5,
+  #     :reading_6,:math_6,:social_studies_6,
+  #     :reading_7,:math_7,
+  #     :reading_8,:math_8,:science_8,
+  #     :ela_i_eoc,:ela_ii_eoc,:integrated_math_i_eoc,:integrated_math_ii_eoc,:algebra_i_eoc,:geometry_eoc,:biology_eoc,:physical_science_eoc,:government_eoc,:history_eoc)
+  #   .transform("Adding grades",WithBlock) do |row|
+  #    row[:grade] = row[:subject][/([^\_]+)$/]
+  #    row
+  #   end
+  #   .transform("",WithBlock) do |row|
+  #    if row[:grade] == 'eoc'
+  #      row[:grade] = 'All'
+  #      row[:subject] = row[:subject].to_s.gsub!('_eoc','')
+  #    elsif row[:grade] != 'All'
+  #      row[:grade] = row[:grade]
+  #      row[:subject] = row[:subject][/^[^\_[0-9]]*/]
+  #    else row[:subject] = row[:subject]
+  #    end
+  #    row
+  #   end
+  #   .transform('remove NC and nil value rows', DeleteRows, :value_float, 'NC', nil)
+  #   .transform("map >95", HashLookup, :value_float, {'>95.0' => '95'} )
+  #   .transform("Adding subject ids",
+  #    HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
+  #   .transform('Fill missing default fields', Fill, {
+  #     entity_level: 'school'
+  #   })
+  #   .transform('Rename column headers', MultiFieldRenamer,{
+  #     student_group: :breakdown,
+  #   })
+  #   .transform("Adding breakdown ids",
+  #    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
+  # end
+
+  # source("1617_BUILDING_LEP.txt",[],col_sep: "\t") do |s|
+  #  s.transform("Transpose subject grade columns", 
+  #   Transposer, 
+  #     :subject,:value_float,
+  #     :reading_3,:math_3,
+  #     :reading_4,:math_4,:social_studies_4,
+  #     :reading_5,:math_5,:science_5,
+  #     :reading_6,:math_6,:social_studies_6,
+  #     :reading_7,:math_7,
+  #     :reading_8,:math_8,:science_8,
+  #     :ela_i_eoc,:ela_ii_eoc,:integrated_math_i_eoc,:integrated_math_ii_eoc,:algebra_i_eoc,:geometry_eoc,:biology_eoc,:physical_science_eoc,:government_eoc,:history_eoc)
+  #   .transform("Adding grades",WithBlock) do |row|
+  #    row[:grade] = row[:subject][/([^\_]+)$/]
+  #    row
+  #   end
+  #   .transform("",WithBlock) do |row|
+  #    if row[:grade] == 'eoc'
+  #      row[:grade] = 'All'
+  #      row[:subject] = row[:subject].to_s.gsub!('_eoc','')
+  #    elsif row[:grade] != 'All'
+  #      row[:grade] = row[:grade]
+  #      row[:subject] = row[:subject][/^[^\_[0-9]]*/]
+  #    else row[:subject] = row[:subject]
+  #    end
+  #    row
+  #   end
+  #   .transform('remove NC and nil value rows', DeleteRows, :value_float, 'NC', nil)
+  #   .transform("map >95", HashLookup, :value_float, {'>95.0' => '95'} )
+  #   .transform("Adding subject ids",
+  #    HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
+  #   .transform('Fill missing default fields', Fill, {
+  #     entity_level: 'school'
+  #   })
+  #   .transform('Rename column headers', MultiFieldRenamer,{
+  #     student_group: :breakdown,
+  #   })
+  #   .transform("Adding breakdown ids",
+  #    HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
+  # end
+
+  source("1617_DISTRICT_ACHIEVEMENT.txt",[],col_sep: "\t") do |s|
    s.transform("Transpose subject grade columns", 
      Transposer, 
       :subject,:value_float,
@@ -76,14 +314,14 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
     .transform("Adding subject ids",
      HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
     .transform('Fill missing default fields', Fill, {
-      entity_level: 'school',
+      entity_level: 'district',
       breakdown: 'All Students',
       breakdown_gsdata_id: 1
     })
   end
 
 
-  source("1617_BUILDING_DISABLED.txt",[],col_sep: "\t") do |s|
+  source("1617_DISTRICT_DISABLED.txt",[],col_sep: "\t") do |s|
    s.transform("Transpose subject grade columns", 
     Transposer, 
       :subject,:value_float,
@@ -114,7 +352,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
     .transform("Adding subject ids",
      HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
     .transform('Fill missing default fields', Fill, {
-      entity_level: 'school'
+      entity_level: 'district'
     })
     .transform('Rename column headers', MultiFieldRenamer,{
       student_group: :breakdown,
@@ -123,7 +361,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
      HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   end
 
-  source("1617_BUILDING_ECON_DIS.txt",[],col_sep: "\t") do |s|
+  source("1617_DISTRICT_ECON_DIS.txt",[],col_sep: "\t") do |s|
    s.transform("Transpose subject grade columns", 
     Transposer, 
       :subject,:value_float,
@@ -154,7 +392,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
     .transform("Adding subject ids",
      HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
     .transform('Fill missing default fields', Fill, {
-      entity_level: 'school'
+      entity_level: 'district'
     })
     .transform('Rename column headers', MultiFieldRenamer,{
       student_group: :breakdown,
@@ -164,7 +402,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
   end
 
 
-  source("1617_BUILDING_ETHNIC.txt",[],col_sep: "\t") do |s|
+  source("1617_DISTRICT_ETHNIC.txt",[],col_sep: "\t") do |s|
    s.transform("Transpose subject grade columns", 
     Transposer, 
       :subject,:value_float,
@@ -195,7 +433,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
     .transform("Adding subject ids",
      HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
     .transform('Fill missing default fields', Fill, {
-      entity_level: 'school'
+      entity_level: 'district'
     })
     .transform('Rename column headers', MultiFieldRenamer,{
       student_group: :breakdown,
@@ -204,7 +442,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
      HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   end
 
-  source("1617_BUILDING_GENDER.txt",[],col_sep: "\t") do |s|
+  source("1617_DISTRICT_GENDER.txt",[],col_sep: "\t") do |s|
    s.transform("Transpose subject grade columns", 
     Transposer, 
       :subject,:value_float,
@@ -235,7 +473,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
     .transform("Adding subject ids",
      HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
     .transform('Fill missing default fields', Fill, {
-      entity_level: 'school'
+      entity_level: 'district'
     })
     .transform('Rename column headers', MultiFieldRenamer,{
       student_group: :breakdown,
@@ -244,7 +482,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
      HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
   end
 
-  source("1617_BUILDING_LEP.txt",[],col_sep: "\t") do |s|
+  source("1617_DISTRICT_LEP.txt",[],col_sep: "\t") do |s|
    s.transform("Transpose subject grade columns", 
     Transposer, 
       :subject,:value_float,
@@ -275,7 +513,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
     .transform("Adding subject ids",
      HashLookup, :subject, map_oh_subject_type, to: :academic_gsdata_id)
     .transform('Fill missing default fields', Fill, {
-      entity_level: 'school'
+      entity_level: 'district'
     })
     .transform('Rename column headers', MultiFieldRenamer,{
       student_group: :breakdown,
