@@ -6,13 +6,13 @@ import Button from 'react_components/button';
 import Ad from 'react_components/ad';
 import { t, capitalize } from 'util/i18n';
 import { keepInViewport } from 'util/sticky';
+import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
-class CityLayout extends React.Component {
+class StateLayout extends React.Component {
   static propTypes = {
     viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
-    shouldDisplayReviews: PropTypes.bool,
     shouldDisplayDistricts: PropTypes.bool
   };
 
@@ -45,31 +45,26 @@ class CityLayout extends React.Component {
   }
 
   heroTitle(){
-    let {city, stateShort} = this.props.locality;
-    return `${city}, ${stateShort}`
+    let {nameLong} = this.props.locality;
+    return t('state.state_hero_title', { parameters: { state: nameLong }});
   }
 
+  // AC_TODO: Add Spanish translation for hero blurb
   heroNarration(){
-    let {city,stateLong,county} = this.props.locality;    
-    if (county) {
-      return <div
+    let {nameLong} = this.props.locality;
+    let schoolCount = this.props.schoolCount;
+
+    return <div
         dangerouslySetInnerHTML={{
-          __html: t('city_hero_html', { parameters: { city, stateLong, county } })
+          __html: t('state.state_hero_narrative_html', { parameters: { nameLong, schoolCount } })
         }}
-      />
-    }else{
-      return <div
-        dangerouslySetInnerHTML={{
-          __html: t('city_hero_no_county_html', { parameters: { city, stateLong } })
-        }}
-      />
-    }
+      />;
   }
 
   renderHero(){
     return (<div id="hero">
       <div>
-        <div className="icon-city"></div>
+        {/* <div className="icon-city"></div> */}
         <h1 className="city-hero-title">{this.heroTitle()}</h1>
         {this.heroNarration()}
         <div className="city-hero-stats"></div>
@@ -97,53 +92,70 @@ class CityLayout extends React.Component {
     return this.props.viewportSize > XS && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
   }
 
+  // AC_TODO: Add translations
   renderDistricts(){
     return this.props.shouldDisplayDistricts && (
       <div id="districts">
-        <h2 className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</h2>
-          {this.props.districtsInCity}
+        <div className="modules-title">{`Largest school districts in ${this.props.locality.nameLong}`}</div>
+          {this.props.districtsInState}
       </div>
     )
   }
 
-  renderSchools(){
+  // AC_TODO: Add translations
+  renderCities(){
+    const browseHeader = `Browse schools in ${this.props.locality.nameLong} by`;
+
     return (
       <div id="schools">
-        <h2 className="modules-title">{`Find schools in ${this.props.locality.city}`}</h2>
-        {this.props.browseSchools}
-        {this.props.topSchools}
+        {}
+        <div className="modules-title">{browseHeader}</div>
+        {this.props.browseCities}
       </div>
     )
   }
 
-  renderZillow(){
-    return (
-        <div>
-          {this.props.zillow}
-        </div>
-    )
-  }
+  renderCsaModule() {
+    const csaStateLink = this.props.locality.stateCsaUrl;
 
-  renderReviews() {
-    return (
-      this.props.shouldDisplayReviews &&
-        <div id="reviews">
-          <div className="rating-container reviews-module">
-            <h3>{t('recent_reviews.title')} {`${this.props.locality.city}`}</h3>
-            {this.props.recentReviews}
+    if (this.props.csaModule) {
+      return (
+        <div className="csa-state-module">
+          <h3>{t('award_winners')}</h3>
+          <div className="csa-state-blurb">
+            <img 
+              src={csaBadgeGenLg}
+              className="csa-badge-gen-lg"
+              alt="csa-badge-icon"
+            />
+            <p>
+              <span dangerouslySetInnerHTML={{__html: t("csa_district_schools_info_html")}}/>
+            </p>
+          </div>
+          <div className="csa-state-module-divider">
+            <div className="blue-line" />
+          </div>
+          <div className="more-school-btn">
+            <a href={csaStateLink}>
+              <button>{t('see_all_winning_schools')}</button>
+            </a>
           </div>
         </div>
-    )
+      );
+    }
   }
-  
-  renderMobility(){
-    return(
-      <div id="mobility">
-        <h2 className="modules-title">{`${t('mobility.title')} ${this.props.locality.city}`}</h2>
-        {this.props.mobility}
-      </div>
-    )
-  }
+
+  // renderReviews() {
+  //   return (
+  //     this.props.shouldDisplayReviews &&
+  //       <div id="reviews">
+  //         <div className="rating-container reviews-module">
+  //           <h3>{t('recent_reviews.title')} {`${this.props.locality.city}`}</h3>
+  //           {this.props.recentReviews}
+  //         </div>
+  //       </div>
+  //   )
+  // }
 
   render() {
     return (
@@ -156,12 +168,11 @@ class CityLayout extends React.Component {
             {this.renderToc()}
             <div className="community-modules">
               {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
-              {this.renderSchools()}
-              {this.renderBoxAd()}
+              {this.renderCities()}
+              {this.renderCsaModule()}
+              {/* {this.renderBoxAd()} */}
               {this.renderDistricts()}
-              {this.renderMobility()}
-              {this.renderZillow()}
-              {this.renderReviews()}
+              {/* {this.renderReviews()} */}
             </div>
           {/*</div>*/}
           {this.renderDesktopAd()}
@@ -171,4 +182,4 @@ class CityLayout extends React.Component {
   }
 }
 
-export default CityLayout;
+export default StateLayout;

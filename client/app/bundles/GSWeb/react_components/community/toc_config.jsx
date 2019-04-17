@@ -7,6 +7,14 @@ export const REVIEWS = 'Reviews';
 export const COMMUNITY_RESOURCES = 'community_resources';
 export const ACADEMICS = 'Academics';
 export const CALENDAR = 'calendar';
+export const BROWSE_SCHOOLS = 'browse_schools';
+
+const browseSchools = {
+  key: BROWSE_SCHOOLS,
+  label: t(BROWSE_SCHOOLS),
+  anchor: '#browse-schools',
+  selected: true
+}
 
 const schools = {
   key: SCHOOLS,
@@ -58,6 +66,7 @@ const reviews = {
 }
 
 export {
+  browseSchools,
   schools,
   schoolDistricts,
   academics,

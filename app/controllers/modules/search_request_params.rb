@@ -392,6 +392,10 @@ module SearchRequestParams
     ensure_array_param(:csaYears)
   end
 
+  def csa_year_param
+    params[:csaYears]
+  end
+
   private
 
   def ensure_array_param(param_name, delim = ',') 

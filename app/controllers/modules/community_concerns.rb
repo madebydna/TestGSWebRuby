@@ -80,7 +80,7 @@ module CommunityConcerns
           with_rating: 'true',
           csa_years: csa_years.presence
         )
-      else
+      elsif params[:city]
         query_type.new(
           city: city,
           state: state,
@@ -90,8 +90,14 @@ module CommunityConcerns
           sort_name: 'rating',
           with_rating: 'true',
           csa_years: csa_years.presence
+          )
+      else
+        query_type.new(
+          state: locality[:nameShort],
+          limit: 1,
+          csa_years: @csa_years.presence
         )
-      end
+        end
     end
 
     def default_top_schools_limit

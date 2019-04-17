@@ -1,192 +1,197 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { stringify, parseUrl } from 'query-string';
+import { parse, stringify } from 'query-string';
+import parseUrl from 'url-parse';
 import { assign } from 'lodash';
+import { renderToStaticMarkup } from 'react-dom/server';
+import Tooltip from 'react_components/school_profiles/tooltip';
 import { t, localeQueryParams } from '../../util/i18n';
 
-/*
-module SharingTooltipModal
-  extend ActiveSupport::Concern
+/**
+ * Given a url returns a new URL by merging/overwriting
+ * query params in the source URL with the given new params
+ * 
+ * @param {string} fullUrl 
+ * @param {Object} newParams 
+ */
+const addParamsToUrl = (fullUrl, newParams) => {
+  const url = parseUrl(fullUrl);
+  url.set('query', assign(parse(url.query) || {}, newParams));
+  return url.toString();
+};
 
-  included do
-    include Rails.application.routes.url_helpers
-    include UrlHelper
-  end
+/**
+ * Returns an obj with props that can be formed into a query string
+ * for tracking how/where the user came from when navigating to a URL
+ * 
+ * @param {string} source utm_source
+ * @param {string} medium utm_medium
+ */
+const utmParams = (source, medium) => ({
+  utm_source: source,
+  utm_medium: medium,
+  ...localeQueryParams()
+});
 
-  SHARE_LINKS = [
-      {icon: 'icon-mail', link_name: 'Email', link: 'mailto:'},
-      {icon: 'icon-facebook', link_name: 'Facebook', link:'https://www.facebook.com/sharer/sharer.php?u='},  #, link: '"https://www.facebook.com/sharer/sharer.php?u=' + URLENCODED_URL + '&t=' + TITLE + '"'},
-      {icon: 'icon-twitter', link_name: 'Twitter', link:'https://twitter.com/share?url='},  #, link: '"https://twitter.com/share?url=' + URLENCODED_URL + '&via=@GreatSchools&text=' + TEXT + '"'},
-      {icon: 'icon-link', link_name: 'Permalink'}
-  ]
+/**
+ * ? is moduleName really needed/used? 
+ * 
+ * @param {Object} obj
+ * @param {string} obj.url Full "share" URL for whichever service
+ * @param {string} obj.type (email,facebook,permalink,twitter) Type of Sharing service, used to determine icon
+ * @param {string} obj.moduleName Name of the module where the sharing behavior is being added
+ */
+const sharingRow = ({ url, type, moduleName }) => {
+  const icons = {
+    email: 'mail',
+    facebook: 'facebook',
+    permalink: 'link',
+    twitter: 'twitter'
+  };
+  const className = type === 'Email' ? 'emailSharingLinks' : 'sharingLinks';
+  const iconName = icons[type.toLowerCase()];
 
-  def share_tooltip_modal(anchor, school)
-    url = StructuredMarkup.ensure_https(school_url(school))
-    school_name = school.name
-    SHARE_LINKS.each do | hash |
-      if hash[:link_name] == 'Email'
-        // str += email_link(url, anchor, school_name, hash[:link])
-      elsif hash[:link_name] == 'Facebook'
-        str += facebook_link(url, anchor, school_name, hash[:link])
-      elsif hash[:link_name] == 'Twitter'
-        str += twitter_link(url, anchor, school_name, hash[:link])
-      else
-        str += '<div class="sharing-row">'
-      end
+  return (
+    <div
+      className={`sharing-row js-${className} js-slTracking`}
+      data-type={type}
+      data-module={moduleName}
+      data-link={url}
+    >
+      <div className="sharing-icon-box">
+        <span className={`icon-${iconName}`} />
+      </div>
+      <span className="sharing-row-text">{type}</span>
+    </div>
+  );
+};
 
-      str += '<div class="sharing-icon-box">'
-      str += '<span class="'+hash[:icon]+'"></span>'
-      str += '</div>'
-      str += '<span class="sharing-row-text">'+hash[:link_name]+'</span>'
-      str += perma_link(url, anchor) if hash[:link_name] == 'Permalink'
-      str += '</div>'
-    end
-    str + '</div>'
-  end
+/**
+ * Generates a mailto url. When user clicks link containing this URL, email client
+ * should open with subject and message body populated. Message body should contain
+ * a URL for the page we're driving the recipient to.
+ * 
+ * @param {string} url A GreatSchools URL to place into email message body
+ * @param {string} subject
+ * @param {string} text Beginning of email body
+ */
+const mailtoUrl = (url, title, text) => {
+  const lineBreak = '\r\n';
+  const mailto = stringify({
+    subject: title,
+    body: `${text}${lineBreak}${url}`
+  });
+  return `mailto:?${mailto}`;
+};
 
-  def perma_link(url, module_name)
-    new_params = {}
-    new_params[:utm_source] = 'profile'
-    new_params[:utm_medium] = 'Permalink'
-    new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
-    url_new = add_query_params_to_url(url, false, new_params)
-    url_new = set_anchor(url_new, module_name)
-    acknowledgement = I18n.t('controllers.school_profile_controller.Copied to clipboard')
-    '<div><input class="permalink js-permaLink js-slTracking" type="text" value="'+ url_new +'" /><span class="acknowledgement">' + acknowledgement + '</span></div>'
-  end
+/**
+ * @param {string} url A GreatSchools URL to place into a Facebook share URL
+ * @param {string} text Default text for end user write into their post
+ */
+const facebookUrl = (url, text) => parseUrl('https://www.facebook.com/sharer/sharer.php').set('query', stringify({
+  u: url,
+  t: text
+})).toString();
 
-  def facebook_link(url, module_name, school_name, link)
-    content_text = school_name + ' - ' + module_name.gsub('_', ' ')
-    new_params = {}
-    new_params[:utm_source] = 'profile'
-    new_params[:utm_medium] = 'Facebook'
-    new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
-    url_new = add_query_params_to_url(url, false, new_params)
-    url_new = set_anchor(url_new, module_name)
-    facebook_str = '&t=' + content_text
-    '<div class="sharing-row js-sharingLinks js-slTracking" data-url="'+url_new+'" data-siteparams="' + facebook_str + '" data-type="Facebook" data-module="'+module_name+'" data-link="'+link+'">'
-  end
+/**
+ * @param {string} url A GreatSchools URL to place into a Facebook share URL
+ * @param {string} text Default text for end user write into their post
+ */
+const twitterUrl = (url, text) => parseUrl('https://twitter.com/intent/tweet').set('query', stringify({
+  url,
+  via: 'GreatSchools',
+  text
+})).toString();
 
-  def twitter_link(url, module_name, school_name, link)
-    content_text = school_name + ' - ' + module_name.gsub('_', ' ')
-    new_params = {}
-    new_params[:utm_source] = 'profile'
-    new_params[:utm_medium] = 'Twitter'
-    new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
-    url_new = add_query_params_to_url(url, false, new_params)
-    url_new = set_anchor(url_new, module_name)
-    twitter_str = '&via=GreatSchools&text='+content_text
-    '<div class="sharing-row js-sharingLinks js-slTracking" data-url="'+url_new+'" data-siteparams="' + twitter_str + '" data-type="Twitter" data-module="'+module_name+'" data-link="'+link+'">'
-  end
+/**
+ * @param {Object} obj
+ * @param {string} obj.url A GreatSchools URL to place various share URLs
+ * @param {string} obj.title Some common text that will be populated into share popups or email
+ * @param {string} obj.pageName Used for the utm_source. The page that the user event originated from
+ * @param {string} obj.moduleName Not required. If page has multiple modules that have Share functionality, the name of the module
+ */
+const defaultShareContent = ({url, title, pageName, moduleName }) => {
+  return (
+  <div className="sharing-modal">
+    {sharingRow({
+      url: mailtoUrl(
+        `${addParamsToUrl(url, utmParams(pageName, 'Email'))}`,
+        title,
+        `Check out the ${title}`
+      ),
+      type: 'Email',
+      title,
+      moduleName
+    })}
 
-  def current_language
-    @_current_language ||= I18n.locale
-  end
+    {sharingRow({
+      url: facebookUrl(
+        `${addParamsToUrl(url, utmParams(pageName, 'Facebook'))}`,
+        title
+      ),
+      type: 'Facebook',
+      title,
+      moduleName
+    })}
 
-  def email_link(url, module_name, school_name, link)
-    content_text = "Check out the #{school_name} - #{module_name.gsub('_',' ')}%0D%0A"
-    new_params = {}
-    new_params[:utm_source] = 'profile'
-    new_params[:utm_medium] = 'Email'
-    new_params[:subject] = "#{school_name} - #{module_name.gsub('_',' ')}"
-    new_params[:body] = content_text
-    new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
-    url_new = add_query_params_to_url(url, false, new_params)
-    url_new = set_anchor(url_new, module_name)
-    '<div class="sharing-row js-emailSharingLinks js-slTracking" data-url="'+url_new+'" data-type="Email" data-module="'+module_name+'" data-link="'+link+email_query_string(module_name, url, school_name)+'">'
-  end
+    {sharingRow({
+      url: twitterUrl(
+        `${addParamsToUrl(url, utmParams(pageName, 'Twitter'))}`,
+        title
+      ),
+      type: 'Twitter',
+      title,
+      moduleName
+    })}
 
-  def email_utm(url)
-    email_utm = url =~ /\?/ ? '&' : '?'
-    email_utm << "utm_source=profile%26utm_medium=email"
-  end
-
-end
-*/
-
-const current_language = 'en';
-
-const URIencode = () => {}
-
-const addParamsToUrl = (url, newParams) => {
-  const { urlWithoutQs, queryParams } = parseUrl(url);
-  return `${urlWithoutQs}?${stringify(assign(queryParams, newParams))}`
-}
-
-// def facebook_link(url, module_name, school_name, link)
-// content_text = school_name + ' - ' + module_name.gsub('_', ' ')
-// new_params = {}
-// new_params[:utm_source] = 'profile'
-// new_params[:utm_medium] = 'Facebook'
-// new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
-// url_new = add_query_params_to_url(url, false, new_params)
-// url_new = set_anchor(url_new, module_name)
-// facebook_str = '&t=' + content_text
-// '<div class="sharing-row js-sharingLinks js-slTracking" data-url="'+url_new+'" data-siteparams="' + facebook_str + '" data-type="Facebook" data-module="'+module_name+'" data-link="'+link+'">'
-// end
-
-// const facebookLink = (url, moduleName, schoolName, link) => {
-//   const content_text = schoolName + ' - ' + moduleName.gsub('_', ' ')
-//   const queryParams = {
-//     utm_source: 'profile',
-//     utm_medium: 'Facebook',
-//     ...localeQueryParams()
-//   }
-//   const new_url = addParamsToUrl(url, queryParams) + '#' + moduleName
-
-// }
+    <div className="sharing-row">
+      <div className="sharing-icon-box">
+        <span className="icon-link" />
+      </div>
+      <span className="sharing-row-text">Permalink</span>
+      <div>
+        <input
+          className="permalink js-permaLink js-slTracking"
+          type="text"
+          value={`${addParamsToUrl(url, utmParams('Profile', 'Permalink'))}`}
+        />
+        <span className="acknowledgement">Copied to clipboard</span>
+      </div>
+    </div>
+  </div>
+  )
+};
 
 
-
-// const emailUtm = (url) => {
-//   const qs = stringify({
-//     utm_source: 'profile',
-//     utm_medium: 'email'
-//   });
-//   const delim = (!url.match(/\?/)) ? '?' : '&';
-//   return `${url}${delim}${qs}`;
-// }
-
-// const emailQueryString = (anchor, url, schoolName) => {
-//   const params = {
-//     subject: (`${schoolName} - ${anchor.replace(/_/g,' ')}`),
-//     body: `Check out the ${schoolName} - ${anchor.gsub('_',' ')}%0D%0A${url}/${emailUtm(url)}#${anchor}`
-//   }
-//   return stringify(params);
-// }
-
-// const emailUrl = (url, moduleName, schoolName, link) => {
-//   const newParams = {
-//     utm_source: 'profile',
-//     utm_medium: 'Email',
-//     subject: `${schoolName} - ${moduleName.gsub('_',' ')}`,
-//     body: "Check out the #{school_name} - #{module_name.gsub('_',' ')}%0D%0A",
-//     ...localeQueryParams()
-//   };
-//   return `${addParamsToUrl(url, newParams)}#${moduleName}`
-// }
-
-// const defaultShareContent = <div className="sharing-modal">
-//   <div class="sharing-row js-emailSharingLinks js-slTracking"/>
-//   data-url={emailUrl()} data-type="Email" data-module={module_name} data-link={link + email_query_string(module_name, url, school_name) }>
-// </div>;
-
-const SharingModal = ({ content }) => (
-  <a
-    data-remodal-target="modal_info_box"
-    data-content-type="info_box"
-    data-content-html={content}
-    className="share-link gs-tipso"
-    data-tipso-width="318"
-    data-tipso-position="left"
-    href="javascript:void(0)">
-      <span className="icon-share"></span>&nbsp;
+const SharingModal = ({ content, url, title, pageName, moduleName = undefined }) => (
+  <Tooltip
+    content={
+      content ||
+      renderToStaticMarkup(
+        defaultShareContent({ url, title, pageName, moduleName })
+      )
+    }
+  >
+    <span>
+      <span className="icon-share" />&nbsp;
       {t('Share')}
-    </a>
+    </span>
+  </Tooltip>
 );
 
+SharingModal.defaultProps = {
+  url: undefined,
+  title: undefined,
+  pageName: undefined,
+  moduleName: undefined
+};
+
 SharingModal.propTypes = {
-  content: PropTypes.string.isRequired
-}
+  content: PropTypes.string.isRequired,
+  url: PropTypes.string,
+  title: PropTypes.string,
+  pageName: PropTypes.string,
+  moduleName: PropTypes.string
+};
 
 export default SharingModal;

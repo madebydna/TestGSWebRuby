@@ -106,6 +106,24 @@ module CachedCharacteristicsMethods
     style_school_value_as_percent('Percent Enrolled in College and Returned for a Second Year')
   end
 
+  def graduates_remediation
+    remediation_data = characteristics['Percent Needing Remediation for College']
+    return [] unless remediation_data
+    if remediation_data.length > 1
+      filtered_data = remediation_data.select {|rd| rd["subject"] == "All subjects"}
+      if filtered_data.present?
+        "#{filtered_data.first["school_value"].round(0)}%"
+      else
+        remediation_data.select {|rd| rd["subject"] == "English" || rd["subject"] == "Math"}
+                        &.sort {|rd1,rd2| rd1["subject"] <=> rd2["subject"]}
+                        &.map {|d| "#{d['school_value'].round(0)}%" }
+                        &.join(',')
+      end
+    else
+      style_school_value_as_percent('Percent Needing Remediation for College')
+    end
+  end
+
   def style_school_value_as_percent(data_name)
     if valid_characteristic_cache(characteristics[data_name])
       value = characteristics[data_name].first['school_value'].to_i
