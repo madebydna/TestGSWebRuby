@@ -295,7 +295,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
       :reading_7,:math_7,
       :reading_8,:math_8,:science_8,
       :english_i_hs,:english_ii_hs,:math_i_hs,:math_ii_hs,:algebra_i_hs,:geometry_hs,:biology_hs,:physical_science_hs,:government_hs,:history_hs)
-    .transform('remove NC value rows', DeleteRows, :value_float, 'NC')
+    .transform('remove NC value rows', DeleteRows, :value_float, 'NC', nil)
     .transform("Adding grades",WithBlock) do |row|
      row[:grade] = row[:subject][/([^\_]+)$/]
      row
