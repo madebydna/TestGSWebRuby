@@ -56,32 +56,32 @@ module SearchTableConcerns
       {
           key: 'enrollment',
           title: t("Total enrolled", scope:'lib.college_success_award'),
-          tooltip: nil
+          tooltip: t("Total enrolled", scope:'lib.college_success_award.tooltips')
       },
       {
           key: 'percentLowIncome',
           title: "% #{t("Low-income", scope:'lib.search')}",
-          tooltip: nil
+          tooltip: t("Low-income", scope:'lib.college_success_award.tooltips')
       },
       {
         key: 'percentCollegeRemediation',
         title: "Remediation",
-        tooltip: nil
+        tooltip: t("Remediation", scope:'lib.college_success_award.tooltips')
       },
       {
         key: 'percentCollegeRemediationEnglish',
         title: "English Remediation",
-        tooltip: nil
+        tooltip: t("English remediation", scope:'lib.college_success_award.tooltips')
       },
       {
         key: 'percentCollegeRemediationMath',
         title: "Math Remediation",
-        tooltip: nil
+        tooltip: t("Math remediation", scope:'lib.college_success_award.tooltips')
       },
       {
           key: 'percentCollegePersistent',
           title: "#{t("Persistence", scope:'lib.college_success_award')} %",
-          tooltip: nil
+          tooltip: t("Persistence", scope:'lib.college_success_award.tooltips')
       },
       {
           key: 'districtAnchor',
@@ -90,27 +90,4 @@ module SearchTableConcerns
       }
     ].compact
   end
-
-  # def generate_remediation_hash
-  #   remediation_data = serialized_schools.map { |d| d[:remediationData] }.flatten
-  #   any_subject_breakdown = remediation_data.any? { |rd| rd["subject"] && rd["subject"] != 'All subjects' }
-  #   if any_subject_breakdown
-  #     remediation_data.map {|r| r["subject"]}.compact
-  #                                            .uniq
-  #                                            .map do |header|
-  #                                               {
-  #                                                 key: "percentCollegeRemediation#{header.downcase}",
-  #                                                 title: COLLEGE_REMEDIATION_HEADER_NAMES[header.downcase],
-  #                                                 tooltip: nil
-  #                                               }
-  #                                             end
-  #   else
-  #     {
-  #       key: 'percentCollegeRemediation',
-  #       title: "College Remediation",
-  #       tooltip: nil
-  #     }
-  #   end
-  # end
-
 end
