@@ -28,6 +28,8 @@ en:
     state:
       state_hero_narrative_html: <div class="state-hero-narrative">There are {schoolCount} public and private K-12 schools in {nameLong}. As you search for schools that fit your family, you'll find information on academic, equity, environment, reviews, and more.</div>
       state_hero_title: '{state} Schools'
+      districts_header: Largest school districts in {nameLong}
+      cities_header: Browse schools in {nameLong} by
     community_resources: community resources
     county: county
     date: Date
