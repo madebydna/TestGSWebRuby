@@ -28,7 +28,7 @@ module SchoolProfiles
         'number_of_reviews_with_comments' =>  school_reviews_count,
         # untruncated values
         'city_long'   => school.city,
-        'address'    => school.mail_street
+        'address'    => school.street
       }
     end
   end
