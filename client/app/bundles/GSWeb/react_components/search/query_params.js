@@ -100,7 +100,7 @@ export function getView() {
   if (validSearchViews.indexOf(view) > -1) {
     return view;
   }
-  return 'list';
+  return undefined;
 }
 
 export function getTableView() {
