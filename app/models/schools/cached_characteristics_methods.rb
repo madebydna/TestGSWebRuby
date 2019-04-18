@@ -104,7 +104,8 @@ module CachedCharacteristicsMethods
   end
 
   def stays_2nd_year
-    style_school_value_as_percent('Percent Enrolled in College and Returned for a Second Year')
+    value = style_school_value_as_percent('Percent Enrolled in College and Returned for a Second Year') 
+    value == NO_DATA_SYMBOL ? 'N/A' : value
   end
 
   def graduates_remediation
