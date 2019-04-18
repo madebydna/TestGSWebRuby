@@ -595,46 +595,12 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
      HashLookup, :grade_level, map_oh_grade, to: :grade)
     .transform("Adding subject ids",
      HashLookup, :subject, map_oh_subject_type_state, to: :academic_gsdata_id)
-    .transform("Map breakdown" WithBlock) do |row|
-      if row[:breakdown]=='N'
-        row[:breakdown] = 'NonDisabled'
-      elsif row[:breakdown]=='Y'
-        row[:breakdown] = 'Disabled'
-      end
-     row
-    end
-    .transform("Adding breakdown ids",
-      HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
-    .transform('Fill missing default fields', Fill, {
-      entity_level: 'state'
-    })
-  end
-
-  source("1617_STATE_DISABLED.txt",[],col_sep: "\t") do |s|
-   s.transform('Rename column headers', MultiFieldRenamer,{
-      proficient_percentage: :value_float,
-      disabled_flag: :breakdown,
-      assessment_subject: :subject
-    })
-    .transform('remove NC value rows', DeleteRows, :value_float, 'NC', nil)
-    .transform("Remove "%" in value_float", WithBlock) do |row|
-      unless row[:value_float].nil?
-          row[:value_float] = row[:value_float].gsub(/[\%]/, '')
+    .transform("Map breakdown", WithBlock) do |row|
+       if row[:breakdown]=='N'
+         row[:breakdown] = 'NonDisabled'
+       elsif row[:breakdown]=='Y'
+         row[:breakdown] = 'Disabled'
      end
-     row
-    end
-    .transform("Adding grades",
-     HashLookup, :grade_level, map_oh_grade, to: :grade)
-    .transform("Adding subject ids",
-     HashLookup, :subject, map_oh_subject_type_state, to: :academic_gsdata_id)
-    .transform("Adding breakdown ids",
-     HashLookup, :subject, map_disabled_st, to: :breakdown_gsdata_id)
-    .transform("Map breakdown" WithBlock) do |row|
-      if row[:breakdown]=='N'
-        row[:breakdown] = 'NonDisabled'
-      elsif row[:breakdown]=='Y'
-        row[:breakdown] = 'Disabled'
-      end
      row
     end
     .transform("Adding breakdown ids",
@@ -685,11 +651,11 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
      HashLookup, :grade_level, map_oh_grade, to: :grade)
     .transform("Adding subject ids",
      HashLookup, :subject, map_oh_subject_type_state, to: :academic_gsdata_id)
-    .transform("Map breakdown" WithBlock) do |row|
-      if row[:breakdown]=='No'
-        row[:breakdown] = 'NonLEP'
-      elsif row[:breakdown]=='Yes'
-        row[:breakdown] = 'LEP'
+    .transform("Map breakdown", WithBlock) do |row|
+       if row[:breakdown]=='No'
+         row[:breakdown] = 'NonLEP'
+       elsif row[:breakdown]=='Yes'
+         row[:breakdown] = 'LEP'
       end
      row
     end
@@ -718,11 +684,11 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
      HashLookup, :grade_level, map_oh_grade, to: :grade)
     .transform("Adding subject ids",
      HashLookup, :subject, map_oh_subject_type_state, to: :academic_gsdata_id)
-    .transform("Map breakdown" WithBlock) do |row|
-      if row[:breakdown]=='N'
-        row[:breakdown] = 'NonDisadvantaged'
-      elsif row[:breakdown]=='Y'
-        row[:breakdown] = 'Disadvantaged'
+    .transform("Map breakdown", WithBlock) do |row|
+       if row[:breakdown]=='N'
+         row[:breakdown] = 'NonDisadvantaged'
+       elsif row[:breakdown]=='Y'
+         row[:breakdown] = 'Disadvantaged'
       end
      row
     end
