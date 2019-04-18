@@ -181,7 +181,7 @@ class CollegeSuccessAwardLayout extends React.Component {
   }
 
   shouldRenderTable() {
-    return this.props.view === TABLE_VIEW;
+    return this.props.size > XS && this.props.view === TABLE_VIEW;
   }
 
   onSignup() {
