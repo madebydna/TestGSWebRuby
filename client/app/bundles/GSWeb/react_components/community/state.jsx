@@ -9,7 +9,6 @@ import TopSchoolsStateful from './top_schools_stateful';
 import CityBrowseLinks from './city_browse_links';
 import DistrictsInState from "./districts_in_state";
 import RecentReviews from "./recent_reviews";
-// import Mobility from "./mobility";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
@@ -104,8 +103,6 @@ class State extends React.Component {
 
   selectTocItems(){
     let stateTocItems = [browseSchools, schoolDistricts];
-    // AC_TODO: Might need the check below?
-    // cityTocItems = remove(cityTocItems, (tocItem)=> tocItem.key === SCHOOL_DISTRICTS && this.props.districts.length === 0);
     return stateTocItems;
   }
 
@@ -130,15 +127,6 @@ class State extends React.Component {
             }
             csaModule={this.props.csa_module}
             shouldDisplayDistricts={this.props.districts.length > 0}
-            topSchools={
-              <TopSchoolsStateful
-                  community="city"
-                  schoolsData={3 || this.props.schools_data.schools}
-                  size={this.props.viewportSize}
-                  locality={this.props.locality}
-                  schoolLevels={2 || this.props.schools_data.counts}
-              />
-            }
             districts={this.props.districts}
             districtsInState={
               <DistrictsInState
