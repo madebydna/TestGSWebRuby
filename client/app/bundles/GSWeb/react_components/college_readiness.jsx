@@ -63,11 +63,11 @@ export default class CollegeReadiness extends DataModule {
       let badge = this.filteredData()[this.state.active].csa_badge;
       return ( badge &&
         <div className="panel clearfix">
-          <div className="row">
-            <div className="col-xs-12 col-sm-4 csa-image">
+          <div className="row csa-profile-module-blurb">
+            <div className="col-xs-12 col-sm-3 csa-image">
               <img src={require('school_profiles/csa_generic_badge_lg_icon.png')}/>
             </div>
-            <div className="col-xs-12 col-sm-8 csa-text">
+            <div className="col-xs-12 col-sm-9 csa-text">
               <span dangerouslySetInnerHTML={{__html: badge}}/>
             </div>
           </div>
