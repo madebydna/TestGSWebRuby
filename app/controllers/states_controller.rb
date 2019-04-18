@@ -305,7 +305,7 @@ class StatesController < ApplicationController
 
   def districts_data 
     stateShort = States.abbreviation(params['state'])
-    if StateCache.for_state('district_largest', stateShort).value
+    if StateCache.for_state('district_largest', stateShort)
       largest_districts = JSON.parse(StateCache.for_state('district_largest', stateShort).value)
     else 
       largest_districts = {}
