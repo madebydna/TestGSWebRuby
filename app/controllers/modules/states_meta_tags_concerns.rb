@@ -17,7 +17,7 @@ module StatesMetaTagsConcerns
   end
 
   def states_show_description
-    "GreatSchools has ratings & reviews for #{state_school_count} #{state_long_name_with_caps} elementary, middle, & high schools. Find the best public, charter, or private school for your child."
+    t('.description', state_school_count: state_school_count, state_long_name_with_caps: state_long_name_with_caps)
   end
 
   def states_community_title
