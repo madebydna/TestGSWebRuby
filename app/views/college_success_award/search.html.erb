@@ -6,7 +6,8 @@
     <%= webpack_javascript_include_tag 'college-success-award', defer: true %>
 <% end %>
 <% content_for :page_stylesheets do %>
-    <%= stylesheet_link_tag "search", async: true %>
+  <%= stylesheet_link_tag "search", async: true %>
+  <%= stylesheet_link_tag "college-success-award", media: "all", "data-turbolinks-track" => true %>
 <% end %>
 
 <div id="search-page">

@@ -41,13 +41,14 @@
           font-size: 11px;
         }
       }
-      &:last-child {
-        color: #2bade3;
-        font-weight: 600;
-        border-top: solid 1px $gray;
-        &:hover {
-          background: none;
-        }
+    }
+
+    .search-results-show-all-option {
+      color: #2bade3;
+      font-weight: 600;
+      border-top: solid 1px $gray;
+      &:hover {
+        background: none;
       }
     }
   }

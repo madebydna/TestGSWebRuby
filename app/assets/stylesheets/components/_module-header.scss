@@ -10,6 +10,12 @@
   .title-container {
     padding: 0 $spacing-medium;
     overflow: hidden;
+    // Overwrites the general styles applied on h3
+    h3 {
+      display: inline-block;
+      margin: 0;
+      font-size: 20px;
+    }
   }
 
   > .icon {

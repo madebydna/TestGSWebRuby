@@ -32,9 +32,7 @@ module CommunityConcerns
     end
 
     def fetch_top_rated_csa_schools
-      current_year = [2018]
-      set_level_code_params('h')
-      set_csa_winner_param(current_year)
+      set_csa_winner_param('*')
       serialized_schools
     end 
 
@@ -56,7 +54,7 @@ module CommunityConcerns
             middle: middle.count,
             high: high.count,
             csa: csa.count,
-            all: elementary.count + middle.count + high.count + csa.count
+            all: elementary.count + middle.count + high.count
           }
         }
       end

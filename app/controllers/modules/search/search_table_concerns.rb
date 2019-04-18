@@ -4,6 +4,7 @@ module SearchTableConcerns
 
   ACADEMIC_HEADER_NAMES = ['Test Scores Rating', 'Academic Progress Rating', 'College Readiness Rating', 'Advanced Courses Rating', 'Equity Overview Rating']
   OVERVIEW_HEADER_NAMES = ['Type', 'Grades', 'Total students enrolled', 'Students per teacher', 'Reviews', 'District']
+  COLLEGE_REMEDIATION_HEADER_NAMES = {"english": "Remediation: English", "math": "Remediation: Math"}
 
   def academic_header_hash
     ACADEMIC_HEADER_NAMES.map do |title|
@@ -43,5 +44,73 @@ module SearchTableConcerns
       }
     end
   end
+
+  def college_success_award_header_arr(year)
+    # get the state values by year
+    [
+      {
+          key: 'schoolType',
+          title: 'Type',
+          tooltip: nil
+      },
+      {
+          key: 'enrollment',
+          title: 'Total enrolled',
+          tooltip: nil
+      },
+      {
+          key: 'percentLowIncome',
+          title: '% Low income',
+          tooltip: nil
+      },
+      {
+        key: 'percentCollegeRemediation',
+        title: "College Remediation",
+        tooltip: nil
+      },
+      {
+        key: 'percentCollegeRemediationEnglish',
+        title: "College Remediation: English",
+        tooltip: nil
+      },
+      {
+        key: 'percentCollegeRemediationMath',
+        title: "College Remediation: Math",
+        tooltip: nil
+      },
+      {
+          key: 'percentCollegePersistent',
+          title: 'Persistence %',
+          tooltip: nil
+      },
+      {
+          key: 'districtAnchor',
+          title: 'District',
+          tooltip: nil
+      }
+    ].compact
+  end
+
+  # def generate_remediation_hash
+  #   remediation_data = serialized_schools.map { |d| d[:remediationData] }.flatten
+  #   any_subject_breakdown = remediation_data.any? { |rd| rd["subject"] && rd["subject"] != 'All subjects' }
+  #   if any_subject_breakdown
+  #     remediation_data.map {|r| r["subject"]}.compact
+  #                                            .uniq
+  #                                            .map do |header|
+  #                                               {
+  #                                                 key: "percentCollegeRemediation#{header.downcase}",
+  #                                                 title: COLLEGE_REMEDIATION_HEADER_NAMES[header.downcase],
+  #                                                 tooltip: nil
+  #                                               }
+  #                                             end
+  #   else
+  #     {
+  #       key: 'percentCollegeRemediation',
+  #       title: "College Remediation",
+  #       tooltip: nil
+  #     }
+  #   end
+  # end
 
 end

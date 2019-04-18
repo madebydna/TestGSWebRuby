@@ -3,6 +3,7 @@
 class ReviewSchoolChooserController < ApplicationController
   
   before_action :use_gs_bootstrap
+  layout 'application'
 
   def show
     write_tags_and_gon

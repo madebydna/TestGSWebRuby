@@ -54,6 +54,8 @@ class School < ActiveRecord::Base
 
   # Given objects that have state and school_id, load school for each one
   def self.load_all_from_associates(associates)
+    associates = associates.select { |o| o.state.present? && o.school_id.present? }
+
     # need a map so we can effeciently maintain order
     associate_state_school_ids_hash = 
       associates.each_with_object({}) do |obj, hash|

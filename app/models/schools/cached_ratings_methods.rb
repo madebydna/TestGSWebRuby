@@ -59,6 +59,12 @@ module CachedRatingsMethods
       .map {|filtered_breakdown| filtered_breakdown[:label]}
   end
 
+   Breakdown.unique_ethnicity_names.each do |ethnicity|
+    define_method("test_scores_rating_#{ethnicity.downcase.gsub(" ", "_")}") do
+      send(:test_score_ratings_by_breakdown)[ethnicity]
+    end
+  end
+
   # Not using for now; will implement when we have better breakdown handling
   def translated_ethnicity_breakdowns_with_fallback
     ethnicity_breakdowns.map {|breakdown| I18n.t(breakdown, default: breakdown)}

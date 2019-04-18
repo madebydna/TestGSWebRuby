@@ -8,7 +8,8 @@
   <%= stylesheet_link_tag    "deprecated_print",       media: "print" %>
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
-  <%= javascript_include_tag "deprecated_application", "data-turbolinks-track" => true %>
+  <%= webpack_javascript_include_tag("commons-blocking", "data-turbolinks-track" => true) %>
+  <%= webpack_javascript_include_tag("commons-blocking-loader", "data-turbolinks-track" => true) %>
 
   <%= csrf_meta_tags %>
     <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
@@ -43,7 +44,6 @@
 </head>
 <body class="open-sans">
 
-<%= render 'google_tag_manager/push_to_data_layer' %>
 <div class="js-modal-container"></div>
 <%= render 'google_tag_manager/install' %>
 
@@ -70,7 +70,8 @@
 <div class="visible-xs js-disableInterstitial"></div>
 <%= stylesheet_link_tag "deprecated_post_load", :async => true %>
 <%= webpack_javascript_include_tag "mobile-overlay-ad", defer: true %>
-<%= javascript_include_tag "deprecated_post_load", defer: true %>
+<%= javascript_include_tag "deprecated_post_load", defer: true unless content_for?(:page_javascripts) %>
+
 <script type="text/javascript">
   $(window).on('load', function () {
     GS.ad.init();
@@ -81,7 +82,13 @@
     }
   });
 </script>
-<%= yield :javascript_includes %>
-<%= yield :page_javascripts %>
+
+  <%= yield :javascript_includes %>
+  <%= yield :page_javascripts %>
+  <%= webpack_javascript_include_tag 'commons', defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'default-page-just-layout', defer: true unless content_for?(:page_javascripts) %>
+  <%= react_component('SearchBoxWrapper') unless content_for?(:page_javascripts) %>
+
 </body>
 </html>
