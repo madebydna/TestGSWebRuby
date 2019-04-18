@@ -3,5 +3,13 @@ en:
     college_success_award:
       title: "%{year} College Success Award Winners from %{state}"
       csa_year_winners: "%{year} winners"
-      Total enrolled: Número total de estudiantes matriculados
+      Total enrolled: Total enrolled
       Persistence: Persistence
+      tooltips:
+        Total enrolled: The total number of students enrolled across all grade levels in each school.
+        Low-income: Students who qualify for free or reduced-price lunch 
+        College enrollment: Graduates from who enrolled in an institution of higher learning
+        Remediation: This reflects the percentage of graduates who needed to take basic - or remedial - classes, which do not count towards a degree, in college.
+        Math remediation: This reflects the percentage of graduates who needed to take basic - or remedial - math classes in college, which do not count towards a degree.
+        English remediation: This reflects the percentage of graduates who needed to take basic - or remedial - English classes in college, which do not count towards a degree.
+        Persistence: This reflects the percentage of graduates who completed their first year of college and returned for a second year.
