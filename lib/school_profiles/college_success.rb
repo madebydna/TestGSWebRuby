@@ -31,8 +31,9 @@ module SchoolProfiles
         else
           csa_award_winning_years[0..-2].join(', ') + " #{translate("and")} " + csa_award_winning_years.last.to_s
         end
+      csa_state_link = state_college_success_awards_list_path(state_params(@school_cache_data_reader.school.state))
       {
-        csa_badge: I18n.t(:csa_badge_html, scope: 'lib.college_readiness', blurb: blurb).html_safe
+        csa_badge: I18n.t(:csa_badge_html, scope: 'lib.college_readiness', blurb: blurb, csa_state_link: csa_state_link).html_safe
       }
     end
 
