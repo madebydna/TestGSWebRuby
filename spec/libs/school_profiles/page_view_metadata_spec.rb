@@ -5,6 +5,7 @@ describe SchoolProfiles::PageViewMetadata do
   describe "#build" do
     it 'should return page meta data hash' do
       school = build(:page_view_school)
+      school.street = '15 O\'Hara St'
       school_reviews_count  = 6
       gs_rating = '5'
       page_name = 'test'
@@ -31,6 +32,22 @@ describe SchoolProfiles::PageViewMetadata do
       'district_id' => school.district.present? ? school.district.id.to_s : "",
       'template'    => "SchoolProf",
       'number_of_reviews_with_comments' => school_reviews_count,
+      'city_long' => 'Alameda',
+      'address' => '15 OHara St'
     }
+  end
+
+  describe '#sanitize_for_dfp' do
+    subject { SchoolProfiles::PageViewMetadata.sanitize_for_dfp(value) }
+
+    describe 'with a normal alphanumeric string' do
+      let (:value) { '2121 Broadway' }
+      it { is_expected.to eq '2121 Broadway' }
+    end
+
+    describe 'with characters in the set [,#&()]' do
+      let (:value) { '2121 O\'Broadway & 23rd #400 (WeWork)' }
+      it { is_expected.to eq '2121 OBroadway  23rd 400 WeWork' }
+    end
   end
 end
