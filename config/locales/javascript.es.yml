@@ -355,6 +355,14 @@ es:
     Continue: Continuar
     Not right now: No en este momento
     sources: Fuentes
+    CSA Page:
+      summary: >
+        <span>En %{state}, %{total} escuelas públicas ganaron un College Success Award de %{year}, un premio basado en su 
+          éxito en preparar a los estudiantes para la universidad y, finalmente, la carrera. Los College Success Awards 
+          reconocen a las escuelas secundarias públicas que se sobresalen a lograr que los estudiantes se matriculen y permanezcan 
+          en la universidad. 
+          <a href="/gk/csa-winners/">Obtén más información</a>.
+        </span>
     tour1:
       step1: GreatSchool es la organización nacional sin fines de lucro líder en información de escuelas y padres. Recaudamos información de fuentes estatales y federales para ayudarle a entender lo que es la calidad escolar y encontrar las mejores oportunidades educativas para sus hijos.
       step2_title_html: '<div class="tutorial-header">El Resumen de Calificaciones</div><br/>'

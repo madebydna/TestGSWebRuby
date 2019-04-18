@@ -7,6 +7,7 @@ import { Search } from './search/search';
 import NoResults from './search/no_results';
 import { getCsaYears, queryStringWithNewCsaYears } from './search/query_params';
 import { pushQueryString } from './search/search_query_params';
+import { t, capitalize } from 'util/i18n';
 
 class CollegeSuccessAward extends Search {
   noResults() {
@@ -19,14 +20,14 @@ class CollegeSuccessAward extends Search {
   }
 
   renderCsaSummary() {
+    let state = stateName(this.props.state);
+    let total = this.props.total;
+    let year = this.props.csaYears[0];
     return (
-      <span>
-        {`In ${stateName(this.props.state)}, ${this.props.total} public schools earned a College Success Award in ${this.props.csaYears[0]} based on their 
-            success in preparing students for college and ultimately career. The College Success awards 
-            recognize public high schools that stand out in getting students enrolled in - and staying 
-            with - college.  `}
-        <a href="/gk/csa-winners/">Learn more</a>.
-      </span>
+      <div dangerouslySetInnerHTML={{
+          __html: t('CSA Page.summary', { parameters: { state, total, year } })
+        }}
+      />
     );
   }
 

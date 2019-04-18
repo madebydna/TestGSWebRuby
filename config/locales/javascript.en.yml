@@ -353,6 +353,14 @@ en:
     Continue: Continue
     Not right now: Not right now
     sources: Sources
+    CSA Page:
+      summary: >
+        <span>In %{state}, %{total} public schools earned a College Success Award in %{year} based on their 
+            success in preparing students for college and ultimately career. The College Success awards 
+            recognize public high schools that stand out in getting students enrolled in - and staying 
+            with - college.  
+          <a href="/gk/csa-winners/">Learn more</a>.
+        </span>
     tour1:
       step1: GreatSchools is the leading national nonprofit providing school & parenting information. We collect data from state & federal sources to help you understand school quality and find the best educational opportunities for your child.
       step2_title_html: '<div class="tutorial-header">Summary rating</div><br/>'

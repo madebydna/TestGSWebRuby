@@ -145,6 +145,7 @@ const SchoolTableRow = ({
   const percentCollegeRemediation = renderRemediationValue(remediationData, 'All subjects')
   const percentCollegeRemediationEnglish = renderRemediationValue(remediationData, 'English')
   const percentCollegeRemediationMath = renderRemediationValue(remediationData, 'Math')
+  const clarifiedSchoolType = <div>{capitalize(clarifySchoolType(schoolType))}</div>
 
   const schoolCard = () => {
     return (
@@ -205,7 +206,6 @@ const SchoolTableRow = ({
   }
 
   else {
-    if (columns === undefined) {debugger }
     content = <React.Fragment>{columns.map(col => <td>{eval(col.key)}</td>) }</React.Fragment>
   }
 

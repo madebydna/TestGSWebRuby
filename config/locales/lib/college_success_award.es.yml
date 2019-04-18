@@ -2,3 +2,6 @@ es:
   lib:
     college_success_award:
       title: "%{year} Ganadores del College Success Award de %{state}"
+      csa_year_winners: "Ganadores del  %{year}"
+      Total enrolled: Número total de estudiantes matriculados
+      Persistence: Persistencia

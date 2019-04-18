@@ -49,38 +49,38 @@ module SearchTableConcerns
     # get the state values by year
     [
       {
-          key: 'schoolType',
+          key: 'clarifiedSchoolType',
           title: 'Type',
           tooltip: nil
       },
       {
           key: 'enrollment',
-          title: 'Total enrolled',
+          title: t("Total enrolled", scope:'lib.college_success_award'),
           tooltip: nil
       },
       {
           key: 'percentLowIncome',
-          title: '% Low income',
+          title: "% #{t("Low-income", scope:'lib.search')}",
           tooltip: nil
       },
       {
         key: 'percentCollegeRemediation',
-        title: "College Remediation",
+        title: "Remediation",
         tooltip: nil
       },
       {
         key: 'percentCollegeRemediationEnglish',
-        title: "College Remediation: English",
+        title: "English Remediation",
         tooltip: nil
       },
       {
         key: 'percentCollegeRemediationMath',
-        title: "College Remediation: Math",
+        title: "Math Remediation",
         tooltip: nil
       },
       {
           key: 'percentCollegePersistent',
-          title: 'Persistence %',
+          title: "#{t("Persistence", scope:'lib.college_success_award')} %",
           tooltip: nil
       },
       {

@@ -28,7 +28,7 @@ class CollegeSuccessAwardController < ApplicationController
         tableViewOptions: (csa_available_years).map do |year|
           {
             key: year,
-            label: "#{year} winners"
+            label: t('csa_year_winners', scope: 'lib.college_success_award', year: year)
           }
         end
       })
@@ -42,8 +42,8 @@ class CollegeSuccessAwardController < ApplicationController
     gon.search['facetFields'] = populated_facet_fields
     gon.search['csaYears'] = csa_available_years
     set_meta_tags(choose_meta_tag_implementation.new(self).meta_tag_hash)
+    set_page_analytics_data
     # set_ad_targeting_props
-    # set_page_analytics_data
     # response.status = 404 if serialized_schools.empty?
   end
 
@@ -158,12 +158,10 @@ class CollegeSuccessAwardController < ApplicationController
 
   # PageAnalytics
   def page_analytics_data
-    raise 'Not defined'
     {}.tap do |hash|
-      hash[PageAnalytics::SEARCH_TERM] = q if q
-      hash[PageAnalytics::SEARCH_TYPE] = search_type
-      hash[PageAnalytics::SEARCH_HAS_RESULTS] = page_of_results.any?
-      hash[PageAnalytics::PAGE_NAME] = 'GS:CSAAwardWinners'
+      hash[PageAnalytics::PAGE_NAME] = 'GS:Badges:CSA'
+      hash[PageAnalytics::STATE] = state.upcase if state
+      hash[PageAnalytics::ENV] = ENV_GLOBAL['advertising_env']
     end
   end
 
