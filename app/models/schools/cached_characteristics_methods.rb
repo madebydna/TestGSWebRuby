@@ -114,7 +114,6 @@ module CachedCharacteristicsMethods
   end
 
   def graduates_remediation_for_college_success_awards
-    # require 'pry'; binding.pry if graduates_remediation.nil?
     return [] unless graduates_remediation.present?
     data = graduates_remediation.select { |data| data["subject"] == nil || REMEDIATION_SUBJECTS_FOR_CSA.include?(data["subject"])}
     data.map do |datum|
