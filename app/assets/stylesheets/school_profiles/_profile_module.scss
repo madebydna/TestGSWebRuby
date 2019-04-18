@@ -208,15 +208,26 @@
     }
   }
 
-  .csa-image {
-    text-align: center;
-  }
+  .csa-profile-module-blurb {
+    display: flex;
+    margin: 0 10px;
+    align-items: center;
 
-  .csa-text {
-    @include media-breakpoint-down(md) {
-      padding-top: 15px;
+    .csa-image {
+      margin: 0;
+    }
+  
+    .csa-text {
+      @include media-breakpoint-down(md) {
+        padding-top: 15px;
+      }
+
+      p {
+        margin: 0;
+      }
     }
   }
+
 
   .icon-flag {
     margin-left: 5px;
