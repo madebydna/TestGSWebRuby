@@ -28,7 +28,7 @@ const DistrictsInState = ({districts, locality}) => {
 
       <div className="more-school-btn">
         <a href={locality.districtsBrowseUrl}>
-          <button>See All Districts</button>
+          <button>{t('state.districts_browse_more_button')}</button>
         </a>
       </div>
     </section>

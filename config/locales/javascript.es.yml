@@ -27,9 +27,11 @@ es:
     city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
     state:
       state_hero_narrative_html: <div class="state-hero-narrative">There are {schoolCount} public and private K-12 schools in {nameLong}. As you search for schools that fit your family, you'll find information on academic, equity, environment, reviews, and more.</div>
-      state_hero_title: '{state} Escuelas'
+      state_hero_title: '{nameLong} Escuelas'
       districts_header: Largest school districts in {nameLong}
       cities_header: Browse schools in {nameLong} by
+      cities_browse_more_button: See all cities
+      districts_browse_more_button: See all districts
     community_resources: recursos de la comunidad 
     county: condado
     date: Fecha
