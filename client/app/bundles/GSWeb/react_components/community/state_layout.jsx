@@ -45,13 +45,12 @@ class StateLayout extends React.Component {
   }
 
   heroTitle(){
-    let {nameLong} = this.props.locality;
-    return t('state.state_hero_title', { parameters: { state: nameLong }});
+    let { nameLong } = this.props.locality;
+    return t('state.state_hero_title', { parameters: { nameLong }});
   }
 
-  // AC_TODO: Add Spanish translation for hero blurb
   heroNarration(){
-    let {nameLong} = this.props.locality;
+    let { nameLong } = this.props.locality;
     let schoolCount = this.props.schoolCount;
 
     return <div
@@ -92,19 +91,22 @@ class StateLayout extends React.Component {
     return this.props.viewportSize > XS && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
   }
 
-  // AC_TODO: Add translations
   renderDistricts(){
+    console.log(this.props.shouldDisplayDistricts);
+
+    let { nameLong } = this.props.locality;
+
     return this.props.shouldDisplayDistricts && (
       <div id="districts">
-        <div className="modules-title">{`Largest school districts in ${this.props.locality.nameLong}`}</div>
+        <div className="modules-title">{t('state.districts_header', { parameters: { nameLong }})}</div>
           {this.props.districtsInState}
       </div>
     )
   }
 
-  // AC_TODO: Add translations
   renderCities(){
-    const browseHeader = `Browse schools in ${this.props.locality.nameLong} by`;
+    let { nameLong } = this.props.locality;
+    const browseHeader = t('state.cities_header', { parameters: { nameLong }});
 
     return (
       <div id="schools">

@@ -50,7 +50,7 @@ const cityBrowseLinks = ({locality, size, community, cities}) => {
       </div>
       <div className="more-school-btn">
         <a href={locality.citiesBrowseUrl}>
-          <button>See All Cities</button>
+          <button>{t('state.cities_browse_more_button')}</button>
         </a>
       </div>
     </section>
