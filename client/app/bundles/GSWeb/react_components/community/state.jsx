@@ -12,7 +12,7 @@ import RecentReviews from "./recent_reviews";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
-import {browseSchools, schoolDistricts} from './toc_config';
+import {browseSchools, schoolDistricts, BROWSE_SCHOOLS, SCHOOL_DISTRICTS} from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
@@ -105,6 +105,7 @@ class State extends React.Component {
 
   selectTocItems(){
     let stateTocItems = [browseSchools, schoolDistricts];
+    stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === SCHOOL_DISTRICTS && this.props.districts.length === 0);
     return stateTocItems;
   }
 
