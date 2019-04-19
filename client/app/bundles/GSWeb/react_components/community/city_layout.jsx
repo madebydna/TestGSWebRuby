@@ -109,7 +109,7 @@ class CityLayout extends React.Component {
   renderSchools(){
     return (
       <div id="schools">
-        <h2 className="modules-title">{`Find schools in ${this.props.locality.city}`}</h2>
+        <h2 className="modules-title">{`${t('find_schools_in')} ${this.props.locality.city}`}</h2>
         {this.props.browseSchools}
         {this.props.topSchools}
       </div>
