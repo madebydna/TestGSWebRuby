@@ -160,7 +160,8 @@ class SearchProvider extends React.Component {
       !isEqual(prevProps.sort, this.props.sort) ||
       !isEqual(prevProps.page, this.props.page) ||
       !isEqual(prevProps.distance, this.props.distance) ||
-      !isEqual(prevProps.csaYears, this.props.csaYears)
+      !isEqual(prevProps.csaYears, this.props.csaYears) ||
+      !isEqual(prevProps.total, this.props.total)
     ) {
       this.updateSchools();
     }
@@ -199,7 +200,7 @@ class SearchProvider extends React.Component {
       () => {
         const start = Date.now();
         this.findSchoolsWithReactState().done(
-          ({ items: schools, totalPages, paginationSummary, resultSummary }) =>
+          ({ items: schools, totalPages, paginationSummary, resultSummary, total }) =>
             setTimeout(
               () =>
                 this.setState({
@@ -207,6 +208,7 @@ class SearchProvider extends React.Component {
                   totalPages,
                   paginationSummary,
                   resultSummary,
+                  total,
                   loadingSchools: false
                 }),
               500 - (Date.now() - start)
@@ -381,7 +383,7 @@ class SearchProvider extends React.Component {
           numOfSchools: this.state.schools.length,
           page: this.props.page,
           totalPages: this.state.totalPages,
-          total: this.props.total,
+          total: this.state.total,
           state: this.props.state,
           onPageChanged: compose(
             () => {

@@ -47,39 +47,6 @@ class CollegeSuccessAwardController < ApplicationController
     # response.status = 404 if serialized_schools.empty?
   end
 
-  # def table_headers_arr(year)
-  #   # get the state values by year
-  #   [
-  #     {
-  #         key: 'schoolType',
-  #         title: 'Type',
-  #         tooltip: nil
-  #     },
-  #     {
-  #         key: 'enrollment',
-  #         title: 'Total enrolled',
-  #         tooltip: nil
-  #     },
-  #     {
-  #         key: 'percentLowIncome',
-  #         title: '% Low income',
-  #         tooltip: nil
-  #     },
-  #     generate_remediation_hash,
-  #     {
-  #         key: 'percentCollegePersistent',
-  #         title: 'Persistence %',
-  #         tooltip: nil
-  #     },
-  #     {
-  #         key: 'districtAnchor',
-  #         title: 'District',
-  #         tooltip: nil
-  #     }
-  #   ].compact
-  # end
-
-
   # SearchRequestParams
   def default_view
     'table'
@@ -184,10 +151,6 @@ class CollegeSuccessAwardController < ApplicationController
   # SearchRequestParams
   def not_default_extras
     %w(geometry)
-  end
-
-  def with_required_subjects()
-    
   end
 
 end
