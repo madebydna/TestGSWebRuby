@@ -13,7 +13,7 @@ module MetaTag
     end
 
     def canonical_url
-      "#{state_url(state_params(state))}college-success-award/"
+      "#{state_college_success_awards_list_url(States.abbreviation_hash[state])}"
     end
 
     def og
