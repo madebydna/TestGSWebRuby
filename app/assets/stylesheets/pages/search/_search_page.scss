@@ -634,6 +634,13 @@ body {
         top: 20px;
       }
     }
+
+    .low-income-percentages{
+      @include flexbox-center;
+      span{
+        font-family: 'opensans-semibold';
+      }
+    }
   }
 }
 

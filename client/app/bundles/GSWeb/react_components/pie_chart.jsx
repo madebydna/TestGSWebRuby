@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const size = 5;
+// const size = 2;
 const radCircumference = Math.PI * 2;
 const center = size / 2;
 const radius = center - 1; // padding to prevent clipping
