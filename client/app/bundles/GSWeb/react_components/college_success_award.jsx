@@ -8,6 +8,7 @@ import NoResults from './search/no_results';
 import { getCsaYears, queryStringWithNewCsaYears } from './search/query_params';
 import { pushQueryString } from './search/search_query_params';
 import { t, capitalize } from 'util/i18n';
+import { XS, SM, validSizes } from 'util/viewport';
 
 class CollegeSuccessAward extends Search {
   noResults() {
@@ -23,12 +24,22 @@ class CollegeSuccessAward extends Search {
     let state = stateName(this.props.state);
     let total = this.props.total;
     let year = this.props.csaYears[0];
-    return (
-      <div dangerouslySetInnerHTML={{
-          __html: t('CSA Page.summary', { parameters: { state, total, year } })
-        }}
-      />
-    );
+
+    if (this.props.size > SM) {
+      return (
+        <div className="pagination-summary" dangerouslySetInnerHTML={{
+            __html: t('CSA Page.summary', { parameters: { state, total, year } })
+          }}
+        />
+      );
+    } else {
+      return (
+        <div className="pagination-summary" dangerouslySetInnerHTML={{
+            __html: t('CSA Page.summary_mobile', { parameters: { state, total, year } })
+          }}
+        />
+      );
+    }
   }
 
   additionalLayoutProps = () => ({

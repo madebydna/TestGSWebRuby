@@ -367,6 +367,8 @@ es:
           en la universidad. 
           <a href="/gk/csa-winners/">Obtén más información</a>.
         </span>
+      summary_mobile: >
+        <span>En %{state}, %{total} escuelas públicas han ganado un %{year} GreatSchools College Success Award basado en su éxito en la preparación de los estudiantes para la universidad y, finalmente, la carrera. <a href="/gk/csa-winners/">Aprende más</a>.</span>
     tour1:
       step1: GreatSchool es la organización nacional sin fines de lucro líder en información de escuelas y padres. Recaudamos información de fuentes estatales y federales para ayudarle a entender lo que es la calidad escolar y encontrar las mejores oportunidades educativas para sus hijos.
       step2_title_html: '<div class="tutorial-header">El Resumen de Calificaciones</div><br/>'
