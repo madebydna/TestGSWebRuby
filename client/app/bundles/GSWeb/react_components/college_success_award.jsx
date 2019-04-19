@@ -9,6 +9,7 @@ import { getCsaYears, queryStringWithNewCsaYears } from './search/query_params';
 import { pushQueryString } from './search/search_query_params';
 import { t, capitalize } from 'util/i18n';
 import { XS, SM, validSizes } from 'util/viewport';
+import Select from 'react_components/select';
 
 class CollegeSuccessAward extends Search {
   noResults() {
@@ -43,8 +44,28 @@ class CollegeSuccessAward extends Search {
   }
 
   additionalLayoutProps = () => ({
-    csaSummary: this.renderCsaSummary()
+    csaSummary: this.renderCsaSummary(),
+    csaYearSelect: this.renderCSADropDown()
   });
+
+  renderCSADropDown = () => {
+    const options = this.props.tableViewOptions;
+    const tableView = this.props.tableView.split('-')[1]
+    return (
+      <Select
+        objects={options}
+        labelFunc={d => d.label}
+        keyFunc={d => d.key}
+        onChange={d => pushQueryString(queryStringWithNewCsaYears([d.key]))}
+        defaultLabel={
+          (options.find(o=>String(o.key) === tableView) || options[0]).label
+        }
+        defaultValue={
+          options.find(o => String(o.key) === tableView).key
+        }
+      />
+    )
+  }
 
   renderTableViewButtons() {
     return (
@@ -62,7 +83,7 @@ export default function() {
     <SearchContext.Provider layout="CollegeSuccessAward">
       <SearchContext.Consumer>
         {({ schools, ...state }) => (
-          <CollegeSuccessAward {...state} tableView='CSA-2019' schools={schools.map(s => ({...s, address: ({...s.address, zip: undefined, street1: undefined})}))} />
+          <CollegeSuccessAward {...state} tableView={getCsaYears() ? `CSA-${(getCsaYears()[0])}` : null} schools={schools.map(s => ({...s, address: ({...s.address, zip: undefined, street1: undefined})}))} />
         )}
       </SearchContext.Consumer>
     </SearchContext.Provider>

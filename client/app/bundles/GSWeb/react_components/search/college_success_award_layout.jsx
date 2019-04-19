@@ -24,7 +24,8 @@ const t = translateWithDictionary({
       'for a free GreatSchools account and access your saved schools from anywhere.',
     'Verify email':
       'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.',
-    'Print': 'Print'
+    'Print': 'Print',
+    'Select': 'Select'
   },
   es: {
     'Your saved schools in': 'Tus escuelas guardadas en',
@@ -34,7 +35,8 @@ const t = translateWithDictionary({
       'para obtener una cuenta gratuita de GreatSchools y acceda a tus escuelas guardadas desde cualquier lugar.',
     'Verify email':
       'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.',
-    'Print': 'Imprime'
+    'Print': 'Imprime',
+    'Select': 'Seleccione'
   }
 });
 
@@ -321,6 +323,7 @@ class CollegeSuccessAwardLayout extends React.Component {
       !(this.shouldRenderMap() && this.props.size <= SM) && (
         <div className="subheader menu-bar">
           {this.props.breadcrumbs}
+          {this.shouldRenderList() && this.shouldRenderMap() && this.renderCSAYearDropDown()}
           {this.shouldRenderTable() ? (
             <React.Fragment>
               {!this.shouldRenderList() && (
@@ -386,6 +389,17 @@ class CollegeSuccessAwardLayout extends React.Component {
         {this.props.sortSelect}
       </div>
     );
+  }
+
+  renderCSAYearDropDown(){
+    return (
+      <React.Fragment>
+        <div className="menu-item">
+          <span className="label">{t('Select')}:</span>
+          {this.props.csaYearSelect}
+        </div>
+      </React.Fragment>
+    )
   }
 
   render() {

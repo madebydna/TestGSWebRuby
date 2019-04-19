@@ -50,7 +50,7 @@ const sharingRow = ({ url, type, moduleName }) => {
   };
   const className = type === 'Email' ? 'emailSharingLinks' : 'sharingLinks';
   const iconName = icons[type.toLowerCase()];
-  console.log(t(type))
+
   return (
     <div
       className={`sharing-row js-${className} js-slTracking`}
