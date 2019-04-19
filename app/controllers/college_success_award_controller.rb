@@ -44,7 +44,7 @@ class CollegeSuccessAwardController < ApplicationController
     set_meta_tags(choose_meta_tag_implementation.new(self).meta_tag_hash)
     set_page_analytics_data
     # set_ad_targeting_props
-    # response.status = 404 if serialized_schools.empty?
+    response.status = 404 if serialized_schools.empty?
   end
 
   # SearchRequestParams
