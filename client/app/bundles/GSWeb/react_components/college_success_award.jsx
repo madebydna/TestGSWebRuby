@@ -83,7 +83,7 @@ export default function() {
     <SearchContext.Provider layout="CollegeSuccessAward">
       <SearchContext.Consumer>
         {({ schools, ...state }) => (
-          <CollegeSuccessAward {...state} tableView={getCsaYears() ? `CSA-${(getCsaYears()[0])}` : null} schools={schools.map(s => ({...s, address: ({...s.address, zip: undefined, street1: undefined})}))} />
+          <CollegeSuccessAward {...state} tableView={getCsaYears() ? `CSA-${(getCsaYears()[0])}` : `CSA-2019`} schools={schools.map(s => ({...s, address: ({...s.address, zip: undefined, street1: undefined})}))} />
         )}
       </SearchContext.Consumer>
     </SearchContext.Provider>

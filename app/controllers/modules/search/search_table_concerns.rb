@@ -59,7 +59,7 @@ module SearchTableConcerns
           tooltip: t("Total enrolled", scope:'lib.college_success_award.tooltips')
       },
       {
-          key: 'percentLowIncome',
+          key: 'pieChartLowIncome',
           title: "% #{t("Low-income", scope:'lib.search')}",
           tooltip: t("Low-income", scope:'lib.college_success_award.tooltips')
       },

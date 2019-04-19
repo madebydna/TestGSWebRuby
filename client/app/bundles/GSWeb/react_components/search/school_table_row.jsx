@@ -8,6 +8,7 @@ import FiveStarRating from '../review/form/five_star_rating';
 import RatingWithTooltip from 'react_components/rating_with_tooltip';
 import ModalTooltip from "../modal_tooltip";
 import SavedSchoolContext from './saved_school_context';
+import PieChart from 'react_components/pie_chart';
 import csaBadgeSm from 'search/csa-award-sm.png';
 import csaBadgeMd from 'search/csa-award-md.png';
 
@@ -123,6 +124,21 @@ const SchoolTableRow = ({
   const homesForSaleHref = getHomesForSaleHref(state, address);
   const districtLink = getDistrictHref(state, address.city, districtName);
   const districtAnchor = <a href={districtLink}>{districtName}</a>
+  console.log(parseInt(percentLowIncome))
+  const pieChartLowIncome =
+    <div className="low-income-percentages">
+      <PieChart slices={[
+        {
+          color: 'gray',
+          value: parseInt(percentLowIncome)
+        },
+        {
+          color: '#d3d3d3',
+          value: 100 - parseInt(percentLowIncome),
+        },
+      ]} />
+      <span>{`${percentLowIncome}`}</span>
+    </div>;
 
   let addressPhrase = null;
   if(address.street1) {

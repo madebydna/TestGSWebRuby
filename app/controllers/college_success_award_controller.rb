@@ -53,7 +53,7 @@ class CollegeSuccessAwardController < ApplicationController
   end
 
   def csa_available_years
-    csa_available_years_query.response.facet_fields['csa_badge'].each_slice(2).select {|x| x[1] > 0}.map(&:first).map(&:to_i).sort.reverse
+    @csa_years ||= csa_available_years_query.response.facet_fields['csa_badge'].each_slice(2).select {|x| x[1] > 0}.map(&:first).map(&:to_i).sort.reverse
   end
 
   def csa_available_years_query
