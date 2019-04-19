@@ -45,6 +45,8 @@ es:
         <p><span>Fuente&#58;</span> Tandem</p>
       </div>
     districts: Distritos
+    Email: Correo electrónico
+    Permalink: Enlace permanente
     schools_in_district: Escuelas en el distrito
     school_grade: Grado escolar
     additional_school_type: Tipos de escuelas adicionales

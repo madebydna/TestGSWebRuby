@@ -5,7 +5,7 @@ import parseUrl from 'url-parse';
 import { assign } from 'lodash';
 import { renderToStaticMarkup } from 'react-dom/server';
 import Tooltip from 'react_components/school_profiles/tooltip';
-import { t, localeQueryParams } from '../../util/i18n';
+import { t, localeQueryParams, capitalize } from '../../util/i18n';
 
 /**
  * Given a url returns a new URL by merging/overwriting
@@ -50,7 +50,7 @@ const sharingRow = ({ url, type, moduleName }) => {
   };
   const className = type === 'Email' ? 'emailSharingLinks' : 'sharingLinks';
   const iconName = icons[type.toLowerCase()];
-
+  console.log(t(type))
   return (
     <div
       className={`sharing-row js-${className} js-slTracking`}
@@ -61,7 +61,7 @@ const sharingRow = ({ url, type, moduleName }) => {
       <div className="sharing-icon-box">
         <span className={`icon-${iconName}`} />
       </div>
-      <span className="sharing-row-text">{type}</span>
+      <span className="sharing-row-text">{t(type)}</span>
     </div>
   );
 };
@@ -148,7 +148,7 @@ const defaultShareContent = ({url, title, pageName, moduleName }) => {
       <div className="sharing-icon-box">
         <span className="icon-link" />
       </div>
-      <span className="sharing-row-text">Permalink</span>
+      <span className="sharing-row-text">{t('Permalink')}</span>
       <div>
         <input
           className="permalink js-permaLink js-slTracking"

@@ -45,6 +45,8 @@ en:
         <p><span>Sources&#58;</span> Tandem</p>
       </div>
     districts: Districts
+    Email: Email
+    Permalink: Permalink
     schools_in_district: Schools in district
     school_grade: School Grade
     additional_school_type: Additional school type
