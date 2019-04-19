@@ -6,7 +6,7 @@ import { titleizedName } from 'util/states';
 import { XS, SM, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
-import { translateWithDictionary } from 'util/i18n';
+import { translateWithDictionary, capitalize } from 'util/i18n';
 import { LIST_VIEW, MAP_VIEW, TABLE_VIEW } from './search_context';
 import CaptureOutsideClick from './capture_outside_click';
 import HelpTooltip from '../help_tooltip';
@@ -23,7 +23,8 @@ const t = translateWithDictionary({
     'Sign up rest':
       'for a free GreatSchools account and access your saved schools from anywhere.',
     'Verify email':
-      'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.'
+      'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.',
+    'Print': 'Print'
   },
   es: {
     'Your saved schools in': 'Tus escuelas guardadas en',
@@ -32,7 +33,8 @@ const t = translateWithDictionary({
     'Sign up rest':
       'para obtener una cuenta gratuita de GreatSchools y acceda a tus escuelas guardadas desde cualquier lugar.',
     'Verify email':
-      'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.'
+      'Thank you! One more step - please click on the verification link we’ve emailed you to access your saved schools from anywhere.',
+    'Print': 'Imprime'
   }
 });
 
@@ -181,7 +183,7 @@ class CollegeSuccessAwardLayout extends React.Component {
   }
 
   shouldRenderTable() {
-    return this.props.view === TABLE_VIEW;
+    return this.props.size > XS && this.props.view === TABLE_VIEW;
   }
 
   onSignup() {
@@ -354,7 +356,7 @@ class CollegeSuccessAwardLayout extends React.Component {
 
   renderPrintPageLink(){
     return (
-      <a href={"/catalog/csa/2019_" + this.toTitleCase(this.props.stateName) + "_Winners.pdf"}><span className='icon-fax' /><span>Print</span></a>
+      <a href={"/catalog/csa/2019_" + this.toTitleCase(this.props.stateName) + "_Winners.pdf"}><span className='icon-fax' /><span>{t("Print")}</span></a>
     )
   }
   toTitleCase = (phrase) => {

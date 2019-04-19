@@ -278,7 +278,8 @@ class StatesController < ApplicationController
           trailing_slash: true
         )
         cp[:stateCsaUrl] = state_college_success_awards_list_path(
-          state: gs_legacy_url_encode(States.state_name(params['state']))
+          state: gs_legacy_url_encode(States.state_name(params['state'])),
+          trailing_slash: true
         )
       end
     end

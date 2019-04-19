@@ -15,6 +15,7 @@ en:
     no_info: Currently, this information is unavailable. For more information
     visit our FAQ page: visit our FAQ page
     at a glance: at a glance
+    find_schools_in: Find schools in
     award_winner: Award winner
     award_winners: Award winners
     assigned_school: Assigned school
@@ -44,6 +45,8 @@ en:
         <p><span>Sources&#58;</span> Tandem</p>
       </div>
     districts: Districts
+    Email: Email
+    Permalink: Permalink
     schools_in_district: Schools in district
     school_grade: School Grade
     additional_school_type: Additional school type

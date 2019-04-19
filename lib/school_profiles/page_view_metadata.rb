@@ -27,9 +27,17 @@ module SchoolProfiles
         'template'    => SCHOOL_PROFILE_TEMPLATE,
         'number_of_reviews_with_comments' =>  school_reviews_count,
         # untruncated values
-        'city_long'   => school.city,
-        'address'    => school.mail_street
+        'city_long'   => SchoolProfiles::PageViewMetadata.sanitize_for_dfp(school.city),
+        'address'    => SchoolProfiles::PageViewMetadata.sanitize_for_dfp(school.street)
       }
+    end
+
+    # For now just strip the characters out since CGI::encode_www_form_component -- in particular that method does not
+    # encode * which is disallowed by DFP, and further it encodes spaces as + which is disallowed by DFP.
+    # See https://support.google.com/admanager/answer/177381?hl=en for the full list of characters disallowed in
+    # Ad Manager targetting key/values
+    def self.sanitize_for_dfp(value='')
+      value.gsub(/[',#&()]/, '')
     end
   end
 end

@@ -92,8 +92,6 @@ class StateLayout extends React.Component {
   }
 
   renderDistricts(){
-    console.log(this.props.shouldDisplayDistricts);
-
     let { nameLong } = this.props.locality;
 
     return this.props.shouldDisplayDistricts && (

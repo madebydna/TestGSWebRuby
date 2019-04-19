@@ -104,7 +104,8 @@ module CachedCharacteristicsMethods
   end
 
   def stays_2nd_year
-    style_school_value_as_percent('Percent Enrolled in College and Returned for a Second Year')
+    value = style_school_value_as_percent('Percent Enrolled in College and Returned for a Second Year') 
+    value == NO_DATA_SYMBOL ? 'N/A' : value
   end
 
   def graduates_remediation
@@ -113,7 +114,6 @@ module CachedCharacteristicsMethods
   end
 
   def graduates_remediation_for_college_success_awards
-    # require 'pry'; binding.pry if graduates_remediation.nil?
     return [] unless graduates_remediation.present?
     data = graduates_remediation.select { |data| data["subject"] == nil || REMEDIATION_SUBJECTS_FOR_CSA.include?(data["subject"])}
     data.map do |datum|
