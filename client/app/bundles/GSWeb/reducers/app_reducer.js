@@ -8,6 +8,7 @@ import searchReducer from './search_reducer';
 
 const commonReducer = (state, action) => {
   if (typeof state === 'undefined') {
+    console.log("stateName", findStateNameInUrl(window.location.pathname))
     return {
       shouldLoadMobileOverlayAd: false,
       stateName: findStateNameInUrl(window.location.pathname)
