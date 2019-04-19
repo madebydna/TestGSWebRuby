@@ -5,6 +5,9 @@ es:
       csa_year_winners: "Ganadores del  %{year}"
       Total enrolled: Número total de estudiantes matriculados
       Persistence: Persistencia
+      Remediation: Remediación
+      English remediation: Remediación de inglés
+      Math remediation: Remediación de matemáticas
       tooltips:
         Total enrolled: El número total de estudiantes matriculados en todos los grados en cada escuela.
         Low-income: Los estudiantes que son elegibles para recibir el almuerzo gratis o a un precio reducido.

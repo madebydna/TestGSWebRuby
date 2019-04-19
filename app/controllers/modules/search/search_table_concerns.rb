@@ -65,17 +65,17 @@ module SearchTableConcerns
       },
       {
         key: 'percentCollegeRemediation',
-        title: "Remediation",
+        title: t("Remediation", scope:'lib.college_success_award'),
         tooltip: t("Remediation", scope:'lib.college_success_award.tooltips')
       },
       {
         key: 'percentCollegeRemediationEnglish',
-        title: "English Remediation",
+        title: t("English remediation", scope:'lib.college_success_award'),
         tooltip: t("English remediation", scope:'lib.college_success_award.tooltips')
       },
       {
         key: 'percentCollegeRemediationMath',
-        title: "Math Remediation",
+        title: t("Math remediation", scope:'lib.college_success_award'),
         tooltip: t("Math remediation", scope:'lib.college_success_award.tooltips')
       },
       {
