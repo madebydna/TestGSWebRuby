@@ -1,0 +1,91 @@
+@import "school_profiles/sharing_modal";
+// bootstrap
+@import 'resources/bootstrap/smaller_bootstrap';   //REVIEW
+@import 'variables/variables';
+@import 'mixins/*';
+@import 'gs/mixins'; // deprecated   //REVIEW
+
+#search-page .search-body {
+  .icon-fax{
+    padding-right: 5px;
+  }
+  @include media-breakpoint-down(sm) {
+    position: relative;
+    margin: auto;
+    padding: 60px 0 0 0;
+
+    @include media-breakpoint-down(xs) {
+      padding:0;
+      .menu-bar.mobile-filters {
+        display: none;
+      }
+    }
+  }
+}
+
+.list-column {
+  .csa-title {
+    background-color: #e0e7eb;
+    .owl-image {
+      width: 20%;
+      margin-right: 15px;
+      > img {
+        width: 50px;
+        height: 53px;
+        margin: 10px 10px 10px 0;
+      }
+    }
+    .owl-content {
+      width: 75%;
+    }
+  }
+}
+
+.csa-title {
+  margin: 15px;
+  padding: 10px;
+  .owl-image{
+    width:13%;
+    vertical-align: middle;
+    text-align: center;
+    > img{
+      width:96px;
+      height:101px;
+    }
+  }
+  .owl-content{
+    width:82%;
+  }
+
+  @include media-breakpoint-down(sm) {
+    .owl-image{
+      width:15%;
+      > img{
+        width:65px;
+        height:70px;
+        margin: 10px;
+      }
+    }
+    .owl-content{
+      width:80%;
+    }
+    @include media-breakpoint-down(xs) {
+      background-color: #e0e7eb;
+      .owl-image {
+        width: 20%;
+        > img {
+          width: 50px;
+          height: 53px;
+          margin: 10px;
+        }
+      }
+      .owl-content {
+        width: 75%;
+      }
+    }
+  }
+  div {
+    float:left
+  }
+
+}

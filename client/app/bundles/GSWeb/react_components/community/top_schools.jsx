@@ -30,7 +30,7 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
   }
 }
 
-const TopSchools = ({ schools, handleGradeLevel, size, levelCodes, community, schoolLevels, locality}) => {
+const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, levelCodes, community, schoolLevels, locality }) => {
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
@@ -41,6 +41,7 @@ const TopSchools = ({ schools, handleGradeLevel, size, levelCodes, community, sc
   const noSchoolsMapDistrict = {
     "e": t("top_schools.no_elemDistrict"), "m": t("top_schools.no_midDistrict"), "h": t("top_schools.no_highDistrict")
   }
+
   if (schools.length === 0) {
     schoolList = <section className="no-schools">
                     <div>
@@ -58,26 +59,31 @@ const TopSchools = ({ schools, handleGradeLevel, size, levelCodes, community, sc
           ))}
         </section>;
   }
-	return <div className="top-school-module">
-      <div className="top-school-info">
-        <div>
-          <h3>{t("top_schools.top_schools")}</h3>
-          <p>
-            {t('top_schools.top_schools_blurbs')}
-            <a href="/gk/ratings">{t('top_schools.learn_more')}</a>
-          </p>
+  
+	return (
+    <div className="top-school-module">
+      <div className="profile-module">
+        { renderTabsContainer() }
+        <div className="top-school-info">
+          <div>
+            <p>
+              <span dangerouslySetInnerHTML={{__html: t('top_schools.top_schools_blurbs')}}/>
+              <a href="/gk/ratings">{t('top_schools.learn_more')}</a>
+            </p>
+          </div>
+        </div>
+        <br/>
+        {renderButtons(handleGradeLevel, community, schoolLevels, levelCodes)}
+        <hr />
+        {schoolList}
+        <div className="more-school-btn">
+          <a href={addQueryParamToUrl('gradeLevels', levelCodes, locality.searchResultBrowseUrl)}>
+            <button>{seeSchoolMap[levelCodes]}</button>
+          </a>
         </div>
       </div>
-      <br/>
-      {renderButtons(handleGradeLevel, community, schoolLevels, levelCodes)}
-      <hr />
-      {schoolList}
-      <div className="more-school-btn">
-        <a href={addQueryParamToUrl('gradeLevels', levelCodes, locality.searchResultBrowseUrl)}>
-          <button>{seeSchoolMap[levelCodes]}</button>
-        </a>
-      </div>
-    </div>;
+    </div>
+  );
 }
 
 TopSchools.propTypes = {

@@ -1,3 +1,13 @@
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag 'default-page-just-layout', defer: true %>
+  <%= react_component('SearchBoxWrapper') %>
+  <script type="text/javascript">
+  $(function() {
+    $.getScript("<%= asset_path('deprecated_post_load_adapter.js') %>")
+  })
+  </script>
+<% end %>
+
 <% email = @current_user.email if @current_user.present? && @current_user.email.present? %>
 <% show_password_fields = @current_user.blank? || !@current_user.has_password? %>
 

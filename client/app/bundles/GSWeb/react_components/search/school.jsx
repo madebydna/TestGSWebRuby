@@ -41,7 +41,7 @@ const renderCsaBadgePopover = (years, links) => {
             alt="csa-badge-icon"
           />
           <div className="csa-winner-popover-text">
-            <a href={links.collegeSuccess} target="_blank">College Success Award</a>
+            <a href={links.collegeSuccess}>College Success Award</a>
             <div>{csaYears}</div>
           </div>
         </div>
@@ -88,7 +88,7 @@ const School = ({
         <RatingWithTooltip rating={rating} ratingScale={ratingScale} />
       </span>
       <span>
-        <a href={links.profile} className="name" target="_blank">
+        <a href={links.profile} className="name">
           {name}
         </a>
         <br />

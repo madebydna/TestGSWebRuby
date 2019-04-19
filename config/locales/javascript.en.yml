@@ -15,13 +15,24 @@ en:
     no_info: Currently, this information is unavailable. For more information
     visit our FAQ page: visit our FAQ page
     at a glance: at a glance
+    find_schools_in: Find schools in
     award_winner: Award winner
+    award_winners: Award winners
     assigned_school: Assigned school
     browse_school_blurb: Here's a look at schools in
     browse_school_blurb_district: Here's a look at the district
+    browse_schools: Browse schools
     calendar: calendar
+    cities: Cities
     city_hero_html: <div class="city-hero-narrative">{city} is a city in {county} county, {stateLong}</div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} is a city in {stateLong}</div>
+    state:
+      state_hero_narrative_html: <div class="state-hero-narrative">There are {schoolCount} public and private K-12 schools in {nameLong}. As you search for schools that fit your family, you'll find information on academic, equity, environment, reviews, and more.</div>
+      state_hero_title: '{nameLong} Schools'
+      districts_header: Largest school districts in {nameLong}
+      cities_header: Browse schools in {nameLong} by
+      cities_browse_more_button: See all cities
+      districts_browse_more_button: See all districts
     community_resources: community resources
     county: county
     date: Date
@@ -34,6 +45,8 @@ en:
         <p><span>Sources&#58;</span> Tandem</p>
       </div>
     districts: Districts
+    Email: Email
+    Permalink: Permalink
     schools_in_district: Schools in district
     school_grade: School Grade
     additional_school_type: Additional school type
@@ -347,6 +360,16 @@ en:
     Continue: Continue
     Not right now: Not right now
     sources: Sources
+    CSA Page:
+      summary: >
+        <span>In %{state}, %{total} public schools earned a College Success Award in %{year} based on their 
+            success in preparing students for college and ultimately career. The College Success awards 
+            recognize public high schools that stand out in getting students enrolled in - and staying 
+            with - college.  
+          <a href="/gk/csa-winners/">Learn more</a>.
+        </span>
+      summary_mobile: >
+        <span>In %{state}, %{total} public schools have earned a %{year} GreatSchools College Success Award based on their success in preparing students for college and ultimately career. <a href="/gk/csa-winners/">Learn more</a>.</span>
     tour1:
       step1: GreatSchools is the leading national nonprofit providing school & parenting information. We collect data from state & federal sources to help you understand school quality and find the best educational opportunities for your child.
       step2_title_html: '<div class="tutorial-header">Summary rating</div><br/>'
@@ -396,3 +419,6 @@ en:
       step12: '<div><img alt="" height="42" src="/assets/school_profiles/owl.png" style="vertical-align: sub;" width="39" />&nbsp;<h1 style="display:inline-block;">&nbsp;All done!</h1></div><div><p>Thank you for taking time to walk through our new profiles.&nbsp;<br>&nbsp;</p><p>Was this useful? <a id="school-tour-feedback" style="cursor: pointer;">Give us your feedback</a></p><p>Does your child go to this school? <a href="#Reviews" class="js-close-school-tour">Review this school</p><p><button class="tour-cta active js-close-school-tour">Done</button></p></div></div>'
     csa_callout_html: >
       <span class="csa-callout-text">This school is a College Success Award winner! <a href='#College_readiness*College_success'>See details.</a></span>
+    csa_district_schools_info_html: The <a href="/gk/csa-winners/">College Success Awards</a> recognize public high schools that stand out in ​getting students enrolled in - and staying with - college.
+    see_all_winning_schools: See all winning schools
+    csa_winners: College Success Award winners

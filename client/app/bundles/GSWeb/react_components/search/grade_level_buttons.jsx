@@ -3,12 +3,12 @@ import ButtonGroup from 'react_components/buttongroup';
 import GradeLevelContext from './grade_level_context';
 import { t } from 'util/i18n';
 
-const options = {
-  p: t('PreK'),
-  e: t('Elementary'),
-  m: t('Middle'),
-  h: t('High')
-};
+const options = [
+  { key: 'p', label: t('PreK') },
+  { key: 'e', label: t('Elementary') },
+  { key: 'm', label: t('Middle') },
+  { key: 'h', label: t('High') },
+]
 
 const GradeLevelButtons = () => (
   <GradeLevelContext.Consumer>

@@ -5,9 +5,9 @@
 <% max_chars_length = neighborhood.max_chars %>
 
 <div class="neighborhood-module" data-ga-click-label="Neighborhood">
-  <div class="title">
+  <h2 class="title">
     <%= t('.title') %>
-  </div>
+  </h2>
   <% level_value = 'p' %>
   <% level_value = 'e' if @school.level_code_array.include? 'e' %>
   <% level_value = 'm' if @school.level_code_array.include? 'm' %>

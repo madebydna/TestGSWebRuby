@@ -84,7 +84,7 @@ const renderCsaBadgePopover = (years, links) => {
             alt="csa-badge-icon"
           />
           <div className="csa-winner-popover-text">
-            <a href={links.collegeSuccess} target="_blank">College Success Award</a>
+            <a href={links.collegeSuccess}>College Success Award</a>
             <div>{csaYears}</div>
           </div>
         </div>
@@ -115,16 +115,37 @@ const SchoolTableRow = ({
   subratings,
   ethnicityInfo,
   savedSchool,
-  csaAwardYears
+  csaAwardYears,
+  percentLowIncome,
+  percentCollegePersistent,
+  remediationData
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   const districtLink = getDistrictHref(state, address.city, districtName);
-  let addressPhrase = [address.street1, address.city, state, address.zip]
-      .filter(s => !!s && s.length > 0)
-      .join(', ');
-  if (!address.city || !state) {
-    addressPhrase = null;
+  const districtAnchor = <a href={districtLink}>{districtName}</a>
+
+  let addressPhrase = null;
+  if(address.street1) {
+    addressPhrase = [address.street1, address.city, state, address.zip]
+        .filter(s => !!s && s.length > 0)
+        .join(', ');
+    if (!address.city || !state) {
+      addressPhrase = null;
+    }
   }
+
+  const renderRemediationValue = (remediationData, type) => {
+    const remedObj = remediationData.find(rd => rd.subject === type)
+    if (remedObj){
+      return <div>{remedObj.school_value}</div>
+    }else{
+      return <div>N/A</div>
+    }
+  };
+  const percentCollegeRemediation = renderRemediationValue(remediationData, 'All subjects')
+  const percentCollegeRemediationEnglish = renderRemediationValue(remediationData, 'English')
+  const percentCollegeRemediationMath = renderRemediationValue(remediationData, 'Math')
+  const clarifiedSchoolType = <div>{capitalize(clarifySchoolType(schoolType))}</div>
 
   const schoolCard = () => {
     return (
@@ -133,7 +154,7 @@ const SchoolTableRow = ({
             {assigned && <div>{t('assigned_school')}{renderAssignedTooltip(levelCode)}</div>}
             <span><RatingWithTooltip rating={rating} ratingScale={ratingScale}/></span>
             <span>
-            <a href={links.profile} className="name" target="_blank">
+            <a href={links.profile} className="name">
               {name}
             </a>
             <br/>
@@ -183,6 +204,11 @@ const SchoolTableRow = ({
   else if (tableView == 'Academic') {
     content = academicColumns(columns, subratings, links.profile);
   }
+
+  else {
+    content = <React.Fragment>{columns.map(col => <td>{eval(col.key)}</td>) }</React.Fragment>
+  }
+
   return (
       <tr>
         {schoolCard()}
@@ -321,7 +347,8 @@ SchoolTableRow.defaultProps = {
   numReviews: null,
   parentRating: null,
   districtName: null,
-  ethnicityInfo: []
+  ethnicityInfo: [],
+  remediationData: []
 };
 
 export default SchoolTableRow;

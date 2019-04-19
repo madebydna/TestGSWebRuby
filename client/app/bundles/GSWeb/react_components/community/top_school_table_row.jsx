@@ -5,9 +5,12 @@ import ModalTooltip from "../modal_tooltip";
 import FiveStarRating from "../review/form/five_star_rating";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t, capitalize } from "util/i18n";
+import { getDistrictHref } from 'util/school';
 
-const renderSchoolItem = ({name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType}) => {
+const renderSchoolItem = ({ name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, address, state }) => {
   const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
+  const districtLink = getDistrictHref(state, address.city, districtName);
+
   return <React.Fragment>
     <div className="content-container">
       <div>
@@ -22,7 +25,7 @@ const renderSchoolItem = ({name, rating, links, districtName, numReviews, parent
         <a href={links.profile}>
           {name}
         </a>
-        {renderDistrctName(districtName)}
+        {renderDistrictName(districtName, districtLink)}
         <p className="students">{capitalize(t(`school_types.${schoolType}`))}, {gradeLevels} | {enrollment} {t("students")}</p>
         {renderReviews(numReviews, parentRating, links)}
       </div>
@@ -42,16 +45,25 @@ const renderReviews = (numReviews, parentRating, links) => {
     </div>;
 }
 
-const renderDistrctName = (districtName) => (
-  <p className="school-district">{districtName}</p>
-)
+const renderDistrictName = (districtName, districtLink) => {
+  if (districtName && districtLink) {
+    return (
+      <p className="school-district">
+        <a href={districtLink}>{districtName}</a>
+      </p>
+    );
+  } else if (districtName) {
+    return (
+      <p className="school-district">{districtName}</p>
+    );
+  }
+};
 
 const TopSchoolTableRow = (props) => (
   <div className="school-list-item">
     {renderSchoolItem(props)}
   </div>
 );
-
 
 TopSchoolTableRow.propTypes = {
   id: PropTypes.number.isRequired,

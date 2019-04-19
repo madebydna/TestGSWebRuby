@@ -1,3 +1,8 @@
+<% content_for :page_javascripts do %>
+    <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+    <%= webpack_javascript_include_tag 'official_school_profile', defer: true %>
+<% end %>
+
 <div class="container">
   <div class="row">
     <div class="col-xs-12">

@@ -94,6 +94,60 @@ $line-height-community: 1.428571429;
       margin-top: 0;
       line-height: $line-height-community;
     }
+
+    .csa-state-module {
+      margin-bottom: 15px;
+      border: solid 1px #dbe6eb;
+      padding: 5px;
+
+      h3 {
+        padding: 10px 0 10px 15px;
+        color: #333;
+        font-size: 16px;
+        font-family: 'opensans-semibold';
+      }
+
+      .csa-state-blurb {
+        display: flex;
+        margin-left: 20px;
+        margin-bottom: 20px;
+
+        p {
+          margin: 0 20px;
+        }
+      }
+
+      .csa-state-module-divider {
+        padding: 0 15px;
+
+        .blue-line {
+          margin-left: 0;
+        }
+      }
+
+      // AC_TODO: Refactor more-school-btn
+      // .more-school-btn{
+      //   margin-bottom: 20px;
+      //   @include flexbox-center;
+      //   a {
+      //     width: 90%;
+      //     button{
+      //       text-transform: uppercase;
+      //       width: 100%;
+      //       margin: auto;
+      //       height: 50px;
+      //       color: $school-color;
+      //       font-family: 'opensans-semibold';
+      //       font-size: 14px;
+      //       background-image: -webkit-gradient(linear, left top, left bottom, from(white), to($gradient-off-white));
+      //       background-image: -o-linear-gradient(top, white, $gradient-off-white);
+      //       background-image: linear-gradient(to bottom, white, $gradient-off-white);
+      //       border: solid 1px $border-color;
+      //       border-radius: $border-radius;
+      //     }
+      //   }
+      // }
+    }
   }
 
   .sticky {
@@ -184,6 +238,35 @@ $line-height-community: 1.428571429;
   text-align: left;
 }
 
+.districts-in-state-module {
+  padding: 0 10px;
+  .blue-line {
+    margin-left: 0;
+  }
+}
+
+.more-school-btn {
+  margin-bottom: 20px;
+  @include flexbox-center;
+  a {
+    width: 90%;
+    button{
+      text-transform: uppercase;
+      width: 100%;
+      margin: auto;
+      height: 50px;
+      color: $school-color;
+      font-family: 'opensans-semibold';
+      font-size: 14px;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(white), to($gradient-off-white));
+      background-image: -o-linear-gradient(top, white, $gradient-off-white);
+      background-image: linear-gradient(to bottom, white, $gradient-off-white);
+      border: solid 1px $border-color;
+      border-radius: $border-radius;
+    }
+  }
+}
+
 .top-school-module{
   margin-bottom: 15px;
   border: solid 1px $border-color;
@@ -198,9 +281,45 @@ $line-height-community: 1.428571429;
       }
       > p, > h3, > a {
         padding: 0 20px;
-        }
       }
     }
+    .csa-top-schools-blurb {
+      display: flex;
+      margin: 0 20px;
+      align-items: center;
+
+      p {
+        margin: 0 20px;
+      }
+    }
+  }
+
+  .profile-module {
+    font-size: $font-size;
+
+    .tab-buttons {
+      margin: 5px 20px;
+    }
+
+    .top-schools-csa {
+      margin: 3px 0 0;
+    }
+
+    .top-schools-csa > span {
+      font-family: 'opensans-semibold';
+    }
+
+    @include media-breakpoint-only(xs) {
+      border-bottom: none;
+      border-top: none;
+      margin-left: 0;
+      margin-right: 0;
+
+      .tab-buttons {
+        margin: 5px 10px;
+      }
+    }
+  }
   .grade-filter {
     @include flex-justify-center;
     .button-group {
@@ -218,7 +337,10 @@ $line-height-community: 1.428571429;
       // Class to help render five star ratings
       .five-star-review{
         a { color: $school-color; }
-        span { display: inline-block; }
+        span { 
+          display: inline-block; 
+          font-size: $font-size-base;
+        }
         .five-star-rating{ margin-left: 15px; }
       }
       .content-container{
@@ -234,6 +356,9 @@ $line-height-community: 1.428571429;
             margin-bottom: 5px;
           }
           a, p { margin: 3px 0 0; }
+          a {
+            color: $school-color;
+          }
           > a {
             font-family: "opensans-semibold";
             color: $school-color;
@@ -243,27 +368,6 @@ $line-height-community: 1.428571429;
     }
   }
 
-  .more-school-btn{
-    margin-bottom: 20px;
-    @include flexbox-center;
-    a {
-      width: 90%;
-      button{
-        text-transform: uppercase;
-        width: 100%;
-        margin: auto;
-        height: 50px;
-        color: $school-color;
-        font-family: 'opensans-semibold';
-        font-size: 14px;
-        background-image: -webkit-gradient(linear, left top, left bottom, from(white), to($gradient-off-white));
-        background-image: -o-linear-gradient(top, white, $gradient-off-white);
-        background-image: linear-gradient(to bottom, white, $gradient-off-white);
-        border: solid 1px $border-color;
-        border-radius: $border-radius;
-      }
-    }
-  }
   .no-schools{
     @include flexbox-center;
     margin-bottom: 10px;
@@ -297,6 +401,12 @@ $line-height-community: 1.428571429;
     color: #333;
     font-size: 16px;
     font-family: 'opensans-semibold';
+  }
+  .state-cities-module {
+    padding: 0 15px;
+    .blue-line {
+      margin-left: 0;
+    }
   }
   ul{
     @include flex-column-wrap;
@@ -389,8 +499,7 @@ $line-height-community: 1.428571429;
 
 #mobility{
   margin-bottom: 20px;
-  .mobility-module{
-    width: 95%;
+  .mobility-module {
     margin-bottom: 5px;
     border: solid 1px $border-color;
     padding: 5px;
@@ -475,7 +584,6 @@ $line-height-community: 1.428571429;
   margin-bottom: 20px;
 
   .calendar-module {
-    width: 95%;
     margin: 0;
     border: solid 1px $border-color;
 

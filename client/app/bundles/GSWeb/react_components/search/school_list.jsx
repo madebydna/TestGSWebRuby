@@ -35,7 +35,8 @@ const SchoolList = ({
   isLoading,
   pagination,
   toggleHighlight,
-  size
+  size,
+  shouldRemoveAds
 }) => {
   let numsNonAssignedSchools = 0;
   checkSponsorSearchResult();
@@ -56,7 +57,7 @@ const SchoolList = ({
           const shouldRenderSponsorSchoolAdOnDesktop = numsNonAssignedSchools === 4 && size > SM && schools.length >= 8;
           return(
             <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
-              {index > 0 &&
+              {!shouldRemoveAds && index > 0 &&
                 index % 4 === 0 && (
                   <Ad
                     slot={`Search_After${index}_300x250`}
@@ -93,7 +94,7 @@ const SchoolList = ({
           )
         }
         )}
-        {(schools.length < 5 && schools.length > 0) && (
+        {!shouldRemoveAds && (schools.length < 5 && schools.length > 0) && (
           <Ad
             slot={`Search_After4_300x250`}
             sizeName="box"

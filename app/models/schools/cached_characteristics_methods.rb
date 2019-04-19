@@ -2,6 +2,7 @@ module CachedCharacteristicsMethods
 
   NO_DATA_SYMBOL = '?'
   NO_ETHNICITY_SYMBOL = 'n/a'
+  REMEDIATION_SUBJECTS_FOR_CSA = ['All subjects', 'English', 'Math']
 
   def characteristics
     cache_data['characteristics'] || {}
@@ -103,7 +104,29 @@ module CachedCharacteristicsMethods
   end
 
   def stays_2nd_year
-    style_school_value_as_percent('Percent Enrolled in College and Returned for a Second Year')
+    value = style_school_value_as_percent('Percent Enrolled in College and Returned for a Second Year') 
+    value == NO_DATA_SYMBOL ? 'N/A' : value
+  end
+
+  def graduates_remediation
+    # create three variables and supress if something isn't present
+    @_graduates_remediation ||= characteristics['Percent Needing Remediation for College'] || []
+  end
+
+  def graduates_remediation_for_college_success_awards
+    return [] unless graduates_remediation.present?
+    data = graduates_remediation.select { |data| data["subject"] == nil || REMEDIATION_SUBJECTS_FOR_CSA.include?(data["subject"])}
+    data.map do |datum|
+      {}.tap do |hash|
+        if datum["subject"]
+          hash["subject"] = datum["subject"]
+          hash["school_value"] = "#{datum["school_value"].round(0)}%"
+        else
+          hash["subject"] = "All subjects"
+          hash["school_value"] = "#{datum["school_value"].round(0)}%"
+        end
+      end
+    end     
   end
 
   def style_school_value_as_percent(data_name)

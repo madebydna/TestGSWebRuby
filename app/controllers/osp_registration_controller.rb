@@ -9,6 +9,8 @@ class OspRegistrationController < ApplicationController
   before_action :use_gs_bootstrap
   before_action :validate_params, only: [:submit]
 
+  layout 'deprecated_application_with_webpack'
+
   def new
 
     set_gon_and_metadata!

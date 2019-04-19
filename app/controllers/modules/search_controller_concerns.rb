@@ -111,7 +111,8 @@ module SearchControllerConcerns
       sort_name: sort_name,
       with_rating: with_rating,
       test_scores_rating: breakdown.present? ? (1..10).to_a : nil,
-      rating_subgroup: (/^all\b/i.match?(breakdown) ? nil : breakdown)
+      rating_subgroup: (/^all\b/i.match?(breakdown) ? nil : breakdown),
+      csa_years: csa_years.presence,
     )
   end
 
@@ -267,23 +268,12 @@ module SearchControllerConcerns
     end
   end
 
-  def sort_by_ethnicity_test_score(schools)
-    # This keeps the pinned school on top
-    pinned_school = schools.find {|school| school.pinned}
-    non_pinned_schools = schools - [pinned_school]
-    non_pinned_schools = non_pinned_schools.sort_by {|school| [school.test_score_rating_for_ethnicity, -1 * school.distance] }.reverse
-    non_pinned_schools.unshift(pinned_school) if pinned_school
-    non_pinned_schools
-  end
-
-  def filter_by_ethnicity_test_score_rating(schools)
-    schools.map do |school|
-      rating_for_ethnicity = school.ethnicity_test_score_ratings[ethnicity]
-      if rating_for_ethnicity
-        school.define_singleton_method(:test_score_rating_for_ethnicity) {rating_for_ethnicity}
-        school
+  def add_remediation(schools)
+    schools.each do |school|
+      school.define_singleton_method(:remediation) do
+        true
       end
-    end.compact
+    end
   end
 
   def translated_ethnicity_with_fallback

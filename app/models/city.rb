@@ -13,7 +13,7 @@ class City < ActiveRecord::Base
   def self.popular_cities(state, options = {})
     result = where(state: state, active: 1).order('population desc')
     result = result.limit(options[:limit]) if options[:limit]
-    result.to_a.sort { |c1, c2| c1.name <=> c2.name }
+    options[:alphabetical] ? result.to_a.sort { |c1, c2| c1.name <=> c2.name } : result.to_a 
   end
 
   # used by the widget

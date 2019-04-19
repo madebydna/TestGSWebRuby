@@ -130,7 +130,7 @@ export default class Reviews extends React.Component {
         <div className="rating-container profile-section">
           <div className="row">
             <div className="col-xs-12 col-lg-3">
-              <div className="section-title">{title}</div>
+              <h2 className="section-title">{title}</h2>
             </div>
             <div className="col-xs-12 col-lg-9">{componentFunction()}</div>
           </div>

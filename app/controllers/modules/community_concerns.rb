@@ -31,21 +31,29 @@ module CommunityConcerns
       serialized_schools
     end
 
+    def fetch_top_rated_csa_schools
+      set_csa_winner_param('*')
+      serialized_schools
+    end 
+
     def top_rated_schools
       @_top_rated_schools ||= begin
         elementary = fetch_top_rated_schools('e')
         middle = fetch_top_rated_schools('m')
         high = fetch_top_rated_schools('h')
+        csa = fetch_top_rated_csa_schools
         {
           schools: {
             elementary: elementary,
             middle: middle,
             high: high,
+            csa: csa
           },
           counts: {
             elementary: elementary.count,
             middle: middle.count,
             high: high.count,
+            csa: csa.count,
             all: elementary.count + middle.count + high.count
           }
         }
@@ -66,9 +74,10 @@ module CommunityConcerns
           level_codes: [level_code_param].compact,
           limit: default_top_schools_limit,
           sort_name: 'rating',
-          with_rating: 'true'
+          with_rating: 'true',
+          csa_years: csa_years.presence
         )
-      else
+      elsif params[:city]
         query_type.new(
           city: city,
           state: state,
@@ -76,9 +85,16 @@ module CommunityConcerns
           level_codes: [level_code_param].compact,
           limit: default_top_schools_limit,
           sort_name: 'rating',
-          with_rating: 'true'
+          with_rating: 'true',
+          csa_years: csa_years.presence
+          )
+      else
+        query_type.new(
+          state: locality[:nameShort],
+          limit: 1,
+          csa_years: @csa_years.presence
         )
-      end
+        end
     end
 
     def default_top_schools_limit

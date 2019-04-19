@@ -15,6 +15,9 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
+// ! If you add a new JS file to entry object you probably need to edit
+// ! assets.rb in order for the file to be served by Rails on
+// ! prod/QA/single-stack machines
 const config = {
   mode: devBuild ? 'development' : 'production',
   entry: {
@@ -33,12 +36,17 @@ const config = {
     'add-schools': ['./app/bundles/GSWeb/pages/add_schools'],
     compare: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/compare'],
     search: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/search'],
+    'college-success-award': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/college_success_award'],
     'search-box': [
       'polyfills',
       './app/bundles/GSWeb/react_components/search_box_wrapper'
     ],
     community: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/community'],
-    account: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/account']
+    account: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/account'],
+    'official-school-profile': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/official_school_profile'],
+    'reviews-page': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/reviews_page'],
+    'signin-page': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/signin_page'],
+    'default-page-just-layout': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/default_page_just_layout'],
   },
 
   optimization: {
@@ -134,18 +142,20 @@ const config = {
             }
           }
 
-          fs.writeFile(
-            path.resolve(
-              __dirname,
-              '../app/assets/webpack',
-              'webpack.stats.json'
-            ),
-            JSON.stringify({
-              assetsByChunkName: assets,
-              publicPath: stats.compilation.outputOptions.publicPath
-            }),
-            done
-          );
+          if (!process.env.ANALYZE) {
+            fs.writeFile(
+              path.resolve(
+                __dirname,
+                '../app/assets/webpack',
+                'webpack.stats.json'
+              ),
+              JSON.stringify({
+                assetsByChunkName: assets,
+                publicPath: stats.compilation.outputOptions.publicPath
+              }),
+              done
+            );
+          }
         });
       }
     },

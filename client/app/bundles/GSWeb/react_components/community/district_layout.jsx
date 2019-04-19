@@ -150,7 +150,7 @@ class DistrictLayout extends React.Component {
   renderSchools() {
     return (
       <div id="schools">
-        <h2 className="modules-title">{`${this.props.locality.name} ${t('at a glance')}`}</h2>
+        <h2 className="modules-title">{`${t('find_schools_in')} ${this.props.locality.name}`}</h2>
         <div className="xq-partnership">
           {this.props.translations.inPartnershipWith}
           <a href='https://xqsuperschool.org/school-board-thing' target="_blank" rel="nofollow">

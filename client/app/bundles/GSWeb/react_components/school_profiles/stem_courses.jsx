@@ -64,9 +64,9 @@ const sourcesToHtml = function(sources) {
 const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqContent, courses, sources, qualaroo_module_link, share_content }) => {
 
 
-  let titleElement = <span>
+  let titleElement = <h3>
     {title}&nbsp;<QuestionMarkTooltip content={titleTooltipText} element_type="toptooltip" />
-  </span>;
+  </h3>;
 
   let body = <div>
     <ParentTip><span dangerouslySetInnerHTML={{__html: parentTip}}/></ParentTip>

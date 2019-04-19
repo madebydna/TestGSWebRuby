@@ -1,3 +1,6 @@
+import { find } from 'lodash';
+import { isStateName } from "./states";
+
 export function getHref() {
   return window.location.href;
 }
@@ -404,3 +407,5 @@ export function legacyUrlEncode(param) {
     .replace(new RegExp('-', 'g'), '_')
     .replace(new RegExp(' ', 'g'), '-');
 }
+
+export const findStateNameInUrl = url => find(url.split('/'), pathToken => isStateName(pathToken.replace('-',' ')))

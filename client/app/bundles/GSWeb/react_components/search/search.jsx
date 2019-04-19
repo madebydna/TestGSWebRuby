@@ -7,6 +7,7 @@ import SearchContext from './search_context';
 import SortSelect from './sort_select';
 import SearchLayout from './search_layout';
 import MySchoolListLayout from './my_school_list_layout';
+import CollegeSuccessAwardLayout from './college_success_award_layout';
 import ListMapTableSelect from './list_map_table_select';
 import PaginationButtons from './pagination_buttons';
 import Map from './map';
@@ -23,6 +24,22 @@ import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import SearchBox from '../search_box';
 import NoResults from './no_results';
+import { t } from 'util/i18n';
+
+const defaultTableViewOptions = [
+  {
+    key: 'Overview',
+    label: t('Overview')
+  },
+  {
+    key: 'Academic',
+    label: t('Ratings Snapshot')
+  },
+  {
+    key: 'Equity',
+    label: t('Equity Test Scores')
+  }
+];
 
 class Search extends React.Component {
   static defaultProps = {
@@ -36,6 +53,7 @@ class Search extends React.Component {
     q: null,
     layout: 'Search',
     schoolKeys: [],
+    tableViewOptions: defaultTableViewOptions
   };
 
   static propTypes = {
@@ -48,6 +66,7 @@ class Search extends React.Component {
     loadingSchools: PropTypes.bool,
     page: PropTypes.number.isRequired,
     totalPages: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired,
     onPageChanged: PropTypes.func.isRequired,
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     shouldIncludeDistance: PropTypes.bool,
@@ -66,6 +85,12 @@ class Search extends React.Component {
     searchTableViewHeaders: PropTypes.object,
     layout: PropTypes.string,
     schoolKeys: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.array)),
+    tableViewOptions: PropTypes.arrayOf(
+      PropTypes.shape({
+        key: PropTypes.string,
+        label: PropTypes.string
+      })
+    ).isRequired
   };
 
   componentDidMount() {
@@ -78,10 +103,17 @@ class Search extends React.Component {
     ) : null;
   }
 
+  renderTableViewButtons() {
+    return <ChooseTableButtons options={this.props.tableViewOptions} />;
+  }
+
+  additionalLayoutProps = () => ({})
+
   render() {
     const Layout = {
       Search: SearchLayout,
-      MySchoolList: MySchoolListLayout
+      MySchoolList: MySchoolListLayout,
+      CollegeSuccessAward: CollegeSuccessAwardLayout
     }[this.props.layout];
     return (
       <DistanceContext.Consumer>
@@ -91,7 +123,7 @@ class Search extends React.Component {
             view={this.props.view}
             entityTypeDropdown={<EntityTypeDropdown />}
             gradeLevelButtons={<GradeLevelButtons />}
-            chooseTableButtons={<ChooseTableButtons />}
+            chooseTableButtons={this.renderTableViewButtons()}
             stateSelect={<StateSelectDropdown />}
             distanceFilter={
               distance ||
@@ -126,6 +158,7 @@ class Search extends React.Component {
                 saveSchoolCallback={this.props.saveSchoolCallback}
                 isLoading={this.props.loadingSchools}
                 size={this.props.size}
+                shouldRemoveAds={this.props.size <= XS && this.props.layout === 'CollegeSuccessAward'}
               />
             }
             schoolTable={
@@ -167,6 +200,7 @@ class Search extends React.Component {
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
             noResults={this.noResults()}
             refreshAdOnScroll={this.props.refreshAdOnScroll}
+            {...this.additionalLayoutProps()}
           />
         )}
       </DistanceContext.Consumer>

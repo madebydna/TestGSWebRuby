@@ -171,7 +171,11 @@ export default class SearchBar extends React.Component {
             <label>{t('school_grade')}</label>
             <ButtonGroup
               activeOption={this.props.level}
-              options={{e: t('Elementary'), m: t('Middle'), h: t('High')}}
+              options={[
+                {key: 'e', label: t('Elementary')},
+                {key: 'm', label: t('Middle')},
+                {key: 'h', label: t('High')}
+              ]}
               onSelect={this.props.setLevel} />
           </div>
           <div className="filter">

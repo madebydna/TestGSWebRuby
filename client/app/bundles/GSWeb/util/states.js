@@ -1,5 +1,6 @@
 // TODO: Import lodash functions
-import { invert, values, isString } from 'lodash';
+import { invert, values, isString, keys } from 'lodash';
+import { titleize } from 'util/i18n';
 
 const statesHash = {
   alabama: 'al',
@@ -61,9 +62,7 @@ const abbreviationHash = invert(statesHash);
 const stateAbbreviations = values(statesHash);
 
 const anyStateNameRegex = function() {
-  const components = _(statesHash)
-    .keys()
-    .map(stateName => `^${stateName}$`);
+  const components = keys(statesHash).map(stateName => `^${stateName}$`);
 
   return new RegExp(components.join('|'), 'i');
 };
@@ -86,11 +85,27 @@ const abbreviation = function(str) {
 };
 
 const name = function(str) {
+  if(!str) {
+    return undefined;
+  }
   if (!isString(str) || str.length !== 2) {
-    return;
+    str = str.replace('-', ' ');
+    if (isStateName(str)) {
+      return str;
+    }
+    return undefined;
   }
 
   return abbreviationHash[str.toLowerCase()];
 };
 
-export { anyStateNameRegex, isStateName, abbreviation, name };
+const titleizedName = str => {
+  const n = name(str);
+  if(!n) {
+    return;
+  }
+  return titleize(name(str)).replace(/dc$/i, s => s.toUpperCase());
+}
+
+
+export { anyStateNameRegex, isStateName, abbreviation, name, titleizedName };

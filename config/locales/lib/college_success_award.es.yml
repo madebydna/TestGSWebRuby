@@ -1,0 +1,20 @@
+es:
+  lib:
+    college_success_award:
+      title: "%{year} Ganadores del College Success Award de %{state}"
+      csa_year_winners: "Ganadores del  %{year}"
+      Total enrolled: Número total de estudiantes matriculados
+      Persistence: Persistencia
+      tooltips:
+        Total enrolled: El número total de estudiantes matriculados en todos los grados en cada escuela.
+        Low-income: Los estudiantes que son elegibles para recibir el almuerzo gratis o a un precio reducido.
+        College enrollment: El porcentaje de graduados que se inscribieron en cualquier institución de educación superior.
+        Remediation: Esto refleja el porcentaje de graduados que necesitaron tomar clases básicas o correctivas, que no cuentan para un título universitario.
+        Math remediation: Esto refleja el porcentaje de graduados que necesitaron tomar clases de matemáticas básicas o correctivas, que no cuentan para un título universitario.
+        English remediation: Esto refleja el porcentaje de graduados que necesitaron tomar clases de inglés básicas o correctivas, que no cuentan para un título universitario.
+        Persistence: Esto refleja el porcentaje de graduados que completaron su primer año de universidad y regresaron por un segundo año.
+      og:
+        facebook_title: Ganadores del College Success Award de %{state} 2019 | GreatSchools
+        facebook_post_copy: ¿Qué escuelas ganaron? Vea la lista de las mejores escuelas del estado que sobresalen en preparar a los estudiantes para inscribirse y que tengan éxito en la universidad.
+
+

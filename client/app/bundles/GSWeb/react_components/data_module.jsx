@@ -258,7 +258,7 @@ export default class DataModule extends React.Component {
   title() {
     return (
       <div  data-ga-click-label={this.props.title}>
-        { this.props.title }&nbsp;
+        <h3>{this.props.title}</h3>&nbsp;
         { this.props.info_text &&
           <QuestionMarkTooltip content={this.props.info_text} element_type='toptooltip' /> }
       </div>

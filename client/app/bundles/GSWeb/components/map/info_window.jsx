@@ -98,7 +98,7 @@ export default function createInfoWindow(entity, campaignCode) {
       <div className="clearfix">
         {ratingDiv(entity)}
         <div className="school-info">
-          <a href={entity.links ? entity.links.profile : '#'} target="_blank">
+          <a href={entity.links ? entity.links.profile : '#'}>
             {entity.name}
           </a>
           {entity.type == 'school' &&

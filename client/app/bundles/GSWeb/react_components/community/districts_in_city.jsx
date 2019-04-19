@@ -7,7 +7,7 @@ const DistrictsInCity = ({districts}) => {
     <li key={district.districtName}>
       <a href={district.url}>{district.districtName}</a>
       <div>
-        {district.enrollment ? <span><span>{district.enrollment.toLocaleString()} {t("students")}<span class="display-desktop"> | </span></span><div className="display-mobile"></div></span> : null}
+        {district.enrollment ? <span><span>{district.enrollment.toLocaleString()} {t("students")}<span className="display-desktop"> | </span></span><div className="display-mobile"></div></span> : null}
         <span>{t("Grades")}: {district.grades} | </span>
         <span>{district.numSchools} {district.numSchools === 1 ? t("school" ): t("schools")}</span>
       </div>

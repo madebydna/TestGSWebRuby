@@ -6,6 +6,9 @@ const hasClass = function(el, className) {
 };
 
 const addClass = function(el, className) {
+  if(!el) {
+    return;
+  }
   if (el.classList) {
     el.classList.add(className);
   }
@@ -15,6 +18,9 @@ const addClass = function(el, className) {
 };
 
 const removeClass = function(el, className) {
+  if(!el) {
+    return;
+  }
   if (el.classList) {
     el.classList.remove(className);
   }

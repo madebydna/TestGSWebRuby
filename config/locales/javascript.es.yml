@@ -15,13 +15,24 @@ es:
     no_info: Actualmente esta información night o está disponible. Para más información
     visit our FAQ page: visite nuestra página de preguntas frecuentes
     at a glance: de un vistazo
+    find_schools_in: Encuentra escuelas en
     award_winner: Escuela premiada
+    award_winners: Escuelas premiadas
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en
     browse_school_blurb_district: Aquí hay un vistazo a las escuelas en distrito
+    browse_schools: Escuelas de navegación
     calendar: calendario
+    cities: Ciudades
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
+    state:
+      state_hero_narrative_html: <div class="state-hero-narrative">Hay {schoolCount} escuelas públicas y privadas de K-12 en {nameLong}. Mientras que buscas escuelas que se ajusten a tu familia, encontrarás información sobre temas académicos, equidad, medio ambiente, opiniones de la comunidad y más.</div>
+      state_hero_title: 'Escuelas de {nameLong}'
+      districts_header: Los distritos escolares más grandes en {nameLong}
+      cities_header: Busca escuelas en {nameLong} por
+      cities_browse_more_button: Ver todas las ciudades
+      districts_browse_more_button: Vea todos los distritos
     community_resources: recursos de la comunidad 
     county: condado
     date: Fecha
@@ -34,6 +45,8 @@ es:
         <p><span>Fuente&#58;</span> Tandem</p>
       </div>
     districts: Distritos
+    Email: Correo electrónico
+    Permalink: Enlace permanente
     schools_in_district: Escuelas en el distrito
     school_grade: Grado escolar
     additional_school_type: Tipos de escuelas adicionales
@@ -349,6 +362,16 @@ es:
     Continue: Continuar
     Not right now: No en este momento
     sources: Fuentes
+    CSA Page:
+      summary: >
+        <span>En %{state}, %{total} escuelas públicas ganaron un College Success Award de %{year}, un premio basado en su 
+          éxito en preparar a los estudiantes para la universidad y, finalmente, la carrera. Los College Success Awards 
+          reconocen a las escuelas secundarias públicas que se sobresalen a lograr que los estudiantes se matriculen y permanezcan 
+          en la universidad. 
+          <a href="/gk/csa-winners/">Obtén más información</a>.
+        </span>
+      summary_mobile: >
+        <span>En %{state}, %{total} escuelas públicas han ganado un %{year} GreatSchools College Success Award basado en su éxito en la preparación de los estudiantes para la universidad y, finalmente, la carrera. <a href="/gk/csa-winners/">Aprende más</a>.</span>
     tour1:
       step1: GreatSchool es la organización nacional sin fines de lucro líder en información de escuelas y padres. Recaudamos información de fuentes estatales y federales para ayudarle a entender lo que es la calidad escolar y encontrar las mejores oportunidades educativas para sus hijos.
       step2_title_html: '<div class="tutorial-header">El Resumen de Calificaciones</div><br/>'
@@ -398,3 +421,6 @@ es:
       step12: '<div><img alt="" height="42" src="/assets/school_profiles/owl.png" style="vertical-align: sub;" width="39" />&nbsp;<h1 style="display:inline-block;">&nbsp;¡Terminado!</h1></div><div><p>Gracias por ver nuestros nuevos perfiles.&nbsp;&nbsp;</p><p>¿Esto estuvo útil? <a id="school-tour-feedback" style="cursor: pointer;">Danos tu opinion</a></p><p>¿Su hijo va a la escuela?<a href="#Reviews" class="js-close-school-tour">Incluya su opinión sobre esta escuela</p><p><button class="tour-cta active js-close-school-tour">Terminado</button></p></div></div>'
     csa_callout_html: >
       <span class="csa-callout-text">¡Esta escuela ha ganado un College Success Award! <a href='#College_readiness*College_success'>Vea más detalles.</a></span>
+    csa_district_schools_info_html: Los <a href="/gk/csa-winners/">College Success Awards</a> reconocen a las escuelas secundarias públicas que se sobresalen a lograr que los estudiantes se matriculen y permanezcan en la universidad.
+    see_all_winning_schools: Ver todos los ganadoras
+    csa_winners: Ganadores de College Success Award

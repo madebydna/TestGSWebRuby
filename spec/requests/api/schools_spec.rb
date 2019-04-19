@@ -5,6 +5,15 @@ describe "Schools API" do
     clean_dbs :gs_schooldb, :ca, :us_geo
   end
 
+  before(:all) do
+    head '/'
+    @csrf_token = request.cookie_jar.fetch(:csrf_token)
+  end
+
+  def get(path, hash={})
+    super(path, hash, { 'X-CSRF-Token' => @csrf_token })
+  end
+
   let(:json) { JSON.parse(response.body) }
   let(:status) { response.status }
   let(:errors) { json['errors'] }

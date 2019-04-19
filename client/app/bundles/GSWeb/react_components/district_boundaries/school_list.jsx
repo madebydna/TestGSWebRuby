@@ -72,7 +72,7 @@ class SchoolList extends React.Component {
       <li key={school.state + school.id} className={liClass}>
         <span>{school.rating && this.renderRating(school.rating)}</span>
         <span>
-          <a href={school.links.profile} className="name" target="_blank">
+          <a href={school.links.profile} className="name">
             {school.name}
           </a>
           <br />
