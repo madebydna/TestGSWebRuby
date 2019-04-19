@@ -408,4 +408,4 @@ export function legacyUrlEncode(param) {
     .replace(new RegExp(' ', 'g'), '-');
 }
 
-export const findStateNameInUrl = url => find(url.split('/'), pathToken => isStateName(pathToken))
+export const findStateNameInUrl = url => find(url.split('/'), pathToken => isStateName(pathToken.replace('-',' ')))
