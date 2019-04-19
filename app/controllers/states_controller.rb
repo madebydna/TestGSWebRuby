@@ -16,7 +16,7 @@ class StatesController < ApplicationController
 
   def show
     #PT-1205 Special case for dc to redirect to /washington-dc/washington city page
-    if params['state'] == 'washington-dc' || params['state'] == 'dc'
+    if @state[:short] == 'dc'
       return redirect_to city_path('washington-dc', 'washington'), status: 301
     end
     
@@ -34,7 +34,7 @@ class StatesController < ApplicationController
     #   state_hub
     # else
       @params_hash = parse_array_query_string(request.query_string)
-      gon.state_abbr = States.abbreviation(params['state'])
+      gon.state_abbr = @state[:short]
       @ad_page_name = :State_Home_Standard
       @show_ads = PropertyConfig.advertising_enabled?
       gon.show_ads = show_ads?
@@ -44,11 +44,11 @@ class StatesController < ApplicationController
   end
 
   def school_count
-    School.on_db(States.abbreviation(params['state'])).all.active.count
+    School.on_db(@state[:short]).all.active.count
   end
 
   def school_state_title
-    States.capitalize_any_state_names(params['state'])
+    States.capitalize_any_state_names(@state[:long])
   end
 
   # TODO This should be in either at StateHubsController or a HubsController
@@ -253,11 +253,10 @@ class StatesController < ApplicationController
   # end
 
   def breadcrumbs
-    canonical_state_params = state_params(params['state'])
     @_state_breadcrumbs ||= [
       {
-        text: StructuredMarkup.state_breadcrumb_text(params['state']),
-        url: state_url(state_params(params['state']))
+        text: StructuredMarkup.state_breadcrumb_text(@state[:short].upcase),
+        url: state_url(state_params(@state[:short]))
       }
     ]
   end
@@ -265,20 +264,20 @@ class StatesController < ApplicationController
   def locality 
     @_locality ||= begin
       Hash.new.tap do |cp|
-        cp[:nameLong] = States.capitalize_any_state_names(params['state'])
-        cp[:nameShort] = States.abbreviation(params['state']).upcase
+        cp[:nameLong] = States.capitalize_any_state_names(@state[:long])
+        cp[:nameShort] = @state[:short].upcase
         cp[:citiesBrowseUrl] = cities_list_path(
-          state_name: gs_legacy_url_encode(States.state_name(params['state'])),
-          state_abbr: States.abbreviation(params['state']),
+          state_name: gs_legacy_url_encode(@state[:long]),
+          state_abbr: @state[:short],
           trailing_slash: true
         )
         cp[:districtsBrowseUrl] = districts_list_path(
-          state_name: gs_legacy_url_encode(States.state_name(params['state'])),
-          state_abbr: States.abbreviation(params['state']),
+          state_name: gs_legacy_url_encode(@state[:long]),
+          state_abbr: @state[:short],
           trailing_slash: true
         )
         cp[:stateCsaUrl] = state_college_success_awards_list_path(
-          state: gs_legacy_url_encode(States.state_name(params['state'])),
+          state: gs_legacy_url_encode(@state[:long]),
           trailing_slash: true
         )
       end
@@ -305,7 +304,7 @@ class StatesController < ApplicationController
   end 
 
   def districts_data 
-    stateShort = States.abbreviation(params['state'])
+    stateShort = @state[:short]
     if StateCache.for_state('district_largest', stateShort)
       largest_districts = JSON.parse(StateCache.for_state('district_largest', stateShort).value)
     else 
