@@ -27,7 +27,7 @@ module MetaTag
           height: 600,
           width: 1200,
           type: 'image/png',
-          alt: '2019 GreatSchools College Success Award Winners'
+          alt: "#{csa_year_param} GreatSchools College Success Award Winners"
         },
         type: 'website',
         url: add_query_params_to_url(request.original_url, false, utm_source: "College Success Awards", utm_medium: "Facebook" )
