@@ -393,7 +393,7 @@ module SearchRequestParams
   end
 
   def csa_year_param
-    params[:csaYears]
+    params[:csaYears] || csa_available_years.first
   end
 
   private

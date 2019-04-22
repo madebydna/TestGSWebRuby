@@ -18,7 +18,7 @@ module MetaTag
 
     def og
       {
-        title: t("facebook_title", scope:'lib.college_success_award.og', state: States.capitalize_any_state_names(States.abbreviation_hash[state])),
+        title: t("facebook_title", scope:'lib.college_success_award.og', state: States.capitalize_any_state_names(States.abbreviation_hash[state]), year: csa_year_param ),
         description: t("facebook_post_copy", scope:'lib.college_success_award.og'),
         site_name: 'GreatSchools.org',
         image: {
@@ -36,7 +36,7 @@ module MetaTag
 
     def twitter
       {
-        title: t("facebook_title", scope:'lib.college_success_award.og', state: States.capitalize_any_state_names(States.abbreviation_hash[state])),
+        title: t("facebook_title", scope:'lib.college_success_award.og', state: States.capitalize_any_state_names(States.abbreviation_hash[state]), year: csa_year_param),
         image: asset_full_url('assets/share/CSA-social-twitter.png'),
         card: 'Summary',
         site: '@GreatSchools',
