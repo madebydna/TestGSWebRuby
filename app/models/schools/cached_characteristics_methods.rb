@@ -115,9 +115,10 @@ module CachedCharacteristicsMethods
 
   def graduates_remediation_for_college_success_awards
     return [] unless graduates_remediation.present?
-    data = graduates_remediation.select { |data| data["subject"] == nil || REMEDIATION_SUBJECTS_FOR_CSA.include?(data["subject"])}
+    data = graduates_remediation.select { |data| data["breakdown"] == 'All students' && (data["subject"] == nil || REMEDIATION_SUBJECTS_FOR_CSA.include?(data["subject"])) }
     data.map do |datum|
       {}.tap do |hash|
+        next unless datum["school_value"]
         if datum["subject"]
           hash["subject"] = datum["subject"]
           hash["school_value"] = "#{datum["school_value"].round(0)}%"
