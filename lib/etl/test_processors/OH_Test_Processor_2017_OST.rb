@@ -732,7 +732,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
       proficiency_band: 'proficient and above',
       test_data_type: 'OST',
       gsdata_test_data_type_id: 256,
-      notes: 'DXT-2876: OH OST 2017 test load.',
+      notes: 'DXT-2876: OH OST',
       description: 'In 2016-2017, students took state tests in math, English language arts, science and social studies to measure how well they are meeting the expectations of their grade levels. The tests match the content and skills that are taught in the classroom every day and measure real-world skills like critical thinking, problem solving and writing.'
     })
     .transform("Creating StateID, district and school id and dist and sch names", WithBlock) do |row|
