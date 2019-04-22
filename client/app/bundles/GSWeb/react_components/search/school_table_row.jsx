@@ -221,7 +221,7 @@ const SchoolTableRow = ({
   }
 
   else {
-    content = <React.Fragment>{columns.map(col => <td>{eval(col.key)}</td>) }</React.Fragment>
+    content = <React.Fragment>{columns.map(col => <td style={{textAlign:'center'}}>{eval(col.key)}</td>) }</React.Fragment>
   }
 
   return (
