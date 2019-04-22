@@ -135,7 +135,6 @@ const SchoolTableRow = ({
   const homesForSaleHref = getHomesForSaleHref(state, address);
   const districtLink = getDistrictHref(state, address.city, districtName);
   const districtAnchor = <a href={districtLink}>{districtName}</a>
-  console.log(parseInt(percentLowIncome))
   const pieChartLowIncome =
     <div className="low-income-percentages">
       <PieChart slices={[
