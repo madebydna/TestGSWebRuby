@@ -29,8 +29,8 @@ module MetaTag
           type: 'image/png',
           alt: '2019 GreatSchools College Success Award Winners'
         },
-        type: 'place',
-        url: request.original_url
+        type: 'website',
+        url: add_query_params_to_url(request.original_url, false, utm_source: "College Success Awards", utm_medium: "Facebook" )
       }
     end
 
@@ -40,7 +40,7 @@ module MetaTag
         image: asset_full_url('assets/share/CSA-social-twitter.png'),
         card: 'Summary',
         site: '@GreatSchools',
-        description: "We're an independent nonprofit that provides parents with in-depth school quality information."
+        description: "Top schools in the state that excel in preparing students for college success."
       }
     end
 
