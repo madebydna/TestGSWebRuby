@@ -13,9 +13,9 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
   'social' => 18,
   'science' => 19,
   'writing' => 3,
-  'english_i' => 17,
+  'english_i' => 73,
   'ela_i' => 73,
-  'english_ii' => 21,
+  'english_ii' => 70,
   'ela_ii' => 70,
   'math_i' => 7,
   'integrated_math_i' => 7,
@@ -30,12 +30,12 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
  }
 
   map_oh_subject_type_state = {
-  'English Language Arts' => 4,
+  'English Language Arts' => 2, #Load as reading to be consistent with school and district
   'Mathematics' => 5,
   'Social Studies' => 18,
   'Science' => 19,
   'English Language Arts I' => 73,
-  'English Language Arts II' => 21,
+  'English Language Arts II' => 70,
   'Mathematics I' => 7,
   'Mathematics II' => 9,
   'Algebra I' => 6,
@@ -43,7 +43,7 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
   'Biology' => 22,
   'Physical Science' => 24,
   'American US Government' => 56,
-  'American US History' => 23
+  'American US History' => 82 #to match mapping in school and district
  }
 
  map_oh_breakdown_gsdata_id = {
@@ -55,12 +55,10 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
   '"White, Non-Hispanic"' => 21,
   'Black' => 17,
   '"Black, Non-Hispanic"' => 17,
-  'Asian' => 16,
   'Hispanic' => 19,
   'Multiracial' => 22,
   'American Indian or Alaskan Native' => 18,
   'Asian or Pacific Islander' => 15,
-  'Pacific Islander' => 37,
   'Female' => 26,
   'Male' => 25,
   'LEP' => 32,
@@ -712,6 +710,25 @@ class OHTestProcessor2017OST < GS::ETL::TestProcessor
      end
      row
     end
+    .transform("Adding grades",
+     HashLookup, :grade_level, map_oh_grade, to: :grade)
+    .transform("Adding subject ids",
+     HashLookup, :subject, map_oh_subject_type_state, to: :academic_gsdata_id)
+    .transform('remove asian and pacific islander', DeleteRows, :breakdown, 'Asian', 'Pacific Islander') #loaded as weighted averaged below
+    .transform("Adding breakdown ids",
+      HashLookup, :breakdown, map_oh_breakdown_gsdata_id, to: :breakdown_gsdata_id)
+    .transform('Fill missing default fields', Fill, {
+      entity_level: 'state'
+    })
+  end
+
+ source("1617_STATE_ETHNIC_AS_PAC.txt",[],col_sep: "\t") do |s|
+   s.transform('Rename column headers', MultiFieldRenamer,{
+      proficient_percentage: :value_float,
+      student_race: :breakdown,
+      assessment_subject: :subject
+    })
+    .transform('remove NC value rows', DeleteRows, :value_float, 'NC', nil, '&lt; 10')
     .transform("Adding grades",
      HashLookup, :grade_level, map_oh_grade, to: :grade)
     .transform("Adding subject ids",
