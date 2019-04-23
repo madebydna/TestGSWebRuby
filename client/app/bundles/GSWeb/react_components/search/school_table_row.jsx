@@ -130,8 +130,8 @@ const SchoolTableRow = ({
   csaAwardYears,
   percentLowIncome,
   percentCollegePersistent,
-  percentEnrolledInCollege,
-  remediationData
+  remediationData,
+  enrollmentData
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   const districtLink = getDistrictHref(state, address.city, districtName);
@@ -172,6 +172,7 @@ const SchoolTableRow = ({
   const percentCollegeRemediation = renderRemediationValue(remediationData, 'All subjects')
   const percentCollegeRemediationEnglish = renderRemediationValue(remediationData, 'English')
   const percentCollegeRemediationMath = renderRemediationValue(remediationData, 'Math')
+  const percentEnrolledInCollege = <div>{Math.round(Object.values(enrollmentData)[0])}%</div>;
   const clarifiedSchoolType = <div>{capitalize(clarifySchoolType(schoolType))}</div>
 
   const schoolCard = () => {

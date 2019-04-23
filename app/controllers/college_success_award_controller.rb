@@ -44,7 +44,8 @@ class CollegeSuccessAwardController < ApplicationController
     set_meta_tags(choose_meta_tag_implementation.new(self).meta_tag_hash)
     set_page_analytics_data
     # set_ad_targeting_props
-    response.status = 404 if serialized_schools.empty?
+    redirect_to home_url if serialized_schools.empty?
+    # response.status = 404 if serialized_schools.empty?
   end
 
   # SearchRequestParams
@@ -75,7 +76,23 @@ class CollegeSuccessAwardController < ApplicationController
     )
   end
 
+  # SearchControllerConcerns
+  def serialized_schools
+    # Using a plain rubo object to convert domain object to json
+    # decided not to use jbuilder. Dont feel like it adds benefit and
+    # results in less flexible/resuable code. Could use
+    # active_model_serializers (included with rails 5) but it's yet another
+    # gem...
+    return [] if csa_available_years.empty?
+    @_serialized_schools ||= schools.map do |school|
+      Api::SchoolSerializer.new(school).to_hash.tap do |s|
+        s.except(not_default_extras - extras)
+      end
+    end
+  end
+
   private
+  
 
   def default_csa_year
     csa_available_years.first
