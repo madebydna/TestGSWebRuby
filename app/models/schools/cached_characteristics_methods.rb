@@ -3,6 +3,17 @@ module CachedCharacteristicsMethods
   NO_DATA_SYMBOL = '?'
   NO_ETHNICITY_SYMBOL = 'n/a'
   REMEDIATION_SUBJECTS_FOR_CSA = ['All subjects', 'English', 'Math']
+  COLLEGE_ENROLLMENT_DATA_TYPES = [
+    "Percent Enrolled in College Immediately Following High School", # 178
+    "Percent enrolled in any institution of higher learning in the last 0-16 months", # 262
+    "Percent enrolled in any postsecondary institution within 12 months after graduation", # 444
+    "Percent enrolled in any postsecondary institution within 24 months after graduation", # 456
+    "Percent of students who will attend in-state colleges", # 321
+    "Percent enrolled in any public in-state postsecondary institution within 12 months after graduation", # 443
+    "Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation", #458
+    "Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation", # 459
+    "Percent enrolled in any in-state postsecondary institution within 12 months after graduation", # 453
+                                  ]
 
   def characteristics
     cache_data['characteristics'] || {}
@@ -99,9 +110,21 @@ module CachedCharacteristicsMethods
     style_school_value_as_percent('Graduation rate')
   end
 
-  def enroll_in_college
-    value = style_school_value_as_percent('Percent enrolled in any institution of higher learning in the last 0-16 months')
-    value == NO_DATA_SYMBOL ? 'N/A' : value
+def enroll_in_college
+    # find max year for data types with all
+    max_year = 0
+    csa_college_enrollment_data = characteristics.slice(*COLLEGE_ENROLLMENT_DATA_TYPES)
+    csa_college_enrollment_data.values.flatten.select { |h| h['breakdown'] == 'All students'}.each do |h|
+      max_year = h['year'] if h['year'] > max_year
+    end
+    # select out data types with max year
+    data_with_max_year = csa_college_enrollment_data.select { |_,h| h.first['year'] == max_year }
+    data_type = data_with_max_year.first.first
+    value = data_with_max_year.first[1].first['school_value']
+    # Pick first one with all students and return
+    {
+        "#{data_type}": value
+    }
   end
 
   def stays_2nd_year
