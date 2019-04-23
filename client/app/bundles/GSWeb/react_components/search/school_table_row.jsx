@@ -131,11 +131,7 @@ const SchoolTableRow = ({
   percentLowIncome,
   percentCollegePersistent,
   remediationData,
-<<<<<<< HEAD
-  enrollmentData
-=======
   percentEnrolledInCollege
->>>>>>> nextrel
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   const districtLink = getDistrictHref(state, address.city, districtName);
