@@ -119,6 +119,7 @@ def enroll_in_college
     end
     # select out data types with max year
     data_with_max_year = csa_college_enrollment_data.select { |_,h| h.first['year'] == max_year }
+    return [] if data_with_max_year.empty?
     data_type = data_with_max_year.first.first
     value = data_with_max_year.first[1].first['school_value']
     # Pick first one with all students and return
