@@ -130,6 +130,7 @@ const SchoolTableRow = ({
   csaAwardYears,
   percentLowIncome,
   percentCollegePersistent,
+  percentEnrolledInCollege,
   remediationData
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);

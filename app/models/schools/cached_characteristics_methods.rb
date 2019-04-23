@@ -100,7 +100,8 @@ module CachedCharacteristicsMethods
   end
 
   def enroll_in_college
-    style_school_value_as_percent('Percent enrolled in any institution of higher learning in the last 0-16 months')
+    value = style_school_value_as_percent('Percent enrolled in any institution of higher learning in the last 0-16 months')
+    value == NO_DATA_SYMBOL ? 'N/A' : value
   end
 
   def stays_2nd_year
