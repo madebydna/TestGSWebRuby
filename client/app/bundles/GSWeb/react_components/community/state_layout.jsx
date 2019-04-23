@@ -137,7 +137,7 @@ class StateLayout extends React.Component {
           </div>
           <div className="more-school-btn">
             <a href={csaStateLink}>
-              <button>{t('see_all_winning_schools')}</button>
+              <button>{t('state.see_award_winning_schools')}</button>
             </a>
           </div>
         </div>
