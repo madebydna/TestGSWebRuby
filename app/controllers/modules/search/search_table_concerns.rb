@@ -64,6 +64,11 @@ module SearchTableConcerns
           tooltip: t("Low-income", scope:'lib.college_success_award.tooltips')
       },
       {
+          key: 'percentEnrolledInCollege',
+          title: "% #{t("College enrollment", scope:'lib.college_success_award')}",
+          tooltip: t("College enrollment", scope:'lib.college_success_award.tooltips')
+      },
+      {
         key: 'percentCollegeRemediation',
         title: t("Remediation", scope:'lib.college_success_award'),
         tooltip: t("Remediation", scope:'lib.college_success_award.tooltips')
