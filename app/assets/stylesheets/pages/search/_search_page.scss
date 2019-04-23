@@ -637,9 +637,6 @@ body {
 
     .low-income-percentages{
       @include flexbox-center;
-      span{
-        font-family: 'opensans-semibold';
-      }
     }
   }
 }
