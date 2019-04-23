@@ -114,23 +114,21 @@ def enroll_in_college
     # find max year for data types with all
     max_year = 0
     csa_college_enrollment_data = characteristics.slice(*COLLEGE_ENROLLMENT_DATA_TYPES)
-    csa_college_enrollment_data.values.flatten.select { |h| h['breakdown'] == 'All students'}.each do |h|
+    all_students_hashes = csa_college_enrollment_data.values.flatten.select { |h| h['breakdown'] == 'All students'}
+    all_students_hashes.each do |h|
       max_year = h['year'] if h['year'] > max_year
     end
     # select out data types with max year
-    data_with_max_year = csa_college_enrollment_data.select { |_,h| h.first['year'] == max_year }
+    data_with_max_year = all_students_hashes.select { |h| h['year'] == max_year }
     return [] if data_with_max_year.empty?
-    data_type = data_with_max_year.first.first
-    value = data_with_max_year.first[1].first['school_value']
-    # Pick first one with all students and return
-    {
-        "#{data_type}": value
-    }
+    "#{data_with_max_year.first['school_value'].to_f.round(0)}%"
   end
 
   def stays_2nd_year
-    value = style_school_value_as_percent('Percent Enrolled in College and Returned for a Second Year') 
-    value == NO_DATA_SYMBOL ? 'N/A' : value
+    persistence_data = characteristics['Percent Enrolled in College and Returned for a Second Year'] || []
+    all_students_value = persistence_data.find { |h| h['breakdown'] == 'All students'}
+    return 'N/A' unless all_students_value.present?
+    "#{all_students_value['school_value'].to_f.round(0)}%"
   end
 
   def graduates_remediation
