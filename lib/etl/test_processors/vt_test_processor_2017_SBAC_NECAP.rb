@@ -40,129 +40,73 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 		proficient_and_above: 1
 	}
 
-
-	source('VT_2017_SBAC_INDEP_SCHOOL.txt',[],col_sep:"\t") do |s|
-		s.transform('rename fields',MultiFieldRenamer,{
-			group: :breakdown,
-			n: :number_tested,
-			total_proficient_and_above: :value_float})
-		.transform('',WithBlock,) do |row|
-			#require 'byebug'
-			#byebug
-			row
-		end
+	source('VT_2017_NECAP_SCHOOL.txt',[],col_sep:"\t") do |s|
+		s.transform("Renaming fields", MultiFieldRenamer,
+    	{
+      		leaid: :district_id,
+      		leaname: :district_name,
+      		n: :number_tested,
+			group: :breakdown
+  		})
 		.transform('remove rows with blank or 0 ntested',DeleteRows,:number_tested,nil,'0')
 		.transform('remove migrant and not migrant',DeleteRows,:breakdown,'Migrant','Not Migrant')
-		.transform("school id and state_id" WithBlock) do |row|
-			row[:state_id] = row[:psid]
-			row[:school_id] = row[:psid]
-		.transform('entity level',Fill,{
-			entity_level: 'school',
-			test_data_type: 'sbac',
-			gsdata_test_data_type_id: 218,
-			proficiency_band: 'proficient_and_above',
-			proficiency_band_gsdata_id: 1
-			})
-	end
-	
-			
-	source('VT_2017_SBAC_PUBLIC_SCHOOL.txt',[],col_sep:"\t") do |s|
-		s.transform('rename fields',MultiFieldRenamer,{
-		lea_id: :district_id,
-		lea_name: :district_name,
-		group: :breakdown,
-		n: :number_tested,
-		total_proficient_and_above: :value_float})
-		.transform('',WithBlock,) do |row|
-			#require 'byebug'
-			#byebug
-			row
-		end
-		.transform('remove rows with blank or 0 ntested',DeleteRows,:number_tested,nil,'0')
-		.transform('remove migrant and not migrant',DeleteRows,:breakdown,'Migrant','Not Migrant')
-		.transform("school id and state_id" WithBlock) do |row|
-			row[:state_id] = row[:psid]
-			row[:school_id] = row[:psid]
-		.transform('entity level',Fill,{
-			entity_level: 'school',
-			test_data_type: 'sbac',
-			gsdata_test_data_type_id: 218,
-			proficiency_band: 'proficient_and_above',
-			proficiency_band_gsdata_id: 1
-			})
-
-	end
-
-	# source('VT_2016-science-necap_school.txt',[],col_sep:"\t") do |s|
-	# 	s.transform('rename fields',MultiFieldRenamer,{
-	# 	psid: :state_id,
-	# 	leaid: :district_id,
-	# 	leaname: :district_name,
-	# 	group: :breakdown,
-	# 	n: :number_tested,
-	# 	})
-	# 	.transform('',WithBlock,) do |row|
-	# 		#require 'byebug'
-	# 		#byebug
-	# 		unless row[:disaggregate] == 'Disability' && row[:breakdown] == 'All Students'
-	# 			row
-	# 		end
-	# 	end
-	# 	.transform('remove rows with blank or 0 ntested',DeleteRows,:number_tested,nil,'0')
-	# 	.transform('remove migrant and not migrant',DeleteRows,:breakdown,'Migrant','Not Migrant')
-	# 	.transform('subject and grade',WithBlock,) do |row|
-	# 		row[:subject],row[:grade] = row[:test_name].split('Grade')
-	# 		row[:school_id] = row[:state_id]
-	# 		row
-	# 	end
-	# 	.transform('prof and above',SumValues,:proficient_and_above,:level_4_proficient_with_distinction,:level_3_proficient)
-	# 	.transform('transpose prof bands',Transposer,:proficiency_band,:value_float,:proficient_and_above,:level_4_proficient_with_distinction,:level_3_proficient,:level_2_partially_proficient,:level_1_substantially_below_proficient)
-	# 	.transform('map prof band id',HashLookup,:proficiency_band, map_prof_band_id,to: :proficiency_band_gsdata_id)
-	# 	.transform('entity level',Fill,{
-	# 		entity_level: 'school',
-	# 		test_data_type: 'necap',
-	# 		gsdata_test_data_type_id: 95,
-	# 		})
-	# end
-
-	source('VT_2017_NECAP_STATE.txt',[],col_sep:"\t") do |s|
-		s.transform('rename fields',MultiFieldRenamer,{
-		group: :breakdown,
-		n: :number_tested,
-		})
 		.transform('',WithBlock,) do |row|
 			unless row[:disaggregate] == 'Disability' && row[:breakdown] == 'All Students'
 				row
 			end
 		end
-		.transform('remove rows with blank or 0 ntested',DeleteRows,:number_tested,nil,'0')
-		.transform('remove migrant and not migrant',DeleteRows,:breakdown,'Migrant','Not Migrant')
 		.transform('prof and above',SumValues,:proficient_and_above,:level_4_proficient_with_distinction,:level_3_proficient)
 		.transform('transpose prof bands',Transposer,:proficiency_band,:value_float,:proficient_and_above,:level_4_proficient_with_distinction,:level_3_proficient,:level_2_partially_proficient,:level_1_substantially_below_proficient)
 		.transform('map prof band id',HashLookup,:proficiency_band, map_prof_band_id,to: :proficiency_band_gsdata_id)		
-		.transform('',WithBlock,) do |row|
-			# require 'byebug'
-			# byebug
-			row
-		end	
 		.transform('entity level',Fill,{
-			entity_level: 'state',
+			entity_level: 'school',
 			test_data_type: 'necap',
 			gsdata_test_data_type_id: 191,
 			})
+	end
 
+	source('VT_2017_SBAC_PUBLIC_SCHOOL.txt',[],col_sep:"\t") do |s|
+		s.transform('rename fields',MultiFieldRenamer,{
+			total_proficient_and_above: :value_float,
+			lea_id: :district_id,
+			lea_name: :district_name,
+			n: :number_tested,
+			group: :breakdown
+		})
+		.transform('remove rows with blank or 0 ntested',DeleteRows,:number_tested,nil,'0')
+		.transform('remove migrant and not migrant',DeleteRows,:breakdown,'Migrant','Not Migrant')
+		.transform('entity level',Fill,{
+			entity_level: 'school',
+			test_data_type: 'sbac',
+			gsdata_test_data_type_id: 218,
+			proficiency_band: 'proficient_and_above',
+			proficiency_band_gsdata_id: 1
+			})
+	end
+
+	source('VT_2017_SBAC_INDEP_SCHOOL.txt',[],col_sep:"\t") do |s|
+		s.transform('rename fields',MultiFieldRenamer,{
+			total_proficient_and_above: :value_float,
+			n: :number_tested,
+			group: :breakdown
+		})
+		.transform('remove rows with blank or 0 ntested',DeleteRows,:number_tested,nil,'0')
+		.transform('remove migrant and not migrant',DeleteRows,:breakdown,'Migrant','Not Migrant')
+		.transform('entity level',Fill,{
+			entity_level: 'school',
+			test_data_type: 'sbac',
+			gsdata_test_data_type_id: 218,
+			proficiency_band: 'proficient_and_above',
+			proficiency_band_gsdata_id: 1
+			})
 	end
 
 	source('VT_2017_SBAC_STATE.txt',[],col_sep:"\t") do |s|
 		s.transform('rename fields',MultiFieldRenamer,{
-		group: :breakdown,
-		n: :number_tested,
-		total_proficient_and_above: :value_float})
-		.transform('',WithBlock,) do |row|
-			# require 'byebug'
-			# byebug
-			row
-		end
+			total_proficient_and_above: :value_float,
+			n: :number_tested,
+			group: :breakdown
+		})
 		.transform('remove rows with blank or 0 ntested',DeleteRows,:number_tested,nil,'0')
 		.transform('remove migrant and not migrant',DeleteRows,:breakdown,'Migrant','Not Migrant')
 		.transform('entity level',Fill,{
@@ -172,8 +116,31 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 			proficiency_band: 'proficient_and_above',
 			proficiency_band_gsdata_id: 1,
 			})
-
 	end
+
+	source('VT_2017_NECAP_STATE.txt',[],col_sep:"\t") do |s|
+		s.transform('',MultiFieldRenamer,{
+			n: :number_tested,
+			group: :breakdown
+		})
+		.transform('remove rows with blank or 0 ntested',DeleteRows,:number_tested,nil,'0')
+		.transform('remove migrant and not migrant',DeleteRows,:breakdown,'Migrant','Not Migrant')
+		.transform('',WithBlock,) do |row|
+			unless row[:disaggregate] == 'Disability' && row[:breakdown] == 'All Students'
+				row
+			end
+		end
+		.transform('prof and above',SumValues,:proficient_and_above,:level_4_proficient_with_distinction,:level_3_proficient)
+		.transform('transpose prof bands',Transposer,:proficiency_band,:value_float,:proficient_and_above,:level_4_proficient_with_distinction,:level_3_proficient,:level_2_partially_proficient,:level_1_substantially_below_proficient)
+		.transform('map prof band id',HashLookup,:proficiency_band, map_prof_band_id,to: :proficiency_band_gsdata_id)		
+		.transform('entity level',Fill,{
+			entity_level: 'state',
+			test_data_type: 'necap',
+			gsdata_test_data_type_id: 191,
+			})
+	end
+
+
 
 	shared do |s|
 		s.transform('',Fill,{
@@ -186,8 +153,6 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 			row
 		end
 		.transform('Remove 0 from grade and '%' from value_float',WithBlock,) do |row|
-			#require 'byebug'
-			#byebug
 			row[:value_float] = row[:value_float].to_s.gsub('%','')
 			row[:grade] = row[:grade].to_s.sub(/^[ 0]+/,'')
 			row
@@ -203,6 +168,15 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
                 row[:notes] = 'DXT-3080: VT NECAP'
              end
          row
+        end
+        .transform("Creating StateID, district and school id and dist and sch names", WithBlock) do |row|
+     		 if row[:entity_level] == 'state'
+       			row[:state_id] = 'state'
+     		elsif row[:entity_level] == 'school'
+        		row[:state_id] = row[:psid]
+        		row[:school_id] = row[:psid]
+            end
+            row
         end
 	end
 
