@@ -1,5 +1,4 @@
 require_relative "../test_processor"
-GS::ETL::Logging.disable
 
 class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 	
@@ -41,6 +40,7 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 		prof_and_above: 1
 	}
 
+
 	# source('VT_2016_sbac_school_ind.txt',[],col_sep:"\t") do |s|
 	# 	s.transform('rename fields',MultiFieldRenamer,{
 	# 		group: :breakdown,
@@ -63,7 +63,7 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 	# 		test_data_type: 'sbac',
 	# 		gsdata_test_data_type_id: 253,
 	# 		proficiency_band: 'prof_null',
-	# 		proficiency_band_id: 'null'
+	# 		proficiency_band_gsdata_id: 'null'
 	# 		})
 	# end
 	
@@ -93,7 +93,7 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 	# 		test_data_type: 'sbac',
 	# 		gsdata_test_data_type_id: 253,
 	# 		proficiency_band: 'prof_null',
-	# 		proficiency_band_id: 'null'
+	# 		proficiency_band_gsdata_id: 'null'
 	# 		})
 
 	# end
@@ -122,7 +122,7 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 	# 	end
 	# 	.transform('prof and above',SumValues,:proficiency_and_above,:level_4_proficient_with_distinction,:level_3_proficient)
 	# 	.transform('transpose prof bands',Transposer,:proficiency_band,:value_float,:prof_null,:level_4_proficient_with_distinction,:level_3_proficient,:level_2_partially_proficient,:level_1_substantially_below_proficient)
-	# 	.transform('map prof band id',HashLookup,:proficiency_band, map_prof_band_id,to: :proficiency_band_id)
+	# 	.transform('map prof band id',HashLookup,:proficiency_band, map_prof_band_id,to: :proficiency_band_gsdata_id)
 	# 	.transform('entity level',Fill,{
 	# 		entity_level: 'school',
 	# 		test_data_type: 'necap',
@@ -132,14 +132,9 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 
 	source('VT_2017_NECAP_STATE.txt',[],col_sep:"\t") do |s|
 		s.transform('rename fields',MultiFieldRenamer,{
-		disaggregate: :breakdown,
+		group: :breakdown,
 		n: :number_tested,
 		})
-		.transform('',WithBlock,) do |row|
-			#require 'byebug'
-			#byebug
-			row
-		end	
 		.transform('',WithBlock,) do |row|
 			unless row[:disaggregate] == 'Disability' && row[:breakdown] == 'All Students'
 				row
@@ -154,7 +149,12 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 		end
 		.transform('prof and above',SumValues,:proficiency_and_above,:level_4_proficient_with_distinction,:level_3_proficient)
 		.transform('transpose prof bands',Transposer,:proficiency_band,:value_float,:prof_null,:level_4_proficient_with_distinction,:level_3_proficient,:level_2_partially_proficient,:level_1_substantially_below_proficient)
-		.transform('map prof band id',HashLookup,:proficiency_band, map_prof_band_id,to: :proficiency_band_id)
+		.transform('map prof band id',HashLookup,:proficiency_band, map_prof_band_id,to: :proficiency_band_gsdata_id)		
+		.transform('',WithBlock,) do |row|
+			require 'byebug'
+			byebug
+			row
+		end	
 		.transform('entity level',Fill,{
 			entity_level: 'state',
 			test_data_type: 'necap',
@@ -169,8 +169,8 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 		n: :number_tested,
 		total_proficient_and_above: :value_float})
 		.transform('',WithBlock,) do |row|
-			#require 'byebug'
-			#byebug
+			# require 'byebug'
+			# byebug
 			row
 		end
 		.transform('remove rows with blank or 0 ntested',DeleteRows,:number_tested,nil,'0')
@@ -184,7 +184,7 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 			test_data_type: 'sbac',
 			gsdata_test_data_type_id: 218,
 			proficiency_band: 'proficiency_and_above',
-			proficiency_band_id: 1
+			proficiency_band_gsdata_id: 1,
 			})
 
 	end
@@ -195,7 +195,7 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 			level_code: 'e,m,h',
 			year: 2017
 		})
-		.transform('',WithBlock,) do |row|
+		.transform('Remove 0 from grade and '%' from value_float',WithBlock,) do |row|
 			#require 'byebug'
 			#byebug
 			row[:value_float] = row[:value_float].to_s.gsub('%','')
@@ -204,12 +204,24 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 		end
 		.transform('breakdowns',HashLookup,:breakdown,map_breakdown_gsdata_id,to: :breakdown_gsdata_id)
 		.transform('subject',HashLookup,:subject, map_academic_gsdata_id, to: :academic_gsdata_id)
+        .transform("Filling in description", WithBlock) do |row|
+             if row[:gsdata_test_data_type_id] == 218
+                row[:description] = 'In 2016-2017, students in Vermont took The Smarter Balanced assessment, which replaced Vermont\'s previous assessment, the NECAP, in 2016. The new assessment of English Language Arts and Mathematics asks students to demonstrate and apply their knowledge and skills in areas such as critical thinking, analytical writing, and problem solving. The Smarter Balanced assessment is aligned with the Common Core State Standards, uses state of the art computer adaptive testing and accessibility technologies, and provides a continuum of summative, interim and formative tools that can be used for a variety of educational purposes.'
+                row[:notes] = 'DXT-3080: VT VT SBAC'
+             elsif row[:gsdata_test_data_type_id] == 191
+                row[:description] = 'In 2016-2017, students in Vermont took the science assessment, which is part of the New England Common Assessment Program (NECAP). It is designed to measure students\' scientific literacy and inquiry. The NECAP science assessment, which combines scores from multiple choice and short answer questions with results from an inquiry task that requires students to analyze and interpret findings from an actual science experiment.'
+                row[:notes] = 'DXT-3080: VT NECAP'
+             end
+         row
+        end
 	end
 
 	def config_hash
 		{
-		source_id: 50,
+		gsdata_source_id: 50,
+		source_name: 'Vermont Agency of Education',
 		state: 'vt',
+        date_valid: '2017-01-01 00:00:00',
 		notes: 'DXT-3080 VT SBAC, NECAP 2017',
 		url: 'https://education.vermont.gov/documents/data-smarter-balanced-state-school-level-2017',
 		file: 'vt/2017/vt.2017.1.public.charter.[level].txt',

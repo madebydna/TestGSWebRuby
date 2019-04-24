@@ -107,6 +107,27 @@ class Search extends React.Component {
     return <ChooseTableButtons options={this.props.tableViewOptions} />;
   }
 
+  renderSchoolList = () => (
+    <SchoolList
+      toggleHighlight={this.props.toggleHighlight}
+      schools={this.props.schools}
+      saveSchoolCallback={this.props.saveSchoolCallback}
+      isLoading={this.props.loadingSchools}
+      size={this.props.size}
+      shouldRemoveAds={false}
+    />
+  )
+
+  renderSchoolTable = () => (
+    <SchoolTable
+      toggleHighlight={this.props.toggleHighlight}
+      schools={this.props.schools}
+      isLoading={this.props.loadingSchools}
+      searchTableViewHeaders={this.props.searchTableViewHeaders}
+      tableView={this.props.tableView}
+    />
+  )
+
   additionalLayoutProps = () => ({})
 
   render() {
@@ -152,23 +173,10 @@ class Search extends React.Component {
             }
             numOfSchools={this.props.schools.length}
             schoolList={
-              <SchoolList
-                toggleHighlight={this.props.toggleHighlight}
-                schools={this.props.schools}
-                saveSchoolCallback={this.props.saveSchoolCallback}
-                isLoading={this.props.loadingSchools}
-                size={this.props.size}
-                shouldRemoveAds={this.props.size <= XS && this.props.layout === 'CollegeSuccessAward'}
-              />
+              this.renderSchoolList()
             }
             schoolTable={
-              <SchoolTable
-                toggleHighlight={this.props.toggleHighlight}
-                schools={this.props.schools}
-                isLoading={this.props.loadingSchools}
-                searchTableViewHeaders={this.props.searchTableViewHeaders}
-                tableView={this.props.tableView}
-              />
+              this.renderSchoolTable()
             }
             pagination={
               this.props.totalPages > 1 ? (
