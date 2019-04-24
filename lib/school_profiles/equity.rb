@@ -126,14 +126,14 @@ module SchoolProfiles
     def students_with_disabilities_section_props
       @_students_with_disabilities_section_props ||= [
         {
-          title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
-          anchor: 'Test_scores',
-          data: @students_with_disabilities_test_scores_component_group.to_hash
-        },
-        {
           title: I18n.t('Discipline & attendance', scope:'lib.equity_gsdata'),
           anchor: 'Discipline_and_attendance',
           data: @students_with_disabilities_discipline_and_attendance_group.to_hash
+        },
+        {
+          title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
+          anchor: 'Test_scores',
+          data: @students_with_disabilities_test_scores_component_group.to_hash
         }
       ]
     end
