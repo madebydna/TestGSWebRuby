@@ -10,6 +10,8 @@ import { pushQueryString } from './search/search_query_params';
 import { t, capitalize } from 'util/i18n';
 import { XS, SM, validSizes } from 'util/viewport';
 import Select from 'react_components/select';
+import SchoolList from 'react_components/search/school_list';
+import SchoolTable from 'react_components/search/school_table';
 
 class CollegeSuccessAward extends Search {
   noResults() {
@@ -76,14 +78,35 @@ class CollegeSuccessAward extends Search {
       />
     );
   }
+
+  renderSchoolTable = () =>(
+    <SchoolTable
+      toggleHighlight={this.props.toggleHighlight}
+      schools={this.props.schools.map(s => ({ ...s, address: ({ ...s.address, zip: undefined, street1: undefined }) }))}
+      isLoading={this.props.loadingSchools}
+      searchTableViewHeaders={this.props.searchTableViewHeaders}
+      tableView={this.props.tableView}
+    />
+  )
+
+  renderSchoolList = () => (
+    <SchoolList
+      toggleHighlight={this.props.toggleHighlight}
+      schools={this.props.schools.map(s => ({ ...s, address: ({ ...s.address, zip: undefined, street1: undefined }) }))}
+      saveSchoolCallback={this.props.saveSchoolCallback}
+      isLoading={this.props.loadingSchools}
+      size={this.props.size}
+      shouldRemoveAds={this.props.size <= XS}
+    />
+  )
 }
 
 export default function() {
   return (
     <SearchContext.Provider layout="CollegeSuccessAward">
       <SearchContext.Consumer>
-        {({ schools, ...state }) => (
-          <CollegeSuccessAward {...state} tableView={getCsaYears() ? `CSA-${(getCsaYears()[0])}` : `CSA-2019`} schools={schools.map(s => ({...s, address: ({...s.address, zip: undefined, street1: undefined})}))} />
+        {({...state }) => (
+          <CollegeSuccessAward {...state} tableView={getCsaYears() ? `CSA-${(getCsaYears()[0])}` : `CSA-2019`} />
         )}
       </SearchContext.Consumer>
     </SearchContext.Provider>
