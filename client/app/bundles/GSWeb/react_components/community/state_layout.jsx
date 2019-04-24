@@ -108,7 +108,6 @@ class StateLayout extends React.Component {
 
     return (
       <div id="browse-schools">
-        {}
         <div className="modules-title">{browseHeader}</div>
         {this.props.browseCities}
       </div>
@@ -120,25 +119,27 @@ class StateLayout extends React.Component {
 
     if (this.props.csaModule) {
       return (
-        <div className="csa-state-module">
-          <h3>{t('award_winners')}</h3>
-          <div className="csa-state-blurb">
-            <img 
-              src={csaBadgeGenLg}
-              className="csa-badge-gen-lg"
-              alt="csa-badge-icon"
-            />
-            <p>
-              <span dangerouslySetInnerHTML={{__html: t("csa_district_schools_info_html")}}/>
-            </p>
-          </div>
-          <div className="csa-state-module-divider">
-            <div className="blue-line" />
-          </div>
-          <div className="more-school-btn">
-            <a href={csaStateLink}>
-              <button>{t('state.see_award_winning_schools')}</button>
-            </a>
+        <div id="award-winning-schools">
+          <div className="csa-state-module">
+            <h3>{t('award_winners')}</h3>
+            <div className="csa-state-blurb">
+              <img 
+                src={csaBadgeGenLg}
+                className="csa-badge-gen-lg"
+                alt="csa-badge-icon"
+              />
+              <p>
+                <span dangerouslySetInnerHTML={{__html: t("csa_district_schools_info_html")}}/>
+              </p>
+            </div>
+            <div className="csa-state-module-divider">
+              <div className="blue-line" />
+            </div>
+            <div className="more-school-btn">
+              <a href={csaStateLink}>
+                <button>{t('state.see_award_winning_schools')}</button>
+              </a>
+            </div>
           </div>
         </div>
       );
