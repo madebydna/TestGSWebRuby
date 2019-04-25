@@ -2,6 +2,8 @@ class Admin::ReviewsController < ApplicationController
 
   MODERATION_LIST_PAGE_SIZE = 50
 
+  layout 'deprecated_application_with_webpack'
+
   ReviewFlag::VALID_REASONS.each do |reason|
     has_scope reason, type: :boolean
   end
