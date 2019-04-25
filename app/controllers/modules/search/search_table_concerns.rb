@@ -66,7 +66,7 @@ module SearchTableConcerns
       {
           key: 'percentEnrolledInCollege',
           title: "% #{t("College enrollment", scope:'lib.college_success_award')}",
-          tooltip: t("College enrollment", scope:'lib.college_success_award.tooltips')
+          tooltip: t("College_enrollment", scope:'lib.college_success_award.tooltips')
       },
       {
         key: 'percentCollegeRemediation',
