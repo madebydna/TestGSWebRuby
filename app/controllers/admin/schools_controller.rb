@@ -4,6 +4,8 @@ class Admin::SchoolsController < ApplicationController
 
   MODERATION_LIST_PAGE_SIZE = 50
 
+  layout 'deprecated_application_with_webpack'
+
   before_action :require_state, :require_school, except: :index
 
   has_scope :active, type: :boolean

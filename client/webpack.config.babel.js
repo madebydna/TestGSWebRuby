@@ -47,6 +47,7 @@ const config = {
     'reviews-page': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/reviews_page'],
     'signin-page': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/signin_page'],
     'default-page-just-layout': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/default_page_just_layout'],
+    'moderation-tools': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/moderation_tools'],
   },
 
   optimization: {

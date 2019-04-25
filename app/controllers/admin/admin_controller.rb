@@ -3,7 +3,7 @@ class Admin::AdminController < ApplicationController
 
   before_action :init_page
 
-  layout 'deprecated_application'
+  layout 'deprecated_application_with_webpack'
 
   def info
 

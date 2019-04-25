@@ -1,6 +1,8 @@
 class Admin::UsersController < ApplicationController
   include UserValidationConcerns
 
+  layout 'deprecated_application_with_webpack'
+
   def generate_reset_password_link
     user, err_msg = validate_user_can_reset_password(&error_message_hash)
 
