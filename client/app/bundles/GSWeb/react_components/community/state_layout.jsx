@@ -145,17 +145,17 @@ class StateLayout extends React.Component {
     }
   }
 
-  // renderReviews() {
-  //   return (
-  //     this.props.shouldDisplayReviews &&
-  //       <div id="reviews">
-  //         <div className="rating-container reviews-module">
-  //           <h3>{t('recent_reviews.title')} {`${this.props.locality.city}`}</h3>
-  //           {this.props.recentReviews}
-  //         </div>
-  //       </div>
-  //   )
-  // }
+  renderReviews() {
+    return (
+      this.props.shouldDisplayReviews &&
+        <div id="reviews">
+          <div className="rating-container reviews-module">
+            <h3>{t('recent_reviews.title')} {`${this.props.locality.nameLong}`}</h3>
+            {this.props.recentReviews}
+          </div>
+        </div>
+    )
+  }
 
   render() {
     return (
@@ -172,7 +172,7 @@ class StateLayout extends React.Component {
               {this.renderCsaModule()}
               {/* {this.renderBoxAd()} */}
               {this.renderDistricts()}
-              {/* {this.renderReviews()} */}
+              {this.renderReviews()}
             </div>
           {/*</div>*/}
           {this.renderDesktopAd()}

@@ -34,6 +34,7 @@ class State extends React.Component {
   static propTypes = {
     schools_data: PropTypes.object,
     districts: PropTypes.arrayOf(PropTypes.object),
+    reviews: PropTypes.arrayOf(PropTypes.object),
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
         PropTypes.shape({
@@ -45,7 +46,8 @@ class State extends React.Component {
     cities: PropTypes.array,
     schoolCount: PropTypes.number,
     csa_module: PropTypes.bool,
-    shouldDisplayDistricts: PropTypes.bool
+    shouldDisplayDistricts: PropTypes.bool,
+    shouldDisplayReviews: PropTypes.bool
   };
 
   constructor(props) {
@@ -144,13 +146,14 @@ class State extends React.Component {
             //       pageType='city'
             //   />
             // }
-            // recentReviews={
-            //   <RecentReviews
-            //     community="city" 
-            //     reviews={this.props.reviews}
-            //     locality={this.props.locality}
-            //   />
-            // }
+            shouldDisplayReviews={this.props.reviews.length > 0}
+            recentReviews={
+              <RecentReviews
+                community="state" 
+                reviews={this.props.reviews}
+                locality={this.props.locality}
+              />
+            }
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
             viewportSize={this.props.viewportSize}
         >
