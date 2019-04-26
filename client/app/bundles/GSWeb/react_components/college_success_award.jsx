@@ -12,8 +12,48 @@ import { XS, SM, validSizes } from 'util/viewport';
 import Select from 'react_components/select';
 import SchoolList from 'react_components/search/school_list';
 import SchoolTable from 'react_components/search/school_table';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { defaultShareContent } from './school_profiles/sharing_modal';
+import { isEqual } from 'lodash';
+import { titleizedName } from 'util/states';
 
 class CollegeSuccessAward extends Search {
+  componentDidUpdate(prevProps) {
+    if (
+      !isEqual(prevProps.csaYears, this.props.csaYears)
+    ) {
+      this.updateSharedLinks(window.location.href)
+    }
+  }
+
+  // Finds and destroy the current tipso in the sharing modal
+  // Replace it with a new tipso with updated content
+  // Trying to update the original tipso did not work
+  // TODO: Figure out how to make the original tipso update
+  updateSharedLinks(url) {
+    const sharedModal = $('.shared-modal')
+    sharedModal.tipso('destroy')
+    const pageName = "College Success Awards"
+    const title = `${titleizedName(
+      this.props.state
+    )} College Success Awards`;
+    const newContent = renderToStaticMarkup(
+      defaultShareContent({ url, title, pageName })
+    )
+    sharedModal.tipso({
+      position: 'top',
+      speed: 500,
+      width: 300,
+      hideDelay: 300,
+      tooltipHover: true,
+      onBeforeShow: function (ele, tipso) {
+        let temp = ele.data('remodal-target')
+        ele.attr('data-remodal-target-disabled', temp);
+        ele.removeAttr('data-remodal-target');
+      }
+    }).tipso('update', 'content', newContent)
+  }
+  
   noResults() {
     return this.props.schools.length === 0 ? (
       <React.Fragment>
