@@ -58,11 +58,7 @@ const sharingRow = ({ url, type, moduleName }) => {
   return (
     <div
       className={`sharing-row js-${className} js-slTracking`}
-      key={dataAttrs['data-link']}
       {...dataAttrs}
-      // data-type={type}
-      // data-module={moduleName}
-      // data-link={newUrl}
     >
       <div className="sharing-icon-box">
         <span className={`icon-${iconName}`} />
