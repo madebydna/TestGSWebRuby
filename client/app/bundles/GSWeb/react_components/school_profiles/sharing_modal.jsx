@@ -50,13 +50,15 @@ const sharingRow = ({ url, type, moduleName }) => {
   };
   const className = type === 'Email' ? 'emailSharingLinks' : 'sharingLinks';
   const iconName = icons[type.toLowerCase()];
-
+  const dataAttrs = {
+    'data-type': type,
+    'data-module': moduleName,
+    'data-link': url
+  }
   return (
     <div
       className={`sharing-row js-${className} js-slTracking`}
-      data-type={type}
-      data-module={moduleName}
-      data-link={url}
+      {...dataAttrs}
     >
       <div className="sharing-icon-box">
         <span className={`icon-${iconName}`} />
@@ -110,7 +112,7 @@ const twitterUrl = (url, text) => parseUrl('https://twitter.com/intent/tweet').s
  * @param {string} obj.pageName Used for the utm_source. The page that the user event originated from
  * @param {string} obj.moduleName Not required. If page has multiple modules that have Share functionality, the name of the module
  */
-const defaultShareContent = ({url, title, pageName, moduleName }) => {
+export const defaultShareContent = ({url, title, pageName, moduleName}) => {
   return (
   <div className="sharing-modal">
     {sharingRow({
@@ -163,7 +165,7 @@ const defaultShareContent = ({url, title, pageName, moduleName }) => {
 };
 
 
-const SharingModal = ({ content, url, title, pageName, moduleName = undefined }) => (
+const SharingModal = ({ content, url, title, pageName, moduleName = undefined, className}) => (
   <Tooltip
     content={
       content ||
@@ -171,6 +173,8 @@ const SharingModal = ({ content, url, title, pageName, moduleName = undefined })
         defaultShareContent({ url, title, pageName, moduleName })
       )
     }
+
+    className={className}
   >
     <span>
       <span className="icon-share" />&nbsp;
@@ -183,6 +187,7 @@ SharingModal.defaultProps = {
   url: undefined,
   title: undefined,
   pageName: undefined,
+  className: '',
   moduleName: undefined
 };
 
@@ -191,7 +196,8 @@ SharingModal.propTypes = {
   url: PropTypes.string,
   title: PropTypes.string,
   pageName: PropTypes.string,
-  moduleName: PropTypes.string
+  moduleName: PropTypes.string,
+  className: PropTypes.string
 };
 
 export default SharingModal;

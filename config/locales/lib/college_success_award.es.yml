@@ -12,7 +12,7 @@ es:
       tooltips:
         Total enrolled: El número total de estudiantes matriculados en todos los grados en cada escuela.
         Low-income: Los estudiantes que son elegibles para recibir el almuerzo gratis o a un precio reducido.
-        College enrollment: El porcentaje de graduados que se inscribieron en cualquier institución de educación superior.
+        College_enrollment: Esto refleja a los graduados de esta escuela que se inscribieron en una institución de educación superior. Esta definición puede variar según el estado; visite el perfil de una escuela ganadora para obtener más detalles.
         Remediation: Esto refleja el porcentaje de graduados que necesitaron tomar clases básicas o correctivas, que no cuentan para un título universitario.
         Math remediation: Esto refleja el porcentaje de graduados que necesitaron tomar clases de matemáticas básicas o correctivas, que no cuentan para un título universitario.
         English remediation: Esto refleja el porcentaje de graduados que necesitaron tomar clases de inglés básicas o correctivas, que no cuentan para un título universitario.

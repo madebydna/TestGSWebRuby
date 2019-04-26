@@ -344,6 +344,7 @@ class CollegeSuccessAwardLayout extends React.Component {
                   title={`${titleizedName(
                     this.props.stateName
                   )} College Success Awards`}
+                  className={'shared-modal'}
                 />
               </div>
               <div className="menu-item" style={{ marginTop: '24px' }}>
