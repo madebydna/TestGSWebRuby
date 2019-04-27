@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { t } from 'util/i18n';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
-const CsaInfo = ({locality}) => {
+const CsaInfo = ({locality, community}) => {
+  let buttonText = community === "state" ? t('see_all_winning_schools') : `${t('see_winning_schools_in')} ${locality.stateLong}`;
 
   return (
     <div className="csa-state-module">
@@ -23,7 +24,7 @@ const CsaInfo = ({locality}) => {
       </div>
       <div className="more-school-btn">
         <a href={locality.stateCsaUrl}>
-          <button>{t('see_all_winning_schools')}</button>
+          <button>{buttonText}</button>
         </a>
       </div>
     </div>
