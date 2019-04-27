@@ -7,6 +7,7 @@ import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
 import CityBrowseLinks from './city_browse_links';
+import CsaInfo from './csa_info';
 import DistrictsInState from "./districts_in_state";
 import RecentReviews from "./recent_reviews";
 import { init as initAdvertising } from 'util/advertising';
@@ -128,7 +129,12 @@ class State extends React.Component {
                   cities={this.props.cities}
               />
             }
-            csaModule={this.props.csa_module}
+            shouldDisplayCsaInfo={this.props.csa_module}
+            csaInfo={
+              <CsaInfo 
+                locality={this.props.locality}
+              />
+            }
             shouldDisplayDistricts={this.props.districts.length > 0}
             districts={this.props.districts}
             districtsInState={

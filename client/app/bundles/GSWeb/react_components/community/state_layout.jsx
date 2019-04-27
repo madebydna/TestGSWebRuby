@@ -6,7 +6,6 @@ import Button from 'react_components/button';
 import Ad from 'react_components/ad';
 import { t, capitalize } from 'util/i18n';
 import { keepInViewport } from 'util/sticky';
-import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
 class StateLayout extends React.Component {
   static propTypes = {
@@ -116,46 +115,12 @@ class StateLayout extends React.Component {
   }
 
   renderCsaModule() {
-    const csaStateLink = this.props.locality.stateCsaUrl;
-
-    if (this.props.csaModule) {
-      return (
-        <div className="csa-state-module">
-          <h3>{t('award_winners')}</h3>
-          <div className="csa-state-blurb">
-            <img 
-              src={csaBadgeGenLg}
-              className="csa-badge-gen-lg"
-              alt="csa-badge-icon"
-            />
-            <p>
-              <span dangerouslySetInnerHTML={{__html: t("csa_district_schools_info_html")}}/>
-            </p>
-          </div>
-          <div className="csa-state-module-divider">
-            <div className="blue-line" />
-          </div>
-          <div className="more-school-btn">
-            <a href={csaStateLink}>
-              <button>{t('see_all_winning_schools')}</button>
-            </a>
-          </div>
-        </div>
-      );
-    }
+    return this.props.shouldDisplayCsaInfo && (
+      <div>
+        {this.props.csaInfo}
+      </div>
+    );
   }
-
-  // renderReviews() {
-  //   return (
-  //     this.props.shouldDisplayReviews &&
-  //       <div id="reviews">
-  //         <div className="rating-container reviews-module">
-  //           <h3>{t('recent_reviews.title')} {`${this.props.locality.city}`}</h3>
-  //           {this.props.recentReviews}
-  //         </div>
-  //       </div>
-  //   )
-  // }
 
   render() {
     return (
