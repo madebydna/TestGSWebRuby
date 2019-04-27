@@ -158,6 +158,7 @@ class DistrictLayout extends React.Component {
           </a>
         </div>
         {this.props.browseSchools}
+        {this.props.shouldDisplayCsaInfo && this.props.csaInfo}
         {this.props.schoolCounts.all > 0 ? this.props.topSchools: null}
       </div>
     )

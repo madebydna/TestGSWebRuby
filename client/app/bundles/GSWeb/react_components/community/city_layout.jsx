@@ -111,6 +111,7 @@ class CityLayout extends React.Component {
       <div id="schools">
         <h2 className="modules-title">{`${t('find_schools_in')} ${this.props.locality.city}`}</h2>
         {this.props.browseSchools}
+        {this.props.shouldDisplayCsaInfo && this.props.csaInfo}
         {this.props.topSchools}
       </div>
     )
