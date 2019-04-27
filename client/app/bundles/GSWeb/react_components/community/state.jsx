@@ -132,6 +132,7 @@ class State extends React.Component {
             shouldDisplayCsaInfo={this.props.csa_module}
             csaInfo={
               <CsaInfo 
+                community="state"
                 locality={this.props.locality}
               />
             }
