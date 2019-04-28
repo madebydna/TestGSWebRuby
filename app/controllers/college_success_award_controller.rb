@@ -11,11 +11,9 @@ class CollegeSuccessAwardController < ApplicationController
 
   layout 'application'
   before_filter :redirect_unless_valid_search_criteria # we need at least a 'q' param or state and city/district
-  before_action :redirect_unless_valid_csa_state
-
-  CSA_STATES = %w(ar co ct fl ga hi id in ky la ma mi mn mo ms mt nc nd ne nj oh ok tx vt wy)
 
   def search
+    redirect_to state_url(state_params(state)) unless serialized_schools.present?
     gon.search = {
       schools: serialized_schools,
     }.tap do |props|
@@ -158,10 +156,6 @@ class CollegeSuccessAwardController < ApplicationController
 
   def redirect_unless_valid_search_criteria
     true
-  end
-
-  def redirect_unless_valid_csa_state
-    redirect_to state_url(States.state_name(state)) unless CSA_STATES.include?(state)
   end
 
   # extra items returned even if not requested (besides school fields etc)
