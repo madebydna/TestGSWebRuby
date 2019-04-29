@@ -9,6 +9,7 @@ en:
       English remediation: English remediation
       Math remediation: Math remediation
       College enrollment: College enrollment
+      State average: State average
       tooltips:
         Total enrolled: The total number of students enrolled across all grade levels in each school.
         Low-income: Students who qualify for free or reduced-price lunch 

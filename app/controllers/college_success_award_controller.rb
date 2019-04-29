@@ -36,7 +36,7 @@ class CollegeSuccessAwardController < ApplicationController
       props[:breadcrumbs] = breadcrumbs
       props[:searchTableViewHeaders] =
         csa_available_years.each_with_object({}) do | year, hash |
-          hash["CSA-#{year}"] = college_success_award_header_arr(year)
+          hash["CSA-#{year}"] = college_success_award_header_arr
         end
       props[:view] = view || default_view
     end
