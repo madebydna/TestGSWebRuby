@@ -26,22 +26,17 @@ module CommunityConcerns
       end
     end
 
-    def fetch_top_rated_schools(level_code)
-      set_level_code_params(level_code)
-      serialized_schools
-    end
-
-    def fetch_top_rated_csa_schools
-      set_csa_winner_param('*')
-      serialized_schools
-    end 
-
     def top_rated_schools
       @_top_rated_schools ||= begin
-        elementary = fetch_top_rated_schools('e')
-        middle = fetch_top_rated_schools('m')
-        high = fetch_top_rated_schools('h')
-        csa = fetch_top_rated_csa_schools
+        @level_code = ['e']
+        elementary = serialized_schools
+        @level_code = ['m']
+        middle = serialized_schools
+        @level_code = ['h']
+        high = serialized_schools
+        # csa needs level_code to be h or * - it is set above on previous step but if this is refactored, keep this in mind
+        @csa_years = ['*']
+        csa = serialized_schools
         {
           schools: {
             elementary: elementary,
@@ -61,40 +56,8 @@ module CommunityConcerns
     end
 
     def page_of_results
+      # solr_query is defined in each including controller
       solr_query.search
-    end
-
-    def solr_query
-      query_type = Search::SolrSchoolQuery
-
-      if params[:district]
-        query_type.new(
-          state: state,
-          district_id: district_record.id,
-          level_codes: [level_code_param].compact,
-          limit: default_top_schools_limit,
-          sort_name: 'rating',
-          with_rating: 'true',
-          csa_years: csa_years.presence
-        )
-      elsif params[:city]
-        query_type.new(
-          city: city,
-          state: state,
-          district_name: district_record&.name,
-          level_codes: [level_code_param].compact,
-          limit: default_top_schools_limit,
-          sort_name: 'rating',
-          with_rating: 'true',
-          csa_years: csa_years.presence
-          )
-      else
-        query_type.new(
-          state: locality[:nameShort],
-          limit: 1,
-          csa_years: @csa_years.presence
-        )
-        end
     end
 
     def default_top_schools_limit
