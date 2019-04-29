@@ -23,7 +23,7 @@ const CsaInfo = ({locality, community}) => {
         <div className="blue-line" />
       </div>
       <div className="more-school-btn">
-        <a href={locality.stateCsaUrl}>
+        <a href={locality.stateCsaBrowseUrl}>
           <button>{buttonText}</button>
         </a>
       </div>
