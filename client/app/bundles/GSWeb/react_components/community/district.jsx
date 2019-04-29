@@ -25,7 +25,8 @@ class District extends React.Component {
   static defaultProps = {
     schools_data: {},
     breadcrumbs: [],
-    reviews: []
+    reviews: [],
+    csa_module: false
   };
 
   static propTypes = {
@@ -138,7 +139,7 @@ class District extends React.Component {
             schoolLevels={this.props.school_levels}
           />
         }
-        shouldDisplayCsaInfo={this.props.schools_data.schools.csa.length === 0}
+        shouldDisplayCsaInfo={this.props.schools_data.schools.csa.length === 0 && this.props.csa_module}
         csaInfo={
           <CsaInfo 
             community="district"

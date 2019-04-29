@@ -27,7 +27,8 @@ class City extends React.Component {
     loadingSchools: false,
     breadcrumbs: [],
     districts: [],
-    reviews: []
+    reviews: [],
+    csa_module: false 
   };
 
   static propTypes = {
@@ -129,7 +130,7 @@ class City extends React.Component {
             schoolLevels={this.props.school_levels}
           />
         }
-        shouldDisplayCsaInfo={this.props.schools_data.schools.csa.length === 0}
+        shouldDisplayCsaInfo={this.props.schools_data.schools.csa.length === 0 && this.props.csa_module}
         csaInfo={
           <CsaInfo 
             community="city"
