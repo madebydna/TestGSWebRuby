@@ -7,6 +7,7 @@ import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
 import SchoolBrowseLinks from './school_browse_links';
+import CsaInfo from './csa_info';
 import DistrictsInCity from "./districts_in_city";
 import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
@@ -126,6 +127,13 @@ class City extends React.Component {
             locality={this.props.locality}
             size={this.props.viewportSize}
             schoolLevels={this.props.school_levels}
+          />
+        }
+        shouldDisplayCsaInfo={this.props.schools_data.schools.csa.length === 0}
+        csaInfo={
+          <CsaInfo 
+            community="city"
+            locality={this.props.locality}
           />
         }
         districts={this.props.districts}
