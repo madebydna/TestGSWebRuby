@@ -12,6 +12,8 @@ class DistrictsController < ApplicationController
   before_action :redirect_to_canonical_url
 
   def show
+    @level_code = []
+    @csa_years = []
     @locality = locality
     @school_levels = school_levels
     @breadcrumbs = breadcrumbs
@@ -27,6 +29,19 @@ class DistrictsController < ApplicationController
   end
 
   private
+
+  def solr_query
+    query_type = Search::SolrSchoolQuery
+    query_type.new(
+          state: state,
+          district_id: district_record&.id,
+          level_codes: @level_code.compact,
+          limit: default_top_schools_limit,
+          sort_name: 'rating',
+          with_rating: 'true',
+          csa_years: @csa_years.presence
+        )
+  end
 
   def translations
     {}.tap do |hash|

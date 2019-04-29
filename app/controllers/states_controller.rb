@@ -51,6 +51,15 @@ class StatesController < ApplicationController
     States.capitalize_any_state_names(@state[:long])
   end
 
+  def solr_query
+    query_type = Search::SolrSchoolQuery
+    query_type.new(
+        state: locality[:nameShort],
+        limit: 1,
+        csa_years: @csa_years.presence
+    )
+  end
+
   # TODO This should be in either at StateHubsController or a HubsController
   # def state_hub
   #   @cities = popular_cities

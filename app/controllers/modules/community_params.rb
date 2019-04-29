@@ -37,22 +37,6 @@ module CommunityParams
     States.state_name(state)
   end
 
-  def level_code_param
-    params[:levelCode] || 'e'
-  end
-
-  def set_level_code_params(level_code)
-    params[:levelCode] = level_code
-  end
-
-  def csa_years
-    ensure_array_param(:csaYears)
-  end
-
-  def set_csa_winner_param(current_year)
-    params[:csaYears] = current_year || []
-  end
-
   def extras
     default_extras + extras_param
   end
