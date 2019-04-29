@@ -17,10 +17,10 @@ class CitiesController < ApplicationController
     @districts = district_content(decorated_city)
     @reviews = reviews_formatted.reviews_list
     @locality = locality
+    @csa_module = state_solr_query.present?
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props
     set_page_analytics_data
-
   end
 
   private
@@ -63,6 +63,16 @@ class CitiesController < ApplicationController
         csa_years: @csa_years.presence
     )
   end
+
+  def state_solr_query 
+    @_state_solr_query ||=
+      (query_type = Search::SolrSchoolQuery
+      query_type.new(
+          state: state.upcase,
+          limit: 1,
+          csa_years: @csa_years.presence
+      ).search) 
+  end 
 
   def reviews
     @_reviews ||=
