@@ -66,12 +66,15 @@ class CitiesController < ApplicationController
 
   def state_solr_query 
     @_state_solr_query ||=
-      (query_type = Search::SolrSchoolQuery
-      query_type.new(
-          state: state.upcase,
-          limit: 1,
-          csa_years: @csa_years.presence
-      ).search) 
+      (
+        csa_badge = ['*']
+        query_type = Search::SolrSchoolQuery
+        query_type.new(
+            state: state.upcase,
+            limit: 1,
+            csa_years: csa_badge.presence
+        ).search
+      ) 
   end 
 
   def reviews
@@ -141,7 +144,7 @@ class CitiesController < ApplicationController
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
-        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name))
+        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if state_solr_query.present?
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:zip] = get_zip
         cp[:lat] = fetch_district_attr(decorated_city, :lat) || city_record&.lat
