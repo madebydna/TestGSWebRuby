@@ -18,6 +18,7 @@ import {
   COOKIE_NAME
 } from 'util/session';
 import SearchQueryParams from './search_query_params';
+import { getCsaYears } from './query_params';
 import GradeLevelContext from './grade_level_context';
 import SavedSchoolContext from './saved_school_context';
 import ChooseTableContext from './choose_table_context';
@@ -302,7 +303,7 @@ class SearchProvider extends React.Component {
       stateSelect: this.state.stateSelect,
       extras: ['students_per_teacher', 'review_summary'],
       locationLabel: props.locationLabel,
-      csaYears: props.csaYears
+      csaYears: getCsaYears() ? parseInt(getCsaYears()[0]) : props.csaYears[0]
     };
   }
 
