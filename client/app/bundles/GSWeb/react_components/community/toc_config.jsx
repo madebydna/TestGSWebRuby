@@ -8,6 +8,7 @@ export const COMMUNITY_RESOURCES = 'community_resources';
 export const ACADEMICS = 'Academics';
 export const CALENDAR = 'calendar';
 export const BROWSE_SCHOOLS = 'browse_schools';
+export const AWARD_WINNING_SCHOOLS = 'award_winning_schools';
 
 const browseSchools = {
   key: BROWSE_SCHOOLS,
@@ -21,6 +22,13 @@ const schools = {
   label: t(SCHOOLS),
   anchor: '#schools',
   selected: true
+}
+
+const awardWinningSchools = {
+  key: AWARD_WINNING_SCHOOLS,
+  label: t(AWARD_WINNING_SCHOOLS),
+  anchor: '#award-winning-schools',
+  selected: false
 }
 
 const schoolDistricts = {
@@ -68,6 +76,7 @@ const reviews = {
 export {
   browseSchools,
   schools,
+  awardWinningSchools,
   schoolDistricts,
   academics,
   calendar,

@@ -107,6 +107,10 @@ module StructuredMarkup
     end
   end
 
+  def self.home_breadcrumb_text
+    'GreatSchools'
+  end
+
   def self.state_breadcrumb_text(state)
     if state == 'DC'
       'District of Columbia'

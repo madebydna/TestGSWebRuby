@@ -264,6 +264,10 @@ class StatesController < ApplicationController
   def breadcrumbs
     @_state_breadcrumbs ||= [
       {
+        text: StructuredMarkup.home_breadcrumb_text,
+        url: home_path
+      },
+      {
         text: StructuredMarkup.state_breadcrumb_text(@state[:short].upcase),
         url: state_url(state_params(@state[:short]))
       }
