@@ -47,18 +47,18 @@ module SearchTableConcerns
 
   def generate_remediation_headers
     # Method that generate the correct table headers for the college success award page
-    # Shows overall remediation data if available. Otherwise will show Math and English subjects
+    # Shows overall remediation data if available. Otherwise will try to show Math and English subjects
     # In absence of both, return nil and is removed from the array before sending to the frontend
     remediation_data = serialized_schools.map {|x| x[:remediationData]}.flatten
     remediation_data_overall = remediation_data&.select {|s| s["subject"] == 'All subjects'}
 
-    remediation_state_average = remediation_data_overall
-                                    &.map {|s| s["state_average"]}
-                                    &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
-                                    &.max_by(&:last)
-                                    &.first
+
 
     if remediation_data_overall.present?
+      remediation_state_average = remediation_data_overall&.map {|s| s["state_average"]}
+                                                          &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
+                                                          &.max_by(&:last)
+                                                          &.first
       return {
         key: 'percentCollegeRemediation',
         title: t("Remediation", scope:'lib.college_success_award'),
@@ -70,17 +70,16 @@ module SearchTableConcerns
     remediation_data_english = remediation_data&.select {|s| s["subject"] == 'English'}
     remediation_data_math = remediation_data&.select {|s| s["subject"] == 'Math'}
 
-    remediation_eng_state_average = remediation_data_english
-                                        &.map {|s| s["state_average"]}
-                                        &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
-                                        &.max_by(&:last)
-                                        &.first
-    remediation_math_state_average = remediation_data_math
-                                        &.map {|s| s["state_average"]}
-                                        &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
-                                        &.max_by(&:last)
-                                        &.first
+
     if (remediation_data_english.present? ||  remediation_data_math.present?)
+      remediation_eng_state_average = remediation_data_english&.map {|s| s["state_average"]}
+                                                              &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
+                                                              &.max_by(&:last)
+                                                              &.first
+      remediation_math_state_average = remediation_data_math&.map {|s| s["state_average"]}
+                                                            &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
+                                                            &.max_by(&:last)
+                                                            &.first
       return [{
                 key: 'percentCollegeRemediationEnglish',
                 title: t("English remediation", scope:'lib.college_success_award'),
@@ -101,7 +100,6 @@ module SearchTableConcerns
     persistence_data = serialized_schools.map {|x| x[:collegePersistentData]}.flatten
     enrollment_data = serialized_schools.map {|x| x[:collegeEnrollmentData]}.flatten
 
-    # ! TODO: Maybe I can use a lambda method to dry up?
     persistence_state_average = persistence_data&.map {|s| s["state_average"]}
                                     &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
                                     &.max_by(&:last)
@@ -110,7 +108,7 @@ module SearchTableConcerns
                                               &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
                                               &.max_by(&:last)
                                               &.first
-                                              
+    
     [
       {
           key: 'clarifiedSchoolType',
