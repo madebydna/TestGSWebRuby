@@ -158,10 +158,17 @@ class DistrictLayout extends React.Component {
           </a>
         </div>
         {this.props.browseSchools}
-        {this.props.shouldDisplayCsaInfo && this.props.csaInfo}
         {this.props.schoolCounts.all > 0 ? this.props.topSchools: null}
       </div>
     )
+  }
+
+  renderCsaModule() {
+    return this.props.shouldDisplayCsaInfo && (
+      <div>
+        {this.props.csaInfo}
+      </div>
+    );
   }
 
   renderReviews(){
@@ -188,6 +195,7 @@ class DistrictLayout extends React.Component {
             {this.props.viewportSize < SM && <Ad slot="districtpage_first" sizeName="thin_banner_mobile" />}
             {this.renderSchools()}
             {this.renderBoxAd()}
+            {this.renderCsaModule()}
             {this.renderAcademics()}
             {this.renderCalendar()}
             {this.renderMobility()}

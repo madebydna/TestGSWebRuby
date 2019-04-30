@@ -111,10 +111,17 @@ class CityLayout extends React.Component {
       <div id="schools">
         <h2 className="modules-title">{`${t('find_schools_in')} ${this.props.locality.city}`}</h2>
         {this.props.browseSchools}
-        {this.props.shouldDisplayCsaInfo && this.props.csaInfo}
         {this.props.topSchools}
       </div>
     )
+  }
+
+  renderCsaModule() {
+    return this.props.shouldDisplayCsaInfo && (
+      <div>
+        {this.props.csaInfo}
+      </div>
+    );
   }
 
   renderZillow(){
@@ -159,6 +166,7 @@ class CityLayout extends React.Component {
               {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
               {this.renderSchools()}
               {this.renderBoxAd()}
+              {this.renderCsaModule()}
               {this.renderDistricts()}
               {this.renderMobility()}
               {this.renderZillow()}
