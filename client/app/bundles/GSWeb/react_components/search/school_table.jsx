@@ -21,6 +21,7 @@ const tableHeaders = (headerArray = [], tableView) => {
       key={tableView + hash.key}
       colName={hash.title}
       tooltipContent={hash.tooltip}
+      footerNote={hash.footerNote}
     />
   ));
   headers = schoolHeader.concat(headers);
@@ -60,10 +61,6 @@ const SchoolTable = ({
     tableView = typeof(searchTableViewHeaders) === Array ? searchTableViewHeaders[0] : Object.keys(searchTableViewHeaders)[0]
   }
   
-  // ! TODO: Figure out better way to do this. Refactor into class component or use hook's `useState`
-  if (tableView.substring(0,3) === 'CSA'){
-    searchTableViewHeaders[tableView] = filterHeadersOnRemediationSubjects(schools, searchTableViewHeaders[tableView])
-  }
   return (
     <section className="school-table">
       {
