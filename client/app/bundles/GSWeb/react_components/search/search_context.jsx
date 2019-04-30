@@ -301,7 +301,7 @@ class SearchProvider extends React.Component {
       page: props.page,
       limit: props.pageSize,
       stateSelect: this.state.stateSelect,
-      extras: ['students_per_teacher', 'review_summary'],
+      extras: ['students_per_teacher', 'review_summary', 'saved_schools'],
       locationLabel: props.locationLabel,
       csaYears: getCsaYears() ? parseInt(getCsaYears()[0]) : props.csaYears[0]
     };

@@ -75,7 +75,7 @@ class Api::SchoolSerializer
       h[:ethnicityInfo] = ethnicity_information if ethnicity_information
       h[:ethnicityBreakdowns] = compare_ethnicity_breakdowns if compare_ethnicity_breakdowns && school.respond_to?(:pinned)
       h[:savedSchool] = saved_school if saved_school
-      h[:remediationData] = school.graduates_remediation_for_college_success_awards if school.respond_to?(:remediation)
+      h[:remediationData] = school.graduates_remediation_for_college_success_awards
     end
   end
 end

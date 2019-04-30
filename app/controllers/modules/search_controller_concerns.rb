@@ -268,14 +268,6 @@ module SearchControllerConcerns
     end
   end
 
-  def add_remediation(schools)
-    schools.each do |school|
-      school.define_singleton_method(:remediation) do
-        true
-      end
-    end
-  end
-
   def translated_ethnicity_with_fallback
     @_translated_ethnicity ||= I18n.t(ethnicity, default: ethnicity)
   end
