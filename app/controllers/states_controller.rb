@@ -54,8 +54,11 @@ class StatesController < ApplicationController
   def solr_query
     query_type = Search::SolrSchoolQuery
     query_type.new(
-        state: locality[:nameShort],
-        limit: 1,
+        state: @state[:short].upcase,
+        level_codes: @level_code.compact,
+        limit: default_top_schools_limit,
+        sort_name: 'rating',
+        with_rating: 'true',
         csa_years: @csa_years.presence
     )
   end
