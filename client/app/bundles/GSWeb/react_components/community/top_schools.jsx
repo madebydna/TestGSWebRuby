@@ -76,11 +76,11 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
         {renderButtons(handleGradeLevel, community, schoolLevels, levelCodes)}
         <hr />
         {schoolList}
-        <div className="more-school-btn">
+        {community !== "state" && <div className="more-school-btn">
           <a href={addQueryParamToUrl('gradeLevels', levelCodes, locality.searchResultBrowseUrl)}>
             <button>{seeSchoolMap[levelCodes]}</button>
           </a>
-        </div>
+        </div>}
       </div>
     </div>
   );

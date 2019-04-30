@@ -90,6 +90,15 @@ class StateLayout extends React.Component {
     return this.props.viewportSize > XS && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
   }
 
+  renderSchools(){
+    return (
+      <div id="schools">
+        {/* <h2 className="modules-title">{`${t('find_schools_in')} ${this.props.locality.nameLong}`}</h2> */}
+        {this.props.topSchools}
+      </div>
+    )
+  }
+
   renderDistricts(){
     let { nameLong } = this.props.locality;
 
@@ -115,7 +124,7 @@ class StateLayout extends React.Component {
 
   renderCsaModule() {
     return this.props.shouldDisplayCsaInfo && (
-      <div>
+      <div id="award-winning-schools">
         {this.props.csaInfo}
       </div>
     );
@@ -133,6 +142,7 @@ class StateLayout extends React.Component {
             <div className="community-modules">
               {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
               {this.renderCities()}
+              {this.renderSchools()}
               {this.renderCsaModule()}
               {/* {this.renderBoxAd()} */}
               {this.renderDistricts()}
