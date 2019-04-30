@@ -45,6 +45,16 @@ module SearchTableConcerns
     end
   end
 
+  def with_state_averages
+    lambda {|s| s["state_average"]}
+  end
+
+  def mode(array_of_values)
+    array_of_values&.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
+                   &.max_by(&:last)
+                   &.first
+  end
+
   def generate_remediation_headers
     # Method that generate the correct table headers for the college success award page
     # Shows overall remediation data if available. Otherwise will try to show Math and English subjects
@@ -52,13 +62,9 @@ module SearchTableConcerns
     remediation_data = serialized_schools.map {|x| x[:remediationData]}.flatten
     remediation_data_overall = remediation_data&.select {|s| s["subject"] == 'All subjects'}
 
-
-
     if remediation_data_overall.present?
-      remediation_state_average = remediation_data_overall&.map {|s| s["state_average"]}
-                                                          &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
-                                                          &.max_by(&:last)
-                                                          &.first
+      remediation_state_average = mode(remediation_data_overall&.map(&with_state_averages))
+
       return {
         key: 'percentCollegeRemediation',
         title: t("Remediation", scope:'lib.college_success_award'),
@@ -70,16 +76,10 @@ module SearchTableConcerns
     remediation_data_english = remediation_data&.select {|s| s["subject"] == 'English'}
     remediation_data_math = remediation_data&.select {|s| s["subject"] == 'Math'}
 
-
     if (remediation_data_english.present? ||  remediation_data_math.present?)
-      remediation_eng_state_average = remediation_data_english&.map {|s| s["state_average"]}
-                                                              &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
-                                                              &.max_by(&:last)
-                                                              &.first
-      remediation_math_state_average = remediation_data_math&.map {|s| s["state_average"]}
-                                                            &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
-                                                            &.max_by(&:last)
-                                                            &.first
+      remediation_eng_state_average = mode(remediation_data_english&.map(&with_state_averages))
+      remediation_math_state_average = mode(remediation_data_math&.map(&with_state_averages))
+
       return [{
                 key: 'percentCollegeRemediationEnglish',
                 title: t("English remediation", scope:'lib.college_success_award'),
@@ -100,14 +100,8 @@ module SearchTableConcerns
     persistence_data = serialized_schools.map {|x| x[:collegePersistentData]}.flatten
     enrollment_data = serialized_schools.map {|x| x[:collegeEnrollmentData]}.flatten
 
-    persistence_state_average = persistence_data&.map {|s| s["state_average"]}
-                                    &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
-                                    &.max_by(&:last)
-                                    &.first
-    enrollment_state_average = enrollment_data&.map {|s| s["state_average"]}
-                                              &.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
-                                              &.max_by(&:last)
-                                              &.first
+    persistence_state_average = mode(persistence_data&.map(&with_state_averages))
+    enrollment_state_average = mode(enrollment_data&.map(&with_state_averages))
     
     [
       {
