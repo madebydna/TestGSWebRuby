@@ -52,7 +52,7 @@ class CollegeSuccessAward extends Search {
 
   renderCSADropDown = () => {
     const options = this.props.tableViewOptions;
-    const tableView = this.props.tableView.split('-')[1]
+    const tableView = this.props.tableView
     return (
       <Select
         objects={options}
@@ -105,8 +105,8 @@ export default function() {
   return (
     <SearchContext.Provider layout="CollegeSuccessAward">
       <SearchContext.Consumer>
-        {({...state }) => (
-          <CollegeSuccessAward {...state} tableView={getCsaYears() ? `CSA-${(getCsaYears()[0])}` : `CSA-2019`} />
+        {({ ...state }) => (
+          <CollegeSuccessAward {...state} tableView={getCsaYears() ? `${getCsaYears()[0]}` : String(state.csaYears[0])} />
         )}
       </SearchContext.Consumer>
     </SearchContext.Provider>
