@@ -22,7 +22,7 @@ class DistrictsController < ApplicationController
     @academics_props = district_academics_module_props
     @reviews = reviews_formatted.reviews_list
     @translations = translations
-    @csa_module = state_solr_query.present?
+    @csa_module = csa_state_solr_query.present?
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
     set_ad_targeting_props
@@ -44,8 +44,8 @@ class DistrictsController < ApplicationController
         )
   end
 
-  def state_solr_query 
-    @_state_solr_query ||=
+  def csa_state_solr_query 
+    @_csa_state_solr_query ||=
     (
       csa_badge = ['*']
       query_type = Search::SolrSchoolQuery
@@ -151,7 +151,7 @@ class DistrictsController < ApplicationController
           district_name: gs_legacy_url_encode(district),
           trailing_slash: true
         )
-        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if state_solr_query.present?
+        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if csa_state_solr_query.present?
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:calendarURL] = ENV_GLOBAL['calendar_service_url']
         cp[:zipCode] = district_record.mail_zipcode[0..4]

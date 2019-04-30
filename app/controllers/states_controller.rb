@@ -21,7 +21,8 @@ class StatesController < ApplicationController
     end
     
     @csa_years = [2018, 2019]
-    @csa_module = page_of_results.present?
+    @csa_module = csa_state_solr_query.present?
+    # @csa_module = page_of_results.present?
     @breadcrumbs = breadcrumbs 
     @locality = locality 
     @cities = cities_data
@@ -58,6 +59,19 @@ class StatesController < ApplicationController
         limit: 1,
         csa_years: @csa_years.presence
     )
+  end
+
+  def csa_state_solr_query
+    @_csa_state_solr_query ||=
+      (
+        csa_badge = ['*']
+        query_type = Search::SolrSchoolQuery
+        query_type.new(
+            state: @state[:short].upcase,
+            limit: 1,
+            csa_years: csa_badge.presence
+        ).search 
+      )
   end
 
   # TODO This should be in either at StateHubsController or a HubsController

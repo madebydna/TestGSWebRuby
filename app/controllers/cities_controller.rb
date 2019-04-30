@@ -17,7 +17,7 @@ class CitiesController < ApplicationController
     @districts = district_content(decorated_city)
     @reviews = reviews_formatted.reviews_list
     @locality = locality
-    @csa_module = state_solr_query.present?
+    @csa_module = csa_state_solr_query.present?
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props
     set_page_analytics_data
@@ -64,8 +64,8 @@ class CitiesController < ApplicationController
     )
   end
 
-  def state_solr_query 
-    @_state_solr_query ||=
+  def csa_state_solr_query 
+    @_csa_state_solr_query ||=
       (
         csa_badge = ['*']
         query_type = Search::SolrSchoolQuery
@@ -144,7 +144,7 @@ class CitiesController < ApplicationController
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
-        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if state_solr_query.present?
+        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if csa_state_solr_query.present?
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:zip] = get_zip
         cp[:lat] = fetch_district_attr(decorated_city, :lat) || city_record&.lat
