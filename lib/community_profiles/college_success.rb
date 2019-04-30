@@ -43,6 +43,8 @@ module CommunityProfiles
       content = '<div class="sourcing">'
       # content += '<h1>' + translate('title') + '</h1>'
       data_array = cs_component.data_type_hashes
+                               .select{|hash| hash["breakdown"] == "All students"}
+                               .uniq {|h| h.data_type}
       content += data_array.reduce('') do |string, hash|
         string += sources_text(hash)
       end
