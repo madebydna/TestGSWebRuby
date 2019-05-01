@@ -13,7 +13,7 @@ reason = 'bad-language'
 active = 1
 
 ids.each do |id|
-  output.write("Insert into gs_schooldb.review_flags (member_id, review_id, comment, active, reason) values(#{member_id}, #{id}, '#{comment}', #{active}, '#{reason}')\n")
+  output.write("Insert into gs_schooldb.review_flags (member_id, review_id, comment, active, reason) values(#{member_id}, #{id}, '#{comment}', #{active}, '#{reason}');\n")
 end
 
 puts default

@@ -15,7 +15,7 @@ output = File.open('output.sql', "w")
 File.open(filename, "r") do |file_handle|
   file_handle.each_line do |value|
     array = value.split(',')
-    output.write("Insert into community.alert_words (word, really_bad) values('#{array[0].strip}',#{array[1].strip})\n")
+    output.write("Insert into community.alert_words (word, really_bad) values('#{array[0].strip}',#{array[1].strip});\n")
   end
 end
 
