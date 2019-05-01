@@ -23,9 +23,7 @@ class StatesController < ApplicationController
     
     @level_code = []
     @csa_years = []
-    # @csa_years = [2018, 2019]
     @csa_module = csa_state_solr_query.present?
-    # @csa_module = page_of_results.present?
     @breadcrumbs = breadcrumbs 
     @locality = locality 
     @cities = cities_data
@@ -361,7 +359,7 @@ class StatesController < ApplicationController
   end 
 
   def default_extras
-    %w(summary_rating enrollment review_summary students_per_teacher)
+    %w(summary_rating enrollment review_summary)
   end
 
 end
