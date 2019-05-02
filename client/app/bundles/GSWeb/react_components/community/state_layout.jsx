@@ -13,7 +13,8 @@ class StateLayout extends React.Component {
     viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
-    shouldDisplayDistricts: PropTypes.bool
+    shouldDisplayDistricts: PropTypes.bool,
+    shouldDisplayReviews: PropTypes.bool
   };
 
   constructor(props) {

@@ -27,9 +27,7 @@ class State extends React.Component {
     districts: [],
     reviews: [],
     cities: [],
-    csa_module: false,
-    shouldDisplayDistricts: false,
-    shouldDisplayReviews: false
+    csa_module: false
   };
 
   static propTypes = {
@@ -46,9 +44,7 @@ class State extends React.Component {
     locality: PropTypes.object.isRequired,
     cities: PropTypes.array,
     schoolCount: PropTypes.number,
-    csa_module: PropTypes.bool,
-    shouldDisplayDistricts: PropTypes.bool,
-    shouldDisplayReviews: PropTypes.bool
+    csa_module: PropTypes.bool
   };
 
   constructor(props) {

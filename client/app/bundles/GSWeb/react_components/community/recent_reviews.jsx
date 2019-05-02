@@ -39,8 +39,6 @@ class RecentReviews extends React.Component {
       return <p>{t('recent_reviews.city_blurb')}</p>;
     } else if (this.props.community === "district") {
       return <p>{t('recent_reviews.district_blurb')}</p>;
-    } else {
-      return;
     }
   }
 
