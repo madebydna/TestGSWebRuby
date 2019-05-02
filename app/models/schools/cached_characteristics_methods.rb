@@ -120,19 +120,24 @@ def enroll_in_college
     end
     # select out data types with max year
     data_with_max_year = all_students_hashes.select { |h| h['year'] == max_year }
-    return [] if data_with_max_year.empty?
-    "#{data_with_max_year.first['school_value'].to_f.round(0)}%"
+    return {} if data_with_max_year.empty?
+    {}.tap do |hash|
+      hash["school_value"] = "#{data_with_max_year.first['school_value'].to_f.round(0)}%"
+      hash["state_average"] = "#{data_with_max_year.first['state_average'].to_f.round(0)}%" if data_with_max_year.first['state_average']
+    end
   end
 
   def stays_2nd_year
     persistence_data = characteristics['Percent Enrolled in College and Returned for a Second Year'] || []
     all_students_value = persistence_data.find { |h| h['breakdown'] == 'All students'}
-    return 'N/A' unless all_students_value.present?
-    "#{all_students_value['school_value'].to_f.round(0)}%"
+    return [] unless all_students_value.present?
+    {}.tap do |hash|
+      hash["school_value"] = "#{all_students_value['school_value'].to_f.round(0)}%"
+      hash["state_average"] = "#{all_students_value['state_average'].to_f.round(0)}%" if all_students_value['state_average']
+    end
   end
 
   def graduates_remediation
-    # create three variables and supress if something isn't present
     @_graduates_remediation ||= characteristics['Percent Needing Remediation for College'] || []
   end
 
@@ -145,9 +150,11 @@ def enroll_in_college
         if datum["subject"]
           hash["subject"] = datum["subject"]
           hash["school_value"] = "#{datum["school_value"].round(0)}%"
+          hash["state_average"] = "#{datum["state_average"].round(0)}%" if datum["state_average"]
         else
           hash["subject"] = "All subjects"
           hash["school_value"] = "#{datum["school_value"].round(0)}%"
+          hash["state_average"] = "#{datum["state_average"].round(0)}%" if datum["state_average"]
         end
       end
     end     

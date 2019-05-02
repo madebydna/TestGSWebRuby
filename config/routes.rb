@@ -238,6 +238,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
     get '/gk/ratings/',  as: :ratings
     get '/gk/como-clasificamos/',  as: :ratings_spanish
+    get '/gk/csa-winners/', as: :csa_winners
     get '/status/error404.page'
   end
 

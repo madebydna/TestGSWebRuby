@@ -30,6 +30,7 @@ class StatesController < ApplicationController
     @top_schools = top_rated_schools
     @districts = districts_data
     @school_count = school_count 
+    @reviews = reviews_formatted
 
     write_meta_tags
     gon.pagename = 'GS:State:Home'
@@ -67,17 +68,57 @@ class StatesController < ApplicationController
   end
 
   def csa_state_solr_query
-    @_csa_state_solr_query ||=
-      (
-        csa_badge = ['*']
-        query_type = Search::SolrSchoolQuery
-        query_type.new(
-            state: @state[:short].upcase,
-            limit: 1,
-            csa_years: csa_badge.presence
-        ).search 
-      )
+    @_csa_state_solr_query ||= begin 
+      csa_badge = ['*']
+      query_type = Search::SolrSchoolQuery
+      query_type.new(
+          state: @state[:short].upcase,
+          limit: 1,
+          csa_years: csa_badge.presence
+      ).search 
+    end 
   end
+
+  def reviews
+    @_reviews ||= 
+      Review
+        .active
+        .where(state: @state[:short])
+        .where(review_question_id: 1)
+        .where.not(comment: nil)
+        .includes(:answers, :votes, question: :review_topic)
+        .order(id: :desc)
+        .limit(3)
+        .extend(SchoolAssociationPreloading).preload_associated_schools!
+  end
+
+  def reviews_formatted
+    @_reviews_formatted ||= begin 
+      reviews.map do |review|
+        review_school = School.find_by_state_and_id(review.state, review.school_id)
+
+        if review_school.present? && review_school.active?
+          Hash.new.tap do |rp|
+            rp[:avatar] = UserReviews::USER_TYPE_AVATARS[review.user_type]
+            rp[:five_star_review] = five_star_review_hash(review)
+            rp[:id] = review.id 
+            rp[:most_recent_date] = I18n.l(review.created, format: "%B %d, %Y")
+            rp[:school_name] = review_school.name
+            rp[:school_url] = school_path(review_school)
+            rp[:user_type_label] = review.user_type.gs_capitalize_first
+          end 
+        end
+      end.compact
+    end 
+  end 
+
+  def five_star_review_hash(review)
+    Hash.new.tap do |rp|
+      rp[:answer] = review.answer 
+      rp[:comment] = review.comment 
+      rp[:topic_label] = review.question.review_topic.label
+    end
+  end 
 
   # TODO This should be in either at StateHubsController or a HubsController
   # def state_hub
