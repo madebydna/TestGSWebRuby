@@ -58,7 +58,7 @@ module Subscriptions
 
   def has_signedup?(list, school = nil)
     school_id = school&.id
-    state = school.state
+    state = school&.state
     if school && list == 'mystat'
       list = 'mystat_private' if school.private_school?
     end
