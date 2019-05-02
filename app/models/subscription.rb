@@ -29,15 +29,15 @@ class Subscription < ActiveRecord::Base
   }
 
   def name
-    Subscription.subscription_product(list).name
+    Subscription.subscription_product(list)&.name
   end
 
   def long_name
-    Subscription.subscription_product(list).long_name
+    Subscription.subscription_product(list)&.long_name
   end
 
   def description
-    Subscription.subscription_product(list).description
+    Subscription.subscription_product(list)&.description
   end
 
   def self.subscription_product(list)

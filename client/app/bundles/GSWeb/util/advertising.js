@@ -165,7 +165,7 @@ const getSizeMappings = function() {
     thin_banner: googletag
       .sizeMapping()
       .addSize([768, 120], [[728, 90]])
-      .addSize([0, 0], [[320, 50]])
+      .addSize([0, 0], [[320, 50], [320, 100], [300, 250]])
       .build(),
     mobile_overlay: googletag
       .sizeMapping()
@@ -174,7 +174,7 @@ const getSizeMappings = function() {
       .build(),
     thin_banner_mobile: googletag
       .sizeMapping()
-      .addSize([0, 0], [[320, 100], [320, 50]])
+      .addSize([0, 0], [[320, 100], [320, 50], [300, 250]])
       .build(),
     thin_banner_or_box: googletag
       .sizeMapping()
@@ -207,6 +207,11 @@ const getSizeMappings = function() {
     search_result_item: googletag
       .sizeMapping()
       .addSize([0, 0], [300,90])
+      .build(),
+    wide_or_box: googletag
+      .sizeMapping()
+      .addSize([768, 120], [[728, 90], [300, 250]])
+      .addSize([0, 0], [[320, 50], [320, 100], [300, 250]])
       .build(),
   };
 };

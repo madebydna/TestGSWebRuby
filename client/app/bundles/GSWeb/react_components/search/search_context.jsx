@@ -18,6 +18,7 @@ import {
   COOKIE_NAME
 } from 'util/session';
 import SearchQueryParams from './search_query_params';
+import { getCsaYears } from './query_params';
 import GradeLevelContext from './grade_level_context';
 import SavedSchoolContext from './saved_school_context';
 import ChooseTableContext from './choose_table_context';
@@ -286,6 +287,7 @@ class SearchProvider extends React.Component {
 
   // school finder methods, based on obj state
   propsForFindSchools(props) {
+    const csaYear = getCsaYears() ? parseInt(getCsaYears()[0]) : (props.csaYears ? props.csaYears[0] : null)
     return {
       city: props.city,
       district: props.district,
@@ -300,9 +302,9 @@ class SearchProvider extends React.Component {
       page: props.page,
       limit: props.pageSize,
       stateSelect: this.state.stateSelect,
-      extras: ['students_per_teacher', 'review_summary'],
+      extras: ['students_per_teacher', 'review_summary', 'saved_schools'],
       locationLabel: props.locationLabel,
-      csaYears: props.csaYears
+      csaYears: csaYear
     };
   }
 
