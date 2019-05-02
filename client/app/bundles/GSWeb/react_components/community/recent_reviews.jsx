@@ -34,6 +34,14 @@ class RecentReviews extends React.Component {
     this.renderReviewLayout = this.renderReviewLayout.bind(this);
   }
 
+  renderAddReviewsBlurb() {
+    if (this.props.community === "city") {
+      return <p>{t('recent_reviews.city_blurb')}</p>;
+    } else if (this.props.community === "district") {
+      return <p>{t('recent_reviews.district_blurb')}</p>;
+    }
+  }
+
   renderReviewsList() {
     return (
       <ReviewsList
@@ -61,13 +69,17 @@ class RecentReviews extends React.Component {
         <div className="row">
           <div className="col-xs-12 col-lg-12">{componentFunction()}</div>
         </div>
-        <div className="blue-line" />
-        <div className="add-review-container">
-          <p>{this.props.community === "city" ? t('recent_reviews.city_blurb') : t('recent_reviews.district_blurb')}</p>
-          <a href="/reviews/">
-            <button>{t('recent_reviews.Add a review')}</button>
-          </a>
-        </div>
+        {this.props.community !== "state" && 
+          <React.Fragment>
+            <div className="blue-line" />
+            <div className="add-review-container">
+              {this.renderAddReviewsBlurb()}
+              <a href="/reviews/">
+                <button>{t('recent_reviews.Add a review')}</button>
+              </a>
+            </div>
+          </React.Fragment>
+        }
       </React.Fragment>
     );
   }
