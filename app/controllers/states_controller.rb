@@ -62,16 +62,15 @@ class StatesController < ApplicationController
   end
 
   def csa_state_solr_query
-    @_csa_state_solr_query ||=
-      (
-        csa_badge = ['*']
-        query_type = Search::SolrSchoolQuery
-        query_type.new(
-            state: @state[:short].upcase,
-            limit: 1,
-            csa_years: csa_badge.presence
-        ).search 
-      )
+    @_csa_state_solr_query ||= begin 
+      csa_badge = ['*']
+      query_type = Search::SolrSchoolQuery
+      query_type.new(
+          state: @state[:short].upcase,
+          limit: 1,
+          csa_years: csa_badge.presence
+      ).search 
+    end
   end
 
   # TODO This should be in either at StateHubsController or a HubsController

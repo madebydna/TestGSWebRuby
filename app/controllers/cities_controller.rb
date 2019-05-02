@@ -65,16 +65,15 @@ class CitiesController < ApplicationController
   end
 
   def csa_state_solr_query 
-    @_csa_state_solr_query ||=
-      (
-        csa_badge = ['*']
-        query_type = Search::SolrSchoolQuery
-        query_type.new(
-            state: state.upcase,
-            limit: 1,
-            csa_years: csa_badge.presence
-        ).search
-      ) 
+    @_csa_state_solr_query ||= begin 
+      csa_badge = ['*']
+      query_type = Search::SolrSchoolQuery
+      query_type.new(
+          state: state.upcase,
+          limit: 1,
+          csa_years: csa_badge.presence
+      ).search
+    end
   end 
 
   def reviews
