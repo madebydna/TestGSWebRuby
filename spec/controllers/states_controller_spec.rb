@@ -38,7 +38,11 @@ shared_examples_for 'a default state controller action' do |action, page_name|
 end
 
 describe StatesController do
-  before(:each) { FactoryGirl.create(:hub_city_mapping, city: nil, state: 'IN') }
+  before(:each) do
+    stub_request(:post, "#{ENV_GLOBAL['solr.ro.server.url']}select?wt=json").to_return(status: 200, body: "{}", headers: {})
+    FactoryGirl.create(:hub_city_mapping, city: nil, state: 'IN')
+  end
+
   after(:each) { clean_dbs :gs_schooldb }
 
   describe 'GET show' do
