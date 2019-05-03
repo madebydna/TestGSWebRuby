@@ -33,7 +33,7 @@ module Solr
             **(res['facet_counts']&.symbolize_keys || {})
           )
         else
-          docs = res.dig('response', 'docs')
+          docs = res.dig('response', 'docs') || []
           if query.document_class
             docs.map! { |doc| query.document_class.from_hash(doc) }
             docs.extend(query.document_class.const_get('CollectionMethods'))

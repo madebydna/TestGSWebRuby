@@ -9,6 +9,7 @@ describe 'State Home Page' do
   describe 'basic state home page' do
     before do
       create(:city, state: 'mn', name: 'St. Paul')
+      stub_request(:post, "#{ENV_GLOBAL['solr.ro.server.url']}select?wt=json").to_return(status: 200, body: "{}", headers: {})
       visit state_path('minnesota')
     end
     after { clean_dbs :us_geo }
