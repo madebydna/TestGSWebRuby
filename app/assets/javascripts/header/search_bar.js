@@ -150,7 +150,9 @@ GS.nav.searchBar = GS.nav.searchBar || (function(){
   }
 
   var setContentSearchBarSubmitHandler = function () {
-    contentSearchForm.addEventListener("submit", submitContentSearch, false);
+    if (contentSearchForm){
+      contentSearchForm.addEventListener("submit", submitContentSearch, false);
+    }
   };
 
   var setSchoolSearchBarSubmitHandler = function() {

@@ -1,4 +1,5 @@
 class StatesController < ApplicationController
+  include CommunityParams
   include SeoHelper
   include SearchHelper
   include SchoolHelper
@@ -20,26 +21,29 @@ class StatesController < ApplicationController
       return redirect_to city_path('washington-dc', 'washington'), status: 301
     end
     
+    @level_code = []
+    @csa_years = []
+    @csa_module = csa_state_solr_query.present?
     @breadcrumbs = breadcrumbs 
     @locality = locality 
     @cities = cities_data
+    @top_schools = top_rated_schools
     @districts = districts_data
     @school_count = school_count 
-    @csa_years = [2018, 2019]
-    @csa_module = page_of_results.present?
+    @reviews = reviews_formatted
 
     write_meta_tags
     gon.pagename = 'GS:State:Home'
     # if @hub
     #   state_hub
     # else
-      @params_hash = parse_array_query_string(request.query_string)
-      gon.state_abbr = @state[:short]
-      @ad_page_name = :State_Home_Standard
-      @show_ads = PropertyConfig.advertising_enabled?
-      gon.show_ads = show_ads?
-      ad_setTargeting_through_gon
-      data_layer_through_gon
+    @params_hash = parse_array_query_string(request.query_string)
+    gon.state_abbr = @state[:short]
+    @ad_page_name = :State_Home_Standard
+    @show_ads = PropertyConfig.advertising_enabled?
+    gon.show_ads = show_ads?
+    ad_setTargeting_through_gon
+    data_layer_through_gon
     # end
   end
 
@@ -50,6 +54,71 @@ class StatesController < ApplicationController
   def school_state_title
     States.capitalize_any_state_names(@state[:long])
   end
+
+  def solr_query
+    query_type = Search::SolrSchoolQuery
+    query_type.new(
+        state: @state[:short].upcase,
+        level_codes: @level_code.compact,
+        limit: default_top_schools_limit,
+        sort_name: 'rating',
+        with_rating: 'true',
+        csa_years: @csa_years.presence
+    )
+  end
+
+  def csa_state_solr_query
+    @_csa_state_solr_query ||= begin 
+      csa_badge = ['*']
+      query_type = Search::SolrSchoolQuery
+      query_type.new(
+          state: @state[:short].upcase,
+          limit: 1,
+          csa_years: csa_badge.presence
+      ).search 
+    end
+  end
+
+  def reviews
+    @_reviews ||= 
+      Review
+        .active
+        .where(state: @state[:short])
+        .where(review_question_id: 1)
+        .where.not(comment: nil)
+        .includes(:answers, :votes, question: :review_topic)
+        .order(id: :desc)
+        .limit(3)
+        .extend(SchoolAssociationPreloading).preload_associated_schools!
+  end
+
+  def reviews_formatted
+    @_reviews_formatted ||= begin 
+      reviews.map do |review|
+        review_school = School.find_by_state_and_id(review.state, review.school_id)
+
+        if review_school.present? && review_school.active?
+          Hash.new.tap do |rp|
+            rp[:avatar] = UserReviews::USER_TYPE_AVATARS[review.user_type]
+            rp[:five_star_review] = five_star_review_hash(review)
+            rp[:id] = review.id 
+            rp[:most_recent_date] = I18n.l(review.created, format: "%B %d, %Y")
+            rp[:school_name] = review_school.name
+            rp[:school_url] = school_path(review_school)
+            rp[:user_type_label] = review.user_type.gs_capitalize_first
+          end 
+        end
+      end.compact
+    end 
+  end 
+
+  def five_star_review_hash(review)
+    Hash.new.tap do |rp|
+      rp[:answer] = review.answer 
+      rp[:comment] = review.comment 
+      rp[:topic_label] = review.question.review_topic.label
+    end
+  end 
 
   # TODO This should be in either at StateHubsController or a HubsController
   # def state_hub
@@ -255,6 +324,10 @@ class StatesController < ApplicationController
   def breadcrumbs
     @_state_breadcrumbs ||= [
       {
+        text: StructuredMarkup.home_breadcrumb_text,
+        url: home_path
+      },
+      {
         text: StructuredMarkup.state_breadcrumb_text(@state[:short].upcase),
         url: state_url(state_params(@state[:short]))
       }
@@ -276,10 +349,10 @@ class StatesController < ApplicationController
           state_abbr: @state[:short],
           trailing_slash: true
         )
-        cp[:stateCsaUrl] = state_college_success_awards_list_path(
+        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(
           state: gs_legacy_url_encode(@state[:long]),
           trailing_slash: true
-        )
+        ) if @csa_module
       end
     end
   end 
@@ -324,7 +397,10 @@ class StatesController < ApplicationController
         end 
       end 
     end
-
   end 
+
+  def default_extras
+    %w(summary_rating enrollment review_summary)
+  end
 
 end

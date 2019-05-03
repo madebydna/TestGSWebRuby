@@ -7,12 +7,13 @@ import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
 import CityBrowseLinks from './city_browse_links';
+import CsaInfo from './csa_info';
 import DistrictsInState from "./districts_in_state";
 import RecentReviews from "./recent_reviews";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
-import {browseSchools, schoolDistricts, BROWSE_SCHOOLS, SCHOOL_DISTRICTS} from './toc_config';
+import { browseSchools, awardWinningSchools, schoolDistricts, reviews, BROWSE_SCHOOLS, AWARD_WINNING_SCHOOLS, SCHOOL_DISTRICTS, REVIEWS } from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
@@ -27,13 +28,13 @@ class State extends React.Component {
     districts: [],
     reviews: [],
     cities: [],
-    csa_module: false,
-    shouldDisplayDistricts: false
+    csa_module: false
   };
 
   static propTypes = {
     schools_data: PropTypes.object,
     districts: PropTypes.arrayOf(PropTypes.object),
+    reviews: PropTypes.arrayOf(PropTypes.object),
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
     breadcrumbs: PropTypes.arrayOf(
         PropTypes.shape({
@@ -44,8 +45,7 @@ class State extends React.Component {
     locality: PropTypes.object.isRequired,
     cities: PropTypes.array,
     schoolCount: PropTypes.number,
-    csa_module: PropTypes.bool,
-    shouldDisplayDistricts: PropTypes.bool
+    csa_module: PropTypes.bool
   };
 
   constructor(props) {
@@ -104,8 +104,11 @@ class State extends React.Component {
   }
 
   selectTocItems(){
-    let stateTocItems = [browseSchools, schoolDistricts];
+    let stateTocItems = [browseSchools, awardWinningSchools, schoolDistricts, reviews];
+    stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === AWARD_WINNING_SCHOOLS && !this.props.csa_module);
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === SCHOOL_DISTRICTS && this.props.districts.length === 0);
+    stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
+    
     return stateTocItems;
   }
 
@@ -128,7 +131,22 @@ class State extends React.Component {
                   cities={this.props.cities}
               />
             }
-            csaModule={this.props.csa_module}
+            topSchools={
+              <TopSchoolsStateful
+                community="state" 
+                schoolsData={this.props.schools_data.schools}
+                size={this.props.viewportSize}
+                locality={this.props.locality}
+                schoolLevels={this.props.schools_data.counts}
+              />
+            }
+            shouldDisplayCsaInfo={this.props.csa_module}
+            csaInfo={
+              <CsaInfo 
+                community="state"
+                locality={this.props.locality}
+              />
+            }
             shouldDisplayDistricts={this.props.districts.length > 0}
             districts={this.props.districts}
             districtsInState={
@@ -144,13 +162,14 @@ class State extends React.Component {
             //       pageType='city'
             //   />
             // }
-            // recentReviews={
-            //   <RecentReviews
-            //     community="city" 
-            //     reviews={this.props.reviews}
-            //     locality={this.props.locality}
-            //   />
-            // }
+            shouldDisplayReviews={this.props.reviews.length > 0}
+            recentReviews={
+              <RecentReviews
+                community="state" 
+                reviews={this.props.reviews}
+                locality={this.props.locality}
+              />
+            }
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
             viewportSize={this.props.viewportSize}
         >

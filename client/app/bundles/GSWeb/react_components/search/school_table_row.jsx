@@ -11,6 +11,7 @@ import SavedSchoolContext from './saved_school_context';
 import PieChart from 'react_components/pie_chart';
 import csaBadgeSm from 'search/csa-award-sm.png';
 import csaBadgeMd from 'search/csa-award-md.png';
+import { name, titleizedName } from 'util/states';
 
 const renderEnrollment = enrollment => {
   if (enrollment) {
@@ -62,8 +63,12 @@ const fiveStars = numFilled => (
   <FiveStarRating questionId={1} value={numFilled} onClick={() => {}} />
 );
 
-const renderCsaBadgePopover = (years, links) => {
+const renderCsaBadgePopover = (years, links, state) => {
   let csaYears = years.join(", ");
+  let csaYearsForHeader = <span className="csa-award-count">{years.length}</span>;
+  let csaHeader = 
+    years.length === 1 ? t('award') : t('awards');
+  let csaStateLink = `/${name(state)}/college-success-award/`;
 
   return (
     <div className="csa-winner-popover-container">
@@ -73,21 +78,27 @@ const renderCsaBadgePopover = (years, links) => {
           className="csa-badge-sm"
           alt="csa-badge-icon"
         /> 
-        <span className="csa-winner-header">{t('award_winner')}</span>
+        <span className="csa-winner-header">{csaYearsForHeader} {csaHeader}</span>
         <span className="info-circle icon-info"></span>
       </div>
 
       <div className="csa-winner-popover">
         <div className="csa-winner-popover-content">
-          <img 
-            src={csaBadgeMd} 
-            className="csa-badge-md"
-            alt="csa-badge-icon"
-          />
-          <div className="csa-winner-popover-text">
-            <a href={links.collegeSuccess}>College Success Award</a>
-            <div>{csaYears}</div>
+          <h4 className="csa-winner-popover-header">
+            {t('awards_and_badges')}
+          </h4>
+          <div>
+            <img 
+              src={csaBadgeMd} 
+              className="csa-badge-md"
+              alt="csa-badge-icon"
+            />
+            <div className="csa-winner-popover-text">
+              <a href={links.collegeSuccess}>College Success Award</a>
+              <div>{csaYears}</div>
+            </div>
           </div>
+          <a className="csa-winner-popover-state-link" href={csaStateLink}>{t('see_all_winners_in')} {titleizedName(state)}</a>
         </div>
       </div>
     </div>
@@ -118,9 +129,9 @@ const SchoolTableRow = ({
   savedSchool,
   csaAwardYears,
   percentLowIncome,
-  percentCollegePersistent,
+  collegePersistentData,
   remediationData,
-  percentEnrolledInCollege
+  collegeEnrollmentData
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   const districtLink = getDistrictHref(state, address.city, districtName);
@@ -162,6 +173,8 @@ const SchoolTableRow = ({
   const percentCollegeRemediationEnglish = renderRemediationValue(remediationData, 'English')
   const percentCollegeRemediationMath = renderRemediationValue(remediationData, 'Math')
   const clarifiedSchoolType = <div>{capitalize(clarifySchoolType(schoolType))}</div>
+  const percentCollegePersistent = <div>{Object.keys(collegePersistentData).length > 0 ? collegePersistentData.school_value : "N/A"}</div>
+  const percentEnrolledInCollege = <div>{Object.keys(collegeEnrollmentData).length > 0 ? collegeEnrollmentData.school_value : "N/A"}</div>
 
   const schoolCard = () => {
     return (
@@ -174,7 +187,7 @@ const SchoolTableRow = ({
               {name}
             </a>
             <br/>
-              {csaAwardYears.length > 0 && renderCsaBadgePopover(csaAwardYears, links)}
+              {csaAwardYears.length > 0 && renderCsaBadgePopover(csaAwardYears, links, state)}
               {addressPhrase && <div className="address">{addressPhrase}</div>}
               {homesForSaleHref && (
                   <div className="homes-for-sale">

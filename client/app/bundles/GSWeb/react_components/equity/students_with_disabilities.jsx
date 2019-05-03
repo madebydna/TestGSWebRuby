@@ -24,7 +24,7 @@ export default class StudentsWithDisabilities extends SchoolProfileComponent {
       return <ModuleTab {...item} key={index} anchorLink={anchorLink} />
     }.bind(this)).concat([
       <ModuleTab
-        title="Community feedback"
+        title={this.props.feedback_tab_title}
         key={this.filteredData().length}
       />
     ])

@@ -33,7 +33,8 @@ module SchoolProfiles
         end
       csa_state_link = state_college_success_awards_list_path(
         state: gs_legacy_url_encode(States.state_name(@school_cache_data_reader.school.state)), 
-        trailing_slash: true
+        trailing_slash: true,
+        lang: I18n.current_non_en_locale
       )
       {
         csa_badge: I18n.t(:csa_badge_html, scope: 'lib.college_readiness', blurb: blurb, csa_state_link: csa_state_link).html_safe

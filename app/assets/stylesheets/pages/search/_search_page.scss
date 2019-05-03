@@ -249,6 +249,10 @@ body {
       margin: 0 8px;
     }
 
+    .csa-award-count {
+      font-family: $font-family-base-bold;
+    }
+
     .csa-winner-popover {
       display: none;
       position: absolute;
@@ -294,12 +298,28 @@ body {
     }
 
     .csa-winner-popover-content {
-      display: flex;
-      margin: 20px 15px;
+      margin: 15px;
+      
+      > div {
+        display: flex;
+        margin: 10px 0;
+      }
+    }
+
+    .csa-winner-popover-header {
+      font-family: $font-family-base-bold;
+      font-size: $font-size-base;
+      color: $color-dark-gray-text;
     }
 
     .csa-winner-popover-text {
       padding-left: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .csa-winner-popover-state-link {
+      font-family: $font-family-italic;
     }
 
     .school-list ol {
@@ -583,6 +603,14 @@ body {
       text-align: center;
       word-wrap: break-word;
       overflow-wrap: break-word;
+
+      div { margin-bottom: 5px;}
+      
+      .footer-note{
+        font-style: italic;
+        font-size: 12px;
+        margin: 0 auto;
+      }
     }
     th.school {
       width: 320px;

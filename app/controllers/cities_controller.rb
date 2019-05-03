@@ -8,6 +8,8 @@ class CitiesController < ApplicationController
   before_filter :redirect_unless_valid_city
 
   def show
+    @level_code = []
+    @csa_years = []
     set_city_meta_tags
     @top_schools =  top_rated_schools
     @breadcrumbs = breadcrumbs
@@ -15,6 +17,7 @@ class CitiesController < ApplicationController
     @districts = district_content(decorated_city)
     @reviews = reviews_formatted.reviews_list
     @locality = locality
+    @csa_module = csa_state_solr_query.present?
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props
     set_page_analytics_data
@@ -47,19 +50,45 @@ class CitiesController < ApplicationController
     state.downcase == 'dc' ? '' : "#{city_record.name.gs_capitalize_words}, #{state.upcase} "
   end
 
-    def reviews
-      @_reviews ||= 
-        Review
-          .active
-            .where(school_id: 
-              School.on_db(city_record.state.downcase) { School.active.where(city: city_record.name).ids },
-              state: city_record.state.downcase)
-              .where(review_question_id: 1)
-                .where.not(comment: nil)
-                  .includes(:answers, :votes, question: :review_topic)
-                    .order(id: :desc)
-                      .limit(3)
-                        .extend(SchoolAssociationPreloading).preload_associated_schools!
+  def solr_query
+    query_type = Search::SolrSchoolQuery
+    query_type.new(
+        city: city,
+        state: state,
+        district_name: district_record&.name,
+        level_codes: @level_code.compact,
+        limit: default_top_schools_limit,
+        sort_name: 'rating',
+        with_rating: 'true',
+        csa_years: @csa_years.presence
+    )
+  end
+
+  def csa_state_solr_query 
+    @_csa_state_solr_query ||= begin 
+      csa_badge = ['*']
+      query_type = Search::SolrSchoolQuery
+      query_type.new(
+          state: state.upcase,
+          limit: 1,
+          csa_years: csa_badge.presence
+      ).search
+    end
+  end 
+
+  def reviews
+    @_reviews ||=
+      Review
+        .active
+          .where(school_id:
+            School.on_db(city_record.state.downcase) { School.active.where(city: city_record.name).ids },
+            state: city_record.state.downcase)
+            .where(review_question_id: 1)
+              .where.not(comment: nil)
+                .includes(:answers, :votes, question: :review_topic)
+                  .order(id: :desc)
+                    .limit(3)
+                      .extend(SchoolAssociationPreloading).preload_associated_schools!
   end
 
   def reviews_formatted
@@ -114,7 +143,7 @@ class CitiesController < ApplicationController
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
-        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name))
+        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if csa_state_solr_query.present?
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:zip] = get_zip
         cp[:lat] = fetch_district_attr(decorated_city, :lat) || city_record&.lat

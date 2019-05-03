@@ -12,6 +12,8 @@ class DistrictsController < ApplicationController
   before_action :redirect_to_canonical_url
 
   def show
+    @level_code = []
+    @csa_years = []
     @locality = locality
     @school_levels = school_levels
     @breadcrumbs = breadcrumbs
@@ -20,6 +22,7 @@ class DistrictsController < ApplicationController
     @academics_props = district_academics_module_props
     @reviews = reviews_formatted.reviews_list
     @translations = translations
+    @csa_module = csa_state_solr_query.present?
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
     set_ad_targeting_props
@@ -27,6 +30,31 @@ class DistrictsController < ApplicationController
   end
 
   private
+
+  def solr_query
+    query_type = Search::SolrSchoolQuery
+    query_type.new(
+          state: state,
+          district_id: district_record&.id,
+          level_codes: @level_code.compact,
+          limit: default_top_schools_limit,
+          sort_name: 'rating',
+          with_rating: 'true',
+          csa_years: @csa_years.presence
+        )
+  end
+
+  def csa_state_solr_query 
+    @_csa_state_solr_query ||= begin 
+      csa_badge = ['*']
+      query_type = Search::SolrSchoolQuery
+      query_type.new(
+          state: state.upcase,
+          limit: 1,
+          csa_years: csa_badge.presence
+      ).search
+    end 
+  end
 
   def translations
     {}.tap do |hash|
@@ -122,7 +150,7 @@ class DistrictsController < ApplicationController
           district_name: gs_legacy_url_encode(district),
           trailing_slash: true
         )
-        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name))
+        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if csa_state_solr_query.present?
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:calendarURL] = ENV_GLOBAL['calendar_service_url']
         cp[:zipCode] = district_record.mail_zipcode[0..4]
