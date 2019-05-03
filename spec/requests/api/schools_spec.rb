@@ -5,6 +5,8 @@ describe "Schools API" do
     clean_dbs :gs_schooldb, :ca, :us_geo
   end
 
+  before { stub_request(:post, "#{ENV_GLOBAL['solr.ro.server.url']}select?wt=json").to_return(status: 200, body: "{}", headers: {}) }
+
   before(:all) do
     head '/'
     @csrf_token = request.cookie_jar.fetch(:csrf_token)
