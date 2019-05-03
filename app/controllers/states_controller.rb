@@ -20,27 +20,28 @@ class StatesController < ApplicationController
       return redirect_to city_path('washington-dc', 'washington'), status: 301
     end
     
+    @csa_years = [2018, 2019]
+    @csa_module = csa_state_solr_query.present?
+    # @csa_module = page_of_results.present?
     @breadcrumbs = breadcrumbs 
     @locality = locality 
     @cities = cities_data
     @districts = districts_data
     @school_count = school_count 
     @reviews = reviews_formatted
-    @csa_years = [2018, 2019]
-    @csa_module = page_of_results.present?
 
     write_meta_tags
     gon.pagename = 'GS:State:Home'
     # if @hub
     #   state_hub
     # else
-      @params_hash = parse_array_query_string(request.query_string)
-      gon.state_abbr = @state[:short]
-      @ad_page_name = :State_Home_Standard
-      @show_ads = PropertyConfig.advertising_enabled?
-      gon.show_ads = show_ads?
-      ad_setTargeting_through_gon
-      data_layer_through_gon
+    @params_hash = parse_array_query_string(request.query_string)
+    gon.state_abbr = @state[:short]
+    @ad_page_name = :State_Home_Standard
+    @show_ads = PropertyConfig.advertising_enabled?
+    gon.show_ads = show_ads?
+    ad_setTargeting_through_gon
+    data_layer_through_gon
     # end
   end
 
@@ -55,10 +56,22 @@ class StatesController < ApplicationController
   def solr_query
     query_type = Search::SolrSchoolQuery
     query_type.new(
-        state: locality[:nameShort],
+        state: @state[:short].upcase,
         limit: 1,
         csa_years: @csa_years.presence
     )
+  end
+
+  def csa_state_solr_query
+    @_csa_state_solr_query ||= begin 
+      csa_badge = ['*']
+      query_type = Search::SolrSchoolQuery
+      query_type.new(
+          state: @state[:short].upcase,
+          limit: 1,
+          csa_years: csa_badge.presence
+      ).search 
+    end
   end
 
   def reviews
@@ -331,10 +344,10 @@ class StatesController < ApplicationController
           state_abbr: @state[:short],
           trailing_slash: true
         )
-        cp[:stateCsaUrl] = state_college_success_awards_list_path(
+        cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(
           state: gs_legacy_url_encode(@state[:long]),
           trailing_slash: true
-        )
+        ) if @csa_module
       end
     end
   end 

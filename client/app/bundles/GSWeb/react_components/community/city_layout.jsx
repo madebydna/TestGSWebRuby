@@ -116,6 +116,14 @@ class CityLayout extends React.Component {
     )
   }
 
+  renderCsaModule() {
+    return this.props.shouldDisplayCsaInfo && (
+      <div>
+        {this.props.csaInfo}
+      </div>
+    );
+  }
+
   renderZillow(){
     return (
         <div>
@@ -158,6 +166,7 @@ class CityLayout extends React.Component {
               {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
               {this.renderSchools()}
               {this.renderBoxAd()}
+              {this.renderCsaModule()}
               {this.renderDistricts()}
               {this.renderMobility()}
               {this.renderZillow()}
