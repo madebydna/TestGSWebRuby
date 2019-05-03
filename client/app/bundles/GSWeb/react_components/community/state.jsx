@@ -131,6 +131,15 @@ class State extends React.Component {
                   cities={this.props.cities}
               />
             }
+            topSchools={
+              <TopSchoolsStateful
+                community="state" 
+                schoolsData={this.props.schools_data.schools}
+                size={this.props.viewportSize}
+                locality={this.props.locality}
+                schoolLevels={this.props.schools_data.counts}
+              />
+            }
             shouldDisplayCsaInfo={this.props.csa_module}
             csaInfo={
               <CsaInfo 

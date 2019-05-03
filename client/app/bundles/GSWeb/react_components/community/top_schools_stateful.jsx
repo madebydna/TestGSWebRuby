@@ -78,7 +78,7 @@ class TopSchoolsStateful extends React.Component {
   
   tabs() {
     let tabs = [t('top_schools.top_schools')];
-    if (this.props.schoolsData.csa.length > 0) {
+    if (this.props.schoolsData.csa.length > 0 && this.props.community !== "state") {
       tabs.push(t('csa_winners'));
     }
     return tabs.map(function (item, index) {

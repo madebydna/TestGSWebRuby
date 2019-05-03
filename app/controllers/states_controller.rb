@@ -1,4 +1,5 @@
 class StatesController < ApplicationController
+  include CommunityParams
   include SeoHelper
   include SearchHelper
   include SchoolHelper
@@ -20,12 +21,13 @@ class StatesController < ApplicationController
       return redirect_to city_path('washington-dc', 'washington'), status: 301
     end
     
-    @csa_years = [2018, 2019]
+    @level_code = []
+    @csa_years = []
     @csa_module = csa_state_solr_query.present?
-    # @csa_module = page_of_results.present?
     @breadcrumbs = breadcrumbs 
     @locality = locality 
     @cities = cities_data
+    @top_schools = top_rated_schools
     @districts = districts_data
     @school_count = school_count 
     @reviews = reviews_formatted
@@ -57,7 +59,10 @@ class StatesController < ApplicationController
     query_type = Search::SolrSchoolQuery
     query_type.new(
         state: @state[:short].upcase,
-        limit: 1,
+        level_codes: @level_code.compact,
+        limit: default_top_schools_limit,
+        sort_name: 'rating',
+        with_rating: 'true',
         csa_years: @csa_years.presence
     )
   end
@@ -392,7 +397,10 @@ class StatesController < ApplicationController
         end 
       end 
     end
-
   end 
+
+  def default_extras
+    %w(summary_rating enrollment review_summary)
+  end
 
 end
