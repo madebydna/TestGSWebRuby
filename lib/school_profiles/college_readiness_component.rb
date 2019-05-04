@@ -58,7 +58,7 @@ module SchoolProfiles
         subject == 'All subjects'
       end
 
-      (2009..2030).to_a.each do |year|
+      (2000..2030).to_a.each do |year|
         attr_accessor "school_value_#{year}"
         attr_accessor "state_average_#{year}"
         attr_accessor "district_average_#{year}"
