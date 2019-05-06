@@ -1,6 +1,5 @@
-# frozen_string_literal: true
-
 describe Search::SchoolQuery do
+  before { stub_request(:post, "#{ENV_GLOBAL['solr.ro.server.url']}select?wt=json").to_return(status: 200, body: "{}", headers: {}) }
   let(:mock_results) do
     Class.new(Array) do
       def total_count
@@ -9,26 +8,14 @@ describe Search::SchoolQuery do
     end
   end
   let(:results) { mock_results.new }
-  let(:search_response_double) { double(results: results) }
-  let(:search_client_double) { double(response: search_response_double) }
   subject { school_query_with_client_double }
 
   def school_query_with_client_double(*args)
-    Search::SolrSchoolQuery.new(*args).tap do |query|
-      allow(query).to receive(:client).and_return(search_client_double)
-    end
+    Search::SolrSchoolQuery.new(*args)
   end
 
   describe '#search' do
-    it 'should tell the client to search' do
-      expect(search_client_double)
-        .to(receive(:search).with(School).and_return(search_response_double))
-      subject.search
-    end
-
     it 'returns results' do
-      allow(search_client_double)
-        .to(receive(:search).and_return(search_response_double))
       expect(subject.search).to be_a(Search::PageOfResults)
     end
   end
@@ -93,6 +80,4 @@ describe Search::SchoolQuery do
       end
     end
   end
-
 end
-
