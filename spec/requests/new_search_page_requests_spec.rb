@@ -27,9 +27,9 @@ describe 'New search page' do
       it "the uri: #{path} should #{should_write_noindex ? '' : 'not'} include noindex tag" do
         get path
         if should_write_noindex
-          expect(response.body).to include('<meta name="robots" content="noindex, nofollow" />')
+          expect(response.body).to include('<meta name="robots" content="noindex" />')
         else
-          expect(response.body).to_not include('<meta name="robots" content="noindex, nofollow" />')
+          expect(response.body).to_not include('<meta name="robots" content="noindex" />')
         end
       end
     end
@@ -37,14 +37,16 @@ describe 'New search page' do
 
   context 'with two solr results' do
     before do
-      stub_request(:any, /\/main\/select/)
-          .to_return(status: 200, body: {response: {docs: [{school_value:20, school_id:1, school_database_state:['CA'], state:'CA', id:[1,2]},{school_value:14, school_id:1, school_database_state:['CA'], id:[1,2]}], numFound: 2}}.to_json, headers: {})
+      stub_request(:any, /\/solr\/main\/select/)
+          .to_return(status: 200, body: {response: {docs: [{school_value:20, school_id:1, school_database_state:['CA'], state:'CA', id:[1,2]},{school_value:14, school_id:1, school_database_state:['CA'], id:[1,2], state: 'CA'}], numFound: 2}}.to_json, headers: {})
       FactoryGirl.create(:city, name: 'Alameda', state: 'ca')
       FactoryGirl.create(:district, name: 'Alameda Unified School District', city: 'Alameda', state: 'ca')
+      FactoryGirl.create(:alameda_high_school, id: 1)
     end
 
     after do
-      clean_models(City, District)
+      clean_models(City, District, School)
+      clean_dbs(:ca)
     end
 
     [
@@ -56,9 +58,9 @@ describe 'New search page' do
       it "the uri: #{path} should #{should_write_noindex ? '' : 'not'} include noindex tag" do
         get path
         if should_write_noindex
-          expect(response.body).to include('<meta name="robots" content="noindex, nofollow" />')
+          expect(response.body).to include('<meta name="robots" content="noindex" />')
         else
-          expect(response.body).to_not include('<meta name="robots" content="noindex, nofollow" />')
+          expect(response.body).to_not include('<meta name="robots" content="noindex" />')
         end
       end
     end
