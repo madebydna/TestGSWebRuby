@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'features/contexts/nearby_cities_contexts'
 require 'features/examples/nearby_cities_examples'
 require 'features/contexts/search_contexts'
 require 'features/examples/search_examples'
@@ -68,13 +67,6 @@ describe 'Search Page' do
           with_shared_context 'Select Schools and Go to compare' do
             include_example 'should be on compare page'
           end
-        end
-      end
-
-      unless search_type == :by_name_search
-        with_shared_context 'Nearby Cities in search bar' do
-          instance_exec &visit_page
-          include_example 'should have links to nearby cities'
         end
       end
     end
