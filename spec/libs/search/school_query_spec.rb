@@ -1,5 +1,5 @@
 describe Search::SchoolQuery do
-  before { stub_request(:post, "#{ENV_GLOBAL['solr.ro.server.url']}select?wt=json").to_return(status: 200, body: "{}", headers: {}) }
+  before { stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {}) }
   let(:mock_results) do
     Class.new(Array) do
       def total_count

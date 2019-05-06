@@ -39,7 +39,7 @@ end
 
 describe StatesController do
   before(:each) do
-    stub_request(:post, "#{ENV_GLOBAL['solr.ro.server.url']}select?wt=json").to_return(status: 200, body: "{}", headers: {})
+    stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {})
     FactoryGirl.create(:hub_city_mapping, city: nil, state: 'IN')
   end
 
