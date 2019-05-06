@@ -68,7 +68,6 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
           <div>
             <p>
               <span dangerouslySetInnerHTML={{__html: t('top_schools.top_schools_blurbs')}}/>
-              <a href="/gk/ratings">{t('top_schools.learn_more')}</a>
             </p>
           </div>
         </div>
