@@ -63,7 +63,6 @@ class StateLayout extends React.Component {
   renderHero(){
     return (<div id="hero">
       <div>
-        {/* <div className="icon-city"></div> */}
         <h1 className="city-hero-title">{this.heroTitle()}</h1>
         {this.heroNarration()}
         <div className="city-hero-stats"></div>
@@ -94,7 +93,6 @@ class StateLayout extends React.Component {
   renderSchools(){
     return (
       <div id="schools">
-        {/* <h2 className="modules-title">{`${t('find_schools_in')} ${this.props.locality.nameLong}`}</h2> */}
         {this.props.topSchools}
       </div>
     )
