@@ -17,7 +17,6 @@ import { browseSchools, awardWinningSchools, schoolDistricts, reviews, BROWSE_SC
 import withViewportSize from 'react_components/with_viewport_size';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
-// import Zillow from "./zillow";
 import remove from 'util/array';
 
 class State extends React.Component {
@@ -155,13 +154,6 @@ class State extends React.Component {
                   locality={this.props.locality}
               />
             }
-            // zillow={
-            //   <Zillow
-            //       locality={this.props.locality}
-            //       utmCampaign='citypage'
-            //       pageType='city'
-            //   />
-            // }
             shouldDisplayReviews={this.props.reviews.length > 0}
             recentReviews={
               <RecentReviews
