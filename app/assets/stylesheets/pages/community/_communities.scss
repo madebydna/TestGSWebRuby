@@ -54,6 +54,11 @@ $line-height-community: 1.428571429;
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     margin-top: 20px;
   }
+  .hero-title {
+    margin: 0;
+    padding: 0;
+    line-height: $line-height-community;
+  }
 }
 
 .below-hero {

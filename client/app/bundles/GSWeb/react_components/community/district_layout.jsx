@@ -93,7 +93,7 @@ class DistrictLayout extends React.Component {
       <div id="hero">
         <div>
           <div className="icon-nearby_2"></div>
-          <h1 className="district-hero-title">{name}</h1>
+          <h1 className="hero-title">{name}</h1>
           <div className="district-hero-contact-info">
             {address && <span className="content">{address}, {city}, {stateShort} {zipCode}</span>}
             {phone && <span className="badge-and-content phone">
