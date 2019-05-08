@@ -9,11 +9,11 @@ class DistrictBoundariesController < ApplicationController
   end
 
   def meta_title
-    t('district_boundaries.controller.meta_title')
+    t('district_boundaries.show.meta_title')
   end
 
   def meta_description
-    t('district_boundaries.controller.meta_description')
+    t('district_boundaries.show.meta_description')
   end
 
   def open_graph
