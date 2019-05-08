@@ -7,8 +7,8 @@ export const REVIEWS = 'Reviews';
 export const COMMUNITY_RESOURCES = 'community_resources';
 export const ACADEMICS = 'Academics';
 export const CALENDAR = 'calendar';
-export const BROWSE_SCHOOLS = 'browse_schools';
-export const AWARD_WINNING_SCHOOLS = 'award_winning_schools';
+export const BROWSE_SCHOOLS = 'browse-schools';
+export const AWARD_WINNING_SCHOOLS = 'award-winning-schools';
 
 const browseSchools = {
   key: BROWSE_SCHOOLS,

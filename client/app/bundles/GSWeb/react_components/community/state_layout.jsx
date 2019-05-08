@@ -91,14 +91,14 @@ class StateLayout extends React.Component {
     return this.props.viewportSize > XS && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
   }
 
-  renderSchools(){
-    return (
-      <div id="schools">
-        {/* <h2 className="modules-title">{`${t('find_schools_in')} ${this.props.locality.nameLong}`}</h2> */}
-        {this.props.topSchools}
-      </div>
-    )
-  }
+  // renderSchools(){
+  //   return (
+  //     <div>
+  //       {/* <h2 className="modules-title">{`${t('find_schools_in')} ${this.props.locality.nameLong}`}</h2> */}
+  //       {this.props.topSchools}
+  //     </div>
+  //   )
+  // }
 
   renderDistricts(){
     let { nameLong } = this.props.locality;
@@ -111,7 +111,7 @@ class StateLayout extends React.Component {
     )
   }
 
-  renderCities(){
+  renderSchools(){
     let { nameLong } = this.props.locality;
     const browseHeader = t('state.cities_header', { parameters: { nameLong }});
 
@@ -119,6 +119,7 @@ class StateLayout extends React.Component {
       <div id="browse-schools">
         <div className="modules-title">{browseHeader}</div>
         {this.props.browseCities}
+        {this.props.topSchools}
       </div>
     )
   }
@@ -154,7 +155,7 @@ class StateLayout extends React.Component {
             {this.renderToc()}
             <div className="community-modules">
               {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
-              {this.renderCities()}
+              {/* {this.renderCities()} */}
               {this.renderSchools()}
               {this.renderCsaModule()}
               {/* {this.renderBoxAd()} */}
