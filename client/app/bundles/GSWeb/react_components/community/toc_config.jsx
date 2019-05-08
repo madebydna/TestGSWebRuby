@@ -1,7 +1,7 @@
 import React from 'react';
 import { t, capitalize } from 'util/i18n';
 
-export const SCHOOL_DISTRICTS = 'school districts';
+export const SCHOOL_DISTRICTS = 'districts';
 export const SCHOOLS = 'schools';
 export const REVIEWS = 'Reviews';
 export const COMMUNITY_RESOURCES = 'community_resources';
@@ -53,21 +53,21 @@ const calendar = {
 }
 
 const communityResources = {
-  key: 'community resources',
+  key: 'mobility',
   label: capitalize(t(COMMUNITY_RESOURCES)),
   anchor: '#mobility',
   selected: false
 }
 
 const nearbyHomesForSale = {
-  key: 'nearby homes for sale & rent',
+  key: 'homes-and-rentals',
   label: t('nearby homes for sale & rent'),
   anchor: '#homes-and-rentals',
   selected: false
 }
 
 const reviews = {
-  key: 'Reviews',
+  key: 'reviews',
   label: t(REVIEWS),
   anchor: '#reviews',
   selected: false

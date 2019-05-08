@@ -6,21 +6,35 @@ import TocItem from './toc_item';
 
 class Toc extends React.Component {
   static defaultProps = {
-    tocItems: []
+    tocItems: [],
+    selectedToc: null
   };
 
   static propTypes = {
-    tocItems: PropTypes.arrayOf(PropTypes.object).isRequired
+    tocItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+    selectedToc: PropTypes.string
   };
 
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.state = {tocItems: this.props.tocItems};
+    this.state = {
+      tocItems: this.props.tocItems,
+      selectedToc: this.props.selectedToc
+    };
   }
 
   unselectAllTocItems(){
     return this.state.tocItems.map(item => { return item.selected = false} );
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if (prevProps.selectedToc !== this.props.selectedToc){
+      this.unselectAllTocItems();
+      this.setState({
+        tocItems: this.selectTocItem(this.props.selectedToc)
+      })
+    }
   }
 
   selectTocItem(tocItemKey){
@@ -30,9 +44,8 @@ class Toc extends React.Component {
     })
   }
 
-  handleClick(key, selector){
-    this.unselectAllTocItems();
-    this.setState({tocItems: this.selectTocItem(key)}, scrollToElement(selector,()=>{}, -60))
+  handleClick(selector){
+    scrollToElement(selector,()=>{}, -60)
   }
 
   renderTocItems(){
