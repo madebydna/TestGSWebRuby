@@ -94,7 +94,9 @@ class Search extends React.Component {
   };
 
   componentDidMount() {
-    initAdvertising();
+    setTimeout(() => {
+      initAdvertising();
+    }, 1000);
   }
 
   noResults() {

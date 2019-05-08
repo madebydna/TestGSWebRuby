@@ -124,7 +124,8 @@ class SearchLayout extends React.Component {
     this.fixedYLayer = React.createRef();
     this.header = React.createRef();
     this.state = {
-      hasShownMap: this.shouldRenderMap()
+      hasShownMap: this.shouldRenderMap(),
+      delayedLoad: false
     };
   }
 
@@ -133,7 +134,7 @@ class SearchLayout extends React.Component {
       if(ratioScrolledDown > .5) {
         this.props.loadMobileOverlayAd();
       }
-    })
+    });
     keepInViewport(this.fixedYLayer, {
       $elementsAbove: [$('.header_un'), $('.search-body .menu-bar')],
       $elementsBelow: [$('.footer')],
@@ -149,6 +150,9 @@ class SearchLayout extends React.Component {
         )
       );
     });
+    setTimeout(() => {
+      this.setState({delayedLoad:true});
+    }, 1000);
   }
 
   shouldRenderAd() {
@@ -355,7 +359,7 @@ class SearchLayout extends React.Component {
               >
                 {this.props.schoolList}
               </div>
-              {this.renderMapAndAdContainer(
+              {this.state.delayedLoad && this.renderMapAndAdContainer(
                 <div className="map-fit">{this.props.map}</div>,
                 this.props.tallAd
               )}
