@@ -54,9 +54,9 @@ class DistrictLayout extends React.Component {
 
   renderZillow(){
     return (
-        <div>
+        <React.Fragment>
           {this.props.zillow}
-        </div>
+        </React.Fragment>
     )
   }
 
