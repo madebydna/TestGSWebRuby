@@ -12,7 +12,7 @@ export const AWARD_WINNING_SCHOOLS = 'award-winning-schools';
 
 const browseSchools = {
   key: BROWSE_SCHOOLS,
-  label: t(BROWSE_SCHOOLS),
+  label: t("browse_schools"),
   anchor: '#browse-schools',
   selected: true
 }
@@ -26,7 +26,7 @@ const schools = {
 
 const awardWinningSchools = {
   key: AWARD_WINNING_SCHOOLS,
-  label: t(AWARD_WINNING_SCHOOLS),
+  label: t("award_winning_schools"),
   anchor: '#award-winning-schools',
   selected: false
 }
