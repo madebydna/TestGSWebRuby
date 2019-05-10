@@ -390,3 +390,25 @@ $(window).on('load', function() {
 });
 
 document.addEventListener('DOMContentLoaded', () => {updateProfileHeart(gon.school.state, gon.school.id)});
+
+const modifySecondAd = () => {
+  const secondAd = document.querySelector('.js-Profiles_Second_Ad-wrapper')
+  const secondAdIframe = secondAd.querySelector('iframe');
+  
+  if (secondAd && secondAdIframe){
+    if (secondAdIframe.dataset.loadComplete === "true"){
+      if (secondAdIframe.width === "300" && secondAdIframe.height === "250" && window.innerWidth >= 1200){
+        secondAd.style.marginLeft = "150px";
+      }else{
+        return null;
+      }
+
+    }else{
+      setTimeout(modifySecondAd, 1000)  
+    }
+  }else{
+    setTimeout(modifySecondAd, 1000)
+  }
+}
+
+modifySecondAd()
