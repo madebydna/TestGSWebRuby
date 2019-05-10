@@ -210,9 +210,8 @@ const getSizeMappings = function() {
       .build(),
     wide_or_box: googletag
       .sizeMapping()
-      // .addSize([768, 120], [[728, 90], [300, 250]])
-      // .addSize([0, 0], [[320, 50], [320, 100], [300, 250]])
-      .addSize([0, 0], [[300, 250]])
+      .addSize([768, 120], [[728, 90], [300, 250]])
+      .addSize([0, 0], [[320, 50], [320, 100], [300, 250]])
       .build(),
   };
 };
