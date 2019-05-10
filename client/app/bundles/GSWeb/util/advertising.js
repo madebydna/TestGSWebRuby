@@ -210,8 +210,9 @@ const getSizeMappings = function() {
       .build(),
     wide_or_box: googletag
       .sizeMapping()
-      .addSize([768, 120], [[728, 90], [300, 250]])
-      .addSize([0, 0], [[320, 50], [320, 100], [300, 250]])
+      // .addSize([768, 120], [[728, 90], [300, 250]])
+      // .addSize([0, 0], [[320, 50], [320, 100], [300, 250]])
+      .addSize([0, 0], [[300, 250]])
       .build(),
   };
 };
@@ -428,6 +429,33 @@ function checkSponsorSearchResult() {
   }, 2000)
 }
 
+// function to add targeted styles to an ad. Will attempt for ten seconds, otherwise it will cease running
+// adClass is a STRING with the ad class you are targeting
+// dimension is an array of the dimensions you are targeting e.g. [WIDTH, HEIGHT]
+// styling is an string of key-values pairs delimited by `;`
+const applyStylingToIFrameAd = (adClass, dimension, styling, counter = 0 ) => {
+  if (window.innerWidth < 1200 || counter > 10){ return null;}
+  const adElement = document.querySelector(adClass)
+  const adElementIframe = adElement.querySelector('iframe');
+
+  if (adElement && adElementIframe) {
+    if (adElementIframe.dataset.loadComplete === "true") {
+      const width = String(dimension[0])
+      const height = String(dimension[1])
+      if (adElementIframe.width === width && adElementIframe.height === height) {
+        adElement.style.cssText = styling;
+      } else {
+        return null;
+      }
+
+    } else {
+      setTimeout(()=>applyStylingToIFrameAd(adClass, dimension, styling, counter++), 1000)
+    }
+  } else {
+    setTimeout(()=>applyStylingToIFrameAd(adClass, dimension, styling, counter++), 1000)
+  }
+}
+
 GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
 GS.ad.showAd = showAd;
 GS.ad.slotRenderedHandler = slotRenderedHandler;
@@ -442,5 +470,6 @@ export {
   destroyAd,
   destroyAdByName,
   slotIdFromName,
-  checkSponsorSearchResult
+  checkSponsorSearchResult,
+  applyStylingToIFrameAd
 };

@@ -36,7 +36,7 @@ import { assign } from 'lodash';
 import * as validatingInputs from 'components/validating_inputs';
 import owlPng from 'school_profiles/owl.png';
 import { minimizeNudges as minimizeQualarooNudges } from 'util/qualaroo';
-import { init as initAdvertising, enableAdCloseButtons } from 'util/advertising';
+import { init as initAdvertising, enableAdCloseButtons, applyStylingToIFrameAd } from 'util/advertising';
 import {
   registerInterrupt,
   registerPredefinedInterrupts,
@@ -391,24 +391,5 @@ $(window).on('load', function() {
 
 document.addEventListener('DOMContentLoaded', () => {updateProfileHeart(gon.school.state, gon.school.id)});
 
-const modifySecondAd = () => {
-  const secondAd = document.querySelector('.js-Profiles_Second_Ad-wrapper')
-  const secondAdIframe = secondAd.querySelector('iframe');
-  
-  if (secondAd && secondAdIframe){
-    if (secondAdIframe.dataset.loadComplete === "true"){
-      if (secondAdIframe.width === "300" && secondAdIframe.height === "250" && window.innerWidth >= 1200){
-        secondAd.style.marginLeft = "150px";
-      }else{
-        return null;
-      }
-
-    }else{
-      setTimeout(modifySecondAd, 1000)  
-    }
-  }else{
-    setTimeout(modifySecondAd, 1000)
-  }
-}
-
-modifySecondAd()
+//specify style targeting on second ad found in SchoolProfiles#Show
+applyStylingToIFrameAd('.js-Profiles_Second_Ad-wrapper', [300,250], 'margin-left:150px')
