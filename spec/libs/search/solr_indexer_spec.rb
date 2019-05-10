@@ -55,7 +55,7 @@ describe Solr::Indexer do
     context 'when given SchoolDocument' do
       let(:indexable_class) { Solr::SchoolDocument }
       it 'tells the client to delete all items of that type' do
-        expected_query = "type:#{Solr::SchoolDocument.type}"
+        expected_query = "type:#{Solr::SchoolDocument.document_type}"
         expect(solr_client_double).to receive(:delete_by_query).with(expected_query)
         subject
       end

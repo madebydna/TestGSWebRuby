@@ -32,10 +32,10 @@ module Solr
     end
 
     def delete_all_by_type(indexable_class)
-      unless indexable_class && indexable_class.respond_to?(:type)
+      unless indexable_class && indexable_class.respond_to?(:document_type)
         raise ArgumentError.new("Must provide class that is indexable")
       end
-      client.delete_by_query("type:#{indexable_class.type}")
+      client.delete_by_query("type:#{indexable_class.document_type}")
     end
 
     def delete_all
