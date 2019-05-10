@@ -80,12 +80,12 @@ describe CharacteristicsCaching::CharacteristicsCacher do
     ]
   end
 
-  let(:historical_data_keys) { [ :school_value_2010, :school_value_2011, :state_average_2010, :state_average_2011 ] }
-  let(:wrong_historical_data_keys) { [ :school_value_2012, :school_value_2013, :state_average_2012, :state_average_2013 ] }
-  let(:valueless_historical_data_keys) { [ :school_value_2000 ] }
-  let(:historical_data_keys_for_test_scores) { [ :school_value_2013, :school_value_2014, :state_average_2013, :state_average_2014 ] }
-  let(:wrong_historical_data_keys_for_test_scores) { [ :school_value_2010, :school_value_2011, :state_average_2010, :state_average_2011 ] }
-  let(:valueless_historical_data_keys_for_test_scores) { [ :school_value_2000 ] }
+  let(:historical_data_keys) { %i[school_value_2010 school_value_2011] }
+  let(:wrong_historical_data_keys) { %i[school_value_2012 school_value_2013 state_average_2012 state_average_2013] }
+  let(:valueless_historical_data_keys) { [:school_value_2000] }
+  let(:historical_data_keys_for_test_scores) { %i[school_value_2013 school_value_2014] }
+  let(:wrong_historical_data_keys_for_test_scores) { %i[school_value_2010 school_value_2011 state_average_2010 state_average_2011] }
+  let(:valueless_historical_data_keys_for_test_scores) { [:school_value_2000] }
 
 
   describe '#build_hash_for_data_set' do
