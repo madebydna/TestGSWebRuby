@@ -262,6 +262,20 @@ $(function() {
     }
   });
 
+  // closes drawers when a new subject is selected for test scores in school profiles
+  $body.on('click','.js-updateLocationHash',function(){
+    const gradesContainer = $(this).parent().parent().parent();
+    const grades = gradesContainer.find('.grades');
+    grades.slideUp();
+
+    const caretSpans = gradesContainer.find('span.icon-caret-down')
+    caretSpans.each((idx)=>{
+      if(!caretSpans[idx].classList.contains('rotate-text-270')){
+        caretSpans[idx].classList.add('rotate-text-270');
+      }
+    })
+  });
+
   // for summary rating tooltip
   $body.on('click', '.js-rating-details', function () {
     var ratingDescription = $(this).closest('.rating-table-row').find('.rating-table-description');
