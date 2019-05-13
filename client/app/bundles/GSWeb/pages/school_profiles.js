@@ -264,7 +264,7 @@ $(function() {
 
   // closes drawers when a new subject is selected for test scores in school profiles
   $body.on('click','.js-updateLocationHash',function(){
-    const gradesContainer = $(this).parent().parent().parent();
+    const gradesContainer = $(this).parents('.panel');
     const grades = gradesContainer.find('.grades');
     grades.slideUp();
 
