@@ -429,18 +429,18 @@ function checkSponsorSearchResult() {
 }
 
 // function to add targeted styles to an ad. Will attempt for ten seconds, otherwise it will cease running
-// adClass is a STRING with the ad class you are targeting
+// selector is a STRING with sthe selector you are using to target
 // dimension is an array of the dimensions you are targeting e.g. [WIDTH, HEIGHT]
 // styling is an string of key-values pairs delimited by `;`
-const applyStylingToIFrameAd = (adClass, dimension, styling, counter = 0 ) => {
+const applyStylingToIFrameAd = (selector, dimension, styling, counter = 0 ) => {
   if (window.innerWidth < 1200 || counter > 10){ return null;}
-  const adElement = document.querySelector(adClass)
+  const adElement = document.querySelector(selector);
   const adElementIframe = adElement.querySelector('iframe');
 
   if (adElement && adElementIframe) {
     if (adElementIframe.dataset.loadComplete === "true") {
-      const width = String(dimension[0])
-      const height = String(dimension[1])
+      const width = String(dimension[0]);
+      const height = String(dimension[1]);
       if (adElementIframe.width === width && adElementIframe.height === height) {
         adElement.style.cssText = styling;
       } else {
@@ -448,10 +448,10 @@ const applyStylingToIFrameAd = (adClass, dimension, styling, counter = 0 ) => {
       }
 
     } else {
-      setTimeout(()=>applyStylingToIFrameAd(adClass, dimension, styling, counter++), 1000)
+      setTimeout(()=>applyStylingToIFrameAd(selector, dimension, styling, counter++), 1000)
     }
   } else {
-    setTimeout(()=>applyStylingToIFrameAd(adClass, dimension, styling, counter++), 1000)
+    setTimeout(()=>applyStylingToIFrameAd(selector, dimension, styling, counter++), 1000)
   }
 }
 
