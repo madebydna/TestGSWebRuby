@@ -22,6 +22,9 @@ const functionAdShowArray = [];
 const googleId = '/1002894/';
 const slotTimers = {};
 
+const MAX_COUNTER = 10;
+const DELAY_IN_MS = 1000;
+
 const slotIdFromName = (name, slotOccurrenceNumber = 1) => {
   const slotName = capitalize(name).replace(' ', '_');
   return `${slotName}${slotOccurrenceNumber}_Ad`;
@@ -433,7 +436,7 @@ function checkSponsorSearchResult() {
 // dimension is an array of the dimensions you are targeting e.g. [WIDTH, HEIGHT]
 // styling is an string of key-values pairs delimited by `;`
 const applyStylingToIFrameAd = (selector, dimension, styling, counter = 0 ) => {
-  if (window.innerWidth < 1200 || counter > 10){ return null;}
+  if (window.innerWidth < 1200 || counter > MAX_COUNTER){ return; }
   const adElement = document.querySelector(selector);
   const adElementIframe = adElement.querySelector('iframe');
 
@@ -443,16 +446,12 @@ const applyStylingToIFrameAd = (selector, dimension, styling, counter = 0 ) => {
       const height = String(dimension[1]);
       if (adElementIframe.width === width && adElementIframe.height === height) {
         adElement.style.cssText = styling;
-      } else {
-        return null;
+        return;
+        }
       }
-
-    } else {
-      setTimeout(()=>applyStylingToIFrameAd(selector, dimension, styling, counter++), 1000)
     }
-  } else {
-    setTimeout(()=>applyStylingToIFrameAd(selector, dimension, styling, counter++), 1000)
-  }
+    
+  setTimeout(() => applyStylingToIFrameAd(selector, dimension, styling, counter++), DELAY_IN_MS)
 }
 
 GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
