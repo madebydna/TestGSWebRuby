@@ -94,7 +94,7 @@ class StateLayout extends React.Component {
     let { nameLong } = this.props.locality;
 
     return this.props.shouldDisplayDistricts && (
-      <div id="districts">
+      <div id="districts" className="module-section">
         <div className="modules-title">{t('state.districts_header', { parameters: { nameLong }})}</div>
           {this.props.districtsInState}
       </div>
@@ -106,7 +106,7 @@ class StateLayout extends React.Component {
     const browseHeader = t('state.cities_header', { parameters: { nameLong }});
 
     return (
-      <div id="browse-schools">
+      <div id="browse-schools" className="module-section">
         <div className="modules-title">{browseHeader}</div>
         {this.props.browseCities}
         {this.props.topSchools}
@@ -116,7 +116,7 @@ class StateLayout extends React.Component {
 
   renderCsaModule() {
     return this.props.shouldDisplayCsaInfo && (
-      <div id="award-winning-schools">
+      <div id="award-winning-schools" className="module-section">
         {this.props.csaInfo}
       </div>
     );
@@ -125,7 +125,7 @@ class StateLayout extends React.Component {
   renderReviews() {
     return (
       this.props.shouldDisplayReviews &&
-        <div id="reviews">
+        <div id="reviews" className="module-section">
           <div className="rating-container reviews-module">
             <h3>{t('recent_reviews.title')} {`${this.props.locality.nameLong}`}</h3>
             {this.props.recentReviews}

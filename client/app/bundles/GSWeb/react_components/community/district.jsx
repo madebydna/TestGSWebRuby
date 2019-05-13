@@ -13,7 +13,7 @@ import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import Calendar from "./calendar";
 import { init as initAdvertising } from "util/advertising";
-import { XS, validSizes as validViewportSizes, isScrolledInViewport } from "util/viewport";
+import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
 import {schools, academics, ACADEMICS, calendar, CALENDAR, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
@@ -21,7 +21,6 @@ import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
 import remove from 'util/array';
 import { t } from '../../util/i18n';
-import { throttle } from 'lodash';
 class District extends React.Component {
   static defaultProps = {
     schools_data: {},
@@ -48,15 +47,12 @@ class District extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      academicModuleActiveTab: 'Overview',
-      selectedToc: null
+      academicModuleActiveTab: 'Overview'
     }
   }
 
   componentDidMount() {
     initAdvertising();
-    this.updateActiveTocItem()
-    window.addEventListener('scroll', throttle(this.updateActiveTocItem, 100))
   }
 
   // 62 = nav offset on non-mobile
@@ -64,18 +60,6 @@ class District extends React.Component {
     this.state.size > XS
       ? document.querySelector('#search-page').scrollIntoView()
       : window.scroll(0, 0);
-
-  updateActiveTocItem = () => {
-    // Order in array matters. Put in order of top most element to bottom element
-    const tocElementsNames = ['#schools', '#academics', '#calendar', '#mobility', '#homes-and-rentals', '#reviews']
-    const tocElements = [...document.querySelectorAll(tocElementsNames)].filter(ele => isScrolledInViewport(ele))
-    const selectedToc = tocElements ? tocElements[0].id : [];
-    if (this.state.selectedToc !== selectedToc) {
-      this.setState({
-        selectedToc
-      })
-    }
-  }
 
   updateSchools() {
     this.setState(
@@ -222,7 +206,6 @@ class District extends React.Component {
         toc={
           <Toc
             tocItems={this.selectTocItems()}
-            selectedToc={this.state.selectedToc}
           />
         }
         viewportSize={this.props.viewportSize}

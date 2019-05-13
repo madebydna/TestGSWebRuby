@@ -99,7 +99,7 @@ class CityLayout extends React.Component {
 
   renderDistricts(){
     return this.props.shouldDisplayDistricts && (
-      <div id="districts">
+      <div id="districts" className="module-section">
         <h2 className="modules-title">{`${t('Public school districts in')} ${this.props.locality.city}`}</h2>
           {this.props.districtsInCity}
       </div>
@@ -108,7 +108,7 @@ class CityLayout extends React.Component {
 
   renderSchools(){
     return (
-      <div id="schools">
+      <div id="schools" className="module-section">
         <h2 className="modules-title">{`${t('find_schools_in')} ${this.props.locality.city}`}</h2>
         {this.props.browseSchools}
         {this.props.topSchools}
@@ -133,7 +133,7 @@ class CityLayout extends React.Component {
   renderReviews() {
     return (
       this.props.shouldDisplayReviews &&
-        <div id="reviews">
+        <div id="reviews" className="module-section">
           <div className="rating-container reviews-module">
             <h3>{t('recent_reviews.title')} {`${this.props.locality.city}`}</h3>
             {this.props.recentReviews}
@@ -144,7 +144,7 @@ class CityLayout extends React.Component {
   
   renderMobility(){
     return(
-      <div id="mobility">
+      <div id="mobility" className="module-section">
         <h2 className="modules-title">{`${t('mobility.title')} ${this.props.locality.city}`}</h2>
         {this.props.mobility}
       </div>

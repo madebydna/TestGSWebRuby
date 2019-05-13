@@ -11,14 +11,13 @@ import CsaInfo from './csa_info';
 import DistrictsInState from "./districts_in_state";
 import RecentReviews from "./recent_reviews";
 import { init as initAdvertising } from 'util/advertising';
-import { XS, validSizes as validViewportSizes, isScrolledInViewport } from 'util/viewport';
+import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
 import { browseSchools, awardWinningSchools, schoolDistricts, reviews, BROWSE_SCHOOLS, AWARD_WINNING_SCHOOLS, SCHOOL_DISTRICTS, REVIEWS } from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
 import remove from 'util/array';
-import { throttle } from 'lodash';
 
 class State extends React.Component {
   static defaultProps = {
@@ -50,27 +49,10 @@ class State extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      selectedToc: null
-    }
   }
 
   componentDidMount() {
     initAdvertising();
-    this.updateActiveTocItem()
-    window.addEventListener('scroll', throttle(this.updateActiveTocItem, 100))
-  }
-
-  updateActiveTocItem = () => {
-    // Order in array matters. Put in order of top most element to bottom element
-    const tocElementsNames = ['#browse-schools', '#award-winning-schools', '#districts', '#reviews']
-    const tocElements = [...document.querySelectorAll(tocElementsNames)].filter(ele => isScrolledInViewport(ele))
-    const selectedToc = tocElements ? tocElements[0].id : [];
-    if (this.state.selectedToc !== selectedToc) {
-      this.setState({
-        selectedToc
-      })
-    }
   }
 
   // 62 = nav offset on non-mobile
@@ -137,7 +119,6 @@ class State extends React.Component {
             toc={
               <Toc
                 tocItems={this.selectTocItems()}
-                selectedToc={this.state.selectedToc}
               />
             }
             searchBox={<SearchBox size={this.props.viewportSize} />}

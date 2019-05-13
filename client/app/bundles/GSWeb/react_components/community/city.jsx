@@ -12,7 +12,7 @@ import DistrictsInCity from "./districts_in_city";
 import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import { init as initAdvertising } from 'util/advertising';
-import { XS, validSizes as validViewportSizes, isScrolledInViewport } from 'util/viewport';
+import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
 import {schools, schoolDistricts, SCHOOL_DISTRICTS, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
@@ -20,7 +20,6 @@ import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
 import Zillow from "./zillow";
 import remove from 'util/array';
-import { throttle } from 'lodash';
 
 class City extends React.Component {
   static defaultProps = {
@@ -47,15 +46,15 @@ class City extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      selectedToc: null
-    }
+    // this.state = {
+    //   selectedToc: null
+    // }
   }
 
   componentDidMount() {
     initAdvertising();
-    this.updateActiveTocItem()
-    window.addEventListener('scroll', throttle(this.updateActiveTocItem, 100))
+    // this.updateActiveTocItem()
+    // window.addEventListener('scroll', throttle(this.updateActiveTocItem, 100))
   }
 
   // 62 = nav offset on non-mobile
@@ -64,17 +63,17 @@ class City extends React.Component {
       ? document.querySelector('#search-page').scrollIntoView()
       : window.scroll(0, 0);
 
-  updateActiveTocItem = () => {
-    // Order in array matters. Put in order of top most element to bottom element
-    const tocElementsNames = ['#schools', '#districts', '#mobility', '#homes-and-rentals', '#reviews']
-    const tocElements = [...document.querySelectorAll(tocElementsNames)].filter(ele => isScrolledInViewport(ele))
-    const selectedToc = tocElements ? tocElements[0].id : [];
-    if (this.state.selectedToc !== selectedToc) {
-      this.setState({
-        selectedToc
-      })
-    }
-  }
+  // updateActiveTocItem = () => {
+  //   // Order in array matters. Put in order of top most element to bottom element
+  //   const tocElementsNames = ['#schools', '#districts', '#mobility', '#homes-and-rentals', '#reviews']
+  //   const tocElements = [...document.querySelectorAll(tocElementsNames)].filter(ele => isScrolledInViewport(ele))
+  //   const selectedToc = tocElements ? tocElements[0].id : [];
+  //   if (this.state.selectedToc !== selectedToc) {
+  //     this.setState({
+  //       selectedToc
+  //     })
+  //   }
+  // }
 
   updateSchools() {
     this.setState(
@@ -185,7 +184,7 @@ class City extends React.Component {
         toc={
           <Toc
             tocItems={this.selectTocItems()}
-            selectedToc={this.state.selectedToc}
+            // selectedToc={this.state.selectedToc}
           />
         }
         viewportSize={this.props.viewportSize}
