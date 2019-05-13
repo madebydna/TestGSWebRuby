@@ -5,7 +5,7 @@ import { capitalize } from 'util/i18n';
 
 const TocItem = ({id, label, link, selected, anchor, handleClick}) => {
   return (
-    <li onClick={() => handleClick(id, anchor)} className={selected ? 'selected' : ''}><div>{label}</div></li>
+    <li onClick={() => handleClick(anchor)} className={selected ? 'selected' : ''}><div>{label}</div></li>
   )
 }
 

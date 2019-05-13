@@ -126,9 +126,7 @@ class CityLayout extends React.Component {
 
   renderZillow(){
     return (
-        <div>
-          {this.props.zillow}
-        </div>
+      this.props.zillow
     )
   }
 

@@ -53,11 +53,7 @@ class DistrictLayout extends React.Component {
   }
 
   renderZillow(){
-    return (
-        <div>
-          {this.props.zillow}
-        </div>
-    )
+    return this.props.zillow;
   }
 
   renderAcademics(){
