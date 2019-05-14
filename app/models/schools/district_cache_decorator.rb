@@ -19,8 +19,8 @@ class DistrictCacheDecorator
     end
   end
 
-  def respond_to?(meth)
-    @district.respond_to?(meth)
+  def respond_to?(meth, include_private=false)
+    @district.respond_to?(meth, include_private)
   end
 
   def zip
