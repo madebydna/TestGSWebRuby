@@ -438,7 +438,10 @@ function checkSponsorSearchResult() {
 const applyStylingToIFrameAd = (selector, dimension, styling, counter = 0 ) => {
   if (window.innerWidth < 1200 || counter > MAX_COUNTER){ return; }
   const adElement = document.querySelector(selector);
-  const adElementIframe = adElement.querySelector('iframe');
+  let adElementIframe;
+  if (adElement) {
+    adElementIframe = adElement.querySelector('iframe');
+  }
 
   if (adElement && adElementIframe) {
     if (adElementIframe.dataset.loadComplete === "true") {
