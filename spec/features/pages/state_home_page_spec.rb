@@ -16,9 +16,6 @@ describe 'State Home Page' do
     subject { StateHomePage.new }
 
     include_examples 'should have a footer'
-    with_shared_context 'Largest cities on state home' do
-      include_example 'should have a link with', text: 'ST. PAUL', href: '/minnesota/st.-paul/'
-    end
   end
 
 end

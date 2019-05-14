@@ -174,20 +174,6 @@ describe "Districts API" do
       expect(json['links']['prev']).to be_present
     end
 
-    it 'adds GS rating when available' do
-      rating = 10
-      district = create(:alameda_city_unified)
-      create(:cached_district_ratings, :with_gs_rating,
-             state: district.state,
-             district_id: district.id,
-             gs_rating_value: rating
-            )
-      get '/gsr/api/districts/?state=ca'
-      expect(status).to eq(200)
-      expect(errors).to be_blank
-      expect(districts.first['rating']).to eq(rating)
-    end
-
     it 'adds district schools summary when available' do
       district = create(:alameda_city_unified)
       create(:cached_district_schools_summary,

@@ -167,6 +167,11 @@ class StatesController < ApplicationController
     ]
   end
 
+  # StructuredMarkup
+  def prepare_json_ld
+    breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+  end
+
   def locality 
     @_locality ||= begin
       Hash.new.tap do |cp|
