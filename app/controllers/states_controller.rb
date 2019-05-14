@@ -167,6 +167,22 @@ class StatesController < ApplicationController
     ]
   end
 
+  # StructuredMarkup
+  def prepare_json_ld
+    breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+    if @state.present?
+      add_json_ld({
+                      "@context" => "http://schema.org",
+                      "@type" => "State",
+                      'name' => @state[:long],
+                      'address' => {
+                          '@type' => 'PostalAddress',
+                          'addressRegion' => @state[:long],
+                      }
+                  })
+    end
+  end
+
   def locality 
     @_locality ||= begin
       Hash.new.tap do |cp|
