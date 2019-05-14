@@ -45,7 +45,7 @@ class Toc extends React.Component {
 
   updateActiveTocItem = () => {
     const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele))
-    const selectedToc = tocElements ? tocElements[0].id : [];
+    const selectedToc = tocElements.length > 0 ? tocElements[0].id : [];
     
     this.setState({
       selectedToc
