@@ -401,25 +401,9 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'states#show'
     get 'browse', to: 'states#foobar', as: :browse
     get '/college-success-award', to: 'college_success_award#search', as: :college_success_awards_list
-    get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
     get 'guided-search', to: redirect { |params, _|
       "/#{params[:state]}/"
     }
-    get 'events', to: 'states#events', as: :events
-
-
-
-    get 'enrollment', to: 'states#enrollment', as: :enrollment
-    scope '/enrollment', as: :enrollment do
-      get '/:tab', to: 'states#enrollment'
-    end
-
-    scope '/education-community', as: :education_community do
-      get '', to: 'states#community'
-      get '/education', to: 'states#community'
-      get '/funders', to: 'states#community'
-      get '/partner', to: 'states#community', as: :partner
-    end
   end
 
   # Routes for school profile pages
