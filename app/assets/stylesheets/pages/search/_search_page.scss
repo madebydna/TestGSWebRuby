@@ -617,6 +617,29 @@ body {
       text-align: left;
     }
 
+    th.sortable {
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+
+    th.sortable:hover {
+      background-color: #d2eff9;
+    }
+
+    th.active-sort {
+      background-color: #d2eff9;
+      font-family: 'opensans-semibold', sans-serif;
+    }
+
+    td.standard-cell {
+      text-align: center;
+    }
+
+    td.highlighted-cell {
+      text-align: center;
+      background-color: #e9f7fc;
+    }
+
     td.school {
       $active-color: #f6f9fa;
       $hover-color: #f6f9fa;
