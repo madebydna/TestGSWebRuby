@@ -561,6 +561,7 @@ body {
   table {
     table-layout: fixed;
     width: 991px;
+    margin-bottom: 15px;
 
     @include media-breakpoint-up(lg) {
       width: 100%;
