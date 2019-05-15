@@ -56,19 +56,15 @@ loadFacebook();
   const showJoin = function showJoin() {
     let $loginTab = $('#login-tab');
     let $joinTab = $('#join-tab');
-    $loginTab.removeClass('active');
-    $loginTab.removeClass('in');
-    $joinTab.addClass('active');
-    $joinTab.addClass('in');
+    $loginTab.removeClass('active in');
+    $joinTab.addClass('active in');
   };
 
   const showLogin = function showLogin() {
     let $loginTab = $('#login-tab');
     let $joinTab = $('#join-tab');
-    $joinTab.removeClass('active');
-    $joinTab.removeClass('in');
-    $loginTab.addClass('active');
-    $loginTab.addClass('in');
+    $joinTab.removeClass('active in');
+    $loginTab.addClass('active in');
   };
 
   $(function () {
