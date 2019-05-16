@@ -34,7 +34,7 @@ const PaginationButtons = ({ page, totalPages, onPageChanged, mobileView }) => {
     options.push({
       key: '<',
       value: prev,
-      label: <span className="icon-caret-down rotate-text-90" />,
+      label: <span className="icon-chevron-right rotate-text-180" />,
       preventSelect: !prev
     });
     range.forEach(pageNum => {
@@ -47,7 +47,7 @@ const PaginationButtons = ({ page, totalPages, onPageChanged, mobileView }) => {
     options.push({
       key: '>',
       value: next,
-      label: <span className="icon-caret-down rotate-text-270" />,
+      label: <span className="icon-chevron-right" />,
       preventSelect: !next
     });
   }

@@ -22,6 +22,9 @@ const functionAdShowArray = [];
 const googleId = '/1002894/';
 const slotTimers = {};
 
+const MAX_COUNTER = 10;
+const DELAY_IN_MS = 1000;
+
 const slotIdFromName = (name, slotOccurrenceNumber = 1) => {
   const slotName = capitalize(name).replace(' ', '_');
   return `${slotName}${slotOccurrenceNumber}_Ad`;
@@ -428,6 +431,32 @@ function checkSponsorSearchResult() {
   }, 2000)
 }
 
+// function to add targeted styles to an ad. Will attempt for ten seconds, otherwise it will cease running
+// selector is a STRING with sthe selector you are using to target
+// dimension is an array of the dimensions you are targeting e.g. [WIDTH, HEIGHT]
+// styling is an string of key-values pairs delimited by `;`
+const applyStylingToIFrameAd = (selector, dimension, styling, counter = 0 ) => {
+  if (window.innerWidth < 1200 || counter > MAX_COUNTER){ return; }
+  const adElement = document.querySelector(selector);
+  let adElementIframe;
+  if (adElement) {
+    adElementIframe = adElement.querySelector('iframe');
+  }
+
+  if (adElement && adElementIframe) {
+    if (adElementIframe.dataset.loadComplete === "true") {
+      const width = String(dimension[0]);
+      const height = String(dimension[1]);
+      if (adElementIframe.width === width && adElementIframe.height === height) {
+        adElement.style.cssText = styling;
+        return;
+        }
+      }
+    }
+    
+  setTimeout(() => applyStylingToIFrameAd(selector, dimension, styling, counter++), DELAY_IN_MS)
+}
+
 GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
 GS.ad.showAd = showAd;
 GS.ad.slotRenderedHandler = slotRenderedHandler;
@@ -442,5 +471,6 @@ export {
   destroyAd,
   destroyAdByName,
   slotIdFromName,
-  checkSponsorSearchResult
+  checkSponsorSearchResult,
+  applyStylingToIFrameAd
 };

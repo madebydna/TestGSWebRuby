@@ -187,16 +187,18 @@ export default class OspSchoolInfo extends React.Component {
 
   render() {
     const titleElement = (
-      <h3 data-ga-click-label="General Information">
-        {t('General Information')}
-        &nbsp;{this.hasData() && (
-          <QuestionMarkTooltip
-            content={t('general_information_tooltip')}
-            element_type="toptooltip"
-          />
-        )}
+      <div>
+        <h3 data-ga-click-label="General Information">
+          {t('General Information')}
+          &nbsp;{this.hasData() && (
+            <QuestionMarkTooltip
+              content={t('general_information_tooltip')}
+              element_type="toptooltip"
+            />
+          )}
+        </h3>
         <AnchorButton href={this.props.osp_link}>{t('edit')}</AnchorButton>
-      </h3>
+      </div>
     );
 
     const tabs = (
