@@ -5,15 +5,26 @@ import School from './school';
 import LoadingOverlay from './loading_overlay';
 import SchoolTableRow from './school_table_row';
 import SchoolTableColumnHeader from './school_table_column_header';
-import {  uniqBy } from 'lodash';
+import { uniqBy } from 'lodash';
+import SortContext from './sort_context';
 
-const tableHeaders = (headerArray = [], tableView) => {
+const sortableHeader = (headerSort, sortOptions, tableView) => {
+  if ((tableView === "Academic") || (tableView === "Equity")) {
+    return sortOptions.includes(headerSort);
+  }
+}
+
+const tableHeaders = (headerArray = [], tableView, sort, onSortChanged, sortOptions) => {
   const schoolHeader = [
     <SchoolTableColumnHeader
       key={`${tableView}school`}
       colName={capitalize(t('school'))}
       classNameTH="school"
       tooltipContent=""
+      onSortChanged={onSortChanged}
+      sortField="name"
+      activeSort={sort}
+      sortable={sortableHeader("name", sortOptions, tableView)}
     />
   ];
   let headers = headerArray.map(hash => (
@@ -22,6 +33,10 @@ const tableHeaders = (headerArray = [], tableView) => {
       colName={hash.title}
       tooltipContent={hash.tooltip}
       footerNote={hash.footerNote}
+      onSortChanged={onSortChanged}
+      sortField={hash.sortName}
+      activeSort={sort}
+      sortable={sortableHeader(hash.sortName, sortOptions, tableView)}
     />
   ));
   headers = schoolHeader.concat(headers);
@@ -53,40 +68,45 @@ const SchoolTable = ({
   isLoading,
   searchTableViewHeaders,
   tableView
-}) => {
-  if (
-    searchTableViewHeaders[tableView] === undefined ||
-    searchTableViewHeaders[tableView].length === 0
-  ) {
-    tableView = typeof(searchTableViewHeaders) === Array ? searchTableViewHeaders[0] : Object.keys(searchTableViewHeaders)[0]
-  }
-  
-  return (
-    <section className="school-table">
-      {
-        /* would prefer to just not render overlay if not showing it,
-        but then loader gif has delay, and we would need to preload it */
-        <LoadingOverlay
-          visible={isLoading && schools.length > 0}
-          numItems={schools.length}
-        />
+}) => (
+  <SortContext.Consumer>
+    {({ sort, onSortChanged, sortOptions }) => {
+      if (
+        searchTableViewHeaders[tableView] === undefined ||
+        searchTableViewHeaders[tableView].length === 0
+      ) {
+        tableView = typeof(searchTableViewHeaders) === Array ? searchTableViewHeaders[0] : Object.keys(searchTableViewHeaders)[0]
       }
-      <table className={isLoading ? 'loading' : ''}>
-        {tableHeaders(searchTableViewHeaders[tableView], tableView)}
-        <tbody>
-          {schools.map(s => (
-            <SchoolTableRow
-              tableView={tableView}
-              columns={searchTableViewHeaders[tableView]}
-              key={s.state + s.id + (s.assigned ? 'assigned' : '')}
-              {...s}
+      
+      return (
+        <section className="school-table">
+          {
+            /* would prefer to just not render overlay if not showing it,
+            but then loader gif has delay, and we would need to preload it */
+            <LoadingOverlay
+              visible={isLoading && schools.length > 0}
+              numItems={schools.length}
             />
-          ))}
-        </tbody>
-      </table>
-    </section>
-  );
-};
+          }
+          <table className={isLoading ? 'loading' : ''}>
+            {tableHeaders(searchTableViewHeaders[tableView], tableView, sort, onSortChanged, sortOptions)}
+            <tbody>
+              {schools.map(s => (
+                <SchoolTableRow
+                  tableView={tableView}
+                  columns={searchTableViewHeaders[tableView]}
+                  key={s.state + s.id + (s.assigned ? 'assigned' : '')}
+                  activeSort={sort}
+                  {...s}
+                />
+              ))}
+            </tbody>
+          </table>
+        </section>
+      );
+    }}
+  </SortContext.Consumer>
+);
 
 SchoolTable.propTypes = {
   schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,

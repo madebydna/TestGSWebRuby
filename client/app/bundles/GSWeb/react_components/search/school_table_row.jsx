@@ -131,7 +131,8 @@ const SchoolTableRow = ({
   percentLowIncome,
   collegePersistentData,
   remediationData,
-  collegeEnrollmentData
+  collegeEnrollmentData,
+  activeSort
 }) => {
   const homesForSaleHref = getHomesForSaleHref(state, address);
   const districtLink = getDistrictHref(state, address.city, districtName);
@@ -227,11 +228,11 @@ const SchoolTableRow = ({
     );
   }
   else if (tableView == 'Equity') {
-    content = equityColumns(columns, ethnicityInfo, links.profile);
+    content = equityColumns(columns, ethnicityInfo, links.profile, activeSort);
   }
 
   else if (tableView == 'Academic') {
-    content = academicColumns(columns, subratings, links.profile);
+    content = academicColumns(columns, subratings, links.profile, activeSort);
   }
 
   else {
@@ -268,15 +269,16 @@ const overviewColumns = (type, grades, enrollmentDisplay, studentPerTeacher, rev
   )
 }
 
-const equityColumns = (columns, ethnicityInfo, profileLink) => {
-  let cellStyle = {textAlign: 'center'}
-  let content = [] ;
+const equityColumns = (columns, ethnicityInfo, profileLink, activeSort) => {
+  let content = [];
   const keys = ethnicityInfo.map(obj => obj.label);
-  columns.forEach(function(hash, index){
-    if (keys.includes(hash.key)){
+  
+  columns.forEach(function(hash, index) {
+    let cellClass = (activeSort === hash.sortName) ? "highlighted-cell" : "standard-cell";
+    if (keys.includes(hash.key)) {
       const ethInfoIdx = keys.indexOf(hash.key);
       content.push(
-        <td key={index} style={cellStyle}>
+        <td key={index} className={cellClass}>
           {drawRating(ethnicityInfo[ethInfoIdx].rating, `${profileLink}${anchorObject[hash.key]}`)}
           <p className="percentage-population">
             {ethnicityInfo[ethInfoIdx].percentage && 
@@ -287,9 +289,9 @@ const equityColumns = (columns, ethnicityInfo, profileLink) => {
           </p>
         </td>
       );
-    }else{
+    } else {
       content.push(
-        <td key={ index } style={cellStyle}>
+        <td key={index} className={cellClass}>
           <p>N/A</p>
           {renderNoInfoTooltip()}
         </td>
@@ -303,15 +305,16 @@ const equityColumns = (columns, ethnicityInfo, profileLink) => {
   )
 }
 
-const academicColumns = (columns, subratings, profileLink) => {
-  let cellStyle = {textAlign: 'center'}
-  let content = [] ;
-  columns.forEach(function(hash, index){
-    if (subratings.hasOwnProperty(hash['key'])){
-      content.push(<td key={index} style={cellStyle}>{drawRating(subratings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}</td>);
-    }else{
+const academicColumns = (columns, subratings, profileLink, activeSort) => {
+  let content = [];
+
+  columns.forEach(function(hash, index) {
+    let cellClass = (activeSort === hash.sortName) ? "highlighted-cell" : "standard-cell";
+    if (subratings.hasOwnProperty(hash['key'])) {
+      content.push(<td key={index} className={cellClass}>{drawRating(subratings[hash['key']], `${profileLink}${anchorObject[hash.key]}`)}</td>);
+    } else {
       content.push(
-        <td key={ index } style={cellStyle}>
+        <td key={index} className={cellClass}>
           <p>N/A</p>
           {renderNoInfoTooltip()}
         </td>
