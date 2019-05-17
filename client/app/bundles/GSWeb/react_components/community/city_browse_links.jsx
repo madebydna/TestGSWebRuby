@@ -1,43 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { MD, validSizes as validViewportSizes } from "util/viewport";
-import { addQueryParamToUrl } from 'util/uri';
 import { t } from "util/i18n";
 
 const renderCitiesListItem = (linkData) => (
-  <React.Fragment>
-    <span>
-      {
-        <a href={linkData.url}>{linkData.name}</a>
-      }
-    </span>
-  </React.Fragment>
+  <a href={linkData.url}>{linkData.name}</a>
 );
 
-const cityBrowseLinks = ({locality, size, community, cities}) => {
-  let blueLine;
-
-  // const browseLinkData = cities.concat(
-  //   {
-  //     name: `See all cities`,
-  //     state: locality.nameShort, 
-  //     url: locality.citiesBrowseUrl
-  //   }
-  // );
-  
-  const renderStateCities = cities.map((linkData, idx) => (
+const cityBrowseLinks = ({locality, size, cities}) => { 
+  const renderedList = cities.map((linkData, idx) => (
     <li className="school-type-li" key={linkData.name}>
       {renderCitiesListItem(linkData)}
       {size > MD ? 
-        ((idx !== 3 && idx !== 7) ? blueLine = <div className="blue-line" /> : null)
+        ((idx !== 3 && idx !== 7) ? <div className="blue-line" /> : null)
         :
-        (idx !== 7) ? blueLine = <div className="blue-line" /> : null
+        (idx !== 7) ? <div className="blue-line" /> : null
       }
     </li>
   ));
 
   const browseSchoolBlurb = <h3>{t('cities')}</h3>;
-  const renderedList = renderStateCities;
 
   return (
     <section className="school-browse-module">
@@ -62,10 +44,6 @@ cityBrowseLinks.propTypes = {
   size: PropTypes.oneOf(validViewportSizes).isRequired,
   community: PropTypes.string.isRequired,
   cities: PropTypes.array
-};
-
-cityBrowseLinks.defaultProps = {
-
 };
 
 export default cityBrowseLinks;
