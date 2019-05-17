@@ -129,6 +129,7 @@ class DistrictsController < ApplicationController
       hash[PageAnalytics::STATE] = state.upcase if state
       hash[PageAnalytics::COUNTY] = county_record.name if county_record
       hash[PageAnalytics::ENV] = advertising_env
+      hash[PageAnalytics::GS_BADGE] = 'CSAnullstate' unless has_csa_schools?
     end
   end
 
