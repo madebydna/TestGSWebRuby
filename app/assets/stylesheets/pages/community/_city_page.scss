@@ -3,21 +3,13 @@
 #hero{
   div{
     max-width: 500px;
-    .icon-city {
-      font-size: 24px;
-    }
-    .city-hero-narrative {
-      font-size: $font-size;
-      font-weight: normal;
-    }  
+
     .icon-city {
       font-size: 24px;
     }
 
-
     .city-hero-narrative {
       font-size: $font-size;
-      font-weight: normal;
     }
   }
 
