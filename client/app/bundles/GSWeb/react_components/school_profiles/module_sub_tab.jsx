@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { capitalize } from 'util/i18n';
 
 const ModuleSubTab = ({
   title,
@@ -7,16 +8,23 @@ const ModuleSubTab = ({
   flagged,
   highlight,
   anchorLink,
-  onClick
+  onClick,
+  component_module,
+  pageType
 }) => {
   let addJSHashUpdate = '';
   if (anchorLink.length > 0) {
     addJSHashUpdate = ' js-updateLocationHash';
   }
+  let gaAction = `Equity ${google_tracking} Tabs`;
+  let gaCategory = 'Profile'
   // TODO: Refactor or make new components using button groups
   // Hide the tab if the item doesn't have a title
+  if(pageType !== 'profiles'){
+    gaCategory = 'Interaction'
+    gaAction = `${capitalize(pageType)} ${title} Tab Clicked }`
+  }
   if(title === undefined) {return null;}
-
   return (
     <a
       href="javascript:void(0)"
@@ -25,8 +33,8 @@ const ModuleSubTab = ({
       className={`sub-nav-item js-gaClick${addJSHashUpdate}${
         highlight ? ' sub-tab-selected' : ''
       }`}
-      data-ga-click-category="Profile"
-      data-ga-click-action={`Equity ${google_tracking} Tabs`}
+      data-ga-click-category={gaCategory}
+      data-ga-click-action={gaAction}
       data-ga-click-label={title}
     >
       {title}

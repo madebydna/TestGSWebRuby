@@ -178,6 +178,7 @@ class District extends React.Component {
                 </div>
               </div>
             }
+            pageType='district'
           />
         }
         calendar={
