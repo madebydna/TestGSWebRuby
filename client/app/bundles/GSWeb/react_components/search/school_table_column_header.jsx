@@ -33,7 +33,11 @@ const SchoolTableColumnHeader = ({ colName, tooltipContent, classNameTH, footerN
 SchoolTableColumnHeader.propTypes = {
   colName: PropTypes.string.isRequired,
   tooltipContent: PropTypes.string,
-  classNameTH: PropTypes.string
+  classNameTH: PropTypes.string,
+  onSortChanged: PropTypes.func,
+  sortField: PropTypes.string,
+  activeSort: PropTypes.string,
+  sortable: PropTypes.bool
 };
 
 export default SchoolTableColumnHeader;

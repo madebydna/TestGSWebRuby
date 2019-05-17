@@ -112,12 +112,16 @@ SchoolTable.propTypes = {
   schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
   isLoading: PropTypes.bool,
   searchTableViewHeaders: PropTypes.object,
-  tableView: PropTypes.string
+  tableView: PropTypes.string,
+  sort: PropTypes.string,
+  onSortChanged: PropTypes.func,
+  sortOptions: PropTypes.array
 };
 
 SchoolTable.defaultProps = {
   isLoading: false,
   tableView: 'Overview',
-  searchTableViewHeaders: {}
+  searchTableViewHeaders: {},
+  sort: 'rating'
 };
 export default SchoolTable;

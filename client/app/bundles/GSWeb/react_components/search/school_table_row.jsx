@@ -367,7 +367,8 @@ SchoolTableRow.propTypes = {
   })),
   links: PropTypes.shape({
     profile: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  activeSort: PropTypes.string
 };
 
 SchoolTableRow.defaultProps = {
