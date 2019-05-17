@@ -11,7 +11,7 @@ describe Solr::Indexer do
     it 'returns a Indexer with a client connection' do
       unimportant_url = 'a url'
       mock_rsolr = double
-      expect(mock_rsolr).to receive(:connect).with(url: unimportant_url).and_return(solr_client_double)
+      expect(mock_rsolr).to receive(:connect).with(url: unimportant_url).and_return(solr_client_double).twice
       stub_const('RSolr', mock_rsolr)
       indexer = Solr::Indexer.with_solr_url(unimportant_url)
       expect(indexer.client).to be(solr_client_double)
@@ -55,7 +55,7 @@ describe Solr::Indexer do
     context 'when given SchoolDocument' do
       let(:indexable_class) { Solr::SchoolDocument }
       it 'tells the client to delete all items of that type' do
-        expected_query = "type:#{Solr::SchoolDocument.type}"
+        expected_query = "type:#{Solr::SchoolDocument.document_type}"
         expect(solr_client_double).to receive(:delete_by_query).with(expected_query)
         subject
       end

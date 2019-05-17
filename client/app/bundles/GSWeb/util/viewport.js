@@ -160,6 +160,15 @@ const onDomContentLoaded = callback => {
   }
 }
 
+export const isScrolledInViewport = (ele) => {
+  const element = ele.getBoundingClientRect();
+  const elemTop = element.top;
+  const elemBottom = element.bottom - 200;
+
+  const inView = elemTop < window.innerHeight && elemBottom >= 0;
+  return inView;
+}
+
 // this is the 2nd implementation of this function, meant to be more generic than original one in search code
 export function keepInViewport(
   selector,

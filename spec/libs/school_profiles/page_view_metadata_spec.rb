@@ -2,23 +2,35 @@ require 'spec_helper'
 
 describe SchoolProfiles::PageViewMetadata do
 
-  describe "#build" do
-    it 'should return page meta data hash' do
-      school = build(:page_view_school)
-      school.street = '15 O\'Hara St'
-      school_reviews_count  = 6
-      gs_rating = '5'
-      page_name = 'test'
-      page_view_metadata = SchoolProfiles::PageViewMetadata.new(school,
-                                                                page_name,
-                                                                gs_rating,
-                                                                school_reviews_count)
-      expect(page_view_metadata.hash).
-        to eq(meta_data_hash(school, page_name, gs_rating, school_reviews_count))
+  describe "#hash" do
+    let(:school) { build(:page_view_school).tap { |s| s.street = '15 O\'Hara St' } }
+    let(:school_reviews_count) { 6 }
+    let(:gs_rating) { '5' }
+    let(:page_name) { 'test' }
+    let(:expected_hash) { meta_data_hash(school, page_name, gs_rating, school_reviews_count, csa_badge) }
+
+    subject do
+      SchoolProfiles::PageViewMetadata.new(school,
+                                           page_name,
+                                           gs_rating,
+                                           school_reviews_count,
+                                           csa_badge).hash
+    end
+
+    context 'without CSA badge' do
+      let(:csa_badge) { false }
+
+      it { is_expected.to eq(expected_hash) }
+    end
+
+    context 'with CSA badge' do
+      let(:csa_badge) { true }
+
+      it { is_expected.to eq(expected_hash) }
     end
   end
 
-  def meta_data_hash(school, page_name, gs_rating, school_reviews_count)
+  def meta_data_hash(school, page_name, gs_rating, school_reviews_count, csa_badge)
     {
       'page_name'   => page_name,
       'City'        => school.city,
@@ -34,7 +46,9 @@ describe SchoolProfiles::PageViewMetadata do
       'number_of_reviews_with_comments' => school_reviews_count,
       'city_long' => 'Alameda',
       'address' => '15 OHara St'
-    }
+    }.tap do |h|
+      h['gs_badge'] = 'CSAWinner' if csa_badge
+    end
   end
 
   describe '#sanitize_for_dfp' do

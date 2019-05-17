@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe CitiesController do
+  before { stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {}) }
   after(:each) { clean_dbs :gs_schooldb }
 
   let(:url_state) { 'california' }
@@ -27,6 +28,7 @@ describe CitiesController do
     context 'a city' do
       it 'sets canonical tags' do
         allow(controller).to receive(:top_rated_schools).and_return([])
+        allow(controller).to receive(:has_csa_schools?).and_return(false)
         get action, state: url_state, city: url_city
         expect(controller.send(:meta_tags)['canonical']).to be_present
       end
@@ -41,6 +43,20 @@ describe CitiesController do
 
       it 'sets page_name in data_layer' do
         expect(controller.send(:page_analytics_data)).to include('page_name')
+      end
+
+      context 'without CSA schools' do
+        it 'sets gs_badge in data_layer' do
+          expect(controller.send(:page_analytics_data)).to include('gs_badge')
+        end
+      end
+
+      context 'with CSA schools' do
+        before { allow(controller).to receive(:has_csa_schools?).and_return(true) }
+
+        it 'does not set gs_badge in data_layer' do
+          expect(controller.send(:page_analytics_data)).to_not include('gs_badge')
+        end
       end
     end
   end

@@ -9,15 +9,17 @@ class UserEmailSender
   end
 
   def send_review_mss(school, review_snippet)
-    review_url = school_reviews_url(school, anchor: 'Reviews')
-    ReviewPublishedMssEmail.deliver_to_user(@user, school, review_snippet, review_url)
+    ReviewPublishedMssEmail.deliver_to_user(@user, school, review_snippet, review_url_with_anchor(school))
+  end
+
+  def review_url_with_anchor(school)
+    school_reviews_url(school, anchor: 'Reviews')
   end
 
   def send_thank_you_email_for_school(school)
     school_user = SchoolUser.find_by_school_and_user(school, user)
     if send_thank_you_email?(school_user)
-      review_url = school_reviews_url(school, anchor: 'Reviews')
-      ThankYouForReviewEmail.deliver_to_user(user, school, review_url)
+      ThankYouForReviewEmail.deliver_to_user(user, school, review_url_with_anchor(school))
     end
   end
 

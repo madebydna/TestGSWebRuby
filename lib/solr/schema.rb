@@ -1,6 +1,10 @@
 module Solr
   class Schema
 
+    def self.with_url(url)
+      new(RSolr.connect(url: url))
+    end
+
     def self.with_rw_client
       new(Client.rw)
     end

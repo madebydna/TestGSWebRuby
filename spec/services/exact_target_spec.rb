@@ -19,16 +19,16 @@ describe ExactTarget do
     it 'adds extra attributes from the soap body' do
       et = ExactTarget.new
       body = et.send(:build_soap_body, 'a_key', 'foo@example.com', {bar: 'test'})
-      expect(body[:objects][:subscribers][:attributes].first['Name']).to eq(:bar)
-      expect(body[:objects][:subscribers][:attributes].first['Value']).to eq('test')
+      expect(body[:objects][:subscribers].first[:attributes].first['Name']).to eq(:bar)
+      expect(body[:objects][:subscribers].first[:attributes].first['Value']).to eq('test')
     end
 
     it 'adds cdata to verification link attribute' do
       et = ExactTarget.new
       body = et.send(:build_soap_body, 'a_key', 'foo@example.com', {VERIFICATION_LINK: 'test'})
-      expect(body[:objects][:subscribers][:attributes].first['Name']).to eq(:VERIFICATION_LINK)
+      expect(body[:objects][:subscribers].first[:attributes].first['Name']).to eq(:VERIFICATION_LINK)
       # The ! here instructs Savon not to escape the value
-      expect(body[:objects][:subscribers][:attributes].first['Value!']).to eq('<![CDATA[test]]>')
+      expect(body[:objects][:subscribers].first[:attributes].first['Value!']).to eq('<![CDATA[test]]>')
     end
 
     it 'adds the correct priority' do
@@ -49,9 +49,10 @@ describe ExactTarget do
           address:'test@greatschools.org'
         }
       )
-      expect(body[:objects][:subscribers][:owner][:from_address])
+      puts body.inspect
+      expect(body[:objects][:subscribers].first[:owner][:from_address])
         .to eq('test@greatschools.org')
-      expect(body[:objects][:subscribers][:owner][:from_name])
+      expect(body[:objects][:subscribers].first[:owner][:from_name])
         .to eq('GreatSchools')
     end
 

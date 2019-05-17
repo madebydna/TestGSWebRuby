@@ -65,8 +65,10 @@ describe 'School moderate page' do
     end
 
     with_shared_context 'visit page', SchoolModerationPage, state: state_name, school_id: school_id do
+      before { stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: {response: {docs: [], numFound: 0}}.to_json, headers: {}) }
+
       when_I 'search for school', 'CA', 99999 do
-        it { is_expected.to have_content 'California Schools' }
+        it { is_expected.to have_title 'California Schools' }
       end
     end
 

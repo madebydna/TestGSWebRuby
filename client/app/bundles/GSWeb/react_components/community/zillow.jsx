@@ -159,7 +159,7 @@ export default class Zillow extends React.Component {
     }
 
     return (
-        <div id={this.props.domId} className="city">
+        <div id={this.props.domId} className="city module-section">
           <div className="title-bar">
             <h2 className="title city">{this.title()}</h2>
             <div className="tabs">{this.renderTabs()}</div>

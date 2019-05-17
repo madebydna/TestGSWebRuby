@@ -37,7 +37,7 @@ describe('<RecentReviews/>', ()=> {
       recentReview.setProps({community: 'district'})
       expect(recentReview.find('p').text()).to.equal("recent_reviews.district_blurb")
       recentReview.setProps({ community: 'random' })
-      expect(recentReview.find('p').text()).to.equal("recent_reviews.district_blurb")
+      expect(recentReview.find('p').exists()).to.equal(false)
     });
   });
 });

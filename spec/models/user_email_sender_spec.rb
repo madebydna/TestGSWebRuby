@@ -23,7 +23,7 @@ describe UserEmailSender do
     context 'with email to be sent' do
       before do
         allow(subject).to receive(:send_thank_you_email?).and_return(true)
-        allow(subject).to receive(:school_reviews_url).with(school).and_return('blah')
+        allow(subject).to receive(:review_url_with_anchor).with(school).and_return('blah')
       end
       it 'should send email' do
         expect(ThankYouForReviewEmail).to receive(:deliver_to_user).with(user, school, 'blah')
@@ -32,7 +32,7 @@ describe UserEmailSender do
       context 'with email to not be sent' do
         before do
           allow(subject).to receive(:send_thank_you_email?).and_return(false)
-          allow(subject).to receive(:school_reviews_url).with(school).and_return('blah')
+          allow(subject).to receive(:review_url_with_anchor).with(school).and_return('blah')
         end
         it 'should not send email' do
           expect(ThankYouForReviewEmail).to_not receive(:deliver_to_user).with(user, school, 'blah')

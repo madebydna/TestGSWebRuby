@@ -61,11 +61,13 @@ export default class DataModule extends React.Component {
     feedback: PropTypes.object,
     qualaroo_module_link: PropTypes.string,
     suppressIfEmpty: PropTypes.bool,
-    footer: PropTypes.node
+    footer: PropTypes.node,
+    pageType: PropTypes.string
   };
 
   static defaultProps = {
-    data: []
+    data: [],
+    pageType: 'profiles'
   }
 
   constructor(props) {
@@ -271,7 +273,7 @@ export default class DataModule extends React.Component {
     // if `item.title` is undefined, then the pane buttons will not appear
     let subTabs = dataForActiveTab.data.map((item, index) => {
       let anchorLink = formatAndJoinAnchors(this.props.anchor, dataForActiveTab.anchor, item.anchor)
-      return <ModuleSubTab {...item} key={index} anchorLink={anchorLink} />
+      return <ModuleSubTab {...item} key={index} anchorLink={anchorLink} pageType={this.props.pageType} />
     });
 
     let subNav = <SectionSubNavigation key={this.state.active}>
@@ -311,7 +313,7 @@ export default class DataModule extends React.Component {
         anchorLink = formatAndJoinAnchors(this.props.anchor, item.anchor);
       }
       let badge = item.csa_badge;
-      return <ModuleTab {...item} key={index} anchorLink={anchorLink} badge={badge} />
+      return <ModuleTab {...item} key={index} anchorLink={anchorLink} badge={badge} pageType={this.props.pageType} />
     }.bind(this))
   }
 

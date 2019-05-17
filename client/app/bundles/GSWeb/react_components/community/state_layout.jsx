@@ -63,7 +63,6 @@ class StateLayout extends React.Component {
   renderHero(){
     return (<div id="hero">
       <div>
-        {/* <div className="icon-city"></div> */}
         <h1 className="city-hero-title">{this.heroTitle()}</h1>
         {this.heroNarration()}
         <div className="city-hero-stats"></div>
@@ -91,41 +90,33 @@ class StateLayout extends React.Component {
     return this.props.viewportSize > XS && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
   }
 
-  renderSchools(){
-    return (
-      <div id="schools">
-        {/* <h2 className="modules-title">{`${t('find_schools_in')} ${this.props.locality.nameLong}`}</h2> */}
-        {this.props.topSchools}
-      </div>
-    )
-  }
-
   renderDistricts(){
     let { nameLong } = this.props.locality;
 
     return this.props.shouldDisplayDistricts && (
-      <div id="districts">
+      <div id="districts" className="module-section">
         <div className="modules-title">{t('state.districts_header', { parameters: { nameLong }})}</div>
           {this.props.districtsInState}
       </div>
     )
   }
 
-  renderCities(){
+  renderSchools(){
     let { nameLong } = this.props.locality;
     const browseHeader = t('state.cities_header', { parameters: { nameLong }});
 
     return (
-      <div id="browse-schools">
+      <div id="browse-schools" className="module-section">
         <div className="modules-title">{browseHeader}</div>
         {this.props.browseCities}
+        {this.props.topSchools}
       </div>
     )
   }
 
   renderCsaModule() {
     return this.props.shouldDisplayCsaInfo && (
-      <div id="award-winning-schools">
+      <div id="award-winning-schools" className="module-section">
         {this.props.csaInfo}
       </div>
     );
@@ -134,7 +125,7 @@ class StateLayout extends React.Component {
   renderReviews() {
     return (
       this.props.shouldDisplayReviews &&
-        <div id="reviews">
+        <div id="reviews" className="module-section">
           <div className="rating-container reviews-module">
             <h3>{t('recent_reviews.title')} {`${this.props.locality.nameLong}`}</h3>
             {this.props.recentReviews}
@@ -154,7 +145,6 @@ class StateLayout extends React.Component {
             {this.renderToc()}
             <div className="community-modules">
               {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
-              {this.renderCities()}
               {this.renderSchools()}
               {this.renderCsaModule()}
               {/* {this.renderBoxAd()} */}

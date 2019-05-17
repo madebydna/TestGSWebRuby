@@ -5,6 +5,8 @@ describe "Schools API" do
     clean_dbs :gs_schooldb, :ca, :us_geo
   end
 
+  before { stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {}) }
+
   before(:all) do
     head '/'
     @csrf_token = request.cookie_jar.fetch(:csrf_token)
@@ -168,7 +170,6 @@ describe "Schools API" do
       stub_solr_schools(
         create_school(:alameda_high_school, name: 'Alameda High School'),
         create_school(:bay_farm_elementary_school),
-        solr_query: "fq=document_type%3Aschool&fq=school_database_state%3Aca&sort=overall_gs_rating+desc&start=0&rows=#{count}&defType=lucene&qt=school-search&q=*%3A*",
         count: count
       )
 
@@ -282,12 +283,12 @@ describe "Schools API" do
     total ||= count
     docs = schools.map do |school|
       {
-        'school_database_state': [school.state],
+        'state': school.state,
         'school_id': school.id
       }
     end.drop(offset).take(count)
 
-    req = stub_request(:any, /\/main\/select/)
+    req = stub_request(:any, /\/solr\/main\/select/)
     req = req.with(body: solr_query) if solr_query
     req.to_return(
       status: 200,

@@ -26,6 +26,7 @@ describe 'Visitor' do
 
   scenario 'views new school profile invalid school' do
     school = build(:school_with_new_profile)
+    stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {})
     visit school_path(school)
     uri = URI.parse(current_url)
     expect(uri.path).to eq state_path('california')
@@ -138,7 +139,7 @@ describe 'Visitor' do
         "@context" => "https://schema.org",
         "@type" => "School",
         "name" => "Alameda High School",
-        "description" => "Alameda High School is a public school. It has received a GreatSchools rating of  out of 10 based on academic quality.",
+        "description" => "Alameda High School is a public school. This school does not qualify for a GreatSchools rating because there is not sufficient academic data to generate one.",
         "address" => {
           "@type" => "PostalAddress",
           "streetAddress" => "123 main st",

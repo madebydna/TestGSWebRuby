@@ -10,7 +10,7 @@ import commonPageInit from './common';
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 ReactOnRails.register({
   SearchBoxWrapper,
-})
+});
 
 $(commonPageInit);
 loadFacebook();
@@ -47,25 +47,41 @@ loadFacebook();
       signinToFacebookThenGreatSchools().
         done(facebookSignInSuccessHandler).
         fail(facebookSignInFailHandler).
-        always(allowInteractions)
+        always(allowInteractions);
 
       return false;
     });
   });
 
+  const showJoin = function showJoin() {
+    let $loginTab = $('#login-tab');
+    let $joinTab = $('#join-tab');
+    $loginTab.removeClass('active in');
+    $joinTab.addClass('active in');
+  };
+
+  const showLogin = function showLogin() {
+    let $loginTab = $('#login-tab');
+    let $joinTab = $('#join-tab');
+    $joinTab.removeClass('active in');
+    $loginTab.addClass('active in');
+  };
+
   $(function () {
-    if (location.hash.substr(1) == "join") {
-        $('.tab-pane').button('toggle');
-        $('.js-login-tab').button('toggle');
-        $('.js-join-tab').button('toggle');
+    if (location.hash.substr(1) === "join") {
+      showJoin();
     }
 
-    $('#js_login_tab').on('click',function(){
+    $('.js_login_tab').on('click',function(){
         location.hash = '';
+        showLogin();
+        return false;
     });
 
-    $('#js_join_tab').on('click',function(){
-        location.hash = '#';
+    $('.js_join_tab').on('click',function(e){
+        location.hash = 'join';
+        showJoin();
+        return false;
     });
 
 

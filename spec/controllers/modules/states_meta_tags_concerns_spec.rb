@@ -9,36 +9,12 @@ describe StatesMetaTagsConcerns do
     o
   end
 
-  context 'With state set to Arizona' do
-    before { state_module.instance_variable_set(:@state, {:short => 'az', :long => 'arizona'}) }
-
-    describe '#states_show_title' do
-      subject { state_module.states_show_title }
-      it { is_expected.to eql("2019 Arizona Schools | Arizona Schools | Public & Private Schools") }
-    end
-
-    describe '#states_show_description' do
-      subject { state_module.states_show_description }
-      it { is_expected.to eql("2019 Arizona school rankings, all AZ public and private schools in Arizona ranked. Click here for Arizona school information plus read ratings and reviews for Arizona schools.") }
-    end
-  end
-
-  context 'With state set to New Jersey' do
-    before { state_module.instance_variable_set(:@state, {:short => 'nj', :long => 'new jersey'}) }
-
-    describe '#states_show_title' do
-      subject { state_module.states_show_title }
-      it { is_expected.to eql("2019 New Jersey Schools | New Jersey Schools | Public & Private Schools") }
-    end
-
-    describe '#states_show_description' do
-      subject { state_module.states_show_description }
-      it { is_expected.to eql("2019 New Jersey school rankings, all NJ public and private schools in New Jersey ranked. Click here for New Jersey school information plus read ratings and reviews for New Jersey schools.") }
-    end
-  end
-
   describe 'current year' do
-    before { state_module.instance_variable_set(:@state, {:short => 'az', :long => 'arizona'}) }
+    before do
+      state_module.instance_variable_set(:@state, {:short => 'az', :long => 'arizona'})
+      expect(state_module).to receive(:t).and_return(I18n.t('states.show.title', state_long_name_with_caps: 'Arizona'))
+    end
+
     it 'should be updated before 2020' do
       # If this fails then whoever currently owns our SEO strategy should be informed that these
       # title/meta tags are out of date. They wanted it to say 2019 when we launched in 2018

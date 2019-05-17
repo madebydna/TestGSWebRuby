@@ -560,7 +560,7 @@ describe Review do
       clean_dbs :gs_schooldb
     end
     it 'should trigger a cache rebuild' do
-      expect(review).to receive(:log_review_changed).with(review.state, review.school_id, review.member_id)
+      expect(review).to receive(:log_review_changed).with(review)
       review.save
     end
   end

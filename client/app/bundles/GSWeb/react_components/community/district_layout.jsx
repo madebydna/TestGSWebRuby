@@ -53,16 +53,12 @@ class DistrictLayout extends React.Component {
   }
 
   renderZillow(){
-    return (
-        <div>
-          {this.props.zillow}
-        </div>
-    )
+    return this.props.zillow;
   }
 
   renderAcademics(){
     return (
-      <div id="academics">
+      <div id="academics" className="module-section">
         {this.props.academics}
       </div>
     )
@@ -70,7 +66,7 @@ class DistrictLayout extends React.Component {
 
   renderCalendar() {
     return (
-      <div id="calendar">
+      <div id="calendar" className="module-section">
         <h2 className="modules-title">{t('district_calendar')}</h2>
         {this.props.calendar}
       </div>
@@ -79,7 +75,7 @@ class DistrictLayout extends React.Component {
 
   renderMobility() {
     return (
-      <div id="mobility">
+      <div id="mobility" className="module-section">
         <h2 className="modules-title">{`${t('mobility.title')} ${this.props.locality.name}`}</h2>
         {this.props.mobility}
       </div>
@@ -93,7 +89,7 @@ class DistrictLayout extends React.Component {
       <div id="hero">
         <div>
           <div className="icon-nearby_2"></div>
-          <h1 className="district-hero-title">{name}</h1>
+          <h1 className="hero-title">{name}</h1>
           <div className="district-hero-contact-info">
             {address && <span className="content">{address}, {city}, {stateShort} {zipCode}</span>}
             {phone && <span className="badge-and-content phone">
@@ -149,7 +145,7 @@ class DistrictLayout extends React.Component {
 
   renderSchools() {
     return (
-      <div id="schools">
+      <div id="schools" className="module-section">
         <h2 className="modules-title">{`${t('find_schools_in')} ${this.props.locality.name}`}</h2>
         <div className="xq-partnership">
           {this.props.translations.inPartnershipWith}
@@ -174,7 +170,7 @@ class DistrictLayout extends React.Component {
   renderReviews(){
     return (
       this.props.shouldDisplayReviews &&
-      <div id="reviews">
+      <div id="reviews" className="module-section">
         <div className="rating-container reviews-module">
           <h3>{t('recent_reviews.title')} {`${this.props.locality.name}`}</h3>
           {this.props.recentReviews}

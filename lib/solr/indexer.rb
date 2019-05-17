@@ -5,7 +5,7 @@ module Solr
     attr_reader :client
 
     def self.with_solr_url(url)
-      new(solr_client: RSolr.connect(url: url))
+      new(solr_client: RSolr.connect(url: url), schema: Schema.with_url(url))
     end
 
     def self.with_rw_client
@@ -14,9 +14,9 @@ module Solr
 
     #######################################################################################33
 
-    def initialize(solr_client:)
+    def initialize(solr_client:, schema:nil)
       @client = solr_client
-      @schema = Schema.with_rw_client
+      @schema = schema || Schema.with_rw_client
     end
 
     def index(indexables)
@@ -32,10 +32,10 @@ module Solr
     end
 
     def delete_all_by_type(indexable_class)
-      unless indexable_class && indexable_class.respond_to?(:type)
+      unless indexable_class && indexable_class.respond_to?(:document_type)
         raise ArgumentError.new("Must provide class that is indexable")
       end
-      client.delete_by_query("type:#{indexable_class.type}")
+      client.delete_by_query("type:#{indexable_class.document_type}")
     end
 
     def delete_all

@@ -55,15 +55,17 @@ class SchoolProfilesController < ApplicationController
   end
 
   def page_view_metadata
-    @_page_view_metadata ||= (
+    @_page_view_metadata ||= begin
       school_gs_rating = school_cache_data_reader.gs_rating.to_s
       number_of_reviews_with_comments = school.reviews.having_comments.count
+      csa_badge = school_cache_data_reader.csa_badge?
       SchoolProfiles::PageViewMetadata.new(school,
                                            PAGE_NAME,
                                            school_gs_rating,
-                                           number_of_reviews_with_comments)
-        .hash
-    )
+                                           number_of_reviews_with_comments,
+                                           csa_badge)
+          .hash
+    end
   end
 
   def school

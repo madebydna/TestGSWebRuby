@@ -1,12 +1,6 @@
 // City specific css on the hero header
-$line-height-community: 1.428571429;
 
 #hero{
-  .city-hero-title {
-    margin: 0;
-    padding: 0;
-    line-height: $line-height-community;
-  }
   div{
     max-width: 500px;
     .icon-city {

@@ -7,7 +7,7 @@ script_args = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: #{__FILE__} [script_args]"
   opts.on("-l HOST", "--host HOST", String, 'Hostname of the solr server. Defaults to localhost') { |h| script_args[:host] = h }
-  opts.on("-p PORT", "--port PORT", String, 'Port of the solr server. Defaults to 8983') { |h| script_args[:port] = p }
+  opts.on("-p PORT", "--port PORT", String, 'Port of the solr server. Defaults to 8983') { |p| script_args[:port] = p }
   opts.on("-c CORE", "--core CORE", String, 'Name of the of Solr core to index to. Usually [main|prep]. Default to prep') { |c| script_args[:core] = c }
   opts.on("-s STATES", "--states STATES", String, 'comma separated states to index') { |s| script_args[:states] = s }
   opts.on("-i IDS", "--ids IDS", String, 'comma separated IDs to index') { |i| script_args[:ids] = i }
@@ -43,7 +43,7 @@ indexer.delete_all if should_wipe_core
 if script_args[:delete]
   indexer.delete_all_by_type(Solr::CityDocument)
 else
-  documents = Solr::CityDocument.from_active_cities
+  documents = Solr::CityDocument.from_active_cities(states: states)
   indexer.index(documents)
 end
 

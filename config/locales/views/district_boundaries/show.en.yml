@@ -3,6 +3,5 @@ en:
     show:
       heading: See What School District You Are In
       subheading_html: See what school district you are in and research the schools in your neighborhood with our interactive map tool. Enter an address to see what schools public, private, to charter schools are available. Go ahead and give it a spin.
-    controller:
       meta_title: What School District Are You In? District Boundary Map | GreatSchools
       meta_description: See what school district you are in by providing your zip code or address in our interactive map.

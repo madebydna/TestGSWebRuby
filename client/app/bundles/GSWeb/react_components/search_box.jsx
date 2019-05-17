@@ -353,7 +353,12 @@ export default class SearchBox extends React.Component {
   }
 
   resetSearchTerm() {
-    this.setState({ searchTerm: '' });
+    const newResults = cloneDeep(this.state.autoSuggestResults); 
+    newResults.Addresses = []
+    this.setState({ 
+      searchTerm: '',
+      autoSuggestResults: newResults
+    });
   }
 
   selectionOutOfBounds(e) {

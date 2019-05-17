@@ -84,7 +84,6 @@ class City extends React.Component {
   }
 
   // school finder methods, based on obj state
-
   findTopRatedSchoolsWithReactState(newState = {}) {
     return findSchools(
       Object.assign(

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { capitalize } from 'util/i18n';
 
 const ModuleTab = ({
   title,
@@ -8,11 +9,19 @@ const ModuleTab = ({
   badge,
   highlight,
   anchorLink,
-  onClick
+  onClick,
+  pageType = 'profiles'
 }) => {
   let addJSHashUpdate = '';
   if (anchorLink.length > 0) {
     addJSHashUpdate = ' js-updateLocationHash';
+  }
+  let googleCategory = 'Profile'
+  let googleAction = `Equity ${google_tracking} Tabs`
+  // for community pages
+  if (pageType !== 'profiles'){
+    googleCategory = 'Interaction'
+    googleAction = `${capitalize(pageType)} ${title} Tab Clicked }`
   }
   return (
     <a
@@ -22,8 +31,8 @@ const ModuleTab = ({
       className={`tab-title js-gaClick${addJSHashUpdate}${
         highlight ? ' tab-selected' : ''
       }`}
-      data-ga-click-category="Profile"
-      data-ga-click-action={`Equity ${google_tracking} Tabs`}
+      data-ga-click-category={`${googleCategory}`}
+      data-ga-click-action={`${googleAction}`}
       data-ga-click-label={title}
     >
       {title}

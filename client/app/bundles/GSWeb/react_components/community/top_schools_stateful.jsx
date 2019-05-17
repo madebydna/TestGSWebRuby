@@ -82,7 +82,7 @@ class TopSchoolsStateful extends React.Component {
       tabs.push(t('csa_winners'));
     }
     return tabs.map(function (item, index) {
-      return <ModuleTab title={item} key={index} />
+      return <ModuleTab title={item} key={index} pageType={this.props.community} />
     }.bind(this));
   }
     

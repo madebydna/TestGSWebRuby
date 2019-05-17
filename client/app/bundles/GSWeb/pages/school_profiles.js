@@ -36,7 +36,7 @@ import { assign } from 'lodash';
 import * as validatingInputs from 'components/validating_inputs';
 import owlPng from 'school_profiles/owl.png';
 import { minimizeNudges as minimizeQualarooNudges } from 'util/qualaroo';
-import { init as initAdvertising, enableAdCloseButtons } from 'util/advertising';
+import { init as initAdvertising, enableAdCloseButtons, applyStylingToIFrameAd } from 'util/advertising';
 import {
   registerInterrupt,
   registerPredefinedInterrupts,
@@ -262,6 +262,20 @@ $(function() {
     }
   });
 
+  // closes drawers when a new subject is selected for test scores in school profiles
+  $body.on('click','.js-updateLocationHash',function(){
+    const gradesContainer = $(this).parents('.panel');
+    const grades = gradesContainer.find('.grades');
+    grades.slideUp();
+
+    const caretSpans = gradesContainer.find('span.icon-caret-down')
+    caretSpans.each((idx)=>{
+      if(!caretSpans[idx].classList.contains('rotate-text-270')){
+        caretSpans[idx].classList.add('rotate-text-270');
+      }
+    })
+  });
+
   // for summary rating tooltip
   $body.on('click', '.js-rating-details', function () {
     var ratingDescription = $(this).closest('.rating-table-row').find('.rating-table-description');
@@ -390,3 +404,6 @@ $(window).on('load', function() {
 });
 
 document.addEventListener('DOMContentLoaded', () => {updateProfileHeart(gon.school.state, gon.school.id)});
+
+//specify style targeting on second ad found in SchoolProfiles#Show
+applyStylingToIFrameAd('.js-Profiles_Second_Ad-wrapper', [300,250], 'margin-left:150px')
