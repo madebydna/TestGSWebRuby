@@ -12,7 +12,8 @@ module SearchTableConcerns
       {
           key: title,
           title: t(title, scope:'lib.search'),
-          tooltip: t(tooltip, scope:'lib.search', default: '')
+          tooltip: t(tooltip, scope:'lib.search', default: ''),
+          sortName: title.downcase.gsub(" ", "_")
       }
     end
   end
@@ -29,7 +30,8 @@ module SearchTableConcerns
       {
         key: title,
         title: t(title, default: t(title, scope: 'lib.search', default: title)),
-        tooltip: t(title + '_tooltip', scope:'lib.search', default: '')
+        tooltip: t(title + '_tooltip', scope:'lib.search', default: ''),
+        sortName: Solr::SchoolDocument.breakdown_to_rating_field_name[title]
       }
     end
   end
