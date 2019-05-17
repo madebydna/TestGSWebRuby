@@ -9,7 +9,6 @@ const ModuleSubTab = ({
   highlight,
   anchorLink,
   onClick,
-  component_module,
   pageType
 }) => {
   let addJSHashUpdate = '';
