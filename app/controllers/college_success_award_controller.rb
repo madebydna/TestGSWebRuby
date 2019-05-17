@@ -145,6 +145,7 @@ class CollegeSuccessAwardController < ApplicationController
       hash[PageAnalytics::PAGE_NAME] = 'GS:Badges:CSA'
       hash[PageAnalytics::STATE] = state.upcase if state
       hash[PageAnalytics::ENV] = ENV_GLOBAL['advertising_env']
+      hash[PageAnalytics::GS_BADGE] = 'CSAWinner'
     end
   end
 

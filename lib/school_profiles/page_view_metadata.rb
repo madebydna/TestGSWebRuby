@@ -1,15 +1,16 @@
 module SchoolProfiles
   class PageViewMetadata
 
-    attr_reader :school, :page_name, :school_reviews_count, :gs_rating
+    attr_reader :school, :page_name, :school_reviews_count, :gs_rating, :csa_badge
 
     SCHOOL_PROFILE_TEMPLATE = "SchoolProf"
 
-    def initialize(school, page_name, gs_rating, school_reviews_count)
+    def initialize(school, page_name, gs_rating, school_reviews_count, csa_badge)
       @school = school
       @gs_rating = gs_rating
       @page_name = page_name
       @school_reviews_count = school_reviews_count
+      @csa_badge = csa_badge
     end
 
     def hash
@@ -29,7 +30,9 @@ module SchoolProfiles
         # untruncated values
         'city_long'   => SchoolProfiles::PageViewMetadata.sanitize_for_dfp(school.city),
         'address'    => SchoolProfiles::PageViewMetadata.sanitize_for_dfp(school.street)
-      }
+      }.tap do |h|
+        h[PageAnalytics::GS_BADGE] = 'CSAWinner' if csa_badge
+      end
     end
 
     # For now just strip the characters out since CGI::encode_www_form_component -- in particular that method does not
