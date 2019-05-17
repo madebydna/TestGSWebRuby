@@ -17,7 +17,7 @@ const DistrictsInState = ({districts, locality}) => {
     </li>
   ));
   return (
-    <section className="districts-in-city-module">
+    <section className="districts-in-state-module">
       <ul>
         {districtItems}
       </ul>
