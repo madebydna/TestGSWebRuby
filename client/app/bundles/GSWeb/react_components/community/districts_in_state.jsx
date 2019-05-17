@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { t, capitalize } from "util/i18n";
+import { t } from "util/i18n";
 
 const DistrictsInState = ({districts, locality}) => {
   const districtItems = districts.map((district, idx ) => (
@@ -36,7 +36,8 @@ const DistrictsInState = ({districts, locality}) => {
 }
 
 DistrictsInState.propTypes = {
-  districts: PropTypes.arrayOf(PropTypes.object).isRequired
+  districts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  locality: PropTypes.object.isRequired
 };
 
 DistrictsInState.defaultProps = {

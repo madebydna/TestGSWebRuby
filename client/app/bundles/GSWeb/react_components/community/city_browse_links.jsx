@@ -46,4 +46,8 @@ cityBrowseLinks.propTypes = {
   cities: PropTypes.array
 };
 
+cityBrowseLinks.defaultProps = {
+  cities: []
+};
+
 export default cityBrowseLinks;
