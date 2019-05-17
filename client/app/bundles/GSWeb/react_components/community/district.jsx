@@ -20,7 +20,7 @@ import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
 import remove from 'util/array';
-import { t } from '../../util/i18n';
+import { t, capitalize } from '../../util/i18n';
 class District extends React.Component {
   static defaultProps = {
     schools_data: {},
@@ -46,6 +46,7 @@ class District extends React.Component {
 
   constructor(props) {
     super(props);
+    this.pageType = 'district';
     this.state = {
       academicModuleActiveTab: 'Overview'
     }
@@ -124,7 +125,7 @@ class District extends React.Component {
         translations={this.props.translations}
         topSchools={
           <TopSchoolsStateful
-            community="district"
+            community={this.pageType}
             schoolsData={this.props.schools_data.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
@@ -133,7 +134,7 @@ class District extends React.Component {
         }
         browseSchools={
           <SchoolBrowseLinks
-            community="district"
+            community={this.pageType}
             locality={this.props.locality}
             size={this.props.viewportSize}
             schoolLevels={this.props.school_levels}
@@ -142,14 +143,14 @@ class District extends React.Component {
         shouldDisplayCsaInfo={this.props.schools_data.schools.csa.length === 0 && this.props.csa_module}
         csaInfo={
           <CsaInfo 
-            community="district"
+            community={this.pageType}
             locality={this.props.locality}
           />
         }
         mobility={
           <Mobility
             locality={this.props.locality}
-            pageType="District"
+            pageType={capitalize(this.pageType)}
           />
         }
         academics={
@@ -178,7 +179,7 @@ class District extends React.Component {
                 </div>
               </div>
             }
-            pageType='district'
+            pageType={this.pageType}
           />
         }
         calendar={
@@ -191,12 +192,12 @@ class District extends React.Component {
           <Zillow
               locality={this.props.locality}
               utmCampaign='districtpage'
-              pageType='district'
+              pageType={this.pageType}
           />
         }
         recentReviews={
           <RecentReviews 
-            community="district"
+            community={this.pageType}
             reviews={this.props.reviews}
             locality={this.props.locality}
           />
