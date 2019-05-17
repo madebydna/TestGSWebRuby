@@ -55,6 +55,10 @@ module CommunityConcerns
       end
     end
 
+    def has_csa_schools?
+      top_rated_schools[:counts][:csa] > 0
+    end
+
     def page_of_results
       # solr_query is defined in each including controller
       solr_query.search
