@@ -21,7 +21,7 @@ const ModuleTab = ({
   // for community pages
   if (pageType !== 'profiles'){
     googleCategory = 'Interaction'
-    googleAction = `${capitalize(pageType)} ${title} Tab Clicked }`
+    googleAction = `${capitalize(pageType)} ${title} Tab Clicked`
   }
   return (
     <a

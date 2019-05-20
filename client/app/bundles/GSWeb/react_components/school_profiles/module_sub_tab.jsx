@@ -21,7 +21,7 @@ const ModuleSubTab = ({
   // Hide the tab if the item doesn't have a title
   if(pageType !== 'profiles'){
     gaCategory = 'Interaction'
-    gaAction = `${capitalize(pageType)} ${title} Tab Clicked }`
+    gaAction = `${capitalize(pageType)} ${title} Tab Clicked`
   }
   if(title === undefined) {return null;}
   return (
