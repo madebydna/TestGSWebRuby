@@ -1,20 +1,16 @@
-// City specific css on the hero header
+// State specific css on the hero header
 
 #hero{
   div{
     max-width: 500px;
 
-    .icon-city {
-      font-size: 24px;
-    }
-
-    .city-hero-narrative {
+    .state-hero-narrative {
       font-size: $font-size;
     }
   }
 
   @include media-breakpoint-down(sm) {
-    .city-hero-title {
+    .state-hero-title {
       font-size: $font-size-h1;
       margin: 15px auto;
       max-width: 300px;
@@ -42,8 +38,8 @@
 
 }
 
-//CSS rules for the districts in a city module
-.districts-in-city-module {
+//CSS rules for the districts in a state module
+.districts-in-state-module {
   margin-bottom: 15px;
   padding: 10px;
   border: 1px solid $border-color;

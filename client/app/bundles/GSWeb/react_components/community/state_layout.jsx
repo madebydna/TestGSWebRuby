@@ -63,9 +63,8 @@ class StateLayout extends React.Component {
   renderHero(){
     return (<div id="hero">
       <div>
-        <h1 className="city-hero-title">{this.heroTitle()}</h1>
+        <h1 className="state-hero-title">{this.heroTitle()}</h1>
         {this.heroNarration()}
-        <div className="city-hero-stats"></div>
       </div>
     </div>)
   }
@@ -76,13 +75,13 @@ class StateLayout extends React.Component {
 
   renderBoxAd() {
     return <div id="second-ad">
-      <Ad slot="citypage_second" sizeName="box"/>
+      <Ad slot="statepage_second" sizeName="box"/>
     </div>
   }
 
   renderDesktopAd(){
     return this.props.viewportSize > SM && <div className="ad-bar sticky" >
-        <Ad slot="citypage_first" sizeName="box_or_tall" />
+        <Ad slot="statepage_first" sizeName="box_or_tall" />
     </div>
   }
 
@@ -144,10 +143,10 @@ class StateLayout extends React.Component {
           {/*<div className="content">*/}
             {this.renderToc()}
             <div className="community-modules">
-              {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
+              {this.props.viewportSize < SM && <Ad slot="statepage_first" sizeName="thin_banner_mobile" />}
               {this.renderSchools()}
               {this.renderCsaModule()}
-              {/* {this.renderBoxAd()} */}
+              {this.renderBoxAd()}
               {this.renderDistricts()}
               {this.renderReviews()}
             </div>

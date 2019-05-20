@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class StateDistrictLargestCacher < StateCacher
-  include GradeLevelConcerns
-  include CommunityConcerns
-
   CACHE_KEY = 'district_largest'
 
   def build_hash_for_cache
@@ -12,7 +9,7 @@ class StateDistrictLargestCacher < StateCacher
       {}.tap do |hash|
         hash['name'] = district.name 
         hash['id'] = district.id 
-        hash['enrollment'] = district_enrollment_cache(district_id)
+        hash['enrollment'] = overall_enrollment(district_id)
         hash['city'] = district.city 
         hash['state'] = district.state 
         hash['levels'] = GradeLevelConcerns.human_readable_level(district.level)
@@ -23,13 +20,7 @@ class StateDistrictLargestCacher < StateCacher
 
   def district_ids
     district_ids = District.ids_by_state(state)
-    dc_sorted_ids = district_ids.sort do |dc_id1, dc_id2|
-      dc1 = district_characteristics(dc_id1, state)
-      d1 = enrollment_all_students(dc1)
-      dc2 = district_characteristics(dc_id2, state)
-      d2 = enrollment_all_students(dc2)
-      district_enrollment_value(d1) <=> district_enrollment_value(d2)
-    end
+    dc_sorted_ids = district_ids.sort_by(&method(:overall_enrollment))
     dc_sorted_ids.length >= 5 ? dc_sorted_ids[-5..-1].reverse : dc_sorted_ids.reverse 
   end
 
@@ -45,4 +36,11 @@ class StateDistrictLargestCacher < StateCacher
     district_characteristics_results&.first.present? ? district_characteristics_results&.first['district_value'].to_i : 0
   end
   # rubocop:enable Lint/SafeNavigationChain
+end
+
+def overall_enrollment(district_id)
+  @_overall_enrollment ||= Hash.new do |h, id|
+    h[id] = district_enrollment_value(enrollment_all_students(district_characteristics(id, @state)))
+  end
+  @_overall_enrollment[district_id]
 end

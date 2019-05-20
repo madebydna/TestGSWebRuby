@@ -72,7 +72,6 @@ class CityLayout extends React.Component {
         <div className="icon-city"></div>
         <h1 className="hero-title">{this.heroTitle()}</h1>
         {this.heroNarration()}
-        <div className="city-hero-stats"></div>
       </div>
     </div>)
   }
