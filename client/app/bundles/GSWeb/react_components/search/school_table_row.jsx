@@ -280,13 +280,11 @@ const equityColumns = (columns, ethnicityInfo, profileLink, activeSort) => {
       content.push(
         <td key={index} className={cellClass}>
           {drawRating(ethnicityInfo[ethInfoIdx].rating, `${profileLink}${anchorObject[hash.key]}`)}
-          <p className="percentage-population">
-            {ethnicityInfo[ethInfoIdx].percentage && 
-              <React.Fragment>
-                <span>{ethnicityInfo[ethInfoIdx].percentage}%</span><br/> {t('of students')}
-              </React.Fragment>
-            }
-          </p>
+          {ethnicityInfo[ethInfoIdx].percentage > 0 && 
+            <p className="percentage-population">
+              <span>{ethnicityInfo[ethInfoIdx].percentage}%</span><br/> {t('of students')}
+            </p>
+          }
         </td>
       );
     } else {
