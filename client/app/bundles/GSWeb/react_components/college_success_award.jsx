@@ -68,21 +68,14 @@ class CollegeSuccessAward extends Search {
     let total = this.props.total;
     let year = this.props.csaYears[0];
 
-    if (this.props.size > SM) {
-      return (
-        <div className="pagination-summary" dangerouslySetInnerHTML={{
-            __html: t('CSA Page.summary', { parameters: { state, total, year } })
-          }}
-        />
-      );
-    } else {
-      return (
-        <div className="pagination-summary" dangerouslySetInnerHTML={{
-            __html: t('CSA Page.summary_mobile', { parameters: { state, total, year } })
-          }}
-        />
-      );
-    }
+    let summaryText = this.props.size > SM ? 'CSA Page.summary' : 'CSA Page.summary_mobile';
+
+    return (
+      <div className="pagination-summary" dangerouslySetInnerHTML={{
+          __html: t(summaryText, { parameters: { state, total, year } })
+        }}
+      />
+    );
   }
 
   additionalLayoutProps = () => ({
