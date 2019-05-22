@@ -60,7 +60,7 @@ es:
       'Percent of students who will attend out-of-state colleges': Graduados asistiendo la universidad fuera del estado
       'Percent of students who will attend in-state colleges': Graduados asistiendo la universidad estatal
       csa_badge_html: >
-        <p>Esta escuela ha ganado un <span style='font-family:opensans-semibold'>%{blurb} College Success Award</span> basado en su éxito en preparar a los estudiantes para la universidad y finalmente para su carrera. <a href=%{csa_state_link}>Ver más ganadores</a>.</p> 
+        Esta escuela ha ganado un <span style='font-family:opensans-semibold'>%{blurb} College Success Award</span> basado en su éxito en preparar a los estudiantes para la universidad y finalmente para su carrera. <a href=%{csa_state_link}>Ver más ganadores</a>.
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
         'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
