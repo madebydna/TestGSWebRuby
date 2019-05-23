@@ -23,10 +23,12 @@ class DistrictsController < ApplicationController
     @reviews = reviews_formatted.reviews_list
     @translations = translations
     @csa_module = csa_state_solr_query.present?
+    @students = students
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_district_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
+    require 'pry'; binding.pry
   end
 
   private
@@ -80,6 +82,10 @@ class DistrictsController < ApplicationController
 
   def build_header_narration
     "#{district_record.name.gs_capitalize_words} #{t('controllers.districts_controller.District header narration')} #{city}, #{state.upcase}" if largest_district_in_city?
+  end
+
+  def students
+    CommunityProfiles::Students.new(cache_data_reader: district_cache_data_reader)
   end
 
   def largest_district_in_city?
