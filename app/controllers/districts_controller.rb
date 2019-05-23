@@ -28,7 +28,6 @@ class DistrictsController < ApplicationController
     set_district_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
-    require 'pry'; binding.pry
   end
 
   private
