@@ -92,7 +92,8 @@ module Search
         'academic_progress_rating',
         'college_readiness_rating',
         'advanced_courses_rating',
-        'equity_overview_rating'
+        'equity_overview_rating',
+        'Economically_disadvantaged'
       ] + Breakdown.unique_ethnicity_names.map do |breakdown|
         "test_scores_rating_#{breakdown.downcase.gsub(' ', '_')}"
       end
