@@ -42,7 +42,13 @@
       </div>
     <div class="review-school-picker-module">
       <h1><%= t('.school_picker_header_1') %></h1>
-      <%=  render 'shared/school_picker', linkClass: 'search-link-black', component_name: 'ReviewPageSearchBox'  %>
+      <%= react_component('ReviewSchoolPicker', props: {
+          osp: false,
+          resultTypes: ['Schools'],
+          showSearchAllOption: false,
+          showSearchButton: false
+      }) %>
+      <%#  render 'shared/school_picker', linkClass: 'search-link-black', component_name: 'ReviewPageSearchBox'  %>
     </div>
   </section>
   <% if @topic.id == 8 %>

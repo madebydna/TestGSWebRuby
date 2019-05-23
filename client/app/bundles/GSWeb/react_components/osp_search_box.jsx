@@ -8,14 +8,14 @@ import { translateWithDictionary } from 'util/i18n';
 export default class OspSearchBox extends SearchBox {
   constructor(props) {
     super(props);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.resetSelectedListItem = this.resetSelectedListItem.bind(this);
-    this.resetSearchTerm = this.resetSearchTerm.bind(this);
-    this.manageSelectedListItem = this.manageSelectedListItem.bind(this);
-    this.state = this.defaultState(props);
-    this.submit = this.submit.bind(this);
-    this.geocodeAndSubmit = this.geocodeAndSubmit.bind(this);
-    this.autoSuggestQuery = debounce(this.autoSuggestQuery.bind(this), 200);
+    // this.handleKeyDown = this.handleKeyDown.bind(this);
+    // this.resetSelectedListItem = this.resetSelectedListItem.bind(this);
+    // this.resetSearchTerm = this.resetSearchTerm.bind(this);
+    // this.manageSelectedListItem = this.manageSelectedListItem.bind(this);
+    // this.state = this.defaultState(props);
+    // this.submit = this.submit.bind(this);
+    // this.geocodeAndSubmit = this.geocodeAndSubmit.bind(this);
+    // this.autoSuggestQuery = debounce(this.autoSuggestQuery.bind(this), 200);
   }
 
   handleKeyDown(e, { close }) {
