@@ -94,6 +94,16 @@ module CommunityProfiles
     # TODO: ethnicity_data translates the keys, but this method does not. We should translate
     #       here so that we don't have to duplicate the translations in JavaScript
     def subgroups_data
+      @_ethnicity_data_source ||= (
+        # TODO: This iterates over each sub-hash, but overwrites the same key. Either just do it for the first one
+        #       or collect them all (in case some are different), and handle it as an array below.
+        @cache_data_reader.ethnicity_data.select { |e| e.has_key?('district_value') }.each_with_object({}) do |hash, output|
+          output['ethnicity'] = {
+              source: hash['source'],
+              year: hash['year']
+          }.compact
+        end
+      )
       @cache_data_reader.characteristics_data(*OTHER_BREAKDOWN_KEYS)
     end
 
