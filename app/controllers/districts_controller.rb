@@ -23,8 +23,11 @@ class DistrictsController < ApplicationController
     @reviews = reviews_formatted.reviews_list
     @translations = translations
     @csa_module = csa_state_solr_query.present?
-    @students = students
+    @students = students_demographics
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
+    gon.dependencies = {
+        highcharts: ActionController::Base.helpers.asset_path('highcharts.js')
+    }
     set_district_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
@@ -84,7 +87,14 @@ class DistrictsController < ApplicationController
   end
 
   def students
-    CommunityProfiles::Students.new(cache_data_reader: district_cache_data_reader)
+    @_students ||= CommunityProfiles::Students.new(cache_data_reader: district_cache_data_reader)
+  end
+
+  def students_demographics
+    {}.tap do |h|
+      h["ethnicityData"] = students.ethnicity_data
+      h["subgroupsData"] = students.subgroups_data
+    end
   end
 
   def largest_district_in_city?
