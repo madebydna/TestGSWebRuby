@@ -21,7 +21,7 @@ class Students extends React.Component{
     const ethnicityData = this.props.ethnicityData.sort((a,b)=>{
       return b.district_value - a.district_value
     })
-    return ethnicityData.map((bd,idx)=>{
+    return <div>{ethnicityData.map((bd,idx)=>{
       const value = Math.round(bd.district_value);
       const displayedValue = value > 0 ? value : '<1';
       const ethnicityColors = ["#0f69c4", "#2bdc99", "#f1830f", "#f1e634", "#6f2eb4", "#ef60d0", "#ca3154", "#999EFF"]
@@ -32,7 +32,7 @@ class Students extends React.Component{
           <div className="legend-title" style={{float: 'right'}}>{displayedValue}%</div>
         </div>
       )
-    })
+    })}</div>
   }
 
   render(){
@@ -41,9 +41,7 @@ class Students extends React.Component{
         <div className='students-demographic-chart'>
           <div id="ethnicity-graph"></div>
         </div>
-        <div>
-          {this.generateLegend()}
-        </div>
+        {this.generateLegend()}
       </div>
     )
   }
