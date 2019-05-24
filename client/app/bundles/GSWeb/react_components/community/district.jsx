@@ -12,6 +12,7 @@ import CsaInfo from './csa_info';
 import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import Calendar from "./calendar";
+import Students from "./students";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
@@ -202,6 +203,7 @@ class District extends React.Component {
             locality={this.props.locality}
           />
         }
+        students={<Students {...this.props.students}/>}
         heroData={this.props.heroData}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}

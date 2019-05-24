@@ -167,6 +167,15 @@ class DistrictLayout extends React.Component {
     );
   }
 
+  renderStudentsModule(){
+    return (
+      <div id="students" className="module-section">
+        <h2 className="modules-title">Students</h2>
+        {this.props.students}
+      </div>
+    )
+  }
+
   renderReviews(){
     return (
       this.props.shouldDisplayReviews &&
@@ -197,6 +206,7 @@ class DistrictLayout extends React.Component {
             {this.renderMobility()}
             {this.renderZillow()}
             {this.renderReviews()}
+            {this.renderStudentsModule()}
           </div>
           {this.renderDesktopAd()}
         </div>
