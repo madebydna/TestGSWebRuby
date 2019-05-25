@@ -1,7 +1,5 @@
 module CommunityProfiles
   class Students
-    # include Qualaroo
-    # include SharingTooltipModal
 
     OTHER_BREAKDOWN_KEYS = [
         'English learners',
@@ -12,14 +10,6 @@ module CommunityProfiles
 
     def initialize(cache_data_reader:)
       @cache_data_reader = cache_data_reader
-    end
-
-    def share_content
-      share_tooltip_modal('Students', @cache_data_reader.school)
-    end
-
-    def qualaroo_module_link
-      qualaroo_iframe(:students, @cache_data_reader.school.state, @cache_data_reader.school.id.to_s)
     end
 
     def ethnicity_data
@@ -150,10 +140,6 @@ module CommunityProfiles
     # All other data labels should default to students and then db_t
     def data_label(key)
       I18n.t(key, scope: 'lib.students', default: I18n.db_t(key, default: key))
-    end
-
-    def visible?
-      ethnicity_data.present? || gender_data.present? || subgroups_data.present?
     end
   end
 end
