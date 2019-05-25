@@ -91,6 +91,14 @@ module CommunityProfiles
       end
     end
 
+    def students_demographics
+      {}.tap do |h|
+        h["ethnicityData"] = ethnicity_data
+        h["subgroupsData"] = subgroups_data
+        h["genderData"] = gender_data
+      end
+    end
+
     # TODO: ethnicity_data translates the keys, but this method does not. We should translate
     #       here so that we don't have to duplicate the translations in JavaScript
     def subgroups_data

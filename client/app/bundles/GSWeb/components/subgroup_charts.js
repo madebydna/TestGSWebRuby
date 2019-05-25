@@ -53,11 +53,11 @@ var subgroupNameToChartId = function(subgroupName) {
   return subgroupName.toLowerCase().replace(/ /g,'-');
 };
 
-var parseGenderCharacteristicsData = function(genderData) {
+var parseGenderCharacteristicsData = function(genderData, key, valueType) {
   var validParsedGenderData = true;
   var parsedGenderData = [];
   forOwn(genderData, function (data, key) {
-   var parsedData = parseCharacteristicsCache(data, key)
+   var parsedData = parseCharacteristicsCache(data, key, valueType)
    if (! validParsedData(parsedData) ) {
       validParsedGenderData = null;
    }
@@ -70,12 +70,12 @@ var parseGenderCharacteristicsData = function(genderData) {
    }
 };
 
-var parseCharacteristicsCache = function(data, key) {
+var parseCharacteristicsCache = function(data, key, valueType = 'school') {
   var cacheData = data[0];
   if (! cacheData ) {
     return null;
   }
-  var schoolValue = cacheData['school_value'];
+  var schoolValue = cacheData[`${valueType}_value`];
   var schoolValuePercent = Math.round(schoolValue).toString() + '%';
   var parsedData = {
     name: key,
@@ -119,8 +119,8 @@ var generateGenderContainer = function(parsedGenderData) {
   $('.subgroups > .row').append(containerHtml);
 }
 
-var renderGenderChart = function(data, key) {
-  var parsedGenderData = parseGenderCharacteristicsData(data, key);
+var renderGenderChart = function(data, key, valueType) {
+  var parsedGenderData = parseGenderCharacteristicsData(data, key, valueType);
   if ( ! parsedGenderData) {
     return null;
   }
@@ -196,8 +196,8 @@ var renderGenderChart = function(data, key) {
   });
 };
 
-var renderSubgroupChart = function(data, key) {
-  var parsedData = parseCharacteristicsCache(data, key);
+var renderSubgroupChart = function(data, key, valueType) {
+  var parsedData = parseCharacteristicsCache(data, key, valueType);
   if ( ! parsedData) {
     return null;
   }
@@ -246,14 +246,14 @@ var renderSubgroupChart = function(data, key) {
   });
 };
 
-var generateSubgroupPieCharts = function () {
-  if (gon.subgroup) {
-    var subgroupData = gon.subgroup;
+var generateSubgroupPieCharts = function (initialProps = undefined, valueType = 'school') {
+  if (gon.subgroup || initialProps) {
+    const subgroupData = gon.subgroup ? gon.subgroup : initialProps.subgroup
     getScript(gon.dependencies['highcharts']).done(function () {
-      forOwn(subgroupData, renderSubgroupChart);
-      if (gon.gender) {
-        var genderData = gon.gender;
-        renderGenderChart(genderData);
+      Object.entries(subgroupData).forEach(([key, data]) => renderSubgroupChart(data, key, valueType))
+      if (gon.gender || initialProps.gender) {
+        const genderData = gon.gender ? gon.gender : initialProps.gender;
+        renderGenderChart(genderData, undefined, valueType);
         tooltips.initialize();
       }
     });

@@ -127,6 +127,12 @@
 }
 
 #students{
+  .students-module{
+    margin-bottom: 15px;
+    border: solid 1px $border-color;
+    padding: 20px;
+  }
+  
   .students-demographic-chart{
     position: relative;
     width: 100%;
@@ -137,14 +143,12 @@
       width: 100%;
     }
   }
+
   .students-container{
     @include flexbox;
     @include media-breakpoint-down(sm){
       display: block;
     }
-    margin-bottom: 15px;
-    border: solid 1px $border-color;
-    padding: 20px;
   }
 }
 
