@@ -96,6 +96,14 @@ module CommunityProfiles
         h["ethnicityData"] = ethnicity_data
         h["subgroupsData"] = subgroups_data
         h["genderData"] = gender_data
+        h['translations'] = translations
+      end
+    end
+
+    def translations
+      @_translations ||= {}.tap do |h|
+        h['title'] = I18n.t('title', scope: 'school_profiles.students')
+        h['subtitle'] = I18n.t('subtitle_html', scope: 'school_profiles.students')
       end
     end
 

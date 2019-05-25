@@ -46,6 +46,18 @@ class Students extends React.Component{
   render(){
     return (
       <React.Fragment>
+        <div className="module-header">
+          <div className="circle-rating--equity-blue">
+            <span className="icon-users"></span>
+          </div>
+          <div className="title-container">
+            {/* <h2 className="modules-title">Students</h2> */}
+            <h2 className="modules-title"
+                dangerouslySetInnerHTML={{ __html: this.props.translations.title}} 
+            />
+            <span dangerouslySetInnerHTML={{ __html: this.props.translations.subtitle}} />
+          </div>
+        </div>
         <section className="students-module">
           <div className='students-container'>
             <div className='students-demographic-chart'>
@@ -53,12 +65,11 @@ class Students extends React.Component{
             </div>
             {this.generateLegend()}
           </div>
-          <div class="subgroups">
-            <div class="row">
-
+          <div className="subgroups">
+            <div className="row">
             </div>
           </div>
-          <div class="gender"> </div>
+          <div className="gender"> </div>
         </section>
         <InfoBox content={null} element_type="sources" >{t('See notes')}</InfoBox>
       </React.Fragment>
