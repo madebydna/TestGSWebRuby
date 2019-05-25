@@ -45,6 +45,13 @@ const academics = {
   selected: false
 }
 
+const students = {
+  key: 'students',
+  label: capitalize(t('students')),
+  anchor: '#students',
+  selected: false
+}
+
 const calendar = {
   key: 'calendar',
   label: capitalize(t(CALENDAR)),
@@ -79,6 +86,7 @@ export {
   awardWinningSchools,
   schoolDistricts,
   academics,
+  students,
   calendar,
   communityResources,
   nearbyHomesForSale,

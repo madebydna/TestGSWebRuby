@@ -202,11 +202,11 @@ class DistrictLayout extends React.Component {
             {this.renderBoxAd()}
             {this.renderCsaModule()}
             {this.renderAcademics()}
+            {this.renderStudentsModule()}
             {this.renderCalendar()}
             {this.renderMobility()}
             {this.renderZillow()}
             {this.renderReviews()}
-            {this.renderStudentsModule()}
           </div>
           {this.renderDesktopAd()}
         </div>
