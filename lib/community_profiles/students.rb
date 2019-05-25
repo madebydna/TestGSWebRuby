@@ -93,10 +93,11 @@ module CommunityProfiles
 
     def students_demographics
       {}.tap do |h|
-        h["ethnicityData"] = ethnicity_data
-        h["subgroupsData"] = subgroups_data
-        h["genderData"] = gender_data
+        h['ethnicityData'] = ethnicity_data
+        h['subgroupsData'] = subgroups_data
+        h['genderData'] = gender_data
         h['translations'] = translations
+        h['sources'] = sources_text
       end
     end
 
@@ -125,11 +126,14 @@ module CommunityProfiles
 
     def subgroups_data_sources
       subgroups_data.each_with_object({}) do |(data_type, array_of_one_hash), output|
-        array_of_one_hash.each do |hash|
-          output[data_type] = {
-              source: hash['source'],
-              year: hash['year']
-          }
+        # checks to see if valid data before declaring it as source
+        if(array_of_one_hash[0]['district_value'] > 0)
+          array_of_one_hash.each do |hash|
+            output[data_type] = {
+                source: hash['source'],
+                year: hash['year']
+            }
+          end
         end
       end
     end

@@ -71,7 +71,7 @@ class Students extends React.Component{
           </div>
           <div className="gender"> </div>
         </section>
-        <InfoBox content={null} element_type="sources" >{t('See notes')}</InfoBox>
+        <InfoBox content={this.props.sources} element_type="sources" >{t('See notes')}</InfoBox>
       </React.Fragment>
     )
   }
