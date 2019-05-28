@@ -152,7 +152,6 @@
 
   .students-container{
     @include flexbox;
-    // @include media-breakpoint-down(sm){
     @media (max-width: 1100px) {
       display: block;
     }
