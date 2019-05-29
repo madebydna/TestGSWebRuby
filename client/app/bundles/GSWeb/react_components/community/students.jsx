@@ -7,7 +7,7 @@ import { t } from "util/i18n";
 
 class Students extends React.Component{
   static propTypes = {
-    ethnicityData: PropTypes.obj, 
+    ethnicityData: PropTypes.array, 
     subgroupsData: PropTypes.obj,
     genderData: PropTypes.obj,
     translations: PropTypes.obj,
@@ -15,7 +15,7 @@ class Students extends React.Component{
   };
 
   static defaultProps = {
-    ethnicityData: {},
+    ethnicityData: [],
     subgroupsData: {},
     genderData: {}
   };
