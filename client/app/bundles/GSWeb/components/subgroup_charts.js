@@ -53,7 +53,7 @@ var subgroupNameToChartId = function(subgroupName) {
   return subgroupName.toLowerCase().replace(/ /g,'-');
 };
 
-var parseGenderCharacteristicsData = function(genderData, key, valueType) {
+var parseGenderCharacteristicsData = function(genderData, valueType) {
   var validParsedGenderData = true;
   var parsedGenderData = [];
   forOwn(genderData, function (data, key) {
@@ -120,7 +120,7 @@ var generateGenderContainer = function(parsedGenderData) {
 }
 
 var renderGenderChart = function(data, key, valueType) {
-  var parsedGenderData = parseGenderCharacteristicsData(data, key, valueType);
+  var parsedGenderData = parseGenderCharacteristicsData(data, valueType);
   if ( ! parsedGenderData) {
     return null;
   }
@@ -250,7 +250,10 @@ var generateSubgroupPieCharts = function (initialProps = undefined, valueType = 
   if (gon.subgroup || initialProps) {
     const subgroupData = gon.subgroup ? gon.subgroup : initialProps.subgroup
     getScript(gon.dependencies['highcharts']).done(function () {
-      Object.entries(subgroupData).forEach(([key, data]) => renderSubgroupChart(data, key, valueType))
+      forOwn(subgroupData, function(value,key){
+        return renderSubgroupChart(value, key, valueType)
+      });
+      // Object.entries(subgroupData).forEach(([key, data]) => renderSubgroupChart(data, key, valueType))
       if (gon.gender || initialProps.gender) {
         const genderData = gon.gender ? gon.gender : initialProps.gender;
         renderGenderChart(genderData, undefined, valueType);

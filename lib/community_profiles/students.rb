@@ -24,33 +24,28 @@ module CommunityProfiles
     end
 
     def ethnicity_data_source
-      @_ethnicity_data_source ||= (
-        # TODO: This iterates over each sub-hash, but overwrites the same key. Either just do it for the first one
-        #       or collect them all (in case some are different), and handle it as an array below.
-        @cache_data_reader.ethnicity_data.select { |e| e.has_key?('district_value') }.each_with_object({}) do |hash, output|
-          output['ethnicity'] = {
-              source: hash['source'],
-              year: hash['year']
-          }.compact
-        end
-      )
+      @_ethnicity_data_source ||= @cache_data_reader.ethnicity_data.select { |e| e.has_key?('district_value') }
+                                                                   .map {|hash| {source: hash['source'], year: hash['year']} }
+                                                                   .uniq
     end
 
     def sources_text
       str = '<div class="sourcing">'
       str << '<h1>' + static_label('title') + '</h1>'
       if ethnicity_data_source.present?
-        str << '<div>'
-        str << '<h4>' + static_label('ethnicity') + '</h4>'
-        str << '<p><span class="emphasis">' + static_label('source') + "</span>: #{data_label(ethnicity_data_source['ethnicity'][:source])}, "
-        str << "#{ethnicity_data_source['ethnicity'][:year]}</p>"
-        str << '</div>'
+        ethnicity_data_source.each do |data_source|
+          str << '<div>'
+          str << '<h4>' + static_label('ethnicity') + '</h4>'
+          str << '<p><span class="emphasis">' + static_label('source') + "</span>: #{data_label(data_source[:source])}, "
+          str << "#{data_source[:year]}</p>"
+          str << '</div>'
+        end
       end
       if gender_data_source.present?
         str << '<div>'
         str << '<h4>' + static_label('gender') + '</h4>'
-        str << '<p><span class="emphasis">' + static_label('source') + "</span>: #{data_label(gender_data_source['gender'][:source])}, "
-        str << "#{gender_data_source['gender'][:year]}</p>"
+        str << '<p><span class="emphasis">' + static_label('source') + "</span>: #{data_label(gender_data_source[:source])}, "
+        str << "#{gender_data_source[:year]}</p>"
         str << '</div>'
       end
       if subgroups_data_sources.present?
@@ -67,18 +62,13 @@ module CommunityProfiles
     end
 
     def gender_data
-      @cache_data_reader.characteristics_data(*GENDER_KEYS)
+      @_gender_data ||=(
+        @cache_data_reader.characteristics_data(*GENDER_KEYS)
+      )
     end
 
     def gender_data_source
-      gender_data.each_with_object({}) do |(_, array_of_one_hash), output|
-        array_of_one_hash.each do |hash|
-          output['gender'] = {
-              source: hash['source'],
-              year: hash['year']
-          }
-        end
-      end
+      @_gender_data_source ||= gender_data.values.flatten.map {|hash| {source: hash['source'], year: hash['year']} }.uniq.first
     end
 
     def students_demographics
@@ -101,31 +91,25 @@ module CommunityProfiles
     # TODO: ethnicity_data translates the keys, but this method does not. We should translate
     #       here so that we don't have to duplicate the translations in JavaScript
     def subgroups_data
-      @_ethnicity_data_source ||= (
-        # TODO: This iterates over each sub-hash, but overwrites the same key. Either just do it for the first one
-        #       or collect them all (in case some are different), and handle it as an array below.
-        @cache_data_reader.ethnicity_data.select { |e| e.has_key?('district_value') }.each_with_object({}) do |hash, output|
-          output['ethnicity'] = {
-              source: hash['source'],
-              year: hash['year']
-          }.compact
-        end
+      @_subgroups_data ||= (
+        @cache_data_reader.characteristics_data(*OTHER_BREAKDOWN_KEYS)
       )
-      @cache_data_reader.characteristics_data(*OTHER_BREAKDOWN_KEYS)
     end
 
     def subgroups_data_sources
-      subgroups_data.each_with_object({}) do |(data_type, array_of_one_hash), output|
-        # checks to see if valid data before declaring it as source
-        if(array_of_one_hash[0]['district_value'] > 0)
-          array_of_one_hash.each do |hash|
-            output[data_type] = {
-                source: hash['source'],
-                year: hash['year']
-            }
+      @_subgroups_data_sources ||= (
+        subgroups_data.each_with_object({}) do |(data_type, array_of_one_hash), output|
+          # checks to see if valid data before declaring it as source
+          if(array_of_one_hash[0]['district_value'] > 0)
+            array_of_one_hash.each do |hash|
+              output[data_type] = {
+                  source: hash['source'],
+                  year: hash['year']
+              }
+            end
           end
         end
-      end
+      )
     end
 
     def static_label(key)

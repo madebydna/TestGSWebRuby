@@ -7,9 +7,17 @@ import { t } from "util/i18n";
 
 class Students extends React.Component{
   static propTypes = {
+    ethnicityData: PropTypes.obj, 
+    subgroupsData: PropTypes.obj,
+    genderData: PropTypes.obj,
+    translations: PropTypes.obj,
+    sources: PropTypes.string
   };
 
   static defaultProps = {
+    ethnicityData: {},
+    subgroupsData: {},
+    genderData: {}
   };
 
   constructor(props){
