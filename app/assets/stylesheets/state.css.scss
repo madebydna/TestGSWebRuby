@@ -53,8 +53,9 @@
 @import 'pages/community/_state_page';
 
 // needed for newsletter modals to be styled correctly
-@import 'components/join-form';
-@import 'gs/objects/modal_layout';
+// ! Deprecated since these are already import in commmunity_post_load.
+// @import 'components/join-form';
+// @import 'gs/objects/modal_layout';
 
 .back-to-top {
   display: none;
