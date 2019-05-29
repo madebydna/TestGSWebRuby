@@ -3,8 +3,6 @@
     <%= webpack_javascript_include_tag 'community', defer: true %>
 <% end %>
 <% content_for :page_stylesheets do %>
-    <%#= stylesheet_link_tag "post_load", media: "all", "data-turbolinks-track" => true %>
-    <%#= stylesheet_link_tag "post_load", async: true %>
     <%= stylesheet_link_tag "community_post_load", async: true %>
     <%= stylesheet_link_tag "district", async: true %>
 <% end %>
