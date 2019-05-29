@@ -11,6 +11,7 @@ Rails.application.config.assets.precompile += [
     'header.js',
     'header.css',
     'post_load.css',
+    'community_post_load.css',
     'home_page.css',
     'deprecated_application.css',
     'deprecated_application.js',
