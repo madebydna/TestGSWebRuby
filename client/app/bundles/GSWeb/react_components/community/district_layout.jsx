@@ -14,7 +14,8 @@ class DistrictLayout extends React.Component {
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
     heroData: PropTypes.object,
-    shouldDisplayReviews: PropTypes.bool
+    shouldDisplayReviews: PropTypes.bool,
+    hasStudentDemographicData: PropTypes.bool
   };
 
   constructor(props) {
@@ -167,6 +168,14 @@ class DistrictLayout extends React.Component {
     );
   }
 
+  renderStudentsModule(){
+    return (this.props.hasStudentDemographicData && 
+      <div id="students" className="module-section">
+        {this.props.students}
+      </div>
+    )
+  }
+
   renderReviews(){
     return (
       this.props.shouldDisplayReviews &&
@@ -193,6 +202,7 @@ class DistrictLayout extends React.Component {
             {this.renderBoxAd()}
             {this.renderCsaModule()}
             {this.renderAcademics()}
+            {this.renderStudentsModule()}
             {this.renderCalendar()}
             {this.renderMobility()}
             {this.renderZillow()}

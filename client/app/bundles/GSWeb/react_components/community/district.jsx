@@ -12,10 +12,11 @@ import CsaInfo from './csa_info';
 import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import Calendar from "./calendar";
+import Students from "./students";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
-import {schools, academics, ACADEMICS, calendar, CALENDAR, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
+import {schools, academics, ACADEMICS, STUDENTS, students, calendar, CALENDAR, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
@@ -41,7 +42,8 @@ class District extends React.Component {
     ),
     locality: PropTypes.object,
     heroData: PropTypes.object,
-    academics: PropTypes.object
+    academics: PropTypes.object,
+    students: PropTypes.object
   };
 
   constructor(props) {
@@ -108,10 +110,22 @@ class District extends React.Component {
     return data.filter(o => o.data && o.data.length > 0).length > 0
   }
 
+  hasStudentDemographicData(){
+    const  { ethnicityData, genderData, subgroupsData} = this.props.students;
+    const hasEthnicityData = ethnicityData.filter(o => o.district_value > 0).length > 0
+    const hasGenderData = genderData.Male !== undefined && genderData.Female !== undefined;
+    let hasSubgroupsData = false;
+    Object.entries(subgroupsData).forEach(([key, data]) =>{
+      if (data.length > 0 && data[0].breakdown === 'All students' && data[0].district_value > 0) { hasSubgroupsData = true }
+    });
+    return hasEthnicityData || hasGenderData || hasSubgroupsData;
+  }
+
   selectTocItems(){
-    let districtTocItems = [schools, academics, calendar, communityResources, nearbyHomesForSale, reviews];
+    let districtTocItems = [schools, academics, students, calendar, communityResources, nearbyHomesForSale, reviews];
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
+    districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());
     return districtTocItems;
   }
 
@@ -122,6 +136,7 @@ class District extends React.Component {
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schoolCounts={this.props.schools_data.counts}
         shouldDisplayReviews={this.props.reviews.length > 0}
+        hasStudentDemographicData = {this.hasStudentDemographicData}
         translations={this.props.translations}
         topSchools={
           <TopSchoolsStateful
@@ -182,6 +197,7 @@ class District extends React.Component {
             pageType={this.pageType}
           />
         }
+        students={<Students {...this.props.students} />}
         calendar={
           <Calendar 
             locality={this.props.locality}
