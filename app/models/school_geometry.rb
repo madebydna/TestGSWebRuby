@@ -44,7 +44,7 @@ class SchoolGeometry < ActiveRecord::Base
     all_levels = levels || %w(o p m h)
     geometries = find_by_point_and_level(lat, lon, all_levels)
     if geometries.present?
-      geometries.to_a.uniq {|sch| sch.mx_id && sch.nces_schid}
+      geometries.to_a.uniq {|sch| sch.nces_schid}
                      .group_by { |obj| obj['ed_level'] }
                      .values
                      .flat_map { |geos_for_level| school_level_filter_by_attendance_zone(geos_for_level) }
