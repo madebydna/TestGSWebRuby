@@ -11,13 +11,13 @@ const renderAssignedTooltip = (lc) => {
   } else if (school_level.length > 2){
     school_level = school_level.slice(0, school_level.length - 2).join(` ${t('and')} `).concat(school_level[school_level.length - 1])
   }
-  
+
   const content = (
     <div
-  dangerouslySetInnerHTML={{
-    __html: t('assigned_description_html', { parameters: { school_level } })
-  }}
-  />
+      dangerouslySetInnerHTML={{
+        __html: t('assigned_description_html', { parameters: { school_level } })
+      }}
+    />
   );
   return (
     <ModalTooltip content={content}>
