@@ -108,4 +108,4 @@ const titleizedName = str => {
 }
 
 
-export { anyStateNameRegex, isStateName, abbreviation, name, titleizedName };
+export { anyStateNameRegex, isStateName, abbreviation, name, titleizedName, stateAbbreviations };

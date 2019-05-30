@@ -327,7 +327,9 @@ LocalizedProfiles::Application.routes.draw do
   post '/gsr/reviews/:id/vote', :to => 'review_votes#create'
   post '/gsr/reviews/:id/unvote', :to => 'review_votes#destroy'
   get '/gsr/ajax/get_cities', :to => 'simple_ajax#get_cities'
+  get '/gsr/ajax/get_cities_alphabetically', :to => 'simple_ajax#get_cities_alphabetically'
   get '/gsr/ajax/get_schools', :to => 'simple_ajax#get_schools'
+  get '/gsr/ajax/get_schools_with_link', :to => 'simple_ajax#get_schools_with_link'
   get '/gsr/ajax/get_school_and_forward', to: 'simple_ajax#get_school_and_forward', as: :get_school_and_forward
   get '/gsr/validations/validate_user_can_log_in', :to => 'user#validate_user_can_log_in'
   get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'

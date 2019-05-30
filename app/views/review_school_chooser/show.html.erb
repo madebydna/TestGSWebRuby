@@ -4,7 +4,7 @@
 <% end %>
 
 <%  decorated_topic = ReviewTopicDecorator.decorate(@topic) %>
-
+<a name="top"></a>
 <div class="row bg-white pvl <%= @display_morgan_stanley %>">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <div class="oa tac ">
@@ -42,7 +42,12 @@
       </div>
     <div class="review-school-picker-module">
       <h1><%= t('.school_picker_header_1') %></h1>
-      <%=  render 'shared/school_picker', linkClass: 'search-link-black', component_name: 'ReviewPageSearchBox'  %>
+      <%= react_component('ReviewSchoolPicker', props: {
+          osp: false,
+          resultTypes: ['Schools'],
+          showSearchAllOption: false,
+          showSearchButton: false
+      }) %>
     </div>
   </section>
   <% if @topic.id == 8 %>
@@ -72,11 +77,8 @@
       </div>
     </div>
     <div class="review-school-picker-module">
-      <h1><%= t('.school_picker_header_2') %></h1>
-      <%=  render 'shared/school_picker', linkClass: 'search-link-black', component_name: 'ReviewPageSearchBox'  %>
+      <a href="#top"><h1 style="color:#337ab7; padding-bottom: 20px;"><%= t('.school_picker_header_2') %></h1></a>
     </div>
   </section>
 <% end %>
 </div>
-
-<%= react_component('SearchBoxWrapper') %>
