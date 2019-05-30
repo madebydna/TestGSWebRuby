@@ -23,7 +23,7 @@ module Solr
           'select',
           data: query.params
         )
-        print_request(res)
+        # print_request(res)
         if res.has_key?('grouped')
           total = res['grouped'].values.inject(0) { |sum, g| sum += g.dig('matches').to_i }
           docs = res['grouped'].values.inject([]) { |d, g| d += g.dig('doclist', 'docs') }
