@@ -5,36 +5,11 @@ class SimpleAjaxController < ApplicationController
 
   layout false
 
-  def get_cities
-    response = {}
-    state = params[:state]
-    @cities = City.popular_cities(state) if state.present?
-    response = @cities.map(&:name) if @cities.present?
-
-    respond_to do |format|
-      format.json { render json: response}
-    end
-  end
-
   def get_cities_alphabetically
     response = {}
     state = params[:state]
     @cities = City.popular_cities(state, alphabetical: true) if state.present?
     response = @cities.map(&:name) if @cities.present?
-
-    respond_to do |format|
-      format.json { render json: response}
-    end
-  end
-
-  def get_schools
-    response = {}
-    state_param = params[:state]
-    city = params[:city]
-    state = States.abbreviation(state_param) if state_param.present?
-
-    @schools = School.within_city(state,city) if state.present? && city.present?
-    response = @schools.to_a.map { |school| {id:school.id, name: school.name} }
 
     respond_to do |format|
       format.json { render json: response}

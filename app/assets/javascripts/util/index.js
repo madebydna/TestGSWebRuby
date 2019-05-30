@@ -14,7 +14,7 @@
 //= require ./selectpicker
 // require ./school_picker
 //= require ./session_check
-//= require ./state_city_school_select_box
+// require ./state_city_school_select_box
 //= require ./states
 //= require ./subscription
 //  require ./tracking
