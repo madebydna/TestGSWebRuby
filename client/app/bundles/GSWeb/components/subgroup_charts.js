@@ -253,7 +253,6 @@ var generateSubgroupPieCharts = function (initialProps = undefined, valueType = 
       forOwn(subgroupData, function(value,key){
         return renderSubgroupChart(value, key, valueType)
       });
-      // Object.entries(subgroupData).forEach(([key, data]) => renderSubgroupChart(data, key, valueType))
       if (gon.gender || initialProps.gender) {
         const genderData = gon.gender ? gon.gender : initialProps.gender;
         renderGenderChart(genderData, undefined, valueType);
