@@ -178,6 +178,10 @@ es:
       city: ciudad
       school: esculea
       select: 'Seleccione  '
+      do_not_see_school_text: ¿No ve su escuela?
+      placeholder: Escriba el nombre de la escuela
+      return_to_original_search_text: Regresar a original de la búsqueda
+      select_state: Seleccione estado
     school_types:
       Private: Privada
       Public charter: Charter pública
@@ -432,3 +436,4 @@ es:
     see_all_winning_schools: Ver todos los ganadoras
     csa_winners: Ganadores de College Success Award
     see_winning_schools_in: Ver las escuelas ganadores en
+

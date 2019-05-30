@@ -1,10 +1,15 @@
 import React from 'react';
-import SearchBox, { t, keyMap } from './search_box';
+import SearchBox, { keyMap } from './search_box';
 import { SM, XS, validSizes, viewport } from 'util/viewport';
 import { debounce } from 'lodash';
-import { translateWithDictionary } from 'util/i18n';
+import { t } from 'util/i18n';
+import {hasClass, addClass, removeClass} from 'util/selectors';
 
 export default class ReviewPageSearchBox extends SearchBox {
+
+  linkDontSeeSchools() {
+    return document.getElementsByClassName('js-doNotSeeResult')[0];
+  }
 
   constructor(props) {
     super(props);
@@ -17,6 +22,10 @@ export default class ReviewPageSearchBox extends SearchBox {
     else{
       return selectedItem.url;
     }
+  }
+
+  callbackToggle(){
+    this.props.statusCallback(false);
   }
 
   handleKeyDown(e, { close }) {
@@ -40,17 +49,15 @@ export default class ReviewPageSearchBox extends SearchBox {
     }
   }
 
-  // # add callback to calling class
   shouldShowAutoComplete(q) {
     let return_value = false;
+    let linkDontSeeSchools = document.getElementsByClassName('js-doNotSeeResult')[0];
     if(q.length >= 3) {
-      console.log("show link");
-      this.props.statusCallback(true);
+      if(hasClass(linkDontSeeSchools, 'dn')) removeClass(linkDontSeeSchools, 'dn');
       return_value = true;
     }
     else {
-      console.log("hide link");
-      this.props.statusCallback(false);
+      if(!hasClass(linkDontSeeSchools, 'dn')) addClass(linkDontSeeSchools, 'dn');
       return_value = false;
     }
     return return_value;
@@ -69,16 +76,22 @@ export default class ReviewPageSearchBox extends SearchBox {
   }
 
   render() {
+    let subtitleHeight = {
+      height: '35px'
+    };
     return (
       <React.Fragment>
-             <div className="subtitle-sm tac">
-               <a className="js-doNotSeeResult dn pointer">
-                 {t('.do_not_see_school_text')}Do not see School?
-              </a>
-            </div>
+         <div className="subtitle-sm tac" style={subtitleHeight}>
+           <a className="js-doNotSeeResult dn pointer" onClick={this.props.showStateSelector}>
+             {t('school_picker.do_not_see_school_text')}
+          </a>
+        </div>
+        <div className="search-bar-osp js-autocompleteFieldContainer ma picker-border">
+          <div className="full-width">
           {this.searchBoxElement(false)}
+          </div>
+        </div>
       </React.Fragment>
     )
   }
-
 }

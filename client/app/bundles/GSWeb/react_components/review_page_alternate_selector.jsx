@@ -1,111 +1,123 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import SearchBox, { t, keyMap } from './search_box';
-import { SM, XS, validSizes, viewport } from 'util/viewport';
-import { debounce } from 'lodash';
-import { translateWithDictionary } from 'util/i18n';
-import { stateAbbreviations } from 'util/states';
+import { stateAbbreviations } from '../util/states';
+import {hasClass, addClass, removeClass} from 'util/selectors';
+import {t} from "../../../../../app/assets/javascripts/util/i18n";
 
 export default class ReviewPageAlternateSelector extends React.Component  {
   constructor(props) {
     super(props);
-    // this.handleKeyDown = this.handleKeyDown.bind(this);
-    // this.resetSelectedListItem = this.resetSelectedListItem.bind(this);
-    // this.resetSearchTerm = this.resetSearchTerm.bind(this);
-    // this.manageSelectedListItem = this.manageSelectedListItem.bind(this);
-    // this.state = this.defaultState(props);
-    // this.submit = this.submit.bind(this);
-    // this.geocodeAndSubmit = this.geocodeAndSubmit.bind(this);
-    // this.autoSuggestQuery = debounce(this.autoSuggestQuery.bind(this), 200);
-  }
-
-  // handleKeyDown(e, { close }) {
-  //   if (e.key === 'Enter') {
-  //     if (this.state.selectedListItem > -1) {
-  //       close();
-  //       const flattenedResultValues = Array.prototype.concat.apply(
-  //           [],
-  //           Object.values(this.state.autoSuggestResults).filter(array => !!array)
-  //       );
-  //       const selectedListItem =
-  //           flattenedResultValues[this.state.selectedListItem];
-  //       if (selectedListItem.url) {
-  //         window.location.href = selectedListItem.url;
-  //       } else {
-  //         this.selectAndSubmit(() => {})(selectedListItem);
-  //       }
-  //     }
-  //   } else if (Object.keys(keyMap).includes(e.key)) {
-  //     this.manageSelectedListItem(e);
-  //   }
-  // }
-
-  // needs a callback function
-  shouldShowAutoComplete(q) {
-    let return_value = false;
-    if(q.length >= 3) {
-      console.log("show link");
-      return_value = true;
+    this.schoolList = [];
+    this.state = {
+      state_value: '',
+      cityOptions: [],
+      city_value: ''
     }
-    else {
-      console.log("hide link");
-      return_value = false;
-    }
-    return return_value;
   }
 
   onQueryMatchesAddress(q) {}
 
-  placeholderText() {
-    return t('Enter school');
-  }
-  dontSeeYourSchoolContainer() {
-    return ( <a className="js-doNotSeeResult pointer search-link-black" data-no-result-text="Don't see your school?"
-                data-return-to-search-text="Return to original search" data-state="">
-          Don't see your school?
-        </a>
-    )
-  }
+  loadCities = function(state) {
+    $.ajax({
+      type: 'GET',
+      url: "/gsr/ajax/get_cities_alphabetically",
+      data: {state: state},
+      async: true
+    }).done((data) => {
+      this.setState({state_value: state, cityOptions: data, city_value: ''});
+    });
+  };
 
-  dontSeeYourSchoolContainer(){
-    return ( <div className="subtitle-sm tac" style="height:35px;">
-          {this.dontSeeYourSchoolContainer()}
-        </div>
-    )
-  }
+  loadSchools = function(state, city) {
+    $.ajax({
+      type: 'GET',
+      url: "/gsr/ajax/get_schools_with_link",
+      data: {state: state, city: city, osp: this.props.osp},
+      async: true
+    }).done((data) => {
+      this.schoolList = data;
+      this.setState({city_value: city});
+    });
+  };
 
   render() {
-
-    // let elements = window.document.querySelectorAll('.dt-desktop');
-    // // if (this.props.size <= SM) {
-    // //   return [...elements].map(element => this.renderMobileSearchBox(element))
-    // // }
-    // return Array.from(elements).map(element => this.renderSearchBox(element, false))
     return (
         <React.Fragment>
-          {/*{this.dontSeeYourSchoolContainer()}*/}
-          {/*{this.searchBoxElement(false)}*/}
           {this.stateCitySchoolSelect()}
         </React.Fragment>
     )
   }
 
-
-
-  stateCitySchoolSelect() {
-    this.state_option_list = stateAbbreviations.map((state, key) =>
-        <option value="{state}">{state.toUpperCase()}</option>
-    );
-    return (
-        <div className="ma picker-border picker-background" style="max-width: 600px;">
-          <select value={this.state.value} onChange={this.handleChange} className="notranslate">
-            <option value="">Select state</option>
-            {this.state_option_list}
-          </select>
-          <select className="form-control js-citySelect dn mtm notranslate"></select>
-          <select className="form-control js-schoolSelect mtm dn notranslate"></select>
-        </div>
-    )
+  handleStateSelect(event) {
+    if(event.target.value == '') return true;
+    this.loadCities(event.target.value);
   }
 
+  handleCitySelect(event){
+    if(event.target.value == '') return true;
+    this.loadSchools(this.state.state_value, event.target.value);
+  }
+
+  handleSchoolSelect(event){
+    let url = event.target.value;
+    console.log("state: " + event.target.value);
+    if(!this.props.osp){
+      url = url +'#Reviews';
+    }
+    window.location.assign(url);
+  }
+
+  stateCitySchoolSelect() {
+    let maxWidth = {
+      maxWidth: '600px'
+    };
+
+    let subtitleHeight = {
+      height: '35px'
+    };
+
+    let paddingBottom = {
+      paddingBottom: '20px'
+    };
+
+    let state_option_list = stateAbbreviations.map((state, key) =>
+        <option value={state}>{state.toUpperCase()}</option>
+    );
+
+    let city_option_list = this.state.cityOptions.map((city, key) =>
+        <option value={city}>{city}</option>
+    );
+
+    let school_option_list = this.schoolList.map((school, key) =>
+        <option value={school['url']}>{school['name']}</option>
+    );
+
+    return (
+        <React.Fragment>
+          <div className="subtitle-sm tac" style={subtitleHeight}></div>
+          <div className="form-control ma" style={maxWidth}>
+            <div style={paddingBottom}>
+
+              <select value={this.state.state_value} onChange={(e) => this.handleStateSelect(e)} className="notranslate form-control mtm ">
+                <option value="">Select state</option>
+                {state_option_list}
+              </select>
+            </div>
+            {this.state.state_value &&
+              <div style={paddingBottom}>
+                <select className="form-control notranslate" value={this.state.city_value} onChange={(e) => this.handleCitySelect(e)} >
+                  <option value=''>Select City</option>
+                  {city_option_list}
+                </select>
+              </div>}
+            {(this.state.state_value && this.state.city_value) &&
+              <div style={paddingBottom}>
+                <select className="form-control notranslate" onChange={(e) => this.handleSchoolSelect(e)} >
+                  <option value=''>Select School</option>
+                  {school_option_list}
+                </select>
+              </div>}
+          </div>
+        </React.Fragment>
+    )
+  }
 }
