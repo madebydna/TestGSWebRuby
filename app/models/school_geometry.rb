@@ -17,7 +17,7 @@ class SchoolGeometry < ActiveRecord::Base
     results = SchoolGeometry.select('*, AsText(geom) as geom, ST_area(geom) as area').
       containing_point(lat,lon).
       order_by_area
-    results = results.where(ed_level: level).where.not(school_id: nil)
+      results = results.where(ed_level: level).where.not(school_id: nil)
     results
   end
 
@@ -44,10 +44,10 @@ class SchoolGeometry < ActiveRecord::Base
     all_levels = levels || %w(o p m h)
     geometries = find_by_point_and_level(lat, lon, all_levels)
     if geometries.present?
-      geometries.
-        group_by { |obj| obj['ed_level'] }.
-        values.
-        flat_map { |geos_for_level| school_level_filter_by_attendance_zone(geos_for_level) }
+      geometries.to_a.uniq {|sch| sch.mx_id && sch.nces_schid}
+                     .group_by { |obj| obj['ed_level'] }
+                     .values
+                     .flat_map { |geos_for_level| school_level_filter_by_attendance_zone(geos_for_level) }
     else
       []
     end
