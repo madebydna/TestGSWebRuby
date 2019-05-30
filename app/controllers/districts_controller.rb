@@ -276,7 +276,7 @@ class DistrictsController < ApplicationController
   end
 
   def redirect_unless_valid_district
-    redirect_to(city_path(state: state_name, city: city&.downcase), status: 301) unless district_record
+    redirect_to(city_path(city_params(state_name, city&.downcase)), status: 301) unless district_record
   end
 
   def redirect_to_canonical_url
