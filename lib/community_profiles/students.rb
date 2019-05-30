@@ -33,13 +33,11 @@ module CommunityProfiles
       str = '<div class="sourcing">'
       str << '<h1>' + static_label('title') + '</h1>'
       if ethnicity_data_source.present?
-        ethnicity_data_source.each do |data_source|
-          str << '<div>'
-          str << '<h4>' + static_label('ethnicity') + '</h4>'
-          str << '<p><span class="emphasis">' + static_label('source') + "</span>: #{data_label(data_source[:source])}, "
-          str << "#{data_source[:year]}</p>"
-          str << '</div>'
-        end
+        str << '<div>'
+        str << '<h4>' + static_label('ethnicity') + '</h4>'
+        str << '<p><span class="emphasis">' + static_label('source') + "</span>: #{ethnicity_data_source.map { |h| data_label(h[:source]) }.join(', ')}, "
+        str << "#{ethnicity_data_source.map { |h| data_label(h[:year]) }.join(', ')}</p>"
+        str << '</div>'
       end
       if gender_data_source.present?
         str << '<div>'
@@ -92,21 +90,29 @@ module CommunityProfiles
     #       here so that we don't have to duplicate the translations in JavaScript
     def subgroups_data
       @_subgroups_data ||= (
-        @cache_data_reader.characteristics_data(*OTHER_BREAKDOWN_KEYS)
+        @cache_data_reader.characteristics_data(*OTHER_BREAKDOWN_KEYS).each_with_object({}) do |(key, value), hash|
+          data_hash = value.first
+          if data_hash['district_value'] > 0
+            hash[key] = [{}.tap do |h|
+             h["breakdown"] =  data_hash['breakdown']
+             h["district_value"] =  data_hash['district_value']
+             h["source"] =  data_hash['source']
+             h["year"] =  data_hash['year']
+             h["state_average"] =  data_hash['state_average']
+            end]
+          end
+        end
       )
     end
 
     def subgroups_data_sources
       @_subgroups_data_sources ||= (
         subgroups_data.each_with_object({}) do |(data_type, array_of_one_hash), output|
-          # checks to see if valid data before declaring it as source
-          if(array_of_one_hash[0]['district_value'] > 0)
-            array_of_one_hash.each do |hash|
-              output[data_type] = {
-                  source: hash['source'],
-                  year: hash['year']
-              }
-            end
+          array_of_one_hash.each do |hash|
+            output[data_type] = {
+                source: hash['source'],
+                year: hash['year']
+            }
           end
         end
       )
