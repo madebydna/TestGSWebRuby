@@ -3,6 +3,7 @@ es:
   javascript:
     compare_test_scores_for: Compare los resultados de exámenes de estudiantes
     from : de
+    and: y
     to_nearby_schools: con las escuelas cercanas dentro
     Academics: Académica
     Saved!: Salvado!

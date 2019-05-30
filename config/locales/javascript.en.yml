@@ -3,6 +3,7 @@ en:
   javascript:
     compare_test_scores_for: Compare test scores for
     from: from
+    and: and
     to_nearby_schools: to nearby schools within
     Academics: Academics
     Saved!: Saved!
