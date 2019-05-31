@@ -107,6 +107,14 @@ const ratingBreakdownFieldDictionary = Object.keys(ratingDictionary.es).reduce(
         locale: 'es'
       })} (${tBreakdown(breakdown, { locale: 'es' })})`;
     });
+
+    dict.en["Economically_disadvantaged"] = `${tRatingLabel("Test Scores Rating", {
+      locale: 'en'
+    })} (${tBreakdown("Economically disadvantaged", { locale: 'en' })})`;
+    dict.es["Economically_disadvantaged"] = `${tRatingLabel("Test Scores Rating", {
+      locale: 'es'
+    })} (${tBreakdown("Economically disadvantaged", { locale: 'es' })})`;
+
     return dict;
   },
   {

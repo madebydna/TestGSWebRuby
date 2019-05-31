@@ -11,6 +11,7 @@ Rails.application.config.assets.precompile += [
     'header.js',
     'header.css',
     'post_load.css',
+    'community_post_load.css',
     'home_page.css',
     'deprecated_application.css',
     'deprecated_application.js',
@@ -41,6 +42,7 @@ Rails.application.config.assets.precompile += [
     'district.css',
     'compare.css',
     'college-success-award.css',
+    'state.css'
 ]
 # Add client/assets/ folders to asset pipeline's search path.
 # If you do not want to move existing images and fonts from your Rails app

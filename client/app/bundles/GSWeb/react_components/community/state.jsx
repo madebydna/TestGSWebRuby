@@ -49,6 +49,7 @@ class State extends React.Component {
 
   constructor(props) {
     super(props);
+    this.pageType = 'state';
   }
 
   componentDidMount() {
@@ -124,7 +125,7 @@ class State extends React.Component {
             searchBox={<SearchBox size={this.props.viewportSize} />}
             browseCities={
               <CityBrowseLinks
-                  community="state"
+                  community={this.pageType}
                   locality={this.props.locality}
                   size={this.props.viewportSize}
                   cities={this.props.cities}
@@ -132,7 +133,7 @@ class State extends React.Component {
             }
             topSchools={
               <TopSchoolsStateful
-                community="state" 
+                community={this.pageType}
                 schoolsData={this.props.schools_data.schools}
                 size={this.props.viewportSize}
                 locality={this.props.locality}
@@ -142,7 +143,7 @@ class State extends React.Component {
             shouldDisplayCsaInfo={this.props.csa_module}
             csaInfo={
               <CsaInfo 
-                community="state"
+                community={this.pageType}
                 locality={this.props.locality}
               />
             }
@@ -157,7 +158,7 @@ class State extends React.Component {
             shouldDisplayReviews={this.props.reviews.length > 0}
             recentReviews={
               <RecentReviews
-                community="state" 
+                community={this.pageType}
                 reviews={this.props.reviews}
                 locality={this.props.locality}
               />

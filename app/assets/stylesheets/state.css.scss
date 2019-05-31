@@ -35,7 +35,6 @@
 
 // more components
 @import 'gs/objects/spinny_wheel.css.scss';
-@import 'school_profiles/_students_container.scss';
 
 // footer-specific
 @import 'gs/objects/footer';
@@ -51,8 +50,8 @@
 @import 'resources/remodal-default-theme'; // used on profiles / used by modals
 
 // community page stylesheets
-@import 'pages/community/communities';
-@import 'pages/community/district_page';
+@import 'pages/community/_communities';
+@import 'pages/community/_state_page';
 
 // needed for newsletter modals to be styled correctly
 // ! Deprecated since these are already import in commmunity_post_load.

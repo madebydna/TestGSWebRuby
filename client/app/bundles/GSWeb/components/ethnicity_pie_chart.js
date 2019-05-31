@@ -1,35 +1,36 @@
 import { getScript } from '../util/dependency';
 // TODO: import $
 
-      //  If you change these colors they need to be changed in _students.html.erb
+      //  If you change these colors they need to be changed in _students.html.erb and/or students.jsx
   const ethnicityColors = ['#0f69c4', '#2bdc99', '#f1830f', '#f1e634', '#6f2eb4', '#ef60d0', '#ca3154', '#999EFF'];
       // write the graph to this location in html
   const ethnicityGraph = '#ethnicity-graph';
 
-  const buildEthnicityDataFromGon = function (data) {
-    var returnvalue = [];
-    $.each(data, function (index, value) {
+  const buildEthnicityDataFromGon = function (data, valueType) {
+    const returnvalue = [];
+    data.forEach((value,index)=>{
       returnvalue.push({
         name: value['breakdown'],
         legendIndex: index,
-        y: Math.round(value['school_value']),
+        y: Math.round(value[`${valueType}_value`]),
         color: ethnicityColors[index]
       });
-    });
+    })
     return returnvalue;
   };
 
-  const generateEthnicityChart = function (data) {
+  const generateEthnicityChart = function (data, valueType = 'school') {
     if (data) {
-      var callback = function () {
-        var chart = $(ethnicityGraph);
-        var chart_height = 400;
-        if(chart.width() < 400) {
-          chart_height = chart.width() - 40;
-        }
-        var ethnicityData = buildEthnicityDataFromGon(data);
-        chart.highcharts({
+      const callback = function () {
+        const chart = document.querySelector(ethnicityGraph)
+        let chart_height = 400;
 
+        if (chart.offsetWidth < 400) {
+          chart_height = chart.offsetWidth - 40;
+        }
+        const ethnicityData = buildEthnicityDataFromGon(data, valueType);
+        
+        const ethnicityChartForHighlight = Highcharts.chart(chart, {
           chart: {
             type: 'pie',
             height: chart_height
@@ -74,13 +75,17 @@ import { getScript } from '../util/dependency';
             data: ethnicityData
           }]
         });
-        var ethnicityChartForHighlight = $(ethnicityGraph).highcharts();
-        $('.js-highlightPieChart').on("mouseenter mouseleave", function(){
-          var sliceId = $(this).data('slice-id');
-          if (typeof(sliceId) !== 'undefined' && ethnicityChartForHighlight.series[0].data[sliceId]) {
+
+        const highlightSlice = function(){
+          const sliceId = this.dataset.sliceId;
+          if (typeof (sliceId) !== 'undefined' && ethnicityChartForHighlight.series[0].data[sliceId]) {
             ethnicityChartForHighlight.series[0].data[sliceId].select();
           }
-        });
+        }
+        document.querySelectorAll('.js-highlightPieChart').forEach(selector=>{
+          selector.addEventListener('mouseover', highlightSlice)
+          selector.addEventListener('mouseout', highlightSlice)
+        })
       };
 
       if(window.Highcharts) {

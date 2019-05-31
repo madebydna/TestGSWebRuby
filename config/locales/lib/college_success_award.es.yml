@@ -1,7 +1,9 @@
 es:
   lib:
     college_success_award:
+      #need updated  spanish version
       title: "%{year} Ganadores del College Success Award de %{state}"
+      meta: En %{state}, %{total} escuelas públicas ganaron un College Success Award de %{year}, un premio basado en su éxito en preparar a los estudiantes para la universidad y, finalmente, la carrera.
       csa_year_winners: "Ganadores del  %{year}"
       Total enrolled: Número total de estudiantes matriculados
       Persistence: Persistencia

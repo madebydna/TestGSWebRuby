@@ -190,13 +190,14 @@ export default class OspSchoolInfo extends React.Component {
       <div>
         <h3 data-ga-click-label="General Information">
           {t('General Information')}
-          &nbsp;{this.hasData() && (
-            <QuestionMarkTooltip
-              content={t('general_information_tooltip')}
-              element_type="toptooltip"
-            />
-          )}
         </h3>
+        &nbsp;
+        {this.hasData() && (
+          <QuestionMarkTooltip
+            content={t('general_information_tooltip')}
+            element_type="toptooltip"
+          />
+        )}
         <AnchorButton href={this.props.osp_link}>{t('edit')}</AnchorButton>
       </div>
     );

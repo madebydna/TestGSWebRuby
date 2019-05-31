@@ -243,9 +243,6 @@
     width: 100%;
   }
 
-  .search_icon {
-    display: none;
-  }
   nav {
     margin: 0;
     padding: 0;
@@ -762,8 +759,11 @@
   .un .hidden-sm {
     display: none !important;
   }
-  .un nav ul {
-    width: 270px;
+  .un nav ul.menu_hide_mobile {
+    width: 350px;
+  }
+  .un .buffer {
+    margin: 0 15em;
   }
   .un nav > ul > li > ul {
     margin-left: -25px;

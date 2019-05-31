@@ -7,6 +7,7 @@ export const REVIEWS = 'Reviews';
 export const COMMUNITY_RESOURCES = 'community_resources';
 export const ACADEMICS = 'Academics';
 export const CALENDAR = 'calendar';
+export const STUDENTS = 'students'
 export const BROWSE_SCHOOLS = 'browse-schools';
 export const AWARD_WINNING_SCHOOLS = 'award-winning-schools';
 
@@ -45,6 +46,13 @@ const academics = {
   selected: false
 }
 
+const students = {
+  key: STUDENTS,
+  label: capitalize(t(STUDENTS)),
+  anchor: '#students',
+  selected: false
+}
+
 const calendar = {
   key: 'calendar',
   label: capitalize(t(CALENDAR)),
@@ -79,6 +87,7 @@ export {
   awardWinningSchools,
   schoolDistricts,
   academics,
+  students,
   calendar,
   communityResources,
   nearbyHomesForSale,

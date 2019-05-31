@@ -1,21 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import SearchBox, { t, keyMap } from './search_box';
-import { SM, XS, validSizes, viewport } from 'util/viewport';
-import { debounce } from 'lodash';
-import { translateWithDictionary } from 'util/i18n';
+import SearchBox, { keyMap } from './search_box';
+import { t } from 'util/i18n';
+import {hasClass, addClass, removeClass} from 'util/selectors';
 
 export default class ReviewPageSearchBox extends SearchBox {
+
   constructor(props) {
     super(props);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.resetSelectedListItem = this.resetSelectedListItem.bind(this);
-    this.resetSearchTerm = this.resetSearchTerm.bind(this);
-    this.manageSelectedListItem = this.manageSelectedListItem.bind(this);
-    this.state = this.defaultState(props);
-    this.submit = this.submit.bind(this);
-    this.geocodeAndSubmit = this.geocodeAndSubmit.bind(this);
-    this.autoSuggestQuery = debounce(this.autoSuggestQuery.bind(this), 200);
+  }
+
+  urlOspUrl(selectedItem){
+    if(this.props.osp){
+      return selectedItem.ospUrl;
+    }
+    else{
+      return selectedItem.url;
+    }
+  }
+
+  callbackToggle(){
+    this.props.statusCallback(false);
   }
 
   handleKeyDown(e, { close }) {
@@ -26,16 +30,36 @@ export default class ReviewPageSearchBox extends SearchBox {
           [],
           Object.values(this.state.autoSuggestResults).filter(array => !!array)
         );
-        const selectedListItem =
-          flattenedResultValues[this.state.selectedListItem];
-        if (selectedListItem.url) {
-          window.location.href = selectedListItem.url;
-        } else {
+        const selectedListItem = flattenedResultValues[this.state.selectedListItem];
+        if (this.urlOspUrl(selectedListItem)) {
+          window.location.href = this.urlOspUrl(selectedListItem);
+        }
+        else {
           this.selectAndSubmit(() => {})(selectedListItem);
         }
       }
     } else if (Object.keys(keyMap).includes(e.key)) {
       this.manageSelectedListItem(e);
+    }
+  }
+
+  shouldShowAutoComplete(q) {
+    let return_value = false;
+    let linkDontSeeSchools = document.getElementsByClassName('js-doNotSeeResult')[0];
+    if(q.length >= 3) {
+      if(hasClass(linkDontSeeSchools, 'dn')) removeClass(linkDontSeeSchools, 'dn');
+      return_value = true;
+    }
+    else {
+      if(!hasClass(linkDontSeeSchools, 'dn')) addClass(linkDontSeeSchools, 'dn');
+      return_value = false;
+    }
+    return return_value;
+  }
+
+  transformResult(category, result) {
+    if(category == 'Schools') {
+      return ({...result, url: this.urlOspUrl(result)});
     }
   }
 
@@ -46,12 +70,22 @@ export default class ReviewPageSearchBox extends SearchBox {
   }
 
   render() {
-    // let elements = window.document.querySelectorAll('.dt-desktop');
-    // // if (this.props.size <= SM) {
-    // //   return [...elements].map(element => this.renderMobileSearchBox(element))
-    // // }
-    // return Array.from(elements).map(element => this.renderSearchBox(element, false))
-    return this.searchBoxElement(false)
+    let subtitleHeight = {
+      height: '35px'
+    };
+    return (
+      <React.Fragment>
+         <div className="subtitle-sm tac" style={subtitleHeight}>
+           <a className="js-doNotSeeResult dn pointer" onClick={this.props.showStateSelector}>
+             {t('school_picker.do_not_see_school_text')}
+          </a>
+        </div>
+        <div className="search-bar-osp js-autocompleteFieldContainer ma picker-border">
+          <div className="full-width">
+          {this.searchBoxElement(false)}
+          </div>
+        </div>
+      </React.Fragment>
+    )
   }
-
 }

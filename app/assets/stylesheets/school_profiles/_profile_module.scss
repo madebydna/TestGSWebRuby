@@ -212,18 +212,10 @@
     display: flex;
     margin: 0 10px;
     align-items: center;
-
-    .csa-image {
-      margin: 0;
-    }
   
     .csa-text {
       @include media-breakpoint-down(md) {
         padding-top: 15px;
-      }
-
-      p {
-        margin: 0;
       }
     }
   }

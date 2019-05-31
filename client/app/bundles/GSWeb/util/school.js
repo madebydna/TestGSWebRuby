@@ -2,6 +2,7 @@ import React from 'react';
 import { t, capitalize } from 'util/i18n';
 import { name } from 'util/states';
 import { legacyUrlEncode } from 'util/uri';
+import { getQueryParam, updateUrlParameter } from 'components/header/query_param_utils';
 
 const getHomesForSaleHref = (state, address, campaignCode = 'schoolsearch') => {
   if (state && address && address.zip) {
@@ -20,7 +21,13 @@ const getDistrictHref = (state, city, district) => {
     let c = encodeURIComponent(legacyUrlEncode(city));
     let d = encodeURIComponent(legacyUrlEncode(district));
 
-    return `/${s}/${c}/${d}/`;
+    const uri = `/${s}/${c}/${d}/`;
+    if (getQueryParam('lang') === 'es'){
+      return updateUrlParameter(uri, 'lang', 'es');
+    }else{
+      return uri;
+    }
+
   }
   return null;
 };

@@ -184,7 +184,8 @@ module CommunityConcerns
     def district_enrollment_cache(district_id)
       dc = DistrictCache.where(name: 'district_characteristics', district_id: district_id, state: state)
       dc_hash = JSON.parse(dc.first.value) if dc.present? && dc.first
-      dc_hash['Enrollment'].first['district_value'].to_i if dc_hash && dc_hash['Enrollment'] && dc_hash['Enrollment'].first
+      all_students_no_grade = dc_hash['Enrollment'].find { |h| !h.has_key? 'grade' } if dc_hash && dc_hash['Enrollment']
+      all_students_no_grade['district_value'].to_i if all_students_no_grade
     end
 
     def fetch_district_attr(decorated_city, key)

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UserReviews from './user_reviews';
 import { t } from 'util/i18n';
+import { getQueryParam, updateUrlParameter } from 'components/header/query_param_utils';
 
 export default class ReviewsList extends React.Component {
   static propTypes = {
@@ -57,6 +58,11 @@ export default class ReviewsList extends React.Component {
   }
 
   renderOneUsersReviews(userReviews) {
+    let schoolUrl = userReviews.school_url;
+    if (getQueryParam('lang') === 'es'){
+      userReviews.school_url = updateUrlParameter(schoolUrl,'lang','es')
+    }
+    
     return(<UserReviews
       key = {userReviews.id}
       five_star_review = {userReviews.five_star_review}

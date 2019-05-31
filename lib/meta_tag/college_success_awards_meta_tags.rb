@@ -9,7 +9,7 @@ module MetaTag
     end
 
     def description
-      "The GreatSchools College Success Award recognizes the top high schools in #{States.capitalize_any_state_names(States.abbreviation_hash[state])} doing the best job preparing students to enroll & succeed in college"
+      t('meta', scope: 'lib.college_success_award', year: csa_year_param, state: States.capitalize_any_state_names(States.abbreviation_hash[state]), total: page_of_results.total )
     end
 
     def canonical_url

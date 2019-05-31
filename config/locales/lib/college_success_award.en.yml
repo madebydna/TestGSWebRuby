@@ -1,7 +1,9 @@
 en:
   lib:
     college_success_award:
-      title: "%{year} College Success Award Winners from %{state}"
+      # title: "%{year} College Success Award Winners from %{state}"
+      title: "Best %{year} College Prep Public Schools in %{state}"
+      meta: In %{state}, %{total} public schools earned a College Success Award in %{year} based on their success in preparing students for college and ultimately career.
       csa_year_winners: "%{year} winners"
       Total enrolled: Total enrolled
       Persistence: Persistence

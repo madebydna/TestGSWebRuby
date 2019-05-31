@@ -4,14 +4,14 @@ class DistrictCharacteristicsCacher < DistrictCacher
   include DistrictCacheValidation
 
   CACHE_KEY = 'district_characteristics'
-  DIRECTORY_CENSUS_DATA_TYPES = [9, 17, 76, 77, 78, 102, 178, 179, 182, 262, 273, 277, 296, 298, 319, 320, 321, 325, 417, 419]
+  DIRECTORY_CENSUS_DATA_TYPES = [6, 8, 9, 17, 76, 77, 78, 102, 123, 124, 178, 179, 182, 262, 273, 277, 296, 298, 319, 320, 321, 325, 417, 419]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
   # 3 - Master's degree
   # 4 - Doctorate's degree
   # 5 - Student teacher ratio
-  # 6 - FRL
-  # 8 - ELL
+  # 6 - Students participating in free or reduced-price lunch program  
+  # 8 - English Learners
   # 9 - Ethnicity
   # 12 - Average years of teacher experience
   # 13 - Economically disadvantaged
@@ -28,6 +28,8 @@ class DistrictCharacteristicsCacher < DistrictCacher
   # 78 - Graduating seniors pursuing other college                                                                                                                                                      
   # 102 - ACT participation 
   # 103 - at least 5 years teaching experience
+  # 123 - Female
+  # 124 - Male
   # 129 - Teachers with no valid license
   # 131 - Percent classes taught by highly qualified teachers
   # 133 - Teachers with valid license

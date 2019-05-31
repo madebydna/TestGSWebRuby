@@ -49,12 +49,14 @@
 @import 'gs/modal_tooltip'; // used on profiles / used by modals
 @import 'resources/remodal-default-theme'; // used on profiles / used by modals
 
-@import 'pages/community/_communities';
-@import 'pages/community/_city_page';
+// community page stylesheets
+@import 'pages/community/communities';
+@import 'pages/community/city_page';
 
 // needed for newsletter modals to be styled correctly
-@import 'components/join-form';
-@import 'gs/objects/modal_layout';
+// ! Deprecated since these are already import in commmunity_post_load
+// @import 'components/join-form';
+// @import 'gs/objects/modal_layout';
 
 .back-to-top {
   display: none;

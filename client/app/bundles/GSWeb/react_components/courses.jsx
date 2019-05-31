@@ -104,7 +104,8 @@ export default class Courses extends React.Component {
               <div className="col-xs-12 col-md-10">
                 { ratingHtml }
                 <div className="title-container">
-                  <h3 className="title">{t('Advanced courses')} </h3>
+                  <h3 className="title">{t('Advanced courses')}</h3>
+                  &nbsp;
                   <a data-remodal-target="modal_info_box"
                      data-content-type="info_box"
                      data-ga-click-element-type='toptooltip'

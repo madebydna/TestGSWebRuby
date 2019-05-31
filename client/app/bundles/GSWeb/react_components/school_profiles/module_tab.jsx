@@ -31,8 +31,8 @@ const ModuleTab = ({
       className={`tab-title js-gaClick${addJSHashUpdate}${
         highlight ? ' tab-selected' : ''
       }`}
-      data-ga-click-category={`${googleCategory}`}
-      data-ga-click-action={`${googleAction}`}
+      data-ga-click-category={googleCategory}
+      data-ga-click-action={googleAction}
       data-ga-click-label={title}
     >
       {title}

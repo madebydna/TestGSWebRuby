@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { t } from 'util/i18n';
 
 export default class ResponseData extends React.Component {
 
@@ -33,11 +34,13 @@ export default class ResponseData extends React.Component {
 
   listOfAnswers(response_key, answers) {
     let styling = {};
-    if (answers[0] == 'Data not provided by the school' || answers[0] == 'Datos no provistos por la escuela') {
-      styling = {color: 'slategray'};
-    }
+
     return answers.map((answer, index) => {
-      if(response_key == 'Admissions webpage' || response_key == 'Página de admisiones' || response_key == 'Additional info') {
+      if (answer === 'Data not provided by the school' || answer === 'Datos no provistos por la escuela') {
+        styling = { color: 'slategray', wordWrap: 'break-word' };
+        return <li style={styling} key={index}>{t('data_not_provided_by_the_school')}</li>;
+      }
+      if (response_key == 'Admissions webpage' || response_key == 'Página de admisiones' || response_key == 'Additional info') {
         let answerHref = answer.trim();
         if (!(answerHref.startsWith('http') || answerHref.startsWith('https'))) {
           answerHref = 'http://' + answerHref;
@@ -45,10 +48,10 @@ export default class ResponseData extends React.Component {
         answer = <a target="_blank" href={answerHref}>{answer}</a>;
         styling.wordWrap = 'break-word';
       }
-      if(answers.length > 1) {
-        return <li style={styling} style={{listStyle: 'disc'}} key={index}>{answer}</li>
+      if (answers.length > 1) {
+        return <li style={styling} style={{listStyle: 'disc'}} key={index}>{answer}</li>;
       } else {
-        return <li style={styling} key={index}>{answer}</li>
+        return <li style={styling} key={index}>{answer}</li>;
       }
     });
   }
@@ -76,7 +79,7 @@ export default class ResponseData extends React.Component {
           <div className="col-xs-12 col-sm-6">
             <ul>
               {this.listOfAnswers(response_key, answers)}
-              { this.state.limit > 0 && index == (this.state.limit - 1) && <a href="javascript:void(0);" onClick={this.showMore}>Show more</a> }
+              { this.state.limit > 0 && index == (this.state.limit - 1) && <a href="javascript:void(0);" onClick={this.showMore}>{t('show_more')}</a> }
             </ul>
           </div>
         </div>);

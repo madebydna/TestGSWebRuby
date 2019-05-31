@@ -20,6 +20,7 @@ import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
 import Zillow from "./zillow";
 import remove from 'util/array';
+import { capitalize } from '../../util/i18n';
 
 class City extends React.Component {
   static defaultProps = {
@@ -46,6 +47,7 @@ class City extends React.Component {
 
   constructor(props) {
     super(props);
+    this.pageType = 'city'
   }
 
   componentDidMount() {
@@ -114,7 +116,7 @@ class City extends React.Component {
         shouldDisplayDistricts={this.props.districts.length > 0}
         topSchools={
           <TopSchoolsStateful
-            community="city" 
+            community={this.pageType}
             schoolsData={this.props.schools_data.schools}
             size={this.props.viewportSize}
             locality={this.props.locality}
@@ -123,7 +125,7 @@ class City extends React.Component {
         }
         browseSchools={
           <SchoolBrowseLinks
-            community="city"
+            community={this.pageType}
             locality={this.props.locality}
             size={this.props.viewportSize}
             schoolLevels={this.props.school_levels}
@@ -132,7 +134,7 @@ class City extends React.Component {
         shouldDisplayCsaInfo={this.props.schools_data.schools.csa.length === 0 && this.props.csa_module}
         csaInfo={
           <CsaInfo 
-            community="city"
+            community={ this.pageType }
             locality={this.props.locality}
           />
         }
@@ -145,19 +147,19 @@ class City extends React.Component {
         mobility={
           <Mobility
             locality={this.props.locality}
-            pageType='City'
+            pageType={ capitalize(this.pageType) }
              />
         }
         zillow={
           <Zillow
               locality={this.props.locality}
               utmCampaign='citypage'
-              pageType='city'
+              pageType={this.pageType}
           />
         }
         recentReviews={
           <RecentReviews
-            community="city" 
+            community={this.pageType}
             reviews={this.props.reviews}
             locality={this.props.locality}
           />
