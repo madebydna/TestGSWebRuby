@@ -5,10 +5,10 @@ class SimpleAjaxController < ApplicationController
 
   layout false
 
-  def get_cities
+  def get_cities_alphabetically
     response = {}
     state = params[:state]
-    @cities = City.popular_cities(state) if state.present?
+    @cities = City.popular_cities(state, alphabetical: true) if state.present?
     response = @cities.map(&:name) if @cities.present?
 
     respond_to do |format|
@@ -16,14 +16,18 @@ class SimpleAjaxController < ApplicationController
     end
   end
 
-  def get_schools
+  def get_schools_with_link
     response = {}
+    osp = params[:osp]
     state_param = params[:state]
     city = params[:city]
     state = States.abbreviation(state_param) if state_param.present?
-
     @schools = School.within_city(state,city) if state.present? && city.present?
-    response = @schools.to_a.map { |school| {id:school.id, name: school.name} }
+    response = @schools.to_a.map do |school|
+      {id:school.id,
+       name: school.name,
+       url: osp == 'true' ? "/official-school-profile/register.page?city=#{city}&schoolId=#{school.id}&state=#{state}" : school_path(school) }
+    end
 
     respond_to do |format|
       format.json { render json: response}
