@@ -21,6 +21,7 @@ class QueueDaemon
 
     puts ('Using Data base host '+ActiveRecord::Base.connection.instance_variable_get(:@config)[:host])
     puts 'Starting the update queue daemon.'
+    puts 'In concurrent mode.' if @concurrently
     loop do
       begin
         num_processed = process_unprocessed_updates
@@ -42,7 +43,8 @@ class QueueDaemon
   def process_unprocessed_updates
     begin
       updates = get_updates
-    rescue
+    rescue Exception => e
+      Rails.logger.error(e.message + backtrace.join(" ")) if should_log?
       raise DEFAULT_FAIL_MSG
     end
     sig_int = SignalHandler.new('INT')
