@@ -44,7 +44,9 @@ class QueueDaemon
     begin
       updates = get_updates
     rescue Exception => e
-      Rails.logger.error(e.message + backtrace.join(" ")) if should_log?
+      puts e.message
+      puts e.backtrace.join(' ')
+      GSLogger.error(:misc, e, message: 'Exception getting updates')
       raise DEFAULT_FAIL_MSG
     end
     sig_int = SignalHandler.new('INT')
