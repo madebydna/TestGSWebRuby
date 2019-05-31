@@ -1,15 +1,9 @@
 import React from 'react';
 import SearchBox, { keyMap } from './search_box';
-import { SM, XS, validSizes, viewport } from 'util/viewport';
-import { debounce } from 'lodash';
 import { t } from 'util/i18n';
 import {hasClass, addClass, removeClass} from 'util/selectors';
 
 export default class ReviewPageSearchBox extends SearchBox {
-
-  linkDontSeeSchools() {
-    return document.getElementsByClassName('js-doNotSeeResult')[0];
-  }
 
   constructor(props) {
     super(props);

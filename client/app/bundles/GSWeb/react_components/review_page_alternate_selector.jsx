@@ -1,20 +1,25 @@
 import React from 'react';
 import { stateAbbreviations } from '../util/states';
-import {hasClass, addClass, removeClass} from 'util/selectors';
-import {t} from "../../../../../app/assets/javascripts/util/i18n";
+import PropTypes from "prop-types";
 
 export default class ReviewPageAlternateSelector extends React.Component  {
+  static propTypes = {
+    osp: PropTypes.bool
+  };
+
+  static defaultProps = {
+    osp: false
+  };
+
   constructor(props) {
     super(props);
     this.schoolList = [];
     this.state = {
-      state_value: '',
+      stateValue: '',
       cityOptions: [],
-      city_value: ''
+      cityValue: ''
     }
   }
-
-  onQueryMatchesAddress(q) {}
 
   loadCities = function(state) {
     $.ajax({
@@ -23,7 +28,7 @@ export default class ReviewPageAlternateSelector extends React.Component  {
       data: {state: state},
       async: true
     }).done((data) => {
-      this.setState({state_value: state, cityOptions: data, city_value: ''});
+      this.setState({stateValue: state, cityOptions: data, cityValue: ''});
     });
   };
 
@@ -35,7 +40,7 @@ export default class ReviewPageAlternateSelector extends React.Component  {
       async: true
     }).done((data) => {
       this.schoolList = data;
-      this.setState({city_value: city});
+      this.setState({cityValue: city});
     });
   };
 
@@ -47,19 +52,18 @@ export default class ReviewPageAlternateSelector extends React.Component  {
     )
   }
 
-  handleStateSelect(event) {
+  handleStateSelect = (event) => {
     if(event.target.value == '') return true;
     this.loadCities(event.target.value);
   }
 
-  handleCitySelect(event){
+  handleCitySelect = (event) => {
     if(event.target.value == '') return true;
-    this.loadSchools(this.state.state_value, event.target.value);
+    this.loadSchools(this.state.stateValue, event.target.value);
   }
 
-  handleSchoolSelect(event){
+  handleSchoolSelect = (event) => {
     let url = event.target.value;
-    console.log("state: " + event.target.value);
     if(!this.props.osp){
       url = url +'#Reviews';
     }
@@ -79,15 +83,15 @@ export default class ReviewPageAlternateSelector extends React.Component  {
       paddingBottom: '20px'
     };
 
-    let state_option_list = stateAbbreviations.map((state, key) =>
+    let stateOptionList = stateAbbreviations.map((state) =>
         <option value={state}>{state.toUpperCase()}</option>
     );
 
-    let city_option_list = this.state.cityOptions.map((city, key) =>
+    let cityOptionList = this.state.cityOptions.map((city) =>
         <option value={city}>{city}</option>
     );
 
-    let school_option_list = this.schoolList.map((school, key) =>
+    let schoolOptionList = this.schoolList.map((school) =>
         <option value={school['url']}>{school['name']}</option>
     );
 
@@ -97,23 +101,23 @@ export default class ReviewPageAlternateSelector extends React.Component  {
           <div className="form-control ma" style={maxWidth}>
             <div style={paddingBottom}>
 
-              <select value={this.state.state_value} onChange={(e) => this.handleStateSelect(e)} className="notranslate form-control mtm ">
+              <select value={this.state.stateValue} onChange={this.handleStateSelect} className="notranslate form-control mtm ">
                 <option value="">Select state</option>
-                {state_option_list}
+                {stateOptionList}
               </select>
             </div>
-            {this.state.state_value &&
+            {this.state.stateValue &&
               <div style={paddingBottom}>
-                <select className="form-control notranslate" value={this.state.city_value} onChange={(e) => this.handleCitySelect(e)} >
+                <select className="form-control notranslate" value={this.state.cityValue} onChange={this.handleCitySelect} >
                   <option value=''>Select City</option>
-                  {city_option_list}
+                  {cityOptionList}
                 </select>
               </div>}
-            {(this.state.state_value && this.state.city_value) &&
+            {(this.state.stateValue && this.state.cityValue) &&
               <div style={paddingBottom}>
-                <select className="form-control notranslate" onChange={(e) => this.handleSchoolSelect(e)} >
+                <select className="form-control notranslate" onChange={this.handleSchoolSelect} >
                   <option value=''>Select School</option>
-                  {school_option_list}
+                  {schoolOptionList}
                 </select>
               </div>}
           </div>
