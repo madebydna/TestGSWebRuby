@@ -26,7 +26,7 @@ class SimpleAjaxController < ApplicationController
     response = @schools.to_a.map do |school|
       {id:school.id,
        name: school.name,
-       url: osp == 'true' ? "/official-school-profile/register.page?city=#{city}&schoolId=#{school.id}&state=#{state}" : school_path(school) }
+       url: osp == 'true' ? osp_registration_path(city: city, state: state, schoolId: school.id) : school_path(school) }
     end
 
     respond_to do |format|
