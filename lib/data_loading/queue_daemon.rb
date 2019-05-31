@@ -44,9 +44,7 @@ class QueueDaemon
     begin
       updates = get_updates
     rescue Exception => e
-      puts e.message
-      puts e.backtrace.join(' ')
-      GSLogger.error(:misc, e, message: 'Exception getting updates')
+      GSLogger.error(:misc, e, message: 'Exception processing updates')
       raise DEFAULT_FAIL_MSG
     end
     sig_int = SignalHandler.new('INT')
@@ -111,6 +109,7 @@ class QueueDaemon
         end
       end
     rescue => e
+      GSLogger.error(:misc, e, message: 'Exception getting updates')
       raise 'Could Not Retrieve Updates'
     end
   end
