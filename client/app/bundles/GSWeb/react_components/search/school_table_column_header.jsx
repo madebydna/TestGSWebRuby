@@ -4,12 +4,14 @@ import ModalTooltip from 'react_components/modal_tooltip';
 import { t, capitalize } from "util/i18n";
 
 const SchoolTableColumnHeader = ({ colName, tooltipContent, classNameTH, footerNote, onSortChanged, sortField, activeSort, sortable }) => {
+  let sortCaretIndicator = 'icon-caret-down rotate-text-270';
   if (sortable) {
     classNameTH += " sortable";
   }
 
   if (activeSort && (activeSort === sortField)) {
     classNameTH += " active-sort";
+    sortCaretIndicator = 'icon-caret-down';
   }
 
   const _onSortChanged = sortField => {
@@ -20,7 +22,7 @@ const SchoolTableColumnHeader = ({ colName, tooltipContent, classNameTH, footerN
 
   return (
     <th className={`${classNameTH} table-headers`} value={t(colName)} onClick={() => _onSortChanged(sortField)}>
-      {t(colName)} {sortable && <span className="icon-caret-down"/>}
+      {t(colName)} {sortable && <span className={sortCaretIndicator}/>}
       {tooltipContent &&
       <ModalTooltip content={tooltipContent}>
         <span className="info-circle icon-info" />
