@@ -59,7 +59,6 @@ class Students extends React.Component{
             <span className="icon-users"></span>
           </div>
           <div className="title-container">
-            {/* <h2 className="modules-title">Students</h2> */}
             <h2 className="modules-title"
                 dangerouslySetInnerHTML={{ __html: this.props.translations.title}} 
             />
