@@ -93,15 +93,22 @@ class QueueDaemon
 
   def get_updates
     begin
+      num_updated = 0
       if concurrently?
-        num_updated = UpdateQueue.where(status: unprocessed_status, concurrently: true, pid: nil).order(priority: :asc, created: :asc).limit(update_limit).update_all(pid: Process.pid)
+        # Need to force R/W usage here
+        UpdateQueue.on_db(:gs_schooldb_rw) do
+          num_updated = UpdateQueue.where(status: unprocessed_status, concurrently: true, pid: nil).order(priority: :asc, created: :asc).limit(update_limit).update_all(pid: Process.pid)
+        end
         if num_updated > 0
           UpdateQueue.where(status: unprocessed_status, concurrently: true, pid: Process.pid).order(priority: :asc, created: :asc).limit(update_limit)
         else
           return []
         end
       else
-        num_updated = UpdateQueue.where(status: unprocessed_status, pid: nil).order(priority: :asc, created: :asc).limit(update_limit).update_all(pid: Process.pid)
+        # Need to force R/W usage here
+        UpdateQueue.on_db(:gs_schooldb_rw) do
+          num_updated = UpdateQueue.where(status: unprocessed_status, pid: nil).order(priority: :asc, created: :asc).limit(update_limit).update_all(pid: Process.pid)
+        end
         if num_updated > 0
           UpdateQueue.where(status: unprocessed_status, pid: Process.pid).order(priority: :asc, created: :asc).limit(update_limit)
         else
