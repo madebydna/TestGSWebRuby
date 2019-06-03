@@ -58,9 +58,12 @@ export default class ReviewsList extends React.Component {
   }
 
   renderOneUsersReviews(userReviews) {
-    let schoolUrl = userReviews.school_url;
-    if (getQueryParam('lang') === 'es'){
-      userReviews.school_url = updateUrlParameter(schoolUrl,'lang','es')
+    let schoolUrl;
+    if (userReviews.school_url){
+      schoolUrl = userReviews.school_url;
+      if (getQueryParam('lang') === 'es'){
+        userReviews.school_url = updateUrlParameter(schoolUrl,'lang','es')
+      }
     }
     
     return(<UserReviews
