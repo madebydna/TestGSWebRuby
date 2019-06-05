@@ -43,11 +43,11 @@ module Feeds
       }
 
       FEED_TO_SCHEMA_MAPPING = {
-          'common_schema' => 'http://www.greatschools.org/feeds/greatschools-common.xsd',
-          'test_scores' => 'http://www.greatschools.org/feeds/greatschools-test.xsd',
-          'test_subgroup' => 'http://www.greatschools.org/feeds/greatschools-test-subgroup.xsd',
-          'test_rating' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
-          'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
+          'common_schema' => 'https://www.greatschools.org/feeds/greatschools-common.xsd',
+          'test_scores' => 'https://www.greatschools.org/feeds/greatschools-test.xsd',
+          'test_subgroup' => 'https://www.greatschools.org/feeds/greatschools-test-subgroup.xsd',
+          'test_rating' => 'https://www.greatschools.org/feeds/greatschools-test-rating.xsd',
+          'official_overall' => 'https://www.greatschools.org/feeds/gs-official-overall-rating.xsd',
           'directory_feed' => 'https://www.greatschools.org/feeds/local-greatschools.xsd',
           'google_feed' => 'https://www.gstatic.com/localfeed/local_feed.xsd',
           'city' => 'https://www.greatschools.org/feeds/greatschools-city2.xsd',
