@@ -53,7 +53,7 @@ module SchoolProfiles
       li = @low_income_test_scores.to_hash
       li.map do |component|
         if component[:anchor] == 'Overview' && component[:values]
-          component[:values].select {|value_hash| value_hash[:breakdown_in_english] == 'Economically disadvantaged'}
+          component[:values].select {|value_hash| value_hash[:breakdown_in_english] == 'Economically disadvantaged' || value_hash[:breakdown_in_english] == 'All students'}
                             .map do |value_hash|
                               value_hash[:link] = compare_schools_path(compare_button_query_params(value_hash))
                               value_hash
@@ -128,7 +128,6 @@ module SchoolProfiles
         {
           title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
           anchor: 'Test_scores',
-          # data: @low_income_test_scores.to_hash
           data: low_income_test_scores_array
         },
         {
