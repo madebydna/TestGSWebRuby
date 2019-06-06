@@ -35,12 +35,12 @@ class CompareSchoolTable extends React.Component {
     });
   }
 
-  tableHeaders(headerArray = []) {
+  tableHeaders(headerArray = [], sort) {
     const schoolHeader = [
       <SchoolTableColumnHeader
         key={`school`}
         colName={capitalize(t('school'))}
-        classNameTH="school"
+        classNameTH={['name', 'distance', 'rating'].includes(sort) ? 'school yellow-highlight' : 'school'}
         tooltipContent=""
       />
     ];
@@ -78,7 +78,7 @@ class CompareSchoolTable extends React.Component {
             }
             <div className={isLoading ? 'loading' : undefined}>
               <table>
-                {this.tableHeaders(compareTableHeaders)}
+                {this.tableHeaders(compareTableHeaders, sort)}
                 <tbody>
                 <CompareSchoolTableRow
                   columns={compareTableHeaders}

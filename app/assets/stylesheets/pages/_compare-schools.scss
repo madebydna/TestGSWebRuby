@@ -221,14 +221,21 @@ body {
       }
 
       tr.row-outline {
-        //border: 3px solid #176997;
+        // border: 3px solid #176997;
         td {
-          background: #94DCF9;
+          // background: #94DCF9;
+          background: #F5F5F5;
         }
       }
 
+      tr th.yellow-highlight{
+        font-family: 'opensans-semibold';
+        background-color: #d2eff9;
+      }
+
       tr td.yellow-highlight {
-        background-color: #FCFFA2;
+        // background-color: #FCFFA2;
+        background-color: #e9f7fc;
       }
 
       td.pinned {
