@@ -62,7 +62,7 @@ module SearchTableConcerns
   def test_score_rating_by_ethnicity_header_hash
     return nil if ethnicity.nil?
     test_score_rating_key = ethnicity.downcase == 'all students' ? 'test_score_rating_for_all_students' : 'test_score_rating_for'
-    {title: I18n.t(test_score_rating_key, scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: (sort_name == 'testscores' ? 'testscores yellow-highlight' : 'testscores'), key: 'testscores'}
+    {title: I18n.t(test_score_rating_key, scope: 'controllers.compare_schools_controller', ethnicity: translated_ethnicity_with_fallback), className: (sort_name == 'testscores' ? 'testscores highlight' : 'testscores'), key: 'testscores'}
   end
 
   def compare_schools_table_headers

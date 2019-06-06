@@ -40,7 +40,7 @@ class CompareSchoolTable extends React.Component {
       <SchoolTableColumnHeader
         key={`school`}
         colName={capitalize(t('school'))}
-        classNameTH={['name', 'distance', 'rating'].includes(sort) ? 'school yellow-highlight' : 'school'}
+        classNameTH={['name', 'distance', 'rating'].includes(sort) ? 'school highlight' : 'school'}
         tooltipContent=""
       />
     ];
