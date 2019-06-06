@@ -2,6 +2,7 @@ class Api::SchoolsController < ApplicationController
   include Pagination::PaginatableRequest
   include SearchRequestParams
   include SearchControllerConcerns
+  include SearchTableConcerns
   include Api::Authorization
 
   before_action :require_valid_params, :require_authorization
@@ -18,7 +19,7 @@ class Api::SchoolsController < ApplicationController
         next: self.next_offset_url(page_of_results),
       },
       items: serialized_schools,
-      tableHeaders: breakdown.present? ? table_headers : nil 
+      tableHeaders: breakdown.present? ? compare_schools_table_headers : nil 
     }.merge(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
     .merge(Api::PaginationSerializer.new(page_of_results).to_hash)
   end

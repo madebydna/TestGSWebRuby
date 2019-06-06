@@ -2,6 +2,7 @@ class CompareSchoolsController < ApplicationController
   include Pagination::PaginatableRequest
   include SearchRequestParams
   include SearchControllerConcerns
+  include SearchTableConcerns
   include AdvertisingConcerns
   include PageAnalytics
 
@@ -14,7 +15,7 @@ class CompareSchoolsController < ApplicationController
       schools: serialized_schools,
       breakdown: ethnicity,
       sort: sort_name,
-      tableHeaders: table_headers,
+      tableHeaders: compare_schools_table_headers,
     }.merge(Api::SortOptionSerializer.new(solr_query.valid_static_sort_fields + ['testscores']).to_hash)
     @radius = radius
     set_meta_tags(MetaTag::CompareMetaTags.new(self).meta_tag_hash)
