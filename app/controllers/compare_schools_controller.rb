@@ -9,6 +9,10 @@ class CompareSchoolsController < ApplicationController
   layout "application"
   before_filter :redirect_unless_school_id_and_state
 
+  set_additional_js_translations(
+    breakdowns: [:lib, :breakdowns]
+  )
+  
   def show
     set_login_redirect
     gon.compare = {
