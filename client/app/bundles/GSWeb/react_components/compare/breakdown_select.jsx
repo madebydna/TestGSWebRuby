@@ -8,7 +8,7 @@ const BreakdownSelect = ({ breakdowns }) => {
     <SortContext.Consumer>
       {({ breakdown, onBreakdownChanged }) => (
         <Select
-          objects={breakdowns}
+          objects={breakdowns.sort()}
           labelFunc={d => d}
           keyFunc={d => d}
           onChange={d => onBreakdownChanged(d)}
