@@ -63,6 +63,22 @@ const BasicDataModuleRow = ({
         <div className="compare-link">
           {(link && renderCompareLink()) || drawerTrigger}
         </div>
+        {/* {link ? 
+          <React.Fragment>
+            <div className="col-xs-9-compare col-sm-4">
+              {children}
+            </div>
+            <div className="compare-link">
+              {(link && renderCompareLink()) || drawerTrigger}
+            </div>
+          </React.Fragment>
+          :
+          <React.Fragment>
+            <div className="col-xs-9 col-sm-4">
+              {children}
+            </div>
+          </React.Fragment>
+        } */}
       </div>
     </div>
   );
