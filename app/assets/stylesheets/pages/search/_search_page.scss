@@ -625,6 +625,7 @@ body {
 
     th.sortable:hover {
       background-color: #d2eff9;
+      transition: 0.5s ease;
     }
 
     th.active-sort {
@@ -659,6 +660,7 @@ body {
       }
       &:hover {
         background-color: $hover-color;
+        transition: 0.5s ease;
       }
       &.active {
         background-color: $active-color;
