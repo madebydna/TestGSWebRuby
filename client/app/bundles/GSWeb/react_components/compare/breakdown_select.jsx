@@ -5,9 +5,8 @@ import SortContext from 'react_components/search/sort_context';
 import { t } from '../../util/i18n';
 
 const BreakdownSelect = ({ breakdowns }) => {
-  const options = [];
-  breakdowns.sort().forEach((bd) => {
-    options.push({
+  const options = breakdowns.sort().map((bd) => {
+    return ({
       key: bd,
       label: t(`breakdowns.${bd}`)
     });
