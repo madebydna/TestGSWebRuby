@@ -166,11 +166,6 @@ $line-height-community: 1.428571429;
     }
   }
 
-  //Targets ie11 only
-  @media all and (-ms-high-contrast: none){
-  //  *::-ms-backdrop, .sticky{ position: static; }
-  }
-
   .ad-bar {
     display: inline-block;
     vertical-align: top;
