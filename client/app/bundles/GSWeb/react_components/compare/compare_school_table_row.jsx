@@ -77,7 +77,7 @@ const CompareSchoolTableRow = ({
   const schoolCard = () => {
     return (
       <td className={schoolClass()}>
-        {pinned && <div className="compare-schools-pinned-header">COMPARE THIS SCHOOL TO SCHOOLS BELOW</div>}
+        {pinned && <div className="compare-schools-pinned-header">{t('compare_pinned_school')}</div>}
         <React.Fragment key={state + id}>
           <span><RatingWithTooltip rating={rating} ratingScale={ratingScale} /></span>
           <span>

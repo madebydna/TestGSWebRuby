@@ -2,6 +2,7 @@
 es:
   javascript:
     compare_test_scores_for: Compare los resultados de exámenes de estudiantes
+    compare_pinned_school: COMPRAR ESTA ESCUELA CON LAS ESCUELAS DE ABAJO
     from : de
     and: y
     to_nearby_schools: con las escuelas cercanas dentro

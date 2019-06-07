@@ -2,6 +2,7 @@
 en:
   javascript:
     compare_test_scores_for: Compare test scores for
+    compare_pinned_school: COMPARE THIS SCHOOL TO SCHOOLS BELOW
     from: from
     and: and
     to_nearby_schools: to nearby schools within
