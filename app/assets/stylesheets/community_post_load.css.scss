@@ -54,13 +54,10 @@
 @import 'components/ad-slot';
 @import 'components/gs-rating-with-label';
 @import 'components/person-bar-viz';
-// @import 'components/static-right-rail-container';
 @import 'components/breadcrumbs';
 @import 'components/rating-container';
 @import 'components/circle-rating';
 @import 'components/circle-rating-with-label';
-// @import 'components/diamond-rating';
-// @import 'components/square-rating';
 @import 'components/rating-score-item';
 @import 'components/bar-graph-display';
 @import 'components/five-stars';
@@ -68,16 +65,11 @@
 @import 'components/review';
 @import 'components/review-summary';
 @import 'components/report-review';
-// @import 'components/five-star-question-cta';
 @import 'components/join-form';
-// @import 'components/nearby-schools';
 @import 'components/homes-and-rentals';
-// @import 'components/neighborhood';
-// @import 'components/school-user-modal';
 @import 'components/info-circle';
 @import 'components/module-header';
 @import 'components/ratio-viz';
-// @import 'components/back-to-top';
 @import 'components/info-window';
 @import 'components/school-list';
 @import 'components/anchor-button';
@@ -86,13 +78,8 @@
 // more components
 @import 'gs/objects/spinny_wheel.css.scss';
 @import 'gs/objects/modal_layout';
-// @import 'pages/districts-cities-list';
-// @import 'gs/modal_tooltip';
-// @import 'lib/transform';
 @import 'components/mobile-overlay-ad';
 @import 'components/search-autosuggest';
-// @import 'gs/objects/review_school_chooser';
-// @import 'gs/objects/osp_landing_page';
 
 // footer-specific
 @import 'gs/objects/footer';
@@ -107,31 +94,13 @@
 @import 'school_profiles/profile_module';
 @import 'school_profiles/module_feedback';
 @import 'school_profiles/hero.scss';
-// @import 'school_profiles/toc.scss';
-// @import 'school_profiles/school_profile_sticky_cta';
-// @import 'school_profiles/school_profile_tutorial';
-// @import 'school_profiles/review_form';
 @import 'school_profiles/students_container';
 @import 'school_profiles/subgroups';
-// @import 'school_profiles/teachers_staff';
-// @import 'gs/equity';
-// @import 'school_profiles/advanced_courses';
-// @import 'school_profiles/toc_private';
 @import 'school_profiles/auto_narration';
 @import 'school_profiles/sourcing';
-// @import 'school_profiles/speech_bubbles';
 @import 'school_profiles/info_text_and_circle';
-// @import 'school_profiles/historical_ratings';
-// @import 'school_profiles/tour_button';
-// @import 'school_profiles/summary_rating_tooltip';
-// @import 'school_profiles/sharing_modal';
-// @import 'school_profiles/csa_badge.scss';
-// @import 'gs/osp-school-info';
-
-// @import 'pages/district-boundaries/district_boundaries_page';
 
 // third party libraries
 @import 'resources/tipso'; // used on school profiles
 @import 'resources/remodal'; // used on profiles / used by modals
 @import 'resources/remodal-default-theme'; // used on profiles / used by modals
-// @import 'resources/introjs';
