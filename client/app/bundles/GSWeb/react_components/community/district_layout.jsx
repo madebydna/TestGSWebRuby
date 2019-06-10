@@ -7,6 +7,7 @@ import Ad from 'react_components/ad';
 import { t, capitalize } from 'util/i18n';
 import { keepInViewport } from 'util/sticky';
 import xq from 'community/xq-sm.png';
+import XQSchoolBoardFinder from './xq_school_board_finder';
 
 class DistrictLayout extends React.Component {
   static propTypes = {
@@ -78,6 +79,7 @@ class DistrictLayout extends React.Component {
     return (
       <div id="mobility" className="module-section">
         <h2 className="modules-title">{`${t('mobility.title')} ${this.props.locality.name}`}</h2>
+        <XQSchoolBoardFinder />
         {this.props.mobility}
       </div>
     )

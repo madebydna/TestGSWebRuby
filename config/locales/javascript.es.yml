@@ -438,4 +438,16 @@ es:
     see_all_winning_schools: Ver todos los ganadoras
     csa_winners: Ganadores de College Success Award
     see_winning_schools_in: Ver las escuelas ganadores en
+    xq:
+      school_board_finder: School board finder
+      learn_more_school_board_html: Learn more about this district's school board and <a href="https://xqsuperschool.org/school-board-lookup?" target="_blank" rel="nofollow">how you can get involved</a>.
+      powered_by_xq: Powered by XQ
+      sources: >
+        <div class="sourcing">
+          <h1>GreatSchools district data sources & information</h1>
+          <div>
+            <h4>School Board Finder</h4>
+            <p><span class="emphasis">Source&#58;</span> XQ</p>
+          </div>
+        </div>
 
