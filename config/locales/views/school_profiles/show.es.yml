@@ -11,3 +11,15 @@ es:
     Take_a_quick_tour: Visite rápidamente el sitio
     Not_right_now: No en este momento
     We found 3 nearest high-performing schools_html: Vea las 3 escuelas más cercanas de alto rendimiento
+    xq:
+      school_board_finder: School board finder
+      learn_more_school_board: Learn more about this district's school board and <a href="https://xqsuperschool.org/school-board-lookup?" target="_blank" rel="nofollow">how you can get involved</a>.
+      powered_by_xq: Powered by XQ
+      sources: >
+        <div class="sourcing">
+          <h1>GreatSchools profile data sources & information</h1>
+          <div>
+            <h4>School Board Finder</h4>
+            <p><span class="emphasis">Source&#58;</span> XQ</p>
+          </div>
+        </div>

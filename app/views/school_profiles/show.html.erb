@@ -108,6 +108,11 @@
                 <%= t('.environment') %>
               </h2>
             </div>
+
+            <div class="col-xs-12 xq_school_board_module_mobile_container">
+              <%= render 'xq_school_board_module_mobile' %>
+            </div>
+
             <div class="col-xs-12 col-lg-9">
               <% osp_link = osp_register_path(city: @school.city, school_id: @school.id.to_s, state: @school.state).gsub(/\/$/, '') %>
 
