@@ -1,3 +1,5 @@
+$border-color: #dbe6eb;
+
 .profile-section {
   .section-title {
     text-align: center;
@@ -43,6 +45,38 @@
       @include media-breakpoint-up(lg) {
         width: 205px;
         display: block;
+      }
+    }
+  }
+
+
+  .xq_school_board_module_mobile_container {
+    @include media-breakpoint-up(sm) {
+      display: none;
+    }
+
+    margin-bottom: 30px;
+
+    .xq_school_board_module_mobile {
+      border: 1px solid $border-color;
+      background-color: $light-gray;
+      padding: 10px;
+      margin: 5px 0;
+      font-size: $font-size-small;
+  
+      h3 {
+        font-size: 18px;
+        margin-bottom: 3px;
+      }
+  
+      a {
+        font-size: $font-size-small;
+      }
+    }
+
+    .xq-sources-text {
+      h3, div, span {
+        font-family: $font-family-base-bold;
       }
     }
   }
