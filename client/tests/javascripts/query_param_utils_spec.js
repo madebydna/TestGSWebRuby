@@ -3,6 +3,7 @@ import { describe, it } from 'mocha';
 import { equal } from 'assert';
 import { getQueryParam, updateUrlParameter } from 'components/header/query_param_utils';
 
+// client/app/bundles/GSWeb/components/header/query_param_utils.js
 describe('QueryParamUtils', ()=> {
   
   context('#updateUrlParameter', ()=> {
