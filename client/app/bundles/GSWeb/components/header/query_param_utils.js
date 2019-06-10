@@ -17,7 +17,7 @@ const updateUrlParameter = function (uri, key, value) {
 
   if (!value) {
     // remove key-value pair if value is empty
-    uri = uri.replace(new RegExp("([&]?)" + key + "=.*?(&|$)", "i"), '');
+    uri = uri.replace(new RegExp("([&]?)" + key + "=.*?([^(&|$)]*)", "i"), '');
     if (uri.slice(-1) === '?') {
       uri = uri.slice(0, -1);
     }
