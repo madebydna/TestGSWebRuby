@@ -21,6 +21,11 @@ const updateUrlParameter = function (uri, key, value) {
     if (uri.slice(-1) === '?') {
       uri = uri.slice(0, -1);
     }
+    let x = uri.indexOf('?');
+    // Removes '&' if its the first character in the query params string
+    if (uri !== -1 && uri[x+1] === '&'){
+      uri = uri.slice(0,x+1) + uri.slice(x+2, uri.length);
+    }
   } else if (uri.match(re)) {
     uri = uri.replace(re, '$1' + key + "=" + value + '$2');
   } else {
