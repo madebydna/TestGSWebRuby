@@ -27,11 +27,44 @@ class WidgetController < ApplicationController
     @params_hash ||= params
     @width = width
     @height = height
-    gon.map_points = serialized_schools.map { |s| transform_for_widget(s) }
-    gon.sprite_files = {}
-    gon.sprite_files['imageUrlPrivateSchools'] = view_context.image_path('icons/google_map_pins/private_school_markers.png')
-    gon.sprite_files['imageUrlPublicSchools'] = view_context.image_path('icons/google_map_pins/public_school_markers.png')
+    @search_params = params.slice(:lat, :lon)
+    @search_params[:locationLabel] = params[:normalizedAddress]
+    @static_map_url = static_map_url
     gon.search_failed = serialized_schools.empty?
+  end
+
+  RATING_COLORS = {
+      10 => '0x439325',
+      9 => '0x559F23',
+      8 => '0x6BA721',
+      7 => '0x86B31F',
+      6 => '0xA3BE1E',
+      5 => '0xBDC01D',
+      4 => '0xD2B81A',
+      3 => '0xDCA219',
+      2 => '0xE78817',
+      1 => '0xF26B16',
+  }
+
+  def static_map_url
+    marker_styles = Hash.new { |h,k| h[k] = [] }
+    serialized_schools.each do |s|
+      rating = s[:rating].to_i
+      style_str = 'color:gray|'
+      if rating > 0
+        style_str = "color:#{RATING_COLORS[rating]}|"
+      end
+      marker_styles[style_str] << "#{s[:lat]},#{s[:lon]}"
+    end
+    puts marker_styles.inspect
+    google_apis_path = GoogleSignedImages::STATIC_MAP_URL
+    address = params[:normalizedAddress].gsub(/\s+/,'+').gsub(/'/,'')
+    url = "#{google_apis_path}?size=#{width-15}x#{height-175}&scale=1&center=#{address}&zoom=13&markers=color:blue|#{address}"
+    marker_styles.each do |style, markers|
+      url += "&markers=#{style}#{markers.join('|')}"
+    end
+    url += "&sensor=false"
+    GoogleSignedImages.sign_url(url, ENV_GLOBAL['GOOGLE_MAPS_WIDGET_API_KEY'])
   end
 
   def map_and_links
@@ -65,7 +98,7 @@ class WidgetController < ApplicationController
 
   # SearchRequestParams
   def default_limit
-    100
+    50
   end
 
   # SearchRequestParams
@@ -129,7 +162,7 @@ class WidgetController < ApplicationController
 
   # SearchRequestParams
   def q
-    params[:searchQuery] || ''
+    '' #params[:searchQuery] || ''
   end
 
   # SearchRequestParams

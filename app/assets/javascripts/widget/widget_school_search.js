@@ -112,18 +112,7 @@ GS.widget =
         !document.getElementById('filter_m').checked &&
         !document.getElementById('filter_h').checked;
 
-      document.getElementById('zoom').value = GS.googleMap.getMap().getZoom();
-      document.getElementById('lat').value = GS.googleMap
-        .getMap()
-        .getCenter()
-        .lat();
-      document.getElementById('lon').value = GS.googleMap
-        .getMap()
-        .getCenter()
-        .lng();
-
       if (noneChecked) {
-        GS.googleMap.removeAllMapMarkers();
       } else {
         document.forms['searchForm'].submit();
       }
