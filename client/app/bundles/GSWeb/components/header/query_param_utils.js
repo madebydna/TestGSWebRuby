@@ -23,7 +23,7 @@ const updateUrlParameter = function (uri, key, value) {
     }
     let x = uri.indexOf('?');
     // Removes '&' if its the first character in the query params string
-    if (uri !== -1 && uri[x+1] === '&'){
+    if (x !== -1 && uri[x+1] === '&'){
       uri = uri.slice(0,x+1) + uri.slice(x+2, uri.length);
     }
   } else if (uri.match(re)) {
