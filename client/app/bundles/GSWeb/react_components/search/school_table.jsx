@@ -31,6 +31,7 @@ const tableHeaders = (headerArray = [], tableView, sort, onSortChanged, sortOpti
     <SchoolTableColumnHeader
       key={tableView + hash.key}
       colName={hash.title}
+      classNameTH={''}
       tooltipContent={hash.tooltip}
       footerNote={hash.footerNote}
       onSortChanged={onSortChanged}

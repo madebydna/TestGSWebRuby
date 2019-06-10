@@ -136,7 +136,7 @@ const CompareSchoolTableRow = ({
       <React.Fragment>
         <td className="centered">{enrollment.toLocaleString()}</td>
         {breakdown !== 'All students' && <td className="centered">{cohortPercentageComponent(cohortPercentageForEthnicity())}</td>}
-        <td className={`${size < MD ? "centered" : undefined} ${sort === 'testscores' ? 'highlight' : undefined}`}>
+        <td className={`${size < MD ? "centered" : ''} ${sort === 'testscores' ? 'highlight' : ''}`}>
           {size > MD ? 
             <RatingWithBar score={testScoreRatingForEthnicity} size='small' />
             :
