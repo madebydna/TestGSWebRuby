@@ -22,9 +22,11 @@ describe('<BreakdownSelect />', () => {
     
     context('with Spanish as the current locale', () => {
         before(() => {
-            translation.t = sinon.stub();
-            translation.t.withArgs('breakdowns.Hispanic').returns('Hispanos/Latinos')
-            translation.t.withArgs('breakdowns.All students').returns('Todos los estudiantes');
+            translation.currentLocale = sinon.stub().returns('es');
+            translation._setTranslationsHash({
+                'breakdowns.Hispanic': 'Hispanos/Latinos',
+                'breakdowns.All students': 'Todos los estudiantes'
+            });
         });
 
         it('creates menu options with Spanish labels', () => {
@@ -42,9 +44,11 @@ describe('<BreakdownSelect />', () => {
 
     context('with English as the current locale', () => {
         before(() => {
-            translation.t = sinon.stub();
-            translation.t.withArgs('breakdowns.Hispanic').returns('Hispanic')
-            translation.t.withArgs('breakdowns.All students').returns('All students');
+            translation.currentLocale = sinon.stub().returns('es');
+            translation._setTranslationsHash({
+                'breakdowns.Hispanic': 'Hispanic',
+                'breakdowns.All students': 'All students'
+            });
         });
 
         it('creates menu options with English labels', () => {
