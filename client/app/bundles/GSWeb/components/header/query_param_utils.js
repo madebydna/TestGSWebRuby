@@ -6,6 +6,7 @@ const getQueryParam = function (key, uri) {
 };
 
 // Add / Update a key-value pair in the URL query parameters
+// Doesn't current work if the key includes any RegExp special characters since those aren't escaped
 const updateUrlParameter = function (uri, key, value) {
   // remove the hash part before operating on the uri
   let i = uri.indexOf('#');
