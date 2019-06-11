@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe 'CollegeSuccess' do
+describe 'SchoolProfiles::CollegeSuccess' do
   let(:school_cache_data_reader) { double("school_cache_data_reader") }
   subject(:college_success) do
     SchoolProfiles::CollegeSuccess.new(
@@ -76,17 +76,17 @@ describe 'CollegeSuccess' do
         school_cache_data_reader: multiple_csa_winner
     )}
 
-    it 'should return an empty hash when it is not a winner' do
-      expect(non_winning_college_success.csa_props).to eq({})
-    end
-
     before do
       allow(csa_winner).to receive(:school).and_return(school)
       allow(multiple_csa_winner).to receive(:school).and_return(school2)
       allow(school).to receive(:state).and_return('ar')
-      allow(school2).to receive(:state).and_return('ca')
+      allow(school2).to receive(:state).and_return('nj')
     end
 
+    it 'should return an empty hash when it is not a winner' do
+      expect(non_winning_college_success.csa_props).to eq({})
+    end
+    
     it 'should return the correct csa award winnings years' do
       expect(college_success.csa_award_winning_years).to eq([2018, 2019])
       expect(multiple_college_success.csa_award_winning_years).to eq([2018, 2019, 2020])
@@ -96,7 +96,7 @@ describe 'CollegeSuccess' do
       expect(college_success.csa_props[:csa_badge].include?('2018 and 2019')).to eq(true)
       expect(multiple_college_success.csa_props[:csa_badge].include?('2018, 2019 and 2020')).to eq(true)
       expect(college_success.csa_props[:csa_badge].include?('a href=/arkansas/college-success-award/>See more winners')).to eq(true)
-      expect(multiple_college_success.csa_props[:csa_badge].include?('a href=/california/college-success-award/>See more winners')).to eq(true)
+      expect(multiple_college_success.csa_props[:csa_badge].include?('a href=/new-jersey/college-success-award/>See more winners')).to eq(true)
     end
   end
 
