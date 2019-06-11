@@ -29,6 +29,7 @@ class WidgetController < ApplicationController
     @height = height
     @search_params = params.slice(:lat, :lon)
     @search_params[:locationLabel] = params[:normalizedAddress]
+    @search_params[:gradeLevels] = level_codes if level_codes.present?
     @static_map_url = static_map_url
     gon.search_failed = serialized_schools.empty?
   end
@@ -56,7 +57,6 @@ class WidgetController < ApplicationController
       end
       marker_styles[style_str] << "#{s[:lat]},#{s[:lon]}"
     end
-    puts marker_styles.inspect
     google_apis_path = GoogleSignedImages::STATIC_MAP_URL
     address = params[:normalizedAddress].gsub(/\s+/,'+').gsub(/'/,'')
     url = "#{google_apis_path}?size=#{width-15}x#{height-175}&scale=1&center=#{address}&zoom=13&markers=color:blue|#{address}"

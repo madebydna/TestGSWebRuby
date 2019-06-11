@@ -35,7 +35,6 @@ GS.widget =
       if (search_failed == true) {
         showSearchTab();
       }
-      calculateMapHeight();
       calculateHelpHeight();
 
       $('.gs-tab').on('click', function() {
@@ -54,16 +53,6 @@ GS.widget =
       $('.info-mark').on('click', function() {
         showHelpTab();
       });
-    };
-    var calculateMapHeight = function() {
-      var mapCanvas = $('#js-map-canvas');
-      var mapTabHeight = $('#' + GS_MAP_TAB_NAME).outerHeight(true);
-      var mapContainerHeight = $('.js-mapContainer').outerHeight(true);
-      var mapCanvasHeight = mapCanvas.outerHeight(true);
-      var tabsHeight = $('.gs-tab-container').outerHeight(true);
-      var newMapHeight =
-        mapCanvasHeight + mapContainerHeight - mapTabHeight - tabsHeight;
-      mapCanvas.height(newMapHeight);
     };
 
     var calculateHelpHeight = function() {
