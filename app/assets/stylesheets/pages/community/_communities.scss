@@ -273,7 +273,7 @@ $line-height-community: 1.428571429;
   .top-school-info{
     padding: 2px 0 0 2px;
     > div{
-      margin-top: 20px;
+      margin: 15px 0 20px;
       width: 100%;
       h3 {
         font-size: $font-size;
@@ -287,15 +287,22 @@ $line-height-community: 1.428571429;
       display: flex;
       margin: 0 20px;
       align-items: center;
-
+      
       p {
         margin: 0 20px;
       }
     }
   }
-
+  
   .profile-module {
     font-size: $font-size;
+    
+    > h3 {
+      padding: 10px 0 10px 20px;
+      color: #333;
+      font-size: 16px;
+      font-family: 'opensans-semibold';
+    }
 
     .tab-buttons {
       margin: 5px 20px;

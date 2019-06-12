@@ -71,7 +71,6 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
             </p>
           </div>
         </div>
-        <br/>
         {renderButtons(handleGradeLevel, community, schoolLevels, levelCodes)}
         <hr />
         {schoolList}
