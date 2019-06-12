@@ -28,7 +28,7 @@ module MetaTag
     end
 
     def robots
-      serialized_schools.length < 2 ? 'noindex' : nil
+      serialized_schools.length < 3 ? 'noindex' : nil
     end
   end
 end
