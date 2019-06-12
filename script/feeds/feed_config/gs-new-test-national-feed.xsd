@@ -1,0 +1,10 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:include schemaLocation="gs-test.xsd"/>
+  <xs:element name="gs-test-national-feed">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="gs-test-feed" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
