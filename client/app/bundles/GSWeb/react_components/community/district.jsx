@@ -16,7 +16,7 @@ import Students from "./students";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
-import {schools, academics, ACADEMICS, STUDENTS, students, calendar, CALENDAR, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
+import { schoolsTocItem, academicsTocItem, ACADEMICS, STUDENTS, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
@@ -122,7 +122,7 @@ class District extends React.Component {
   }
 
   selectTocItems(){
-    let districtTocItems = [schools, academics, students, calendar, communityResources, nearbyHomesForSale, reviews];
+    let districtTocItems = [schoolsTocItem, academicsTocItem, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());
@@ -136,7 +136,7 @@ class District extends React.Component {
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schoolCounts={this.props.schools_data.counts}
         shouldDisplayReviews={this.props.reviews.length > 0}
-        hasStudentDemographicData = {this.hasStudentDemographicData}
+        hasStudentDemographicData = {this.hasStudentDemographicData()}
         translations={this.props.translations}
         topSchools={
           <TopSchoolsStateful

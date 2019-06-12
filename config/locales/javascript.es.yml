@@ -24,11 +24,11 @@ es:
     awards: premios
     award_winner: Escuela premiada
     award_winners: Escuelas premiadas
-    award_winning_schools: Escuelas que ganaron premios
+    award-winning-schools: Escuelas que ganaron premios
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en
     browse_school_blurb_district: Aquí hay un vistazo a las escuelas en distrito
-    browse_schools: Escuelas de navegación
+    browse-schools: Escuelas de navegación
     calendar: calendario
     cities: Ciudades
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>

@@ -14,7 +14,7 @@ import Mobility from "./mobility";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
-import {schools, schoolDistricts, SCHOOL_DISTRICTS, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
+import { schoolsTocItem, schoolDistrictsTocItem, SCHOOL_DISTRICTS, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS} from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
@@ -101,7 +101,7 @@ class City extends React.Component {
   }
 
   selectTocItems(){
-    let cityTocItems = [schools, schoolDistricts, communityResources, nearbyHomesForSale, reviews];
+    let cityTocItems = [schoolsTocItem, schoolDistrictsTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
     cityTocItems = remove(cityTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     cityTocItems = remove(cityTocItems, (tocItem)=> tocItem.key === SCHOOL_DISTRICTS && this.props.districts.length === 0);
     return cityTocItems;
