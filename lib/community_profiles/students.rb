@@ -61,9 +61,13 @@ module CommunityProfiles
       str
     end
 
+    def district_cache_gender_data
+      @_district_cache_gender_data ||= @cache_data_reader.characteristics_data(*GENDER_KEYS)
+    end
+
     def gender_data
       @_gender_data ||=(
-        @cache_data_reader.characteristics_data(*GENDER_KEYS)
+        district_cache_gender_data.select {|k,v| v.first['district_value'] > 0}
       )
     end
 
