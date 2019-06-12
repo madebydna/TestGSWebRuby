@@ -6,8 +6,8 @@ import StateLayout from './state_layout';
 import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
+import CsaTopSchools from './csa_top_schools';
 import CityBrowseLinks from './city_browse_links';
-import CsaInfo from './csa_info';
 import DistrictsInState from "./districts_in_state";
 import RecentReviews from "./recent_reviews";
 import { init as initAdvertising } from 'util/advertising';
@@ -141,9 +141,11 @@ class State extends React.Component {
               />
             }
             shouldDisplayCsaInfo={this.props.csa_module}
-            csaInfo={
-              <CsaInfo 
+            csaTopSchools={
+              <CsaTopSchools
                 community={this.pageType}
+                schools={this.props.schools_data.schools.csa}
+                size={this.props.size}
                 locality={this.props.locality}
               />
             }
