@@ -20,10 +20,11 @@ describe('<Courses />', () => {
     const wrapper = shallow(
       <Courses course_enrollments_and_ratings={courseEnrollmentsAndRatings} />
     );
-    expect(wrapper.containsMatchingElement(<CourseSubject />)).to.equal(true);
+    const subject = Object.keys(courseEnrollmentsAndRatings)[0];
+    expect(wrapper.containsMatchingElement(<CourseSubject name={subject} key={0} {...courseEnrollmentsAndRatings[subject]} />)).to.equal(true);
   });
 
-  it('should show no data cta if there are no subjects', () => {
+  it.skip('should show no data cta if there are no subjects', () => {
     const wrapper = shallow(<Courses course_enrollments_and_ratings="" />);
     expect(wrapper.containsMatchingElement(<NoDataModuleCta />)).to.equal(true);
   });

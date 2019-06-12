@@ -11,7 +11,7 @@
     "build:production": "NODE_ENV=production webpack --config webpack.config.babel.js",
     "build:development": "webpack -w --config webpack.config.babel.js",
     "analyze": "NODE_ENV=production ANALYZE=true webpack --config webpack.config.babel.js",
-    "test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/app/bundles/GSWeb ./node_modules/.bin/mocha --reporter spec test_setup.js tests/**/*.js*",
+    "test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/app/bundles/GSWeb ./node_modules/.bin/mocha --opts ./mocha-webpack.opts \"tests/**/*.js*\"",
     "test:one": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/app/bundles/GSWeb ./node_modules/.bin/mocha --reporter spec test_setup.js ",
     "rspec": "rm ../app/assets/webpack/* && NODE_ENV=production webpack -p --config webpack.config.babel.js"
   },
@@ -85,6 +85,7 @@
     "file-loader": "^1.1.11",
     "jsdom": "^9.9.1",
     "mocha": "^3.2.0",
+    "null-loader": "^3.0.0",
     "prettier": "1.12.1",
     "react-addons-test-utils": "^15.4.1",
     "redux-devtools-extension": "^2.13.0",

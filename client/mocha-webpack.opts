@@ -1,3 +1,5 @@
 --colors
 --webpack-config webpack.config-test.babel.js
-tests/*
+--recursive
+--reporter spec
+--require test_setup.js
