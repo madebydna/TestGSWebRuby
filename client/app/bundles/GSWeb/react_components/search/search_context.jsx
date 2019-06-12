@@ -39,9 +39,7 @@ export const validViews = [LIST_VIEW, MAP_VIEW, TABLE_VIEW];
 
 const gonSearch = (window.gon || {}).search || {};
 
-const showListOrTable = () => {
-  return viewportSize() > XS ? TABLE_VIEW : LIST_VIEW;
-}
+const showListOrTable = () =>  viewportSize() > XS ? TABLE_VIEW : LIST_VIEW;
 
 class SearchProvider extends React.Component {
   static defaultProps = {
