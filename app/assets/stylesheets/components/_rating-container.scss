@@ -11,17 +11,6 @@ $border-color: #dbe6eb;
   }
 }
 
-.rating-container {
-  // this needs to be changed to immediate descendent when
-  // .rating-container__rating is removed from surrounding div
-  .module-footer {
-    padding-right: 10px;
-    @include clearfix;
-    @include media-breakpoint-only(xs) {
-      padding-left: 10px;
-    }
-  }
-}
 .equity-section {
   // this needs to be changed to immediate descendent when
   // .rating-container__rating is removed from surrounding div

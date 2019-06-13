@@ -86,10 +86,8 @@ $border-color: #dbe6eb;
   }
 
   .profile-module {
-    padding-left: 10px;
     background: $light-gray;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px;
     @include media-breakpoint-only(xs) {
       padding-left: 0px;
       padding-right: 0px;

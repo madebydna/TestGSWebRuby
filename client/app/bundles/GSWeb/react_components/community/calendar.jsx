@@ -5,6 +5,7 @@ import { findDistrictCalendarWithNCES as fetchDistrictCalendar } from "../../api
 import InfoBox from "../school_profiles/info_box";
 import LoadingOverlay from "../search/loading_overlay";
 import Drawer from "../drawer";
+import QualarooDistrictLink from '../qualaroo_district_link';
 
 class Calendar extends React.Component {
   static propTypes = {
@@ -171,7 +172,12 @@ class Calendar extends React.Component {
                 }
               </div>
             </section>
-            <InfoBox content={sources} element_type="sources" >{ t('See notes') }</InfoBox>
+            <div className="module-footer">
+              <div data-ga-click-label='Calendar'>
+                <InfoBox content={sources} element_type="sources" >{ t('See notes') }</InfoBox>
+                <QualarooDistrictLink module='district_calendar' state={this.props.locality.stateShort} districtId={this.props.locality.district_id} />
+              </div>
+            </div>
           </React.Fragment>
         )
     }

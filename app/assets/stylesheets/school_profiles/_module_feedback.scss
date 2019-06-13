@@ -9,11 +9,11 @@
     margin-left: 5px;
   }
 }
+
+// School profiles' feedback links are wider
+// and should go to the next line on mobile
 @include media-breakpoint-down(xs) {
-  .module_feedback_desktop_divider{
-    display: none;
-  }
-  .module_feedback {
+  .profile-module .module_feedback {
     float: none;
     display: block;
   }

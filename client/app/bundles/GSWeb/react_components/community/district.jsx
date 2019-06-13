@@ -22,6 +22,8 @@ import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
 import remove from 'util/array';
 import { t, capitalize } from '../../util/i18n';
+import QualarooDistrictLink from '../qualaroo_district_link';
+
 class District extends React.Component {
   static defaultProps = {
     schools_data: {},
@@ -187,11 +189,7 @@ class District extends React.Component {
             footer={
               <div data-ga-click-label={title}>
                 <InfoBox content={sources} element_type="sources">{ t('See notes') }</InfoBox>
-                <div className="module_feedback">
-                  <a href={`https://s.qualaroo.com/45194/a8cbf43f-a102-48f9-b4c8-4e032b2563ec?state=${this.props.locality.stateShort}&districtId=${this.props.locality.district_id}`} className="anchor-button" target="_blank" rel="nofollow">
-                    {t('search_help.send_feedback')}
-                  </a>
-                </div>
+                <QualarooDistrictLink module='district_academics' state={this.props.locality.stateShort} districtId={this.props.locality.district_id} />
               </div>
             }
             pageType={this.pageType}
