@@ -1,3 +1,4 @@
+<% encoded_address = ERB::Util.url_encode(address) %>
 <% sources = t("school_profiles.xq.sources") %>
 
 <div class="module-header xq_school_board_module_mobile">
@@ -12,7 +13,7 @@
             <%= t("school_profiles.xq.school_board_finder") %>
           </h3>
         </div>
-        <span><%= t("school_profiles.xq.learn_more_school_board_html") %></span>
+        <span><%= t("school_profiles.xq.learn_more_school_board_html", address: encoded_address) %></span>
       </div>
     </div>
   </div>
