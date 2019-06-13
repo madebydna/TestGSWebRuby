@@ -79,7 +79,9 @@ class DistrictLayout extends React.Component {
     return (
       <div id="mobility" className="module-section">
         <h2 className="modules-title">{`${t('mobility.title')} ${this.props.locality.name}`}</h2>
-        <XQSchoolBoardFinder />
+        <XQSchoolBoardFinder 
+          locality={this.props.locality}
+        />
         {this.props.mobility}
       </div>
     )
