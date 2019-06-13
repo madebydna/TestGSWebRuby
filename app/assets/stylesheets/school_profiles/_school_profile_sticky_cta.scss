@@ -44,7 +44,40 @@ $cta_font_color: #71787e;
     display: none;
   }
 
-  .rr-nearby-school, .rr-xq-school-board {
+  .rr-nearby-school {
+    width: 300px;
+    border: solid 1px #AAAAAA;
+    margin-bottom: 40px;
+    @include media-breakpoint-down(sm) {
+      display:none;
+    }
+
+    >.content {
+      padding: 10px;
+      background-color: #efefef;
+      color: #000000;
+
+      .icon {
+        width: 30px;
+        display: inline-block;
+        vertical-align: top;
+        padding-top: 5px;
+      }
+      .text {
+        width: 240px;
+        display: inline-block;
+        padding-left: 10px;
+        color: $cta_font_color;
+
+        >a {
+          font-family: $font-family-base-bold;
+          color:#26abe2;
+        }
+      }
+    }
+  }
+
+  .rr-xq-school-board {
     width: 300px;
     border: solid 1px #AAAAAA;
     margin-bottom: 40px;
