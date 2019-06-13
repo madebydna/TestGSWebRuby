@@ -506,6 +506,21 @@ $line-height-community: 1.428571429;
 
 #mobility{
   margin-bottom: 20px;
+
+  .xq_school_board_module_container {
+    margin-bottom: 30px;
+
+    .xq_school_board_module {
+      border: 1px solid $border-color;
+      padding: 15px;
+      margin: 5px 0;
+  
+      h3 {
+        margin-bottom: 3px;
+      }
+    }
+  }
+
   .mobility-module {
     margin-bottom: 5px;
     border: solid 1px $border-color;
