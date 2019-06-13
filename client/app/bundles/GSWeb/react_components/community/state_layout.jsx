@@ -112,11 +112,11 @@ class StateLayout extends React.Component {
       </div>
     )
   }
-
+  
   renderCsaModule() {
     return this.props.shouldDisplayCsaInfo && (
       <div id="award-winning-schools" className="module-section">
-        {this.props.csaInfo}
+        {this.props.csaTopSchools}
       </div>
     );
   }
