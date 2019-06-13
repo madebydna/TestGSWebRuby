@@ -13,7 +13,7 @@ en:
     We found 3 nearest high-performing schools_html: See the 3 nearest<br />high-performing schools
     xq:
       school_board_finder: School board finder
-      learn_more_school_board_html: Learn more about this district's school board and <a href="https://xqsuperschool.org/school-board-lookup?" target="_blank" rel="nofollow">how you can get involved</a>.
+      learn_more_school_board_html: Learn more about this district's school board and <a href="%{url}" target="_blank" rel="nofollow">how you can get involved</a>.
       powered_by_xq: Powered by XQ
       sources: >
         <div class="sourcing">
