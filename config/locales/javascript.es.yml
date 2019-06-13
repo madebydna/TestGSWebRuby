@@ -439,15 +439,15 @@ es:
     csa_winners: Ganadores de College Success Award
     see_winning_schools_in: Ver las escuelas ganadores en
     xq:
-      school_board_finder: School board finder
-      learn_more_school_board_html: Learn more about this district's school board and <a href="https://xqsuperschool.org/school-board-lookup?" target="_blank" rel="nofollow">how you can get involved</a>.
-      powered_by_xq: Powered by XQ
+      school_board_finder: Encuentra tu junta escolar
+      learn_more_school_board_html: Obtén más información sobre la junta escolar de este distrito y sobre <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">cómo puedes participar</a> (enlace en inglés).
+      powered_by_xq: Desarrollado por XQ
       sources: >
         <div class="sourcing">
-          <h1>GreatSchools district data sources & information</h1>
+          <h1>Las fuentes de datos y información de los perfiles de distritos de GreatSchools</h1>
           <div>
-            <h4>School Board Finder</h4>
-            <p><span class="emphasis">Source&#58;</span> XQ</p>
+            <h4>Encuentra tu junta escolar</h4>
+            <p><span class="emphasis">Fuente&#58;</span> XQ</p>
           </div>
         </div>
 
