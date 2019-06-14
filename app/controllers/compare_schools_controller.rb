@@ -2,19 +2,24 @@ class CompareSchoolsController < ApplicationController
   include Pagination::PaginatableRequest
   include SearchRequestParams
   include SearchControllerConcerns
+  include SearchTableConcerns
   include AdvertisingConcerns
   include PageAnalytics
 
   layout "application"
   before_filter :redirect_unless_school_id_and_state
 
+  set_additional_js_translations(
+    breakdowns: [:lib, :breakdowns]
+  )
+  
   def show
     set_login_redirect
     gon.compare = {
       schools: serialized_schools,
       breakdown: ethnicity,
       sort: sort_name,
-      tableHeaders: table_headers,
+      tableHeaders: compare_schools_table_headers,
     }.merge(Api::SortOptionSerializer.new(solr_query.valid_static_sort_fields + ['testscores']).to_hash)
     @radius = radius
     set_meta_tags(MetaTag::CompareMetaTags.new(self).meta_tag_hash)

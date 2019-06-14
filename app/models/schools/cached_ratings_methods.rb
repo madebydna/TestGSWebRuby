@@ -54,7 +54,7 @@ module CachedRatingsMethods
   end
 
   def ethnicity_breakdowns
-    ethnicity_information
+    ethnicity_information_for_tableview
       .select {|breakdown| breakdown[:rating] && breakdown[:rating] > 0}
       .map {|filtered_breakdown| filtered_breakdown[:label]}
   end

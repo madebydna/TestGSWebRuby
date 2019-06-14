@@ -29,7 +29,7 @@ const config = {
       './app/bundles/GSWeb/district_boundaries'
     ],
     'school-profiles': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/school_profiles'],
-    home: ['./app/bundles/GSWeb/common', './app/bundles/GSWeb/home'],
+    home: ['polyfills','./app/bundles/GSWeb/common', './app/bundles/GSWeb/home'],
     'commons-blocking-loader': ['./app/bundles/GSWeb/misc_all_page_blocking'],
     'jquery-loader': ['jquery'],
     'admin-tools': ['./app/bundles/GSWeb/admin_tools'],

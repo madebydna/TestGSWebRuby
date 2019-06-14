@@ -2,6 +2,7 @@
 es:
   javascript:
     compare_test_scores_for: Compare los resultados de exámenes de estudiantes
+    compare_pinned_school: COMPRAR ESTA ESCUELA CON LAS ESCUELAS DE ABAJO
     from : de
     and: y
     to_nearby_schools: con las escuelas cercanas dentro
@@ -23,11 +24,11 @@ es:
     awards: premios
     award_winner: Escuela premiada
     award_winners: Escuelas premiadas
-    award_winning_schools: Escuelas que ganaron premios
+    award-winning-schools: Escuelas que ganaron premios
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en
     browse_school_blurb_district: Aquí hay un vistazo a las escuelas en distrito
-    browse_schools: Escuelas de navegación
+    browse-schools: Escuelas de navegación
     calendar: calendario
     cities: Ciudades
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
@@ -437,4 +438,16 @@ es:
     see_all_winning_schools: Ver todos los ganadoras
     csa_winners: Ganadores de College Success Award
     see_winning_schools_in: Ver las escuelas ganadores en
+    xq:
+      school_board_finder: Encuentra tu junta escolar
+      learn_more_school_board_html: Obtén más información sobre la junta escolar de este distrito y sobre <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">cómo puedes participar</a> (enlace en inglés).
+      powered_by_xq: Desarrollado por XQ
+      sources: >
+        <div class="sourcing">
+          <h1>Las fuentes de datos y información de los perfiles de distritos de GreatSchools</h1>
+          <div>
+            <h4>Encuentra tu junta escolar</h4>
+            <p><span class="emphasis">Fuente&#58;</span> XQ</p>
+          </div>
+        </div>
 

@@ -72,7 +72,7 @@ module Solr
     end
 
     def self.rating_subgroup_field_name(rating_type, breakdown)
-      [rating_type, breakdown].compact.join('_').downcase.gsub(" ", "_")
+      breakdown&.downcase == 'low-income' ? 'Economically_disadvantaged' : [rating_type, breakdown].compact.join('_').downcase.gsub(" ", "_")
     end
 
     def self.all_fields

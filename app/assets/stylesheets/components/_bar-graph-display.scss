@@ -8,6 +8,10 @@
     padding: 10px;
     .compare-link {
       float: right;
+      @media (max-width: 376px){
+        float: left;
+        margin-top: 15px;
+      }
       .anchor-button {
         height: 30px;
         padding: 3px 12px

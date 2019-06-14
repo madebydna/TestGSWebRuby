@@ -166,11 +166,6 @@ $line-height-community: 1.428571429;
     }
   }
 
-  //Targets ie11 only
-  @media all and (-ms-high-contrast: none){
-   *::-ms-backdrop, .sticky{ position: fixed; }
-  }
-
   .ad-bar {
     display: inline-block;
     vertical-align: top;
@@ -278,7 +273,7 @@ $line-height-community: 1.428571429;
   .top-school-info{
     padding: 2px 0 0 2px;
     > div{
-      margin-top: 20px;
+      margin: 15px 0 20px;
       width: 100%;
       h3 {
         font-size: $font-size;
@@ -292,15 +287,22 @@ $line-height-community: 1.428571429;
       display: flex;
       margin: 0 20px;
       align-items: center;
-
+      
       p {
         margin: 0 20px;
       }
     }
   }
-
+  
   .profile-module {
     font-size: $font-size;
+    
+    > h3 {
+      padding: 10px 0 10px 20px;
+      color: #333;
+      font-size: 16px;
+      font-family: 'opensans-semibold';
+    }
 
     .tab-buttons {
       margin: 5px 20px;
@@ -504,6 +506,21 @@ $line-height-community: 1.428571429;
 
 #mobility{
   margin-bottom: 20px;
+
+  .xq_school_board_module_container {
+    margin-bottom: 30px;
+
+    .xq_school_board_module {
+      border: 1px solid $border-color;
+      padding: 15px;
+      margin: 5px 0;
+  
+      h3 {
+        margin-bottom: 3px;
+      }
+    }
+  }
+
   .mobility-module {
     margin-bottom: 5px;
     border: solid 1px $border-color;

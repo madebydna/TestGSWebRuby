@@ -75,6 +75,29 @@ class QueueDaemon
     updates.size
   end
 
+  # Our general approach to queue_daemon data loads: insert a bunch of rows to load data (serially), then
+  # insert a bunch of rows to rebuild the caches (concurrently). The intent of this method is to have our concurrent
+  # daemons WAIT until all the serial rows complete before attempting to rebuild the caches. They do this by checking
+  # for any serial rows inserted prior to the first concurrent row they see. If they find one, abort. Otherwise, continue.
+  #
+  # For the concurrent check, only interested in the actual next row we would process. So pid nil by priority, created etc.
+  #
+  # For the serial check, only interested in created date (not priority), but want to include ones that are already
+  # claimed as long as they are still in progress (so no pid check). Reason we don't care about priority is we don't
+  # really care if the next row the daemon would process is some high priority parent review, what we want to know is
+  # if there are any data load rows remaining that were inserted prior to that concurrent data_refresh row.
+  def safe_to_run?
+    return true unless concurrently? # This check only applies to concurrent daemons
+
+    max_created_concurrent = UpdateQueue.where(status: unprocessed_status, concurrently: true, pid: nil).order(priority: :asc, created: :asc).limit(1).pluck(:created).first
+    max_created_serial = UpdateQueue.where(status: unprocessed_status, concurrently: false).order(created: :asc).limit(1).pluck(:created).first
+
+    return true if max_created_serial.nil? # Always safe to run if no serial rows exist
+    return false if max_created_concurrent.nil? # No need to proceed if no concurrent rows exist
+    # Safe to run only if the first serial row was created after the first concurrent row
+    max_created_serial > max_created_concurrent
+  end
+
   def print_status_summary
     return unless should_log?
     hash = UpdateQueue.group(:status).count.symbolize_keys
@@ -93,26 +116,21 @@ class QueueDaemon
 
   def get_updates
     begin
-      num_updated = 0
       if concurrently?
-        # Need to force R/W usage here
-        UpdateQueue.on_db(:gs_schooldb_rw) do
-          num_updated = UpdateQueue.where(status: unprocessed_status, concurrently: true, pid: nil).order(priority: :asc, created: :asc).limit(update_limit).update_all(pid: Process.pid)
-        end
-        if num_updated > 0
-          UpdateQueue.where(status: unprocessed_status, concurrently: true, pid: Process.pid).order(priority: :asc, created: :asc).limit(update_limit)
+        if safe_to_run?
+          # Need to force R/W usage here otherwise DB Charmer may get fooled and pick the R/O
+          UpdateQueue.on_db(:gs_schooldb_rw) do
+            UpdateQueue.where(status: unprocessed_status, concurrently: true, pid: nil).order(priority: :asc, created: :asc).limit(update_limit).update_all(pid: Process.pid)
+            UpdateQueue.where(status: unprocessed_status, concurrently: true, pid: Process.pid).order(priority: :asc, created: :asc).limit(update_limit)
+          end
         else
           return []
         end
       else
-        # Need to force R/W usage here
+        # Need to force R/W usage here otherwise DB Charmer may get fooled and pick the R/O
         UpdateQueue.on_db(:gs_schooldb_rw) do
-          num_updated = UpdateQueue.where(status: unprocessed_status, pid: nil).order(priority: :asc, created: :asc).limit(update_limit).update_all(pid: Process.pid)
-        end
-        if num_updated > 0
+          UpdateQueue.where(status: unprocessed_status, pid: nil).order(priority: :asc, created: :asc).limit(update_limit).update_all(pid: Process.pid)
           UpdateQueue.where(status: unprocessed_status, pid: Process.pid).order(priority: :asc, created: :asc).limit(update_limit)
-        else
-          return []
         end
       end
     rescue => e

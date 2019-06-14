@@ -12,9 +12,13 @@ module CommunityProfiles
       @cache_data_reader = cache_data_reader
     end
 
+    def district_cache_ethnicity_data
+      @_district_cache_ethnicity_data ||= @cache_data_reader.ethnicity_data.select(&with_district_values)
+    end
+
     def ethnicity_data
       @_ethnicity_data ||= (
-        @cache_data_reader.ethnicity_data.select { |e| e.has_key?('district_value') }.map do |hash|
+        district_cache_ethnicity_data.map do |hash|
           {
               breakdown: ethnicity_label(hash['breakdown']),
               district_value: hash['district_value']
@@ -24,9 +28,7 @@ module CommunityProfiles
     end
 
     def ethnicity_data_source
-      @_ethnicity_data_source ||= @cache_data_reader.ethnicity_data.select { |e| e.has_key?('district_value') }
-                                                                   .map {|hash| {source: hash['source'], year: hash['year']} }
-                                                                   .uniq
+      district_cache_ethnicity_data.map {|hash| {source: hash['source'], year: hash['year']} }.uniq
     end
 
     def sources_text
@@ -59,9 +61,13 @@ module CommunityProfiles
       str
     end
 
+    def district_cache_gender_data
+      @_district_cache_gender_data ||= @cache_data_reader.characteristics_data(*GENDER_KEYS)
+    end
+
     def gender_data
       @_gender_data ||=(
-        @cache_data_reader.characteristics_data(*GENDER_KEYS)
+        district_cache_gender_data.select {|k,v| v.first['district_value'] > 0}
       )
     end
 
@@ -131,5 +137,12 @@ module CommunityProfiles
     def data_label(key)
       I18n.t(key, scope: 'lib.students', default: I18n.db_t(key, default: key))
     end
+
+    private
+
+    def with_district_values
+      lambda {|e| e['district_value'] > 0 }
+    end
+    
   end
 end

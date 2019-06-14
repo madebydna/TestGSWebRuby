@@ -7,7 +7,7 @@ import { t } from "util/i18n";
 import { addQueryParamToUrl } from 'util/uri';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
-const CsaTopSchools = ({ schools, renderTabsContainer, size, locality }) => {
+const CsaTopSchools = ({ schools, renderTabsContainer, size, locality, community }) => {
   let schoolList;
   
   schoolList = <section className="top-school-list">
@@ -23,7 +23,10 @@ const CsaTopSchools = ({ schools, renderTabsContainer, size, locality }) => {
 	return (
     <div className="top-school-module">
       <div className="profile-module">
-        { renderTabsContainer() }
+        { community === "state" ?
+          <h3>{t('award_winners')}</h3> : 
+          renderTabsContainer()
+        }
         <div className="top-school-info">
           <div className="csa-top-schools-blurb">
             <img 

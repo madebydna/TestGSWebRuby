@@ -18,6 +18,7 @@ const initLanguageLinkListener = function() {
   }
 
   changeLanguageLink.onclick = function(e) {
+    locationLanguageLink = window.location.href;
     if(isSpanish()) {
       changeLanguageLink.href = updateUrlParameter(locationLanguageLink, 'lang', '');
     } else {

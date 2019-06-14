@@ -4,6 +4,7 @@ $cta_button_border: rgba(255,255,255,0.17);
 $cta_icon_color: #ffffff; // Regular GS Blue
 $cta_icon_hover_color: #55b5e3; // Light GS Blue
 $cta_icon_active_color: #2282b0; // Medium GS Blue
+$cta_font_color: #71787e;
 
 #profile-sticky-container {
 
@@ -66,10 +67,62 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
         width: 240px;
         display: inline-block;
         padding-left: 10px;
+        color: $cta_font_color;
 
         >a {
           font-family: $font-family-base-bold;
           color:#26abe2;
+        }
+      }
+    }
+  }
+
+  .rr-xq-school-board {
+    width: 300px;
+    border: solid 1px #AAAAAA;
+    margin-bottom: 40px;
+    @include media-breakpoint-down(sm) {
+      display:none;
+    }
+
+    >.content {
+      padding: 10px;
+      background-color: #efefef;
+      color: #000000;
+
+      .icon {
+        width: 30px;
+        display: inline-block;
+        vertical-align: top;
+        padding-top: 5px;
+      }
+      .text {
+        width: 240px;
+        display: inline-block;
+        padding-left: 10px;
+        color: $cta_font_color;
+
+        a {
+          font-family: $font-family-base-bold;
+          color:#26abe2;
+          font-size: $font-size-small;
+        }
+
+        .right-rail-module-header {
+          font-family: $font-family-base-bold;
+          font-size: $font-size-medium;
+        }
+
+        .right-rail-module-text {
+          font-family: $font-family-base-bold;
+          font-size: $font-size-small;
+        }
+
+        .right-rail-module-sponsor {
+          margin-top: 3px;
+          font-family: $font-family-italic;
+          font-style: italic;
+          font-size: $font-size-xs;
         }
       }
     }

@@ -22,9 +22,7 @@ const DistrictsInState = ({districts, locality}) => {
         {districtItems}
       </ul>
 
-      <div className="districts-in-state-module">
-        <div className="blue-line" />
-      </div>
+      <div className="blue-line" />
 
       <div className="more-school-btn">
         <a href={locality.districtsBrowseUrl}>

@@ -1,95 +1,81 @@
-import React from 'react';
 import { t, capitalize } from 'util/i18n';
 
 export const SCHOOL_DISTRICTS = 'districts';
 export const SCHOOLS = 'schools';
-export const REVIEWS = 'Reviews';
+export const REVIEWS = 'reviews';
 export const COMMUNITY_RESOURCES = 'community_resources';
-export const ACADEMICS = 'Academics';
+export const ACADEMICS = 'academics';
 export const CALENDAR = 'calendar';
 export const STUDENTS = 'students'
 export const BROWSE_SCHOOLS = 'browse-schools';
 export const AWARD_WINNING_SCHOOLS = 'award-winning-schools';
 
-const browseSchools = {
+export const browseSchoolsTocItem = {
   key: BROWSE_SCHOOLS,
-  label: t("browse_schools"),
+  label: t(BROWSE_SCHOOLS),
   anchor: '#browse-schools',
   selected: true
 }
 
-const schools = {
+export const schoolsTocItem = {
   key: SCHOOLS,
   label: t(SCHOOLS),
   anchor: '#schools',
   selected: true
 }
 
-const awardWinningSchools = {
+export const awardWinningSchoolsTocItem = {
   key: AWARD_WINNING_SCHOOLS,
-  label: t("award_winning_schools"),
+  label: t(AWARD_WINNING_SCHOOLS),
   anchor: '#award-winning-schools',
   selected: false
 }
 
-const schoolDistricts = {
+export const schoolDistrictsTocItem = {
   key: SCHOOL_DISTRICTS,
   label: t(SCHOOL_DISTRICTS),
   anchor: '#districts',
   selected: false
 }
 
-const academics = {
-  key: 'academics',
+export const academicsTocItem = {
+  key: ACADEMICS,
   label: t(ACADEMICS),
   anchor: '#academics',
   selected: false
 }
 
-const students = {
+export const studentsTocItem = {
   key: STUDENTS,
   label: capitalize(t(STUDENTS)),
   anchor: '#students',
   selected: false
 }
 
-const calendar = {
-  key: 'calendar',
+export const calendarTocItem = {
+  key: CALENDAR,
   label: capitalize(t(CALENDAR)),
   anchor: '#calendar',
   selected: false
 }
 
-const communityResources = {
+export const communityResourcesTocItem = {
   key: 'mobility',
   label: capitalize(t(COMMUNITY_RESOURCES)),
   anchor: '#mobility',
   selected: false
 }
 
-const nearbyHomesForSale = {
+export const nearbyHomesForSaleTocItem = {
   key: 'homes-and-rentals',
   label: t('nearby homes for sale & rent'),
   anchor: '#homes-and-rentals',
   selected: false
 }
 
-const reviews = {
-  key: 'reviews',
-  label: t(REVIEWS),
+export const reviewsTocItem = {
+  key: REVIEWS,
+  label: capitalize(t(REVIEWS)),
   anchor: '#reviews',
   selected: false
-}
-
-export {
-  browseSchools,
-  schools,
-  awardWinningSchools,
-  schoolDistricts,
-  academics,
-  students,
-  calendar,
-  communityResources,
-  nearbyHomesForSale,
-  reviews
 }

@@ -221,14 +221,18 @@ body {
       }
 
       tr.row-outline {
-        //border: 3px solid #176997;
         td {
-          background: #94DCF9;
+          background: #F5F5F5;
         }
       }
 
-      tr td.yellow-highlight {
-        background-color: #FCFFA2;
+      tr th.highlight{
+        font-family: 'opensans-semibold';
+        background-color: #d2eff9;
+      }
+
+      tr td.highlight {
+        background-color: #e9f7fc;
       }
 
       td.pinned {
@@ -294,6 +298,7 @@ body {
         }
         &:hover {
           background-color: $hover-color;
+          transition: 0.5s ease;
         }
         &.active {
           background-color: $active-color;
