@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module OmniInsertStatement
+module InsertStatement
   def self.build(row,source)
     if row[:entity_level] == 'source'
         "insert into omni.data_sets (source_id,data_type_id,state,date_valid,configuration,notes,description) values ('#{source[:source_id]}',#{row[:test_data_type_id]},'#{source[:state].upcase}','#{source[:date_valid]}','none','#{::Mysql2::Client.escape(row[:notes])}','#{::Mysql2::Client.escape(row[:description])}');\n"
