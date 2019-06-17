@@ -1,0 +1,22 @@
+# The hostname and port that Rails will use when generating absolute URLs
+app_host: 'localhost'
+app_port: '3000'
+
+# a.k.a. cdn_prefix, the cdn hostname for assets. Change this if you change your personal app_host or app_port
+media_server: 'http://localhost:3000'
+
+# The URLs of the Solr server to use
+solr7.ro.server.url: "http://dev-solr1.greatschools.org:8983/solr/main/"
+solr7.rw.server.url: "http://dev-solr1.greatschools.org:8983/solr/main/"
+# solr.ro.server.url: 'http://solr:8983/solr/main/' # Use these if working on solr-7 in docker
+# solr.rw.server.url: 'http://solr:8983/solr/main/'
+
+# The host and credentials to the primary mysql server that Rails reads from when serving web pages
+db_host: dev.greatschools.org
+db_username: developer
+db_password: ASK_FOR_DEVELOPER_PASSWORD
+
+# The host and credentials to the "gsdata" (data warehouse) mysql server
+gsdata_db_host: datadev-gsdata.greatschools.org
+gsdata_db_username: developer
+gsdata_db_password: ASK_FOR_GSDATA_PASSWORD
