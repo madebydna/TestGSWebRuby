@@ -84,7 +84,7 @@ module Solr
     def self.breakdown_to_rating_field_name
       @_breakdown_to_rating_field_name ||= (
         equity_hash = { "Low-income" => "Economically_disadvantaged" }
-        Breakdown.unique_ethnicity_names.each_with_object({}) do |breakdown|
+        Breakdown.unique_ethnicity_names.each do |breakdown|
           equity_hash[breakdown] = "test_scores_rating_#{breakdown.downcase.gsub(" ", "_")}"
         end
         equity_hash
