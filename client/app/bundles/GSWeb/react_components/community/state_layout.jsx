@@ -105,7 +105,7 @@ class StateLayout extends React.Component {
     const browseHeader = t('state.cities_header', { parameters: { nameLong }});
 
     return (
-      <div id="browse-schools" className="module-section">
+      <div id="schools" className="module-section">
         <div className="modules-title">{browseHeader}</div>
         {this.props.browseCities}
         {this.props.topSchools}
