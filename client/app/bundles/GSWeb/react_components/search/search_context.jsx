@@ -39,8 +39,6 @@ export const validViews = [LIST_VIEW, MAP_VIEW, TABLE_VIEW];
 
 const gonSearch = (window.gon || {}).search || {};
 
-const showListOrTable = () =>  viewportSize() > XS ? TABLE_VIEW : LIST_VIEW;
-
 class SearchProvider extends React.Component {
   static defaultProps = {
     findSchools,
@@ -68,7 +66,7 @@ class SearchProvider extends React.Component {
     resultSummary: gonSearch.resultSummary,
     paginationSummary: gonSearch.paginationSummary,
     breadcrumbs: gonSearch.breadcrumbs || [],
-    view: gonSearch.view || showListOrTable(),
+    view: gonSearch.view || LIST_VIEW,
     searchTableViewHeaders: gonSearch.searchTableViewHeaders || {},
     tableViewOptions: gonSearch.tableViewOptions,
     tableView: 'Overview',
