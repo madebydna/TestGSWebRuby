@@ -31,6 +31,17 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
 }
 
 const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, levelCodes, community, schoolLevels, locality }) => {
+  let name;
+  if (locality.stateShort === 'DC') {
+    name = `${locality.city}, ${locality.stateShort}`;
+  } else if (community === 'state') {
+    name = locality.nameLong;
+  } else if (community === 'city') {
+    name = locality.city;
+  } else {
+    name = locality.name;
+  }
+
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
@@ -67,7 +78,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
         <div className="top-school-info">
           <div>
             <p>
-              <span dangerouslySetInnerHTML={{__html: t('top_schools.top_schools_blurbs')}}/>
+              <span dangerouslySetInnerHTML={{__html: t('top_schools.top_schools_blurbs', { parameters: { name } })}}/>
             </p>
           </div>
         </div>

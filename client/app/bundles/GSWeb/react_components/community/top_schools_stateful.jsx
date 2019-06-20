@@ -93,6 +93,11 @@ class TopSchoolsStateful extends React.Component {
   renderTabsContainer() {
     let tabs = this.tabs();
     if (tabs.length === 1) {
+      if (this.props.community === 'state') {
+        return (
+          <h3 dangerouslySetInnerHTML={{__html: t('top_schools.state_top_schools_header', { parameters: { state: this.props.locality.nameLong } })}} />
+        );
+      }
       return (
         <h3>{tabs[0]}</h3>
       );
