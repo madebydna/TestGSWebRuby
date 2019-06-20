@@ -155,8 +155,8 @@ class StateLayout extends React.Component {
               {this.renderSchools()}
               {this.renderCsaModule()}
               {this.renderBoxAd()}
-              {this.renderStudentsModule()}
               {this.renderDistricts()}
+              {this.renderStudentsModule()}
               {this.renderReviews()}
             </div>
           {/*</div>*/}

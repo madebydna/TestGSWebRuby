@@ -117,7 +117,7 @@ class State extends React.Component {
   }
 
   selectTocItems(){
-    let stateTocItems = [browseSchoolsTocItem, awardWinningSchoolsTocItem, studentsTocItem, schoolDistrictsTocItem, reviewsTocItem];
+    let stateTocItems = [browseSchoolsTocItem, awardWinningSchoolsTocItem, schoolDistrictsTocItem, studentsTocItem, reviewsTocItem];
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === AWARD_WINNING_SCHOOLS && !this.props.csa_module);
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === SCHOOL_DISTRICTS && this.props.districts.length === 0);
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
