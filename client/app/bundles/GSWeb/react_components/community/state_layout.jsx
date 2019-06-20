@@ -112,6 +112,14 @@ class StateLayout extends React.Component {
       </div>
     )
   }
+
+  renderStudentsModule() {
+    return (this.props.hasStudentDemographicData &&
+      <div id="students" className="module-section">
+        {this.props.students}
+      </div>
+    )
+  }
   
   renderCsaModule() {
     return this.props.shouldDisplayCsaInfo && (
@@ -147,6 +155,7 @@ class StateLayout extends React.Component {
               {this.renderSchools()}
               {this.renderCsaModule()}
               {this.renderBoxAd()}
+              {this.renderStudentsModule()}
               {this.renderDistricts()}
               {this.renderReviews()}
             </div>

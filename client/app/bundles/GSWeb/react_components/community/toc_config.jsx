@@ -75,7 +75,7 @@ export const nearbyHomesForSaleTocItem = {
 
 export const reviewsTocItem = {
   key: REVIEWS,
-  label: capitalize(t(REVIEWS)),
+  label: t(capitalize(REVIEWS)),
   anchor: '#reviews',
   selected: false
 }
