@@ -24,6 +24,7 @@ es:
     awards: premios
     award_winner: Escuela premiada
     award_winners: Escuelas premiadas
+    award_winning_high_schools: Escuelas secundarias premiadas
     award-winning-schools: Escuelas que ganaron premios
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en
@@ -218,12 +219,12 @@ es:
       at_grade_level: a nivel de grado
     This school: Esta escuela
     top_schools:
+      state_top_schools_header: Las mejores escuelas en {state}
       top_schools: Escuelas con una calificación alta
       top_schools_blurbs: >
-        La Calificación General de GreatSchools aparece en la parte superior del perfil de una 
-        escuela y proporciona un resumen general de la calidad de la escuela sobre la base de 
-        qué tan bien una escuela prepara a todos sus estudiantes para el éxito postsecundaria
-         — ya sea de colegio o carrera. <a href="/gk/como-clasificamos/?lang=es">Obtenga más información</a>
+        Estas son algunas de las escuelas públicas mejor calificadas en {name} <a href="/gk/como-clasificamos/?lang=es#summary-rating">basadas en una variedad de medidas</a>, incluyendo el rendimiento académico y la <a href="/gk/como-clasificamos/?lang=es#equityrating">equidad</a>. Haz clic para ver la lista completa de escuelas ordenadas por clasificación. <a href="/gk/como-clasificamos/?lang=es">Sobre la calificación de GreatSchools</a>
+      csa_top_schools_blurb: >
+        Estas son algunas de las mejores escuelas secundarias públicas en {name} preparando a los estudiantes para el éxito en la universidad. El <a href="/gk/csa-winners/">College Success Award</a> reconoce a las escuelas que realizan un trabajo ejemplar al hacer que los estudiantes se inscriban y se mantengan en la universidad, incluyendo las escuelas que superan las probabilidades prestando un mejor servicio a los estudiantes de bajos ingresos.
       learn_more: Obtenga más información
       no_elemCity: No hay escuelas primarias con una Calificación General de GreatSchools en esta ciudad
       no_midCity: No hay escuelas intermedias con una Calificación General de GreatSchools en esta ciudad
