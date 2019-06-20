@@ -31,7 +31,10 @@ class StatesController < ApplicationController
     @districts = districts_data
     @school_count = school_count 
     @reviews = reviews_formatted
-
+    @students = students
+    gon.dependencies = {
+      highcharts: ActionController::Base.helpers.asset_path('highcharts.js')
+    }
     write_meta_tags
     gon.pagename = 'GS:State:Home'
     @params_hash = parse_array_query_string(request.query_string)
@@ -115,6 +118,14 @@ class StatesController < ApplicationController
       rp[:topic_label] = review.question.review_topic.label
     end
   end 
+  
+  def students
+    @_students ||= CommunityProfiles::Students.new(cache_data_reader: state_cache_data_reader)
+  end
+
+  def state_cache_data_reader
+    @_state_cache_data_reader ||= StateCacheDataReader.new(state, state_cache_keys: ['district_largest','district_characteristics'])
+  end
 
   private
 
