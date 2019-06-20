@@ -2,14 +2,15 @@ class StateCharacteristicsCacher < StateCacher
   include StateCacheValidation
 
   CACHE_KEY = 'state_characteristics'
-  STATE_CHARACTERISTICS_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 123, 124, 129, 131, 133, 179]
+  # STATE_CHARACTERISTICS_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 123, 124, 129, 131, 133, 179]
+  STATE_CHARACTERISTICS_CENSUS_DATA_TYPES = [6, 8, 9, 123, 124]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
   # 3 - Master's degree
   # 4 - Doctorate's degree
   # 5 - Student teacher ratio
-  # 6 - FRL
-  # 8 - ELL
+  # 6 - Students participating in free or reduced-price lunch program  
+  # 8 - English Learners
   # 9 - Ethnicity
   # 12 - Average years of teacher experience
   # 13 - Economically disadvantaged
@@ -34,7 +35,7 @@ class StateCharacteristicsCacher < StateCacher
   end
   
   def initialize(state)
-    @state = state
+    @state = state&.upcase
   end
 
   def self.active?
