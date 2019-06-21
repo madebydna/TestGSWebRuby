@@ -47,7 +47,7 @@ export const academicsTocItem = {
 
 export const studentsTocItem = {
   key: STUDENTS,
-  label: capitalize(t(STUDENTS)),
+  label: capitalize(t('students demographics')),
   anchor: '#students',
   selected: false
 }
