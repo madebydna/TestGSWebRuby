@@ -189,7 +189,8 @@ class SearchController < ApplicationController
     elsif state && city
       redirect_to(state_path(States.state_path(state))) unless city_record
     elsif state
-      redirect_to(state_path(States.state_path(state)))
+      # redirect_to(state_path(States.state_path(state)))
+      return
     else
       redirect_to home_path
     end
