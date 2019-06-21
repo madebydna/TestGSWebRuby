@@ -70,6 +70,7 @@ module Search
     def result_summary(results)
       district_url = district_url(district_params(state_name, city,  district_name).merge({trailing_slash: true})) if state && city && district_name
       city_url = city_url(city_params(state&.upcase, city).merge({trailing_slash: true})) if state.present? && city.present?
+      state_url = state_url(state_params(state_name).merge({trailing_slash: true})) if state
       params = {
         count: results.total,
         first: results.index_of_first_result,
@@ -77,6 +78,8 @@ module Search
         city: city,
         city_url: city_url,
         state: state&.upcase,
+        state_long: States.state_name(state).titleize,
+        state_url: state_url,
         district: district_name,
         district_url: district_url,
         search_term: @q.presence,
@@ -88,6 +91,8 @@ module Search
         t('district_browse', **params)
       elsif city
         t('city_browse', **params)
+      elsif state 
+        t('state_browse', **params)
       elsif @q.present?
         t('search_term', **params)
       else
