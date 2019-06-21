@@ -18,6 +18,14 @@ ReactOnRails.register({
 });
 
 $(function() {
+  $('#state-dropdown').on('change', function () {
+    var url = $(this).val();
+    if (url) {
+      window.location = url;
+    }
+    return false;
+  });
+
   commonPageInit({includeFeatured: false});
   setupImages(
     {
