@@ -39,7 +39,8 @@ class StateCharacteristicsCacher < StateCacher
   end
 
   def self.active?
-    ENV_GLOBAL['is_feed_builder'].present? && [true, 'true'].include?(ENV_GLOBAL['is_feed_builder'])
+    # ENV_GLOBAL['is_feed_builder'].present? && [true, 'true'].include?(ENV_GLOBAL['is_feed_builder'])
+    true
   end
 
   def census_query
