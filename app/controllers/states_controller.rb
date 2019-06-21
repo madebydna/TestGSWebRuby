@@ -124,7 +124,7 @@ class StatesController < ApplicationController
   end
 
   def state_cache_data_reader
-    @_state_cache_data_reader ||= StateCacheDataReader.new(state, state_cache_keys: ['district_largest','district_characteristics'])
+    @_state_cache_data_reader ||= StateCacheDataReader.new(state, state_cache_keys: ['district_largest','state_characteristics'])
   end
 
   private

@@ -11,11 +11,11 @@ module StateCachedCharacteristicsMethods
   end
 
   def with_all_students
-    lambda {|hash| hash['breakdown'] == 'All students'}
+    ->(hash) { hash['breakdown'] == 'All students' }
   end
 
   def with_state_value
-    lambda {|hash| hash['state_value']}
+    ->(hash) { hash['state_value'] }
   end
 
 end
