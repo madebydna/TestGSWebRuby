@@ -78,7 +78,7 @@ module Search
         city: city,
         city_url: city_url,
         state: state&.upcase,
-        state_long: States.state_name(state).titleize,
+        state_long: state_name.titleize,
         state_url: state_url,
         district: district_name,
         district_url: district_url,

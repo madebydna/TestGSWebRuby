@@ -218,6 +218,10 @@ module SearchRequestParams
     state.present? && city.present? && district.blank?
   end
 
+  def state_browse?
+    state.present?
+  end 
+
   def zip_code_search?
     params[:locationType]&.downcase == 'zip'
   end
@@ -232,6 +236,8 @@ module SearchRequestParams
       :district_browse
     elsif city_browse?
       :city_browse
+    elsif state_browse?
+      :state_browse 
     elsif zip_code_search?
       :zip_code
     elsif street_address?
