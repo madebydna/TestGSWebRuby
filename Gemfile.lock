@@ -65,14 +65,15 @@ GEM
       debug_inspector (>= 0.0.1)
     builder (3.2.3)
     byebug (8.2.5)
-    capybara (2.4.4)
-      mime-types (>= 1.16)
+    capybara (2.18.0)
+      addressable
+      mini_mime (>= 0.1.3)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
-      xpath (~> 2.0)
-    capybara-mechanize (1.4.0)
-      capybara (~> 2.4.4)
+      xpath (>= 2.0, < 4.0)
+    capybara-mechanize (1.11.0)
+      capybara (>= 2.4.4, < 4)
       mechanize (~> 2.7.0)
     capybara-screenshot (1.0.11)
       capybara (>= 1.0, < 3)
@@ -111,7 +112,7 @@ GEM
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     docile (1.1.3)
-    domain_name (0.5.23)
+    domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     draper (2.1.0)
       actionpack (>= 3.0)
@@ -186,7 +187,7 @@ GEM
     hashie (2.1.1)
     highline (1.7.2)
     hike (1.2.3)
-    http-cookie (1.0.2)
+    http-cookie (1.0.3)
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
     httpclient (2.8.3)
@@ -233,13 +234,13 @@ GEM
     machinist (2.0)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
-    mechanize (2.7.2)
+    mechanize (2.7.6)
       domain_name (~> 0.5, >= 0.5.1)
-      http-cookie (~> 1.0.0)
-      mime-types (~> 1.17, >= 1.17.2)
+      http-cookie (~> 1.0)
+      mime-types (>= 1.17.2)
       net-http-digest_auth (~> 1.1, >= 1.1.1)
-      net-http-persistent (~> 2.5, >= 2.5.2)
-      nokogiri (~> 1.4)
+      net-http-persistent (>= 2.5.2)
+      nokogiri (~> 1.6)
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
     meta-tags (2.4.0)
@@ -249,7 +250,7 @@ GEM
     mini_fb (2.2.0)
       hashie
       httpclient
-    mini_mime (1.0.0)
+    mini_mime (1.0.1)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     multi_json (1.13.1)
@@ -257,8 +258,9 @@ GEM
     multipart-post (2.0.0)
     mysql2 (0.4.10)
     nenv (0.3.0)
-    net-http-digest_auth (1.4)
-    net-http-persistent (2.9.4)
+    net-http-digest_auth (1.4.1)
+    net-http-persistent (3.0.1)
+      connection_pool (~> 2.2)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     nori (2.4.0)
@@ -287,7 +289,7 @@ GEM
       pry (>= 0.10.4)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
-    rack (1.6.9)
+    rack (1.6.11)
     rack-mini-profiler (0.9.1)
       rack (>= 1.1.3)
     rack-test (0.6.3)
@@ -392,7 +394,7 @@ GEM
     ruby_parser (3.6.4)
       sexp_processor (~> 4.1)
     rubyntlm (0.4.0)
-    rubyzip (1.1.3)
+    rubyzip (1.2.3)
     safe_attributes (1.0.10)
       activerecord (>= 3.0.0)
     safe_yaml (1.0.4)
@@ -411,11 +413,9 @@ GEM
       nori (~> 2.4.0)
       uuid (~> 2.3.7)
       wasabi (~> 3.3.0)
-    selenium-webdriver (2.41.0)
-      childprocess (>= 0.5.0)
-      multi_json (~> 1.0)
-      rubyzip (~> 1.0)
-      websocket (~> 1.0.4)
+    selenium-webdriver (3.142.3)
+      childprocess (>= 0.5, < 2.0)
+      rubyzip (~> 1.2, >= 1.2.2)
     sexp_processor (4.4.3)
     shellany (0.0.1)
     simplecov (0.8.2)
@@ -471,7 +471,7 @@ GEM
       json (>= 1.8.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.6)
+    unf_ext (0.0.7.6)
     unicode-display_width (1.3.0)
     uuid (2.3.7)
       macaddr (~> 1.0)
@@ -483,14 +483,17 @@ GEM
       activemodel (>= 4.2)
       debug_inspector
       railties (>= 4.2)
+    webdrivers (4.0.1)
+      nokogiri (~> 1.6)
+      rubyzip (~> 1.0)
+      selenium-webdriver (>= 3.0, < 4.0)
     webmock (3.1.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    webrobots (0.1.1)
-    websocket (1.0.7)
-    xpath (2.0.0)
-      nokogiri (~> 1.3)
+    webrobots (0.1.2)
+    xpath (3.2.0)
+      nokogiri (~> 1.8)
     yard (0.8.7.4)
 
 PLATFORMS
@@ -500,7 +503,7 @@ DEPENDENCIES
   addressable
   binding_of_caller (~> 0.7.2)
   byebug
-  capybara
+  capybara (~> 2.18)
   capybara-mechanize
   capybara-screenshot (~> 1.0.11)
   childprocess
@@ -560,7 +563,6 @@ DEPENDENCIES
   safe_attributes
   sass-rails (~> 4.0.1)
   savon (~> 2.6.0)
-  selenium-webdriver
   simplecov (~> 0.8.0)
   simplecov-html (~> 0.8.0)
   simplecov-rcov
@@ -574,8 +576,9 @@ DEPENDENCIES
   to_regexp
   uglifier (>= 1.0.3)
   web-console
+  webdrivers
   webmock
   yard
 
 BUNDLED WITH
-   1.17.3
+   1.16.1

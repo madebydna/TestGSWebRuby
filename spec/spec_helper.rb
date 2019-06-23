@@ -91,7 +91,9 @@ RSpec.configure do |config|
   if ENV['BLACK_BOX']
     WebMock.allow_net_connect!
   else
-    WebMock.disable_net_connect!(allow_localhost: true)
+    WebMock.disable_net_connect!(
+      allow_localhost: true,
+      allow: 'chromedriver.storage.googleapis.com')
 
     config.mock_with :rspec
 
@@ -114,45 +116,45 @@ RSpec.configure do |config|
 
 
   if ENV['BLACK_BOX']
-    Capybara.default_driver = :webkit
+    Capybara.default_driver = :selenium_chrome_headless
     Capybara.run_server = false
   else
     Capybara.default_driver = :rack_test
     Capybara.run_server = true
   end
-  Capybara.javascript_driver = :webkit
+  Capybara.javascript_driver = :selenium_chrome_headless
+  
   port = ENV['CAPYBARA_PORT'] || 3001
   Capybara.app_host = ENV['CAPYBARA_HOST'] || "http://localhost:#{port}"
   Capybara.server_port = port
   ENV_GLOBAL['app_host'] = 'localhost'
   ENV_GLOBAL['app_port'] = '3001'
 
-  Capybara::Webkit.configure do |config|
-    # config.debug = true
-    config.block_unknown_urls # doesnt seem to block urls in all cases
-    config.block_url "http://www.google-analytics.com"
-    config.block_url "https://stats.g.doubleclick.net"
-    config.block_url "http://pixel.quantserve.com"
-    config.block_url "http://bs.serving-sys.com"
-    config.block_url "http://partner.googleadservices.com"
-    config.block_url "https://www.dsply.com"
-    config.block_url "http://gateway.answerscloud.com"
-    config.block_url "https://www.google.com"
-    config.block_url "http://staticxx.facebook.com"
-    config.block_url "https://www.facebook.com"
-    config.block_url "http://www.googletagmanager.com"
-    config.block_url "http://csi.gstatic.com"
-    config.block_url "https://securepubads.g.doubleclick.net"
-    config.block_url "connect.facebook.net"
-    config.block_url "maps.googleapis.com"
-    config.block_url "www.googletagservices.com"
-    config.block_url "tpc.googlesyndication.com"
-    config.block_url "securepubads.g.doubleclick.net"
 
-    config.allow_url "https://www.facebook.com"
-    config.allow_url("*.greatschools.org")
+  # Capybara::Webkit.configure do |config|
+  #   # config.debug = true
+  #   config.block_unknown_urls # doesnt seem to block urls in all cases
+  #   config.block_url "http://www.google-analytics.com"
+  #   config.block_url "https://stats.g.doubleclick.net"
+  #   config.block_url "http://pixel.quantserve.com"
+  #   config.block_url "http://bs.serving-sys.com"
+  #   config.block_url "http://partner.googleadservices.com"
+  #   config.block_url "https://www.dsply.com"
+  #   config.block_url "http://gateway.answerscloud.com"
+  #   config.block_url "https://www.google.com"
+  #   config.block_url "http://staticxx.facebook.com"
+  #   config.block_url "https://www.facebook.com"
+  #   config.block_url "http://www.googletagmanager.com"
+  #   config.block_url "http://csi.gstatic.com"
+  #   config.block_url "https://securepubads.g.doubleclick.net"
+  #   config.block_url "connect.facebook.net"
+  #   config.block_url "maps.googleapis.com"
+  #   config.block_url "www.googletagservices.com"
+  #   config.block_url "tpc.googlesyndication.com"
 
-    config.skip_image_loading
-  end
+  #   config.allow_url "https://www.facebook.com"
+  #   config.allow_url("*.greatschools.org")
 
+  #   config.skip_image_loading
+  # end
 end

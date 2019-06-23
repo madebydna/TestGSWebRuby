@@ -164,10 +164,9 @@ group :test do
   # DSL for page object pattern, used for cucumber testing
   gem 'site_prism'
 
-  gem 'selenium-webdriver'
   gem 'mechanize'
-  gem 'capybara'
-  # gem 'capybara-webkit'
+  gem 'capybara', '~> 2.18'
+  gem 'webdrivers'
   gem 'capybara-mechanize'
   gem 'machinist', '>= 2.0.0.beta2'
   gem 'timecop'
