@@ -135,6 +135,10 @@ export default class Map extends React.Component {
     if (this.props.markerDigest !== prevProps.markerDigest) {
       this.setState({ markersUpdated: true});
     }
+    // the following condition is to help reset the center of map when map object is not viewable but MapMarkers are changed
+    if(this.props.view === 'list' && this.props.view !== prevProps.view){
+      this.setState({ markersUpdated: true }, () => setTimeout(() => this.map.panBy(1, 1), 50));
+    }
   }
 
   renderPolygons() {
@@ -179,6 +183,7 @@ export default class Map extends React.Component {
       } else {
         theMap.setOptions({maxZoom:null});
       }
+      // this.props.googleMaps.event.trigger(theMap, 'resize')
       this.setState({
         markersUpdated: false,
       })
