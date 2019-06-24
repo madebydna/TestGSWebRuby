@@ -380,7 +380,7 @@ const handleGhostTextMessages = function(event) {
             .find('.advertisement-text');
         if ($adTextDiv.length === 0) {
           // Probably under /gk/
-          $adTextDiv = $adSlotDiv.find('.advertisement-text');
+          $adTextDiv = $adSlotDiv.siblings('.advertisement-text');
         }
         $adTextDiv.text(event.data.ghostText);
       }
