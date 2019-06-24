@@ -10,10 +10,11 @@ import CsaTopSchools from './csa_top_schools';
 import CityBrowseLinks from './city_browse_links';
 import DistrictsInState from "./districts_in_state";
 import RecentReviews from "./recent_reviews";
+import Students from "./students";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
-import { browseSchoolsTocItem, awardWinningSchoolsTocItem, schoolDistrictsTocItem, reviewsTocItem, AWARD_WINNING_SCHOOLS, SCHOOL_DISTRICTS, REVIEWS } from './toc_config';
+import { browseSchoolsTocItem, awardWinningSchoolsTocItem, studentsTocItem, schoolDistrictsTocItem, reviewsTocItem, AWARD_WINNING_SCHOOLS, STUDENTS, SCHOOL_DISTRICTS, REVIEWS } from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
@@ -44,7 +45,8 @@ class State extends React.Component {
     locality: PropTypes.object.isRequired,
     cities: PropTypes.array,
     schoolCount: PropTypes.number,
-    csa_module: PropTypes.bool
+    csa_module: PropTypes.bool,
+    students: PropTypes.object
   };
 
   constructor(props) {
@@ -103,16 +105,29 @@ class State extends React.Component {
     );
   }
 
+  hasStudentDemographicData() {
+    const { ethnicityData, genderData, subgroupsData } = this.props.students;
+    const hasEthnicityData = ethnicityData.filter(o => o.state_value > 0).length > 0
+    const hasGenderData = genderData.Male !== undefined && genderData.Female !== undefined;
+    let hasSubgroupsData = false;
+    Object.entries(subgroupsData).forEach(([key, data]) => {
+      if (data.length > 0 && data[0].breakdown === 'All students' && data[0].state_value > 0) { hasSubgroupsData = true }
+    });
+    return hasEthnicityData || hasGenderData || hasSubgroupsData;
+  }
+
   selectTocItems(){
-    let stateTocItems = [browseSchoolsTocItem, awardWinningSchoolsTocItem, schoolDistrictsTocItem, reviewsTocItem];
+    let stateTocItems = [browseSchoolsTocItem, awardWinningSchoolsTocItem, schoolDistrictsTocItem, studentsTocItem, reviewsTocItem];
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === AWARD_WINNING_SCHOOLS && !this.props.csa_module);
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === SCHOOL_DISTRICTS && this.props.districts.length === 0);
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
+    stateTocItems = remove(stateTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());
     
     return stateTocItems;
   }
 
   render() {
+    const studentProps = {...this.props.students,...{'pageType': this.pageType}}
     return (
         <StateLayout
             locality={this.props.locality}
@@ -140,6 +155,8 @@ class State extends React.Component {
                 schoolLevels={this.props.schools_data.counts}
               />
             }
+            hasStudentDemographicData={this.hasStudentDemographicData()}
+            students={<Students {...studentProps} />}
             shouldDisplayCsaInfo={this.props.csa_module}
             csaTopSchools={
               <CsaTopSchools

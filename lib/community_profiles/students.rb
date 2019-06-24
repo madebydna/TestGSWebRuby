@@ -12,23 +12,35 @@ module CommunityProfiles
       @cache_data_reader = cache_data_reader
     end
 
-    def district_cache_ethnicity_data
-      @_district_cache_ethnicity_data ||= @cache_data_reader.ethnicity_data.select(&with_district_values)
+    def community_type
+      @_community_type ||= begin
+        if @cache_data_reader.is_a?(DistrictCacheDataReader)
+          'district'
+        elsif @cache_data_reader.is_a?(StateCacheDataReader)
+          'state'
+        else
+          raise NotImplementedError.new("@cache_data_reader must be valid in #{self.class.name}#community_type")
+        end
+      end
+    end
+
+    def cache_ethnicity_data
+      @_cache_ethnicity_data ||= @cache_data_reader.ethnicity_data.select(&with_valid_values)
     end
 
     def ethnicity_data
       @_ethnicity_data ||= (
-        district_cache_ethnicity_data.map do |hash|
+        cache_ethnicity_data.map do |hash|
           {
               breakdown: ethnicity_label(hash['breakdown']),
-              district_value: hash['district_value']
+              "#{community_type}_value".to_sym => hash["#{community_type}_value"]
           }.compact
         end
       )
     end
 
     def ethnicity_data_source
-      district_cache_ethnicity_data.map {|hash| {source: hash['source'], year: hash['year']} }.uniq
+      cache_ethnicity_data.map {|hash| {source: hash['source'], year: hash['year']} }.uniq
     end
 
     def sources_text
@@ -61,13 +73,13 @@ module CommunityProfiles
       str
     end
 
-    def district_cache_gender_data
-      @_district_cache_gender_data ||= @cache_data_reader.characteristics_data(*GENDER_KEYS)
+    def cache_gender_data
+      @_cache_gender_data ||= @cache_data_reader.characteristics_data(*GENDER_KEYS)
     end
 
     def gender_data
       @_gender_data ||=(
-        district_cache_gender_data.select {|k,v| v.first['district_value'] > 0}
+        cache_gender_data.select {|k,v| v.first["#{community_type}_value"] > 0}
       )
     end
 
@@ -98,13 +110,13 @@ module CommunityProfiles
       @_subgroups_data ||= (
         @cache_data_reader.characteristics_data(*OTHER_BREAKDOWN_KEYS).each_with_object({}) do |(key, value), hash|
           data_hash = value.first
-          if data_hash['district_value'] > 0
+          if data_hash["#{community_type}_value"] > 0
             hash[key] = [{}.tap do |h|
              h["breakdown"] =  data_hash['breakdown']
-             h["district_value"] =  data_hash['district_value']
+             h["#{community_type}_value"] =  data_hash["#{community_type}_value"]
              h["source"] =  data_hash['source']
              h["year"] =  data_hash['year']
-             h["state_average"] =  data_hash['state_average']
+             h["state_average"] =  data_hash['state_average'] if community_type != 'state'
             end]
           end
         end
@@ -140,8 +152,8 @@ module CommunityProfiles
 
     private
 
-    def with_district_values
-      lambda {|e| e['district_value'] > 0 }
+    def with_valid_values
+      lambda {|e| e["#{community_type}_value"] > 0 }
     end
     
   end
