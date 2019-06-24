@@ -75,9 +75,10 @@ const loadGpt = function() {
     gads.async = true;
     gads.type = 'text/javascript';
     const useSSL = document.location.protocol == 'https:';
-    gads.src = `${
-      useSSL ? 'https:' : 'http:'
-    }//www.googletagservices.com/tag/js/gpt.js`;
+    // gads.src = `${
+    //   useSSL ? 'https:' : 'http:'
+    // }//www.googletagservices.com/tag/js/gpt.js`;
+    gads.src = "https://securepubads.g.doubleclick.net/tag/js/gpt.js";
     const node = document.getElementsByTagName('script')[0];
     node.parentNode.insertBefore(gads, node);
   })();

@@ -147,6 +147,7 @@ RSpec.configure do |config|
     config.block_url "maps.googleapis.com"
     config.block_url "www.googletagservices.com"
     config.block_url "tpc.googlesyndication.com"
+    config.block_url "securepubads.g.doubleclick.net"
 
     config.allow_url "https://www.facebook.com"
     config.allow_url("*.greatschools.org")
