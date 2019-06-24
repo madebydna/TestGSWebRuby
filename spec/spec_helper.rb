@@ -81,6 +81,7 @@ RSpec.configure do |config|
   config.include WaitForAjax, type: :feature
   config.include CookieHelper
   config.include SigninHelper
+  config.include InspectRequests, type: :feature
 
   config.order = "random" # you can specify order with --seed flag
   config.infer_spec_type_from_file_location!
@@ -123,6 +124,7 @@ RSpec.configure do |config|
     Capybara.run_server = true
   end
   Capybara.javascript_driver = :selenium_chrome_headless
+  Capybara.server = :webrick
   
   port = ENV['CAPYBARA_PORT'] || 3001
   Capybara.app_host = ENV['CAPYBARA_HOST'] || "http://localhost:#{port}"
@@ -130,6 +132,7 @@ RSpec.configure do |config|
   ENV_GLOBAL['app_host'] = 'localhost'
   ENV_GLOBAL['app_port'] = '3001'
 
+  config.filter_run_when_matching focus: true
 
   # Capybara::Webkit.configure do |config|
   #   # config.debug = true

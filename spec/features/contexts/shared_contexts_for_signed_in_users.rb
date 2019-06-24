@@ -1,7 +1,8 @@
 def log_in_user(user)
+  visit root_path if page.driver.class.name == 'Capybara::Selenium::Driver'
   auth_token = UserAuthenticationToken.new(user).generate
   set_cookie('auth_token', auth_token)
-  set_cookie('MEMID', user.id)
+  set_cookie('MEMID', user.id.to_s)
   set_cookie('community_www', auth_token.gsub('=', '~'))
 end
 

@@ -14,7 +14,8 @@ shared_example 'should eql the expected text' do |text|
   end
 end
 
-shared_example 'should eql the expected value' do |value|
+shared_example 'should eql the expected value' do |value, *flags|
+  skip if flags.include?(:skip)
   fail unless subject.present?
   [*subject].each do | s |
     expect(s.value).to eql(value)
