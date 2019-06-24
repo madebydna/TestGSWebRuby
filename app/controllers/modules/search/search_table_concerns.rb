@@ -70,7 +70,7 @@ module SearchTableConcerns
   end
 
   def with_state_averages
-    lambda {|s| s["state_average"]}
+    ->(s) {|s| s["state_average"]}
   end
 
   def mode(array_of_values)
