@@ -18,6 +18,10 @@ class StateCacheDataReader
     decorated_state.ethnicity_data
   end
 
+  def largest_districts
+    decorated_state.largest_districts
+  end
+
   def characteristics_data(*keys)
     decorated_state.state_characteristics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
       array_of_hashes = array_of_hashes.select {|h| h.has_key?('source')}

@@ -28,7 +28,7 @@ class StatesController < ApplicationController
     @locality = locality 
     @cities = cities_data
     @top_schools = top_rated_schools
-    @districts = districts_data
+    @districts = district_largest.to_hash
     @school_count = school_count 
     @reviews = reviews_formatted
     @students = students
@@ -121,6 +121,10 @@ class StatesController < ApplicationController
   
   def students
     @_students ||= CommunityProfiles::Students.new(cache_data_reader: state_cache_data_reader)
+  end
+
+  def district_largest
+    @_district_largest ||= CommunityProfiles::DistrictLargest.new(cache_data_reader: state_cache_data_reader)
   end
 
   def state_cache_data_reader
@@ -221,29 +225,6 @@ class StatesController < ApplicationController
             trailing_slash: true
           )
         end
-      end 
-    end
-  end 
-
-  def districts_data 
-    stateShort = @state[:short]
-    if StateCache.for_state('district_largest', stateShort)
-      largest_districts = JSON.parse(StateCache.for_state('district_largest', stateShort).value)
-    else 
-      largest_districts = {}
-    end
-
-    @_districts_data ||= begin 
-      largest_districts.map do |district|
-        Hash.new.tap do |cp| 
-          cp[:name] = district['name']
-          cp[:enrollment] = district['enrollment']
-          cp[:city] = district['city']
-          cp[:state] = district['state']
-          cp[:grades] = district['levels']
-          cp[:numSchools] = district['school_count']
-          cp[:url] = district_url(district_params(district['state'], district['city'], district['name']))
-        end 
       end 
     end
   end 

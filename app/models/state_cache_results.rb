@@ -63,8 +63,8 @@ class StateCacheResults
     case cache_key
       when 'state_characteristics'
         StateCachedCharacteristicsMethods
-      # when 'district_largest'
-        # DistrictCachedTestScoresMethods
+      when 'district_largest'
+        StateCachedDistrictLargestMethods
     end
   end
 
