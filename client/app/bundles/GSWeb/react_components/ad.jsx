@@ -95,7 +95,7 @@ class Ad extends React.Component {
     }`;
     const adElement = (
       <React.Fragment>
-        <div className="tac" id={slotIdFromName(slot, slotOccurrenceNumber)} />
+        <div className="tac js-ad-hook" id={slotIdFromName(slot, slotOccurrenceNumber)} />
         {this.props.ghostTextEnabled && (
           <div width="100%">
             <div className="advertisement-text ma">{t('advertisement')}</div>

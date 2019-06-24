@@ -372,12 +372,11 @@ const handleGhostTextMessages = function(event) {
     jQuery('iframe').each(function() {
       if (
         this.getAttribute('name') &&
-        window.frames[this.getAttribute('name')] == event.source
+        window.frames[this.getAttribute('name')] === event.source
       ) {
-        const $adSlotDiv = jQuery(this).parents('.gs_ad_slot');
-        const slotName = $adSlotDiv.attr('id');
+        const $adSlotDiv = jQuery(this).parents('.js-ad-hook');
         let $adTextDiv = $adSlotDiv
-            .parents(`.js-${slotName}-wrapper`)
+            .siblings()
             .find('.advertisement-text');
         if ($adTextDiv.length === 0) {
           // Probably under /gk/
