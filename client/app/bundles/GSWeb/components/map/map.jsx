@@ -10,7 +10,8 @@ export default class Map extends React.Component {
     lat: PropTypes.number,
     lon: PropTypes.number,
     markerDigest: PropTypes.string,
-    heartClickCallback: PropTypes.func
+    heartClickCallback: PropTypes.func,
+    view: PropTypes.string
   };
 
   static defaultProps = {
