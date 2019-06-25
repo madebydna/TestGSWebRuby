@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-shared_example 'should contain the expected text' do |text|
+shared_example 'should contain the expected text' do |text, *flags|
+  skip if flags.include?(:skip)
   fail unless subject.present?
   [*subject].each do | s |
     expect(s.text).to include(text)

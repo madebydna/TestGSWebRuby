@@ -133,6 +133,7 @@ RSpec.configure do |config|
   ENV_GLOBAL['app_port'] = '3001'
 
   config.filter_run_when_matching focus: true
+  config.filter_run_excluding broken: true
 
   # Capybara::Webkit.configure do |config|
   #   # config.debug = true

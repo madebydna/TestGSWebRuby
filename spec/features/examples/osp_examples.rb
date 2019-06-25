@@ -34,7 +34,8 @@ shared_example 'should have basic school information' do
   subject.find('.rs-school-information', text: school.state)
 end
 
-shared_example 'should have a save edits button' do |count|
+shared_example 'should have a save edits button' do |count, *flags|
+  skip if flags.include?(:skip)
   subject.assert_selector('button.rs-submit', :count => count)
 end
 

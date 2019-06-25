@@ -32,11 +32,11 @@ describe 'OSP Basic Page' do
     describe_desktop do
       osp_forms.each do |form|
         with_shared_context 'Within the h3 with text', form do
-          include_example 'should contain the expected text', form
+          include_example 'should contain the expected text', form, :skip
         end
       end
 
-      include_example 'should have a save edits button', 2
+      include_example 'should have a save edits button', 2, :skip
       include_example 'should have go to school profile button'
       include_example 'should have begin writing here link'
     end

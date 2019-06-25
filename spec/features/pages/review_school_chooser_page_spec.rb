@@ -5,6 +5,8 @@ require 'features/examples/footer_examples'
 require 'features/page_objects/school_profiles_page'
 
 describe 'Review School Chooser Page' do
+  before { stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {}) } 
+
   with_shared_context 'Visit Review School Chooser Page for topic 1' do
     subject(:page_object) { ReviewSchoolChooserPage.new }
     it { is_expected.to have_overall_topic_review_school_chooser_header }
