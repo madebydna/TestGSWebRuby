@@ -54,7 +54,6 @@ GS.widget =
       });
 
       $('.info-mark').on('click', function() {
-        $()
         showHelpTab();
       });
     };
