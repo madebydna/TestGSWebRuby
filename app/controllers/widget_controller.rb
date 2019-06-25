@@ -31,7 +31,10 @@ class WidgetController < ApplicationController
     @search_params[:locationLabel] = params[:normalizedAddress]
     @search_params[:gradeLevels] = level_codes if level_codes.present?
     @static_map_url = static_map_url
+    @serialized_schools = serialized_schools
     gon.search_failed = serialized_schools.empty?
+    @rating_level = RATING_TO_PERFORMANCE_LEVEL
+    @school_types_map = SCHOOL_TYPES_MAP
   end
 
   RATING_COLORS = {
@@ -45,6 +48,25 @@ class WidgetController < ApplicationController
       3 => '0xDCA219',
       2 => '0xE78817',
       1 => '0xF26B16',
+  };
+
+  RATING_TO_PERFORMANCE_LEVEL = {
+      1 => 'Below Average',
+      2 => 'Below Average',
+      3 => 'Below Average',
+      4 => 'Average',
+      5 => 'Average',
+      6 => 'Average',
+      7 => 'Average',
+      8 => 'Above Average',
+      9 => 'Above Average',
+      10 => 'Above Average'
+  };
+
+  SCHOOL_TYPES_MAP = {
+      'charter' => 'Public charter',
+      'public' => 'Public district',
+      'private' => 'Private'
   }
 
   def static_map_url
@@ -58,7 +80,7 @@ class WidgetController < ApplicationController
       marker_styles[style_str] << "#{s[:lat]},#{s[:lon]}"
     end
     google_apis_path = GoogleSignedImages::STATIC_MAP_URL
-    address = params[:normalizedAddress].gsub(/\s+/,'+').gsub(/'/,'')
+    address = params[:normalizedAddress] ? params[:normalizedAddress].gsub(/\s+/,'+').gsub(/'/,'') : ''
     url = "#{google_apis_path}?size=#{width-15}x#{height-175}&scale=1&center=#{address}&zoom=13&markers=color:blue|#{address}"
     marker_styles.each do |style, markers|
       url += "&markers=#{style}#{markers.join('|')}"

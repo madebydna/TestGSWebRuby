@@ -5,6 +5,7 @@ GS.widget =
     var GS_MAP_TAB_NAME = 'mapTabBody';
     var GS_SEARCH_TAB_NAME = 'searchTabBody';
     var GS_HELP_TAB_NAME = 'helpTabBody';
+    var GS_SCHOOLS_TAB_NAME = 'schoolsTabBody';
     var waitForGeocode = true;
 
     String.prototype.trim = function() {
@@ -40,19 +41,39 @@ GS.widget =
       $('.gs-tab').on('click', function() {
         $(this)
           .siblings()
-          .removeClass('active');
-        $(this).addClass('active');
+          .removeClass('active')
+          .addClass('inactive');
+        $(this)
+          .removeClass('inactive')
+          .addClass('active');
         var value = $(this).data('name');
         if (value == 'tabMap') {
           showMapTab();
         } else {
-          showSearchTab();
+          if(value == 'tabSchools'){
+            showSchoolsTab();
+          }
+          else {
+            showSearchTab();
+          }
         }
       });
 
       $('.info-mark').on('click', function() {
+        $()
         showHelpTab();
       });
+    };
+
+    var setSchoolTabActive = function(){
+      let schoolTab = $('[data-name="tabSchools"]');
+      schoolTab
+          .siblings()
+          .removeClass('active')
+          .addClass('inactive');
+      schoolTab
+          .removeClass('inactive')
+          .addClass('active');
     };
 
     var calculateHelpHeight = function() {
@@ -65,18 +86,29 @@ GS.widget =
       showTab(GS_MAP_TAB_NAME);
       hideTab(GS_SEARCH_TAB_NAME);
       hideTab(GS_HELP_TAB_NAME);
-      GS.googleMap.checkResize();
+      hideTab(GS_SCHOOLS_TAB_NAME);
+      // GS.googleMap.checkResize();
+    };
+
+    var showSchoolsTab = function() {
+      setSchoolTabActive();
+      hideTab(GS_MAP_TAB_NAME);
+      hideTab(GS_SEARCH_TAB_NAME);
+      hideTab(GS_HELP_TAB_NAME);
+      showTab(GS_SCHOOLS_TAB_NAME);
     };
 
     var showSearchTab = function() {
       hideTab(GS_MAP_TAB_NAME);
       hideTab(GS_HELP_TAB_NAME);
+      hideTab(GS_SCHOOLS_TAB_NAME);
       showTab(GS_SEARCH_TAB_NAME);
     };
 
     var showHelpTab = function() {
       hideTab(GS_MAP_TAB_NAME);
       hideTab(GS_SEARCH_TAB_NAME);
+      hideTab(GS_SCHOOLS_TAB_NAME);
       showTab(GS_HELP_TAB_NAME);
     };
 
@@ -180,7 +212,8 @@ GS.widget =
       submitSearch: submitSearch,
       submitSearchButton: submitSearchButton,
       toggleFilter: toggleFilter,
-      closeHelpTab: closeHelpTab
+      closeHelpTab: closeHelpTab,
+      showSchoolsTab: showSchoolsTab
     };
   })();
 

@@ -19,7 +19,7 @@
     <div class="info-mark"><span class="info-circle"><span class="icon-question"></span></span></div>
     <div style="clear: both"></div>
   </div>
-  <%= link_to(search_url(@search_params), target: '_blank') do %>
+  <a onclick="GS.widget.showSchoolsTab(); return false;">
     <%= image_tag(@static_map_url) %>
-  <% end %>
+  </a>
 </div>

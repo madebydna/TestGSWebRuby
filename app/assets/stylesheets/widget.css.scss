@@ -12,7 +12,10 @@
 
 @import "resources/bootstrap/bootstrap/mixins/_clearfix";
 @import "libs/widget/*";
-//@import "gs/ratings";
+@import "components/circle-rating";
+$page-side-padding: 15px;
+@import "components/school-list";
+@import "pages/search/list-and-map";
 //@import "components/five-stars";
 
 //@import 'resourcefs/tipso'; // used on school profiles
