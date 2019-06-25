@@ -66,7 +66,7 @@ GS.widget =
     };
 
     var setSchoolTabActive = function(){
-      let schoolTab = $('[data-name="tabSchools"]');
+      var schoolTab = $('[data-name="tabSchools"]');
       schoolTab
           .siblings()
           .removeClass('active')
