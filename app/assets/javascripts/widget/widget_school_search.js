@@ -39,23 +39,17 @@ GS.widget =
       calculateHelpHeight();
 
       $('.gs-tab').on('click', function() {
-        $(this)
-          .siblings()
-          .removeClass('active')
-          .addClass('inactive');
-        $(this)
-          .removeClass('inactive')
-          .addClass('active');
-        var value = $(this).data('name');
-        if (value == 'tabMap') {
-          showMapTab();
-        } else {
-          if(value == 'tabSchools'){
+        setTabActive($(this));
+        switch ($(this).data('name')) {
+          case 'tabMap':
+            showMapTab();
+            break;
+          case 'tabSchools':
             showSchoolsTab();
-          }
-          else {
+            break;
+          default:
             showSearchTab();
-          }
+            break;
         }
       });
 
@@ -65,15 +59,19 @@ GS.widget =
       });
     };
 
-    var setSchoolTabActive = function(){
-      var schoolTab = $('[data-name="tabSchools"]');
-      schoolTab
+    var setTabActive = function(tabObj){
+      tabObj
           .siblings()
           .removeClass('active')
           .addClass('inactive');
-      schoolTab
+      tabObj
           .removeClass('inactive')
           .addClass('active');
+    };
+
+    var setSchoolTabActive = function(){
+      var schoolTab = $('[data-name="tabSchools"]');
+      setTabActive(schoolTab);
     };
 
     var calculateHelpHeight = function() {
