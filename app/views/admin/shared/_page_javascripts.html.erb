@@ -1,0 +1,9 @@
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag 'moderation-tools', defer: true %>
+  <%= react_component('SearchBoxWrapper') %>
+  <script type="text/javascript">
+    $(function() {
+      $.getScript("<%= asset_path('deprecated_post_load_adapter.js') %>")
+    })
+  </script>
+<% end %>
