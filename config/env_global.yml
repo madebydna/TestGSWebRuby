@@ -10,6 +10,7 @@ force_ssl: false
 
 # Google API keys
 GOOGLE_MAPS_STATIC_API_KEY: "AIzaSyBv3LfIisMottwdQh3LIZ52KNLKXgoDFas"
+GOOGLE_MAPS_WIDGET_API_KEY: "AIzaSyBjTd2dueHtfNdsOhXvo_3HQJfyYlkEv98"
 GOOGLE_MAPS_STATIC_SIGNING_KEY: "HNQL8P_a2tbC9mcxe6vpxgtkWUg="
 
 # Facebook API keys

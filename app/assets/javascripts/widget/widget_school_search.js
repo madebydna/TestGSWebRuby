@@ -5,6 +5,7 @@ GS.widget =
     var GS_MAP_TAB_NAME = 'mapTabBody';
     var GS_SEARCH_TAB_NAME = 'searchTabBody';
     var GS_HELP_TAB_NAME = 'helpTabBody';
+    var GS_SCHOOLS_TAB_NAME = 'schoolsTabBody';
     var waitForGeocode = true;
 
     String.prototype.trim = function() {
@@ -35,19 +36,20 @@ GS.widget =
       if (search_failed == true) {
         showSearchTab();
       }
-      calculateMapHeight();
       calculateHelpHeight();
 
       $('.gs-tab').on('click', function() {
-        $(this)
-          .siblings()
-          .removeClass('active');
-        $(this).addClass('active');
-        var value = $(this).data('name');
-        if (value == 'tabMap') {
-          showMapTab();
-        } else {
-          showSearchTab();
+        setTabActive($(this));
+        switch ($(this).data('name')) {
+          case 'tabMap':
+            showMapTab();
+            break;
+          case 'tabSchools':
+            showSchoolsTab();
+            break;
+          default:
+            showSearchTab();
+            break;
         }
       });
 
@@ -55,15 +57,20 @@ GS.widget =
         showHelpTab();
       });
     };
-    var calculateMapHeight = function() {
-      var mapCanvas = $('#js-map-canvas');
-      var mapTabHeight = $('#' + GS_MAP_TAB_NAME).outerHeight(true);
-      var mapContainerHeight = $('.js-mapContainer').outerHeight(true);
-      var mapCanvasHeight = mapCanvas.outerHeight(true);
-      var tabsHeight = $('.gs-tab-container').outerHeight(true);
-      var newMapHeight =
-        mapCanvasHeight + mapContainerHeight - mapTabHeight - tabsHeight;
-      mapCanvas.height(newMapHeight);
+
+    var setTabActive = function(tabObj){
+      tabObj
+          .siblings()
+          .removeClass('active')
+          .addClass('inactive');
+      tabObj
+          .removeClass('inactive')
+          .addClass('active');
+    };
+
+    var setSchoolTabActive = function(){
+      var schoolTab = $('[data-name="tabSchools"]');
+      setTabActive(schoolTab);
     };
 
     var calculateHelpHeight = function() {
@@ -76,18 +83,29 @@ GS.widget =
       showTab(GS_MAP_TAB_NAME);
       hideTab(GS_SEARCH_TAB_NAME);
       hideTab(GS_HELP_TAB_NAME);
-      GS.googleMap.checkResize();
+      hideTab(GS_SCHOOLS_TAB_NAME);
+      // GS.googleMap.checkResize();
+    };
+
+    var showSchoolsTab = function() {
+      setSchoolTabActive();
+      hideTab(GS_MAP_TAB_NAME);
+      hideTab(GS_SEARCH_TAB_NAME);
+      hideTab(GS_HELP_TAB_NAME);
+      showTab(GS_SCHOOLS_TAB_NAME);
     };
 
     var showSearchTab = function() {
       hideTab(GS_MAP_TAB_NAME);
       hideTab(GS_HELP_TAB_NAME);
+      hideTab(GS_SCHOOLS_TAB_NAME);
       showTab(GS_SEARCH_TAB_NAME);
     };
 
     var showHelpTab = function() {
       hideTab(GS_MAP_TAB_NAME);
       hideTab(GS_SEARCH_TAB_NAME);
+      hideTab(GS_SCHOOLS_TAB_NAME);
       showTab(GS_HELP_TAB_NAME);
     };
 
@@ -112,18 +130,7 @@ GS.widget =
         !document.getElementById('filter_m').checked &&
         !document.getElementById('filter_h').checked;
 
-      document.getElementById('zoom').value = GS.googleMap.getMap().getZoom();
-      document.getElementById('lat').value = GS.googleMap
-        .getMap()
-        .getCenter()
-        .lat();
-      document.getElementById('lon').value = GS.googleMap
-        .getMap()
-        .getCenter()
-        .lng();
-
       if (noneChecked) {
-        GS.googleMap.removeAllMapMarkers();
       } else {
         document.forms['searchForm'].submit();
       }
@@ -202,7 +209,8 @@ GS.widget =
       submitSearch: submitSearch,
       submitSearchButton: submitSearchButton,
       toggleFilter: toggleFilter,
-      closeHelpTab: closeHelpTab
+      closeHelpTab: closeHelpTab,
+      showSchoolsTab: showSchoolsTab
     };
   })();
 
