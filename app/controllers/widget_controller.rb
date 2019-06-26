@@ -51,6 +51,7 @@ class WidgetController < ApplicationController
   };
 
   RATING_TO_PERFORMANCE_LEVEL = {
+      0 => 'Currently Unrated',
       1 => 'Below Average',
       2 => 'Below Average',
       3 => 'Below Average',

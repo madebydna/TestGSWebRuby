@@ -9,8 +9,12 @@
             <span>
               <div class="">
                 <span class="tipso_style">
-                  <div class="circle-rating--small circle-rating--<%= rating %>"><%= rating %><span class="rating-circle-small">/10</span></div>
-                  <div class="scale"><%= @rating_level[rating] ? @rating_level[rating] : '' %></div>
+                  <% if rating > 0 %>
+                    <div class="circle-rating--small circle-rating--<%= rating %>"><%= rating %><span class="rating-circle-small">/10</span></div>
+                  <% else %>
+                    <%= image_tag('school_profiles/owl.png') %>
+                  <% end %>
+                  <div class="scale" style="font-size: smaller; color:#666"><%= @rating_level[rating] ? @rating_level[rating] : '' %></div>
                 </span>
               </div>
             </span>
