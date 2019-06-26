@@ -69,6 +69,10 @@ class WidgetController < ApplicationController
       'private' => 'Private'
   }
 
+  STATIC_MAP_WIDTH_CORRECTION = 15
+  STATIC_MAP_HEIGHT_CORRECTION = 175
+  STATIC_MAP_CUTOFF = 640
+
   def static_map_url
     marker_styles = Hash.new { |h,k| h[k] = [] }
     serialized_schools.each do |s|
@@ -81,7 +85,15 @@ class WidgetController < ApplicationController
     end
     google_apis_path = GoogleSignedImages::STATIC_MAP_URL
     address = params[:normalizedAddress] ? params[:normalizedAddress].gsub(/\s+/,'+').gsub(/'/,'') : ''
-    url = "#{google_apis_path}?size=#{width-15}x#{height-175}&scale=1&center=#{address}&zoom=13&markers=color:blue|#{address}"
+    scale = 1
+    width_static_map = width-STATIC_MAP_WIDTH_CORRECTION
+    height_static_map = height-STATIC_MAP_HEIGHT_CORRECTION
+    if width_static_map > STATIC_MAP_CUTOFF
+      scale = 2
+      width_static_map = (width_static_map/2).floor
+      height_static_map = (height_static_map/2).floor
+    end
+    url = "#{google_apis_path}?size=#{width_static_map}x#{height_static_map}&scale=#{scale}&center=#{address}&zoom=13&markers=color:blue|#{address}"
     marker_styles.each do |style, markers|
       url += "&markers=#{style}#{markers.join('|')}"
     end
