@@ -10,16 +10,14 @@
   }
   
   @include media-breakpoint-down(sm) {
-    height: 240px;
+    height: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
 
     .state-hero-title {
       font-size: $font-size-h1;
       margin: 15px auto;
       max-width: 300px;
-    }
-
-    div .state-hero-narrative {
-      font-size: $font-size-base;
     }
   }
 }
