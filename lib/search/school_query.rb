@@ -91,10 +91,10 @@ module Search
         t('district_browse', **params)
       elsif city
         t('city_browse', **params)
-      elsif state 
-        t('state_browse', **params)
       elsif @q.present?
         t('search_term', **params)
+      elsif state 
+        t('state_browse', **params)
       else
         t('showing_number_of_schools', **params)
       end

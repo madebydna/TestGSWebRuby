@@ -236,12 +236,12 @@ module SearchRequestParams
       :district_browse
     elsif city_browse?
       :city_browse
-    elsif state_browse?
-      :state_browse 
     elsif zip_code_search?
       :zip_code
     elsif street_address?
       :address
+    elsif state_browse?
+      :state_browse 
     else
       :other
     end
