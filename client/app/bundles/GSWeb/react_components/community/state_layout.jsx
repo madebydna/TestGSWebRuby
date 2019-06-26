@@ -135,7 +135,7 @@ class StateLayout extends React.Component {
 
   render() {
     return (
-      <div className="city-body">
+      <div className="state-body">
         {this.props.searchBox}
         {this.renderBreadcrumbs()}
         {this.renderHero()}
