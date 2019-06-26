@@ -10,16 +10,16 @@ const XQSchoolBoardFinder = ({ locality }) => {
   const encodedAddress = encodeURIComponent(addressString);
 
   return (
-    <div class="xq_school_board_module_container">
-      <div class="module-header xq_school_board_module">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="circle-rating--equity-blue">
-              <span class="icon-high-performing-schools" />
+    <div className="xq_school_board_module_container">
+      <div className="module-header xq_school_board_module">
+        <div className="row">
+          <div className="col-xs-12">
+            <div className="circle-rating--equity-blue">
+              <span className="icon-high-performing-schools" />
             </div>
-            <div class="title-container">
+            <div className="title-container">
               <div>
-                <h3 class="title">
+                <h3 className="title">
                   { t('xq.school_board_finder') }
                 </h3>
               </div>
@@ -29,7 +29,7 @@ const XQSchoolBoardFinder = ({ locality }) => {
         </div>
       </div>
 
-      <div class="module-footer">
+      <div className="module-footer">
         <InfoBox content={sources} element_type="sources" >{ t('See notes') }</InfoBox>
       </div>
     </div>
