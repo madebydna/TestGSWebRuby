@@ -35,7 +35,7 @@ en:
     city_hero_html: <div class="city-hero-narrative">{city} is a city in {county} county, {stateLong}</div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} is a city in {stateLong}</div>
     state:
-      state_hero_narrative_html: <div class="state-hero-narrative">There are {schoolCount} public and private K-12 schools in {nameLong}. As you search for schools that fit your family, you'll find information on academic, equity, environment, reviews, and more.</div>
+      state_hero_narrative_html: There are {schoolCount} public and private K-12 schools in {nameLong}. As you search for schools that fit your family, you'll find information on academic, equity, environment, reviews, and more.
       state_hero_title: '{nameLong} Schools'
       districts_header: Largest school districts in {nameLong}
       cities_header: Explore schools in {nameLong}

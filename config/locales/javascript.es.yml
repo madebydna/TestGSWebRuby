@@ -35,7 +35,7 @@ es:
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
     state:
-      state_hero_narrative_html: <div class="state-hero-narrative">Hay {schoolCount} escuelas públicas y privadas de K-12 en {nameLong}. Mientras que buscas escuelas que se ajusten a tu familia, encontrarás información sobre temas académicos, equidad, medio ambiente, opiniones de la comunidad y más.</div>
+      state_hero_narrative_html: Hay {schoolCount} escuelas públicas y privadas de K-12 en {nameLong}. Mientras que buscas escuelas que se ajusten a tu familia, encontrarás información sobre temas académicos, equidad, medio ambiente, opiniones de la comunidad y más.
       state_hero_title: 'Escuelas de {nameLong}'
       districts_header: Los distritos escolares más grandes en {nameLong}
       cities_header: Explora escuelas en {nameLong}
