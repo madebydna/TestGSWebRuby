@@ -8,15 +8,13 @@ import { addQueryParamToUrl } from 'util/uri';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
 const regionName = (locality, community) => {
-  let name;
   if (locality.stateShort === 'DC') {
-    name = `${locality.city}, ${locality.stateShort}`;
+    return `${locality.city}, ${locality.stateShort}`;
   } else if (community === 'state') {
-    name = locality.nameLong;
+    return locality.nameLong;
   } else {
-    name = locality.stateLong;
+    return locality.stateLong;
   }
-  return name;
 }
 
 const CsaTopSchools = ({ schools, renderTabsContainer, size, locality, community }) => {

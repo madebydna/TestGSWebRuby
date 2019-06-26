@@ -31,17 +31,15 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
 }
 
 const regionName = (locality, community) => {
-  let name;
   if (locality.stateShort === 'DC') {
-    name = `${locality.city}, ${locality.stateShort}`;
+    return `${locality.city}, ${locality.stateShort}`;
   } else if (community === 'state') {
-    name = locality.nameLong;
+    return locality.nameLong;
   } else if (community === 'city') {
-    name = locality.city;
+    return locality.city;
   } else {
-    name = locality.name;
+    return locality.name;
   }
-  return name;
 }
 
 const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, levelCodes, community, schoolLevels, locality }) => {
