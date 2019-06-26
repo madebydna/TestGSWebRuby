@@ -10,7 +10,6 @@ class DistrictsController < ApplicationController
   layout 'application'
   before_filter :redirect_unless_valid_district
   before_action :redirect_to_canonical_url
-  before_action :santize_params
 
   def show
     @level_code = []

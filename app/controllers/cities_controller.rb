@@ -6,7 +6,6 @@ class CitiesController < ApplicationController
 
   layout 'application'
   before_filter :redirect_unless_valid_city
-  before_action :santize_params
 
   def show
     @level_code = []
