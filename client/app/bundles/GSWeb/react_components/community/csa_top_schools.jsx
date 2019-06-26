@@ -7,7 +7,7 @@ import { t } from "util/i18n";
 import { addQueryParamToUrl } from 'util/uri';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
-const CsaTopSchools = ({ schools, renderTabsContainer, size, locality, community }) => {
+const regionName = (locality, community) => {
   let name;
   if (locality.stateShort === 'DC') {
     name = `${locality.city}, ${locality.stateShort}`;
@@ -16,18 +16,22 @@ const CsaTopSchools = ({ schools, renderTabsContainer, size, locality, community
   } else {
     name = locality.stateLong;
   }
+  return name;
+}
+
+const CsaTopSchools = ({ schools, renderTabsContainer, size, locality, community }) => {
+  let name = regionName(locality, community);
   
-  let schoolList;
-  
-  schoolList = <section className="top-school-list">
-        {schools.map(school => (
-          <CsaTopSchoolTableRow
-            key={school.state + school.id}
-            {...school}
-            size={size}
-          />
-        ))}
-      </section>;
+  let schoolList = (
+    <section className="top-school-list">
+      {schools.map(school => (
+        <CsaTopSchoolTableRow
+          key={school.state + school.id}
+          {...school}
+          size={size}
+        />
+      ))}
+    </section>);
 
 	return (
     <div className="top-school-module">
