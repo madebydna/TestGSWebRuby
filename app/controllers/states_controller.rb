@@ -13,6 +13,7 @@ class StatesController < ApplicationController
   # before_action :set_hub
   # before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
+  before_action :santize_params
   layout 'application'
 
   def show

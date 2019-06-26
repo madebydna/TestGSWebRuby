@@ -10,6 +10,7 @@ class SearchController < ApplicationController
   include Api::Authorization
 
   layout 'application'
+  before_action :santize_params
   before_filter :redirect_unless_valid_search_criteria # we need at least a 'q' param or state and city/district
   before_action :require_authorization, only: %i[suggest_school_by_name suggest_district_by_name suggest_city_by_name]
 
@@ -207,6 +208,5 @@ class SearchController < ApplicationController
   def not_default_extras
     %w(geometry)
   end
-
 
 end

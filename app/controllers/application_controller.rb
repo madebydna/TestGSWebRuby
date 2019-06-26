@@ -199,4 +199,11 @@ class ApplicationController < ActionController::Base
   def add_fb_appid_to_gon
     gon.facebook_app_id = ENV_GLOBAL['facebook_app_id']
   end
+
+  def santize_params
+    full_sanitizer = Rails::Html::FullSanitizer.new 
+    params.keys.each do |key|
+      params[key] = full_sanitizer.sanitize(params[key])
+    end
+  end
 end

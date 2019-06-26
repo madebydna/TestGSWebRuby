@@ -29,8 +29,8 @@ class GoogleSignedImages
     address.gsub(/\s+/,'+').gsub(/'/,'')
   end
 
-  def self.sign_url(url)
-    google_api_key = ENV_GLOBAL['GOOGLE_MAPS_STATIC_API_KEY']
+  def self.sign_url(url, key=ENV_GLOBAL['GOOGLE_MAPS_STATIC_API_KEY'])
+    google_api_key = key
     signing_key = ENV_GLOBAL['GOOGLE_MAPS_STATIC_SIGNING_KEY']
 
     parsed_url = URI.parse(URI.encode(url))
