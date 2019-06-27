@@ -224,7 +224,7 @@ group :development, :test do
   gem 'rubocop-checkstyle_formatter', require: false
 
   # Minimal embedded v8 engine for Ruby
-  # gem 'mini_racer', platforms: :ruby
+  gem 'mini_racer', platforms: :ruby
 
   gem 'pry-rails'
 end
