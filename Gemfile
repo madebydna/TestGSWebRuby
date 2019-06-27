@@ -167,7 +167,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'mechanize'
   gem 'capybara'
-  gem 'capybara-webkit'
+  # gem 'capybara-webkit'
   gem 'capybara-mechanize'
   gem 'machinist', '>= 2.0.0.beta2'
   gem 'timecop'
@@ -225,7 +225,9 @@ group :development, :test do
   gem 'rubocop-checkstyle_formatter', require: false
 
   # Minimal embedded v8 engine for Ruby
-  gem 'mini_racer', platforms: :ruby
+  # gem 'mini_racer', platforms: :ruby
+
+  gem 'pry-rails'
 end
 
 # Sass adapter for the Rails asset pipeline.
