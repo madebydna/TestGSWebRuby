@@ -77,9 +77,6 @@ GEM
     capybara-screenshot (1.0.11)
       capybara (>= 1.0, < 3)
       launchy
-    capybara-webkit (1.11.1)
-      capybara (>= 2.3.0, < 2.8.0)
-      json
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
     code_analyzer (0.4.5)
@@ -221,7 +218,6 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.2)
       addressable (~> 2.3)
-    libv8 (5.9.211.38.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -255,8 +251,6 @@ GEM
       httpclient
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    mini_racer (0.1.7)
-      libv8 (~> 5.3)
     minitest (5.11.3)
     multi_json (1.13.1)
     multi_test (0.1.1)
@@ -289,6 +283,8 @@ GEM
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    pry-rails (0.3.9)
+      pry (>= 0.10.4)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.6.9)
@@ -507,7 +503,6 @@ DEPENDENCIES
   capybara
   capybara-mechanize
   capybara-screenshot (~> 1.0.11)
-  capybara-webkit
   childprocess
   coffee-rails (~> 4.0.1)
   cucumber (~> 1.3.8)
@@ -537,13 +532,13 @@ DEPENDENCIES
   mechanize
   meta-tags
   mini_fb
-  mini_racer
   mysql2 (= 0.4.10)
   nokogiri (= 1.8.1)
   oj
   ox
   pdf-reader
   protected_attributes
+  pry-rails
   quiet_assets
   rack-mini-profiler
   rails (= 4.2.8)
@@ -583,4 +578,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   1.16.0
+   1.17.3
