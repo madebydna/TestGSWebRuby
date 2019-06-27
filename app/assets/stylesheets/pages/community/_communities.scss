@@ -292,6 +292,25 @@ $line-height-community: 1.428571429;
         margin-right: 10px;
       }
     }
+
+    @include media-breakpoint-down(sm) {
+      padding: 0;
+
+      .csa-top-schools-blurb {
+        display: block;
+
+        img {
+          float: left;
+          height: 60px;
+          margin: 8px 16px 0 0;
+        }
+
+        p {
+          padding: 0;
+          margin-right: 40px;
+        }
+      }
+    }
   }
   
   .profile-module {
