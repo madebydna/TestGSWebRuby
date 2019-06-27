@@ -7,24 +7,35 @@ import { t } from "util/i18n";
 import { addQueryParamToUrl } from 'util/uri';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
+const regionName = (locality, community) => {
+  if (locality.stateShort === 'DC') {
+    return `${locality.city}, ${locality.stateShort}`;
+  } else if (community === 'state') {
+    return locality.nameLong;
+  } else {
+    return locality.stateLong;
+  }
+}
+
 const CsaTopSchools = ({ schools, renderTabsContainer, size, locality, community }) => {
-  let schoolList;
+  let name = regionName(locality, community);
   
-  schoolList = <section className="top-school-list">
-        {schools.map(school => (
-          <CsaTopSchoolTableRow
-            key={school.state + school.id}
-            {...school}
-            size={size}
-          />
-        ))}
-      </section>;
+  let schoolList = (
+    <section className="top-school-list">
+      {schools.map(school => (
+        <CsaTopSchoolTableRow
+          key={school.state + school.id}
+          {...school}
+          size={size}
+        />
+      ))}
+    </section>);
 
 	return (
     <div className="top-school-module">
       <div className="profile-module">
         { community === "state" ?
-          <h3>{t('award_winners')}</h3> : 
+          <h3>{t('award_winning_high_schools')}</h3> : 
           renderTabsContainer()
         }
         <div className="top-school-info">
@@ -35,7 +46,7 @@ const CsaTopSchools = ({ schools, renderTabsContainer, size, locality, community
               alt="csa-badge-icon"
               />
             <p>
-              <span dangerouslySetInnerHTML={{__html: t('csa_district_schools_info_html')}}/>
+              <span dangerouslySetInnerHTML={{__html: t('top_schools.csa_top_schools_blurb', { parameters: { name } })}}/>
             </p>
           </div>
         </div>
