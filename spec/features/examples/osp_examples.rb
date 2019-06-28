@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'features/examples/osp_examples'
 require 'features/examples/page_examples'
 
 shared_examples_for 'the conditional multi select group of questions should be disabled' do
@@ -35,7 +34,8 @@ shared_example 'should have basic school information' do
   subject.find('.rs-school-information', text: school.state)
 end
 
-shared_example 'should have a save edits button' do |count|
+shared_example 'should have a save edits button' do |count, *flags|
+  skip if flags.include?(:skip)
   subject.assert_selector('button.rs-submit', :count => count)
 end
 
@@ -52,10 +52,10 @@ shared_example 'should only contain the following values in the form response' d
 end
 
 shared_example 'should not submit value in text field' do
-  response_before_click = page.response_headers['X-Request-Id']
-  osp_page.osp_form.submit.click
-  response_after_click = page.response_headers['X-Request-Id']
-  expect(response_before_click).to eql(response_after_click)
+  new_requests = inspect_requests do
+    osp_page.osp_form.submit.click
+  end
+  expect(new_requests).to be_empty
 end
 
 shared_example 'should have switch schools link' do

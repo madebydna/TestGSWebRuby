@@ -133,6 +133,7 @@ class District extends React.Component {
 
   render() {
     let { title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback } = this.props.academics;
+    const studentProps = { ...this.props.students, ...{ 'pageType': this.pageType } }
     return (
       <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
@@ -195,7 +196,7 @@ class District extends React.Component {
             pageType={this.pageType}
           />
         }
-        students={<Students {...this.props.students} />}
+        students={<Students {...studentProps} />}
         calendar={
           <Calendar 
             locality={this.props.locality}

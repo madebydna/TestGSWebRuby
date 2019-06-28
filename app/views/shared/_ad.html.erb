@@ -36,7 +36,7 @@
       }
       custom_data_attrs['ad-defer-render'] = true if defer
     %>
-    <%= content_tag('div', '', class: "gs_ad_slot ad-slot tac", id: iddef, data: custom_data_attrs) %>
+    <%= content_tag('div', '', class: "js-ad-hook gs_ad_slot ad-slot tac", id: iddef, data: custom_data_attrs) %>
     <% if show_ad_text %>
         <%= render partial: '/shared/advertising_word' %>
     <% end %>

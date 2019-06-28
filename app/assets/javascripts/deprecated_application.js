@@ -22,4 +22,5 @@
 //= require ./util/i18n
 //= require ./util/spinny_wheel
 //= require ./util/window.sizing
+//= require ./util/notifications
 //= require ./page_initializers/header_init

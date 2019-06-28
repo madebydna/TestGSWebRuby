@@ -1,6 +1,7 @@
 <% content_for :page_javascripts do %>
   <%= webpack_javascript_include_tag 'react-redux', defer: true %>
   <%= webpack_javascript_include_tag 'signin-page', defer: true %>
+  <%= javascript_include_tag 'deprecated_post_load_adapter' %>
 <% end %>
 
 <% @active_tab ||= 'login' %>

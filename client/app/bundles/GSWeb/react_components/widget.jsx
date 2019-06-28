@@ -17,7 +17,7 @@ export default class Widget extends React.Component {
     this.getCode = this.getCode.bind(this);
 
     let defaultIframeWidth = (window.innerWidth ? window.innerWidth - 20 : undefined) || 740;
-    if(defaultIframeWidth > 1180) defaultIframeWidth = 1180;
+    if(defaultIframeWidth > 640) defaultIframeWidth = 640;
 
     let widgetHost = 'www.greatschools.org';
     if(/greatschools\.org(:\d+)?$/.test(window.location.host)) {

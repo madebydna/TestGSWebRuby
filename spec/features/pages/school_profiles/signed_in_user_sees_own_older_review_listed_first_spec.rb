@@ -3,6 +3,8 @@ require 'features/contexts/shared_contexts_for_signed_in_users'
 require "features/page_objects/school_profiles_page"
 
 describe "Signed in and verified user" do
+  before { stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {}) }
+
   with_shared_context 'signed in verified user' do
     after do
       clean_dbs(:gs_schooldb)
@@ -21,7 +23,6 @@ describe "Signed in and verified user" do
                                     created: Date.parse('2012-01-01'),
                                     school: school
                                    )
-
       visit school_path(school)
       within review_list do
         expect(page).to have_css ".five-star-review .comment", text: user_old_comment

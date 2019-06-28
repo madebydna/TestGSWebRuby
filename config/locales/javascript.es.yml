@@ -24,6 +24,7 @@ es:
     awards: premios
     award_winner: Escuela premiada
     award_winners: Escuelas premiadas
+    award_winning_high_schools: Escuelas secundarias premiadas
     award-winning-schools: Escuelas que ganaron premios
     assigned_school: Escuela asignada
     browse_school_blurb: Aquí hay un vistazo a las escuelas en
@@ -34,10 +35,10 @@ es:
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
     state:
-      state_hero_narrative_html: <div class="state-hero-narrative">Hay {schoolCount} escuelas públicas y privadas de K-12 en {nameLong}. Mientras que buscas escuelas que se ajusten a tu familia, encontrarás información sobre temas académicos, equidad, medio ambiente, opiniones de la comunidad y más.</div>
+      state_hero_narrative_html: Hay {schoolCount} escuelas públicas y privadas de K-12 en {nameLong}. Mientras que buscas escuelas que se ajusten a tu familia, encontrarás información sobre temas académicos, equidad, medio ambiente, opiniones de la comunidad y más.
       state_hero_title: 'Escuelas de {nameLong}'
       districts_header: Los distritos escolares más grandes en {nameLong}
-      cities_header: Busca escuelas en {nameLong} por
+      cities_header: Explora escuelas en {nameLong}
       cities_browse_more_button: Ver todas las ciudades
       districts_browse_more_button: Vea todos los distritos
       see_award_winning_schools: Ver las escuelas que ganaron premios
@@ -218,12 +219,12 @@ es:
       at_grade_level: a nivel de grado
     This school: Esta escuela
     top_schools:
+      state_top_schools_header: Las mejores escuelas en {state}
       top_schools: Escuelas con una calificación alta
       top_schools_blurbs: >
-        La Calificación General de GreatSchools aparece en la parte superior del perfil de una 
-        escuela y proporciona un resumen general de la calidad de la escuela sobre la base de 
-        qué tan bien una escuela prepara a todos sus estudiantes para el éxito postsecundaria
-         — ya sea de colegio o carrera. <a href="/gk/como-clasificamos/?lang=es">Obtenga más información</a>
+        Estas son algunas de las escuelas públicas mejor calificadas en {name} <a href="/gk/como-clasificamos/?lang=es#summary-rating">basadas en una variedad de medidas</a>, incluyendo el rendimiento académico y la <a href="/gk/como-clasificamos/?lang=es#equityrating">equidad</a>. Haz clic para ver la lista completa de escuelas ordenadas por clasificación. <a href="/gk/como-clasificamos/?lang=es">Sobre la calificación de GreatSchools</a>
+      csa_top_schools_blurb: >
+        Estas son algunas de las mejores escuelas secundarias públicas en {name} preparando a los estudiantes para el éxito en la universidad. El <a href="/gk/csa-winners/">College Success Award</a> reconoce a las escuelas que realizan un trabajo ejemplar al hacer que los estudiantes se inscriban y se mantengan en la universidad, incluyendo las escuelas que superan las probabilidades prestando un mejor servicio a los estudiantes de bajos ingresos.
       learn_more: Obtenga más información
       no_elemCity: No hay escuelas primarias con una Calificación General de GreatSchools en esta ciudad
       no_midCity: No hay escuelas intermedias con una Calificación General de GreatSchools en esta ciudad
@@ -257,6 +258,7 @@ es:
     student: estudiante
     students: estudiantes
     Students: Estudiantes
+    students demographics: estudiantes demografía
     State avg: Promedio del estado
     State average: Promedio del estado
     School value: Valor de la escuela
@@ -437,6 +439,7 @@ es:
     csa_district_schools_info_html: Los <a href="/gk/csa-winners/">College Success Awards</a> reconocen a las escuelas secundarias públicas que se sobresalen a lograr que los estudiantes se matriculen y permanezcan en la universidad.
     see_all_winning_schools: Ver todos los ganadoras
     csa_winners: Ganadores de College Success Award
+    csa_winner: Ganador de CSA
     see_winning_schools_in: Ver las escuelas ganadores en
     xq:
       school_board_finder: Encuentra tu junta escolar

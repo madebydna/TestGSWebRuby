@@ -5,14 +5,14 @@ import { generateSubgroupPieCharts } from "../../components/subgroup_charts";
 import InfoBox from '../school_profiles/info_box';
 import { t } from "util/i18n";
 
-const generateLegend = (ethnicityData) => {
+const generateLegend = (ethnicityData, pageType) => {
   const sortedEthnicityData = ethnicityData.sort((a, b) => {
-    return b.district_value - a.district_value
+    return b[`${pageType}_value`] - a[`${pageType}_value`]
   })
   return (
     <div>
       {sortedEthnicityData.map((bd, idx) => {
-        const value = Math.round(bd.district_value);
+        const value = Math.round(bd[`${pageType}_value`]);
         const displayedValue = value > 0 ? value : '<1';
         const ethnicityColors = ["#0f69c4", "#2bdc99", "#f1830f", "#f1e634", "#6f2eb4", "#ef60d0", "#ca3154", "#999EFF"]
         return (
@@ -27,10 +27,10 @@ const generateLegend = (ethnicityData) => {
   )
 }
 
-const Students = ({ ethnicityData, subgroupsData, genderData, translations, sources }) => {
+const Students = ({ ethnicityData, subgroupsData, genderData, translations, sources, pageType }) => {
   useEffect(() => {
-    generateEthnicityChart(ethnicityData, 'district')
-    generateSubgroupPieCharts({ 'subgroup': subgroupsData, 'gender': genderData }, 'district')
+    generateEthnicityChart(ethnicityData, pageType)
+    generateSubgroupPieCharts({ 'subgroup': subgroupsData, 'gender': genderData }, pageType)
   }, [])
 
   return (
@@ -51,7 +51,7 @@ const Students = ({ ethnicityData, subgroupsData, genderData, translations, sour
           <div className='students-demographic-chart'>
             <div id="ethnicity-graph"></div>
           </div>
-          {generateLegend(ethnicityData)}
+          {generateLegend(ethnicityData, pageType)}
         </div>
         <div className="subgroups">
           <div className="row">
@@ -69,7 +69,8 @@ Students.propTypes = {
   subgroupsData: PropTypes.obj,
   genderData: PropTypes.obj,
   translations: PropTypes.obj,
-  sources: PropTypes.string
+  sources: PropTypes.string,
+  pageType: PropTypes.string
 };
 
 Students.defaultProps = {

@@ -30,27 +30,18 @@
   height: 300px;
 }
 
-.image-scaling-height, .image-scaling-height-sponsored {
+.image-scaling-height {
   height: 550px;
 }
 
 @media (max-width: 1200px) {
-   .image-scaling-height, .image-scaling-height-sponsored {
+   .image-scaling-height {
     height: 500px;
   }
-
 }
 
 @media (max-width: 991px) {
-  .image-scaling-height {
-    height: 380px;
-  }
-
-  .image-scaling-height-sponsored {
-    height: 375px;
-  }
-
-
+  // TODO: Remove this ... only being called in an unused partial
   .image-scaling-height-homepage-short{
     height: 330px;
   }

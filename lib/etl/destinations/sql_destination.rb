@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../step'
-require_relative './output_lib/gsdata_insert_statement'
+require_relative './output_lib/insert_statement'
 require_relative './output_lib/test_score_queue_daemon_json_blob'
 
 class SqlDestination < GS::ETL::Step
@@ -17,7 +17,7 @@ class SqlDestination < GS::ETL::Step
   def write(row)
     validate_row_has_required_fields(row)
     unless has_error?(row)
-      @sql << GSdataInsertStatement.build(row, @source)
+      @sql << InsertStatement.build(row, @source)
     end
     row
   end

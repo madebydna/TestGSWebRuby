@@ -47,7 +47,7 @@ export const academicsTocItem = {
 
 export const studentsTocItem = {
   key: STUDENTS,
-  label: capitalize(t(STUDENTS)),
+  label: capitalize(t('students demographics')),
   anchor: '#students',
   selected: false
 }
@@ -75,7 +75,7 @@ export const nearbyHomesForSaleTocItem = {
 
 export const reviewsTocItem = {
   key: REVIEWS,
-  label: capitalize(t(REVIEWS)),
+  label: t(capitalize(REVIEWS)),
   anchor: '#reviews',
   selected: false
 }

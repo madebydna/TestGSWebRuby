@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
+import { LIST_VIEW, MAP_VIEW } from 'react_components/search/search_context';
 import { once } from 'lodash';
 
 export default class Map extends React.Component {
@@ -10,7 +11,8 @@ export default class Map extends React.Component {
     lat: PropTypes.number,
     lon: PropTypes.number,
     markerDigest: PropTypes.string,
-    heartClickCallback: PropTypes.func
+    heartClickCallback: PropTypes.func,
+    view: PropTypes.string
   };
 
   static defaultProps = {
@@ -135,6 +137,10 @@ export default class Map extends React.Component {
     if (this.props.markerDigest !== prevProps.markerDigest) {
       this.setState({ markersUpdated: true});
     }
+    // the following condition is to help reset the center of map when map object is not viewable but MapMarkers are changed 
+    if((this.props.view === LIST_VIEW || this.props.view === MAP_VIEW) && this.props.view !== prevProps.view){
+      this.setState({ markersUpdated: true }, () => setTimeout(() => this.map.panBy(1, 1), 50));
+    }
   }
 
   renderPolygons() {
@@ -179,6 +185,7 @@ export default class Map extends React.Component {
       } else {
         theMap.setOptions({maxZoom:null});
       }
+      // this.props.googleMaps.event.trigger(theMap, 'resize')
       this.setState({
         markersUpdated: false,
       })

@@ -77,7 +77,7 @@ class RITestProcessor2016PARCCNECAP < GS::ETL::TestProcessor
     p_3_and_4: 1
   }
 
-  source("PARC_2016.txt",[], col_sep: "\t") do |s|
+  source("PARCC_2016.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
       entity_level: 'school',
       year: 2016,
@@ -104,9 +104,15 @@ class RITestProcessor2016PARCCNECAP < GS::ETL::TestProcessor
       elsif row[:testcode] == 'MATH'
         row[:subject] = 'Math'
         row[:grade] = 'All'
+      elsif row[:testcode].to_s.include?("ELA0")
+        row[:subject] = 'ELA'
+        row[:grade] = row[:testcode].gsub("ELA0","")
       elsif row[:testcode].to_s.include?("ELA")
         row[:subject] = 'ELA'
         row[:grade] = row[:testcode].gsub("ELA","")
+      elsif row[:testcode].to_s.include?("MAT0")
+        row[:subject] = 'Math'
+        row[:grade] = row[:testcode].gsub("MAT0","")
       elsif row[:testcode].to_s.include?("MAT")
         row[:subject] = 'Math'
         row[:grade] = row[:testcode].gsub("MAT","")
@@ -139,10 +145,6 @@ class RITestProcessor2016PARCCNECAP < GS::ETL::TestProcessor
     .transform("delete suppressed data",DeleteRows,:number_tested,'0','1','2','3','4','5','6','7','8','9')
     .transform("Adding column breakdown from breadown code in file", HashLookup, :reporder, map_breakdown_codes, to: :breakdown)
     .transform("delete bad breakdowns",DeleteRows,:breakdown,nil)
-    .transform("pad grade values",WithBlock) do |row|
-      row[:grade] = row[:grade].rjust(2,'0')
-      row
-    end
     .transform("create prof above",WithBlock) do |row|
       row[:p_3_and_4] = row[:p3].to_f + row[:p4].to_f
       row

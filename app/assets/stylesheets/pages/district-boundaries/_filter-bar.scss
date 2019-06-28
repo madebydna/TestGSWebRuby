@@ -79,8 +79,8 @@
           display: none;
         }
         a {
-          font-weight: bold;
-          font-size: 14px;
+          font-family: $font-family-base-bold;
+          font-size: $font-size-base;
         }
       }
     }

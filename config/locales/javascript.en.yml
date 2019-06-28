@@ -24,6 +24,7 @@ en:
     awards: awards
     award_winner: Award winner
     award_winners: Award winners
+    award_winning_high_schools: Award-winning high schools
     award-winning-schools: Award-winning schools
     assigned_school: Assigned school
     browse_school_blurb: Here's a look at schools in
@@ -34,10 +35,10 @@ en:
     city_hero_html: <div class="city-hero-narrative">{city} is a city in {county} county, {stateLong}</div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} is a city in {stateLong}</div>
     state:
-      state_hero_narrative_html: <div class="state-hero-narrative">There are {schoolCount} public and private K-12 schools in {nameLong}. As you search for schools that fit your family, you'll find information on academic, equity, environment, reviews, and more.</div>
+      state_hero_narrative_html: There are {schoolCount} public and private K-12 schools in {nameLong}. As you search for schools that fit your family, you'll find information on academic, equity, environment, reviews, and more.
       state_hero_title: '{nameLong} Schools'
       districts_header: Largest school districts in {nameLong}
-      cities_header: Browse schools in {nameLong} by
+      cities_header: Explore schools in {nameLong}
       cities_browse_more_button: See all cities
       districts_browse_more_button: See all districts
       see_award_winning_schools: See award-winning schools
@@ -219,11 +220,12 @@ en:
       at_grade_level: Proficient
     This school: This school
     top_schools:
+      state_top_schools_header: Best public schools in {state}
       top_schools: Top schools
       top_schools_blurbs: >
-        The GreatSchools Rating provides an overall snapshot of school quality
-        based on how well a school prepares all its students for postsecondary
-        success - be it college or career. <a href="/gk/ratings/">Learn more</a>
+        These are some of the top-rated public schools in {name} <a href="/gk/ratings/#summary-rating">based on a variety of measures</a>, including academic performance and <a href="gk/ratings/#equityrating">equity</a>. Click to see the full list of schools sorted by rating. <a href="/gk/ratings/">About the GreatSchools rating</a>
+      csa_top_schools_blurb: >
+        These are some of the best public high schools in {name} at preparing students for success in college. The <a href="/gk/csa-winners/">College Success Award</a> recognizes schools that do an exemplary job getting students to enroll in and stick with college, including those that beat the odds by better serving low-income students.
       learn_more: Learn more
       no_elemCity: There are no elementary schools with a GreatSchools rating for this city
       no_midCity: There are no middle schools with a GreatSchools rating for this city
@@ -257,6 +259,7 @@ en:
     student: student
     students: students
     Students: Students
+    students demographics: students demographics
     State avg: 'State avg:'
     School value: School value
     Sponsored Ad: Sponsored Listing
@@ -435,6 +438,7 @@ en:
     csa_district_schools_info_html: The <a href="/gk/csa-winners/">College Success Awards</a> recognize public high schools that stand out in ​getting students enrolled in - and staying with - college.
     see_all_winning_schools: See all winning schools
     csa_winners: College Success Award winners
+    csa_winner: CSA winner
     see_winning_schools_in: See winning schools in
     xq:
       school_board_finder: School board finder

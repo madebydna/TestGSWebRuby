@@ -248,3 +248,14 @@
   }
 
 }
+
+@include media-breakpoint-down(xs) {
+  #Students_with_Disabilities .sub-section-navigation .sub-nav-item {
+    display: block;
+    
+    &:last-child,
+    &:first-child {
+      border-radius: 4px;
+    }
+  }
+}

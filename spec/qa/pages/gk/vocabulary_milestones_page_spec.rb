@@ -2,7 +2,7 @@
 
 require 'features/page_objects/gk_vocabulary_milestones_page'
 
-describe 'User visits GK high school milestones', type: :feature, remote: true, safe_for_prod: true do
+xdescribe 'User visits GK high school milestones', type: :feature, remote: true, safe_for_prod: true do
   before { visit '/gk/category/milestones-topics/vocabulary/' }
   let(:page_object) { GkVocabularyMilestones.new }
   subject { page_object }

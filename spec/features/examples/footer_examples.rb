@@ -4,7 +4,8 @@ require 'features/page_objects/state_home_page'
 
 
 #Footer Shared Examples
-shared_examples_for 'should have a footer' do
+shared_examples_for 'should have a footer' do |*flags|
+  skip if flags.include?(:skip)
   it { is_expected.to have_footer }
   it { is_expected.to_not have_selector('.js-shortFooter') }
   it { is_expected.to_not have_selector('.rs-state-footer') }

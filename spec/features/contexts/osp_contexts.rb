@@ -423,6 +423,7 @@ end
 shared_context 'click Before Care and Canoe button options' do
   let(:selected_answers) { ['Before Care', 'Canoe'] }
   include_context 'click several buttons'
+  before { skip }
 end
 
 shared_context 'click No Dress code and Dress code radio buttons' do

@@ -66,4 +66,6 @@ LocalizedProfiles::Application.configure do
     config.logger = ActiveSupport::Logger.new(ENV_GLOBAL['log_file'])
   end
 
+  config.middleware.insert_before('ActionDispatch::Static', 'Testing::RequestInspectorMiddleware')
+
 end
