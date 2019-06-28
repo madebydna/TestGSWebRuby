@@ -38,7 +38,7 @@ const studentsPhrase = enrollment => {
   }
   return (
     <span key="enrollment">
-      <span className="open-sans_semibold">{enrollment}</span>
+      <span className="open-sans_semibold">{enrollment.toLocaleString()}</span>
       {` ${enrollment > 1 ? t('students') : t('student')}`}
     </span>
   );

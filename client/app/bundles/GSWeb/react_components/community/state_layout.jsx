@@ -53,20 +53,16 @@ class StateLayout extends React.Component {
     let { nameLong } = this.props.locality;
     let schoolCount = this.props.schoolCount;
 
-    return <div
-        dangerouslySetInnerHTML={{
-          __html: t('state.state_hero_narrative_html', { parameters: { nameLong, schoolCount } })
-        }}
-      />;
+    return t('state.state_hero_narrative_html', { parameters: { nameLong, schoolCount } });
   }
 
   renderHero(){
     return (<div id="hero">
       <div>
         <h1 className="state-hero-title">{this.heroTitle()}</h1>
-        {this.heroNarration()}
+        <div className="state-hero-narrative">{this.heroNarration()}</div>
       </div>
-    </div>)
+    </div>);
   }
 
   renderBreadcrumbs(){
@@ -105,7 +101,7 @@ class StateLayout extends React.Component {
     const browseHeader = t('state.cities_header', { parameters: { nameLong }});
 
     return (
-      <div id="browse-schools" className="module-section">
+      <div id="schools" className="module-section">
         <div className="modules-title">{browseHeader}</div>
         {this.props.browseCities}
         {this.props.topSchools}
@@ -143,7 +139,7 @@ class StateLayout extends React.Component {
 
   render() {
     return (
-      <div className="city-body">
+      <div className="state-body">
         {this.props.searchBox}
         {this.renderBreadcrumbs()}
         {this.renderHero()}
