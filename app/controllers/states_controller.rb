@@ -202,6 +202,7 @@ class StatesController < ApplicationController
           state_abbr: @state[:short],
           trailing_slash: true
         )
+        cp[:searchResultBrowseUrl] = search_state_browse_path(gs_legacy_url_encode(@state[:long]))
         cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(
           state: gs_legacy_url_encode(@state[:long]),
           trailing_slash: true
