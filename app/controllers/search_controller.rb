@@ -77,6 +77,8 @@ class SearchController < ApplicationController
       MetaTag::ZipMetaTags
     elsif street_address?
       MetaTag::AddressMetaTags
+    elsif state_browse?
+      MetaTag::StateBrowseMetaTags
     else
       MetaTag::OtherMetaTags
     end
@@ -88,11 +90,16 @@ class SearchController < ApplicationController
   end
 
   def should_include_breadcrumbs?
-    city_browse? || district_browse?
+    city_browse? || district_browse? || state_browse?
   end
 
   def search_breadcrumbs
-    district_browse? ? district_breadcrumbs : city_breadcrumbs
+    if district_browse?
+      return district_breadcrumbs 
+    elsif city_browse? 
+      return city_breadcrumbs
+    end 
+    state_breadcrumbs
   end
 
   def city_breadcrumbs
@@ -121,6 +128,19 @@ class SearchController < ApplicationController
       {
         text: district&.gs_capitalize_words,
         url: district_url(district_params(state_name, city,  district))
+      }
+    ]
+  end
+
+  def state_breadcrumbs
+    @_state_breadcrumbs ||= [
+      {
+        text: StructuredMarkup.home_breadcrumb_text,
+        url: home_path
+      },
+      {
+        text: StructuredMarkup.state_breadcrumb_text(state),
+        url: state_url(state_params(state))
       }
     ]
   end
