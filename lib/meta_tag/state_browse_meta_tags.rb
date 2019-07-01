@@ -4,11 +4,11 @@ module MetaTag
   class StateBrowseMetaTags < MetaTag::MetaTags
     def title
       state_type_level_code_text = "#{entity_type_long}#{level_code_long}#{schools_or_preschools}"
-      "Find the best public, charter #{state_type_level_code_text} in #{States.state_name(state).titleize}#{title_pagination_text}"
+      "Find the best public, charter #{state_type_level_code_text.downcase} in #{States.state_name(state).titleize}#{title_pagination_text}"
     end
 
     def description
-      "View & compare ratings, parent reviews, & information about #{page_of_results.total} public, charter #{level_code_long} schools in #{States.state_name(state).titleize}."
+      "View & compare ratings, parent reviews, & information about #{page_of_results.total} public, charter #{level_code_long.downcase} schools in #{States.state_name(state).titleize}."
     end
 
     def canonical_url
