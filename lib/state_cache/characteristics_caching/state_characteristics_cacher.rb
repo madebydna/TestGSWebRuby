@@ -34,7 +34,7 @@ class StateCharacteristicsCacher < StateCacher
   end
   
   def initialize(state)
-    @state = state&.upcase
+    @state = state
   end
 
   def self.active?
@@ -53,7 +53,7 @@ class StateCharacteristicsCacher < StateCacher
     @_census_query_results ||= (
     census_data = CensusDataStateResults.new(census_query.to_a).filter_to_max_year_per_data_type!
     census_data.map do |obj|
-      CharacteristicsCaching::QueryResultDecorator.new(@state, obj)
+      CharacteristicsCaching::QueryResultDecorator.new(@state&.upcase, obj)
     end.compact
     )
   end
