@@ -6,8 +6,9 @@ class Api::PaginationSummarySerializer
   end
 
   def to_hash
+    full_sanitizier = Rails::Html::FullSanitizer.new
     {
-      resultSummary: @paginatable_results.result_summary,
+      resultSummary: full_sanitizier.sanitize(@paginatable_results.result_summary),
       paginationSummary: @paginatable_results.pagination_summary
     }
   end

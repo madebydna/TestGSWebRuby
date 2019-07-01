@@ -4,7 +4,7 @@
     <div class="sample_url">https://api.greatschools.org/schools/nearby?[parameters]</div>
   </div>
   <div class="call">
-    <h3>Parameters</h3> The "key" parameter is what is used to identify your specific API key to GreatSchools. The "state" parameter tells us what State you would like the results for and is required. You must provide at least one of the following, "city", "zip", "address", or "lat" and "lon" describing the location in order to receive the list of schools near that coordinate. Other parameters are optional.
+    <h3>Parameters</h3> The "key" parameter is what is used to identify your specific API key to GreatSchools. The "state" parameter tells us what State you would like the results for and is required. You must provide at least one of the following, "city" or "lat" and "lon" describing the location in order to receive the list of schools near that coordinate. Other parameters are optional.
     <table class="call_params">
       <thead>
         <tr class="fields">
@@ -26,22 +26,10 @@
           <td>CT</td>
         </tr>
         <tr>
-          <td>zip</td>
-          <td>5 digit zip code
-          </td>
-          <td>06107</td>
-        </tr>
-        <tr>
           <td>city</td>
           <td>URL-encoded city name
           </td>
           <td>San+Francisco</td>
-        </tr>
-        <tr>
-          <td>address</td>
-          <td>URL-encoded address
-          </td>
-          <td>684+New+Britain+Ave</td>
         </tr>
         <tr>
           <td>lat</td>
@@ -83,73 +71,91 @@
     </table>
     <div class="footnote">*required</div>
     Examples of usage:
-    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;address=160+Spear+St&amp;city=San+Francisco&amp;state=CA&amp;zip=94105&amp;schoolType=public-charter&amp;levelCode=elementary-schools&amp;radius=10&amp;limit=100</div>
-    Returns up to 100 public and charter elementary schools within 10 miles of 160 Spear St, San Francisco, CA 94105
-    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;city=San+Francisco&amp;state=CA</div>
-    Returns up to 200 schools within 5 miles of San Francisco, CA
-    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;zip=94105</div>
-    Returns up to 200 schools within 5 miles of ZIP Code 94105 in California
     <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;lat=37.758862&amp;lon=-122.411406</div>
     Returns up to 200 schools within 5 miles of latitude 35.274494, longitude -119.005623 in California
+    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;city=San+Francisco&amp;state=CA</div>
+    Returns up to 200 schools within 5 miles of San Francisco, CA
   </div>
   <div class="call">
     <h3>Sample Request</h3>
-    <div class="sample_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;zip=94105&amp;limit=2</div>
-    Returns 2 California schools within 5 miles of ZIP Code 94105 in California
+    <div class="sample_url">https://http://api.greatschools.org/schools/nearby?key=[yourAPIKey]&state=CA&city=oakland&limit=2</div>
+    Returns 2 California schools in Oakland
   </div>
   <div class="call">
     <h3>Sample Response</h3>
     <textarea rows="" cols="" readonly="readonly" wrap="off" class="sampleTextArea">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
-      &lt;schools&gt;
-      &lt;school&gt;
-      &lt;gsId&gt;11536&lt;/gsId&gt;
-      &lt;name&gt;Youth Chance High School&lt;/name&gt;
-      &lt;type&gt;private&lt;/type&gt;
-      &lt;gradeRange&gt;10-12&lt;/gradeRange&gt;
-      &lt;enrollment&gt;25&lt;/enrollment&gt;
-      &lt;city&gt;San Francisco&lt;/city&gt;
-      &lt;state&gt;CA&lt;/state&gt;
-      &lt;address&gt;169 Steuart Street,
-      San Francisco, CA  94105&lt;/address&gt;
-      &lt;phone&gt;(415) 615-1337&lt;/phone&gt;
-      &lt;ncesId&gt;A9900759&lt;/ncesId&gt;
-      &lt;lat&gt;37.7924&lt;/lat&gt;
-      &lt;lon&gt;-122.3921&lt;/lon&gt;
-      &lt;overviewLink&gt;
-      https://www.greatschools.org/cgi-bin/ca/private/11536?s_cid=gsapi
-      &lt;/overviewLink&gt;
-      &lt;ratingsLink&gt;
-      https://www.greatschools.org/school/rating.page?state=CA&amp;id=11536&amp;s_cid=gsapi
-      &lt;/ratingsLink&gt;
-      &lt;reviewsLink&gt;
-      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=11536&amp;s_cid=gsapi
-      &lt;/reviewsLink&gt;
-      &lt;/school&gt;
-      &lt;school&gt;
-      &lt;gsId&gt;8097&lt;/gsId&gt;
-      &lt;name&gt;Notre Dame des Victoires School&lt;/name&gt;
-      &lt;type&gt;private&lt;/type&gt;
-      &lt;gradeRange&gt;K-8&lt;/gradeRange&gt;
-      &lt;enrollment&gt;275&lt;/enrollment&gt;
-      &lt;city&gt;San Francisco&lt;/city&gt;
-      &lt;state&gt;CA&lt;/state&gt;
-      &lt;address&gt;659 Pine St,
-      San Francisco, CA  94108&lt;/address&gt;
-      &lt;phone&gt;(415) 421-0069&lt;/phone&gt;
-      &lt;ncesId&gt;00072439&lt;/ncesId&gt;
-      &lt;lat&gt;37.791412&lt;/lat&gt;
-      &lt;lon&gt;-122.406784&lt;/lon&gt;
-      &lt;overviewLink&gt;
-      https://www.greatschools.org/cgi-bin/ca/private/8097?s_cid=gsapi
-      &lt;/overviewLink&gt;
-      &lt;ratingsLink&gt;
-      https://www.greatschools.org/school/rating.page?state=CA&amp;id=8097&amp;s_cid=gsapi
-      &lt;/ratingsLink&gt;
-      &lt;reviewsLink&gt;
-      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=8097&amp;s_cid=gsapi
-      &lt;/reviewsLink&gt;
-      &lt;/school&gt;
-      &lt;/schools&gt;
+      <schools>
+<school>
+<gsId>11910</gsId>
+<name>ASCEND School</name>
+<type>charter</type>
+<gradeRange>K-8</gradeRange>
+<enrollment>433</enrollment>
+<gsRating>4</gsRating>
+<parentRating>4</parentRating>
+<city>Oakland</city>
+<state>CA</state>
+<districtId>14</districtId>
+<district>Oakland Unified School District</district>
+<districtNCESId>0628050</districtNCESId>
+<address>3709 East 12th Street, Oakland, CA 94601</address>
+<phone>(510) 879-3140</phone>
+<fax>(510) 534-7222</fax>
+<website>www.efcps.org</website>
+<ncesId>062805008677</ncesId>
+<lat>37.774033</lat>
+<lon>-122.22166</lon>
+<overviewLink>
+https://www.greatschools.org/california/oakland/11910-ASCEND-School/?utm_source=GSAPI&utm_medium=referral
+</overviewLink>
+<ratingsLink>
+https://www.greatschools.org/california/oakland/11910-ASCEND-School/?utm_source=GSAPI&utm_medium=referral
+</ratingsLink>
+<reviewsLink>
+https://www.greatschools.org/california/oakland/11910-ASCEND-School/?utm_source=GSAPI&utm_medium=referral#Reviews
+</reviewsLink>
+<distance>0.37</distance>
+<schoolStatsLink>
+https://www.greatschools.org/california/oakland/11910-ASCEND-School/?utm_source=GSAPI&utm_medium=referral
+</schoolStatsLink>
+</school>
+<school>
+<gsId>17573</gsId>
+<name>Arise High School</name>
+<type>charter</type>
+<gradeRange>9-12</gradeRange>
+<enrollment>263</enrollment>
+<gsRating>4</gsRating>
+<parentRating>3</parentRating>
+<city>Oakland</city>
+<state>CA</state>
+<districtId>14</districtId>
+<district>Oakland Unified School District</district>
+<districtNCESId>0628050</districtNCESId>
+<address>
+3301 East 12th Street, Suite 205, Oakland, CA 94601
+</address>
+<phone>(510) 436-5487</phone>
+<fax>(510) 436-5493</fax>
+<website>www.arisehighschool.org</website>
+<ncesId>062805012040</ncesId>
+<lat>37.77616</lat>
+<lon>-122.22506</lon>
+<overviewLink>
+https://www.greatschools.org/california/oakland/17573-Arise-High-School/?utm_source=GSAPI&utm_medium=referral
+</overviewLink>
+<ratingsLink>
+https://www.greatschools.org/california/oakland/17573-Arise-High-School/?utm_source=GSAPI&utm_medium=referral
+</ratingsLink>
+<reviewsLink>
+https://www.greatschools.org/california/oakland/17573-Arise-High-School/?utm_source=GSAPI&utm_medium=referral#Reviews
+</reviewsLink>
+<distance>0.44</distance>
+<schoolStatsLink>
+https://www.greatschools.org/california/oakland/17573-Arise-High-School/?utm_source=GSAPI&utm_medium=referral
+</schoolStatsLink>
+</school>
+</schools>
     </textarea>
   </div>
 </div>

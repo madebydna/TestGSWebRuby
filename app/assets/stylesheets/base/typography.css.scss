@@ -3,7 +3,7 @@ h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
 h6, .h6 { font-family: 'opensans-italic'; }
 h1.lg-roboto {
   font-size: 30px;
-  font-family: 'RobotoSlab-Light';
+  font-family: $headings-font-family-robotoslab-light;
   @media (min-width: $screen-sm-min) {
     font-size: 50px;
   }

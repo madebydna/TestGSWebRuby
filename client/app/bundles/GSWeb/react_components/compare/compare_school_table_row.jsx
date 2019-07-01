@@ -69,7 +69,7 @@ const CompareSchoolTableRow = ({
   const schoolClass = () => {
     let baseClass = pinned ? 'school pinned' : 'school';
     if (['name', 'distance', 'rating'].includes(sort)) {
-      return `${baseClass} yellow-highlight`
+      return `${baseClass} highlight`
     }
     return baseClass
   }
@@ -77,7 +77,7 @@ const CompareSchoolTableRow = ({
   const schoolCard = () => {
     return (
       <td className={schoolClass()}>
-        {pinned && <div className="compare-schools-pinned-header">COMPARE THIS SCHOOL TO SCHOOLS BELOW</div>}
+        {pinned && <div className="compare-schools-pinned-header">{t('compare_pinned_school')}</div>}
         <React.Fragment key={state + id}>
           <span><RatingWithTooltip rating={rating} ratingScale={ratingScale} /></span>
           <span>
@@ -136,7 +136,7 @@ const CompareSchoolTableRow = ({
       <React.Fragment>
         <td className="centered">{enrollment.toLocaleString()}</td>
         {breakdown !== 'All students' && <td className="centered">{cohortPercentageComponent(cohortPercentageForEthnicity())}</td>}
-        <td className={`${size < MD ? "centered" : undefined} ${sort === 'testscores' ? 'yellow-highlight' : undefined}`}>
+        <td className={`${size < MD ? "centered" : ''} ${sort === 'testscores' ? 'highlight' : ''}`}>
           {size > MD ? 
             <RatingWithBar score={testScoreRatingForEthnicity} size='small' />
             :

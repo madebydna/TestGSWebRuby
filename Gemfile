@@ -145,7 +145,7 @@ end
 
 group :test do
   gem 'rspec_junit_formatter', '~> 0.2.3'
-  gem 'capybara-screenshot', '~> 1.0.11'
+  gem 'capybara-screenshot', '~> 1.0.23'
 
   # Mock external http requests for tests
   gem 'webmock'
@@ -158,17 +158,16 @@ group :test do
   # testing frameworks
   gem 'rspec', '~> 3.5.0'
   gem 'rspec-rails', '~> 3.5.0'
-  gem 'cucumber', '~> 1.3.8'
-  gem 'cucumber-rails', '~> 1.4.0', :require => false
+  gem 'cucumber', '~> 3'
+  gem 'cucumber-rails', '~> 1.7.0', :require => false
 
   # DSL for page object pattern, used for cucumber testing
   gem 'site_prism'
 
-  gem 'selenium-webdriver'
   gem 'mechanize'
-  gem 'capybara'
-  gem 'capybara-webkit'
-  gem 'capybara-mechanize'
+  gem 'capybara', '~> 3.18.0'
+  gem 'webdrivers'
+  gem 'capybara-mechanize', '~> 1.11.0'
   gem 'machinist', '>= 2.0.0.beta2'
   gem 'timecop'
 
@@ -226,6 +225,8 @@ group :development, :test do
 
   # Minimal embedded v8 engine for Ruby
   gem 'mini_racer', platforms: :ruby
+
+  gem 'pry-rails'
 end
 
 # Sass adapter for the Rails asset pipeline.

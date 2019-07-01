@@ -107,7 +107,7 @@ class SchoolModerationPage < SitePrism::Page
   end
 
   def search_for_school(state, id)
-    wait_for_school_search_form
+    wait_until_school_search_form_visible
     form = school_search_form
     form.state_dropdown.select(state)
     form.school_id_box.set(id)

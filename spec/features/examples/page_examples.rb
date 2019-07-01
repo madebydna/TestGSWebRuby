@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-shared_example 'should contain the expected text' do |text|
+shared_example 'should contain the expected text' do |text, *flags|
+  skip if flags.include?(:skip)
   fail unless subject.present?
   [*subject].each do | s |
     expect(s.text).to include(text)
@@ -14,7 +15,8 @@ shared_example 'should eql the expected text' do |text|
   end
 end
 
-shared_example 'should eql the expected value' do |value|
+shared_example 'should eql the expected value' do |value, *flags|
+  skip if flags.include?(:skip)
   fail unless subject.present?
   [*subject].each do | s |
     expect(s.value).to eql(value)

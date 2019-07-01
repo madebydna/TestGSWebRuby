@@ -38,6 +38,19 @@ class HomeController < ApplicationController
     @homepage_banner_prop = PropertyConfig.get_property('homePageGreatKidsMilestoneBannerActive', 'false')
     gon.pagename = "Homepage"
 
+    # NOTE: this is temporary until we get the final list from product
+    @city_list_for_footer = ["Albuquerque, NM", "Anchorage, AK", "Atlanta, GA", "Austin, TX", 
+    "Baltimore, MD", "Billings, MT", "Birmingham, AL", "Boise, ID", "Boston, MA", "Bridgeport, CT", 
+    "Burlington, VT", "Charleston, WV", "Charlotte, NC", "Cheyenne, WY", "Chicago, IL", "Columbia, SC", 
+    "Columbus, OH", "Dallas, TX", "Denver, CO", "Des Moines, IA", "Detroit, MI", "El Paso, TX", "Fargo, ND", 
+    "Honolulu, HI", "Houston, TX", "Indianapolis, IN", "Jackson, MS", "Jacksonville, FL", "Kansas City, MO", 
+    "Las Vegas, NV", "Little Rock, AR", "Los Angeles, CA", "Louisville, KY", "Manchester, NH", "Memphis, TN", 
+    "Miami, FL", "Milwaukee, WI", "Minneapolis, MN", "Nashville, TN", "New Orleans, LA", "New York, NY", 
+    "Newark, NJ", "Oakland, CA", "Oklahoma City, OK", "Omaha, NE", "Oklahoma City, MS", "Philadelphia, PA", 
+    "Phoenix, AZ", "Portland, MA", "Portland, OR", "Providence, RI", "Sacramento, CA", "Salt Lake City, UT", 
+    "San Antonio, TX", "San Diego, CA", "San Francisco, CA", "San Jose, CA", "Seattle, WA", "Sioux Falls, SD", 
+    "Tucson, AZ", "Virginia Beach, VA", "Washington, DC", "Wichita, KS", "Wilmington, DE"]
+
   end
 
   def page_view_metadata

@@ -6,8 +6,8 @@ app_port: '3000'
 media_server: 'http://localhost:3000'
 
 # The URLs of the Solr server to use
-solr.ro.server.url: 'http://dev.greatschools.org:8983/solr/main/'
-solr.rw.server.url: 'http://dev.greatschools.org:8983/solr/main/'
+solr7.ro.server.url: "http://dev-solr1.greatschools.org:8983/solr/main/"
+solr7.rw.server.url: "http://dev-solr1.greatschools.org:8983/solr/main/"
 # solr.ro.server.url: 'http://solr:8983/solr/main/' # Use these if working on solr-7 in docker
 # solr.rw.server.url: 'http://solr:8983/solr/main/'
 

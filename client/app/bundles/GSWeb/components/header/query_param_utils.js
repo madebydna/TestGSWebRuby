@@ -6,6 +6,7 @@ const getQueryParam = function (key, uri) {
 };
 
 // Add / Update a key-value pair in the URL query parameters
+// Doesn't current work if the key includes any RegExp special characters since those aren't escaped
 const updateUrlParameter = function (uri, key, value) {
   // remove the hash part before operating on the uri
   let i = uri.indexOf('#');
@@ -17,9 +18,14 @@ const updateUrlParameter = function (uri, key, value) {
 
   if (!value) {
     // remove key-value pair if value is empty
-    uri = uri.replace(new RegExp("([&]?)" + key + "=.*?(&|$)", "i"), '');
+    uri = uri.replace(new RegExp("([&]?)" + key + "=([^(&|$)]*)", "i"), '');
     if (uri.slice(-1) === '?') {
       uri = uri.slice(0, -1);
+    }
+    let x = uri.indexOf('?');
+    // Removes '&' if its the first character in the query params string
+    if (x !== -1 && uri[x+1] === '&'){
+      uri = uri.slice(0,x+1) + uri.slice(x+2, uri.length);
     }
   } else if (uri.match(re)) {
     uri = uri.replace(re, '$1' + key + "=" + value + '$2');

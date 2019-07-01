@@ -4,6 +4,7 @@ import { parse, extract } from 'query-string';
 import QuestionMarkTooltip from './question_mark_tooltip';
 import { analyticsEvent } from 'util/page_analytics';
 import { t } from '../../util/i18n';
+import { getQueryParam, updateUrlParameter } from 'components/header/query_param_utils';
 
 // TODOs:
 // - rename subject css class
@@ -46,6 +47,9 @@ const BasicDataModuleRow = ({
   };
 
   const renderCompareLink = () => {
+    if (getQueryParam('lang') === 'es') {
+      link = updateUrlParameter(link, 'lang', 'es');
+    }
     return <a onClick={()=> handleClick(link)} className="anchor-button" href={link}>Compare</a>
   }
 

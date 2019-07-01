@@ -50,9 +50,8 @@ export default class ResponseData extends React.Component {
       }
       if (answers.length > 1) {
         return <li style={styling} style={{listStyle: 'disc'}} key={index}>{answer}</li>;
-      } else {
-        return <li style={styling} key={index}>{answer}</li>;
       }
+      return <li style={styling} key={index}>{answer}</li>;
     });
   }
 

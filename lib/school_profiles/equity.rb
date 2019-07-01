@@ -48,6 +48,21 @@ module SchoolProfiles
       end
     end
 
+    def low_income_test_scores_array
+      # For low-income in the Overview tab, add in a url to the compare page with the correct query params
+      li = @low_income_test_scores.to_hash
+      li.map do |component|
+        if component[:anchor] == 'Overview' && component[:values]
+          component[:values].select {|value_hash| value_hash[:breakdown_in_english] == 'Economically disadvantaged' || value_hash[:breakdown_in_english] == 'All students'}
+                            .map do |value_hash|
+                              value_hash[:link] = compare_schools_path(compare_button_query_params(value_hash))
+                              value_hash
+                            end
+        end
+        component
+      end
+    end
+
     def ethnicity_mapping_hash
       {
         :'African American' => "African American",
@@ -77,7 +92,7 @@ module SchoolProfiles
         hash[:lat] = school.lat
         hash[:lon] = school.lon
         hash[:gradeLevels] = school.level_code.split(',')
-        hash[:breakdown] = values_hash[:breakdown_in_english]
+        hash[:breakdown] = values_hash[:breakdown_in_english] != 'Economically disadvantaged' ? values_hash[:breakdown_in_english] : 'Low-income'
         hash[:sort] = 'testscores'
       end
     end
@@ -113,7 +128,7 @@ module SchoolProfiles
         {
           title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
           anchor: 'Test_scores',
-          data: @low_income_test_scores.to_hash
+          data: low_income_test_scores_array
         },
         {
           title: I18n.t('Graduation rates', scope:'lib.equity_gsdata'),

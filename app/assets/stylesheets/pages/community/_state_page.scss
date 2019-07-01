@@ -3,13 +3,17 @@
 #hero{
   div{
     max-width: 500px;
-
+    
     .state-hero-narrative {
       font-size: $font-size;
     }
   }
-
+  
   @include media-breakpoint-down(sm) {
+    height: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
     .state-hero-title {
       font-size: $font-size-h1;
       margin: 15px auto;

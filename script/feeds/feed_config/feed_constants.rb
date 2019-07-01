@@ -18,7 +18,8 @@ module Feeds
           'subrating_description' => 'local-gs-subrating-description-feed',
           'old_test_gsdata' => 'local-gs-test-feed',
           'old_test_subgroup_gsdata' => 'local-gs-test-subgroup-feed',
-          'new_test_gsdata' => 'local-gs-new-test-result-feed',
+          'new_test_gsdata_flat' => 'local-gs-new-test-result-feed',
+          'new_test_gsdata' => 'local-gs-new-test-feed',
           'new_test_subgroup_gsdata' => 'local-gs-new-test-subgroup-feed',
           'new_test_gsdata_description' => 'local-gs-new-test-feed',
           'official_overall' => 'local-gs-official-overall-rating-feed',
@@ -43,11 +44,11 @@ module Feeds
       }
 
       FEED_TO_SCHEMA_MAPPING = {
-          'common_schema' => 'http://www.greatschools.org/feeds/greatschools-common.xsd',
-          'test_scores' => 'http://www.greatschools.org/feeds/greatschools-test.xsd',
-          'test_subgroup' => 'http://www.greatschools.org/feeds/greatschools-test-subgroup.xsd',
-          'test_rating' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
-          'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
+          'common_schema' => 'https://www.greatschools.org/feeds/greatschools-common.xsd',
+          'test_scores' => 'https://www.greatschools.org/feeds/greatschools-test.xsd',
+          'test_subgroup' => 'https://www.greatschools.org/feeds/greatschools-test-subgroup.xsd',
+          'test_rating' => 'https://www.greatschools.org/feeds/greatschools-test-rating.xsd',
+          'official_overall' => 'https://www.greatschools.org/feeds/gs-official-overall-rating.xsd',
           'directory_feed' => 'https://www.greatschools.org/feeds/local-greatschools.xsd',
           'google_feed' => 'https://www.gstatic.com/localfeed/local_feed.xsd',
           'city' => 'https://www.greatschools.org/feeds/greatschools-city2.xsd',

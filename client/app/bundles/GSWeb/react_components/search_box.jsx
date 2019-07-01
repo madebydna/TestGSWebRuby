@@ -18,6 +18,7 @@ import OpenableCloseable from './openable_closeable';
 import CaptureOutsideClick from './search/capture_outside_click';
 import SearchResultsList from './search_results_list';
 import { name as stateName } from 'util/states';
+import cancelCircle from 'icons/cancel-circle.svg';
 
 // Matches only 5 digits
 // Todo currently 3-4 schools would match this regex,
@@ -479,7 +480,7 @@ export default class SearchBox extends React.Component {
         this.resetSearchTerm();
       }}
     >
-      x
+      <img src={cancelCircle}/>
     </div>
   );
 

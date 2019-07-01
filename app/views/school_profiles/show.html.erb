@@ -14,7 +14,7 @@
     <!-- main content -->
     <div class="static-container">
       <div class="right_rail">
-        <%= render 'sticky_right_rail' %>
+        <%= render 'sticky_right_rail', private_school_flag: false, address: @school_profile.hero.school_address %>
       </div>
       <div class="content">
         <div class="profile-section">
@@ -108,6 +108,11 @@
                 <%= t('.environment') %>
               </h2>
             </div>
+
+            <div class="col-xs-12 xq_school_board_module_mobile_container">
+              <%= render 'xq_school_board_module_mobile', address: @school_profile.hero.school_address %>
+            </div>
+
             <div class="col-xs-12 col-lg-9">
               <% osp_link = osp_register_path(city: @school.city, school_id: @school.id.to_s, state: @school.state).gsub(/\/$/, '') %>
 

@@ -5,6 +5,7 @@ import Button from "../button";
 import { t } from 'util/i18n';
 import { XS, size as viewportSize } from 'util/viewport';
 import { scrollToElement } from 'util/scrolling';
+import { copyParam, getHref } from 'util/uri';
 
 class RecentReviews extends React.Component {
   static propTypes = {
@@ -55,6 +56,7 @@ class RecentReviews extends React.Component {
   }
 
   renderReviewLayout(componentFunction) {
+    const reviewsLink = copyParam('lang', getHref(), '/reviews/');
     return (
       <React.Fragment>
         {/* Commented out until we need to filter for gradeLevels */}
@@ -74,7 +76,7 @@ class RecentReviews extends React.Component {
             <div className="blue-line" />
             <div className="add-review-container">
               {this.renderAddReviewsBlurb()}
-              <a href="/reviews/">
+              <a href={reviewsLink}>
                 <button>{t('recent_reviews.Add a review')}</button>
               </a>
             </div>

@@ -1,4 +1,4 @@
-GS.localStorage = (function(_) {
+GS.localStorage = (function() {
     var namespace = 'GS.';
     var enabled = !!window.localStorage;
 
@@ -62,4 +62,4 @@ GS.localStorage = (function(_) {
         removeItem:removeItem
     }
 
-})(_);
+})();

@@ -1,7 +1,12 @@
 export const links = {
   zendesk: 'https://greatschools.zendesk.com/hc/en-us/requests/new',
   tableviewFaq: 'https://greatschools.zendesk.com/hc/en-us/articles/360017863772-Searching-for-schools',
-  sponsoredSchools: 'https://greatschools.zendesk.com/hc/en-us/articles/360018787412-How-we-fund-our-work'
+  sponsoredSchools: 'https://greatschools.zendesk.com/hc/en-us/articles/360018787412-How-we-fund-our-work',
+  qualaroo: {
+    district_calendar: 'https://s.qualaroo.com/45194/ce167a02-c261-4a18-8cb5-9f6ae9648110',
+    district_academics: 'https://s.qualaroo.com/45194/a8cbf43f-a102-48f9-b4c8-4e032b2563ec',
+    nearby_schools: 'https://s.qualaroo.com/45194/7127048b-a2e6-491e-8f23-aa335f92b19a'
+  }
 }
 
 export const anchorObject = {

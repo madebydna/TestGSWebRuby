@@ -1,0 +1,39 @@
+#home-city-footer {
+    margin-top: 20px;
+    padding: 20px 0;
+    background: lighten(#15314E, 5%);
+    
+    .row.columns {
+      -webkit-columns: 4;
+      -moz-columns: 4;
+      columns: 4;
+    }
+    .row.columns > *:first-child > *:first-child{
+      margin-top: 0;
+    }
+    
+    .columns > [class*="col-"] {
+      -webkit-column-break-inside: avoid;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      width: 100%;
+      float: none;
+    }
+
+    @media (max-width: $screen-sm-max) {
+      .row.columns {
+        -webkit-columns: 3;
+        -moz-columns: 3;
+        columns: 3; 
+      }
+    }
+
+    @media (max-width: $screen-xs-max) {
+      .row.columns {
+        -webkit-columns: 2;
+        -moz-columns: 2;
+        columns: 2; 
+      }
+    }
+}
+

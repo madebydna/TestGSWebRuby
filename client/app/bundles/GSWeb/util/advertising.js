@@ -75,9 +75,10 @@ const loadGpt = function() {
     gads.async = true;
     gads.type = 'text/javascript';
     const useSSL = document.location.protocol == 'https:';
-    gads.src = `${
-      useSSL ? 'https:' : 'http:'
-    }//www.googletagservices.com/tag/js/gpt.js`;
+    // gads.src = `${
+    //   useSSL ? 'https:' : 'http:'
+    // }//www.googletagservices.com/tag/js/gpt.js`;
+    gads.src = "https://securepubads.g.doubleclick.net/tag/js/gpt.js";
     const node = document.getElementsByTagName('script')[0];
     node.parentNode.insertBefore(gads, node);
   })();
@@ -372,16 +373,15 @@ const handleGhostTextMessages = function(event) {
     jQuery('iframe').each(function() {
       if (
         this.getAttribute('name') &&
-        window.frames[this.getAttribute('name')] == event.source
+        window.frames[this.getAttribute('name')] === event.source
       ) {
-        const $adSlotDiv = jQuery(this).parents('.gs_ad_slot');
-        const slotName = $adSlotDiv.attr('id');
+        const $adSlotDiv = jQuery(this).parents('.js-ad-hook');
         let $adTextDiv = $adSlotDiv
-            .parents(`.js-${slotName}-wrapper`)
+            .siblings()
             .find('.advertisement-text');
         if ($adTextDiv.length === 0) {
           // Probably under /gk/
-          $adTextDiv = $adSlotDiv.find('.advertisement-text');
+          $adTextDiv = $adSlotDiv.siblings('.advertisement-text');
         }
         $adTextDiv.text(event.data.ghostText);
       }

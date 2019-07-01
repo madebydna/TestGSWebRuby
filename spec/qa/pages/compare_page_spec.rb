@@ -3,7 +3,7 @@
 
 require 'features/page_objects/compare_page'
 
-describe 'Search page' do
+xdescribe 'Search page' do
   let(:uri) { '' }
   before { visit uri }
   subject { ComparePage.new }

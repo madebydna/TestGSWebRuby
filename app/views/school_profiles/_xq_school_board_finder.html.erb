@@ -1,0 +1,14 @@
+<% encoded_address = ERB::Util.url_encode(address) %>
+
+<div class="rr-xq-school-board">
+  <div class="content">
+    <div class="icon">
+      <%= image_tag (asset_path('icons/nearby schools_30x30.png')) %>
+    </div>
+    <div class="text">
+      <div class="right-rail-module-header"><%= t("school_profiles.xq.school_board_finder") %></div>
+      <div class="right-rail-module-text"><%= t("school_profiles.xq.learn_more_school_board_html", address: encoded_address) %></div>
+      <div class="right-rail-module-sponsor"><%= t("school_profiles.xq.powered_by_xq") %></div>
+    </div>
+  </div>
+</div>

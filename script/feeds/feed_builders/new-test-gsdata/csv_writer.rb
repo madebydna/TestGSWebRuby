@@ -16,7 +16,7 @@ module Feeds
         @feed_file_path = output_path
         @data_reader = data_reader
         @data_for_test_description_file = []
-        @feed_file_path_description = @feed_file_path.gsub(FEED_NAME_MAPPING['new_test_gsdata'], FEED_NAME_MAPPING['new_test_gsdata_description'])
+        @feed_file_path_description = @feed_file_path.gsub(FEED_NAME_MAPPING['new_test_gsdata_flat'], FEED_NAME_MAPPING['new_test_gsdata_description'])
       end
 
       def write_feed

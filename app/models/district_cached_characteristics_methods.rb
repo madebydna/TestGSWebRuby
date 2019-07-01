@@ -20,7 +20,7 @@ module DistrictCachedCharacteristicsMethods
   end
 
   def all_students(array_of_hashes)
-    with_all_students_breakdown = array_of_hashes.compact.select {|hash| hash['breakdown'] == 'All students'}
+    with_all_students_breakdown = array_of_hashes.compact.select {|hash| hash['breakdown'] == 'All students' && !hash.key?('grade')}
     if with_all_students_breakdown.length > 1
       GSLogger.warn(:misc, nil, message: 'District characteristics cacher: multiple values with All students breakdown', vars: {
         district: district.id, state: state

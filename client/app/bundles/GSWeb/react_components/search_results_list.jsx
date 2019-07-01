@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { href } from 'util/search';
 import { translateWithDictionary, capitalize } from 'util/i18n';
+import poweredByGoogle from 'search/powered_by_google_on_white.png';
 
 const t = translateWithDictionary({
   en: {
@@ -84,9 +85,10 @@ const SearchResultsList = ({
   searchTerm,
   showSearchAllOption
 }) => {
-  const groupNameListItem = name => (
-    <li key={`category ${name}`} className="search-results-list-group-name">
-      {t(capitalize(name))}
+  const groupNameListItem = (name, index) => (
+    <li key={`category ${name}`} className="search-results-list-group-name clearfix">
+      <div className='fl'>{t(capitalize(name))}</div>
+      {index == 0 && <div className='fr'><img src={poweredByGoogle}/></div>}
     </li>
   );
 
@@ -128,9 +130,9 @@ const SearchResultsList = ({
     const order = { counter: -1 };
     return Object.keys(listGroups)
       .filter(k => listGroups[k] && listGroups[k].length > 0)
-      .map(group => (
+      .map((group, index) => (
         <React.Fragment key={group}>
-          {groupNameListItem(group)}
+          {groupNameListItem(group, index)}
           {groupListItems(group, listGroups[group], order)}
         </React.Fragment>
       ));

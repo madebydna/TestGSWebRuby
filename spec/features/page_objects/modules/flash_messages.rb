@@ -5,7 +5,7 @@ module FlashMessages
       elements :flash_errors, '.flash_error'
 
       def has_flash_message?(message)
-        wait_for_flash_messages
+        wait_until_flash_messages_visible
         flash_messages.map do |flash_message_dom_element|
           # The flash message div's text includes the message text plus the "x" button text
           flash_message_dom_element.text.sub(flash_message_dom_element.find('button').text, '')
@@ -13,7 +13,7 @@ module FlashMessages
       end
 
       def has_flash_error?(message)
-        wait_for_flash_errors
+        wait_until_flash_errors_visible
         flash_errors.map do |flash_message_dom_element|
           # The flash message div's text includes the message text plus the "x" button text
           flash_message_dom_element.text.sub(flash_message_dom_element.find('button').text, '').strip

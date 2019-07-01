@@ -16,12 +16,14 @@ import Students from "./students";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
-import {schools, academics, ACADEMICS, STUDENTS, students, calendar, CALENDAR, communityResources, nearbyHomesForSale, reviews, REVIEWS} from './toc_config';
+import { schoolsTocItem, academicsTocItem, ACADEMICS, STUDENTS, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
 import remove from 'util/array';
 import { t, capitalize } from '../../util/i18n';
+import QualarooDistrictLink from '../qualaroo_district_link';
+
 class District extends React.Component {
   static defaultProps = {
     schools_data: {},
@@ -122,7 +124,7 @@ class District extends React.Component {
   }
 
   selectTocItems(){
-    let districtTocItems = [schools, academics, students, calendar, communityResources, nearbyHomesForSale, reviews];
+    let districtTocItems = [schoolsTocItem, academicsTocItem, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());
@@ -131,12 +133,13 @@ class District extends React.Component {
 
   render() {
     let { title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback } = this.props.academics;
+    const studentProps = { ...this.props.students, ...{ 'pageType': this.pageType } }
     return (
       <DistrictLayout
         searchBox={<SearchBox size={this.props.viewportSize} />}
         schoolCounts={this.props.schools_data.counts}
         shouldDisplayReviews={this.props.reviews.length > 0}
-        hasStudentDemographicData = {this.hasStudentDemographicData}
+        hasStudentDemographicData = {this.hasStudentDemographicData()}
         translations={this.props.translations}
         topSchools={
           <TopSchoolsStateful
@@ -187,17 +190,13 @@ class District extends React.Component {
             footer={
               <div data-ga-click-label={title}>
                 <InfoBox content={sources} element_type="sources">{ t('See notes') }</InfoBox>
-                <div className="module_feedback">
-                  <a href={`https://s.qualaroo.com/45194/a8cbf43f-a102-48f9-b4c8-4e032b2563ec?state=${this.props.locality.stateShort}&districtId=${this.props.locality.district_id}`} className="anchor-button" target="_blank" rel="nofollow">
-                    {t('search_help.send_feedback')}
-                  </a>
-                </div>
+                <QualarooDistrictLink module='district_academics' state={this.props.locality.stateShort} districtId={this.props.locality.district_id} />
               </div>
             }
             pageType={this.pageType}
           />
         }
-        students={<Students {...this.props.students} />}
+        students={<Students {...studentProps} />}
         calendar={
           <Calendar 
             locality={this.props.locality}

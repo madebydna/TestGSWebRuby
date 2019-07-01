@@ -2,6 +2,7 @@ require "spec_helper"
 require "features/page_objects/school_profiles_page"
 
 describe "Visitor" do
+  before { stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {}) } 
   after do
     clean_dbs(:gs_schooldb)
     clean_models(:ca, School)

@@ -51,7 +51,7 @@ const renderCsaYears = (csaAwardYears) => {
   let csaYears = csaAwardYears.join(", ");
   return (
     <div className="top-schools-csa">
-      <span>CSA winner: </span> {csaYears} 
+      <span>{t('csa_winner')}</span>: {csaYears} 
     </div>
   );
 };

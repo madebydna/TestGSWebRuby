@@ -55,4 +55,5 @@ Object.keys(document.defaultView).forEach(property => {
 });
 documentRef = document;
 
+// This doesn't seem to be sufficient to set NODE_PATH ... still need to prefix command with env var
 process.env.NODE_PATH = `./node_modules:./app/bundles/GSWeb`;

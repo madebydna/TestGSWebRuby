@@ -22,6 +22,10 @@ LocalizedProfiles::Application.routes.draw do
   city_regex = /[^\/]+/
 
   # Routes for search pages
+  scope ':state/schools/', constraints: {state: States.any_state_name_regex}, as: :search_state_browse do
+    get '', to: 'search#search'
+  end
+
   scope ':state/:city/schools/', constraints: {state: States.any_state_name_regex, city: city_regex}, as: :search_city_browse do
     get '', to: 'search#search'
   end

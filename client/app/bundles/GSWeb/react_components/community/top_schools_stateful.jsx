@@ -75,22 +75,37 @@ class TopSchoolsStateful extends React.Component {
   handleTabClick(index) {
     this.setState({ active: index });
   }
-  
+
   tabs() {
     let tabs = [t('top_schools.top_schools')];
     if (this.props.schoolsData.csa.length > 0 && this.props.community !== "state") {
       tabs.push(t('csa_winners'));
     }
-    return tabs.map(function (item, index) {
+    return tabs;
+  }
+  
+  makeTabs() {
+    return this.tabs().map(function (item, index) {
       return <ModuleTab title={item} key={index} pageType={this.props.community} />
     }.bind(this));
   }
     
   renderTabsContainer() {
+    let tabs = this.tabs();
+    if (tabs.length === 1) {
+      if (this.props.community === 'state') {
+        return (
+          <h3 dangerouslySetInnerHTML={{__html: t('top_schools.state_top_schools_header', { parameters: { state: this.props.locality.nameLong } })}} />
+        );
+      }
+      return (
+        <h3>{tabs[0]}</h3>
+      );
+    }
     return (
       <div className="tab-buttons">
         <SectionNavigation active={this.state.active} onTabClick={this.handleTabClick} badge={this.props.csa_badge} >
-          { this.tabs() }
+          { this.makeTabs() }
         </SectionNavigation>
       </div>
     );

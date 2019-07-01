@@ -44,18 +44,42 @@ class Mobility extends React.Component {
       }))
   }
 
-  renderAgencies = (agencies) =>(
+  renderAgencies = (agencies) => (
     agencies.map(agency => {
       const logoLine = agency.agencyColor !== null ? `solid 5px ${agency.agencyColor}` : "solid 5px #dbe6eb";
       return(
         <div key={`${agency.agencyShortName}`} className="agencies">
           <div style={{height: '25px', borderRight: logoLine}}></div>
           <img src={`https://mobilityscore.transitscreen.io/${agency.agencyLogoLight}`} alt={agency.agencyShortName}/>
-          <p>{agency.agencyShortName}</p>
+          <p>{agency.agencyShortName.join(", ")}</p>
         </div>
       )
     }
   ));
+
+  convertAgenciesStructure(agencies) {
+    let combineRedundantAgencies = {};
+    agencies.forEach(function (agency) {
+      if (!Array.isArray(combineRedundantAgencies[agency.agencyLogoLight])) {
+        combineRedundantAgencies[agency.agencyLogoLight] = new Array();
+      }
+      combineRedundantAgencies[agency.agencyLogoLight].push(agency);
+    });
+
+    let reducedAgencyList = [];
+    Object.keys(combineRedundantAgencies).forEach(function (key) {
+      let agencyArray = combineRedundantAgencies[key];
+      let shortName = [];
+      agencyArray.forEach(function (a){
+        shortName.push(a.agencyShortName)
+      });
+      agencyArray[0].agencyShortName = shortName;
+      reducedAgencyList.push(agencyArray[0]);
+    });
+    return reducedAgencyList;
+  }
+
+
 
   renderTransportation(str, transportation){
     return(
@@ -64,7 +88,7 @@ class Mobility extends React.Component {
           <img src={`https://mobilityscore.transitscreen.io/${transportation.logo}`} alt={str} />
           <p>{transportation.friendlyName}</p>
         </div>
-        {this.renderAgencies(transportation.agencies)}
+        {this.renderAgencies(this.convertAgenciesStructure(transportation.agencies))}
       </React.Fragment>
     )
   }

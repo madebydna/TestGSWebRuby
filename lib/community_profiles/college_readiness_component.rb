@@ -132,11 +132,11 @@ module CommunityProfiles
     end
 
     def college_success_datatypes
-      [SENIORS_FOUR_YEAR, SENIORS_TWO_YEAR, SENIORS_ENROLLED_OTHER, SENIORS_ENROLLED, GRADUATES_REMEDIATION,
-       GRADUATES_PERSISTENCE, GRADUATES_COLLEGE_VOCATIONAL,GRADUATES_TWO_YEAR, GRADUATES_FOUR_YEAR,
-       GRADUATES_OUT_OF_STATE, GRADUATES_IN_STATE] + REMEDIATION_SUBGROUPS
+      POST_SECONDARY + REMEDIATION_SUBGROUPS + SECOND_YEAR
     end
 
+    # Filters characteristics data from DB
+    # these have been converted to instances of either CharacteristicsValue or GradutesRemediationValue 
     def data_type_hashes
       @_data_type_hashes ||= begin
         hashes = characteristics_data
@@ -158,8 +158,19 @@ module CommunityProfiles
             true
           end
         end
-        data_values.reject! {|dv| dv['year'].to_i < DATA_CUTOFF_YEAR} if cache_accessor == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS
+        if @tab == "college_success"
+          data_values.reject! {|dv| dv['year'].to_i < DATA_CUTOFF_YEAR} 
+          data_values = select_post_secondary_max_year(data_values) 
+        end
         data_values.sort_by {|o| included_data_types.index(o['data_type'])}
+      end
+    end
+
+    def select_post_secondary_max_year(data_values)
+      post_secondary_data = data_values.select { | dv | POST_SECONDARY.include?(dv['data_type']) }
+      max_year = post_secondary_data.map(&:year).compact.max
+      data_values.select do | dv |
+        !POST_SECONDARY.include?(dv['data_type']) || dv['year'] == max_year 
       end
     end
 

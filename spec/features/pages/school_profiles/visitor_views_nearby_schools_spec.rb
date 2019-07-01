@@ -4,6 +4,8 @@ require 'features/page_objects/school_profiles_page'
 describe 'Visitor' do
   let(:page_object) { SchoolProfilesPage.new }
   let (:school) { create(:school_with_new_profile) }
+
+  before { stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {}) } 
   after do
     clean_dbs(:gs_schooldb)
     clean_models(:ca, School)

@@ -8,8 +8,8 @@ class StateCharacteristicsCacher < StateCacher
   # 3 - Master's degree
   # 4 - Doctorate's degree
   # 5 - Student teacher ratio
-  # 6 - FRL
-  # 8 - ELL
+  # 6 - Students participating in free or reduced-price lunch program  
+  # 8 - English Learners
   # 9 - Ethnicity
   # 12 - Average years of teacher experience
   # 13 - Economically disadvantaged
@@ -34,11 +34,12 @@ class StateCharacteristicsCacher < StateCacher
   end
   
   def initialize(state)
-    @state = state
+    @state = state&.upcase
   end
 
   def self.active?
-    ENV_GLOBAL['is_feed_builder'].present? && [true, 'true'].include?(ENV_GLOBAL['is_feed_builder'])
+    # ENV_GLOBAL['is_feed_builder'].present? && [true, 'true'].include?(ENV_GLOBAL['is_feed_builder'])
+    true
   end
 
   def census_query

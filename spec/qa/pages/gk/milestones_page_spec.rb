@@ -2,7 +2,7 @@
 
 require 'features/page_objects/gk_milestones_page'
 
-describe 'User visits GK milestones', type: :feature, remote: true, safe_for_prod: true do
+xdescribe 'User visits GK milestones', type: :feature, remote: true, safe_for_prod: true do
   before { visit gk_milestones_path }
   let(:page_object) { GkMilestones.new }
   subject { page_object }
