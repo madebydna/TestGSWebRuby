@@ -3,6 +3,7 @@ require_relative '../states' # FIXME: This require is outside the etl directory
 require_relative './logging'
 require_relative './row'
 require_relative './gs_ids_fetcher'
+require_relative './state_gs_id_mapping'
 
 require_all = ->(dir) do
   dir_relative_to_this_file = File.dirname(__FILE__)
@@ -24,30 +25,33 @@ module GS
       attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
       attr_writer :source_columns
 
-      FILE_LOCATION = '/tmp/'
+      #FILE_LOCATION = '/tmp/'
+      USER = `echo $(whoami)`.chomp!
+      FILE_LOCATION = "/Users/#{USER}/Documents/Test_Load/Test_Output/"
       SCHOOL_TYPE_STRING = 'public.charter'
       ENTITIES = %w(school state district)
-      COLUMN_ORDER = [ :year, :entity_type, :entity_level, :state_id, :school_id, :school_name,
-                       :district_id, :district_name, :test_data_type, :gsdata_test_data_type_id, :grade,
-                       :subject, :academic_gsdata_id, :breakdown, :breakdown_gsdata_id, :proficiency_band,
-                       :proficiency_band_gsdata_id, :level_code, :number_tested, :value_float]
-      GSDATA_COLUMNS = %w[
-        source_name date_valid notes 
-        description value_float state district_id 
-        school_id gsdata_test_data_type_id 
-        source_name number_tested grade 
-        proficiency_band_gsdata_id gsdata_source_id
-        breakdown_gsdata_id
-        academic_gsdata_id
+      COLUMN_ORDER = [ :year, :entity_type, :gs_id, :state_id,
+                       :district_name, :school_name, :test_data_type, :test_data_type_id, :grade,
+                       :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
+                       :number_tested, :value]
+      COLUMNS = %w[
+        entity_type gs_id
+        date_valid notes 
+        description value state test_data_type_id 
+        number_tested grade 
+        proficiency_band_id source_id
+        breakdown_id
+        subject_id
       ]
-      REQUIRED_GSDATA_COLUMNS = %w[
-        source_name date_valid notes 
-        description value_float state
-        gsdata_source_id
-        breakdown_gsdata_id
-        academic_gsdata_id
+      REQUIRED_COLUMNS = %w[
+        entity_type gs_id
+        date_valid notes 
+        description value state test_data_type_id 
+        proficiency_band_id source_id
+        breakdown_id
+        subject_id
       ]
-      SUMMARY_OUTPUT_FIELDS = %i[entity_level field value count]
+      SUMMARY_OUTPUT_FIELDS = %i[entity_type field value count]
 
       def initialize(input_dir, options = {})
         @input_dir = input_dir
@@ -81,20 +85,19 @@ module GS
         output_files_root_step
       end
 
-      def config_step
-        @config_step ||= LoadConfigFile.new config_output_file, config_hash
-      end
+      # def config_step
+      #   @config_step ||= LoadConfigFile.new config_output_file, config_hash
+      # end
 
       def summary_output_step
         @summary_output_step ||= SummaryOutput.new(%i[
-                                                       entity_level
+                                                       entity_type
                                                        year
-                                                       gsdata_test_data_type_id
+                                                       test_data_type_id
                                                        grade
-                                                       level_code
-                                                       academic_gsdata_id
-                                                       breakdown_gsdata_id
-                                                       proficiency_band_gsdata_id
+                                                       subject_id
+                                                       breakdown_id
+                                                       proficiency_band_id
                                                    ]
         )
       end
@@ -140,7 +143,7 @@ module GS
 
       def build_column_value_report
         require_relative 'column_value_report'
-        ::ColumnValueReport.new('/tmp/column_value_report.txt', :grade, :breakdown_id)
+        ::ColumnValueReport.new("#{FILE_LOCATION}column_value_report.txt", :grade, :breakdown_id)
       end
 
       def build_graph
@@ -159,10 +162,10 @@ module GS
         shared_leaf.add(column_value_report.build_graph)
         @runnable_steps += column_value_report.runnable_steps
         @runnable_steps << summary_output_step
-        shared_leaf.transform("Adds data_type_id column for config file", WithBlock) do |row|
-         row[:data_type_id] = row[:test_data_type_id]
-         row
-        end.add(config_step)
+        # shared_leaf.transform("Adds data_type_id column for config file", WithBlock) do |row|
+        #  row[:data_type_id] = row[:test_data_type_id]
+        #  row
+        # end.add(config_step)
       end
 
       def context_for_sources
@@ -174,8 +177,9 @@ module GS
         @sources.each do |source|
           source.run(context_for_sources)
         end
-        @runnable_steps << config_step
+        # @runnable_steps << config_step
         @runnable_steps.each(&:run)
+        zip_output_files
         GS::ETL::Logging.logger.finish if GS::ETL::Logging.logger
       end
 
@@ -208,12 +212,18 @@ module GS
         end
       end
 
+      def zip_output_files
+        ENTITIES.each do |entity|
+          `gzip -f "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql"`
+        end
+      end
+
       def summary_output_file
         FILE_LOCATION +  data_file_prefix + 'summary_report.csv'
       end
 
       def source_output_sql_file
-        FILE_LOCATION +  data_file_prefix + "source.sql"
+        FILE_LOCATION +  data_file_prefix + "dataset.sql"
       end
 
       def queue_output_file
@@ -225,43 +235,47 @@ module GS
       end
 
       def source_steps
-        node = output_files_root_step.add_step('Keep only state rows for source', KeepRows, :entity_level, 'state')
+        node = output_files_root_step.add_step('Keep only state rows for source', KeepRows, :entity_type, 'state')
         sources = {}
         node = node.transform 'Find unique source', WithBlock do |row|
             source_key = [config_hash[:date_valid],row[:notes],row[:description]]
             unless sources[source_key]
-              row[:entity_level] = 'source' 
+              row[:entity_type] = 'source' 
               sources[source_key] = true
+              row[:gs_id] = 0
             end      
           row
         end
-        node = node.transform('Keep rows for source', KeepRows, :entity_level, 'source')
-        node.sql_writer 'Output source rows to SQL file', SqlDestination, source_output_sql_file, config_hash, GSDATA_COLUMNS, REQUIRED_GSDATA_COLUMNS
+        node = node.transform('Keep rows for source', KeepRows, :entity_type, 'source')
+        node.sql_writer 'Output source rows to SQL file', SqlDestination, source_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS
         node
+      end
+
+      def state_id_hash
+        StateIdMapping.new.state_gs_id_mapping
       end
 
       def state_steps
         output_files_root_step.add(summary_output_step)
-        node = output_files_root_step.add_step('Keep only state rows', KeepRows, :entity_level, 'state')
+        state_ids = state_id_hash
+        node = output_files_root_step.add_step('Keep only state rows', KeepRows, :entity_type, 'state')
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           row[:state_id] = 'state'
-          row[:school_id] = 'state'
           row[:school_name] = 'state'
           row[:district_name] ='state'
-          row[:district_id] = 'state'
+          if state_ids[config_hash[:state].upcase].nil?
+            row[:gs_id] = 'CHECK STATE VALUE'
+          else
+            row[:gs_id] = state_ids[config_hash[:state].upcase]
+          end
           row
-        end
-        node.destination 'Output state rows to CSV', CsvDestination, state_output_file, *COLUMN_ORDER
-        node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
-          row[:school_id] = 'NULL'
-          row[:district_id] = 'NULL'
-          row
-        end
+        end     
         node = node.transform 'Check n_tested"', WithBlock do |row|
           row[:number_tested] = 'NULL' if row[:number_tested].nil?
           row
         end
-        node.sql_writer 'Output state rows to SQL file', SqlDestination, state_output_sql_file, config_hash, GSDATA_COLUMNS, REQUIRED_GSDATA_COLUMNS
+        node.destination 'Output state rows to CSV', CsvDestination, state_output_file, *COLUMN_ORDER
+        node.sql_writer 'Output state rows to SQL file', SqlDestination, state_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS
         node
       end
 
@@ -272,22 +286,19 @@ module GS
       def district_steps
         output_files_root_step.add(summary_output_step)
         district_ids = district_id_hash
-        node = output_files_root_step.add_step('Keep only district rows', KeepRows, :entity_level, 'district')
+        node = output_files_root_step.add_step('Keep only district rows', KeepRows, :entity_type, 'district')
         node = node.transform 'Fill a couple columns with "district"', Fill,
-          school_id: 'district',
           school_name: 'district'
-        node.destination 'Output district rows to CSV', CsvDestination, district_output_file, *COLUMN_ORDER
         queue_hash = {}
-        node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
-          row[:school_id] = 'NULL'
+        node = node.transform 'Match district gs_id', WithBlock do |row|
           if district_ids[row[:state_id]].nil? and !queue_hash.key?(row[:state_id])
             queue_hash[row[:state_id]] = true
             @queue_file.write_queue(row)
-            row[:district_id] = 'ADD NEW DISTRICT'
+            row[:gs_id] = 'ADD NEW DISTRICT'
           elsif district_ids[row[:state_id]].nil?
-            row[:district_id] = 'ADD NEW DISTRICT'
+            row[:gs_id] = 'ADD NEW DISTRICT'
           elsif district_ids[row[:state_id]]
-            row[:district_id] = district_ids[row[:state_id]]
+            row[:gs_id] = district_ids[row[:state_id]]
           end
           row
         end
@@ -295,7 +306,8 @@ module GS
           row[:number_tested] = 'NULL' if row[:number_tested].nil?
           row
         end
-        node.sql_writer 'Output district rows to SQL file', SqlDestination, district_output_sql_file, config_hash, GSDATA_COLUMNS, REQUIRED_GSDATA_COLUMNS
+        node.destination 'Output district rows to CSV', CsvDestination, district_output_file, *COLUMN_ORDER
+        node.sql_writer 'Output district rows to SQL file', SqlDestination, district_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS
         node
       end
 
@@ -309,20 +321,20 @@ module GS
           .destination('Output summary data to file', CsvDestination, summary_output_file, *SUMMARY_OUTPUT_FIELDS)
         school_ids = school_id_hash
         district_ids = district_id_hash
-        node = output_files_root_step.add_step('Keep only school rows', KeepRows, :entity_level, 'school')
-        node.destination 'Output school rows to CSV', CsvDestination, school_output_file, *COLUMN_ORDER
+        node = output_files_root_step.add_step('Keep only school rows', KeepRows, :entity_type, 'school')
+        
         queue_hash = {}
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           row[:gs_district_id] = district_ids[row[:district_id]]
-          row[:district_id] = 'NULL'
+          row[:district_name] = 'NULL'
           if school_ids[row[:state_id]].nil? and !queue_hash.key?(row[:state_id])
             queue_hash[row[:state_id]] = true
             @queue_file.write_queue(row)
-            row[:school_i] = 'ADD NEW SCHOOL'
+            row[:gs_id] = 'ADD NEW SCHOOL'
           elsif school_ids[row[:state_id]].nil?
-            row[:school_i] = 'ADD NEW SCHOOL'
+            row[:gs_id] = 'ADD NEW SCHOOL'
           elsif school_ids[row[:state_id]]
-            row[:school_id] = school_ids[row[:state_id]]
+            row[:gs_id] = school_ids[row[:state_id]]
           end
           row
         end
@@ -330,7 +342,8 @@ module GS
           row[:number_tested] = 'NULL' if row[:number_tested].nil?
           row
         end
-        node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, GSDATA_COLUMNS, REQUIRED_GSDATA_COLUMNS
+        node.destination 'Output school rows to CSV', CsvDestination, school_output_file, *COLUMN_ORDER
+        node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS
         node
       end
 
