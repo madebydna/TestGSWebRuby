@@ -91,7 +91,7 @@ class StateCharacteristicsCacher < StateCacher
     cache_hash = census_query_results.each_with_object({}) do |result, hash|
       hash[result.label] ||= []
       hash[result.label] << build_hash_for_data_set(result)
-    end
+    end.compact
     validate!(cache_hash)
   end
 
