@@ -14,8 +14,12 @@ class ReviewPublishedMssEmail < AbstractExactTargetMailer
     @user_type = user_type
   end
 
+  def school_link_review_url(school)
+    "https://www.greatschools.org" + school_reviews_path(school, anchor: 'Reviews')
+  end
+
   def trigger_email
-    school_url = school_reviews_url(@school, anchor: 'Reviews')
+    school_url = school_link_review_url(school)
     @school.mss_subscribers.map(&:email).uniq.each_slice(EMAIL_BATCH_SIZE) do |emails|
       ReviewPublishedMssEmail.deliver(emails,
                                       reviewUrl: school_url,
