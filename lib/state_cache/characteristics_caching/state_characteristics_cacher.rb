@@ -2,7 +2,8 @@ class StateCharacteristicsCacher < StateCacher
   include StateCacheValidation
 
   CACHE_KEY = 'state_characteristics'
-  STATE_CHARACTERISTICS_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 123, 124, 129, 131, 133, 179]
+  # STATE_CHARACTERISTICS_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 123, 124, 129, 131, 133, 179]
+  STATE_CHARACTERISTICS_CENSUS_DATA_TYPES = [ 9]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
   # 3 - Master's degree
@@ -90,8 +91,8 @@ class StateCharacteristicsCacher < StateCacher
   def build_hash_for_cache
     cache_hash = census_query_results.each_with_object({}) do |result, hash|
       hash[result.label] ||= []
-      hash[result.label] << build_hash_for_data_set(result)
-    end.compact
+      hash[result.label] << build_hash_for_data_set(result) if build_hash_for_data_set(result)
+    end
     validate!(cache_hash)
   end
 
