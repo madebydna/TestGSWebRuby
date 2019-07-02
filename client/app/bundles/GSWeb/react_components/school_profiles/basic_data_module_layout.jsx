@@ -67,8 +67,8 @@ BasicDataModuleLayout.propTypes = {
   subtitle: PropTypes.string,
   body: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   feedback: PropTypes.object,
-  footer: PropTypes.object,
-  csa_badge: PropTypes.bool,
+  footer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  csa_badge: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   tabs: PropTypes.oneOfType([PropTypes.element, PropTypes.bool])
 };
 

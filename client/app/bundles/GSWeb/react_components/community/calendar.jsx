@@ -9,7 +9,7 @@ import QualarooDistrictLink from '../qualaroo_district_link';
 
 class Calendar extends React.Component {
   static propTypes = {
-    locality: PropTypes.obj,
+    locality: PropTypes.object,
     pageType: PropTypes.string.isRequired
   };
 

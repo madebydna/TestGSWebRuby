@@ -126,9 +126,9 @@ export default class Zillow extends React.Component {
     );
   }
 
-  renderHome(listing) {
+  renderHome(listing, idx) {
     return (
-        <div className="tile-container">
+        <div className="tile-container" key={`listing-${idx}`}>
           <a
               className="tile"
               href={listing.detailPageLink(this.props.utmCampaign)}
