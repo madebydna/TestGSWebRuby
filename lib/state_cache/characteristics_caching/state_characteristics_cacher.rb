@@ -90,7 +90,8 @@ class StateCharacteristicsCacher < StateCacher
   def build_hash_for_cache
     cache_hash = census_query_results.each_with_object({}) do |result, hash|
       hash[result.label] ||= []
-      hash[result.label] << build_hash_for_data_set(result)
+      hash_for_cache = build_hash_for_data_set(result)
+      hash[result.label] << hash_for_cache if hash_for_cache.present?
     end
     validate!(cache_hash)
   end
