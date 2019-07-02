@@ -8,7 +8,7 @@ module MetaTag
     end
 
     def description
-      "View & compare ratings, parent reviews, & information about #{page_of_results.total} public, charter #{level_code_long.downcase} schools in #{States.state_name(state).titleize}."
+      "View & compare ratings, parent reviews, & information about #{page_of_results.total} public, charter #{level_code_long&.downcase} schools in #{States.state_name(state).titleize}."
     end
 
     def canonical_url
