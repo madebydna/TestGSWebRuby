@@ -103,10 +103,17 @@ class StateLayout extends React.Component {
     return (
       <div id="schools" className="module-section">
         <div className="modules-title">{browseHeader}</div>
-        {this.props.browseCities}
         {this.props.topSchools}
       </div>
     )
+  }
+
+  renderCities() {
+    return (
+      <div id="cities" className="module-section">
+        {this.props.browseCities}
+      </div>
+    )    
   }
 
   renderStudentsModule() {
@@ -151,8 +158,9 @@ class StateLayout extends React.Component {
               {this.renderSchools()}
               {this.renderCsaModule()}
               {this.renderBoxAd()}
-              {this.renderDistricts()}
               {this.renderStudentsModule()}
+              {this.renderCities()}
+              {this.renderDistricts()}
               {this.renderReviews()}
             </div>
           {/*</div>*/}

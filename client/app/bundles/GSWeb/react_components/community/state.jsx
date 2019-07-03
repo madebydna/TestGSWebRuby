@@ -14,7 +14,7 @@ import Students from "./students";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
-import { schoolsTocItem, awardWinningSchoolsTocItem, studentsTocItem, schoolDistrictsTocItem, reviewsTocItem, AWARD_WINNING_SCHOOLS, STUDENTS, SCHOOL_DISTRICTS, REVIEWS } from './toc_config';
+import { schoolsTocItem, awardWinningSchoolsTocItem, studentsTocItem, schoolDistrictsTocItem, citiesTocItem, reviewsTocItem, AWARD_WINNING_SCHOOLS, STUDENTS, SCHOOL_DISTRICTS, REVIEWS } from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
@@ -117,7 +117,7 @@ class State extends React.Component {
   }
 
   selectTocItems(){
-    let stateTocItems = [schoolsTocItem, awardWinningSchoolsTocItem, schoolDistrictsTocItem, studentsTocItem, reviewsTocItem];
+    let stateTocItems = [schoolsTocItem, awardWinningSchoolsTocItem, studentsTocItem, citiesTocItem, schoolDistrictsTocItem, reviewsTocItem];
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === AWARD_WINNING_SCHOOLS && !this.props.csa_module);
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === SCHOOL_DISTRICTS && this.props.districts.length === 0);
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
