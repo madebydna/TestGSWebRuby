@@ -29,7 +29,7 @@ export default class PersonBar extends React.Component {
       }
       else {
         if (this.props.percentage) {
-          return <span className="subject-subtext"><br />({this.props.percentage}{this.translateString('percentage of students')} )</span>
+          return <span className="subject-subtext"><br />({this.props.percentage}{this.translateString('percentage of students')})</span>
         }
       }
     }

@@ -31,7 +31,7 @@ export default class PlainNumber extends React.Component {
       }
       else {
         if (test_data['percentage']) {
-          return <span className="subject-subtext"><br />({test_data['percentage']}{this.translateString('percentage of students')} )</span>
+          return <span className="subject-subtext"><br />({test_data['percentage']}{this.translateString('percentage of students')})</span>
         }
       }
     }
