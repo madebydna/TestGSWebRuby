@@ -1,9 +1,14 @@
 es:
   community:
     academics:
-      subtext: >
+      district_subtext: >
         ¿Está esta escuela ofreciendo oportunidades a todos sus estudiantes, o está dejando a algunos atrás?
         Las escuelas exitosas están trabajando para
+        <a href=%{achievement_gap_link}>
+        eliminar las diferencias en logros académicos.</a>
+      state_subtext: >
+        ¿Están las escuelas en %{state} ofreciendo oportunidades a todos sus estudiantes,
+        o está dejando a algunos atrás? Estados exitosas están trabajando para 
         <a href=%{achievement_gap_link}>
         eliminar las diferencias en logros académicos.</a>
       faq:

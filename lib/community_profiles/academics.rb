@@ -9,12 +9,20 @@ module CommunityProfiles
       new(cache_data_reader).district_academics_props
     end
 
+    def self.state_academics_props(cache_data_reader)
+      new(cache_data_reader).state_academics_props
+    end
+
     def initialize(cache_data_reader)
       @cache_data_reader = cache_data_reader
     end
 
     def district_test_scores
       @_district_test_scores ||= Components::ComponentGroups::DistrictTestScoresComponentGroup.new(cache_data_reader: cache_data_reader).to_hash
+    end
+
+    def state_test_scores
+      @_state_test_scores ||= Components::ComponentGroups::StateTestScoresComponentGroup.new(cache_data_reader: cache_data_reader).to_hash
     end
 
     def faq_for_academics_module
@@ -29,6 +37,16 @@ module CommunityProfiles
           title: I18n.t('Test scores', scope: 'lib.equity_gsdata'),
           anchor: 'Test_scores',
           data: district_test_scores
+        }
+      ]
+    end
+
+    def data_props_for_state_academics_module
+      [
+        {
+          title: I18n.t('Test scores', scope: 'lib.equity_gsdata'),
+          anchor: 'Test_scores',
+          data: state_test_scores
         }
       ]
     end
@@ -108,12 +126,30 @@ module CommunityProfiles
         title: I18n.t('.academics', scope: 'school_profiles.show'),
         anchor: 'Academics',
         analytics_id: 'Academics',
-        subtitle: I18n.t('.subtext', scope: 'community.academics', achievement_gap_link: article_achievement_gap_path),
+        subtitle: I18n.t('.district_subtext', scope: 'community.academics', achievement_gap_link: article_achievement_gap_path),
         info_text: nil, #I18n.t('.Race ethnicity tooltip', scope: 'school_profiles.equity')
         icon_classes: I18n.t('.Race ethnicity icon', scope: 'school_profiles.equity'),
         sources: sources_html(academics_sources) + college_readiness.sources + college_success.sources, #equity.race_ethnicity_sources
         share_content: nil,
         data: data_props_for_district_academics_module + college_readiness.props + college_success.props,
+        faq: faq_for_academics_module,
+        no_data_summary: I18n.t('.Race ethnicity no data', scope: 'school_profiles.equity'),
+        qualaroo_module_link: nil
+      }
+    end
+
+    def state_academics_props
+      academic_state = States.state_name(cache_data_reader.state).capitalize
+      {
+        title: I18n.t('.academics', scope: 'school_profiles.show'),
+        anchor: 'Academics',
+        analytics_id: 'Academics',
+        subtitle: I18n.t('.state_subtext', scope: 'community.academics', achievement_gap_link: article_achievement_gap_path, state: academic_state),
+        info_text: nil, #I18n.t('.Race ethnicity tooltip', scope: 'school_profiles.equity')
+        icon_classes: I18n.t('.Race ethnicity icon', scope: 'school_profiles.equity'),
+        sources: sources_html(academics_sources),
+        share_content: nil,
+        data: data_props_for_state_academics_module,
         faq: faq_for_academics_module,
         no_data_summary: I18n.t('.Race ethnicity no data', scope: 'school_profiles.equity'),
         qualaroo_module_link: nil

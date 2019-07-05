@@ -96,6 +96,14 @@ class StateLayout extends React.Component {
     )
   }
 
+  renderAcademics() {
+    return (
+      <div id="academics" className="module-section">
+        {this.props.academics}
+      </div>
+    )
+  }
+
   renderSchools(){
     let { nameLong } = this.props.locality;
     const browseHeader = t('state.cities_header', { parameters: { nameLong }});
@@ -150,6 +158,7 @@ class StateLayout extends React.Component {
               {this.props.viewportSize < SM && <Ad slot="statepage_first" sizeName="thin_banner_mobile" />}
               {this.renderSchools()}
               {this.renderCsaModule()}
+              {this.renderAcademics()}
               {this.renderBoxAd()}
               {this.renderDistricts()}
               {this.renderStudentsModule()}

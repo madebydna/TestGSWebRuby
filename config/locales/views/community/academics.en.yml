@@ -1,9 +1,14 @@
 en:
   community:
     academics:
-      subtext: >
+      district_subtext: >
         Is this district offering opportunity for all its students, or leaving some kids behind?
         Successful districts are working to
+        <a href=%{achievement_gap_link}>
+        close the achievement gap.</a>
+      state_subtext: >
+        Are the  schools in %{state} offering opportunity for all students, or are some kids being left behind?
+        Successful states are working to
         <a href=%{achievement_gap_link}>
         close the achievement gap.</a>
       faq:
