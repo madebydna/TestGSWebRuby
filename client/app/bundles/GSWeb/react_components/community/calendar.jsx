@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { t } from "util/i18n";
+import { t, capitalize } from "util/i18n";
 import { findDistrictCalendarWithNCES as fetchDistrictCalendar, findDistrictOverviewData } from "../../api_clients/calendar";
 import InfoBox from "../school_profiles/info_box";
 import LoadingOverlay from "../search/loading_overlay";
@@ -25,7 +25,8 @@ class Calendar extends React.Component {
       didFail: false,
       data: [],
       error: "",
-      verified: false
+      verified: false,
+      lastUpdated: []
     };
 
     this.renderCalendarEvent = this.renderCalendarEvent.bind(this);
@@ -100,12 +101,18 @@ class Calendar extends React.Component {
         findDistrictOverviewData(this.props.locality.nces_code)
           .done($jsonRes2 =>{
             let verified;
+            let lastUpdated;
             if ($jsonRes2.district && $jsonRes2.district[0]){
               verified = $jsonRes2.district[0].verified;
+              
+              lastUpdated = this.parseDateString($jsonRes2.district[0].last_updated);
+              console.log(lastUpdated);
+              console.log($jsonRes2.district[0].last_updated);
             }
             this.setState({
               isLoading: false,
               verified: verified,
+              lastUpdated: lastUpdated,
               data: this.parseEventsPayload($jsonRes)
             })
           })
@@ -149,10 +156,28 @@ class Calendar extends React.Component {
     )
   }
 
+  renderLastUpdatedDate(lastUpdatedArray){
+    const [year, intMonth, day] = lastUpdatedArray;
+    const date = new Date(year, intMonth - 1, day);
+    const month = date.toLocaleString('en-us', { month: 'long' })
+    return (
+      <div className="row bar-graph-display">
+        <div className="test-score-container clearfix">
+          <div className="col-sm-2"></div>
+          <div className="col-sm-1"></div>
+          <div className="col-sm-9 last-updated">{`${capitalize(t('last updated'))}: ${month} ${day}, ${year}`}</div>
+        </div>
+      </div>
+    )
+  }
+
   render() {
     let calendarEvents = this.state.data;
     let calendarEventsInitial = calendarEvents.slice(0,5).map(event => this.renderCalendarEvent(event));
     let calendarEventsForDrawer = calendarEvents.slice(5).map(event => this.renderCalendarEvent(event));
+    if(this.state.lastUpdated.length > 0){
+      calendarEventsForDrawer = calendarEventsForDrawer.concat(this.renderLastUpdatedDate(this.state.lastUpdated))
+    }
 
     if (this.state.isLoading === true) {
       return (
