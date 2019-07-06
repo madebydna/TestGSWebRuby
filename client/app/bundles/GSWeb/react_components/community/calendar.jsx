@@ -104,10 +104,7 @@ class Calendar extends React.Component {
             let lastUpdated;
             if ($jsonRes2.district && $jsonRes2.district[0]){
               verified = $jsonRes2.district[0].verified;
-              
               lastUpdated = this.parseDateString($jsonRes2.district[0].last_updated);
-              console.log(lastUpdated);
-              console.log($jsonRes2.district[0].last_updated);
             }
             this.setState({
               isLoading: false,
