@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { t } from "util/i18n";
-import { findDistrictCalendarWithNCES as fetchDistrictCalendar } from "../../api_clients/calendar";
+import { findDistrictCalendarWithNCES as fetchDistrictCalendar, findDistrictOverviewData } from "../../api_clients/calendar";
 import InfoBox from "../school_profiles/info_box";
 import LoadingOverlay from "../search/loading_overlay";
 import Drawer from "../drawer";
@@ -24,7 +24,8 @@ class Calendar extends React.Component {
       isLoading: true,
       didFail: false,
       data: [],
-      error: ""
+      error: "",
+      verified: false
     };
 
     this.renderCalendarEvent = this.renderCalendarEvent.bind(this);
@@ -95,16 +96,31 @@ class Calendar extends React.Component {
 
   componentDidMount() {
     fetchDistrictCalendar(this.props.locality.calendarURL, this.props.locality.nces_code)
-      .done($jsonRes => this.setState({
-        isLoading: false,
-        data: this.parseEventsPayload($jsonRes)
-      }))
+      .done($jsonRes => {
+        findDistrictOverviewData(this.props.locality.nces_code)
+          .done($jsonRes2 =>{
+            let verified;
+            if ($jsonRes2.district && $jsonRes2.district[0]){
+              verified = $jsonRes2.district[0].verified;
+            }
+            this.setState({
+              isLoading: false,
+              verified: verified,
+              data: this.parseEventsPayload($jsonRes)
+            })
+          })
+          .fail(error => this.setState({
+            isLoading: false,
+            verified: false,
+            data: this.parseEventsPayload($jsonRes)
+          }))
+      })
       .fail(error => this.setState({
         isLoading: false,
         didFail: true,
         error: error 
       }))
-  }
+    }
 
   renderCalendarHeader() {
     return (
@@ -112,7 +128,10 @@ class Calendar extends React.Component {
         <div className="test-score-container clearfix calendar-header">
           <div className="col-sm-2">{ t('date') }</div>
           <div className="col-sm-1"></div>
-          <div className="col-sm-9">{ t('event') }</div>
+          <div className="col-sm-9">
+            {t('event')}
+            { this.state.verified && <span className="verified"><img src="/assets/school_profiles/claimed_badge.png" title="This calendar is being updated by a verified admin."/></span> }
+          </div>
         </div>
       </div>
     )
