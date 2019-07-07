@@ -104,7 +104,7 @@ class StatesController < ApplicationController
             rp[:most_recent_date] = I18n.l(review.created, format: "%B %d, %Y")
             rp[:school_name] = review_school.name
             rp[:school_url] = school_path(review_school)
-            rp[:user_type_label] = review.user_type.gs_capitalize_first
+            rp[:user_type_label] = t(review.user_type.gs_capitalize_first)
           end 
         end
       end.compact
