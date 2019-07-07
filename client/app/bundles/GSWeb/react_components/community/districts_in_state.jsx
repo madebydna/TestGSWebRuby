@@ -1,11 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { t } from "util/i18n";
+import { copyParam } from 'util/uri';
+
+const districtLink = (link) => (
+  copyParam('lang', window.location.href, link)
+);
 
 const DistrictsInState = ({districts, locality}) => {
-  const districtItems = districts.map((district, idx ) => (
+  const districtItems = districts.map((district, idx) => (
     <li key={district.name}>
-      <a href={district.url}>{district.name}</a>
+      <a href={districtLink(district.url)}>{district.name}</a>
       <div>
         {district.enrollment ? <span>{district.enrollment.toLocaleString()} {t("students")}<span className="display-desktop"> | </span></span> : null}
         <span>{district.city}, {district.state}</span>

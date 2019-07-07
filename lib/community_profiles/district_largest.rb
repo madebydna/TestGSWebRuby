@@ -17,7 +17,12 @@ module CommunityProfiles
             h[:state] = district['state']
             h[:grades] = district['levels']
             h[:numSchools] = district['school_count']
-            h[:url] = district_url(district_params(district['state'], district['city'], district['name']))
+            h[:url] = district_path(
+              state: gs_legacy_url_encode(States.state_name(district['state'])),
+              city: gs_legacy_url_encode(district['city']),
+              district: gs_legacy_url_encode(district['name']), 
+              trailing_slash: true
+            )
           end
         end
       end
