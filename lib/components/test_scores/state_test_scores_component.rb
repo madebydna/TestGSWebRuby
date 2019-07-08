@@ -50,7 +50,7 @@ module Components
           label: text_value(dv.state_value),
           score: float_value(dv.state_value),
           percentage: breakdown_percentage(dv),
-          number_students_tested: dv.state_cohort_count,
+          # number_students_tested: dv.state_cohort_count,
           grade: dv.grade,
           display_percentages: true,
           subject: dv.academics,
