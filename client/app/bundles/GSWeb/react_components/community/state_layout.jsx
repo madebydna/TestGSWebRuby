@@ -51,7 +51,7 @@ class StateLayout extends React.Component {
 
   heroNarration(){
     let { nameLong } = this.props.locality;
-    let schoolCount = this.props.schoolCount;
+    let schoolCount = this.props.schoolCount.toLocaleString();
 
     return t('state.state_hero_narrative_html', { parameters: { nameLong, schoolCount } });
   }
