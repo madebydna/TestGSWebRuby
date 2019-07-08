@@ -42,6 +42,14 @@ const regionName = (locality, community) => {
   }
 }
 
+const browseLink = (link, levelCodes, community) => {
+  let searchLink = link;
+  if (community === 'state') {
+    searchLink = addQueryParamToUrl('view', 'table', link);
+  }
+  return addQueryParamToUrl('gradeLevels', levelCodes, searchLink);
+}
+
 const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, levelCodes, community, schoolLevels, locality }) => {
   let name = regionName(locality, community);
 
@@ -89,7 +97,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
         <hr />
         {schoolList}
         <div className="more-school-btn">
-          <a href={addQueryParamToUrl('gradeLevels', levelCodes, locality.searchResultBrowseUrl)}>
+          <a href={browseLink(locality.searchResultBrowseUrl, levelCodes, community)}>
             <button>{seeSchoolMap[levelCodes]}</button>
           </a>
         </div>
