@@ -6,7 +6,6 @@ export const findDistrictCalendarWithNCES = (url, nces) => (
     })
 );
 
-//Need a proxy for this API call
 export const findDistrictOverviewData = (url, nces) => (
     $.ajax({
         type: 'GET',
