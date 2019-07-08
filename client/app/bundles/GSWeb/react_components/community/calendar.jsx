@@ -98,7 +98,7 @@ class Calendar extends React.Component {
   componentDidMount() {
     fetchDistrictCalendar(this.props.locality.calendarURL, this.props.locality.nces_code)
       .done($jsonRes => {
-        findDistrictOverviewData(this.props.locality.nces_code)
+        findDistrictOverviewData(this.props.locality.calendarURL, this.props.locality.nces_code)
           .done($jsonRes2 =>{
             let verified;
             let lastUpdated;
