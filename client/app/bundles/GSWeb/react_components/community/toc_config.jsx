@@ -10,6 +10,7 @@ export const STUDENTS = 'students'
 export const BROWSE_SCHOOLS = 'browse-schools';
 export const AWARD_WINNING_SCHOOLS = 'award-winning-schools';
 export const CITIES = 'cities';
+export const NEIGHBORING_CITIES = 'neighboring-cities';
 
 export const browseSchoolsTocItem = {
   key: BROWSE_SCHOOLS,
@@ -85,5 +86,12 @@ export const reviewsTocItem = {
   key: REVIEWS,
   label: t(capitalize(REVIEWS)),
   anchor: '#reviews',
+  selected: false
+}
+
+export const neighboringCitiesTocItem = {
+  key: NEIGHBORING_CITIES,
+  label: t(NEIGHBORING_CITIES),
+  anchor: '#neighboring-cities',
   selected: false
 }

@@ -14,7 +14,10 @@ import Mobility from "./mobility";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
-import { schoolsTocItem, schoolDistrictsTocItem, SCHOOL_DISTRICTS, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS} from './toc_config';
+import { schoolsTocItem, schoolDistrictsTocItem, 
+  SCHOOL_DISTRICTS, communityResourcesTocItem, 
+  nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS,
+  neighboringCitiesTocItem, NEIGHBORING_CITIES } from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
@@ -29,7 +32,8 @@ class City extends React.Component {
     breadcrumbs: [],
     districts: [],
     reviews: [],
-    csa_module: false 
+    csa_module: false, 
+    neighboring_cities: []
   };
 
   static propTypes = {
@@ -42,6 +46,7 @@ class City extends React.Component {
         url: PropTypes.string.isRequired
       })
     ),
+    neighboring_cities: PropTypes.arrayOf(PropTypes.object),
     locality: PropTypes.object.isRequired
   };
 
@@ -101,9 +106,10 @@ class City extends React.Component {
   }
 
   selectTocItems(){
-    let cityTocItems = [schoolsTocItem, schoolDistrictsTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
+    let cityTocItems = [schoolsTocItem, schoolDistrictsTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem, neighboringCitiesTocItem];
     cityTocItems = remove(cityTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     cityTocItems = remove(cityTocItems, (tocItem)=> tocItem.key === SCHOOL_DISTRICTS && this.props.districts.length === 0);
+    cityTocItems = remove(cityTocItems, (tocItem)=> tocItem.key === NEIGHBORING_CITIES && this.props.neighboring_cities.length === 0);
     return cityTocItems;
   }
 
@@ -164,6 +170,7 @@ class City extends React.Component {
             locality={this.props.locality}
           />
         }
+        neighboringCities={this.props.neighboring_cities}
         breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
         locality={this.props.locality}
         toc={
