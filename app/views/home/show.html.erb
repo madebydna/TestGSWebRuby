@@ -62,10 +62,13 @@
       <div class="container">
         <div class="heading"><%= t('nav.footer.find-great-schools') %></div>
         <div class="row columns">
-          <% @city_list_for_footer.each do |city_with_state| %>
+          <% @city_list_for_footer.each_with_index do |city_with_state, i| %>
             <% city, state = city_with_state.match(/^([\w\s]+),\s([A-Z]{2})/).captures %>
-            <div class="col-sm-12"><%= link_to city_with_state, city_url(city_params(state, city)) %></div>
+            <div class='<%= "col-sm-12 #{i > 18 ? 'extra' : ''}" %>'><%= link_to city_with_state, city_url(city_params(state, city)) %></div>
           <% end %>
+          <div class="col-sm-12" id="show-more-for-footer">
+            <a href="#"><%= t('javascript.show_more') %></a>
+          </div>
         </div>
       </div>
   </div>

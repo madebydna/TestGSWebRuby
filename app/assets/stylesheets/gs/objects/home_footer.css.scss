@@ -20,11 +20,32 @@
       float: none;
     }
 
+    #show-more-for-footer {
+      display: none;
+      a {
+        text-decoration: underline;
+        color: #ffffff;
+      }
+    }
+
     @media (max-width: $screen-sm-max) {
+
       .row.columns {
         -webkit-columns: 3;
         -moz-columns: 3;
         columns: 3; 
+      }
+
+      .col-sm-12 {
+        padding: 3px 15px;
+      }
+
+      div.col-sm-12.extra:not(.js-showing) {
+        display: none;
+      }
+
+      #show-more-for-footer {
+        display: block;
       }
     }
 
@@ -36,4 +57,3 @@
       }
     }
 }
-

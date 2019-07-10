@@ -46,8 +46,8 @@ class HomeController < ApplicationController
     "Honolulu, HI", "Houston, TX", "Indianapolis, IN", "Jackson, MS", "Jacksonville, FL", "Kansas City, MO", 
     "Las Vegas, NV", "Little Rock, AR", "Los Angeles, CA", "Louisville, KY", "Manchester, NH", "Memphis, TN", 
     "Miami, FL", "Milwaukee, WI", "Minneapolis, MN", "Nashville, TN", "New Orleans, LA", "New York, NY", 
-    "Newark, NJ", "Oakland, CA", "Oklahoma City, OK", "Omaha, NE", "Oklahoma City, OK", "Philadelphia, PA", 
-    "Phoenix, AZ", "Portland, ME", "Portland, OR", "Providence, RI", "Sacramento, CA", "Salt Lake City, UT", 
+    "Newark, NJ", "Oakland, CA", "Oklahoma City, OK", "Omaha, NE", "Philadelphia, PA", "Phoenix, AZ", "Portland, ME", 
+    "Portland, OR", "Providence, RI", "Sacramento, CA", "Salt Lake City, UT", 
     "San Antonio, TX", "San Diego, CA", "San Francisco, CA", "San Jose, CA", "Seattle, WA", "Sioux Falls, SD", 
     "Tucson, AZ", "Virginia Beach, VA", "Washington, DC", "Wichita, KS", "Wilmington, DE"]
 
