@@ -49,7 +49,6 @@ class SchoolProfilesController < ApplicationController
     add_json_ld({
       "@context" => "http://schema.org",
       "@type" => "ProfilePage",
-      "dateModified" => l(school_profile.last_modified_date, format: '%Y-%m-%d'),
       "description" => StructuredMarkup.description(school: school, gs_rating: school_cache_data_reader.gs_rating.to_s)
     })
   end
@@ -87,7 +86,6 @@ class SchoolProfilesController < ApplicationController
         sp.review_questions = review_questions
         sp.students = students
         sp.nearby_schools = nearby_schools
-        sp.last_modified_date = last_modified_date
         sp.neighborhood = neighborhood
         sp.equity = equity
         sp.equity_overview = equity_overview
@@ -113,7 +111,6 @@ class SchoolProfilesController < ApplicationController
       psp.review_questions = review_questions
       psp.students = students
       psp.nearby_schools = nearby_schools
-      psp.last_modified_date = last_modified_date
       psp.neighborhood = neighborhood
       psp.toc = toc # TODO - do we want something like a toc_private method? probably...
       psp.breadcrumbs = breadcrumbs
@@ -411,19 +408,6 @@ class SchoolProfilesController < ApplicationController
                       request.query_parameters
                   ), status: :moved_permanently
     end
-  end
-
-  def last_modified_date
-    reviews_list = reviews.reviews
-    review_date = reviews_list.present? ? reviews_list.first.created : nil
-    school_date = school.modified.present? ? school.modified.to_date : nil
-    rating_date = nil
-    unless @school.private_school?
-      rating_date = summary_rating.last_updated_date
-    end
-    max_gsdata_date = school_cache_data_reader.decorated_school.max_source_date_valid
-    max_gsdata_date = max_gsdata_date.to_date if max_gsdata_date
-    [review_date, school_date, rating_date, max_gsdata_date, *(school_cache_data_reader.cache_updated_dates)].compact.max
   end
 
   def add_dependencies_to_gon
