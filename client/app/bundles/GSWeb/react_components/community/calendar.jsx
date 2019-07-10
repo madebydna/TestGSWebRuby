@@ -6,6 +6,8 @@ import InfoBox from "../school_profiles/info_box";
 import LoadingOverlay from "../search/loading_overlay";
 import Drawer from "../drawer";
 import QualarooDistrictLink from '../qualaroo_district_link';
+import ModalTooltip from "react_components/modal_tooltip";
+import claimedBadge from 'school_profiles/claimed_badge.png';
 
 class Calendar extends React.Component {
   static propTypes = {
@@ -134,7 +136,13 @@ class Calendar extends React.Component {
           <div className="col-sm-1"></div>
           <div className="col-sm-9">
             {t('event')}
-            { this.state.verified && <span className="verified"><img src="/assets/school_profiles/claimed_badge.png" title="This calendar is being updated by a verified admin."/></span> }
+            { this.state.verified && 
+              <span className="verified">
+                <ModalTooltip content={t('district_calendar_verified')}>
+                  <img src={claimedBadge}/>
+                </ModalTooltip>
+              </span> 
+            }
           </div>
         </div>
       </div>
@@ -153,27 +161,17 @@ class Calendar extends React.Component {
     )
   }
 
-  renderLastUpdatedDate(lastUpdatedArray){
-    const [year, intMonth, day] = lastUpdatedArray;
-    const date = new Date(year, intMonth - 1, day);
-    const month = date.toLocaleString('en-us', { month: 'long' })
-    return (
-      <div className="row bar-graph-display">
-        <div className="test-score-container clearfix">
-          <div className="col-sm-2"></div>
-          <div className="col-sm-1"></div>
-          <div className="col-sm-9 last-updated">{`${capitalize(t('last updated'))}: ${month} ${day}, ${year}`}</div>
-        </div>
-      </div>
-    )
-  }
-
   render() {
     let calendarEvents = this.state.data;
     let calendarEventsInitial = calendarEvents.slice(0,5).map(event => this.renderCalendarEvent(event));
     let calendarEventsForDrawer = calendarEvents.slice(5).map(event => this.renderCalendarEvent(event));
+    
+    let lastUpdated;
     if(this.state.lastUpdated.length > 0){
-      calendarEventsForDrawer = calendarEventsForDrawer.concat(this.renderLastUpdatedDate(this.state.lastUpdated))
+      const [year, intMonth, day] = this.state.lastUpdated;
+      const date = new Date(year, intMonth - 1, day);
+      const month = date.toLocaleString('en-us', { month: 'long' })
+      lastUpdated = <div className="last-updated">{`${capitalize(t('last updated'))}: ${month} ${day}, ${year}`}</div>;
     }
 
     if (this.state.isLoading === true) {
@@ -212,6 +210,7 @@ class Calendar extends React.Component {
                   </div>
                 }
               </div>
+              {lastUpdated}
             </section>
             <div className="module-footer">
               <div data-ga-click-label='Calendar'>
