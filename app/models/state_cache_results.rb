@@ -65,6 +65,8 @@ class StateCacheResults
         StateCachedCharacteristicsMethods
       when 'district_largest'
         StateCachedDistrictLargestMethods
+      when 'test_scores_gsdata'
+        StateCachedTestScoresMethods
     end
   end
 

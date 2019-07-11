@@ -44,6 +44,7 @@ class StatesController < ApplicationController
     gon.show_ads = show_ads?
     ad_setTargeting_through_gon
     data_layer_through_gon
+    @academics = academics
   end
 
   def school_count
@@ -52,6 +53,10 @@ class StatesController < ApplicationController
 
   def school_state_title
     States.capitalize_any_state_names(@state[:long])
+  end
+
+  def academics
+    CommunityProfiles::Academics.state_academics_props(state_cache_data_reader)
   end
 
   def solr_query
@@ -128,7 +133,7 @@ class StatesController < ApplicationController
   end
 
   def state_cache_data_reader
-    @_state_cache_data_reader ||= StateCacheDataReader.new(state, state_cache_keys: ['district_largest','state_characteristics'])
+    @_state_cache_data_reader ||= StateCacheDataReader.new(state, state_cache_keys: ['district_largest','state_characteristics', 'test_scores_gsdata'])
   end
 
   private
