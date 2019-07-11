@@ -69,12 +69,20 @@ class GsdataCaching::GsDataValue
       select { |dv| dv.district_value.present? && !dv.district_value_as_float.zero? }.extend(CollectionMethods)
     end
 
+    def having_non_zero_state_value
+      select { |dv| dv.state_value.present? && !dv.state_value_as_float.zero? }.extend(CollectionMethods)
+    end
+
     def any_non_zero_school_values?
       having_non_zero_school_value.any?
       end
 
     def any_non_zero_district_values?
       having_non_zero_district_value.any?
+    end
+
+    def any_non_zero_state_values?
+      having_non_zero_state_value.any?
     end
 
     def keep_if_any_non_zero_school_values
@@ -84,6 +92,11 @@ class GsdataCaching::GsDataValue
 
     def keep_if_any_non_zero_district_values
       return [].extend(CollectionMethods) unless any_non_zero_district_values?
+      self
+    end
+
+    def keep_if_any_non_zero_state_values
+      return [].extend(CollectionMethods) unless any_non_zero_state_values?
       self
     end
 
