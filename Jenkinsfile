@@ -198,7 +198,7 @@ parallel test_report: {
             unstash "rspec${j}"
             unstash "features_rspec${j}"
         }
-        unstash "js_test_results"
+        // unstash "js_test_results"
         step([$class: 'JUnitResultArchiver', testResults: 'tmp/*.xml'])
     }
 }, rubocop: {
