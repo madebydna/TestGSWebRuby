@@ -12,8 +12,8 @@ es:
         other: Mostrando %{first} a %{last} de %{count} escuelas encontradas en <a href='%{district_url}?lang=es'>%{district}</a>
       state_browse:
         zero: Su búsqueda no obtuvo resultados en <a href='%{state_url}?lang=es'>%{state_long}</a>.
-        one: Mostrando 1 escuela encontrada en <a href='%{state_url}?lang=es'>%{state_long}</a>
-        other: Mostrando %{first} a %{last} de %{count} escuelas encontradas en <a href='%{state_url}?lang=es'>%{state_long}</a>
+        one: Mostrando 1 %{level_code_long} encontrada en <a href='%{state_url}?lang=es'>%{state_long}</a>
+        other: Mostrando %{first} a %{last} de %{count} %{level_code_long} encontradas en <a href='%{state_url}?lang=es'>%{state_long}</a>
       distance:
         zero: Su búsqueda no obtuvo resultados cerca %{location}.
         one: Mostrando 1 escuela encontrada cerca %{location}
@@ -72,3 +72,5 @@ es:
         other: a %{count} milla de %{address}
       list_link: Lista
       map_link: Mapa
+      school: escuela
+      schools: escuelas
