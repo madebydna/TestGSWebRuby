@@ -115,7 +115,7 @@ export default class SearchBox extends React.Component {
     defaultType: PropTypes.string,
     resultTypes: PropTypes.arrayOf(PropTypes.string),
     pageType: PropTypes.string,
-    listType: PropTypes.element,
+    listType: PropTypes.func,
     showSearchAllOption: PropTypes.bool,
     showSearchButton: PropTypes.bool
   };

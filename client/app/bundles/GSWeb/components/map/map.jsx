@@ -137,6 +137,10 @@ export default class Map extends React.Component {
     if (this.props.markerDigest !== prevProps.markerDigest) {
       this.setState({ markersUpdated: true});
     }
+    // remove the setState from fitBounds, since that is called during render
+    if (prevState.markersUpdated) {
+      this.setState({ markersUpdated: false });
+    }
     // the following condition is to help reset the center of map when map object is not viewable but MapMarkers are changed 
     if((this.props.view === LIST_VIEW || this.props.view === MAP_VIEW) && this.props.view !== prevProps.view){
       this.setState({ markersUpdated: true }, () => setTimeout(() => this.map.panBy(1, 1), 50));
@@ -186,9 +190,6 @@ export default class Map extends React.Component {
         theMap.setOptions({maxZoom:null});
       }
       // this.props.googleMaps.event.trigger(theMap, 'resize')
-      this.setState({
-        markersUpdated: false,
-      })
     }
     this.bounds = new this.props.googleMaps.LatLngBounds();
   }

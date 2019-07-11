@@ -67,8 +67,27 @@ module Search
       States.state_name(state)
     end
 
+    def level_code_long(result_count)
+      level_code_options = {
+        "p" => "Preschool",
+        "e" => "Elementary",
+        "m" => "Middle",
+        "h" => "High"
+      }
+
+      if level_codes.length > 1 && result_count == 1
+        return t('school')
+      elsif level_codes.empty? || level_codes.length > 1 
+        return t('schools')
+      elsif result_count == 1
+        return t("#{level_code_options[level_codes.first]}.one")
+      end
+
+      t("#{level_code_options[level_codes.first]}.other")
+    end 
+
     def result_summary(results)
-      district_url = district_url(district_params(state_name, city,  district_name).merge({trailing_slash: true})) if state && city && district_name
+      district_url = district_url(district_params(state_name, city, district_name).merge({trailing_slash: true})) if state && city && district_name
       city_url = city_url(city_params(state&.upcase, city).merge({trailing_slash: true})) if state.present? && city.present?
       state_url = state_url(state_params(state_name).merge({trailing_slash: true})) if state
       params = {
@@ -82,7 +101,8 @@ module Search
         state_url: state_url,
         district: district_name,
         district_url: district_url,
-        search_term: @q.presence,
+        search_term: Rails::Html::FullSanitizer.new.sanitize(@q.presence),
+        level_code_long: level_code_long(results.total),
         location: location_label || @q
       }
       if lat && lon && radius

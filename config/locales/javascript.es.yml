@@ -35,7 +35,7 @@ es:
     city_hero_html: <div class="city-hero-narrative">{city} es una ciudad en el condado de {county}, {stateLong} </div>
     city_hero_no_county_html: <div class="city-hero-narrative">{city} es una ciudad en {stateLong} </div>
     state:
-      state_hero_narrative_html: Hay {schoolCount} escuelas públicas y privadas de K-12 en {nameLong}. Mientras que buscas escuelas que se ajusten a tu familia, encontrarás información sobre temas académicos, equidad, medio ambiente, opiniones de la comunidad y más.
+      state_hero_narrative_html: Hay {schoolCount} escuelas públicas y privadas de K-12 en {nameLong}. Obtén más información sobre las escuelas, la demografía estudiantil, resultados académicos en el estado, lea opiniones de la comunidad, y busca información de ciudades y distritos escolares específicos.
       state_hero_title: 'Escuelas de {nameLong}'
       districts_header: Los distritos escolares más grandes en {nameLong}
       cities_header: Explora escuelas en {nameLong}
@@ -48,6 +48,7 @@ es:
     date: Fecha
     district_calendar: Calendario del distrito
     district_calendar_no_results: En este momento, esta información no está disponible.
+    district_calendar_verified: This calendar is being updated by a verified administrator.
     district_calendar_sources_html: >
       <div class="sources-text">
         <h3>Las fuentes de datos y información de los perfiles de distritos de GreatSchools</h3>
@@ -300,6 +301,7 @@ es:
     Agree: De acuerdo
     Strongly agree: Totalmente de acuerdo
     Review Guidelines: Guia para comentarios
+    last updated: última actualización
     Cancel: Cancelar
     Submit: Enviar
     Required: Requerido

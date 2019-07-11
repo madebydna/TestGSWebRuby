@@ -9,7 +9,7 @@ import { analyticsEvent } from "util/page_analytics";
 
 class Mobility extends React.Component {
   static propTypes = {
-    locality: PropTypes.obj,
+    locality: PropTypes.object,
     pageType: PropTypes.string.isRequired
   };
 
@@ -83,7 +83,7 @@ class Mobility extends React.Component {
 
   renderTransportation(str, transportation){
     return(
-      <React.Fragment>
+      <React.Fragment key={`frag-${str}`}>
         <div className="transportation-container">
           <img src={`https://mobilityscore.transitscreen.io/${transportation.logo}`} alt={str} />
           <p>{transportation.friendlyName}</p>
@@ -149,7 +149,7 @@ class Mobility extends React.Component {
         <React.Fragment>
           <section className="mobility-module">
             <div>
-              {/* <div>
+              {/* <div key="foo">
                 Removing for now until TransitScreen has better coverage
                 <ModalTooltip content={content}>
                   <img src={badgeURL} alt="badge_score" onMouseEnter={() => this.handleGoogleAnalyics('Infobox', 'Mobility')} />

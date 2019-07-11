@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import PropTypes from 'prop-types';
 import { castArray } from 'lodash';
 import Selectable from './selectable';
@@ -46,8 +46,10 @@ ButtonGroup.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSelect: PropTypes.func.isRequired,
   activeOption: PropTypes.oneOfType([
+    PropTypes.number,
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string)
+    PropTypes.arrayOf(PropTypes.number),
+    PropTypes.arrayOf(PropTypes.string),
   ]).isRequired,
   multiple: PropTypes.bool,
   label: PropTypes.string,

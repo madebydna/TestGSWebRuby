@@ -179,6 +179,7 @@ class SearchController < ApplicationController
         hash[PageAnalytics::SEARCH_TYPE] = search_type
         hash[PageAnalytics::SEARCH_HAS_RESULTS] = page_of_results.any?
         hash[PageAnalytics::PAGE_NAME] = 'GS:Search:State'
+        hash[PageAnalytics::STATE] = state
       end
     end 
     {}.tap do |hash|

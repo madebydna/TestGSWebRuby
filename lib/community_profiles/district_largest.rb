@@ -17,7 +17,7 @@ module CommunityProfiles
             h[:state] = district['state']
             h[:grades] = district['levels']
             h[:numSchools] = district['school_count']
-            h[:url] = district_url(district_params(district['state'], district['city'], district['name']))
+            h[:url] = district_path(district_params(district['state'], district['city'], district['name']).merge(trailing_slash: true))
           end
         end
       end

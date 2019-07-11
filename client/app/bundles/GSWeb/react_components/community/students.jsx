@@ -16,7 +16,7 @@ const generateLegend = (ethnicityData, pageType) => {
         const displayedValue = value > 0 ? value : '<1';
         const ethnicityColors = ["#0f69c4", "#2bdc99", "#f1830f", "#f1e634", "#6f2eb4", "#ef60d0", "#ca3154", "#999EFF"]
         return (
-          <div className="legend-separator js-highlightPieChart clearfix" data-slice-id={idx}>
+          <div className="legend-separator js-highlightPieChart clearfix" data-slice-id={idx} key={`${bd.breakdown}-${idx}`}>
             <div className="legend-square" style={{ float: "left", backgroundColor: ethnicityColors[idx] }}></div>
             <div className="legend-title" style={{ float: 'left' }}>{bd.breakdown}</div>
             <div className="legend-title" style={{ float: 'right' }}>{displayedValue}%</div>
@@ -66,9 +66,9 @@ const Students = ({ ethnicityData, subgroupsData, genderData, translations, sour
 
 Students.propTypes = {
   ethnicityData: PropTypes.array,
-  subgroupsData: PropTypes.obj,
-  genderData: PropTypes.obj,
-  translations: PropTypes.obj,
+  subgroupsData: PropTypes.object,
+  genderData: PropTypes.object,
+  translations: PropTypes.object,
   sources: PropTypes.string,
   pageType: PropTypes.string
 };
