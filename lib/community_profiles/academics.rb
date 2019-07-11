@@ -58,7 +58,7 @@ module CommunityProfiles
     end
 
     def data_label(key)
-      I18n.t(key.to_sym, scope: 'lib.district', default: I18n.db_t(key, default: key))
+      I18n.t(key.to_sym, scope: 'lib.community', default: I18n.db_t(key, default: key))
     end
 
     def sources_footer
