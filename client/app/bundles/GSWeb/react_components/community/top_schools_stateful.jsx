@@ -136,6 +136,7 @@ class TopSchoolsStateful extends React.Component {
           levelCodes={this.state.levelCodes}
           community={this.props.community}
           locality={this.props.locality}
+          viewportSize={this.props.viewportSize}
         />
       );
     }
