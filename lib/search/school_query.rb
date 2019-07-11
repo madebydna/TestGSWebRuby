@@ -82,7 +82,7 @@ module Search
         state_url: state_url,
         district: district_name,
         district_url: district_url,
-        search_term: @q.presence ? Rails::Html::FullSanitizer.new.sanitize(@q) : nil,
+        search_term: Rails::Html::FullSanitizer.new.sanitize(@q.presence),
         location: location_label || @q
       }
       if lat && lon && radius
