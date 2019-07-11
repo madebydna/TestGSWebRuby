@@ -48,7 +48,7 @@ export const citiesTocItem = {
 
 export const academicsTocItem = {
   key: ACADEMICS,
-  label: t('Academics'),
+  label: t(capitalize(ACADEMICS)),
   anchor: '#academics',
   selected: false
 }
