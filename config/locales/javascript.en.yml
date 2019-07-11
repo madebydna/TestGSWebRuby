@@ -48,6 +48,7 @@ en:
     date: Date
     district_calendar: District calendar
     district_calendar_no_results: Currently, this information is not available.
+    district_calendar_verified: This calendar is being updated by a verified administrator.
     district_calendar_sources_html: >
       <div class="sources-text">
         <h3>GreatSchools district data sources & information</h3>
@@ -299,6 +300,7 @@ en:
     Agree: Agree
     Strongly agree: Strongly agree
     Review Guidelines: Review guidelines
+    last updated: last updated
     Cancel: Cancel
     Submit: Submit
     Required: Required
