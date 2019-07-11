@@ -224,6 +224,9 @@ group :development, :test do
   gem 'rubocop-checkstyle_formatter', require: false
 
   gem 'pry-rails'
+
+  # Minimal embedded v8 engine for Ruby
+  gem 'mini_racer', platforms: :ruby
 end
 
 # Sass adapter for the Rails asset pipeline.
