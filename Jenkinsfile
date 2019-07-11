@@ -185,11 +185,11 @@ parallelTests += [1,2].collectEntries([:]) { ["featurespecs${it}", makeJSBranch(
 parallelTests['failFast'] = true
 parallel parallelTests
 
-node('slave') {
-    prepareWorkspace()
-    sh 'script/ci/run_js_unit_tests.sh'
-    stash includes: 'tmp/js_tests_results.xml', name: "js_test_results"
-}
+// node('slave') {
+//     prepareWorkspace()
+//     sh 'script/ci/run_js_unit_tests.sh'
+//     stash includes: 'tmp/js_tests_results.xml', name: "js_test_results"
+// }
 
 parallel test_report: {
     node('slave') {
