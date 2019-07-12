@@ -1,7 +1,7 @@
 en:
   school_profiles:
     students:
-      title: Students Demographics
+      title: Student demographics
       no_data_html: >
         This section includes information about student demographics at this school.
         <br></br>

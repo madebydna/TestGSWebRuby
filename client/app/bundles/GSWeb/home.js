@@ -11,6 +11,7 @@ import { setupImages } from 'util/responsive_images';
 import "jquery-unveil";
 import SearchBox from 'react_components/search_box';
 import withViewportSize from 'react_components/with_viewport_size';
+import { t } from 'util/i18n';
 
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 ReactOnRails.register({
@@ -24,6 +25,18 @@ $(function() {
       window.location = url;
     }
     return false;
+  });
+
+  $('#show-more-for-footer').on('click', 'a', function(e) {
+    e.preventDefault();
+    var extraLinks = $('#home-city-footer').find('.extra');
+    extraLinks.toggleClass('js-showing');
+    
+    if ($(this).text() == t('show_more')) {
+      $(this).text(t('show_less'));
+    } else {
+      $(this).text(t('show_more'));
+    }
   });
 
   commonPageInit({includeFeatured: false});

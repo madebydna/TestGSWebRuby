@@ -50,7 +50,7 @@ module MetaTag
     end
 
     def robots
-      nil
+      'noindex'
     end
 
     def alternate_url

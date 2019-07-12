@@ -73,7 +73,7 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
   ];
   let blueLine;
   const renderCitySchoolAmt = browseLinkData.map((linkData, idx) => (
-    <li className="school-type-li" key={linkData.name}>
+    <li key={linkData.name}>
       {renderListItems(linkData, locality)}
       {size > MD ? 
         ((idx !== 3 && idx !== 7) ? blueLine = <div className="blue-line" /> : null)
@@ -87,7 +87,7 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
   const browseLinkDistrictData = (browseLinkData.slice(0, 4)).concat([browseLinkData[7]]);
   const renderDistrictSchoolAmt = browseLinkDistrictData.map((linkData, idx) => (
       linkData.schoolNumber > 0 ?
-        <li className="school-type-li" key={linkData.name}>
+        <li key={linkData.name}>
           {renderListItems(linkData, locality)}
           {idx !== 4 ? <div className="blue-line"/> : null}
         </li> : null
@@ -95,7 +95,7 @@ const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
   
   if (schoolLevels.all !== null) {
     return (
-      <section className="school-browse-module">
+      <section className="links-module">
         {/* {browseSchoolBlurb} */}
         <ul>
           {community === 'city' ? renderCitySchoolAmt : renderDistrictSchoolAmt}

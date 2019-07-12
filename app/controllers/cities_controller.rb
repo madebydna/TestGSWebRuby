@@ -18,6 +18,7 @@ class CitiesController < ApplicationController
     @reviews = reviews_formatted.reviews_list
     @locality = locality
     @csa_module = csa_state_solr_query.present?
+    @neighboring_cities = neighboring_cities_data
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props
     set_page_analytics_data
@@ -30,7 +31,8 @@ class CitiesController < ApplicationController
     set_meta_tags(alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
                   title: cities_title,
                   description: cities_description,
-                  canonical: city_url(state: city_params_hash[:state], city: city_params_hash[:city]))
+                  canonical: city_url(state: city_params_hash[:state], city: city_params_hash[:city]),
+                  noindex: school_levels[:all] < 3)
   end
 
   def cities_title
@@ -177,6 +179,21 @@ class CitiesController < ApplicationController
       }
     ]
   end
+
+  def neighboring_cities_data
+    @_neighboring_cities_data ||= begin
+      City.find_neighbors(city_record).map do |city|
+        Hash.new.tap do |cp|
+          cp[:name] = city.name
+          cp[:url] = city_path(
+            state: gs_legacy_url_encode(States.state_name(city.state)),
+            city: gs_legacy_url_encode(city.name),
+            trailing_slash: true
+          )
+        end
+      end 
+    end
+  end 
 
   # StructuredMarkup
   def prepare_json_ld

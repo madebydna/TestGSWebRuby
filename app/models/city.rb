@@ -31,6 +31,25 @@ class City < ActiveRecord::Base
     City.all.order(id: :asc).active
   end
 
+  def self.find_neighbors(city)
+    select_sql = <<~SQL
+      id, name, state, (
+      6371 * acos (
+      cos ( radians(:lat) )
+      * cos( radians(lat) )
+      * cos( radians(lon) - radians(:lon) )
+      + sin ( radians(:lat) )
+      * sin( radians(lat) )
+      )
+      ) AS distance
+    SQL
+    City.select(sanitize_sql_array([select_sql, lat: city.lat, lon: city.lon]))
+      .where(state: city.state, active: true)
+      .where.not(id: city.id)
+      .having("distance < 100") # 100 km =~ 62.1371 miles
+      .order("distance").limit(8)
+  end
+
   def state_long
     States.abbreviation_hash[state.downcase]
   end

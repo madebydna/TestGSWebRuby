@@ -18,7 +18,7 @@ const ParentTip = ({children}) => {
 };
 
 ParentTip.propTypes = {
-  content: PropTypes.string.isRequired
+  children: PropTypes.node.isRequired
 }
 
 export default ParentTip;

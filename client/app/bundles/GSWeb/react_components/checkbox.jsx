@@ -33,6 +33,7 @@ export default class Checkbox extends React.Component {
     return (
       <span onClick={this.onToggle}>
         <input
+          onChange={(e) => {}} // hack to silence React warning
           type="checkbox"
           value={this.props.value}
           checked={this.state.checked}

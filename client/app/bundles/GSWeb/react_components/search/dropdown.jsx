@@ -24,8 +24,9 @@ const Dropdown = props => (
           </div>
           {isOpen && (
             <div className="panel">
-              {options.map(({ option, select, active }) => (
+              {options.map(({ option, select, active }, idx) => (
                 <div
+                  key={`opt-${option.label}-${idx}`}
                   onClick={select}
                   onKeyPress={select}
                   role="radio"

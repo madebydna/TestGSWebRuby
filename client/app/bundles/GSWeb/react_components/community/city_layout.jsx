@@ -6,6 +6,8 @@ import Button from 'react_components/button';
 import Ad from 'react_components/ad';
 import { t, capitalize } from 'util/i18n';
 import { keepInViewport } from 'util/sticky';
+import { NEIGHBORING_CITIES } from './toc_config';
+import CityLinks from './city_links';
 
 class CityLayout extends React.Component {
   static propTypes = {
@@ -13,7 +15,8 @@ class CityLayout extends React.Component {
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
     shouldDisplayReviews: PropTypes.bool,
-    shouldDisplayDistricts: PropTypes.bool
+    shouldDisplayDistricts: PropTypes.bool,
+    neighboringCities: PropTypes.arrayOf(PropTypes.object)
   };
 
   constructor(props) {
@@ -150,6 +153,20 @@ class CityLayout extends React.Component {
     )
   }
 
+  renderNeighboringCities(){
+    if (this.props.neighboringCities == 0) return;
+    return(
+      <div id="neighboring-cities" className="module-section">
+        <section className="links-module">
+          <h3>{t(NEIGHBORING_CITIES)}</h3>
+          <ul>
+            <CityLinks cities={this.props.neighboringCities} size={this.props.viewportSize} />
+          </ul>
+        </section>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="city-body">
@@ -168,6 +185,7 @@ class CityLayout extends React.Component {
               {this.renderMobility()}
               {this.renderZillow()}
               {this.renderReviews()}
+              {this.renderNeighboringCities()}
             </div>
           {/*</div>*/}
           {this.renderDesktopAd()}

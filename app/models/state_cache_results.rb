@@ -1,4 +1,5 @@
 class StateCacheResults
+  attr_reader :state_data
 
   def initialize(cache_keys, query_results)
     @cache_keys = Array.wrap(cache_keys)
@@ -7,16 +8,8 @@ class StateCacheResults
     build_state_data_hash
   end
 
-  def state_data_hash
-    @state_data
-  end
-
-  def data_hash
-    @state_data
-  end
-
   def decorate_state(state)
-    decorated = StateCacheDecorator.new(state, @state_data[state] || {})
+    decorated = StateCacheDecorator.new(state, state_data[state] || {})
     @cache_keys.each do |key|
       if module_for_key(key)
         decorated.send(:extend, (module_for_key(key)))
@@ -24,27 +17,6 @@ class StateCacheResults
     end
     decorated
   end
-
-  # module HashWithDistrictCacheData
-  #   def cache_data
-  #     self
-  #   end
-  # end
-
-  # def get_cache_object_for_district(state, district_id)
-  #   hash = @district_data[[state, district_id]]
-  #   if hash
-  #     hash.send(:extend, HashWithDistrictCacheData)
-  #     hash.keys.each do |key|
-  #       hash.send(:extend, (module_for_key(key)))
-  #     end
-  #   end
-  #   hash
-  # end
-
-  # def decorate_district(district)
-  #   decorate_districts([district]).first
-  # end
 
   private
 
@@ -54,8 +26,8 @@ class StateCacheResults
       cache_key = result[:name]
       cache_value = begin Oj.load(result.value) rescue {} end
 
-      @state_data[state] ||= {}
-      @state_data[state][result.name] = cache_value
+      state_data[state] ||= {}
+      state_data[state][result.name] = cache_value
     end
   end
 
@@ -65,6 +37,8 @@ class StateCacheResults
         StateCachedCharacteristicsMethods
       when 'district_largest'
         StateCachedDistrictLargestMethods
+      when 'test_scores_gsdata'
+        StateCachedTestScoresMethods
     end
   end
 

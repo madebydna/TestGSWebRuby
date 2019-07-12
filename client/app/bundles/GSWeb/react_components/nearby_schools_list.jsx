@@ -133,7 +133,7 @@ class NearbySchoolsList extends React.Component {
 
   pageRightButton() {
     let className = '';
-    let onClick = '';
+    let onClick;
     if (this.canPageRight()) {
       className = 'active';
       onClick = this.pageRight;

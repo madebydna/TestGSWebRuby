@@ -9,6 +9,8 @@ export const CALENDAR = 'calendar';
 export const STUDENTS = 'students'
 export const BROWSE_SCHOOLS = 'browse-schools';
 export const AWARD_WINNING_SCHOOLS = 'award-winning-schools';
+export const CITIES = 'cities';
+export const NEIGHBORING_CITIES = 'neighboring-cities';
 
 export const browseSchoolsTocItem = {
   key: BROWSE_SCHOOLS,
@@ -38,16 +40,23 @@ export const schoolDistrictsTocItem = {
   selected: false
 }
 
+export const citiesTocItem = {
+  key: CITIES,
+  label: t(CITIES),
+  anchor: '#cities',
+  selected: false
+}
+
 export const academicsTocItem = {
   key: ACADEMICS,
-  label: t(ACADEMICS),
+  label: t(capitalize(ACADEMICS)),
   anchor: '#academics',
   selected: false
 }
 
 export const studentsTocItem = {
   key: STUDENTS,
-  label: capitalize(t('students demographics')),
+  label: capitalize(t('student demographics')),
   anchor: '#students',
   selected: false
 }
@@ -77,5 +86,12 @@ export const reviewsTocItem = {
   key: REVIEWS,
   label: t(capitalize(REVIEWS)),
   anchor: '#reviews',
+  selected: false
+}
+
+export const neighboringCitiesTocItem = {
+  key: NEIGHBORING_CITIES,
+  label: t(NEIGHBORING_CITIES),
+  anchor: '#neighboring-cities',
   selected: false
 }

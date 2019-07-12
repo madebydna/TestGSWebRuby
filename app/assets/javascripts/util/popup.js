@@ -1,4 +1,4 @@
-GS.popup = (function(_) {
+GS.popup = (function() {
     var defaultPopupWrapper   = '.js-popupWrapper';
     var defaultPopupActivator = '.js-popupActivator';
     var defaultPopupBody      = '.js-popupBody';
@@ -72,4 +72,4 @@ GS.popup = (function(_) {
         closeOtherPopups: closeOtherPopups
     }
 
-})(_);
+})();

@@ -34,33 +34,35 @@ module SchoolProfiles
           # Two hacks for mapping pacific islander and native american to test scores values.
           if (PACIFIC_ISLANDER.include? ed['breakdown']) ||
               (PACIFIC_ISLANDER.include? ed['original_breakdown'])
-            PACIFIC_ISLANDER.each { |islander| ethnicity_breakdown[islander] = ed["#{school_or_district}_value"]}
+            PACIFIC_ISLANDER.each { |islander| ethnicity_breakdown[islander] = ed["#{entity_type}_value"]}
           elsif (NATIVE_AMERICAN.include? ed['breakdown']) ||
               (NATIVE_AMERICAN.include? ed['original_breakdown'])
-            NATIVE_AMERICAN.each { |native_american| ethnicity_breakdown[native_american] = ed["#{school_or_district}_value"]}
+            NATIVE_AMERICAN.each { |native_american| ethnicity_breakdown[native_american] = ed["#{entity_type}_value"]}
           elsif (AFRICAN_AMERICAN.include? ed['breakdown']) ||
               (AFRICAN_AMERICAN.include? ed['original_breakdown'])
-            AFRICAN_AMERICAN.each { |ethnicity| ethnicity_breakdown[ethnicity] = ed["#{school_or_district}_value"]}
+            AFRICAN_AMERICAN.each { |ethnicity| ethnicity_breakdown[ethnicity] = ed["#{entity_type}_value"]}
           elsif (ASIAN.include? ed['breakdown']) ||
               (ASIAN.include? ed['original_breakdown'])
-            ASIAN.each { |ethnicity| ethnicity_breakdown[ethnicity] = ed["#{school_or_district}_value"]}
+            ASIAN.each { |ethnicity| ethnicity_breakdown[ethnicity] = ed["#{entity_type}_value"]}
           else
-            ethnicity_breakdown[ed['breakdown']] = ed["#{school_or_district}_value"]
-            ethnicity_breakdown[ed['original_breakdown']] = ed["#{school_or_district}_value"]
+            ethnicity_breakdown[ed['breakdown']] = ed["#{entity_type}_value"]
+            ethnicity_breakdown[ed['original_breakdown']] = ed["#{entity_type}_value"]
           end
         end
         ethnicity_breakdown.compact
       end
     end
 
-    def school_or_district
-      @_school_or_district ||= begin
+    def entity_type
+      @_entity_type ||= begin
         if @cache_data_reader.is_a?(DistrictCacheDataReader)
           'district'
         elsif @cache_data_reader.is_a?(SchoolCacheDataReader)
           'school'
+        elsif @cache_data_reader.is_a?(StateCacheDataReader)
+          'state'
         else
-          ''
+          raise NotImplementedError.new("@cache_data_reader must be valid in #{self.class.name}#entity_type")
         end
       end
     end

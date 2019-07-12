@@ -1,15 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { t } from "util/i18n";
-import { findDistrictCalendarWithNCES as fetchDistrictCalendar } from "../../api_clients/calendar";
+import { t, capitalize } from "util/i18n";
+import { findDistrictCalendarWithNCES as fetchDistrictCalendar, findDistrictOverviewData } from "../../api_clients/calendar";
 import InfoBox from "../school_profiles/info_box";
 import LoadingOverlay from "../search/loading_overlay";
 import Drawer from "../drawer";
 import QualarooDistrictLink from '../qualaroo_district_link';
+import ModalTooltip from "react_components/modal_tooltip";
+import claimedBadge from 'school_profiles/claimed_badge.png';
 
 class Calendar extends React.Component {
   static propTypes = {
-    locality: PropTypes.obj,
+    locality: PropTypes.object,
     pageType: PropTypes.string.isRequired
   };
 
@@ -24,7 +26,9 @@ class Calendar extends React.Component {
       isLoading: true,
       didFail: false,
       data: [],
-      error: ""
+      error: "",
+      verified: false,
+      lastUpdated: []
     };
 
     this.renderCalendarEvent = this.renderCalendarEvent.bind(this);
@@ -95,16 +99,34 @@ class Calendar extends React.Component {
 
   componentDidMount() {
     fetchDistrictCalendar(this.props.locality.calendarURL, this.props.locality.nces_code)
-      .done($jsonRes => this.setState({
-        isLoading: false,
-        data: this.parseEventsPayload($jsonRes)
-      }))
+      .done($jsonRes => {
+        findDistrictOverviewData(this.props.locality.calendarURL, this.props.locality.nces_code)
+          .done($jsonRes2 =>{
+            let verified;
+            let lastUpdated;
+            if ($jsonRes2.district && $jsonRes2.district[0]){
+              verified = $jsonRes2.district[0].verified;
+              lastUpdated = this.parseDateString($jsonRes2.district[0].last_updated);
+            }
+            this.setState({
+              isLoading: false,
+              verified: verified,
+              lastUpdated: lastUpdated,
+              data: this.parseEventsPayload($jsonRes)
+            })
+          })
+          .fail(error => this.setState({
+            isLoading: false,
+            verified: false,
+            data: this.parseEventsPayload($jsonRes)
+          }))
+      })
       .fail(error => this.setState({
         isLoading: false,
         didFail: true,
         error: error 
       }))
-  }
+    }
 
   renderCalendarHeader() {
     return (
@@ -112,7 +134,16 @@ class Calendar extends React.Component {
         <div className="test-score-container clearfix calendar-header">
           <div className="col-sm-2">{ t('date') }</div>
           <div className="col-sm-1"></div>
-          <div className="col-sm-9">{ t('event') }</div>
+          <div className="col-sm-9">
+            {t('event')}
+            { this.state.verified && 
+              <span className="verified">
+                <ModalTooltip content={t('district_calendar_verified')}>
+                  <img src={claimedBadge}/>
+                </ModalTooltip>
+              </span> 
+            }
+          </div>
         </div>
       </div>
     )
@@ -134,6 +165,14 @@ class Calendar extends React.Component {
     let calendarEvents = this.state.data;
     let calendarEventsInitial = calendarEvents.slice(0,5).map(event => this.renderCalendarEvent(event));
     let calendarEventsForDrawer = calendarEvents.slice(5).map(event => this.renderCalendarEvent(event));
+    
+    let lastUpdated;
+    if(this.state.lastUpdated.length > 0){
+      const [year, intMonth, day] = this.state.lastUpdated;
+      const date = new Date(year, intMonth - 1, day);
+      const month = date.toLocaleString('en-us', { month: 'long' })
+      lastUpdated = <div className="last-updated">{`${capitalize(t('last updated'))}: ${month} ${day}, ${year}`}</div>;
+    }
 
     if (this.state.isLoading === true) {
       return (
@@ -171,6 +210,7 @@ class Calendar extends React.Component {
                   </div>
                 }
               </div>
+              {lastUpdated}
             </section>
             <div className="module-footer">
               <div data-ga-click-label='Calendar'>

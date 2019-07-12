@@ -115,7 +115,7 @@ export default class SearchBox extends React.Component {
     defaultType: PropTypes.string,
     resultTypes: PropTypes.arrayOf(PropTypes.string),
     pageType: PropTypes.string,
-    listType: PropTypes.element,
+    listType: PropTypes.func,
     showSearchAllOption: PropTypes.bool,
     showSearchButton: PropTypes.bool
   };
@@ -154,7 +154,8 @@ export default class SearchBox extends React.Component {
         Districts: [],
         Schools: []
       },
-      displayMobileSearchModal: false
+      displayMobileSearchModal: false,
+      googleMapsInitialized: false
     };
   }
 
@@ -217,7 +218,15 @@ export default class SearchBox extends React.Component {
         this.submit();
         return;
       }
-      geocode(searchTerm)
+      if (this.state.googleMapsInitialized) {
+        this.doGeocode();
+      }
+    }
+  }
+
+  doGeocode() {
+    const { searchTerm } = this.state;
+    geocode(searchTerm)
         .then(json => json[0])
         .done(
           ({
@@ -263,7 +272,6 @@ export default class SearchBox extends React.Component {
             q: this.state.searchTerm
           });
         });
-    }
   }
 
   submit() {
@@ -295,21 +303,22 @@ export default class SearchBox extends React.Component {
     };
   }
 
-  transformResult(category, result) {
-    return result;
-  }
-
-  onQueryMatchesAddress(q) {
+  // we need to init Google Maps for later Geocoding
+  onQueryMatchesAddressOrZip(q) {
     initGoogleMaps(() => {
-      getAddressPredictions(q, addresses => {
-        const newResults = cloneDeep(this.state.autoSuggestResults);
-        newResults.Addresses = addresses.map(address => ({
-          type: 'address',
-          title: address,
-          value: address
-        }));
-        this.setState({ autoSuggestResults: newResults });
-      });
+      if (matchesAddress(q)) {
+        getAddressPredictions(q, addresses => {
+          const newResults = cloneDeep(this.state.autoSuggestResults);
+          newResults.Addresses = addresses.map(address => ({
+            type: 'address',
+            title: address,
+            value: address
+          }));
+          this.setState({ googleMapsInitialized: true, autoSuggestResults: newResults });
+        });
+      } else {
+        this.setState({ googleMapsInitialized: true });
+      }
     });
   }
 
@@ -320,8 +329,8 @@ export default class SearchBox extends React.Component {
   autoSuggestQuery(q) {
     q = q.replace(/[^a-zA-Z 0-9\-\,\']+/g, '');
     if (this.shouldShowAutoComplete(q)) {
-      if (matchesAddress(q)) {
-        this.onQueryMatchesAddress(q);
+      if (matchesAddressOrZip(q)) {
+        this.onQueryMatchesAddressOrZip(q);
       }
 
       let qPortionBeforeComma = q;
@@ -339,9 +348,7 @@ export default class SearchBox extends React.Component {
           };
           Object.keys(results).forEach(category => {
             (results[category] || []).forEach(result => {
-              adaptedResults[category].push(
-                this.transformResult(category, result)
-              );
+              adaptedResults[category].push(result);
             });
           });
           adaptedResults.Addresses = this.state.autoSuggestResults.Addresses;

@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Breadcrumbs from 'react_components/breadcrumbs';
 import StateLayout from './state_layout';
+import DataModule from "react_components/data_module";
+import InfoBox from 'react_components/school_profiles/info_box';
 import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
@@ -14,11 +16,13 @@ import Students from "./students";
 import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
-import { schoolsTocItem, awardWinningSchoolsTocItem, studentsTocItem, schoolDistrictsTocItem, reviewsTocItem, AWARD_WINNING_SCHOOLS, STUDENTS, SCHOOL_DISTRICTS, REVIEWS } from './toc_config';
+import { schoolsTocItem, academicsTocItem, awardWinningSchoolsTocItem, studentsTocItem, schoolDistrictsTocItem, citiesTocItem, reviewsTocItem, AWARD_WINNING_SCHOOLS, STUDENTS, SCHOOL_DISTRICTS, REVIEWS, ACADEMICS } from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
 import remove from 'util/array';
+import { t, capitalize } from '../../util/i18n';
+// import QualarooDistrictLink from '../qualaroo_district_link';
 
 class State extends React.Component {
   static defaultProps = {
@@ -105,6 +109,11 @@ class State extends React.Component {
     );
   }
 
+  hasAcademicsData() {
+    let { data } = this.props.academics;
+    return data.filter(o => o.data && o.data.length > 0).length > 0
+  }
+
   hasStudentDemographicData() {
     const { ethnicityData, genderData, subgroupsData } = this.props.students;
     const hasEthnicityData = ethnicityData.filter(o => o.state_value > 0).length > 0
@@ -117,16 +126,17 @@ class State extends React.Component {
   }
 
   selectTocItems(){
-    let stateTocItems = [schoolsTocItem, awardWinningSchoolsTocItem, schoolDistrictsTocItem, studentsTocItem, reviewsTocItem];
+    let stateTocItems = [schoolsTocItem, awardWinningSchoolsTocItem, academicsTocItem, studentsTocItem, citiesTocItem, schoolDistrictsTocItem, reviewsTocItem];
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === AWARD_WINNING_SCHOOLS && !this.props.csa_module);
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === SCHOOL_DISTRICTS && this.props.districts.length === 0);
     stateTocItems = remove(stateTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     stateTocItems = remove(stateTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());
-    
+    stateTocItems = remove(stateTocItems, (tocItem) => tocItem.key === ACADEMICS && !this.hasAcademicsData());
     return stateTocItems;
   }
 
   render() {
+    let { title, anchor, subtitle, info_text, icon_classes, sources, share_content, rating, data, analytics_id, showTabs, faq, feedback } = this.props.academics;
     const studentProps = {...this.props.students,...{'pageType': this.pageType}}
     return (
         <StateLayout
@@ -164,6 +174,31 @@ class State extends React.Component {
                 schools={this.props.schools_data.schools.csa}
                 size={this.props.size}
                 locality={this.props.locality}
+              />
+            }
+            academics={
+              <DataModule
+                title={title}
+                anchor={anchor}
+                subtitle={subtitle}
+                info_text={info_text}
+                icon_classes={icon_classes}
+                sources={sources}
+                share_content={share_content}
+                rating={rating}
+                data={data}
+                analytics_id={analytics_id}
+                showTabs={showTabs}
+                faq={faq}
+                feedback={feedback}
+                suppressIfEmpty={true}
+                footer={
+                  <div data-ga-click-label={title}>
+                    <InfoBox content={sources} element_type="sources">{t('See notes')}</InfoBox>
+                    {/* <QualarooDistrictLink module='state_academics' state={this.props.locality.stateShort} /> */}
+                  </div>
+                }
+                pageType={this.pageType}
               />
             }
             shouldDisplayDistricts={this.props.districts.length > 0}

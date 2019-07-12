@@ -1,33 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { MD, validSizes as validViewportSizes } from "util/viewport";
+import { validSizes as validViewportSizes } from "util/viewport";
+import CityLinks from "./city_links";
 import { t } from "util/i18n";
 
-const renderCitiesListItem = (linkData) => (
-  <a href={linkData.url}>{linkData.name}</a>
-);
-
 const cityBrowseLinks = ({locality, size, cities}) => { 
-  const renderedList = cities.map((linkData, idx) => (
-    <li className="school-type-li" key={linkData.name}>
-      {renderCitiesListItem(linkData)}
-      {size > MD ? 
-        ((idx !== 3 && idx !== 7) ? <div className="blue-line" /> : null)
-        :
-        (idx !== 7) ? <div className="blue-line" /> : null
-      }
-    </li>
-  ));
 
   const browseSchoolBlurb = <h3>{t('cities')}</h3>;
 
   return (
-    <section className="school-browse-module">
+    <section className="links-module">
       {browseSchoolBlurb}
       <ul>
-        {renderedList}
+        <CityLinks cities={cities} size={size} />
       </ul>
-      <div className="state-cities-module">
+      <div className="separator">
         <div className="blue-line" />
       </div>
       <div className="more-school-btn">

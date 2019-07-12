@@ -71,7 +71,7 @@ const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqCo
   let body = <div>
     <ParentTip><span dangerouslySetInnerHTML={{__html: parentTip}}/></ParentTip>
     {listOfVisualizations(courses)}
-    <InfoTextAndCircle cta={faqCta} content={faqContent} />
+    <InfoTextAndCircle cta={faqCta} content={faqContent} element_type="faq" />
   </div>
 
 

@@ -63,8 +63,6 @@ LocalizedProfiles::Application.configure do
 
   if ENV_GLOBAL['media_server'].present?
     config.action_controller.asset_host = ENV_GLOBAL['media_server']
-  else
-    config.action_controller.asset_host = 'http://localhost:3000'
   end
 
   # For dev environments, use domain: all which will makes session cookies have a domain of localhost

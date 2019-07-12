@@ -22,29 +22,29 @@ export function geocode(searchInput) {
             geocodeResult.partial_match = false;
           }
           for (let i = 0; i < results[x].address_components.length; i++) {
-            if (results[x].address_components[i].types.contains('locality')) {
+            if (results[x].address_components[i].types.includes('locality')) {
               geocodeResult.city = results[x].address_components[i].long_name;
             }
             if (
-              results[x].address_components[i].types.contains('postal_code')
+              results[x].address_components[i].types.includes('postal_code')
             ) {
               geocodeResult.zip = results[x].address_components[i].short_name;
             }
             if (
-              results[x].address_components[i].types.contains(
+              results[x].address_components[i].types.includes(
                 'administrative_area_level_1'
               )
             ) {
               geocodeResult.state = results[x].address_components[i].short_name;
             }
-            if (results[x].address_components[i].types.contains('country')) {
+            if (results[x].address_components[i].types.includes('country')) {
               geocodeResult.country =
                 results[x].address_components[i].short_name;
             }
-            if (results[x].address_components[i].types.contains('neighborhood')) {
+            if (results[x].address_components[i].types.includes('neighborhood')) {
               geocodeResult.neighborhood = results[x].address_components[i].long_name;
             }
-            if (results[x].address_components[i].types.contains('sublocality')) {
+            if (results[x].address_components[i].types.includes('sublocality')) {
               geocodeResult.sublocality = results[x].address_components[i].long_name;
             }
           }

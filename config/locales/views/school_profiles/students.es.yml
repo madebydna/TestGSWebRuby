@@ -1,7 +1,7 @@
 es:
   school_profiles:
     students:
-      title: Estudiantes Demografía
+      title: Demografía estudiantil
       no_data_html: >
         Esta sección incluye información sobre la demografía estudiantil en esta escuela.
         <br></br>

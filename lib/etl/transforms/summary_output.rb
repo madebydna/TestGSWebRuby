@@ -24,24 +24,24 @@ class SummaryOutput < GS::ETL::Source
   # }
 
   def process(row)
-    entity_level = row[:entity_level].to_sym
-    @hash[entity_level] ||= {}
+    entity_type = row[:entity_type].to_sym
+    @hash[entity_type] ||= {}
     summary_output_fields.each do |field|
       field_value = row[field]
-      @hash[entity_level][field] ||= {}
-      @hash[entity_level][field][field_value] ||= []
-      @hash[entity_level][field][field_value] << row[:state_id]
+      @hash[entity_type][field] ||= {}
+      @hash[entity_type][field][field_value] ||= []
+      @hash[entity_type][field][field_value] << row[:state_id]
     end
     nil
   end
 
   def each
-    @hash.each do |entity_level,entity_hash|
+    @hash.each do |entity_type,entity_hash|
       entity_hash.each do |field,value_hash|
         value_hash.each do |value, count|
           yield(
               {
-                  entity_level: entity_level,
+                  entity_type: entity_type,
                   field: field,
                   value: value,
                   count: count.uniq.length

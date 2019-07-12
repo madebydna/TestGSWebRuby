@@ -38,4 +38,30 @@ describe City do
       end
     end
   end
+
+  describe '.find_neighbors' do
+    let!(:san_francisco) { create(:city, name: "San Francisco", lat: 37.7628, lon: -122.435, state: 'CA')}
+    let!(:oakland) { create(:city, name: "Oakland", lat: 37.7699, lon: -122.226, state: 'CA')}
+    let!(:berkeley) { create(:city, name: "Berkeley", lat: 37.8667, lon: -122.299, state: 'CA')}
+    let!(:inactive_city) { create(:city, name: "Inactive", active: false, lat: 37.8667, lon: -122.299, state: 'CA')}
+    let!(:other_state) { create(:city, name: "Other State", lat: 37.8667, lon: -122.299, state: 'WA')}
+    let!(:sacramento) { create(:city, name: "Sacramento", lat:38.5666, lon: -121.469, state: 'CA')}
+
+    it 'should return cities within 60 miles in the same state' do
+      expect(City.find_neighbors(san_francisco)).to include(oakland)
+      expect(City.find_neighbors(san_francisco)).to include(berkeley)
+    end
+
+    it 'should only return active cities within 60 miles' do
+      expect(City.find_neighbors(san_francisco)).not_to include(inactive_city)
+    end
+
+    it 'should not return cities further away' do
+      expect(City.find_neighbors(san_francisco)).not_to include(sacramento)
+    end
+
+    it 'should not return cities in another state' do
+      expect(City.find_neighbors(san_francisco)).not_to include(other_state)
+    end
+  end
 end

@@ -79,7 +79,8 @@ module States
   def self.capitalize_any_state_names(string)
     return string if string.nil?
     regexp = Regexp.new('\b' << state_hash.keys.join('\b|\b') << '\b', 'i')
-    string.gsub(regexp, &:titleize)
+    titleized = string.gsub(regexp, &:titleize)
+    string == "washington dc" ? "Washington DC" : titleized
   end
 
   def self.state_name(str)

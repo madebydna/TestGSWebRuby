@@ -51,7 +51,7 @@ class StateLayout extends React.Component {
 
   heroNarration(){
     let { nameLong } = this.props.locality;
-    let schoolCount = this.props.schoolCount;
+    let schoolCount = this.props.schoolCount.toLocaleString();
 
     return t('state.state_hero_narrative_html', { parameters: { nameLong, schoolCount } });
   }
@@ -96,6 +96,14 @@ class StateLayout extends React.Component {
     )
   }
 
+  renderAcademics() {
+    return (
+      <div id="academics" className="module-section">
+        {this.props.academics}
+      </div>
+    )
+  }
+
   renderSchools(){
     let { nameLong } = this.props.locality;
     const browseHeader = t('state.cities_header', { parameters: { nameLong }});
@@ -103,10 +111,17 @@ class StateLayout extends React.Component {
     return (
       <div id="schools" className="module-section">
         <div className="modules-title">{browseHeader}</div>
-        {this.props.browseCities}
         {this.props.topSchools}
       </div>
     )
+  }
+
+  renderCities() {
+    return (
+      <div id="cities" className="module-section">
+        {this.props.browseCities}
+      </div>
+    )    
   }
 
   renderStudentsModule() {
@@ -150,9 +165,11 @@ class StateLayout extends React.Component {
               {this.props.viewportSize < SM && <Ad slot="statepage_first" sizeName="thin_banner_mobile" />}
               {this.renderSchools()}
               {this.renderCsaModule()}
+              {this.renderAcademics()}
               {this.renderBoxAd()}
-              {this.renderDistricts()}
               {this.renderStudentsModule()}
+              {this.renderCities()}
+              {this.renderDistricts()}
               {this.renderReviews()}
             </div>
           {/*</div>*/}

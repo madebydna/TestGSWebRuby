@@ -31,14 +31,14 @@ describe('<BreakdownSelect />', () => {
 
         it('creates menu options with Spanish labels', () => {
             const select = breakdownSelect().find('select');
-            expect(select.childAt(0).text()).to.equal('Hispanos/Latinos');
-            expect(select.childAt(1).text()).to.equal('Todos los estudiantes');
+            expect(select.childAt(0).text()).to.equal('Todos los estudiantes');
+            expect(select.childAt(1).text()).to.equal('Hispanos/Latinos');
         });
 
         it('creates menu options with correct values', () => {
             const select = breakdownSelect().find('select');
-            expect(select.childAt(0).prop('value')).to.equal('Hispanic');
-            expect(select.childAt(1).prop('value')).to.equal('All students');
+            expect(select.childAt(0).prop('value')).to.equal('All students');
+            expect(select.childAt(1).prop('value')).to.equal('Hispanic');
         });
     });
 
@@ -53,14 +53,14 @@ describe('<BreakdownSelect />', () => {
 
         it('creates menu options with English labels', () => {
             const select = breakdownSelect().find('select');
-            expect(select.childAt(0).text()).to.equal('Hispanic');
-            expect(select.childAt(1).text()).to.equal('All students');
+            expect(select.childAt(0).text()).to.equal('All students');
+            expect(select.childAt(1).text()).to.equal('Hispanic');
         });
         
         it('creates menu options with correct values', () => {
             const select = breakdownSelect().find('select');
-            expect(select.childAt(0).prop('value')).to.equal('Hispanic');
-            expect(select.childAt(1).prop('value')).to.equal('All students');
+            expect(select.childAt(0).prop('value')).to.equal('All students');
+            expect(select.childAt(1).prop('value')).to.equal('Hispanic');
         });
     });
     

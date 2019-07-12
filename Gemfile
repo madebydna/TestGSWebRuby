@@ -223,9 +223,6 @@ group :development, :test do
   # A formatter for rubocop that outputs in checkstyle format
   gem 'rubocop-checkstyle_formatter', require: false
 
-  # Minimal embedded v8 engine for Ruby
-  gem 'mini_racer', platforms: :ruby
-
   gem 'pry-rails'
 end
 
