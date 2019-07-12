@@ -153,7 +153,6 @@ class State extends React.Component {
                 size={this.props.viewportSize}
                 locality={this.props.locality}
                 schoolLevels={this.props.schools_data.counts}
-                viewportSize={this.props.viewportSize}
               />
             }
             hasStudentDemographicData={this.hasStudentDemographicData()}
