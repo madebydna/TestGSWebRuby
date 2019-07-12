@@ -11,10 +11,6 @@ describe 'StateCacheDataReader' do
     it 'should raise error if state isn\'t provided' do
       expect{new_reader}.to raise_error(ArgumentError)
     end
-
-    it 'should raise error if keywords arguments isn\'t provided' do
-      expect{new_reader('state', ['foo', 'bar', 'baz'])}.to raise_error(ArgumentError)
-    end
   end
 
   context 'when given a state' do
