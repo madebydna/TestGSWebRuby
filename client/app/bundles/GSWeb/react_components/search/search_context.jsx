@@ -288,9 +288,7 @@ class SearchProvider extends React.Component {
   // school finder methods, based on obj state
   propsForFindSchools(props) {
     const csaYear = getCsaYears() ? parseInt(getCsaYears()[0]) : (props.csaYears ? props.csaYears[0] : null)
-
     const district = props.district ? props.district.replace(/-/g, '_').replace(/ /g, '-').toLowerCase() : null;
-    console.log(district)
     return {
       city: props.city,
       district: district,
