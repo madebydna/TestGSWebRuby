@@ -121,6 +121,7 @@ class TopSchoolsStateful extends React.Component {
           handleTabClick={this.handleTabClick}
           renderTabsContainer={this.renderTabsContainer}
           size={this.props.size}
+          community={this.props.community}
           locality={this.props.locality}
         />
       );
