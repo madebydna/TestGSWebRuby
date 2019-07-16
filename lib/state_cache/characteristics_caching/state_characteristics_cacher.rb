@@ -2,7 +2,8 @@ class StateCharacteristicsCacher < StateCacher
   include StateCacheValidation
 
   CACHE_KEY = 'state_characteristics'
-  STATE_CHARACTERISTICS_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 123, 124, 129, 131, 133, 179]
+  STATE_CHARACTERISTICS_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42,
+    102, 103, 123, 124, 129, 131, 133, 179, 296, 298, 319, 325, 417, 419]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
   # 3 - Master's degree
@@ -21,6 +22,7 @@ class StateCharacteristicsCacher < StateCacher
   # 33 - Percent classes taught by non-highly qualified teachers
   # 41 - Head official name
   # 42 - Head official email
+  # 102 - ACT participation 
   # 103 - at least 5 years teaching experience
   # 123 - Female
   # 124 - Male
@@ -28,6 +30,12 @@ class StateCharacteristicsCacher < StateCacher
   # 131 - Percent classes taught by highly qualified teachers
   # 133 - Teachers with valid license
   # 179 - Percent Needing Remediation for College
+  # 296 - SAT percent college ready 
+  # 298 - 4-year high school graduation rate 
+  # 319 - Average ACT score
+  # 325 - ACT percent college ready
+  # 417 - Percent of Students Passing AP/IB Exams 
+  # 419 - Percent of students who meet UC/CSU entrance requirements 
 
   def self.listens_to?(data_type)
     :state_characteristics == data_type
