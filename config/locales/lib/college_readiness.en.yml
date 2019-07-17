@@ -2,13 +2,15 @@ en:
   lib:
     college_readiness:
       and: and
+      state: state
+      district: district
       info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and AP coursework when available.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
       'title': 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools College Readiness Rating'
       'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
       'SAT percent participation': 'SAT participation rate'
       'SAT percent college ready': 'SAT college readiness rate'
-      district_scoped_info_text: "<p style='font-family:opensans-semibold'>Are graduates from this district prepared to succeed in college? This section looks at important signs of college readiness.</p>
+      scoped_info_text: "<p style='font-family:opensans-semibold'>Are graduates from this %{entity} prepared to succeed in college? This section looks at important signs of college readiness.</p>
       <p>See the schools in this state that won a <a href='/gk/csa-winners/' target='_blank'>College Success Award</a> for excellence in preparing students for college.</p>"
       ACT participation:  'ACT participation rate'
       'ACT percent college ready': 'ACT college readiness rate'
