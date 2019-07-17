@@ -10,7 +10,7 @@ es:
       'Rating text': 'Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.'
       'SAT percent participation': 'Participación SAT'
       'SAT percent college ready': 'Clasificación para la preparación universitaria SAT Subject Test'
-      scoped_info_text: "<p style='font-family:opensans-semibold'>¿Los graduados de esta escuela están preparados para tener éxito en la universidad? Esta sección analiza los signos importantes de la preparación para la universidad.</p>
+      scoped_info_text: "<p style='font-family:opensans-semibold'>¿Los graduados de esta %{entity} están preparados para tener éxito en la universidad? Esta sección analiza los signos importantes de la preparación para la universidad.</p>
       <p>Ve las escuelas en este estado que ganaron un <a href='/gk/csa-winners/' target='_blank'>College Success Award</a> por su excelencia en la preparación de estudiantes para la universidad.</p>"
       ACT participation: 'Participación ACT'
       'ACT percent college ready': 'Clasificación para la preparación universitaria ACT'
