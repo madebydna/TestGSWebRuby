@@ -147,7 +147,7 @@ module CommunityProfiles
         subtitle: I18n.t('.state_subtext', scope: 'community.academics', achievement_gap_link: article_achievement_gap_path, state: academic_state),
         info_text: nil, #I18n.t('.Race ethnicity tooltip', scope: 'school_profiles.equity')
         icon_classes: I18n.t('.Race ethnicity icon', scope: 'school_profiles.equity'),
-        sources: sources_html(academics_sources) + college_readiness.sources,
+        sources: sources_html(academics_sources) + college_readiness.sources + college_success.sources,
         share_content: nil,
         data: data_props_for_state_academics_module + college_readiness.props + college_success.props,
         faq: faq_for_academics_module,
