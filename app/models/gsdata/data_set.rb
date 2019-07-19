@@ -10,8 +10,7 @@ class DataSet < ActiveRecord::Base
   belongs_to :data_type
   has_many :ratings
 
-  def self.data_type_ids_to_loads(data_type_ids, configuration, subset_load_ids = nil)
-    dtis = data_type_ids.join(',')
+  def self.data_type_ids_to_loads(configuration, subset_load_ids = nil)
     sli = subset_load_ids.presence&.join(',')
 
     query = "select data_sets.id,
@@ -24,7 +23,6 @@ class DataSet < ActiveRecord::Base
       (data_types.short_name) as 'data_type_short_name'
       from data_sets, sources, data_types
       where data_sets.data_type_id = data_types.id and data_sets.source_id = sources.id
-      and data_sets.data_type_id in (#{dtis})
       #{with_load_ids(sli)}
     #{with_configuration_string(configuration)}"
     find_by_sql(query)
