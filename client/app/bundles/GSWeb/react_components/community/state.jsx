@@ -59,7 +59,9 @@ class State extends React.Component {
   }
 
   componentDidMount() {
-    initAdvertising();
+    setTimeout(() => {
+      initAdvertising();
+    }, 1000);
   }
 
   // 62 = nav offset on non-mobile
