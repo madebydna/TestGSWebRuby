@@ -7,20 +7,23 @@ class DataSet < ActiveRecord::Base
 
   db_magic connection: :omni
 
+  belongs_to :data_type
+  has_many :ratings
+
   def self.data_type_ids_to_loads(data_type_ids, configuration, subset_load_ids = nil)
     dtis = data_type_ids.join(',')
     sli = subset_load_ids.presence&.join(',')
-    find_by_sql("select loads.id,
-      loads.data_type_id,
-      loads.configuration,
-      loads.date_valid,
-      loads.description,
+    find_by_sql("select data_sets.id,
+      data_sets.data_type_id,
+      data_sets.configuration,
+      data_sets.date_valid,
+      data_sets.description,
       (sources_new.name) as 'source_name',
       (data_types.name) as 'data_type_name',
       (data_types.short_name) as 'data_type_short_name'
-      from loads, sources_new, data_types
-      where loads.data_type_id = data_types.id and loads.source_id = sources_new.id
-      and loads.data_type_id in (#{dtis})
+      from data_sets, sources_new, data_types
+      where data_sets.data_type_id = data_types.id and data_sets.source_id = sources_new.id
+      and data_sets.data_type_id in (#{dtis})
       #{with_load_ids(sli)}
                 #{with_configuration_string(configuration)}")
   end
