@@ -10,9 +10,12 @@ class Rating < ActiveRecord::Base
   # ratings
   def self.find_by_school_and_data_types_with_academics(school, data_types, configuration = default_configuration)
 
-    # "SELECT `data_values`.* FROM `data_values` WHERE (state = "#{school.state}" AND district_id IS NULL AND school_id = '999' AND active = 1)"
+    # "SELECT distinct load_id FROM `data_values` WHERE (state = "#{school.state}"
+    # AND district_id IS NULL AND school_id = "#{scool.id}" AND active = 1)"
     school_load_ids = DataValue.filter_query(school.state, nil, school.id).pluck(:load_id).uniq
     return unless school_load_ids.present?
+
+    # loads = DataSet.data_type_ids_to_loads(data_types, configuration, school_load_ids )
 
     loads = Load.data_type_ids_to_loads(data_types, configuration, school_load_ids )
     return unless loads.present?
