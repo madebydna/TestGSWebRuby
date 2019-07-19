@@ -33,6 +33,39 @@ describe CitiesController do
         expect(controller.send(:meta_tags)['canonical']).to be_present
       end
 
+      context 'noindex meta tag' do
+        before do
+          allow(controller).to receive(:cache_school_levels).and_return(school_levels_cache)
+          get action, state: url_state, city: url_city
+        end
+
+        subject { controller.send(:meta_tags)['noindex'] }
+
+        context 'when cache is missing' do
+          let(:school_levels_cache) { nil }
+
+          it { is_expected.to be_truthy }
+        end
+
+        context 'when 0 schools' do
+          let(:school_levels_cache) { {'all' => [{'city_value' => 0}] } }
+
+          it { is_expected.to be_truthy }
+        end
+
+        context 'when 2 schools' do
+          let(:school_levels_cache) { {'all' => [{'city_value' => 2}] } }
+
+          it { is_expected.to be_truthy }
+        end
+
+        context 'when 3 schools' do
+          let(:school_levels_cache) { {'all' => [{'city_value' => 3}] } }
+
+          it { is_expected.to be_falsey }
+        end
+      end
+
       it 'sets city in data_layer' do
         expect(controller.send(:page_analytics_data)).to include('City')
       end
