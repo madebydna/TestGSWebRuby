@@ -7,6 +7,8 @@ class Rating < ActiveRecord::Base
 
   db_magic connection: :omni
 
+  belongs_to :data_set
+
   # ratings
   def self.find_by_school_and_data_types_with_academics(school, data_types, configuration = default_configuration)
 
@@ -14,10 +16,8 @@ class Rating < ActiveRecord::Base
     # AND district_id IS NULL AND school_id = "#{scool.id}" AND active = 1)"
     school_load_ids = DataValue.filter_query(school.state, nil, school.id).pluck(:load_id).uniq
     return unless school_load_ids.present?
-
-    # loads = DataSet.data_type_ids_to_loads(data_types, configuration, school_load_ids )
-
-    loads = Load.data_type_ids_to_loads(data_types, configuration, school_load_ids )
+    loads = DataSet.data_type_ids_to_loads(data_types, configuration, school_load_ids )
+    # loads = Load.data_type_ids_to_loads(data_types, configuration, school_load_ids )
     return unless loads.present?
 
     dvs = dvs(loads, school)
