@@ -154,12 +154,12 @@ en:
             <p class="narrative-content">This shows the percentage of students with disabilities absent for 15 or more days compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
-            <p class="footnote"> <a href='/gk/articles/5-things-not-to-say-to-kids-with-learning-and-attention-issues-about-going-back-to-school/'>5 things <i>not</i> to say to your child</a> about going back-to-school.</p>
+            <p class="footnote"><a href='/gk/articles/5-things-not-to-say-to-kids-with-learning-and-attention-issues-about-going-back-to-school/'>5 things <i>not</i> to say to your child</a> about going back-to-school.</p>
           'Percentage of students suspended out of school': >
             <p class="narrative-content">This shows the suspension rates for students with disabilities at this school compared to the state average. High suspension rates mean less time for  teaching and learning.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
-            <p class="footnote"> <a href='/gk/articles/5-things-not-to-say-to-kids-with-learning-and-attention-issues-about-going-back-to-school/'>5 things <i>not</i> to say to your child</a> about going back-to-school.</p>
+            <p class="footnote"><a href='/gk/articles/5-things-not-to-say-to-kids-with-learning-and-attention-issues-about-going-back-to-school/'>5 things <i>not</i> to say to your child</a> about going back-to-school.</p>
           'Test scores':
             # one - subject begins with a vowel e.g. an English
             # other - subject begins with a consonant e.g. a Math
