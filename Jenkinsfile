@@ -181,7 +181,7 @@ node('slave') {
 stage "Test"
 
 def parallelTests = [1,2].collectEntries([:]) { ["_specs${it}", makeBranch(it, groups)] }
-parallelTests += [1,2].collectEntries([:]) { ["featurespecs${it}", makeJSBranch(it, groups)] }
+//parallelTests += [1,2].collectEntries([:]) { ["featurespecs${it}", makeJSBranch(it, groups)] }
 parallelTests['failFast'] = true
 parallel parallelTests
 
@@ -196,7 +196,7 @@ parallel test_report: {
         prepareWorkspace()
         for (int j = 1; j <= groups; j++) {
             unstash "rspec${j}"
-            unstash "features_rspec${j}"
+            //unstash "features_rspec${j}"
         }
         // unstash "js_test_results"
         step([$class: 'JUnitResultArchiver', testResults: 'tmp/*.xml'])
