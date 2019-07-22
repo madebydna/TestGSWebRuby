@@ -39,7 +39,7 @@ class Rating < ActiveRecord::Base
     SQL
 
     result = self.connection.exec_query(query)
-    result.map { |row| JSON.parse(row.to_json, object_class: OpenStruct) }
+    result.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
   end
 
   def to_open_struct(data)
