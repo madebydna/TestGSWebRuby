@@ -40,6 +40,10 @@ module CachePopulator
             cache_keys.first == 'all' ? self.class::CACHE_KEYS : cache_keys
         end
 
+        def print_errors
+            errors.map { |k, v| "#{k} #{v}"}.join("; ")
+        end
+
 
         private
         def check_for_valid_cache_keys
@@ -55,10 +59,6 @@ module CachePopulator
                 (states.first == 'all' || states.all? {|key| States.abbreviations.include?(key)})
                 errors.add(:states, "must have the value 'all' or be a list of valid states")
             end
-        end
-
-        def print_errors
-            errors.map { |k, v| "#{k} #{v}"}.join("; ")
         end
 
         def parse_optional_ids

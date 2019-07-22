@@ -60,5 +60,26 @@ describe CachePopulator::Runner do
         end
     end
 
+    context "#run with errors" do
+
+        after { tempfile_with_errors.unlink }
+
+        let(:tempfile_with_errors) do
+            Tempfile.new('tsv').tap do |file|
+                file << "type\tvalues\tcache_keys\n"
+                file << "state\tca,hi\tstate_characteristics\n"
+                file << "city\tca,hi:1,2,3\tstate_characteristics\n"
+                file << "foo\t:1,2,3\tratings\n"
+                file.close
+            end
+        end
+
+
+        it "fails fast" do
+            runner = CachePopulator::Runner.new(tempfile_with_errors.path) 
+            expect { runner.run }.to raise_error(CachePopulator::PopulatorError, /Error on line 3:.+Error on line 4/m)
+        end
+    end
+
     
 end
