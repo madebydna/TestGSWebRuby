@@ -9,7 +9,7 @@ class Rating < ActiveRecord::Base
 
   belongs_to :data_set
 
-  def self.find_by_school_and_data_types_with_academics(school, data_types = nil)
+  def self.find_by_school_and_data_types_with_academics(school, data_types)
     query = <<-SQL
     select       
       r.value, 
@@ -22,15 +22,18 @@ class Rating < ActiveRecord::Base
       s.name as source_name, 
       ds.date_valid,
       ds.description,
-      dt.name
+      dt.name,
+      bt.tag as breakdown_tags,
+      b.name as breakdown_names
     from omni.ratings r
     join omni.data_sets ds on r.data_set_id = ds.id
     join omni.data_types dt on dt.id = ds.data_type_id
     join omni.data_type_tags dtt on dtt.data_type_id = ds.data_type_id
     join omni.breakdowns b on r.breakdown_id = b.id
+    join omni.breakdown_tags bt on bt.breakdown_id = b.id
     join omni.sources s on ds.source_id = s.id
     where ds.state = '#{school.state}' and entity_type = 'school' and gs_id = #{school.id}
-    and tag in ('rating','summary_rating_weight')
+    and dtt.tag in ('rating','summary_rating_weight')
     and ds.data_type_id in (#{data_types.join(",")})
     and r.active = 1
     SQL
