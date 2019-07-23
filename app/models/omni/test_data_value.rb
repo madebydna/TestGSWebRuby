@@ -7,57 +7,88 @@ class TestDataValue < ActiveRecord::Base
 
   db_magic connection: :omni
 
-  DATA_TYPE_TAGS = %w(state_test)
-
   # test scores gsdata!!!!  proficiency is always 1
-  def self.find_by_school_and_data_type_tags(school, tags, configuration = DataValue.default_configuration)
+  def self.by_school(school)
     query = <<-SQL
-    select * from omni.test_data_values tdv 
-    join omni.data_sets ds on tdv.data_set_id = ds.id 
-    join omni.proficiency_bands pb on tdv.proficiency_band_id = pb.id
+    select
+      tdv.value, 
+      ds.state, 
+      tdv.gs_id as school_id,
+      tdv.grade,
+      tdv.cohort_count,
+      tdv.proficiency_band_id,
+      b.name as breakdown_names,
+      bt.tag as breakdown_tags,      
+      s.name as academic_names,      
+      st.tag as academic_tags,      
+      ds.data_type_id, 
+      ds.configuration, 
+      ss.name as source, 
+      ss.name as source_name, 
+      ds.date_valid,
+      ds.description,
+      dt.name       
+    from omni.test_data_values tdv 
+    join omni.data_sets ds on tdv.data_set_id = ds.id
+    join omni.data_types dt on dt.id = ds.data_type_id 
     join omni.data_type_tags dtt on dtt.data_type_id = ds.data_type_id
-    join omni.breakdowns b on tdv.breakdown_id = b.id 
-    join omni.subjects s on tdv.subject_id = s.id
-    where ds.state = '#{school.state}' and entity_type = 'school' and gs_id = #{school.id} 
-    and tag = 'state_test' and configuration = 'feeds'
+    join omni.breakdowns b on tdv.breakdown_id = b.id
+    join omni.breakdown_tags bt on bt.breakdown_id = b.id 
+    join omni.subjects s on tdv.subject_id = s.id    
+    join omni.subject_tags st on st.subject_id = s.id    
+    join omni.sources ss on ds.source_id = ss.id
+    
+    where ds.state = '#{school.state}' 
+      and entity_type = 'school' 
+      and gs_id = #{school.id} 
+    and dtt.tag = 'state_test'
+    and tdv.active = 1
+    and proficiency_band_id = 1
     SQL
 
     result = self.connection.exec_query(query)
     result.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
   end
 
-  def self.test_scores(school, tags, configuration=DataValue.default_configuration)
-    # loads = Load.data_type_tags_to_loads(tags, configuration )
-    # dvs = school_values_with_academics.
-    #     from(
-    #         DataValue.filter_query(school.state,
-    #                                nil,
-    #                                school.id,
-    #                                load_ids(loads),
-    #                                true), :data_values)
-    #           .with_academics
-    #           .with_academic_tags
-    #           .with_breakdowns
-    #           .with_breakdown_tags
-    #           .with_proficiency_bands
-    #           .group('data_values.id')
-    # GsdataCaching::LoadDataValue.new(loads, dvs).merge
-
+  # test scores gsdata - district
+  def self.by_district(state, district_id)
+    #todo validate date format for date valid
     query = <<-SQL
-    select * from omni.test_data_values tdv 
-    join omni.data_sets ds on tdv.data_set_id = ds.id 
-    join omni.proficiency_bands pb on tdv.proficiency_band_id = pb.id
-    join omni.data_type_tags dtt on dtt.data_type_id = ds.data_type_id
-    join omni.breakdowns b on tdv.breakdown_id = b.id 
-    join omni.subjects s on tdv.subject_id = s.id
-    where ds.state = '#{school.state}' and entity_type = 'school' and gs_id = #{school.id} 
-    and tag = 'state_test' and configuration = 'feeds'
+        select
+          tdv.value, 
+          ds.state, 
+          tdv.grade,
+          tdv.cohort_count,
+          tdv.proficiency_band_id,
+          b.name as breakdown_names,
+          bt.tag as breakdown_tags,      
+          s.name as academic_names,      
+          ds.data_type_id, 
+          ds.configuration, 
+          ss.name as source, 
+          ss.name as source_name, 
+          ds.date_valid,
+          ds.description,
+          dt.name     
+        from omni.test_data_values tdv 
+        join omni.data_sets ds on tdv.data_set_id = ds.id
+        join omni.data_types dt on dt.id = ds.data_type_id 
+        join omni.data_type_tags dtt on dtt.data_type_id = ds.data_type_id
+        join omni.breakdowns b on tdv.breakdown_id = b.id
+        join omni.breakdown_tags bt on bt.breakdown_id = b.id 
+        join omni.subjects s on tdv.subject_id = s.id
+        join omni.sources ss on ds.source_id = ss.id
+
+        where ds.state = '#{state}' 
+          and entity_type = 'district' 
+          and gs_id = #{district_id} 
+        and dtt.tag = 'state_test'
+        and tdv.active = 1
+        AND proficiency_band_id = 1
     SQL
 
     result = self.connection.exec_query(query)
     result.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
   end
-
-
 
 end
