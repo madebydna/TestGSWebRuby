@@ -6,6 +6,11 @@ class TestDataValue < ActiveRecord::Base
   self.table_name = 'test_data_values'
 
   db_magic connection: :omni
+  belongs_to :data_set
+  belongs_to :proficiency_band
+  belongs_to :breakdown
+
+  has_many :data_sets
 
   #todo validate date format for date valid
 
@@ -49,7 +54,7 @@ class TestDataValue < ActiveRecord::Base
     SQL
 
     result = self.connection.exec_query(query)
-    result.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
+    result.map { |row| JSON.parse(row.to_json, object_class: OpenStruct) }
   end
 
   # test scores gsdata - district
@@ -90,7 +95,7 @@ class TestDataValue < ActiveRecord::Base
     SQL
 
     result = self.connection.exec_query(query)
-    result.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
+    result.map { |row| JSON.parse(row.to_json, object_class: OpenStruct) }
   end
 
   # test scores gsdata - state
@@ -129,7 +134,7 @@ class TestDataValue < ActiveRecord::Base
     SQL
 
     result = self.connection.exec_query(query)
-    result.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
+    result.map { |row| JSON.parse(row.to_json, object_class: OpenStruct) }
   end
 
   def self.feeds_by_school(school_state, school_id)
@@ -174,7 +179,7 @@ class TestDataValue < ActiveRecord::Base
     SQL
 
     result = self.connection.exec_query(query)
-    result.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
+    result.map { |row| JSON.parse(row.to_json, object_class: OpenStruct) }
   end
 
   def self.feeds_by_district(state, district_id)
@@ -216,26 +221,26 @@ class TestDataValue < ActiveRecord::Base
     SQL
 
     result = self.connection.exec_query(query)
-    result.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
+    result.map { |row| JSON.parse(row.to_json, object_class: OpenStruct) }
   end
 
   def self.feeds_by_state(state)
     query = <<-SQL
     select
-      tdv.value, 
-      ds.state, 
+      tdv.value,        
       tdv.grade,
       tdv.cohort_count,
       tdv.proficiency_band_id,
       p.name as proficiency_band_name,
       b.name as breakdown_names,
       s.name as academic_names,      
+      ds.state,
       ds.data_type_id, 
       ds.configuration, 
-      ss.name as source, 
-      ss.name as source_name, 
       ds.date_valid,
       ds.description,
+      ss.name as source, 
+      ss.name as source_name, 
       dt.name       
     from omni.test_data_values tdv 
     join omni.data_sets ds on tdv.data_set_id = ds.id
@@ -256,7 +261,39 @@ class TestDataValue < ActiveRecord::Base
     SQL
 
     result = self.connection.exec_query(query)
-    result.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
+    result.map { |row| JSON.parse(row.to_json, object_class: OpenStruct) }
+  end
+
+  def self.feeds_by_state_ar(state)
+    data = TestDataValue
+               .select(
+                   :value,
+                   :grade,
+                   :cohort_count,
+                   :proficiency_band_id,
+                   "proficiency_bands.name as proficiency_band_name",
+                   "breakdowns.name as breakdown_names",
+                   "subjects.name as academic_names",
+                   "data_sets.state",
+                   "data_sets.data_type_id",
+                   "data_sets.configuration",
+                   "data_sets.date_valid",
+                   "data_sets.description",
+                   "sources.name as source",
+                   "sources.name as source_name",
+                   "data_types.name"
+               )
+               .joins(:data_set).where(data_sets: { state: 'ca', configuration: 'feeds' })
+               .joins("join data_types on data_types.id = data_sets.data_type_id ")
+               .joins("join data_type_tags on data_type_tags.data_type_id = data_sets.data_type_id").where(data_type_tags: { tag: 'state_test' })
+               .joins("left join breakdowns on test_data_values.breakdown_id = breakdowns.id")
+               .joins("left join breakdown_tags on breakdown_tags.breakdown_id = breakdowns.id")
+               .joins("left join subjects on subjects.id = test_data_values.subject_id")
+               .joins("left join subject_tags on subjects.id = subject_tags.subject_id")
+               .joins("join sources on sources.id = data_sets.source_id")
+               .joins(:proficiency_band)
+               .where(entity_type: 'state', active: 1)
+    data
   end
 
 end
