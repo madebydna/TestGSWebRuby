@@ -9,10 +9,25 @@ module CachePopulator
         end
 
         def run
-            run_with_validation do |state, cache_key|
-                cities_to_cache(state).each do |city|
-                    CityCacher.create_cache(city, cache_key)
+            rows_updated = 0
+            begin
+                run_with_validation do |state, cache_key|
+                    cities_to_cache(state).each do |city|
+                        CityCacher.create_cache(city, cache_key)
+                        rows_updated += 1
+                    end
                 end
+                log.update(
+                    output: "Successfully created/updated #{rows_updated} row(s).",
+                    end: Time.now.utc,
+                    succeeded: 1
+                )
+            rescue => error
+                log.update(
+                    output: error,
+                    end: Time.now.utc,
+                    succeeded: 0
+                ) 
             end
         end
 
@@ -40,6 +55,18 @@ module CachePopulator
                     states.all? {|key| States.abbreviations.include?(key)})
                 errors.add(:states, "unless blank must have the value 'all' or be a list of valid states")
             end
+        end
+
+        def log_script_name
+            "CityCachePopulator"
+        end
+
+        def log_params
+            {
+                "states" => states.join(','),
+                "cache_keys" => cache_keys.join(','),
+                "city_id" => optional_ids.present? ? optional_ids : 'all'
+            }
         end
 
     end

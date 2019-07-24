@@ -8,8 +8,22 @@ describe CachePopulator::Base do
             CACHE_KEYS = %w(foo bar baz)
         end
     end
-    
+
+    module CachePopulator
+        class Base
+            %w(log_script_name log_params run).each do |method_name|
+                define_method(method_name) do
+                    nil
+                end 
+            end
+        end
+    end
+
     context "initialization" do
+        before(:each) do
+            allow(subject).to receive(:log_script_name).and_return(nil)
+            allow(subject).to receive(:log_params).and_return(nil)
+        end
         it "requires a values and cache_keys named arguments" do
             expect { subject }.not_to raise_error
             expect { CachePopulator::Base.new }.to raise_error(ArgumentError, /missing keyword.+values/)
@@ -99,6 +113,8 @@ describe CachePopulator::Base do
             expect { |b| populator.run_with_validation(&b) }.to yield_successive_args(['ak', 'foo'], ['ak', 'baz'], ['hi', 'foo'], ['hi', 'baz'])
         end
     end
+
+    
 
 
 end

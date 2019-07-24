@@ -1,6 +1,9 @@
 require "spec_helper"
 
 describe CachePopulator::DistrictCachePopulator do
+    after(:each) do
+        do_clean_models(:gs_schooldb, ScriptLogger)
+    end
 
     context "#districts_to_cache" do
         let(:district) { class_double("District").as_stubbed_const }
@@ -62,6 +65,24 @@ describe CachePopulator::DistrictCachePopulator do
             expect(district_cacher).to receive(:create_cache).with(@oakland_unified, 'district_schools_summary')
             expect(district_cacher).not_to receive(:create_cache).with(@sitka_school_district, 'district_schools_summary')
             populator.run
+        end
+    end
+
+    context "logs correctly" do
+        argument = {"states"=>"de", "cache_keys"=>"district_schools_summary", "district_id"=>"1,2,3"}.to_s
+
+        it "should initialize a record during cache built" do
+            populator_instance = CachePopulator::DistrictCachePopulator.new(values: 'de:1,2,3', cache_keys: 'district_schools_summary')
+            expect(ScriptLogger.all.count).to eq(1)
+            expect(ScriptLogger.where(script_name: "DistrictCachePopulator").first.arguments).to eq(argument)
+        end
+
+        it "should log a successfully finished script" do
+            populator = CachePopulator::DistrictCachePopulator.new(values: 'de:1,2,3', cache_keys: 'district_schools_summary')
+            populator.run
+            expect(ScriptLogger.all.count).to eq(1)
+            expect(ScriptLogger.where(script_name: "DistrictCachePopulator").first.arguments).to eq(argument)
+            expect(ScriptLogger.where(script_name: "DistrictCachePopulator").where.not(end: nil).first.succeeded).to eq(true)
         end
     end
     

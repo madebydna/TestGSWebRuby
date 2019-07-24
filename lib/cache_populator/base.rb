@@ -5,11 +5,12 @@ module CachePopulator
         include ActiveModel::Validations
         CACHE_KEYS = []
 
-        attr_accessor :states, :optional_ids, :cache_keys
+        attr_accessor :states, :optional_ids, :cache_keys, :log
         def initialize(values:, cache_keys:)
             states_raw, @optional_ids = values.try(:split, ':')
             @states = states_raw.try(:split, /,\s?/)
             @cache_keys = cache_keys.try(:split, /,\s?/)
+            @log = ScriptLogger.record_log_instance(log_script_name, log_params)
         end
 
         validates :states, presence: true
@@ -27,6 +28,11 @@ module CachePopulator
                     end
                 end
             else
+                log.update(
+                    output: print_errors,
+                    succeeded: 0,
+                    end: Time.now.utc
+                )
                 raise PopulatorError.new("#{self.class} cache failure: #{print_errors}")
             end
         end
@@ -50,6 +56,10 @@ module CachePopulator
             unless cache_keys.present? && 
                 (cache_keys.first == 'all' || cache_keys.all? {|key| self.class::CACHE_KEYS.include?(key)})
                 errors[:cache_keys] << "must have the value 'all' or be a list of valid cache keys"
+                log.update(
+                    output: print_errors,
+                    succeeded: 0
+                )
             end
         end
 
@@ -58,6 +68,11 @@ module CachePopulator
             unless states.present? && 
                 (states.first == 'all' || states.all? {|key| States.abbreviations.include?(key)})
                 errors.add(:states, "must have the value 'all' or be a list of valid states")
+                log.update(
+                    output: print_errors,
+                    succeeded: 0,
+                    end: Time.now.utc
+                )
             end
         end
 
@@ -71,6 +86,11 @@ module CachePopulator
             end
         end
 
+        %w(log_script_name log_params run).each do |method_name|
+            define_method(method_name) do
+                raise NotImplementedError.new("##{method_name} must be defined in the cacher class")
+            end 
+        end
     end
 
 end

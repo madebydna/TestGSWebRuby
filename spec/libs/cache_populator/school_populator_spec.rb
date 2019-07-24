@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe CachePopulator::SchoolCachePopulator do
+    after(:each) do
+        do_clean_models(:gs_schooldb, ScriptLogger)
+    end
+
     context "#schools_to_cache" do
         let(:school) { class_double("School").as_stubbed_const }
         let(:dbl) { double }
@@ -63,4 +67,23 @@ describe CachePopulator::SchoolCachePopulator do
             populator.run
         end
     end
+
+    context "logs correctly" do
+        argument = {"states"=>"ca", "cache_keys"=>"esp_responses", "school_ids"=>"all"}.to_s
+        
+        it "should initialize a record during cache built" do
+            populator_instance = CachePopulator::SchoolCachePopulator.new(values: 'ca', cache_keys: 'esp_responses')
+            expect(ScriptLogger.all.count).to eq(1)
+            expect(ScriptLogger.where(script_name: "SchoolCachePopulator").first.arguments).to eq(argument)
+        end
+
+        it "should log a successfully finished script" do
+            populator = CachePopulator::SchoolCachePopulator.new(values: 'ca', cache_keys: 'esp_responses')
+            populator.run
+            expect(ScriptLogger.all.count).to eq(1)
+            expect(ScriptLogger.where(script_name: "SchoolCachePopulator").first.arguments).to eq(argument)
+            expect(ScriptLogger.where(script_name: "SchoolCachePopulator").where.not(end: nil).first.succeeded).to eq(true)
+        end
+    end
+    
 end

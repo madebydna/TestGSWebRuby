@@ -1,6 +1,9 @@
 require "spec_helper"
 
 describe CachePopulator::StateCachePopulator do
+    after(:each) do
+        do_clean_models(:gs_schooldb, ScriptLogger)
+    end
 
     context "validations" do
         it "validates correct states" do
@@ -22,5 +25,23 @@ describe CachePopulator::StateCachePopulator do
             subject.run
         end
         
+    end
+
+    context "logs correctly" do
+        argument = {"states"=>"ca", "cache_keys"=>"district_largest"}.to_s
+
+        it "should initialize a record during cache built" do
+            populator_instance = CachePopulator::StateCachePopulator.new(values: 'ca', cache_keys: 'district_largest')
+            expect(ScriptLogger.all.count).to eq(1)
+            expect(ScriptLogger.where(script_name: "StateCachePopulator").first.arguments).to eq(argument)
+        end
+
+        it "should log a successfully finished script" do
+            populator = CachePopulator::StateCachePopulator.new(values: 'ca', cache_keys: 'district_largest')
+            populator.run
+            expect(ScriptLogger.all.count).to eq(1)
+            expect(ScriptLogger.where(script_name: "StateCachePopulator").first.arguments).to eq(argument)
+            expect(ScriptLogger.where(script_name: "StateCachePopulator").where.not(end: nil).first.succeeded).to eq(true)
+        end
     end
 end

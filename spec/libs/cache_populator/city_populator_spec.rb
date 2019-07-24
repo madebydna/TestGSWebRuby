@@ -1,7 +1,10 @@
 require "spec_helper"
 
 describe CachePopulator::CityCachePopulator do
-
+    after(:each) do
+        do_clean_models(:gs_schooldb, ScriptLogger)
+    end
+    
     context "validations" do
         it "validates that states can be 'all'" do
             populator = CachePopulator::CityCachePopulator.new(values: 'all', cache_keys: 'school_levels')
@@ -77,6 +80,24 @@ describe CachePopulator::CityCachePopulator do
             expect(city_cacher).to receive(:create_cache).with(san_francisco, 'header')
             expect(city_cacher).to receive(:create_cache).with(berkeley, 'header')
             populator.run
+        end
+    end
+
+    context "logs correctly" do
+        argument = {"states"=>"all", "cache_keys"=>"school_levels", "city_id"=>"all"}.to_s
+
+        it "should initialize a record during cache built" do
+            populator_instance = CachePopulator::CityCachePopulator.new(values: 'all', cache_keys: 'school_levels')
+            expect(ScriptLogger.all.count).to eq(1)
+            expect(ScriptLogger.where(script_name: "CityCachePopulator").first.arguments).to eq(argument)
+        end
+
+        it "should log a successfully finished script" do
+            populator = CachePopulator::CityCachePopulator.new(values: 'all', cache_keys: 'school_levels')
+            populator.run
+            expect(ScriptLogger.all.count).to eq(1)
+            expect(ScriptLogger.where(script_name: "CityCachePopulator").first.arguments).to eq(argument)
+            expect(ScriptLogger.where(script_name: "CityCachePopulator").where.not(end: nil).first.succeeded).to eq(true)
         end
     end
     
