@@ -158,16 +158,98 @@ class TestDataValue < ActiveRecord::Base
     join omni.data_sets ds on tdv.data_set_id = ds.id
     join omni.data_types dt on dt.id = ds.data_type_id 
     join omni.data_type_tags dtt on dtt.data_type_id = ds.data_type_id
-    join omni.breakdowns b on tdv.breakdown_id = b.id
-    join omni.breakdown_tags bt on bt.breakdown_id = b.id 
-    join omni.subjects s on tdv.subject_id = s.id    
-    join omni.subject_tags st on st.subject_id = s.id    
+    left join omni.breakdowns b on tdv.breakdown_id = b.id
+    left join omni.breakdown_tags bt on bt.breakdown_id = b.id 
+    left join omni.subjects s on tdv.subject_id = s.id    
+    left join omni.subject_tags st on st.subject_id = s.id    
     join omni.sources ss on ds.source_id = ss.id
     join omni.proficiency_bands p on tdv.proficiency_band_id = p.id
 
     where ds.state = '#{school_state}' 
       and entity_type = 'school' 
       and gs_id = #{school_id} 
+      and ds.configuration like '%feeds%' 
+      and dtt.tag = 'state_test'
+      and tdv.active = 1
+    SQL
+
+    result = self.connection.exec_query(query)
+    result.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
+  end
+
+  def self.feeds_by_district(state, district_id)
+    query = <<-SQL
+    select
+      tdv.value, 
+      ds.state, 
+      tdv.grade,
+      tdv.cohort_count,
+      tdv.proficiency_band_id,
+      p.name as proficiency_band_name,
+      p.composite_of_pro_null,
+      b.name as breakdown_names,
+      s.name as academic_names,      
+      ds.data_type_id, 
+      ds.configuration, 
+      ss.name as source, 
+      ss.name as source_name, 
+      ds.date_valid,
+      ds.description,
+      dt.name       
+    from omni.test_data_values tdv 
+    join omni.data_sets ds on tdv.data_set_id = ds.id
+    join omni.data_types dt on dt.id = ds.data_type_id 
+    join omni.data_type_tags dtt on dtt.data_type_id = ds.data_type_id
+    left join omni.breakdowns b on tdv.breakdown_id = b.id
+    left join omni.breakdown_tags bt on bt.breakdown_id = b.id 
+    left join omni.subjects s on tdv.subject_id = s.id    
+    left join omni.subject_tags st on st.subject_id = s.id    
+    join omni.sources ss on ds.source_id = ss.id
+    join omni.proficiency_bands p on tdv.proficiency_band_id = p.id
+
+    where ds.state = '#{state}' 
+      and entity_type = 'district' 
+      and gs_id = #{district_id} 
+      and ds.configuration like '%feeds%' 
+      and dtt.tag = 'state_test'
+      and tdv.active = 1
+    SQL
+
+    result = self.connection.exec_query(query)
+    result.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
+  end
+
+  def self.feeds_by_state(state)
+    query = <<-SQL
+    select
+      tdv.value, 
+      ds.state, 
+      tdv.grade,
+      tdv.cohort_count,
+      tdv.proficiency_band_id,
+      p.name as proficiency_band_name,
+      b.name as breakdown_names,
+      s.name as academic_names,      
+      ds.data_type_id, 
+      ds.configuration, 
+      ss.name as source, 
+      ss.name as source_name, 
+      ds.date_valid,
+      ds.description,
+      dt.name       
+    from omni.test_data_values tdv 
+    join omni.data_sets ds on tdv.data_set_id = ds.id
+    join omni.data_types dt on dt.id = ds.data_type_id 
+    join omni.data_type_tags dtt on dtt.data_type_id = ds.data_type_id
+    left join omni.breakdowns b on tdv.breakdown_id = b.id
+    left join omni.breakdown_tags bt on bt.breakdown_id = b.id 
+    left join omni.subjects s on tdv.subject_id = s.id    
+    left join omni.subject_tags st on st.subject_id = s.id    
+    join omni.sources ss on ds.source_id = ss.id
+    join omni.proficiency_bands p on tdv.proficiency_band_id = p.id
+
+    where ds.state = '#{state}' 
+      and entity_type = 'state' 
       and ds.configuration like '%feeds%' 
       and dtt.tag = 'state_test'
       and tdv.active = 1
