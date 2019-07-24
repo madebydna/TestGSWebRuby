@@ -141,6 +141,8 @@ class TestDataValue < ActiveRecord::Base
       tdv.grade,
       tdv.cohort_count,
       tdv.proficiency_band_id,
+      p.name as proficiency_band_name,
+      p.composite_of_pro_null,
       b.name as breakdown_names,
       bt.tag as breakdown_tags,      
       s.name as academic_names,      
@@ -161,6 +163,7 @@ class TestDataValue < ActiveRecord::Base
     join omni.subjects s on tdv.subject_id = s.id    
     join omni.subject_tags st on st.subject_id = s.id    
     join omni.sources ss on ds.source_id = ss.id
+    join omni.proficiency_bands p on tdv.proficiency_band_id = p.id
 
     where ds.state = '#{school_state}' 
       and entity_type = 'school' 
