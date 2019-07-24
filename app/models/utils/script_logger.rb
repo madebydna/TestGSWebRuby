@@ -7,7 +7,7 @@ class ScriptLogger < ActiveRecord::Base
 
   validates :username, presence: {message: 'Must provide a username'}
   validates :pid, :script_name, presence: true
-  validates :start, presence: {message: 'Must provide start and end time for script'}
+  validates :start, presence: {message: 'Must provide start for script'}
 
   def self.record_log_instance(script_name, params)
     log = new

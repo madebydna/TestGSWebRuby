@@ -20,10 +20,6 @@ describe CachePopulator::Base do
     end
 
     context "initialization" do
-        before(:each) do
-            allow(subject).to receive(:log_script_name).and_return(nil)
-            allow(subject).to receive(:log_params).and_return(nil)
-        end
         it "requires a values and cache_keys named arguments" do
             expect { subject }.not_to raise_error
             expect { CachePopulator::Base.new }.to raise_error(ArgumentError, /missing keyword.+values/)
