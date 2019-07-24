@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'opensans-bold';
+  src:  local('opensans-bold'),
+  asset-url('opensans-bold-webfont.woff') format('woff'),
+  asset-url('opensans-bold-webfont.ttf')  format('truetype'),
+  asset-url('opensans-bold-webfont.eot') format('embedded-opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: fallback;
+}
+
+.open-sans_sb {
+  font-family: 'opensans-bold';
+  font-weight: 400;
+  font-style: normal;
+}
+  
