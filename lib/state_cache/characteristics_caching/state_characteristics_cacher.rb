@@ -2,7 +2,9 @@ class StateCharacteristicsCacher < StateCacher
   include StateCacheValidation
 
   CACHE_KEY = 'state_characteristics'
-  STATE_CHARACTERISTICS_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 123, 124, 129, 131, 133, 179]
+  STATE_CHARACTERISTICS_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42,
+    102, 103, 123, 124, 129, 131, 133, 179, 296, 298, 319, 325, 417, 419, 443, 444, 445, 446, 447, 448, 449,
+    450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
   # 3 - Master's degree
@@ -21,6 +23,7 @@ class StateCharacteristicsCacher < StateCacher
   # 33 - Percent classes taught by non-highly qualified teachers
   # 41 - Head official name
   # 42 - Head official email
+  # 102 - ACT participation 
   # 103 - at least 5 years teaching experience
   # 123 - Female
   # 124 - Male
@@ -28,6 +31,29 @@ class StateCharacteristicsCacher < StateCacher
   # 131 - Percent classes taught by highly qualified teachers
   # 133 - Teachers with valid license
   # 179 - Percent Needing Remediation for College
+  # 296 - SAT percent college ready 
+  # 298 - 4-year high school graduation rate 
+  # 319 - Average ACT score
+  # 325 - ACT percent college ready
+  # 417 - Percent of Students Passing AP/IB Exams 
+  # 419 - Percent of students who meet UC/CSU entrance requirements 
+  # 443 - Percent enrolled in any public in-state postsecondary institution within 12 months after graduation
+  # 444 - Percent enrolled in any postsecondary institution within 12 months after graduation
+  # 447 - Percent enrolled in any 2 year postsecondary institution within 6 months after graduation
+  # 448 - Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation
+  # 449 - Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation
+  # 450 - Percent enrolled in any 4 year postsecondary institution within 6 months after graduation
+  # 451 - Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation
+  # 452 - Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation
+  # 453 - Percent enrolled in any in-state postsecondary institution within 12 months after graduation
+  # 454 - Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation
+  # 455 - Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation
+  # 456 - Percent enrolled in any postsecondary institution within 24 months after graduation
+  # 457 - Percent enrolled in any postsecondary institution within 6 months after graduation
+  # 458 - Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation
+  # 459 - Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation
+  # 460 - Percent Enrolled in a public 4 year college and Returned for a Second Year
+  # 461 - Percent Enrolled in a public 2 year college and Returned for a Second Year
 
   def self.listens_to?(data_type)
     :state_characteristics == data_type
@@ -78,7 +104,6 @@ class StateCharacteristicsCacher < StateCacher
   def data_attributes
     [
         :breakdown,
-        :created,
         :grade,
         :state_average,
         :source,

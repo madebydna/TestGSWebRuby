@@ -40,7 +40,8 @@ module CommunityProfiles
       end
       attr_accessor :breakdown, :original_breakdown, :district_value,
                     :year, :subject, :data_type, :source, :district_created, :subject_id, :subject,
-                    :performance_level,  :narrative, :grade, :district_average, :state_average
+                    :performance_level,  :narrative, :grade, :district_average, :state_average,
+                    :state_value
 
       def [](key)
         send(key) if respond_to?(key)
@@ -108,7 +109,7 @@ module CommunityProfiles
     end
 
     def characteristics_data
-      array_of_hashes = @cache_data_reader.characteristics_data(*included_data_types(:district_characteristics))
+      array_of_hashes = @cache_data_reader.characteristics_data(*included_data_types(:characteristics))
       array_of_hashes.each_with_object({}) do |(data_type, array), accum|
         accum[data_type] =
           array.map do |h|
@@ -141,7 +142,7 @@ module CommunityProfiles
       @_data_type_hashes ||= begin
         hashes = characteristics_data
         return [] if hashes.blank?
-        # handle_ACT_SAT_to_display!(hashes)
+        handle_ACT_SAT_to_display!(hashes)
         hashes = hashes.map do |key, array|
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
             # This is for characteristics
@@ -152,7 +153,7 @@ module CommunityProfiles
         data_values = hashes.flatten.compact
         data_values.select! { |dv| included_data_types.include?(dv['data_type']) }
         data_values.select! do |dv|
-          if multiple_breakdowns_in_one_data_type.include?(dv['data_type']) && dv['subject_id'] != 1
+          if multiple_breakdowns_in_one_data_type.include?(dv['data_type']) && dv.subject != 'All subjects'
             false
           else
             true
@@ -180,7 +181,7 @@ module CommunityProfiles
         formatting = data_type_formatting_map[data_type] || [:round_unless_less_than_1, :percent]
         visualization = data_type_visualization_map[data_type]
         range = data_type_range_map[data_type]
-        state = @cache_data_reader.district.state
+        state = entity_type == 'district' ? @cache_data_reader&.district.state : @cache_data_reader.state
         RatingScoreItem.new.tap do |item|
           item.label = data_label(data_type)
           item.data_type = data_type
@@ -194,11 +195,13 @@ module CommunityProfiles
             item.info_text = data_label_info_text(data_type)
             item.range = range
           end
-          item.score = SchoolProfiles::DataPoint.new(hash['district_value']).
+          item.score = SchoolProfiles::DataPoint.new(hash["#{entity_type}_value"]).
             apply_formatting(*formatting)
-          state_average = hash['state_average'] || hash['state_value']
-          item.state_average = SchoolProfiles::DataPoint.new(state_average).
-            apply_formatting(*formatting)
+          if entity_type != 'state'
+            state_average = hash['state_average'] || hash['state_value']
+            item.state_average = SchoolProfiles::DataPoint.new(state_average).
+              apply_formatting(*formatting)
+          end
           item.visualization = visualization
           item.source = hash['source'] || hash['source_name']
         end
@@ -213,8 +216,8 @@ module CommunityProfiles
          breakdown: score_item.label,
          data_type: score_item.data_type,
          subgroup: score_item.subgroup,
-         state_average: score_item.state_average.value.present? ? score_item.state_average.value.to_i : nil,
-         state_average_label: score_item.state_average.value.present? ? score_item.state_average.value.to_f.round.to_s : nil,
+         state_average: score_item.state_average&.value.present? ? score_item.state_average.value.to_i : nil,
+         state_average_label: score_item.state_average&.value.present? ? score_item.state_average.value.to_f.round.to_s : nil,
          display_type: score_item.visualization,
          lower_range: (score_item.range.first if score_item.range),
          upper_range: (score_item.range.last if score_item.range),
@@ -233,8 +236,8 @@ module CommunityProfiles
          display_percentages: score_item.subgroup_percentage,
          data_type: score_item.data_type,
          subgroup: score_item.subgroup,
-         state_average: score_item.state_average.value.present? ? score_item.state_average.value.to_i : nil,
-         state_average_label: score_item.state_average.value.present? ? score_item.state_average.value.to_f.round.to_s : nil,
+         state_average: score_item.state_average&.value.present? ? score_item.state_average.value.to_i : nil,
+         state_average_label: score_item.state_average&.value.present? ? score_item.state_average.value.to_f.round.to_s : nil,
          display_type: score_item.visualization,
          lower_range: (score_item.range.first if score_item.range),
          upper_range: (score_item.range.last if score_item.range),
@@ -254,7 +257,7 @@ module CommunityProfiles
         data_array << { narration: I18n.t('RE UC/CSU eligibility narration', scope: 'lib.equity_gsdata'), title: I18n.t('UC/CSU eligibility', scope: 'lib.equity_gsdata'), values: uc_csu_data, anchor: 'UC/CSU eligibility' } if has_data?(uc_csu_data)
         data_array << { narration: I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata'), title: I18n.t('Graduation rates', scope: 'lib.equity_gsdata'), values: graduation_data, anchor: 'Graduation rates'} if has_data?(graduation_data)
         # no title for college success since we don't want the sub panels to render in React
-        data_array << { narration: I18n.t('district_scoped_info_text', scope: 'lib.college_readiness') + college_success_narration, values: college_success_data, type: 'mixed_variety'} if has_data?(college_success_data)
+        data_array << { narration: I18n.t('scoped_info_text', scope: 'lib.college_readiness', entity: I18n.t("#{entity_type}", scope: 'lib.college_readiness')), values: college_success_data, type: 'mixed_variety'} if has_data?(college_success_data)
         data_array.compact
       end
     end
@@ -353,6 +356,20 @@ module CommunityProfiles
 
     def breakdown_percentage(dv)
       value_to_s(ethnicities_to_percentages[dv.breakdown])
+    end
+
+    private
+
+    def entity_type
+      @_entity_type ||= begin
+        if @cache_data_reader.is_a?(DistrictCacheDataReader)
+          'district'
+        elsif @cache_data_reader.is_a?(StateCacheDataReader)
+          'state'
+        else
+          raise NotImplementedError.new("@cache_data_reader must be valid in #{self.class.name}#entity_type")
+        end
+      end
     end
   end
 end

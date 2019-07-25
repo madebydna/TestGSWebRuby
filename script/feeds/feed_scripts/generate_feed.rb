@@ -25,8 +25,6 @@ module Feeds
     DATA_READERS = {
         subrating: Feeds::Subrating::DataReader,
         subrating_description: Feeds::Subrating::DataReader,
-        old_test_gsdata: Feeds::OldTestGsdata::AllStudentsDataReader,
-        old_test_subgroup_gsdata: Feeds::OldTestGsdata::DataReader,
         new_test_gsdata: Feeds::NewTestGsdata::AllStudentsDataReader,
         new_test_subgroup_gsdata: Feeds::NewTestGsdata::DataReader,
     }
