@@ -40,19 +40,18 @@ describe CachePopulator::Runner do
             expect(cacher).to be_a(CachePopulator::SchoolCachePopulator)
         end 
 
-        it "raises a PopulatorError for unrecognized cacher types" do
+        it "returns nil for unrecognized cacher types" do
             line_as_hash['type'] = 'foo'
-            expect { subject.setup_cacher(line_as_hash) }.to raise_error(CachePopulator::PopulatorError, /Cacher type not recognized/)
-
+            expect(subject.setup_cacher(line_as_hash)).to be_nil
         end
     end
 
     context "#run" do
 
         it "should call respective cache populator class by line" do
-            state_populator = instance_double(CachePopulator::StateCachePopulator, run: true)
-            city_populator = instance_double(CachePopulator::CityCachePopulator, run: true)
-            school_populator = instance_double(CachePopulator::SchoolCachePopulator, run: true)
+            state_populator = instance_double(CachePopulator::StateCachePopulator, run: true, valid?: true)
+            city_populator = instance_double(CachePopulator::CityCachePopulator, run: true, valid?: true)
+            school_populator = instance_double(CachePopulator::SchoolCachePopulator, run: true, valid?: true)
             expect(CachePopulator::StateCachePopulator).to receive(:new).with(values: "ca,hi", cache_keys: "state_characteristics").and_return(state_populator)
             expect(CachePopulator::CityCachePopulator).to receive(:new).with(values: "ca,hi:1,2,3", cache_keys: "school_levels").and_return(city_populator)
             expect(CachePopulator::SchoolCachePopulator).to receive(:new).with(values: ":1,2,3", cache_keys: "ratings").and_return(school_populator)
