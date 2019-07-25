@@ -6,11 +6,19 @@ class TestDataValue < ActiveRecord::Base
   self.table_name = 'test_data_values'
 
   db_magic connection: :omni
+
   belongs_to :data_set
   belongs_to :proficiency_band
   belongs_to :breakdown
 
   has_many :data_sets
+
+  ENTITIES = %w(nation state district school).freeze
+
+  scope :state_entity, -> { where(entity_type: 'state') }
+  scope :district_entity, -> { where(entity_type: 'district') }
+  scope :school_entity, -> { where(entity_type: 'school') }
+  scope :active, -> { where(active: 1) }
 
   #todo validate date format for date valid
 
@@ -225,46 +233,6 @@ class TestDataValue < ActiveRecord::Base
   end
 
   def self.feeds_by_state(state)
-    query = <<-SQL
-    select
-      tdv.value,        
-      tdv.grade,
-      tdv.cohort_count,
-      tdv.proficiency_band_id,
-      p.name as proficiency_band_name,
-      b.name as breakdown_names,
-      s.name as academic_names,      
-      ds.state,
-      ds.data_type_id, 
-      ds.configuration, 
-      ds.date_valid,
-      ds.description,
-      ss.name as source, 
-      ss.name as source_name, 
-      dt.name       
-    from omni.test_data_values tdv 
-    join omni.data_sets ds on tdv.data_set_id = ds.id
-    join omni.data_types dt on dt.id = ds.data_type_id 
-    join omni.data_type_tags dtt on dtt.data_type_id = ds.data_type_id
-    left join omni.breakdowns b on tdv.breakdown_id = b.id
-    left join omni.breakdown_tags bt on bt.breakdown_id = b.id 
-    left join omni.subjects s on tdv.subject_id = s.id    
-    left join omni.subject_tags st on st.subject_id = s.id    
-    join omni.sources ss on ds.source_id = ss.id
-    join omni.proficiency_bands p on tdv.proficiency_band_id = p.id
-
-    where ds.state = '#{state}' 
-      and entity_type = 'state' 
-      and ds.configuration like '%feeds%' 
-      and dtt.tag = 'state_test'
-      and tdv.active = 1
-    SQL
-
-    result = self.connection.exec_query(query)
-    result.map { |row| JSON.parse(row.to_json, object_class: OpenStruct) }
-  end
-
-  def self.feeds_by_state_ar(state)
     data = TestDataValue
                .select(
                    :value,
@@ -293,7 +261,7 @@ class TestDataValue < ActiveRecord::Base
                .joins("left join subject_tags on subjects.id = subject_tags.subject_id")
                .joins("join sources on sources.id = data_sets.source_id")
                .joins(:proficiency_band)
-               .where(entity_type: 'state', active: 1)
+               .state_entity.active
     data
   end
 
