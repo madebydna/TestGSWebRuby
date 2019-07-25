@@ -12,12 +12,14 @@ class StatusPage
 
       db_text = "DB: #{db_status_local ? 'OK' : 'FAILED'}"
       solr_text = "Solr: #{solr_status_local ? 'OK' : 'FAILED'}"
+      script_status =  script_status1
+
       version_text = version_string
 
       response_code = (db_status_local && solr_status_local) ? 200 : 503
       headers = {'Content-Type' => 'text/plain',
                  'cache-control' => 'private, must-revalidate, max-age=0'}
-      body = [[db_text, solr_text, version_text].join("\n\n")]
+      body = [[db_text, solr_text, script_status, version_text].join("\n\n")]
       [response_code, headers, body]
     else
       @app.call(env)
@@ -26,6 +28,38 @@ class StatusPage
 
   def version_string
     File.read(Rails.root.join("version.txt")) rescue 'VERSION UNKNOWN'
+  end
+
+  def script_status1
+    current_script + last_script_ran
+  end
+
+  def current_script
+    scripts = ScriptLogger.where(output: nil).order(start: :desc)
+    begin
+      script = scripts.first
+      "Current Running Script:
+        Filename: #{script.filename}
+        Username: #{script.username}
+        Start time: #{script.start}
+        Elapse Time: #{((Time.now.utc - script.start) / 60).round(2)} minutes\n\n"
+    rescue
+      "Current Running Script:
+        NONE RUNNING\n\n"
+    end
+  end
+
+  def last_script_ran
+    script = ScriptLogger.where.not(end: nil).order(end: :desc).first
+      "Last Finished Script:
+        Filename: #{script.filename}
+        Username: #{script.username}
+        Start time: #{script.start}
+        End time: #{script.end}
+        Success?: #{script.succeeded}
+        Elapsed Time: #{((script.end - script.start) / 60).round(2)} minutes
+        Output: #{script.output}
+        \n"
   end
 
   def redis_status
