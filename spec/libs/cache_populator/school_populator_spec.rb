@@ -30,15 +30,15 @@ describe CachePopulator::SchoolCachePopulator do
 
   context "#run" do
     after(:all) do
-        do_clean_models(:ca, School)
-        do_clean_models(:co, School)
+      do_clean_models(:ca, School)
+      do_clean_models(:co, School)
     end
 
-      before(:all) do
-          @alameda_high_school = FactoryGirl.create_on_shard(:ca, :school, attributes_for(:alameda_high_school))
-          @bay_farm_elementary_school = FactoryGirl.create_on_shard(:ca, :school, attributes_for(:bay_farm_elementary_school))
-          @cesar_chavez_academy_denver = FactoryGirl.create_on_shard(:co, :school, attributes_for(:cesar_chavez_academy_denver))
-      end
+    before(:all) do
+      @alameda_high_school = FactoryGirl.create_on_shard(:ca, :school, attributes_for(:alameda_high_school))
+      @bay_farm_elementary_school = FactoryGirl.create_on_shard(:ca, :school, attributes_for(:bay_farm_elementary_school))
+      @cesar_chavez_academy_denver = FactoryGirl.create_on_shard(:co, :school, attributes_for(:cesar_chavez_academy_denver))
+    end
 
     let(:school_cacher) { class_double('Cacher').as_stubbed_const }
 
