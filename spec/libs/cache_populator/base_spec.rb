@@ -9,16 +9,6 @@ describe CachePopulator::Base do
         end
     end
 
-    # module CachePopulator
-    #     class Base
-    #         %w(log_script_name log_params run).each do |method_name|
-    #             define_method(method_name) do
-    #                 nil
-    #             end 
-    #         end
-    #     end
-    # end
-
     context "initialization" do
         it "requires a values and cache_keys named arguments" do
             expect { subject }.not_to raise_error
