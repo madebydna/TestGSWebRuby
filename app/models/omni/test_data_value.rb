@@ -273,6 +273,7 @@ class TestDataValue < ActiveRecord::Base
                    :proficiency_band_id,
                    "proficiency_bands.name as proficiency_band_name",
                    "breakdowns.name as breakdown_names",
+                   "breakdowns.id as breakdown_id_list",
                    "subjects.name as academic_names",
                    "data_sets.state",
                    "data_sets.data_type_id",
@@ -283,7 +284,7 @@ class TestDataValue < ActiveRecord::Base
                    "sources.name as source_name",
                    "data_types.name"
                )
-               .joins(:data_set).where(data_sets: { state: 'ca', configuration: 'feeds' })
+               .joins(:data_set).where(data_sets: { state: state, configuration: 'feeds' })
                .joins("join data_types on data_types.id = data_sets.data_type_id ")
                .joins("join data_type_tags on data_type_tags.data_type_id = data_sets.data_type_id").where(data_type_tags: { tag: 'state_test' })
                .joins("left join breakdowns on test_data_values.breakdown_id = breakdowns.id")
