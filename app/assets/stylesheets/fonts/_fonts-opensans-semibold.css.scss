@@ -1,12 +1,12 @@
 @font-face {
   font-family: 'opensans-semibold';
-  src:  url('Open-Sans-600.eot?');
-  src:  local('?'),
+  src:  local('opensans-semibold'),
   asset-url('Open-Sans-600.woff') format('woff'),
   asset-url('Open-Sans-600.ttf')  format('truetype'),
-  asset-url('Open-Sans-600.svg#opensans-semibold') format('svg');
+  asset-url('Open-Sans-600.eot') format('embedded-opentype');
   font-weight: 400;
   font-style: normal;
+  // font-display: fallback;
 }
 
 .open-sans_semibold {

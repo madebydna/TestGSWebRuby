@@ -2,22 +2,22 @@
 module SchoolAssociationPreloading
 
   def self.extended(object)
-    unless object.is_a?(Enumerable) || object.is_a?(ActiveRecord::Relation)
+    unless object.is_a?(ActiveRecord::Relation)
       raise ArgumentError.new(
-              "SchoolAssociationPreloading must be mixed into an ActiveRecord relation or an Enumerable object, such as an array. "\
+              "SchoolAssociationPreloading must be mixed into an ActiveRecord relation. "\
               "Attempted to mix it into a #{object.class}"
             )
     end
-    unless object.first.respond_to?(:state) || object.first.nil?
+    unless object.klass.method_defined?(:state) || object.klass.attribute_method?("state")
       raise ArgumentError.new(
-              "SchoolAssociationPreloading must be mixed into Enumerable models that each respond to .state and .school_id. "\
-              "First model of type #{object.first.class} does not respond to .state"
+              "SchoolAssociationPreloading must be mixed into ActiveRecord models that respond to .state and .school_id. "\
+              "#{object.klass} does not respond to .state"
             )
     end
-    unless object.first.respond_to?(:school_id) || object.first.nil?
+    unless object.klass.method_defined?(:school_id) || object.klass.attribute_method?("school_id")
       raise ArgumentError.new(
-              "SchoolAssociationPreloading must be mixed into Enumerable models that each respond to .state and .school_id. "\
-              "First model of type #{object.first.class} does not respond to .school_id"
+              "SchoolAssociationPreloading must be mixed into ActiveRecord models that respond to .state and .school_id. "\
+              "#{object.klass} does not respond to .school_id"
             )
     end
   end
