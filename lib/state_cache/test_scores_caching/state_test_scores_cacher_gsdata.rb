@@ -1,4 +1,4 @@
-# frozen_string_literal: trues
+# frozen_string_literal: true
 
 class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
   CACHE_KEY = 'test_scores_gsdata'
@@ -17,7 +17,6 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
         cache_hash[result_hash[:data_type]] << result_hash.except(*cache_exceptions)
       end
     end
-    # hashes.select {|hash| valid_result_hash? hash }
   end
 
   def cache_exceptions
