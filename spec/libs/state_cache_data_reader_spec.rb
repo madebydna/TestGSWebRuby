@@ -77,5 +77,20 @@ describe 'StateCacheDataReader' do
         end
       end
     end
+
+    describe '#school_levels' do
+      subject { new_reader(state, state_cache_keys: 'school_levels') }
+
+      before do
+        @state_cache = FactoryGirl.create(:state_cache, :with_school_levels)
+      end
+
+      after { clean_dbs :gs_schooldb }
+
+      it "should returned the parsed hash from the state cache" do
+        expect(subject.school_levels).to eq(JSON.parse(@state_cache.value))
+      end
+
+    end
   end
 end

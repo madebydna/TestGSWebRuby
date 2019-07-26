@@ -19,92 +19,88 @@ const renderListItems = (linkData, locality) => (
         <p>{linkData.name}</p>
       }
     </span>
-    <span className="school-count">{linkData.schoolNumber}</span>
+    <span className="school-count">{linkData.schoolNumber && linkData.schoolNumber.toLocaleString()}</span>
   </React.Fragment>
 );
 
 const schoolBrowseLinks = ({locality, size, schoolLevels, community}) => {
-  // const browseSchoolBlurb = community === 'city' ? 
-  //   <h3>{t('browse_school_blurb')} {locality.city}</h3>
-  //   :
-  //   <h3>{t('browse_school_blurb_district')}</h3>;
-
-  const browseLinkData = [
-    {
-      name: `${t("Preschools")}`,
-      queryParams: [{ key: "gradeLevels%5B%5D", val: "p"}], 
-      schoolNumber: schoolLevels.preschool,
-    },
-    {
-      name: `${t("Elementary schools")}`, 
-      queryParams: [{ key: "gradeLevels%5B%5D", val: "e"}], 
-      schoolNumber: schoolLevels.elementary,
-    },
-    {
-      name: `${t("Middle schools")}`,
-      queryParams: [{ key: "gradeLevels%5B%5D", val: "m"}],
-      schoolNumber: schoolLevels.middle,
-    },
-    {
-      name: `${t("High schools")}`,
-      queryParams: [{ key: "gradeLevels%5B%5D", val: "h"}],
-      schoolNumber: schoolLevels.high,
-    },
-    {
-      name: `${t("Public district schools")}`,
-      queryParams: [{ key: "st%5B%5D", val: "public_charter"},{key: "st%5B%5D", val:"public"}],
-      schoolNumber: schoolLevels.public,
-    },
-    {
-      name: `${t("Public charter schools")}`,
-      queryParams: [{ key: "st%5B%5D", val:"public_charter"},{key: "st%5B%5D", val: "charter"}],
-      schoolNumber: schoolLevels.charter,
-    },
-    {
-      name: `${t("Private schools")}`,
-      queryParams: [{ key: "st%5B%5D", val: "private"}],
-      schoolNumber: schoolLevels.private,
-    },
-    {
-      name: `${t("All schools")}`, 
-      queryParams: [],
-      schoolNumber: schoolLevels.all,
-    }
-  ];
-  let blueLine;
-  const renderCitySchoolAmt = browseLinkData.map((linkData, idx) => (
-    <li key={linkData.name}>
-      {renderListItems(linkData, locality)}
-      {size > MD ? 
-        ((idx !== 3 && idx !== 7) ? blueLine = <div className="blue-line" /> : null)
-        :
-        (idx !== 7) ? blueLine = <div className="blue-line" /> : null
+  if (schoolLevels !== null) {
+    const browseLinkData = [
+      {
+        name: `${t("Preschools")}`,
+        queryParams: [{ key: "gradeLevels%5B%5D", val: "p"}], 
+        schoolNumber: schoolLevels.preschool,
+      },
+      {
+        name: `${t("Elementary schools")}`, 
+        queryParams: [{ key: "gradeLevels%5B%5D", val: "e"}], 
+        schoolNumber: schoolLevels.elementary,
+      },
+      {
+        name: `${t("Middle schools")}`,
+        queryParams: [{ key: "gradeLevels%5B%5D", val: "m"}],
+        schoolNumber: schoolLevels.middle,
+      },
+      {
+        name: `${t("High schools")}`,
+        queryParams: [{ key: "gradeLevels%5B%5D", val: "h"}],
+        schoolNumber: schoolLevels.high,
+      },
+      {
+        name: `${t("Public district schools")}`,
+        queryParams: [{ key: "st%5B%5D", val: "public_charter"},{key: "st%5B%5D", val:"public"}],
+        schoolNumber: schoolLevels.public,
+      },
+      {
+        name: `${t("Public charter schools")}`,
+        queryParams: [{ key: "st%5B%5D", val:"public_charter"},{key: "st%5B%5D", val: "charter"}],
+        schoolNumber: schoolLevels.charter,
+      },
+      {
+        name: `${t("Private schools")}`,
+        queryParams: [{ key: "st%5B%5D", val: "private"}],
+        schoolNumber: schoolLevels.private,
+      },
+      {
+        name: `${t("All schools")}`, 
+        queryParams: [],
+        schoolNumber: schoolLevels.all,
       }
-    </li>
-  ));
-
-
-  const browseLinkDistrictData = (browseLinkData.slice(0, 4)).concat([browseLinkData[7]]);
-  const renderDistrictSchoolAmt = browseLinkDistrictData.map((linkData, idx) => (
-      linkData.schoolNumber > 0 ?
-        <li key={linkData.name}>
-          {renderListItems(linkData, locality)}
-          {idx !== 4 ? <div className="blue-line"/> : null}
-        </li> : null
-  ));
+    ];
+    let blueLine;
+    const renderCitySchoolAmt = browseLinkData.map((linkData, idx) => (
+      <li key={linkData.name}>
+        {renderListItems(linkData, locality)}
+        {size > MD ? 
+          ((idx !== 3 && idx !== 7) ? blueLine = <div className="blue-line" /> : null)
+          :
+          (idx !== 7) ? blueLine = <div className="blue-line" /> : null
+        }
+      </li>
+    ));
   
-  if (schoolLevels.all !== null) {
+  
+    const browseLinkDistrictData = (browseLinkData.slice(0, 4)).concat([browseLinkData[7]]);
+    
+    const renderDistrictSchoolAmt = browseLinkDistrictData.map((linkData, idx) => (
+        linkData.schoolNumber > 0 ?
+          <li key={linkData.name}>
+            {renderListItems(linkData, locality)}
+            {idx !== 4 ? <div className="blue-line"/> : null}
+          </li> : null
+    ));
+  
     return (
       <section className="links-module">
-        {/* {browseSchoolBlurb} */}
         <ul>
-          {community === 'city' ? renderCitySchoolAmt : renderDistrictSchoolAmt}
+          {community === 'district' ? renderDistrictSchoolAmt : renderCitySchoolAmt }
         </ul>
       </section>
     )
-  }else{
-    return null;
-  }
+
+  };
+
+  return(null);
 }
 
 schoolBrowseLinks.propTypes = {

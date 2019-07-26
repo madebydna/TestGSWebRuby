@@ -35,7 +35,7 @@ class CitiesController < ApplicationController
                   title: cities_title,
                   description: cities_description,
                   canonical: city_url(state: city_params_hash[:state], city: city_params_hash[:city]),
-                  noindex: (school_levels[:all] || 0 ) < 3)
+                  noindex: (school_levels.try(:fetch, :all, nil) || 0 ) < 3)
   end
 
   def cities_title

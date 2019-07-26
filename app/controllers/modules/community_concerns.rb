@@ -12,16 +12,19 @@ module CommunityConcerns
     end
 
     def school_levels
-      @_school_levels ||= begin
-        {}.tap do |sl|
-          sl[:all] = school_count('all')
-          sl[:public] = school_count('public')
-          sl[:private] = school_count('private')
-          sl[:charter] = school_count('charter')
-          sl[:preschool] = school_count('preschool')
-          sl[:elementary] = school_count('elementary')
-          sl[:middle] = school_count('middle')
-          sl[:high] = school_count('high')
+      return @_school_levels if defined?(@_school_levels)
+      @_school_levels = begin
+        if school_count('all').present?
+          {}.tap do |sl|
+            sl[:all] = school_count('all')
+            sl[:public] = school_count('public')
+            sl[:private] = school_count('private')
+            sl[:charter] = school_count('charter')
+            sl[:preschool] = school_count('preschool')
+            sl[:elementary] = school_count('elementary')
+            sl[:middle] = school_count('middle')
+            sl[:high] = school_count('high')
+          end
         end
       end
     end

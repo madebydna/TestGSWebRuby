@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StateCacheDataReader
-  STATE_CACHE_KEYS = %w(state_characteristics district_largest test_scores_gsdata)
+  STATE_CACHE_KEYS = %w(state_characteristics district_largest test_scores_gsdata school_levels)
 
   attr_reader :state, :state_cache_keys
 
@@ -24,6 +24,10 @@ class StateCacheDataReader
 
   def test_scores
     decorated_state.test_scores
+  end
+
+  def school_levels
+    decorated_state.school_levels
   end
 
   def flat_test_scores_for_latest_year

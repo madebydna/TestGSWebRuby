@@ -10,7 +10,8 @@ class School < ActiveRecord::Base
     elementary: 'e',
     middle: 'm',
     high: 'h',
-    public: 'public OR charter',
+    public: 'public',
+    public_or_charter: 'public OR charter',
     private: 'private',
     charter: 'charter'
   }
@@ -37,6 +38,14 @@ class School < ActiveRecord::Base
     select("#{School.table_name}.*, #{District.table_name}.name as district_name").
     joins("LEFT JOIN district on school.district_id = district.id")
   }
+
+  scope :preschool_schools, -> { where('level_code like ?', "%#{LEVEL_CODES[:preschool]}%") }
+  scope :elementary_schools, -> { where('level_code like ?', "%#{LEVEL_CODES[:elementary]}%") }
+  scope :middle_schools, -> { where('level_code like ?', "%#{LEVEL_CODES[:middle]}%") }
+  scope :high_schools, -> { where('level_code like ?', "%#{LEVEL_CODES[:high]}%") }
+  scope :public_schools, -> { where('type = ?', LEVEL_CODES[:public]) }
+  scope :charter_schools, -> { where('type = ?', LEVEL_CODES[:charter]) }
+  scope :private_schools, -> { where('type = ?', LEVEL_CODES[:private]) }
 
   self.inheritance_column = nil
 
@@ -91,6 +100,10 @@ class School < ActiveRecord::Base
 
   def self.within_city(state_abbreviation, city_name)
     on_db(state_abbreviation.downcase.to_sym).active.where(city: city_name).order(:name)
+  end
+
+  def self.within_state(state_abbreviation)
+    on_db(state_abbreviation.downcase.to_sym).active.order(:name)
   end
 
   def census_data_for_data_types(data_types = [])

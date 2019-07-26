@@ -153,6 +153,7 @@ class District extends React.Component {
           />
         }
         browseSchools={
+          this.props.school_levels &&
           <SchoolBrowseLinks
             community={this.pageType}
             locality={this.props.locality}
