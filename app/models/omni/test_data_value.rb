@@ -20,27 +20,27 @@ class TestDataValue < ActiveRecord::Base
   scope :default_proficiency, -> { where(proficiency_band_id: 1) }
 
   def self.web_by_school(state, id)
-    select(common_cache_keys).common_web_query(state).school_entity.where(gs_id: id).default_proficiency
+    select(common_attrs).common_web_query(state).school_entity.where(gs_id: id).default_proficiency
   end
 
   def self.web_by_district(state, id)
-    select(common_cache_keys).common_web_query(state).district_entity.where(gs_id: id)
+    select(common_attrs).common_web_query(state).district_entity.where(gs_id: id)
   end
 
   def self.web_by_state(state)
-    select(common_cache_keys).common_web_query(state).state_entity
+    select(common_attrs).common_web_query(state).state_entity
   end
 
   def self.feeds_by_school(state, school_id)
-    select(common_cache_keys).common_feeds_query(state).school_entity.where(gs_id: school_id)
+    select(common_attrs).common_feeds_query(state).school_entity.where(gs_id: school_id)
   end
 
   def self.feeds_by_district(state, district_id)
-    select(common_cache_keys).common_feeds_query(state).district_entity.where(gs_id: district_id)
+    select(common_attrs).common_feeds_query(state).district_entity.where(gs_id: district_id)
   end
 
   def self.feeds_by_state(state)
-    select(common_cache_keys).common_feeds_query(state).state_entity
+    select(common_attrs).common_feeds_query(state).state_entity
   end
 
   def self.common_web_query(state)
@@ -80,11 +80,12 @@ class TestDataValue < ActiveRecord::Base
   end
 
   #todo validate date format for date valid
-  def self.common_cache_keys
+  def self.common_attrs
     [:value,
      :grade,
      :cohort_count,
      :proficiency_band_id,
+     :gs_id,
      "data_types.name",
      "sources.name as source_name",
      "sources.name as source",
