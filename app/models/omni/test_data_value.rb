@@ -28,7 +28,7 @@ class TestDataValue < ActiveRecord::Base
   end
 
   def self.web_by_state(state)
-    select(common_attrs).common_web_query(state).state_entity
+    select(common_attrs).common_web_query(state).state_entity.default_proficiency
   end
 
   def self.feeds_by_school(state, school_id)

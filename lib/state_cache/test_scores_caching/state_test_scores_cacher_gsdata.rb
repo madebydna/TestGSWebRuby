@@ -4,10 +4,7 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
   CACHE_KEY = 'test_scores_gsdata'
 
   def query_results
-    @query_results ||=
-      begin
-        DataValue.find_by_state_and_data_type_tags_and_proficiency_is_one(state, 'state_test', %w(all) )
-      end
+    @query_results ||= TestDataValue.web_by_state(state)
   end
 
   def build_hash_for_cache
