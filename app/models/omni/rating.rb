@@ -3,47 +3,63 @@
 require 'ruby-prof'
 
 class Rating < ActiveRecord::Base
-  self.table_name = 'ratings'
+
+  DATA_TYPE_IDS = %w(151 155 156 157 158 159 160 175 176 177 178 179 180 181 182 183 184 185 186 187).freeze
 
   db_magic connection: :omni
 
   belongs_to :data_set
 
-  def self.find_by_school_and_data_types_with_academics(school, data_types)
-    query = <<-SQL
-    select       
-      r.value, 
-      ds.state, 
-      r.gs_id as school_id,
-      r.active, 
-      ds.data_type_id, 
-      ds.configuration, 
-      s.name as source, 
-      s.name as source_name, 
-      ds.date_valid,
-      ds.description,
-      dt.name,
-      bt.tag as breakdown_tags,
-      b.name as breakdown_names
-    from omni.ratings r
-    join omni.data_sets ds on r.data_set_id = ds.id
-    join omni.data_types dt on dt.id = ds.data_type_id
-    join omni.data_type_tags dtt on dtt.data_type_id = ds.data_type_id
-    join omni.breakdowns b on r.breakdown_id = b.id
-    join omni.breakdown_tags bt on bt.breakdown_id = b.id
-    join omni.sources s on ds.source_id = s.id
-    where ds.state = '#{school.state}' and entity_type = 'school' and gs_id = #{school.id}
-    and dtt.tag in ('rating','summary_rating_weight')
-    and ds.data_type_id in (#{data_types.join(",")})
-    and r.active = 1
-    SQL
+  scope :state_entity, -> { where(entity_type: 'state') }
+  scope :district_entity, -> { where(entity_type: 'district') }
+  scope :school_entity, -> { where(entity_type: 'school') }
+  scope :active, -> { where(active: 1) }
+  scope :default_proficiency, -> { where(proficiency_band_id: 1) }
 
-    result = self.connection.exec_query(query)
-    to_open_struct(result)
+  def self.by_school(state, id)
+    select(
+        :value,
+        "data_sets.state",
+        "gs_id as school_id",
+        :active,
+        "data_sets.data_type_id",
+        "data_sets.configuration",
+        "sources.name as source",
+        "sources.name as source_name",
+        "data_sets.date_valid",
+        "data_sets.description",
+        "data_types.name",
+        "breakdown_tags.tag as breakdown_tags",
+        "breakdowns.name as breakdown_names"
+    )
+        .joins(data_set: [:data_type, :source])
+        .joins("join data_type_tags on data_type_tags.data_type_id = data_sets.data_type_id")
+        .with_breakdowns
+        .with_breakdown_tags
+        .with_subjects
+        .with_subject_tags
+        .where(data_type_tag: { tag: %w(rating summary_rating_weight) })
+        .where(data_set: { data_type_id: DATA_TYPE_IDS.join(",") })
+        .merge(DataSet.by_state(state))
+        .where(gs_id: id)
+        .school_entity
+        .active
   end
 
-  def to_open_struct(data)
-    data.map {|row| JSON.parse(row.to_json, object_class: OpenStruct)}
+  def self.with_breakdowns
+    joins("left join breakdowns on breakdown_id = breakdowns.id")
+  end
+
+  def self.with_breakdown_tags
+    joins("left join breakdown_tags on breakdown_tags.breakdown_id = breakdowns.id")
+  end
+
+  def self.with_subjects
+    joins("left join subjects on subjects.id = subject_id")
+  end
+
+  def self.with_subject_tags
+    joins("left join subject_tags on subjects.id = subject_tags.subject_id")
   end
 
 end
