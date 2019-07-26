@@ -24,7 +24,7 @@ class TestDataValue < ActiveRecord::Base
   end
 
   def self.web_by_district(state, id)
-    select(common_attrs).common_web_query(state).district_entity.where(gs_id: id)
+    select(common_attrs).common_web_query(state).district_entity.where(gs_id: id).default_proficiency
   end
 
   def self.web_by_state(state)

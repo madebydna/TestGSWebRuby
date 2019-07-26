@@ -83,10 +83,9 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
 
   def district_results_hash
     @_district_results_hash ||= begin
-      district_values = DataValue
-        .find_by_district_and_data_type_tags_and_proficiency_is_one(school.state, school.district_id, DATA_TYPE_TAGS, %w(all) )
+      district_values = TestDataValue.web_by_district(district.state, district.id)
       district_values.each_with_object({}) do |result, hash|
-        district_key = DataValue.datatype_breakdown_year(result)
+        district_key = TestDataValue.datatype_breakdown_year(result)
         hash[district_key] = result.value
       end
     end

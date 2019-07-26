@@ -7,30 +7,7 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
   DATA_TYPE_TAGS = 'state_test'
 
   def query_results
-    @query_results ||=
-      begin
-        DataValue.find_by_district_and_data_type_tags_and_proficiency_is_one(district.state,
-                                                                             district.id,
-                                                                             DATA_TYPE_TAGS,
-                                                                             %w(all))
-        # DataValue.state_and_district_values
-        #   .from(
-        #     DataValue.state_and_district(
-        #       district.state,
-        #       district.id
-        #     ), :data_values
-        #   )
-        #   .where(proficiency_band_id: 1)
-        #   .with_data_types
-        #   .with_data_type_tags(DATA_TYPE_TAGS)
-        #   .with_breakdowns
-        #   .with_breakdown_tags
-        #   .with_academics
-        #   .with_academic_tags
-        #   .with_loads
-        #   .with_sources
-        #   .group('data_values.id')
-      end
+    @query_results ||= TestDataValue.web_by_district(district.state, district.id)
   end
 
   def build_hash_for_cache
