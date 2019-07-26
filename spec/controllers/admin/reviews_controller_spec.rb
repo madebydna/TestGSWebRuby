@@ -125,7 +125,7 @@ describe Admin::ReviewsController do
       clean_models :ca, School
     end
     subject do
-      controller.send(:flagged_reviews)
+      controller.send(:sort_table)
     end
 
     context 'with flagged reviews for a non-verified user' do
