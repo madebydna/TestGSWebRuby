@@ -1,4 +1,6 @@
 class Admin::ReviewsController < ApplicationController
+  include ReviewHelper
+  helper_method :sort_column, :sort_direction
 
   MODERATION_LIST_PAGE_SIZE = 50
 
@@ -14,7 +16,7 @@ class Admin::ReviewsController < ApplicationController
       render 'reviews_for_email'
     end
 
-    @flagged_reviews = flagged_reviews
+    @flagged_reviews = sort_table
     @total_number_of_reviews_to_moderate = total_number_of_reviews_to_moderate
 
     set_pagination_data_on_reviews(@flagged_reviews)
@@ -277,19 +279,106 @@ class Admin::ReviewsController < ApplicationController
     )
   end
 
-  def flagged_reviews
+  def flagged_review_school_ids_by_state(state)
+    filtered_flagged_reviews_scope.
+      group('reviews.member_id, reviews.review_question_id, reviews.school_id, reviews.state').
+      where('reviews.state = ?', state).
+      eager_load(:user).
+      merge(User.verified).
+      pluck('reviews.school_id')
+  end
+  
+  def flagged_school_ids_in_all_states_hash
+    flagged_school_ids_in_all_states = Hash.new
+    
+    States.abbreviations.each do |state|
+      flagged_within_state = flagged_review_school_ids_by_state(state)
+
+      unless flagged_within_state.empty?
+        flagged_school_ids_in_all_states[state] = flagged_within_state
+      end 
+    end
+    
+    flagged_school_ids_in_all_states
+  end 
+
+  def school_name_query_string
+    select_statement_array = []
+    flagged_school_ids_in_all_states_hash.each do |state, ids|
+      id_string = ids.uniq.join(", ")
+      select_statement_array << "(SELECT id, name, state FROM _#{state}.school WHERE id in(#{id_string}) )"
+    end
+
+    select_statement_array.join(' UNION ')
+  end
+  
+  def flagged_reviews_with_school_info
+    flagged_reviews_with_school_names = 
+      Review.select("reviews.*, flagged_schools.name AS school_name").
+        joins("JOIN (#{school_name_query_string}) AS flagged_schools ON (reviews.school_id = flagged_schools.id AND reviews.state = flagged_schools.state)").
+        where(reviews: { id: flagged_review_ids })
+  end
+
+  def flagged_reviews_with_user
+    flagged_reviews_with_user = 
+      Review.
+        joins(:user).
+        where(id: flagged_review_ids)
+  end 
+
+  def flag_count_per_review
+    flag_count_per_review = 
+      Review.
+        joins("JOIN review_flags ON reviews.id = review_flags.review_id").
+        where(review_flags: { review_id: flagged_review_ids, active: 1 }).
+        group("review_flags.review_id")
+  end 
+
+  def flagged_reviews(query, sort_column, sort_direction)
     # load needs to be called at the end of this chain, otherwise ActiveRecord will perform two extra queries
     # when extending the results and preloading the associated schools
-    @flagged_reviews ||= (
-      results = filtered_flagged_reviews_scope.
-        where(id: flagged_review_ids).
-        order('review_flags.created desc').
+    @flagged_reviews ||= begin
+      results = query.
+        order("#{sort_column} #{sort_direction}").
           includes(:user, :answers).
           page(params[:page]).per(MODERATION_LIST_PAGE_SIZE).
           load
 
       results.extend(SchoolAssociationPreloading).preload_associated_schools!
-    )
+    end
+  end 
+
+  def sort_table
+    query = filtered_flagged_reviews_scope.where(id: flagged_review_ids)
+
+    if sort_column == 'school_name'
+      query = flagged_reviews_with_school_info
+    elsif sort_column == 'list_member.email'
+      query = flagged_reviews_with_user
+    elsif sort_column == 'COUNT(review_flags.review_id)'
+      query = flag_count_per_review
+    end 
+
+    flagged_reviews(query, sort_column, sort_direction)
+  end
+
+  SORT_OPTIONS = {
+    "comment" => "reviews.comment",
+    "status" => "reviews.active", 
+    "school" => "school_name",
+    "state" => "reviews.state",
+    "reviewer" => "list_member.email",
+    "open_flags" => "COUNT(review_flags.review_id)",
+    "reasons" => "review_flags.reason",
+    "created" => "review_flags.created"
+  }
+
+  def sort_column
+    SORT_OPTIONS.key?(params[:sort]) ? SORT_OPTIONS[params[:sort]] : SORT_OPTIONS["created"]
+  end 
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
   def review_params
