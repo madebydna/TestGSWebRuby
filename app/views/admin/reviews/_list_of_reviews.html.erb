@@ -5,14 +5,14 @@
   <table class="table table-striped <%= css_class %>">
     <thead>
     <tr>
-      <td>Review</td>
-      <td>Status</td>
-      <td>School</td>
-      <td>State</td>
-      <td>Reviewer</td>
-      <td>Open flags</td>
-      <td>Reasons</td>
-      <td>Opened&nbsp;on</td>
+      <td><%= create_sort_link("comment", "Review") %></td>
+      <td><%= create_sort_link("status") %></td>
+      <td><%= create_sort_link("school") %></td>
+      <td><%= create_sort_link("state") %></td>
+      <td><%= create_sort_link("reviewer") %></td>
+      <td><%= create_sort_link("open_flags", "Open flags") %></td>
+      <td><%= create_sort_link("reasons") %></td>
+      <td><%= create_sort_link("created", "Opened on") %></td>
     </tr>
     </thead>
     <tbody>
