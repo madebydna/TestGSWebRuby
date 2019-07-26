@@ -68,11 +68,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   end
 
   def query_results
-    @query_results ||=
-      begin
-        DataValue
-          .find_by_school_and_data_type_tags_proficiency_is_one(school, data_type_tags, %w(all) )
-      end
+    @query_results ||= TestDataValue.web_by_school(school.state, school.id)
   end
 
   def state_results_hash
