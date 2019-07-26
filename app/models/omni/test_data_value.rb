@@ -20,15 +20,15 @@ class TestDataValue < ActiveRecord::Base
   scope :default_proficiency, -> { where(proficiency_band_id: 1) }
 
   def self.web_by_school(state, id)
-    select(common_attrs).common_web_query(state).school_entity.where(gs_id: id).default_proficiency
+    select(common_attrs).common_web_query(state).school_entity.where(gs_id: id)
   end
 
   def self.web_by_district(state, id)
-    select(common_attrs).common_web_query(state).district_entity.where(gs_id: id).default_proficiency
+    select(common_attrs).common_web_query(state).district_entity.where(gs_id: id)
   end
 
   def self.web_by_state(state)
-    select(common_attrs).common_web_query(state).state_entity.default_proficiency
+    select(common_attrs).common_web_query(state).state_entity
   end
 
   def self.feeds_by_school(state, school_id)
@@ -44,7 +44,7 @@ class TestDataValue < ActiveRecord::Base
   end
 
   def self.common_web_query(state)
-    common_query.merge(DataSet.by_state(state))
+    common_query.merge(DataSet.by_state(state)).default_proficiency
   end
 
   def self.common_feeds_query(state)
