@@ -68,6 +68,37 @@
     }
 }
 
+.flagged_reviews_table {
+  thead {
+    tr {
+      height: 100%;
+    }
+
+    tr > td {
+      padding: 0;
+      height: 100%;
+    }
+
+    tr > td > a {
+      padding: 10px;
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+    
+    // td:hover {
+    //   background-color: #d2eff9;
+    //   transition: 0.5s ease;
+    // }
+    
+    td .active-sort {
+      // background-color: #d2eff9;
+      font-family: 'opensans-semibold', sans-serif;
+    }
+
+
+  }
+}
 
 
 

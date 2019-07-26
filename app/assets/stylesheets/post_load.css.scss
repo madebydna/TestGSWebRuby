@@ -34,16 +34,8 @@
 // fonts
 @import 'fonts/fonts-opensans-regular';
 @import 'fonts/fonts-opensans-semibold';
+@import 'fonts/fonts-opensans-bold';
 @import 'fonts/fonts-robotoslab-bold';
-@font-face {
-  font-family: 'opensans-bold';
-  src: url('opensans-bold-webfont.eot?');
-  src: local('?'), asset-url('opensans-bold-webfont.woff') format('woff'),
-    asset-url('opensans-bold-webfont.ttf') format('truetype'),
-    asset-url('opensans-bold-webfont.svg#opensans-bold') format('svg');
-  font-weight: 400;
-  font-style: normal;
-}
 
 // icons / sprites
 @import 'fonts/gs-icon-font';

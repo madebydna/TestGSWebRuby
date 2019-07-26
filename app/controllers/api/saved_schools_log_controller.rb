@@ -23,7 +23,9 @@ class Api::SavedSchoolsLogController < ApplicationController
   end
 
   def add_missing_member_ids(uuid)
-    FavoriteSchoolLog.where(uuid: uuid).update_all(member_id: current_user.id)
+    FavoriteSchoolLog.on_db(:gs_schooldb_rw) do
+      FavoriteSchoolLog.where(uuid: uuid).update_all(member_id: current_user.id)
+    end
   end
 
 end

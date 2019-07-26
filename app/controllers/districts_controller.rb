@@ -12,6 +12,9 @@ class DistrictsController < ApplicationController
   before_action :redirect_to_canonical_url
 
   def show
+    cache_time = ENV_GLOBAL['district_page_cache_time']
+    expires_in(cache_time.to_i, public: true, must_revalidate: true) if cache_time.present?
+
     @level_code = []
     @csa_years = []
     @locality = locality
