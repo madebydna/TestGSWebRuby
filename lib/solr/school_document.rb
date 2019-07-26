@@ -23,6 +23,7 @@ module Solr
           array << new_field(:name, type: FieldTypes::TEXT) { school.name }
           array << new_field(:sortable_name, type: FieldTypes::STRING) { school.name&.downcase }
           array << new_field(:city, type: FieldTypes::TEXT_LOCATION_SYNONYMS) { school.city }
+          array << new_field(:city_untokenized, type: FieldTypes::STRING) { school.city&.downcase }
           array << new_field(:school_district_id, type: FieldTypes::STRING) { school.district_id }
           array << new_field(:school_district_name, type: FieldTypes::STRING) { school.district&.name }
           array << new_field(:street, type: FieldTypes::STRING) { school.street&.downcase }

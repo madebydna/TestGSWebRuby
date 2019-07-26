@@ -20,7 +20,7 @@ module Search
       district_name: nil,
       location_label: nil,
       q: nil,
-      level_codes: nil,
+      level_codes: [],
       entity_types: nil,
       lat: nil,
       lon: nil,

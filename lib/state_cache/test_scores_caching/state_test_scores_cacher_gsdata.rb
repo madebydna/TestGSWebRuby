@@ -46,7 +46,6 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
 # rubocop:enable Style/FormatStringToken
       h[:source_name] = result.source_name
       h[:state_value] = result.value
-      h[:value] = result.value
       h[:description] = result.description if result.description
       h[:academics] = academics
       h[:grade] = result.grade if result.grade

@@ -8,6 +8,9 @@ class CitiesController < ApplicationController
   before_filter :redirect_unless_valid_city
 
   def show
+    cache_time = ENV_GLOBAL['city_page_cache_time']
+    expires_in(cache_time.to_i, public: true, must_revalidate: true) if cache_time.present?
+
     @level_code = []
     @csa_years = []
     set_city_meta_tags
@@ -32,7 +35,7 @@ class CitiesController < ApplicationController
                   title: cities_title,
                   description: cities_description,
                   canonical: city_url(state: city_params_hash[:state], city: city_params_hash[:city]),
-                  noindex: school_levels[:all] < 3)
+                  noindex: (school_levels[:all] || 0 ) < 3)
   end
 
   def cities_title

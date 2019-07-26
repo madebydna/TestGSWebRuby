@@ -173,20 +173,12 @@ class SearchController < ApplicationController
 
   # PageAnalytics
   def page_analytics_data
-    if state_browse?
-      return {}.tap do |hash|
-        hash[PageAnalytics::SEARCH_TERM] = q if q
-        hash[PageAnalytics::SEARCH_TYPE] = search_type
-        hash[PageAnalytics::SEARCH_HAS_RESULTS] = page_of_results.any?
-        hash[PageAnalytics::PAGE_NAME] = 'GS:Search:State'
-        hash[PageAnalytics::STATE] = state
-      end
-    end 
     {}.tap do |hash|
       hash[PageAnalytics::SEARCH_TERM] = q if q
       hash[PageAnalytics::SEARCH_TYPE] = search_type
       hash[PageAnalytics::SEARCH_HAS_RESULTS] = page_of_results.any?
-      hash[PageAnalytics::PAGE_NAME] = 'GS:SchoolSearchResults'
+      hash[PageAnalytics::PAGE_NAME] = (state_browse? ? 'GS:Search:State' : 'GS:SchoolSearchResults')
+      hash[PageAnalytics::STATE] = state if state_browse?
     end
   end
 
