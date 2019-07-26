@@ -326,6 +326,14 @@ class Admin::ReviewsController < ApplicationController
         where(id: flagged_review_ids)
   end 
 
+  def flag_count_per_review
+    flag_count_per_review = 
+      Review.
+        joins("JOIN review_flags ON reviews.id = review_flags.review_id").
+        where(review_flags: { review_id: flagged_review_ids, active: 1 }).
+        group("review_flags.review_id")
+  end 
+
   def flagged_reviews(query, sort_column, sort_direction)
     # load needs to be called at the end of this chain, otherwise ActiveRecord will perform two extra queries
     # when extending the results and preloading the associated schools
@@ -345,8 +353,10 @@ class Admin::ReviewsController < ApplicationController
 
     if sort_column == 'school_name'
       query = flagged_reviews_with_school_info
-    elsif sort_column == 'reviewer'
+    elsif sort_column == 'list_member.email'
       query = flagged_reviews_with_user
+    elsif sort_column == 'COUNT(review_flags.review_id)'
+      query = flag_count_per_review
     end 
 
     flagged_reviews(query, sort_column, sort_direction)
@@ -358,7 +368,7 @@ class Admin::ReviewsController < ApplicationController
     "school" => "school_name",
     "state" => "reviews.state",
     "reviewer" => "list_member.email",
-    "open_flags" => "review_flags.active", # FIX THIS
+    "open_flags" => "COUNT(review_flags.review_id)",
     "reasons" => "review_flags.reason",
     "created" => "review_flags.created"
   }
