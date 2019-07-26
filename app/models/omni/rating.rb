@@ -36,10 +36,8 @@ class Rating < ActiveRecord::Base
         .joins("join data_type_tags on data_type_tags.data_type_id = data_sets.data_type_id")
         .with_breakdowns
         .with_breakdown_tags
-        .with_subjects
-        .with_subject_tags
-        .where(data_type_tag: { tag: %w(rating summary_rating_weight) })
-        .where(data_set: { data_type_id: DATA_TYPE_IDS.join(",") })
+        .where(data_type_tags: { tag: %w(rating summary_rating_weight) })
+        .where(data_sets: { data_type_id: DATA_TYPE_IDS.join(",") })
         .merge(DataSet.by_state(state))
         .where(gs_id: id)
         .school_entity
