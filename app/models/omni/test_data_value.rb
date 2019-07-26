@@ -79,7 +79,10 @@ class TestDataValue < ActiveRecord::Base
     joins("left join subject_tags on subjects.id = subject_tags.subject_id")
   end
 
-  #todo validate date format for date valid
+  def self.datatype_breakdown_year(obj)
+    [obj.data_type_id, obj.breakdown_names, obj.date_valid, obj.academic_names, obj.grade]
+  end
+
   def self.common_attrs
     [:value,
      :grade,
