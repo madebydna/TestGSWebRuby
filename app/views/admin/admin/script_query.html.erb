@@ -32,16 +32,17 @@
           <th><%= header %></th>
         <% end %>
         <% Array.wrap(@last_script_ran).each do |script| %>
-        <tr>
-          <td><%= script.pid %></td>
-          <td><%= script.username %></td>
-          <td><%= script.filename %></td>
-          <td><%= script.arguments %></td>
-          <td><%= script.output %></td>
-          <td><%= script.start.to_formatted_s(:long_ordinal) %></td>
-          <td><%= (script.end - script.start).round(0) %> seconds long</td>
-          <td><%= script.succeeded %></td>
-        </tr>
+          <% show_badge = script.succeeded ? "icon-checkmark" : 'icon-close' %>
+          <tr>
+            <td><%= script.pid %></td>
+            <td><%= script.username %></td>
+            <td><%= script.filename %></td>
+            <td><%= script.arguments %></td>
+            <td><%= script.output %></td>
+            <td><%= script.start.to_formatted_s(:long_ordinal) %></td>
+            <td><%= (script.end - script.start).round(0) %> seconds long</td>
+            <td><div class=<%="#{show_badge}"%>></div></td>
+          </tr>
         <% end %>
       </tbody>
     </table>
