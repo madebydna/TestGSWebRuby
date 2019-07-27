@@ -1,46 +1,49 @@
 <% if @current_running_script %>
-  <h3 id="script-logger">Current Running Script Log Table</h3>
-  <h4>DB Host: <%= ENV_GLOBAL["db_host"] %></h4>
+  <div style="padding:0px 50px">
+    <h3 id="script-logger">Current Running Script Log Table</h3>
+    <h4>DB Host: <%= ENV_GLOBAL["db_host"] %></h4>
+      <table class="table table-striped">
+        <tbody>
+          <% %w(PID Username Filename Arguments StartTime Elapsed).each do |header| %>
+          <th><%= header %></th>
+          <% end %>
+          <% Array.wrap(@current_running_script).each do |script| %>
+          <tr>
+            <td><%= script.pid %></td>
+            <td><%= script.username %></td>
+            <td><%= script.filename %></td>
+            <td><%= script.arguments %></td>
+            <td><%= script.start.to_formatted_s(:long_ordinal) %></td>
+            <td>Running for <%= (Time.now.utc - script.start).round(0) %> seconds long</td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+  </div>
+<% end %>
+
+<% if @last_script_ran %>
+  <div style="padding: 0px 50px">
+    <h3 id="script-logger">Finished Script Log Table</h3>
+    <h4>DB Host: <%= ENV_GLOBAL["db_host"] %></h4>
     <table class="table table-striped">
       <tbody>
-        <% %w(PID Username Filename Arguments StartTime Elapsed).each do |header| %>
-        <th><%= header %></th>
+        <% %w(PID Username Filename Arguments Output StartTime Elapsed Succeeded).each do |header| %>
+          <th><%= header %></th>
         <% end %>
-        <% Array.wrap(@current_running_script).each do |script| %>
+        <% Array.wrap(@last_script_ran).each do |script| %>
         <tr>
           <td><%= script.pid %></td>
           <td><%= script.username %></td>
           <td><%= script.filename %></td>
           <td><%= script.arguments %></td>
+          <td><%= script.output %></td>
           <td><%= script.start.to_formatted_s(:long_ordinal) %></td>
-          <td>Running for <%= (Time.now.utc - script.start).round(0) %> seconds long</td>
+          <td><%= (script.end - script.start).round(0) %> seconds long</td>
           <td><%= script.succeeded %></td>
         </tr>
         <% end %>
       </tbody>
     </table>
-<% end %>
-
-<% if @last_script_ran %>
-  <h3 id="script-logger">Finished Script Log Table</h3>
-  <h4>DB Host: <%= ENV_GLOBAL["db_host"] %></h4>
-  <table class="table table-striped">
-    <tbody>
-      <% %w(PID Username Filename Arguments Output StartTime Elapsed Succeeded).each do |header| %>
-        <th><%= header %></th>
-      <% end %>
-      <% Array.wrap(@last_script_ran).each do |script| %>
-      <tr>
-        <td><%= script.pid %></td>
-        <td><%= script.username %></td>
-        <td><%= script.filename %></td>
-        <td><%= script.arguments %></td>
-        <td><%= script.output %></td>
-        <td><%= script.start.to_formatted_s(:long_ordinal) %></td>
-        <td><%= (script.end - script.start).round(0) %> seconds long</td>
-        <td><%= script.succeeded %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+  </div>
 <% end %>
