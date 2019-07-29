@@ -15,4 +15,11 @@ module ReviewHelper
 
     link_to "#{label} <span class='#{arrow_icon}' />".html_safe, {:sort => sort_field, :direction => direction}, :class => css_class
   end
+
+  def active_sort_cell(sort_field)
+    if Admin::ReviewsController::SORT_OPTIONS[sort_field] == sort_column
+      return 'active-sort-cell'
+    end 
+    nil
+  end
 end
