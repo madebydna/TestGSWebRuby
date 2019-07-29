@@ -162,12 +162,12 @@ test: &test
     legacy: false
   omni:
     <<: *mysql_gsdata
-    database: omni
+    database: omni_test
     legacy: false
   omni_rw:
     <<: *mysql_gsdata
     host: localhost
-    database: omni
+    database: omni_test
     legacy: false
 
 cucumber:
