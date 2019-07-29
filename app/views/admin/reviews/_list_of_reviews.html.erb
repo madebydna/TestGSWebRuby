@@ -5,14 +5,14 @@
   <table class="table table-striped <%= css_class %>">
     <thead>
     <tr>
-      <td>Review</td>
-      <td>Status</td>
-      <td>School</td>
-      <td>State</td>
-      <td>Reviewer</td>
-      <td>Open flags</td>
-      <td>Reasons</td>
-      <td>Opened&nbsp;on</td>
+      <td><%= create_sort_link("comment", "Review") %></td>
+      <td><%= create_sort_link("status") %></td>
+      <td><%= create_sort_link("school") %></td>
+      <td><%= create_sort_link("state") %></td>
+      <td><%= create_sort_link("reviewer") %></td>
+      <td><%= create_sort_link("open_flags", "Open flags") %></td>
+      <td><%= create_sort_link("reasons") %></td>
+      <td><%= create_sort_link("created", "Opened on") %></td>
     </tr>
     </thead>
     <tbody>
@@ -20,7 +20,7 @@
       <% active_flags = review.flags.select(&:active?) %>
       <% inactive_flags = review.flags.select(&:inactive?) %>
       <tr>
-        <td>
+        <td class="<%= active_sort_cell('comment') %>">
           <% if review.school %>
             <% school = review.school %>
             <%= link_to truncate(review.comment, length: 20), admin_school_moderate_path(state:
@@ -29,10 +29,10 @@
             <%= truncate(review.comment, length: 20) %>
           <% end %>
         </td>
-        <td class="tac">
+        <td class="tac <%= active_sort_cell('status') %>">
           <%= review.status.to_s.capitalize %>
         </td>
-        <td>
+        <td class="<%= active_sort_cell('school') %>">
           <% if review.school %>
             <% school = review.school %>
             <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
@@ -40,20 +40,20 @@
             School not found
           <% end %>
         </td>
-        <td class="tac">
+        <td class="tac <%= active_sort_cell('state') %>">
           <%= review.school.state if review.school %>
         </td>
-        <td>
+        <td class="<%= active_sort_cell('reviewer') %>">
           <%= link_to(
                 review.user.email,
                 users_admin_reviews_path(review_moderation_search_string: review.user.email)
               ) if review.school && review.user %>
         </td>
-        <td class="tac">
+        <td class="tac <%= active_sort_cell('open_flags') %>">
           <%= active_flags.size %>
         </td>
-        <td class="tac"><%= active_flags.map(&:reasons).inject([], &:+).uniq.join(', ') %></td>
-        <td class="tar">
+        <td class="tac <%= active_sort_cell('reasons') %>"><%= active_flags.map(&:reasons).inject([], &:+).uniq.join(', ') %></td>
+        <td class="tar <%= active_sort_cell('created') %>">
           <% if active_flags.any? %>
             <% time = active_flags.last.created %>
             <%= time.strftime '%-m/%d/%Y' %><%= " at #{time.strftime('%r')}" if time.strftime('%r') != '12:00:00 AM' %>
