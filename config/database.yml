@@ -85,11 +85,6 @@ development: &development
     <<: *mysql_gsdata
     database: omni
     legacy: false
-  omni_rw:
-    <<: *mysql_gsdata
-    host: localhost
-    database: omni
-    legacy: false
   api_rw:
     <<: *mysql_rw_server
     database: api
