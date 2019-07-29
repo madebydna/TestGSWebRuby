@@ -95,9 +95,13 @@
     td a.active-sort {
       background-color: #d2eff9;
       font-family: 'opensans-semibold', sans-serif;
-    }
+    }    
+  }
+}
 
-
+.flagged_reviews_table.table-striped {
+  td.active-sort-cell {
+    background-color: rgba(210, 239, 249, 0.18);
   }
 }
 
