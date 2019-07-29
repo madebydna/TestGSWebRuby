@@ -132,19 +132,31 @@ class DatabaseConfigurationLoader
 
     gsdata_config = config['gsdata']
     config['gsdata_rw'] ||= config['gsdata']
+    omni_config = config['omni']
+    config['omni_rw'] ||= config['omni']
 
     if gsdata_db_host.present?
       gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
         hash[key] = gsdata_db_host if key == 'host'
+      end
+
+      omni_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = omni_db_host if key == 'host'
       end
     end
     if gsdata_db_username.present?
       gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
         hash[key] = gsdata_db_username if key == 'username'
       end
+      omni_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_username if key == 'username'
+      end
     end
     if gsdata_db_password.present?
       gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_password if key == 'password'
+      end
+      omni_config.gs_recursive_each_with_clone do |hash, key, value|
         hash[key] = gsdata_db_password if key == 'password'
       end
     end
