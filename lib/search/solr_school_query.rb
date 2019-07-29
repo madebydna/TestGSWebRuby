@@ -64,8 +64,7 @@ module Search
         if district_id && district_id > 0
           array << eq(:school_district_id, district_id)
         elsif city.present?
-          array << eq(:city_untokenized, city.downcase)
-          # array << eq(:city, city.downcase)
+          array << eq(:city, city.downcase)
         end
 
         if school_keys.present?
