@@ -81,6 +81,10 @@ development: &development
     <<: *mysql_gsdata
     database: gsdata
     legacy: false
+  omni:
+    <<: *mysql_gsdata
+    database: omni
+    legacy: false
   api_rw:
     <<: *mysql_rw_server
     database: api
@@ -155,6 +159,14 @@ test: &test
   gsdata_rw:
     <<: *test_db
     database: gsdata_test
+    legacy: false
+  omni:
+    <<: *mysql_gsdata
+    database: omni_test
+    legacy: false
+  omni_rw:
+    <<: *mysql_gsdata
+    database: omni_test
     legacy: false
 
 cucumber:
