@@ -4,7 +4,6 @@ require 'ruby-prof'
 
 class Rating < ActiveRecord::Base
 
-  DATA_TYPE_IDS = %w(151 155 156 157 158 159 160 175 176 177 178 179 180 181 182 183 184 185 186 187).freeze
 
   db_magic connection: :omni
 
@@ -37,7 +36,7 @@ class Rating < ActiveRecord::Base
         .with_breakdowns
         .with_breakdown_tags
         .where(data_type_tags: { tag: %w(rating summary_rating_weight) })
-        .where(data_sets: { data_type_id: DATA_TYPE_IDS.join(",") })
+        .where(data_sets: { data_type_id: RatingsCaching::GsdataRatingsCacher::DATA_TYPE_IDS })
         .merge(DataSet.by_state(state))
         .where(gs_id: id)
         .school_entity
