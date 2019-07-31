@@ -91,7 +91,8 @@ module Search
       city_url = city_url(city_params(state&.upcase, city).merge({trailing_slash: true})) if state.present? && city.present?
       state_url = state_url(state_params(state_name).merge({trailing_slash: true})) if state
       params = {
-        count: delimit_number(results.total),
+        count: results.total,
+        count_delimited: delimit_number(results.total),
         first: results.index_of_first_result,
         last: results.index_of_last_result,
         city: city,
@@ -123,7 +124,8 @@ module Search
     def pagination_summary(results)
       t(
         'showing_number_of_schools_found',
-        count: delimit_number(results.total),
+        count: results.total,
+        count_delimited: delimit_number(results.total),
         first: results.index_of_first_result,
         last: results.index_of_last_result
       )
