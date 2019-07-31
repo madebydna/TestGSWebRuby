@@ -4,7 +4,7 @@
       signup_and_follow_modal:
         body_html: <p>¡Entérate sobre resultados de las pruebas, revisiones o actualizaciones de perfiles. Sólo le
                    enviaremos por correo electrónico cuando hay ¡algo nuevo!</p>
-                   <p class="open-sans_sb">Además, el Boletín GreatSchools!</p>
+                   <p class="open-sans_b">Además, el Boletín GreatSchools!</p>
                    <p>Nuestros mejores artículos, hojas de trabajo libres y más entregados semanalmente.</p>
         signup_button: Ingresar
         signup_success: Gracias! Ahora estás registrado.

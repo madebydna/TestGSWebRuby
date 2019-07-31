@@ -53,7 +53,7 @@ const EmailSettings = ({ subscriptions }) => {
                 )}
                 {shouldGroupList(subscription.list) && (
                   <div className={`js-subscription-${subscription.id}`}>
-                    <div className="open-sans_sb mtm">
+                    <div className="open-sans_b mtm">
                       <label className="pointer notranslate">
                         <div className="fl mtn prm">
                           {checkbox({ ...subscription, checked: true })}

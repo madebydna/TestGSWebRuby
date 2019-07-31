@@ -34,7 +34,7 @@ class ReviewTopicDecorator < Draper::Decorator
 
   def sample_review_intro
     return nil unless valid_topic_config?
-    "A #{ student? ? 'student' : 'parent' }  at <a class='link-darkgray' href='#{school_url}'><span class='open-sans_sb'>#{sample_review_school}</span></a> in #{sample_review_city_and_state} said:"
+    "A #{ student? ? 'student' : 'parent' }  at <a class='link-darkgray' href='#{school_url}'><span class='open-sans_b'>#{sample_review_school}</span></a> in #{sample_review_city_and_state} said:"
   end
 
   def city

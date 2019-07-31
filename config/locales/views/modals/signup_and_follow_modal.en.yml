@@ -4,7 +4,7 @@
       signup_and_follow_modal:
         body_html: <p>Get notified about test scores, reviews or profile updates.​ We'll only email you when there's
                    something new!</p>
-                   <p class="open-sans_sb">Plus, the GreatSchools Newsletter!</p>
+                   <p class="open-sans_b">Plus, the GreatSchools Newsletter!</p>
                    <p>Our best articles, free worksheets and more delivered weekly.</p>
         signup_button: Sign up
         signup_success: Thanks! You're now signed up.
