@@ -2,11 +2,17 @@
 
 require 'spec_helper'
 
-describe Rating do
+describe Omni::Rating do
   after { clean_dbs :omni }
 
+  describe ".by_school(state, id)" do
+    it 'deos stuff' do
+      obj = Omni::Rating.by_school('ca', 1)
+      expect(obj.count).to eq(1)
+    end
+  end
+
   it 'does something' do
-    pending
     #<OpenStruct
     # value="9",
     # state="CA",
