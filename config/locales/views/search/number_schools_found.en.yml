@@ -5,23 +5,23 @@ en:
       city_browse:
         zero: Your search did not return any schools in <a href='%{city_url}'>%{city}, %{state}</a>.
         one: Showing one school found in <a href='%{city_url}'>%{city}, %{state}</a>
-        other: Showing %{first} to %{last} of %{count} schools found in <a href='%{city_url}'>%{city}, %{state}</a>
+        other: Showing %{first} to %{last} of %{count_delimited} schools found in <a href='%{city_url}'>%{city}, %{state}</a>
       district_browse:
         zero: Your search did not return any schools in <a href='%{district_url}'>%{district}</a>.
         one: Showing one school found in <a href='%{district_url}'>%{district}</a>
-        other: Showing %{first} to %{last} of %{count} schools found in <a href='%{district_url}'>%{district}</a>
+        other: Showing %{first} to %{last} of %{count_delimited} schools found in <a href='%{district_url}'>%{district}</a>
       state_browse:
         zero: Your search did not return any %{level_code_long} in <a href='%{state_url}'>%{state_long}</a>.
         one: Showing one %{level_code_long} found in <a href='%{state_url}'>%{state_long}</a>
-        other: Showing %{first} to %{last} of %{count} %{level_code_long} found in <a href='%{state_url}'>%{state_long}</a>
+        other: Showing %{first} to %{last} of %{count_delimited} %{level_code_long} found in <a href='%{state_url}'>%{state_long}</a>
       distance:
         zero: Your search did not return any schools near %{location}
         one: Showing one school found near %{location}
-        other: Showing %{first} to %{last} of %{count} schools found near %{location}
+        other: Showing %{first} to %{last} of %{count_delimited} schools found near %{location}
       search_term:
         zero: Your search for <span class="search-term">%{search_term}</span> did not return any results.
         one: Showing one school found for %{search_term}
-        other: Showing %{first} to %{last} of %{count} schools found for %{search_term}
+        other: Showing %{first} to %{last} of %{count_delimited} schools found for %{search_term}
       in_city_state: in %{city}, %{state}
       in_district: in %{district}
       near_address: near %{address}
@@ -42,24 +42,24 @@ en:
         other: preschools
       number_of_schools_found:
         one: 1 school found
-        other: '%{count} schools found'
+        other: '%{count_delimited} schools found'
       showing_number_of_schools:
         zero: No schools
         one: Showing 1 school
-        other: Showing %{first} to %{last} of %{count} schools
+        other: Showing %{first} to %{last} of %{count_delimited} schools
       showing_number_of_schools_found:
         zero: No schools found
         one: Showing 1 school found
-        other: Showing %{first} to %{last} of %{count} schools found
+        other: Showing %{first} to %{last} of %{count_delimited} schools found
       number_of_schools_found_with_level_code:
         one: '1 %{level_code} found'
-        other: '%{count} %{level_code} found'
+        other: '%{count_delimited} %{level_code} found'
       number_of_schools_found_with_school_type:
         one: '1 %{school_type} school found'
-        other: '%{count} %{school_type} schools found'
+        other: '%{count_delimited} %{school_type} schools found'
       number_of_schools_found_with_level_code_and_school_type:
         one: '1 %{school_type} %{level_code} found'
-        other: '%{count} %{school_type} %{level_code} found'
+        other: '%{count_delimited} %{school_type} %{level_code} found'
       within_radius:
         one: within 1 mile of %{address}
         other: within %{count} miles of %{address}
