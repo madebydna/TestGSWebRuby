@@ -9,7 +9,8 @@ module MetaTag
 
     def description
       state_type_level_code_text = "#{level_code_long}#{schools_or_preschools}"
-      "View & compare ratings, parent reviews, & information about #{page_of_results.total} public, charter #{state_type_level_code_text.downcase} in #{States.state_name(state).titleize}."
+      count = page_of_results.total.to_s(:delimited, delimiter: ',')
+      "View & compare ratings, parent reviews, & information about #{count} public, charter #{state_type_level_code_text.downcase} in #{States.state_name(state).titleize}."
     end
 
     def canonical_url

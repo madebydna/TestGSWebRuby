@@ -92,6 +92,7 @@ module Search
       state_url = state_url(state_params(state_name).merge({trailing_slash: true})) if state
       params = {
         count: results.total,
+        count_delimited: results.total.to_s(:delimited, delimiter: ','),
         first: results.index_of_first_result,
         last: results.index_of_last_result,
         city: city,
@@ -124,6 +125,7 @@ module Search
       t(
         'showing_number_of_schools_found',
         count: results.total,
+        count_delimited: results.total.to_s(:delimited, delimiter: ','),
         first: results.index_of_first_result,
         last: results.index_of_last_result
       )

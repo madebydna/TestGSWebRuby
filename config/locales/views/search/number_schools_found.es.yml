@@ -5,23 +5,23 @@ es:
       city_browse:
         zero: Su búsqueda no obtuvo resultados en <a href='%{city_url}?lang=es'>%{city}, %{state}</a>.
         one: Mostrando 1 escuela encontrada en <a href='%{city_url}?lang=es'>%{city}, %{state}</a>
-        other: Mostrando %{first} a %{last} de %{count} escuelas encontradas en <a href='%{city_url}?lang=es'>%{city}, %{state}</a>
+        other: Mostrando %{first} a %{last} de %{count_delimited} escuelas encontradas en <a href='%{city_url}?lang=es'>%{city}, %{state}</a>
       district_browse:
         zero: Su búsqueda no obtuvo resultados en <a href='%{district_url}?lang=es'>%{district}</a>.
         one: Mostrando 1 escuela encontrada en <a href='%{district_url}?lang=es'>%{district}</a>
-        other: Mostrando %{first} a %{last} de %{count} escuelas encontradas en <a href='%{district_url}?lang=es'>%{district}</a>
+        other: Mostrando %{first} a %{last} de %{count_delimited} escuelas encontradas en <a href='%{district_url}?lang=es'>%{district}</a>
       state_browse:
         zero: Su búsqueda no obtuvo resultados en <a href='%{state_url}?lang=es'>%{state_long}</a>.
         one: Mostrando 1 %{level_code_long} encontrada en <a href='%{state_url}?lang=es'>%{state_long}</a>
-        other: Mostrando %{first} a %{last} de %{count} %{level_code_long} encontradas en <a href='%{state_url}?lang=es'>%{state_long}</a>
+        other: Mostrando %{first} a %{last} de %{count_delimited} %{level_code_long} encontradas en <a href='%{state_url}?lang=es'>%{state_long}</a>
       distance:
         zero: Su búsqueda no obtuvo resultados cerca %{location}.
         one: Mostrando 1 escuela encontrada cerca %{location}
-        other: Mostrando %{first} a %{last} de %{count} escuelas encontradas cerca de %{location}
+        other: Mostrando %{first} a %{last} de %{count_delimited} escuelas encontradas cerca de %{location}
       search_term:
         zero: Su búsqueda de <span class="search-term">%{search_term}</span> no obtuvo resultados.
         one: Mostrando 1 escuela encontrada para %{search_term}
-        other: Mostrando %{first} a %{last} de %{count} escuelas encontradas para %{search_term}
+        other: Mostrando %{first} a %{last} de %{count_delimited} escuelas encontradas para %{search_term}
       in_city_state: en %{city}, %{state}
       in_district: en %{district}
       near_address: cerca %{address}
@@ -50,23 +50,23 @@ es:
       showing_number_of_schools:
         zero: No se encontraron escuelas
         one: Mostrando 1 escuela encontrada
-        other: Mostrando %{first} to %{last} de %{count} escuelas encontradas
+        other: Mostrando %{first} to %{last} de %{count_delimited} escuelas encontradas
       showing_number_of_schools_found:
         zero: No se encontraron escuelas
         one: Mostrando 1 escuela encontrada
-        other: Mostrando %{first} to %{last} de %{count} escuelas encontradas
+        other: Mostrando %{first} to %{last} de %{count_delimited} escuelas encontradas
       number_of_schools_found:
         one: 1 escuela encontrada
-        other: '%{count} escuelas encontradas'
+        other: '%{count_delimited} escuelas encontradas'
       number_of_schools_found_with_level_code:
         one: '1 %{level_code} encontrada'
-        other: '%{count} %{level_code} encontradas'
+        other: '%{count_delimited} %{level_code} encontradas'
       number_of_schools_found_with_school_type:
         one: '1 escuela %{school_type} encontrada'
-        other: '%{count} escuelas %{school_type} encontradas'
+        other: '%{count_delimited} escuelas %{school_type} encontradas'
       number_of_schools_found_with_level_code_and_school_type:
         one: '1 %{level_code} %{school_type} encontrada'
-        other: '%{count} %{level_code} %{school_type} encontradas'
+        other: '%{count_delimited} %{level_code} %{school_type} encontradas'
       within_radius:
         one: a 1 milla de %{address}
         other: a %{count} milla de %{address}
