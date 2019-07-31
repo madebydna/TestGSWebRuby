@@ -4,7 +4,7 @@
   $md-list-width: 370px;
   $lg-list-width: 450px;
   $charcoal-gray: #92aeb9;
-  $hightlighted: #fff5ab;
+  $hightlighted: #ffe57c;
   $off-black: #0d0d0d;
   $small-font: 11px;
 
@@ -19,7 +19,7 @@
     .sponsored-school-result-ad{
       height: 107px;
       margin-top: 7px;
-      background-color: $hightlighted;
+      border: $hightlighted solid 5px;
       div:first-child {
         text-transform: uppercase;
         color: $off-black;

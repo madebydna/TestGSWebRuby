@@ -54,7 +54,7 @@ const SchoolList = ({
         {schools.map((s, index) => {
           if (s.assigned === null) { numsNonAssignedSchools++; }
           const shouldRenderSponsorSchoolAdOnMobile = numsNonAssignedSchools === 6 && size <= SM && schools.length >= 8; 
-          const shouldRenderSponsorSchoolAdOnDesktop = numsNonAssignedSchools === 4 && size > SM && schools.length >= 8;
+          const shouldRenderSponsorSchoolAdOnDesktop = numsNonAssignedSchools === 3 && size > SM && schools.length >= 8;
           return(
             <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
               {!shouldRemoveAds && index > 0 &&
