@@ -14,9 +14,8 @@ class Admin::AdminController < ApplicationController
   end
 
   def script_query
-    @limit = limit
-    @last_script_ran = ScriptLogger.where.not(output:nil).order(end: :desc).limit(@limit)
-    @range_of_num_of_scripts = ScriptLogger.all.count > @last_script_ran.length ? ScriptLogger.all.count : @last_script_ran.length
+    @last_script_ran = ScriptLogger.where.not(output:nil).order(end: :desc).limit(limit)
+    @range_of_num_of_scripts = ScriptLogger.all.count > 10 ? 10 : ScriptLogger.all.count
     @current_running_script = ScriptLogger.where(output:nil).order(end: :desc)
 
     respond_to do |format|
