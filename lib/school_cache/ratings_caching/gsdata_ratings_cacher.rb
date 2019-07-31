@@ -69,7 +69,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   end
 
   def school_results
-    @_school_results ||= Rating.by_school(school.state, school.id)
+    @_school_results ||= Omni::Rating.by_school(school.state, school.id)
   end
 
   def advanced_coursework_select_logic?(dv)
