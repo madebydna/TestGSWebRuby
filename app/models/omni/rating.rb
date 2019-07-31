@@ -3,8 +3,6 @@
 require 'ruby-prof'
 
 class Rating < ActiveRecord::Base
-
-
   db_magic connection: :omni
 
   belongs_to :data_set

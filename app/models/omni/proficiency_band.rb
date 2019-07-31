@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-class ProficiencyBand < ActiveRecord::Base
-  self.table_name = 'proficiency_bands'
-  db_magic connection: :omni
+module Omni
+  class ProficiencyBand < ActiveRecord::Base
+    db_magic connection: :omni
 
-  has_many :test_data_values
+    has_many :test_data_values
 
+  end
 end
