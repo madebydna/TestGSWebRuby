@@ -14,7 +14,7 @@ class TestScoresCaching::Feed::FeedDistrictTestScoresCacherGsdata < TestScoresCa
   }
 
   def query_results
-    @query_results ||= TestDataValue.feeds_by_district(district.state, district.id)
+    @query_results ||= Omni::TestDataValue.feeds_by_district(district.state, district.id)
   end
 
   def build_hash_for_cache

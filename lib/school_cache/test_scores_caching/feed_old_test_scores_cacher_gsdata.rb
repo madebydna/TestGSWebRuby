@@ -15,7 +15,7 @@ class TestScoresCaching::FeedOldTestScoresCacherGsdata < TestScoresCaching::Test
       academics: 'subject-name'
   }
   def query_results
-    @query_results ||= TestDataValue.feeds_by_school(school.state, school.id)
+    @query_results ||= Omni::TestDataValue.feeds_by_school(school.state, school.id)
   end
 
   def hash_name_changer!(hash)

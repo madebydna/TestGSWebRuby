@@ -14,10 +14,7 @@ class TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata < TestScoresCachi
   }
 
   def query_results
-    @query_results ||=
-      begin
-        TestDataValue.feeds_by_state(state)
-      end
+    @query_results ||= Omni::TestDataValue.feeds_by_state(state)
   end
 
   def build_hash_for_cache

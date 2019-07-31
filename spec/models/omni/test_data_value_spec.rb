@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TestDataValue do
+describe Omni::TestDataValue do
 
   after { clean_dbs :omni }
 
@@ -30,7 +30,7 @@ describe TestDataValue do
       # above proficient on the tests.",
       # name="California Standards Tests">
 
-      tdv  = TestDataValue.create(entity_type: 'state',
+      tdv  = Omni::TestDataValue.create(entity_type: 'state',
                             gs_id: 1,
                             data_set_id: 1,
                             value: 1, proficiency_band_id: 1)

@@ -68,14 +68,14 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   end
 
   def query_results
-    @query_results ||= TestDataValue.web_by_school(school.state, school.id)
+    @query_results ||= Omni::TestDataValue.web_by_school(school.state, school.id)
   end
 
   def state_results_hash
     @_state_results_hash ||= begin
-      state_values = TestDataValue.web_by_state(school.state)
+      state_values = Omni::TestDataValue.web_by_state(school.state)
       state_values.each_with_object({}) do |result, hash|
-        state_key = TestDataValue.datatype_breakdown_year(result)
+        state_key = Omni::TestDataValue.datatype_breakdown_year(result)
         hash[state_key] = result
       end
     end
@@ -83,9 +83,9 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
 
   def district_results_hash
     @_district_results_hash ||= begin
-      district_values = TestDataValue.web_by_district(school.state, school.district_id)
+      district_values = Omni::TestDataValue.web_by_district(school.state, school.district_id)
       district_values.each_with_object({}) do |result, hash|
-        district_key = TestDataValue.datatype_breakdown_year(result)
+        district_key = Omni::TestDataValue.datatype_breakdown_year(result)
         hash[district_key] = result.value
       end
     end
