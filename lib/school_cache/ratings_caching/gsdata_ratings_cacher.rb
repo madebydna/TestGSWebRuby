@@ -69,8 +69,7 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   end
 
   def school_results
-    @_school_results ||=
-      DataValue.find_by_school_and_data_types_with_academics(school, data_type_ids)
+    @_school_results ||= Rating.by_school(school.state, school.id)
   end
 
   def advanced_coursework_select_logic?(dv)
