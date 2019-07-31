@@ -9,7 +9,7 @@ module MetaTag
 
     def description
       state_type_level_code_text = "#{level_code_long}#{schools_or_preschools}"
-      count = page_of_results.total.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+      count = page_of_results.total.to_s(:delimited, delimiter: ',')
       "View & compare ratings, parent reviews, & information about #{count} public, charter #{state_type_level_code_text.downcase} in #{States.state_name(state).titleize}."
     end
 
