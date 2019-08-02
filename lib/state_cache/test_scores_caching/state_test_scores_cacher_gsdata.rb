@@ -4,7 +4,7 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
   CACHE_KEY = 'test_scores_gsdata'
 
   def query_results
-    @query_results ||= Omni::TestDataValue.web_by_state(state)
+    @query_results ||= Omni::TestDataValue.all_by_state(state)
   end
 
   def build_hash_for_cache

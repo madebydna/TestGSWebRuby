@@ -8,7 +8,7 @@ describe Omni::TestDataValue do
   let(:data_set) { create(:data_set, state: school.state, data_type: data_type) }
   let(:breakdown) { create(:breakdown_with_tags) }
 
-  describe ".web_by_school(state, id)" do
+  describe ".all_by_school(state, id)" do
     let!(:test_data_value) do
       Omni::TestDataValue.create(entity_type: Omni::Rating::SCHOOL_ENTITY,
                                  gs_id: school.id,
@@ -18,7 +18,7 @@ describe Omni::TestDataValue do
                                  proficiency_band_id: 1)
     end
 
-    subject(:results) { Omni::TestDataValue.web_by_school(school.state, school.id) }
+    subject(:results) { Omni::TestDataValue.all_by_school(school.state, school.id) }
 
     it 'returns an object that has the required keys' do
       results_keys = results.first.attributes.keys.map(&:to_sym)

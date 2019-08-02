@@ -22,36 +22,36 @@ module Omni
     scope :active, -> { where(active: 1) }
     scope :default_proficiency, -> { where(proficiency_band_id: 1) }
 
-    def self.web_by_school(state, id)
-      select(required_keys_db_mapping.values).common_web_query(state).school_entity.where(gs_id: id)
+    def self.all_by_school(state, id)
+      common_all_query(state).school_entity.where(gs_id: id)
     end
 
-    def self.web_by_district(state, id)
-      select(required_keys_db_mapping).common_web_query(state).district_entity.where(gs_id: id)
+    def self.all_by_district(state, id)
+      common_all_query(state).district_entity.where(gs_id: id)
     end
 
-    def self.web_by_state(state)
-      select(required_keys_db_mapping).common_web_query(state).state_entity
+    def self.all_by_state(state)
+      common_all_query(state).state_entity
     end
 
     def self.feeds_by_school(state, school_id)
-      select(required_keys_db_mapping).common_feeds_query(state).school_entity.where(gs_id: school_id)
+      common_feeds_query(state).school_entity.where(gs_id: school_id)
     end
 
     def self.feeds_by_district(state, district_id)
-      select(required_keys_db_mapping).common_feeds_query(state).district_entity.where(gs_id: district_id)
+      common_feeds_query(state).district_entity.where(gs_id: district_id)
     end
 
     def self.feeds_by_state(state)
-      select(required_keys_db_mapping).common_feeds_query(state).state_entity
+      common_feeds_query(state).state_entity
     end
 
-    def self.common_web_query(state)
-      common_query.merge(DataSet.by_state(state)).default_proficiency
+    def self.common_all_query(state)
+      select(required_keys_db_mapping.values).common_query.merge(DataSet.by_state(state)).default_proficiency
     end
 
     def self.common_feeds_query(state)
-      common_query.merge(DataSet.feeds_by_state(state))
+      select(required_keys_db_mapping).common_query.merge(DataSet.feeds_by_state(state))
     end
 
     def self.common_query
@@ -91,8 +91,8 @@ module Omni
     end
 
     def self.required_keys_db_mapping
-       # "proficiency_bands.name as proficiency_band_name",
-       # "breakdowns.id as breakdown_id_list",
+      # "proficiency_bands.name as proficiency_band_name",
+      # "breakdowns.id as breakdown_id_list",
       {
           value: "value",
           grade: "grade",
