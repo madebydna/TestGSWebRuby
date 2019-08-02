@@ -7,9 +7,8 @@ describe Omni::Rating do
 
   describe ".by_school(state, id)" do
     let(:data_set) { create(:data_set, state: school.state, data_type: data_type) }
-    let(:data_type) { Omni::DataType.create(name: "test") }
+    let(:data_type) { create(:data_type_with_tags, tag: 'rating') }
     let(:school) { create(:school) }
-    let!(:data_type_tag) { Omni::DataTypeTag.create(data_type_id: data_set.data_type_id, tag: 'rating') }
 
     it 'returns an object that has the required keys' do
       Omni::Rating.create(entity_type: Omni::Rating::SCHOOL_ENTITY,
