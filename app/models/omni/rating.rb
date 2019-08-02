@@ -20,7 +20,7 @@ module Omni
     def self.by_school(state, id)
       select(self.required_keys_db_mapping.values)
           .joins(data_set: [:data_type, :source])
-          .joins("join data_type_tags on data_type_tags.data_type_id = data_sets.data_type_id")
+          .joins("join data_type_tags on data_type_tags.data_type_id = data_types.id")
           .where(data_type_tags: { tag: %w(rating summary_rating_weight) })
           .with_breakdowns
           .with_breakdown_tags
