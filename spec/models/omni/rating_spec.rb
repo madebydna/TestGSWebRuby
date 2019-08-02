@@ -45,7 +45,7 @@ describe Omni::Rating do
     end
 
     it 'returns the date_valid of the associated data set' do
-      # expect(results.first.date_valid).to eq(data_set.date_valid)
+      expect(results.first.date_valid).to eq(data_set.reload.date_valid)
     end
 
     it 'returns the description of the associated data set' do
