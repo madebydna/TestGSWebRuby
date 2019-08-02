@@ -6,40 +6,44 @@ module Omni
   class TestDataValue < ActiveRecord::Base
     db_magic connection: :omni
 
+    STATE_ENTITY = 'state'
+    DISTRICT_ENTITY = 'district'
+    SCHOOL_ENTITY = 'school'
+    TAGS = 'state_test'
+
     belongs_to :data_set
     belongs_to :proficiency_band
     belongs_to :breakdown
+    belongs_to :data_set
 
-    has_many :data_sets
-
-    scope :state_entity, -> { where(entity_type: 'state') }
-    scope :district_entity, -> { where(entity_type: 'district') }
-    scope :school_entity, -> { where(entity_type: 'school') }
+    scope :state_entity, -> { where(entity_type: STATE_ENTITY) }
+    scope :district_entity, -> { where(entity_type: DISTRICT_ENTITY) }
+    scope :school_entity, -> { where(entity_type: SCHOOL_ENTITY) }
     scope :active, -> { where(active: 1) }
     scope :default_proficiency, -> { where(proficiency_band_id: 1) }
 
     def self.web_by_school(state, id)
-      select(common_attrs).common_web_query(state).school_entity.where(gs_id: id)
+      select(required_keys_db_mapping.values).common_web_query(state).school_entity.where(gs_id: id)
     end
 
     def self.web_by_district(state, id)
-      select(common_attrs).common_web_query(state).district_entity.where(gs_id: id)
+      select(required_keys_db_mapping).common_web_query(state).district_entity.where(gs_id: id)
     end
 
     def self.web_by_state(state)
-      select(common_attrs).common_web_query(state).state_entity
+      select(required_keys_db_mapping).common_web_query(state).state_entity
     end
 
     def self.feeds_by_school(state, school_id)
-      select(common_attrs).common_feeds_query(state).school_entity.where(gs_id: school_id)
+      select(required_keys_db_mapping).common_feeds_query(state).school_entity.where(gs_id: school_id)
     end
 
     def self.feeds_by_district(state, district_id)
-      select(common_attrs).common_feeds_query(state).district_entity.where(gs_id: district_id)
+      select(required_keys_db_mapping).common_feeds_query(state).district_entity.where(gs_id: district_id)
     end
 
     def self.feeds_by_state(state)
-      select(common_attrs).common_feeds_query(state).state_entity
+      select(required_keys_db_mapping).common_feeds_query(state).state_entity
     end
 
     def self.common_web_query(state)
@@ -52,14 +56,18 @@ module Omni
 
     def self.common_query
       joins(data_set: [:data_type, :source])
-          .joins("join data_type_tags on data_type_tags.data_type_id = data_sets.data_type_id")
+          .with_data_type_tags
           .with_breakdowns
           .with_breakdown_tags
           .with_subjects
           .with_subject_tags
           .joins(:proficiency_band)
-          .where(data_type_tags: { tag: 'state_test' })
+          .where(data_type_tags: { tag: TAGS })
           .active
+    end
+
+    def self.with_data_type_tags
+      joins("join data_type_tags on data_type_tags.data_type_id = data_types.id")
     end
 
     def self.with_breakdowns
@@ -82,26 +90,28 @@ module Omni
       [obj.data_type_id, obj.breakdown_names, obj.date_valid, obj.academic_names, obj.grade]
     end
 
-    def self.common_attrs
-      [:value,
-       :grade,
-       :cohort_count,
-       :proficiency_band_id,
-       "gs_id as school_id",
-       "data_types.name",
-       "sources.name as source_name",
-       "sources.name as source",
-       "proficiency_bands.name as proficiency_band_name",
-       "breakdowns.name as breakdown_names",
-       "breakdown_tags.tag as breakdown_tags",
-       "subject_tags.tag as academic_tags",
-       "breakdowns.id as breakdown_id_list",
-       "subjects.name as academic_names",
-       "data_sets.state",
-       "data_sets.data_type_id",
-       "data_sets.configuration",
-       "data_sets.date_valid",
-       "data_sets.description"]
+    def self.required_keys_db_mapping
+       # "proficiency_bands.name as proficiency_band_name",
+       # "breakdowns.id as breakdown_id_list",
+      {
+          value: "value",
+          grade: "grade",
+          cohort_count: "cohort_count",
+          proficiency_band_id: "proficiency_band_id",
+          school_id: "gs_id as school_id",
+          data_type_id: "data_types.id as data_type_id",
+          name: "data_types.name",
+          state: "data_sets.state",
+          configuration: "data_sets.configuration",
+          date_valid: "data_sets.date_valid",
+          description: "data_sets.description",
+          source: "sources.name as source",
+          source_name: "sources.name as source_name",
+          breakdown_tags: "breakdown_tags.tag as breakdown_tags",
+          breakdown_names: "breakdowns.name as breakdown_names",
+          academic_names: "subjects.name as academic_names",
+          academic_tags: "subject_tags.tag as academic_tags",
+      }
     end
   end
 end

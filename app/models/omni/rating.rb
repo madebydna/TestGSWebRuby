@@ -6,13 +6,13 @@ module Omni
   class Rating < ActiveRecord::Base
     db_magic connection: :omni
 
-    belongs_to :data_set
-    belongs_to :breakdown
-
     STATE_ENTITY = 'state'
     DISTRICT_ENTITY = 'district'
     SCHOOL_ENTITY = 'school'
     TAGS = %w(rating summary_rating_weight)
+
+    belongs_to :data_set
+    belongs_to :breakdown
 
     scope :state_entity, -> { where(entity_type: STATE_ENTITY) }
     scope :district_entity, -> { where(entity_type: DISTRICT_ENTITY) }
