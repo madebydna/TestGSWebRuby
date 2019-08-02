@@ -3,37 +3,38 @@
 require 'spec_helper'
 
 describe Omni::Rating do
-  after { clean_dbs :omni }
+  before { clean_dbs :omni, :ca }
 
   describe ".by_school(state, id)" do
-    it 'deos stuff' do
-      obj = Omni::Rating.by_school('ca', 1)
-      expect(obj.count).to eq(1)
+    let(:data_set) do
+      Omni::DataSet.create(data_type_id: data_type.id,
+                           source_id: source.id,
+                           notes: "test",
+                           state: school.state)
+    end
+
+    let(:source) { Omni::Source.create(name: 'Foo') }
+    let(:data_type) { Omni::DataType.create(name: "test") }
+    let(:school) { create(:school) }
+    let!(:data_type_tag) { Omni::DataTypeTag.create(data_type_id: data_set.data_type_id, tag: 'rating') }
+
+    it 'the return object has the required keys' do
+      Omni::Rating.create(entity_type: Omni::Rating::SCHOOL_ENTITY,
+                          gs_id: school.id,
+                          data_set_id: data_set.id,
+                          value: 1)
+
+
+      result = Omni::Rating.by_school(school.state, school.id)
+      result_keys = result.first.attributes.keys.map(&:to_sym)
+      expected_keys = Omni::Rating.required_keys_db_mapping.keys + [:id]
+
+      expect(result_keys).to match_array(expected_keys)
     end
   end
 
   it 'does something' do
-    #<OpenStruct
-    # value="9",
-    # state="CA",
-    # school_id=1,
-    # grade="All",
-    # cohort_count=nil,
-    # proficiency_band_id=nil,
-    # breakdown_names="All Students",
-    # breakdown_tags="all_students",
-    # breakdown_count=1,
-    # academic_names=nil,
-    # academic_tags=nil,
-    # academic_count=0,
-    # academic_types=nil,
-    # data_type_id=151,
-    # configuration="none",
-    # source="GreatSchools",
-    # source_name="GreatSchools",
-    # date_valid="20171006 13:13:12",
-    # description="The Advanced Courses Rating looks at the rate of students who
-    # are enrolled in advanced courses in a school.", name="Advanced Course Rating">
+
   end
 
 end
