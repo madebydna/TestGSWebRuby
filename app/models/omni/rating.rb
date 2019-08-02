@@ -7,6 +7,7 @@ module Omni
     db_magic connection: :omni
 
     belongs_to :data_set
+    belongs_to :breakdown
 
     STATE_ENTITY = 'state'
     DISTRICT_ENTITY = 'district'
@@ -34,15 +35,15 @@ module Omni
     def self.required_keys_db_mapping
       {
           value: "value",
-          state: "data_sets.state",
           school_id: "gs_id as school_id",
-          data_type_id: "data_sets.data_type_id",
+          data_type_id: "data_types.id as data_type_id",
+          name: "data_types.name",
+          state: "data_sets.state",
           configuration: "data_sets.configuration",
-          source: "sources.name as source",
-          source_name: "sources.name as source_name",
           date_valid: "data_sets.date_valid",
           description: "data_sets.description",
-          name: "data_types.name",
+          source: "sources.name as source",
+          source_name: "sources.name as source_name",
           breakdown_tags: "breakdown_tags.tag as breakdown_tags",
           breakdown_names: "breakdowns.name as breakdown_names"
       }
