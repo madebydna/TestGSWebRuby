@@ -11,6 +11,7 @@ module Omni
     STATE_ENTITY = 'state'
     DISTRICT_ENTITY = 'district'
     SCHOOL_ENTITY = 'school'
+    TAGS = %w(rating summary_rating_weight)
 
     scope :state_entity, -> { where(entity_type: STATE_ENTITY) }
     scope :district_entity, -> { where(entity_type: DISTRICT_ENTITY) }
@@ -20,11 +21,11 @@ module Omni
     def self.by_school(state, id)
       select(self.required_keys_db_mapping.values)
           .joins(data_set: [:data_type, :source])
-          .joins("join data_type_tags on data_type_tags.data_type_id = data_types.id")
-          .where(data_type_tags: { tag: %w(rating summary_rating_weight) })
+          .with_data_type_tags
           .with_breakdowns
           .with_breakdown_tags
-          .merge(DataSet.by_state(state))
+          .merge(DataSet.none_or_web_by_state(state))
+          .where(data_type_tags: { tag: TAGS })
           .where(gs_id: id)
           .school_entity
           .active
@@ -47,20 +48,16 @@ module Omni
       }
     end
 
+    def self.with_data_type_tags
+      joins("join data_type_tags on data_type_tags.data_type_id = data_types.id")
+    end
+
     def self.with_breakdowns
       joins("left join breakdowns on breakdown_id = breakdowns.id")
     end
 
     def self.with_breakdown_tags
       joins("left join breakdown_tags on breakdown_tags.breakdown_id = breakdowns.id")
-    end
-
-    def self.with_subjects
-      joins("left join subjects on subjects.id = subject_id")
-    end
-
-    def self.with_subject_tags
-      joins("left join subject_tags on subjects.id = subject_tags.subject_id")
     end
 
   end

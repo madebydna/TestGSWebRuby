@@ -1,29 +1,6 @@
 class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   CACHE_KEY = 'ratings'.freeze
 
-  # DATA_TYPES INCLUDED
-  # 151: Advanced Coursework Rating
-  # 155: Test Score Rating
-  # 158: Equity rating
-  # 159: Academic Progress Rating
-  # 160: Summary Rating
-  # 175: Summary Rating Weight: Advanced Course Rating
-  # 176: Summary Rating Weight: Test Score Rating
-  # 177: Summary Rating Weight: College Readiness Rating
-  # 178: Summary Rating Weight: Student Progress Rating
-  # 179: Summary Rating Weight: Equity Rating
-  # 180: Summary Rating Weight: Academic Progress Rating
-  # 181: Summary Rating Weight: Discipline Flag
-  # 182: Summary Rating Weight: Absence Flag
-  # 183: Discipline Flag
-  # 184: Absence Flag
-  # 185: Equity Adjustment Factor
-  # 186: Summary Rating Weight: Equity Adjustment Factor
-  # 187: CSA Badge
-
-
-  DATA_TYPE_IDS = %w(151 155 156 157 158 159 160 175 176 177 178 179 180 181 182 183 184 185 186 187).freeze
-
   ADVANCED_COURSEWORK_DATA_TYPE_ID = 151
   CSA_AWARD_DATA_TYPE_ID = 187
   ALL_STUDENTS = 'All Students'

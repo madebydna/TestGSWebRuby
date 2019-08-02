@@ -11,8 +11,10 @@ module Omni
 
     scope :feeds, -> { where(configuration: 'feeds') }
     scope :web, -> { where(configuration: 'web') }
+    scope :none_or_web, -> { where(configuration: %w(none web)) }
 
     scope :by_state, -> (state) { where('state = ?', state) }
     scope :feeds_by_state, -> (state) { feeds.by_state(state) }
+    scope :none_or_web_by_state, -> (state) { none_or_web.by_state(state) }
   end
 end

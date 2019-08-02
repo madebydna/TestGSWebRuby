@@ -5,11 +5,11 @@ require 'spec_helper'
 describe Omni::Rating do
   before { clean_dbs :omni, :ca }
 
-  describe ".by_school(state, id)" do
-    let(:data_set) { create(:data_set, state: school.state, data_type: data_type) }
-    let(:data_type) { create(:data_type_with_tags, tag: 'rating') }
-    let(:school) { create(:school) }
+  let(:school) { create(:school) }
+  let(:data_type) { create(:data_type_with_tags, tag: Omni::Rating::TAGS.sample) }
+  let(:data_set) { create(:data_set, state: school.state, data_type: data_type) }
 
+  describe ".by_school(state, id)" do
     it 'returns an object that has the required keys' do
       Omni::Rating.create(entity_type: Omni::Rating::SCHOOL_ENTITY,
                           gs_id: school.id,
@@ -23,10 +23,8 @@ describe Omni::Rating do
 
       expect(result_keys).to match_array(expected_keys)
     end
-  end
 
-  it 'does something' do
-
+    # it returns only values for matching tags && school id && state && configuration
   end
 
 end
