@@ -8,37 +8,43 @@ module Omni
 
     belongs_to :data_set
 
-    scope :state_entity, -> { where(entity_type: 'state') }
-    scope :district_entity, -> { where(entity_type: 'district') }
-    scope :school_entity, -> { where(entity_type: 'school') }
+    STATE_ENTITY = 'state'
+    DISTRICT_ENTITY = 'district'
+    SCHOOL_ENTITY = 'school'
+
+    scope :state_entity, -> { where(entity_type: STATE_ENTITY) }
+    scope :district_entity, -> { where(entity_type: DISTRICT_ENTITY) }
+    scope :school_entity, -> { where(entity_type: SCHOOL_ENTITY) }
     scope :active, -> { where(active: 1) }
 
     def self.by_school(state, id)
-      select(
-          :value,
-          "data_sets.state",
-          "gs_id as school_id",
-          :active,
-          "data_sets.data_type_id",
-          "data_sets.configuration",
-          "sources.name as source",
-          "sources.name as source_name",
-          "data_sets.date_valid",
-          "data_sets.description",
-          "data_types.name",
-          "breakdown_tags.tag as breakdown_tags",
-          "breakdowns.name as breakdown_names",
-          "NULL as academic_names"
-      )
+      select(self.key_to_db.values)
           .joins(data_set: [:data_type, :source])
           .joins("join data_type_tags on data_type_tags.data_type_id = data_sets.data_type_id")
+          .where(data_type_tags: { tag: %w(rating summary_rating_weight) })
           .with_breakdowns
           .with_breakdown_tags
-          .where(data_type_tags: { tag: %w(rating summary_rating_weight) })
           .merge(DataSet.by_state(state))
           .where(gs_id: id)
           .school_entity
           .active
+    end
+
+    def self.key_to_db
+      {
+          value: "value",
+          state: "data_sets.state",
+          school_id: "gs_id as school_id",
+          data_type_id: "data_sets.data_type_id",
+          configuration: "data_sets.configuration",
+          source: "sources.name",
+          source_name: "sources.name",
+          date_valid: "data_sets.date_valid",
+          description: "data_sets.description",
+          name: "data_types.name",
+          breakdown_tags: "breakdown_tags.tag",
+          breakdown_names: "breakdowns.name"
+      }
     end
 
     def self.with_breakdowns
