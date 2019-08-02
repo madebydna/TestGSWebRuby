@@ -1,45 +1,67 @@
 require 'spec_helper'
 
 describe Omni::TestDataValue do
+  before { clean_dbs :omni, :ca }
 
-  after { clean_dbs :omni }
+  let(:school) { create(:school) }
+  let(:data_type) { create(:data_type_with_tags, tag: Omni::Rating::TAGS.sample) }
+  let(:data_set) { create(:data_set, state: school.state, data_type: data_type) }
+  let(:breakdown) { create(:breakdown_with_tags) }
 
-  describe '.feeds_by_state' do
-    it 'returns a object that can be used ' do
-      []
-      #<OpenStruct
-      # value="7.0",
-      # state="CA",
-      # grade="8",
-      # cohort_count=407824,
-      # proficiency_band_id=63,
-      # proficiency_band_name="far below basic",
-      # breakdown_names="General-Education students",
-      # breakdown_id_list="30",
-      # academic_names="Science",
-      # data_type_id=298,
-      # configuration="feeds",
-      # source="California Department of Education",
-      # source_name="California Department of Education",
-      # date_valid="20150101 00:00:00",
-      # description="In 2014-2015 California used the California Standards Tests
-      # (CSTs) to test students in science in grades 5, 8 and 10.
-      # The CSTs are standards-based tests, which means they measure
-      # how well students are mastering specific skills defined for each grade
-      # by the state of California. The goal is for all students to score at or
-      # above proficient on the tests.",
-      # name="California Standards Tests">
+  describe ".web_by_school(state, id)" do
+    let!(:test_data_value) do
+      Omni::TestDataValue.create(entity_type: Omni::Rating::SCHOOL_ENTITY,
+                          gs_id: school.id,
+                          data_set_id: data_set.id,
+                          value: 1,
+                          breakdown: breakdown)
+    end
 
-      tdv  = Omni::TestDataValue.create(entity_type: 'state',
-                            gs_id: 1,
-                            data_set_id: 1,
-                            value: 1, proficiency_band_id: 1)
+    subject(:results) { Omni::Rating.by_school(school.state, school.id) }
 
+    it 'returns an object that has the required keys' do
+      results_keys = results.first.attributes.keys.map(&:to_sym)
+      expected_keys = Omni::Rating.required_keys_db_mapping.keys + [:id]
 
+      expect(results_keys).to match_array(expected_keys)
+    end
 
+    it 'returns the name of the associated data type' do
+      expect(results.first.name).to eq(data_type.name)
+    end
 
+    it 'returns the id of the associated data type' do
+      expect(results.first.data_type_id).to eq(data_type.id)
+    end
+
+    it 'returns the state of the associated data set' do
+      expect(results.first.state).to eq(data_set.state)
+    end
+
+    it 'returns the configuration of the associated data set' do
+      expect(results.first.configuration).to eq(data_set.configuration)
+    end
+
+    it 'returns the date_valid of the associated data set' do
+      expect(results.first.date_valid).to eq(data_set.reload.date_valid)
+    end
+
+    it 'returns the description of the associated data set' do
+      expect(results.first.description).to eq(data_set.description)
+    end
+
+    it 'returns the source name of the associated source' do
+      expect(results.first.source).to eq(data_set.source.name)
+      expect(results.first.source_name).to eq(data_set.source.name)
+    end
+
+    it 'returns the tag of the associated breakdown_tags' do
+      expect(results.first.breakdown_tags).to eq(breakdown.breakdown_tags.first.tag)
+    end
+
+    it 'returns the name of the associated breakdown' do
+      expect(results.first.breakdown_names).to eq(breakdown.name)
     end
 
   end
-
 end
