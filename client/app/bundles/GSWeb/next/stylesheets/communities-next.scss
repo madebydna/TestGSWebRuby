@@ -1,0 +1,717 @@
+@import '../../../../../../app/assets/stylesheets/resources/bootstrap/smaller_bootstrap';
+@import '../../../../../../app/assets/stylesheets/resources/bootstrap-grid/_variables.scss';
+@import '../../../../../../app/assets/stylesheets/variables/variables';
+@import '../../../../../../app/assets/stylesheets/mixins/_breakpoints.scss';
+@import '../../../../../../app/assets/stylesheets/mixins/_flexbox.scss';
+@import '../../../../../../app/assets/stylesheets/mixins/_button-group.scss';
+@import '../../../../../../app/assets/stylesheets/mixins/button.scss';
+
+
+$active-color: #f6f9fa;
+$hover-color: $active-color;
+$border-color: #dbe6eb;
+$school-color: #2bade3;
+$gradient-off-white: #f4f5f7;
+$border-radius: 3px;
+$breadcrumbs-bg: #002c47;
+$font-size: 16px;
+$subtle-gray: #647981;
+$line-height-community: 1.428571429;
+
+// Hides the navbar links
+.featured {
+  display: none; // TODO: dont put this here
+}
+
+// Set up the community breadcrumbs
+.community-page {
+  position: relative;
+  .breadcrumbs-container {
+    display: -ms-flexbox; 
+    -ms-flex-pack: center;
+    -ms-flex-align: center;
+    display: -webkit-flex;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    position: -webkit-sticky;
+    position: sticky;
+    width: 100%;
+    top: 80px;
+    z-index:1;
+    background-color: $breadcrumbs-bg;
+    .breadcrumbs {
+      width: 1200px;
+      padding-left: 15px;
+      @include media-breakpoint-down(md) {
+        max-width: 992px;
+      }
+      .divider {
+        font-size: 9px;
+        color: #bbc0ca;
+        padding: 0 5px;
+      }
+    }
+  }
+}
+
+// Community shared css for the hero header
+#hero {
+  @include flexbox-center;
+  padding: 30px 0px;
+  min-height: 220px;
+  background-image: image_url('school_profiles/hero_bg.jpg');
+  text-align: center;
+  color: white;
+  font-family: 'opensans-regular';
+  padding: 0 25px;
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    margin-top: 20px;
+  }
+  .hero-title {
+    margin: 0;
+    padding: 0;
+    line-height: $line-height-community;
+  }
+}
+
+.below-hero {
+  position: relative;
+  margin: auto;
+  padding: 0px 10px;
+  max-width: 1170px;
+  @include media-breakpoint-up(sm) {
+    padding: 0px 15px;
+  }
+
+  .community-modules {
+    display: inline-block;
+    width: calc(100% - 570px);
+
+    margin-top: 20px;
+    > div {
+      margin-bottom: 20px;
+    }
+
+    @include media-breakpoint-down(sm) {
+      width: calc(100% - 255px);
+    }
+
+    @include media-breakpoint-down(xs) {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .modules-title {
+      font-family: 'opensans-bold';
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 0;
+      line-height: $line-height-community;
+    }
+
+    .csa-state-module {
+      margin-bottom: 15px;
+      border: solid 1px #dbe6eb;
+      padding: 5px;
+
+      h3 {
+        padding: 10px 0 10px 15px;
+        color: #333;
+        font-size: 16px;
+        font-family: 'opensans-semibold';
+      }
+
+      .csa-state-blurb {
+        display: flex;
+        margin-left: 20px;
+        margin-bottom: 20px;
+
+        p {
+          margin: 0 20px;
+        }
+      }
+
+      .csa-state-module-divider {
+        padding: 0 15px;
+
+        .blue-line {
+          margin-left: 0;
+        }
+      }
+
+      // AC_TODO: Refactor more-school-btn
+      // .more-school-btn{
+      //   margin-bottom: 20px;
+      //   @include flexbox-center;
+      //   a {
+      //     width: 90%;
+      //     button{
+      //       text-transform: uppercase;
+      //       width: 100%;
+      //       margin: auto;
+      //       height: 50px;
+      //       color: $school-color;
+      //       font-family: 'opensans-semibold';
+      //       font-size: 14px;
+      //       background-image: -webkit-gradient(linear, left top, left bottom, from(white), to($gradient-off-white));
+      //       background-image: -o-linear-gradient(top, white, $gradient-off-white);
+      //       background-image: linear-gradient(to bottom, white, $gradient-off-white);
+      //       border: solid 1px $border-color;
+      //       border-radius: $border-radius;
+      //     }
+      //   }
+      // }
+    }
+  }
+
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+
+    //target ie10
+    @media screen and (min-width:0\0) {
+      position: static;
+      vertical-align: top;
+    }
+  }
+
+  .ad-bar {
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px 0 0 20px;
+    top:60px;
+  }
+
+  //CSS for shared portion between City and District pages.
+  .toc {
+    margin: 20px 20px 0 0;
+    display: inline-block;
+    width: 230px;
+    vertical-align: top;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      li {
+        color: $school-color;
+        font-size: 14px;
+        height: 100%;
+        //Targets IE10
+        @media screen and (min-width:0\0) {
+          height: 50px;
+        }
+        &:hover {
+          cursor: pointer;
+        }
+        div {
+          height: 100%;
+          padding: 16px 0px;
+          margin: 0 20px;
+        }
+      }
+      //Targets ie11 only
+      @media all and (-ms-high-contrast: none){
+        *::-ms-backdrop, li{ height: 100%; }
+      }
+      li + li {
+        div {
+          border-top: 1px solid $border-color;
+        }
+      }
+      li.selected {
+        color: black;
+        background-color: $gray-light-blue;
+        border-left: 5px solid $school-color;
+        div {
+          margin-left: 15px;
+        }
+      }
+    }
+  }
+}
+
+// Class to help draw blueish-gray lines
+.blue-line{
+  border-bottom: 1px solid $border-color;
+  width: 100%;
+  margin: 10px 5px 10px 5px;
+}
+
+// Class to help render districts in a few places with styling
+.school-district{
+  font-family: "opensans-regular";
+  color: $subtle-gray;
+  text-align: left;
+}
+
+.districts-in-state-module {
+  padding: 0 10px;
+  .blue-line {
+    margin-left: 0;
+  }
+}
+
+.more-school-btn {
+  margin-bottom: 20px;
+  @include flexbox-center;
+  a {
+    width: 90%;
+    button{
+      text-transform: uppercase;
+      width: 100%;
+      margin: auto;
+      height: 50px;
+      color: $school-color;
+      font-family: 'opensans-semibold';
+      font-size: 14px;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(white), to($gradient-off-white));
+      background-image: -o-linear-gradient(top, white, $gradient-off-white);
+      background-image: linear-gradient(to bottom, white, $gradient-off-white);
+      border: solid 1px $border-color;
+      border-radius: $border-radius;
+    }
+  }
+}
+
+.top-school-module{
+  margin-bottom: 15px;
+  border: solid 1px $border-color;
+  .top-school-info{
+    padding: 2px 0 0 2px;
+    > div{
+      margin: 15px 0 20px;
+      width: 100%;
+      h3 {
+        font-size: $font-size;
+        font-family: 'opensans-semibold';
+      }
+      > p, > h3, > a {
+        padding: 0 20px;
+      }
+    }
+    .csa-top-schools-blurb {
+      display: flex;
+      margin: 0 20px;
+      align-items: center;
+      
+      p {
+        margin-right: 10px;
+      }
+    }
+
+    @include media-breakpoint-down(sm) {
+      padding: 0;
+
+      .csa-top-schools-blurb {
+        display: block;
+
+        img {
+          float: left;
+          height: 60px;
+          margin: 8px 16px 0 0;
+        }
+
+        p {
+          padding: 0;
+          margin-right: 40px;
+        }
+      }
+    }
+  }
+  
+  .profile-module {
+    font-size: $font-size;
+    
+    > h3 {
+      padding: 10px 0 10px 20px;
+      color: #333;
+      font-size: 16px;
+      font-family: 'opensans-semibold';
+    }
+
+    .tab-buttons {
+      margin: 5px 20px;
+    }
+
+    .top-schools-csa {
+      margin: 3px 0 0;
+    }
+
+    .top-schools-csa > span {
+      font-family: 'opensans-semibold';
+    }
+
+    @include media-breakpoint-only(xs) {
+      border-bottom: none;
+      border-top: none;
+      margin-left: 0;
+      margin-right: 0;
+
+      .tab-buttons {
+        margin: 5px 10px;
+      }
+    }
+  }
+  .grade-filter {
+    @include flex-justify-center;
+    .button-group {
+      @include button-group;
+      button.active{
+        background-color: $school-color;
+        border: 1px solid $form-field-border-color;
+      }
+    }
+  }
+  .top-school-list{
+    .school-list-item{
+      width: 90%;
+      margin: auto;
+      // Class to help render five star ratings
+      .five-star-review{
+        a { color: $school-color; }
+        span { 
+          display: inline-block; 
+          font-size: $font-size-base;
+        }
+        .five-star-rating{ margin-left: 15px; }
+      }
+      .content-container{
+        @include flexbox;
+        a, p { font-size: 16px; }
+        .scale{
+          @include flexbox-center;
+          height: 30px;
+        }
+        .school-info{
+          margin-left: 15px;
+          .students{
+            margin-bottom: 5px;
+          }
+          a, p { margin: 3px 0 0; }
+          a {
+            color: $school-color;
+          }
+          > a {
+            font-family: "opensans-semibold";
+            color: $school-color;
+          }
+        }
+      }
+    }
+  }
+
+  .no-schools{
+    @include flexbox-center;
+    margin-bottom: 10px;
+    width: 100%;
+    > div{
+      height: 150px;
+      width: 90%;
+      border: 1px solid $form-field-border-color;
+      @include flexbox-center;
+      h3 {
+        width: 85%;
+        color: #333;
+        font-size: $font-size;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.links-module{
+  margin-bottom: 15px;
+  border: solid 1px $border-color;
+  padding: 5px;
+  @include media-breakpoint-down(sm) {
+    margin: auto;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  h3{
+    padding: 10px 0 10px 15px;
+    color: #333;
+    font-size: 16px;
+    font-family: 'opensans-semibold';
+  }
+  .separator {
+    padding: 0 15px;
+    .blue-line {
+      margin-left: 0;
+    }
+  }
+  ul{
+    @include flex-column-wrap;
+    // Set height of UL in District or City specific page
+    width: 100%;
+    li{
+      //Set width of li in District or City specific page
+      margin-left: -10px;
+      font-size: 25px;
+      color: $color-button-border;
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        height: 36px;
+      }
+      // modify the blueline to have no padding for browse links
+      .blue-line{
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        margin-left: -8px;
+      }
+      a, p {
+        font-size: $font-size;
+        font-family: 'opensans-semibold';
+        letter-spacing: -0.70px;
+        margin-left: -8px;
+      }
+      a { 
+        color: $school-color; 
+        margin-top: -3px;
+      }
+      p { 
+        color: #999;
+        display: inline-block;
+        margin-top: 5px;
+        margin-bottom: 0; 
+      }
+      .school-count{
+        @include clearfix;
+        font-size: 15px;
+        color: #333;
+        margin-right: 15px;
+        margin-top: 10px;
+        float: right;
+      }
+    }
+  }
+}
+
+.reviews-module{
+  margin-bottom: 15px;
+  margin-top: 15px;
+  border: solid 1px $border-color;
+  padding: 20px;
+  h3{
+    padding: 10px 0 10px 15px;
+    color: #333;
+    font-size: 20px;
+    font-family: 'opensans-semibold';
+    margin-bottom: 30px; //remove when we add back the gradelevel filter buttons
+  }
+  .grade-filter {
+    margin-bottom: 30px;
+    @include flex-justify-center;
+    .button-group {
+      @include button-group;
+      button.active{
+        background-color: $school-color;
+        border: 1px solid $form-field-border-color;
+      }
+    }
+  }
+  
+  .add-review-container{
+    >a{
+      display: block;
+      text-align: center;
+      button{
+        @include button;
+      }
+    }
+    > a:hover{
+      text-decoration: none
+    }
+    > p { 
+      text-align: center;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+#mobility{
+  margin-bottom: 20px;
+
+  .xq_school_board_module_container {
+    margin-bottom: 30px;
+
+    .xq_school_board_module {
+      border: 1px solid $border-color;
+      padding: 15px;
+      margin: 5px 0;
+  
+      h3 {
+        margin-bottom: 3px;
+      }
+    }
+  }
+
+  .mobility-module {
+    margin-bottom: 5px;
+    border: solid 1px $border-color;
+    padding: 5px;
+    >div{ 
+      padding: 20px;
+      // Add this back when TransitScreen has better coverage
+      // @include flexbox;
+      // @include media-breakpoint-down(sm){
+      //   -webkit-box-orient: vertical;
+      //   -webkit-box-direction: normal;
+      //   -ms-flex-direction: column;
+      //   flex-direction: column;
+      //   >div:first-child{
+      //     margin: auto;
+      //   }
+      // }
+      .scale{
+        @include flexbox-center;
+        height: 30px;
+      }
+      .transportation-content{
+        width: 100%;
+        h3{
+          font-family: "opensans-semibold";
+          font-size: $font-size;
+        }
+        //Remove margin-left when mobility score gets added back
+        >div:last-child{ margin-left: 20px; }
+        a{color: black;}
+        a:hover{ text-decoration: none; }
+        .transportation-container{
+          @include flexbox-align-items-center;
+          p { margin-bottom: 0px; }
+          >img{ 
+            margin-right: 10px;
+            height: 25px;
+          }
+          margin-top: 20px;
+          margin-bottom: 5px;
+        }
+        .agencies{
+          @include flexbox-align-items-center;
+          margin-left: 25px;
+          margin-bottom: 10px;
+          >div, img, p{ margin-right: 10px;}
+          img{ height: 20px; }
+          p { 
+            margin-bottom: 0px;
+            color: $subtle-gray;
+          }
+        }
+      }
+    }
+    //CSS for the Null states
+    .null-state{
+      display: block;
+      font-family: 'opensans-semibold';
+      padding: 20px;
+      margin: auto;
+      h3{ text-align: center; }
+      h4{ font-size: $font-size; }
+      .loading-overlay {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        > .loader {
+          width: 60px;
+          height: 60px;
+          margin: auto;
+          background-image: image-url('search/owl-loader.gif');
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+    }
+  }
+  > a:hover { text-decoration: none;}
+}
+
+#Academics {
+  margin-bottom: 20px;
+  .profile-module {border: none}
+  .panel {
+    margin: 0;
+  }
+  @media (max-width: 767px) {
+    .module_feedback {float: right;}
+  }
+}
+
+.tooltip-content{
+  text-align: left;
+}
+
+.sources-text{
+  div, h3, span{
+    font-family: "opensans-semibold";
+  }
+  h3{
+    margin-bottom: 20px;
+  }
+  div{
+    font-size: $font-size;
+    margin-bottom: 10px;
+  }
+}
+
+#students{
+  .students-module{
+    margin-bottom: 15px;
+    border: solid 1px $border-color;
+    padding: 20px;
+  }
+
+  // overwrite margin bottom for section header since this section has
+  // additional words ported over from profiles
+  .modules-title{
+    margin-bottom: 0;
+  }
+
+  .students-demographic-chart{
+    position: relative;
+    width: 100%;
+    height: 400px;
+
+    @media (max-width: 768px){
+      height: 300px;
+    }
+
+    #ethnicity-graph{
+      position: absolute;
+      width: 100%;
+    }
+  }
+
+  .students-container{
+    @include flexbox;
+    @media (max-width: 1100px) {
+      display: block;
+    }
+  }
+
+  .title-container{
+    margin-bottom: 10px;
+  }
+}
+
+//@include media-breakpoint-down(xs) {
+//  .display-desktop { display:none }
+//}
+//
+//@include media-breakpoint-up(sm) {
+//  .display-mobile { display:none }
+//}
+
+@import 'state_page_next.scss'

@@ -1,6 +1,6 @@
 <% content_for :page_javascripts do %>
-  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
-  <%= webpack_javascript_include_tag 'community', defer: true %>
+  <%#= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%#= webpack_javascript_include_tag 'community', defer: true %>
 <% end %>
 <% content_for :page_stylesheets do %>
   <%= stylesheet_link_tag "community_post_load", async: true %>
@@ -8,7 +8,7 @@
 <% end %>
 
 <div class="community-page">
-  <%= react_component("State", props: {
+  <%#= react_component("State", props: {
       cities: @cities,
       schoolCount: @school_count,
       schools_data: @top_schools,
@@ -20,4 +20,12 @@
       students: @students.students_demographics,
       academics: @academics
   }) %>
+</div>
+<div class="community-page">
+  <%= react_component("TestState", props: {
+      breadcrumbs: @breadcrumbs,
+      locality: @locality,
+      districts: @districts,
+      cities: @cities,
+  }, prerender: true) %>
 </div>

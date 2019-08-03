@@ -1,0 +1,23 @@
+const withSass = require('@zeit/next-sass')
+const withCSS = require('@zeit/next-css')
+
+module.exports = withCSS(withSass({
+  webpack: function (config, options) {
+    config.module.rules.push(
+      {
+        test: /\.ya?ml$/,
+        use: 'js-yaml-loader',
+      },
+    )
+    config.module.rules.push(
+      {
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 100000
+        }
+      },
+    )
+    return config;
+  }
+}))

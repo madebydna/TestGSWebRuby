@@ -1,0 +1,132 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+
+ */
+// Place all the styles related to the Pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// reset css
+@import './resources/normalize.css.scss';
+
+// bootstrap
+@import 'resources/bootstrap/smaller_bootstrap';
+
+// variables, mixins, base styles
+@import 'variables/variables';
+// @import 'mixins/*';
+// not using rails or gulp so need to add in all stylesheets
+@import 'mixins/select.scss';
+@import './mixins/flexbox.scss';
+@import './mixins/checkbox.scss';
+@import './mixins/_square-rating.scss';
+@import './mixins/_anchor-button.scss';
+@import './mixins/avatars.scss';
+@import './mixins/_input-with-search-icon.scss';
+@import './mixins/_circle-rating.scss';
+@import './mixins/_vertical-separator.scss';
+@import './mixins/_speech-bubble.scss';
+@import 'mixins/_button-group.scss';
+@import './mixins/button.scss';
+@import './mixins/absolute_positions.scss';
+@import './mixins/breakpoints.scss';
+@import './mixins/_input-joined-with-button.scss';
+@import './mixins/clearfix.scss';
+@import './mixins/_diamond-rating.scss';
+@import './mixins/_icon-badge.scss';
+@import './mixins/_review-form-buttons.scss';
+// @import 'gs/mixins'; // deprecated
+// not using rails or gulp so need to add in all stylesheets
+@import 'gs/mixins/typography.scss';
+@import 'gs/mixins/buttons.scss';
+@import 'gs/mixins/performance.scss';
+@import 'gs/mixins/sprites.scss';
+@import 'gs/mixins/nav_tabs.scss';
+@import 'gs/mixins/spacing.scss';
+@import 'gs/mixins/responsive_utilities.scss';
+
+@import './gs/form.css.scss';
+@import 'base/spacing.css.scss';
+@import 'base/typography.css.scss';
+
+// fonts
+// @import './fonts/_fonts-opensans-regular.css.scss';
+@import './fonts/_fonts-opensans-semibold.css.scss';
+@import './fonts/_fonts-opensans-bold.css.scss';
+@import './fonts/_fonts-robotoslab-bold.css.scss';
+
+// icons / sprites
+@import './fonts/_gs-icon-font.scss';
+@import 'sprites/avatars_33x33';
+@import 'sprites/avatars_65x65';
+
+// components
+@import './components/_show-more.scss';
+@import './components/_five-star-rating.scss';
+@import './components/_badge-and-content.scss';
+@import './components/_ad-slot.scss';
+@import './components/_gs-rating-with-label.scss';
+@import './components/_person-bar-viz.scss';
+@import './components/breadcrumbs';
+@import './components/_rating-container.scss';
+@import './components/_circle-rating.scss';
+@import './components/_circle-rating-with-label.scss';
+@import './components/_rating-score-item.scss';
+@import './components/_bar-graph-display.scss';
+@import './components/_five-stars.scss';
+@import './components/_review-list.scss';
+@import './components/review';
+@import './components/_review-summary.scss';
+@import './components/_report-review.scss';
+@import './components/_join-form.scss';
+@import './components/_homes-and-rentals.scss';
+@import './components/_info-circle.scss';
+@import './components/_module-header.scss';
+@import './components/_module-footer.scss';
+@import './components/_ratio-viz.scss';
+@import './components/_info-window.scss';
+@import './components/_school-list.scss';
+@import './components/_anchor-button.scss';
+@import './components/_rating-with-bar.scss';
+@import './components/_vertical-nav.scss';
+// more components
+@import 'gs/objects/spinny_wheel.css.scss';
+@import './gs/objects/modal_layout.css.scss';
+@import './components/_mobile-overlay-ad.scss';
+@import './components/_search-autosuggest.scss';
+
+// footer-specific
+@import 'gs/objects/footer.css.scss';
+@import 'sprites/footer_icons_16x16.css.scss';
+
+// page specific
+@import './pages/_page-not-found.scss';
+
+// school profile specific
+@import 'school_profiles/school_profile';
+@import 'school_profiles/profile_section';
+@import 'school_profiles/profile_module';
+@import 'school_profiles/module_feedback';
+@import 'school_profiles/hero.scss';
+@import 'school_profiles/students_container';
+@import 'school_profiles/subgroups';
+@import 'school_profiles/auto_narration';
+@import 'school_profiles/sourcing';
+@import 'school_profiles/info_text_and_circle';
+
+// third party libraries
+@import 'resources/tipso.css.scss'; // used on school profiles
+@import 'resources/remodal.css.scss'; // used on profiles / used by modals
+@import 'resources/remodal-default-theme.css.scss'; // used on profiles / used by modals
+
+// community page stylesheets
+// @import 'pages/community/communities';
+// @import 'pages/community/state_page';

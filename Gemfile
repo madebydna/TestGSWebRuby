@@ -123,6 +123,8 @@ gem 'stackprof'
 # fast xml parsing library
 gem 'ox'
 
+gem 'mini_racer'
+
 group :development do
   gem 'web-console' # Add repl to error pages on localhost, replaces better_errors
 
