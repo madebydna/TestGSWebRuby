@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'TestScoreCalculations' do
+describe TestScoreCalculations do
 
   describe '#select_items_with_max_year!' do
     subject { data.select_items_with_max_year!; data }
@@ -23,15 +23,15 @@ describe 'TestScoreCalculations' do
     context 'with all same years' do
       let(:data) do
         [
-          { 'date_valid' => '20100101' },
-          { 'date_valid' => '20100101' },
+          { 'date_valid' => Time.parse('20100101') },
+          { 'date_valid' => Date.parse('20100101') },
           { 'date_valid' => '20100101' }
         ].extend(TestScoreCalculations)
       end
       its(:length) { is_expected.to eq(3) }
       it 'should have all the same years' do
-        years = subject.map { |o| o['date_valid'] }
-        expect(years.all? { |y| y == '20100101' }).to be true
+        years = subject.map { |o| o['date_valid'].to_date.year.to_s }
+        expect(years.all? { |y| y == '2010' }).to be true
       end
     end
 
