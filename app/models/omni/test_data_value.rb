@@ -9,7 +9,7 @@ module Omni
     STATE_ENTITY = 'state'
     DISTRICT_ENTITY = 'district'
     SCHOOL_ENTITY = 'school'
-    TAGS = 'state_test'
+    TAGS = %w(state_test)
 
     belongs_to :data_set
     belongs_to :proficiency_band
@@ -91,8 +91,6 @@ module Omni
     end
 
     def self.required_keys_db_mapping
-      # "proficiency_bands.name as proficiency_band_name",
-      # "breakdowns.id as breakdown_id_list",
       {
           value: "value",
           grade: "grade",
