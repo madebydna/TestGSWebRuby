@@ -95,20 +95,10 @@ module SchoolProfiles
     # and set all previous years' school_values to nil
     def enforce_latest_year_school_value_for_data_types!(hash, *data_types)
       return_value = nil
-      # From characteristics hash, select only the records for the specified data types (e.g., ACT score/part/percent)
-      # Selected records should only include the ones that reference "All students" and "All subjects"
       data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
         tds.all_subjects? && tds.all_students?
       end.flatten
-      # Take the max year found in array of records
       max_year = data_type_hashes.map { |dts| dts.year }.max
-      # For each record, check if there is a field for school_value_[max_year] (e.g., "school_value_2017") and return that value
-      # Run that value through school_value_present?
-        # So if we're looking at "All students" "Average ACT score" with school_value_2017 = 28.75:
-          # We check that a value exists for that year in that category.
-          # In this case, All students average ACT score has a value for school_value_2017, so we'll display it
-          # However, All students ACT participation does not have a value for school_value_2017 (latest is 2015)
-            # So we'll set school_value to nil and hide it from our display
       data_type_hashes.each do |h|
         if school_value_present?(h["school_value_#{max_year}"])
           return_value = max_year
