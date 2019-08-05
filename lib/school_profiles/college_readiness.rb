@@ -51,8 +51,16 @@ module SchoolProfiles
     end
 
     def handle_ACT_SAT_to_display!(hash)
+      # returns max_year if we have at least one ACT data type to display, else: nil
       act_content = enforce_latest_year_school_value_for_data_types!(hash, ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY)
+      # returns max_year if we have at least one SAT data type to display, else: nil
       sat_content = enforce_latest_year_school_value_for_data_types!(hash, SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY)
+      # JT-8787: Displayed ACT & SAT data must be within 2 years of one another, otherwise hide the older data type
+      if act_content && sat_content && ((act_content - sat_content).abs > 2)
+        act_content > sat_content ? 
+          remove_crdc_breakdown!(hash, SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY) :
+          remove_crdc_breakdown!(hash, ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY)
+      end
       if act_content || sat_content
         remove_crdc_breakdown!(hash, ACT_SAT_PARTICIPATION, ACT_SAT_PARTICIPATION_9_12)
       else
@@ -81,16 +89,29 @@ module SchoolProfiles
       end
     end
 
-    # TODO Create method to handle ACT_SAT_PARTICIPATION  -  Instead of returning boolean
+    # TODO Create method to handle ACT_SAT_PARTICIPATION
+    # Assuming we have >= 1 year(s)' worth of school_values for a given data type,
+    # this will return the most recent year (i.e., "max year") for which we have data
+    # and set all previous years' school_values to nil
     def enforce_latest_year_school_value_for_data_types!(hash, *data_types)
-      return_value = false
+      return_value = nil
+      # From characteristics hash, select only the records for the specified data types (e.g., ACT score/part/percent)
+      # Selected records should only include the ones that reference "All students" and "All subjects"
       data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
         tds.all_subjects? && tds.all_students?
       end.flatten
+      # Take the max year found in array of records
       max_year = data_type_hashes.map { |dts| dts.year }.max
+      # For each record, check if there is a field for school_value_[max_year] (e.g., "school_value_2017") and return that value
+      # Run that value through school_value_present?
+        # So if we're looking at "All students" "Average ACT score" with school_value_2017 = 28.75:
+          # We check that a value exists for that year in that category.
+          # In this case, All students average ACT score has a value for school_value_2017, so we'll display it
+          # However, All students ACT participation does not have a value for school_value_2017 (latest is 2015)
+            # So we'll set school_value to nil and hide it from our display
       data_type_hashes.each do |h|
         if school_value_present?(h["school_value_#{max_year}"])
-          return_value = true
+          return_value = max_year
         else
           h.school_value = nil
         end
