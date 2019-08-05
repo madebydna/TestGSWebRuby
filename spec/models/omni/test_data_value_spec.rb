@@ -7,6 +7,13 @@ describe Omni::TestDataValue do
   let(:data_type) { create(:data_type_with_tags, tag: Omni::TestDataValue::TAGS.sample) }
   let(:data_set) { create(:data_set, state: school.state, data_type: data_type) }
   let(:breakdown) { create(:breakdown_with_tags) }
+  let!(:test_data_value) do
+    create(:test_data_value,
+           gs_id: school.id,
+           data_set_id: data_set.id,
+           value: 1,
+           breakdown: breakdown)
+  end
 
   describe ".common_query" do
     it 'returns an object that has the required keys' do
@@ -20,14 +27,6 @@ describe Omni::TestDataValue do
   end
 
   describe ".all_by_school(state, id)" do
-    let!(:test_data_value) do
-      create(:test_data_value,
-             gs_id: school.id,
-             data_set_id: data_set.id,
-             value: 1,
-             breakdown: breakdown)
-    end
-
     subject(:results) { Omni::TestDataValue.all_by_school(school.state, school.id) }
 
     it 'returns the name of the associated data type' do
