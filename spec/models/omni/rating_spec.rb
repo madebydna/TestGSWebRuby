@@ -6,17 +6,17 @@ describe Omni::Rating do
   before { clean_dbs :omni, :ca }
 
   let(:school) { create(:school) }
-  let(:data_type) { create(:data_type_with_tags, tag: Omni::Rating::TAGS.sample) }
-  let(:data_set) { create(:data_set, state: school.state, data_type: data_type) }
-  let(:breakdown) { create(:breakdown_with_tags) }
+  let(:data_type) { create(:data_type, :with_tags, tag: Omni::Rating::TAGS.sample) }
+  let(:source) { create(:source) }
+  let(:data_set) { create(:data_set, state: school.state, data_type: data_type, source: source) }
 
   describe ".by_school(state, id)" do
     let!(:rating) do
-      Omni::Rating.create(entity_type: Omni::Rating::SCHOOL_ENTITY,
-                          gs_id: school.id,
-                          data_set_id: data_set.id,
-                          value: 1,
-                          breakdown: breakdown)
+      create(:rating,
+             entity_type: Omni::Rating::SCHOOL_ENTITY,
+             gs_id: school.id,
+             data_set_id: data_set.id,
+             value: 1)
     end
 
     subject(:results) { Omni::Rating.by_school(school.state, school.id) }
@@ -58,11 +58,11 @@ describe Omni::Rating do
     end
 
     it 'returns the tag of the associated breakdown_tags' do
-      expect(results.first.breakdown_tags).to eq(breakdown.breakdown_tags.first.tag)
+      expect(results.first.breakdown_tags).to eq(rating.breakdown.breakdown_tags.first.tag)
     end
 
     it 'returns the name of the associated breakdown' do
-      expect(results.first.breakdown_names).to eq(breakdown.name)
+      expect(results.first.breakdown_names).to eq(rating.breakdown.name)
     end
 
   end

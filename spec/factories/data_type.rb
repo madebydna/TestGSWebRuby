@@ -3,8 +3,28 @@ FactoryGirl.define do
     name 'foo'
 
     trait :with_tags do
-      after(:create) do |data_type|
-        create(:data_type_tag, data_type: data_type, tag: Omni::TestDataValue::TAGS.first)
+      ignore do
+        tag nil
+      end
+
+      after(:create) do |data_type, evaluator|
+        create(:data_type_tag, data_type: data_type, tag: evaluator.tag)
+      end
+    end
+
+    trait :with_feeds_data_set do
+      ignore { state nil }
+
+      after(:create) do |data_type, evaluator|
+        create(:data_set, :feeds, data_type: data_type, state: evaluator.state)
+      end
+    end
+
+    trait :with_data_set do
+      ignore { state nil }
+
+      after(:create) do |data_type, evaluator|
+        create(:data_set, :none, data_type: data_type, state: evaluator.state)
       end
     end
 
