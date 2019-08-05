@@ -8,6 +8,17 @@ describe Omni::TestDataValue do
   let(:data_set) { create(:data_set, state: school.state, data_type: data_type) }
   let(:breakdown) { create(:breakdown_with_tags) }
 
+  describe ".common_query" do
+    it 'returns an object that has the required keys' do
+      result = Omni::TestDataValue.common_query
+
+      results_keys = result.first.attributes.keys.map(&:to_sym)
+      expected_keys = Omni::TestDataValue.required_keys_db_mapping.keys + [:id]
+
+      expect(results_keys).to match_array(expected_keys)
+    end
+  end
+
   describe ".all_by_school(state, id)" do
     let!(:test_data_value) do
       create(:test_data_value,
@@ -58,14 +69,4 @@ describe Omni::TestDataValue do
 
   end
 
-  describe ".common_query" do
-    it 'returns an object that has the required keys' do
-      result = Omni::TestDataValue.common_query
-
-      results_keys = result.first.attributes.keys.map(&:to_sym)
-      expected_keys = Omni::TestDataValue.required_keys_db_mapping.keys + [:id]
-
-      expect(results_keys).to match_array(expected_keys)
-    end
-  end
 end

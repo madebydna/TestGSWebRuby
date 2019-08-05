@@ -77,10 +77,9 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
 
   def state_results_hash
     @_state_results_hash ||= begin
-      state_values = DataValue
-                       .find_by_state_and_data_type_tags_and_proficiency_is_one(district.state, DATA_TYPE_TAGS, %w(all) )
+      state_values = Omni::TestDataValue.all_by_state(district.state)
       state_values.each_with_object({}) do |result, hash|
-        state_key = DataValue.datatype_breakdown_year(result)
+        state_key = Omni::TestDataValue.datatype_breakdown_year(result)
         hash[state_key] = result
       end
     end
