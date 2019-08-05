@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :breakdown, class: Omni::Breakdown do
-    name 'foo'
+    sequence(:name) { |n| n }
 
-    factory :breakdown_with_tags do
+    trait :with_tags do
       after(:create) do |breakdown|
         create(:breakdown_tag, breakdown: breakdown)
       end

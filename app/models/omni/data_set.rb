@@ -4,14 +4,18 @@ module Omni
   class DataSet < ActiveRecord::Base
     db_magic connection: :omni
 
+    FEEDS = 'feeds'
+    WEB = 'web'
+    NONE = 'none'
+
     has_many :test_data_values
     has_many :data_type_tags
     belongs_to :data_type
     belongs_to :source
 
-    scope :feeds, -> { where(configuration: 'feeds') }
-    scope :web, -> { where(configuration: 'web') }
-    scope :none_or_web, -> { where(configuration: %w(none web)) }
+    scope :feeds, -> { where(configuration: FEEDS) }
+    scope :web, -> { where(configuration: WEB) }
+    scope :none_or_web, -> { where(configuration: [NONE, WEB]) }
 
     scope :by_state, -> (state) { where('state = ?', state) }
     scope :feeds_by_state, -> (state) { feeds.by_state(state) }

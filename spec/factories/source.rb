@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :source, class: Omni::Source do
-    name 'Foo'
+    sequence(:name) { |n| n }
   end
 end
