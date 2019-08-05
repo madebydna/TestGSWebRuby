@@ -47,15 +47,16 @@ module Omni
     end
 
     def self.common_all_query(state)
-      select(required_keys_db_mapping.values).common_query.merge(DataSet.by_state(state)).default_proficiency
+      common_query.merge(DataSet.by_state(state)).default_proficiency
     end
 
     def self.common_feeds_query(state)
-      select(required_keys_db_mapping).common_query.merge(DataSet.feeds_by_state(state))
+      common_query.merge(DataSet.feeds_by_state(state))
     end
 
     def self.common_query
-      joins(data_set: [:data_type, :source])
+      select(required_keys_db_mapping.values)
+          .joins(data_set: [:data_type, :source])
           .with_data_type_tags
           .with_breakdowns
           .with_breakdown_tags
