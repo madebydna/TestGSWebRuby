@@ -32,6 +32,18 @@ module Omni
           .active
     end
 
+    def self.with_data_type_tags
+      joins("join data_type_tags on data_type_tags.data_type_id = data_types.id")
+    end
+
+    def self.with_breakdowns
+      joins("left join breakdowns on breakdown_id = breakdowns.id")
+    end
+
+    def self.with_breakdown_tags
+      joins("left join breakdown_tags on breakdown_tags.breakdown_id = breakdowns.id")
+    end
+
     def self.required_keys_db_mapping
       {
           value: "value",
@@ -47,18 +59,6 @@ module Omni
           breakdown_tags: "breakdown_tags.tag as breakdown_tags",
           breakdown_names: "breakdowns.name as breakdown_names"
       }
-    end
-
-    def self.with_data_type_tags
-      joins("join data_type_tags on data_type_tags.data_type_id = data_types.id")
-    end
-
-    def self.with_breakdowns
-      joins("left join breakdowns on breakdown_id = breakdowns.id")
-    end
-
-    def self.with_breakdown_tags
-      joins("left join breakdown_tags on breakdown_tags.breakdown_id = breakdowns.id")
     end
 
   end
