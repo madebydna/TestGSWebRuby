@@ -49,7 +49,7 @@ describe Omni::TestDataValue do
   describe ".common_feeds_query(state)" do
     it 'returns objects for feeds' do
       result = Omni::TestDataValue.common_feeds_query(school.state)
-      expect(result.first.configuration).to eq Omni::DataSet::FEEDS
+      expect(result.map(&:configuration)).to match_array([Omni::DataSet::FEEDS])
     end
   end
 
