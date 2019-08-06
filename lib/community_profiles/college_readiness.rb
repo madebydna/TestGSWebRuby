@@ -53,6 +53,13 @@ module CommunityProfiles
     def handle_ACT_SAT_to_display!(hash)
       act_content = enforce_latest_year_school_value_for_data_types!(hash, ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY)
       sat_content = enforce_latest_year_school_value_for_data_types!(hash, SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY)
+
+      # JT-8787: Displayed ACT & SAT data must be within 2 years of one another, otherwise hide the older data type
+      if act_content && sat_content && ((act_content - sat_content).abs > 2)
+        act_content > sat_content ? 
+          remove_crdc_breakdown!(hash, SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY) :
+          remove_crdc_breakdown!(hash, ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY)
+      end
       if act_content || sat_content
         remove_crdc_breakdown!(hash, ACT_SAT_PARTICIPATION, ACT_SAT_PARTICIPATION_9_12)
       else
@@ -81,16 +88,19 @@ module CommunityProfiles
       end
     end
 
-    # TODO Create method to handle ACT_SAT_PARTICIPATION  -  Instead of returning boolean
+    # TODO Create method to handle ACT_SAT_PARTICIPATION
+    # Assuming we have >= 1 year(s)' worth of school_values for a given data type,
+    # this will return the most recent year (i.e., "max year") for which we have data
+    # and set all previous years' school_values to nil
     def enforce_latest_year_school_value_for_data_types!(hash, *data_types)
-      return_value = false
+      return_value = nil
       data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
         tds.all_subjects? && tds.all_students?
       end.flatten
       max_year = data_type_hashes.map { |dts| dts.year }.max
       data_type_hashes.each do |h|
         if school_value_present?(h["school_value_#{max_year}"])
-          return_value = true
+          return_value = max_year
         else
           h.school_value = nil if h.respond_to?(:school_value)
         end
