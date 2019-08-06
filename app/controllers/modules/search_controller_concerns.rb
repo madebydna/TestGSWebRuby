@@ -109,7 +109,6 @@ module SearchControllerConcerns
       offset: offset,
       limit: limit,
       sort_name: sort_name,
-      with_rating: with_rating,
       test_scores_rating: breakdown.present? ? (1..10).to_a : nil,
       rating_subgroup: (/^all\b/i.match?(breakdown) ? nil : breakdown),
       csa_years: csa_years.presence,

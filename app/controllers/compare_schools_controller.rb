@@ -66,10 +66,6 @@ class CompareSchoolsController < ApplicationController
     default_limit
   end
 
-  def with_rating
-    true
-  end
-
   def default_limit
     100
   end
