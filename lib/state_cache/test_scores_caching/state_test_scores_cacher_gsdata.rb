@@ -86,6 +86,6 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
   end
 
   def state_result(result)
-    state_results_hash[DataValue.datatype_breakdown_year(result)]
+    state_results_hash[Omni::TestDataValue.datatype_breakdown_year(result)]
   end
 end
