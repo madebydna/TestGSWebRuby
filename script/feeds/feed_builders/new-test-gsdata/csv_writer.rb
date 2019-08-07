@@ -11,12 +11,21 @@ module Feeds
       HEADERS = %w(test-abbrv universal-id year subject grade score proficiency-band number-tested)
       HEADERS_DESCRIPTION = %w(test-name test-abbrv scale most-recent-year description)
 
+
+# For test data we need to rename the flat files and build the description files which are only used as flat files.
+# naming gets confusing
+# The content files with the test scores is renamed to include results in the file name for flat files
+# The original name is now used by the descriptions in the flat files.
+# subgroup content has the same file name for xml and flat.
       def initialize(data_reader, output_path)
-        @write_description_file = true
         @feed_file_path = output_path
+        if output_path.include? FEED_NAME_MAPPING['new_test_gsdata']
+          @write_description_file = true
+          @feed_file_path = output_path.gsub(FEED_NAME_MAPPING['new_test_gsdata'], FEED_NAME_MAPPING['new_test_gsdata_csv'])
+          @data_for_test_description_file = []
+          @feed_file_path_description = output_path.gsub(FEED_NAME_MAPPING['new_test_gsdata'], FEED_NAME_MAPPING['new_test_gsdata_description_csv'])
+        end
         @data_reader = data_reader
-        @data_for_test_description_file = []
-        @feed_file_path_description = @feed_file_path.gsub(FEED_NAME_MAPPING['new_test_gsdata'], FEED_NAME_MAPPING['new_test_gsdata_description'])
       end
 
       def write_feed
