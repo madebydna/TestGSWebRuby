@@ -21,7 +21,6 @@ module Feeds
           'new_test_gsdata' => 'local-gs-new-test-feed',
           'new_test_gsdata_csv' => 'local-gs-new-test-result-feed',
           'new_test_subgroup_gsdata' => 'local-gs-new-test-subgroup-feed',
-          'new_test_gsdata_description_csv' => 'local-gs-new-test-feed',
           'official_overall' => 'local-gs-official-overall-rating-feed',
           'directory_feed' => 'local-greatschools-feed',
           'google_feed' => 'local-google-feed',

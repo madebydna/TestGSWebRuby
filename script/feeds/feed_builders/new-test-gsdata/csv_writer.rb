@@ -23,7 +23,7 @@ module Feeds
           @write_description_file = true
           @feed_file_path = output_path.gsub(FEED_NAME_MAPPING['new_test_gsdata'], FEED_NAME_MAPPING['new_test_gsdata_csv'])
           @data_for_test_description_file = []
-          @feed_file_path_description = output_path.gsub(FEED_NAME_MAPPING['new_test_gsdata'], FEED_NAME_MAPPING['new_test_gsdata_description_csv'])
+          @feed_file_path_description = output_path
         end
         @data_reader = data_reader
       end
