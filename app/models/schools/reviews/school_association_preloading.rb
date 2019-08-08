@@ -2,22 +2,22 @@
 module SchoolAssociationPreloading
 
   def self.extended(object)
-    unless object.is_a?(ActiveRecord::Relation)
+    unless valid_object_type?(object)
       raise ArgumentError.new(
-              "SchoolAssociationPreloading must be mixed into an ActiveRecord relation. "\
+              "SchoolAssociationPreloading must be mixed into an ActiveRecord relation or an Enumerable object. "\
               "Attempted to mix it into a #{object.class}"
             )
     end
-    unless object.klass.method_defined?(:state) || object.klass.attribute_method?("state")
+    unless instance_responds_to_state?(object)
       raise ArgumentError.new(
-              "SchoolAssociationPreloading must be mixed into ActiveRecord models that respond to .state and .school_id. "\
-              "#{object.klass} does not respond to .state"
+              "SchoolAssociationPreloading must be mixed into an ActiveRecord model or Enumerable whose members respond to .state and .school_id. "\
+              "#{identify_object(object)} does not respond to .state"
             )
     end
-    unless object.klass.method_defined?(:school_id) || object.klass.attribute_method?("school_id")
+    unless instance_responds_to_school_id?(object)
       raise ArgumentError.new(
-              "SchoolAssociationPreloading must be mixed into ActiveRecord models that respond to .state and .school_id. "\
-              "#{object.klass} does not respond to .school_id"
+              "SchoolAssociationPreloading must be mixed into an ActiveRecord model or Enumerable whose members respond to .school_id. "\
+              "#{identify_object(object)} does not respond to .school_id"
             )
     end
   end
@@ -52,4 +52,23 @@ module SchoolAssociationPreloading
     self
   end
 
+  def self.identify_object(object)
+    object.is_a?(ActiveRecord::Relation) ? object.klass.name : object.first.class.name
+  end
+
+  def self.valid_object_type?(object)
+    object.is_a?(ActiveRecord::Relation) || object.is_a?(Enumerable)
+  end
+
+  def self.instance_responds_to_state?(object)
+    object.is_a?(ActiveRecord::Relation) ? 
+      (object.klass.method_defined?(:state) || object.klass.attribute_method?("state")) : 
+      (object.first.blank? || object.first.respond_to?(:state))
+  end
+
+  def self.instance_responds_to_school_id?(object)
+    object.is_a?(ActiveRecord::Relation) ? 
+      (object.klass.method_defined?(:school_id) || object.klass.attribute_method?("school_id")) : 
+      (object.first.blank? || object.first.respond_to?(:school_id))
+  end
 end
