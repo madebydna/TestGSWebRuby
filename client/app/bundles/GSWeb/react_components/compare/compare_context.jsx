@@ -247,8 +247,7 @@ class CompareProvider extends React.Component {
       limit: 100,
       distance: props.distance,
       extras: ["summary_rating", "enrollment", "review_summary", "saved_schools", "pinned_school", "ethnicity_test_score_rating", "distance"],
-      locationLabel: props.locationLabel,
-      with_rating: true
+      locationLabel: props.locationLabel
     };
   }
 

@@ -1,5 +1,6 @@
 class LeadGenController < ApplicationController
   protect_from_forgery with: :exception
+  after_action :allow_iframe, only: :show
   layout false
 
   def show
@@ -43,5 +44,9 @@ class LeadGenController < ApplicationController
 
   def grade_level
     lead_gen_params[:grade_level]
+  end
+
+  def allow_iframe
+    response.headers.except! 'X-Frame-Options'
   end
 end

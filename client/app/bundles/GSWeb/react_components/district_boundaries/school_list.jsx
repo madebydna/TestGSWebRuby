@@ -13,6 +13,7 @@ import {
 import DistrictBoundariesLegend from './district_boundaries_legend';
 import SpinnyWheel from '../spinny_wheel';
 import { getHomesForSaleHref } from '../../util/school';
+import unratedSchoolIcon from 'school_profiles/owl.png';
 
 class SchoolList extends React.Component {
   static defaultProps = {
@@ -48,6 +49,11 @@ class SchoolList extends React.Component {
   }
 
   renderRating(rating) {
+    if (!rating) {
+      return (
+        <img alt="Owl icon for unrated school" src={unratedSchoolIcon} />
+      );
+    }
     const className = `circle-rating--small circle-rating--${  rating}`;
     return (
       <div className={className}>
@@ -70,7 +76,7 @@ class SchoolList extends React.Component {
     const homesForSaleHref = getHomesForSaleHref(school.state, school.address, utmCampaignCode);
     return (
       <li key={school.state + school.id} className={liClass}>
-        <span>{school.rating && this.renderRating(school.rating)}</span>
+        <span>{this.renderRating(school.rating)}</span>
         <span>
           <a href={school.links.profile} className="name">
             {school.name}

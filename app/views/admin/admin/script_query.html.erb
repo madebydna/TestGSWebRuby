@@ -14,7 +14,7 @@
             <td><%= script.filename %></td>
             <td><%= script.arguments %></td>
             <td><%= script.start.to_formatted_s(:long_ordinal) %></td>
-            <td>Running for <%= (Time.now.utc - script.start).round(0) %> seconds long</td>
+            <td>Running for <%= time_ago_in_words(script.start) %>.</td>
           </tr>
           <% end %>
         </tbody>

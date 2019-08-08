@@ -176,7 +176,6 @@ class WidgetController < ApplicationController
       q: q,
       offset: offset,
       limit: limit,
-      with_rating: true,
       sort_name: 'rating'
     )
   end

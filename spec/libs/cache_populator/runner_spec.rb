@@ -13,10 +13,17 @@ describe CachePopulator::Runner do
     end
   end
 
+  let(:tempfile_with_blank_lines) do
+    open(tempfile_1) do |f|
+      f << "\n"
+      f << "\n"
+    end
+  end
+
   let(:subject) { CachePopulator::Runner.new(tempfile_1.path) }
   let(:line_as_hash) { { 'type' => 'state', 'values' => 'ca,hi', 'cache_keys' => 'foo,bar'} }
 
-  context "#setup_cacher" do
+  describe "#setup_cacher" do
     it "returns a StateCachePopulator if type = state" do
       cacher = subject.setup_cacher(line_as_hash)
       expect(cacher).to be_a(CachePopulator::StateCachePopulator)
@@ -46,7 +53,7 @@ describe CachePopulator::Runner do
     end
   end
 
-  context "#run" do
+  describe "#run" do
 
     it "should call respective cache populator class by line" do
       state_populator = instance_double(CachePopulator::StateCachePopulator, run: 0, valid?: true)
@@ -57,9 +64,19 @@ describe CachePopulator::Runner do
       expect(CachePopulator::SchoolCachePopulator).to receive(:new).with(values: "ca:1,2,3", cache_keys: "ratings").and_return(school_populator)
       subject.run
     end
+
+    it "should ignore blank lines" do
+      open(tempfile_1) do |f|
+        f << "\n"
+        f << "\n"
+      end
+      allow(subject).to receive(:run_instantiated_cachers).and_return(nil)
+      subject.run
+      expect(subject.instantiated_cachers.find{|k,v| v.is_a?(CachePopulator::PopulatorError)}).to be_nil
+    end
   end
 
-  context "#run with errors" do
+  describe "#run with errors" do
 
     after { tempfile_with_errors.unlink }
 
@@ -72,7 +89,6 @@ describe CachePopulator::Runner do
         file.close
       end
     end
-
 
     it "fails fast" do
       runner = CachePopulator::Runner.new(tempfile_with_errors.path) 
