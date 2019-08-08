@@ -10,7 +10,6 @@ module Omni
     DISTRICT_ENTITY = 'district'
     SCHOOL_ENTITY = 'school'
     TAGS = %w(rating summary_rating_weight)
-    WHITELISTED_DATA_TYPES = %w(151 155 156 157 158 159 160 175 176 177 178 179 180 181 182 183 184 185 186 187)
 
     belongs_to :data_set
     belongs_to :breakdown
@@ -28,7 +27,7 @@ module Omni
           .with_breakdown_tags
           .merge(DataSet.none_or_web_by_state(state))
           .where(data_type_tags: { tag: TAGS })
-          .where(data_types: { id: WHITELISTED_DATA_TYPES })
+          .where(data_types: { id: RatingsCaching::GsdataRatingsCacher::WHITELISTED_DATA_TYPES })
           .where(gs_id: id)
           .where("breakdowns.id != 0")
           .school_entity
