@@ -30,6 +30,7 @@ module Omni
           .where(data_type_tags: { tag: TAGS })
           .where(data_types: { id: WHITELISTED_DATA_TYPES })
           .where(gs_id: id)
+          .where("breakdowns.id != 0")
           .school_entity
           .active
     end
