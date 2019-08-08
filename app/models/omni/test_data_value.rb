@@ -57,6 +57,7 @@ module Omni
     def self.common_query
       select(required_keys_db_mapping.values)
           .joins(data_set: [:data_type, :source])
+          .joins(:proficiency_band)
           .with_data_type_tags
           .with_breakdowns
           .with_breakdown_tags
@@ -97,6 +98,7 @@ module Omni
           grade: "grade",
           cohort_count: "cohort_count",
           proficiency_band_id: "proficiency_band_id",
+          proficiency_band_name: "proficiency_bands.name as proficiency_band_name",
           school_id: "gs_id as school_id",
           data_type_id: "data_types.id as data_type_id",
           name: "data_types.name",
@@ -108,6 +110,7 @@ module Omni
           source_name: "sources.name as source_name",
           breakdown_tags: "breakdown_tags.tag as breakdown_tags",
           breakdown_names: "breakdowns.name as breakdown_names",
+          breakdown_id_list: "breakdowns.id as breakdown_id_list",
           academic_names: "subjects.name as academic_names",
           academic_tags: "subject_tags.tag as academic_tags",
       }
