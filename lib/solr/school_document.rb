@@ -47,6 +47,7 @@ module Solr
             :academic_progress_rating,
             :college_readiness_rating,
             :equity_overview_rating,
+            :student_progress_rating,
           ].each do |rating_name|
             array << new_field(rating_name, type: FieldTypes::INTEGER) { school.send(rating_name) }
           end
