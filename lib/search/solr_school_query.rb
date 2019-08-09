@@ -91,6 +91,7 @@ module Search
       [
         'test_scores_rating',
         'academic_progress_rating',
+        'student_progress_rating',
         'college_readiness_rating',
         'advanced_courses_rating',
         'equity_overview_rating',

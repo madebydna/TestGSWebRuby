@@ -128,7 +128,8 @@ describe SearchTableConcerns do
 
     it 'returns the english/math remediation headers for tableview if English/Math is present and not overall data' do
       remediation_header = dummy_controller2.generate_remediation_headers
-      expect(remediation_header.length)&.to eq(2)
+      expect(remediation_header.length).to eq(2)
+      expect(remediation_header.map {|x| x.fetch(:key, nil)}).to eq(['percentCollegeRemediationEnglish','percentCollegeRemediationMath'])
     end
 
     it 'return nil if there isn\'t instance of overall, math, or english as a remediation subject' do
@@ -138,9 +139,16 @@ describe SearchTableConcerns do
   end
 
   describe '#mode' do
-    it 'picks the most frequent repeated value' do
-      array_of_integers = [77, 77, 89, 77]
-      expect(dummy_controller.mode(array_of_integers)).to eq(77)
+    context 'picks the most frequent repeated value' do
+      it "picks the most frequent number" do
+        array_of_integers = [77, 77, 89, 77]
+        expect(dummy_controller.mode(array_of_integers)).to eq(77)
+      end
+
+      it "picks the most frequent word" do
+        array_of_words = ['cat', 'dog', 'cat', 'mouse']
+        expect(dummy_controller.mode(array_of_words)).to eq('cat')
+      end
     end
   end
 end

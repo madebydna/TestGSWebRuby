@@ -225,6 +225,10 @@ module CachedRatingsMethods
     rating_for_key('Student Progress Rating')
   end
 
+  def student_progress_rating
+    rating_for_key('Student Progress Rating')
+  end
+
   def student_growth_rating_year
     rating_year_for_key('Student Progress Rating')
   end
