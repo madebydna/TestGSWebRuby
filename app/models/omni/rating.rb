@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'ruby-prof'
-
 module Omni
   class Rating < ActiveRecord::Base
     db_magic connection: :omni
@@ -29,7 +27,6 @@ module Omni
           .where(data_type_tags: { tag: TAGS })
           .where(data_types: { id: RatingsCaching::GsdataRatingsCacher::WHITELISTED_DATA_TYPES })
           .where(gs_id: id)
-          .where("breakdowns.id != 0")
           .school_entity
           .active
     end
