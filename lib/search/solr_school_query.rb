@@ -64,7 +64,8 @@ module Search
         if district_id && district_id > 0
           array << eq(:school_district_id, district_id)
         elsif city.present?
-          array << eq(:city, city.downcase)
+          array << eq(:city_untokenized, city.downcase)
+          # array << eq(:city, city.downcase)
         end
 
         if school_keys.present?
@@ -90,6 +91,7 @@ module Search
       [
         'test_scores_rating',
         'academic_progress_rating',
+        'student_progress_rating',
         'college_readiness_rating',
         'advanced_courses_rating',
         'equity_overview_rating',

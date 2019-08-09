@@ -2,12 +2,15 @@
 
 module SearchTableConcerns
 
-  ACADEMIC_HEADER_NAMES = ['Test Scores Rating', 'Academic Progress Rating', 'College Readiness Rating', 'Advanced Courses Rating', 'Equity Overview Rating']
   OVERVIEW_HEADER_NAMES = ['Type', 'Grades', 'Total students enrolled', 'Students per teacher', 'Reviews', 'District']
   COLLEGE_REMEDIATION_HEADER_NAMES = {"english": "Remediation: English", "math": "Remediation: Math"}
 
+  def academic_header_names
+    ['Test Scores Rating', growth_progress_rating_header, 'College Readiness Rating', 'Advanced Courses Rating', 'Equity Overview Rating']
+  end
+  
   def academic_header_hash
-    ACADEMIC_HEADER_NAMES.map do |title|
+    academic_header_names.map do |title|
       tooltip = title.gsub('Rating', 'Description')
       {
           key: title,
@@ -16,6 +19,18 @@ module SearchTableConcerns
           sortName: title.downcase.gsub(" ", "_")
       }
     end
+  end
+
+  def growth_progress_rating_header
+    growth_data_state? ? 'Student Progress Rating' : 'Academic Progress Rating'
+  end
+
+  # This method checks to see if the the array of serialized schools is a growth state 
+  # (with a Student Progress Rating) or a growth proxy state (with a Academic Progress Rating)
+  # Return a boolean if any school from the  set of serialized schools has a Student Progress rating
+  # indicating that the state is a growth data state
+  def growth_data_state?
+    serialized_schools.any? {|s| s.fetch(:subratings, {}).fetch('Student Progress Rating', false)}
   end
 
   def equity_header_hash(schools)
@@ -126,7 +141,7 @@ module SearchTableConcerns
 
     persistence_state_average = mode(persistence_data&.map(&with_state_averages))
     enrollment_state_average = mode(enrollment_data&.map(&with_state_averages))
-    
+
     [
       {
           key: 'clarifiedSchoolType',

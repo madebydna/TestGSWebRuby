@@ -225,6 +225,10 @@ module CachedRatingsMethods
     rating_for_key('Student Progress Rating')
   end
 
+  def student_progress_rating
+    rating_for_key('Student Progress Rating')
+  end
+
   def student_growth_rating_year
     rating_year_for_key('Student Progress Rating')
   end
@@ -380,6 +384,7 @@ module CachedRatingsMethods
       {
           :'Test Scores Rating' => :test_scores_rating,
           :'Academic Progress Rating' => :academic_progress_rating,
+          :'Student Progress Rating' => :student_growth_rating,
           :'College Readiness Rating' => :college_readiness_rating,
           :'Advanced Courses Rating' => :courses_rating,
           :'Equity Overview Rating' => :equity_overview_rating

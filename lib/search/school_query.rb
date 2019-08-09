@@ -8,7 +8,7 @@ module Search
     include UrlHelper
 
     attr_accessor :q, :district_id, :district_name, :location_label, :city, :level_codes, :entity_types, :id, :lat,
-                  :lon, :radius, :with_rating, :ratings, :school_keys, :test_scores_rating, :rating_subgroup, :csa_years
+                  :lon, :radius, :ratings, :school_keys, :test_scores_rating, :rating_subgroup, :csa_years
     attr_reader :state
 
     def initialize(
@@ -27,7 +27,6 @@ module Search
       radius: nil,
       sort_name: nil,
       sort_direction: nil,
-      with_rating: false,
       ratings: [],
       test_scores_rating: nil,
       rating_subgroup: nil,
@@ -51,7 +50,6 @@ module Search
       self.sort_direction = sort_direction
       self.limit = limit
       self.offset = offset
-      self.with_rating = with_rating
       self.ratings = ratings
       self.school_keys = school_keys
       self.test_scores_rating = test_scores_rating
@@ -92,6 +90,7 @@ module Search
       state_url = state_url(state_params(state_name).merge({trailing_slash: true})) if state
       params = {
         count: results.total,
+        count_delimited: results.total.to_s(:delimited, delimiter: ','),
         first: results.index_of_first_result,
         last: results.index_of_last_result,
         city: city,
@@ -124,6 +123,7 @@ module Search
       t(
         'showing_number_of_schools_found',
         count: results.total,
+        count_delimited: results.total.to_s(:delimited, delimiter: ','),
         first: results.index_of_first_result,
         last: results.index_of_last_result
       )

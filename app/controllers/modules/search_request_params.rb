@@ -314,10 +314,6 @@ module SearchRequestParams
     }[str]
   end
 
-  def with_rating
-    cast_to_boolean(params[:with_rating]&.downcase)
-  end
-
   #myschoollist params
 
   def merge_school_keys

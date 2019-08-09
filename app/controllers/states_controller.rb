@@ -32,7 +32,8 @@ class StatesController < ApplicationController
     @cities = cities_data
     @top_schools = top_rated_schools
     @districts = district_largest.to_hash
-    @school_count = school_count 
+    @school_count = school_levels.try(:fetch, :all, nil).presence || School.within_state(state).count
+    @school_levels = school_levels
     @reviews = reviews_formatted
     @students = students
     gon.dependencies = {
@@ -50,10 +51,6 @@ class StatesController < ApplicationController
     @academics = academics
   end
 
-  def school_count
-    School.on_db(@state[:short]).all.active.count
-  end
-
   def school_state_title
     States.capitalize_any_state_names(@state[:long])
   end
@@ -62,6 +59,7 @@ class StatesController < ApplicationController
     CommunityProfiles::Academics.state_academics_props(state_cache_data_reader)
   end
 
+  # ::SearchControllerConcerns
   def solr_query
     query_type = Search::SolrSchoolQuery
     query_type.new(
@@ -69,7 +67,7 @@ class StatesController < ApplicationController
         level_codes: @level_code.compact,
         limit: default_top_schools_limit,
         sort_name: 'rating',
-        with_rating: 'true',
+        ratings: (1..10).to_a,
         csa_years: @csa_years.presence
     )
   end
@@ -136,7 +134,15 @@ class StatesController < ApplicationController
   end
 
   def state_cache_data_reader
-    @_state_cache_data_reader ||= StateCacheDataReader.new(state, state_cache_keys: ['district_largest','state_characteristics', 'test_scores_gsdata'])
+    @_state_cache_data_reader ||= StateCacheDataReader.new(state)
+  end
+
+  def school_count(key)
+    cache_school_levels.try(:fetch, key, nil)
+  end
+
+  def cache_school_levels
+    state_cache_data_reader.school_levels
   end
 
   private

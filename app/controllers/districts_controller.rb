@@ -38,6 +38,7 @@ class DistrictsController < ApplicationController
 
   private
 
+  # ::SearchControllerConcerns
   def solr_query
     query_type = Search::SolrSchoolQuery
     query_type.new(
@@ -46,7 +47,7 @@ class DistrictsController < ApplicationController
           level_codes: @level_code.compact,
           limit: default_top_schools_limit,
           sort_name: 'rating',
-          with_rating: 'true',
+          ratings: (1..10).to_a,
           csa_years: @csa_years.presence
         )
   end

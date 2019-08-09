@@ -478,7 +478,7 @@ class CollectionConfig < ActiveRecord::Base
         key: tab.to_s,
         display_name: display_names[tab.try(:to_sym)],
         results: {
-          public: solr.breakdown_results(grade_level: School::LEVEL_CODES[tab.to_sym], type: School::LEVEL_CODES[:public]),
+          public: solr.breakdown_results(grade_level: School::LEVEL_CODES[tab.to_sym], type: School::LEVEL_CODES[:public_or_charter]),
           private: solr.breakdown_results(grade_level: School::LEVEL_CODES[tab.to_sym], type: School::LEVEL_CODES[:private])
         }
       }

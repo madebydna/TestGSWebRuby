@@ -39,6 +39,8 @@ class StateCacheResults
         StateCachedDistrictLargestMethods
       when 'test_scores_gsdata'
         StateCachedTestScoresMethods
+      when 'school_levels'
+        StateCachedSchoolLevelsMethods
     end
   end
 

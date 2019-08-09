@@ -7,6 +7,47 @@ describe School do
 
   after(:each) { clean_dbs :ca }
 
+  describe 'scopes' do
+    levels = %w(preschool elementary middle high)
+    types = %w(private public charter)
+
+    types.each do |type|
+      describe ".#{type}_schools" do
+        before do
+          @school = FactoryGirl.create_on_shard(:ca, :school, level_code: 'p,e', type: School::LEVEL_CODES[type.to_sym])
+        end
+
+        it 'returns the school' do
+          expect(School.on_db(:ca).send("#{type}_schools".to_sym)).to include(@school)
+        end
+      end
+    end
+
+    levels.each_with_index do |level, i|
+      describe ".#{level}_schools" do
+        context "with single level" do
+          before do
+            @school = FactoryGirl.create_on_shard(:ca, :school, level_code: School::LEVEL_CODES[level.to_sym], type: 'public')
+          end
+          it 'returns the school' do
+            expect(School.on_db(:ca).send("#{level}_schools".to_sym)).to include(@school)
+          end
+        end
+        context "with multiple levels" do
+          before do
+            l1 = School::LEVEL_CODES[level.to_sym]
+            other_code = levels[i % levels.length - 1].to_sym
+            l2 = School::LEVEL_CODES[other_code]
+            @school = FactoryGirl.create_on_shard(:ca, :school, level_code: [l1,l2].join(',') , type: 'public')
+          end
+          it 'returns the school' do
+            expect(School.on_db(:ca).send("#{level}_schools".to_sym)).to include(@school)
+          end
+        end
+      end
+    end
+  end
+
   describe '#held?' do
     let(:school) { FactoryGirl.build(:school) }
     it 'should return true because the school is held' do

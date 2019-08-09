@@ -18,6 +18,7 @@ export const anchorObject = {
   'Two or more races': "#Race_ethnicity",
   "Test Scores Rating": "#Test_scores",
   "Academic Progress Rating": "#Academic_progress",
+  "Student Progress Rating": "#Student_progress",
   "College Readiness Rating": "#College_readiness",
   "Advanced Courses Rating": "#Advanced_courses",
   "Equity Overview Rating": "#Equity_overview"

@@ -25,6 +25,7 @@ module CachePopulator
 		def run
 			@instantiated_cachers = {}
 			CSV.foreach(file, headers: true, col_sep: "\t", quote_char: "\x00") do |line|
+				next if line.blank?
 				cacher = setup_cacher(line)
 				if cacher.blank?
 						instantiated_cachers[$INPUT_LINE_NUMBER] = PopulatorError.new("Cacher type not recognized: #{line['type']}. Type must be one of: #{CACHER_TYPES.keys.join(', ')}.")

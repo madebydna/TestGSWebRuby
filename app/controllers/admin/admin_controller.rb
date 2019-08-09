@@ -13,6 +13,21 @@ class Admin::AdminController < ApplicationController
 
   end
 
+  def script_query
+    @last_script_ran = ScriptLogger.where.not(output:nil).order(end: :desc).limit(limit)
+    @range_of_num_of_scripts = ScriptLogger.all.count > 10 ? 10 : ScriptLogger.all.count
+    @current_running_script = ScriptLogger.where(output:nil).order(end: :desc)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def limit
+    params[:limit].to_i == 0 ? 5 : params[:limit].to_i
+  end
+
   def omniture_test
     gon.pagename = 'omniture_test'
     gon.omniture_pagename = 'omniture_test'

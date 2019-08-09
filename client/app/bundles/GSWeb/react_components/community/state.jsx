@@ -8,6 +8,7 @@ import InfoBox from 'react_components/school_profiles/info_box';
 import SearchBox from 'react_components/search_box'
 import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
+import SchoolBrowseLinks from './school_browse_links';
 import CsaTopSchools from './csa_top_schools';
 import CityBrowseLinks from './city_browse_links';
 import DistrictsInState from "./districts_in_state";
@@ -32,7 +33,8 @@ class State extends React.Component {
     districts: [],
     reviews: [],
     cities: [],
-    csa_module: false
+    csa_module: false,
+    schoolCount: 0
   };
 
   static propTypes = {
@@ -49,6 +51,7 @@ class State extends React.Component {
     locality: PropTypes.object.isRequired,
     cities: PropTypes.array,
     schoolCount: PropTypes.number,
+    school_levels: PropTypes.object,
     csa_module: PropTypes.bool,
     students: PropTypes.object
   };
@@ -165,6 +168,15 @@ class State extends React.Component {
                 size={this.props.viewportSize}
                 locality={this.props.locality}
                 schoolLevels={this.props.schools_data.counts}
+              />
+            }
+            browseSchools={
+              this.props.school_levels && 
+              <SchoolBrowseLinks
+                community={this.pageType}
+                locality={this.props.locality}
+                size={this.props.viewportSize}
+                schoolLevels={this.props.school_levels}
               />
             }
             hasStudentDemographicData={this.hasStudentDemographicData()}

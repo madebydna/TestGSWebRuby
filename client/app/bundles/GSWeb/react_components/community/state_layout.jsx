@@ -13,7 +13,8 @@ class StateLayout extends React.Component {
     searchBox: PropTypes.element.isRequired,
     breadcrumbs: PropTypes.element,
     shouldDisplayDistricts: PropTypes.bool,
-    shouldDisplayReviews: PropTypes.bool
+    shouldDisplayReviews: PropTypes.bool,
+    hasSchoolLevelData: PropTypes.bool
   };
 
   constructor(props) {
@@ -104,14 +105,26 @@ class StateLayout extends React.Component {
     )
   }
 
+  renderSchoolLevelData(){
+    if (this.props.browseSchools) {
+      return (
+        <React.Fragment>
+          <div className="modules-title">{t('state.explore_by_type')}</div>
+          { this.props.browseSchools }
+        </React.Fragment>
+      );
+    }
+  }
+
   renderSchools(){
     let { nameLong } = this.props.locality;
-    const browseHeader = t('state.cities_header', { parameters: { nameLong }});
-
+    const browseHeader = t('state.explore_in_state', { parameters: { nameLong }});
+    
     return (
       <div id="schools" className="module-section">
         <div className="modules-title">{browseHeader}</div>
         {this.props.topSchools}
+        {this.renderSchoolLevelData()}
       </div>
     )
   }
