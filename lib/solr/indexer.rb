@@ -26,7 +26,6 @@ module Solr
       return unless indexables.any?
       first_indexable = indexables.next
       first_indexable.class.all_fields.each { |f| @schema.add_field(f) unless @schema.field_exists?(f) }
-      num_of_index = 0
       indexables.each do |indexable| 
         index_one(indexable)
         @num_of_indexed_docs += 1
