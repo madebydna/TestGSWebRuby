@@ -3,6 +3,7 @@
 module Solr
   class Indexer
     attr_reader :client
+    attr_accessor :num_of_indexed_docs
 
     def self.with_solr_url(url)
       new(solr_client: RSolr.connect(url: url), schema: Schema.with_url(url))
@@ -17,6 +18,7 @@ module Solr
     def initialize(solr_client:, schema:nil)
       @client = solr_client
       @schema = schema || Schema.with_rw_client
+      @num_of_indexed_docs = 0
     end
 
     def index(indexables)
@@ -24,7 +26,12 @@ module Solr
       return unless indexables.any?
       first_indexable = indexables.next
       first_indexable.class.all_fields.each { |f| @schema.add_field(f) unless @schema.field_exists?(f) }
-      indexables.each { |indexable| index_one(indexable) }
+      num_of_index = 0
+      indexables.each do |indexable| 
+        index_one(indexable)
+        @num_of_indexed_docs += 1
+      end
+      num_of_indexed_docs
     end
 
     def index_one(indexable)

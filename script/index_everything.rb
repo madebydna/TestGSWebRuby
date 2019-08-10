@@ -28,6 +28,17 @@ solr_url =  if script_args.has_key?(:host)
               ENV_GLOBAL['solr.rw.server.url']
             end
 
+# Start logging
+log_params = {}.tap do |h|
+  h[:states] = states if states
+  h[:host] = host if host
+  h[:port] = port if port
+  h[:core] = core if core
+  h[:should_swap_cores] = should_swap_cores
+  h[:should_wipe_core] = should_wipe_core
+end
+log = ScriptLogger.record_log_instance(log_params)
+
 indexer = 
   if script_args.has_key?(:host)
     Solr::Indexer.with_solr_url(solr_url)
@@ -35,28 +46,38 @@ indexer =
     Solr::Indexer.with_rw_client
   end
 
-indexer.delete_all if should_wipe_core
+begin
+  indexer.delete_all if should_wipe_core
+  num_of_indexed_docs = 0
+  
+  puts "Starting city indexer for states: #{states.join(', ')}"
+  documents = Solr::CityDocument.from_active_cities(states: states)
+  num_of_indexed_docs += indexer.index(documents)
+  indexer.commit
 
-puts "Starting city indexer for states: #{states.join(', ')}"
-documents = Solr::CityDocument.from_active_cities(states: states)
-indexer.index(documents)
-indexer.commit
+  puts "Starting district indexer for states: #{states.join(', ')}"
+  documents = Search::DistrictDocumentFactory.new(states: states).documents
+  num_of_indexed_docs += indexer.index(documents)
+  indexer.commit
 
-puts "Starting district indexer for states: #{states.join(', ')}"
-documents = Search::DistrictDocumentFactory.new(states: states).documents
-indexer.index(documents)
-indexer.commit
-
-puts "Starting school indexer for states: #{states.join(', ')}"
-documents = Search::SchoolDocumentFactory.new(states: states).documents
-indexer.index(documents)
-indexer.commit
+  puts "Starting school indexer for states: #{states.join(', ')}"
+  documents = Search::SchoolDocumentFactory.new(states: states).documents
+  num_of_indexed_docs += indexer.index(documents)
+  indexer.commit
 
 
-indexer.optimize
+  indexer.optimize
 
-if should_swap_cores
-  solr_swap_command_path = "/solr/admin/cores?action=SWAP&core=main&other=prep"
-  require 'open-uri'
-  response = open("http://#{host}:#{port}#{solr_swap_command_path}").read
+  if should_swap_cores
+    solr_swap_command_path = "/solr/admin/cores?action=SWAP&core=main&other=prep"
+    require 'open-uri'
+    response = open("http://#{host}:#{port}#{solr_swap_command_path}").read
+  end
+  
+  log.finish_logging_session(1, "Finished indexing #{num_of_indexed_docs} documents.")
+  puts "Finished indexing #{num_of_indexed_docs} documents."
+
+rescue => e
+  log.finish_logging_session(0, e)
+  abort "Error when running script: #{e.message}."
 end
