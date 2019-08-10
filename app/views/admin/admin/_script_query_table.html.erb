@@ -22,7 +22,7 @@
       <td><%= script.arguments %></td>
       <td><%= script.output %></td>
       <td><%= script.start.to_formatted_s(:long_ordinal) %></td>
-      <td><%= (script.end - script.start).round(0) %> seconds long</td>
+      <td><%= distance_of_time_in_words(script.end - script.start) %></td>
       <td>
         <div class=<%= show_badge %> style=<%= color %>></div>
       </td>
