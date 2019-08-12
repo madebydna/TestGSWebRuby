@@ -30,10 +30,10 @@ solr_url =  if script_args.has_key?(:host)
 
 # Start logging
 log_params = {}.tap do |h|
-  h[:states] = states if states
-  h[:host] = host if host
-  h[:port] = port if port
-  h[:core] = core if core
+  h[:states] = states
+  h[:host] = host
+  h[:port] = port
+  h[:core] = core
   h[:should_swap_cores] = should_swap_cores
   h[:should_wipe_core] = should_wipe_core
 end
