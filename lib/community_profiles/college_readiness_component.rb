@@ -181,7 +181,7 @@ module CommunityProfiles
         formatting = data_type_formatting_map[data_type] || [:round_unless_less_than_1, :percent]
         visualization = data_type_visualization_map[data_type]
         range = data_type_range_map[data_type]
-        state = entity_type == 'district' ? @cache_data_reader&.district.state : @cache_data_reader.state
+        state = entity_type == 'district' ? @cache_data_reader.district.state : @cache_data_reader.state
         RatingScoreItem.new.tap do |item|
           item.label = data_label(data_type)
           item.data_type = data_type
