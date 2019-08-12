@@ -32,17 +32,7 @@ solr_url =  if script_args.has_key?(:host)
             end
 
 # Start logging
-log_params = {}.tap do |h|
-  h[:states] = states
-  h[:ids] = ids
-  h[:host] = host
-  h[:port] = port
-  h[:core] = core
-  h[:should_swap_cores] = should_swap_cores
-  h[:should_wipe_core] = should_wipe_core
-  h[:delete] = script_args[:delete] if script_args[:delete] #delete documents base on specific criteria
-end
-log = ScriptLogger.record_log_instance(log_params)
+log = ScriptLogger.record_log_instance(script_args)
 
 begin
   indexer = 
@@ -69,5 +59,5 @@ begin
 
 rescue => e
   log.finish_logging_session(0, e)
-  abort "Error when running script: #{e.message}"
+  raise
 end
