@@ -33,10 +33,10 @@ class QueueFile
   end
 
   def write_file(row)
-    school_or_district = row[:entity_level]
+    school_or_district = row[:entity_type]
     original_id = 0
-    if row[:entity_level] == 'school' and row[:gs_district_id]
-      district_id = row[:gs_district_id]
+    if row[:entity_type] == 'school' and row[:district_id]
+      district_id = row[:district_id]
     else
       district_id = 0
     end
@@ -49,7 +49,7 @@ class QueueFile
   end
 
   def write_name(row)
-    key = :"#{row[:entity_level]}_name"
+    key = :"#{row[:entity_type]}_name"
     if row[key].nil?
       name = "TEST LOAD #{row[:entity_level]} #{row[:state_id]}"
     else

@@ -32,7 +32,7 @@ module GS
       ENTITIES = %w(school state district)
       COLUMN_ORDER = [ :year, :entity_type, :gs_id, :state_id,
                        :district_name, :school_name, :test_data_type, :test_data_type_id, :grade,
-                       :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
+                       :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band, :proficiency_band_id,
                        :number_tested, :value]
       COLUMNS = %w[
         entity_type gs_id
@@ -84,10 +84,6 @@ module GS
         build_file_output_steps
         output_files_root_step
       end
-
-      # def config_step
-      #   @config_step ||= LoadConfigFile.new config_output_file, config_hash
-      # end
 
       def summary_output_step
         @summary_output_step ||= SummaryOutput.new(%i[
@@ -162,10 +158,6 @@ module GS
         shared_leaf.add(column_value_report.build_graph)
         @runnable_steps += column_value_report.runnable_steps
         @runnable_steps << summary_output_step
-        # shared_leaf.transform("Adds data_type_id column for config file", WithBlock) do |row|
-        #  row[:data_type_id] = row[:test_data_type_id]
-        #  row
-        # end.add(config_step)
       end
 
       def context_for_sources
@@ -177,9 +169,8 @@ module GS
         @sources.each do |source|
           source.run(context_for_sources)
         end
-        # @runnable_steps << config_step
         @runnable_steps.each(&:run)
-        zip_output_files
+        #zip_output_files
         GS::ETL::Logging.logger.finish if GS::ETL::Logging.logger
       end
 
@@ -214,7 +205,7 @@ module GS
 
       def zip_output_files
         ENTITIES.each do |entity|
-          `gzip -f "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql"`
+          `while lsof "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql" >/dev/null; do sleep 1; done; gzip -f "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql"`
         end
       end
 
@@ -238,7 +229,7 @@ module GS
         node = output_files_root_step.add_step('Keep only state rows for source', KeepRows, :entity_type, 'state')
         sources = {}
         node = node.transform 'Find unique source', WithBlock do |row|
-            source_key = [config_hash[:date_valid],row[:notes],row[:description]]
+            source_key = [row[:date_valid],row[:notes],row[:description]]
             unless sources[source_key]
               row[:entity_type] = 'source' 
               sources[source_key] = true
@@ -269,6 +260,7 @@ module GS
             row[:gs_id] = state_ids[config_hash[:state].upcase]
           end
           row
+          # puts "#{row[:year]},#{row[:grade]},#{row[:subject_id]},#{row[:breakdown_id]}"
         end     
         node = node.transform 'Check n_tested"', WithBlock do |row|
           row[:number_tested] = 'NULL' if row[:number_tested].nil?
@@ -325,8 +317,6 @@ module GS
         
         queue_hash = {}
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
-          row[:gs_district_id] = district_ids[row[:district_id]]
-          row[:district_name] = 'NULL'
           if school_ids[row[:state_id]].nil? and !queue_hash.key?(row[:state_id])
             queue_hash[row[:state_id]] = true
             @queue_file.write_queue(row)
