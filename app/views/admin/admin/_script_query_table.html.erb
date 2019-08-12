@@ -1,12 +1,3 @@
-<h3>Finished Script Log Table</h3>
-<h4>DB Host: <%= ENV_GLOBAL["db_host"] %> 
-  <span style="margin-left:10px;">
-    <%= select_tag :scripts, options_for_select(
-      (1..@range_of_num_of_scripts).map {|x| [x, admin_script_query_path(:limit => x.to_i)]}
-      ), prompt: "Displayed Logs",  id: "script-logger"
-    %>
-  </span>
-</h4>
 <table class="table table-striped">
   <tbody>
     <% %w(PID Username Filename Arguments Output StartTime Elapsed Succeeded).each do |header| %>
@@ -30,16 +21,3 @@
     <% end %>
   </tbody>
 </table>
-
-<script>
-  $(function(){
-    $('#script-logger').on('change', function(){
-      return $.ajax({
-        method: 'GET',
-        url: $(this).val(),
-        contentType: "text/javascript",
-        dataType: "script"
-      })
-    })
-  })
-</script>
