@@ -37,8 +37,9 @@ describe FavoriteSchool do
 
   describe '#methods to persists favorite schools for users' do
     before(:each) do
-      clean_dbs :gs_schooldb
+      clean_models(:gs_schooldb, FavoriteSchool)
     end
+
     let(:cristo_hs) { FactoryGirl.build(:cristo_rey_new_york_high_school) }
     let(:head_start) { FactoryGirl.build(:washington_dc_ps_head_start) }
     let(:new_user) { FactoryGirl.build(:verified_user, id: 3) }
