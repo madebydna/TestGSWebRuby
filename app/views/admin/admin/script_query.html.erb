@@ -5,17 +5,17 @@
       <table class="table table-striped">
         <tbody>
           <% %w(PID Username Filename Arguments StartTime Elapsed).each do |header| %>
-          <th><%= header %></th>
+            <th><%= header %></th>
           <% end %>
           <% Array.wrap(@current_running_script).each do |script| %>
-          <tr>
-            <td><%= script.pid %></td>
-            <td><%= script.username %></td>
-            <td><%= script.filename %></td>
-            <td><%= script.arguments %></td>
-            <td><%= script.start.to_formatted_s(:long_ordinal) %></td>
-            <td>Running for <%= time_ago_in_words(script.start) %>.</td>
-          </tr>
+            <tr>
+              <td><%= script.pid %></td>
+              <td><%= script.username %></td>
+              <td><%= script.filename %></td>
+              <td><%= script.arguments %></td>
+              <td><%= script.start.to_formatted_s(:long_ordinal) %></td>
+              <td>Running for <%= time_ago_in_words(script.start) %>.</td>
+            </tr>
           <% end %>
         </tbody>
       </table>

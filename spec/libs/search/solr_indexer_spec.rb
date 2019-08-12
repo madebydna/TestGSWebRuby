@@ -33,6 +33,22 @@ describe Solr::Indexer do
         expect(solr_client_double).to_not have_received(:add)
       end
     end
+    context 'when given a list of indexable documents' do
+      let(:document) { class_double("Document") }
+      let(:indexables) {[document, document, document]}
+      let(:solr_document) {class_double("SolrDocument")}
+
+      it 'returns the number of documents indexed' do
+        allow(indexer).to receive(:index_one).and_return(true)
+        allow(indexables).to receive(:next).and_return(solr_document)
+        # mocked out Schema#add_fields for now
+        allow(solr_document).to receive(:class).and_return(solr_document)
+        allow(solr_document).to receive(:all_fields).and_return(solr_document)
+        allow(solr_document).to receive(:each).and_return(true)
+        subject
+        expect(indexer.num_of_indexed_docs).to eq(3)
+      end
+    end
   end
 
   describe '#delete_all_by_type' do

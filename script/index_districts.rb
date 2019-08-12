@@ -31,21 +31,43 @@ solr_url =  if script_args.has_key?(:host)
               ENV_GLOBAL['solr.rw.server.url']
             end
 
-indexer = 
-  if script_args.has_key?(:host)
-    Solr::Indexer.with_solr_url(solr_url)
-  else
-    Solr::Indexer.with_rw_client
-  end
-          
-indexer.delete_all if should_wipe_core
-
-if script_args[:delete]
-  indexer.delete_all_by_type(Solr::DistrictDocument)
-else
-  documents = Search::DistrictDocumentFactory.new(states: states, ids: ids).documents
-  indexer.index(documents)
+# Start logging
+log_params = {}.tap do |h|
+  h[:states] = states
+  h[:ids] = ids
+  h[:host] = host
+  h[:port] = port
+  h[:core] = core
+  h[:should_swap_cores] = should_swap_cores
+  h[:should_wipe_core] = should_wipe_core
+  h[:delete] = script_args[:delete] if script_args[:delete] #delete documents base on specific criteria
 end
+log = ScriptLogger.record_log_instance(log_params)
 
-indexer.commit
-indexer.optimize
+begin
+  indexer = 
+    if script_args.has_key?(:host)
+      Solr::Indexer.with_solr_url(solr_url)
+    else
+      Solr::Indexer.with_rw_client
+    end
+            
+  indexer.delete_all if should_wipe_core
+
+  if script_args[:delete]
+    indexer.delete_all_by_type(Solr::DistrictDocument)
+  else
+    documents = Search::DistrictDocumentFactory.new(states: states, ids: ids).documents
+    num_of_indexed_docs = indexer.index(documents)
+  end
+
+  indexer.commit
+  indexer.optimize
+
+  log.finish_logging_session(1, "Finished indexing #{num_of_indexed_docs} documents")
+  puts "Finished indexing #{num_of_indexed_docs} documents"
+
+rescue => e
+  log.finish_logging_session(0, e)
+  abort "Error when running script: #{e.message}"
+end
