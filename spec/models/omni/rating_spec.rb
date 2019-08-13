@@ -6,7 +6,7 @@ describe Omni::Rating do
   before { clean_dbs :omni, :ca }
 
   let(:school) { create(:school) }
-  let(:data_type) { create(:data_type, :with_tags, tag: Omni::Rating::TAGS.sample) }
+  let(:data_type) { create(:data_type, :with_tags, tag: Omni::Rating::TAGS.sample, id: RatingsCaching::GsdataRatingsCacher::WHITELISTED_DATA_TYPES.first) }
   let(:source) { create(:source) }
   let(:data_set) { create(:data_set, state: school.state, data_type: data_type, source: source) }
 
