@@ -25,12 +25,15 @@ import cancelCircle from 'icons/cancel-circle.svg';
 // but it may not be worth maintain a list of those schools to prevent matches
 const matchesFiveDigits = string => /(\D|^)\d{5}(\D*$|$)/.test(string);
 
+//Matches three digits minimum
+const matchesThreeDigits = string => /(\D|^)\d{3}(\D*$|$)/.test(string);
+
 // Matches 5 digits + dash or space or no space + 4 digits.
 const matchesFiveDigitsPlusFourDigits = string =>
   /(\D|^)\d{5}(-|\s*)\d{4}(\D|$)/.test(string);
 
 const matchesZip = string =>
-  matchesFiveDigits(string) || matchesFiveDigitsPlusFourDigits(string);
+  matchesFiveDigits(string) || matchesFiveDigitsPlusFourDigits(string) || matchesThreeDigits(string);
 
 const matchesNumbersAsOnlyFirstCharacters = string => /^\W*\d+\s/.test(string);
 
