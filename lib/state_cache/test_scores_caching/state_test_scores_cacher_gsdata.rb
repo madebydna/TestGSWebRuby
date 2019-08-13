@@ -1,13 +1,10 @@
-# frozen_string_literal: trues
+# frozen_string_literal: true
 
 class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
   CACHE_KEY = 'test_scores_gsdata'
 
   def query_results
-    @query_results ||=
-      begin
-        DataValue.find_by_state_and_data_type_tags_and_proficiency_is_one(state, 'state_test', %w(all) )
-      end
+    @query_results ||= Omni::TestDataValue.all_by_state(state)
   end
 
   def build_hash_for_cache
@@ -20,7 +17,6 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
         cache_hash[result_hash[:data_type]] << result_hash.except(*cache_exceptions)
       end
     end
-    # hashes.select {|hash| valid_result_hash? hash }
   end
 
   def cache_exceptions
@@ -81,16 +77,15 @@ class TestScoresCaching::StateTestScoresCacherGsdata < StateCacher
 
   def state_results_hash
     @_state_results_hash ||= begin
-      state_values = DataValue
-                       .find_by_state_and_data_type_tags_and_proficiency_is_one(district.state, DATA_TYPE_TAGS, %w(all) )
+      state_values = Omni::TestDataValue.all_by_state(district.state)
       state_values.each_with_object({}) do |result, hash|
-        state_key = DataValue.datatype_breakdown_year(result)
+        state_key = Omni::TestDataValue.datatype_breakdown_year(result)
         hash[state_key] = result
       end
     end
   end
 
   def state_result(result)
-    state_results_hash[DataValue.datatype_breakdown_year(result)]
+    state_results_hash[Omni::TestDataValue.datatype_breakdown_year(result)]
   end
 end

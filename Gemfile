@@ -135,7 +135,6 @@ group :development do
   gem 'guard-rspec', '= 4.2.9'
   gem 'guard-livereload'
   gem 'spring-commands-rspec'
-  gem 'byebug'
 
   # Profiling toolkit for Rack applications with Rails integration.
   # USED: in development env. See config/initializers/rack_profiler.rb
@@ -180,6 +179,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'byebug'
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
   #gem 'awesome_print', :require => 'ap'
 
