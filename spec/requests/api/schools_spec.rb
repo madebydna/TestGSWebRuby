@@ -79,7 +79,7 @@ describe "Schools API" do
       let(:school) { create_school(:alameda_high_school) }
       before do
         str = 'MULTIPOLYGON(((1 1,1 10,10 10,10 1,1 1)))'
-        SchoolGeometry.connection.execute("insert into school_geometry(state, school_id, ed_level, geom) values('#{school.state}', #{school.id}, 'O', GeomFromText('#{str}'));")
+        create_geo_data(str)
         stub_solr_schools(school)
       end
       let(:coordinates) do
@@ -181,7 +181,7 @@ describe "Schools API" do
     end
 
     it 'Obeys offset param' do
-      count = 1 
+      count = 1
       stub_solr_schools(
         create_school(:alameda_high_school),
         create_school(:bay_farm_elementary_school, name: 'Cristo Rey New York High School'),
@@ -244,7 +244,7 @@ describe "Schools API" do
       let(:school) { create_school(:alameda_high_school) }
       before do
         str = 'MULTIPOLYGON(((1 1,1 10,10 10,10 1,1 1)))'
-        SchoolGeometry.connection.execute("insert into school_geometry(state, school_id, ed_level, geom) values('#{school.state}', #{school.id}, 'O', GeomFromText('#{str}'));")
+        create_geo_data(str)
         stub_solr_schools(school)
       end
       let(:coordinates) do
@@ -299,6 +299,13 @@ describe "Schools API" do
         }
       }.to_json,
       headers: {}
+    )
+  end
+
+  def create_geo_data(str)
+    SchoolGeometry.connection.execute(
+        "insert into school_geometry(state, school_id, ed_level, geom, mx_id)
+         values('#{school.state}', #{school.id}, 'O', GeomFromText('#{str}'), '1');"
     )
   end
 end
