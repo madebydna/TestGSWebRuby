@@ -52,10 +52,6 @@ class MissingDatabaseTranslationChecker
   def initialize
     @config                       = [
       {
-        table:  :'gs_schooldb.data_description',
-        column: :value
-      },
-      {
         table:  :'gs_schooldb.ethnicity',
         column: :name
       },
