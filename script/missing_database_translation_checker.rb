@@ -230,7 +230,7 @@ class MissingDatabaseTranslationChecker
     # Values might be strings, integers, or strings that contain json blobs
     def column_values
       if is_omni?
-        result = DataValue.connection.execute(build_query)
+        result = Omni::TestDataValue.connection.execute(build_query)
       else
         result = ActiveRecord::Base.connection.execute(build_query)
       end
