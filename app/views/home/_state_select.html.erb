@@ -1,8 +1,20 @@
 <div id="home_state_select_wrapper">
-    <p><%= t('home.hero.find-schools-by-state').upcase %></p>
-    <%= select_tag :state_dropdown, options_for_select(
-        States.state_hash.except('district of columbia', 'washington dc').keys.map do |state|
-            [States.capitalize_any_state_names(state), state_path(States.state_path(state))]
-        end
-    ), prompt: t('shared.school_picker.select_state'), id: "state-dropdown" %>
+	<p><%= t('home.hero.find-schools-by-state').upcase %></p>
+	<!-- <%#= select_tag :state_dropdown, options_for_select(
+		States.state_hash.except('district of columbia', 'washington dc').keys.map do |state|
+				[States.capitalize_any_state_names(state), state_path(States.state_path(state))]
+		end
+	), prompt: t('shared.school_picker.select_state'), id: "state-dropdown" %> -->
+	<div class="dropdown-container">
+		<div class="state-btn">Select state</div>
+		<ul>
+			<% States.state_hash.except('district of columbia', 'washington dc').keys.map do |state| %>
+				<a href=<%= state_path(States.state_path(state)) %>>
+					<li>
+						<%= States.capitalize_any_state_names(state) %>
+					</li>
+				</a>
+			<% end %>
+		</ul>
+	</div>
 </div>
