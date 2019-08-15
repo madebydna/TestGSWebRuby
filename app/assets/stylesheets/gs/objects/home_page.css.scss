@@ -78,7 +78,8 @@
         background: #fff;
         width: 130px;
         height: 34px;
-        text-align: center;
+        display: flex;
+        justify-content: space-between;
       }
   
       ul{
