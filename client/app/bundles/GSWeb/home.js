@@ -19,13 +19,19 @@ ReactOnRails.register({
 });
 
 $(function() {
-  $('#state-dropdown').on('change', function () {
-    var url = $(this).val();
-    if (url) {
-      window.location = url;
-    }
-    return false;
+  // $('#state-dropdown').on('change', function () {
+  //   var url = $(this).val();
+  //   if (url) {
+  //     window.location = url;
+  //   }
+  //   return false;
+  // });
+  const dropdownList = document.querySelector('.dropdown-container ul')
+
+  $('#home_state_select_wrapper .state-btn').on('click', function () {
+    $('.dropdown-container ul').toggleClass('hide-state-list')
   });
+  
 
   $('#show-more-for-footer').on('click', 'a', function(e) {
     e.preventDefault();

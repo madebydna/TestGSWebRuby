@@ -7,7 +7,7 @@
 	), prompt: t('shared.school_picker.select_state'), id: "state-dropdown" %> -->
 	<div class="dropdown-container">
 		<div class="state-btn">Select state <span class="icon-caret-down"></span></div>
-		<ul>
+		<ul class="hide-state-list">
 			<% States.state_hash.except('district of columbia', 'washington dc').keys.map do |state| %>
 				<a href=<%= state_path(States.state_path(state)) %>>
 					<li>
