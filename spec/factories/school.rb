@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
     sequence :id do |n|
       n
     end
@@ -13,7 +13,7 @@ FactoryGirl.define do
       name 'Alameda High School'
       city 'Alameda'
       state 'CA'
-      collections { FactoryGirl.build_list :collection, 1 }
+      collections { FactoryBot.build_list :collection, 1 }
       created { Time.now.to_s }
       lat 37.801239
       lon -122.258301
@@ -174,7 +174,7 @@ FactoryGirl.define do
         end
 
         after(:create) do |school, evaluator|
-          FactoryGirl.create_list(:hub_city_mapping,1,collection_id: evaluator.collection_id,city: 'san francisco', state:'ca')
+          FactoryBot.create_list(:hub_city_mapping,1,collection_id: evaluator.collection_id,city: 'san francisco', state:'ca')
         end
       end
 
@@ -183,7 +183,7 @@ FactoryGirl.define do
           district_name ''
         end
         before(:create) do |school, evaluator|
-          district = FactoryGirl.create(
+          district = FactoryBot.create(
             :district,
             name: evaluator.district_name
           )
@@ -193,7 +193,7 @@ FactoryGirl.define do
 
       trait :with_collection do
         after(:create) do |school, evaluator|
-          FactoryGirl.create(
+          FactoryBot.create(
             :school_metadata,
             school_id: school.id,
             meta_key: 'collection_id',
@@ -202,7 +202,7 @@ FactoryGirl.define do
         end
 
         after(:build) do |school, evaluator|
-          collection = evaluator.collection ||  FactoryGirl.build(
+          collection = evaluator.collection ||  FactoryBot.build(
                                                   :collection,
                                                   city: school.city,
                                                   state: school.state
@@ -214,7 +214,7 @@ FactoryGirl.define do
         end
 
         after(:stub) do |school, evaluator|
-          collection = evaluator.collection ||  FactoryGirl.build_stubbed(
+          collection = evaluator.collection ||  FactoryBot.build_stubbed(
                                                   :collection,
                                                   city: school.city,
                                                   state: school.state
@@ -229,7 +229,7 @@ FactoryGirl.define do
         end
 
         after(:create) do |school, evaluator|
-          FactoryGirl.create(
+          FactoryBot.create(
             :school_metadata,
             school_id: school.id,
             meta_key: 'overallRating',

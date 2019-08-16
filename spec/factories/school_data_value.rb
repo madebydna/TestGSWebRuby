@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :data_value, class: DataValue do
     sequence :id do |n|
       n

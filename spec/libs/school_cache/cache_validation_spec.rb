@@ -84,7 +84,7 @@ describe CacheValidation do
   }
 
 
-  let(:school) { FactoryGirl.build(:alameda_high_school) }
+  let(:school) { FactoryBot.build(:alameda_high_school) }
   let(:cacher) { CharacteristicsCaching::CharacteristicsCacher.new(school) }
 
   context 'Ethnicity data validation' do

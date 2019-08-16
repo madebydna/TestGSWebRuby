@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SchoolReviews do
 
   context 'initialized with only a school with no reviews' do
-    let(:school) { FactoryGirl.build(:school) }
+    let(:school) { FactoryBot.build(:school) }
     let!(:school_reviews) do
       school_reviews = SchoolReviews.new do
         [].extend(ReviewScoping).extend(ReviewCalculations)
@@ -87,7 +87,7 @@ describe SchoolReviews do
     describe '#promote_review!' do
       let!(:school_reviews) do
         school_reviews = SchoolReviews.new do
-          FactoryGirl.build_list(:five_star_review, 5).extend(ReviewScoping).extend(ReviewCalculations)
+          FactoryBot.build_list(:five_star_review, 5).extend(ReviewScoping).extend(ReviewCalculations)
         end
       end
 
@@ -108,7 +108,7 @@ describe SchoolReviews do
     describe '#add_number_of_votes_method_to_each' do
       let!(:school_reviews) do
         school_reviews = SchoolReviews.new do
-          FactoryGirl.build_list(:five_star_review, 2).extend(ReviewScoping).extend(ReviewCalculations)
+          FactoryBot.build_list(:five_star_review, 2).extend(ReviewScoping).extend(ReviewCalculations)
         end
       end
       before do

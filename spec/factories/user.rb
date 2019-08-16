@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     sequence(:id) { |n| n }
     sequence(:email) { |n| "test+#{n}@greatschools.org" }
@@ -25,7 +25,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        FactoryGirl.create(:esp_membership, :with_approved_status,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
+        FactoryBot.create(:esp_membership, :with_approved_status,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
       end
     end
 
@@ -36,7 +36,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        FactoryGirl.create(:esp_membership, :with_provisional_status ,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
+        FactoryBot.create(:esp_membership, :with_provisional_status ,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
       end
     end
 
@@ -47,24 +47,24 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        FactoryGirl.create(:esp_membership, :with_approved_status, school_id: evaluator.school_id, state: evaluator.state, member_id: user.id)
-        FactoryGirl.create(:role, id: 8)
-        FactoryGirl.create(:member_role, role_id: 8, member_id: user.id)
+        FactoryBot.create(:esp_membership, :with_approved_status, school_id: evaluator.school_id, state: evaluator.state, member_id: user.id)
+        FactoryBot.create(:role, id: 8)
+        FactoryBot.create(:member_role, role_id: 8, member_id: user.id)
       end
     end
 
-    #usage let!(:user) {FactoryGirl.create(:verified_user,:with_role,:role_id=>8 )}
+    #usage let!(:user) {FactoryBot.create(:verified_user,:with_role,:role_id=>8 )}
     trait :with_role do
       ignore do
         role_id 9 #default
       end
 
       after(:create) do |user, evaluator|
-        FactoryGirl.create(:member_role,member_id: user.id,role_id:evaluator.role_id)
+        FactoryBot.create(:member_role,member_id: user.id,role_id:evaluator.role_id)
       end
     end
 
-    #usage let!(:user) {FactoryGirl.create(:verified_user,:with_role,:role_id=>8 )}
+    #usage let!(:user) {FactoryBot.create(:verified_user,:with_role,:role_id=>8 )}
     trait :with_subscriptions do
       ignore do
         list 'greatnews'
@@ -72,21 +72,21 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        FactoryGirl.create_list(:subscription,evaluator.number_of_subscriptions, list: evaluator.list,member_id:user.id)
+        FactoryBot.create_list(:subscription,evaluator.number_of_subscriptions, list: evaluator.list,member_id:user.id)
       end
     end
 
     trait :with_school_subscriptions do
       ignore do
         lists ['mystat']
-        lists_schools [FactoryGirl.build(:school)]
+        lists_schools [FactoryBot.build(:school)]
         number_of_subscriptions 1
       end
 
       after(:create) do |user, evaluator|
         evaluator.lists.each_with_index do |list, i|
           school = evaluator.lists_schools[i]
-          FactoryGirl.create(:subscription,
+          FactoryBot.create(:subscription,
                              list: list,
                              member_id:user.id,
                              school_id: school.id,

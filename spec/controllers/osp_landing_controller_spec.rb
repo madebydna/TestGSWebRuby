@@ -9,7 +9,7 @@ describe OspLandingController do
     end
 
     context 'with a signed in user with no memberships' do
-      let (:user) { FactoryGirl.create(:user) }
+      let (:user) { FactoryBot.create(:user) }
       after { clean_models User }
       before { allow(controller).to receive(:current_user).and_return(user) }
 
@@ -20,7 +20,7 @@ describe OspLandingController do
     end
 
     context 'when provided a state and schoolId parameter' do
-      let (:user) { FactoryGirl.create(:user) }
+      let (:user) { FactoryBot.create(:user) }
       after { clean_models User }
       before { allow(controller).to receive(:current_user).and_return(user) }
 
@@ -59,10 +59,10 @@ describe OspLandingController do
 
     context 'with two or more active memberships' do
       before do
-        user = FactoryGirl.create(:user)
+        user = FactoryBot.create(:user)
         allow(controller).to receive(:current_user).and_return(user)
-        FactoryGirl.create(:esp_membership, :with_approved_status,school_id: 1,state: 'ca',member_id: user.id)
-        FactoryGirl.create(:esp_membership, :with_approved_status,school_id: 2,state: 'ca',member_id: user.id)
+        FactoryBot.create(:esp_membership, :with_approved_status,school_id: 1,state: 'ca',member_id: user.id)
+        FactoryBot.create(:esp_membership, :with_approved_status,school_id: 2,state: 'ca',member_id: user.id)
       end
       after do
         clean_models User, EspMembership
@@ -77,7 +77,7 @@ describe OspLandingController do
 
   describe '#single_membership' do
     let (:subject) { controller.send(:single_membership) }
-    let (:user) { FactoryGirl.create(:user) }
+    let (:user) { FactoryBot.create(:user) }
 
     before { allow(controller).to receive(:current_user).and_return(user) }
 
@@ -86,21 +86,21 @@ describe OspLandingController do
     end
 
     it 'returns an approved memberships if you have exactly one' do
-      FactoryGirl.create(:esp_membership, :with_approved_status, school_id: 2, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_approved_status, school_id: 2, state: 'ca', member_id: user.id)
 
       expect(subject).to_not be_nil
       expect(subject.school_id).to eq(2)
     end
 
     it 'returns nil if you have more than one approved membership' do
-      FactoryGirl.create(:esp_membership, :with_approved_status, school_id: 2, state: 'ca', member_id: user.id)
-      FactoryGirl.create(:esp_membership, :with_approved_status, school_id: 1, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_approved_status, school_id: 2, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_approved_status, school_id: 1, state: 'ca', member_id: user.id)
 
       expect(subject).to be_nil
     end
 
     it 'returns a provisional membership if you have exactly one' do
-      FactoryGirl.create(:esp_membership, :with_provisional_status, school_id: 2, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_provisional_status, school_id: 2, state: 'ca', member_id: user.id)
 
       expect(subject).to_not be_nil
       expect(subject.school_id).to eq(2)
@@ -108,16 +108,16 @@ describe OspLandingController do
     end
 
     it 'returns a provisional membership if you have more than one' do
-      FactoryGirl.create(:esp_membership, :with_provisional_status, school_id: 2, state: 'ca', member_id: user.id)
-      FactoryGirl.create(:esp_membership, :with_provisional_status, school_id: 1, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_provisional_status, school_id: 2, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_provisional_status, school_id: 1, state: 'ca', member_id: user.id)
 
       expect(subject).to_not be_nil
       expect(subject.provisional?).to be_truthy
     end
 
     it 'returns approved membership if you have exactly one along with some provisionals' do
-      FactoryGirl.create(:esp_membership, :with_approved_status, school_id: 2, state: 'ca', member_id: user.id)
-      FactoryGirl.create(:esp_membership, :with_provisional_status, school_id: 1, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_approved_status, school_id: 2, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_provisional_status, school_id: 1, state: 'ca', member_id: user.id)
 
       expect(subject).to_not be_nil
       expect(subject.school_id).to eq(2)
@@ -125,9 +125,9 @@ describe OspLandingController do
     end
 
     it 'returns nil if you have multiple approved memberships and one provisional' do
-      FactoryGirl.create(:esp_membership, :with_approved_status, school_id: 2, state: 'ca', member_id: user.id)
-      FactoryGirl.create(:esp_membership, :with_approved_status, school_id: 1, state: 'ca', member_id: user.id)
-      FactoryGirl.create(:esp_membership, :with_provisional_status, school_id: 3, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_approved_status, school_id: 2, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_approved_status, school_id: 1, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_provisional_status, school_id: 3, state: 'ca', member_id: user.id)
 
       expect(subject).to be_nil
     end
@@ -141,11 +141,11 @@ describe OspLandingController do
     let (:subject) { controller.send(:schools) }
 
     before do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       allow(controller).to receive(:current_user).and_return(user)
-      FactoryGirl.create(:esp_membership, :with_approved_status, school_id: 10, state: 'ca', member_id: user.id)
-      FactoryGirl.create(:esp_membership, :with_approved_status, school_id: 11, state: 'ca', member_id: user.id)
-      FactoryGirl.create(:esp_membership, :with_approved_status, school_id: 12, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_approved_status, school_id: 10, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_approved_status, school_id: 11, state: 'ca', member_id: user.id)
+      FactoryBot.create(:esp_membership, :with_approved_status, school_id: 12, state: 'ca', member_id: user.id)
     end
 
     after do
@@ -154,24 +154,24 @@ describe OspLandingController do
     end
 
     it 'Orders schools by name' do
-      s1 = FactoryGirl.create(:school, id: 10, name: 'Def')
-      s2 = FactoryGirl.create(:school, id: 11, name: 'Ghi')
-      s3 = FactoryGirl.create(:school, id: 12, name: 'Abc')
+      s1 = FactoryBot.create(:school, id: 10, name: 'Def')
+      s2 = FactoryBot.create(:school, id: 11, name: 'Ghi')
+      s3 = FactoryBot.create(:school, id: 12, name: 'Abc')
 
       expect(subject).to eq([s3, s1, s2])
     end
 
     it 'Removes nil (school not found)' do
-      s2 = FactoryGirl.create(:school, id: 11, name: 'Ghi')
-      s3 = FactoryGirl.create(:school, id: 12, name: 'Abc')
+      s2 = FactoryBot.create(:school, id: 11, name: 'Ghi')
+      s3 = FactoryBot.create(:school, id: 12, name: 'Abc')
 
       expect(subject).to eq([s3, s2])
     end
 
     it 'Removes inactive schools' do
-      s1 = FactoryGirl.create(:school, id: 10, name: 'Def')
-      s2 = FactoryGirl.create(:school, id: 11, name: 'Ghi')
-           FactoryGirl.create(:school, id: 12, name: 'Abc', active: false)
+      s1 = FactoryBot.create(:school, id: 10, name: 'Def')
+      s2 = FactoryBot.create(:school, id: 11, name: 'Ghi')
+           FactoryBot.create(:school, id: 12, name: 'Abc', active: false)
 
       expect(subject).to eq([s1, s2])
     end

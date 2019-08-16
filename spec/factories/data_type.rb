@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :data_type, class: Omni::DataType do
     name 'foo'
 

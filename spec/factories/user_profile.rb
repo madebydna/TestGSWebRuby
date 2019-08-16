@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user_profile do
     sequence(:id) { |n| n }
     active 1

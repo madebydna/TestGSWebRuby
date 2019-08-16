@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 shared_examples_for 'a controller that can save a favorite school' do
-  let(:user) { FactoryGirl.build(:user) }
-  let(:school) { FactoryGirl.build(:school, state: 'ca') }
+  let(:user) { FactoryBot.build(:user) }
+  let(:school) { FactoryBot.build(:school, state: 'ca') }
   subject do
     controller.send :add_favorite_school,
                     state: school.state,
@@ -69,9 +69,9 @@ shared_examples_for 'a controller that can save a favorite school' do
 
 
   describe '#add_favorite_school' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:school) { FactoryGirl.build(:school, state: 'ca') }
-    let(:school2) { FactoryGirl.build(:school, state: 'de') }
+    let(:user) { FactoryBot.build(:user) }
+    let(:school) { FactoryBot.build(:school, state: 'ca') }
+    let(:school2) { FactoryBot.build(:school, state: 'de') }
 
     before(:each) do
       allow(controller).to receive(:current_user).and_return user

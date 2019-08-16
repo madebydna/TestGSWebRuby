@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ReviewControllerConcerns::ReviewParams do
-  let(:user) { FactoryGirl.build(:verified_user) }
+  let(:user) { FactoryBot.build(:verified_user) }
   let(:review_params) do
     {
       state: 'ca',
@@ -51,7 +51,7 @@ describe ReviewControllerConcerns::ReviewParams do
       end
 
       context 'only when the school is found in the database' do
-        let(:school) { FactoryGirl.create(:alameda_high_school) }
+        let(:school) { FactoryBot.create(:alameda_high_school) }
         after do
           clean_models :ca, School
         end
@@ -77,7 +77,7 @@ describe ReviewControllerConcerns::ReviewParams do
   end
 
   describe '#handle_save' do
-    let(:review) { FactoryGirl.build(:review) }
+    let(:review) { FactoryBot.build(:review) }
     subject { params_object.handle_save(review) }
     it 'should not try to save the review if there are errors with parameters' do
       review_params[:school_id] = nil
@@ -92,13 +92,13 @@ describe ReviewControllerConcerns::ReviewParams do
     end
 
     it 'should save a valid review' do
-      allow(params_object).to receive(:school).and_return(FactoryGirl.build(:school))
+      allow(params_object).to receive(:school).and_return(FactoryBot.build(:school))
       expect(review).to receive(:save)
       subject
     end
 
     it 'should return errors if review fails to save' do
-      allow(params_object).to receive(:school).and_return(FactoryGirl.build(:school))
+      allow(params_object).to receive(:school).and_return(FactoryBot.build(:school))
       expect(review).to receive(:save).and_return(false)
       allow(review).to receive(:errors).and_return(double(full_messages: ['foo bar']))
       review, errors = subject
@@ -109,8 +109,8 @@ describe ReviewControllerConcerns::ReviewParams do
   describe '#save_review' do
     let(:controller) { (Class.new { include ReviewControllerConcerns }).new }
     let(:review_params) { double }
-    let(:review) { FactoryGirl.build(:review) }
-    let(:current_user) { FactoryGirl.build(:user) }
+    let(:review) { FactoryBot.build(:review) }
+    let(:current_user) { FactoryBot.build(:user) }
     before do
       allow(controller).to receive(:t) { |s| I18n.t(s) }
       allow(controller).to receive(:set_omniture_events_in_cookie)
@@ -178,7 +178,7 @@ describe ReviewControllerConcerns::ReviewParams do
   end
 
   describe '#review_attributes' do
-    let(:user) { FactoryGirl.build(:verified_user) }
+    let(:user) { FactoryBot.build(:verified_user) }
     let(:review_params) do
       {
         state: 'ca',

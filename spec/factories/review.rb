@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :review, class: Review do
     ignore do
@@ -121,7 +121,7 @@ FactoryGirl.define do
 
     trait :flagged do
       after(:create) do |review, evaluator|
-        FactoryGirl.create(
+        FactoryBot.create(
           :review_flag,
           review: review,
           user: review.user,

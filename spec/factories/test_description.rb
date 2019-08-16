@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   TestDescription.switch_connection_to(:gs_schooldb)
 
   factory :test_description,class: TestDescription do

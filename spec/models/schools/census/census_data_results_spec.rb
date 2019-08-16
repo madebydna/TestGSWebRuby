@@ -5,12 +5,12 @@ describe CensusDataResults do
   describe '#keep_null_breakdowns!' do
     let(:null_breakdowns) do
       [
-        FactoryGirl.build(
+        FactoryBot.build(
           :census_data_set,
           breakdown_id: nil,
           data_type_id: 1
         ),
-        FactoryGirl.build(
+        FactoryBot.build(
           :census_data_set,
           breakdown_id: nil,
           data_type_id: 2
@@ -19,12 +19,12 @@ describe CensusDataResults do
     end
     let(:non_null_breakdowns) do
       [
-        FactoryGirl.build(
+        FactoryBot.build(
           :census_data_set,
           breakdown_id: 1,
           data_type_id: 1
         ),
-        FactoryGirl.build(
+        FactoryBot.build(
           :census_data_set,
           breakdown_id: 1,
           data_type_id: 2
@@ -61,17 +61,17 @@ sets with null breakdowns' do
     it 'should sort by school value in descending order' do
 
       data = [
-        FactoryGirl.build(
+        FactoryBot.build(
           :census_data_set,
           :with_school_value,
           school_value_float: 3
         ),
-        FactoryGirl.build(
+        FactoryBot.build(
           :census_data_set,
           :with_school_value,
           school_value_float: 1
         ),
-        FactoryGirl.build(
+        FactoryBot.build(
           :census_data_set,
           :with_school_value,
           school_value_float: 2
@@ -85,9 +85,9 @@ sets with null breakdowns' do
   end
 
   describe '#for_data_types' do
-    let(:census_data_set_1) { FactoryGirl.build(:census_data_set) }
-    let(:census_data_set_2) { FactoryGirl.build(:census_data_set) }
-    let(:census_data_set_3) { FactoryGirl.build(:census_data_set) }
+    let(:census_data_set_1) { FactoryBot.build(:census_data_set) }
+    let(:census_data_set_2) { FactoryBot.build(:census_data_set) }
+    let(:census_data_set_3) { FactoryBot.build(:census_data_set) }
     let(:data_sets) do
       [
         census_data_set_1, census_data_set_2, census_data_set_3
@@ -97,13 +97,13 @@ sets with null breakdowns' do
 
     before(:each) do
       allow(census_data_set_1).to receive(:census_data_type) do
-        FactoryGirl.build(:census_data_type, id: 9, description: 'test description')
+        FactoryBot.build(:census_data_type, id: 9, description: 'test description')
       end
       allow(census_data_set_2).to receive(:census_data_type) do
-        FactoryGirl.build(:census_data_type, id: 10)
+        FactoryBot.build(:census_data_type, id: 10)
       end
       allow(census_data_set_3).to receive(:census_data_type) do
-        FactoryGirl.build(:census_data_type, id: 11)
+        FactoryBot.build(:census_data_type, id: 11)
       end
     end
 
@@ -125,14 +125,14 @@ sets with null breakdowns' do
 
   describe '#max_year_per_data_type' do
     let(:data_sets) do
-      data_sets = (1..3).map do |id| FactoryGirl.build_stubbed(
+      data_sets = (1..3).map do |id| FactoryBot.build_stubbed(
           :census_data_set,
           id: id,
           data_type_id: 1,
           year: 2000 - id
         )
       end +
-      (4..5).map do |id| FactoryGirl.build_stubbed(
+      (4..5).map do |id| FactoryBot.build_stubbed(
           :census_data_set,
           id: id,
           data_type_id: 2,
@@ -140,7 +140,7 @@ sets with null breakdowns' do
         )
       end
       data_sets.each do |data_set|
-        allow(data_set).to receive(:census_data_school_values).and_return(FactoryGirl.build_stubbed_list(:census_data_school_value, 1))
+        allow(data_set).to receive(:census_data_school_values).and_return(FactoryBot.build_stubbed_list(:census_data_school_value, 1))
       end
       data_sets
     end
@@ -154,14 +154,14 @@ sets with null breakdowns' do
 
   describe '#filter_to_max_year_per_data_type!' do
     let(:data_sets) do
-      data_sets = (1..3).map do |id| FactoryGirl.build_stubbed(
+      data_sets = (1..3).map do |id| FactoryBot.build_stubbed(
           :census_data_set,
           id: id,
           data_type_id: 1,
           year: 2000 - id
         )
       end +
-      (4..5).map do |id| FactoryGirl.build_stubbed(
+      (4..5).map do |id| FactoryBot.build_stubbed(
           :census_data_set,
           id: id,
           data_type_id: 2,
@@ -169,7 +169,7 @@ sets with null breakdowns' do
         )
       end
       data_sets.each do |data_set|
-        allow(data_set).to receive(:census_data_school_values).and_return(FactoryGirl.build_stubbed_list(:census_data_school_value, 1))
+        allow(data_set).to receive(:census_data_school_values).and_return(FactoryBot.build_stubbed_list(:census_data_school_value, 1))
       end
       data_sets
     end

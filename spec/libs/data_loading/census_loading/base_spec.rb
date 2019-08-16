@@ -15,7 +15,7 @@ describe CensusLoading::Base do
   }
   let(:source) { 'osp' }
   let(:weird_case_data_type) { 'A dEsCrIPtion' } # The factory's description is 'a description'
-  let(:census_data_type) { FactoryGirl.build(:census_data_type) }
+  let(:census_data_type) { FactoryBot.build(:census_data_type) }
   let(:census_data_type_in_base_class_format) { [census_data_type.description, census_data_type] }
 
   context 'data types' do

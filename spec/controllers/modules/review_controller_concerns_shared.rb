@@ -4,8 +4,8 @@ shared_examples_for 'a controller that can save a review' do
 
   describe '#save_review' do
     before { pending('TODO: remove these specs') }
-    let(:current_user) { FactoryGirl.build(:user) }
-    let(:existing_review) { FactoryGirl.build(:school_rating) }
+    let(:current_user) { FactoryBot.build(:user) }
+    let(:existing_review) { FactoryBot.build(:school_rating) }
     let(:review_params) {
       {
         school_id: 1,
@@ -22,7 +22,7 @@ shared_examples_for 'a controller that can save a review' do
 
     before(:each) do
       allow(controller).to receive(:current_user).and_return current_user
-      allow(controller).to receive(:review_from_params).and_return FactoryGirl.
+      allow(controller).to receive(:review_from_params).and_return FactoryBot.
         build(:school_rating)
     end
 
@@ -49,8 +49,8 @@ shared_examples_for 'a controller that can save a review' do
 
   describe '#update_existing_review' do
     before { pending('TODO: remove these specs') }
-    let(:current_user) { FactoryGirl.build(:user) }
-    let(:existing_review) { FactoryGirl.build(:school_rating) }
+    let(:current_user) { FactoryBot.build(:user) }
+    let(:existing_review) { FactoryBot.build(:school_rating) }
     let(:review_params) {
       {
         school_id: 1,
@@ -67,7 +67,7 @@ shared_examples_for 'a controller that can save a review' do
 
     before(:each) do
       allow(controller).to receive(:current_user).and_return current_user
-      allow(controller).to receive(:review_from_params).and_return FactoryGirl.
+      allow(controller).to receive(:review_from_params).and_return FactoryBot.
         build(:school_rating)
     end
 
@@ -116,7 +116,7 @@ shared_examples_for 'a controller that can save a review' do
 
   describe '#review_from_params' do
     before { pending('TODO: remove these specs') }
-    let(:school) { FactoryGirl.build(:school) }
+    let(:school) { FactoryBot.build(:school) }
     let(:review_params) {
       {
         school_id: 1,
@@ -171,7 +171,7 @@ shared_examples_for 'a controller that can save a review' do
         affiliation: 'student'
       }
     }
-    let(:review) { FactoryGirl.build(:school_rating) }
+    let(:review) { FactoryBot.build(:school_rating) }
 
     context 'when review saved successfully' do
       before(:each) do

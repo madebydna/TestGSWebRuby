@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :osp_question do
     sequence(:id) { |n| n }
     sequence(:esp_response_key) { |n| "test+#{n}Key" }
@@ -33,7 +33,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |osp_question, evaluator|
-        FactoryGirl.create(:osp_display_config, 
+        FactoryBot.create(:osp_display_config, 
           osp_question_id: osp_question.id,
           osp_question_group_id: evaluator.osp_question_group_id,
           order_on_page: evaluator.order_on_page,

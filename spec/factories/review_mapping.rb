@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :review_mapping, class: ReviewMapping do
     original_id 1

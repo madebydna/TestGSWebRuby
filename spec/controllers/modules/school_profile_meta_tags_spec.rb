@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SchoolProfileMetaTags do
-  let(:school) { FactoryGirl.build(:alameda_high_school) }
+  let(:school) { FactoryBot.build(:alameda_high_school) }
 
   subject(:helper) { SchoolProfileMetaTags.new(school) }
 

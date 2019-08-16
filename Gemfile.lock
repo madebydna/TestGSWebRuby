@@ -142,10 +142,10 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.5)
     execjs (2.7.0)
-    factory_girl (4.4.0)
+    factory_bot (4.11.1)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.4.1)
-      factory_girl (~> 4.4.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
@@ -526,7 +526,7 @@ DEPENDENCIES
   cucumber-rails (~> 1.7.0)
   db-charmer!
   draper (~> 2.1.0)
-  factory_girl_rails (~> 4.4.0)
+  factory_bot_rails (~> 4.11.0)
   geokit-rails
   gon
   guard

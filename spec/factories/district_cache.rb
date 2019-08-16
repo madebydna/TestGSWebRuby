@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :district_cache, class: DistrictCache do
     name :name
     district_id :district_id

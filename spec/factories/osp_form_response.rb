@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :osp_form_response do
     sequence :id do |n|
       n
@@ -121,7 +121,7 @@ FactoryGirl.define do
         member_id 1
       end
       after(:create) do |osp_form_responses, evaluator|
-        FactoryGirl.create(:esp_membership,
+        FactoryBot.create(:esp_membership,
           id: osp_form_responses.esp_membership_id,
           school_id: evaluator.esp_member_school_id,
           state: evaluator.esp_member_state,

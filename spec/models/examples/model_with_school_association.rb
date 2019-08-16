@@ -12,11 +12,11 @@ shared_examples_for 'model with school association' do |klass = described_class,
   end
 
   describe '.find_by_school' do
-    let!(:school) { FactoryGirl.create(:alameda_high_school) }
-    let!(:first) { FactoryGirl.create(factory, school_id: 9999, school_state: 'WY') }
-    let!(:second) { FactoryGirl.create(factory, school_id: school.id, school_state: school.state) }
-    let!(:third) { FactoryGirl.create(factory, school_id: 9998, school_state: 'WY') }
-    let!(:fourth) { FactoryGirl.create(factory, school_id: school.id, school_state: school.state) }
+    let!(:school) { FactoryBot.create(:alameda_high_school) }
+    let!(:first) { FactoryBot.create(factory, school_id: 9999, school_state: 'WY') }
+    let!(:second) { FactoryBot.create(factory, school_id: school.id, school_state: school.state) }
+    let!(:third) { FactoryBot.create(factory, school_id: 9998, school_state: 'WY') }
+    let!(:fourth) { FactoryBot.create(factory, school_id: school.id, school_state: school.state) }
     after do
       clean_dbs :gs_schooldb, :ca, :wy
     end
@@ -39,8 +39,8 @@ shared_examples_for 'model with school association' do |klass = described_class,
   end
 
   describe '#school' do
-    let!(:school) { FactoryGirl.create(:alameda_high_school) }
-    subject { FactoryGirl.build(factory, school_id: school.id, school_state: school.state) }
+    let!(:school) { FactoryBot.create(:alameda_high_school) }
+    subject { FactoryBot.build(factory, school_id: school.id, school_state: school.state) }
     after do
       clean_dbs :gs_schooldb, :ca
     end
@@ -51,8 +51,8 @@ shared_examples_for 'model with school association' do |klass = described_class,
   end
 
   describe '#school=' do
-    let!(:school) { FactoryGirl.create(:alameda_high_school, id: 1, state: 'CA') }
-    subject { FactoryGirl.build(factory, school_id: 999, school_state: 'WY') }
+    let!(:school) { FactoryBot.create(:alameda_high_school, id: 1, state: 'CA') }
+    subject { FactoryBot.build(factory, school_id: 999, school_state: 'WY') }
     after do
       clean_dbs :gs_schooldb, :ca, :wy
     end

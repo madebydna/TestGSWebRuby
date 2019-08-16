@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :data_load, class: Admin::DataLoadSchedule do
     sequence(:id) { |n| n }

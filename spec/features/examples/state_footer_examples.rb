@@ -5,12 +5,12 @@ shared_examples_for 'page with state footer features' do |state|
     before(:each) do
       alt = { short: 'NY', long: 'New York' }
       alt = { short: 'TX', long: 'Texas' } if state[:short] == 'NY'
-      @city = FactoryGirl.create(
+      @city = FactoryBot.create(
         :city,
         name: "A city in #{state[:long]}",
         state: state[:short]
       )
-      @alt_city = FactoryGirl.create(
+      @alt_city = FactoryBot.create(
         :city,
         name: "A city in #{alt[:long]}",
         state: alt[:short]

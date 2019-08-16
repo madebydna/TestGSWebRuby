@@ -6,10 +6,10 @@ describe CensusDataType do
   end
 
   let!(:ethnicity_data_type) {
-    FactoryGirl.create(:census_data_type, id: 1, description: 'ethnicity')
+    FactoryBot.create(:census_data_type, id: 1, description: 'ethnicity')
   }
   let!(:class_size_data_type) {
-    FactoryGirl.create(:census_data_type, id: 2, description: 'class size')
+    FactoryBot.create(:census_data_type, id: 2, description: 'class size')
   }
 
   describe '.data_type_ids' do

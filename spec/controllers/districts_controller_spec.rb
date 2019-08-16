@@ -6,8 +6,8 @@ describe DistrictsController, type: :controller do
   before { skip }
   describe '#ad_setTargeting_through_gon' do
     before do
-      FactoryGirl.create(:hub_city_mapping)
-      FactoryGirl.create(:district)
+      FactoryBot.create(:hub_city_mapping)
+      FactoryBot.create(:district)
       # Currently there a (presumably unused) route in the routes file that will match, and always cause
       # the canonical redirect code to execute. Prevent that
       allow(controller).to receive(:redirect_to_canonical_url) {}

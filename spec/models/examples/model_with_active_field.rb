@@ -8,9 +8,9 @@ shared_examples_for 'model with active field' do |klass = described_class, facto
   end
 
   describe '.active' do
-    let!(:first_active) { FactoryGirl.create(factory, :active) }
-    let!(:first_inactive) { FactoryGirl.create(factory, :inactive) }
-    let!(:second_active) { FactoryGirl.create(factory, :active) }
+    let!(:first_active) { FactoryBot.create(factory, :active) }
+    let!(:first_inactive) { FactoryBot.create(factory, :inactive) }
+    let!(:second_active) { FactoryBot.create(factory, :active) }
     after do
       clean_models klass
     end
@@ -22,9 +22,9 @@ shared_examples_for 'model with active field' do |klass = described_class, facto
   end
 
   describe '.inactive' do
-    let!(:first_active) { FactoryGirl.create(factory, :active) }
-    let!(:first_inactive) { FactoryGirl.create(factory, :inactive) }
-    let!(:second_active) { FactoryGirl.create(factory, :active) }
+    let!(:first_active) { FactoryBot.create(factory, :active) }
+    let!(:first_inactive) { FactoryBot.create(factory, :inactive) }
+    let!(:second_active) { FactoryBot.create(factory, :active) }
     after do
       clean_models klass
     end
@@ -35,8 +35,8 @@ shared_examples_for 'model with active field' do |klass = described_class, facto
   end
 
   describe '#active=' do
-    let!(:first) { FactoryGirl.create(factory, :active) }
-    let!(:second) { FactoryGirl.create(factory, :inactive) }
+    let!(:first) { FactoryBot.create(factory, :active) }
+    let!(:second) { FactoryBot.create(factory, :inactive) }
     after do
       clean_models klass
     end
@@ -67,7 +67,7 @@ shared_examples_for 'model with active field' do |klass = described_class, facto
   end
 
   describe '#deactivate' do
-    let!(:object) { FactoryGirl.create(factory, :active) }
+    let!(:object) { FactoryBot.create(factory, :active) }
     after do
       clean_models klass
     end
@@ -77,7 +77,7 @@ shared_examples_for 'model with active field' do |klass = described_class, facto
   end
 
   describe '#activate' do
-    let!(:object) { FactoryGirl.create(factory, :inactive) }
+    let!(:object) { FactoryBot.create(factory, :inactive) }
     after do
       clean_models klass
     end
@@ -87,7 +87,7 @@ shared_examples_for 'model with active field' do |klass = described_class, facto
   end
 
   describe '#active?' do
-    subject { FactoryGirl.create(factory, :active) }
+    subject { FactoryBot.create(factory, :active) }
     after do
       clean_models klass
     end
@@ -96,7 +96,7 @@ shared_examples_for 'model with active field' do |klass = described_class, facto
   end
 
   describe '#inactive?' do
-    subject { FactoryGirl.create(factory, :inactive) }
+    subject { FactoryBot.create(factory, :inactive) }
     after do
       clean_models klass
     end

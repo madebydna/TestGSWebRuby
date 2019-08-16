@@ -17,7 +17,7 @@ describe User do
   it_behaves_like 'model with roles association'
 
   context 'new user with valid password' do
-    let!(:user) { FactoryGirl.build(:new_user) }
+    let!(:user) { FactoryBot.build(:new_user) }
     after(:each) { clean_dbs :gs_schooldb }
     before { user.encrypt_plain_text_password }
 
@@ -43,17 +43,17 @@ describe User do
 
     describe '#reviews_for_school' do
       context 'with saved school and an active and inactive review' do
-        let!(:user) { FactoryGirl.create(:verified_user) }
-        let!(:school) { FactoryGirl.create(:alameda_high_school) }
+        let!(:user) { FactoryBot.create(:verified_user) }
+        let!(:school) { FactoryBot.create(:alameda_high_school) }
         let!(:review1) do
-          review1 = FactoryGirl.create(:five_star_review, user: user, school: school)
+          review1 = FactoryBot.create(:five_star_review, user: user, school: school)
           review1.moderated = true
           review1.deactivate
           review1.save
           review1
         end
         let!(:review2) do
-          review2 = FactoryGirl.create(:five_star_review, user: user, school: school)
+          review2 = FactoryBot.create(:five_star_review, user: user, school: school)
           review2.moderated = true
           review2.activate
           review2.save
@@ -80,7 +80,7 @@ describe User do
       after { clean_models User }
 
       it 'should be less than or equal to the "updated" timestamp after first save' do
-        u = FactoryGirl.build(:new_user)
+        u = FactoryBot.build(:new_user)
         u.save
         u.reload
         expect(u.time_added).to be_present
@@ -89,7 +89,7 @@ describe User do
       end
 
       it 'should not be changed when user is updated' do
-        u = FactoryGirl.build(:new_user)
+        u = FactoryBot.build(:new_user)
         u.save
         u.reload
         expect do
@@ -100,7 +100,7 @@ describe User do
       end
 
       it 'should never be greater than "updated" timestmap' do
-        u = FactoryGirl.build(:new_user)
+        u = FactoryBot.build(:new_user)
         u.save
         u = User.find(u.id)
         sleep(1.second)
@@ -115,16 +115,16 @@ describe User do
 
     describe '#publish_reviews!' do
       let(:school) do
-        FactoryGirl.create(:alameda_high_school)
+        FactoryBot.create(:alameda_high_school)
       end
       let(:question) do
-        FactoryGirl.create(:overall_rating_question)
+        FactoryBot.create(:overall_rating_question)
       end
       let!(:existing_reviews) do
         reviews = [
-          FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
-          FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
-          FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
+          FactoryBot.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+          FactoryBot.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
+          FactoryBot.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
         ]
         reviews.each do
         |review| review.moderated = true
@@ -151,9 +151,9 @@ describe User do
       context 'when an older review is already published' do
         let!(:existing_reviews) do
           reviews = [
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
-            FactoryGirl.build(:five_star_review, active: true, school: school, question:question, user: user, created: '2011-01-01'),
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+            FactoryBot.build(:five_star_review, active: true, school: school, question:question, user: user, created: '2011-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
           ]
           reviews.each do
           |review| review.moderated = true
@@ -175,9 +175,9 @@ describe User do
       context 'when the newest review is active and has been flagged' do
         let!(:existing_reviews) do
           reviews = [
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
-            FactoryGirl.build(:five_star_review, active: true, school: school, question:question, user: user, created: '2012-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
+            FactoryBot.build(:five_star_review, active: true, school: school, question:question, user: user, created: '2012-01-01'),
           ]
           reviews.each do
           |review| review.moderated = true
@@ -201,9 +201,9 @@ describe User do
       context 'when the newest review is inactive and has been flagged' do
         let!(:existing_reviews) do
           reviews = [
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
           ]
           reviews.each do
           |review| review.moderated = true
@@ -227,9 +227,9 @@ describe User do
       context 'when an older review is inactive and has been flagged' do
         let!(:existing_reviews) do
           reviews = [
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
           ]
           reviews.each do
           |review| review.moderated = true
@@ -254,9 +254,9 @@ describe User do
       context 'when an older review is active and has been flagged' do
         let!(:existing_reviews) do
           reviews = [
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
-            FactoryGirl.build(:five_star_review, active: true, school: school, question:question, user: user, created: '2011-01-01'),
-            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+            FactoryBot.build(:five_star_review, active: true, school: school, question:question, user: user, created: '2011-01-01'),
+            FactoryBot.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
           ]
           reviews.each do
           |review| review.moderated = true

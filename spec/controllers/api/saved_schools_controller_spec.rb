@@ -5,9 +5,9 @@ describe Api::SavedSchoolsController do
     before(:each) do 
       clean_dbs :gs_schooldb
     end
-    let(:user) { FactoryGirl.build(:user) }
-    let(:school) { FactoryGirl.build(:school) }
-    let(:favorite_school) { FactoryGirl.build(:favorite_school, member_id: user.id) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:school) { FactoryBot.build(:school) }
+    let(:favorite_school) { FactoryBot.build(:favorite_school, member_id: user.id) }
 
     context "with valid attributes" do
       it "saves the favorite school in the database" do
@@ -43,8 +43,8 @@ describe Api::SavedSchoolsController do
     before(:each) do
       clean_dbs :gs_schooldb
     end
-    let(:user) { FactoryGirl.build(:user) }
-    let(:favorite_school) { FactoryGirl.create(:favorite_school, member_id: user.id) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:favorite_school) { FactoryBot.create(:favorite_school, member_id: user.id) }
     
     context "with valid attributes" do
       it "deletes the entry from the database" do

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :test_data_subject, class: TestDataSubject do
     id 1
     name 'All'

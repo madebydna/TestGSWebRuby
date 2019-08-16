@@ -10,9 +10,9 @@ describe Review do
   after do
     clean_dbs :gs_schooldb
   end
-  let(:review) { FactoryGirl.build(:review) }
-  let(:school) { FactoryGirl.build(:school) }
-  let(:user) { FactoryGirl.build(:user) }
+  let(:review) { FactoryBot.build(:review) }
+  let(:school) { FactoryBot.build(:school) }
+  let(:user) { FactoryBot.build(:user) }
   # create review flag
 
   let(:no_bad_language) { AlertWord::AlertWordSearchResult.new([],[]) }
@@ -35,7 +35,7 @@ describe Review do
   end
 
   it 'five star review should not be valid with no comment' do
-    five_star_review = FactoryGirl.build(:five_star_review, active: true,
+    five_star_review = FactoryBot.build(:five_star_review, active: true,
                                          school: school, user: user, comment: nil)
     expect(five_star_review).to_not be_valid
   end
@@ -184,7 +184,7 @@ describe Review do
       end
 
       context 'when user is a student' do
-        let(:school_user) { FactoryGirl.build(:student_school_user) }
+        let(:school_user) { FactoryBot.build(:student_school_user) }
         before { allow(review).to receive(:school_user).and_return(school_user) }
         context 'with comment in review' do
           before { allow(review).to receive(:comment).and_return(' lorem ' * 15) }
@@ -205,7 +205,7 @@ describe Review do
       end
 
       context 'when user is a principal' do
-        let(:school_user) { FactoryGirl.build(:principal_school_user) }
+        let(:school_user) { FactoryBot.build(:principal_school_user) }
         before do
           allow(review).to receive(:school_user).and_return(school_user)
           expect(AlertWord).to receive(:search).and_return(no_bad_language)
@@ -268,7 +268,7 @@ describe Review do
   end
 
   describe '#calculate_and_set_active' do
-    let(:new_user) { FactoryGirl.build(:new_user) }
+    let(:new_user) { FactoryBot.build(:new_user) }
 
     before do
       subject.school = school
@@ -293,7 +293,7 @@ describe Review do
 
     context 'when reviews are not per-moderated' do
       context 'with new parent user' do
-        let(:parent_school_user) { FactoryGirl.build(:parent_school_user) }
+        let(:parent_school_user) { FactoryBot.build(:parent_school_user) }
         before do
           allow(subject).to receive(:school_user).and_return(parent_school_user)
           subject.user = new_user
@@ -312,10 +312,10 @@ describe Review do
       end
 
       context 'with registered user' do
-        let(:registered_user) { FactoryGirl.build(:verified_user) }
-        let(:principal_school_user) { FactoryGirl.build(:principal_school_user) }
-        let(:student_school_user) { FactoryGirl.build(:student_school_user) }
-        let(:parent_school_user) { FactoryGirl.build(:parent_school_user) }
+        let(:registered_user) { FactoryBot.build(:verified_user) }
+        let(:principal_school_user) { FactoryBot.build(:principal_school_user) }
+        let(:student_school_user) { FactoryBot.build(:student_school_user) }
+        let(:parent_school_user) { FactoryBot.build(:parent_school_user) }
 
         before do
           subject.school = school
@@ -419,7 +419,7 @@ describe Review do
       end
 
       context 'with registered user' do
-        let(:registered_user) { FactoryGirl.build(:verified_user) }
+        let(:registered_user) { FactoryBot.build(:verified_user) }
 
         before do
           subject.school = school
@@ -445,8 +445,8 @@ describe Review do
   end
 
   describe '#send_thank_you_email_if_published' do
-    let(:review) { FactoryGirl.create(:review, active: true) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:review) { FactoryBot.create(:review, active: true) }
+    let(:user) { FactoryBot.create(:user) }
     before { allow(review).to receive(:user).and_return(user) }
     context 'if review active' do
       it 'should send email' do
@@ -456,7 +456,7 @@ describe Review do
     end
 
     context 'if review not active' do
-      let(:review) { FactoryGirl.create(:review, active: false) }
+      let(:review) { FactoryBot.create(:review, active: false) }
       it 'should not send email' do
         expect(user).to_not receive(:send_thank_you_email_for_school)
         review.send_thank_you_email_if_published
@@ -465,12 +465,12 @@ describe Review do
   end
 
   describe '#uniqueness' do
-    let(:user) { FactoryGirl.create(:verified_user) }
+    let(:user) { FactoryBot.create(:verified_user) }
     let(:school) do
-      FactoryGirl.create(:alameda_high_school)
+      FactoryBot.create(:alameda_high_school)
     end
     let(:question) do
-      FactoryGirl.create(:overall_rating_question)
+      FactoryBot.create(:overall_rating_question)
     end
     after do
       clean_models :ca, School
@@ -478,13 +478,13 @@ describe Review do
     end
 
     it 'should prevent multiple active reviews for the same user / school / question' do
-      review = FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user)
+      review = FactoryBot.create(:five_star_review, active: false, school: school, question:question, user: user)
       review.moderated = true
       review.activate
       review.save!
 
       expect do
-        review = FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user)
+        review = FactoryBot.create(:five_star_review, active: false, school: school, question:question, user: user)
         review.moderated = true
         review.activate
         review.save!
@@ -494,7 +494,7 @@ describe Review do
     it 'should not prevent multiple inactive reviews for the same user / school / question' do
       3.times do
         expect do
-          review = FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user)
+          review = FactoryBot.create(:five_star_review, active: false, school: school, question:question, user: user)
           review.moderated = false
           review.deactivate
           review.save!
@@ -525,7 +525,7 @@ describe Review do
       clean_models Review
     end
     context 'when review has no comment' do
-      let(:review) { FactoryGirl.create(:review, comment: nil) }
+      let(:review) { FactoryBot.create(:review, comment: nil) }
       subject { review.comment }
       it { is_expected.to be_nil }
     end
@@ -536,7 +536,7 @@ describe Review do
       clean_models Review
     end
     context 'with five star review answer integer value saved as string' do
-      let(:five_star_review_value_4_str) { FactoryGirl.build(:five_star_review, answer_value: '4') }
+      let(:five_star_review_value_4_str) { FactoryBot.build(:five_star_review, answer_value: '4') }
       subject { five_star_review_value_4_str }
       it 'should return answer value as int' do
         expect(subject.answer_as_int).to be_a(Integer)
@@ -546,7 +546,7 @@ describe Review do
       end
     end
     context 'with string review answer string value that is not an integer' do
-      let(:review_with_string_answer) { FactoryGirl.build(:teacher_effectiveness_review)}
+      let(:review_with_string_answer) { FactoryBot.build(:teacher_effectiveness_review)}
       subject { review_with_string_answer}
       it 'should return the string answer value as nil' do
         expect(subject.answer_as_int).to eq(nil)
@@ -555,7 +555,7 @@ describe Review do
   end
 
   describe '#create' do
-    let(:review) { FactoryGirl.build(:five_star_review) }
+    let(:review) { FactoryBot.build(:five_star_review) }
     after do
       clean_dbs :gs_schooldb
     end
@@ -566,7 +566,7 @@ describe Review do
   end
 
   describe '#comment_snippet' do
-    let (:review) { FactoryGirl.create(:review) }
+    let (:review) { FactoryBot.create(:review) }
     let (:comment) { nil }
 
     subject { review.comment_snippet }

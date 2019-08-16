@@ -1,4 +1,4 @@
-module FactoryGirl
+module FactoryBot
   def self.create_on_shard(shard, *args)
     obj = build(*args)
     obj.on_db(shard).save
