@@ -29,12 +29,12 @@ describe CachePopulator::SchoolCachePopulator do
   end
 
   describe "#run" do
-    after(:all) do
+    after(:each) do
       do_clean_models(:ca, School)
       do_clean_models(:co, School)
     end
 
-    before(:all) do
+    before(:each) do
       @alameda_high_school         = FactoryBot.create_on_shard(:ca, :school, attributes_for(:alameda_high_school))
       @bay_farm_elementary_school  = FactoryBot.create_on_shard(:ca, :school, attributes_for(:bay_farm_elementary_school))
       @cesar_chavez_academy_denver = FactoryBot.create_on_shard(:co, :school, attributes_for(:cesar_chavez_academy_denver))
@@ -44,9 +44,9 @@ describe CachePopulator::SchoolCachePopulator do
 
     it "caches all schools if state is 'all'" do
       populator = CachePopulator::SchoolCachePopulator.new(values: 'all', cache_keys: 'esp_responses')
-      expect(Cacher).to receive(:create_cache).with(@alameda_high_school, 'esp_responses')
-      expect(Cacher).to receive(:create_cache).with(@bay_farm_elementary_school, 'esp_responses')
-      expect(Cacher).to receive(:create_cache).with(@cesar_chavez_academy_denver, 'esp_responses')
+      expect(school_cacher).to receive(:create_cache).with(@alameda_high_school, 'esp_responses')
+      expect(school_cacher).to receive(:create_cache).with(@bay_farm_elementary_school, 'esp_responses')
+      expect(school_cacher).to receive(:create_cache).with(@cesar_chavez_academy_denver, 'esp_responses')
       populator.run
     end
 

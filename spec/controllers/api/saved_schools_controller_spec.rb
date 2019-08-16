@@ -21,7 +21,7 @@ describe Api::SavedSchoolsController do
     
     context "with invalid attributes" do
       it "when the specified school is not found" do
-        Api::SavedSchoolsController.any_instance.stub(:current_user).and_return(user)
+        allow_any_instance_of(Api::SavedSchoolsController).to receive(:current_user).and_return(user)
         allow(School).to receive_message_chain(:active,:find_by).and_return(nil)
         allow(FavoriteSchool).to receive_message_chain(:create_saved_school_instance).and_return(FavoriteSchool.new)
         post :create, school: {state: "ca", id: 15}
