@@ -26,7 +26,7 @@ FactoryBot.define do
   end
 
   trait :with_school_values do
-    ignore do
+    transient do
       school_id 2
       value_text '1'
       value_float 1

@@ -4,7 +4,7 @@ FactoryBot.define do
     end
 
     factory :school do
-      ignore do
+      transient do
         collection_id 1
         collection nil
       end
@@ -136,7 +136,7 @@ FactoryBot.define do
       end
 
       factory :school_with_rating do
-        ignore do
+        transient do
           # Elements of this array should be in this format:
           # { data_type_id: 174, breakdown_id: 1, value_float: 10 },
           # { data_type_id: 174, breakdown_id: 8, value_float: 9  },
@@ -169,7 +169,7 @@ FactoryBot.define do
       end
 
       trait :with_hub_city_mapping do
-        ignore do
+        transient do
           collection_id 1
         end
 
@@ -179,7 +179,7 @@ FactoryBot.define do
       end
 
       trait :with_district do
-        ignore do
+        transient do
           district_name ''
         end
         before(:create) do |school, evaluator|
@@ -224,7 +224,7 @@ FactoryBot.define do
       end
 
       trait :with_gs_rating do
-        ignore do
+        transient do
           gs_rating 4 #default
         end
 

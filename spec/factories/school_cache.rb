@@ -15,7 +15,7 @@ FactoryBot.define do
     updated Time.now
 
     trait :with_gs_rating do
-      ignore do
+      transient do
         gs_rating_value 5.0
       end
       before(:create) do |cached_ratings, evaluator|
@@ -31,7 +31,7 @@ FactoryBot.define do
     end
 
     trait :with_test_score_rating do
-      ignore do
+      transient do
         test_score_rating_value 6.0
       end
       before(:create) do |cached_ratings, evaluator|
@@ -47,7 +47,7 @@ FactoryBot.define do
     end
 
     trait :with_test_score_and_gs_rating do
-      ignore do
+      transient do
         gs_rating_value 5.0
         test_score_rating_value 6.0
       end
@@ -331,7 +331,7 @@ FactoryBot.define do
   end
 
   factory :custom_characteristics_all_students_cache, class: SchoolCache do
-    ignore do
+    transient do
       data_type 'data type'
       school_value 0.0
       state_average 0.0

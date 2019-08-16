@@ -19,7 +19,7 @@ FactoryBot.define do
     end
 
     trait :with_approved_esp_membership do
-      ignore do
+      transient do
         school_id 1 #default
         state 'ca' #default
       end
@@ -30,7 +30,7 @@ FactoryBot.define do
     end
 
     trait :with_provisional_esp_membership do
-      ignore do
+      transient do
         school_id 1 #default
         state 'ca' #default
       end
@@ -41,7 +41,7 @@ FactoryBot.define do
     end
 
     trait :with_approved_superuser_membership do
-      ignore do
+      transient do
         school_id nil #default
         state nil #default
       end
@@ -55,7 +55,7 @@ FactoryBot.define do
 
     #usage let!(:user) {FactoryBot.create(:verified_user,:with_role,:role_id=>8 )}
     trait :with_role do
-      ignore do
+      transient do
         role_id 9 #default
       end
 
@@ -66,7 +66,7 @@ FactoryBot.define do
 
     #usage let!(:user) {FactoryBot.create(:verified_user,:with_role,:role_id=>8 )}
     trait :with_subscriptions do
-      ignore do
+      transient do
         list 'greatnews'
         number_of_subscriptions 1
       end
@@ -77,7 +77,7 @@ FactoryBot.define do
     end
 
     trait :with_school_subscriptions do
-      ignore do
+      transient do
         lists ['mystat']
         lists_schools [FactoryBot.build(:school)]
         number_of_subscriptions 1

@@ -3,7 +3,7 @@ FactoryBot.define do
     name 'foo'
 
     trait :with_tags do
-      ignore do
+      transient do
         tag nil
       end
 
@@ -13,7 +13,7 @@ FactoryBot.define do
     end
 
     trait :with_feeds_data_set do
-      ignore { state nil }
+      transient { state nil }
 
       after(:create) do |data_type, evaluator|
         create(:data_set, :feeds, data_type: data_type, state: evaluator.state)
@@ -21,7 +21,7 @@ FactoryBot.define do
     end
 
     trait :with_data_set do
-      ignore { state nil }
+      transient { state nil }
 
       after(:create) do |data_type, evaluator|
         create(:data_set, :none, data_type: data_type, state: evaluator.state)

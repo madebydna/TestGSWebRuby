@@ -15,7 +15,7 @@ FactoryBot.define do
     updated Time.now
 
     trait :with_gs_rating do
-      ignore do
+      transient do
         gs_rating_value 5.0
       end
       before(:create) do |cached_ratings, evaluator|

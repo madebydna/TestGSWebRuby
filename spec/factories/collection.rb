@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :collection, class: Collection do
 
-    ignore do
+    transient do
       sequence(:id) { |n| n }
       city 'detroit'
       state 'mi'

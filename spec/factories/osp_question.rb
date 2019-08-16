@@ -17,7 +17,7 @@ FactoryBot.define do
                     }.to_json)
 
     trait :with_osp_display_config do
-      ignore do
+      transient do
         osp_question_group_id  1
         order_on_page          1
         order_in_group         1

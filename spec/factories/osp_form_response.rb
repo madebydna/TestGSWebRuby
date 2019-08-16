@@ -115,7 +115,7 @@ FactoryBot.define do
     end
 
     trait :with_esp_member do
-      ignore do
+      transient do
         esp_member_school_id 1
         esp_member_state 'ca'
         member_id 1

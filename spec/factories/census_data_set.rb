@@ -48,7 +48,7 @@ FactoryBot.define do
   end
 
   factory :ethnicity_data_set_results, class: CensusDataResults do
-    ignore do
+    transient do
       number_of_data_sets 3
     end
     after(:stub) do |array, evaluator|
@@ -75,7 +75,7 @@ FactoryBot.define do
     level_code 'e,m,h'
     grade '9'
 
-    ignore do
+    transient do
       school_id nil
       school_value_modified '2000-01-01'
       school_value_float { generate(:school_value_float) }
