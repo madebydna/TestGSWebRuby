@@ -58,6 +58,10 @@ module SchoolProfiles
         subject == 'All subjects'
       end
 
+      def all_subjects_and_students?
+        all_subjects? && all_students?
+      end
+
       (2000..2030).to_a.each do |year|
         attr_accessor "school_value_#{year}"
         attr_accessor "state_average_#{year}"
