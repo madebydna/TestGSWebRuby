@@ -69,9 +69,9 @@ describe SchoolProfiles::CollegeReadiness do
     end
   end
 
-  describe "#remove_crdc_for_unfresh_data" do 
-    context 'with ACT & SAT content within 2 years of one another' do 
-      it 'does not mutate the hash' do 
+  describe "#remove_crdc_for_unfresh_data" do
+    context 'with ACT & SAT content within 2 years of one another' do
+      it 'does not mutate the hash' do
 
         cv1                      = SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue.new
         cv1.subject              = 'All subjects'
@@ -93,11 +93,11 @@ describe SchoolProfiles::CollegeReadiness do
         college_readiness.remove_crdc_for_unfresh_data(cv1.year, cv4.year, hash)
         expect(cv1.school_value).to_not be_nil
         expect(cv4.school_value).to_not be_nil
-      end 
+      end
     end
 
-    context 'with ACT & SAT content not within 2 years of one another' do 
-      it 'does mutate the hash' do 
+    context 'with ACT & SAT content not within 2 years of one another' do
+      it 'does mutate the hash' do
 
         cv1                      = SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue.new
         cv1.subject              = 'All subjects'
@@ -119,20 +119,20 @@ describe SchoolProfiles::CollegeReadiness do
         college_readiness.remove_crdc_for_unfresh_data(cv1.year, cv4.year, hash)
         expect(cv1.school_value).to_not be_nil
         expect(cv4.school_value).to be_nil
-      end 
+      end
     end
 
   end 
 
   describe "#handle_ACT_SAT_to_display!" do
 
-    context 'with an empty hash' do 
+    context 'with an empty hash' do
       it 'the hash will nullify records we do not want to display' do
         hash = {}
         college_readiness.handle_ACT_SAT_to_display!(hash)
         expect(hash).to eq({})
       end
-    end 
+    end
 
     # it 'the hash will nullify records we do not want to display' do
       # act_data = "Average ACT score"
