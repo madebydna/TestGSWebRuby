@@ -4,8 +4,16 @@ class DistrictCache < ActiveRecord::Base
   attr_accessible :name, :district_id, :state, :value, :updated
   KEYS = [:test_scores, :directory_census, :district_directory, :feed_district_characteristics]
 
-  def self.for_district(name, district_id, state)
-    DistrictCache.where(name: name, district_id: district_id, state: state).first()
+  # def self.for_district(name, district_id, state)
+  #   DistrictCache.where(name: name, district_id: district_id, state: state).first()
+  # end
+
+  def self.for_district(district)
+    where(state: district.state, district_id: district.id)
+  end
+
+  def self.include_cache_keys(keys)
+    where(name: keys)
   end
 
   def self.for_districts_keys(keys, districts, state)
@@ -17,6 +25,10 @@ class DistrictCache < ActiveRecord::Base
     end
     district_data
   end
+
+  #look for one district cache record
+  #look for many district cache record
+  # ! for_districts && for_keys
 
   def self.cached_results_for(districts, keys)
     query = DistrictCacheQuery.new.include_cache_keys(keys)

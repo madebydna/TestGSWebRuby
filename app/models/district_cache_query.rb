@@ -35,6 +35,7 @@ class DistrictCacheQuery
     end
   end
 
+  # needs OR active record support in Rails 5+
   def matching_districts_clause
     arel = DistrictCache.arel_table
     q ||= Arel::Nodes::Grouping.new(Arel::Nodes::SqlLiteral.new('false = true')) # false = true prevents needing to special-case code below
