@@ -55,13 +55,8 @@ module SchoolProfiles
       act_content = enforce_latest_year_school_value_for_data_types!(hash, ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY)
       # returns max_year if we have at least one SAT data type to display, else: nil
       sat_content = enforce_latest_year_school_value_for_data_types!(hash, SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY)
-      # JT-8787: Displayed ACT & SAT data must be within 2 years of one another, otherwise hide the older data type
 
-      if act_content && sat_content && ((act_content - sat_content).abs > 2)
-        act_content > sat_content ? 
-          remove_crdc_breakdown!(hash, SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY) :
-          remove_crdc_breakdown!(hash, ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY)
-      end
+      remove_crdc_for_unfresh_data(act_content, sat_content, hash)
 
       if act_content || sat_content
         remove_crdc_breakdown!(hash, ACT_SAT_PARTICIPATION, ACT_SAT_PARTICIPATION_9_12)
@@ -70,6 +65,16 @@ module SchoolProfiles
         part912 = hash.slice(ACT_SAT_PARTICIPATION_9_12).values.flatten.select(&:all_students?).flatten
         remove_crdc_breakdown!(hash, ACT_SAT_PARTICIPATION) if part912.present?
       end
+    end
+
+    # JT-8787: Displayed ACT & SAT data must be within 2 years of one another, otherwise hide the older data type
+    def remove_crdc_for_unfresh_data(act_content, sat_content, hash)
+      return unless act_content && sat_content
+      return unless ((act_content - sat_content).abs > 2)
+      if act_content > sat_content
+        return remove_crdc_breakdown!(hash, SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY)
+      end
+      remove_crdc_breakdown!(hash, ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY)
     end
 
     def enforce_latest_year_gsdata!(hash, *data_types)

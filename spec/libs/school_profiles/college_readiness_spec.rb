@@ -3,9 +3,9 @@ require "spec_helper"
 include SchoolProfiles::CollegeReadinessConfig
 describe SchoolProfiles::CollegeReadiness do
 
-  describe "#enforce_latest_year_school_value_for_data_types!" do
-    let(:college_readiness) { SchoolProfiles::CollegeReadiness.new(school_cache_data_reader: double) }
+  let(:college_readiness) { SchoolProfiles::CollegeReadiness.new(school_cache_data_reader: double) }
 
+  describe "#enforce_latest_year_school_value_for_data_types!" do
     context 'hash does not have given data_types' do
       it 'returns nil' do
         hash       = {}
@@ -67,5 +67,22 @@ describe SchoolProfiles::CollegeReadiness do
         expect(cv3.school_value).to be_nil
       end
     end
+  end
+
+  describe "#handle_ACT_SAT_to_display!" do
+
+    it 'the hash will nullify records we do not want to display' do
+      hash = {}
+      college_readiness.handle_ACT_SAT_to_display!(hash)
+      expect(hash).to eq({})
+    end
+
+    # it 'modifies the given hash - sets school values to nil' do
+    #
+    # end
+
+    # it 'modifies the given hash - sets school values to nil' do
+    #
+    # end
   end
 end
