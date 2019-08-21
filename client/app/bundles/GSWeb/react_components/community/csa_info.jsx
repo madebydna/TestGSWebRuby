@@ -9,12 +9,14 @@ const CsaInfo = ({ locality, caAdvocacy }) => {
   let headerText = `${t('award_winners')}`;
   let blurbText = `${t("csa_district_schools_info_html")}`;
   let buttonText = `${t('see_winning_schools_in')} ${locality.stateLong}`;
+  let buttonLink = locality.stateCsaBrowseUrl;
 
   if (caAdvocacy) {
     moduleIcon = owlPng;
     headerText = `CA header text`;
     blurbText = `CA blurb text`;
     buttonText = `CA button text`;
+    // buttonLink = ''; UPDATE THIS
   }
 
   return (
