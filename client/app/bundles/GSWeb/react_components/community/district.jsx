@@ -164,8 +164,14 @@ class District extends React.Component {
         shouldDisplayCsaInfo={this.props.schools_data.schools.csa.length === 0 && this.props.csa_module}
         csaInfo={
           <CsaInfo 
-            community={this.pageType}
             locality={this.props.locality}
+            caAdvocacy={false}
+          />
+        }
+        caCsaInfo={
+          <CsaInfo 
+            locality={this.props.locality}
+            caAdvocacy={true}
           />
         }
         mobility={
