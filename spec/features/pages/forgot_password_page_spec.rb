@@ -26,7 +26,7 @@ describe 'Forgot password page' do
   include_examples 'should have a footer'
 
   context 'when I enter email that has no user', js: true do
-    let (:user) { FactoryGirl.build(:user) }
+    let (:user) { FactoryBot.build(:user) }
     before do
       page_object.fill_in_email_field  user.email
     end
@@ -43,7 +43,7 @@ describe 'Forgot password page' do
     end
   end
   context 'when I enter email for verfied user', js: true do
-    let (:verified_user) { FactoryGirl.create(:verified_user) }
+    let (:verified_user) { FactoryBot.create(:verified_user) }
     before do
       page_object.fill_in_email_field  verified_user.email
     end
@@ -66,10 +66,10 @@ describe 'Forgot password page' do
 
       context 'when I visit lost password link' do
         let(:review) {
-          FactoryGirl.create(:review,
+          FactoryBot.create(:review,
             active: false,
             user: verified_user,
-            school: FactoryGirl.create(:school, state: 'ca')
+            school: FactoryBot.create(:school, state: 'ca')
           )
         }
         it 'should display the reset password page' do
@@ -92,7 +92,7 @@ describe 'Forgot password page' do
   end
 
   context 'when I enter email for unverified user', js: true do
-    let (:unverified_user) { FactoryGirl.create(:new_user) }
+    let (:unverified_user) { FactoryBot.create(:new_user) }
     before do
       page_object.fill_in_email_field  unverified_user.email
     end
@@ -115,10 +115,10 @@ describe 'Forgot password page' do
 
       context 'when I visit lost password link' do
         let(:review) {
-          FactoryGirl.create(:review,
+          FactoryBot.create(:review,
             active: false,
             user: unverified_user,
-            school: FactoryGirl.create(:school, state: 'ca')
+            school: FactoryBot.create(:school, state: 'ca')
           )
         }
         it 'should display the reset password page' do

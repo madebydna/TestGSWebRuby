@@ -33,7 +33,7 @@ describe SchoolLoading::Loader do
       let(:school_loader) { SchoolLoading::Loader.new('home_page_url', [update], 'osp_form') }
 
       before do
-        @school= FactoryGirl.create(:alameda_high_school, modified: '2015-01-30 18:36:29 -0700', id: 1, home_page_url: 'not real')
+        @school= FactoryBot.create(:alameda_high_school, modified: '2015-01-30 18:36:29 -0700', id: 1, home_page_url: 'not real')
       end
 
       it 'should have the correct value' do
@@ -65,7 +65,7 @@ describe SchoolLoading::Loader do
       let(:school_loader) { SchoolLoading::Loader.new('home_page_url', [update], 'osp_form') }
 
       before do
-        @school= FactoryGirl.create(:alameda_high_school, modified: '2015-01-30 18:36:29 -0700', id: 1, home_page_url: 'not real')
+        @school= FactoryBot.create(:alameda_high_school, modified: '2015-01-30 18:36:29 -0700', id: 1, home_page_url: 'not real')
       end
 
       it 'should have the correct value' do

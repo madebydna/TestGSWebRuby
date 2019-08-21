@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :favorite_school do
     sequence(:id) { |id| id }
     school_id 1

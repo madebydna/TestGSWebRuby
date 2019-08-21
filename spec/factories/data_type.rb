@@ -1,9 +1,9 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :data_type, class: Omni::DataType do
     name 'foo'
 
     trait :with_tags do
-      ignore do
+      transient do
         tag nil
       end
 
@@ -13,7 +13,7 @@ FactoryGirl.define do
     end
 
     trait :with_feeds_data_set do
-      ignore { state nil }
+      transient { state nil }
 
       after(:create) do |data_type, evaluator|
         create(:data_set, :feeds, data_type: data_type, state: evaluator.state)
@@ -21,7 +21,7 @@ FactoryGirl.define do
     end
 
     trait :with_data_set do
-      ignore { state nil }
+      transient { state nil }
 
       after(:create) do |data_type, evaluator|
         create(:data_set, :none, data_type: data_type, state: evaluator.state)

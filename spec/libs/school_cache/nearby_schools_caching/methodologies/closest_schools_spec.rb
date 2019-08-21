@@ -6,7 +6,7 @@ describe NearbySchoolsCaching::Methodologies::ClosestSchools do
   subject { NearbySchoolsCaching::Methodologies::ClosestSchools }
 
   let(:main_school) do
-    FactoryGirl.create(:alameda_high_school,
+    FactoryBot.create(:alameda_high_school,
                        id: 1,
                        state: 'CA',
                        lat: 32,
@@ -94,7 +94,7 @@ describe NearbySchoolsCaching::Methodologies::ClosestSchools do
 
   before do
     school_configs.each do |config|
-      FactoryGirl.create(:school_with_rating, config.except(:exclude))
+      FactoryBot.create(:school_with_rating, config.except(:exclude))
     end
   end
   after do

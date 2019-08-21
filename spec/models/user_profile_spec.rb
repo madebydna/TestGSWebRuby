@@ -5,7 +5,7 @@ describe UserProfile do
   describe '#created' do
     before { clean_models User, UserProfile }
     after { clean_models User, UserProfile }
-    let(:user) { FactoryGirl.build(:verified_user) }
+    let(:user) { FactoryBot.build(:verified_user) }
 
     it 'should have a timestamp after model is saved' do
       user.save
@@ -31,7 +31,7 @@ describe UserProfile do
   describe '#updated' do
     before { clean_models User, UserProfile }
     after { clean_models User, UserProfile }
-    let(:user) { FactoryGirl.build(:verified_user) }
+    let(:user) { FactoryBot.build(:verified_user) }
 
     it 'should have a timestamp after model is saved' do
       user.save

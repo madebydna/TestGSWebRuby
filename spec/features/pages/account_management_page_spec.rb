@@ -37,7 +37,7 @@ feature 'Account management page' do
 
     context 'when user has approved osp membership' do
       before { skip }
-      let!(:esp_membership) {FactoryGirl.create(:esp_membership,:with_approved_status,:member_id=> user.id )}
+      let!(:esp_membership) {FactoryBot.create(:esp_membership,:with_approved_status,:member_id=> user.id )}
       scenario 'It displays link to edit osp' do
         expect(subject).to have_content('Edit School Profile')
       end
@@ -45,7 +45,7 @@ feature 'Account management page' do
 
     context 'when user has provisional osp membership' do
       before { skip }
-      let!(:esp_membership) {FactoryGirl.create(:esp_membership,:with_provisional_status,:member_id=> user.id,:school_id=>1,:state=> 'mi' )}
+      let!(:esp_membership) {FactoryBot.create(:esp_membership,:with_provisional_status,:member_id=> user.id,:school_id=>1,:state=> 'mi' )}
       scenario 'It displays link to edit osp' do
         expect(subject).to have_content('Edit School Profile')
       end
@@ -53,8 +53,8 @@ feature 'Account management page' do
 
     context 'when user is osp super user' do
       before { skip }
-      let!(:esp_superuser_role) {FactoryGirl.create(:role )}
-      let!(:member_role) {FactoryGirl.create(:member_role,member_id: user.id,role_id:esp_superuser_role.id)}
+      let!(:esp_superuser_role) {FactoryBot.create(:role )}
+      let!(:member_role) {FactoryBot.create(:member_role,member_id: user.id,role_id:esp_superuser_role.id)}
       scenario 'It displays link to edit osp' do
         expect(subject).to have_content('Edit School Profile')
       end
@@ -62,8 +62,8 @@ feature 'Account management page' do
 
 
     context 'When user has subscriptions' do
-      let!(:osp_subscription) {FactoryGirl.create(:subscription,list: 'osp',member_id: user.id)}
-      let!(:gs_subscription) {FactoryGirl.create(:subscription,list: 'greatnews',member_id: user.id)}
+      let!(:osp_subscription) {FactoryBot.create(:subscription,list: 'osp',member_id: user.id)}
+      let!(:gs_subscription) {FactoryBot.create(:subscription,list: 'greatnews',member_id: user.id)}
 
       scenario 'It should display subscriptions with pretty long_names names if subscription product is present otherwise just the name' do
         pending('PT-1213: No longer applicable. Delete and make new spec coverage for account management page subscription functionality')

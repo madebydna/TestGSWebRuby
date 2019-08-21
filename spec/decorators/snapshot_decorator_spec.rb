@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe SnapshotDecorator do
   let(:school) do
-    s = FactoryGirl.build(:school)
-    allow(s).to receive(:district).and_return(FactoryGirl.build(:district))
+    s = FactoryBot.build(:school)
+    allow(s).to receive(:district).and_return(FactoryBot.build(:district))
     s
   end
   subject(:snapshot_decorator) do

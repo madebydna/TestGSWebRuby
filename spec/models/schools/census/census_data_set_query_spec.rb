@@ -115,10 +115,10 @@ ON clause contains school_id constraint' do
 
   describe '#load_district_values' do
     let(:data_set_without_district_values) do
-      FactoryGirl.build(:census_data_set)
+      FactoryBot.build(:census_data_set)
     end
     it 'should load a district value onto a data set' do
-      allow(subject).to receive(:district_values).and_return FactoryGirl.build_list(
+      allow(subject).to receive(:district_values).and_return FactoryBot.build_list(
         :census_data_district_value, 1,
         data_set_id: data_set_without_district_values.id
       )
@@ -171,12 +171,12 @@ ON clause contains school_id constraint' do
 
   describe '#load_state_values' do
     let(:data_set_without_state_values) {
-      FactoryGirl.build(:census_data_set,
+      FactoryBot.build(:census_data_set,
         census_data_state_values: []
       )
     }
     it 'should load a state value onto a data set' do
-      allow(subject).to receive(:state_values).and_return FactoryGirl.build_list(
+      allow(subject).to receive(:state_values).and_return FactoryBot.build_list(
         :census_data_state_value, 1,
         data_set_id: data_set_without_state_values.id
       )
@@ -216,10 +216,10 @@ ON clause contains school_id constraint' do
 
   describe '#load_census_descriptions' do
     let(:data_set_without_census_description) {
-      FactoryGirl.build(:census_data_set)
+      FactoryBot.build(:census_data_set)
     }
     it 'should load a description onto a data set' do
-      allow(subject).to receive(:census_descriptions).and_return FactoryGirl.build_list(
+      allow(subject).to receive(:census_descriptions).and_return FactoryBot.build_list(
         :census_description,
         1,
         census_data_set_id: data_set_without_census_description.id
@@ -251,11 +251,11 @@ ON clause contains school_id constraint' do
 
   describe '#load_config_entries' do
     let(:data_set_without_config_entry) do
-      FactoryGirl.build(:census_data_set)
+      FactoryBot.build(:census_data_set)
     end
     it 'should load a config entry onto a data set' do
       allow(subject).to receive(:config_entry_for_data_set)
-        .and_return FactoryGirl.build(:census_data_config_entry)
+        .and_return FactoryBot.build(:census_data_config_entry)
       allow(subject).to receive(:data_sets) do
         [data_set_without_config_entry]
       end

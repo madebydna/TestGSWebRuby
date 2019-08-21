@@ -3,9 +3,9 @@ require 'spec_helper'
 describe SchoolUserController do
 
   describe '#create' do
-    let(:school) { FactoryGirl.build(:alameda_high_school) }
-    let(:school_user) { FactoryGirl.build(:teacher_school_user, school: school) }
-    let(:user) { FactoryGirl.build(:verified_user) }
+    let(:school) { FactoryBot.build(:alameda_high_school) }
+    let(:school_user) { FactoryBot.build(:teacher_school_user, school: school) }
+    let(:user) { FactoryBot.build(:verified_user) }
 
     before do
       controller.instance_variable_set(:@school, school)
@@ -50,9 +50,9 @@ describe SchoolUserController do
   end
 
   describe '#find_or_initialize_school_user' do
-    let(:user) { FactoryGirl.build(:verified_user) }
-    let(:school) { FactoryGirl.build(:alameda_high_school) }
-    let(:school_user) { FactoryGirl.build(:parent_school_user, user: user, school: school) }
+    let(:user) { FactoryBot.build(:verified_user) }
+    let(:school) { FactoryBot.build(:alameda_high_school) }
+    let(:school_user) { FactoryBot.build(:parent_school_user, user: user, school: school) }
     before do
       allow(controller).to receive(:logged_in?).and_return true
       allow(controller).to receive(:current_user).and_return user

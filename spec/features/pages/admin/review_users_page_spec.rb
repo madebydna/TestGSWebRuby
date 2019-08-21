@@ -31,8 +31,8 @@ describe 'Review users page' do
     end
 
     context 'with an email for a user with flagged reviews' do
-      let(:user) { FactoryGirl.create(:verified_user) }
-      let!(:reviews) { FactoryGirl.create_list(:review, 2, :flagged, user: user) }
+      let(:user) { FactoryBot.create(:verified_user) }
+      let!(:reviews) { FactoryBot.create_list(:review, 2, :flagged, user: user) }
       before do
         subject.find_by_email_or_ip_form.search_box.set(user.email)
         subject.find_by_email_or_ip_form.search_button.click

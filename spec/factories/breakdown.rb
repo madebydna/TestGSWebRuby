@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :breakdown, class: Omni::Breakdown do
     sequence(:name) { |n| n }
 

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :school_metadata_gs_rating_configuration, class: SchoolProfileConfiguration do
     state 'ca'
     configuration_key 'gs_rating'

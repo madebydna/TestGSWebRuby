@@ -6,7 +6,7 @@ describe UserEmailPreferencesController do
       clean_dbs(:gs_schooldb)
     end
     context 'when logged in' do
-      let(:user) { FactoryGirl.create(:verified_user) }
+      let(:user) { FactoryBot.create(:verified_user) }
       before do
         controller.instance_variable_set(:@current_user, user)
       end

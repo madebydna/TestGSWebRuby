@@ -5,9 +5,9 @@ describe Api::SavedSchoolsController do
     before(:each) do 
       clean_dbs :gs_schooldb
     end
-    let(:user) { FactoryGirl.build(:user) }
-    let(:school) { FactoryGirl.build(:school) }
-    let(:favorite_school) { FactoryGirl.build(:favorite_school, member_id: user.id) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:school) { FactoryBot.build(:school) }
+    let(:favorite_school) { FactoryBot.build(:favorite_school, member_id: user.id) }
 
     context "with valid attributes" do
       it "saves the favorite school in the database" do
@@ -21,7 +21,7 @@ describe Api::SavedSchoolsController do
     
     context "with invalid attributes" do
       it "when the specified school is not found" do
-        Api::SavedSchoolsController.any_instance.stub(:current_user).and_return(user)
+        allow_any_instance_of(Api::SavedSchoolsController).to receive(:current_user).and_return(user)
         allow(School).to receive_message_chain(:active,:find_by).and_return(nil)
         allow(FavoriteSchool).to receive_message_chain(:create_saved_school_instance).and_return(FavoriteSchool.new)
         post :create, school: {state: "ca", id: 15}
@@ -43,8 +43,8 @@ describe Api::SavedSchoolsController do
     before(:each) do
       clean_dbs :gs_schooldb
     end
-    let(:user) { FactoryGirl.build(:user) }
-    let(:favorite_school) { FactoryGirl.create(:favorite_school, member_id: user.id) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:favorite_school) { FactoryBot.create(:favorite_school, member_id: user.id) }
     
     context "with valid attributes" do
       it "deletes the entry from the database" do

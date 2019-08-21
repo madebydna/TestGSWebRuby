@@ -88,7 +88,7 @@ programs_partners_value = "{ heading: 'Detroit Partners', subheading: 'more part
 programs_articles_value = "{ sectionHeading: 'Resources in San Francisco',articles: [ { heading: 'How to find a school', newwindow: 'true', path: 'http://www.google.com' }, { heading: 'How to find a school', newwindow:'true', path: 'http://www.google.com' }, { heading: 'How to find a school', newwindow: 'true', path: 'http://www.google.com' }, { heading: 'How to find a school', newwindow:'true', path: 'http://www.google.com' }, { heading: 'How to find a school',newwindow: 'true',path: 'http://www.google.com'},{heading:'How to find a school',newwindow: 'true',path: 'http://www.google.com'}]}"
 
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :state_hub_content_module, class: CollectionConfig do
     collection_id 6
     quay CollectionConfig::CONTENT_MODULE_KEY

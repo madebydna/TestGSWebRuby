@@ -8,7 +8,7 @@ describe SimpleAjaxController do
   end
 
   describe '#get_cities_alphabetically' do
-    let(:cities) { FactoryGirl.build_list(:city,2) }
+    let(:cities) { FactoryBot.build_list(:city,2) }
 
     it 'should return empty if no state is provided' do
       xhr :get,  :get_cities_alphabetically
@@ -36,7 +36,7 @@ describe SimpleAjaxController do
   end
 
   describe '#get_schools' do
-    let(:schools) { [FactoryGirl.build(:alameda_high_school,id:3),FactoryGirl.build(:bay_farm_elementary_school,id:3)]}
+    let(:schools) { [FactoryBot.build(:alameda_high_school,id:3),FactoryBot.build(:bay_farm_elementary_school,id:3)]}
 
     before(:each) do
       allow(School).to receive(:within_city).and_return(schools)

@@ -143,7 +143,7 @@ describe SubscriptionsController do
   end
 
   describe '#destroy' do
-    let!(:current_user) { FactoryGirl.create(:user,:with_subscriptions,:list=>'osp') }
+    let!(:current_user) { FactoryBot.create(:user,:with_subscriptions,:list=>'osp') }
 
     before do
       controller.instance_variable_set(:@current_user, current_user)
@@ -159,7 +159,7 @@ describe SubscriptionsController do
 
     it "should not change the subscription count since the subscription does not match user's subscriptions" do
 
-      some_subscription = FactoryGirl.create(:subscription,id:15)
+      some_subscription = FactoryBot.create(:subscription,id:15)
       allow(controller).to receive(:params).and_return({id: 15})
       allow(Subscription).to receive(:find).and_return(some_subscription)
 

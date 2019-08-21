@@ -8,7 +8,7 @@ describe CitiesController do
   let(:state) { 'CA' }
   let(:url_city) { gs_legacy_url_city_encode('San Francisco').downcase }
   let(:city) { 'San Francisco' }
-  let(:city_record) { FactoryGirl.build(:city, name: 'San Francisco') }
+  let(:city_record) { FactoryBot.build(:city, name: 'San Francisco') }
 
   before do
     allow(controller).to receive(:state).and_return(state)

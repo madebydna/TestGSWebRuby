@@ -8,8 +8,8 @@ describe 'New search page' do
       stub_request(:any, /\/main\/select/)
         .to_return(status: 200, body: {response: {docs: [], numFound: 0}}.to_json, headers: {})
 
-      FactoryGirl.create(:city, name: 'Alameda', state: 'ca')
-      FactoryGirl.create(:district, name: 'Alameda Unified School District', city: 'Alameda', state: 'ca')
+      FactoryBot.create(:city, name: 'Alameda', state: 'ca')
+      FactoryBot.create(:district, name: 'Alameda Unified School District', city: 'Alameda', state: 'ca')
     end
 
     after do
@@ -39,9 +39,9 @@ describe 'New search page' do
     before do
       stub_request(:any, /\/solr\/main\/select/)
           .to_return(status: 200, body: {response: {docs: [{school_value:20, school_id:1, school_database_state:['CA'], state:'CA', id:[1,2]},{school_value:14, school_id:1, school_database_state:['CA'], id:[1,2], state: 'CA'}], numFound: 2}}.to_json, headers: {})
-      FactoryGirl.create(:city, name: 'Alameda', state: 'ca')
-      FactoryGirl.create(:district, name: 'Alameda Unified School District', city: 'Alameda', state: 'ca')
-      FactoryGirl.create(:alameda_high_school, id: 1)
+      FactoryBot.create(:city, name: 'Alameda', state: 'ca')
+      FactoryBot.create(:district, name: 'Alameda Unified School District', city: 'Alameda', state: 'ca')
+      FactoryBot.create(:alameda_high_school, id: 1)
     end
 
     after do

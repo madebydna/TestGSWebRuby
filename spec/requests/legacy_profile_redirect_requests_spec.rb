@@ -8,7 +8,7 @@ describe 'Legacy profile redirect requests' do
 
   describe 'provided parameters mapping to a valid school' do
     before do
-      FactoryGirl.create(:school, id: 1)
+      FactoryBot.create(:school, id: 1)
       get test_url
     end
 

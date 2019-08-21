@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   TestDataType.switch_connection_to(:gs_schooldb)
 
   factory :test_data_type, class: TestDataType do

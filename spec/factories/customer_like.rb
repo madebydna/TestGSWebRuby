@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :customer_like do
     sequence(:id) { |n| n }
     product_id 1

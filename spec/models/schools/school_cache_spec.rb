@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe SchoolCache do
 
-  let!(:school) { FactoryGirl.create(:school) }
-  let!(:test_data_breakdown) { FactoryGirl.create(:test_data_breakdown) }
-  let!(:test_data_subject) { FactoryGirl.create(:test_data_subject) }
+  let!(:school) { FactoryBot.create(:school) }
+  let!(:test_data_breakdown) { FactoryBot.create(:test_data_breakdown) }
+  let!(:test_data_subject) { FactoryBot.create(:test_data_subject) }
 
   after(:each) do
     clean_models :ca, School, TestDataSet, TestDataSchoolValue

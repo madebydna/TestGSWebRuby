@@ -17,14 +17,14 @@ describe Admin::ReviewsController do
     end
 
     it 'should update the review if one is found' do
-      review = FactoryGirl.build(:review)
+      review = FactoryBot.build(:review)
       allow(Review).to receive(:find).and_return(review)
       expect(review).to receive(:update_attributes).and_return true
       post :update, id: 1, review: { comment: 'Foo' }
     end
 
     it 'should handle update failure by setting flash message' do
-      review = FactoryGirl.build(:review)
+      review = FactoryBot.build(:review)
       allow(Review).to receive(:find).and_return(review)
       expect(review).to receive(:update_attributes).and_return false
       expect(controller).to receive(:flash_error)
@@ -44,7 +44,7 @@ describe Admin::ReviewsController do
       allow(controller).to receive(:logged_in?).and_return(true)
       comment = 'foo'
       review_flag = double(ReviewFlag).as_null_object
-      review = FactoryGirl.build(:review)
+      review = FactoryBot.build(:review)
       allow(Review).to receive(:find).and_return(review)
       expect(review).to receive(:build_review_flag).with(comment, 'user-reported') {
         review_flag
@@ -58,7 +58,7 @@ describe Admin::ReviewsController do
       allow(controller).to receive(:logged_in?).and_return(true)
       comment = 'foo'
       review_flag = double(ReviewFlag).as_null_object
-      review = FactoryGirl.build(:review)
+      review = FactoryBot.build(:review)
       allow(Review).to receive(:find).and_return(review)
       expect(review).to receive(:build_review_flag).with(comment, 'user-reported') {
         review_flag
@@ -70,10 +70,10 @@ describe Admin::ReviewsController do
   end
 
   describe '#moderation' do
-    let(:school) { FactoryGirl.build(:school) }
-    let(:flagged_reviews) { FactoryGirl.build_list(:review, 3, :flagged) }
-    let(:valid_reviews) { FactoryGirl.build_list(:review, 3) }
-    let(:user) {FactoryGirl.build(:user)}
+    let(:school) { FactoryBot.build(:school) }
+    let(:flagged_reviews) { FactoryBot.build_list(:review, 3, :flagged) }
+    let(:valid_reviews) { FactoryBot.build_list(:review, 3) }
+    let(:user) {FactoryBot.build(:user)}
 
     before do
       allow(controller).to receive(:flagged_reviews).and_return flagged_reviews
@@ -113,9 +113,9 @@ describe Admin::ReviewsController do
   end
 
   describe '#flagged reviews' do
-    let!(:school) { FactoryGirl.create(:alameda_high_school) }
-    let!(:user) { FactoryGirl.create(:verified_user) }
-    let!(:non_verified_user) { FactoryGirl.create(:new_user, email_verified: false) }
+    let!(:school) { FactoryBot.create(:alameda_high_school) }
+    let!(:user) { FactoryBot.create(:verified_user) }
+    let!(:non_verified_user) { FactoryBot.create(:new_user, email_verified: false) }
     before do
       controller.instance_variable_set(:@current_user, user)
       allow(controller).to receive(:school_from_params) { school }
@@ -130,15 +130,15 @@ describe Admin::ReviewsController do
 
     context 'with flagged reviews for a non-verified user' do
       let!(:flagged_review_for_non_verified_user) do
-        FactoryGirl.create(:review, :flagged, school: school, user: non_verified_user)
+        FactoryBot.create(:review, :flagged, school: school, user: non_verified_user)
       end
 
       context 'with a non-flagged inactive review for the same school/user/question' do
-        let!(:non_flagged_review) { FactoryGirl.create(:review, school: school, user: user) }
+        let!(:non_flagged_review) { FactoryBot.create(:review, school: school, user: user) }
 
         context 'with multiple flagged inactive reviews for the same school/user/question' do
           let!(:reviews) do
-            FactoryGirl.create_list(:review, 3, :flagged, school: school, user: user)
+            FactoryBot.create_list(:review, 3, :flagged, school: school, user: user)
           end
           before do
             reviews.each do |review|
@@ -191,9 +191,9 @@ describe Admin::ReviewsController do
   end
 
   shared_context 'with one inactive review' do
-    let!(:school) { FactoryGirl.create(:alameda_high_school) }
+    let!(:school) { FactoryBot.create(:alameda_high_school) }
     let!(:review) do
-      r = FactoryGirl.build(:five_star_review, school: school)
+      r = FactoryBot.build(:five_star_review, school: school)
       r.moderated = true
       r.deactivate
       r.save
@@ -206,9 +206,9 @@ describe Admin::ReviewsController do
   end
 
   shared_context 'with one active review' do
-    let!(:school) { FactoryGirl.create(:alameda_high_school) }
+    let!(:school) { FactoryBot.create(:alameda_high_school) }
     let!(:review) do
-      r = FactoryGirl.build(:five_star_review, school: school)
+      r = FactoryBot.build(:five_star_review, school: school)
       r.moderated = true
       r.activate
       r.save
@@ -233,7 +233,7 @@ describe Admin::ReviewsController do
   end
 
   describe '#deactivate' do
-    let!(:school) { FactoryGirl.create(:alameda_high_school) }
+    let!(:school) { FactoryBot.create(:alameda_high_school) }
     subject do
       post :deactivate, id: review.id
       review.reload

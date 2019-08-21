@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe AddSchoolsController do
-  let(:k12_school_complete) { FactoryGirl.build(:new_school_submission_k12) }
-  let(:prek_school_complete) { FactoryGirl.build(:new_school_submission_prek) }
+  let(:k12_school_complete) { FactoryBot.build(:new_school_submission_k12) }
+  let(:prek_school_complete) { FactoryBot.build(:new_school_submission_prek) }
 
   describe '#success_conditions' do 
     describe '#k-12' do 
@@ -23,7 +23,7 @@ describe AddSchoolsController do
     end 
 
     describe '#pre-k' do      
-      let(:prek_school_complete) { FactoryGirl.build(:new_school_submission_prek) }
+      let(:prek_school_complete) { FactoryBot.build(:new_school_submission_prek) }
 
       it 'should not require an NCES code or a State School ID to successfully add a school' do 
         expect(prek_school_complete.save).to eq(true)

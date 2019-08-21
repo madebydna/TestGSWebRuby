@@ -37,9 +37,9 @@ describe CachePopulator::DistrictCachePopulator do
     let(:district_cacher) { class_double('DistrictCacher').as_stubbed_const }
 
     before(:all) do
-      @alameda_city_unified = FactoryGirl.create_on_shard(:ca, :district, attributes_for(:alameda_city_unified))
-      @oakland_unified = FactoryGirl.create_on_shard(:ca, :district, attributes_for(:oakland_unified))
-      @sitka_school_district = FactoryGirl.create_on_shard(:al, :district, attributes_for(:sitka_school_district))
+      @alameda_city_unified = FactoryBot.create_on_shard(:ca, :district, attributes_for(:alameda_city_unified))
+      @oakland_unified = FactoryBot.create_on_shard(:ca, :district, attributes_for(:oakland_unified))
+      @sitka_school_district = FactoryBot.create_on_shard(:al, :district, attributes_for(:sitka_school_district))
     end
 
     it "caches all districts if state is 'all'" do

@@ -7,8 +7,8 @@ require 'capybara-screenshot/rspec'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
-require 'factory_girl' unless ENV['BLACK_BOX']
-require 'support/factory_girl_extensions' unless ENV['BLACK_BOX']
+require 'factory_bot' unless ENV['BLACK_BOX']
+require 'support/factory_bot_extensions'
 require 'support/rspec_custom_masters'
 require 'support/rspec_its'
 require 'support/rspec_extensions'
@@ -77,7 +77,7 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include Rails.application.routes.url_helpers
   config.include UrlHelper
-  config.include FactoryGirl::Syntax::Methods unless ENV['BLACK_BOX']
+  config.include FactoryBot::Syntax::Methods unless ENV['BLACK_BOX']
   config.include WaitForAjax, type: :feature
   config.include CookieHelper
   config.include SigninHelper

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :data_set, class: Omni::DataSet do
     notes "Foo notes"
     state 'CA'

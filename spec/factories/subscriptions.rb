@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   Subscription.switch_connection_to(:gs_schooldb)
 
   factory :subscription, class: Subscription do

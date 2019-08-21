@@ -18,7 +18,7 @@ shared_examples "it fails with an error" do
     after(:each) { clean_dbs :gs_schooldb }
 
     it 'returns nil' do
-      FactoryGirl.create(:bogus_collection_config, quay: key)
+      FactoryBot.create(:bogus_collection_config, quay: key)
       collection_configs = described_class.where(collection_id: 1, quay: key)
       result = described_class.send(method, collection_configs)
 
@@ -28,7 +28,7 @@ shared_examples "it fails with an error" do
     it 'logs an error' do
       expect(Rails.logger).to receive(:error)
       collection_configs = described_class.where(collection_id: 1, quay: key)
-      FactoryGirl.create(:bogus_collection_config, quay: key)
+      FactoryBot.create(:bogus_collection_config, quay: key)
 
       result = described_class.send(method, collection_configs)
     end
@@ -54,7 +54,7 @@ describe CollectionConfig do
     end
 
     context 'valid json string' do
-      before(:each) { FactoryGirl.create(:feature_articles_collection_config) }
+      before(:each) { FactoryBot.create(:feature_articles_collection_config) }
 
       it 'parses the articles and returns an array' do
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::FEATURED_ARTICLES_KEY)
@@ -83,7 +83,7 @@ describe CollectionConfig do
 
 
     context 'valid json string' do
-      before(:each) { FactoryGirl.create(:city_hub_partners_collection_config) }
+      before(:each) { FactoryBot.create(:city_hub_partners_collection_config) }
 
       it 'parses the partners string and returns a hash' do
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_PARTNERS_KEY)
@@ -114,7 +114,7 @@ describe CollectionConfig do
 
     context 'valid json string' do
       it 'parses the sponsors string and returns an array' do
-        FactoryGirl.create(:city_hub_sponsor_collection_config)
+        FactoryBot.create(:city_hub_sponsor_collection_config)
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_SPONSOR_KEY)
         result = CollectionConfig.sponsor(collection_configs)
 
@@ -135,7 +135,7 @@ describe CollectionConfig do
 
     context 'valid json string' do
       it 'parses the choose school string and returns a hash' do
-        FactoryGirl.create(:choose_a_school_collection_configs)
+        FactoryBot.create(:choose_a_school_collection_configs)
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_CHOOSE_A_SCHOOL_KEY)
         result = CollectionConfig.city_hub_choose_school(collection_configs)
 
@@ -157,8 +157,8 @@ describe CollectionConfig do
 
     context 'valid json string' do
       it 'parses the announcement string and returns a hash' do
-        FactoryGirl.create(:announcement_collection_config)
-        FactoryGirl.create(:show_announcement_collection_config)
+        FactoryBot.create(:announcement_collection_config)
+        FactoryBot.create(:show_announcement_collection_config)
         collection_configs = CollectionConfig.where(collection_id: 1)
         result = CollectionConfig.city_hub_announcement(collection_configs)
 
@@ -187,7 +187,7 @@ describe CollectionConfig do
 
 
     context 'valid json string' do
-      before(:each) { FactoryGirl.create(:important_events_collection_config) }
+      before(:each) { FactoryBot.create(:important_events_collection_config) }
       let(:collection_configs) { CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY) }
 
       it 'parses the important events string and returns a hash' do
@@ -242,7 +242,7 @@ describe CollectionConfig do
     end
 
     context 'valid json string' do
-      before(:each) { FactoryGirl.create(:important_events_collection_config) }
+      before(:each) { FactoryBot.create(:important_events_collection_config) }
       it 'parses the important events string and returns an array' do
         result = CollectionConfig.important_events(1)
 
@@ -280,7 +280,7 @@ describe CollectionConfig do
 
     context 'valid json string' do
       it 'returns the subheading string' do
-        FactoryGirl.create(:community_partners_subheading_collection_config)
+        FactoryBot.create(:community_partners_subheading_collection_config)
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::EDUCATION_COMMUNITY_SUBHEADING_KEY)
         subheading = CollectionConfig.ed_community_subheading(collection_configs)
 
@@ -300,7 +300,7 @@ describe CollectionConfig do
     end
 
     context 'valid json string' do
-      before(:each) { FactoryGirl.create(:community_partners_collection_config) }
+      before(:each) { FactoryBot.create(:community_partners_collection_config) }
       it 'returns sorted partners' do
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::EDUCATION_COMMUNITY_PARTNERS_KEY)
         result = CollectionConfig.ed_community_partners(collection_configs)
@@ -329,7 +329,7 @@ describe CollectionConfig do
     end
 
     context 'by default' do
-      before(:each) { FactoryGirl.create(:community_tabs_collection_config) }
+      before(:each) { FactoryBot.create(:community_tabs_collection_config) }
 
       it 'returns a boolean value for tabs' do
         configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::EDUCATION_COMMUNITY_TABS_KEY)
@@ -348,9 +348,9 @@ describe CollectionConfig do
 
   describe '.partner' do
     before(:each) do
-      FactoryGirl.create(:community_sponsor_collection_config_name)
-      FactoryGirl.create(:community_sponsor_collection_config_page_name)
-      FactoryGirl.create(:community_sponsor_collection_config_data)
+      FactoryBot.create(:community_sponsor_collection_config_name)
+      FactoryBot.create(:community_sponsor_collection_config_page_name)
+      FactoryBot.create(:community_sponsor_collection_config_data)
     end
 
     let(:result) do
@@ -390,7 +390,7 @@ describe CollectionConfig do
 
   describe '.choosing_page_links' do
     context 'by default' do
-      before(:each) { FactoryGirl.create(:choosing_page_links_configs) }
+      before(:each) { FactoryBot.create(:choosing_page_links_configs) }
       let(:configs) { CollectionConfig.all }
       it 'returns links' do
         result = CollectionConfig.choosing_page_links(configs)
@@ -415,7 +415,7 @@ describe CollectionConfig do
 
   describe '.content_modules' do
     context 'by default' do
-      before(:each) { FactoryGirl.create(:state_hub_content_module) }
+      before(:each) { FactoryBot.create(:state_hub_content_module) }
       let(:configs) { CollectionConfig.all }
 
       it 'returns parsed content modules' do
@@ -434,11 +434,11 @@ describe CollectionConfig do
     context 'with malformed data' do
       it 'logs an error' do
         expect(Rails.logger).to receive(:error)
-        configs = FactoryGirl.create(:state_hub_content_module, value: 'foobarbaz')
+        configs = FactoryBot.create(:state_hub_content_module, value: 'foobarbaz')
         result = CollectionConfig.content_modules([configs])
       end
       it 'returns nil' do
-        configs = FactoryGirl.create(:state_hub_content_module, value: 'foobarbaz')
+        configs = FactoryBot.create(:state_hub_content_module, value: 'foobarbaz')
         results = CollectionConfig.content_modules([configs])
         expect(results).to be_nil
       end
@@ -448,13 +448,13 @@ describe CollectionConfig do
   describe '.state_featured_articles' do
     context 'by default' do
       it 'parses featured articles' do
-        configs = FactoryGirl.create(:state_hub_featured_articles)
+        configs = FactoryBot.create(:state_hub_featured_articles)
         results = CollectionConfig.state_featured_articles([configs])
         expect(results).to be_an_instance_of(Array)
       end
 
       it 'prepends the assets path to images' do
-        configs = FactoryGirl.create(:state_hub_featured_articles)
+        configs = FactoryBot.create(:state_hub_featured_articles)
         results = CollectionConfig.state_featured_articles([configs])
         results.each do |article|
           expect(article[:articleImagePath]).to start_with '/assets'
@@ -464,7 +464,7 @@ describe CollectionConfig do
 
     context 'with missing data' do
       it 'returns nil' do
-        configs = FactoryGirl.create(:community_sponsor_collection_config_data)
+        configs = FactoryBot.create(:community_sponsor_collection_config_data)
         result1 = CollectionConfig.state_featured_articles([])
         result2 = CollectionConfig.state_featured_articles([configs])
         expect(result1).to be_nil
@@ -475,12 +475,12 @@ describe CollectionConfig do
     context 'with malformed data' do
       it 'logs an error' do
         expect(Rails.logger).to receive(:error)
-        configs = FactoryGirl.create(:state_hub_featured_articles, value: 'foobarb]a{z ? ? ? ?')
+        configs = FactoryBot.create(:state_hub_featured_articles, value: 'foobarb]a{z ? ? ? ?')
         CollectionConfig.state_featured_articles([configs])
       end
 
       it 'returns nil' do
-        configs = FactoryGirl.create(:state_hub_featured_articles, value: 'foobarb]a{z ? ? ? ?')
+        configs = FactoryBot.create(:state_hub_featured_articles, value: 'foobarb]a{z ? ? ? ?')
         result = CollectionConfig.state_featured_articles([configs])
         expect(result).to be_nil
       end
@@ -490,7 +490,7 @@ describe CollectionConfig do
   describe '.state_partners' do
     context 'by default' do
       it 'parses state partners' do
-        configs = FactoryGirl.create(:state_partners_configs)
+        configs = FactoryBot.create(:state_partners_configs)
         results = CollectionConfig.state_partners([configs])
         expect(results).to be_an_instance_of(Hash)
       end
@@ -499,14 +499,14 @@ describe CollectionConfig do
     context 'with missing data' do
       it 'returns nil' do
         result1 = CollectionConfig.state_partners([])
-        result2 = CollectionConfig.state_partners([FactoryGirl.create(:state_hub_featured_articles)])
+        result2 = CollectionConfig.state_partners([FactoryBot.create(:state_hub_featured_articles)])
         expect(result1).to be_nil
         expect(result2).to be_nil
       end
     end
 
     context 'with malformed data' do
-      let(:configs) { FactoryGirl.create(:state_partners_configs, value: 'foobar{? baz do') }
+      let(:configs) { FactoryBot.create(:state_partners_configs, value: 'foobar{? baz do') }
       it 'logs an error' do
         expect(Rails.logger).to receive(:error)
         CollectionConfig.state_partners([configs])
@@ -523,7 +523,7 @@ describe CollectionConfig do
 
     context 'with missing data' do
       it 'returns an empty object' do
-        FactoryGirl.create(:bogus_collection_config, quay: 'foobar_key')
+        FactoryBot.create(:bogus_collection_config, quay: 'foobar_key')
         bogus_configs = CollectionConfig.where(collection_id: 1)
         result = CollectionConfig.enrollment_subheading(bogus_configs)
         expect(result).to eq({})
@@ -532,7 +532,7 @@ describe CollectionConfig do
 
     context 'with empty data' do
       it 'returns an empty object' do
-        FactoryGirl.create(:enrollment_subheading_configs, value: "")
+        FactoryBot.create(:enrollment_subheading_configs, value: "")
         empty_configs = CollectionConfig.where(collection_id: 1)
         result = CollectionConfig.enrollment_subheading(empty_configs)
         expect(result).to eq({ error: "The enrollment subheading is empty" })
@@ -540,7 +540,7 @@ describe CollectionConfig do
     end
 
     context 'with malformed data' do
-      let(:broken_configs) { [FactoryGirl.create(:bogus_collection_config, quay: key, value: "?? foo bar baz")] }
+      let(:broken_configs) { [FactoryBot.create(:bogus_collection_config, quay: key, value: "?? foo bar baz")] }
       it 'logs an error' do
         expect(Rails.logger).to receive(:error)
         CollectionConfig.enrollment_subheading(broken_configs)
@@ -553,7 +553,7 @@ describe CollectionConfig do
 
     context 'by default' do
       it 'returns the enrollment page subheading' do
-        FactoryGirl.create(:enrollment_subheading_configs)
+        FactoryBot.create(:enrollment_subheading_configs)
         configs = CollectionConfig.where(collection_id: 1)
         result = CollectionConfig.enrollment_subheading(configs)
         expect(result).to be_an_instance_of(Hash)
@@ -596,7 +596,7 @@ describe CollectionConfig do
     context 'with missing or malformed data' do
       it 'returns nil' do
         results = [ CollectionConfig.enrollment_module([], 'preschool'),
-        CollectionConfig.enrollment_module([FactoryGirl.create(:bogus_collection_config)], 'preschool') ]
+        CollectionConfig.enrollment_module([FactoryBot.create(:bogus_collection_config)], 'preschool') ]
         results.each do |result|
           expect(result[:public]).to be_nil
           expect(result[:private]).to be_nil
@@ -611,8 +611,8 @@ describe CollectionConfig do
     context 'by default' do
       let(:configs) do
         [
-          FactoryGirl.build(:enrollment_module_configs, quay: 'enrollmentPage_private_elementary_module'),
-          FactoryGirl.build(:enrollment_module_configs, quay: 'enrollmentPage_public_elementary_module')
+          FactoryBot.build(:enrollment_module_configs, quay: 'enrollmentPage_private_elementary_module'),
+          FactoryBot.build(:enrollment_module_configs, quay: 'enrollmentPage_public_elementary_module')
         ]
       end
 
@@ -644,7 +644,7 @@ describe CollectionConfig do
     end
 
     context 'malformed data' do
-      let(:bogus_configs) { [FactoryGirl.create(:bogus_collection_config)] }
+      let(:bogus_configs) { [FactoryBot.create(:bogus_collection_config)] }
 
       it 'returns nil' do
         result = CollectionConfig.enrollment_tips(bogus_configs, 'preschool')
@@ -655,7 +655,7 @@ describe CollectionConfig do
 
     context 'a single tip in db' do
       before(:each) do
-        FactoryGirl.create(:single_enrollment_tip_config)
+        FactoryBot.create(:single_enrollment_tip_config)
       end
 
       it 'returns an array with a single tip' do
@@ -666,7 +666,7 @@ describe CollectionConfig do
 
     context 'by default' do
       before(:each) do
-        FactoryGirl.create(:enrollment_tips_config)
+        FactoryBot.create(:enrollment_tips_config)
       end
 
       it 'returns a hash of tips' do
@@ -679,7 +679,7 @@ describe CollectionConfig do
 
   describe '.state_choose_school' do
     context 'with missing or malformed data' do
-      let(:bogus_configs) { [FactoryGirl.create(:bogus_collection_config, quay: 'statehubHome_chooseSchool')] }
+      let(:bogus_configs) { [FactoryBot.create(:bogus_collection_config, quay: 'statehubHome_chooseSchool')] }
 
       it 'returns nil' do
         [
@@ -696,7 +696,7 @@ describe CollectionConfig do
 
     context 'by default' do
       before(:each) do
-        FactoryGirl.create(:state_choose_school_config)
+        FactoryBot.create(:state_choose_school_config)
       end
       let(:configs) { CollectionConfig.all }
 
@@ -726,7 +726,7 @@ describe CollectionConfig do
     end
 
     context 'with malformed data' do
-      before(:each) { FactoryGirl.create(:bogus_collection_config, quay: 'keyEnrollmentDates_private_preschool') }
+      before(:each) { FactoryBot.create(:bogus_collection_config, quay: 'keyEnrollmentDates_private_preschool') }
 
       it 'returns nil' do
         result = CollectionConfig.key_dates(configs, 'preschool')
@@ -739,7 +739,7 @@ describe CollectionConfig do
     end
 
     context 'by default' do
-      before(:each) { FactoryGirl.create(:key_dates_config) }
+      before(:each) { FactoryBot.create(:key_dates_config) }
 
       it 'returns parsed key dates' do
         result = CollectionConfig.key_dates(configs, 'preschool')
@@ -758,7 +758,7 @@ describe CollectionConfig do
     end
 
     context 'by default' do
-      before { FactoryGirl.create(:browse_links_config) }
+      before { FactoryBot.create(:browse_links_config) }
       let(:configs) { CollectionConfig.where(collection_id: 1) }
       let(:result) { CollectionConfig.browse_links(configs) }
 
@@ -775,7 +775,7 @@ describe CollectionConfig do
     end
 
     context 'by default' do
-      let(:configs) { [FactoryGirl.build(:programs_heading_config)] }
+      let(:configs) { [FactoryBot.build(:programs_heading_config)] }
       let(:heading) { CollectionConfig.programs_heading(configs) }
 
       it 'returns the programs heading' do
@@ -791,7 +791,7 @@ describe CollectionConfig do
     end
 
     context 'by default' do
-      let(:configs) { [FactoryGirl.build(:programs_intro_config)] }
+      let(:configs) { [FactoryBot.build(:programs_intro_config)] }
       let(:result) { CollectionConfig.programs_intro(configs) }
 
       it 'returns the intro section html blob' do
@@ -807,7 +807,7 @@ describe CollectionConfig do
     end
 
     context 'by default' do
-      let(:configs) { [FactoryGirl.build(:programs_sponsor_config)] }
+      let(:configs) { [FactoryBot.build(:programs_sponsor_config)] }
       let(:result) { CollectionConfig.programs_sponsor(configs) }
 
       it 'parses the programs page sponsor' do
@@ -835,7 +835,7 @@ describe CollectionConfig do
     it_behaves_like 'it fails with an error'
 
     context 'by default' do
-      let(:configs) { [FactoryGirl.build(:programs_articles_config)] }
+      let(:configs) { [FactoryBot.build(:programs_articles_config)] }
       let(:result) { CollectionConfig.programs_articles(configs) }
 
       it 'parses programs page articles' do
