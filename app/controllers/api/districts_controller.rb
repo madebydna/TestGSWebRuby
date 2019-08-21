@@ -57,11 +57,10 @@ class Api::DistrictsController < ApplicationController
   end
 
   def add_rating(districts)
-    q = DistrictCacheQuery.new.
-      include_objects(districts).
-      include_cache_keys(['district_schools_summary'])
+    q = DistrictCache.for_districts(districts)
+          .include_cache_keys(['district_schools_summary'])
 
-    school_cache_results = DistrictCacheResults.new(['district_schools_summary'], q.query)
+    school_cache_results = DistrictCacheResults.new(['district_schools_summary'], q)
     school_cache_results.decorate_districts(districts)
   end
 

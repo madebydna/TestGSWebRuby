@@ -28,12 +28,12 @@ class DistrictCacheQuery
     self
   end
 
-  def self.for_district(district)
-    raise ArgumentError.new('District must not be nil') if district.nil?
-    new.tap do |cache_query|
-      cache_query.include_districts(district.state, district.id)
-    end
-  end
+  # def self.for_district(district)
+  #   raise ArgumentError.new('District must not be nil') if district.nil?
+  #   new.tap do |cache_query|
+  #     cache_query.include_districts(district.state, district.id)
+  #   end
+  # end
 
   # needs OR active record support in Rails 5+
   def matching_districts_clause

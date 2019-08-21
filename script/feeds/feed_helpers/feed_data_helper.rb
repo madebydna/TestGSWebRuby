@@ -60,15 +60,11 @@ module Feeds
     end
 
     def get_districts_batch_cache_data(district_batch)
-      query = DistrictCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
-      district_batch.each do |district|
-        query = query.include_districts(district.state, district.id)
-      end
-      query_results = query.query_and_use_cache_keys
-      district_cache_results = DistrictCacheResults.new(FEED_CACHE_KEYS, query_results)
+      query = DistrictCache.include_cache_keys(FEED_CACHE_KEYS).for_districts(district_batch)
+      district_cache_results = DistrictCacheResults.new(FEED_CACHE_KEYS, query)
       districts_with_cache_results= district_cache_results.decorate_districts(district_batch)
       districts_with_cache_results.map do |district|
-              DistrictFeedDecorator.decorate(district)
+        DistrictFeedDecorator.decorate(district)
       end
     end
   end
