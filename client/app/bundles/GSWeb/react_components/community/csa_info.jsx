@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { t } from 'util/i18n';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
-const CsaInfo = ({ locality, community, caAdvocacy }) => {
+const CsaInfo = ({ locality, caAdvocacy }) => {
   let headerText = `${t('award_winners')}`;
   let blurbText = `${t("csa_district_schools_info_html")}`;
   let buttonText = `${t('see_winning_schools_in')} ${locality.stateLong}`;
