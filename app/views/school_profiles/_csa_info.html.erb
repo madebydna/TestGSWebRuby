@@ -1,0 +1,25 @@
+<div class="ca-csa-module">
+  <h3>HEADER GOES HERE</h3>
+  <div class="ca-csa-blurb">
+    <img 
+      src="<%= image_path('school_profiles/owl.png') %>"
+      class="ca-csa-owl-icon"
+      alt="GS Owl Icon"
+    />
+    <p>
+      <%# <span dangerouslySetInnerHTML={{__html: t("csa_district_schools_info_html")}}/> %>
+      CONTENT GOES HERE
+    </p>
+  </div>
+  <div class="ca-csa-module-divider">
+    <div class="blue-line"></div>
+  </div>
+  <div class="more-school-btn">
+  <%# <a class="show-more__button js-toggle-button">
+<%= [t('javascript.show_more'), suffix].compact.join(' ') </a> %>
+    <a href="#">
+      <button>{buttonText}</button>
+    </a>
+  </div>
+</div>
+
