@@ -3,12 +3,20 @@ import PropTypes from 'prop-types';
 import { t } from 'util/i18n';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
-const CsaInfo = ({locality, community}) => {
-  let buttonText = community === "state" ? t('see_all_winning_schools') : `${t('see_winning_schools_in')} ${locality.stateLong}`;
+const CsaInfo = ({ locality, community, caAdvocacy }) => {
+  let headerText = `${t('award_winners')}`;
+  let blurbText = `${t("csa_district_schools_info_html")}`;
+  let buttonText = `${t('see_winning_schools_in')} ${locality.stateLong}`;
+
+  if (caAdvocacy) {
+    headerText = `CA header text`;
+    blurbText = `CA blurb text`;
+    buttonText = `CA button text`;
+  }
 
   return (
     <div className="csa-state-module">
-      <h3>{t('award_winners')}</h3>
+      <h3>{headerText}</h3>
       <div className="csa-state-blurb">
         <img 
           src={csaBadgeGenLg}
@@ -16,7 +24,7 @@ const CsaInfo = ({locality, community}) => {
           alt="csa-badge-icon"
         />
         <p>
-          <span dangerouslySetInnerHTML={{__html: t("csa_district_schools_info_html")}}/>
+          <span dangerouslySetInnerHTML={{__html: blurbText }}/>
         </p>
       </div>
       <div className="csa-state-module-divider">
