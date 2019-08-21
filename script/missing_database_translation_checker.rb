@@ -50,108 +50,62 @@ class MissingDatabaseTranslationChecker
   end
 
   def initialize
-    @config = [
+    @config                       = [
       {
-        table: :'localized_profiles.categories',
+        table:  :'gs_schooldb.ethnicity',
         column: :name
       },
       {
-        table: :'localized_profiles.category_data',
-        column: :label
-      },
-      {
-        table: :'localized_profiles.category_placements',
-        column: :title
-      },
-      {
-        table: :'gs_schooldb.data_description',
-        column: :value
-      },
-      {
-        table: :'gs_schooldb.ethnicity',
-        column: :name
-      },
-      # {
-      #   table: :'gs_schooldb.hub_config',
-      #   column: :value,
-      #   filters: [
-      #     /^true$/,
-      #     /^false$/,
-      #     /\.jpg$/,
-      #     /\.png$/,
-      #     /\.gs$/,
-      #     /^https?:/,
-      #     /^([^a-zA-Z])+$/,
-      #     /^schools\/\?/,
-      #     /\#\d+$/,
-      #     /^\/[a-z\/-]+$/,
-      #     /Parent Portal .{3} doorway to answers/
-      #   ]
-      # },
-      {
-        table: :'localized_profiles.response_values',
-        column: :response_label
-      },
-      {
-        table: :'gs_schooldb.review_questions',
+        table:  :'gs_schooldb.review_questions',
         column: :question
       },
       {
-        table: :'gs_schooldb.review_questions',
-        column: :responses,
+        table:     :'gs_schooldb.review_questions',
+        column:    :responses,
         delimiter: ','
       },
       {
-        table: :'gs_schooldb.review_topics',
+        table:  :'gs_schooldb.review_topics',
         column: :label
       },
       {
-        table: :'gs_schooldb.review_topics',
+        table:  :'gs_schooldb.review_topics',
         column: :name
       },
       {
-        table: :'gs_schooldb.school_members',
+        table:  :'gs_schooldb.school_members',
         column: :user_type
       },
       {
-        table: :'localized_profiles.school_profile_configurations',
-        column: :value,
+        table:   :'gs_schooldb.TestDataBreakdown',
+        column:  :name,
         filters: [
-          /^\d+$/,
-          /^true$/,
-          /^false$/
-        ]
+                   /DEPRECATED/
+                 ]
       },
       {
-        table: :'gs_schooldb.TestDataBreakdown',
-        column: :name,
-        filters: [
-          /DEPRECATED/
-        ]
-      },
-      {
-        table: :'gs_schooldb.TestDataSubject',
+        table:  :'gs_schooldb.TestDataSubject',
         column: :name,
       },
       {
-        table: :'gs_schooldb.TestDataType',
+        table:  :'gs_schooldb.TestDataType',
         column: :description
       },
       {
-        table: :'gs_schooldb.TestDataType',
+        table:  :'gs_schooldb.TestDataType',
         column: :display_name
       },
       {
-        table: :'gs_schooldb.test_description',
+        table:  :'gs_schooldb.test_description',
         column: :description
       },
       {
-        table: :'gs_schooldb.census_description',
+        table:  :'gs_schooldb.census_description',
         column: :source
       },
       {
-          table: :'gsdata.loads',
-          column: :description
+        table:  :'omni.data_sets',
+        column: :description
       }
     ]
     @missing_translation_messages = []
@@ -165,7 +119,7 @@ class MissingDatabaseTranslationChecker
 
   def check_for_missing_translations
     @config.each do |hash|
-      column_check = new_column_checker(hash[:table], hash[:column], hash)
+      column_check                  = new_column_checker(hash[:table], hash[:column], hash)
       @missing_translation_messages += column_check.missing_translation_messages
       puts column_check.report
     end
@@ -195,15 +149,16 @@ class MissingDatabaseTranslationChecker
 
   class ColumnChecker
     attr_accessor :table, :column, :config
+
     def initialize(table, column, config = {})
       default_config_options = {
-        filters: [],
+        filters:   [],
         delimiter: nil
       }
-      config = config.reverse_merge(default_config_options)
+      config                 = config.reverse_merge(default_config_options)
       config.keep_if { |k| default_config_options.has_key?(k) }
       config.each_pair { |option, value| instance_variable_set("@#{option}", value) }
-      @table = table
+      @table  = table
       @column = column
     end
 
@@ -212,7 +167,7 @@ class MissingDatabaseTranslationChecker
     end
 
     def missing_translation_messages
-      missing_translations.map { |key| "Missing translation '#{key}' for #{table}.#{column}"}
+      missing_translations.map { |key| "Missing translation '#{key}' for #{table}.#{column}" }
     end
 
     def missing_translations_hash
@@ -270,8 +225,8 @@ class MissingDatabaseTranslationChecker
 
     # Values might be strings, integers, or strings that contain json blobs
     def column_values
-      if is_gsdata?
-        result = DataValue.connection.execute(build_query)
+      if is_omni?
+        result = Omni::TestDataValue.connection.execute(build_query)
       else
         result = ActiveRecord::Base.connection.execute(build_query)
       end
@@ -282,8 +237,8 @@ class MissingDatabaseTranslationChecker
       end.compact
     end
 
-    def is_gsdata?
-      table.to_s.start_with?('gsdata.')
+    def is_omni?
+      table.to_s.start_with?('omni.')
     end
 
     def build_query
@@ -295,17 +250,19 @@ class MissingDatabaseTranslationChecker
 
       array.inject([]) do |result, value|
         case value
-          when Hash then result + values_from_hash(value)
-          when Array then result + values_from_hash(value)
-          else
-            result << value
+        when Hash
+          result + values_from_hash(value)
+        when Array
+          result + values_from_hash(value)
+        else
+          result << value
         end
       end
     end
   end
 end
 
-options = OpenStruct.new
+options         = OpenStruct.new
 options.command = :report
 OptionParser.new do |opts|
 
@@ -318,17 +275,17 @@ OptionParser.new do |opts|
 
   opts.on('-tTABLE', '--translate=TABLE', 'Google translate missing strings for dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
     options.command = :translate
-    options.table = table
+    options.table   = table
   end
 
   opts.on('-aTABLE', '--add=TABLE', 'Add English text for all locales for dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
     options.command = :add
-    options.table = table
+    options.table   = table
   end
 
   opts.on('-rTABLE', '--reformat=TABLE', 'Reformat files for dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
     options.command = :reformat
-    options.table = table
+    options.table   = table
   end
 
   # Cannot use -h and --help since that will be interpreted by rails runner and spit out rails runner usage
