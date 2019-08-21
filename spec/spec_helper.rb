@@ -8,6 +8,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'factory_bot' unless ENV['BLACK_BOX']
+require 'support/factory_bot_extensions'
 require 'support/rspec_custom_masters'
 require 'support/rspec_its'
 require 'support/rspec_extensions'
