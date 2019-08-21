@@ -132,7 +132,8 @@ module SchoolProfiles
         hashes = characteristics_data
         hashes.merge!(@school_cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata)))
         return [] if hashes.blank?
-        handle_ACT_SAT_to_display!(hashes)
+        # handle_ACT_SAT_to_display!(hashes)
+        ActSatHandler.new(hashes).handle_ACT_SAT_to_display!
         hashes = hashes.map do |key, array|
           array = array.for_all_students.having_school_value.having_most_recent_date
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
