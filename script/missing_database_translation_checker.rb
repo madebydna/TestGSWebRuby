@@ -250,9 +250,9 @@ class MissingDatabaseTranslationChecker
 
       array.inject([]) do |result, value|
         case value
-        when Hash then
+        when Hash
           result + values_from_hash(value)
-        when Array then
+        when Array
           result + values_from_hash(value)
         else
           result << value
