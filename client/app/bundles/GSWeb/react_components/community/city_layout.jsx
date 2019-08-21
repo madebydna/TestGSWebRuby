@@ -126,6 +126,15 @@ class CityLayout extends React.Component {
     );
   }
 
+  // CA Advocacy CSA
+  renderCaCsaModule() {
+    return this.props.locality.stateShort === 'CA' && (
+      <div>
+        {this.props.caCsaInfo}
+      </div>
+    );
+  }
+
   renderZillow(){
     return (
       this.props.zillow
@@ -181,6 +190,7 @@ class CityLayout extends React.Component {
               {this.renderSchools()}
               {this.renderBoxAd()}
               {this.renderCsaModule()}
+              {this.renderCaCsaModule()}
               {this.renderDistricts()}
               {this.renderMobility()}
               {this.renderZillow()}
