@@ -1,5 +1,6 @@
-# S
+# This class handles the filtering of SAT/ACT data to only the most recent data
 class ActSatHandler
+  include SchoolProfiles::CollegeReadinessConfig
 
   attr_reader :hash
 
@@ -7,7 +8,6 @@ class ActSatHandler
     @hash = hash
   end
 
-  # side effect - set school_value to nil based on conditionals
   def handle_ACT_SAT_to_display!
     # returns max_year if we have at least one ACT data type to display, else: nil
     act_content = enforce_latest_year_school_value_for_data_types!(hash, ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY)

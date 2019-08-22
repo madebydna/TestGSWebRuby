@@ -132,8 +132,9 @@ module SchoolProfiles
         hashes = characteristics_data
         hashes.merge!(@school_cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata)))
         return [] if hashes.blank?
-        # handle_ACT_SAT_to_display!(hashes)
+
         ActSatHandler.new(hashes).handle_ACT_SAT_to_display!
+
         hashes = hashes.map do |key, array|
           array = array.for_all_students.having_school_value.having_most_recent_date
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
@@ -142,6 +143,7 @@ module SchoolProfiles
           end
           array
         end
+
         data_values = hashes.flatten.compact
         data_values.select! {|dv| included_data_types.include?(dv['data_type'])}
         data_values.reject! {|dv| dv['year'].to_i < DATA_CUTOFF_YEAR} if cache_accessor == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS
