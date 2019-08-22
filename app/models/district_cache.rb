@@ -24,40 +24,11 @@ class DistrictCache < ActiveRecord::Base
     where(matching_clause)
   end
 
-  # def self.for_districts_keys(keys, districts, state)
-  #   district_data = Hash.new { |h,k| h[k] = {} }
-  #   cached_data = DistrictCache.where(name: keys, district_id: districts, state: state)
-  #   cached_data.each do |cache|
-  #     cache_value = begin JSON.parse(cache.value) rescue {} end
-  #     district_data[cache.district_id].merge! cache.name => cache_value
-  #   end
-  #   district_data
-  # end
-
-  #look for one district cache record
-  #look for many district cache record
-  # ! for_districts && for_keys
-
+  # TODO: this should be moved to data reader
   def self.cached_results_for(districts, keys)
     query = DistrictCache.include_cache_keys(keys).for_districts(districts)
     DistrictCacheResults.new(keys, query)
   end
-
-  # self::KEYS.each do |key|
-  #   method_name = "cached_#{key}_data"
-  #   define_singleton_method(method_name) do |district|
-  #     cache_key = "#{method_name}"
-  #     if district.instance_variable_get("@#{cache_key}")
-  #       return district.instance_variable_get("@#{cache_key}")
-  #     end
-  #     cached_data = if (district_cache = self.for_district(district).include_cache_keys(key))
-  #                     district_cache.cache_data(symbolize_names: true)
-  #                   else
-  #                     {}
-  #                   end
-  #     district.instance_variable_set("@#{cache_key}", cached_data)
-  #   end
-  # end
 
   def cache_data(options = {})
     JSON.parse(value, options) rescue {}

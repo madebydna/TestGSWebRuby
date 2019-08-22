@@ -10,12 +10,12 @@ describe Feeds::FeedDataHelper do
   after { clean_dbs :gs_schooldb, :ca, :mi }
 
   before do
-    @ca_district_1 = FactoryGirl.create_on_shard(:ca, :district)
-    @ca_district_2 = FactoryGirl.create_on_shard(:ca, :district)
-    @mi_district = FactoryGirl.create_on_shard(:mi, :district)
-    FactoryGirl.create(:district_cache, state: 'ca', district_id: @ca_district_1.id, name: 'feed_test_scores')
-    FactoryGirl.create(:district_cache, state: 'ca', district_id: @ca_district_2.id, name: 'feed_test_scores')
-    FactoryGirl.create(:district_cache, state: 'mi', district_id: @mi_district.id, name: 'feed_test_scores')
+    @ca_district_1 = FactoryBot.create_on_shard(:ca, :district)
+    @ca_district_2 = FactoryBot.create_on_shard(:ca, :district)
+    @mi_district = FactoryBot.create_on_shard(:mi, :district)
+    FactoryBot.create(:district_cache, state: 'ca', district_id: @ca_district_1.id, name: 'feed_test_scores')
+    FactoryBot.create(:district_cache, state: 'ca', district_id: @ca_district_2.id, name: 'feed_test_scores')
+    FactoryBot.create(:district_cache, state: 'mi', district_id: @mi_district.id, name: 'feed_test_scores')
   end
 
   describe '#get_districts_batch_cache_data' do
