@@ -4,11 +4,11 @@
 		<div class="state-btn"><%= t('shared.school_picker.select_state') %><span class="icon-caret-down"></span></div>
 		<ul class="hide-state-list">
 			<% States.state_hash.except('district of columbia', 'washington dc').keys.map do |state| %>
-				<a href=<%= state_path(States.state_path(state)) %>>
-					<li>
+				<li>
+					<a href=<%= state_path(States.state_path(state)) %>>
 						<%= States.capitalize_any_state_names(state) %>
-					</li>
-				</a>
+					</a>
+				</li>
 			<% end %>
 		</ul>
 	</div>
