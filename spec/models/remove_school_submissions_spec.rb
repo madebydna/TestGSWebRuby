@@ -3,7 +3,7 @@
 describe RemoveSchoolSubmission do
   context '#valid?' do
     subject {remove_school_submission.valid?}
-    let(:remove_school_submission) { FactoryGirl.build(:remove_school_submission)}
+    let(:remove_school_submission) { FactoryBot.build(:remove_school_submission)}
 
     non_gs_domain = 'http://my-favorite_astronomy-site.org'
     context "with non-gs domain: #{non_gs_domain}" do

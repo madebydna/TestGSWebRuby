@@ -1,7 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :review, class: Review do
-    ignore do
+    transient do
       review_flag_reason ReviewFlag::AUTO_FLAGGED
     end
 
@@ -14,7 +14,7 @@ FactoryGirl.define do
 
     factory :five_star_review do
 
-      ignore do
+      transient do
         answer_value (1..5).to_a.sample
       end
 
@@ -48,7 +48,7 @@ FactoryGirl.define do
     end
 
     factory :teacher_effectiveness_review do
-      ignore do
+      transient do
         answer_value 'Very ineffective,Ineffective,Moderately effective,Effective,Very effective'.
           split(',').sample
       end
@@ -77,7 +77,7 @@ FactoryGirl.define do
     end
 
     factory :homework_review do
-      ignore do
+      transient do
         answer_value 'Very ineffective,Ineffective,Moderately effective,Effective,Very effective'.
           split(',').sample
       end
@@ -121,7 +121,7 @@ FactoryGirl.define do
 
     trait :flagged do
       after(:create) do |review, evaluator|
-        FactoryGirl.create(
+        FactoryBot.create(
           :review_flag,
           review: review,
           user: review.user,

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe EspResponsesCaching::EspResponsesCacher do
-  let(:school) { FactoryGirl.build(:alameda_high_school) }
+  let(:school) { FactoryBot.build(:alameda_high_school) }
   let(:cacher) { EspResponsesCaching::EspResponsesCacher.new(school) }
-  let(:esp_response) { [FactoryGirl.build(:esp_response), FactoryGirl.build(:esp_response)] }
+  let(:esp_response) { [FactoryBot.build(:esp_response), FactoryBot.build(:esp_response)] }
 
   describe '#build_hash_for_cache' do
 

@@ -14,7 +14,7 @@ describe School do
     types.each do |type|
       describe ".#{type}_schools" do
         before do
-          @school = FactoryGirl.create_on_shard(:ca, :school, level_code: 'p,e', type: School::LEVEL_CODES[type.to_sym])
+          @school = FactoryBot.create_on_shard(:ca, :school, level_code: 'p,e', type: School::LEVEL_CODES[type.to_sym])
         end
 
         it 'returns the school' do
@@ -27,7 +27,7 @@ describe School do
       describe ".#{level}_schools" do
         context "with single level" do
           before do
-            @school = FactoryGirl.create_on_shard(:ca, :school, level_code: School::LEVEL_CODES[level.to_sym], type: 'public')
+            @school = FactoryBot.create_on_shard(:ca, :school, level_code: School::LEVEL_CODES[level.to_sym], type: 'public')
           end
           it 'returns the school' do
             expect(School.on_db(:ca).send("#{level}_schools".to_sym)).to include(@school)
@@ -38,7 +38,7 @@ describe School do
             l1 = School::LEVEL_CODES[level.to_sym]
             other_code = levels[i % levels.length - 1].to_sym
             l2 = School::LEVEL_CODES[other_code]
-            @school = FactoryGirl.create_on_shard(:ca, :school, level_code: [l1,l2].join(',') , type: 'public')
+            @school = FactoryBot.create_on_shard(:ca, :school, level_code: [l1,l2].join(',') , type: 'public')
           end
           it 'returns the school' do
             expect(School.on_db(:ca).send("#{level}_schools".to_sym)).to include(@school)
@@ -49,7 +49,7 @@ describe School do
   end
 
   describe '#held?' do
-    let(:school) { FactoryGirl.build(:school) }
+    let(:school) { FactoryBot.build(:school) }
     it 'should return true because the school is held' do
       allow(HeldSchool).to receive(:exists?).and_return(true)
       expect(school.held?).to be_truthy
@@ -62,7 +62,7 @@ describe School do
   end
 
   describe '#school_metadata' do
-    let(:school) { FactoryGirl.build(:school) }
+    let(:school) { FactoryBot.build(:school) }
     it 'should return a Hashie::Mash object' do
       schoolMetadata = school.school_metadata
       expect(schoolMetadata).to be_a Hashie::Mash
@@ -70,7 +70,7 @@ describe School do
   end
 
   describe '#great_schools_rating' do
-    subject(:school) { FactoryGirl.build(:school) }
+    subject(:school) { FactoryBot.build(:school) }
     before do
       school_metadata = Hashie::Mash.new(:overallRating => "10")
       allow(school).to receive(:school_metadata).and_return(school_metadata)
@@ -90,8 +90,8 @@ describe School do
   end
 
   describe '#preload_school_metadata' do
-    let(:school_with_gs_ratings) { FactoryGirl.create(:school,:with_gs_rating,gs_rating: 3 ) }
-    let(:school_with_no_ratings) { FactoryGirl.create(:the_friendship_preschool) }
+    let(:school_with_gs_ratings) { FactoryBot.create(:school,:with_gs_rating,gs_rating: 3 ) }
+    let(:school_with_no_ratings) { FactoryBot.create(:the_friendship_preschool) }
     let(:all_schools) {Array(school_with_gs_ratings) + Array(school_with_no_ratings)}
 
     it 'should set rating if a school has rating else an empty hash.' do
@@ -118,7 +118,7 @@ describe School do
   end
 
   describe '#cache_results' do
-    let(:school) { FactoryGirl.create(:school) }
+    let(:school) { FactoryBot.create(:school) }
 
     it 'should query the school cache only once.' do
       expect(school).to memoize(:cache_results)
@@ -143,7 +143,7 @@ describe School do
   end
 
   describe '#nearby_schools_for_list' do
-    let(:school) { FactoryGirl.build(:school) }
+    let(:school) { FactoryBot.build(:school) }
     CacheResultsStruct = Struct.new(:nearby_schools)
     context 'when the cache is present and a hash' do
       let(:cache_results) do

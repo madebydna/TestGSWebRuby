@@ -89,7 +89,7 @@ describe LegacyProfileRedirectController do
   describe '#school' do
     subject { controller.send(:school) }
 
-    let (:school) { FactoryGirl.create(:school) }
+    let (:school) { FactoryBot.create(:school) }
     let (:id) { school.id }
     let (:state) { school.state }
 
@@ -135,7 +135,7 @@ describe LegacyProfileRedirectController do
   describe '#show' do
     subject { response }
 
-    let (:school) { FactoryGirl.create(:school) }
+    let (:school) { FactoryBot.create(:school) }
     let (:id) { school.id }
     let (:city) { school.city.downcase.gsub(' ', '-') }
     let (:state) { school.state_name.downcase.gsub(' ', '-') }

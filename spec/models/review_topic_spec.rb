@@ -4,8 +4,8 @@ require_relative 'examples/model_with_active_field'
 describe ReviewTopic do
   it_behaves_like 'model with active field'
 
-  let(:review_topic) { FactoryGirl.build(:review_topic) }
-  let (:school) { FactoryGirl.build(:school) }
+  let(:review_topic) { FactoryBot.build(:review_topic) }
+  let (:school) { FactoryBot.build(:school) }
   after do
     clean_dbs :gs_schooldb
   end
@@ -42,11 +42,11 @@ describe ReviewTopic do
   end
 
 describe '.find_by_school' do
-    let(:alameda_high_school) {FactoryGirl.build(:alameda_high_school) }
-    let!(:review_topic_matching) {FactoryGirl.create(:review_topic, school_level: alameda_high_school.level_code, school_type: alameda_high_school.type)}
-    let!(:review_topic_not_matching) {FactoryGirl.create(:review_topic, school_level: 'e', school_type: alameda_high_school.type)}
-    let!(:review_topic_not_matching2) {FactoryGirl.create(:review_topic, school_level: alameda_high_school.level_code, school_type: 'private')}
-    let!(:inactive_topic) {FactoryGirl.create(:review_topic, school_level: alameda_high_school.level_code, school_type: alameda_high_school.type, active: false)}
+    let(:alameda_high_school) {FactoryBot.build(:alameda_high_school) }
+    let!(:review_topic_matching) {FactoryBot.create(:review_topic, school_level: alameda_high_school.level_code, school_type: alameda_high_school.type)}
+    let!(:review_topic_not_matching) {FactoryBot.create(:review_topic, school_level: 'e', school_type: alameda_high_school.type)}
+    let!(:review_topic_not_matching2) {FactoryBot.create(:review_topic, school_level: alameda_high_school.level_code, school_type: 'private')}
+    let!(:inactive_topic) {FactoryBot.create(:review_topic, school_level: alameda_high_school.level_code, school_type: alameda_high_school.type, active: false)}
 
     it 'should return Topic matching level code of school and type of school' do
       expect(ReviewTopic.find_by_school(alameda_high_school)).to include(review_topic_matching)
@@ -97,12 +97,12 @@ describe '.find_by_school' do
 
   describe '#overall?' do
     context 'when its a overall topic' do
-      let(:review_topic) { FactoryGirl.create(:overall_topic) }
+      let(:review_topic) { FactoryBot.create(:overall_topic) }
       subject { review_topic.overall? }
       it { is_expected.to eq(true) }
     end
     context 'when its a overall topic' do
-      let(:review_topic) { FactoryGirl.create(:teachers_topic) }
+      let(:review_topic) { FactoryBot.create(:teachers_topic) }
       subject { review_topic.overall? }
       it { is_expected.to eq(false) }
     end
@@ -111,8 +111,8 @@ describe '.find_by_school' do
   describe '.find_id_by_name' do
     before do
       clean_models :gs_schooldb, ReviewTopic
-      FactoryGirl.create(:overall_topic, id: 1, name: 'Overall')
-      FactoryGirl.create(:honesty_topic, id: 2, name: 'Honesty')
+      FactoryBot.create(:overall_topic, id: 1, name: 'Overall')
+      FactoryBot.create(:honesty_topic, id: 2, name: 'Honesty')
     end
     after do
       clean_models :gs_schooldb, ReviewTopic
@@ -136,7 +136,7 @@ describe '.find_by_school' do
 
     context 'with an inactive topic' do
       before do
-        FactoryGirl.create(:teachers_topic, id: 3, name: 'Teachers', active: false)
+        FactoryBot.create(:teachers_topic, id: 3, name: 'Teachers', active: false)
       end
       it 'should not return inactive topic id' do
         expect(ReviewTopic.find_id_by_name('Teachers')).to be_nil

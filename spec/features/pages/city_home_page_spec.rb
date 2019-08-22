@@ -51,7 +51,7 @@ describe 'City Home Page' do
     context 'with three districts' do
       let!(:districts) do
         [2,3,1].each do |num_schools|
-          FactoryGirl.create_on_shard(:mn, :district, name: 'foo', city: 'St. Paul', state: 'MN', num_schools: num_schools)
+          FactoryBot.create_on_shard(:mn, :district, name: 'foo', city: 'St. Paul', state: 'MN', num_schools: num_schools)
         end
       end
       it { is_expected.to have_largest_districts_section }
@@ -70,7 +70,7 @@ describe 'City Home Page' do
       before { skip }
       let!(:districts) do
         [5, 25, 15, 10, 30, 40].each do |num_schools|
-          FactoryGirl.create_on_shard(:mn, :district, name: 'foo', city: 'St. Paul', state: 'MN', num_schools: num_schools)
+          FactoryBot.create_on_shard(:mn, :district, name: 'foo', city: 'St. Paul', state: 'MN', num_schools: num_schools)
         end
       end
       it { is_expected.to have_largest_districts_section }

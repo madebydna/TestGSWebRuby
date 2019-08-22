@@ -149,11 +149,6 @@ group :test do
   # Mock external http requests for tests
   gem 'webmock'
 
-  # gem for setting up ruby objects as test data
-  # gem 'factory_girl_rails', '~> 4.2.1'
-  # Rails 4
-  gem 'factory_girl_rails', '~> 4.4.0'
-
   # testing frameworks
   gem 'rspec', '~> 3.5.0'
   gem 'rspec-rails', '~> 3.5.0'
@@ -213,7 +208,7 @@ group :development, :test do
   gem 'pdf-reader'
 
   gem 'sourcify'
-  
+
   #  translation tasks gem
   gem 'i18n-tasks', '~> 0.8.3'
 
@@ -224,6 +219,8 @@ group :development, :test do
   gem 'rubocop-checkstyle_formatter', require: false
 
   gem 'pry-rails'
+
+  gem "factory_bot_rails", '~> 4.11.0'
 end
 
 # Sass adapter for the Rails asset pipeline.

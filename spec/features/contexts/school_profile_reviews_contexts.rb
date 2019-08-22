@@ -7,12 +7,12 @@ require 'features/contexts/shared_contexts_for_signed_in_users'
 
 shared_context 'with 2 questions: first an overall star topic question; second a radio button question' do
   # create topics- requires that a school was set by previous context
-  let(:overall_topic) { FactoryGirl.create(:overall_topic, school_level: school.level_code, school_type: school.type, id: 1) }
-  let(:teachers_topic) { FactoryGirl.create(:teachers_topic, school_level: school.level_code, school_type: school.type) }
+  let(:overall_topic) { FactoryBot.create(:overall_topic, school_level: school.level_code, school_type: school.type, id: 1) }
+  let(:teachers_topic) { FactoryBot.create(:teachers_topic, school_level: school.level_code, school_type: school.type) }
   # create questions for topic
   # Execute immediately
-  let!(:overall_rating_question) { FactoryGirl.create(:overall_rating_question, review_topic: overall_topic ) }
-  let!(:teacher_question) { FactoryGirl.create(:teacher_question) }
+  let!(:overall_rating_question) { FactoryBot.create(:overall_rating_question, review_topic: overall_topic ) }
+  let!(:teacher_question) { FactoryBot.create(:teacher_question) }
 
   after do
     clean_models ReviewTopic, ReviewQuestion
@@ -21,10 +21,10 @@ end
 
 shared_context 'a radio button question' do
   # create topics- requires that a school was set by previous context
-  let(:teachers_topic) { FactoryGirl.create(:teachers_topic, school_level: school.level_code, school_type: school.type) }
+  let(:teachers_topic) { FactoryBot.create(:teachers_topic, school_level: school.level_code, school_type: school.type) }
   # create questions for topic
   # Execute immediately
-  let!(:teacher_question) { FactoryGirl.create(:teacher_question, review_topic: teachers_topic) }
+  let!(:teacher_question) { FactoryBot.create(:teacher_question, review_topic: teachers_topic) }
   after do
     clean_models ReviewTopic, ReviewQuestion
   end
@@ -49,7 +49,7 @@ shared_context 'with signing into a verified account' do
     pending ('Replace this context with when_I sign up via modal for signin into verified account.')
     fail
     click_link('Login')
-    user = FactoryGirl.create(:verified_user)
+    user = FactoryBot.create(:verified_user)
     log_in_user(user)
     fill_in(:email, with: user.email)
     fill_in(:password, with: user.password)
@@ -67,7 +67,7 @@ shared_context 'with signing into a verified account without role for school' do
     pending ('update sign in with modal with verified account without role for school')
     fail
     click_link('Login')
-    user = FactoryGirl.create(:verified_user)
+    user = FactoryBot.create(:verified_user)
     log_in_user(user)
     fill_in(:email, with: user.email)
     fill_in(:password, with: user.password)
@@ -82,16 +82,16 @@ end
 
 shared_context 'with signing into a verified account with role for school' do
   let(:user) do
-    FactoryGirl.create(:verified_user)
+    FactoryBot.create(:verified_user)
   end
   let!(:school_user) do
-    FactoryGirl.create(:parent_school_user, school: school, user: user)
+    FactoryBot.create(:parent_school_user, school: school, user: user)
   end
   before do
     pending ('update with signing into verified account through modal')
     fail
     click_link('Login')
-    # user = FactoryGirl.create(:verified_user)
+    # user = FactoryBot.create(:verified_user)
     log_in_user(user)
     fill_in(:email, with: user.email)
     fill_in(:password, with: user.password)
@@ -106,10 +106,10 @@ end
 
 shared_context 'signed in verified user with role for school' do
   let(:user) do
-    FactoryGirl.create(:verified_user)
+    FactoryBot.create(:verified_user)
   end
   let!(:school_user) do
-    FactoryGirl.create(:parent_school_user, school: school, user: user)
+    FactoryBot.create(:parent_school_user, school: school, user: user)
   end
 
   before do
@@ -124,10 +124,10 @@ end
 
 shared_context 'with signed in as principal for school' do
   let(:user) do
-    FactoryGirl.create(:verified_user)
+    FactoryBot.create(:verified_user)
   end
   let!(:school_user) do
-    FactoryGirl.create(:principal_school_user, school: school, user: user)
+    FactoryBot.create(:principal_school_user, school: school, user: user)
   end
 
   before do
@@ -167,8 +167,8 @@ end
 shared_context 'with two active reviews' do
   let!(:two_active_reviews) do
     [
-      FactoryGirl.create(:five_star_review, active: true, school: school),
-      FactoryGirl.create(:teacher_effectiveness_review, active: true, school: school)
+      FactoryBot.create(:five_star_review, active: true, school: school),
+      FactoryBot.create(:teacher_effectiveness_review, active: true, school: school)
     ]
   end
   after do
@@ -178,25 +178,25 @@ end
 
 shared_context 'an overall principal review' do
   let!(:overall_principal_review) do
-    review = FactoryGirl.create(:five_star_review, active: true, school: school)
-    FactoryGirl.create(:principal_school_user, school: review.school, user: review.user)
+    review = FactoryBot.create(:five_star_review, active: true, school: school)
+    FactoryBot.create(:principal_school_user, school: review.school, user: review.user)
     review
   end
 end
 
 shared_context 'a topical principal review' do
   let!(:topical_principal_review) do
-    review = FactoryGirl.create(:teacher_effectiveness_review, active: true, school: school)
-    FactoryGirl.create(:principal_school_user, school: review.school, user: review.user)
+    review = FactoryBot.create(:teacher_effectiveness_review, active: true, school: school)
+    FactoryBot.create(:principal_school_user, school: review.school, user: review.user)
     review
   end
 end
 
 shared_context 'with seven parent reviews' do
   let!(:seven_parent_reviews) do
-    reviews = FactoryGirl.create_list(:five_star_review, 7, active: true, school: school)
+    reviews = FactoryBot.create_list(:five_star_review, 7, active: true, school: school)
     reviews.each do |review|
-      FactoryGirl.create(:parent_school_user, school: review.school, user: review.user)
+      FactoryBot.create(:parent_school_user, school: review.school, user: review.user)
     end
     reviews
   end
@@ -207,9 +207,9 @@ end
 
 shared_context 'with seven student reviews' do
   let!(:seven_student_reviews) do
-    reviews = FactoryGirl.create_list(:five_star_review, 7, active: true, school: school)
+    reviews = FactoryBot.create_list(:five_star_review, 7, active: true, school: school)
     reviews.each do |review|
-      FactoryGirl.create(:student_school_user, school: review.school, user: review.user)
+      FactoryBot.create(:student_school_user, school: review.school, user: review.user)
     end
     reviews
   end
@@ -222,16 +222,16 @@ end
 
 shared_context 'with seven parent overall reviews' do
   let!(:overall_question) do
-    FactoryGirl.create(:overall_rating_question)
+    FactoryBot.create(:overall_rating_question)
   end
   # let!(:review_answer) do
-  #   FactoryGirl.build(:review_answer_overall)
+  #   FactoryBot.build(:review_answer_overall)
   # end
   let!(:seven_parent_reviews) do
-    reviews = FactoryGirl.create_list(:five_star_review, 7, active: true, school: school, question: overall_question)
+    reviews = FactoryBot.create_list(:five_star_review, 7, active: true, school: school, question: overall_question)
     reviews.each do |review|
-      FactoryGirl.create(:parent_school_user, school: review.school, user: review.user)
-      # FactoryGirl.create(:review_answer_overall, review: review)
+      FactoryBot.create(:parent_school_user, school: review.school, user: review.user)
+      # FactoryBot.create(:review_answer_overall, review: review)
     end
     reviews
   end
@@ -243,13 +243,13 @@ end
 
 shared_context 'with seven student teacher effectiveness reviews' do
   let!(:teacher_question) do
-    FactoryGirl.create(:teacher_question)
+    FactoryBot.create(:teacher_question)
   end
   let!(:seven_student_reviews) do
-    reviews = FactoryGirl.create_list(:teacher_effectiveness_review, 7, active: true, school: school, question: teacher_question )
+    reviews = FactoryBot.create_list(:teacher_effectiveness_review, 7, active: true, school: school, question: teacher_question )
     reviews.each do |review|
-      FactoryGirl.create(:student_school_user, school: review.school, user: review.user)
-      # FactoryGirl.create(:review_answer_teacher, review: review)
+      FactoryBot.create(:student_school_user, school: review.school, user: review.user)
+      # FactoryBot.create(:review_answer_teacher, review: review)
     end
     reviews
   end
@@ -260,7 +260,7 @@ end
 
 shared_context 'with active review' do
   let!(:active_review) do
-    FactoryGirl.create(:five_star_review, active: true, school: school)
+    FactoryBot.create(:five_star_review, active: true, school: school)
   end
   after do
     clean_dbs :gs_schooldb
@@ -269,8 +269,8 @@ end
 
 shared_context 'with active review with one vote' do
   let!(:active_review_with_one_vote) do
-    review = FactoryGirl.create(:five_star_review, active: true, school: school)
-    FactoryGirl.create(:review_vote, review: review)
+    review = FactoryBot.create(:five_star_review, active: true, school: school)
+    FactoryBot.create(:review_vote, review: review)
     review
   end
   after do
@@ -280,7 +280,7 @@ end
 
 shared_context 'with inactive review' do
   let!(:inactive_review) do
-    FactoryGirl.create(:five_star_review, active: false, school: school, comment: 'inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review')
+    FactoryBot.create(:five_star_review, active: false, school: school, comment: 'inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review')
   end
   after do
     clean_dbs :gs_schooldb
@@ -289,7 +289,7 @@ end
 
 shared_context 'with five star review' do
   let!(:five_star_review) do
-    FactoryGirl.create(:five_star_review, active: true, school: school)
+    FactoryBot.create(:five_star_review, active: true, school: school)
   end
   after do
     clean_dbs :gs_schooldb
@@ -298,7 +298,7 @@ end
 
 shared_context 'with topical review' do
   let!(:topical_review) do
-    FactoryGirl.create(:teacher_effectiveness_review, active: true, school: school)
+    FactoryBot.create(:teacher_effectiveness_review, active: true, school: school)
   end
   after do
     clean_dbs :gs_schooldb

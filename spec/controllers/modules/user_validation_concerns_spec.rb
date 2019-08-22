@@ -32,7 +32,7 @@ describe UserValidationConcerns do
 
   describe '#validate_user' do
     context 'with valid email and registered user' do
-      let(:user) { FactoryGirl.build(:verified_user) }
+      let(:user) { FactoryBot.build(:verified_user) }
       before do
         allow(user).to receive(:has_password?).and_return(true)
         allow(controller).to receive(:email_param_error).and_return(nil)
@@ -41,7 +41,7 @@ describe UserValidationConcerns do
       end
 
       context 'when user has disabled profile' do
-        let(:profile) { FactoryGirl.build(:inactive_user_profile) }
+        let(:profile) { FactoryBot.build(:inactive_user_profile) }
 
         it "should use the \'#{I18n.t('forms.errors.email.de_activated')}\' error message" do
           allow(controller).to receive(:default_error_messages).and_return(error_messages_hash)
@@ -83,7 +83,7 @@ describe UserValidationConcerns do
     end
 
     it 'should validate even if the user is provisional.' do
-      user = FactoryGirl.create(:new_user)
+      user = FactoryBot.create(:new_user)
       allow(controller).to receive(:params).and_return({email: user.email})
       allow(User).to receive(:find_by_email).and_return(user)
       allow(controller).to receive(:default_error_messages).with(user).and_return(error_messages_hash)
@@ -92,7 +92,7 @@ describe UserValidationConcerns do
     end
 
     it 'should validate even if the user has no password.' do
-      user = FactoryGirl.build(:email_only, password: nil)
+      user = FactoryBot.build(:email_only, password: nil)
       allow(controller).to receive(:params).and_return({email: user.email})
       allow(User).to receive(:find_by_email).and_return(user)
       allow(controller).to receive(:default_error_messages).with(user).and_return(error_messages_hash)
@@ -101,7 +101,7 @@ describe UserValidationConcerns do
     end
 
     it 'should validate the user.' do
-      user = FactoryGirl.create(:verified_user)
+      user = FactoryBot.create(:verified_user)
       allow(controller).to receive(:params).and_return({email: user.email})
       allow(User).to receive(:find_by_email).and_return(user)
       allow(controller).to receive(:default_error_messages).with(user).and_return(error_messages_hash)

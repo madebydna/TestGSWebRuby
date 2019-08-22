@@ -8,7 +8,7 @@ describe RatingsCaching::GsdataRatingsCacher do
     fail
   end
 
-  let(:school) { FactoryGirl.build(:alameda_high_school) }
+  let(:school) { FactoryBot.build(:alameda_high_school) }
   let(:cacher) { RatingsCaching::GsdataRatingsCacher.new(school) }
 
   describe '#cache' do

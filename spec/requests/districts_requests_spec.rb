@@ -10,7 +10,7 @@ describe 'District home page requests' do
 
   describe 'In California' do
     before do
-      FactoryGirl.create(:district, name: 'San Francisco Unified', city: 'San Francisco')
+      FactoryBot.create(:district, name: 'San Francisco Unified', city: 'San Francisco')
       get test_url
     end
 
@@ -36,9 +36,9 @@ describe 'District home page requests' do
 
   describe 'In New Jersey' do
     before do
-      # Note because of model sharding (and FactoryGirl's obliviousness to it) to properly save a sharded FactoryGirl
+      # Note because of model sharding (and FactoryBot's obliviousness to it) to properly save a sharded FactoryBot
       # model to a database other than the default (:ca) this is what you need to do
-      nj_district = FactoryGirl.build(:district, name: 'Jersey City Unified', city: 'Jersey City', state: 'NJ')
+      nj_district = FactoryBot.build(:district, name: 'Jersey City Unified', city: 'Jersey City', state: 'NJ')
       District.on_db(:nj) { nj_district.save }
       get test_url
     end

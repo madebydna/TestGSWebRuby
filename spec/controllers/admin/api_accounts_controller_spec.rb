@@ -5,7 +5,7 @@ describe Admin::ApiAccountsController do
   describe '#display_selected_api_accounts' do
     test_size = 101
     before do
-      test_size.times {|num| FactoryGirl.create(:api_account, account_added: Time.now + num)}
+      test_size.times {|num| FactoryBot.create(:api_account, account_added: Time.now + num)}
       allow(controller).to receive(:params).and_return(params)
     end
     let (:params) {{}}

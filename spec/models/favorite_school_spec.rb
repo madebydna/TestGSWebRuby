@@ -8,7 +8,7 @@ describe FavoriteSchool do
   end
 
   describe '.initialize' do
-    let(:school) { FactoryGirl.build(:school) }
+    let(:school) { FactoryBot.build(:school) }
 
     it 'should set copy school id and state from provided school' do
       favorite_school = FavoriteSchool.build_for_school school
@@ -24,7 +24,7 @@ describe FavoriteSchool do
 
   describe '#school' do
     it 'should ask School class to find the school' do
-      favorite_school = FactoryGirl.build(
+      favorite_school = FactoryBot.build(
         :favorite_school,
         state: 'ca',
         school_id: 1
@@ -40,9 +40,9 @@ describe FavoriteSchool do
       clean_models(:gs_schooldb, FavoriteSchool)
     end
 
-    let(:cristo_hs) { FactoryGirl.build(:cristo_rey_new_york_high_school) }
-    let(:head_start) { FactoryGirl.build(:washington_dc_ps_head_start) }
-    let(:new_user) { FactoryGirl.build(:verified_user, id: 3) }
+    let(:cristo_hs) { FactoryBot.build(:cristo_rey_new_york_high_school) }
+    let(:head_start) { FactoryBot.build(:washington_dc_ps_head_start) }
+    let(:new_user) { FactoryBot.build(:verified_user, id: 3) }
 
     it "should create a favorite school instance" do
       [cristo_hs, head_start].each do |school|

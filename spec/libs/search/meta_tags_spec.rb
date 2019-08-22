@@ -4,7 +4,7 @@ require 'meta_tag/meta_tags.rb'
 require 'meta_tag/city_browse_meta_tags.rb'
 
 describe MetaTag::CityBrowseMetaTags do
-  let(:city) { FactoryGirl.build(:city, name: 'San Francisco', state: 'ca') }
+  let(:city) { FactoryBot.build(:city, name: 'San Francisco', state: 'ca') }
   let(:entity_type) { %w[public] }
   let(:level_code) { %w[e] }
   let(:total) { 10 }

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :hub_city_mapping, class: HubCityMapping do
     sequence(:id) { |n| n }
     collection_id 1

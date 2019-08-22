@@ -15,6 +15,7 @@ class UserReviews
     'funcionario de la escuela' => 5,
     'líder de la escuela' => 5,
     'profesor' => 4,
+    'maestro' => 4,
     'miembro de la comunidad' => 3
   }.freeze
 

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CensusDataReader do
   let(:page) { double('page') }
-  let(:school) { FactoryGirl.build(:school) }
+  let(:school) { FactoryBot.build(:school) }
   subject(:reader) { CensusDataReader.new(school) }
 
   before(:each) do

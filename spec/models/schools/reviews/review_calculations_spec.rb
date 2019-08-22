@@ -7,12 +7,12 @@ describe ReviewCalculations do
     reviews_array.extend ReviewCalculations
     reviews_array.extend ReviewScoping
   end
-  let(:five_star_review_value_4) { FactoryGirl.build(:five_star_review, answer_value: 4) }
-  let(:five_star_review_value_3) { FactoryGirl.build(:five_star_review, answer_value: 3) }
-  let(:five_star_review_value_1) { FactoryGirl.build(:five_star_review, answer_value: 1) }
-  let(:non_numeric_review) { FactoryGirl.build(:teacher_effectiveness_review) }
-  let(:user_1) { FactoryGirl.build(:verified_user) }
-  let(:user_2) { FactoryGirl.build(:verified_user) }
+  let(:five_star_review_value_4) { FactoryBot.build(:five_star_review, answer_value: 4) }
+  let(:five_star_review_value_3) { FactoryBot.build(:five_star_review, answer_value: 3) }
+  let(:five_star_review_value_1) { FactoryBot.build(:five_star_review, answer_value: 1) }
+  let(:non_numeric_review) { FactoryBot.build(:teacher_effectiveness_review) }
+  let(:user_1) { FactoryBot.build(:verified_user) }
+  let(:user_2) { FactoryBot.build(:verified_user) }
 
   subject { reviews_array }
 
@@ -35,11 +35,11 @@ describe ReviewCalculations do
 
   shared_context 'with three reviews with a single user and two reviews with a different user' do
     before do
-      reviews_array << FactoryGirl.build(:five_star_review, user: user_1)
-      reviews_array << FactoryGirl.build(:five_star_review, user: user_1)
-      reviews_array << FactoryGirl.build(:five_star_review, user: user_1)
-      reviews_array << FactoryGirl.build(:five_star_review, user: user_2)
-      reviews_array << FactoryGirl.build(:five_star_review, user: user_2)
+      reviews_array << FactoryBot.build(:five_star_review, user: user_1)
+      reviews_array << FactoryBot.build(:five_star_review, user: user_1)
+      reviews_array << FactoryBot.build(:five_star_review, user: user_1)
+      reviews_array << FactoryBot.build(:five_star_review, user: user_2)
+      reviews_array << FactoryBot.build(:five_star_review, user: user_2)
     end
   end
 
@@ -97,7 +97,7 @@ describe ReviewCalculations do
       it 'should have correct values for non overall reviews' do
         example_distribution.each  do |hash|
           hash[:count].times do |i| 
-            reviews_array << FactoryGirl.build(:teacher_effectiveness_review, answer_value: hash[:label])
+            reviews_array << FactoryBot.build(:teacher_effectiveness_review, answer_value: hash[:label])
           end
         end
         expect(example_distribution - subject.score_distribution_with_percentage).to eq([])
@@ -125,7 +125,7 @@ describe ReviewCalculations do
 
     context 'with reviews that have nil value' do
      include_context 'with 4 overall reviews values: 4,3,3,1'
-     let(:five_star_review_value_nil) { FactoryGirl.build(:five_star_review, answer_value: nil) }
+     let(:five_star_review_value_nil) { FactoryBot.build(:five_star_review, answer_value: nil) }
       before { subject << five_star_review_value_nil }
       it 'should return hash with no key for nil' do
         expect(subject.score_distribution).to_not have_key(nil)
@@ -152,8 +152,8 @@ describe ReviewCalculations do
       end
     end
     context 'with 2 overall reviews values: 4 & 3 saved as strings' do
-      let(:five_star_review_value_4_str) { FactoryGirl.build(:five_star_review, answer_value: '4') }
-      let(:five_star_review_value_3_str) { FactoryGirl.build(:five_star_review, answer_value: '3') }
+      let(:five_star_review_value_4_str) { FactoryBot.build(:five_star_review, answer_value: '4') }
+      let(:five_star_review_value_3_str) { FactoryBot.build(:five_star_review, answer_value: '3') }
       before do
         subject << five_star_review_value_4_str
         subject << five_star_review_value_3_str

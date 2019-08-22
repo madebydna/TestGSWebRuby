@@ -9,7 +9,7 @@ describe Subscription do
     let(:now) { Time.now.strftime("%F %T") }
     let(:expires) { (Time.now + 1.days).strftime("%F %T") }
     let(:subscription) do
-      FactoryGirl.create(:subscription,
+      FactoryBot.create(:subscription,
                          list: 'foo',
                          member_id: 2,
                          school_id: 3,

@@ -71,7 +71,7 @@ class SearchController < ApplicationController
   def choose_meta_tag_implementation
     if district_browse?
       MetaTag::DistrictBrowseMetaTags
-    elsif city_browse?
+    elsif city_browse? && city_record.present?
       MetaTag::CityBrowseMetaTags
     elsif zip_code_search?
       MetaTag::ZipMetaTags

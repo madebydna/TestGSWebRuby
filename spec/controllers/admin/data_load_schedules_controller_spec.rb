@@ -12,7 +12,7 @@ describe Admin::DataLoadSchedulesController do
 
   describe '#update' do
 
-    let(:data_load) { FactoryGirl.build(:data_load) }
+    let(:data_load) { FactoryBot.build(:data_load) }
 
     before do
       allow_any_instance_of(Admin::DataLoadSchedulesController).to receive(:format_attributes).and_return(data_load.attributes)
@@ -34,7 +34,7 @@ describe Admin::DataLoadSchedulesController do
 
   describe '#create' do
 
-    let(:data_load) { FactoryGirl.build(:data_load) }
+    let(:data_load) { FactoryBot.build(:data_load) }
 
     before do
       allow_any_instance_of(Admin::DataLoadSchedulesController).to receive(:format_attributes).and_return(data_load.attributes)

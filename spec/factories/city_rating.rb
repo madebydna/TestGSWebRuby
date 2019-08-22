@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :city_rating do
     sequence(:id) { |n| n }
     city :alameda

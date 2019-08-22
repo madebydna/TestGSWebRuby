@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SubscriptionConcerns do
   let(:controller) { FakeController.new }
-  let(:current_user) {FactoryGirl.create(:user)}
+  let(:current_user) {FactoryBot.create(:user)}
 
   before(:all) do
     class FakeController
@@ -23,7 +23,7 @@ describe SubscriptionConcerns do
   after(:all) { Object.send :remove_const, :FakeController }
 
   describe '#create_subscription' do
-    let(:school) { FactoryGirl.build(:school) }
+    let(:school) { FactoryBot.build(:school) }
     before do 
       allow(controller).to receive(:flash_notice)
       allow(controller).to receive(:flash_error)
@@ -57,8 +57,8 @@ describe SubscriptionConcerns do
               state: 'CA,CA,CA',
             }
           end
-          let(:school2) { FactoryGirl.build(:bay_farm_elementary_school) }
-          let(:school3) { FactoryGirl.build(:emery_secondary) }
+          let(:school2) { FactoryBot.build(:bay_farm_elementary_school) }
+          let(:school3) { FactoryBot.build(:emery_secondary) }
 
           before do
             allow(School).to receive(:find_by_state_and_id).with('CA','2').and_return(school2)
@@ -84,8 +84,8 @@ describe SubscriptionConcerns do
               state: 'CA,CA',
             }
           end
-          let(:school2) { FactoryGirl.build(:bay_farm_elementary_school) }
-          let(:school3) { FactoryGirl.build(:emery_secondary) }
+          let(:school2) { FactoryBot.build(:bay_farm_elementary_school) }
+          let(:school3) { FactoryBot.build(:emery_secondary) }
 
           before do
             allow(School).to receive(:find_by_state_and_id).with('CA','2').and_return(school2)

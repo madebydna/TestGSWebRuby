@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :property_config do
     sequence :id do |n|
       n

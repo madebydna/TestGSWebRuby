@@ -5,7 +5,7 @@ def all_cache_keys
 end
 
 def init_school_with_cache
-  let(:school) { FactoryGirl.build(:an_elementary_school) }
+  let(:school) { FactoryBot.build(:an_elementary_school) }
   let(:query) { SchoolCacheQuery.new.include_cache_keys(all_cache_keys) }
   let(:query_results) { query.include_schools(school.state, school.id).query }
   let(:school_cache_results) { SchoolCacheResults.new(all_cache_keys, query_results) }

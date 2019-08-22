@@ -4,7 +4,7 @@ describe EmailVerificationToken do
 
   describe '.initialize' do
     context 'with a user' do
-      let(:user) { FactoryGirl.build(:user) }
+      let(:user) { FactoryBot.build(:user) }
       subject(:token) { EmailVerificationToken.new(user: user) }
 
       it 'should set the current time' do
@@ -20,7 +20,7 @@ describe EmailVerificationToken do
     end
 
     context 'with a user_id' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
       after { clean_dbs :gs_schooldb }
       subject(:token) { EmailVerificationToken.new(user_id: user.id) }
 
@@ -38,7 +38,7 @@ describe EmailVerificationToken do
 
   describe '.parse' do
     before(:each) do
-      allow(User).to receive(:find).and_return FactoryGirl.build(:user)
+      allow(User).to receive(:find).and_return FactoryBot.build(:user)
     end
 
     context 'with valid token' do
@@ -48,7 +48,7 @@ describe EmailVerificationToken do
       let(:token_with_user_id) { token_string + 'blah' }
 
       it 'should generate a valid token' do
-        allow(User).to receive(:find).and_return FactoryGirl.build(:user)
+        allow(User).to receive(:find).and_return FactoryBot.build(:user)
         allow(EmailVerificationToken).to receive(:time_from_string) { 4.days.ago }
         token = EmailVerificationToken.parse(token_with_user_id, nil)
         allow(token).to receive(:generate).and_return token_with_user_id
@@ -68,7 +68,7 @@ describe EmailVerificationToken do
   end
 
   describe '#expired?' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     after { clean_dbs :gs_schooldb }
     it 'should be expired when more than 5 days old' do
       token = EmailVerificationToken.new(user_id: user.id)
@@ -84,7 +84,7 @@ describe EmailVerificationToken do
   end
 
   describe '#generate' do
-    let(:user) { FactoryGirl.build(:user) }
+    let(:user) { FactoryBot.build(:user) }
     let(:token) { token = EmailVerificationToken.new(user: user) }
     subject(:token_string) { token.generate }
 

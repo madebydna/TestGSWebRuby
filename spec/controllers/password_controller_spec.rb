@@ -13,7 +13,7 @@ describe PasswordController do
 
     context 'when user is signed in' do
       let(:user) do
-        user = FactoryGirl.build(:verified_user)
+        user = FactoryBot.build(:verified_user)
         user.password = 'abcdefg'
         user.save
         user

@@ -6,7 +6,7 @@ describe City do
   describe '.popular_cities' do
     before(:each) do
       (1..10).to_a.map do |i|
-        FactoryGirl.create(:city, name: "Test City#{i}", population: "#{i}000".to_i)
+        FactoryBot.create(:city, name: "Test City#{i}", population: "#{i}000".to_i)
       end
     end
 
@@ -23,7 +23,7 @@ describe City do
     let(:city) { City.first }
 
     context 'by default' do
-      before { FactoryGirl.create(:city, name: 'Foobar') }
+      before { FactoryBot.create(:city, name: 'Foobar') }
 
       it 'returns the city name' do
         expect(city.display_name).to eq(city.name)
@@ -31,7 +31,7 @@ describe City do
     end
 
     context 'with DC' do
-      before { FactoryGirl.create(:city, state: 'DC') }
+      before { FactoryBot.create(:city, state: 'DC') }
 
       it 'returns washington dc' do
         expect(city.display_name).to eq('Washington, DC')

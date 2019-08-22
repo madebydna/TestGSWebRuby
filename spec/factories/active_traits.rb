@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   trait :active do
     active 1
   end

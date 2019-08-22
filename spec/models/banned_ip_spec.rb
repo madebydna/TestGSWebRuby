@@ -5,8 +5,8 @@ describe BannedIp do
     clean_dbs :community
   end
 
-  let(:banned_ip) { FactoryGirl.create(:banned_ip, ip: '1.1.1.1') }
-  let(:expired_banned_ip) { FactoryGirl.create(:expired_banned_ip, ip: '2.2.2.2') }
+  let(:banned_ip) { FactoryBot.create(:banned_ip, ip: '1.1.1.1') }
+  let(:expired_banned_ip) { FactoryBot.create(:expired_banned_ip, ip: '2.2.2.2') }
 
   describe 'expired scope' do
     it 'should return expired rows' do

@@ -7,7 +7,7 @@ end
 
 describe OspData do
   let(:esp_membership_id) { 1 }
-  let(:school) { FactoryGirl.build(:school, id: 1, state: 'CA')}
+  let(:school) { FactoryBot.build(:school, id: 1, state: 'CA')}
   subject { OspData.new(school) }
   describe '#values_for' do
     with_shared_context 'for a particular response_key and question_id', *[:boys_sports, 1] do

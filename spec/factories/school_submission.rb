@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :new_school_submission, class: NewSchoolSubmission do
     sequence :id do |n|

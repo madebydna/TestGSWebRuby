@@ -1,7 +1,7 @@
 shared_examples_for 'model with student grade levels association' do
 
   describe '#add_user_grade_level' do
-    subject(:user) { FactoryGirl.create(:new_user) }
+    subject(:user) { FactoryBot.create(:new_user) }
     after { clean_dbs :gs_schooldb }
     it 'saves a correct grade level' do
       subject.add_user_grade_level('4')
@@ -13,7 +13,7 @@ shared_examples_for 'model with student grade levels association' do
   end
 
   describe '#delete_user_grade_level' do
-    subject(:user) { FactoryGirl.create(:new_user) }
+    subject(:user) { FactoryBot.create(:new_user) }
     after { clean_dbs :gs_schooldb }
     context 'when existing user has three student grade levels' do
       before do

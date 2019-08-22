@@ -39,7 +39,7 @@ describe SharedCache do
         end
       end
       context 'with shared cached key already in database' do
-        let!(:shared_cache) { FactoryGirl.create(:shared_cache) }
+        let!(:shared_cache) { FactoryBot.create(:shared_cache) }
         context 'with expiration time set' do
           subject { SharedCache.set_cache_value(quay, value, expiration) }
           it 'should already have shared cache with key in database' do

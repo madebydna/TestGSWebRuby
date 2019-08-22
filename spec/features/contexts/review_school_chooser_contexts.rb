@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 shared_context 'Visit Review School Chooser Page for topic 1' do
-    let(:overall_topic) { FactoryGirl.create(:overall_topic, id: 1) }
-    let(:school) { FactoryGirl.create(:school) }
-    let(:overall_rating_question) { FactoryGirl.create(:overall_rating_question, id: 1, review_topic: overall_topic ) }
-    let!(:reviews) { FactoryGirl.create_list(:review, 15, question: overall_rating_question, school: school ) }
+    let(:overall_topic) { FactoryBot.create(:overall_topic, id: 1) }
+    let(:school) { FactoryBot.create(:school) }
+    let(:overall_rating_question) { FactoryBot.create(:overall_rating_question, id: 1, review_topic: overall_topic ) }
+    let!(:reviews) { FactoryBot.create_list(:review, 15, question: overall_rating_question, school: school ) }
     before do
       ut1847 = School.on_db(:ut).new(id: 1847, type: 'public', state: 'ut', city: 'Scotland', name: 'Hogwarts School of Witchcraft and Wizardry')
       ut1847.id = 1847
@@ -20,10 +20,10 @@ shared_context 'Visit Review School Chooser Page for topic 1' do
 end
 
 shared_context 'Visit Review School Chooser Page for topic 8' do
-    let(:overall_topic) { FactoryGirl.create(:overall_topic, id: 1) }
-    let(:school) { FactoryGirl.create(:school) }
-    let(:overall_rating_question) { FactoryGirl.create(:overall_rating_question, id: 1, review_topic: overall_topic ) }
-    let!(:reviews) { FactoryGirl.create_list(:review, 15, question: overall_rating_question, school: school ) }
+    let(:overall_topic) { FactoryBot.create(:overall_topic, id: 1) }
+    let(:school) { FactoryBot.create(:school) }
+    let(:overall_rating_question) { FactoryBot.create(:overall_rating_question, id: 1, review_topic: overall_topic ) }
+    let!(:reviews) { FactoryBot.create_list(:review, 15, question: overall_rating_question, school: school ) }
     before do
       visit review_choose_school_path
     end

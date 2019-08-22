@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :census_data_type, class: CensusDataType do
     sequence(:id)

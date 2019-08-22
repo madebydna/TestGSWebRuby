@@ -8,23 +8,23 @@ shared_context 'visit page' do |page_class, *args|
 end
 
 shared_context 'flagged five star reviews' do
-  let!(:user) { FactoryGirl.create(:verified_user) }
-  let!(:review) { FactoryGirl.create(:five_star_review, :flagged, user: user, school: school, answer_value: 'Agree') }
-  let!(:school_user) { FactoryGirl.create(:principal_school_user, user: user, school: school) }
+  let!(:user) { FactoryBot.create(:verified_user) }
+  let!(:review) { FactoryBot.create(:five_star_review, :flagged, user: user, school: school, answer_value: 'Agree') }
+  let!(:school_user) { FactoryBot.create(:principal_school_user, user: user, school: school) }
   after do
     clean_dbs :gs_schooldb
   end
 end
 
 shared_context 'flagged teacher reviews' do
-  let!(:teacher_review) { FactoryGirl.create(:teacher_effectiveness_review, :flagged, user: user, school: school, answer_value: 'Agree') }
+  let!(:teacher_review) { FactoryBot.create(:teacher_effectiveness_review, :flagged, user: user, school: school, answer_value: 'Agree') }
   after do
     clean_dbs :gs_schooldb
   end
 end
 
 shared_context 'alameda high school' do |state, school_id|
-  let!(:school) { FactoryGirl.create(:alameda_high_school, state: state, id: school_id) }
+  let!(:school) { FactoryBot.create(:alameda_high_school, state: state, id: school_id) }
   after do
     clean_models :ca, School
   end

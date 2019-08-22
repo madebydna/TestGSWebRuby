@@ -29,7 +29,7 @@ describe ForgotPasswordController do
     end
 
     it 'should send email and redirect if there are no validation errors and a valid forgetful user.' do
-      user = FactoryGirl.build(:new_user)
+      user = FactoryBot.build(:new_user)
       allow(controller).to receive(:validate_user_can_reset_password).and_return([user,''])
 
       expect(ResetPasswordEmail).to receive(:deliver_to_user).with user, create_reset_password_url(user)

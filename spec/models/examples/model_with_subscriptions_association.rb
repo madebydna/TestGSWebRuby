@@ -9,7 +9,7 @@ shared_examples_for 'model with subscriptions association' do
     after do
       clean_dbs :gs_schooldb, :ca
     end
-    let(:user) { FactoryGirl.create(:verified_user) }
+    let(:user) { FactoryBot.create(:verified_user) }
     [
       [ 'osp_partner_promos', nil, nil ],
       [ 'mystat', 'CA', 1000 ],
@@ -18,14 +18,14 @@ shared_examples_for 'model with subscriptions association' do
     ].each do |opts|
       list = opts.first
       it "should try to create only one list with: #{opts.to_s}" do
-        subscription_school = FactoryGirl.create(:school, state: opts[1], id: opts[2]) if opts[1] && opts[2]
+        subscription_school = FactoryBot.create(:school, state: opts[1], id: opts[2]) if opts[1] && opts[2]
         expect_any_instance_of(Subscription).to receive(:save!).once.and_call_original
         2.times { user.safely_add_subscription!(list, subscription_school) }
       end
     end
 
     it 'should allow the same list for multiple schools' do
-      schools = FactoryGirl.create_list(:school, 2)
+      schools = FactoryBot.create_list(:school, 2)
       expect do
         schools.each do |school|
           user.safely_add_subscription!('mystat', school)
@@ -70,37 +70,37 @@ shared_examples_for 'model with subscriptions association' do
   describe 'check if subject has subscription' do
     it 'has the subscription already' do
       subscriptions = []
-      subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
-      subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: 10.days.from_now)
-      subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
+      subscriptions << FactoryBot.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
+      subscriptions << FactoryBot.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: 10.days.from_now)
+      subscriptions << FactoryBot.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
       allow(subject).to receive(:subscriptions).and_return(subscriptions)
 
-      school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'mi')
+      school = FactoryBot.build_stubbed(:school_with_params, id: 1, state: 'mi')
 
       expect(subject.has_subscription?('mystat', school)).to be_truthy
     end
 
     it "does not have the subscription already, because the school's state is different" do
       subscriptions = []
-      subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
-      subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: 10.days.from_now)
-      subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
+      subscriptions << FactoryBot.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
+      subscriptions << FactoryBot.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: 10.days.from_now)
+      subscriptions << FactoryBot.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
       allow(subject).to receive(:subscriptions).and_return(subscriptions)
 
-      school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'tx')
+      school = FactoryBot.build_stubbed(:school_with_params, id: 1, state: 'tx')
 
       expect(subject.has_subscription?('mystat', school)).to be_falsey
     end
 
     it 'does not have the subscription already, because the subscription has expired' do
       subscriptions = []
-      subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
-      subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: Time.now - 10.days)
-      subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
+      subscriptions << FactoryBot.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
+      subscriptions << FactoryBot.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: Time.now - 10.days)
+      subscriptions << FactoryBot.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
 
       allow(subject).to receive(:subscriptions).and_return(subscriptions)
 
-      school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'mi')
+      school = FactoryBot.build_stubbed(:school_with_params, id: 1, state: 'mi')
 
       expect(subject.has_subscription?('mystat', school)).to be_falsey
     end

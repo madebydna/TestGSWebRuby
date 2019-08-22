@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe CachePopulator::SchoolCachePopulator do
 
-  context "#schools_to_cache" do
+  describe "#schools_to_cache" do
     let(:school) { class_double("School").as_stubbed_const }
     let(:dbl) { double }
 
@@ -16,10 +16,10 @@ describe CachePopulator::SchoolCachePopulator do
     it "returns select schools in state if ids given" do
       populator = CachePopulator::SchoolCachePopulator.new(values: 'de:1,2,3', cache_keys: 'esp_responses')
       expect(school).to receive(:on_db).with(:de).and_return(dbl)
-      expect(dbl).to receive(:where).with({id: ['1', '2', '3']})
+      expect(dbl).to receive(:where).with({ id: ['1', '2', '3'] })
       populator.schools_to_cache('de')
     end
-    
+
     it "returns select schools by sql if school ids are not a comma-separated string" do
       populator = CachePopulator::SchoolCachePopulator.new(values: 'hi:id not in (1,2,3)', cache_keys: 'esp_responses')
       expect(school).to receive(:on_db).with(:hi).and_return(dbl)
@@ -28,16 +28,16 @@ describe CachePopulator::SchoolCachePopulator do
     end
   end
 
-  context "#run" do
-    after(:all) do
+  describe "#run" do
+    after(:each) do
       do_clean_models(:ca, School)
       do_clean_models(:co, School)
     end
 
-    before(:all) do
-      @alameda_high_school = FactoryGirl.create_on_shard(:ca, :school, attributes_for(:alameda_high_school))
-      @bay_farm_elementary_school = FactoryGirl.create_on_shard(:ca, :school, attributes_for(:bay_farm_elementary_school))
-      @cesar_chavez_academy_denver = FactoryGirl.create_on_shard(:co, :school, attributes_for(:cesar_chavez_academy_denver))
+    before(:each) do
+      @alameda_high_school         = FactoryBot.create_on_shard(:ca, :school, attributes_for(:alameda_high_school))
+      @bay_farm_elementary_school  = FactoryBot.create_on_shard(:ca, :school, attributes_for(:bay_farm_elementary_school))
+      @cesar_chavez_academy_denver = FactoryBot.create_on_shard(:co, :school, attributes_for(:cesar_chavez_academy_denver))
     end
 
     let(:school_cacher) { class_double('Cacher').as_stubbed_const }

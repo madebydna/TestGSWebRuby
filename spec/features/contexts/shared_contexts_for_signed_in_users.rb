@@ -12,7 +12,7 @@ end
 
 shared_context 'signed in verified user' do
   let(:user) do
-    FactoryGirl.create(:verified_user)
+    FactoryBot.create(:verified_user)
   end
 
   before do
@@ -28,7 +28,7 @@ end
 
 shared_context 'signed in provisional user' do
   let(:user) do
-    FactoryGirl.create(:new_user)
+    FactoryBot.create(:new_user)
   end
 
   before do

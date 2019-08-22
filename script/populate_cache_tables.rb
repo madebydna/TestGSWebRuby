@@ -1,28 +1,14 @@
-require 'csv'
+# Hack to get around problem of running script 
+# via `rails runner` that also responds to the -h flag
+ARGV << '-h' if ARGV.empty?
 
-file = ARGV[0]
-
-unless file.present? && File.exists?(file)
-  abort <<~USAGE
-  \n\nUSAGE: rails runner script/populate_cache_tables path/to/file
-
-  Ex: rails runner script/populate_cache_tables rxxx_cache_updates.txt
-  USAGE
-end
-
-log_params = []
-CSV.foreach(file, headers: true, col_sep: "\t", quote_char: "\x00") do |line|
-  hash = {}
-  hash['type'] = line['type']
-  hash['values'] = line['values']
-  hash['cache_keys'] = line['cache_keys']
-  log_params << hash
-end
+commands = CachePopulator::ArgumentParser.new.parse(ARGV)
 
 starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-log = ScriptLogger.record_log_instance(log_params)
+
+log = ScriptLogger.record_log_instance(commands)
 begin 
-  rows_updated = CachePopulator::Runner.populate_all_and_return_rows_changed(file)
+  rows_updated = CachePopulator::Runner.populate_all_and_return_rows_changed(commands)
   log.finish_logging_session(1, "Successfully created/updated #{rows_updated} row(s).")
 rescue => e
   log.finish_logging_session(0, e.message)

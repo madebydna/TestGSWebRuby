@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :esp_response do
     sequence(:id) { |n| n }
     association :school, factory: :school, strategy: :build
@@ -10,7 +10,7 @@ FactoryGirl.define do
     created Time.zone.now
 
     before(:create) do |esp_response, evaluator|
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       esp_response.user = user
     end
   end

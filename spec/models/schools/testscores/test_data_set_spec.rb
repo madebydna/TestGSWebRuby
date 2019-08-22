@@ -47,14 +47,14 @@ describe TestDataSet do
   end
 
   describe '#base_performance_query' do
-    let(:school) { FactoryGirl.build(:school, id: 1) }
+    let(:school) { FactoryBot.build(:school, id: 1) }
     describe 'with no data' do
       it {expect(subject.base_performance_query(school).to_a).to be_empty}
     end
   end
 
   describe '.ratings_for_school' do
-    let(:school) { FactoryGirl.build(:school, id: 1) }
+    let(:school) { FactoryBot.build(:school, id: 1) }
     describe 'query criteria' do
       subject { TestDataSet.ratings_for_school(school) }
       it { is_expected.to_not include('breakdown') }
@@ -69,7 +69,7 @@ describe TestDataSet do
   end
 
   describe '.historic_ratings_for_school' do
-    let(:school) { FactoryGirl.build(:school, id: 1) }
+    let(:school) { FactoryBot.build(:school, id: 1) }
     describe 'query criteria' do
       subject { TestDataSet.historic_ratings_for_school(school, [1,2], [3,4]) }
       its(:where_values_hash) { is_expected.to include('breakdown_id') }
