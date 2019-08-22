@@ -22,6 +22,21 @@ export default class ReviewPageSearchBox extends SearchBox {
     this.props.statusCallback(false);
   }
 
+  searchResultsList = ({ close }) => {
+    const ListType = this.props.listType;
+    return (
+      <ListType
+        listGroups={this.state.autoSuggestResults}
+        searchTerm={this.state.searchTerm}
+        onSelect={this.selectAndSubmit(close)}
+        selectedListItem={this.state.selectedListItem}
+        navigateToSelectedListItem={this.state.navigateToSelectedListItem}
+        showSearchAllOption={this.props.showSearchAllOption}
+        searchBoxType={'OSP'}
+      />
+    );
+  };
+
   handleKeyDown(e, { close }) {
     if (e.key === 'Enter') {
       if (this.state.selectedListItem > -1) {
