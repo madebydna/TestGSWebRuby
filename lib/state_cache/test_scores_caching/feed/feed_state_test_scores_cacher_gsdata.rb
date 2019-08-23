@@ -14,11 +14,7 @@ class TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata < TestScoresCachi
   }
 
   def query_results
-    @query_results ||=
-      begin
-        DataValue
-          .find_by_state_and_data_type_tags_with_proficiency_band_name(state, 'state_test', %w(feeds) )
-      end
+    @query_results ||= Omni::TestDataValue.feeds_by_state(state)
   end
 
   def build_hash_for_cache

@@ -3,7 +3,7 @@ require 'spec_helper'
 shared_examples_for 'methodologies that use lat lons' do
 
   let(:school_without_lat) do
-    FactoryGirl.create(:alameda_high_school,
+    FactoryBot.create(:alameda_high_school,
                        id: 1,
                        state: 'CA',
                        lat: nil,
@@ -13,7 +13,7 @@ shared_examples_for 'methodologies that use lat lons' do
   end
 
   let(:school_without_lon) do
-    FactoryGirl.create(:alameda_high_school,
+    FactoryBot.create(:alameda_high_school,
                        id: 1,
                        state: 'CA',
                        lat: 32,

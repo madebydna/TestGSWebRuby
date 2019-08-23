@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   TestDataSet.switch_connection_to(:ca)
 
   factory :ratings_test_data_set, class: TestDataSet do
@@ -10,7 +10,7 @@ FactoryGirl.define do
     year 2013
     active 1
     test_data_school_values {
-      FactoryGirl.build_list(:test_data_school_value, 1)
+      FactoryBot.build_list(:test_data_school_value, 1)
     }
   end
 
@@ -26,7 +26,7 @@ FactoryGirl.define do
   end
 
   trait :with_school_values do
-    ignore do
+    transient do
       school_id 2
       value_text '1'
       value_float 1
@@ -35,7 +35,7 @@ FactoryGirl.define do
     end
 
     after(:create) do |data_set, evaluator|
-      FactoryGirl.create_list(:test_data_school_value,1, data_set_id: data_set.id, school_id: evaluator.school_id,
+      FactoryBot.create_list(:test_data_school_value,1, data_set_id: data_set.id, school_id: evaluator.school_id,
                               value_text: evaluator.value_text, value_float: evaluator.value_float,
                               number_tested: evaluator.number_tested, active: evaluator.school_value_active)
     end

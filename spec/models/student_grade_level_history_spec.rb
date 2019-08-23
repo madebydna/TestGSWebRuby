@@ -8,7 +8,7 @@ describe StudentGradeLevelHistory do
     end
     let(:now) { Time.now.strftime("%F %T") }
     let(:student_grade_level) do
-      FactoryGirl.create(:student_grade_level,
+      FactoryBot.create(:student_grade_level,
                          member_id: 2,
                          updated: now
                         )

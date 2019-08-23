@@ -10,9 +10,9 @@ en:
         one: "%{count} star"
         other: "%{count} stars"
       review_answer_summary_html:
-        one: "Currently, most people answered <span class= 'open-sans_cb wsnw'>%{top_response_text}</span>
+        one: "Currently, most people answered <span class= 'open-sans_sb wsnw'>%{top_response_text}</span>
           (%{count}&nbsp;response)"
-        other: "Currently, most people answered <span class= 'open-sans_cb wsnw'>%{top_response_text}</span>
+        other: "Currently, most people answered <span class= 'open-sans_sb wsnw'>%{top_response_text}</span>
           (%{count}&nbsp;responses)"
       reviews:
         one: "%{count} review"

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :new_school_submission_k12, class: NewSchoolSubmission do
     school_name 'Landels Academy'
     nces_code '112358132134'

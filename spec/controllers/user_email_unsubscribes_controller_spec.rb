@@ -47,12 +47,12 @@ describe UserEmailUnsubscribesController do
   end
 
   def stub_valid_token
-    user = FactoryGirl.create(:user, id: 1)
+    user = FactoryBot.create(:user, id: 1)
     UserVerificationToken.token(user.id)
   end
 
   def stub_invalid_token
-    FactoryGirl.create(:user, id: 1)
+    FactoryBot.create(:user, id: 1)
     'invalid_token'
   end
 
@@ -66,7 +66,7 @@ describe UserEmailUnsubscribesController do
   end
 
   def stub_current_user
-    user = FactoryGirl.create(:user, id: 1)
+    user = FactoryBot.create(:user, id: 1)
     allow(controller).to receive(:current_user).and_return user
     user
   end

@@ -76,7 +76,7 @@ const Account = ({
           site.
           <div className="grade-level-checkboxes">
             <br />
-            <div className="open-sans_sb">
+            <div className="open-sans_b">
               What grade levels are you interested in?
             </div>
             <br />

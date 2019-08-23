@@ -13,7 +13,7 @@ feature "Signin features" do
 
     before { subject }
     let(:user) do
-      FactoryGirl.create(:verified_user, password: 'password')
+      FactoryBot.create(:verified_user, password: 'password')
     end
 
     it 'Gives the user the ability to log out' do

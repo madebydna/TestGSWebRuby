@@ -15,11 +15,11 @@ shared_context 'with one active review' do
 end
 
 describe UserEmailSender do
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryBot.build(:user) }
   subject {UserEmailSender.new(user)}
 
   describe '#send_thank_you_email_for_school' do
-    let(:school) { FactoryGirl.build(:school) }
+    let(:school) { FactoryBot.build(:school) }
     context 'with email to be sent' do
       before do
         allow(subject).to receive(:send_thank_you_email?).and_return(true)
@@ -49,13 +49,13 @@ describe UserEmailSender do
     end
     with_shared_context 'with one active review' do
       context 'with unknown school user for user' do
-        let(:school_user) { FactoryGirl.build(:unknown_school_user) }
+        let(:school_user) { FactoryBot.build(:unknown_school_user) }
         include_example 'should not send email'
       end
 
       ['parent', 'student', 'teacher', 'principal', 'community'].each do |member_type|
         context "with #{member_type} type" do
-          let(:school_user) { FactoryGirl.build("#{member_type}_school_user".to_sym) }
+          let(:school_user) { FactoryBot.build("#{member_type}_school_user".to_sym) }
           include_example 'should send email'
         end
       end
@@ -67,7 +67,7 @@ describe UserEmailSender do
       end
       ['parent', 'student', 'teacher', 'principal', 'community', 'unknown'].each do |member_type|
         context "with #{member_type} type" do
-          let(:school_user) { FactoryGirl.build("#{member_type}_school_user".to_sym) }
+          let(:school_user) { FactoryBot.build("#{member_type}_school_user".to_sym) }
           include_example 'should not send email'
         end
       end
@@ -79,7 +79,7 @@ describe UserEmailSender do
       end
       ['parent', 'student', 'teacher', 'principal', 'community'].each do |member_type|
         context "with #{member_type} type" do
-          let(:school_user) { FactoryGirl.build("#{member_type}_school_user".to_sym) }
+          let(:school_user) { FactoryBot.build("#{member_type}_school_user".to_sym) }
           include_example 'should not send email'
         end
       end

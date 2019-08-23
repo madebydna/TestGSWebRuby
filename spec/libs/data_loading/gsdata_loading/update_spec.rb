@@ -118,7 +118,7 @@
 #     subject { update.create }
 #
 #     context 'with a valid school' do
-#       let(:school) { FactoryGirl.create(:alameda_high_school, state_id: '00001') }
+#       let(:school) { FactoryBot.create(:alameda_high_school, state_id: '00001') }
 #       it "saves a data value" do
 #         expect { subject }.to change { DataValue.count }.from(0).to(1)
 #       end

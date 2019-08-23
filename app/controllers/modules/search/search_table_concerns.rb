@@ -4,6 +4,8 @@ module SearchTableConcerns
 
   OVERVIEW_HEADER_NAMES = ['Type', 'Grades', 'Total students enrolled', 'Students per teacher', 'Reviews', 'District']
   COLLEGE_REMEDIATION_HEADER_NAMES = {"english": "Remediation: English", "math": "Remediation: Math"}
+  STUDENT_PROGRESS_RATING = 'Student Progress Rating'
+  ACADEMIC_PROGRESS_RATING = 'Academic Progress Rating'
 
   def academic_header_names
     ['Test Scores Rating', growth_progress_rating_header, 'College Readiness Rating', 'Advanced Courses Rating', 'Equity Overview Rating']
@@ -22,7 +24,7 @@ module SearchTableConcerns
   end
 
   def growth_progress_rating_header
-    growth_data_state? ? 'Student Progress Rating' : 'Academic Progress Rating'
+    growth_data_state? ? STUDENT_PROGRESS_RATING : ACADEMIC_PROGRESS_RATING
   end
 
   # This method checks to see if the the array of serialized schools is a growth state 
@@ -30,7 +32,7 @@ module SearchTableConcerns
   # Return a boolean if any school from the  set of serialized schools has a Student Progress rating
   # indicating that the state is a growth data state
   def growth_data_state?
-    serialized_schools.any? {|s| s.fetch(:subratings, {}).fetch('Student Progress Rating', false)}
+    serialized_schools.any? {|s| s.fetch(:subratings, {}).fetch(STUDENT_PROGRESS_RATING, false)}
   end
 
   def equity_header_hash(schools)

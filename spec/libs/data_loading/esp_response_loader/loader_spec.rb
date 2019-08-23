@@ -17,7 +17,7 @@ describe EspResponseLoading::Loader do
     end
 
     context 'when inserting newer data than the db has' do
-      let(:value_row) { [FactoryGirl.build(:esp_response, created: Time.now-10000000)] }
+      let(:value_row) { [FactoryBot.build(:esp_response, created: Time.now-10000000)] }
       let(:update) {
         {
             entity_state: "fl",
@@ -38,7 +38,7 @@ describe EspResponseLoading::Loader do
       end
     end
     context 'when inserting older data than the db has' do
-      let(:value_row) { [FactoryGirl.build(:esp_response, created: Time.now+10000000)] }
+      let(:value_row) { [FactoryBot.build(:esp_response, created: Time.now+10000000)] }
       let(:update) {
         {
             entity_state: "fl",
@@ -96,8 +96,8 @@ describe EspResponseLoading::Loader do
 
     context 'when disabling data in db' do
       before do
-        FactoryGirl.create(:esp_response, response_key: 'before_after_care', response_value: 'before', school_id: update[:entity_id])
-        FactoryGirl.create(:esp_response, response_key: 'before_after_care', response_value: 'after', school_id: update[:entity_id])
+        FactoryBot.create(:esp_response, response_key: 'before_after_care', response_value: 'before', school_id: update[:entity_id])
+        FactoryBot.create(:esp_response, response_key: 'before_after_care', response_value: 'after', school_id: update[:entity_id])
       end
 
       let(:update) {

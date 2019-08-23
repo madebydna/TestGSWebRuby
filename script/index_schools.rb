@@ -31,6 +31,9 @@ solr_url =  if script_args.has_key?(:host)
               ENV_GLOBAL['solr.rw.server.url']
             end
 
+# Start logging
+log = ScriptLogger.record_log_instance(script_args)
+
 indexer = 
   if script_args.has_key?(:host)
     Solr::Indexer.with_solr_url(solr_url)
@@ -38,21 +41,29 @@ indexer =
     Solr::Indexer.with_rw_client
   end
 
-indexer.delete_all if should_wipe_core
+begin
+  indexer.delete_all if should_wipe_core
 
-if script_args[:delete]
-  indexer.delete_all_by_type(Solr::SchoolDocument)
-else
-  puts "Starting school indexer for states: #{states.join(', ')}"
-  documents = Search::SchoolDocumentFactory.new(states: states, ids: ids).documents
-  indexer.index(documents)
-end
+  if script_args[:delete]
+    indexer.delete_all_by_type(Solr::SchoolDocument)
+  else
+    puts "Starting school indexer for states: #{states.join(', ')}"
+    documents = Search::SchoolDocumentFactory.new(states: states, ids: ids).documents
+    num_of_indexed_docs = indexer.index(documents)
+  end
 
-indexer.commit
-indexer.optimize
+  indexer.commit
+  indexer.optimize
 
-if should_swap_cores
-  solr_swap_command_path = "/solr/admin/cores?action=SWAP&core=main&other=prep"
-  require 'open-uri'
-  response = open("http://#{host}:#{port}#{solr_swap_command_path}").read
+  if should_swap_cores
+    solr_swap_command_path = "/solr/admin/cores?action=SWAP&core=main&other=prep"
+    require 'open-uri'
+    response = open("http://#{host}:#{port}#{solr_swap_command_path}").read
+  end
+  log.finish_logging_session(1, "Finished indexing #{num_of_indexed_docs} documents")
+  puts "Finished indexing #{num_of_indexed_docs} documents"
+  
+rescue => e
+  log.finish_logging_session(0, e)
+  raise
 end

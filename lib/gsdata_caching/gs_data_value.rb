@@ -557,7 +557,9 @@ class GsdataCaching::GsDataValue
   end
 
   def source_year
-    source_date_valid ? source_date_valid[0..3] : @source_year
+    return @source_year unless source_date_valid
+    return source_date_valid.year.to_s if source_date_valid.class == Time
+    source_date_valid[0..3]
   end
 
   alias_method :year, :source_year

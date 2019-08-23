@@ -10,8 +10,8 @@ es:
         one:  "%{count} estrella"
         other:  "%{count} estrellas"
       review_answer_summary_html:
-        one: "Actualmente, la mayoría de la gente responde a <span class= 'open-sans_cb wsnw'>%{top_response_text}</span> (%{count}&nbsp;respuesta)"
-        other: "Actualmente, la mayoría de la gente responde a <span class= 'open-sans_cb wsnw'>%{top_response_text}</span> (%{count}&nbsp;respuestas)"
+        one: "Actualmente, la mayoría de la gente responde a <span class= 'open-sans_sb wsnw'>%{top_response_text}</span> (%{count}&nbsp;respuesta)"
+        other: "Actualmente, la mayoría de la gente responde a <span class= 'open-sans_sb wsnw'>%{top_response_text}</span> (%{count}&nbsp;respuestas)"
       reviews:
         one: "%{count} evaluacion"
         other: "%{count} evaluaciones"

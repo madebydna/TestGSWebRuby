@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ReviewsController do
-  let(:current_user) { FactoryGirl.build(:user) }
+  let(:current_user) { FactoryBot.build(:user) }
 
   describe '#flag' do
     it 'should flash error and redirect back if all params not provided' do

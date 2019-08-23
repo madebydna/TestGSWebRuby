@@ -135,7 +135,6 @@ group :development do
   gem 'guard-rspec', '= 4.2.9'
   gem 'guard-livereload'
   gem 'spring-commands-rspec'
-  gem 'byebug'
 
   # Profiling toolkit for Rack applications with Rails integration.
   # USED: in development env. See config/initializers/rack_profiler.rb
@@ -149,11 +148,6 @@ group :test do
 
   # Mock external http requests for tests
   gem 'webmock'
-
-  # gem for setting up ruby objects as test data
-  # gem 'factory_girl_rails', '~> 4.2.1'
-  # Rails 4
-  gem 'factory_girl_rails', '~> 4.4.0'
 
   # testing frameworks
   gem 'rspec', '~> 3.5.0'
@@ -180,6 +174,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'byebug'
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
   #gem 'awesome_print', :require => 'ap'
 
@@ -213,7 +208,7 @@ group :development, :test do
   gem 'pdf-reader'
 
   gem 'sourcify'
-  
+
   #  translation tasks gem
   gem 'i18n-tasks', '~> 0.8.3'
 
@@ -224,6 +219,8 @@ group :development, :test do
   gem 'rubocop-checkstyle_formatter', require: false
 
   gem 'pry-rails'
+
+  gem "factory_bot_rails", '~> 4.11.0'
 end
 
 # Sass adapter for the Rails asset pipeline.

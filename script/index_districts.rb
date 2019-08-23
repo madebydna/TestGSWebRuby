@@ -31,21 +31,33 @@ solr_url =  if script_args.has_key?(:host)
               ENV_GLOBAL['solr.rw.server.url']
             end
 
-indexer = 
-  if script_args.has_key?(:host)
-    Solr::Indexer.with_solr_url(solr_url)
+# Start logging
+log = ScriptLogger.record_log_instance(script_args)
+
+begin
+  indexer = 
+    if script_args.has_key?(:host)
+      Solr::Indexer.with_solr_url(solr_url)
+    else
+      Solr::Indexer.with_rw_client
+    end
+            
+  indexer.delete_all if should_wipe_core
+
+  if script_args[:delete]
+    indexer.delete_all_by_type(Solr::DistrictDocument)
   else
-    Solr::Indexer.with_rw_client
+    documents = Search::DistrictDocumentFactory.new(states: states, ids: ids).documents
+    num_of_indexed_docs = indexer.index(documents)
   end
-          
-indexer.delete_all if should_wipe_core
 
-if script_args[:delete]
-  indexer.delete_all_by_type(Solr::DistrictDocument)
-else
-  documents = Search::DistrictDocumentFactory.new(states: states, ids: ids).documents
-  indexer.index(documents)
+  indexer.commit
+  indexer.optimize
+
+  log.finish_logging_session(1, "Finished indexing #{num_of_indexed_docs} documents")
+  puts "Finished indexing #{num_of_indexed_docs} documents"
+
+rescue => e
+  log.finish_logging_session(0, e)
+  raise
 end
-
-indexer.commit
-indexer.optimize

@@ -7,30 +7,7 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
   DATA_TYPE_TAGS = 'state_test'
 
   def query_results
-    @query_results ||=
-      begin
-        DataValue.find_by_district_and_data_type_tags_and_proficiency_is_one(district.state,
-                                                                             district.id,
-                                                                             DATA_TYPE_TAGS,
-                                                                             %w(all))
-        # DataValue.state_and_district_values
-        #   .from(
-        #     DataValue.state_and_district(
-        #       district.state,
-        #       district.id
-        #     ), :data_values
-        #   )
-        #   .where(proficiency_band_id: 1)
-        #   .with_data_types
-        #   .with_data_type_tags(DATA_TYPE_TAGS)
-        #   .with_breakdowns
-        #   .with_breakdown_tags
-        #   .with_academics
-        #   .with_academic_tags
-        #   .with_loads
-        #   .with_sources
-        #   .group('data_values.id')
-      end
+    @query_results ||= Omni::TestDataValue.all_by_district(district.state, district.id)
   end
 
   def build_hash_for_cache
@@ -108,17 +85,16 @@ class TestScoresCaching::DistrictTestScoresCacherGsdata < TestScoresCaching::Dis
 
   def state_results_hash
     @_state_results_hash ||= begin
-      state_values = DataValue
-                       .find_by_state_and_data_type_tags_and_proficiency_is_one(district.state, DATA_TYPE_TAGS, %w(all) )
+      state_values = Omni::TestDataValue.all_by_state(district.state)
       state_values.each_with_object({}) do |result, hash|
-        state_key = DataValue.datatype_breakdown_year(result)
+        state_key = Omni::TestDataValue.datatype_breakdown_year(result)
         hash[state_key] = result
       end
     end
   end
 
   def state_result(result)
-    state_results_hash[DataValue.datatype_breakdown_year(result)]
+    state_results_hash[Omni::TestDataValue.datatype_breakdown_year(result)]
   end
 
 end

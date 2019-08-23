@@ -1,6 +1,6 @@
 require_relative "../test_processor"
 
-class UTTestProcessor2017SAGE < GS::ETL::TestProcessor
+class UTTestProcessor2018SAGE < GS::ETL::TestProcessor
 
   def initialize(*args)
     super
@@ -33,12 +33,15 @@ class UTTestProcessor2017SAGE < GS::ETL::TestProcessor
     s.transform('Fill missing default fields', Fill, {
       year: 2017,
       date_valid: '2017-01-01 00:00:00',
+      description: 'In 2016-2017, students in UT took the SAGE assessment.SAGE is a system of assessments designed to measure student success and growth over the years. SAGE tests are based on the Utah Core Standards, a set of academic standards that raise our expectations for students and teachers.'
+
   })
   end
   source("ut_sage_2017_18_proficiency_041519.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
       year: 2018,
-      date_valid: '2018-01-01 00:00:00'
+      date_valid: '2018-01-01 00:00:00',
+      description: 'In 2017-2018, students in UT took the SAGE assessment.SAGE is a system of assessments designed to measure student success and growth over the years. SAGE tests are based on the Utah Core Standards, a set of academic standards that raise our expectations for students and teachers.'
     })
   end
 
@@ -52,8 +55,7 @@ class UTTestProcessor2017SAGE < GS::ETL::TestProcessor
       test_data_type_id: 196,
       proficiency_band_id: 1,
       proficiency_band: 'proficient and above',
-      notes: 'DXT-3090: UT SAGE',
-      description: 'In 2016-2017, students in UT took the SAGE assessment.SAGE is a system of assessments designed to measure student success and growth over the years. SAGE tests are based on the Utah Core Standards, a set of academic standards that raise our expectations for students and teachers.'
+      notes: 'DXT-3090: UT SAGE'
     })
     .transform('skip Mobile and All Demographic Values breakdowns',DeleteRows,:breakdown, 'Mobile', 'All Demographic Values')  
     .transform('Transpose value columns', Transposer,
@@ -66,7 +68,7 @@ class UTTestProcessor2017SAGE < GS::ETL::TestProcessor
     .transform("Skip invalid values", DeleteRows, :value, 'N<10', 'NA')
     .transform("Process range and inequalities", WithBlock) do |row|
       row[:value] = row[:value].gsub(' ','')
-      unless row[:value] == "#{row[:value].to_f}" or row[:value] == '<=1' or row[:value] == '>=95'
+      unless row[:value] == "#{row[:value].to_f}" or row[:value] == '<=1' or row[:value] == '>=98'
         row[:value] = 'SKIP'
       end
       row
@@ -104,4 +106,4 @@ class UTTestProcessor2017SAGE < GS::ETL::TestProcessor
   end
 end
 
-UTTestProcessor2017SAGE.new(ARGV[0], max: nil).run
+UTTestProcessor2018SAGE.new(ARGV[0], max: nil).run

@@ -50,17 +50,17 @@ class DatabaseConfigurationLoader
 
     if db_host.present?
       config.gs_recursive_each_with_clone do |hash, key, value|
-        hash[key] = db_host if key == 'host' && hash['database'] != 'gsdata'
+        hash[key] = db_host if key == 'host' && (hash['database'] != 'gsdata' && hash['database'] != 'omni')
       end
     end
     if db_username.present?
       config.gs_recursive_each_with_clone do |hash, key, value|
-        hash[key] = db_username if key == 'username' && hash['database'] != 'gsdata'
+        hash[key] = db_username if key == 'username' && (hash['database'] != 'gsdata' && hash['database'] != 'omni')
       end
     end
     if db_password.present?
       config.gs_recursive_each_with_clone do |hash, key, value|
-        hash[key] = db_password if key == 'password' && hash['database'] != 'gsdata'
+        hash[key] = db_password if key == 'password' && (hash['database'] != 'gsdata' && hash['database'] != 'omni')
       end
     end
     config.gs_recursive_each_with_clone do |hash, key, _|
@@ -74,20 +74,33 @@ class DatabaseConfigurationLoader
     gsdata_db_password = ENV['gsdata_db_password'] || ENV_GLOBAL['gsdata_db_password']
     gsdata_config = config['gsdata']
     config['gsdata_rw'] ||= config['gsdata']
-
+    omni_config = config['omni']
+    config['omni_rw'] ||= config['omni']
 
     if gsdata_db_host.present?
       gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
         hash[key] = gsdata_db_host if key == 'host'
       end
+      omni_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_host if key == 'host'
+      end
     end
+
     if gsdata_db_username.present?
       gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
         hash[key] = gsdata_db_username if key == 'username'
       end
+
+      omni_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_username if key == 'username'
+      end
     end
+
     if gsdata_db_password.present?
       gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_password if key == 'password'
+      end
+      omni_config.gs_recursive_each_with_clone do |hash, key, value|
         hash[key] = gsdata_db_password if key == 'password'
       end
     end
@@ -103,35 +116,47 @@ class DatabaseConfigurationLoader
 
     if db_host.present?
       config.gs_recursive_each_with_clone do |hash, key, value|
-        hash[key] = db_host if key == 'host' && hash['database'] != 'gsdata'
+        hash[key] = db_host if key == 'host' && (hash['database'] != 'gsdata' && hash['database'] != 'omni')
       end
     end
     if db_username.present?
       config.gs_recursive_each_with_clone do |hash, key, value|
-        hash[key] = db_username if key == 'username' && hash['database'] != 'gsdata'
+        hash[key] = db_username if key == 'username' && (hash['database'] != 'gsdata' && hash['database'] != 'omni')
       end
     end
     if db_password.present?
       config.gs_recursive_each_with_clone do |hash, key, value|
-        hash[key] = db_password if key == 'password' && hash['database'] != 'gsdata'
+        hash[key] = db_password if key == 'password' && (hash['database'] != 'gsdata' && hash['database'] != 'omni')
       end
     end
 
     gsdata_config = config['gsdata']
     config['gsdata_rw'] ||= config['gsdata']
+    omni_config = config['omni']
+    config['omni_rw'] ||= config['omni']
 
     if gsdata_db_host.present?
       gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
         hash[key] = gsdata_db_host if key == 'host'
+      end
+
+      omni_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = omni_db_host if key == 'host'
       end
     end
     if gsdata_db_username.present?
       gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
         hash[key] = gsdata_db_username if key == 'username'
       end
+      omni_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_username if key == 'username'
+      end
     end
     if gsdata_db_password.present?
       gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_password if key == 'password'
+      end
+      omni_config.gs_recursive_each_with_clone do |hash, key, value|
         hash[key] = gsdata_db_password if key == 'password'
       end
     end

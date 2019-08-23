@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :review_topic, class: ReviewTopic do
     sequence(:id) { |n| n }

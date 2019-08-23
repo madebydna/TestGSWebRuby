@@ -77,8 +77,8 @@ describe OspRegistrationController do
       clean_models :ca, School
     end
 
-    let(:school) { FactoryGirl.create(:school, id: 1, level_code: 'h', state: 'CA') }
-    let(:user) { FactoryGirl.create(:user, email: 'albus@hogwarts.uk') }
+    let(:school) { FactoryBot.create(:school, id: 1, level_code: 'h', state: 'CA') }
+    let(:user) { FactoryBot.create(:user, email: 'albus@hogwarts.uk') }
     let(:upgrade_osp_user_hash) do
       {state: school.state, schoolId: school.id, email: user.email,
        first_name: 'Albus', last_name: 'Dumbledore',
@@ -123,8 +123,8 @@ describe OspRegistrationController do
     context 'with a non osp user with bad data posted' do
       victim_attrs = {email: 'victim@hogwarts.uk', password: 'victim_pass'}
       victim_membership_attrs = { job_title: 'the principle', state: 'de', school_id: 2 }
-      let!(:victim) { FactoryGirl.create(:user, victim_attrs) }
-      let!(:victim_membership) { FactoryGirl.create(:esp_membership, victim_membership_attrs.merge(member_id: victim.id)) }
+      let!(:victim) { FactoryBot.create(:user, victim_attrs) }
+      let!(:victim_membership) { FactoryBot.create(:esp_membership, victim_membership_attrs.merge(member_id: victim.id)) }
       let(:bad_upgrade_osp_user_hash) do
         {state: school.state, schoolId: school.id, email: victim.email, password: 'new_password',
          first_name: 'Albus', last_name: 'Dumbledore',
@@ -188,8 +188,8 @@ describe OspRegistrationController do
     context 'when creating a new user and trying to use an existing account ' do
       victim_attrs = { email: 'victim@hogwarts.uk', password: 'victim_pass'}
       victim_membership_attrs = { job_title: 'the principle', state: 'de', school_id: 2 }
-      let!(:victim) { FactoryGirl.create(:user, victim_attrs) }
-      let!(:victim_membership) { FactoryGirl.create(:esp_membership, victim_membership_attrs.merge(member_id: victim.id)) }
+      let!(:victim) { FactoryBot.create(:user, victim_attrs) }
+      let!(:victim_membership) { FactoryBot.create(:esp_membership, victim_membership_attrs.merge(member_id: victim.id)) }
       let(:bad_save_new_osp_user_hash) do
         {state: school.state, schoolId: school.id, email: victim.email, password: 'new_password',
          first_name: 'Minerva', last_name: 'McGonagall',
@@ -311,7 +311,7 @@ describe OspRegistrationController do
 
     shared_examples_for 'a robust osp subscription signup process' do
       let(:current_subscriptions) { user.subscriptions }
-      let(:school) { FactoryGirl.create(:school) }
+      let(:school) { FactoryBot.create(:school) }
 
       context 'with both opt-ins selected' do
         let(:subscription_params) { ['mystat_osp', 'osp_partner_promos'] }
@@ -370,7 +370,7 @@ describe OspRegistrationController do
 
     context "with a user who has already signed up" do
       it_behaves_like 'a robust osp subscription signup process' do
-        let(:user) { FactoryGirl.create(
+        let(:user) { FactoryBot.create(
             :user,
             :with_school_subscriptions,
             lists: ['mystat', 'osp', 'osp_partner_promos'],
@@ -383,7 +383,7 @@ describe OspRegistrationController do
 
     context "with a user who has not signed up" do
       it_behaves_like 'a robust osp subscription signup process' do
-        let(:user) { FactoryGirl.create(:user, email: 'km2@gs.org') }
+        let(:user) { FactoryBot.create(:user, email: 'km2@gs.org') }
       end
     end
   end

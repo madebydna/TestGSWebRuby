@@ -2,9 +2,9 @@ require 'spec_helper'
 require_relative 'examples/model_with_active_field'
 
 describe ReviewQuestion do
-  let(:review_question) {FactoryGirl.create(:review_question)}
-  let(:overall_question) {FactoryGirl.create(:overall_rating_question)}
-  let(:teacher_question) {FactoryGirl.create(:teacher_question)}
+  let(:review_question) {FactoryBot.create(:review_question)}
+  let(:overall_question) {FactoryBot.create(:overall_rating_question)}
+  let(:teacher_question) {FactoryBot.create(:teacher_question)}
   after do
     clean_dbs :gs_schooldb
   end
@@ -49,10 +49,10 @@ describe ReviewQuestion do
  end
 
   describe '#matches_school?' do
-    let(:matching_school) {FactoryGirl.create(:alameda_high_school)}
-    let(:not_matching_school1) {FactoryGirl.create(:alameda_high_school, level_code: 'e')}
-    let(:not_matching_school2) {FactoryGirl.create(:alameda_high_school, type: 'private')}
-    let(:review_question) {FactoryGirl.create(:review_question, school_level: matching_school.level_code, school_type: matching_school.type)}
+    let(:matching_school) {FactoryBot.create(:alameda_high_school)}
+    let(:not_matching_school1) {FactoryBot.create(:alameda_high_school, level_code: 'e')}
+    let(:not_matching_school2) {FactoryBot.create(:alameda_high_school, type: 'private')}
+    let(:review_question) {FactoryBot.create(:review_question, school_level: matching_school.level_code, school_type: matching_school.type)}
     it 'should return true if matches school' do
       expect(review_question.matches_school?(matching_school)).to be_truthy
     end

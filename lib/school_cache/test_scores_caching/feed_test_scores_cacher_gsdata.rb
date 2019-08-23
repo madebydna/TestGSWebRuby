@@ -11,11 +11,7 @@ class TestScoresCaching::FeedTestScoresCacherGsdata < TestScoresCaching::TestSco
   }
 
   def query_results
-    @query_results ||=
-      begin
-       DataValue
-        .find_by_school_and_data_type_tags(school, data_type_tags, %w(feeds) )
-      end
+    @query_results ||= Omni::TestDataValue.feeds_by_school(school.state, school.id)
   end
 
   def hash_name_changer!(hash)

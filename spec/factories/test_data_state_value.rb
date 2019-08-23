@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   TestDataStateValue.switch_connection_to(:ca)
 
   factory :test_data_state_value, class: TestDataStateValue do

@@ -26,8 +26,8 @@ describe WordpressInterfaceController do
         let(:user_session_key) { 'my_session_key' }
         let(:scenario_key)     { 'A1' }
         before do
-          FactoryGirl.create(:customer_like, user_session_key: user_session_key, item_key: scenario_key)
-          FactoryGirl.create(:customer_like, user_session_key: 'another_key', item_key: scenario_key)
+          FactoryBot.create(:customer_like, user_session_key: user_session_key, item_key: scenario_key)
+          FactoryBot.create(:customer_like, user_session_key: 'another_key', item_key: scenario_key)
         end
         before do
           post_params.merge!({
@@ -53,8 +53,8 @@ describe WordpressInterfaceController do
         it 'should only return total likes for that scenario key' do
           other_user_session_key, other_scenario_key = 'other_session_key', 'B2'
 
-          FactoryGirl.create(:customer_like, user_session_key: other_user_session_key, item_key: other_scenario_key)
-          FactoryGirl.create(:customer_like, user_session_key: user_session_key, item_key: other_scenario_key)
+          FactoryBot.create(:customer_like, user_session_key: other_user_session_key, item_key: other_scenario_key)
+          FactoryBot.create(:customer_like, user_session_key: user_session_key, item_key: other_scenario_key)
 
           post :call_from_wordpress, post_params
           json_response = JSON.parse(response.body)
@@ -64,8 +64,8 @@ describe WordpressInterfaceController do
         it 'should only return user likes for that scenario key' do
           other_user_session_key, other_scenario_key = 'other_session_key', 'B2'
 
-          FactoryGirl.create(:customer_like, user_session_key: user_session_key, item_key: other_scenario_key)
-          FactoryGirl.create(:customer_like, user_session_key: other_user_session_key, item_key: other_scenario_key)
+          FactoryBot.create(:customer_like, user_session_key: user_session_key, item_key: other_scenario_key)
+          FactoryBot.create(:customer_like, user_session_key: other_user_session_key, item_key: other_scenario_key)
 
           post :call_from_wordpress, post_params
           json_response = JSON.parse(response.body)
@@ -109,7 +109,7 @@ describe WordpressInterfaceController do
 
       context 'when a user already has a liked an item' do
         it 'should not let the user like it again' do
-          FactoryGirl.create(:customer_like, user_session_key: user_session_key, item_key: scenario_key)
+          FactoryBot.create(:customer_like, user_session_key: user_session_key, item_key: scenario_key)
 
           post_params.merge!({
             wp_params: {
@@ -126,7 +126,7 @@ describe WordpressInterfaceController do
 
       context 'when a user already has a liked a different item' do
         it 'should let the user like the current item' do
-          FactoryGirl.create(:customer_like, user_session_key: user_session_key, item_key: 'B2')
+          FactoryBot.create(:customer_like, user_session_key: user_session_key, item_key: 'B2')
 
           post_params.merge!({
             wp_params: {
@@ -143,7 +143,7 @@ describe WordpressInterfaceController do
 
       context 'when there are other likes already saved' do
         it 'should let the user like the current item' do
-          FactoryGirl.create(:customer_like, user_session_key: 'other_user_session', item_key: scenario_key)
+          FactoryBot.create(:customer_like, user_session_key: 'other_user_session', item_key: scenario_key)
 
           post_params.merge!({
             wp_params: {

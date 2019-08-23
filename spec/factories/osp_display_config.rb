@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :osp_display_config do
     sequence   :id
     sequence   :location_group_id

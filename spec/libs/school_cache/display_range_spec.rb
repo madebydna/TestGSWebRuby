@@ -52,7 +52,7 @@ describe DisplayRange do
         context "when the range: #{range} is available for data_type= #{range_data_type} data_type_id=#{range_data_type_id} subject_id=#{range_subject_id || 'all'} state=#{range_state || 'all'} year=#{range_year || 'all'}" do
           let(:display_ranges) do
             { [range_data_type, range_data_type_id, (range_subject_id || 'all'), (range_state || 'all'), (range_year || 'all')] => [
-              FactoryGirl.build(:display_range, data_type: range_data_type, data_type_id: range_data_type_id, subject_id: range_subject_id, state: range_state, year: range_year)
+              FactoryBot.build(:display_range, data_type: range_data_type, data_type_id: range_data_type_id, subject_id: range_subject_id, state: range_state, year: range_year)
             ] }
           end
           before { allow(DisplayRange).to receive(:grouped_display_ranges).and_return(display_ranges) }
@@ -93,7 +93,7 @@ describe DisplayRange do
           [ 3, nil, 'ca', 2012, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json],
           [ 4, nil, 'ca', (Time.now.year + 1), {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json]
         ].each do | data_type_id, subject_id, state, year, ranges |
-          FactoryGirl.create(:display_range, data_type_id: data_type_id, subject_id: subject_id, state: state, year: year, ranges: ranges)
+          FactoryBot.create(:display_range, data_type_id: data_type_id, subject_id: subject_id, state: state, year: year, ranges: ranges)
         end
       end
   

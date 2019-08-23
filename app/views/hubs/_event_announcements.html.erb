@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pvm">
       <div class="alert alert-success">
-        <strong class="mrm open-sans_sb"><%= t('.announcement') %></strong>
+        <strong class="mrm open-sans_b"><%= t('.announcement') %></strong>
         <span><%= db_t(announcement[:content], default: announcement[:content]) %></span>
         <% link_name = db_t(announcement[:link][:name], default: announcement[:link][:name]) %>
         <% if announcement[:link][:newWindow] == 'true' %>

@@ -93,13 +93,13 @@ shared_context 'Given school profile page with school test guide module' do |pag
 end
 
 shared_context 'with Cesar Chavez Academy Denver' do
-  let!(:school) { FactoryGirl.create(:cesar_chavez_academy_denver) }
+  let!(:school) { FactoryBot.create(:cesar_chavez_academy_denver) }
   after do
     clean_models :co, School
   end
 end
 shared_context 'with Alameda High School' do
-  let!(:school) { FactoryGirl.create(:alameda_high_school) }
+  let!(:school) { FactoryBot.create(:alameda_high_school) }
   after do
     clean_models :ca, School
   end
@@ -107,7 +107,7 @@ end
 
 shared_context 'with a Washington, DC school' do
   let!(:school) do
-    s = FactoryGirl.build(:washington_dc_ps_head_start)
+    s = FactoryBot.build(:washington_dc_ps_head_start)
     s.on_db(:dc).save
     s
   end
@@ -117,7 +117,7 @@ shared_context 'with a Washington, DC school' do
 end
 
 shared_context 'with elementary school in CA' do
-  let!(:school) { FactoryGirl.create(:bay_farm_elementary_school) }
+  let!(:school) { FactoryBot.create(:bay_farm_elementary_school) }
   after do
     clean_models :ca, School
   end
@@ -125,7 +125,7 @@ end
 
 shared_context 'with Cristo Rey New York High School' do
   let!(:school) do 
-    new_york_school = FactoryGirl.build(:cristo_rey_new_york_high_school) 
+    new_york_school = FactoryBot.build(:cristo_rey_new_york_high_school) 
     School.on_db(:ny) { new_york_school.save}
     new_york_school
   end
@@ -136,7 +136,7 @@ end
 
 shared_context 'with Cesar Chavez Academy Denver' do
   let!(:school) do
-    colorado_school = FactoryGirl.build(:cesar_chavez_academy_denver) 
+    colorado_school = FactoryBot.build(:cesar_chavez_academy_denver) 
     School.on_db(:co) { colorado_school.save}
     colorado_school 
   end

@@ -38,7 +38,7 @@ const studentsPhrase = enrollment => {
   }
   return (
     <span key="enrollment">
-      <span className="open-sans_semibold">{enrollment.toLocaleString()}</span>
+      <span className="open-sans_sb">{enrollment.toLocaleString()}</span>
       {` ${enrollment > 1 ? t('students') : t('student')}`}
     </span>
   );
@@ -60,7 +60,7 @@ const clarifySchoolType = schoolType => {
 };
 
 const schoolTypePhrase = (schoolType, gradeLevels) => (
-  <span key="school-type" className="open-sans_semibold">
+  <span key="school-type" className="open-sans_sb">
     {`${capitalize(clarifySchoolType(schoolType))}, ${gradeLevels}`}
   </span>
 );

@@ -4,7 +4,7 @@ describe SchoolProfiles::ReviewQuestions do
   after(:each) do
     clean_dbs(:gs_schooldb)
   end
-  let(:alameda_high_school) { FactoryGirl.create(:alameda_high_school) }
+  let(:alameda_high_school) { FactoryBot.create(:alameda_high_school) }
   subject do
     SchoolProfiles::ReviewQuestions.new(alameda_high_school)
   end

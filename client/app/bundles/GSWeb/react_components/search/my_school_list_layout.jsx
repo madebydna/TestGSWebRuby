@@ -187,7 +187,7 @@ class MySchoolListLayout extends React.Component {
   renderSignupPrompt() {
     return (
       <div className="signup-link">
-        <a href='javascript:void(0)' onClick={this.onSignup} className="open-sans_semibold">
+        <a href='javascript:void(0)' onClick={this.onSignup} className="open-sans_sb">
           {t('Sign up link')}
         </a>{' '}
         <span className="open-sans_regular">{t('Sign up rest')}</span>

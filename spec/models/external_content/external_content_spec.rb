@@ -13,7 +13,7 @@ describe ExternalContent do
 
   describe '.homepage_features' do
     before do
-      FactoryGirl.create(:homepage_features_external_content)
+      FactoryBot.create(:homepage_features_external_content)
     end
     after do
       clean_models :gs_schooldb, ExternalContent
@@ -44,7 +44,7 @@ describe ExternalContent do
 
   describe '.homepage_features_content' do
     before do
-      FactoryGirl.create(:homepage_features_external_content)
+      FactoryBot.create(:homepage_features_external_content)
     end
     after do
       clean_models :gs_schooldb, ExternalContent

@@ -119,7 +119,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     submitted_value = answer_value
     submitted_value = t('decorators.school_profile_review_decorator.stars', count: answer_value) if topic.overall?
     text = t('decorators.school_profile_review_decorator.you_selected_html')
-    text << h.content_tag('span', submitted_value, class: 'open-sans_cb')
+    text << h.content_tag('span', submitted_value, class: 'open-sans_sb')
     text.html_safe
   end
 

@@ -8,7 +8,7 @@ describe NewSchoolSubmission do
     subject {new_school_submission.valid?}
 
 
-    let(:new_school_submission) {FactoryGirl.build(:new_school_submission, :private_school)}
+    let(:new_school_submission) {FactoryBot.build(:new_school_submission, :private_school)}
 
     it {is_expected.to be true}
 
@@ -149,7 +149,7 @@ describe NewSchoolSubmission do
   context '#add_level_code' do
     subject {new_school_submission}
     after {clean_dbs :gs_schooldb}
-    let(:new_school_submission) {FactoryGirl.build(:new_school_submission, :private_school)}
+    let(:new_school_submission) {FactoryBot.build(:new_school_submission, :private_school)}
 
     context 'with empty grades' do
       before do
@@ -189,7 +189,7 @@ describe NewSchoolSubmission do
 
   context '#pk_only?' do
     subject {new_school_submission.pk_only?}
-    let(:new_school_submission) {FactoryGirl.build(:new_school_submission, :private_school)}
+    let(:new_school_submission) {FactoryBot.build(:new_school_submission, :private_school)}
 
     context 'with non pre-k grade' do
       before {new_school_submission.grades = 'kg'}

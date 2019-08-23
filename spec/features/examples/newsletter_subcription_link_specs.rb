@@ -39,7 +39,7 @@ feature '/gsr/user/subscriptions' do
     end
 
     context 'with signed out registered user' do
-      let(:user) { FactoryGirl.create(:verified_user, password: 'password') }
+      let(:user) { FactoryBot.create(:verified_user, password: 'password') }
 
       subject do
         visit create_subscription_from_link_path(list: 'greatnews')

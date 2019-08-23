@@ -5,12 +5,12 @@ describe District do
   describe '#nearby_districts' do
     it 'should sort districts by distance' do
       nearby_district_objects = [
-        FactoryGirl.build(:nearby_district,
+        FactoryBot.build(:nearby_district,
           neighbor_state: 'CA',
           neighbor_id: 2,
           distance: 3
         ),
-        FactoryGirl.build(:nearby_district,
+        FactoryBot.build(:nearby_district,
           neighbor_state: 'CA',
           neighbor_id: 1,
           distance: 5
@@ -23,8 +23,8 @@ describe District do
 
       # These districts are not yet in ascending order by distance
       districts = [
-        FactoryGirl.build(:district, id: 1),
-        FactoryGirl.build(:district, id: 2)
+        FactoryBot.build(:district, id: 1),
+        FactoryBot.build(:district, id: 2)
       ]
 
       allow(District).to receive(:find_by_state_and_ids).
@@ -37,7 +37,7 @@ describe District do
 
   describe '#schools_by_rating_desc' do
     it 'should sort schools by rating in descending order with NR at end' do
-      schools = FactoryGirl.build_list(:school, 10)
+      schools = FactoryBot.build_list(:school, 10)
       # Set rating to the position of the school in the list
       schools.each_with_index do |s, index|
         rating = (index == 0) ? 'NR' : index

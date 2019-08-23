@@ -3,7 +3,7 @@ require 'spec_helper'
 describe LevelCaching::StateLevelCacher do
 
   def create_school(level, type)
-    FactoryGirl.create_on_shard(:ca, :school, level_code: level, type: type)
+    FactoryBot.create_on_shard(:ca, :school, level_code: level, type: type)
   end
 
   describe "#build_hash_for_cache" do

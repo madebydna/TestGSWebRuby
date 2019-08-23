@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :api_account, class: ApiAccount do
     name 'Curious George'

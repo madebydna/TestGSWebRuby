@@ -6,8 +6,8 @@ require 'features/page_objects/osp_page'
 
 shared_context 'signed in approved osp user for school' do |state, school_id|
   before do
-    factory_girl_options = {state: state, school_id: school_id}.delete_if {|_,v| v.nil?}
-    user = FactoryGirl.create(:verified_user, :with_approved_esp_membership, factory_girl_options)
+    factory_options = {state: state, school_id: school_id}.delete_if {|_,v| v.nil?}
+    user = FactoryBot.create(:verified_user, :with_approved_esp_membership, factory_options)
     log_in_user(user)
   end
 
@@ -19,8 +19,8 @@ end
 
 shared_context 'signed in approved superuser for school' do |state, school_id|
   before do
-    factory_girl_options = {state: state, school_id: school_id}.delete_if {|_,v| v.nil?}
-    super_user = FactoryGirl.create(:verified_user, :with_approved_superuser_membership, factory_girl_options)
+    factory_options = {state: state, school_id: school_id}.delete_if {|_,v| v.nil?}
+    super_user = FactoryBot.create(:verified_user, :with_approved_superuser_membership, factory_options)
     log_in_user(super_user)
   end
 
@@ -33,7 +33,7 @@ end
 ### School Blocks ###
 
 shared_context 'Basic High School' do
-  let(:school) { FactoryGirl.create(:school, id: 1, level_code: 'h') }
+  let(:school) { FactoryBot.create(:school, id: 1, level_code: 'h') }
   after { clean_models :ca, School }
   end
 
@@ -399,10 +399,10 @@ end
 shared_context 'save osp question to db' do
   before do
     questions.each do |question|
-      FactoryGirl.create(:osp_question, :with_osp_display_config, question)
+      FactoryBot.create(:osp_question, :with_osp_display_config, question)
     end
     [*try(:questions_without_display_conf)].each do |question|
-      FactoryGirl.create(:osp_question, question)
+      FactoryBot.create(:osp_question, question)
     end
   end
   after { clean_models :gs_schooldb, OspQuestion, OspDisplayConfig }
@@ -410,7 +410,7 @@ end
 
 shared_context 'with oddly formatted data in school cache for school' do |state, school_id|
   before do
-    FactoryGirl.create(:school_cache_odd_formatted_esp_responses, state: state, school_id: school_id )
+    FactoryBot.create(:school_cache_odd_formatted_esp_responses, state: state, school_id: school_id )
   end
 
   after do

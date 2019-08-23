@@ -1,6 +1,6 @@
 require 'rspec/mocks/standalone'
 
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence :school_value_float do |n|
     n
@@ -48,11 +48,11 @@ FactoryGirl.define do
   end
 
   factory :ethnicity_data_set_results, class: CensusDataResults do
-    ignore do
+    transient do
       number_of_data_sets 3
     end
     after(:stub) do |array, evaluator|
-      array.replace FactoryGirl.build_stubbed_list(
+      array.replace FactoryBot.build_stubbed_list(
         :census_data_set,
         evaluator.number_of_data_sets,
         :various_breakdowns,
@@ -75,7 +75,7 @@ FactoryGirl.define do
     level_code 'e,m,h'
     grade '9'
 
-    ignore do
+    transient do
       school_id nil
       school_value_modified '2000-01-01'
       school_value_float { generate(:school_value_float) }
@@ -113,20 +113,20 @@ FactoryGirl.define do
       end
 
       data_set.census_data_school_values =
-        FactoryGirl.build_list(
+        FactoryBot.build_list(
           :census_data_school_value,
           evaluator.number_of_school_values,
           school_value_params
         )
 
       data_set.census_data_district_values =
-        FactoryGirl.build_list(
+        FactoryBot.build_list(
           :census_data_district_value,
           evaluator.number_of_district_values
         )
 
       data_set.census_data_state_values =
-        FactoryGirl.build_list(
+        FactoryBot.build_list(
           :census_data_state_value,
           evaluator.number_of_state_values
         )
@@ -142,7 +142,7 @@ FactoryGirl.define do
       end
 
       # allow(data_set).to receive(:census_data_school_values) do
-      #   FactoryGirl.create_list(
+      #   FactoryBot.create_list(
       #     :census_data_school_value,
       #     evaluator.number_of_school_values,
       #     school_value_params
@@ -150,14 +150,14 @@ FactoryGirl.define do
       # end
       #
       # allow(data_set).to receive(:census_data_district_values) do
-      #   FactoryGirl.create_list(
+      #   FactoryBot.create_list(
       #     :census_data_district_value,
       #     evaluator.number_of_district_values
       #   )
       # end
       #
       # allow(data_set).to receive(:census_data_state_values) do
-      #   FactoryGirl.create_list(
+      #   FactoryBot.create_list(
       #     :census_data_state_value,
       #     evaluator.number_of_state_values
       #   )
@@ -174,7 +174,7 @@ FactoryGirl.define do
       end
 
       # allow(data_set).to receive(:census_data_school_values) do
-      #   FactoryGirl.build_stubbed_list(
+      #   FactoryBot.build_stubbed_list(
       #     :census_data_school_value,
       #     evaluator.number_of_school_values,
       #     school_value_params
@@ -182,14 +182,14 @@ FactoryGirl.define do
       # end
       #
       # allow(data_set).to receive(:census_data_district_values) do
-      #   FactoryGirl.build_stubbed_list(
+      #   FactoryBot.build_stubbed_list(
       #     :census_data_district_value,
       #     evaluator.number_of_district_values
       #   )
       # end
       #
       # allow(data_set).to receive(:census_data_state_values) do
-      #   FactoryGirl.build_stubbed_list(
+      #   FactoryBot.build_stubbed_list(
       #     :census_data_state_value,
       #     evaluator.number_of_state_values
       #   )

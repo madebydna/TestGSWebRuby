@@ -304,7 +304,7 @@ describe UrlHelper do
       fake_controller.new
     end
 
-    let(:user) { FactoryGirl.build(:new_user) }
+    let(:user) { FactoryBot.build(:new_user) }
     let(:parsed_url) { URI.parse(url_helper.create_reset_password_url(user)) }
     subject { parsed_url }
 

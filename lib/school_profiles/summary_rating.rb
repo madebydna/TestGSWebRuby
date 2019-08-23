@@ -148,9 +148,10 @@ module SchoolProfiles
       rating_weight = (@school_cache_data_reader.ratings_data(key)[key] || []).map do |hash|
         GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: key))
       end.extend(GsdataCaching::GsDataValue::CollectionMethods)
+
       rating_weight
         .having_school_value
-        .for_all_students
+        .having_all_students_or_all_breakdowns_in(Omni::Breakdown::NOT_APPLICABLE)
         .having_most_recent_date
         .expect_only_one(
           key,

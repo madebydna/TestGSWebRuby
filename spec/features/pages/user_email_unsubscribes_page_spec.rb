@@ -11,7 +11,7 @@ describe 'unsubscribe page' do
     UserEmailUnsubscribesPage.new
   end
 
-  let(:user) { FactoryGirl.create(:user, id: 1) }
+  let(:user) { FactoryBot.create(:user, id: 1) }
   after do
     clean_dbs(:gs_schooldb)
   end

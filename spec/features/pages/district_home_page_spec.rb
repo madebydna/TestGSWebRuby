@@ -35,8 +35,8 @@ describe 'District Home Page' do
     let!(:top_rated_schools) do
       (1..5).map do |nearby_school_number|
         shard = :ca
-        s = FactoryGirl.create_on_shard(shard, :alameda_high_school, district_id: district.id, name: "Nearby School #{nearby_school_number}")
-        FactoryGirl.create_on_shard(shard, :overall_rating_school_metadata, school_id: s.id, meta_value: nearby_school_number + 5)
+        s = FactoryBot.create_on_shard(shard, :alameda_high_school, district_id: district.id, name: "Nearby School #{nearby_school_number}")
+        FactoryBot.create_on_shard(shard, :overall_rating_school_metadata, school_id: s.id, meta_value: nearby_school_number + 5)
         s
       end
     end

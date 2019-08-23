@@ -2,5 +2,6 @@
   es:
     modals:
       email_join_modal:
-        heading: Recibe actualizaciones en esta escuela.
+        heading: ¡Guardé esta escuela en Mi lista de escuelas!
+        subheading: ¡Sí! Envíeme actualizaciones por correo electrónico sobre la escuela de mi hijo.
 

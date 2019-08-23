@@ -66,7 +66,7 @@ describe "Districts API" do
       let(:district) { create(:alameda_city_unified) }
       before do
         str = 'MULTIPOLYGON(((1 1,1 10,10 10,10 1,1 1)))'
-        DistrictGeometry.connection.execute("insert into school_district_geometry(state, district_id, level_code, geom) values('#{district.state}', #{district.id}, 'e,m,h', GeomFromText('#{str}'));")
+        create_geo_data(str)
       end
       let(:coordinates) do
         [[[
@@ -189,7 +189,7 @@ describe "Districts API" do
       let(:district) { create(:alameda_city_unified) }
       before do
         str = 'MULTIPOLYGON(((1 1,1 10,10 10,10 1,1 1)))'
-        DistrictGeometry.connection.execute("insert into school_district_geometry(state, district_id, level_code, geom) values('#{district.state}', #{district.id}, 'e,m,h', GeomFromText('#{str}'));")
+        create_geo_data(str)
       end
 
       it 'Doesnt include geometry by default' do
@@ -210,4 +210,11 @@ describe "Districts API" do
     end
   end
 
+  def create_geo_data(str)
+    DistrictGeometry.connection.execute(
+        "insert into school_district_geometry(state, district_id, level_code, geom, nces_disid)
+         values('#{district.state}', #{district.id}, 'e,m,h', GeomFromText('#{str}'), '1');")
+  end
+
 end
+

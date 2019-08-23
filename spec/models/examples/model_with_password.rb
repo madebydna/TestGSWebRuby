@@ -2,7 +2,7 @@ shared_examples_for 'model with password' do |factory_for_valid_object|
   context 'new user with valid password' do
     # We need the subject to be an object that would be valid and savable except
     # for password.
-    subject { FactoryGirl.build(factory_for_valid_object) }
+    subject { FactoryBot.build(factory_for_valid_object) }
     after(:each) { clean_dbs :gs_schooldb }
 
     describe '#password' do

@@ -4,8 +4,8 @@ describe Admin::SchoolsController do
 
   describe '#moderate' do
 
-    let(:school) { FactoryGirl.create(:school) }
-    let!(:reviews) { FactoryGirl.create_list(:review, 3, school_id: school.id) }
+    let(:school) { FactoryBot.create(:school) }
+    let!(:reviews) { FactoryBot.create_list(:review, 3, school_id: school.id) }
 
     before { controller.instance_variable_set(:@school, school) }
     after do

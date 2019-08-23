@@ -8,7 +8,7 @@ describe UserSubscriptionManager do
 
   describe '#update' do
     before { clean_dbs(:gs_schooldb) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     context 'with no prior subscriptions' do
       it 'should add new subscription when given a new subscription' do
         new_subscription_ids = ['greatnews']
@@ -20,7 +20,7 @@ describe UserSubscriptionManager do
 
     context 'with greatnews subscription' do
       let!(:current_subscription) do
-        FactoryGirl.create(:subscription, member_id: user.id, list: 'greatnews')
+        FactoryBot.create(:subscription, member_id: user.id, list: 'greatnews')
       end
       let(:subscription_manager) { UserSubscriptionManager.new(user) }
       subject { subscription_manager.update(chosen_lists) }
@@ -68,7 +68,7 @@ describe UserSubscriptionManager do
     end
 
     context 'with user unsubcribing from subscription' do
-      let!(:current_subscription) { FactoryGirl.create(:subscription, member_id: user.id) }
+      let!(:current_subscription) { FactoryBot.create(:subscription, member_id: user.id) }
       it 'should remove subscription for user' do
         no_subscriptions = []
         expect do

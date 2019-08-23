@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :school_cache, class: SchoolCache do
     name :name
     school_id :school_id
@@ -15,7 +15,7 @@ FactoryGirl.define do
     updated Time.now
 
     trait :with_gs_rating do
-      ignore do
+      transient do
         gs_rating_value 5.0
       end
       before(:create) do |cached_ratings, evaluator|
@@ -31,7 +31,7 @@ FactoryGirl.define do
     end
 
     trait :with_test_score_rating do
-      ignore do
+      transient do
         test_score_rating_value 6.0
       end
       before(:create) do |cached_ratings, evaluator|
@@ -47,7 +47,7 @@ FactoryGirl.define do
     end
 
     trait :with_test_score_and_gs_rating do
-      ignore do
+      transient do
         gs_rating_value 5.0
         test_score_rating_value 6.0
       end
@@ -331,7 +331,7 @@ FactoryGirl.define do
   end
 
   factory :custom_characteristics_all_students_cache, class: SchoolCache do
-    ignore do
+    transient do
       data_type 'data type'
       school_value 0.0
       state_average 0.0
@@ -551,6 +551,99 @@ FactoryGirl.define do
           "state_average_2013" => 84.47
         },
       ],
+    }.to_json)
+    updated Time.now
+  end
+
+  factory :school_characteristics_act_sat, class: SchoolCache do
+    name 'characteristics'
+    sequence(:school_id) { |n| n }
+    state 'CA'
+    value ({
+      # Most recent school data is from 2013
+      'ACT participation' => [
+        {
+          "breakdown" => "All students",
+          "original_breakdown" => "All students",
+          "created" => "2014-08-08T10:05:40-07:00",
+          "grade" => "9",
+          "school_value" => 100.0,
+          "source" => "CA Dept. of Education",
+          "subject" => "All subjects",
+          "year" => 2013,
+          "school_value_2013" => 100.0
+        }
+      ],
+      # Most recent school data is from 2014
+      'Average ACT score' => [
+        {
+          "breakdown" => "All students",
+          "original_breakdown" => "All students",
+          "created" => "2015-02-05T13:47:47-08:00",
+          "district_average" => 20.8,
+          "school_value" => 24.9,
+          "source" => "CA Dept. of Education",
+          "state_average" => 20.4,
+          "subject" => "Science",
+          "year" => 2014,
+          "state_average_2006" => 19.2,
+          "state_average_2007" => 19.1,
+          "state_average_2008" => 19.6,
+          "school_value_2013" => 23.3,
+          "state_average_2013" => 20.1,
+          "school_value_2014" => 24.9,
+          "state_average_2014" => 20.4,
+          "state_average_2012" => 20.1,
+          "state_average_2011" => 20.2008,
+          "state_average_2015" => 20.5,
+          "state_average_2016" => 20.6
+        },
+        {
+          "breakdown" => "All students",
+          "original_breakdown" => "All students",
+          "created" => "2015-02-05T13:47:47-08:00",
+          "district_average" => 19.6,
+          "school_value" => 24.4,
+          "source" => "CA Dept. of Education",
+          "state_average" => 20.1,
+          "subject" => "Math",
+          "year" => 2014,
+          "state_average_2006" => 18.6,
+          "state_average_2007" => 18.9,
+          "state_average_2008" => 19.3,
+          "school_value_2013" => 22.8,
+          "state_average_2013" => 20.1,
+          "school_value_2014" => 24.4,
+          "state_average_2014" => 20.1,
+          "state_average_2012" => 20.1,
+          "state_average_2011" => 20.0117,
+          "state_average_2015" => 20.0,
+          "state_average_2016" => 20.0
+        },
+        {
+          "breakdown" => "All students",
+          "original_breakdown" => "All students",
+          "created" => "2015-02-05T13:47:47-08:00",
+          "district_average" => 20.4,
+          "school_value" => 24.1,
+          "source" => "CA Dept. of Education",
+          "state_average" => 20.3,
+          "subject" => "All subjects",
+          "year" => 2014,
+          "state_average_2006" => 19.0,
+          "state_average_2007" => 19.0,
+          "state_average_2008" => 19.4,
+          "school_value_2013" => 22.8,
+          "state_average_2013" => 20.1,
+          "school_value_2014" => 24.1,
+          "state_average_2014" => 20.3,
+          "state_average_2012" => 20.0,
+          "state_average_2011" => 19.9235,
+          "state_average_2015" => 20.1,
+          "state_average_2016" => 20.4
+        }
+      ],
+      # TODO: Add SAT examples
     }.to_json)
     updated Time.now
   end

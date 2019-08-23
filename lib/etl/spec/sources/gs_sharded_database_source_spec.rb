@@ -1,10 +1,10 @@
 require_relative '../../sources/gs_sharded_database_source'
 
-#FIXME: FactoryGirl not part of environment yet
+#FIXME: FactoryBot not part of environment yet
 xdescribe GsShardedDatabaseSource do
   let(:query_response) do
-    [ FactoryGirl.attributes_for(:demo_school, state_id: 1),
-      FactoryGirl.attributes_for(:demo_school, state_id: 2) ]
+    [ FactoryBot.attributes_for(:demo_school, state_id: 1),
+      FactoryBot.attributes_for(:demo_school, state_id: 2) ]
   end
   let(:client) { double(query: query_response) }
   context 'with no where statement' do
