@@ -84,7 +84,7 @@ const SearchResultsList = ({
   listGroups,
   searchTerm,
   showSearchAllOption,
-  searchBoxType
+  handleOSPCase
 }) => {
   const groupNameListItem = (name, index) => (
     <li key={`category ${name}`} className="search-results-list-group-name clearfix">
@@ -98,7 +98,7 @@ const SearchResultsList = ({
       order.counter += 1;
       const title = resultTypes[group].title(listItem);
       const additionalInfo = resultTypes[group].additionalInfo(listItem);
-      if (searchBoxType === 'OSP' && listItem.ospUrl){
+      if (handleOSPCase && listItem.ospUrl){
         listItem.url = listItem.ospUrl;
       }
       return (
@@ -137,7 +137,7 @@ const SearchResultsList = ({
       .map((group, index) => (
         <React.Fragment key={group}>
           {groupNameListItem(group, index)}
-          {groupListItems(group, listGroups[group], order, searchBoxType)}
+          {groupListItems(group, listGroups[group], order, handleOSPCase)}
         </React.Fragment>
       ));
   };
