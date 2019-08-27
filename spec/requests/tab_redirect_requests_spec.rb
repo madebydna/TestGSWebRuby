@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'School Profile redirect on query string tab param' do
   before do
-    FactoryGirl.create(:school_with_new_profile,
+    FactoryBot.create(:school_with_new_profile,
                       state: 'ca',
                       city: 'alameda',
                       id: 1,

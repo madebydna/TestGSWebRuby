@@ -10,7 +10,7 @@ describe UserVerificationToken do
     context 'with valid user id' do
       it 'should delegate generate to token generator' do
         token_generator = double('token_generator')
-        user = FactoryGirl.create(:user)
+        user = FactoryBot.create(:user)
         allow(UserAuthenticationToken).to receive(:new).with(user).and_return(token_generator)
         expect(token_generator).to receive(:generate)
         UserVerificationToken.token(user.id)
@@ -77,7 +77,7 @@ describe UserVerificationToken do
   describe '#user' do
     context 'with user in database' do
 
-      let!(:user) { FactoryGirl.create(:user, id: 1) }
+      let!(:user) { FactoryBot.create(:user, id: 1) }
 
       it 'should set user instance variable to user' do
         expect(UserVerificationToken.new(1).instance_variable_get(:@_user)).

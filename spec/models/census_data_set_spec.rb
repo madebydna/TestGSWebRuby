@@ -8,7 +8,7 @@ describe CensusDataSet do
 
   context 'new data set' do
     before do
-      @data_set = FactoryGirl.build(:census_data_set)
+      @data_set = FactoryBot.build(:census_data_set)
     end
 
     it 'should be saveable' do

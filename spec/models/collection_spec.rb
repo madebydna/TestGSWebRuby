@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Collection do
   describe '#config' do
-    let(:collection) { FactoryGirl.build(:collection) }
+    let(:collection) { FactoryBot.build(:collection) }
     before do
       config = { this_is: :a_config }
       allow(collection).to receive(:read_attribute).and_return(config)
@@ -19,7 +19,7 @@ describe Collection do
   describe '::promos_for' do
     let(:base_promo) { { stuff: 'other stuff', something: 'something else' } }
     context 'with one collection' do
-      let(:collection) { FactoryGirl.build(:collection) }
+      let(:collection) { FactoryBot.build(:collection) }
       let(:collections) { [collection] }
       context 'with a promo' do
         subject do
@@ -43,7 +43,7 @@ describe Collection do
     end
 
     context 'with multiple collections' do
-      let(:collections) { FactoryGirl.build_list(:collection, 3) }
+      let(:collections) { FactoryBot.build_list(:collection, 3) }
       context 'with the same promo' do
         subject do
           config = { promos: [base_promo] }

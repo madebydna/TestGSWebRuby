@@ -7,9 +7,9 @@ describe CensusLoading::Loader do
 
   describe '#insert_into!' do
 
-    let(:data_type) { FactoryGirl.create(:census_data_type) }
+    let(:data_type) { FactoryBot.create(:census_data_type) }
     let(:loader) { CensusLoading::Loader.new(nil, nil, 'fake source') }
-    let(:school) { FactoryGirl.create(:school) }
+    let(:school) { FactoryBot.create(:school) }
     let(:update) {
       {
           entity_state: 'CA',
@@ -60,10 +60,10 @@ describe CensusLoading::Loader do
             let(:census_update) { CensusLoading::Update.new(data_type, update) }
             before do
               unless entity_type == :state
-                entity = FactoryGirl.create(entity_type, id: update[:entity_id])
+                entity = FactoryBot.create(entity_type, id: update[:entity_id])
               end
-              @data_set = FactoryGirl.create(:census_data_set)
-              @data_value = FactoryGirl.create("census_data_#{entity_type}_value_with_newer_data".to_sym)
+              @data_set = FactoryBot.create(:census_data_set)
+              @data_value = FactoryBot.create("census_data_#{entity_type}_value_with_newer_data".to_sym)
               value_class = "CensusData#{entity_type.to_s.titleize}Value".constantize
               allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(@data_set)
               allow(value_class).to   receive(:first_or_initialize).and_return(@data_value)
@@ -86,7 +86,7 @@ describe CensusLoading::Loader do
 
     context 'data set' do
       it 'should be for the correct attributes' do
-        @data_set = FactoryGirl.create(:census_data_set)
+        @data_set = FactoryBot.create(:census_data_set)
         allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(@data_set)
         expect(CensusDataSet).to receive(:find_or_create_and_activate).with(census_update.shard, census_update.data_set_attributes)
         loader.insert_into!(census_update, school)
@@ -95,9 +95,9 @@ describe CensusLoading::Loader do
 
     context 'the census description row' do
       it 'should be for the correct attributes' do
-        data_set = FactoryGirl.create(:census_data_set)
+        data_set = FactoryBot.create(:census_data_set)
         allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(data_set)
-        census_description = FactoryGirl.create(
+        census_description = FactoryBot.create(
           :census_description,
           census_data_set_id: data_set.id,
           state: update[:entity_state],
@@ -134,9 +134,9 @@ describe CensusLoading::Loader do
           let(:census_update) { CensusLoading::Update.new(data_type, update) }
           before do
             unless entity_type == :state
-              entity = FactoryGirl.create(entity_type, id: update[:entity_id])
+              entity = FactoryBot.create(entity_type, id: update[:entity_id])
             end
-            @data_set = FactoryGirl.create(:census_data_set)
+            @data_set = FactoryBot.create(:census_data_set)
             allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(@data_set)
             loader.insert_into!(census_update, entity)
             value_class = "CensusData#{entity_type.to_s.titleize}Value".constantize

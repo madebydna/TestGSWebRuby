@@ -7,7 +7,7 @@ describe CensusLoading::Update do
 
   it_behaves_like 'an update', CensusLoading::Update, required_update_keys
 
-  let(:data_type) { FactoryGirl.build(:census_data_type) }
+  let(:data_type) { FactoryBot.build(:census_data_type) }
   let(:sourceless_update) {
     {
         entity_state: 'CA',

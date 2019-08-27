@@ -3,4 +3,4 @@ en:
   modals:
     success_modal:
       heading: Success!
-      subheading: Expect something great in your inbox soon.
+      subheading_html: Expect something great in your inbox soon.

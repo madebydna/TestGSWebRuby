@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :nearby_school do
     school 1
     neighbor 11

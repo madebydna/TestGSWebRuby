@@ -296,7 +296,7 @@ describe SigninController do
 
       context 'when a valid school is specified' do
         before do
-          school = FactoryGirl.create(:school)
+          school = FactoryBot.create(:school)
           controller.params[:state] = school.state
           controller.params[:school_id] = school.id
         end
@@ -310,7 +310,7 @@ describe SigninController do
 
       context 'when an inactive school is specified' do
         before do
-          school = FactoryGirl.create(:inactive_school)
+          school = FactoryBot.create(:inactive_school)
           controller.params[:state] = school.state
           controller.params[:school_id] = school.id.to_s
         end
@@ -521,7 +521,7 @@ describe SigninController do
   end
 
   describe '#verify_email' do
-    let(:user) { FactoryGirl.build(:user) }
+    let(:user) { FactoryBot.build(:user) }
     let(:token) { EmailVerificationToken.new(user: user) }
     let(:expired_token) {
       EmailVerificationToken.new(user: user, time: 1000.years.ago)
@@ -711,7 +711,7 @@ describe SigninController do
       let(:expired_token) {
         EmailVerificationToken.new(user: user, time: 1000.years.ago)
       }
-      let(:user) { FactoryGirl.create(:new_user) }
+      let(:user) { FactoryBot.create(:new_user) }
       let(:valid_token) { token.generate }
       let(:valid_time) { token.time_as_string }
       let(:invalid_token) { 'foo' }

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :update_queue_form_response do
     sequence :id do |n|
       n

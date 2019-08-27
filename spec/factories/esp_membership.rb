@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :esp_membership, class: EspMembership do
     member_id :member_id

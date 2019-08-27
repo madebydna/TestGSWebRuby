@@ -19,7 +19,7 @@ describe Api::SessionsController do
     end
 
     context 'when logged in' do
-      let(:user) { FactoryGirl.create(:verified_user) } 
+      let(:user) { FactoryBot.create(:verified_user) } 
       before do
         allow(controller).to receive(:current_user).and_return(user)
       end

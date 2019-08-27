@@ -18,7 +18,7 @@ describe SchoolDataHash do
   let(:school_type)  { 'public'     }
   let(:school_level) { '9-12'       }
   let(:school_url)   { '/california/alpha-high-city/1-alpha-high'  }
-  let(:school) { FactoryGirl.create(:school, name: school_name, type: school_type, level: "9,10,11,12") }
+  let(:school) { FactoryBot.create(:school, name: school_name, type: school_type, level: "9,10,11,12") }
   let(:link_helper) { Object.new }
   let(:characteristics) do
     {

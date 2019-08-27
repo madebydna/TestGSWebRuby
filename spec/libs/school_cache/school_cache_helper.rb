@@ -19,7 +19,7 @@ module SchoolCacheHelper
 
   def save_school_cache_to_db!(school_id, state, cache_data)
     [*cache_data].each do | c_data |
-      FactoryGirl.create(:school_cache, name: c_data[:name], school_id: school_id, state: state, value: c_data[:value].to_json)
+      FactoryBot.create(:school_cache, name: c_data[:name], school_id: school_id, state: state, value: c_data[:value].to_json)
     end
   end
 

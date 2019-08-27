@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :solr_school_result_hash, class:Hash do
     sequence :school_id do |n|
       n

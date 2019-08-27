@@ -6,7 +6,7 @@ describe OspController do
 
   describe '#show' do
     with_shared_context 'user esp_membership status is', :approved do
-      let(:school) { FactoryGirl.build(:alameda_high_school, id: 1) }
+      let(:school) { FactoryBot.build(:alameda_high_school, id: 1) }
       before do
         controller.instance_variable_set(:@current_user, current_user)
         allow(School).to receive(:find_by_state_and_id).and_return school
@@ -57,7 +57,7 @@ describe OspController do
     end
 
     with_shared_context 'user esp_membership status is', :provisional do
-      let(:school) { FactoryGirl.build(:alameda_high_school, id: 1) }
+      let(:school) { FactoryBot.build(:alameda_high_school, id: 1) }
       before do
         controller.instance_variable_set(:@current_user, current_user)
         allow(School).to receive(:find_by_state_and_id).and_return school
@@ -228,7 +228,7 @@ describe OspController do
   describe '#approve_provisional_osp_user_data' do
     let(:esp_membership_id) { 1 }
     before do
-      3.times { FactoryGirl.create(:osp_form_response, esp_membership_id: esp_membership_id) }
+      3.times { FactoryBot.create(:osp_form_response, esp_membership_id: esp_membership_id) }
       allow(controller).to receive(:params).and_return({membership_id: esp_membership_id})
       allow(controller).to receive(:render)
     end

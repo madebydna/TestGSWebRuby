@@ -545,7 +545,7 @@ describe SearchMetaTagsConcerns do
         controller.instance_variable_set(:@city, Struct.new(:name, :state).new(city_name, state_long))
         allow(controller).to receive(:city_params).and_return state: state_url, city: city_url
         allow(controller).to receive(:state_params).and_return state: state_url
-        FactoryGirl.create(:jersey_city)
+        FactoryBot.create(:jersey_city)
       end
 
       after do
@@ -691,7 +691,7 @@ describe SearchMetaTagsConcerns do
         before do
           controller.instance_variable_set(:@q, city_name)
           allow(controller).to receive(:city_params).and_return state: state_url, city: city_url
-          FactoryGirl.create(:jersey_city)
+          FactoryBot.create(:jersey_city)
         end
 
         after do

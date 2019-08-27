@@ -6,9 +6,9 @@ describe PropertyConfig do
 
   describe '#get_property' do
     subject { PropertyConfig }
-    let(:property_config) { FactoryGirl.build(:property_config) }
+    let(:property_config) { FactoryBot.build(:property_config) }
 
-    before { FactoryGirl.create(:property_config) }
+    before { FactoryBot.create(:property_config) }
     before { Rails.cache.clear }
     after(:each) { clean_models :gs_schooldb, PropertyConfig }
 

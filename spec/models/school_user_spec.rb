@@ -6,9 +6,9 @@ end
 
 
 describe SchoolUser do
-  let(:user) { FactoryGirl.build(:verified_user) }
-  let(:school) { FactoryGirl.build(:alameda_high_school) }
-  let(:school_user) { FactoryGirl.build(:school_user, user: user, school: school, user_type: nil) }
+  let(:user) { FactoryBot.build(:verified_user) }
+  let(:school) { FactoryBot.build(:alameda_high_school) }
+  let(:school_user) { FactoryBot.build(:school_user, user: user, school: school, user_type: nil) }
   subject { school_user }
   after do
     clean_dbs(:gs_schooldb)
@@ -38,11 +38,11 @@ describe SchoolUser do
       expect(mock_esp_memberships).to receive(:for_school).with(school).and_return school_esp_memberships
     end
     context 'when there is an approved esp membership for the user and school' do
-      let(:school_esp_memberships) { [ FactoryGirl.build(:esp_membership, :with_approved_status) ] }
+      let(:school_esp_memberships) { [ FactoryBot.build(:esp_membership, :with_approved_status) ] }
       it { is_expected.to be_approved_osp_user }
     end
     context 'when there is only a provisional esp membership for the user and school' do
-      let(:school_esp_memberships) { [ FactoryGirl.build(:esp_membership, :with_provisional_status) ] }
+      let(:school_esp_memberships) { [ FactoryBot.build(:esp_membership, :with_provisional_status) ] }
       it { is_expected.to_not be_approved_osp_user }
     end
   end
@@ -54,11 +54,11 @@ describe SchoolUser do
       expect(mock_esp_memberships).to receive(:for_school).with(school).and_return school_esp_memberships
     end
     context 'when there is a provisional esp membership for the user and school' do
-      let(:school_esp_memberships) { [ FactoryGirl.build(:esp_membership, :with_provisional_status) ] }
+      let(:school_esp_memberships) { [ FactoryBot.build(:esp_membership, :with_provisional_status) ] }
       it { is_expected.to be_provisional_osp_user }
     end
     context 'when there is only an approved esp membership for the user and school' do
-      let(:school_esp_memberships) { [ FactoryGirl.build(:esp_membership, :with_approved_status) ] }
+      let(:school_esp_memberships) { [ FactoryBot.build(:esp_membership, :with_approved_status) ] }
       it { is_expected.to_not be_provisional_osp_user }
     end
   end
@@ -94,7 +94,7 @@ describe SchoolUser do
   describe '#deactivate_reviews!' do
     subject { school_user }
     context 'with reviews with comments' do
-      let(:reviews) { FactoryGirl.build_list(:review, 4) }
+      let(:reviews) { FactoryBot.build_list(:review, 4) }
       before do
         allow(subject).to receive(:reviews).and_return(reviews)
       end
@@ -105,7 +105,7 @@ describe SchoolUser do
     end
 
     context 'with reviews without comments' do
-      let(:reviews) { FactoryGirl.build_list(:review, 4, comment: '') }
+      let(:reviews) { FactoryBot.build_list(:review, 4, comment: '') }
       before do
         allow(subject).to receive(:reviews).and_return(reviews)
       end
@@ -118,9 +118,9 @@ describe SchoolUser do
 
   describe '#remove_review_answers!' do
     subject { school_user }
-    let (:school) { FactoryGirl.build(:school)}
-    let(:review_answers) { FactoryGirl.build_list(:review_answer, 2, value: 1) }
-    let(:reviews) { FactoryGirl.build_list(:review, 2) }
+    let (:school) { FactoryBot.build(:school)}
+    let(:review_answers) { FactoryBot.build_list(:review_answer, 2, value: 1) }
+    let(:reviews) { FactoryBot.build_list(:review, 2) }
     before do
       reviews.each_with_index do |review, index|
         review.answers << review_answers[index]
@@ -141,7 +141,7 @@ describe SchoolUser do
     subject { school_user }
 
     context 'with review without comments' do
-      let(:reviews) { FactoryGirl.build_list(:review, 2, comment: ' lorem ' * 15) }
+      let(:reviews) { FactoryBot.build_list(:review, 2, comment: ' lorem ' * 15) }
       before do
         allow(subject).to receive(:reviews).and_return(reviews.extend ReviewScoping)
       end
@@ -152,7 +152,7 @@ describe SchoolUser do
     end
 
     context 'with review with comment' do
-      let(:reviews) { FactoryGirl.build_list(:review, 2, comment: '') }
+      let(:reviews) { FactoryBot.build_list(:review, 2, comment: '') }
       before do
         allow(subject).to receive(:reviews).and_return(reviews.extend ReviewScoping)
       end
@@ -165,7 +165,7 @@ describe SchoolUser do
   end
 
   describe '#first_unanswered_topic' do
-    let(:topics) { FactoryGirl.build_list(:review_topic, 4) }
+    let(:topics) { FactoryBot.build_list(:review_topic, 4) }
     let(:reviews) do
       [
         double(topic: topics.first),
@@ -187,10 +187,10 @@ describe SchoolUser do
   end
 
   describe "#find_active_review_by_question_id" do
-    let(:user) { FactoryGirl.create(:verified_user) }
-    let(:school) { FactoryGirl.create(:a_high_school) }
-    let(:reviews) { FactoryGirl.create_list(:review, 5) }
-    let(:review_questions) { FactoryGirl.create_list(:review_question, 5) }
+    let(:user) { FactoryBot.create(:verified_user) }
+    let(:school) { FactoryBot.create(:a_high_school) }
+    let(:reviews) { FactoryBot.create_list(:review, 5) }
+    let(:review_questions) { FactoryBot.create_list(:review_question, 5) }
     before do
       (0..4).to_a.each do |n|
         reviews[n].question = review_questions[n]

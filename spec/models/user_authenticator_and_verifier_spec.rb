@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe UserAuthenticatorAndVerifier do
-  let(:user) { FactoryGirl.create(:new_user) }
+  let(:user) { FactoryBot.create(:new_user) }
   let(:token_and_time) { EmailVerificationToken.token_and_date(user) }
   let(:token) { token_and_time[0] }
   let(:time) { token_and_time[1] }
@@ -52,7 +52,7 @@ describe UserAuthenticatorAndVerifier do
   end
 
   context 'Attempt to hack token by swapping user id for another user' do
-    let(:another_user) { FactoryGirl.create(:new_user) }
+    let(:another_user) { FactoryBot.create(:new_user) }
     let(:invalid_token) { token.sub(/==\d+$/, "==#{another_user.id.to_s}") }
     let(:hacked_subject) { UserAuthenticatorAndVerifier.new(invalid_token, time) }
 

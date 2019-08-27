@@ -15,10 +15,10 @@ end
 # By Location Search Context
 
 shared_context 'Visit By Location Search in Delaware' do
-  let(:solr_results) { FactoryGirl.build(:solr_response_object) }
-  let(:solr_cities_results) { FactoryGirl.build(:solr_cities_response_object) }
-  let(:schools_solr_params) { FactoryGirl.build(:by_location_delaware_address_solr_params_schools) }
-  let(:nearby_cities_solr_params) { FactoryGirl.build(:by_location_delaware_address_solr_params_nearby_cities) }
+  let(:solr_results) { FactoryBot.build(:solr_response_object) }
+  let(:solr_cities_results) { FactoryBot.build(:solr_cities_response_object) }
+  let(:schools_solr_params) { FactoryBot.build(:by_location_delaware_address_solr_params_schools) }
+  let(:nearby_cities_solr_params) { FactoryBot.build(:by_location_delaware_address_solr_params_nearby_cities) }
 
   before(:each) do
     allow_any_instance_of(Solr).to receive(:get_search_results).with(schools_solr_params).and_return(solr_results)
@@ -31,9 +31,9 @@ end
 
 shared_context 'Visit By Name Search dover elementary' do
   let(:solr_results) do
-    FactoryGirl.build(:solr_response_object)
+    FactoryBot.build(:solr_response_object)
   end
-  let(:solr_params) { FactoryGirl.build(:by_name_solr_params_dover_schools) }
+  let(:solr_params) { FactoryBot.build(:by_name_solr_params_dover_schools) }
 
   before(:each) do
     allow_any_instance_of(Solr).to receive(:get_search_results).with(solr_params).and_return(solr_results)
@@ -43,8 +43,8 @@ shared_context 'Visit By Name Search dover elementary' do
 end
 
 shared_context 'Visit by name search using parameters state=de and q=north' do
-  let(:solr_results) { FactoryGirl.build(:solr_response_object_north_name_search) }
-  let(:schools_solr_params) { FactoryGirl.build(:by_name_solr_params_north) }
+  let(:solr_results) { FactoryBot.build(:solr_response_object_north_name_search) }
+  let(:schools_solr_params) { FactoryBot.build(:by_name_solr_params_north) }
 
   before(:each) do
     allow_any_instance_of(Solr).to receive(:get_search_results).with(schools_solr_params).and_return(solr_results)
@@ -53,8 +53,8 @@ shared_context 'Visit by name search using parameters state=de and q=north' do
 end
 
 shared_context 'Visit by name search using parameters state=de and q=magnolia' do
-  let(:solr_results) { FactoryGirl.build(:solr_response_object_magnolia_name_search) }
-  let(:schools_solr_params) { FactoryGirl.build(:by_name_solr_params_magnolia) }
+  let(:solr_results) { FactoryBot.build(:solr_response_object_magnolia_name_search) }
+  let(:schools_solr_params) { FactoryBot.build(:by_name_solr_params_magnolia) }
 
   before(:each) do
     allow_any_instance_of(Solr).to receive(:get_search_results).with(schools_solr_params).and_return(solr_results)
@@ -65,10 +65,10 @@ end
 # City Browse Search Contexts
 
 shared_context 'Visit dover delaware city browse' do
-  let(:solr_results) { FactoryGirl.build(:solr_response_object) }
-  let(:solr_cities_results) { FactoryGirl.build(:solr_cities_response_object) }
-  let(:schools_solr_params) { FactoryGirl.build(:city_browse_solr_params_dover_schools) }
-  let(:nearby_cities_solr_params) { FactoryGirl.build(:city_browse_solr_params_dover_nearby_cities) }
+  let(:solr_results) { FactoryBot.build(:solr_response_object) }
+  let(:solr_cities_results) { FactoryBot.build(:solr_cities_response_object) }
+  let(:schools_solr_params) { FactoryBot.build(:city_browse_solr_params_dover_schools) }
+  let(:nearby_cities_solr_params) { FactoryBot.build(:city_browse_solr_params_dover_nearby_cities) }
 
   before(:each) do
     allow_any_instance_of(Solr).to receive(:get_search_results).with(nearby_cities_solr_params).and_return(solr_cities_results)
@@ -78,10 +78,10 @@ shared_context 'Visit dover delaware city browse' do
 end
 
 shared_context 'Visit youngstown ohio city browse' do
-  let(:solr_results) { FactoryGirl.build(:solr_response_object) }
-  let(:solr_cities_results) { FactoryGirl.build(:solr_cities_response_object) }
-  let(:cities_solr_params) { FactoryGirl.build(:city_browse_ohio_solr_params_nearby_cities) }
-  let(:schools_solr_params) { FactoryGirl.build(:city_browse_ohio_solr_params_schools) }
+  let(:solr_results) { FactoryBot.build(:solr_response_object) }
+  let(:solr_cities_results) { FactoryBot.build(:solr_cities_response_object) }
+  let(:cities_solr_params) { FactoryBot.build(:city_browse_ohio_solr_params_nearby_cities) }
+  let(:schools_solr_params) { FactoryBot.build(:city_browse_ohio_solr_params_schools) }
 
   before(:each) do
     allow_any_instance_of(Solr).to receive(:get_search_results).with(schools_solr_params).and_return(solr_results)
@@ -94,10 +94,10 @@ end
 # District Browse Search Context
 
 shared_context 'Visit Appoquinimink  School District district browse' do
-  let(:solr_results) { FactoryGirl.build(:solr_response_object) }
-  let(:solr_cities_results) { FactoryGirl.build(:solr_cities_response_object) }
-  let(:cities_solr_params) { FactoryGirl.build(:district_browse_delaware_solr_params_nearby_cities) }
-  let(:schools_solr_params) { FactoryGirl.build(:district_browse_delaware_solr_params_schools) }
+  let(:solr_results) { FactoryBot.build(:solr_response_object) }
+  let(:solr_cities_results) { FactoryBot.build(:solr_cities_response_object) }
+  let(:cities_solr_params) { FactoryBot.build(:district_browse_delaware_solr_params_nearby_cities) }
+  let(:schools_solr_params) { FactoryBot.build(:district_browse_delaware_solr_params_schools) }
 
   before(:each) do
     allow_any_instance_of(Solr).to receive(:get_search_results).with(cities_solr_params).and_return(solr_cities_results)

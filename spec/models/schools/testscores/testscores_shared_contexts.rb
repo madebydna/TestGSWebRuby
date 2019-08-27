@@ -15,9 +15,9 @@ shared_context 'when there is a deactivated test_data_set' do
       active: 1
     }
   end
-  let(:school) { FactoryGirl.build(:school, id: 1) }
+  let(:school) { FactoryBot.build(:school, id: 1) }
   before do
-    FactoryGirl.create(:test_data_set, :with_school_values, test_data_set_attrs.merge(active: 0))
+    FactoryBot.create(:test_data_set, :with_school_values, test_data_set_attrs.merge(active: 0))
   end
   after do
     clean_dbs :ca
@@ -39,9 +39,9 @@ shared_context 'when there is an active test_data_set with a deactivated test_da
       active: 1
     }
   end
-  let(:school) { FactoryGirl.build(:school, id: 1) }
+  let(:school) { FactoryBot.build(:school, id: 1) }
   before do
-    FactoryGirl.create(:test_data_set, :with_school_values, test_data_set_attrs.merge(school_value_active: 0))
+    FactoryBot.create(:test_data_set, :with_school_values, test_data_set_attrs.merge(school_value_active: 0))
   end
   after do
     clean_dbs :ca
@@ -63,9 +63,9 @@ shared_context 'when there is an active feed test_data_set' do
         active: 1
     }
   end
-  let(:school) { FactoryGirl.build(:school, id: 1) }
+  let(:school) { FactoryBot.build(:school, id: 1) }
   before do
-    FactoryGirl.create(:test_data_set, :with_school_values, test_data_set_attrs)
+    FactoryBot.create(:test_data_set, :with_school_values, test_data_set_attrs)
   end
   after do
     clean_dbs :ca
@@ -87,9 +87,9 @@ shared_context 'when there is an inactive feed test_data_set' do
         active: 0
     }
   end
-  let(:school) { FactoryGirl.build(:school, id: 1) }
+  let(:school) { FactoryBot.build(:school, id: 1) }
   before do
-    FactoryGirl.create(:test_data_set, :with_school_values, test_data_set_attrs)
+    FactoryBot.create(:test_data_set, :with_school_values, test_data_set_attrs)
   end
   after do
     clean_dbs :ca
@@ -111,9 +111,9 @@ shared_context 'when there is an active feed test_data_set with a deactivated te
         active: 1
     }
   end
-  let(:school) { FactoryGirl.build(:school, id: 1) }
+  let(:school) { FactoryBot.build(:school, id: 1) }
   before do
-    FactoryGirl.create(:test_data_set, :with_school_values, test_data_set_attrs.merge(school_value_active: 0))
+    FactoryBot.create(:test_data_set, :with_school_values, test_data_set_attrs.merge(school_value_active: 0))
   end
   after do
     clean_dbs :ca
@@ -135,9 +135,9 @@ shared_context 'when there is an active desktop test_data_set' do
         active: 1
     }
   end
-  let(:school) { FactoryGirl.build(:school, id: 1) }
+  let(:school) { FactoryBot.build(:school, id: 1) }
   before do
-    FactoryGirl.create(:test_data_set, :with_school_values, test_data_set_attrs)
+    FactoryBot.create(:test_data_set, :with_school_values, test_data_set_attrs)
   end
   after do
     clean_dbs :ca
@@ -159,9 +159,9 @@ shared_context 'when there is an inactive desktop test_data_set' do
         active: 0
     }
   end
-  let(:school) { FactoryGirl.build(:school, id: 1) }
+  let(:school) { FactoryBot.build(:school, id: 1) }
   before do
-    FactoryGirl.create(:test_data_set, :with_school_values, test_data_set_attrs)
+    FactoryBot.create(:test_data_set, :with_school_values, test_data_set_attrs)
   end
   after do
     clean_dbs :ca
@@ -183,9 +183,9 @@ shared_context 'when there is an active desktop test_data_set with a deactivated
         active: 1
     }
   end
-  let(:school) { FactoryGirl.build(:school, id: 1) }
+  let(:school) { FactoryBot.build(:school, id: 1) }
   before do
-    FactoryGirl.create(:test_data_set, :with_school_values, test_data_set_attrs.merge(school_value_active: 0))
+    FactoryBot.create(:test_data_set, :with_school_values, test_data_set_attrs.merge(school_value_active: 0))
   end
   after do
     clean_dbs :ca

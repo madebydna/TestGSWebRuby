@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe UserAuthenticationToken do
-  let(:user) { FactoryGirl.create(:user, id: 1) }
+  let(:user) { FactoryBot.create(:user, id: 1) }
   after { clean_dbs :gs_schooldb }
 
   describe '#generate' do

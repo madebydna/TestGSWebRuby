@@ -1,7 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :collection, class: Collection do
 
-    ignore do
+    transient do
       sequence(:id) { |n| n }
       city 'detroit'
       state 'mi'
@@ -20,7 +20,7 @@ FactoryGirl.define do
           active: 1
         }.merge(options)
 
-        FactoryGirl.build(
+        FactoryBot.build(
           :hub_city_mapping,
           params
         )

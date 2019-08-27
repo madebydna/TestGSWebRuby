@@ -10,7 +10,7 @@ end
 
 shared_context 'with a review flagged because of' do |reason|
   before do
-    FactoryGirl.create(:review, :flagged, review_flag_reason: reason)
+    FactoryBot.create(:review, :flagged, review_flag_reason: reason)
   end
   after do
     clean_dbs :gs_schooldb
@@ -25,9 +25,9 @@ shared_context 'when I filter on' do |reason|
 end
 
 shared_context 'with three inactive reviews' do
-  let!(:user) { FactoryGirl.create(:verified_user) }
-  let!(:school) { FactoryGirl.create(:alameda_high_school) }
-  let!(:reviews) { FactoryGirl.create_list(:review, 3, :flagged, school: school, user: user) }
+  let!(:user) { FactoryBot.create(:verified_user) }
+  let!(:school) { FactoryBot.create(:alameda_high_school) }
+  let!(:reviews) { FactoryBot.create_list(:review, 3, :flagged, school: school, user: user) }
   before do
     reviews.each do |review|
       review.moderated = true
@@ -58,9 +58,9 @@ describe 'Review moderation page' do
   end
 
   context 'when there are flagged reviews' do
-    let!(:user) { FactoryGirl.create(:verified_user) }
-    let!(:school) { FactoryGirl.create(:alameda_high_school) }
-    let!(:reviews) { FactoryGirl.create_list(:review, 3, :flagged, school: school, user: user) }
+    let!(:user) { FactoryBot.create(:verified_user) }
+    let!(:school) { FactoryBot.create(:alameda_high_school) }
+    let!(:reviews) { FactoryBot.create_list(:review, 3, :flagged, school: school, user: user) }
     after do
       clean_dbs :gs_schooldb, :community
       clean_models :ca, School

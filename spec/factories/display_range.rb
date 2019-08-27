@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :display_range do
     sequence(:id) { |n| n }
     state nil

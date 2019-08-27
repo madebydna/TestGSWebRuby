@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :review_flag, class: ReviewFlag do
     sequence(:id) { |n| n }

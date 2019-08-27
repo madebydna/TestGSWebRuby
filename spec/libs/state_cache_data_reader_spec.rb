@@ -82,7 +82,7 @@ describe 'StateCacheDataReader' do
       subject { new_reader(state, state_cache_keys: 'school_levels') }
 
       before do
-        @state_cache = FactoryGirl.create(:state_cache, :with_school_levels)
+        @state_cache = FactoryBot.create(:state_cache, :with_school_levels)
       end
 
       after { clean_dbs :gs_schooldb }

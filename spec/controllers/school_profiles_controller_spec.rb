@@ -13,7 +13,7 @@ describe SchoolProfilesController do
     end
 
     it 'redirects to city page if school is inactive' do
-      allow(controller).to receive(:school).and_return(FactoryGirl.build(:inactive_school))
+      allow(controller).to receive(:school).and_return(FactoryBot.build(:inactive_school))
       expect(controller).to receive(:redirect_to).
           with('/california/alameda/', {:status=>:found})
       subject

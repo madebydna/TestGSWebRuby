@@ -6,13 +6,13 @@ describe ReviewScoping do
     reviews_array = Array.new
     reviews_array.extend ReviewScoping
   end
-  let(:five_star_parent_review1) { FactoryGirl.build(:five_star_review) }
-  let(:five_star_parent_review2) { FactoryGirl.build(:five_star_review) }
-  let(:five_star_teacher_review1) { FactoryGirl.build(:five_star_review) }
-  let(:five_star_student_review1) { FactoryGirl.build(:five_star_review) }
-  let(:five_star_principal_review) { FactoryGirl.build(:five_star_review) }
-  let(:teacher_effectiveness_principal_review) { FactoryGirl.build(:teacher_effectiveness_review) }
-  let(:teacher_effectiveness_unknown_review) { FactoryGirl.build(:teacher_effectiveness_review) }
+  let(:five_star_parent_review1) { FactoryBot.build(:five_star_review) }
+  let(:five_star_parent_review2) { FactoryBot.build(:five_star_review) }
+  let(:five_star_teacher_review1) { FactoryBot.build(:five_star_review) }
+  let(:five_star_student_review1) { FactoryBot.build(:five_star_review) }
+  let(:five_star_principal_review) { FactoryBot.build(:five_star_review) }
+  let(:teacher_effectiveness_principal_review) { FactoryBot.build(:teacher_effectiveness_review) }
+  let(:teacher_effectiveness_unknown_review) { FactoryBot.build(:teacher_effectiveness_review) }
 
   subject { reviews_array }
 
@@ -150,7 +150,7 @@ describe ReviewScoping do
         expect(subject.principal_review).to eq(five_star_principal_review)
       end
       context 'a second principal review added to reviews array' do
-        let(:second_principal_review) { FactoryGirl.build(:five_star_review) }
+        let(:second_principal_review) { FactoryBot.build(:five_star_review) }
         before do
           allow(second_principal_review).to receive(:user_type).and_return('principal')
           subject << second_principal_review
@@ -170,9 +170,9 @@ describe ReviewScoping do
   end
 
   shared_context 'with two reviews with comments and one review without comments' do
-    let(:review_with_comment) { FactoryGirl.build(:review) }
-    let(:review_with_comment2) { FactoryGirl.build(:review) }
-    let(:review_without_comment) { FactoryGirl.build(:review, comment: '') }
+    let(:review_with_comment) { FactoryBot.build(:review) }
+    let(:review_with_comment2) { FactoryBot.build(:review) }
+    let(:review_without_comment) { FactoryBot.build(:review, comment: '') }
 
     before do
       subject.push(review_with_comment, review_with_comment2, review_without_comment)
@@ -180,9 +180,9 @@ describe ReviewScoping do
   end
 
   shared_context 'with two reviews with answers and one review without answers' do
-    let(:review_with_answer) { FactoryGirl.build(:five_star_review) }
-    let(:review_with_answer2) { FactoryGirl.build(:five_star_review) }
-    let(:review_without_answer) { FactoryGirl.build(:review ) }
+    let(:review_with_answer) { FactoryBot.build(:five_star_review) }
+    let(:review_with_answer2) { FactoryBot.build(:five_star_review) }
+    let(:review_without_answer) { FactoryBot.build(:review ) }
 
     before do
       subject.push(review_with_answer, review_with_answer2, review_without_answer)

@@ -19,7 +19,7 @@ describe Admin::OspDemigodController do
 
     describe 'with valid user in database' do
       before do
-        user = FactoryGirl.create(:verified_user, :with_approved_esp_membership, school_id: 12345)
+        user = FactoryBot.create(:verified_user, :with_approved_esp_membership, school_id: 12345)
         params[:member_id] = user.id
       end
 
@@ -29,8 +29,8 @@ describe Admin::OspDemigodController do
 
       describe 'with valid schools in db' do
         before do
-          school_1 = FactoryGirl.create(:school)
-          school_2 = FactoryGirl.create(:school)
+          school_1 = FactoryBot.create(:school)
+          school_2 = FactoryBot.create(:school)
           params[:school_ids] = [school_1.id,school_2.id].join(',')
         end
 
@@ -56,8 +56,8 @@ describe Admin::OspDemigodController do
 
       describe 'with inactive schools in db' do
         before do
-          school_1 = FactoryGirl.create(:inactive_school)
-          school_2 = FactoryGirl.create(:inactive_school)
+          school_1 = FactoryBot.create(:inactive_school)
+          school_2 = FactoryBot.create(:inactive_school)
           params[:school_ids] = [school_1.id,school_2.id].join(',')
         end
 
@@ -111,7 +111,7 @@ describe Admin::OspDemigodController do
 
     describe 'with unverified user in database' do
       before do
-        user = FactoryGirl.create(:email_only)
+        user = FactoryBot.create(:email_only)
         params[:member_id] = user.id
       end
 
@@ -124,10 +124,10 @@ describe Admin::OspDemigodController do
 
     describe 'with verified user with no existing membership' do
       before do
-        user = FactoryGirl.create(:verified_user)
+        user = FactoryBot.create(:verified_user)
         params[:member_id] = user.id
-        school_1 = FactoryGirl.create(:school)
-        school_2 = FactoryGirl.create(:school)
+        school_1 = FactoryBot.create(:school)
+        school_2 = FactoryBot.create(:school)
         params[:school_ids] = [school_1.id,school_2.id].join(',')
       end
 
@@ -140,10 +140,10 @@ describe Admin::OspDemigodController do
 
     describe 'with user having existing membership to one of the schools' do
       before do
-        school_1 = FactoryGirl.create(:school)
-        school_2 = FactoryGirl.create(:school)
+        school_1 = FactoryBot.create(:school)
+        school_2 = FactoryBot.create(:school)
         params[:school_ids] = [school_1.id,school_2.id].join(',')
-        user = FactoryGirl.create(:verified_user, :with_approved_esp_membership, school_id: school_1.id, state: 'ca')
+        user = FactoryBot.create(:verified_user, :with_approved_esp_membership, school_id: school_1.id, state: 'ca')
         params[:member_id] = user.id
       end
 

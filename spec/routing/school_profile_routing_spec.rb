@@ -13,7 +13,7 @@ describe 'school profile routing' do
 
     default_url_options[:host] = 'greatschools.org'
 
-    @school = FactoryGirl.build(:school, state: 'ca', city: 'alameda', id: 1, name: 'alameda high school')
+    @school = FactoryBot.build(:school, state: 'ca', city: 'alameda', id: 1, name: 'alameda high school')
 
     @trailing_slash =
       Rails.application.routes.default_url_options[:trailing_slash]
@@ -66,7 +66,7 @@ describe 'school profile routing' do
               describe "In a #{city_description}" do
                 before do
                   route_params[:city] = city.sub('%23','#')
-                  @school = FactoryGirl.build(:school_with_new_profile,
+                  @school = FactoryBot.build(:school_with_new_profile,
                                               state: state_abbr,
                                               city: city.sub('%23', '#').sub('-', ' '),
                                               id: 1,
@@ -134,7 +134,7 @@ describe 'school profile routing' do
               describe "In a #{city_description}" do
                 before do
                   route_params[:city] = city.sub('%23','#')
-                  @school = FactoryGirl.build(:school, state: state_abbr, city: city.sub('%23', '#').sub('-', ' '), id: 1, name: 'alameda high school', level_code: 'p')
+                  @school = FactoryBot.build(:school, state: state_abbr, city: city.sub('%23', '#').sub('-', ' '), id: 1, name: 'alameda high school', level_code: 'p')
                   expect(@school).to be_preschool
                 end
                 it "has a route for #{action}" do

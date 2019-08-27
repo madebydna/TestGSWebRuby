@@ -7,14 +7,14 @@ end
 
 shared_context 'user esp_membership status is' do | user_type |
   include_context 'with state=ca and school_id=1'
-  let(:factory_girl_mapping) {
+  let(:factory_mapping) {
     {
       approved: :with_approved_esp_membership,
       provisional: :with_provisional_esp_membership,
       super: :with_approved_superuser_membership
     }
   }
-  let(:factory_girl_options) {
+  let(:factory_options) {
     {
       approved: {state: state, school_id: school_id},
       provisional: {state: state, school_id: school_id},
@@ -22,7 +22,7 @@ shared_context 'user esp_membership status is' do | user_type |
     }
   }
 
-  let(:current_user) { FactoryGirl.create(:user, factory_girl_mapping[user_type], factory_girl_options[user_type]) }
+  let(:current_user) { FactoryBot.create(:user, factory_mapping[user_type], factory_options[user_type]) }
 
   after { clean_models :gs_schooldb, User, UserProfile, EspMembership, Role, MemberRole }
 end
@@ -74,7 +74,7 @@ end
 shared_context 'Osp question key and answers saved in the db' do
   before do
     questions_with_ids_and_answers.each do |question|
-      FactoryGirl.create(:osp_question, id: question[:id], esp_response_key: question[:response_key])
+      FactoryBot.create(:osp_question, id: question[:id], esp_response_key: question[:response_key])
     end
   end
   after { clean_models :gs_schooldb, OspQuestion }
@@ -96,7 +96,7 @@ end
 #needs to execute after current user is set
 shared_context 'setup osp controller instance var dependencies' do
   let(:esp_membership) { current_user.esp_memberships.first }
-  let(:school) { FactoryGirl.build(:alameda_high_school, id: school_id, state: state) }
+  let(:school) { FactoryBot.build(:alameda_high_school, id: school_id, state: state) }
 
   before do
     controller.instance_variable_set(:@current_user, current_user)

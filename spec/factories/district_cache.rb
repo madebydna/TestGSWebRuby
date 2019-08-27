@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :district_cache, class: DistrictCache do
     name :name
     district_id :district_id
@@ -15,7 +15,7 @@ FactoryGirl.define do
     updated Time.now
 
     trait :with_gs_rating do
-      ignore do
+      transient do
         gs_rating_value 5.0
       end
       before(:create) do |cached_ratings, evaluator|

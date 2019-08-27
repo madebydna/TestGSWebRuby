@@ -17,14 +17,14 @@ describe UserController do
     end
 
     it 'should return true if email exists and doesnt have a password' do
-      user = FactoryGirl.build(:user, email: email_address, password: nil)
+      user = FactoryBot.build(:user, email: email_address, password: nil)
       user.save(validate: false)
       xhr :post, :email_available, email: email_address
       expect(response.body).to eq 'true'
     end
 
     it 'should return false if email exists and has a password' do
-      FactoryGirl.create(:new_user, email: email_address)
+      FactoryBot.create(:new_user, email: email_address)
       xhr :post, :email_available, email: email_address
       expect(response.body).to eq 'false'
     end
@@ -42,14 +42,14 @@ describe UserController do
     end
 
     it 'should return true if email exists and doesnt have a password' do
-      user = FactoryGirl.build(:user, email: email_address, password: nil)
+      user = FactoryBot.build(:user, email: email_address, password: nil)
       user.save(validate: false)
       xhr :post, :need_to_signin, email: email_address
       expect(response.body).to eq 'true'
     end
 
     it 'should return true if email exists and has a password' do
-      FactoryGirl.create(:new_user, email: email_address)
+      FactoryBot.create(:new_user, email: email_address)
       xhr :post, :need_to_signin, email: email_address
       expect(response.body).to eq 'true'
     end
@@ -72,19 +72,19 @@ describe UserController do
       end
 
       it 'should not return an error message if the account is not provisional and has a password' do
-        FactoryGirl.create(:verified_user, email: email_address)
+        FactoryBot.create(:verified_user, email: email_address)
         xhr :post, :validate_user_can_log_in, email: email_address
         expect(response.body).to eq(no_error_response)
       end
       it 'should not return an error message if the account is provisional' do
-        FactoryGirl.create(:new_user, email: email_address)
+        FactoryBot.create(:new_user, email: email_address)
         expect(controller).to_not receive(:t).with('forms.errors.email.provisional_resend_email', anything)
         xhr :post, :validate_user_can_log_in, email: email_address
         expect(response.body).to eq(no_error_response)
         expect(response.body).to_not eq({'error_msg' => 'provisional resend error message'}.to_json)
       end
       it 'should return an error message if the account does not have a password' do
-        user = FactoryGirl.build(:verified_user, email: email_address, password: nil)
+        user = FactoryBot.build(:verified_user, email: email_address, password: nil)
         user.save(validate: false)
 
         expect(controller).to receive(:t).with('forms.errors.email.account_without_password', anything).and_return('account without password error message')
@@ -100,15 +100,15 @@ describe UserController do
     after { clean_models User }
 
     shared_context 'when given an email for existing provisional user' do
-      let(:user) { FactoryGirl.create(:new_user) }
+      let(:user) { FactoryBot.create(:new_user) }
       subject { xhr :post, :send_verification_email, email: user.email }
     end
     shared_context 'when given an email for nonexisting user' do
-      let(:user) { FactoryGirl.create(:new_user) }
+      let(:user) { FactoryBot.create(:new_user) }
       subject { xhr :post, :send_verification_email, email: 'sslkdfjlsjfklj@greatschools.org' }
     end
     shared_context 'when given an email for verified user' do
-      let(:user) { FactoryGirl.create(:verified_user) }
+      let(:user) { FactoryBot.create(:verified_user) }
       subject { xhr :post, :send_verification_email, email: user.email }
     end
 
@@ -149,7 +149,7 @@ describe UserController do
   end
 
   describe '#update_user_grade_selection' do
-    let(:current_user) {FactoryGirl.create(:verified_user)}
+    let(:current_user) {FactoryBot.create(:verified_user)}
     after do
       clean_models User, StudentGradeLevel
     end
@@ -193,7 +193,7 @@ describe UserController do
   end
 
   describe '#delete_user_grade_selection' do
-    let(:current_user) {FactoryGirl.create(:verified_user)}
+    let(:current_user) {FactoryBot.create(:verified_user)}
     after do
       clean_models User, StudentGradeLevel
     end
@@ -223,7 +223,7 @@ describe UserController do
   end
 
   describe '#update_user_city_state' do
-    let(:user) { FactoryGirl.create(:verified_user) }
+    let(:user) { FactoryBot.create(:verified_user) }
     before do
       controller.instance_variable_set(:@current_user, user)
       controller.params[:userCity] = 'alameda'

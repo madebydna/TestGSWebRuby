@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Cacher do
-  let(:school) { FactoryGirl.build(:alameda_high_school) }
+  let(:school) { FactoryBot.build(:alameda_high_school) }
   let(:cacher) { Cacher.new(school) }
 
   describe '#cache' do
@@ -10,7 +10,7 @@ describe Cacher do
         foo: 'bar'
       }
     end
-    let(:school) { FactoryGirl.build(:school) }
+    let(:school) { FactoryBot.build(:school) }
     let(:cache_key) { 'test_cache_key' }
     subject { cacher }
     after do

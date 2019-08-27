@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :held_school, class: HeldSchool do
     sequence(:id) { |n| n }

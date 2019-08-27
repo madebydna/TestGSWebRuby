@@ -25,7 +25,7 @@ describe DataLayerConcerns do
     subject { controller.gon.data_layer_hash }
 
     context 'with a signed in regular user' do
-      let(:user) {FactoryGirl.create(:user)}
+      let(:user) {FactoryBot.create(:user)}
       before do
         allow(controller).to receive(:current_user).and_return(user)
         controller.send(:add_user_info_to_gtm_data_layer)
@@ -41,7 +41,7 @@ describe DataLayerConcerns do
     end
 
     context 'with a signed in osp user' do
-      let(:osp_user) {FactoryGirl.create(:user, :with_approved_esp_membership)}
+      let(:osp_user) {FactoryBot.create(:user, :with_approved_esp_membership)}
 
       before do
         allow(controller).to receive(:current_user).and_return(osp_user)
@@ -97,13 +97,13 @@ describe DataLayerConcerns do
 
     context 'with a school set' do
       it 'should call collection_ids on school' do
-        school = FactoryGirl.build(:school)
+        school = FactoryBot.build(:school)
         controller.instance_variable_set(:@school, school)
         expect(school).to receive(:collection_ids)
         controller.send(:add_collection_id_to_gtm_data_layer)
       end
       it 'should set collection_ids to the data layer hash' do
-        school = FactoryGirl.build(:school)
+        school = FactoryBot.build(:school)
         controller.instance_variable_set(:@school, school)
         controller.send(:add_collection_id_to_gtm_data_layer)
         expect(subject['collection_ids']).to be_an_instance_of Array

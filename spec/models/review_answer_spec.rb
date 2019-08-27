@@ -7,12 +7,12 @@ describe ReviewAnswer do
     clean_dbs :gs_schooldb
   end
 
-  let(:overall_review) { FactoryGirl.build(:five_star_review) }
-  let(:teacher_review) { FactoryGirl.build(:teacher_effectiveness_review) }
-  let(:school) { FactoryGirl.build(:school) }
-  let(:user) { FactoryGirl.build(:user) }
-  let(:overall_answer) { FactoryGirl.build(:review_answer, review: overall_review, value: 5) }
-  let(:teacher_answer) { FactoryGirl.build(:review_answer, review: teacher_review) }
+  let(:overall_review) { FactoryBot.build(:five_star_review) }
+  let(:teacher_review) { FactoryBot.build(:teacher_effectiveness_review) }
+  let(:school) { FactoryBot.build(:school) }
+  let(:user) { FactoryBot.build(:user) }
+  let(:overall_answer) { FactoryBot.build(:review_answer, review: overall_review, value: 5) }
+  let(:teacher_answer) { FactoryBot.build(:review_answer, review: teacher_review) }
 
 
   describe '#label' do

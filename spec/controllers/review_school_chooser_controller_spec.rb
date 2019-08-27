@@ -6,9 +6,9 @@ shared_example 'does not set any google ad targeting attributes' do
 end
 
 describe ReviewSchoolChooserController do
-  let(:current_user) { FactoryGirl.build(:user) }
-  let(:overall_topic) { FactoryGirl.build(:overall_topic, id: 1, active: 1) }
-  let(:teachers_topic) { FactoryGirl.build(:teachers_topic, active: 1) }
+  let(:current_user) { FactoryBot.build(:user) }
+  let(:overall_topic) { FactoryBot.build(:overall_topic, id: 1, active: 1) }
+  let(:teachers_topic) { FactoryBot.build(:teachers_topic, active: 1) }
   after do
     clean_dbs :gs_schooldb
   end
@@ -91,9 +91,9 @@ describe ReviewSchoolChooserController do
     subject { controller }
 
     it 'should not return inactive reviews' do
-      overall_topic = FactoryGirl.create(:overall_topic, id: 1)
-      overall_rating_question = FactoryGirl.create(:overall_rating_question, review_topic: overall_topic)
-      reviews = FactoryGirl.create_list(:five_star_review, 3, question: overall_rating_question)
+      overall_topic = FactoryBot.create(:overall_topic, id: 1)
+      overall_rating_question = FactoryBot.create(:overall_rating_question, review_topic: overall_topic)
+      reviews = FactoryBot.create_list(:five_star_review, 3, question: overall_rating_question)
       reviews[1].deactivate
       reviews[1].save
       expect(subject.reviews.map(&:active)).to_not include(false)

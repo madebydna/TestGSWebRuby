@@ -6,7 +6,7 @@ shared_examples_for 'user with user profile association' do
   describe '#has_active_profile?' do
     after(:each) { clean_dbs :gs_schooldb }
     # User profile is created automatically
-    let!(:user) { FactoryGirl.create(:user) }
+    let!(:user) { FactoryBot.create(:user) }
 
     it 'should return true if there is active profile' do
       expect(user.has_active_profile?).to be_truthy
@@ -25,7 +25,7 @@ shared_examples_for 'user with user profile association' do
   describe '#has_inactive_profile?' do
     after(:each) { clean_dbs :gs_schooldb }
     # User profile is created automatically
-    let!(:user) { FactoryGirl.create(:user) }
+    let!(:user) { FactoryBot.create(:user) }
 
     it 'should return false if there is active profile' do
       expect(user.has_inactive_profile?).to be_falsey
