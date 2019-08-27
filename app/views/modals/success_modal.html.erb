@@ -1,6 +1,6 @@
 <% modal_css_class = params[:modal_css_class] %>
 <% heading = params[:heading].presence || t('.heading') %>
-<% subheading = params[:subheading].presence || t('.subheading', default: '') %>
+<% subheading = params[:subheading].presence || t('.subheading_html', default: '') %>
 
 <%= render layout: 'modal_layout', locals: {
   heading: heading,

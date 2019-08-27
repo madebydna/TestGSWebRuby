@@ -170,15 +170,6 @@ export default class Zillow extends React.Component {
                 className="bold-anchor"
                 rel="nofollow"
                 target="_blank"
-                href={borrowingPageUrl()}
-            >
-              <span className="icon-house prs" />
-              {t('See how much you can afford to borrow')}
-            </AnchorButton>
-            <AnchorButton
-                className="bold-anchor"
-                rel="nofollow"
-                target="_blank"
                 href={nearbyHomesUrl(this.props.locality.city, this.props.locality.stateShort, this.props.utmCampaign)}
             >
               {t(this.buttonStringMoreListings())}

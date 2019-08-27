@@ -261,6 +261,7 @@ class Admin::ReviewsController < ApplicationController
     flagged_review_ids.size
   end
 
+  # Returns IDs of (unique) reviews that have been flagged
   def flagged_review_ids
     @flagged_review_ids ||= (
       # Because we only want to show the most recent inactive review for a given school/user/question combo,
@@ -323,7 +324,7 @@ class Admin::ReviewsController < ApplicationController
     flagged_reviews_with_user = 
       Review.
         joins(:user).
-        where(id: flagged_review_ids)
+        where(reviews: { id: flagged_review_ids })
   end 
 
   def flag_count_per_review
@@ -349,7 +350,7 @@ class Admin::ReviewsController < ApplicationController
   end 
 
   def sort_table
-    query = filtered_flagged_reviews_scope.where(id: flagged_review_ids)
+    query = filtered_flagged_reviews_scope.where(reviews: { id: flagged_review_ids })
 
     if sort_column == 'school_name'
       query = flagged_reviews_with_school_info
@@ -374,7 +375,7 @@ class Admin::ReviewsController < ApplicationController
   }
 
   def sort_column
-    SORT_OPTIONS.key?(params[:sort]) ? SORT_OPTIONS[params[:sort]] : SORT_OPTIONS["created"]
+    SORT_OPTIONS.fetch(params[:sort], SORT_OPTIONS["created"])
   end 
 
   def sort_direction

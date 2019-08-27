@@ -10,29 +10,28 @@ module CachePopulator
 			"school" => SchoolCachePopulator
 		}
 
-		attr_accessor :file, :instantiated_cachers, :rows_updated
-		def initialize(file)
-			@file = file
+		attr_accessor :rows, :instantiated_cachers, :rows_updated
+		def initialize(rows)
+			@rows = rows
 			@rows_updated = 0
 		end
 
-		def self.populate_all_and_return_rows_changed(file)
-			populator = self.new(file)
+		def self.populate_all_and_return_rows_changed(rows)
+			populator = self.new(rows)
 			populator.run
 			populator.rows_updated
 		end
 
 		def run
 			@instantiated_cachers = {}
-			CSV.foreach(file, headers: true, col_sep: "\t", quote_char: "\x00") do |line|
-				next if line.blank?
-				cacher = setup_cacher(line)
+      rows.each_with_index do |row, i|
+				cacher = setup_cacher(row)
 				if cacher.blank?
-						instantiated_cachers[$INPUT_LINE_NUMBER] = PopulatorError.new("Cacher type not recognized: #{line['type']}. Type must be one of: #{CACHER_TYPES.keys.join(', ')}.")
+						instantiated_cachers[i+1] = PopulatorError.new("Cacher type not recognized: #{row['type']}. Type must be one of: #{CACHER_TYPES.keys.join(', ')}.")
 				elsif cacher.valid?
-						instantiated_cachers[$INPUT_LINE_NUMBER] = cacher
+						instantiated_cachers[i+1] = cacher
 				else 
-						instantiated_cachers[$INPUT_LINE_NUMBER] = PopulatorError.new("#{cacher.class} cache failure: #{cacher.print_errors}")
+						instantiated_cachers[i+1] = PopulatorError.new("#{cacher.class} cache failure: #{cacher.print_errors}")
 				end
 			end
 			run_instantiated_cachers
@@ -41,7 +40,7 @@ module CachePopulator
 		def run_instantiated_cachers
 			if instantiated_cachers.values.any? {|value| value.is_a?(PopulatorError) }
 				error_messages = instantiated_cachers.select {|k,v| v.is_a?(PopulatorError) }.map do |k, v|
-					"Error on line #{k}: #{v.message}"
+					"Error on row #{k}: #{v.message}"
 				end
 					# Combine different error messages into one 
 					raise PopulatorError.new("The input file has errors:\n" + error_messages.join("\n"))
@@ -50,18 +49,17 @@ module CachePopulator
 					begin
 						@rows_updated += cacher.run
 					rescue => e
-						# puts "Error raised from #{cacher.class} cacher on line #{lineno}: #{e.message}"
 						raise StandardError.new("Error raised from #{cacher.class} cacher on line #{lineno}: #{e.message}")
 					end
 				end
 			end
 		end
 
-		def setup_cacher(line)
-			type = line["type"]
+		def setup_cacher(row)
+			type = row["type"]
 			cacher = CACHER_TYPES[type]
 			if cacher.present?
-					cacher.send(:new, values: line["values"], cache_keys: line["cache_keys"])
+				cacher.send(:new, values: row["values"], cache_keys: row["cache_keys"])
 			end
 		end
 	end

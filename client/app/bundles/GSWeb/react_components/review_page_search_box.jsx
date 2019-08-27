@@ -3,7 +3,7 @@ import SearchBox, { keyMap } from './search_box';
 import { t } from 'util/i18n';
 import {hasClass, addClass, removeClass} from 'util/selectors';
 
-export default class ReviewPageSearchBox extends SearchBox {
+class ReviewPageSearchBox extends SearchBox {
 
   constructor(props) {
     super(props);
@@ -21,6 +21,21 @@ export default class ReviewPageSearchBox extends SearchBox {
   callbackToggle(){
     this.props.statusCallback(false);
   }
+
+  searchResultsList = ({ close }) => {
+    const ListType = this.props.listType;
+    return (
+      <ListType
+        listGroups={this.state.autoSuggestResults}
+        searchTerm={this.state.searchTerm}
+        onSelect={this.selectAndSubmit(close)}
+        selectedListItem={this.state.selectedListItem}
+        navigateToSelectedListItem={this.state.navigateToSelectedListItem}
+        showSearchAllOption={this.props.showSearchAllOption}
+        handleOSPCase={this.props.osp}
+      />
+    );
+  };
 
   handleKeyDown(e, { close }) {
     if (e.key === 'Enter') {
@@ -89,3 +104,5 @@ export default class ReviewPageSearchBox extends SearchBox {
     )
   }
 }
+
+export default ReviewPageSearchBox;
