@@ -57,7 +57,7 @@ module SubscriptionConcerns
     end
 
     def message
-      params[:message].presence
+      params[:message].presence || "You've signed up to receive updates"
     end
 
     def user
