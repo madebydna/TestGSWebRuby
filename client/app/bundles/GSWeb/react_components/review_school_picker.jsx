@@ -1,8 +1,9 @@
 import React from "react";
 import ReviewPageAlternateSelector from "./review_page_alternate_selector";
 import ReviewPageSearchBox from "./review_page_search_box";
+import PropTypes from 'prop-types';
 
-export default class ReviewSchoolPicker extends React.Component {
+class ReviewSchoolPicker extends React.Component {
 
   constructor(props) {
     super(props);
@@ -36,3 +37,18 @@ export default class ReviewSchoolPicker extends React.Component {
     }
   }
 }
+
+ReviewSchoolPicker.propTypes = {
+  osp: PropTypes.bool,
+  resultTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  showSearchAllOption: PropTypes.bool,
+  showSearchButton: PropTypes.bool,
+};
+
+ReviewSchoolPicker.defaultProps = {
+  osp: false,
+  showSearchAllOption: false,
+  showSearchButton: false,
+};
+
+export default ReviewSchoolPicker;

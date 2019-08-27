@@ -3,7 +3,7 @@ import SearchBox, { keyMap } from './search_box';
 import { t } from 'util/i18n';
 import {hasClass, addClass, removeClass} from 'util/selectors';
 
-export default class ReviewPageSearchBox extends SearchBox {
+class ReviewPageSearchBox extends SearchBox {
 
   constructor(props) {
     super(props);
@@ -32,7 +32,7 @@ export default class ReviewPageSearchBox extends SearchBox {
         selectedListItem={this.state.selectedListItem}
         navigateToSelectedListItem={this.state.navigateToSelectedListItem}
         showSearchAllOption={this.props.showSearchAllOption}
-        searchBoxType={'OSP'}
+        handleOSPCase={this.props.osp}
       />
     );
   };
@@ -104,3 +104,5 @@ export default class ReviewPageSearchBox extends SearchBox {
     )
   }
 }
+
+export default ReviewPageSearchBox;
