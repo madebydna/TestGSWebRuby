@@ -32,7 +32,7 @@ solr_url =  if script_args.has_key?(:host)
             end
 
 # Start logging
-log = ScriptLogger.record_log_instance(script_args)
+begin log = ScriptLogger.record_log_instance(script_args); rescue;end
 
 begin
   indexer = 
