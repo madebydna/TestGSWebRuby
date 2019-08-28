@@ -103,7 +103,7 @@ class DistrictLayout extends React.Component {
             </span>}
             {districtUrl && <span className="badge-and-content link">
               <span className="badge icon-link"/>
-              <span><a className="content" href={districtUrl}>{t('website')}</a></span>
+              <span><a className="content" href={districtUrl} target='_blank'>{t('website')}</a></span>
             </span>
             }
           </div>
