@@ -6,12 +6,12 @@ commands = CachePopulator::ArgumentParser.new.parse(ARGV)
 
 starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
-log = ScriptLogger.record_log_instance(commands)
+# log = ScriptLogger.record_log_instance(commands)
 begin 
   rows_updated = CachePopulator::Runner.populate_all_and_return_rows_changed(commands)
-  log.finish_logging_session(1, "Successfully created/updated #{rows_updated} row(s).")
+  begin log.finish_logging_session(1, "Successfully created/updated #{rows_updated} row(s)."); rescue;end
 rescue => e
-  log.finish_logging_session(0, e.message)
+  begin log.finish_logging_session(0, e.message); rescue;end
   abort e.message
 end
 

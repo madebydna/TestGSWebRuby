@@ -66,10 +66,10 @@ begin
     response = open("http://#{host}:#{port}#{solr_swap_command_path}").read
   end
   
-  log.finish_logging_session(1, "Finished indexing #{num_of_indexed_docs} documents.")
+  begin log.finish_logging_session(1, "Finished indexing #{num_of_indexed_docs} documents."); rescue;end
   puts "Finished indexing #{num_of_indexed_docs} documents."
 
 rescue => e
-  log.finish_logging_session(0, e)
+  begin log.finish_logging_session(0, e); rescue;end
   raise
 end
