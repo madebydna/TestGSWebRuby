@@ -19,8 +19,11 @@ class ActSatHandler
     if act_content || sat_content
       remove_crdc_breakdown!(ACT_SAT_PARTICIPATION, ACT_SAT_PARTICIPATION_9_12)
     else
+      # if no ACT/SAT content, we check ACT/SAT participation data and set school_values of records older than max_year data to nil
       enforce_latest_year_gsdata!(ACT_SAT_PARTICIPATION, ACT_SAT_PARTICIPATION_9_12)
+      # Select 9-12 data for all students
       part912 = hash.slice(ACT_SAT_PARTICIPATION_9_12).values.flatten.select(&:all_students?).flatten
+      # Prioritize 9-12 data over non-9-12 data
       remove_crdc_breakdown!(ACT_SAT_PARTICIPATION) if part912.present?
     end
   end
