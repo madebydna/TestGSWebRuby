@@ -18,4 +18,5 @@ end
 ending = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 elapsed = ending - starting
 
+puts "Successfully created/updated #{rows_updated} row(s)."
 puts "Script populate_cache_tables.rb completed successfully and ran for #{elapsed} seconds"
