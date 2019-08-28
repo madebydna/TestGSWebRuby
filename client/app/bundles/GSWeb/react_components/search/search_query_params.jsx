@@ -49,7 +49,8 @@ export default class SearchQueryParams extends React.Component {
       updateSort: sort => {
         pushQueryString(queryParams.queryStringWithNewSort(sort));
       },
-      updatePage: page => {
+      updatePage: (page) => {
+        event.preventDefault()
         pushQueryString(queryParams.queryStringWithNewPage(page));
       },
       updateDistance: distance => {
