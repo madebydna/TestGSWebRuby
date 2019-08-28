@@ -166,7 +166,7 @@ export default class Courses extends React.Component {
               <span className="icon-user"></span>
             </div>
             <div className="title-container">
-              <h3 className="title">{t('Advanced courses')}</h3>
+              <div><h3 className="title">{t('Advanced courses')}</h3></div>
               <span dangerouslySetInnerHTML={{__html: t('advanced_courses_subheading_html')}}></span>
               <NoDataModuleCta moduleName="Advanced courses" message={this.props.no_data_summary}/>
             </div>
