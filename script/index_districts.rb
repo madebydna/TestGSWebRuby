@@ -31,8 +31,14 @@ solr_url =  if script_args.has_key?(:host)
               ENV_GLOBAL['solr.rw.server.url']
             end
 
+sig_int = SignalHandler.new('INT')
+
 # Start logging
 begin log = ScriptLogger.record_log_instance(script_args); rescue;end
+
+sig_int.dont_interrupt do
+  begin log = log.finish_logging_session(0, "Process ended early. User manually cancelled process."); rescue;end
+end
 
 begin
   indexer = 

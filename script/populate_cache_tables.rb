@@ -6,7 +6,14 @@ commands = CachePopulator::ArgumentParser.new.parse(ARGV)
 
 starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
+sig_int = SignalHandler.new('INT')
+
 begin log = ScriptLogger.record_log_instance(commands); rescue;end
+
+sig_int.dont_interrupt do
+  begin log = log.finish_logging_session(0, "Process ended early. User manually cancelled process."); rescue;end
+end
+
 begin 
   rows_updated = CachePopulator::Runner.populate_all_and_return_rows_changed(commands)
   begin log.finish_logging_session(1, "Successfully created/updated #{rows_updated} row(s)."); rescue;end
