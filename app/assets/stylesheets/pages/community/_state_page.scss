@@ -27,7 +27,7 @@
     height: 150px;
     margin-bottom: 0;
     li {
-      width:45%;
+      width:49%;
       @include media-breakpoint-down(md) {
         width: 90%;
       }
