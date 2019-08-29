@@ -28,6 +28,9 @@
     margin-bottom: 0;
     li {
       width:49%;
+      @include media-breakpoint-up(lg) {
+        margin-right: 20px;
+      }
       @include media-breakpoint-down(md) {
         width: 90%;
       }
