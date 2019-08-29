@@ -85,9 +85,9 @@ module Search
     end 
 
     def result_summary(results)
-      district_url = district_url(district_params(state_name, city, district_name).merge({trailing_slash: true})) if state && city && district_name
-      city_url = city_url(city_params(state&.upcase, city).merge({trailing_slash: true})) if state.present? && city.present?
-      state_url = state_url(state_params(state_name).merge({trailing_slash: true})) if state
+      district_url = district_path(district_params(state_name, city, district_name).merge({trailing_slash: true})) if state && city && district_name
+      city_url = city_path(city_params(state&.upcase, city).merge({trailing_slash: true})) if state.present? && city.present?
+      state_url = state_path(state_params(state_name).merge({trailing_slash: true})) if state
       params = {
         count: results.total,
         count_delimited: results.total.to_s(:delimited, delimiter: ','),
