@@ -4,7 +4,6 @@
 
 require 'ox'
 require 'mysql2'
-require 'zip'
 
 class DirectoryCensusParser < ::Ox::Sax
 
