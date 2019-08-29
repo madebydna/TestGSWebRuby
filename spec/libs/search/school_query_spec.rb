@@ -22,9 +22,9 @@ describe Search::SchoolQuery do
 
   describe '#result_summary' do
     {
-      [0, 'Alameda', 'CA'] => "Your search did not return any schools in <a href='http://localhost/california/alameda/'>Alameda, CA</a>.",
-      [1, 'Alameda', 'CA'] => "Showing one school found in <a href='http://localhost/california/alameda/'>Alameda, CA</a>",
-      [2, 'Alameda', 'CA'] => "Showing 1 to 2 of 2 schools found in <a href='http://localhost/california/alameda/'>Alameda, CA</a>"
+      [0, 'Alameda', 'CA'] => "Your search did not return any schools in <a href='/california/alameda/'>Alameda, CA</a>.",
+      [1, 'Alameda', 'CA'] => "Showing one school found in <a href='/california/alameda/'>Alameda, CA</a>",
+      [2, 'Alameda', 'CA'] => "Showing 1 to 2 of 2 schools found in <a href='/california/alameda/'>Alameda, CA</a>"
     }.each do |args, expected|
       context "given #{args.join(', ')} " do
         it "should return #{expected}" do
