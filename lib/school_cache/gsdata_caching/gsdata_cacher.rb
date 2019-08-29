@@ -2,9 +2,13 @@
 class GsdataCaching::GsdataCacher < Cacher
   CACHE_KEY = 'gsdata'.freeze
   # DATA_TYPES INCLUDED
+  # 23: Percentage algebra 1 enrolled grades 7-8
+  # 27: Percentage passing algebra 1 grades 7-8
   # 31: In school suspension ---- not used currently JT-3276
   # 35: Out of school suspension
   # 55: %AP enrollment for students in grades 9-12
+  # 59: Percentage AP math enrolled grades 9-12
+  # 63: Percentage AP science enrolled grades 9-12
   # 71: Percentage SAT/ACT participation grades 11-12
   # 83: Percentage of students passing 1 or more AP exams grades 9-12
   # 91: Absent the rate of absenteeism
