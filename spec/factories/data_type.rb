@@ -13,10 +13,13 @@ FactoryBot.define do
     end
 
     trait :with_feeds_data_set do
-      transient { state nil }
+      transient do 
+        state { nil }
+        date_valid { Date.today }
+      end
 
       after(:create) do |data_type, evaluator|
-        create(:data_set, :feeds, data_type: data_type, state: evaluator.state)
+        create(:data_set, :feeds, data_type: data_type, state: evaluator.state, date_valid: evaluator.date_valid)
       end
     end
 

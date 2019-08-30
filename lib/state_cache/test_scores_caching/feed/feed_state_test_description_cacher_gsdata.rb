@@ -3,55 +3,37 @@
 class TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata < TestScoresCaching::StateTestScoresCacherGsdata
   CACHE_KEY = 'feed_test_description_gsdata'
 
-
-  # first get all the load ids for the state
-  # second get all the state_test results for that state
-  # third filter load ids to the most recent year for each data_type_id
   def query_results
     @query_results ||=
       begin
-        load_ids_for_state = DataValue.filter_query(state).pluck(:load_id).uniq
-        state_test_load_ids = Load.data_type_tags_to_loads(%w(state_test), %w(feeds), load_ids_for_state).map(&:id).uniq
-        filter_to_most_recent_load_id_by_data_type_id(state_test_load_ids)
+        Omni::DataSet.select("data_sets.id, data_sets.data_type_id, data_sets.date_valid, data_sets.description, data_types.id as test_id, data_types.name, data_types.short_name")
+          .feeds_by_state(state).filter_by_data_type_tag('state_test')
+          .group_by(&:data_type_id).map do |id, ds_data|
+            ds_data.max_by(&:date_valid)
+          end
       end
-  end
-
-  # added the last line to maintain state filter - reversed process to first get state ids then get most recent.
-  def filter_to_most_recent_load_id_by_data_type_id(ids)
-    Load.find_by_sql("select loads1.data_type_id, loads1.id, loads1.date_valid from gsdata.loads loads1 INNER JOIN
-                      (select loads2.data_type_id, MAX(loads2.date_valid) as dv from gsdata.loads loads2
-                        where id in ( #{ids.join(',')})
-                        group by loads2.data_type_id) most_recent_load
-                      on loads1.data_type_id = most_recent_load.data_type_id and loads1.date_valid = most_recent_load.dv
-                      and loads1.id in ( #{ids.join(',')} )")
   end
 
   def build_hash_for_cache
-    query_results.map do |obj|
+    query_results.map do |ds|
       hash = {}
-      loads_data_info = Load.where(id: obj[:id]).order(date_valid: :desc)&.first
-      hash['most-recent-year'] = loads_data_info&.date_valid&.year
-      hash['description'] = loads_data_info&.description
-      data_type_info = loads_data_info&.data_type
-      hash['test-id'] = data_type_info&.id
-      hash['test-name'] = data_type_info&.name
-      hash['test-abbrv'] = data_type_info&.short_name
-      data_value_obj = DataValue.where("load_id = ? && proficiency_band_id > 1", loads_data_info&.id).limit(1).reorder(nil)
-      hash['scale'] = ''
-      if data_value_obj&.first
-        hash['scale'] = scale(data_value_obj.first[:proficiency_band_id])
-      end
+      hash['most-recent-year'] = ds.date_valid.year
+      hash['description'] = ds.description
+      hash['test-id'] = ds.test_id
+      hash['test-name'] = ds.name
+      hash['test-abbrv'] = ds.short_name
+      test_data_value_obj = ds.test_data_values.where("proficiency_band_id > 1").reorder(false).first
+      hash['scale'] = scale(test_data_value_obj&.proficiency_band)
       hash
     end
   end
 
-  def scale(proficiency_band_id)
-    pb_obj = ProficiencyBand.where(id: proficiency_band_id)
-    group_id = pb_obj.first[:group_id] if pb_obj&.first
-    group_pbs = ProficiencyBand.where(group_id: group_id, composite_of_pro_null: 1).order('group_order ASC')
+  def scale(proficiency_band)
+    return '' unless proficiency_band.present?
+    group_pbs = Omni::ProficiencyBand.where(group_id: proficiency_band.group_id, composite_of_pro_null: 1).order('group_order ASC')
     scale_keys = group_pbs.map(&:name)
     scale = scale_keys.size < 3 ? scale_keys.join(' or ') : scale_keys.join(', ')
-    "% #{scale}" if scale
+    scale.present? ? "% #{scale}" : ''
   end
 
   def self.active?
