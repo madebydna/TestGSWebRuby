@@ -66,4 +66,7 @@ begin
 rescue => e
   begin log.finish_logging_session(0, e); rescue;end
   raise
+rescue SignalException
+  begin log = log.finish_logging_session(0, "Process ended early. User manually cancelled process."); rescue;end
+  abort
 end

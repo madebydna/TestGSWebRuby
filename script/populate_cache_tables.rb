@@ -6,14 +6,8 @@ commands = CachePopulator::ArgumentParser.new.parse(ARGV)
 
 starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
-
+# Start Logging
 begin log = ScriptLogger.record_log_instance(commands); rescue;end
-
-# Ruby signal handling to catch user-initiated interrupts
-sig_int = SignalHandler.new('INT')
-sig_int.dont_interrupt do
-  begin log = log.finish_logging_session(0, "Process ended early. User manually cancelled process."); rescue;end
-end
 
 begin 
   rows_updated = CachePopulator::Runner.populate_all_and_return_rows_changed(commands)
@@ -21,6 +15,9 @@ begin
 rescue => e
   begin log.finish_logging_session(0, e.message); rescue;end
   abort e.message
+rescue SignalException
+  begin log = log.finish_logging_session(0, "Process ended early. User manually cancelled process."); rescue;end
+  abort
 end
 
 ending = Process.clock_gettime(Process::CLOCK_MONOTONIC)
