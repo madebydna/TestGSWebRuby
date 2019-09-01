@@ -127,7 +127,6 @@ export default class SearchBar extends React.Component {
     } else {
       searchInput = <input name="search-term" type="text" placeholder={t('enter_an_address_to_see_schools')} defaultValue={this.state.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
     }
-
     return (
       <div className="filter-bar">
         <div className="search-input-and-filter-button">
@@ -165,6 +164,7 @@ export default class SearchBar extends React.Component {
               onChange={d => this.props.selectDistrict(d.id, d.state)}
               defaultLabel={t('search_or_click_map_for_districts')}
               defaultValue={this.props.district.id}
+              key={this.props.district.id}
             />
           </div>
           <div className="filter grade-filter">

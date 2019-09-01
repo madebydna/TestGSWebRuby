@@ -16,7 +16,7 @@ const Select = ({objects, keyFunc, labelFunc, onChange, defaultValue, defaultLab
   const _onChange = event => 
     onChange(objects.find(obj=> keyFunc(obj) == event.target.value));
 
-  return <select key={defaultLabel} onChange={_onChange} defaultValue={defaultValue}>{options()}</select>;
+  return <select onChange={_onChange} defaultValue={defaultValue}>{options()}</select>;
 };
 
 Select.propTypes = {

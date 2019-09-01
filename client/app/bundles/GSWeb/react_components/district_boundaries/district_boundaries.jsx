@@ -59,8 +59,8 @@ export default class DistrictBoundaries extends React.Component {
     selectSchool: PropTypes.func,
     selectDistrict: PropTypes.func,
     state: PropTypes.string,
-    schoolId: PropTypes.string,
-    districtId: PropTypes.string,
+    schoolId: PropTypes.number,
+    districtId: PropTypes.number,
     locateSchool: PropTypes.func,
     locateDistrict: PropTypes.func,
     changeLocation: PropTypes.func,
@@ -182,7 +182,7 @@ export default class DistrictBoundaries extends React.Component {
         {...markerProps(s)}
         {...otherProps}
         {...{
-          key: `s${s.state}${s.id}`,
+          key: `s${s.state}${s.id}${s.assigned}${s.highlighted}`,
           openInfoWindow: m =>
             otherProps.openInfoWindow(createInfoWindow(s, utmCampaignCode), m),
           onClick: () => this.props.selectSchool(s.id, s.state),
