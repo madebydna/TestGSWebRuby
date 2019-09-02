@@ -193,6 +193,7 @@ class State extends React.Component {
             }
             caCsaInfo={
               <CsaInfo
+                community={this.pageType}
                 locality={this.props.locality}
                 caAdvocacy={true}
               />
