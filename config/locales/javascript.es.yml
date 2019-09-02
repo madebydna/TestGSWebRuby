@@ -457,4 +457,10 @@ es:
             <p><span class="emphasis">Fuente&#58;</span> XQ</p>
           </div>
         </div>
-
+    ca_csa_advocacy:
+      state_header: Padres en Texas lo saben. Padres en Florida lo saben. ¿Por qué no nosotros?
+      district_header: No sabemos si las escuelas secundarias de California preparan a los niños para tener éxito en la universidad. Pero podemos.
+      state_body: La mayoría de estados comparten información sobre si las escuelas secundarias públicas preparan a los estudiantes para ir a la universidad y tener éxito una vez que llegan allí. California aún no ofrece esta información. Haga clic a continuación para que nuestros líderes estatales sepan que te importa.
+      district_body: Muchos estados comparten información sobre qué tan bien las escuelas secundarias públicas preparan a los estudiantes para ir a la universidad y tener éxito una vez que llegan allí. California aún no ofrece esta información. Haga clic a continuación para que nuestros líderes estatales sepan que te importa.
+      state_button: Si. Quiero saber.
+      district_button: Cambiemos esto.
