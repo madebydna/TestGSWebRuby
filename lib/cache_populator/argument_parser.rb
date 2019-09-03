@@ -26,6 +26,7 @@ module CachePopulator
           opts.on("-t", "--state STRING", String, "Format states:cache_keys") do |args|
             parsed_options[:commands] <<  handle_args('state', args)
           end
+          opts.on("-e", "--examples", "Show basic usage examples") {puts usage; exit}
           opts.on_tail("-h", "--help", "Show this message") { puts "Hello!"; puts opts; exit }
         end.parse!(args)
 
@@ -65,6 +66,27 @@ module CachePopulator
         result['cache_keys'] = cache_keys
       end
       result
+    end
+
+    def usage
+      <<~USAGE
+        \e[1mUSAGE EXAMPLES\e[22m
+        \e[1mFILE\e[22m
+        \trails runner script/populate_cache_tables.rb -f path/to/tsv_files
+        \e[1mSCHOOL\e[22m
+        \trails runner script/populate_cache_tables.rb -s de:all:9,18,23
+        \trails runner script/populate_cache_tables.rb -s al:test_scores_gsdata
+        \e[1mDISTRICT\e[22m
+        \trails runner script/populate_cache_tables.rb -d al:feed_test_scores_gsdata
+        \trails runner script/populate_cache_tables.rb -d de:all:9,18,23
+        \e[1mCITY\e[22m
+        \trails runner script/populate_cache_tables.rb -c al:school_levels :all:8,9
+        \trails runner script/populate_cache_tables.rb -c :all:8,9
+        \e[1mSTATE\e[22m
+        \trails runner script/populate_cache_tables.rb -t fl:state_characteristics
+        \trails runner script/populate_cache_tables.rb -t all
+
+      USAGE
     end
 
   end

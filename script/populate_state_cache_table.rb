@@ -9,7 +9,7 @@ def usage
   abort "\n\nUSAGE: rails runner script/populate_state_cache_table (all | [state]:[cache_keys])
 
 
-Ex: rails runner script/populate_state_cache_table fl:characteristics
+Ex: rails runner script/populate_state_cache_table fl:state_characteristics
 Ex: rails runner script/populate_state_cache_table all
 
 Possible cache keys: #{all_cache_keys.join(', ')}\n\n"
