@@ -28,7 +28,7 @@ class KSTestProcessor2018Ksa < GS::ETL::TestProcessor
 
   subject_id_map={
     'Math' => 5,
-    'Reading' => 2,
+    'ELA' => 4,
     'Science' => 19,
     'History/Government' => 52
   }
@@ -66,37 +66,39 @@ class KSTestProcessor2018Ksa < GS::ETL::TestProcessor
     end
   end
 
-  # source("KS_Test_Results_2016_17_072519.txt",[], col_sep: "\t") do |s|
-  #   s.transform("Fill missing default fields", Fill, {
-  #     year: 2017,
-  #     date_valid: '2017-01-01 00:00:00',
-  #     description: 'In 2016-17, Kansas used the Kansas State Assessments (KSA) to test students in grades 3 though 8, and 10 in reading and math, and in grades 5,8,11 in science. The tests are standards-based, which means they measure how well students are mastering specific skills defined for each grade by the state of Kansas. The goal is for all students to score at or above the state standard.'
-  #   })
-  #   .transform("Set hs grade by subject", WithBlock,) do |row|
-  #     if row[:grade] == 'HS' and subject == 'Science'
-  #       row[:grade] = 11
-  #     elsif row[:grade] == 'HS'
-  #       row[:grade]==10
-  #     end
-  #     row
-  #   end
-  # end
+  source("KS_Test_Results_2016_17_072519.txt",[], col_sep: "\t") do |s|
+    s.transform("Fill missing default fields", Fill, {
+      year: 2017,
+      date_valid: '2017-01-01 00:00:00',
+      description: 'In 2016-17, Kansas used the Kansas State Assessments (KSA) to test students in grades 3 though 8, and 10 in reading and math, and in grades 5,8,11 in science. The tests are standards-based, which means they measure how well students are mastering specific skills defined for each grade by the state of Kansas. The goal is for all students to score at or above the state standard.'
+    })
+    .transform("Set hs grade by subject", WithBlock,) do |row|
+      if row[:grade] == 'HS' and row[:subject] == 'Science'
+        row[:grade] = 11
+      elsif row[:grade] == 'HS'
+        row[:grade] = 10
+      end
+      row
+    end
+  end
 
-  # source("KS_Test_Results_2017_18_072519.txt",[], col_sep: "\t") do |s|
-  #   s.transform("Fill missing default fields", Fill, {
-  #     year: 2018,
-  #     date_valid: '2018-01-01 00:00:00',
-  #     description: 'In 2017-18, Kansas used the Kansas State Assessments (KSA) to test students in grades 3 though 8, and 10 in reading and math. Students were also tested in grades 5,8,11 in science, and grades, 6,8, and 11 in history and government. The tests are standards-based, which means they measure how well students are mastering specific skills defined for each grade by the state of Kansas. The goal is for all students to score at or above the state standard.'
-  #   })
-  #   .transform("Set hs grade by subject", WithBlock,) do |row|
-  #     if row[:grade] == 'HS' and subject == 'Science' or subject == 'History/Government'
-  #       row[:grade] = 11
-  #     elsif row[:grade] == 'HS'
-  #       row[:grade]==10
-  #     end
-  #     row
-  #   end
-  # end
+  source("KS_Test_Results_2017_18_072519.txt",[], col_sep: "\t") do |s|
+    s.transform("Fill missing default fields", Fill, {
+      year: 2018,
+      date_valid: '2018-01-01 00:00:00',
+      description: 'In 2017-18, Kansas used the Kansas State Assessments (KSA) to test students in grades 3 though 8, and 10 in reading and math. Students were also tested in grades 5,8,11 in science, and grades, 6,8, and 11 in history and government. The tests are standards-based, which means they measure how well students are mastering specific skills defined for each grade by the state of Kansas. The goal is for all students to score at or above the state standard.'
+    })
+    .transform("Set hs grade by subject", WithBlock,) do |row|
+      if row[:grade] == 'HS' and row[:subject] == 'Science'
+        row[:grade] = 11
+      elsif row[:grade] == 'HS' and row[:subject] == 'History/Government'
+        row[:grade] = 11
+      elsif row[:grade] == 'HS'
+        row[:grade] = 10
+      end
+      row
+    end
+  end
 
   shared do |s|
 
@@ -111,19 +113,7 @@ class KSTestProcessor2018Ksa < GS::ETL::TestProcessor
       test_data_type_id: 243,
       notes: 'DXT-3123: KS KSA'
       })
-     .transform('Create state_ids, set entity level', WithBlock) do |row|
-      if row[:district_id]=='State'
-        row[:entity_type]='state'
-        row[:state_id]='state'
-      elsif row[:school_id]=='0'
-        row[:entity_type]='district'
-        row[:state_id]=row[:district_id]
-      else
-        row[:entity_type]='school'
-        row[:state_id]=row[:school_id]
-      end
-      row
-     end
+     .transform("remove NA rows - fully suppressed", DeleteRows, :number_tested, 'NA','0','1','2','3','4','5','6','7','8','9')
      .transform("sum levels 3 and 4 for prof and above", SumValues, :proficient_and_above, :pct_level_3, :pct_level_4)
      .transform("transpose prof bands", Transposer,
       :proficiency_band,
@@ -138,12 +128,26 @@ class KSTestProcessor2018Ksa < GS::ETL::TestProcessor
         row[:value] = 0
       elsif row[:value].to_f > 100
         row[:value] = 100
+      end
       row
      end
      .transform("map breakdown to id", HashLookup, :breakdown, breakdown_id_map, to: :breakdown_id)
      .transform('map subject to ids', HashLookup, :subject, subject_id_map, to: :subject_id)
      .transform('map proficiency band to ids', HashLookup, :proficiency_band, proficiency_band_id_map, to: :proficiency_band_id)
      .transform('map grade', HashLookup, :grade, grade_map, to: :grade)
+     .transform('Create state_ids, set entity level', WithBlock) do |row|
+      if row[:district_id]=='State'
+        row[:entity_type]='state'
+        row[:state_id]='state'
+      elsif row[:school_id]=='0'
+        row[:entity_type]='district'
+        row[:state_id]=row[:district_id]
+      else
+        row[:entity_type]='school'
+        row[:state_id]=row[:school_id].rjust(4, '0')
+      end
+      row
+     end
      # .transform('Remove leading grade zeros', WithBlock) do |row|
      #    row[:grade].gsub!('0','') if row[:grade][0]=='0'
      #    row
@@ -187,6 +191,4 @@ class KSTestProcessor2018Ksa < GS::ETL::TestProcessor
   end
 end
 
-end
-
-KSTestProcessor2018Ksa.new(ARGV[0], offset: nil, max: nil).run
+KSTestProcessor2018Ksa.new(ARGV[0], max: nil).run
