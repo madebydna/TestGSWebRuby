@@ -39,8 +39,8 @@ class ActSatHandler
   end
 
   def enforce_latest_year_gsdata!(*data_types)
-    data_type_hashes = hash.slice(*data_types).values.flatten.select(&:all_students?).flatten.extend(GsdataCaching::GsDataValue::CollectionMethods)
-    max_year = data_type_hashes.year_of_most_recent
+    data_type_hashes = hash.slice(*data_types).values.flatten.select(&:all_students?).flatten.extend(SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue::CollectionMethods)
+    max_year = data_type_hashes.having_most_recent_date.first.year
     data_type_hashes.each do |v|
       if v.year < max_year
         v.school_value = nil

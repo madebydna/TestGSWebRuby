@@ -6,6 +6,7 @@ describe SchoolProfiles::CollegeReadiness do
 
     let(:cv1) { SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue.new }
     let(:cv2) { SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue.new }
+    let(:cv3) { SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue.new }
     let(:act_sat_data_type) { SchoolProfiles::CollegeReadinessConfig::ACT_SAT_PARTICIPATION }
     let(:act_data_type) { SchoolProfiles::CollegeReadinessConfig::ACT_SCORE }
     let(:act_data_type_1) { SchoolProfiles::CollegeReadinessConfig::ACT_PARTICIPATION }
@@ -101,38 +102,29 @@ describe SchoolProfiles::CollegeReadiness do
 
       # TODO: Fix this test to accurately reflect what is being tested
       it 'sets school value to nil for data older than max year for act_sat data' do
-        gsdv1 = GsdataCaching::GsDataValue.from_hash({
-          "breakdown" => 'All students',
-          "year" => "2018",
-          "school_value" => 123,
-          "source_date_valid" => "20181109 12:03:44"
-        })
+        cv1.breakdown = 'All students'
+        cv1.year = '2018'
+        cv1.school_value = 123
 
-        gsdv2 = GsdataCaching::GsDataValue.from_hash({
-          "breakdown" => 'All students',
-          "year" => "2014",
-          "school_value" => 123,
-          "source_date_valid" => "20141109 12:03:44"
-        })
+        cv2.breakdown = 'All students'
+        cv2.year = '2014'
+        cv2.school_value = 234
 
-        gsdv3 = GsdataCaching::GsDataValue.from_hash({
-          "breakdown" => 'Hispanic',
-          "year" => "2018",
-          "school_value" => 546,
-          "source_date_valid" => "20181109 12:03:44"
-        })
+        cv3.breakdown = 'Hispanic'
+        cv3.year = '2018'
+        cv3.school_value = 345
 
         hash = {
-          act_sat_data_type     => [gsdv1],
-          act_sat_912_data_type => [gsdv2, gsdv3]
+          act_sat_data_type     => [cv1],
+          act_sat_912_data_type => [cv2, cv3]
         }
 
         handler = ActSatHandler.new(hash)
 
         handler.handle_ACT_SAT_to_display!
-        expect(handler.hash[act_sat_data_type].first.school_value).to_not be nil
-        # expect(handler.hash[act_sat_912_data_type].first.school_value).to be nil
-        # expect(handler.hash[act_sat_912_data_type].last.school_value).to be nil
+        expect(handler.hash[act_sat_data_type].first.school_value).to be nil
+        expect(handler.hash[act_sat_912_data_type].first.school_value).to be nil
+        expect(handler.hash[act_sat_912_data_type].last.school_value).to_not be nil
 
       end
     end
