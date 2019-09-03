@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Omni::TestDataValue do
-  before(:each) { clean_dbs :omni, :ca }
+  before(:each) { do_clean_dbs :omni, :ca }
+  after(:each) { do_clean_dbs :omni, :ca }
 
   let(:school) { create(:school) }
   let(:data_type) { create(:data_type, :with_tags, tag: Omni::TestDataValue::TAGS.first) }
