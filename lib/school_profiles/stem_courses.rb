@@ -22,7 +22,8 @@ module SchoolProfiles
           'Percentage algebra 1 enrolled grades 7-8' => :PersonBar,
           'Percentage passing algebra 1 grades 7-8' => :SingleBar,
           'Percentage AP math enrolled grades 9-12' => :PersonBar,
-          'Percentage AP science enrolled grades 9-12' => :PersonBar
+          'Percentage AP science enrolled grades 9-12' => :PersonBar,
+          'Percentage AP other courses enrolled grades 9-12' => :PersonBar
       }
     end
 
