@@ -111,7 +111,7 @@ class KSTestProcessor2018Ksa < GS::ETL::TestProcessor
      .transform("Fill entity_type and level_code", Fill, {
       test_data_type: 'KSA',
       test_data_type_id: 243,
-      notes: 'DXT-3123: KS KSA'
+      notes: 'DXT-2440: KS KSA'
       })
      .transform("remove NA rows - fully suppressed", DeleteRows, :number_tested, 'NA','0','1','2','3','4','5','6','7','8','9')
      .transform("sum levels 3 and 4 for prof and above", SumValues, :proficient_and_above, :pct_level_3, :pct_level_4)
