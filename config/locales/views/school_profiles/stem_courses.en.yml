@@ -26,6 +26,12 @@ en:
           it may be because the school did not offer these courses or because the data wasn't included in the federal
           Civil Rights Data Collection (CRDC). Information about students taking and/or passing AP science or math exams
           is not part of the data provided by the CRDC. (See “Sources” for more information.)</p>
+          <div class="emphasis">What courses are included in "Other AP course participation?"</div>
+          <p>"Other subjects" include all AP courses other than those in mathematics and science. 
+          For example, AP computer science and AP world languages and cultures are included in 
+          "other subjects." Note&colon; a combined view of participation in any AP course can be 
+          found in the College Readiness module.</p>
+          <p>Did you find the information about advanced STEM courses useful? What can we do better? <a href="#">Share your feedback.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       mixed:
         subtitle_html: STEM stands for science, technology, engineering, and math. <a href="/gk/articles/stem-in-the-classroom/">Find out</a> more about why STEM coursework is so important for today’s students.
@@ -59,4 +65,7 @@ en:
       'Percentage AP science enrolled grades 9-12': 
         label: AP science course participation
         tooltip_html: This reflects the percentage of students at this school who took an Advanced Placement (AP) science course compared to the state average.
+      'Percentage AP other courses enrolled grades 9-12': 
+        label: Other AP course participation
+        tooltip_html: This reflects the percentage of students at this school who took an Advanced Placement (AP) course in a subject other than mathematics and science compared to the state average.
 
