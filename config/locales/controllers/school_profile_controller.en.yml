@@ -10,3 +10,8 @@ en:
       about_this_rating: About this rating
       source: Source
       more: More
+      meta_tags:
+        title_suffix: ' | GreatSchools'
+        preschool_description: "%{school_name} in %{location_string}. Read parent reviews and get the scoop on the school environment, teachers, students, programs and services available from this preschool."
+        description: "%{school_name} located in %{location_string}. Find %{school_name} test scores, student-teacher ratio, parent reviews and teacher stats."
+        
