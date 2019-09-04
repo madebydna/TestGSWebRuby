@@ -14,15 +14,13 @@ describe DistrictCache do
   
   describe '.for_district' do
     it 'returns correct district given a district record' do
-      expect(DistrictCache.for_district(@district1)).to include(@district_cache1)
-      expect(DistrictCache.for_district(@district1)).not_to include(@district_cache2)
+      expect(DistrictCache.for_district(@district1)).to match_array([@district_cache1])
     end
   end
 
   describe '.include_cache_keys' do
     it 'returns all cached data for given key' do
-      expect(DistrictCache.include_cache_keys('ratings')).to include(@district_cache2, @district_cache3)
-      expect(DistrictCache.include_cache_keys('ratings')).not_to include(@district_cache1)
+      expect(DistrictCache.include_cache_keys('ratings')).to match_array([@district_cache2, @district_cache3])
     end
 
     it 'returns all cached data given multiple keys' do
@@ -40,6 +38,12 @@ describe DistrictCache do
     context 'with districts from different states' do
       it 'returns district cache data records for given districts' do
         expect(DistrictCache.for_districts([@district1, @district3])).to include(@district_cache1, @district_cache3)
+      end
+    end
+
+    context 'with empty array' do
+      it 'returns no districts' do
+        expect(DistrictCache.for_districts([]).empty?).to be_truthy
       end
     end
   end

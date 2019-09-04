@@ -13,14 +13,12 @@ class DistrictCache < ActiveRecord::Base
   end
 
   def self.for_districts(districts)
-    state_hash = districts.group_by(&:state).tap do |hash|
-      hash.each do |k, v|
-        hash[k] = v.map(&:id)
-      end  
-    end
-    matching_clause = state_hash.map do |state,ids|
+    return [] if districts.empty?
+
+    matching_clause = state_to_id_map(districts).map do |state,ids|
       sanitize_sql_for_conditions(["(state = ? and district_id IN (?))", state, ids])
     end.join(" OR ")
+
     where(matching_clause)
   end
 
@@ -32,5 +30,15 @@ class DistrictCache < ActiveRecord::Base
 
   def cache_data(options = {})
     JSON.parse(value, options) rescue {}
+  end
+
+  private
+
+  def self.state_to_id_map(districts)
+    districts.group_by(&:state).tap do |hash|
+      hash.each do |k, v|
+        hash[k] = v.map(&:id)
+      end
+    end
   end
 end
