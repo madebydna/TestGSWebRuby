@@ -4,10 +4,12 @@ import Selectable from 'react_components/selectable';
 import pageNumbers from 'util/pagination';
 import AnchorButton from 'react_components/anchor_button';
 import { t } from 'util/i18n';
+import { putIntoQueryString } from 'util/uri';
 
-const link = (page) => (
-  `${window.location.pathname}?page=${page}`
-);
+const link = (page) => {
+  const queryString = putIntoQueryString(window.location.search, 'page', page, true)
+  return `${window.location.pathname}${queryString}`
+};
 
 const PaginationButtons = ({ page, totalPages, onPageChanged, mobileView }) => {
   const { prev, next, range } = pageNumbers(page, totalPages);
