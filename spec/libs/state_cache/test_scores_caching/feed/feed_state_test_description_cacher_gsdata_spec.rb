@@ -23,12 +23,8 @@ describe TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata do
 
   describe '#query_results' do
   
-    it 'selects data sets for state tests in given state' do
+    it 'selects latest data sets for state tests in given state' do
       expect(cacher.query_results).to include(@data_set_ca_1_newer, @data_set_ca_2)
-    end
-    
-    it 'selects latest data set for particular state test' do
-      expect(cacher.query_results).to include(@data_set_ca_1_newer)
     end
 
     it 'does not select older instances of particular state test' do
@@ -74,7 +70,8 @@ describe TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata do
     end
 
     context 'with proficiency band data' do
-      before(:all) do
+      after(:each) { do_clean_models(:omni, ProficiencyBand)}
+      before(:each) do
         @pb1 = create(:proficiency_band, id: 2, name: 'below average', group_id: 1, composite_of_pro_null: 1, group_order: 1)
         @pb2 = create(:proficiency_band, id: 3, name: 'average', group_id: 1, composite_of_pro_null: 1, group_order: 2)
         @pb3 = create(:proficiency_band, id: 4, name: 'above average', group_id: 1, composite_of_pro_null: 1, group_order: 3)
