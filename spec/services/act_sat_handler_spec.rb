@@ -7,10 +7,10 @@ describe SchoolProfiles::CollegeReadiness do
     let(:cv1) { SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue.new }
     let(:cv2) { SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue.new }
     let(:cv3) { SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue.new }
-    let(:act_sat_data_type) { SchoolProfiles::CollegeReadinessConfig::ACT_SAT_PARTICIPATION }
-    let(:act_data_type) { SchoolProfiles::CollegeReadinessConfig::ACT_SCORE }
-    let(:act_data_type_1) { SchoolProfiles::CollegeReadinessConfig::ACT_PARTICIPATION }
-    let(:act_sat_912_data_type) { SchoolProfiles::CollegeReadinessConfig::ACT_SAT_PARTICIPATION_9_12 }
+    let(:act_score_dt) { SchoolProfiles::CollegeReadinessConfig::ACT_SCORE }
+    let(:act_participation_dt) { SchoolProfiles::CollegeReadinessConfig::ACT_PARTICIPATION }
+    let(:act_sat_912_participation_dt) { SchoolProfiles::CollegeReadinessConfig::ACT_SAT_PARTICIPATION_9_12 }
+    let(:act_sat_participation_dt) { SchoolProfiles::CollegeReadinessConfig::ACT_SAT_PARTICIPATION }
 
     context 'given hash contains only act content' do
 
@@ -22,17 +22,24 @@ describe SchoolProfiles::CollegeReadiness do
         cv1["school_value_2014"] = "yes"
         cv1.school_value         = 123
 
+        cv2.subject              = 'All subjects'
+        cv2.breakdown            = 'All students'
+        cv2.year                 = "2018"
+        cv2["school_value_2018"] = "yes"
+        cv2["school_value_2014"] = "yes"
+        cv2.school_value         = 234
+
         hash = {
-          act_sat_data_type     => [cv1],
-          act_data_type         => [cv1],
-          act_sat_912_data_type => []
+          act_sat_participation_dt     => [cv1],
+          act_score_dt         => [cv2],
+          act_sat_912_participation_dt => []
         }
 
         handler = ActSatHandler.new(hash)
 
-        expect(handler.hash[act_sat_data_type].first.school_value).to_not be nil
+        expect(handler.hash[act_sat_participation_dt].first.school_value).to_not be nil
         handler.handle_ACT_SAT_to_display!
-        expect(handler.hash[act_sat_data_type].first.school_value).to be nil
+        expect(handler.hash[act_sat_participation_dt].first.school_value).to be nil
       end
 
       context 'data type is for all students and subjects' do
@@ -51,17 +58,17 @@ describe SchoolProfiles::CollegeReadiness do
           cv2.school_value = 123
 
           hash = {
-            act_data_type_1 => [cv1],
-            act_data_type   => [cv2]
+            act_participation_dt => [cv1],
+            act_score_dt   => [cv2]
           }
 
           handler = ActSatHandler.new(hash)
 
-          expect(handler.hash[act_data_type_1].first.school_value).to_not be nil
-          expect(handler.hash[act_data_type].first.school_value).to_not be nil
+          expect(handler.hash[act_participation_dt].first.school_value).to_not be nil
+          expect(handler.hash[act_score_dt].first.school_value).to_not be nil
           handler.handle_ACT_SAT_to_display!
-          expect(handler.hash[act_data_type_1].first.school_value).to_not be nil
-          expect(handler.hash[act_data_type].first.school_value).to be nil
+          expect(handler.hash[act_participation_dt].first.school_value).to_not be nil
+          expect(handler.hash[act_score_dt].first.school_value).to be nil
         end
       end
 
@@ -80,17 +87,17 @@ describe SchoolProfiles::CollegeReadiness do
           cv2.school_value = 123
 
           hash            = {
-            act_data_type_1 => [cv1],
-            act_data_type   => [cv2]
+            act_participation_dt => [cv1],
+            act_score_dt   => [cv2]
           }
 
           handler = ActSatHandler.new(hash)
 
-          expect(handler.hash[act_data_type_1].first.school_value).to_not be nil
-          expect(handler.hash[act_data_type].first.school_value).to_not be nil
+          expect(handler.hash[act_participation_dt].first.school_value).to_not be nil
+          expect(handler.hash[act_score_dt].first.school_value).to_not be nil
           handler.handle_ACT_SAT_to_display!
-          expect(handler.hash[act_data_type_1].first.school_value).to_not be nil
-          expect(handler.hash[act_data_type].first.school_value).to_not be nil
+          expect(handler.hash[act_participation_dt].first.school_value).to_not be nil
+          expect(handler.hash[act_score_dt].first.school_value).to_not be nil
         end
       end
     end
@@ -115,16 +122,16 @@ describe SchoolProfiles::CollegeReadiness do
         cv3.school_value = 345
 
         hash = {
-          act_sat_data_type     => [cv1],
-          act_sat_912_data_type => [cv2, cv3]
+          act_sat_participation_dt     => [cv1],
+          act_sat_912_participation_dt => [cv2, cv3]
         }
 
         handler = ActSatHandler.new(hash)
 
         handler.handle_ACT_SAT_to_display!
-        expect(handler.hash[act_sat_data_type].first.school_value).to be nil
-        expect(handler.hash[act_sat_912_data_type].first.school_value).to be nil
-        expect(handler.hash[act_sat_912_data_type].last.school_value).to_not be nil
+        expect(handler.hash[act_sat_participation_dt].first.school_value).to be nil
+        expect(handler.hash[act_sat_912_participation_dt].first.school_value).to be nil
+        expect(handler.hash[act_sat_912_participation_dt].last.school_value).to_not be nil
 
       end
     end

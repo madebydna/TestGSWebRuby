@@ -39,7 +39,8 @@ class ActSatHandler
   end
 
   def enforce_latest_year_gsdata!(*data_types)
-    data_type_hashes = hash.slice(*data_types).values.flatten.select(&:all_students?).flatten.extend(SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue::CollectionMethods)
+    #data_type_hashes = hash.slice(*data_types).values.flatten.select(&:all_students?).flatten.extend(SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue::CollectionMethods)
+    data_type_hashes = select_by_data_types(*data_types, &:all_students?).extend(SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue::CollectionMethods)
     max_year = data_type_hashes.having_most_recent_date.first.year
     data_type_hashes.each do |v|
       if v.year < max_year
@@ -48,13 +49,10 @@ class ActSatHandler
     end
   end
 
+  # remove school value for all students for selected data types
   def remove_crdc_breakdown!(*data_types)
-    data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
-      tds.all_students?
-    end.flatten
-    data_type_hashes.each do |h|
-      h.school_value = nil
-    end
+    data_type_hashes = select_by_data_types(*data_types, &:all_students?)
+    set_school_value_to_nil(data_type_hashes)
   end
 
   # TODO Create method to handle ACT_SAT_PARTICIPATION
@@ -89,7 +87,20 @@ class ActSatHandler
     return_value
   end
 
+  # TODO: replace with !value.zero?
   def school_value_present?(value)
     value.present? && value.to_s != '0.0' && value.to_s != '0'
+  end
+
+  private
+
+  def select_by_data_types(*data_types, &block)
+    hash.slice(*data_types).values.flatten.select{|item| block.call(item) }.flatten
+  end
+
+  def set_school_value_to_nil(array)
+    array.each do |h|
+      h.school_value = nil
+    end
   end
 end
