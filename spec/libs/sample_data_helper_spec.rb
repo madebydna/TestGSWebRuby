@@ -3,12 +3,8 @@ require 'spec_helper'
 describe 'sample_data_helper.rb' do
   require 'sample_data_helper'
 
-  after(:each) do
-    clean_dbs :ca, :mi
-  end
-
   describe 'load_sample_data' do
-    before(:each) { clean_dbs :ca }
+    after(:each) { do_clean_dbs :ca }
 
     it 'should load a single school' do
       load_sample_data 'sample_data_helper_test'
