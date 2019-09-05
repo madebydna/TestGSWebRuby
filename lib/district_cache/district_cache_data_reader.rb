@@ -11,7 +11,7 @@ class DistrictCacheDataReader
   end
 
   def decorated_district
-    @_decorated_district ||= decorate_district(district)
+    @_decorated_district ||= decorate_district
   end
 
   def ethnicity_data
@@ -193,7 +193,7 @@ class DistrictCacheDataReader
     DistrictCache.for_district(district).include_cache_keys(district_cache_keys)
   end
 
-  def decorate_district(district)
+  def decorate_district
     district_cache_results = DistrictCacheResults.new(DISTRICT_CACHE_KEYS, district_cache_query)
     district_cache_results.decorate_district(district)
   end

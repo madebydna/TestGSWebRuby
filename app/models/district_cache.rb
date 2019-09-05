@@ -22,11 +22,11 @@ class DistrictCache < ActiveRecord::Base
     where(matching_clause)
   end
 
-  # TODO: this should be moved to data reader
-  def self.cached_results_for(districts, keys)
-    query = DistrictCache.include_cache_keys(keys).for_districts(districts)
-    DistrictCacheResults.new(keys, query)
-  end
+  # # TODO: this should be moved to data reader
+  # def self.cached_results_for(districts, keys)
+  #   query = DistrictCache.include_cache_keys(keys).for_districts(districts)
+  #   DistrictCacheResults.new(keys, query)
+  # end
 
   def cache_data(options = {})
     JSON.parse(value, options) rescue {}
