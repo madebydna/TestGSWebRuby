@@ -164,6 +164,7 @@ class DistrictsController < ApplicationController
           trailing_slash: true
         )
         cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if csa_state_solr_query.present?
+        cp[:caAdvocacyUrl] = free_the_data_path if state == 'ca'
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:calendarURL] = ENV_GLOBAL['calendar_service_url']
         cp[:zipCode] = district_record.mail_zipcode[0..4]
