@@ -35,11 +35,7 @@ class QueueFile
   def write_file(row)
     school_or_district = row[:entity_type]
     original_id = 0
-    if row[:entity_type] == 'school' and row[:district_id]
-      district_id = row[:district_id]
-    else
-      district_id = 0
-    end
+    district_id = 0
     name = write_name(row)
     state_id = row[:state_id]
     result = ['school_or_district',school_or_district,'original_id',original_id,'district_id',district_id,'name',name,'state_id',state_id]
