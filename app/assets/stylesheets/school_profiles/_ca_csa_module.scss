@@ -2,29 +2,53 @@ $border-color: #dbe6eb;
 $gradient-off-white: #f4f5f7;
 $border-radius: 3px;
 
-.ca-csa-module {
+.csa-state-module {
   margin-bottom: 15px;
   border: solid 1px #dbe6eb;
   padding: 5px;
 
   h3 {
-    padding: 10px 0 10px 15px;
+    padding: 10px 15px 10px 15px;
     color: #333;
     font-size: 16px;
     font-family: 'opensans-semibold';
   }
 
-  .ca-csa-blurb {
+  .csa-state-blurb {
     display: flex;
     margin-left: 20px;
     margin-bottom: 20px;
+
+    img {
+      max-width: 75px;
+      max-height: 75px;
+      margin-top: 5px;
+    }
 
     p {
       margin: 0 20px;
     }
   }
+  @include media-breakpoint-down(sm) {
+    padding: 0;
 
-  .ca-csa-module-divider {
+    .csa-state-blurb {
+      display: block;
+
+      img {
+        float: left;
+        height: 60px;
+        margin: 8px 12px 0 0;
+      }
+
+      p {
+        padding: 0;
+        margin-left: 0;
+      }
+    }
+  }
+
+  .ca-state-module-divider {
     padding: 0 15px;
 
     .blue-line {
