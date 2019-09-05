@@ -31,11 +31,8 @@ es:
           o porque los datos no fueron incluidos en la recopilación de datos federales de los Derechos Civiles (CRDC).
           Información sobre los estudiantes tomando y/o aprobando los exámenes de matemáticas o ciencias AP no es parte
           de los datos proporcionados por el CRDC. (Ver "Fuentes" para más información).</p>
-          <div class="emphasis">What courses are included in "Other AP course participation?"</div>
-          <p>"Other subjects" include all AP courses other than those in mathematics and science. 
-          For example, AP computer science and AP world languages and cultures are included in 
-          "other subjects." Note&colon; a combined view of participation in any AP course can be 
-          found in the College Readiness module.</p>
+          <div class="emphasis">¿Cuales cursos están incluidos en "participación en otros cursos AP?"</div>
+          <p>Los "otros cursos" incluyen todos los cursos AP que no sean matemática y ciencia. Por ejemplo, las ciencias de computación AP y los idiomas y culturas del mundo AP se incluyen en "otros cursos". Nota&colon; se puede encontrar un resumen combinado de la participación en cualquier curso AP en el módulo Preparación universitaria.</p>
           <p>¿Ha encontrado la información de cursos avanzados de STEM útil? ¿Qué podemos hacer mejor? <a href="#">Comparte tus comentarios.</a></p>
           <p>¿Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
       mixed:
@@ -74,5 +71,5 @@ es:
         label: Participación en cursos de ciencias AP
         tooltip_html: Esto refleja el porcentaje de estudiantes de esta escuela que tomaron un Curso Avanzado (AP) de ciencia en comparación con el promedio estatal. 
       'Percentage AP other courses enrolled grades 9-12': 
-        label: Other AP course participation
-        tooltip_html: This reflects the percentage of students at this school who took an Advanced Placement (AP) course in a subject other than mathematics and science compared to the state average.
+        label: Participación en otros cursos de AP
+        tooltip_html: Esto refleja el porcentaje de estudiantes de esta escuela que tomaron un Curso Avanzado (AP) en una materia que no sea matemáticas o ciencias en comparación con el promedio estatal.
