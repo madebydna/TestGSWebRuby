@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import { t } from 'util/i18n';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 import owlQuestionPng from 'community/owl_question.png';
+import { analyticsEvent } from "util/page_analytics";
+
+const handleGoogleAnalytics = (community, action, label) => {
+  analyticsEvent(community, action, label);
+}
 
 const CsaInfo = ({ community, locality, caAdvocacy }) => {
   let moduleIcon = csaBadgeGenLg;
@@ -10,6 +15,8 @@ const CsaInfo = ({ community, locality, caAdvocacy }) => {
   let blurbText = t('csa_district_schools_info_html');
   let buttonText = `${t('see_winning_schools_in')} ${locality.stateLong}`;
   let buttonLink = locality.stateCsaBrowseUrl;
+
+  let gaEvent = caAdvocacy ? 'CSA Advocacy' : 'CSA State List';
 
   if (caAdvocacy && community === 'district') {
     moduleIcon = owlQuestionPng;
@@ -19,9 +26,9 @@ const CsaInfo = ({ community, locality, caAdvocacy }) => {
     buttonLink = locality.caAdvocacyUrl;
   } else if (caAdvocacy && community === 'school') {
     moduleIcon = owlQuestionPng;
-    headerText = t('ca_csa_advocacy.school_header');
-    blurbText = t('ca_csa_advocacy.school_body');
-    buttonText = t('ca_csa_advocacy.school_button');
+    headerText = t('ca_csa_advocacy.profile_header');
+    blurbText = t('ca_csa_advocacy.profile_body');
+    buttonText = t('ca_csa_advocacy.profile_button');
     buttonLink = locality.caAdvocacyUrl;
   } else if (caAdvocacy) {
     moduleIcon = owlQuestionPng;
@@ -48,7 +55,7 @@ const CsaInfo = ({ community, locality, caAdvocacy }) => {
         <div className="blue-line" />
       </div>
       <div className="more-school-btn">
-        <a href={buttonLink}>
+        <a href={buttonLink} onClick={() => handleGoogleAnalytics(community, gaEvent, `${buttonText} Clicked`)}>
           <button>{buttonText}</button>
         </a>
       </div>
