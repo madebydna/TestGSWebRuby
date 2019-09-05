@@ -5,38 +5,39 @@ import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 import owlQuestionPng from 'community/owl_question.png';
 import { analyticsEvent } from "util/page_analytics";
 
+
+const handleTextGrouping = (community, locality, caAdvocacy) => {
+  if (caAdvocacy) {
+    let textGrouping = community === 'city' ? 'state' : community;
+    
+    return (
+      {
+        moduleIcon: owlQuestionPng,
+        headerText: t(`ca_csa_advocacy.${textGrouping}_header`),
+        blurbText: t(`ca_csa_advocacy.${textGrouping}_body`),
+        buttonText: t(`ca_csa_advocacy.${textGrouping}_button`),
+        buttonLink: locality.caAdvocacyUrl
+      }
+    );
+  }
+    
+  return (
+    {
+      moduleIcon: csaBadgeGenLg,
+      headerText: t('award_winners'),
+      blurbText: t('csa_district_schools_info_html'),
+      buttonText: `${t('see_winning_schools_in')} ${locality.stateLong}`,
+      buttonLink: locality.stateCsaBrowseUrl
+    }
+  );
+}
 const handleGoogleAnalytics = (community, action, label) => {
   analyticsEvent(community, action, label);
 }
 
 const CsaInfo = ({ community, locality, caAdvocacy }) => {
-  let moduleIcon = csaBadgeGenLg;
-  let headerText = t('award_winners');
-  let blurbText = t('csa_district_schools_info_html');
-  let buttonText = `${t('see_winning_schools_in')} ${locality.stateLong}`;
-  let buttonLink = locality.stateCsaBrowseUrl;
-
+  let { moduleIcon, headerText, blurbText, buttonText, buttonLink } = handleTextGrouping(community, locality, caAdvocacy);
   let gaEvent = caAdvocacy ? 'CSA Advocacy' : 'CSA State List';
-
-  if (caAdvocacy && community === 'district') {
-    moduleIcon = owlQuestionPng;
-    headerText = t('ca_csa_advocacy.district_header');
-    blurbText = t('ca_csa_advocacy.district_body');
-    buttonText = t('ca_csa_advocacy.district_button');
-    buttonLink = locality.caAdvocacyUrl;
-  } else if (caAdvocacy && community === 'school') {
-    moduleIcon = owlQuestionPng;
-    headerText = t('ca_csa_advocacy.profile_header');
-    blurbText = t('ca_csa_advocacy.profile_body');
-    buttonText = t('ca_csa_advocacy.profile_button');
-    buttonLink = locality.caAdvocacyUrl;
-  } else if (caAdvocacy) {
-    moduleIcon = owlQuestionPng;
-    headerText = t('ca_csa_advocacy.state_header');
-    blurbText = t('ca_csa_advocacy.state_body');
-    buttonText = t('ca_csa_advocacy.state_button');
-    buttonLink = locality.caAdvocacyUrl;
-  }
 
   return (
     <div className="csa-state-module">
