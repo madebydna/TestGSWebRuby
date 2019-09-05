@@ -32,10 +32,30 @@ class ReviewPageSearchBox extends SearchBox {
         selectedListItem={this.state.selectedListItem}
         navigateToSelectedListItem={this.state.navigateToSelectedListItem}
         showSearchAllOption={this.props.showSearchAllOption}
-        handleOSPCase={this.props.osp}
       />
     );
   };
+
+  sortResultsByCategory(results) {
+    const adaptedResults = {
+      Addresses: [],
+      Zipcodes: [],
+      Cities: [],
+      Districts: [],
+      Schools: []
+    };
+    Object.keys(results).forEach(category => {
+      (results[category] || []).forEach(result => {
+        // sets the url link as the OSP for OSP related pages
+        if(this.props.osp){
+          result.url = result.ospUrl;
+        }
+        adaptedResults[category].push(result);
+      });
+    });
+    adaptedResults.Addresses = this.state.autoSuggestResults.Addresses;
+    this.setState({ autoSuggestResults: adaptedResults });
+  }
 
   handleKeyDown(e, { close }) {
     if (e.key === 'Enter') {
