@@ -166,6 +166,14 @@ class District extends React.Component {
           <CsaInfo 
             community={this.pageType}
             locality={this.props.locality}
+            caAdvocacy={false}
+          />
+        }
+        caCsaInfo={
+          <CsaInfo 
+            community={this.pageType}
+            locality={this.props.locality}
+            caAdvocacy={true}
           />
         }
         mobility={

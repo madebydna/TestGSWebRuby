@@ -172,6 +172,15 @@ class DistrictLayout extends React.Component {
     );
   }
 
+  // CA Advocacy CSA
+  renderCaCsaModule() {
+    return this.props.locality.stateShort === 'CA' && (
+      <div>
+        {this.props.caCsaInfo}
+      </div>
+    );
+  }
+
   renderStudentsModule(){
     return (this.props.hasStudentDemographicData && 
       <div id="students" className="module-section">
@@ -205,6 +214,7 @@ class DistrictLayout extends React.Component {
             {this.renderSchools()}
             {this.renderBoxAd()}
             {this.renderCsaModule()}
+            {this.renderCaCsaModule()}
             {this.renderAcademics()}
             {this.renderStudentsModule()}
             {this.renderCalendar()}
