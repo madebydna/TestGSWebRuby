@@ -1,9 +1,8 @@
 require "spec_helper"
 
 describe ReviewsForm do
-  after do
-    clean_dbs(:ca, :gs_schooldb)
-  end
+  before(:each) { do_clean_dbs(:ca, :gs_schooldb) }
+  after(:each) { do_clean_dbs(:ca, :gs_schooldb) }
 
   it "should be ActiveModel-compliant" do
     reviews_form = build_reviews_form

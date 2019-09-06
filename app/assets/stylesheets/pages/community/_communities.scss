@@ -106,7 +106,7 @@ $line-height-community: 1.428571429;
       padding: 5px;
 
       h3 {
-        padding: 10px 0 10px 15px;
+        padding: 10px 15px 10px 15px;
         color: #333;
         font-size: 16px;
         font-family: 'opensans-semibold';
@@ -117,8 +117,33 @@ $line-height-community: 1.428571429;
         margin-left: 20px;
         margin-bottom: 20px;
 
+        img {
+          max-width: 75px;
+          max-height: 75px;
+          margin-top: 5px;
+        }
+
         p {
           margin: 0 20px;
+        }
+      }
+
+      @include media-breakpoint-down(sm) {
+        padding: 0;
+    
+        .csa-state-blurb {
+          display: block;
+    
+          img {
+            float: left;
+            height: 60px;
+            margin: 8px 12px 0 0;
+          }
+    
+          p {
+            padding: 0;
+            margin-left: 0;
+          }
         }
       }
 
@@ -473,7 +498,7 @@ $line-height-community: 1.428571429;
         @include clearfix;
         font-size: 15px;
         color: #333;
-        margin-right: 15px;
+        margin-right: 20px;
         margin-top: 10px;
         float: right;
       }

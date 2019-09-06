@@ -28,8 +28,8 @@ class FeedConfig
     @state_abbreviations.map { |state| "local-greatschools-feed-#{state}.xml" }
   end
 
-  def city_feed_files
-    @state_abbreviations.map { |state| "local-greatschools-city-feed-#{state}.xml" }
+  def local_new_test_feed_files
+    @state_abbreviations.map { |state| "local-gs-new-test-feed-#{state}.xml" }
   end
 
   def official_overall_rating_feed_files
@@ -40,22 +40,13 @@ class FeedConfig
     @state_abbreviations.map { |state| "local-gs-parent-review-feed-#{state}.xml" }
   end
 
-  def test_feed_files
-    @state_abbreviations.map { |state| "local-gs-test-feed-#{state}.xml" }
-  end
-
-  def test_rating_feed_files
-    @state_abbreviations.map { |state| "local-gs-test-rating-feed-#{state}.xml" }
-  end
-
-  def test_subgroup_feed_files
-    @state_abbreviations.map { |state| "local-gs-test-subgroup-feed-#{state}.xml" }
+  def local_gs_new_test_subgroup_feed_files
+    @state_abbreviations.map { |state| "local-gs-new-test-subgroup-feed-#{state}.xml" }
   end
 
   def all_feed_files
-    local_feed_files + city_feed_files + 
-    official_overall_rating_feed_files + parent_review_feed_files + 
-    test_feed_files + test_rating_feed_files + test_subgroup_feed_files
+    local_feed_files + local_new_test_feed_files + local_gs_new_test_subgroup_feed_files + 
+    official_overall_rating_feed_files + parent_review_feed_files
   end
 
   def each_pair_old_and_new_feed_files

@@ -32,7 +32,7 @@ solr_url =  if script_args.has_key?(:host)
             end
 
 # Start logging
-log = ScriptLogger.record_log_instance(script_args)
+begin log = ScriptLogger.record_log_instance(script_args); rescue;end
 
 begin
   indexer = 
@@ -54,10 +54,13 @@ begin
   indexer.commit
   indexer.optimize
 
-  log.finish_logging_session(1, "Finished indexing #{num_of_indexed_docs} documents")
+  begin log.finish_logging_session(1, "Finished indexing #{num_of_indexed_docs} documents"); rescue;end
   puts "Finished indexing #{num_of_indexed_docs} documents"
 
 rescue => e
-  log.finish_logging_session(0, e)
+  begin log.finish_logging_session(0, e); rescue;end
   raise
+rescue SignalException
+  begin log = log.finish_logging_session(0, "Process ended early. User manually cancelled process."); rescue;end
+  abort
 end

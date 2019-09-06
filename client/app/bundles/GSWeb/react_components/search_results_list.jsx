@@ -83,8 +83,7 @@ const SearchResultsList = ({
   onSelect,
   listGroups,
   searchTerm,
-  showSearchAllOption,
-  handleOSPCase
+  showSearchAllOption
 }) => {
   const groupNameListItem = (name, index) => (
     <li key={`category ${name}`} className="search-results-list-group-name clearfix">
@@ -98,9 +97,6 @@ const SearchResultsList = ({
       order.counter += 1;
       const title = resultTypes[group].title(listItem);
       const additionalInfo = resultTypes[group].additionalInfo(listItem);
-      if (handleOSPCase && listItem.ospUrl){
-        listItem.url = listItem.ospUrl;
-      }
       return (
         <li
           onClick={listItem.url ? () => {} : () => onSelect(listItem)}
@@ -137,7 +133,7 @@ const SearchResultsList = ({
       .map((group, index) => (
         <React.Fragment key={group}>
           {groupNameListItem(group, index)}
-          {groupListItems(group, listGroups[group], order, handleOSPCase)}
+          {groupListItems(group, listGroups[group], order)}
         </React.Fragment>
       ));
   };

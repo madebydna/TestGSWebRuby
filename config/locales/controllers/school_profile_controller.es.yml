@@ -10,3 +10,7 @@ es:
       about_this_rating: Sobre esta calificación
       source: Fuente
       more: Más
+      meta_tags:
+        title_suffix: ' ¡En Español! | GreatSchools'
+        preschool_description: "%{school_name} in %{location_string}. Averigue las horas, inscripción, clases, deportes y más acerca de esta escuela."
+        description: "%{school_name} ubicada en %{location_string}. Encuentra los resultados de los exámenes, el promedio de estudiantes por cada profesor, opiniones de los padres y estadísticas de los profesores de %{school_name}."

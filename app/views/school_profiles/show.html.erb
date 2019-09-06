@@ -47,6 +47,13 @@
                 <div class="profile-section-slot">
                   <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
                 </div>
+
+                <% if @school.state == 'CA' %>
+                  <div class="profile-section-slot">
+                    <%= render 'csa_info' %>
+                  </div>
+                <% end %>
+
                 <% if @school_profile.college_success.visible? %>
                     <div class="profile-section-slot">
                       <%= render 'college_success', college_success: @school_profile.college_success %>
@@ -57,6 +64,12 @@
               <div class="profile-section-slot">
                 <%= render 'test_scores', test_scores: @school_profile.test_scores %>
               </div>
+
+              <% if @school.state == 'CA' && !@school_profile.show_high_school_data %>
+                <div class="profile-section-slot">
+                  <%= render 'csa_info' %>
+                </div>
+              <% end %>
 
               <%# NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
                 The SP module has a no-data state, while The AP module DOES NOT have a no-data state.

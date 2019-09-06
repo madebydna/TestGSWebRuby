@@ -4,8 +4,8 @@
 
 require 'ox'
 require 'mysql2'
-require 'zip'
 
+# This class iterates over a select group of fields and compares them for discrepancies in the database.
 class DirectoryCensusParser < ::Ox::Sax
 
   attr_reader :state

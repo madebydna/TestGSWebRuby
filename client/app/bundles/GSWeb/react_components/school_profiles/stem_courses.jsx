@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BasicDataModuleLayout from './basic_data_module_layout';
 import { MicroscopeCircleIcon } from './circle_icons';
-import Tooltip from './tooltip';
 import InfoBox from './info_box';
 import QuestionMarkTooltip from './question_mark_tooltip';
 import ParentTip from './parent_tip';
@@ -64,17 +63,16 @@ const sourcesToHtml = function(sources) {
 const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqContent, courses, sources, qualaroo_module_link, share_content }) => {
 
 
-  let titleElement = <h3>
-    {title}&nbsp;<QuestionMarkTooltip content={titleTooltipText} element_type="toptooltip" />
-  </h3>;
+  let titleElement = <div data-ga-click-label={title}>
+    <h3>{title}</h3>&nbsp;
+    <QuestionMarkTooltip content={titleTooltipText} element_type='toptooltip' />
+  </div>
 
   let body = <div>
     <ParentTip><span dangerouslySetInnerHTML={{__html: parentTip}}/></ParentTip>
     {listOfVisualizations(courses)}
     <InfoTextAndCircle cta={faqCta} content={faqContent} element_type="faq" />
   </div>
-
-
 
   return <div>
     <a className="anchor-mobile-offset" name="Advanced_courses"></a>

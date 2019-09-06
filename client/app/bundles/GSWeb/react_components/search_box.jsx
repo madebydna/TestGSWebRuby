@@ -342,25 +342,29 @@ export default class SearchBox extends React.Component {
       }
       suggest(qPortionBeforeComma, { types: this.props.resultTypes }).done(
         results => {
-          const adaptedResults = {
-            Addresses: [],
-            Zipcodes: [],
-            Cities: [],
-            Districts: [],
-            Schools: []
-          };
-          Object.keys(results).forEach(category => {
-            (results[category] || []).forEach(result => {
-              adaptedResults[category].push(result);
-            });
-          });
-          adaptedResults.Addresses = this.state.autoSuggestResults.Addresses;
-          this.setState({ autoSuggestResults: adaptedResults });
+          this.sortResultsByCategory(results)
         }
       );
     } else {
       this.setState({ autoSuggestResults: {} });
     }
+  }
+
+  sortResultsByCategory(results){
+    const adaptedResults = {
+      Addresses: [],
+      Zipcodes: [],
+      Cities: [],
+      Districts: [],
+      Schools: []
+    };
+    Object.keys(results).forEach(category => {
+      (results[category] || []).forEach(result => {
+        adaptedResults[category].push(result);
+      });
+    });
+    adaptedResults.Addresses = this.state.autoSuggestResults.Addresses;
+    this.setState({ autoSuggestResults: adaptedResults });
   }
 
   resetSelectedListItem() {

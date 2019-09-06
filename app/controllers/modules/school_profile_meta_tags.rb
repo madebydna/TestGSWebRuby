@@ -13,30 +13,16 @@ class SchoolProfileMetaTags
     else
       return_title_str << @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
     end
-    return_title_str << ' | GreatSchools'
+    return_title_str << I18n.t(:title_suffix, scope: 'controllers.school_profile_controller.meta_tags')
   end
 
   def description
-    return_description_str = ''
-    return_description_str << @school.name
     if @school.preschool?
-      if @school.state.downcase == 'dc'
-        location_string = 'Washington, DC'
-      else
-        location_string = "#{@school.city}, #{@school.state_name.capitalize} (#{@school.state})"
-      end
-      return_description_str << ' in ' + location_string
-      return_description_str << '. Read parent reviews and get the scoop on the school environment, teachers,'
-      return_description_str << ' students, programs and services available from this preschool.'
+      location_string = @school.state.downcase == 'dc' ? 'Washington, DC' : "#{@school.city}, #{@school.state_name.capitalize} (#{@school.state})"
+      I18n.t('preschool_description', scope: 'controllers.school_profile_controller.meta_tags', school_name: @school.name, location_string: location_string)
     else
-      if @school.state.downcase == 'dc'
-        location_string = 'Washington, DC'
-      else
-        location_string = "#{@school.city}, #{@school.state_name.capitalize} - #{@school.state}"
-      end
-      return_description_str << ' located in ' + location_string
-      return_description_str << '. Find ' +  @school.name + ' test scores, student-teacher ratio, parent reviews and teacher stats.'
+      location_string = @school.state.downcase == 'dc' ? 'Washington, DC' : "#{@school.city}, #{@school.state_name.capitalize} - #{@school.state}"
+      I18n.t('description', scope: 'controllers.school_profile_controller.meta_tags', school_name: @school.name, location_string: location_string)
     end
-    return_description_str
   end
 end

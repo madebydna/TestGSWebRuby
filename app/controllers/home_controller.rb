@@ -39,18 +39,16 @@ class HomeController < ApplicationController
     gon.pagename = "Homepage"
 
     # NOTE: this is temporary until we get the final list from product
-    @city_list_for_footer = ["Albuquerque, NM", "Anchorage, AK", "Atlanta, GA", "Austin, TX", 
-    "Baltimore, MD", "Billings, MT", "Birmingham, AL", "Boise, ID", "Boston, MA", "Bridgeport, CT", 
-    "Burlington, VT", "Charleston, WV", "Charlotte, NC", "Cheyenne, WY", "Chicago, IL", "Columbia, SC", 
-    "Columbus, OH", "Dallas, TX", "Denver, CO", "Des Moines, IA", "Detroit, MI", "El Paso, TX", "Fargo, ND", 
-    "Honolulu, HI", "Houston, TX", "Indianapolis, IN", "Jackson, MS", "Jacksonville, FL", "Kansas City, MO", 
-    "Las Vegas, NV", "Little Rock, AR", "Los Angeles, CA", "Louisville, KY", "Manchester, NH", "Memphis, TN", 
-    "Miami, FL", "Milwaukee, WI", "Minneapolis, MN", "Nashville, TN", "New Orleans, LA", "New York, NY", 
-    "Newark, NJ", "Oakland, CA", "Oklahoma City, OK", "Omaha, NE", "Philadelphia, PA", "Phoenix, AZ", "Portland, ME", 
-    "Portland, OR", "Providence, RI", "Sacramento, CA", "Salt Lake City, UT", 
-    "San Antonio, TX", "San Diego, CA", "San Francisco, CA", "San Jose, CA", "Seattle, WA", "Sioux Falls, SD", 
-    "Tucson, AZ", "Virginia Beach, VA", "Washington, DC", "Wichita, KS", "Wilmington, DE"]
-
+    @city_list_for_footer = ['Albuquerque, NM', 'Allentown, PA', 'Anchorage, AK', 'Atlanta, GA', 'Austin, TX', 'Baltimore, MD', 'Bellingham, WA',
+    'Boise, ID', 'Boston, MA', 'Bridgeport, CT', 'Charleston, WV', 'Charlotte, NC', 'Chicago, IL', 'Colorado Springs, CO',
+    'Columbus, OH', 'Dallas, TX', 'Denver, CO', 'Des Moines, IA', 'Detroit, MI', 'Fort Lauderdale, FL', 'Grand Rapids, MI',
+    'Honolulu, HI', 'Houston, TX', 'Huntsville, AL', 'Indianapolis, IN', 'Irvine, CA', 'Jacksonville, FL', 'Kansas City, MO',
+    'Las Vegas, NV', 'Little Rock, AR', 'Long Beach, CA', 'Los Angeles, CA', 'Manchester, NH', 'Marietta, GA', 'Memphis, TN',
+    'Miami, FL', 'Milwaukee, WI', 'Minneapolis, MN', 'New Orleans, LA', 'New York, NY', 'Newark, NJ', 'Oakland, CA',
+    'Oklahoma City, OK', 'Omaha, NE', 'Orlando, FL', 'Pasadena, CA', 'Philadelphia, PA', 'Phoenix, AZ', 'Sacramento, CA',
+    'Salt Lake City, UT', 'San Antonio, TX', 'San Diego, CA', 'San Francisco, CA', 'San Jose, CA', 'Seattle, WA', 'Sioux Falls, SD',
+    'Tacoma, WA', 'Tampa, FL', 'Temecula, CA', 'Tucson, AZ', 'Virginia Beach, VA', 'Washington, DC', 'West Palm Beach, FL',
+    'Wilmington, DE']
   end
 
   def page_view_metadata

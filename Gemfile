@@ -218,6 +218,7 @@ group :development, :test do
   # A formatter for rubocop that outputs in checkstyle format
   gem 'rubocop-checkstyle_formatter', require: false
 
+  # gem to use pry rails when using rails console. Give formatting issues superior to standard irb
   gem 'pry-rails'
 
   gem "factory_bot_rails", '~> 4.11.0'
