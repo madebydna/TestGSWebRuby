@@ -288,7 +288,7 @@ describe 'school profiles page' do
 
     it { is_expected.to_not have_advanced_courses }
     with_subject :advanced_stem_courses do
-      it { is_expected.to have_text('Advanced STEM courses') }
+      it { is_expected.to have_text('Advanced & STEM courses') }
     end
 
     with_subject :equity_overview do
@@ -419,7 +419,7 @@ describe 'school profiles page' do
     it { is_expected.to_not have_advanced_courses }
 
     with_subject :advanced_stem_courses do
-      it { is_expected.to have_text('Advanced STEM courses') }
+      it { is_expected.to have_text('Advanced & STEM courses') }
     end
 
     it { is_expected.to_not have_equity_overview }
