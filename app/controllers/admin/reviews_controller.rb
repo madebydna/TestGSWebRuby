@@ -316,7 +316,7 @@ class Admin::ReviewsController < ApplicationController
   def flagged_reviews_with_school_info
       Review.select("reviews.*, flagged_schools.name AS school_name").
         joins("JOIN (#{school_name_query_string}) AS flagged_schools ON (reviews.school_id = flagged_schools.id AND reviews.state = flagged_schools.state)").
-        where(reviews: { id: flagged_review_ids })
+        where(reviews: { id: flagged_review_ids }).includes(:flags)
   end
 
   def flagged_reviews_with_user
