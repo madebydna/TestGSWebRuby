@@ -325,13 +325,9 @@ export default class SearchBox extends React.Component {
     });
   }
 
-  shouldShowAutoComplete(q) {
-    return q.length >= 3;
-  }
-
   autoSuggestQuery(q) {
     q = q.replace(/[^a-zA-Z 0-9\-\,\']+/g, '');
-    if (this.shouldShowAutoComplete(q)) {
+    if (q.length >= 3) {
       if (matchesAddressOrZip(q)) {
         this.onQueryMatchesAddressOrZip(q);
       }
