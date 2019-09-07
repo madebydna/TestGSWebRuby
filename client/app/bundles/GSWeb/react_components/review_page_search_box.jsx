@@ -90,7 +90,7 @@ class ReviewPageSearchBox extends SearchBox {
     return t('Enter school');
   }
 
-  renderSchoolSelectDropdown(){
+  displayDoNotSeeSchoolLink(){
     const subtitleHeight = {
       height: '35px'
     };
@@ -110,7 +110,7 @@ class ReviewPageSearchBox extends SearchBox {
   render() {
     return (
       <React.Fragment>
-        {this.renderSchoolSelectDropdown()}
+        {this.displayDoNotSeeSchoolLink()}
         <div className="search-bar-osp js-autocompleteFieldContainer ma picker-border">
           <div className="full-width">
           {this.searchBoxElement(false)}
