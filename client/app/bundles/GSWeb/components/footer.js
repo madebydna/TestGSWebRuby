@@ -5,7 +5,7 @@ import {
 import * as validatingInputs from 'components/validating_inputs';
 import { attachJQueryEventHandlers as attachMultiSelectButtonGroupEventHandlers } from 'util/multi_select_button_group';
 
-import { translateWithDictionary } from 'util/i18n';
+import { translateWithDictionary, currentLocale } from 'util/i18n';
 
 const newsletterLinkSelector = '.js-send-me-updates-button-footer';
 
@@ -21,6 +21,7 @@ export function setupNewsletterLink() {
     validatingInputs.addFilteringEventListener('body');
     attachMultiSelectButtonGroupEventHandlers();
   })
+
 
   $(newsletterLinkSelector).on('click', () => {
     let stateAbbreviation;
@@ -40,7 +41,13 @@ export function setupNewsletterLink() {
         schoolId
       );
     } else {
-      signupAndGetNewsletter();
+      if (currentLocale() == 'es'){
+        let win = window.open("https://pub.s1.exacttarget.com/bkt2mldejgh", '_blank');
+        win.focus();
+      }
+      else{
+        signupAndGetNewsletter();
+      }
     }
   });
 }
