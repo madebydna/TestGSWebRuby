@@ -39,20 +39,16 @@ class ActSatHandler
   end
 
   def enforce_latest_year_gsdata!(*data_types)
-    #data_type_hashes = hash.slice(*data_types).values.flatten.select(&:all_students?).flatten.extend(SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue::CollectionMethods)
-    data_type_hashes = select_by_data_types(*data_types, &:all_students?).extend(SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue::CollectionMethods)
-    max_year = data_type_hashes.having_most_recent_date.first.year
-    data_type_hashes.each do |v|
-      if v.year < max_year
-        v.school_value = nil
-      end
-    end
+    records = select_by_data_types(*data_types, &:all_students?)
+    max_year = get_max_year(records)
+    older_records = records.select {|v| v.year < max_year}
+    set_school_value_to_nil(older_records)
   end
 
   # remove school value for all students for selected data types
   def remove_crdc_breakdown!(*data_types)
-    data_type_hashes = select_by_data_types(*data_types, &:all_students?)
-    set_school_value_to_nil(data_type_hashes)
+    records = select_by_data_types(*data_types, &:all_students?)
+    set_school_value_to_nil(records)
   end
 
   # TODO Create method to handle ACT_SAT_PARTICIPATION
@@ -60,24 +56,18 @@ class ActSatHandler
   # this will return the most recent year (i.e., "max year") for which we have data
   # and set all previous years' school_values to nil
   def enforce_latest_year_school_value_for_data_types!(*data_types)
-    data_type_hashes = build_data_type_hashes(data_types)
-    max_year = get_max_year(data_type_hashes)
-    check_school_value_max(data_type_hashes, max_year)
+    records = select_by_data_types(*data_types, &:all_subjects_and_students?)
+    max_year = get_max_year(records)
+    check_school_value_max(records, max_year)
   end
 
-  def build_data_type_hashes(data_types)
-    hash.slice(*data_types).values.flatten.select do |tds|
-      tds.all_subjects_and_students?
-    end.flatten
+  def get_max_year(records)
+    records.map { |dts| dts.year }.max
   end
 
-  def get_max_year(data_type_hashes)
-    data_type_hashes.map { |dts| dts.year }.max
-  end
-
-  def check_school_value_max(data_type_hashes, max_year)
+  def check_school_value_max(records, max_year)
     return_value     = nil
-    data_type_hashes.each do |h|
+    records.each do |h|
       if school_value_present?(h["school_value_#{max_year}"])
         return_value = max_year
       else
@@ -87,9 +77,8 @@ class ActSatHandler
     return_value
   end
 
-  # TODO: replace with !value.zero?
   def school_value_present?(value)
-    value.present? && value.to_s != '0.0' && value.to_s != '0'
+    value.present? && !value.zero?
   end
 
   private

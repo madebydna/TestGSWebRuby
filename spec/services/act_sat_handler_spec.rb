@@ -18,15 +18,15 @@ describe SchoolProfiles::CollegeReadiness do
         cv1.subject              = 'All subjects'
         cv1.breakdown            = 'All students'
         cv1.year                 = "2018"
-        cv1["school_value_2018"] = "yes"
-        cv1["school_value_2014"] = "yes"
+        cv1["school_value_2018"] = 100
+        cv1["school_value_2014"] = 200
         cv1.school_value         = 123
 
         cv2.subject              = 'All subjects'
         cv2.breakdown            = 'All students'
         cv2.year                 = "2018"
-        cv2["school_value_2018"] = "yes"
-        cv2["school_value_2014"] = "yes"
+        cv2["school_value_2018"] = 100
+        cv2["school_value_2014"] = 200
         cv2.school_value         = 234
 
         hash = {
@@ -48,8 +48,8 @@ describe SchoolProfiles::CollegeReadiness do
           cv1.subject              = 'All subjects'
           cv1.breakdown            = 'All students'
           cv1.year                 = "2018"
-          cv1["school_value_2018"] = "yes"
-          cv1["school_value_2014"] = "yes"
+          cv1["school_value_2018"] = 100
+          cv1["school_value_2014"] = 300
           cv1.school_value         = 123
 
           cv2.subject      = 'All subjects'
@@ -77,8 +77,8 @@ describe SchoolProfiles::CollegeReadiness do
           cv1.subject              = 'Test Subject'
           cv1.breakdown            = 'Test students'
           cv1.year                 = "2018"
-          cv1["school_value_2018"] = "yes"
-          cv1["school_value_2014"] = "yes"
+          cv1["school_value_2018"] = 345
+          cv1["school_value_2014"] = 456
           cv1.school_value         = 123
 
           cv2.subject      = 'Test subject'
