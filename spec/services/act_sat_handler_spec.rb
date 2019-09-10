@@ -12,7 +12,7 @@ describe SchoolProfiles::CollegeReadiness do
     let(:act_sat_912_participation_dt) { SchoolProfiles::CollegeReadinessConfig::ACT_SAT_PARTICIPATION_9_12 }
     let(:act_sat_participation_dt) { SchoolProfiles::CollegeReadinessConfig::ACT_SAT_PARTICIPATION }
 
-    context 'given hash contains only act content' do
+    context 'given hash contains only ACT content' do
 
       it 'sets school value to nil for all students for ACT_SAT data types' do
         cv1.subject              = 'All subjects'
@@ -102,7 +102,11 @@ describe SchoolProfiles::CollegeReadiness do
       end
     end
 
-    context 'with no sat and no act content' do
+    context 'given hash contains only SAT content' do
+
+    end
+
+    context 'with no SAT and no ACT content' do
 
       # it 'should return data for act sat participation'
       # it 'should prioritize act/sat participation for 9-12 over 11-12'
@@ -135,6 +139,13 @@ describe SchoolProfiles::CollegeReadiness do
 
       end
     end
+
+    context 'with both SAT and ACT content' do
+
+    end 
+  end
+
+  def create_characteristics_value()
 
   end
 end
