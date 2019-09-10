@@ -13,6 +13,7 @@ import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import Calendar from "./calendar";
 import Students from "./students";
+import StemCourses from "../school_profiles/stem_courses";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
@@ -205,6 +206,20 @@ class District extends React.Component {
               </div>
             }
             pageType={this.pageType}
+          />
+        }
+        stemCourses={
+          <StemCourses
+            // courses={this.props.stemCourses.stem_courses_hashes}
+            // sources={this.props.stemCourses.stem_courses_sources}
+            share_content={this.props.stemCourses.share_content}
+            title={this.props.stemCourses.title}
+            titleTooltipText={this.props.stemCourses.titleTooltipText}
+            subtitle={this.props.stemCourses.subtitle}
+            parentTip={this.props.stemCourses.parentTip}
+            faqCta={this.props.stemCourses.faqCta}
+            faqContent={this.props.stemCourses.faqContent}
+            qualaroo_module_link={this.props.stemCourses.qualaroo_module_link}
           />
         }
         students={<Students {...studentProps} />}

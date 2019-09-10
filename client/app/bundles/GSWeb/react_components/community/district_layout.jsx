@@ -66,6 +66,14 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderStemCourses() {
+    return (
+      <div id="advanced_courses" className="module-section">
+        {this.props.stemCourses}
+      </div>
+    )
+  }
+
   renderCalendar() {
     return (
       <div id="calendar" className="module-section">
@@ -216,6 +224,7 @@ class DistrictLayout extends React.Component {
             {this.renderCsaModule()}
             {this.renderCaCsaModule()}
             {this.renderAcademics()}
+            {this.renderStemCourses()}
             {this.renderStudentsModule()}
             {this.renderCalendar()}
             {this.renderMobility()}
