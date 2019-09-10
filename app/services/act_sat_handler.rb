@@ -70,15 +70,10 @@ class ActSatHandler
   end
 
   def check_school_value_max(records, max_year)
-    return_value     = nil
-    records.each do |h|
-      if school_value_present?(h["school_value_#{max_year}"])
-        return_value = max_year
-      else
-        h.school_value = nil
-      end
-    end
-    return_value
+    max_year_records, older_records = records.partition { |h| school_value_present?(h["school_value_#{max_year}"]) }
+    set_school_value_to_nil(older_records)
+
+    max_year_records.any? ? max_year : nil
   end
 
   def school_value_present?(value)
