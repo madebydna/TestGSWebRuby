@@ -1,0 +1,40 @@
+es:
+  lib:
+    stem_courses:
+      title: Cursos avanzados y de STEM
+      title_tooltip_text_html: El acrónimo STEM representa las iniciales de&colon; ciencia, tecnología, ingeniería y matemáticas. <a href="/gk/articles/stem-in-the-classroom/">Averigua más</a> por qué cursos de STEM son tan importantes para los estudiantes de hoy.
+      subtitle_html: Un riguroso curso de STEM puede ayudar a tu estudiante a prepararse y entrar a la universidad. <a href="/gk/articles/stem-in-the-classroom/">Averigua más</a> acerca de por qué cursos de STEM son tan importantes para los estudiantes de hoy.
+      parent_tip_html: Muchos estudiantes exitosos terminan en cursos correctivas de matemáticas en la universidad. ¿<a href="/gk/articles/ready-for-college-math/">Tu estudiante está preparado</a> para matemáticas a nivel universitario? Pregúntele a este distrito cómo garantizan que los estudiantes están bien preparados.
+      faq_cta: ¿Notas que algo falta o confunde?
+      faq_content_html: >
+        <div class="emphasis">Matemáticas avanzadas en la escuela intermedia:</div>
+        <p>Generalmente <a href="/gk/articles/why-algebra/">Álgebra 1</a> se ofrece como un curso avanzado (AP) de matemáticas para estudiantes en escuelas intermedias (es una clase estándar de matemáticas en la escuela secundaria). Cuando falta información en nuestro perfil, lo más probable es que las escuelas en este distrito no ofrecían estudiantes Álgebra 1 en el 8° grado, o porque las escuelas en este distrito no tenían estudiantes en 8° grado. También puede ser que los datos que faltan no fueron incluidos en la recopilación federal de datos de derechos civiles (CRDC). (Ve "Fuentes" para más información.) Nota&colon; Mientras que las escuelas en este distrito pueden ofrecer Álgebra 1 en 7° o 8° grado, solo mostramos información sobre el índice de aprobación y participación de Álgebra 1 en el 8° grado, porque los datos de CRDC no incluía información de el índice de aprobación para estudiantes en 7° grado.</p>
+        <div class="emphasis">Matemáticas y ciencias avanzadas en la escuela secundaria:</div>
+        <p>Las clases de cursos avanzados (AP) son clases rigurosas con un examen final. El porcentaje de estudiantes que toman clases AP puede reflejar si la cultura del distrito se enfoca en la universidad. Cuando falta información en nuestro perfil, es muy probable porque las escuelas de este distrito no ofrecieron estos cursos.</p>
+        <div class="emphasis">¿Por qué no veo índices de AP?</div>
+        <p>Cuando falta información en nuestra perfiles, puede ser porque las escuelas en el distrito no ofrecían estos cursos o porque los datos no fueron incluidos en la recopilación de datos federales de los derechos civiles (CRDC). Información sobre los estudiantes tomando y/o aprobando los exámenes de matemáticas o ciencias AP no es parte de los datos proporcionados por el CRDC. (Ve "Fuentes" para más información.)</p>
+        <div class="emphasis">¿Cuales cursos están incluidos en "participación en otros cursos AP"?</div>
+        <p>Los "otros cursos" incluyen todos los cursos AP que no sean matemática y ciencia. Por ejemplo, las ciencias de computación AP y los idiomas y culturas del mundo AP se incluyen en "otros cursos". Nota&colon; se puede encontrar un resumen combinado de la participación en cualquier curso AP en el módulo Preparación universitaria.</p>
+        <p>¿Ha encontrado la información de cursos avanzados de STEM útil? ¿Qué podemos hacer mejor? <a href="#">Comparte tus comentarios.</a></p>
+        <p>Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
+      'Percentage algebra 1 enrolled grades 7-8':
+        label: Algebra 1 índice de participación en el 8° grado
+        tooltip_html: La mayoría de distritos consideran <a href="/gk/articles/why-algebra/">Álgebra 1</a> como un curso avanzado en los grados 7° y 8° y un curso estándar en la escuela secundaria. Esto refleja el porcentaje de estudiantes en 8° de este distrito que tomaron Álgebra 1 comparado con el promedio estatal. Aquí encontrarás todo lo que necesitas saber acerca de la <a href="/gk/articles/esta-tu-nino-siendo-asignado-a-un-grupo-especifico-en-la-clase-de-matematicas/?lang=es">ruta de matemáticas</a>.
+      'Percentage passing algebra 1 grades 7-8':
+        label: Algebra 1 índice de aprobación en el 8° grado
+        tooltip_html: Esto refleja el porcentaje de estudiantes en los años 8° de este distrito que pasaron <a href="/gk/articles/why-algebra/">Álgebra 1</a> comparado con el promedio estatal.
+      'Percent of students enrolled in Algebra 1':
+        label: Algebra 1 índice de participación en el 8° grado
+        tooltip_html: La mayoría de distritos consideran <a href="/gk/articles/why-algebra/">Álgebra 1</a> como un curso avanzado en los grados 7° y 8° y un curso estándar en la escuela secundaria. Esto refleja el porcentaje de estudiantes en 8° de este distrito que tomaron Álgebra 1 comparado con el promedio estatal. Aquí encontrarás todo lo que necesitas saber acerca de la <a href="/gk/articles/esta-tu-nino-siendo-asignado-a-un-grupo-especifico-en-la-clase-de-matematicas/?lang=es">ruta de matemáticas</a>.
+      'Percent of students passing Algebra 1':
+        label: Algebra 1 índice de aprobación en el 8° grado
+        tooltip_html: Esto refleja el porcentaje de estudiantes en los años 8° de este distrito que pasaron <a href="/gk/articles/why-algebra/">Álgebra 1</a> comparado con el promedio estatal.
+      'Percentage AP math enrolled grades 9-12':
+        label: Participación en cursos de matemáticas AP
+        tooltip_html: Esto refleja el porcentaje de estudiantes de este distrito que tomaron un Curso Avanzado (AP) de matemáticas en comparación con el promedio estatal.
+      'Percentage AP science enrolled grades 9-12':
+        label: Participación en cursos de ciencias AP
+        tooltip_html: Esto refleja el porcentaje de estudiantes de este distrito que tomaron un Curso Avanzado (AP) de ciencia en comparación con el promedio estatal.
+      'Percentage AP other courses enrolled grades 9-12':
+        label: Participación en otros cursos de AP
+        tooltip_html: Esto refleja el porcentaje de estudiantes de este distrito que tomaron un Curso Avanzado (AP) en una materia que no sea matemáticas o ciencias en comparación con el promedio estatal.
