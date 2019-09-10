@@ -20,9 +20,10 @@ class DistrictsController < ApplicationController
     @locality = locality
     @school_levels = school_levels
     @breadcrumbs = breadcrumbs
-    @top_schools =  top_rated_schools
+    @top_schools = top_rated_schools
     @hero_data = hero_data
     @academics_props = district_academics_module_props
+    @stem_courses = district_stem_courses
     @reviews = reviews_formatted.reviews_list
     @translations = translations
     @csa_module = csa_state_solr_query.present?
@@ -72,6 +73,10 @@ class DistrictsController < ApplicationController
 
   def district_academics_module_props
     CommunityProfiles::Academics.district_academics_props(district_cache_data_reader)
+  end
+
+  def district_stem_courses
+    @_district_stem_courses ||= CommunityProfiles::StemCourses.new(cache_data_reader: district_cache_data_reader).stem_courses_props
   end
 
   def district_cache_data_reader

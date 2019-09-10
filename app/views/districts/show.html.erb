@@ -8,6 +8,7 @@
 <% end %>
 
 <div class="community-page">
+    <% puts @stem_courses %>
   <%= react_component("District", props: {
       schools_data: @top_schools,
       school_levels: @school_levels,
@@ -15,6 +16,7 @@
       locality: @locality,
       heroData: @hero_data,
       academics: @academics_props,
+      stemCourses: @stem_courses,
       reviews: @reviews,
       translations: @translations,
       csa_module: @csa_module,
