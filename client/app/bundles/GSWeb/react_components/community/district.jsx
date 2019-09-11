@@ -210,8 +210,8 @@ class District extends React.Component {
         }
         stemCourses={
           <StemCourses
-            // courses={this.props.stemCourses.stem_courses_hashes}
-            // sources={this.props.stemCourses.stem_courses_sources}
+            courses={this.props.stemCourses.courses}
+            sources={this.props.stemCourses.sources}
             share_content={this.props.stemCourses.share_content}
             title={this.props.stemCourses.title}
             titleTooltipText={this.props.stemCourses.titleTooltipText}
