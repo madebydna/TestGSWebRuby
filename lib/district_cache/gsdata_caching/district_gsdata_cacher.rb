@@ -72,7 +72,7 @@ class DistrictGsdataCacher < DistrictCacher
 
   def district_results
     @_district_results ||=
-      DataValue.find_by_district_and_data_types(district.state, district, data_type_ids)
+      DataValue.find_by_district_and_data_types(district.state, district.id, data_type_ids)
   end
 
   def state_results_hash
