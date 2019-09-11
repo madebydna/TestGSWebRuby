@@ -80,6 +80,8 @@ es:
       disabilities_title: Estudiantes con discapacidades
       Students with IDEA catagory disabilities: Estudiantes con discapacidades
       Percentage AP enrolled grades 9-12: Porcentaje tomando cursos AP
+      Percentage of students enrolled in IB grades 9-12: Porcentaje tomando cursos IB
+      Percentage of students enrolled in Dual Enrollment classes grade 9-12: Porcentaje tomando cursos universitarios
       Number of Advanced Courses Taken per Student: Cursos avanzados por estudiantes
       English Language Arts: Inglés
       African American: Afroamericanos
@@ -104,6 +106,8 @@ es:
       Advanced courses: Cursos avanzados
       data_point_info_texts:
         'Percentage AP enrolled grades 9-12': 'Esto muestra el porcentaje de estudiantes tomando cursos avanzados (AP).'
+        'Percentage of students enrolled in Dual Enrollment classes grade 9-12': 'Esto muestra el porcentaje de estudiantes que están matriculados en clases universitarias mientras están en la escuela secundaria (también referido como "inscripción doble").'
+        'Percentage of students enrolled in IB grades 9-12': 'Porcentaje tomando cursos IB'
         'Number of Advanced Courses Taken per Student': 'Esto muestra el promedio de cursos avanzados tomadas por los estudiantes de esta escuela.'
         'Advanced Course Rating': >
           Las calificaciones de los cursos avanzados reflejan el número de cursos avanzados de Inglés,
