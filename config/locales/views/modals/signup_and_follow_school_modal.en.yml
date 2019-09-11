@@ -2,7 +2,7 @@
 en:
   modals:
     signup_and_follow_school_modal:
-      subheading: Yes! Send me email updates about my child's school.
+      subheading_html: Yes! Send me email updates about my child's school.
       heading_html: Saved this school to %{heading_link}! 
       heading_link_text: My School List
       heading_removed_html: Removed this school from %{heading_link}.

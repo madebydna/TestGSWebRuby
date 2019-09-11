@@ -5,23 +5,15 @@ import {
 import * as validatingInputs from 'components/validating_inputs';
 import { attachJQueryEventHandlers as attachMultiSelectButtonGroupEventHandlers } from 'util/multi_select_button_group';
 
-import { translateWithDictionary, currentLocale } from 'util/i18n';
+import { currentLocale } from 'util/i18n';
 
 const newsletterLinkSelector = '.js-send-me-updates-button-footer';
-
-const t = translateWithDictionary({
-  es: {
-    "Send me email updates about my child's school":
-      'Envíeme actualizaciones por correo electrónico sobre la escuela de mi hijo'
-  }
-});
 
 export function setupNewsletterLink() {
   $(() => {
     validatingInputs.addFilteringEventListener('body');
     attachMultiSelectButtonGroupEventHandlers();
   })
-
 
   $(newsletterLinkSelector).on('click', () => {
     let stateAbbreviation;
@@ -33,14 +25,16 @@ export function setupNewsletterLink() {
     }
 
     if (schoolId && stateAbbreviation) {
+      // let propsToPass = modalTopContent();
+      // let successMessage = successMessageMSS();
       signUpForGreatNewsAndMss(
-        {
-          heading: t("Send me email updates about my child's school")
-        },
+        modalTopContent(),
         stateAbbreviation,
-        schoolId
+        schoolId,
+        successMessageMSS(),
       );
-    } else {
+    }
+    else {
       if (currentLocale() == 'es'){
         let win = window.open("https://pub.s1.exacttarget.com/bkt2mldejgh", '_blank');
         win.focus();
@@ -50,4 +44,27 @@ export function setupNewsletterLink() {
       }
     }
   });
+
+  function successMessageMSS(){
+    if (currentLocale() == 'en'){
+      return '';
+    }
+    else{
+      return "¡Todo listo! Usted está suscrito a nuestro boletín de noticias y actualizaciones sobre %{school_name}<br /><br /><a href='https://pub.s1.exacttarget.com/bkt2mldejgh' target='_blank'><span class='heading'>¿Quieres más en español?</span> <br />Tenemos Boletines Grado por Grado del Kínder hasta el 12.° grado. Haz clic aquí al suscribirte.</a>";
+    }
+  }
+
+  function modalTopContent(){
+    if (currentLocale() == 'en'){
+      return {
+        heading: "Send me email updates about my child's school"
+      };
+    }
+    else{
+      return {
+        heading: 'Envíeme actualizaciones por correo electrónico sobre la escuela de mi hijo',
+        subheading: "Lo sentimos, actualmente no ofrecemos correos electrónicos sobre tu escuela en español, pero lo haremos en un futuro cercano. Actualmente ofrecemos boletines disponibles en español basados en el grado de tu hijo para ayudarte a apoyar el aprendizaje en el hogar. Verás un enlace en la siguiente página para suscribirte."
+      }
+    }
+  }
 }

@@ -2,7 +2,11 @@
   es:
     modals:
       signup_and_follow_school_modal:
-        subheading: ¡Sí! Envíeme actualizaciones por correo electrónico sobre la escuela de mi hijo.
+        subheading_html: >
+          ¡Sí! Envíeme actualizaciones por correo electrónico sobre la escuela de mi hijo.<br /><br />
+          Lo sentimos, actualmente no ofrecemos correos electrónicos sobre tu escuela en español, solo en inglés.
+          En español, ofrecemos Boletines Grado por Grado del kínder hasta el 12.° grado para ayudarte a apoyar
+          el aprendizaje en el hogar. Verás un enlace en la siguiente página para suscribirte si quieres.
         heading_html: ¡Guardé esta escuela en %{heading_link}!
         heading_link_text: Mi lista de escuelas
         heading_removed_html: Eliminado esta escuela de %{heading_link}.

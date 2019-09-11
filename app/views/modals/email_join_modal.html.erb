@@ -2,5 +2,5 @@
 <%= render 'modals/email_join_modal',
   modal_css_class: modal_css_class,
   heading: params[:heading] || t('.heading'),
-  subheading: nil
+  subheading: params[:subheading] || nil
 %>

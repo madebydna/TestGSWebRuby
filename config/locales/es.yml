@@ -12,7 +12,10 @@ es:
     generic_error: Lo sentimos, por algo salió mal al procesar tu solicitud.
     my_school_list:
       school_added: ! '%{school_name} se ha guardado en la lista de la escuela.'
-      school_added_subscribed: ¡Todo listo! Usted está suscrito a nuestro boletín de noticias y actualizaciones sobre %{school_name}
+      school_added_subscribed: >
+        ¡Todo listo! Usted está suscrito a nuestro boletín de noticias y actualizaciones sobre %{school_name}<br /><br />
+        <a href='https://pub.s1.exacttarget.com/bkt2mldejgh' target='_blank'><span class='heading'>¿Quieres más en español?</span>
+        <br />Tenemos Boletines Grado por Grado del Kínder hasta el 12.° grado. Haz clic aquí al suscribirte.</a>
     official_school_profile:
       register: ¡Casi Estas allí! Gracias por registrarse como líder escolar. Sólo tenemos que verificar su dirección de correo electrónico. Te hemos enviado un correo electrónico - por favor haga clic en el enlace en ese mensaje para empezar la edición de la información de su escuela!
     report_review:
