@@ -21,6 +21,20 @@ module Components
             component.title = 'Percentage AP enrolled grades 9-12'
             component.type = 'person'
             component.exact_breakdown_tags = ['ethnicity']
+          end,
+          GsdataComponent.new.tap do |component|
+            component.cache_data_reader = cache_data_reader
+            component.data_type = 'Percentage of students enrolled in IB grades 9-12'
+            component.title = 'Percentage of students enrolled in IB grades 9-12'
+            component.type = 'person'
+            component.exact_breakdown_tags = ['ethnicity']
+          end,
+          GsdataComponent.new.tap do |component|
+            component.cache_data_reader = cache_data_reader
+            component.data_type = 'Percentage of students enrolled in Dual Enrollment classes grade 9-12'
+            component.title = 'Percentage of students enrolled in Dual Enrollment classes grade 9-12'
+            component.type = 'person'
+            component.exact_breakdown_tags = ['ethnicity']
           end
         ]
       end
