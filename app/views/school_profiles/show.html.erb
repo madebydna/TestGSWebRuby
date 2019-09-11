@@ -90,17 +90,11 @@
 
               <% if @school.includes_level_code?(%w[m h]) %>
                 <div class="profile-section-slot">
-                  <% if !@school.middle_school? && @school_profile.courses.visible? %>
-                    <% # for multi level and high schools, show advanced courses data if we can %>
-                    <%= render 'courses', courses: @school_profile.courses %>
-                  <% elsif @school_profile.stem_courses.visible? %>
-                    <% # if multi level / high school didnt have advanced courses, or for middle schools, show stem data if we can %>
+                  <% if @school_profile.stem_courses.visible? %>
                     <%= render(
                       'stem_courses',
                       stem_courses: @school_profile.stem_courses
                     ) %>
-                  <% else %>
-                    <%= render 'courses', courses: @school_profile.courses %>
                   <% end %>
                 </div>
               <% end %>

@@ -93,7 +93,6 @@ class SchoolProfilesController < ApplicationController
         sp.breadcrumbs = breadcrumbs
         sp.teachers_staff = teachers_staff
         sp.show_high_school_data = show_high_school_data?
-        sp.courses = courses
         sp.osp_school_info = osp_school_info
         sp.claimed = hero.school_claimed?
         sp.stem_courses = stem_courses
@@ -155,7 +154,7 @@ class SchoolProfilesController < ApplicationController
 
   def summary_rating
     @_summary_rating ||= SchoolProfiles::SummaryRating.new(
-      test_scores, college_readiness, student_progress, academic_progress, equity_overview, courses, stem_courses,
+      test_scores, college_readiness, student_progress, academic_progress, equity_overview, stem_courses,
       school,
       school_cache_data_reader: school_cache_data_reader
     )
@@ -173,7 +172,7 @@ class SchoolProfilesController < ApplicationController
     SchoolProfiles::Toc.new(test_scores: test_scores, college_readiness: college_readiness,
                             college_success: college_success, student_progress: student_progress, equity: equity,
                             equity_overview: equity_overview, students: students,
-                            teachers_staff: teachers_staff, courses: courses, stem_courses: stem_courses,
+                            teachers_staff: teachers_staff, stem_courses: stem_courses,
                             academic_progress: academic_progress, school: school)
   end
 
