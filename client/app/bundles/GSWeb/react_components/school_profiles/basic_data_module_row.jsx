@@ -50,7 +50,7 @@ const BasicDataModuleRow = ({
     if (getQueryParam('lang') === 'es') {
       link = updateUrlParameter(link, 'lang', 'es');
     }
-    return <a onClick={()=> handleClick(link)} className="anchor-button" href={link}>Compare</a>
+    return <a onClick={()=> handleClick(link)} rel="nofollow" className="anchor-button" href={link}>Compare</a>
   }
 
   return (
