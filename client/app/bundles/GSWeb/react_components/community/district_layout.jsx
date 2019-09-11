@@ -67,7 +67,7 @@ class DistrictLayout extends React.Component {
   }
 
   renderStemCourses() {
-    return (
+    return this.props.shouldDisplayStemCourses && (
       <div id="advanced_courses" className="module-section">
         {this.props.stemCourses}
       </div>

@@ -208,6 +208,7 @@ class District extends React.Component {
             pageType={this.pageType}
           />
         }
+        shouldDisplayStemCourses={this.props.stemCourses.courses.length > 0}
         stemCourses={
           <StemCourses
             courses={this.props.stemCourses.courses}
