@@ -10,11 +10,13 @@ module CommunityProfiles
     end
 
     def share_content
-      share_tooltip_modal('Advanced_courses', @cache_data_reader.school)
+      # Per conversation with EP, no need to include Share button on community modules (for the foreseeable future)
+      # share_tooltip_modal('Advanced_courses', @cache_data_reader.district)
+      nil
     end
 
     def qualaroo_module_link
-      qualaroo_iframe(:advanced_stem, @cache_data_reader.school.state, @cache_data_reader.school.id.to_s)
+      qualaroo_iframe(:advanced_stem, @cache_data_reader.district.state, @cache_data_reader.district.id.to_s)
     end
 
     def data_types_and_visualizations
@@ -43,7 +45,6 @@ module CommunityProfiles
       data_types_and_visualizations.keys
     end
 
-    # look into this
     def stem_data
       @_stem_data ||= begin
         all_data = @cache_data_reader.decorated_gsdata_datas(*data_types)
@@ -52,11 +53,10 @@ module CommunityProfiles
       end
     end
 
-    # look into this
     def stem_courses_hashes
       stem_data.each_with_object([]) do |(data_type, bd_hashes), accum|
-        bd_hashes.for_all_students.having_school_value.having_most_recent_date.each do |data_value|
-          val = data_value.school_value.to_f.round
+        bd_hashes.for_all_students.having_district_value.having_most_recent_date.each do |data_value|
+          val = data_value.district_value.to_f.round
           accum << {
               breakdown: I18n.t(data_type, scope: 'lib.stem_courses', default:{})[:label],
               score: val,
@@ -72,7 +72,7 @@ module CommunityProfiles
     # look into this
     def stem_courses_sources
       stem_data.each_with_object([]) do |(data_type, bd_hashes), accum|
-        bd_hashes.for_all_students.having_school_value.having_most_recent_date.each do |data_value|
+        bd_hashes.for_all_students.having_district_value.having_most_recent_date.each do |data_value|
           accum << {
             data_type: I18n.t(data_type, scope: 'lib.stem_courses', default:{})[:label],
             source_year: data_value.source_year,
@@ -84,16 +84,16 @@ module CommunityProfiles
 
     def stem_courses_props
       {
-        courses: 1,
-        sources: 1,
-        share_content: 1,
+        courses: stem_courses_hashes,
+        sources: stem_courses_sources,
+        share_content: share_content,
         title: I18n.t('.title', scope: 'lib.stem_courses'),
         titleTooltipText: I18n.t('.title_tooltip_text_html', scope: 'lib.stem_courses'),
         subtitle: I18n.t('.subtitle_html', scope: 'lib.stem_courses'),
         parentTip: I18n.t('.parent_tip_html', scope: 'lib.stem_courses'),
         faqCta: I18n.t('.faq_cta', scope: 'lib.stem_courses'),
         faqContent: I18n.t('.faq_content_html', scope: 'lib.stem_courses'),
-        qualaroo_module_link: 1
+        qualaroo_module_link: qualaroo_module_link
       }
     end
 
