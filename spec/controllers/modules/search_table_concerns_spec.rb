@@ -76,10 +76,10 @@ describe SearchTableConcerns do
     ]
   }
   let(:empty_array) {[]}
-  
+
   before do
-    @academic_progress_state_cache = FactoryBot.create(:state_cache, state: 'ca', name: 'state_attributes', value: '{\"growth_type\":\"Academic Progress Rating\"}')
-    @student_progress_state_cache = FactoryBot.create(:state_cache, state: 'ar', name: 'state_attributes', value: '{\"growth_type\":\"Student Progress Rating\"}')
+    @academic_progress_state_cache = FactoryBot.create(:state_cache, state: 'ca', name: 'state_attributes', value: "{\"growth_type\":\"Academic Progress Rating\"}")
+    @student_progress_state_cache = FactoryBot.create(:state_cache, state: 'ar', name: 'state_attributes', value: "{\"growth_type\":\"Student Progress Rating\"}")
   end
 
   describe 'Remediation headers for tableview' do
@@ -106,9 +106,34 @@ describe SearchTableConcerns do
 
   describe 'Student Progress / Academic Progress Rating Headers' do
     context 'when a state is a data growth state' do
+      before{allow(dummy_controller).to receive(:state).and_return('ar')}
+
       it '.growth_data_proxy_state?' do
-        allow(dummy_controller).to receive(:state).and_return('ar')
         expect(dummy_controller.growth_data_proxy_state?).to be false
+      end
+
+      it '.growth_progress_rating_header' do
+        expect(dummy_controller.growth_progress_rating_header).to eq('Student Progress Rating')
+      end
+
+      it '.academic_header_names' do
+        expect(dummy_controller.academic_header_names).to eq(['Test Scores Rating', 'Student Progress Rating', 'College Readiness Rating', 'Advanced Courses Rating', 'Equity Overview Rating'])
+      end
+    end
+
+    context 'when a state is a data growth proxy state' do
+      before{allow(dummy_controller).to receive(:state).and_return('ca')}
+
+      it '.growth_data_proxy_state?' do
+        expect(dummy_controller.growth_data_proxy_state?).to be true
+      end
+
+      it '.growth_progress_rating_header' do
+        expect(dummy_controller.growth_progress_rating_header).to eq('Academic Progress Rating')
+      end
+
+      it '.academic_header_names' do
+        expect(dummy_controller.academic_header_names).to eq(['Test Scores Rating', 'Academic Progress Rating', 'College Readiness Rating', 'Advanced Courses Rating', 'Equity Overview Rating'])
       end
     end
   end
