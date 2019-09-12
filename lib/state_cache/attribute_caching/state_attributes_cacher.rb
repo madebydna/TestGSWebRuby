@@ -8,7 +8,7 @@ module AttributeCaching
       %w(growth_type)
     end
 
-    def growth_type
+    def growth_type_rating
       @_growth_types_by_state ||=begin
         Omni::Rating.joins(data_set: :data_type)
           .where(data_sets: {data_type_id: GROWTH_DATA_TYPES, state: state})
@@ -25,7 +25,7 @@ module AttributeCaching
       attributes.each_with_object({}) do |key, hash|
         case key
         when 'growth_type'
-          hash[key] = growth_type == nil ? 'N/A' : growth_type
+          hash[key] = growth_type_rating == nil ? 'N/A' : growth_type_rating
         end
       end
     end

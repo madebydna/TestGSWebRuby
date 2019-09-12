@@ -4,6 +4,7 @@ module SchoolProfiles
     include SharingTooltipModal
     
     attr_reader :school, :school_cache_data_reader
+    STUDENT_PROGRESS_RATING = 'student progress rating'
 
     def initialize(school, school_cache_data_reader:)
       @school = school
@@ -126,6 +127,10 @@ module SchoolProfiles
 
     def visible?
       has_data? || @school.includes_level_code?(%w(e m))
+    end
+
+    def student_progress_state?
+      school_cache_data_reader.growth_type == STUDENT_PROGRESS_RATING || school_cache_data_reader.growth_type == 'N/A'
     end
 
     def has_data?
