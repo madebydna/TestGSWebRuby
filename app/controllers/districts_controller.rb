@@ -11,6 +11,10 @@ class DistrictsController < ApplicationController
   before_filter :redirect_unless_valid_district
   before_action :redirect_to_canonical_url
 
+  set_additional_js_translations(
+    teachers_staff: [:lib, :teachers_staff]
+  )
+
   def show
     cache_time = ENV_GLOBAL['district_page_cache_time']
     expires_in(cache_time.to_i, public: true, must_revalidate: true) if cache_time.present?
@@ -28,6 +32,7 @@ class DistrictsController < ApplicationController
     @translations = translations
     @csa_module = csa_state_solr_query.present?
     @students = students.students_demographics
+    @teachers_staff = teachers_staff_data
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     gon.dependencies = {
         highcharts: ActionController::Base.helpers.asset_path('highcharts.js')
@@ -97,6 +102,10 @@ class DistrictsController < ApplicationController
 
   def students
     @_students ||= CommunityProfiles::Students.new(cache_data_reader: district_cache_data_reader)
+  end
+
+  def teachers_staff_data
+    @_teachers_staff_data ||= CommunityProfiles::TeachersStaff.new(district_cache_data_reader).data_values
   end
 
   def largest_district_in_city?

@@ -121,7 +121,6 @@ class DistrictCacheDataReader
     end
   end
 
-
   def decorated_gsdata_data(key)
     Array.wrap(decorated_district.gsdata.slice(key)[key])
       .map do |h|

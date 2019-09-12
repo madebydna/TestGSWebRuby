@@ -186,6 +186,14 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderTeachersStaffModule(){
+    return ( this.props.teachersStaff && 
+      <div id="teachers-staff" className="module-section">
+        {this.props.teachersStaff}
+      </div>
+    )
+  }
+
   renderReviews(){
     return (
       this.props.shouldDisplayReviews &&
@@ -214,6 +222,7 @@ class DistrictLayout extends React.Component {
             {this.renderAcademics()}
             {this.renderStemCourses()}
             {this.renderStudentsModule()}
+            {this.renderTeachersStaffModule()}
             {this.renderCalendar()}
             {this.renderMobility()}
             {this.renderZillow()}
