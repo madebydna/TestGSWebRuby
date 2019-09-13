@@ -25,7 +25,7 @@ const renderCsaBadgePopover = (years, links, state) => {
   let csaYearsForHeader = <span className="csa-award-count">{years.length}</span>;
   let csaHeader = 
     years.length === 1 ? t('award') : t('awards');
-    let csaStateLink = `/${legacyUrlEncode(name(state))}/college-success-award/`;
+  let csaStateLink = `/${legacyUrlEncode(name(state))}/college-success-award/`;
 
   return (
     <div className="csa-winner-popover-container">
