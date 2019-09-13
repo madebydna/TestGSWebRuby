@@ -39,6 +39,7 @@ const SchoolList = ({
   shouldRemoveAds
 }) => {
   let numsNonAssignedSchools = 0;
+  const hasAssignedSchools = schools.some(s=>s.assigned)
   checkSponsorSearchResult();
   return(
     <section className="school-list">
@@ -53,7 +54,8 @@ const SchoolList = ({
       <ol className={isLoading ? "loading" : ""}>
         {schools.map((s, index) => {
           if (s.assigned === null) { numsNonAssignedSchools++; }
-          const shouldRenderSponsorSchoolAdOnMobile = numsNonAssignedSchools === 6 && size <= SM && schools.length >= 8; 
+          const shouldRenderSponsorSchoolAdOnMobileWithAssignedSchools = hasAssignedSchools && numsNonAssignedSchools === 1 && size <= SM && schools.length >= 8; 
+          const shouldRenderSponsorSchoolAdOnMobile = !hasAssignedSchools && numsNonAssignedSchools === 2 && size <= SM && schools.length >= 8; 
           const shouldRenderSponsorSchoolAdOnDesktop = numsNonAssignedSchools === 3 && size > SM && schools.length >= 8;
           return(
             <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
@@ -69,6 +71,7 @@ const SchoolList = ({
                 )}
               {/* To place the faux ad after a certain amount of non-assigned school search result   */}
               {shouldRenderSponsorSchoolAdOnMobile && renderSponsorSearchResultAd()}
+              {shouldRenderSponsorSchoolAdOnMobileWithAssignedSchools && renderSponsorSearchResultAd()}
               {shouldRenderSponsorSchoolAdOnDesktop && renderSponsorSearchResultAd()}
               {size > SM ? (
                 <li
