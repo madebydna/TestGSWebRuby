@@ -59,7 +59,6 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
          test_data_type_id: 314, 
          description: 'In 2016-2017, students took the Louisiana Educational Assessment Program (LEAP) for grades 3-8 in ELA, Math, Science, and Social Studies. These assessments are aligned to the Louisiana Standards which were developed with significant input from Louisiana educators.'
       })
-      .transform("delete rows with full by band suppression",DeleteRows, :advanced, 'NA')
       .transform("Calc prof and above, ignore inequalities", WithBlock) do |row|
       if row[:mastery] =~ /^\d/ && row[:advanced] =~ /^\d/
         row[:prof_and_above] = row[:mastery].to_f + row[:advanced].to_f
@@ -78,7 +77,6 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
          grade: 'All',
          description: 'In 2016-2017 Louisiana used the End-Of-Course (EOC) tests to test grade high school students in English 2, English 3, U.S. History, Biology 1, Algebra 1, and Geometry. The EOC is a standards-based test, which means it measures specific skills defined for each grade by the state of Louisiana. The EOC is a high school graduation requirement. The goal is for all students to score at or above fair on the test.'
       })
-      .transform("delete rows with full by band suppression",DeleteRows, :excellent, 'NA')
       .transform("Calc prof and above, ignore inequalities", WithBlock) do |row|
       if row[:good] =~ /^\d/ && row[:excellent] =~ /^\d/
         row[:prof_and_above] = row[:good].to_f + row[:excellent].to_f
@@ -92,13 +90,12 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
 
   shared do |s|
     s.transform("Add subject id", HashLookup, :subject, map_subject_id, to: :subject_id)
-      .transform("delete rows where school is unknown",DeleteRows, :schoolname, 'unknown','Unknown')
       .transform("skip bad subgroups", DeleteRows, :subgroup, 'Education Classification_Regular Education and Section 504 - No', 'Education Classification_Regular Education and Section 504 - Yes', 'Homeless_No', 'Homeless_Yes', 'Migrant_No', 'Migrant_Yes')
       .transform("Add column with breakdown id", HashLookup, :subgroup, map_breakdown_id, to: :breakdown_id)
       .transform("Rename columns", MultiFieldRenamer,
       {
       district_state_id: :district_id,
-      schoolsystemcname: :district_name,
+      schoolsystemname: :district_name,
       school_state_id: :school_id,
       schoolname: :school_name,
       subgroup: :breakdown
