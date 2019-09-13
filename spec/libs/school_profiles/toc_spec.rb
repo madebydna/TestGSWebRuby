@@ -11,7 +11,6 @@ describe SchoolProfiles::Toc do
   let(:equity) {double('equity')}
   let(:students) {double('students')}
   let(:teacher_staff) {double('teacher_staff')}
-  let(:courses) {double('courses')}
   let(:stem_courses) {double('stem_courses')}
   let(:academic_progress) {double('academic_progress')}
   let(:college_success) {double('college_success')}
@@ -19,7 +18,7 @@ describe SchoolProfiles::Toc do
   subject(:toc) do
     SchoolProfiles::Toc.new(test_scores: test_scores, college_readiness: college_readiness, student_progress: student_progress,
                             equity_overview: equity_overview, equity: equity, students: students, teachers_staff: teacher_staff,
-                            courses: courses, stem_courses: stem_courses, academic_progress: academic_progress, school: school,
+                            stem_courses: stem_courses, academic_progress: academic_progress, school: school,
                             college_success: college_success)
   end
 
