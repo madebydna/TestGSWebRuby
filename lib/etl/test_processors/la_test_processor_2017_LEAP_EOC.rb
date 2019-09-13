@@ -57,6 +57,7 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
       s.transform("Set data type and id",Fill,{   
          test_data_type: 'leap',
          test_data_type_id: 314, 
+         notes: 'DXT-2875 LA LEAP',
          description: 'In 2016-2017, students took the Louisiana Educational Assessment Program (LEAP) for grades 3-8 in ELA, Math, Science, and Social Studies. These assessments are aligned to the Louisiana Standards which were developed with significant input from Louisiana educators.'
       })
       .transform("Calc prof and above, ignore inequalities", WithBlock) do |row|
@@ -75,6 +76,7 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
          test_data_type: 'laeoc',
          test_data_type_id: 316,
          grade: 'All',
+         notes: 'DXT-2875 LA EOC',
          description: 'In 2016-2017 Louisiana used the End-Of-Course (EOC) tests to test grade high school students in English 2, English 3, U.S. History, Biology 1, Algebra 1, and Geometry. The EOC is a standards-based test, which means it measures specific skills defined for each grade by the state of Louisiana. The EOC is a high school graduation requirement. The goal is for all students to score at or above fair on the test.'
       })
       .transform("Calc prof and above, ignore inequalities", WithBlock) do |row|
@@ -102,7 +104,6 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
       })
       .transform("Fill in n tested, notes, date value and year", Fill, {
        number_tested: nil,
-       notes: 'DXT-2875 LA LEAP, EOC 2017',
        date_valid: '2017-01-01 00:00:00',
        year: 2017
       })
