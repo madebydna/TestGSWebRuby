@@ -13,6 +13,7 @@ module AttributeCaching
         Omni::Rating.joins(data_set: :data_type)
           .where(data_sets: {data_type_id: GROWTH_DATA_TYPES, state: state})
           .school_entity
+          .order('data_sets.date_valid DESC')
           .active
           .select('data_sets.state as state, data_types.name')
           .distinct
