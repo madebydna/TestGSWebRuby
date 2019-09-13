@@ -17,6 +17,8 @@ es:
       'Percentage SAT/ACT participation grades 11-12': 'Índice de participación en SAT/ACT'
       'Percent of Students who Participated in the SAT/ACT in grades 9-12': 'Índice de participación en SAT/ACT'
       'Percentage AP enrolled grades 9-12': 'Participación en cursos AP'
+      'Percentage of students enrolled in Dual Enrollment classes grade 9-12': 'El porcentaje de estudiantes matriculados en cursos de Inscripción Doble en los grados 9.° y 12.°'
+      'Percentage of students enrolled in IB grades 9-12': 'El porcentaje de estudiantes matriculados en IB en los grados 9.° y 12.°'
       '4-year high school graduation rate': 'Índice de graduación de escuelas preparatorias de 4 años'
       Percent of students who meet UC/CSU entrance requirements: Porcentaje de alumnos que cumplen con los requisitos de elegibilidad para UC/CSU
       'Percentage of students passing 1 or more AP exams grades 9-12': 'El porcentaje de estudiantes que pasaron uno o más exámenes AP grados 9°-12°'
@@ -25,7 +27,10 @@ es:
         cta: ¿Notas que algo falta o confunde?
         content_html: >
           <p>Información de la preparación universitaria procede de agencias del estado o nacionales de educación (haz clic en el enlace "Fuentes" para más detalles).</p>
-          <p>Cuando falta información en nuestros perfiles, probablemente es porque esta escuela no ofreció un curso AP o participó en uno de los dos exámenes de preparación universitaria, el ACT o SAT (algunos estados determinan que exámenes de preparación universitaria las escuelas pueden utilizar). También es posible que los datos que faltan no estaban incluidos en los datos que recibimos del estado.</p>
+          <p>Cuando falta información en nuestros perfiles, probablemente es porque esta escuela no ofreció un curso AP,
+          clases de bachillerato internacional (IB) o inscripción doble, o participó en uno de los dos exámenes de preparación
+          universitaria, el ACT o SAT (algunos estados determinan que exámenes de preparación universitaria las escuelas pueden utilizar).
+          También es posible que los datos que faltan no estaban incluidos en los datos que recibimos del estado.</p>
           <p><a href="/gk/como-clasificamos/?lang=es#collegereadinessrating" target="_blank">Infórmese más sobre esta calificación.</a></p>
           <p>Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
       'Graduating seniors pursuing 4 year college/university': Estudiantes de último año que buscan una universidad de 4 años
@@ -64,6 +69,13 @@ es:
       csa_badge_html: >
         Esta escuela ha ganado un <span style='font-family:opensans-semibold'>%{blurb} College Success Award</span> basado en su éxito en preparar a los estudiantes para la universidad y finalmente para su carrera. <a href=%{csa_state_link}>Ver más ganadores</a>.
       data_point_info_texts:
+        'Percentage of students enrolled in IB grades 9-12': >
+          El Bachillerato Internacional (IB) es un programa de alto nivel reconocido internacionalmente que enfatiza
+          el pensamiento creativo y crítico. Una escuela secundaria puede tener clases específicas de IB que
+          los estudiantes pueden tomar, o un programa IB para toda la escuela que afecta a todas las clases.
+          Algunas universidades dan créditos universitarios para los cursos del IB.
+          <a href='/gk/articles/what-is-ib-international-baccalaureate/' target='_blank'>Más acerca de IB</a>
+        'Percentage of students enrolled in Dual Enrollment classes grade 9-12': 'La Clasificación para la Participación de Inscripción Doble refleja el porcentaje de estudiantes en esta escuela que toman cursos universitarios mientras están en la escuela secundaria. Los créditos para estos cursos se aplican a los requisitos para un diploma de la escuela secundaria y los requisitos de para graduación universitaria.'
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
         'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
         'Average SAT score_new': 'El SAT es una prueba de admisión universitaria, que en 2016 tenía un total de 1600 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela.'

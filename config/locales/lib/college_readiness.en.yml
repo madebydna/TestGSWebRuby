@@ -4,7 +4,7 @@ en:
       and: and
       state: state
       district: district
-      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and AP coursework when available.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
+      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and advanced coursework when available.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
       'title': 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools College Readiness Rating'
       'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
@@ -17,6 +17,8 @@ en:
       'Percentage SAT/ACT participation grades 11-12': 'SAT/ACT participation rate'
       'Percent of Students who Participated in the SAT/ACT in grades 9-12': 'SAT/ACT participation rate'
       'Percentage AP enrolled grades 9-12': 'AP course participation'
+      'Percentage of students enrolled in Dual Enrollment classes grade 9-12': 'Percentage of students enrolled in Dual Enrollment classes grade 9-12'
+      'Percentage of students enrolled in IB grades 9-12': 'Percentage of students enrolled in IB grades 9-12'
       '4-year high school graduation rate': '4-year high school graduation rate'
       Percent of students who meet UC/CSU entrance requirements: 'Percentage of graduates who meet UC/CSU entrance requirements'
       'Percentage of students passing 1 or more AP exams grades 9-12': 'Percentage of students passing 1 or more AP exams grades 9-12'
@@ -25,7 +27,7 @@ en:
         cta: Notice something missing or confusing?
         content_html: >
           <p>College readiness information comes from state or national education agencies (click on the "Sources" link for details).</p>
-          <p>When information is missing in our display, it's most likely because this school did not offer an AP course or participate in one of the two college readiness tests, the ACT or SAT (some states mandate which college readiness test schools use). It's also possible that the missing data was not included in the data we received from the state.</p>
+          <p>When information is missing in our display, it's most likely because this school did not offer an AP course, IB or dual enrollment classes, or participate in one of the two college readiness tests, the ACT or SAT (some states mandate which college readiness test schools use). It's also possible that the missing data was not included in the data we received from the state.</p>
           <p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page.</a></p>
       'Graduating seniors pursuing 4 year college/university': 'Graduates pursuing 4-year college'
@@ -65,6 +67,12 @@ en:
         This school has earned a <span style='font-family:opensans-semibold'>%{blurb} College Success Award</span> based on its success in preparing students for college and ultimately career. <a href=%{csa_state_link}>See more winners</a>.
       data_point_info_texts:
         '4-year high school graduation rate': 'Graduation rates reflect how many students graduate from this school on time.'
+        'Percentage of students enrolled in IB grades 9-12': >
+          International Baccalaureate (IB) is an internationally recognized, high-standards program that emphasizes creative
+          and critical thinking. A high school may have specific IB classes students can take, or a school-wide IB program
+          that affects all classes. Some colleges give college credit for IB courses.
+          <a href='/gk/articles/what-is-ib-international-baccalaureate/' target='_blank'>More about IB</a>
+        'Percentage of students enrolled in Dual Enrollment classes grade 9-12': 'The Dual Enrollment participation rate reflects the percentage of students at this school who are taking college courses while in high school. Credits for these courses apply both to high school diploma requirements and college graduation requisites.'
         'Average SAT score': 'The SAT is a college admissions test which in 2015 had a total of 2400 possible points. This score reflects the average SAT score for students at this school. In 2016 the SAT changed to a 1600 point scale. Check back soon for updated information for this school.'
         'Average SAT score_new': 'The SAT is a college admissions test which in 2016 had a total of 1600 possible points. This score reflects the average SAT score for students at this school.'
         'SAT percent participation': 'The SAT participation rate reflects the percentage of eligible students at this school who took the SAT.'
