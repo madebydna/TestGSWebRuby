@@ -31,6 +31,8 @@ module SearchTableConcerns
   # Otherwise it will return false if it is a growth_data_state (uses Student Progress Rating) or if the state
   # doesn't have any data at all (N/A but will use SPR as a fallback) 
   def growth_data_proxy_state?
+    # finds most frequent state if a la carte search is used and no state in query params
+    state = mode(serialized_schools.map {|school| school.dig(:state) }) if state.nil?
     cache_data = StateCache.for_state('state_attributes', state).cache_data
     return false if cache_data.empty?
     cache_data['growth_type'] == ACADEMIC_PROGRESS_RATING
