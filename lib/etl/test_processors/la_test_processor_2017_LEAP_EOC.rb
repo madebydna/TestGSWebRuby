@@ -41,16 +41,16 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
   }
 
   map_prof_band_id = {
-      'Advanced' 17,
-      'Mastery' 16,
-      'Basic' 15,
-      'Approaching_Basic' 14,
-      'Unsatisfactory' 13,
-      'Excellent' 8,
-      'Good' 7,
-      'Fair' 6,
-      'Needs_Improvement' 5,
-      'prof_and_above' 1
+      :advanced => 17,
+      :mastery => 16,
+      :basic => 15,
+      :approaching_basic => 14,
+      :unsatisfactory => 13,
+      :excellent => 8,
+      :good => 7,
+      :fair => 6,
+      :needs_improvement => 5,
+      :prof_and_above => 1
   }
 
   source("edited_spring-2017-state-lea-leap-achievement-level-subgroup_public.txt",[],col_sep: "\t") do |s|
@@ -59,6 +59,16 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
          test_data_type_id: 314, 
          description: 'In 2016-2017, students took the Louisiana Educational Assessment Program (LEAP) for grades 3-8 in ELA, Math, Science, and Social Studies. These assessments are aligned to the Louisiana Standards which were developed with significant input from Louisiana educators.'
       })
+      .transform("delete rows with full by band suppression",DeleteRows, :advanced, 'NA')
+      .transform("Calc prof and above, ignore inequalities", WithBlock) do |row|
+      if row[:mastery] =~ /^\d/ && row[:advanced] =~ /^\d/
+        row[:prof_and_above] = row[:mastery].to_f + row[:advanced].to_f
+      elsif row[:unsatisfactory] =~ /^\d/ && row[:approaching_basic] =~ /^\d/ && row[:basic] =~ /^\d/
+        row[:prof_and_above] = 100 - row[:unsatisfactory].to_f - row[:approaching_basic].to_f - row[:basic].to_f
+      end
+      row
+    end
+    .transform("Skip missing prof and above values", DeleteRows, :prof_and_above, nil)
   end
 
   source("edited_2016-2017-state-lea-school-leap-hs-achievement-level-subgroup_04172019.txt",[],col_sep: "\t") do |s|
@@ -68,12 +78,22 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
          grade: 'All',
          description: 'In 2016-2017 Louisiana used the End-Of-Course (EOC) tests to test grade high school students in English 2, English 3, U.S. History, Biology 1, Algebra 1, and Geometry. The EOC is a standards-based test, which means it measures specific skills defined for each grade by the state of Louisiana. The EOC is a high school graduation requirement. The goal is for all students to score at or above fair on the test.'
       })
+      .transform("delete rows with full by band suppression",DeleteRows, :excellent, 'NA')
+      .transform("Calc prof and above, ignore inequalities", WithBlock) do |row|
+      if row[:good] =~ /^\d/ && row[:excellent] =~ /^\d/
+        row[:prof_and_above] = row[:good].to_f + row[:excellent].to_f
+      elsif row[:needs_improvement] =~ /^\d/ && row[:fair] =~ /^\d/
+        row[:prof_and_above] = 100 - row[:needs_improvement].to_f - row[:fair].to_f
+      end
+      row
+    end
+    .transform("Skip missing prof and above values", DeleteRows, :prof_and_above, nil)
   end
 
   shared do |s|
     s.transform("Add subject id", HashLookup, :subject, map_subject_id, to: :subject_id)
       .transform("delete rows where school is unknown",DeleteRows, :schoolname, 'unknown','Unknown')
-      .transform("skip bad subgroups", DeleteRows, :subgroup, 'Regular Education and Section 504', 'Homeless', 'Migrant')
+      .transform("skip bad subgroups", DeleteRows, :subgroup, 'Education Classification_Regular Education and Section 504 - No', 'Education Classification_Regular Education and Section 504 - Yes', 'Homeless_No', 'Homeless_Yes', 'Migrant_No', 'Migrant_Yes')
       .transform("Add column with breakdown id", HashLookup, :subgroup, map_breakdown_id, to: :breakdown_id)
       .transform("Rename columns", MultiFieldRenamer,
       {
@@ -81,10 +101,13 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
       schoolsystemcname: :district_name,
       school_state_id: :school_id,
       schoolname: :school_name,
-      subgroup: :breakdown,
-      notes: 'DXT-2875 LA LEAP, EOC 2017',
-      date_valid: '2017-01-01 00:00:00',
-      year: 2017,
+      subgroup: :breakdown
+      })
+      .transform("Fill in n tested, notes, date value and year", Fill, {
+       number_tested: nil,
+       notes: 'DXT-2875 LA LEAP, EOC 2017',
+       date_valid: '2017-01-01 00:00:00',
+       year: 2017
       })
       .transform("state id", WithBlock) do |row|
 	     if row[:entity_type] == 'district'
@@ -95,13 +118,24 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
 	        elsif (row[:school_id].length) == 3	     
 		      row [:state_id] = "%03s%03s" % [row[:district_id], row[:school_id]]
 		      end
-	     elsif row[:entity_level] == 'state'
+	     elsif row[:entity_type] == 'state'
 	        row[:state_id] = 'state'
 	     end
 	     row
       end
-      .transform("Transpose Proficiency bands",Transposer,:proficiency_band, :value, :advanced, :mastery, :basic, :approaching_basic, :unsatisfactory, :excellent, :good, :fair, :needs_improvement,:prof_and_above)
+      .transform("Transpose Proficiency bands",Transposer, :proficiency_band, :value, 
+        :advanced, 
+        :mastery, 
+        :basic, 
+        :approaching_basic, 
+        :unsatisfactory, 
+        :excellent, 
+        :good, 
+        :fair, 
+        :needs_improvement,
+        :prof_and_above)
       .transform("Add column with prof band id", HashLookup, :proficiency_band, map_prof_band_id, to: :proficiency_band_id)
+      .transform("delete NA value rows",DeleteRows, :value, 'NA', nil)
       .transform("Fix inequalities in value and fix grade padding", WithBlock,) do |row|
 	     if row[:value] == -1
 	      row[:value] = 0
@@ -112,9 +146,6 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
 	     row[:grade].sub!(/^0/, '')
 	     row
       end
-      .transform("Fill in n tested", Fill, {
-	     number_tested: nil,
-      })
   end
 
   def config_hash
