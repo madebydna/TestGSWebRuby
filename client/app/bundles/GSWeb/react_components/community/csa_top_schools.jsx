@@ -25,8 +25,9 @@ const CsaTopSchools = ({ schools, renderTabsContainer, size, locality, community
       {schools.map(school => (
         <CsaTopSchoolTableRow
           key={school.state + school.id}
-          {...school}
           size={size}
+          community={community}
+          {...school}
         />
       ))}
     </section>);

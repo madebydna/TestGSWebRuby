@@ -138,7 +138,7 @@ class Calendar extends React.Component {
             {t('event')}
             { this.state.verified && 
               <span className="verified">
-                <ModalTooltip content={t('district_calendar_verified')}>
+                <ModalTooltip content={t('district_calendar_verified')} gaCategory='District'>
                   <img src={claimedBadge}/>
                 </ModalTooltip>
               </span> 

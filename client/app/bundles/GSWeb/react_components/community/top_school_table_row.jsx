@@ -7,7 +7,7 @@ import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t, capitalize } from "util/i18n";
 import { getDistrictHref } from 'util/school';
 
-const renderSchoolItem = ({ name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, address, state }) => {
+const renderSchoolItem = ({ name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, address, state, community }) => {
   const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
   const districtLink = getDistrictHref(state, address.city, districtName);
 
@@ -16,7 +16,7 @@ const renderSchoolItem = ({ name, rating, links, districtName, numReviews, paren
       <div>
         <Rating score={rating} size="medium" />
         <div className="scale">
-          <ModalTooltip content={content}>
+          <ModalTooltip content={content} gaCategory={capitalize(community)}>
             <span className="info-circle icon-info" />
           </ModalTooltip>
         </div>

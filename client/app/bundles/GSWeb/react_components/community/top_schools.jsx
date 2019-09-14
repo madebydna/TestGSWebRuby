@@ -78,6 +78,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
               key={school.state + school.id}
               {...school}
               size={size}
+              community={community}
             />
           ))}
         </section>;
