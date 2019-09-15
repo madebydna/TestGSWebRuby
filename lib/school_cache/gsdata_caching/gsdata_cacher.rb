@@ -23,10 +23,15 @@ class GsdataCaching::GsdataCacher < Cacher
   # 318: Percent of Students who Participated in the SAT/ACT in grades 9-12
   # 321: Percent of students enrolled in Algebra 1
   # 322: Percent of students passing Algebra 1
+  # 330: Law Enforcement Officer indicator
+  # 331: Security Guard indicator
+  # 332: Nurse indicator
+  # 333: Psychologist indicator
+  # 334: Social Worker indicator
 
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
 
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 67, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154, 318, 321, 322].freeze
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 67, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154, 318, 321, 322, 330, 331, 332, 333, 334].freeze
 
   # BREAKDOWN_TAG_NAMES = %w(
   #   ethnicity
