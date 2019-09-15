@@ -12,7 +12,7 @@ en:
           students in middle school (it’s a standard math class in high school). When participation is shown as 0%, or other information is missing in our
           display, it’s most likely because this school either did not offer Algebra 1 to its 8th grade students. It may also be that the missing data was not
           included in the federal Civil Rights Data Collection (CRDC). (See "Sources" for more information.) Note&colon; While schools can offer Algebra 1 in 7th or 8th grades, we are displaying 8th grade Algebra 1 participation and pass rate information only, because the CRDC data set did not include pass rate information for 7th grade students.</p>
-          <p>Did you find the information about advanced STEM courses useful? What can we do better? <a href="#">Share your feedback.</a></p>
+          <p>Did you find the information about advanced STEM courses useful? What can we do better? <a href="https://s.qualaroo.com/45194/08c5c785-4c16-4a7a-9faf-434b253029bc" target="_blank">Share your feedback.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       h:
         title: Advanced & STEM courses
@@ -27,13 +27,13 @@ en:
           <p>When information is missing in our display,
           it may be because the school did not offer these courses or because the data wasn't included in the federal
           Civil Rights Data Collection (CRDC). Information about students taking and/or passing AP science or math exams
-          is not part of the data provided by the CRDC. (See “Sources” for more information.)</p>
+          is not part of the data provided by the CRDC. (See "Sources" for more information.)</p>
           <div class="emphasis">What courses are included in "Other AP course participation?"</div>
           <p>"Other subjects" include all AP courses other than those in mathematics and science. 
           For example, AP computer science and AP world languages and cultures are included in 
           "other subjects." Note&colon; a combined view of participation in any AP course can be 
           found in the College Readiness module.</p>
-          <p>Did you find the information about advanced STEM courses useful? What can we do better? <a href="#">Share your feedback.</a></p>
+          <p>Did you find the information about advanced STEM courses useful? What can we do better? <a href="https://s.qualaroo.com/45194/08c5c785-4c16-4a7a-9faf-434b253029bc" target="_blank">Share your feedback.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       mixed:
         title: Advanced & STEM courses
@@ -57,7 +57,7 @@ en:
           is not part of the data provided by the CRDC. (See "Sources" for more information.)</p>
           <div class="emphasis">What courses are included in "Other AP course participation?"</div>
           <p>"Other subjects" include all AP courses other than those in mathematics and science. For example, AP computer science and AP world languages and cultures are included in "other subjects." Note&colon; a combined view of participation in any AP course can be found in the College Readiness module.</p>
-          <p>Did you find the information about advanced STEM courses useful? What can we do better? <a href="#">Share your feedback.</a></p>
+          <p>Did you find the information about advanced STEM courses useful? What can we do better? <a href="https://s.qualaroo.com/45194/08c5c785-4c16-4a7a-9faf-434b253029bc" target="_blank">Share your feedback.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       faq_cta: Notice something missing or confusing?
       'Percentage algebra 1 enrolled grades 7-8':
