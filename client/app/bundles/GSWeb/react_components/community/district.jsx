@@ -17,7 +17,7 @@ import StemCourses from "../school_profiles/stem_courses";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
-import { schoolsTocItem, academicsTocItem, ACADEMICS, STUDENTS, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS} from './toc_config';
+import { schoolsTocItem, academicsTocItem, ACADEMICS, advancedCoursesTocItem, STUDENTS, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
@@ -127,7 +127,7 @@ class District extends React.Component {
   }
 
   selectTocItems(){
-    let districtTocItems = [schoolsTocItem, academicsTocItem, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
+    let districtTocItems = [schoolsTocItem, academicsTocItem, advancedCoursesTocItem, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());

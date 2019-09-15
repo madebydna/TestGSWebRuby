@@ -6,7 +6,8 @@ export const REVIEWS = 'reviews';
 export const COMMUNITY_RESOURCES = 'community_resources';
 export const ACADEMICS = 'academics';
 export const CALENDAR = 'calendar';
-export const STUDENTS = 'students'
+export const STUDENTS = 'students';
+export const ADVANCED_COURSES = 'advanced_courses';
 export const BROWSE_SCHOOLS = 'browse-schools';
 export const AWARD_WINNING_SCHOOLS = 'award-winning-schools';
 export const CITIES = 'cities';
@@ -51,6 +52,13 @@ export const academicsTocItem = {
   key: ACADEMICS,
   label: t(capitalize(ACADEMICS)),
   anchor: '#academics',
+  selected: false
+}
+
+export const advancedCoursesTocItem = {
+  key: ADVANCED_COURSES,
+  label: t('Advanced courses'),
+  anchor: '#advanced_courses',
   selected: false
 }
 
