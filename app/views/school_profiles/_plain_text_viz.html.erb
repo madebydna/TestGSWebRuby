@@ -1,0 +1,22 @@
+<% score_data %>
+
+<div class="row bar-graph-display">
+  <div class="test-score-container clearfix">
+    <div class="col-xs-6 col-sm-5 subject"><%= score_data.label %>
+      <% if score_data.info_text %>
+        <%= render 'info_circle', content: score_data.info_text, element_type: 'datatooltip' %>
+      <% end %>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-xs-6 col-sm-6">
+      <div class="bar-graph-container">
+        <div class="score"></div>
+        <div class="viz">
+          <div class="subject">
+            Full Time
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
