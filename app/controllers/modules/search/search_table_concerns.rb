@@ -8,7 +8,7 @@ module SearchTableConcerns
   ACADEMIC_PROGRESS_RATING = 'Academic Progress Rating'
 
   def academic_header_names
-    ['Test Scores Rating', growth_progress_rating_header, 'College Readiness Rating', 'Advanced Courses Rating', 'Equity Overview Rating']
+    ['Test Scores Rating', growth_progress_rating_header, 'College Readiness Rating', 'Equity Overview Rating']
   end
   
   def academic_header_hash
