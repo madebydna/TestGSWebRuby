@@ -19,7 +19,7 @@ const ModuleSubTab = ({
   let gaCategory = 'Profile'
   // TODO: Refactor or make new components using button groups
   // Hide the tab if the item doesn't have a title
-  if(pageType !== 'profiles'){
+  if(pageType !== 'Profile'){
     gaCategory = `${capitalize(pageType)} Page - Interaction`;
     gaAction = `${title} Tab Clicked`
   }

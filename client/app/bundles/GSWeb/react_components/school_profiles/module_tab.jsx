@@ -10,7 +10,7 @@ const ModuleTab = ({
   highlight,
   anchorLink,
   onClick,
-  pageType = 'profiles'
+  pageType = 'Profile'
 }) => {
   let addJSHashUpdate = '';
   if (anchorLink.length > 0) {
@@ -19,7 +19,7 @@ const ModuleTab = ({
   let googleCategory = 'Profile'
   let googleAction = `Equity ${google_tracking} Tabs`
   // for community pages
-  if (pageType !== 'profiles'){
+  if (pageType !== 'Profile'){
     googleCategory = 'Interaction'
     googleAction = `${capitalize(pageType)} ${title} Tab Clicked`
   }

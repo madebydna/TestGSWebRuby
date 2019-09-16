@@ -188,7 +188,7 @@ const renderNoInfoTooltip = () => {
     </div>;
   return (
     <div className="scale">
-      <ModalTooltip content={noInfo} gaCategory='Compare'>
+      <ModalTooltip content={noInfo}>
         <span className="info-circle icon-info" />
       </ModalTooltip>
     </div>

@@ -7,7 +7,7 @@ import { t } from "util/i18n";
 import { addQueryParamToUrl } from 'util/uri';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
-const regionName = (locality, community) => {
+const regionName = (locality) => {
   if (locality.stateShort === 'DC') {
     return `${locality.city}, ${locality.stateShort}`;
   } else if (community === 'state') {
@@ -26,7 +26,6 @@ const CsaTopSchools = ({ schools, renderTabsContainer, size, locality, community
         <CsaTopSchoolTableRow
           key={school.state + school.id}
           size={size}
-          community={community}
           {...school}
         />
       ))}

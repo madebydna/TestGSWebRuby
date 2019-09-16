@@ -138,7 +138,7 @@ class Calendar extends React.Component {
             {t('event')}
             { this.state.verified && 
               <span className="verified">
-                <ModalTooltip content={t('district_calendar_verified')} gaCategory='District'>
+                <ModalTooltip content={t('district_calendar_verified')}>
                   <img src={claimedBadge}/>
                 </ModalTooltip>
               </span> 
@@ -214,7 +214,7 @@ class Calendar extends React.Component {
             </section>
             <div className="module-footer">
               <div data-ga-click-label='Calendar'>
-                <InfoBox content={sources} element_type="sources" >{ t('See notes') }</InfoBox>
+                <InfoBox content={sources} element_type="sources" pageType={this.props.pageType}>{ t('See notes') }</InfoBox>
                 <QualarooDistrictLink module='district_calendar' state={this.props.locality.stateShort} districtId={this.props.locality.district_id} />
               </div>
             </div>

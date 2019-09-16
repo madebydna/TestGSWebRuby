@@ -200,7 +200,7 @@ class District extends React.Component {
             suppressIfEmpty={true}
             footer={
               <div data-ga-click-label={title}>
-                <InfoBox content={sources} element_type="sources">{ t('See notes') }</InfoBox>
+                <InfoBox content={sources} element_type="sources" pageType={this.pageType}>{ t('See notes') }</InfoBox>
                 <QualarooDistrictLink module='district_academics' state={this.props.locality.stateShort} districtId={this.props.locality.district_id} />
               </div>
             }
