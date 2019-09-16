@@ -13,6 +13,7 @@ import { COOKIE_NAME } from './search_context';
 import csaBadgeSm from 'search/csa-award-sm.png';
 import csaBadgeMd from 'search/csa-award-md.png';
 import { name, titleizedName } from 'util/states';
+import { legacyUrlEncode } from 'util/uri';
 
 const joinWithSeparator = (arrayOfElements, separator) =>
   arrayOfElements
@@ -24,7 +25,7 @@ const renderCsaBadgePopover = (years, links, state) => {
   let csaYearsForHeader = <span className="csa-award-count">{years.length}</span>;
   let csaHeader = 
     years.length === 1 ? t('award') : t('awards');
-  let csaStateLink = `/${name(state)}/college-success-award/`;
+  let csaStateLink = `/${legacyUrlEncode(name(state))}/college-success-award/`;
 
   return (
     <div className="csa-winner-popover-container">
