@@ -72,15 +72,17 @@
               <% end %>
 
               <%# NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
-                Checks the cache data reader to query if it is a growth data state (which uses Student Progress Rating)
-                or a growth proxy data state (which uses Academic Progress Rating). If a state doesn't have any active loads
-                for either, it will default as if it was a STUDENT PROGRESS state
+                The SP module has a no-data state, while The AP module DOES NOT have a no-data state.
+                AP.visible? checks to see if the school has AP data AND if the school is (e,m or h)
+                SP.visible? checks to see if the school has SP data OR if the school is (e,m)
+                We only show the AP module if the school has data for AP AND the school is (e,m, or h) AND the school DOES NOT have data for SP
+                Else, if the school is (e,m), we show SP, whether SP has data, or not (no-data state)
               %>
-              <% if @school_profile.academic_progress.academic_progress_state? %>
+              <% if @school_profile.academic_progress.academic_progress_state? && @school_profile.academic_progress.visible? && && !@school_profile.student_progress.has_data?%>
                 <div class="profile-section-slot">
                   <%= render 'academic_progress', academic_progress: @school_profile.academic_progress %>
                 </div>
-              <% else %>
+              <% elsif @school_profile.student_progress.student_progress_state? && @school_profile.student_progress.visible? %>
                 <div class="profile-section-slot">
                   <%= render 'student_progress', student_progress: @school_profile.student_progress %>
                 </div>

@@ -4,7 +4,7 @@ module SchoolProfiles
     include SharingTooltipModal
     
     attr_reader :school, :school_cache_data_reader
-    STUDENT_PROGRESS_RATING = 'student progress rating'
+    STUDENT_PROGRESS_RATING = 'Student Progress Rating'
 
     def initialize(school, school_cache_data_reader:)
       @school = school
