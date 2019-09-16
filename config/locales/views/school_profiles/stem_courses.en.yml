@@ -62,23 +62,23 @@ en:
       faq_cta: Notice something missing or confusing?
       'Percentage algebra 1 enrolled grades 7-8':
         label: Algebra 1 participation rate
-        tooltip_html: Most schools consider <a href="/gk/articles/why-algebra/">Algebra 1</a> an advanced course in grades 7 or 8 and a standard course in high school. This reflects the percentage of 8th grade students at this school who took Algebra 1 compared to the state average. Here's what you need to know about <a href="/gk/articles/algebra-middle-school-math-track/">math tracking</a>.  
-      'Percentage passing algebra 1 grades 7-8': 
+        tooltip_html: Most schools consider <a href="/gk/articles/why-algebra/">Algebra 1</a> an advanced course in grades 7 or 8 and a standard course in high school. This reflects the percentage of 7th or 8th grade students at this school who took Algebra 1 compared to the state average. Here's what you need to know about <a href="/gk/articles/algebra-middle-school-math-track/">math tracking</a>.
+      'Percentage passing algebra 1 grades 7-8':
         label: Algebra 1 pass rate
-        tooltip_html: This reflects the percentage of 8th grade students at this school who passed <a href="/gk/articles/why-algebra/">Algebra 1</a> compared to the state average. 
+        tooltip_html: This reflects the percentage of 7th or 8th grade students at this school who passed <a href="/gk/articles/why-algebra/">Algebra 1</a> compared to the state average.
       'Percent of students enrolled in Algebra 1':
         label: Algebra 1 participation rate
-        tooltip_html: Most schools consider <a href="/gk/articles/why-algebra/">Algebra 1</a> an advanced course in grades 7 or 8 and a standard course in high school. This reflects the percentage of 8th grade students at this school who took Algebra 1 compared to the state average. Here's what you need to know about <a href="/gk/articles/algebra-middle-school-math-track/">math tracking</a>.  
-      'Percent of students passing Algebra 1': 
+        tooltip_html: Most schools consider <a href="/gk/articles/why-algebra/">Algebra 1</a> an advanced course in grades 7 or 8 and a standard course in high school. This reflects the percentage of 8th grade students at this school who took Algebra 1 compared to the state average. Here's what you need to know about <a href="/gk/articles/algebra-middle-school-math-track/">math tracking</a>.
+      'Percent of students passing Algebra 1':
         label: Algebra 1 pass rate
-        tooltip_html: This reflects the percentage of 8th grade students at this school who passed <a href="/gk/articles/why-algebra/">Algebra 1</a> compared to the state average. 
-      'Percentage AP math enrolled grades 9-12': 
+        tooltip_html: This reflects the percentage of 8th grade students at this school who passed <a href="/gk/articles/why-algebra/">Algebra 1</a> compared to the state average.
+      'Percentage AP math enrolled grades 9-12':
         label: AP math course participation
         tooltip_html: This reflects the percentage of students at this school who took an Advanced Placement (AP) math course compared to the state average.
-      'Percentage AP science enrolled grades 9-12': 
+      'Percentage AP science enrolled grades 9-12':
         label: AP science course participation
         tooltip_html: This reflects the percentage of students at this school who took an Advanced Placement (AP) science course compared to the state average.
-      'Percentage AP other courses enrolled grades 9-12': 
+      'Percentage AP other courses enrolled grades 9-12':
         label: Other AP course participation
         tooltip_html: This reflects the percentage of students at this school who took an Advanced Placement (AP) course in a subject other than mathematics and science compared to the state average.
 

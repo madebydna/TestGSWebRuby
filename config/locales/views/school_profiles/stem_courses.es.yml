@@ -20,7 +20,7 @@ es:
       h:
         title: Cursos avanzados y de STEM
         subtitle_html: Un riguroso curso de STEM puede ayudar a su estudiante a prepararse y entrar a la universidad. <a href="/gk/articles/stem-in-the-classroom/">Averigue más</a> acerca de por qué cursos de STEM son tan importantes para los estudiantes de hoy.
-        parent_tip_html: Muchos estudiantes exitosos terminan en cursos correctivas de matemáticas en la universidad. <a href="/gk/articles/ready-for-college-math/">¿Su estudiante está preparado</a> para matemáticas a nivel universitario? Pregúntele a esta escuela cómo garantizan que los estudiantes están bien preparados. 
+        parent_tip_html: Muchos estudiantes exitosos terminan en cursos correctivas de matemáticas en la universidad. <a href="/gk/articles/ready-for-college-math/">¿Su estudiante está preparado</a> para matemáticas a nivel universitario? Pregúntele a esta escuela cómo garantizan que los estudiantes están bien preparados.
         faq_content_html: >
           <div class="emphasis">¿Qué son las clases de AP?</div>
           <p>Las cursos "AP" (Cursos Avanzados) son clases de nivel universitario con un examen final que, si aprobado,
@@ -54,22 +54,22 @@ es:
       faq_cta: ¿Notas que algo falta o confunde?
       'Percentage algebra 1 enrolled grades 7-8':
         label: Algebra 1 índice de participación
-        tooltip_html: La mayoría de las escuelas consideran <a href="/gk/articles/why-algebra/">Álgebra 1</a> como un curso avanzado en los años 7° y 8° y un curso estándar en la escuela secundaria. Esto refleja el porcentaje de estudiantes en 8° de esta escuela que tomaron Álgebra 1 comparado con el promedio estatal. Aquí encontrará todo lo que necesita saber acerca de la <a href="/gk/articles/algebra-middle-school-math-track/">ruta de matemáticas</a>.
-      'Percentage passing algebra 1 grades 7-8': 
+        tooltip_html: La mayoría de las escuelas consideran <a href="/gk/articles/why-algebra/">Álgebra 1</a> como un curso avanzado en los años 7° y 8° y un curso estándar en la escuela secundaria. Esto refleja el porcentaje de estudiantes en 7° o 8° de esta escuela que tomaron Álgebra 1 comparado con el promedio estatal. Aquí encontrará todo lo que necesita saber acerca de la <a href="/gk/articles/algebra-middle-school-math-track/">ruta de matemáticas</a>.
+      'Percentage passing algebra 1 grades 7-8':
         label: Algebra 1 indice
-        tooltip_html: Esto refleja el porcentaje de estudiantes en el año 8° de esta escuela que pasaron <a href="/gk/articles/why-algebra/">Álgebra 1</a> comparado con el promedio estatal.
+        tooltip_html: Esto refleja el porcentaje de estudiantes en los años 7° y 8° de esta escuela que pasaron <a href="/gk/articles/why-algebra/">Álgebra 1</a> comparado con el promedio estatal.
       'Percent of students enrolled in Algebra 1':
         label: Algebra 1 índice de participación
         tooltip_html: La mayoría de las escuelas consideran <a href="/gk/articles/why-algebra/">Álgebra 1</a> como un curso avanzado en los años 7° y 8° y un curso estándar en la escuela secundaria. Esto refleja el porcentaje de estudiantes en 8° de esta escuela que tomaron Álgebra 1 comparado con el promedio estatal. Aquí encontrará todo lo que necesita saber acerca de la <a href="/gk/articles/algebra-middle-school-math-track/">ruta de matemáticas</a>.
-      'Percent of students passing Algebra 1': 
+      'Percent of students passing Algebra 1':
         label: Algebra 1 indice
         tooltip_html: Esto refleja el porcentaje de estudiantes en el año 8° de esta escuela que pasaron <a href="/gk/articles/why-algebra/">Álgebra 1</a> comparado con el promedio estatal.
-      'Percentage AP math enrolled grades 9-12': 
+      'Percentage AP math enrolled grades 9-12':
         label: Participación en cursos de matemáticas AP
         tooltip_html: Esto refleja el porcentaje de estudiantes de esta escuela que tomaron un Curso Avanzado (AP) de matemáticas en comparación con el promedio estatal.
-      'Percentage AP science enrolled grades 9-12': 
+      'Percentage AP science enrolled grades 9-12':
         label: Participación en cursos de ciencias AP
-        tooltip_html: Esto refleja el porcentaje de estudiantes de esta escuela que tomaron un Curso Avanzado (AP) de ciencia en comparación con el promedio estatal. 
-      'Percentage AP other courses enrolled grades 9-12': 
+        tooltip_html: Esto refleja el porcentaje de estudiantes de esta escuela que tomaron un Curso Avanzado (AP) de ciencia en comparación con el promedio estatal.
+      'Percentage AP other courses enrolled grades 9-12':
         label: Participación en otros cursos de AP
         tooltip_html: Esto refleja el porcentaje de estudiantes de esta escuela que tomaron un Curso Avanzado (AP) en una materia que no sea matemáticas o ciencias en comparación con el promedio estatal.
