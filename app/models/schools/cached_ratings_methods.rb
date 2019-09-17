@@ -110,7 +110,7 @@ module CachedRatingsMethods
       :'Black' => "African American",
       :'White' => "White",
       :'Asian or Pacific Islander' => "Asian or Pacific Islander",
-      :'Asian' => "Asian",
+      :'Asian' => asian_or_pacific?,
       :'All' => "All students",
       :'All students' => "All students",
       :'Multiracial' => "Two or more races",
@@ -124,6 +124,13 @@ module CachedRatingsMethods
       :'Low Income' => "Low-income",
       :'Hispanic' => "Hispanic"
     }
+  end
+
+  # Special case handling for new york JT-9120
+  # This silliness is because we don't know yet how we want to maintain consistency regarding ethnicity
+  def asian_or_pacific?
+    return "Asian" unless self.state == 'ny'
+    "Asian or Pacific Islander"
   end
 
   def great_schools_rating
