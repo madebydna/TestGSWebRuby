@@ -8,9 +8,24 @@ en:
       'Ratio of students to full time teachers': 'Students per teacher'
       'Percentage of teachers with less than three years experience': 'Percentage of teachers with 3 or more years experience'
       'source': 'Source'
+      'Nurse indicator': 'Nurse'
+      'Psychologist indicator': 'Psychologist'
+      'Social Worker indicator': 'Social worker'
+      'Law Enforcement Officer indicator': 'Law enforcement officer'
+      'Security Guard indicator': 'Security guard'
       data_point_info_texts:
         'Ratio of students to full time teachers': 'The average number of students per full-time teacher at this school; please note that this is not a reflection of average class size.'
         'Ratio of teacher salary to total number of teachers': 'The average salary for full-time teachers at this school.'
         'Percentage of full time teachers who are certified': 'The percentage of full-time teachers at this school who have met all applicable state standard teacher certification requirements.'
         'Ratio of students to full time counselors': 'The average number of students per counselor at this school.'
         'Percentage of teachers with less than three years experience': 'The percentage of full-time teachers at this school who have been teaching for 3 or more years.'
+        'Nurse indicator': 'This indicates if this school has a part-time, full-time or no registered nurse on staff.'
+        'Psychologist indicator': 'This indicates if this school has a part-time, full-time or no licensed psychologist on staff.'
+        'Social Worker indicator': 'This indicates if this school has a part-time, full-time or no licensed social worker on staff.'
+        'Law Enforcement Officer indicator': 'This indicates if this school has a part-time, full-time or no sworn law officer on campus.'
+        'Security Guard indicator': 'This indicates if this school has a part-time, full-time or no security guard on staff.'
+      employment_level:
+        'not_present': 'None'
+        'present':
+          'full-time': Full-time
+          'part-time': Part-time
