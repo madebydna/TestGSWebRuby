@@ -8,6 +8,11 @@
 <!DOCTYPE html>
 <html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
+  <% if @disable_google_analytics %>
+    <script>
+      window['ga-disable-UA-54676320-1'] = true;
+    </script>
+  <% end %>
   <%= display_meta_tags %>
 
   <%= render 'layouts/common_prefetches' %>

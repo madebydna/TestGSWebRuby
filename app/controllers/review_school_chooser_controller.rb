@@ -8,7 +8,8 @@ class ReviewSchoolChooserController < ApplicationController
   def show
     write_tags_and_gon
     @topic = review_topic
-    @reviews = reviews
+    @reviews = active_schools_required(reviews)
+
   end
 
   def morgan_stanley
@@ -38,10 +39,23 @@ class ReviewSchoolChooserController < ApplicationController
     )
   end
 
+  def active_schools_required(r)
+    r.select{|review| review.school.active == 1}[0..14]
+  end
+
   def reviews
     cache_key = "recent-reviews-national"
     Rails.cache.fetch(cache_key, expires_in: 1.hour) do
-      review_topic.first_question.reviews.active.has_comment.order(id: :desc).limit(15).includes(:answers, :votes, question: :review_topic).extend(SchoolAssociationPreloading).preload_associated_schools!
+      review_topic
+          .first_question
+          .reviews
+          .active
+          .has_comment
+          .order(id: :desc)
+          .limit(20)
+          .includes(:answers, :votes, question: :review_topic)
+          .extend(SchoolAssociationPreloading)
+          .preload_associated_schools!
     end
   end
 

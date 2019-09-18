@@ -139,6 +139,7 @@ class SchoolProfilesController < ApplicationController
     elsif !school.active? && !school.demo_school?
       redirect_to city_path(city_params(school.state_name, school.city)), status: :found
     end
+    @disable_google_analytics = true if school.demo_school?
   end
 
   def school_cache_data_reader
