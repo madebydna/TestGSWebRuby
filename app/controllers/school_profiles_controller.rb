@@ -134,8 +134,8 @@ class SchoolProfilesController < ApplicationController
   end
 
   def require_school
-    redirect_to city_path(city_params(state_param, city_param)), status: :found if school.blank?
-    redirect_to city_path(city_params(school.state_name, school.city)), status: :found if !school.active? && !school.demo_school?
+    redirect_to city_path(city_params(state_param, city_param)), status: :found if school&.blank?
+    redirect_to city_path(city_params(school.state_name, school.city)), status: :found if !school&.active? && !school&.demo_school?
     @disable_google_analytics = true if school&.demo_school?
   end
 

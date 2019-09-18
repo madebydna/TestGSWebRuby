@@ -43,7 +43,7 @@ class ReviewSchoolChooserController < ApplicationController
   end
 
   def active_schools_required(review_array)
-    review_array.select{|review| review.school.active == 1}[0..REVIEW_LIMIT_TO_RETURN-1]
+    review_array.select{|review| review&.school&.active == 1}[0..REVIEW_LIMIT_TO_RETURN-1]
   end
 
   def reviews
