@@ -365,7 +365,9 @@ class SchoolProfilesController < ApplicationController
     meta_tags = SchoolProfileMetaTags.new(school)
     description = meta_tags.description
     canonical_url = school_url(school)
+    robots_tag = school.demo_school? ? "noindex" : "index"
     set_meta_tags title: meta_tags.title,
+                  robots: robots_tag,
                   description: description,
                   canonical: canonical_url,
                   alternate: {
