@@ -29,8 +29,8 @@ module SchoolProfiles
       }
     end
 
-    # JT-8999: Display 2016 8th grade algebra data types (#321 & #322) if both are available.
-    # Otherwise, display 2014 7th/8th grade algebra data types (#23 & #27).
+    # JT-8999: Display newer 8th grade algebra data types (#321 & #322) if either are available.
+    # Otherwise, display older 7th/8th grade algebra data types (#23 & #27).
     def prioritize_freshest_algebra_data!(hash)
       if hash["Percent of students enrolled in Algebra 1"] || hash["Percent of students passing Algebra 1"]
         hash.delete("Percentage algebra 1 enrolled grades 7-8")
