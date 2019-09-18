@@ -13,7 +13,9 @@ module CommunityProfiles
     end
 
     def share_content
-      share_tooltip_modal('College_readiness', @cache_data_reader.school)
+      # Per conversation with EP, no need to include Share button on community modules (for the foreseeable future)
+      # share_tooltip_modal('College_readiness', @cache_data_reader.school)
+      nil
     end
 
     def qualaroo_module_link

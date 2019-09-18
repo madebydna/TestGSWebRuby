@@ -4,9 +4,14 @@
 class DistrictGsdataCacher < DistrictCacher
   CACHE_KEY = 'gsdata'
   # DATA_TYPES INCLUDED
+  # 23: Percentage algebra 1 enrolled grades 7-8
+  # 27: Percentage passing algebra 1 grades 7-8
   # 31: In school suspension ---- not used currently JT-3276
   # 35: Out of school suspension
   # 55: %AP enrollment for students in grades 9-12
+  # 59: Percentage AP math enrolled grades 9-12
+  # 63: Percentage AP science enrolled grades 9-12
+  # 67: Percentage AP other courses enrolled grades 9-12
   # 71: Percentage SAT/ACT participation grades 11-12
   # 83: Percentage of students passing 1 or more AP exams grades 9-12
   # 91: Absent the rate of absenteeism
@@ -17,10 +22,12 @@ class DistrictGsdataCacher < DistrictCacher
   # 149: Percentage of teachers with less than three years experience
   # 152: Number of advanced courses per student
   # 154: Percentage of Students Enrolled
+  # 321: Percent of students enrolled in Algebra 1
+  # 322: Percent of students passing Algebra 1
 
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
 
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154].freeze
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 67, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154, 321, 322].freeze
 
   # BREAKDOWN_TAG_NAMES = %w(
   #   ethnicity
@@ -65,7 +72,7 @@ class DistrictGsdataCacher < DistrictCacher
 
   def district_results
     @_district_results ||=
-      DataValue.find_by_district_and_data_types(district.state, district, data_type_ids)
+      DataValue.find_by_district_and_data_types(district.state, district.id, data_type_ids)
   end
 
   def state_results_hash
