@@ -32,7 +32,7 @@ class ActSatHandler
     end
   end
 
-  # JT-8787: Displayed ACT & SAT data must be within 2 years of one another, otherwise hide the older data type
+  # JT-8787: If ACT & SAT data are not within 2 years of one another, remove the older data
   def remove_crdc_for_unfresh_data(act_max_year, sat_max_year)
     return unless act_max_year && sat_max_year
     return unless ((act_max_year - sat_max_year).abs > 2)
@@ -55,10 +55,6 @@ class ActSatHandler
     set_school_value_to_nil(records)
   end
 
-  # TODO Create method to handle ACT_SAT_PARTICIPATION
-  # Assuming we have >= 1 year(s)' worth of school_values for a given data type,
-  # this will return the most recent year (i.e., "max year") for which we have data
-  # and set all previous years' school_values to nil
   def enforce_latest_year_school_value_for_data_types!(*data_types)
     records = select_by_data_types(*data_types, &:all_subjects_and_students?)
     max_year = get_max_year(records)
