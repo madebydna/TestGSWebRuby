@@ -139,7 +139,7 @@ class SchoolProfilesController < ApplicationController
     elsif !school.active? && !school.demo_school?
       redirect_to city_path(city_params(school.state_name, school.city)), status: :found
     end
-    @disable_google_analytics = true if school.demo_school?
+    @disable_google_analytics = true if school&.demo_school?
   end
 
   def school_cache_data_reader
@@ -365,7 +365,7 @@ class SchoolProfilesController < ApplicationController
     meta_tags = SchoolProfileMetaTags.new(school)
     description = meta_tags.description
     canonical_url = school_url(school)
-    robots_tag = school.demo_school? ? "noindex" : "index"
+    robots_tag = school&.demo_school? ? "noindex" : "index"
     set_meta_tags title: meta_tags.title,
                   robots: robots_tag,
                   description: description,
