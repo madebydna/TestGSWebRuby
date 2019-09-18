@@ -6,6 +6,7 @@ import {findMobilityScoreWithLatLon as fetchMobilityScore} from 'api_clients/mob
 import InfoBox from '../school_profiles/info_box';
 import LoadingOverlay from "../search/loading_overlay";
 import { analyticsEvent } from "util/page_analytics";
+import { cloneDeep } from 'lodash';
 
 class Mobility extends React.Component {
   static propTypes = {
@@ -51,32 +52,24 @@ class Mobility extends React.Component {
         <div key={`${agency.agencyShortName}`} className="agencies">
           <div style={{height: '25px', borderRight: logoLine}}></div>
           <img src={`https://mobilityscore.transitscreen.io/${agency.agencyLogoLight}`} alt={agency.agencyShortName}/>
-          <p>{agency.agencyShortName.join(", ")}</p>
+          <p>{agency.agencyShortName}</p>
         </div>
       )
     }
   ));
 
   convertAgenciesStructure(agencies) {
-    let combineRedundantAgencies = {};
-    agencies.forEach(function (agency) {
-      if (!Array.isArray(combineRedundantAgencies[agency.agencyLogoLight])) {
-        combineRedundantAgencies[agency.agencyLogoLight] = new Array();
+    const clonedAgencies = cloneDeep(agencies);
+    return clonedAgencies.reduce( (accum, el) => {
+      const agenciesLogos = accum.map(a => a.agencyLogoLight);
+      if (!agenciesLogos.includes(el.agencyLogoLight)){
+        accum.push(el);
+      }else{
+        const idx = agenciesLogos.indexOf(el.agencyLogoLight);
+        accum[idx].agencyShortName = `${accum[idx].agencyShortName}, ${el.agencyShortName}`;
       }
-      combineRedundantAgencies[agency.agencyLogoLight].push(agency);
-    });
-
-    let reducedAgencyList = [];
-    Object.keys(combineRedundantAgencies).forEach(function (key) {
-      let agencyArray = combineRedundantAgencies[key];
-      let shortName = [];
-      agencyArray.forEach(function (a){
-        shortName.push(a.agencyShortName)
-      });
-      agencyArray[0].agencyShortName = shortName;
-      reducedAgencyList.push(agencyArray[0]);
-    });
-    return reducedAgencyList;
+      return accum;
+    }, [])
   }
 
 
