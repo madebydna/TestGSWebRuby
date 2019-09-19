@@ -145,13 +145,8 @@ module SchoolProfiles
       )
       return [] if hashes.blank?
       objs = hashes.map do |key, array|
-        GSLogger.error(:misc, nil,
-                       message:"Failed to find unique data point for data type #{key} in the gsdata cache",
-                       vars: {school: {state: @school_cache_data_reader.school.state,
-                                       id: @school_cache_data_reader.school.id}
-                       }) if array.size > 1
-        hash = array.first
-        GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: key))
+        values = GsdataCaching::GsDataValue.from_array_of_hashes(array.map { |h| h.merge(data_type: key) })
+        values.having_most_recent_date.first
       end
       objs.sort_by { |o| included_data_types.index(o.data_type) }
     end
