@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe SearchTableConcerns do
   class DummyController < ActionController::Base
+    attr_accessor :state
     include SearchTableConcerns
   end
 
@@ -50,7 +51,8 @@ describe SearchTableConcerns do
               "subject" => "Math",
               "state_average" => '35%'
             }
-        ]
+        ],
+        state: 'ca'
       },
       {
         name: 'New Proxy Rating School',
@@ -64,22 +66,24 @@ describe SearchTableConcerns do
               "subject" => "Math",
               "state_average" => '32%'
             }
-        ]
+        ],
+        state: 'ar'
       },
       {
         name: 'Cow\'s Slick County',
         remediationData: [{
           "subject" => "English",
           "state_average" => '56%'
-        }]
+        }],
+        state: 'ca'
       }
     ]
   }
   let(:empty_array) {[]}
 
   before do
-    @academic_progress_state_cache = FactoryBot.create(:state_cache, state: 'ca', name: 'state_attributes', value: "{\"growth_type\":\"Academic Progress Rating\"}")
-    @student_progress_state_cache = FactoryBot.create(:state_cache, state: 'ar', name: 'state_attributes', value: "{\"growth_type\":\"Student Progress Rating\"}")
+    FactoryBot.create(:state_cache, state: 'ca', name: 'state_attributes', value: "{\"growth_type\":\"Academic Progress Rating\"}")
+    FactoryBot.create(:state_cache, state: 'ar', name: 'state_attributes', value: "{\"growth_type\":\"Student Progress Rating\"}")
   end
 
   describe 'Remediation headers for tableview' do
@@ -106,7 +110,9 @@ describe SearchTableConcerns do
 
   describe 'Student Progress / Academic Progress Rating Headers' do
     context 'when a state is a data growth state' do
-      before{allow(dummy_controller).to receive(:state).and_return('ar')}
+      before(:each) do
+        allow(dummy_controller).to receive(:state).and_return('ar')
+      end
 
       it '.growth_data_proxy_state?' do
         expect(dummy_controller.growth_data_proxy_state?).to be false
@@ -117,12 +123,14 @@ describe SearchTableConcerns do
       end
 
       it '.academic_header_names' do
-        expect(dummy_controller.academic_header_names).to eq(['Test Scores Rating', 'Student Progress Rating', 'College Readiness Rating', 'Advanced Courses Rating', 'Equity Overview Rating'])
+        expect(dummy_controller.academic_header_names).to eq(['Test Scores Rating', 'Student Progress Rating', 'College Readiness Rating', 'Equity Overview Rating'])
       end
     end
 
     context 'when a state is a data growth proxy state' do
-      before{allow(dummy_controller).to receive(:state).and_return('ca')}
+      before(:each) do 
+        allow(dummy_controller).to receive(:state).and_return('ca')
+      end
 
       it '.growth_data_proxy_state?' do
         expect(dummy_controller.growth_data_proxy_state?).to be true
@@ -133,7 +141,25 @@ describe SearchTableConcerns do
       end
 
       it '.academic_header_names' do
-        expect(dummy_controller.academic_header_names).to eq(['Test Scores Rating', 'Academic Progress Rating', 'College Readiness Rating', 'Advanced Courses Rating', 'Equity Overview Rating'])
+        expect(dummy_controller.academic_header_names).to eq(['Test Scores Rating', 'Academic Progress Rating', 'College Readiness Rating', 'Equity Overview Rating'])
+      end
+    end
+
+    context 'when no state is given' do
+      before(:each) do 
+        allow(dummy_controller).to receive(:serialized_schools).and_return(array_of_growth_proxy_state_and_specific_subjects_remediation_schools)
+      end
+
+      it '.growth_data_proxy_state?' do
+        expect(dummy_controller.growth_data_proxy_state?).to be true
+      end
+
+      it '.growth_progress_rating_header' do
+        expect(dummy_controller.growth_progress_rating_header).to eq('Academic Progress Rating')
+      end
+
+      it '.academic_header_names' do
+        expect(dummy_controller.academic_header_names).to eq(['Test Scores Rating', 'Academic Progress Rating', 'College Readiness Rating', 'Equity Overview Rating'])
       end
     end
   end
