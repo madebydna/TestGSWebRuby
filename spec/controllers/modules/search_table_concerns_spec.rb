@@ -145,7 +145,7 @@ describe SearchTableConcerns do
       end
     end
 
-    context 'when no state is given' do
+    context 'when no state is established at the controller level' do
       before(:each) do 
         allow(dummy_controller).to receive(:serialized_schools).and_return(array_of_growth_proxy_state_and_specific_subjects_remediation_schools)
       end
