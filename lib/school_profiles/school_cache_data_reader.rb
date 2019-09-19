@@ -4,7 +4,7 @@ module SchoolProfiles
     # characteristics - for enrollment
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
-    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores_gsdata nearby_schools performance gsdata esp_responses courses)
+    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores_gsdata nearby_schools performance gsdata esp_responses)
     DISCIPLINE_FLAG = 'Discipline Flag'
     ABSENCE_FLAG = 'Absence Flag'
     EQUITY_ADJUSTMENT_FACTOR = 'Equity Adjustment Factor'
@@ -35,6 +35,16 @@ module SchoolProfiles
           summary_rating
         end
       )
+    end
+
+    def state_attributes
+      @_state_attributes ||= StateCache.for_state('state_attributes', school.state).cache_data
+    end
+
+    # Data growth type. Either a Data Growth Type (Student Progress Rating) 
+    # or Data Growth Proxy Type (Academic Progress Rating)
+    def growth_type
+      state_attributes['growth_type']
     end
 
     def gs_rating_year
@@ -111,22 +121,6 @@ module SchoolProfiles
 
     def equity_overview_rating_year
       decorated_school.equity_overview_rating_year
-    end
-
-    def courses_rating
-      decorated_school.courses_rating
-    end
-
-    def courses_rating_array
-      decorated_school.courses_rating_array
-    end
-
-    def courses_academics_rating_array
-      decorated_school.courses_academics_rating_array
-    end
-
-    def courses_rating_year
-      decorated_school.courses_rating_year
     end
 
     def academic_progress_rating_hash
@@ -228,10 +222,6 @@ module SchoolProfiles
       gs_data(decorated_school.ratings, *keys)
     end
 
-    def courses_data(*keys)
-      gs_data(decorated_school.courses, *keys)
-    end
-
     def gs_data(obj, *keys)
       obj.slice(*keys).each_with_object({}) do |(k, values), new_hash|
         values = values.map(&consistify_breakdowns)
@@ -268,18 +258,6 @@ module SchoolProfiles
           GsdataCaching::GsDataValue.from_hash(h).tap { |dv| dv.data_type = key }
         end
         .extend(GsdataCaching::GsDataValue::CollectionMethods)
-    end
-
-    def decorated_courses_data(key)
-      Array.wrap(decorated_school.courses.slice(key)[key])
-          .map do |h|
-        GsdataCaching::GsDataValue.from_hash(h).tap { |dv| dv.data_type = key }
-      end
-          .extend(GsdataCaching::GsDataValue::CollectionMethods)
-    end
-
-    def course_enrollment
-      decorated_courses_data('Course Enrollment')
     end
 
     def rating_weights

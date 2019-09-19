@@ -6,6 +6,7 @@ class GsdataCaching::GsdataCacher < Cacher
   # 27: Percentage passing algebra 1 grades 7-8
   # 31: In school suspension ---- not used currently JT-3276
   # 35: Out of school suspension
+  # 51: Percentage of students enrolled in IB grades 9-12
   # 55: %AP enrollment for students in grades 9-12
   # 59: Percentage AP math enrolled grades 9-12
   # 63: Percentage AP science enrolled grades 9-12
@@ -21,12 +22,13 @@ class GsdataCaching::GsdataCacher < Cacher
   # 152: Number of advanced courses per student
   # 154: Percentage of Students Enrolled
   # 318: Percent of Students who Participated in the SAT/ACT in grades 9-12
+  # 320: Percentage of students enrolled in Dual Enrollment classes grade 9-12
   # 321: Percent of students enrolled in Algebra 1
   # 322: Percent of students passing Algebra 1
 
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
 
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 67, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154, 318, 321, 322].freeze
+  DATA_TYPE_IDS = [23, 27, 35, 51, 55, 59, 63, 67, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154, 318, 320, 321, 322].freeze
 
   # BREAKDOWN_TAG_NAMES = %w(
   #   ethnicity

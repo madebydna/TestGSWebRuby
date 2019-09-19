@@ -5,10 +5,25 @@ describe SchoolProfiles::SchoolCacheDataReader do
     SchoolProfiles::SchoolCacheDataReader.new(school, *args)
   end
 
+  before do
+    @academic_progress_state_cache = FactoryBot.create(:state_cache, state: 'ca', name: 'state_attributes', value: "{\"growth_type\":\"Academic Progress Rating\"}")
+    @student_progress_state_cache = FactoryBot.create(:state_cache, state: 'ar', name: 'state_attributes', value: "{\"growth_type\":\"Student Progress Rating\"}")
+  end
+
+  after do
+    clean_dbs :gs_schooldb
+  end
+
   context 'when given a school' do
     let(:school) do
       double('school').tap do |s|
         allow(s).to receive(:state).and_return('ca')
+        allow(s).to receive(:id).and_return(1)
+      end
+    end
+    let(:school2) do
+      double('school').tap do |s|
+        allow(s).to receive(:state).and_return('ar')
         allow(s).to receive(:id).and_return(1)
       end
     end
@@ -79,6 +94,30 @@ describe SchoolProfiles::SchoolCacheDataReader do
       end
     end
 
+    describe '#state_attributes' do
+      let(:reader) { new_reader(school) }
+      let(:reader2) { new_reader(school2) }
+
+      context 'school is part of a academic progress rating state' do
+        it 'returns the right state attributes hash' do
+          expect(reader.state_attributes).to eq({"growth_type" => "Academic Progress Rating"})
+        end
+
+        it 'has the right growth type' do
+          expect(reader.growth_type).to eq("Academic Progress Rating")
+        end
+      end
+
+      context 'school is part of a student progress rating state' do
+        it 'returns the right state attributes hash' do
+          expect(reader2.state_attributes).to eq({"growth_type" => "Student Progress Rating"})
+        end
+
+        it 'has the right growth type' do
+          expect(reader2.growth_type).to eq("Student Progress Rating")
+        end
+      end
+    end
 
   end
 

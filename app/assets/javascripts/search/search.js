@@ -511,7 +511,6 @@ GS.search.schoolSearchForm =
         var geocodeOptions = { address: searchInput };
         geocodeOptions['componentRestrictions'] = { country: 'US' };
         geocoder.geocode(geocodeOptions, function(results, status) {
-          console.log('results: ' + JSON.stringify(results));
           var GS_geocodeResults = new Array();
           if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
             for (var x = 0; x < results.length; x++) {

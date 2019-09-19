@@ -9,7 +9,6 @@ class Cacher
   # :school_media
   # :esp_response
   # :gsdata
-  # :courses
   # :directory
   # :feed_characteristics
   # :test_scores_gsdata
@@ -86,7 +85,6 @@ class Cacher
         gsdata:           GsdataCaching::GsdataCacher,
         ratings:         RatingsCaching::GsdataRatingsCacher,
         directory:        DirectoryCaching::DirectoryCacher,
-        courses:              CoursesCaching::GsdataCoursesCacher,
         feed_test_scores_gsdata: TestScoresCaching::FeedTestScoresCacherGsdata,
         feed_old_test_scores_gsdata: TestScoresCaching::FeedOldTestScoresCacherGsdata,
         feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
@@ -117,7 +115,6 @@ class Cacher
       TestScoresCaching::FeedOldTestScoresCacherGsdata,
       GsdataCaching::GsdataCacher,
       RatingsCaching::GsdataRatingsCacher,
-      CoursesCaching::GsdataCoursesCacher,
       DirectoryCaching::DirectoryCacher,
       FeedCharacteristicsCaching::FeedCharacteristicsCacher
     ]

@@ -2,6 +2,9 @@ FactoryBot.define do
 
   factory :state_cache do
     state 'ca'
+    name :name
+    value :value
+    updated Time.now
 
     trait :with_school_levels do
       name 'school_levels'
