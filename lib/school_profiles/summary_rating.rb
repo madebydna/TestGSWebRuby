@@ -13,18 +13,16 @@ module SchoolProfiles
       'College Readiness Rating' => {title: 'College Readiness', weight: 'Summary Rating Weight: College Readiness Rating'},
       'Equity Rating' => {title: 'Equity Overview', weight: 'Summary Rating Weight: Equity Rating'},
       'Equity Adjustment Factor' => {title: 'Equity Adjustment Factor', weight: 'Summary Rating Weight: Equity Adjustment Factor'},
-      'Advanced Course Rating' => {title: 'Advanced Courses', weight: 'Summary Rating Weight: Advanced Course Rating'},
       'Discipline Flag' => {title: 'Discipline Flag', weight: 'Summary Rating Weight: Discipline Flag'},
       'Attendance Flag' => {title: 'Attendance Flag', weight: 'Summary Rating Weight: Absence Flag'}
     }
 
-    def initialize(test_scores, college_readiness, student_progress, academic_progress, equity_overview, courses, stem_courses, school, school_cache_data_reader:)
+    def initialize(test_scores, college_readiness, student_progress, academic_progress, equity_overview, stem_courses, school, school_cache_data_reader:)
       @test_scores = test_scores
       @student_progress = student_progress
       @academic_progress = academic_progress
       @college_readiness = college_readiness
       @equity_overview = equity_overview
-      @courses = courses
       @stem_courses = stem_courses
       @school = school
       @school_cache_data_reader = school_cache_data_reader
@@ -40,7 +38,7 @@ module SchoolProfiles
     end
 
     def build_content_for_summary_rating_table
-      rating_array = [test_scores, student_progress, college_readiness, equity, courses, discipline, attendance]
+      rating_array = [test_scores, student_progress, college_readiness, equity, discipline, attendance]
       rating_array.reject! {|row| row.nil? || row.empty? || row[:weight].nil? || row[:rating].nil?}
       rating_array.sort_by {|row| row[:weight]}.reverse
     end
@@ -72,12 +70,6 @@ module SchoolProfiles
     def equity_overview
       if @equity_overview.has_rating?
         {title: RATING_WEIGHTS['Equity Rating'][:title], rating: @equity_overview.equity_rating, weight: get_school_value_for(RATING_WEIGHTS['Equity Rating'][:weight])}
-      end
-    end
-
-    def courses
-      if @school.includes_level_code?(%w[m h]) || @courses.visible? || @stem_courses.visible?
-        {title: RATING_WEIGHTS['Advanced Course Rating'][:title], rating: @courses.rating, weight: get_school_value_for(RATING_WEIGHTS['Advanced Course Rating'][:weight])}
       end
     end
 

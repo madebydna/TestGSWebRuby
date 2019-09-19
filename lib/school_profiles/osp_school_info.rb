@@ -139,21 +139,12 @@ module SchoolProfiles
           ]
         end
         unless @school.preschool?
-          if show_non_osp_classes?
-            tab_config << {
-                key: :classes,
-                title: data_label(:classes),
-                data: courses_props
-            }
-          elsif claimed?
+          if claimed?
             tab_config << {
                 key: :classes,
                 title: data_label(:classes),
                 data: osp_school_datas(*CLASSES_CACHE_KEYS)
             }
-          end
-
-          if claimed?
             tab_config << {
                 key: :sports_and_clubs,
                 title: data_label(:sports_and_clubs),
@@ -167,14 +158,6 @@ module SchoolProfiles
 
     def has_osp_classes?
       osp_school_datas(*CLASSES_CACHE_KEYS).reject { |h| h[:response_value].include?('Data not provided by the school') }.present?
-    end
-
-    def has_non_osp_classes?
-      courses_props.present?
-    end
-
-    def show_non_osp_classes?
-      has_non_osp_classes? && (!claimed? || !has_osp_classes?)
     end
 
     def response_label(response_key, response_value)
@@ -268,39 +251,14 @@ module SchoolProfiles
       school.claimed?
     end
 
-    def courses_by_subject
-      @_courses_by_subject ||= school_cache_data_reader
-        .course_enrollment
-        .expand_on_academic_tags
-        .having_academic_tag_matching(/_index$/)
-        .group_by_academic_tag
-    end
-
     def sources
       tab_config.map do |h|
         source = {
             heading: h[:title]
         }
-        if h[:key] == :classes && show_non_osp_classes?
-          subjects_and_years = courses_by_subject.values.flatten.map { |o| {name: o.source_name, year: o.source_year} }.uniq
-          source[:names] = subjects_and_years.map { |h| h[:name] }
-          source[:years] = subjects_and_years.map { |h| h[:year] }
-        else
-          source[:names] = [data_label(SCHOOL_ADMIN)]
-          source[:years] = [nil]
-        end
+        source[:names] = [data_label(SCHOOL_ADMIN)]
+        source[:years] = [nil]
         source
-      end
-    end
-
-    # Quite a bit easier to just stuff courses data into existing
-    # react component prop structure for the time being
-    def courses_props
-      courses_by_subject.reduce([]) do |array, (subject, courses)|
-        array << {
-          response_key: I18n.t(subject, scope: 'lib.advanced_courses'),
-          response_value: courses.map  { |h| h.academics }
-        }
       end
     end
   end

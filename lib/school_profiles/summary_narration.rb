@@ -8,7 +8,7 @@ module SchoolProfiles
 
     delegate :gs_rating, to: :school_cache_data_reader
 
-    SUMMARY_RATING_METHODS = %w(summary_rating test_scores_rating college_readiness_rating student_progress_rating advanced_course_rating sentence_ender discipline_and_attendence)
+    SUMMARY_RATING_METHODS = %w(summary_rating test_scores_rating college_readiness_rating student_progress_rating sentence_ender discipline_and_attendence)
 
     SUMMARY_RATING_METHODS_SCHOOL_NAME = %w(summary_rating_school_name test_scores_rating college_readiness_rating student_progress_rating advanced_course_rating sentence_ender discipline_and_attendence)
 
@@ -119,13 +119,6 @@ module SchoolProfiles
     def student_progress_rating
       obj = @src.student_progress
       standard_rating_by_obj(obj[:rating], obj[:title]) if obj.present?
-    end
-
-    def advanced_course_rating
-      obj = @src.courses
-      rating = obj[:rating] if obj.present?
-      rating_string, level, adverb = advanced_levels(rating) if rating.present?
-      rating.present? ? I18n.t('school_profiles.summary_narration.Advanced Courses_html', rating_string: rating_string, level: level , adverb: adverb ) : ''
     end
 
     def sentence_ender

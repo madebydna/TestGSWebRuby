@@ -29,7 +29,6 @@ const ratingDictionary = {
     'Student Progress Rating': 'Progreso del Estudiante',
     'Academic Progress Rating': 'Progreso Académico',
     'College Readiness Rating': 'Preparación Universitaria',
-    'Advanced Courses Rating': 'Cursos Avanzados',
     'Equity Overview Rating': 'Resumen de Equidad'
   }
 };
