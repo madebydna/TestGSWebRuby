@@ -166,7 +166,8 @@ const config = {
         NODE_ENV: JSON.stringify(nodeEnv)
       }
     }),
-    new LodashModuleReplacementPlugin({ currying: true, flattening: true })
+    new LodashModuleReplacementPlugin({ currying: true, flattening: true }),
+    new webpack.optimize.ModuleConcatenationPlugin()
   ],
   module: {
     rules: [

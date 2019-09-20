@@ -15,14 +15,14 @@ $border-radius: 3px;
   }
 
   .csa-state-blurb {
-    display: flex;
+    @include flexbox;
     margin-left: 20px;
     margin-bottom: 20px;
 
     img {
       max-width: 75px;
-      max-height: 75px;
       margin-top: 5px;
+      align-self: center;
     }
 
     p {

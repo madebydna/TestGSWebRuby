@@ -93,7 +93,6 @@ class SchoolProfilesController < ApplicationController
         sp.breadcrumbs = breadcrumbs
         sp.teachers_staff = teachers_staff
         sp.show_high_school_data = show_high_school_data?
-        sp.courses = courses
         sp.osp_school_info = osp_school_info
         sp.claimed = hero.school_claimed?
         sp.stem_courses = stem_courses
@@ -136,9 +135,12 @@ class SchoolProfilesController < ApplicationController
   def require_school
     if school.blank?
       redirect_to city_path(city_params(state_param, city_param)), status: :found
-    elsif !school.active? && !school.demo_school?
+    elsif school.demo_school?
+      @disable_google_analytics = true
+    elsif !school.active?
       redirect_to city_path(city_params(school.state_name, school.city)), status: :found
     end
+
   end
 
   def school_cache_data_reader
@@ -155,7 +157,7 @@ class SchoolProfilesController < ApplicationController
 
   def summary_rating
     @_summary_rating ||= SchoolProfiles::SummaryRating.new(
-      test_scores, college_readiness, student_progress, academic_progress, equity_overview, courses, stem_courses,
+      test_scores, college_readiness, student_progress, academic_progress, equity_overview, stem_courses,
       school,
       school_cache_data_reader: school_cache_data_reader
     )
@@ -173,7 +175,7 @@ class SchoolProfilesController < ApplicationController
     SchoolProfiles::Toc.new(test_scores: test_scores, college_readiness: college_readiness,
                             college_success: college_success, student_progress: student_progress, equity: equity,
                             equity_overview: equity_overview, students: students,
-                            teachers_staff: teachers_staff, courses: courses, stem_courses: stem_courses,
+                            teachers_staff: teachers_staff, stem_courses: stem_courses,
                             academic_progress: academic_progress, school: school)
   end
 
@@ -364,7 +366,9 @@ class SchoolProfilesController < ApplicationController
     meta_tags = SchoolProfileMetaTags.new(school)
     description = meta_tags.description
     canonical_url = school_url(school)
+    robots_tag = school&.demo_school? ? "noindex" : "index"
     set_meta_tags title: meta_tags.title,
+                  robots: robots_tag,
                   description: description,
                   canonical: canonical_url,
                   alternate: {

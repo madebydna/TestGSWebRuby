@@ -113,14 +113,14 @@ $line-height-community: 1.428571429;
       }
 
       .csa-state-blurb {
-        display: flex;
+        @include flexbox;
         margin-left: 20px;
         margin-bottom: 20px;
 
         img {
           max-width: 75px;
-          max-height: 75px;
           margin-top: 5px;
+          align-self: center;
         }
 
         p {
@@ -655,6 +655,10 @@ $line-height-community: 1.428571429;
   @media (max-width: 767px) {
     .module_feedback {float: right;}
   }
+}
+
+#advanced_courses {
+  .profile-module {border: none}
 }
 
 .tooltip-content{

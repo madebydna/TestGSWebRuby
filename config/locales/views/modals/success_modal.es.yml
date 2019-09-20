@@ -4,5 +4,6 @@ es:
     success_modal:
       heading: ¡Éxito!
       subheading_html: >
-                    <a href="https://pub.s1.exacttarget.com/bkt2mldejgh"><span class='open-sans_b'>¿Quieres más en español?</span>
+                    Estás suscrito a nuestro boletín y actualizaciones sobre %{school_name}<br /><br />
+                    <a href="https://pub.s1.exacttarget.com/bkt2mldejgh" target="_blank"><span class='open-sans_b'>¿Quieres más en español?</span>
                     <br />Tenemos Boletines Grado por Grado del Kínder hasta el 12.° grado. Haz clic aquí al suscribirte.</a>

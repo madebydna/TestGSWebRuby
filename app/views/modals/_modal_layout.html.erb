@@ -13,7 +13,7 @@
           <%= heading %>
         </div>
         <% if local_assigns[:subheading] %>
-          <div class="subheading"><%= subheading %></div>
+          <div class="subheading"><%= subheading.html_safe %></div>
         <% end %>
         <div class="body">
           <%= yield %>

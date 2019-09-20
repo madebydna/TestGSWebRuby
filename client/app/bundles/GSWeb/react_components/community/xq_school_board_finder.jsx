@@ -30,7 +30,7 @@ const XQSchoolBoardFinder = ({ locality }) => {
       </div>
 
       <div className="module-footer">
-        <InfoBox content={sources} element_type="sources" >{ t('See notes') }</InfoBox>
+        <InfoBox content={sources} element_type="sources" pageType='district'>{ t('See notes') }</InfoBox>
       </div>
     </div>
   );

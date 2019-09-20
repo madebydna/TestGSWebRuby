@@ -19,6 +19,10 @@ const SuccessModal = function($, options) {
     if(this.subheading) {
       this.modalUrl = addQueryParamToUrl('subheading', this.subheading, this.modalUrl);
     }
+    if(gon.ad_set_targeting.school_id && gon.ad_set_targeting.State){
+      this.school_name = document.title.split("-")[0].trim();
+      this.modalUrl = addQueryParamToUrl('school_name', this.school_name, this.modalUrl);
+    }
 };
 
 SuccessModal.prototype = create(BaseModal.prototype, {

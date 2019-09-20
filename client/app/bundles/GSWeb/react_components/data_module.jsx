@@ -67,7 +67,7 @@ export default class DataModule extends React.Component {
 
   static defaultProps = {
     data: [],
-    pageType: 'profiles'
+    pageType: 'Profile'
   }
 
   constructor(props) {
@@ -330,7 +330,7 @@ export default class DataModule extends React.Component {
   defaultFooter() {
     return (
       <div data-ga-click-label={this.props.title}>
-        <InfoBox content={this.props.sources} element_type="sources">{ t('See notes') }</InfoBox>
+        <InfoBox content={this.props.sources} element_type="sources" pageType={this.props.pageType}>{ t('See notes') }</InfoBox>
         {this.props.qualaroo_module_link && <GiveUsFeedback content={this.props.qualaroo_module_link} />}
       </div>
     )

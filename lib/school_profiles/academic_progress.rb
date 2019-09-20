@@ -5,6 +5,7 @@ module SchoolProfiles
     include RatingSourceConcerns
 
     attr_reader :school, :school_cache_data_reader
+    ACADEMIC_PROGRESS_RATING = 'Academic Progress Rating'
 
     def initialize(school, school_cache_data_reader:)
       @school = school
@@ -109,6 +110,10 @@ module SchoolProfiles
                                description: academic_progress_rating_description, methodology: academic_progress_rating_methodology,
                                more_anchor: 'academicprogressrating')
       content
+    end
+
+    def academic_progress_state?
+      school_cache_data_reader.growth_type == ACADEMIC_PROGRESS_RATING
     end
 
     def has_data?

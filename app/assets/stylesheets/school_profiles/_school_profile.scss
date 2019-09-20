@@ -93,6 +93,9 @@ $space-between-profile-modules: $spacing-extra-large;
     font-size: 22px;
     color: #666;
   }
+  .remodal-overlay {
+    background: rgba(0, 0, 0, 0.85);
+  }
   @include media-breakpoint-down(xs) {
     .remodal-wrapper {
       padding: 0;

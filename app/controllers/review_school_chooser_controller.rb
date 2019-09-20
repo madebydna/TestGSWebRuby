@@ -5,10 +5,14 @@ class ReviewSchoolChooserController < ApplicationController
   before_action :use_gs_bootstrap
   layout 'application'
 
+  REVIEW_LIMIT_TO_RETURN = 15
+  REVIEW_BUFFER_FOR_DISABLED = 5
+
   def show
     write_tags_and_gon
     @topic = review_topic
     @reviews = reviews
+
   end
 
   def morgan_stanley
@@ -38,10 +42,24 @@ class ReviewSchoolChooserController < ApplicationController
     )
   end
 
+  def active_schools_required(review_array)
+    review_array.select{|review| review&.school&.active == 1}[0..REVIEW_LIMIT_TO_RETURN-1]
+  end
+
   def reviews
     cache_key = "recent-reviews-national"
     Rails.cache.fetch(cache_key, expires_in: 1.hour) do
-      review_topic.first_question.reviews.active.has_comment.order(id: :desc).limit(15).includes(:answers, :votes, question: :review_topic).extend(SchoolAssociationPreloading).preload_associated_schools!
+      review_array = review_topic
+          .first_question
+          .reviews
+          .active
+          .has_comment
+          .order(id: :desc)
+          .limit(REVIEW_LIMIT_TO_RETURN+REVIEW_BUFFER_FOR_DISABLED)
+          .includes(:answers, :votes, question: :review_topic)
+          .extend(SchoolAssociationPreloading)
+          .preload_associated_schools!
+      active_schools_required(review_array)
     end
   end
 

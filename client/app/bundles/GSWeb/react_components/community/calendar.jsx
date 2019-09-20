@@ -214,7 +214,7 @@ class Calendar extends React.Component {
             </section>
             <div className="module-footer">
               <div data-ga-click-label='Calendar'>
-                <InfoBox content={sources} element_type="sources" >{ t('See notes') }</InfoBox>
+                <InfoBox content={sources} element_type="sources" pageType={this.props.pageType}>{ t('See notes') }</InfoBox>
                 <QualarooDistrictLink module='district_calendar' state={this.props.locality.stateShort} districtId={this.props.locality.district_id} />
               </div>
             </div>

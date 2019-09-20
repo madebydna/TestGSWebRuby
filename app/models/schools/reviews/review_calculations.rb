@@ -57,7 +57,7 @@ module ReviewCalculations
     # score distribution is only for reviews from the same topic question
     return nil if map(&:topic).map(&:name).uniq.count > 1
 
-    response_hash = first.question.chart_response_label_array.each_with_object({}) do |(response_label), hash|
+    response_hash = first.question.chart_response_label_array.each_with_object({}) do |response_label, hash|
       hash[response_label] = {count: 0, percentage: '0', label: response_label } 
     end
     group_by_labels = group_by(&:answer_label)

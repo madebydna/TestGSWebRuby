@@ -92,65 +92,65 @@ describe SchoolProfiles::OspSchoolInfo do
     end
   end
 
-  shared_context 'when displaying non-OSP classes' do
-    before do
-      allow(osp_school_info).to receive(:show_non_osp_classes?).and_return(true)
-      allow(osp_school_info).to receive(:courses_by_subject).and_return(sample_course_data)
-      allow(osp_school_info).to receive(:courses_props).and_return(sample_course_props)
-    end
-  end
+  # shared_context 'when displaying non-OSP classes' do
+  #   before do
+  #     allow(osp_school_info).to receive(:show_non_osp_classes?).and_return(true)
+  #     allow(osp_school_info).to receive(:courses_by_subject).and_return(sample_course_data)
+  #     allow(osp_school_info).to receive(:courses_props).and_return(sample_course_props)
+  #   end
+  # end
 
   shared_context 'when displaying OSP classes' do
     before { allow(osp_school_info).to receive(:show_non_osp_classes?).and_return(false) }
   end
 
-  describe '#show_non_osp_classes?' do
-    subject(:show_non_osp_classes) { osp_school_info.show_non_osp_classes? }
-
-    with_shared_context 'with a claimed school' do
-      with_shared_context 'when OSP has not entered classes' do
-        with_shared_context 'when State sources of class info are not available' do
-          it { should be_falsey }
-        end
-
-        with_shared_context 'when State sources of class info are available' do
-          it { should be_truthy }
-        end
-      end
-
-      with_shared_context 'when OSP has entered classes' do
-        with_shared_context 'when State sources of class info are not available' do
-          it { should be_falsey }
-        end
-
-        with_shared_context 'when State sources of class info are available' do
-          it { should be_falsey }
-        end
-      end
-    end
-
-    with_shared_context 'with an unclaimed school' do
-      with_shared_context 'when OSP has not entered classes' do
-        with_shared_context 'when State sources of class info are not available' do
-          it { should be_falsey }
-        end
-
-        with_shared_context 'when State sources of class info are available' do
-          it { should be_truthy }
-        end
-      end
-
-      with_shared_context 'when OSP has entered classes' do
-        with_shared_context 'when State sources of class info are not available' do
-          it { should be_falsey }
-        end
-
-        with_shared_context 'when State sources of class info are available' do
-          it { should be_truthy }
-        end
-      end
-    end
-  end
+  # describe '#show_non_osp_classes?' do
+  #   subject(:show_non_osp_classes) { osp_school_info.show_non_osp_classes? }
+  #
+  #   with_shared_context 'with a claimed school' do
+  #     with_shared_context 'when OSP has not entered classes' do
+  #       with_shared_context 'when State sources of class info are not available' do
+  #         it { should be_falsey }
+  #       end
+  #
+  #       with_shared_context 'when State sources of class info are available' do
+  #         it { should be_truthy }
+  #       end
+  #     end
+  #
+  #     with_shared_context 'when OSP has entered classes' do
+  #       with_shared_context 'when State sources of class info are not available' do
+  #         it { should be_falsey }
+  #       end
+  #
+  #       with_shared_context 'when State sources of class info are available' do
+  #         it { should be_falsey }
+  #       end
+  #     end
+  #   end
+  #
+  #   with_shared_context 'with an unclaimed school' do
+  #     with_shared_context 'when OSP has not entered classes' do
+  #       with_shared_context 'when State sources of class info are not available' do
+  #         it { should be_falsey }
+  #       end
+  #
+  #       with_shared_context 'when State sources of class info are available' do
+  #         it { should be_truthy }
+  #       end
+  #     end
+  #
+  #     with_shared_context 'when OSP has entered classes' do
+  #       with_shared_context 'when State sources of class info are not available' do
+  #         it { should be_falsey }
+  #       end
+  #
+  #       with_shared_context 'when State sources of class info are available' do
+  #         it { should be_truthy }
+  #       end
+  #     end
+  #   end
+  # end
 
   describe '#tab_config' do
     subject(:tab_config) { osp_school_info.tab_config }
@@ -169,15 +169,15 @@ describe SchoolProfiles::OspSchoolInfo do
           end
         end
 
-        with_shared_context 'when displaying non-OSP classes' do
-          it 'should contain all four tabs' do
-            expect(subject.size).to eq(4)
-          end
-
-          it 'should contain State class data' do
-            expect(subject.find { |h| h[:key] == :classes }[:data]).to eq(sample_course_props)
-          end
-        end
+        # with_shared_context 'when displaying non-OSP classes' do
+        #   it 'should contain all four tabs' do
+        #     expect(subject.size).to eq(4)
+        #   end
+        #
+        #   it 'should contain State class data' do
+        #     expect(subject.find { |h| h[:key] == :classes }[:data]).to eq(sample_course_props)
+        #   end
+        # end
       end
 
       with_shared_context 'Preschool' do
@@ -187,33 +187,33 @@ describe SchoolProfiles::OspSchoolInfo do
           end
         end
 
-        with_shared_context 'when displaying non-OSP classes' do
-          it 'should contain all four tabs' do
-            expect(subject.size).to eq(2)
-          end
-        end
+        # with_shared_context 'when displaying non-OSP classes' do
+        #   it 'should contain all four tabs' do
+        #     expect(subject.size).to eq(2)
+        #   end
+        # end
       end
     end
 
-    with_shared_context 'with an unclaimed school' do
-      with_shared_context 'K-12' do
-        with_shared_context 'when displaying non-OSP classes' do
-          it 'should contain only one tab' do
-            expect(subject.size).to eq(1)
-          end
-
-          it 'should contain State class data' do
-            expect(subject.find { |h| h[:key] == :classes }[:data]).to eq(sample_course_props)
-          end
-        end
-      end
-
-      with_shared_context 'Preschool' do
-        with_shared_context 'when displaying non-OSP classes' do
-          it { should be_empty }
-        end
-      end
-    end
+  #   with_shared_context 'with an unclaimed school' do
+  #     # with_shared_context 'K-12' do
+  #     #   with_shared_context 'when displaying non-OSP classes' do
+  #     #     it 'should contain only one tab' do
+  #     #       expect(subject.size).to eq(1)
+  #     #     end
+  #     #
+  #     #     it 'should contain State class data' do
+  #     #       expect(subject.find { |h| h[:key] == :classes }[:data]).to eq(sample_course_props)
+  #     #     end
+  #     #   end
+  #     # end
+  #
+  #     with_shared_context 'Preschool' do
+  #       with_shared_context 'when displaying non-OSP classes' do
+  #         it { should be_empty }
+  #       end
+  #     end
+  #   end
   end
 
   describe '#sources' do
@@ -231,16 +231,16 @@ describe SchoolProfiles::OspSchoolInfo do
       end
     end
 
-    with_shared_context 'when displaying non-OSP classes' do
-      it 'should contain sources for all tabs' do
-        expect(subject.size).to eq(4)
-      end
-
-      it 'classes source should be the State' do
-        expect(subject.find { |h| h[:heading] == 'Classes' }[:names]).to eq(['California Department of Education'])
-        expect(subject.find { |h| h[:heading] == 'Classes' }[:years]).to eq([2016])
-      end
-    end
+    # with_shared_context 'when displaying non-OSP classes' do
+    #   it 'should contain sources for all tabs' do
+    #     expect(subject.size).to eq(4)
+    #   end
+    #
+    #   it 'classes source should be the State' do
+    #     expect(subject.find { |h| h[:heading] == 'Classes' }[:names]).to eq(['California Department of Education'])
+    #     expect(subject.find { |h| h[:heading] == 'Classes' }[:years]).to eq([2016])
+    #   end
+    # end
   end
 
   describe '#data_label' do

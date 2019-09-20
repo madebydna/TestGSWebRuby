@@ -20,6 +20,9 @@ module SchoolProfiles::CollegeReadinessConfig
   OLD_SAT_RANGE = (600..2400)
   GRADUATES_REMEDIATION = 'Percent Needing Remediation for College'
   GRADUATES_PERSISTENCE = 'Percent Enrolled in College and Returned for a Second Year'
+  IB_ENROLLMENT = 'Percentage of students enrolled in IB grades 9-12'
+  DUAL_ENROLLMENT = 'Percentage of students enrolled in Dual Enrollment classes grade 9-12'
+
 # Constants for college success pane
 # Order matters - items display in configured order
   POST_SECONDARY = ['Graduating seniors pursuing other college',
@@ -155,6 +158,18 @@ module SchoolProfiles::CollegeReadinessConfig
       :data_key => AP_EXAMS_PASSED,
       :visualization => 'bar',
       :formatting => [:to_f, :round_unless_less_than_1, :percent]
+    },
+    {
+      :cache => :gsdata,
+      :data_key => DUAL_ENROLLMENT,
+      :visualization => 'bar',
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
+    },
+    {
+      :cache => :gsdata,
+      :data_key => IB_ENROLLMENT,
+      :visualization => 'bar',
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :gsdata,

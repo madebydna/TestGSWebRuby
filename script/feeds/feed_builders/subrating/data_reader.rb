@@ -59,7 +59,6 @@ module Feeds
                 url: school_url(school),
                 ratings: {}.tap do |hash|
                   hash['Test Scores'] = school.gsdata_test_scores_rating_hash if school.gsdata_test_scores_rating_hash
-                  hash['Advanced Courses'] = school.courses_rating_hash if school.courses_rating_hash
                   hash['College Readiness'] = school.college_readiness_rating_hash if school.college_readiness_rating_hash
                   hash['Equity'] = school.equity_overview_rating_hash if school.equity_overview_rating_hash
                   hash['Academic Progress'] = school.academic_progress_rating_hash if school.academic_progress_rating_hash

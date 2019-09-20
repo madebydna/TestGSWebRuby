@@ -78,20 +78,6 @@ class ReviewPageSearchBox extends SearchBox {
     }
   }
 
-  shouldShowAutoComplete(q) {
-    let return_value = false;
-    let linkDontSeeSchools = document.getElementsByClassName('js-doNotSeeResult')[0];
-    if(q.length >= 3) {
-      if(hasClass(linkDontSeeSchools, 'dn')) removeClass(linkDontSeeSchools, 'dn');
-      return_value = true;
-    }
-    else {
-      if(!hasClass(linkDontSeeSchools, 'dn')) addClass(linkDontSeeSchools, 'dn');
-      return_value = false;
-    }
-    return return_value;
-  }
-
   transformResult(category, result) {
     if(category == 'Schools') {
       return ({...result, url: this.urlOspUrl(result)});
@@ -104,17 +90,27 @@ class ReviewPageSearchBox extends SearchBox {
     return t('Enter school');
   }
 
-  render() {
-    let subtitleHeight = {
+  displayDoNotSeeSchoolLink(){
+    const subtitleHeight = {
       height: '35px'
     };
-    return (
-      <React.Fragment>
-         <div className="subtitle-sm tac" style={subtitleHeight}>
-           <a className="js-doNotSeeResult dn pointer" onClick={this.props.showStateSelector}>
-             {t('school_picker.do_not_see_school_text')}
+    if (this.state.searchTerm.length >= 3){
+      return(
+        <div className="subtitle-sm tac" style={subtitleHeight}>
+          <a className="pointer" onClick={this.props.showStateSelector}>
+            {t('school_picker.do_not_see_school_text')}
           </a>
         </div>
+      );
+    }else{
+      return <div className="subtitle-sm tac" style={subtitleHeight}></div>;
+    }
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        {this.displayDoNotSeeSchoolLink()}
         <div className="search-bar-osp js-autocompleteFieldContainer ma picker-border">
           <div className="full-width">
           {this.searchBoxElement(false)}

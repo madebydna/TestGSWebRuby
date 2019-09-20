@@ -13,10 +13,11 @@ import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import Calendar from "./calendar";
 import Students from "./students";
+import StemCourses from "../school_profiles/stem_courses";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
-import { schoolsTocItem, academicsTocItem, ACADEMICS, STUDENTS, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS} from './toc_config';
+import { schoolsTocItem, academicsTocItem, ACADEMICS, advancedCoursesTocItem, STUDENTS, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
@@ -126,7 +127,7 @@ class District extends React.Component {
   }
 
   selectTocItems(){
-    let districtTocItems = [schoolsTocItem, academicsTocItem, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
+    let districtTocItems = [schoolsTocItem, academicsTocItem, advancedCoursesTocItem, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());
@@ -200,11 +201,26 @@ class District extends React.Component {
             suppressIfEmpty={true}
             footer={
               <div data-ga-click-label={title}>
-                <InfoBox content={sources} element_type="sources">{ t('See notes') }</InfoBox>
+                <InfoBox content={sources} element_type="sources" pageType={this.pageType}>{ t('See notes') }</InfoBox>
                 <QualarooDistrictLink module='district_academics' state={this.props.locality.stateShort} districtId={this.props.locality.district_id} />
               </div>
             }
             pageType={this.pageType}
+          />
+        }
+        shouldDisplayStemCourses={this.props.stemCourses.courses.length > 0}
+        stemCourses={
+          <StemCourses
+            courses={this.props.stemCourses.courses}
+            sources={this.props.stemCourses.sources}
+            share_content={this.props.stemCourses.share_content}
+            title={this.props.stemCourses.title}
+            titleTooltipText={this.props.stemCourses.titleTooltipText}
+            subtitle={this.props.stemCourses.subtitle}
+            parentTip={this.props.stemCourses.parentTip}
+            faqCta={this.props.stemCourses.faqCta}
+            faqContent={this.props.stemCourses.faqContent}
+            qualaroo_module_link={this.props.stemCourses.qualaroo_module_link}
           />
         }
         students={<Students {...studentProps} />}

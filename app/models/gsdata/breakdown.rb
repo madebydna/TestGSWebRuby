@@ -31,8 +31,9 @@ class Breakdown < ActiveRecord::Base
 
   def self.unique_ethnicity_names
     [
-      'Asian',
       'African American',
+      'Asian',
+      'Asian or Pacific Islander',
       'Filipino',
       'Hawaiian',
       'Hispanic',

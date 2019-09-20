@@ -10,7 +10,6 @@ import CollegeReadiness from '../react_components/college_readiness';
 import ReviewDistribution from '../react_components/review_distribution';
 import Reviews from '../react_components/review/reviews';
 import NearestHighPerformingSchools from '../react_components/nearest_high_performing_schools';
-import Courses from '../react_components/courses';
 import { makeDrawersWithSelector } from '../components/drawer';
 import { generateEthnicityChart } from '../components/ethnicity_pie_chart';
 import { fixToTopWhenBelowY } from '../util/fix_to_top_when_below_y';
@@ -63,7 +62,6 @@ ReactOnRails.register({
   ReviewDistribution,
   Reviews,
   NearestHighPerformingSchools,
-  Courses,
   OspSchoolInfo,
   HomesAndRentals,
   StemCourses,
@@ -102,7 +100,6 @@ $(function() {
     'Test_scores': '#TestScores .profile-module',
     'College_readiness': '#CollegeReadiness .profile-module',
     'College_success': '#CollegeSuccess .profile-module',
-    'Advanced_courses': '#AdvancedCourses .profile-module',
     'Low-income_students': '#EquityLowIncome .profile-module',
     'Race_ethnicity': '#EquityRaceEthnicity .profile-module',
     'Students_with_Disabilities': '#EquityDisabilities .profile-module',
@@ -364,7 +361,6 @@ $(window).on('load', function() {
     '#CollegeReadiness',
     '#CollegeSuccess',
     '#StudentProgress',
-    '#AdvancedCourses',
     '#EquityOverview',
     '#Equity',
     '#EquityRaceEthnicity',

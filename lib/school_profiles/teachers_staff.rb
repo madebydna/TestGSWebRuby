@@ -32,7 +32,32 @@ module SchoolProfiles
             :data_key => 'Ratio of teacher salary to total number of teachers',
             :visualization => :dollar_viz,
             :formatting => [:to_f, :round, :dollars]
-        }
+        },
+        {
+          :data_key => 'Nurse indicator',
+          :visualization => :plain_text_viz,
+          :formatting => [:employment_level]
+        },
+        {
+          :data_key => 'Psychologist indicator',
+          :visualization => :plain_text_viz,
+          :formatting => [:employment_level]
+        },
+        {
+          :data_key => 'Social Worker indicator',
+          :visualization => :plain_text_viz,
+          :formatting => [:employment_level]
+        },
+        {
+            :data_key => 'Law Enforcement Officer indicator',
+            :visualization => :plain_text_viz,
+            :formatting => [:employment_level]
+        },
+        {
+            :data_key => 'Security Guard indicator',
+            :visualization => :plain_text_viz,
+            :formatting => [:employment_level]
+        },
     ].freeze
 
     def initialize(school_cache_data_reader)
@@ -95,6 +120,24 @@ module SchoolProfiles
     def data_label_info_text(key)
       I18n.t(key.to_sym, scope: 'lib.teachers_staff.data_point_info_texts', default: '')
     end
+    
+    def data_score_type(obj, formatting)
+      if formatting.include?(:employment_level)
+        return employment_level(obj.school_value.to_f, obj.breakdowns)
+      end
+      SchoolProfiles::DataPoint.new(obj.school_value.to_f).apply_formatting(*formatting)
+    end
+
+    def employment_level(value, breakdowns)
+      presence = {
+        0.0 => 'not_present',
+        1.0 => 'present'
+      }
+      t_presence = presence[value]
+      t_key = breakdowns.first
+
+      I18n.t("lib.teachers_staff.employment_level.#{t_presence}.#{t_key}")
+    end
 
     def data_values_by_data_type
       hashes = school_cache_data_reader.gsdata_data(
@@ -102,13 +145,8 @@ module SchoolProfiles
       )
       return [] if hashes.blank?
       objs = hashes.map do |key, array|
-        GSLogger.error(:misc, nil,
-                       message:"Failed to find unique data point for data type #{key} in the gsdata cache",
-                       vars: {school: {state: @school_cache_data_reader.school.state,
-                                       id: @school_cache_data_reader.school.id}
-                       }) if array.size > 1
-        hash = array.first
-        GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: key))
+        values = GsdataCaching::GsDataValue.from_array_of_hashes(array.map { |h| h.merge(data_type: key) })
+        values.having_most_recent_date.first
       end
       objs.sort_by { |o| included_data_types.index(o.data_type) }
     end
@@ -122,8 +160,7 @@ module SchoolProfiles
         RatingScoreItem.new.tap do |item|
           item.label = data_label(data_type)
           item.info_text = data_label_info_text(data_type)
-          item.score = SchoolProfiles::DataPoint.new(obj.school_value.to_f).
-              apply_formatting(*formatting)
+          item.score = data_score_type(obj, formatting)
           item.state_average = SchoolProfiles::DataPoint.new(obj.state_value).
               apply_formatting(*formatting)
           item.visualization = visualization

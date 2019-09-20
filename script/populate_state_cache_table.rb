@@ -1,7 +1,7 @@
 had_any_errors = false
 
 def all_cache_keys
-  %w(state_characteristics test_scores_gsdata feed_test_scores_gsdata feed_test_description_gsdata gsdata ratings district_largest)
+  %w(state_characteristics test_scores_gsdata feed_test_scores_gsdata feed_test_description_gsdata gsdata ratings district_largest state_attributes)
 end
 
 

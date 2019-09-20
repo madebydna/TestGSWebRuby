@@ -59,7 +59,7 @@ const Students = ({ ethnicityData, subgroupsData, genderData, translations, sour
         </div>
         <div className="gender"> </div>
       </section>
-      <InfoBox content={sources} element_type="sources" >{t('See notes')}</InfoBox>
+      <InfoBox content={sources} element_type="sources" pageType={pageType}>{t('See notes')}</InfoBox>
     </React.Fragment>
   )
 }

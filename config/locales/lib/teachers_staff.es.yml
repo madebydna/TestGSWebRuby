@@ -8,9 +8,24 @@ es:
       'Ratio of students to full time teachers': 'El promedio de estudiantes por cada profesor'
       'Percentage of teachers with less than three years experience': 'El porcentaje de profesores con 3 o más años de experiencia'
       'source': 'Fuente'
+      'Nurse indicator': 'Enfermera'
+      'Psychologist indicator': 'Psicólogo'
+      'Social Worker indicator': 'Trabajador social'
+      'Law Enforcement Officer indicator': 'Oficial de la policia'
+      'Security Guard indicator': 'Oficial de seguridad'
       data_point_info_texts:
         'Ratio of students to full time teachers': 'El promedio de estudiantes por cada profesor de tiempo completo en esta escuela; tenga en cuenta que este no es un reflejo del promedio de estudiantes por clase.'
         'Ratio of teacher salary to total number of teachers': 'El salario promedio de profesores trabajando de tiempo completo en esta escuela.'
         'Percentage of full time teachers who are certified': 'El porcentaje de profesores de tiempo completo en esta escuela que han cumplido con todos los requisitos estándares de certificación del estado.'
         'Ratio of students to full time counselors': 'El promedio de estudiantes por cada consejero en esta escuela.'
         'Percentage of teachers with less than three years experience': 'El porcentaje de profesores trabajando de tiempo completo en esta escuela con 3 o más años de experiencia.'
+        'Nurse indicator': 'Esto indica si la escuela tienen o no una enfermera registrada que trabaja medio tiempo o tiempo completo.'
+        'Psychologist indicator': 'Esto indica si la escuela tienen o no un psicólogo licenciado que trabaja medio tiempo o tiempo completo.'
+        'Social Worker indicator': 'Esto indica si la escuela tienen o no un trabajador social licenciado que trabaja medio tiempo o tiempo completo.'
+        'Law Enforcement Officer indicator': 'Esto indica si la escuela tienen o no un oficial de la policía que trabaja medio tiempo o tiempo completo en el campus.'
+        'Security Guard indicator': 'Esto indica si la escuela tienen o no un oficial de seguridad que trabaja medio tiempo o tiempo completo.'
+      employment_level:
+        'not_present': Ninguno
+        'present':
+          'full-time': De tiempo completo
+          'part-time': De medio tiempo

@@ -1,6 +1,10 @@
 <% modal_css_class = params[:modal_css_class] %>
 <% heading = params[:heading].presence || t('.heading') %>
-<% subheading = params[:subheading].presence || t('.subheading_html', default: '') %>
+<% if I18n.locale == :es && params[:subheading] == "You've signed up to receive updates" %>
+  <% subheading =  t('.subheading_html', school_name: params[:school_name], default: '') %>
+<% else %>
+  <% subheading = params[:subheading].presence || t('.subheading_html', default: '') %>
+<% end %>
 
 <%= render layout: 'modal_layout', locals: {
   heading: heading,

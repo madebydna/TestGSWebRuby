@@ -8,7 +8,7 @@ module SearchTableConcerns
   ACADEMIC_PROGRESS_RATING = 'Academic Progress Rating'
 
   def academic_header_names
-    ['Test Scores Rating', growth_progress_rating_header, 'College Readiness Rating', 'Advanced Courses Rating', 'Equity Overview Rating']
+    ['Test Scores Rating', growth_progress_rating_header, 'College Readiness Rating', 'Equity Overview Rating']
   end
   
   def academic_header_hash
@@ -24,15 +24,18 @@ module SearchTableConcerns
   end
 
   def growth_progress_rating_header
-    growth_data_state? ? STUDENT_PROGRESS_RATING : ACADEMIC_PROGRESS_RATING
+    growth_data_proxy_state? ?  ACADEMIC_PROGRESS_RATING : STUDENT_PROGRESS_RATING
   end
 
-  # This method checks to see if the the array of serialized schools is a growth state 
-  # (with a Student Progress Rating) or a growth proxy state (with a Academic Progress Rating)
-  # Return a boolean if any school from the  set of serialized schools has a Student Progress rating
-  # indicating that the state is a growth data state
-  def growth_data_state?
-    serialized_schools.any? {|s| s.fetch(:subratings, {}).fetch(STUDENT_PROGRESS_RATING, false)}
+  # This method checks if the state is a growth_data_proxy_data_state which will use Academic Progress Rating
+  # Otherwise it will return false if it is a growth_data_state (uses Student Progress Rating) or if the state
+  # doesn't have any data at all (N/A but will use SPR as a fallback) 
+  def growth_data_proxy_state?
+    # finds most frequent state if revelance search is used and no state in query params
+    most_frequent_state = mode(serialized_schools.map {|school| school.dig(:state) }) if state.nil?
+    cache_data = StateCache.for_state('state_attributes', (state || most_frequent_state))&.cache_data
+    return false if cache_data.nil?
+    cache_data['growth_type'] == ACADEMIC_PROGRESS_RATING
   end
 
   def equity_header_hash(schools)
