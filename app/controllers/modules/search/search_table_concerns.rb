@@ -32,8 +32,8 @@ module SearchTableConcerns
   # doesn't have any data at all (N/A but will use SPR as a fallback) 
   def growth_data_proxy_state?
     # finds most frequent state if a la carte search is used and no state in query params
-    mostFrequentState = mode(serialized_schools.map {|school| school.dig(:state) }) if state.nil?
-    cache_data = StateCache.for_state('state_attributes', (state || mostFrequentState)).cache_data
+    most_frequent_state = mode(serialized_schools.map {|school| school.dig(:state) }) if state.nil?
+    cache_data = StateCache.for_state('state_attributes', (state || most_frequent_state)).cache_data
     return false if cache_data.empty?
     cache_data['growth_type'] == ACADEMIC_PROGRESS_RATING
   end
