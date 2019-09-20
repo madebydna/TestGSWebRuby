@@ -38,7 +38,7 @@ const SchoolList = ({
   size,
   shouldRemoveAds
 }) => {
-  let numsNonAssignedSchools = 0;
+  let indexOfNonAssignedSchools = 0;
   const hasAssignedSchools = schools.some(s=>s.assigned)
   checkSponsorSearchResult();
   return(
@@ -53,10 +53,11 @@ const SchoolList = ({
       }
       <ol className={isLoading ? "loading" : ""}>
         {schools.map((s, index) => {
-          if (s.assigned === null) { numsNonAssignedSchools++; }
-          const shouldRenderSponsorSchoolAdOnMobileWithAssignedSchools = hasAssignedSchools && numsNonAssignedSchools === 1 && size <= SM && schools.length >= 8; 
-          const shouldRenderSponsorSchoolAdOnMobile = !hasAssignedSchools && numsNonAssignedSchools === 2 && size <= SM && schools.length >= 8; 
-          const shouldRenderSponsorSchoolAdOnDesktop = numsNonAssignedSchools === 3 && size > SM && schools.length >= 8;
+          if (s.assigned === null) { indexOfNonAssignedSchools++; }
+          console.log(index, 'hasAssignedSchools', hasAssignedSchools,'indexOfNonAssignedSchools', indexOfNonAssignedSchools)
+          const shouldRenderSponsorSchoolAdOnMobileWithAssignedSchools = hasAssignedSchools && indexOfNonAssignedSchools === 1 && size <= SM && schools.length >= 8; 
+          const shouldRenderSponsorSchoolAdOnMobile = !hasAssignedSchools && indexOfNonAssignedSchools === 2 && size <= SM && schools.length >= 8; 
+          const shouldRenderSponsorSchoolAdOnDesktop = indexOfNonAssignedSchools === 3 && size > SM && schools.length >= 8;
           return(
             <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
               {!shouldRemoveAds && index > 0 &&
