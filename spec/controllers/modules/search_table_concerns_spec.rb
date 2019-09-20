@@ -114,15 +114,15 @@ describe SearchTableConcerns do
         allow(dummy_controller).to receive(:state).and_return('ar')
       end
 
-      it '.growth_data_proxy_state?' do
+      it '#growth_data_proxy_state?' do
         expect(dummy_controller.growth_data_proxy_state?).to be false
       end
 
-      it '.growth_progress_rating_header' do
+      it '#growth_progress_rating_header' do
         expect(dummy_controller.growth_progress_rating_header).to eq('Student Progress Rating')
       end
 
-      it '.academic_header_names' do
+      it '#academic_header_names' do
         expect(dummy_controller.academic_header_names).to eq(['Test Scores Rating', 'Student Progress Rating', 'College Readiness Rating', 'Equity Overview Rating'])
       end
     end
@@ -132,15 +132,15 @@ describe SearchTableConcerns do
         allow(dummy_controller).to receive(:state).and_return('ca')
       end
 
-      it '.growth_data_proxy_state?' do
+      it '#growth_data_proxy_state?' do
         expect(dummy_controller.growth_data_proxy_state?).to be true
       end
 
-      it '.growth_progress_rating_header' do
+      it '#growth_progress_rating_header' do
         expect(dummy_controller.growth_progress_rating_header).to eq('Academic Progress Rating')
       end
 
-      it '.academic_header_names' do
+      it '#academic_header_names' do
         expect(dummy_controller.academic_header_names).to eq(['Test Scores Rating', 'Academic Progress Rating', 'College Readiness Rating', 'Equity Overview Rating'])
       end
     end
@@ -150,15 +150,15 @@ describe SearchTableConcerns do
         allow(dummy_controller).to receive(:serialized_schools).and_return(array_of_growth_proxy_state_and_specific_subjects_remediation_schools)
       end
 
-      it '.growth_data_proxy_state?' do
+      it '#growth_data_proxy_state?' do
         expect(dummy_controller.growth_data_proxy_state?).to be true
       end
 
-      it '.growth_progress_rating_header' do
+      it '#growth_progress_rating_header' do
         expect(dummy_controller.growth_progress_rating_header).to eq('Academic Progress Rating')
       end
 
-      it '.academic_header_names' do
+      it '#academic_header_names' do
         expect(dummy_controller.academic_header_names).to eq(['Test Scores Rating', 'Academic Progress Rating', 'College Readiness Rating', 'Equity Overview Rating'])
       end
     end
