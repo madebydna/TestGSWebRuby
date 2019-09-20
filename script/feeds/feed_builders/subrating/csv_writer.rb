@@ -9,7 +9,6 @@ module Feeds
       include Feeds::FeedHelper
 
       SUBRATING_LIST = ['Test Scores',
-                        'Advanced Courses',
                         'College Readiness',
                         'Equity',
                         'Academic Progress',
