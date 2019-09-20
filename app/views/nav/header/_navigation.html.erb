@@ -52,14 +52,16 @@
           <li><a class="js-no_ad" href="/logout/"><%= t('.sign_out') %></a></li>
         </ul>
       </li>
-      <li class="featured_visible_mobile featured">
-        <label for="drop-6" class="toggle"><span><%= t('.featured.title') %></span> </label>
-        <a href="#"><%= t('.featured.title') %> </a>
-        <input type="checkbox" id="drop-6"/>
-        <ul>
-          <%= render 'nav/header/featured_links' %>
-        </ul>
-      </li>
+      <% if I18n.locale == :en %>
+        <li class="featured_visible_mobile featured">
+          <label for="drop-6" class="toggle"><span><%= t('.featured.title') %></span> </label>
+          <a href="#"><%= t('.featured.title') %> </a>
+          <input type="checkbox" id="drop-6"/>
+          <ul>
+            <%= render 'nav/header/featured_links' %>
+          </ul>
+        </li>
+      <% end %>
     </ul>
   </nav>
 </div>
