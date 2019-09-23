@@ -81,7 +81,7 @@ const PaginationButtons = ({ page, totalPages, onPageChanged, mobileView }) => {
             enabled={!option.preventSelect}
             active={active}
             onClick={select}
-            href={!option.preventSelect && option.link}
+            href={option.preventSelect ? undefined : option.link}
           >
             {option.label}
           </AnchorButton>

@@ -54,7 +54,6 @@ const SchoolList = ({
       <ol className={isLoading ? "loading" : ""}>
         {schools.map((s, index) => {
           if (s.assigned === null) { indexOfNonAssignedSchools++; }
-          console.log(index, 'hasAssignedSchools', hasAssignedSchools,'indexOfNonAssignedSchools', indexOfNonAssignedSchools)
           const shouldRenderSponsorSchoolAdOnMobileWithAssignedSchools = hasAssignedSchools && indexOfNonAssignedSchools === 1 && size <= SM && schools.length >= 8; 
           const shouldRenderSponsorSchoolAdOnMobile = !hasAssignedSchools && indexOfNonAssignedSchools === 2 && size <= SM && schools.length >= 8; 
           const shouldRenderSponsorSchoolAdOnDesktop = indexOfNonAssignedSchools === 3 && size > SM && schools.length >= 8;
