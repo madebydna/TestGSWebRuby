@@ -380,6 +380,7 @@ en:
     Continue: Continue
     Not right now: Not right now
     sources: Sources
+    no_schools_found: No schools found
     CSA Page:
       summary: >
         <span>In %{state}, %{total} public schools earned a College Success Award in %{year} based on their 

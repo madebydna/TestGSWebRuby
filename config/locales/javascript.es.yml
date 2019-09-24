@@ -381,6 +381,7 @@ es:
     Continue: Continuar
     Not right now: No en este momento
     sources: Fuentes
+    no_schools_found: No se encontraron escuelas
     CSA Page:
       summary: >
         <span>En %{state}, %{total} escuelas públicas ganaron un College Success Award de %{year}, un premio basado en su 
