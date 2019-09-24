@@ -79,6 +79,8 @@ en:
       Students with IDEA catagory disabilities: Students with disabilities
       disabilities_title: Students with disabilities
       Percentage AP enrolled grades 9-12: '% taking AP classes'
+      Percentage of students enrolled in IB grades 9-12: '% taking IB classes'
+      Percentage of students enrolled in Dual Enrollment classes grade 9-12: '% taking college classes'
       Number of Advanced Courses Taken per Student: Adv courses per student
       English Language Arts: English
       African American: Black
@@ -103,6 +105,8 @@ en:
       Advanced courses: Advanced courses
       data_point_info_texts:
         'Percentage AP enrolled grades 9-12': 'This shows the percentage of students who are enrolled in Advanced Placement (AP) courses.'
+        'Percentage of students enrolled in Dual Enrollment classes grade 9-12': 'This shows the percentage of students who are enrolled in college classes while in high school (also called “dual enrollment”).'
+        'Percentage of students enrolled in IB grades 9-12': 'This shows the percentage of students who are enrolled in International Baccalaureate (IB) courses.'
         'Number of Advanced Courses Taken per Student': 'This shows the average number of advanced courses taken by students at this school.'
         'Advanced Course Rating': >
           The Advanced Courses ratings reflect the number of advanced courses taken per student by different
