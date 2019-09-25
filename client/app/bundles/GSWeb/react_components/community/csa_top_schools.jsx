@@ -7,7 +7,7 @@ import { t } from "util/i18n";
 import { addQueryParamToUrl } from 'util/uri';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
-const regionName = (locality) => {
+const regionName = (locality, community) => {
   if (locality.stateShort === 'DC') {
     return `${locality.city}, ${locality.stateShort}`;
   } else if (community === 'state') {
