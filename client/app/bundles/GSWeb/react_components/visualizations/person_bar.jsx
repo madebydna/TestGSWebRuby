@@ -44,7 +44,7 @@ export default class PersonBar extends React.Component {
     return (
       state_average != null && 
       state_average != undefined && 
-      parseInt(state_average) > 0 && 
+      parseInt(state_average) >= 0 &&
       parseInt(state_average) <= 100
     );
   }

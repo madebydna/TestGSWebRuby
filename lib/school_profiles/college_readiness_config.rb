@@ -162,13 +162,13 @@ module SchoolProfiles::CollegeReadinessConfig
     {
       :cache => :gsdata,
       :data_key => DUAL_ENROLLMENT,
-      :visualization => 'bar',
+      :visualization => 'person',
       :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :gsdata,
       :data_key => IB_ENROLLMENT,
-      :visualization => 'bar',
+      :visualization => 'person',
       :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
