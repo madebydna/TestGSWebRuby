@@ -11,7 +11,7 @@ class SchoolProfileMetaTags
     if @school.state.downcase == 'dc'
       return_title_str << 'Washington, DC'
     else
-      return_title_str << @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
+      return_title_str << @school.city + ', ' + @school.state_name.titleize + ' - ' + @school.state
     end
     return_title_str << I18n.t(:title_suffix, scope: 'controllers.school_profile_controller.meta_tags')
   end
