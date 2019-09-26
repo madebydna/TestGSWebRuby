@@ -47,6 +47,10 @@ module SchoolProfiles
       state_attributes['growth_type']
     end
 
+    def hs_enabled_growth_rating?
+      state_attributes['hs_enabled_growth_rating']
+    end
+
     def gs_rating_year
       decorated_school.great_schools_rating_year
     end

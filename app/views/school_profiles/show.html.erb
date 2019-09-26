@@ -78,13 +78,13 @@
                 We only show the AP module if the school has data for AP AND the school is (e,m, or h) AND the school DOES NOT have data for SP
                 Else, if the school is (e,m), we show SP, whether SP has data, or not (no-data state)
               %>
-              <% if @school_profile.academic_progress.visible? && !@school_profile.student_progress.has_data?%>
-                <div class="profile-section-slot">
-                  <%= render 'academic_progress', academic_progress: @school_profile.academic_progress %>
-                </div>
-              <% elsif @school_profile.student_progress.visible? %>
+              <% if @school_profile.student_progress.student_progress_state? && @school_profile.student_progress.visible? %>
                 <div class="profile-section-slot">
                   <%= render 'student_progress', student_progress: @school_profile.student_progress %>
+                </div>
+              <% elsif @school_profile.academic_progress.academic_progress_state? && @school_profile.academic_progress.visible? %>
+                <div class="profile-section-slot">
+                  <%= render 'academic_progress', academic_progress: @school_profile.academic_progress %>
                 </div>
               <% end %>
 
