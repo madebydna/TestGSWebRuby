@@ -18,10 +18,10 @@ class SchoolProfileMetaTags
 
   def description
     if @school.preschool?
-      location_string = @school.state.downcase == 'dc' ? 'Washington, DC' : "#{@school.city}, #{@school.state_name.capitalize} (#{@school.state})"
+      location_string = @school.state.downcase == 'dc' ? 'Washington, DC' : "#{@school.city}, #{@school.state_name.titleize} (#{@school.state})"
       I18n.t('preschool_description', scope: 'controllers.school_profile_controller.meta_tags', school_name: @school.name, location_string: location_string)
     else
-      location_string = @school.state.downcase == 'dc' ? 'Washington, DC' : "#{@school.city}, #{@school.state_name.capitalize} - #{@school.state}"
+      location_string = @school.state.downcase == 'dc' ? 'Washington, DC' : "#{@school.city}, #{@school.state_name.titleize} - #{@school.state}"
       I18n.t('description', scope: 'controllers.school_profile_controller.meta_tags', school_name: @school.name, location_string: location_string)
     end
   end

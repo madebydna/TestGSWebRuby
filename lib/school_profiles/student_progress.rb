@@ -94,7 +94,7 @@ module SchoolProfiles
       description = data_label(description) if description
       methodology = rating_methodology
       methodology = data_label(methodology) if methodology
-      source = "#{@school.state_name.capitalize} #{label('Dept of Education')}, #{rating_year}"
+      source = "#{@school.state_name.titleize} #{label('Dept of Education')}, #{rating_year}"
 
       content = '<div class="sourcing">'
       content << '<h1>' + label('title') + '</h1>'
