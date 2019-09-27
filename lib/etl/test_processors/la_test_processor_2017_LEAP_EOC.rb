@@ -40,16 +40,16 @@ class LATestProcessor2017LEAPEOC < GS::ETL::TestProcessor
       'Total Population_' => 1
   }
 
-  map_prof_band_id = {
-      :advanced => 17,
-      :mastery => 16,
-      :basic => 15,
-      :approaching_basic => 14,
-      :unsatisfactory => 13,
-      :excellent => 8,
-      :good => 7,
-      :fair => 6,
-      :needs_improvement => 5,
+  map_prof_band_id = { #these bands are mapped to the wrong ids, fixed in a script after
+      :advanced => 17, #should be 90
+      :mastery => 16, #should be 89
+      :basic => 15, #should be 88
+      :approaching_basic => 14, #should be 87
+      :unsatisfactory => 13, #should be 86
+      :excellent => 8, #should be 106
+      :good => 7, #should be 105
+      :fair => 6, #should be 104
+      :needs_improvement => 5, #should be 103
       :prof_and_above => 1
   }
 
