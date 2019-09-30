@@ -2,6 +2,8 @@ module SchoolProfiles
   class EquityGsdata
     COURSES_DATA_TYPES = {
         'Percentage AP enrolled grades 9-12' => {type: :person},
+        'Percentage of students enrolled in Dual Enrollment classes grade 9-12' => {type: :person},
+        'Percentage of students enrolled in IB grades 9-12' => {type: :person},
         'Number of Advanced Courses Taken per Student' => {type: :plain, precision: 1}
     }
 
