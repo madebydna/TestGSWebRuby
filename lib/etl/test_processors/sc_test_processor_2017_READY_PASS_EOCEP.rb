@@ -41,8 +41,8 @@ class SCTestProcessor2018READYPASSEOCEP < GS::ETL::TestProcessor
 	'math' => 5,
 	'sci' => 19,
 	'soc' => 18,
-	'1' => 6,#alg1
-	'2' => 22 #bio 1
+	'1' => 6, #alg1
+	'2' => 22,#bio 1
 	'3' => 17, #english 1
 	'4' => 52 #US history and constitution
 	}
@@ -84,30 +84,53 @@ class SCTestProcessor2018READYPASSEOCEP < GS::ETL::TestProcessor
 	'16' => 24#not econ dis
 	}
 
-	# source("SC_PASS_2017.txt",[],col_sep:"\t") do |s|
-	# 	s.transform("Fill values", Fill,{
-	# 		test_data_type: 'pass',
-	# 		test_data_type_id: '276',
-	#		date_valid: '2017-01-01 00:00:00'
-	# 		description: 'In 2016-2017, students took The South Carolina Palmetto Assessment of State Standards (SCPASS). SCPASS is a statewide assessment administered to students in grades four through eight. All students in these grade levels are required to take the SCPASS except those who qualify for the South Carolina Alternate Assessment (SC-Alt). SCPASS includes tests in two subjects: science and social studies.'
-	# 		})
-	# end
+	source("SC_PASS_2017.txt",[],col_sep:"\t") do |s|
+		s.transform("Fill values", Fill,{
+			test_data_type: 'pass',
+			test_data_type_id: '276',
+			date_valid: '2017-01-01 00:00:00',
+			notes: 'DXT-3136 SC PASS',
+			description: 'In 2016-2017, students took The South Carolina Palmetto Assessment of State Standards (SCPASS). SCPASS is a statewide assessment administered to students in grades four through eight. All students in these grade levels are required to take the SCPASS except those who qualify for the South Carolina Alternate Assessment (SC-Alt). SCPASS includes tests in two subjects: science and social studies.'
+			})
+	end
 
-	# source("SC_PASS_2018.txt",[],col_sep:"\t") do |s|
-	# 	s.transform("Fill values", Fill,{
-	# 		test_data_type: 'pass',
-	# 		test_data_type_id: '276',
-	#		date_valid: '2018-01-01 00:00:00'
-	# 		description: 'In 2017-2018, students took The South Carolina Palmetto Assessment of State Standards (SCPASS). SCPASS is a statewide assessment administered to students in science in the 4th, 6th and 8th grade and in social studies in the 5th and 7th grade. All students in these grade levels are required to take the SCPASS except those who qualify for the South Carolina Alternate Assessment (SC-Alt). SCPASS includes tests in two subjects: science and social studies.'
-	# 		})
-	# end
+	source("SC_PASS_2018.txt",[],col_sep:"\t") do |s|
+		s.transform("Fill values", Fill,{
+			test_data_type: 'pass',
+			test_data_type_id: '276',
+			date_valid: '2018-01-01 00:00:00',
+			notes: 'DXT-3136 SC PASS',
+			description: 'In 2017-2018, students took The South Carolina Palmetto Assessment of State Standards (SCPASS). SCPASS is a statewide assessment administered to students in science in the 4th, 6th and 8th grade and in social studies in the 5th and 7th grade. All students in these grade levels are required to take the SCPASS except those who qualify for the South Carolina Alternate Assessment (SC-Alt). SCPASS includes tests in two subjects: science and social studies.'
+			})
+	end
+
+	source("SC_READY_2017.txt",[],col_sep:"\t") do |s|
+		s.transform("Fill values", Fill,{
+			test_data_type: 'sc ready',
+			test_data_type_id: '279',
+			date_valid: '2017-01-01 00:00:00',
+			notes: 'DXT-3136 SC SC READY',
+			description: 'In 2016-2017, students took the South Carolina College- and Career-Ready Assessments (SC READY). The SC Ready is a statewide assessment that includes tests in English Language Arts (ELA) and mathematics administered to students in grades 3-8. All students in grades 3-8 are required to participate in the SC READY, except those who qualify for the South Carolina National Center and State Collaborative (SC-NCSC) alternate assessment. The initial administration of the SC READY was in spring 2016, and the SC READY test results will be used for state and federal accountability purposes.'
+			})
+	end
+
+	source("SC_READY_2018.txt",[],col_sep:"\t") do |s|
+		s.transform("Fill values", Fill,{
+			test_data_type: 'sc ready',
+			test_data_type_id: '279',
+			date_valid: '2018-01-01 00:00:00',
+			notes: 'DXT-3136 SC SC READY',
+			description: 'In 2017-2018, students took the South Carolina College- and Career-Ready Assessments (SC READY). The SC Ready is a statewide assessment that includes tests in English Language Arts (ELA) and mathematics administered to students in grades 3-8. All students in grades 3-8 are required to participate in the SC READY, except those who qualify for the South Carolina National Center and State Collaborative (SC-NCSC) alternate assessment. The initial administration of the SC READY was in spring 2016, and the SC READY test results will be used for state and federal accountability purposes.'
+			})
+	end
 
 
 	source("SC_EOCEP_2017.txt",[],col_sep:"\t") do |s|
 		s.transform("Fill values", Fill,{
 			test_data_type: 'sc eocep',
 			test_data_type_id: '277',
-			date_valid: '2017-01-01 00:00:00'
+			date_valid: '2017-01-01 00:00:00',
+			notes: 'DXT-3136 SC SC EOCEP',
 			description: 'In 2016-2017 South Carolina used the End-of-Course Examination Program (EOCEP) to test middle and high school students in Algebra I, Biology I, English I, and US History & the Constitution. The EOCEP provides tests for high school core courses and for courses taken in middle school for high school credit. The EOCEP is a standards-based test program, which means it measures how well students are mastering specific skills defined for each grade by the state of South Carolina. The goal is for all students to score a D or above.'
 			})
 	end
@@ -116,7 +139,8 @@ class SCTestProcessor2018READYPASSEOCEP < GS::ETL::TestProcessor
 		s.transform("Fill values", Fill,{
 			test_data_type: 'sc eocep',
 			test_data_type_id: '277',
-			date_valid: '2018-01-01 00:00:00'
+			date_valid: '2018-01-01 00:00:00',
+			notes: 'DXT-3136 SC SC EOCEP',
 			description: 'In 2017-2018 South Carolina used the End-of-Course Examination Program (EOCEP) to test middle and high school students in Algebra I, Biology I, English I, and US History & the Constitution. The EOCEP provides tests for high school core courses and for courses taken in middle school for high school credit. The EOCEP is a standards-based test program, which means it measures how well students are mastering specific skills defined for each grade by the state of South Carolina. The goal is for all students to score a D or above.'
 			})
 	end
@@ -149,9 +173,6 @@ class SCTestProcessor2018READYPASSEOCEP < GS::ETL::TestProcessor
 	      end
 	      row
         end
-		.transform("Fill other columns", Fill,{
-		notes: 'DXT-3136 SC READY, PASS, EOCEP'
-		})
 	end
 
 	def config_hash

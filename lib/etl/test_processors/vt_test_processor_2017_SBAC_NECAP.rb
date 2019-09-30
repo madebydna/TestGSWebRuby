@@ -33,10 +33,10 @@ class VTTestProcessor2017SBAC_NECAP < GS::ETL::TestProcessor
 	}
 	
 	map_prof_band_id = { #these bands are mapped to the wrong ids, fixed in a script after
-		level_4_proficient_with_distinction: 8, 
-		level_3_proficient: 7, 
-		level_2_partially_proficient: 6, 
-		level_1_substantially_below_proficient: 5,
+		level_4_proficient_with_distinction: 8, #should be 122
+		level_3_proficient: 7, #should be 121
+		level_2_partially_proficient: 6, #should be 120
+		level_1_substantially_below_proficient: 5, #should be 119
 		proficient_and_above: 1
 	}
 
