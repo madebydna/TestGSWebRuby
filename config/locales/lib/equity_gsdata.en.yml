@@ -158,12 +158,12 @@ en:
             <p class="narrative-content">This shows the percentage of students with disabilities absent for 15 or more days compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
-            <p class="footnote"><a href='/gk/articles/5-things-not-to-say-to-kids-with-learning-and-attention-issues-about-going-back-to-school/'>5 things <span class="italicized">not</span> to say to your child</a> about going back-to-school.</p>
+            <p class="footnote"><a href="/gk/articles/school-discipline-the-rights-of-students-with-ieps-and-504-plans/">Learn about your child’s rights</a> when it comes to school discipline.</p>
           'Percentage of students suspended out of school': >
             <p class="narrative-content">This shows the suspension rates for students with disabilities at this school compared to the state average. High suspension rates mean less time for  teaching and learning.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
-            <p class="footnote"><a href='/gk/articles/5-things-not-to-say-to-kids-with-learning-and-attention-issues-about-going-back-to-school/'>5 things <span class="italicized">not</span> to say to your child</a> about going back-to-school.</p>
+            <p class="footnote"><a href="/gk/articles/school-discipline-the-rights-of-students-with-ieps-and-504-plans/">Learn about your child’s rights</a> when it comes to school discipline.</p>
           'Test scores':
             # one - subject begins with a vowel e.g. an English
             # other - subject begins with a consonant e.g. a Math
@@ -171,9 +171,9 @@ en:
               <p class="narrative-content">This shows results for students with disabilities on an %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
-              <p class="footnote"><a href='/gk/articles/8-steps-to-kicking-off-your-childs-iep-the-right-way/'>8 tips for getting your child's IEP </a> off to a good start this school year. </p>
+              <p class="footnote">Ask your child’s school about <a href="/gk/articles/accommodations-what-they-are-and-how-they-work/">accommodations that can remove barriers to learning.</a></p>
             other: >
               <p class="narrative-content">This shows results for students with disabilities on a %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
-              <p class="footnote"><a href='/gk/articles/8-steps-to-kicking-off-your-childs-iep-the-right-way/'>8 tips for getting your child's IEP </a> off to a good start this school year. </p>
+              <p class="footnote">Ask your child’s school about <a href="/gk/articles/accommodations-what-they-are-and-how-they-work/">accommodations that can remove barriers to learning.</a></p>
