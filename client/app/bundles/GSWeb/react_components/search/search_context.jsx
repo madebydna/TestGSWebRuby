@@ -201,7 +201,7 @@ class SearchProvider extends React.Component {
       () => {
         const start = Date.now();
         this.findSchoolsWithReactState().done(
-          ({ items: schools, totalPages, paginationSummary, resultSummary, total }) => console.log(schools) ||
+          ({ items: schools, totalPages, paginationSummary, resultSummary, total }) =>
             setTimeout(
               () =>
                 this.setState({
