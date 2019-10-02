@@ -126,7 +126,9 @@ module SchoolProfiles
     end
 
     def visible?
-      has_data? || @school.includes_level_code?(%w(e m))
+      return true if (has_data? || @school.includes_level_code?(%w(e m)))
+      return true if @school.includes_level_code?(%w(h)) && @school_cache_data_reader.hs_enabled_growth_rating?
+      false
     end
 
     def student_progress_state?

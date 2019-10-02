@@ -26,6 +26,7 @@ class SCTestProcessor2018READYPASSEOCEP < GS::ETL::TestProcessor
 	'math_pct3' => 7,
 	'math_pct4' => 8,
 	'ela_prof_and_above' => 1,
+<<<<<<< HEAD
 	'math_prof_and_above' => 1,
 	'pctf' => 141,
 	'pctd' => 142,
@@ -35,16 +36,37 @@ class SCTestProcessor2018READYPASSEOCEP < GS::ETL::TestProcessor
 	'prof_and_above' => 1
 	}
 
+=======
+	'math_prof_and_above' => 1
+	}
+
+	# map_prof_band_eoc = {
+	# 'f' => 195,
+	# 'd' => 196,
+	# 'c' => 197,
+	# 'b' => 198,
+	# 'a' => 199,
+	# 'null' => 'null'
+	# }
+>>>>>>> JT-9185
 
 	map_subject = {
 	'ela' => 4,
 	'math' => 5,
 	'sci' => 19,
 	'soc' => 18,
+<<<<<<< HEAD
 	'1' => 6, #alg1
 	'2' => 22,#bio 1
 	'3' => 17, #english 1
 	'4' => 52 #US history and constitution
+=======
+	'1' => 6,#alg1
+	'2' => 22 #bio 1
+	# '3' => 19, #english 1
+	# '4' => 31, #physical science
+	# '5' => 66, #US history and constitution
+>>>>>>> JT-9185
 	}
 
 	map_breakdown = {
@@ -77,13 +99,18 @@ class SCTestProcessor2018READYPASSEOCEP < GS::ETL::TestProcessor
 	'9' => 21,#white
 	'10' => 22,#two more races
 	'11' => 27,#disabled
+<<<<<<< HEAD
 	'12' => 30,#general education
+=======
+	'12' => 30,#not disables
+>>>>>>> JT-9185
 	'13' => 32,#lep
 	'14' => 33,#not lep
 	'15' => 23,#econ dis
 	'16' => 24#not econ dis
 	}
 
+<<<<<<< HEAD
 	source("SC_PASS_2017.txt",[],col_sep:"\t") do |s|
 		s.transform("Fill values", Fill,{
 			test_data_type: 'pass',
@@ -103,13 +130,34 @@ class SCTestProcessor2018READYPASSEOCEP < GS::ETL::TestProcessor
 			description: 'In 2017-2018, students took The South Carolina Palmetto Assessment of State Standards (SCPASS). SCPASS is a statewide assessment administered to students in science in the 4th, 6th and 8th grade and in social studies in the 5th and 7th grade. All students in these grade levels are required to take the SCPASS except those who qualify for the South Carolina Alternate Assessment (SC-Alt). SCPASS includes tests in two subjects: science and social studies.'
 			})
 	end
+=======
+	# source("SC_PASS_2017.txt",[],col_sep:"\t") do |s|
+	# 	s.transform("Fill values", Fill,{
+	# 		test_data_type: 'pass',
+	# 		test_data_type_id: '276',
+	# 		description: 'In 2016-2017, students took The South Carolina Palmetto Assessment of State Standards (SCPASS). SCPASS is a statewide assessment administered to students in grades four through eight. All students in these grade levels are required to take the SCPASS except those who qualify for the South Carolina Alternate Assessment (SC-Alt). SCPASS includes tests in two subjects: science and social studies.'
+	# 		})
+	# end
+
+	# source("SC_PASS_2018.txt",[],col_sep:"\t") do |s|
+	# 	s.transform("Fill values", Fill,{
+	# 		test_data_type: 'pass',
+	# 		test_data_type_id: '276',
+	# 		description: 'In 2017-2018, students took The South Carolina Palmetto Assessment of State Standards (SCPASS). SCPASS is a statewide assessment administered to students in science in the 4th, 6th and 8th grade and in social studies in the 5th and 7th grade. All students in these grade levels are required to take the SCPASS except those who qualify for the South Carolina Alternate Assessment (SC-Alt). SCPASS includes tests in two subjects: science and social studies.'
+	# 		})
+	# end
+
+>>>>>>> JT-9185
 
 	source("SC_READY_2017.txt",[],col_sep:"\t") do |s|
 		s.transform("Fill values", Fill,{
 			test_data_type: 'sc ready',
 			test_data_type_id: '279',
+<<<<<<< HEAD
 			date_valid: '2017-01-01 00:00:00',
 			notes: 'DXT-3136 SC SC READY',
+=======
+>>>>>>> JT-9185
 			description: 'In 2016-2017, students took the South Carolina College- and Career-Ready Assessments (SC READY). The SC Ready is a statewide assessment that includes tests in English Language Arts (ELA) and mathematics administered to students in grades 3-8. All students in grades 3-8 are required to participate in the SC READY, except those who qualify for the South Carolina National Center and State Collaborative (SC-NCSC) alternate assessment. The initial administration of the SC READY was in spring 2016, and the SC READY test results will be used for state and federal accountability purposes.'
 			})
 	end
@@ -118,13 +166,17 @@ class SCTestProcessor2018READYPASSEOCEP < GS::ETL::TestProcessor
 		s.transform("Fill values", Fill,{
 			test_data_type: 'sc ready',
 			test_data_type_id: '279',
+<<<<<<< HEAD
 			date_valid: '2018-01-01 00:00:00',
 			notes: 'DXT-3136 SC SC READY',
+=======
+>>>>>>> JT-9185
 			description: 'In 2017-2018, students took the South Carolina College- and Career-Ready Assessments (SC READY). The SC Ready is a statewide assessment that includes tests in English Language Arts (ELA) and mathematics administered to students in grades 3-8. All students in grades 3-8 are required to participate in the SC READY, except those who qualify for the South Carolina National Center and State Collaborative (SC-NCSC) alternate assessment. The initial administration of the SC READY was in spring 2016, and the SC READY test results will be used for state and federal accountability purposes.'
 			})
 	end
 
 
+<<<<<<< HEAD
 	source("SC_EOCEP_2017.txt",[],col_sep:"\t") do |s|
 		s.transform("Fill values", Fill,{
 			test_data_type: 'sc eocep',
@@ -161,10 +213,21 @@ class SCTestProcessor2018READYPASSEOCEP < GS::ETL::TestProcessor
 				row[:subject_id] = map_subject[row[:subject]]
 			elsif row[:test_data_type_id] == '277'
 			 	row[:subject_id] = map_subject[row[:testid]]
+=======
+	shared do |s|
+		s.transform("Map subject id", HashLookup, :subject, map_subject, to: :subject_id)
+		.transform("Map breakdown id", HashLookup, :demoid, map_breakdown, to: :breakdown_id)
+		.transform("Map prof band id", WithBlock) do |row|
+			if row[:test_data_type_id] == '276' or row[:test_data_type_id] == '279'
+				row[:proficiency_band_id] = map_prof_band[row[:name]]
+			# elsif row[:test_data_type_id] == '191'
+			# 	row[:proficiency_band_id] = map_prof_band_eoc[row[:proficiency_band]]
+>>>>>>> JT-9185
 			end
 			row
 		end
 		.transform("Fix inequalities in value and fix grade padding", WithBlock,) do |row|
+<<<<<<< HEAD
           if row[:value].to_f < 0
             row[:value] = 0
           elsif row[:value].to_f > 100
@@ -173,6 +236,21 @@ class SCTestProcessor2018READYPASSEOCEP < GS::ETL::TestProcessor
 	      end
 	      row
         end
+=======
+	     if row[:value] < 0 
+	      row[:value] = 0
+	     end
+         if row[:value] > 100
+	      row[:value] = 100
+	      end
+	      row[:grade].sub!(/^0/, '')
+	      row
+        end
+		.transform("Fill other columns", Fill,{
+		notes: 'DXT-3136 SC READY, PASS, EOCEP',
+		date_valid: '2018-01-01 00:00:00'
+		})
+>>>>>>> JT-9185
 	end
 
 	def config_hash
