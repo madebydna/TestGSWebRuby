@@ -39,6 +39,7 @@ module SchoolProfiles
       # If a school is in a AP state and is a elementary(E) or middle (M) school, it will display the AcademicProgress module 
       # If a school is in a AP state and is a high(H) school, it will check to see if any other H schools have this rating to display
       # the module or not
+      # If a school is in a state with NEITHER AP or SP it will display NOTHING
       if @student_progress.student_progress_state? && @student_progress.visible?
         arr << {column: 'Academics', label: 'student_progress', present: true, rating: @student_progress.rating, anchor: 'Student_progress'}
       elsif @academic_progress.academic_progress_state? && @academic_progress.visible?

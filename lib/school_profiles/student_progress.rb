@@ -132,7 +132,7 @@ module SchoolProfiles
     end
 
     def student_progress_state?
-      school_cache_data_reader.growth_type == STUDENT_PROGRESS_RATING || school_cache_data_reader.growth_type == 'N/A'
+      school_cache_data_reader.growth_type == STUDENT_PROGRESS_RATING
     end
 
     def has_data?

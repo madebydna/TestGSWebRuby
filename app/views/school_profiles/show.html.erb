@@ -78,6 +78,7 @@
                 If a school is in a AP state and is a elementary(E) or middle (M) school, it will display the AcademicProgress module 
                 If a school is in a AP state and is a high(H) school, it will check to see if any other H schools have this rating to display
                 the module or not
+                If a school is in a state with NEITHER AP or SP it will display NOTHING
               %>
               <% if @school_profile.student_progress.student_progress_state? && @school_profile.student_progress.visible? %>
                 <div class="profile-section-slot">

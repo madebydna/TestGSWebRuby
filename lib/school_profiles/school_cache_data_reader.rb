@@ -38,17 +38,17 @@ module SchoolProfiles
     end
 
     def state_attributes
-      @_state_attributes ||= StateCache.for_state('state_attributes', school.state)&.cache_data
+      @_state_attributes ||= StateCache.for_state('state_attributes', school.state)&.cache_data || {}
     end
 
     # Data growth type. Either a Data Growth Type (Student Progress Rating) 
     # or Data Growth Proxy Type (Academic Progress Rating)
     def growth_type
-      state_attributes['growth_type']
+      state_attributes.fetch('growth_type',nil)
     end
 
     def hs_enabled_growth_rating?
-      state_attributes['hs_enabled_growth_rating']
+      state_attributes.fetch('hs_enabled_growth_rating', nil)
     end
 
     def gs_rating_year
