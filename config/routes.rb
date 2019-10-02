@@ -237,7 +237,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/ratings/',  as: :ratings
     get '/gk/como-clasificamos/',  as: :ratings_spanish
     get '/gk/csa-winners/', as: :csa_winners
-    get '/gk/free-the-data/', as: :free_the_data
     get '/status/error404.page'
   end
 
