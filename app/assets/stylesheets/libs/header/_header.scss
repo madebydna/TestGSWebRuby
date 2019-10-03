@@ -126,6 +126,19 @@
   .logo {
     padding: 10px 20px 10px 10px;
     display: table-cell;
+    a{
+      div{
+        background-image: asset_data_url('nav/gs_logo.png');
+        @media (max-width:820px){
+          background-image: asset_data_url('nav/gs_logo@2x.png');
+          margin: 0 auto;
+        }
+        background-size: 100%;
+        background-repeat: no-repeat;
+        width: 95px;
+        height: 40px;
+      }
+    }
   }
 
   .saved-schools-nav {
