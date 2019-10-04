@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { XS, SM, LG, MD, validSizes } from 'util/viewport';
-import OpenableCloseable from 'react_components/openable_closeable';
-import Button from 'react_components/button';
+import { XS, SM, validSizes } from 'util/viewport';
 import Ad from 'react_components/ad';
-import { t, capitalize } from 'util/i18n';
+import { t } from 'util/i18n';
 import { keepInViewport } from 'util/sticky';
 import xq from 'community/xq-sm.png';
 import XQSchoolBoardFinder from './xq_school_board_finder';
@@ -180,19 +178,18 @@ class DistrictLayout extends React.Component {
     );
   }
 
-  // CA Advocacy CSA
-  renderCaCsaModule() {
-    return this.props.locality.stateShort === 'CA' && (
-      <div>
-        {this.props.caCsaInfo}
-      </div>
-    );
-  }
-
   renderStudentsModule(){
     return (this.props.hasStudentDemographicData && 
       <div id="students" className="module-section">
         {this.props.students}
+      </div>
+    )
+  }
+
+  renderTeachersStaffModule(){
+    return ( this.props.teachersStaff && 
+      <div id="teachers-staff" className="module-section">
+        {this.props.teachersStaff}
       </div>
     )
   }
@@ -222,10 +219,10 @@ class DistrictLayout extends React.Component {
             {this.renderSchools()}
             {this.renderBoxAd()}
             {this.renderCsaModule()}
-            {this.renderCaCsaModule()}
             {this.renderAcademics()}
             {this.renderStemCourses()}
             {this.renderStudentsModule()}
+            {this.renderTeachersStaffModule()}
             {this.renderCalendar()}
             {this.renderMobility()}
             {this.renderZillow()}

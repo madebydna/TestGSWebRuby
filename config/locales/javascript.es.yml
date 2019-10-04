@@ -381,6 +381,7 @@ es:
     Continue: Continuar
     Not right now: No en este momento
     sources: Fuentes
+    no_schools_found: No se encontraron escuelas
     CSA Page:
       summary: >
         <span>En %{state}, %{total} escuelas públicas ganaron un College Success Award de %{year}, un premio basado en su 
@@ -457,13 +458,3 @@ es:
             <p><span class="emphasis">Fuente&#58;</span> XQ</p>
           </div>
         </div>
-    ca_csa_advocacy:
-      state_header: Padres en Texas lo saben. Padres en Florida lo saben. ¿Por qué no nosotros?
-      state_body: La mayoría de estados comparten información sobre si las escuelas secundarias públicas preparan a los estudiantes para ir a la universidad y tener éxito una vez que llegan allí. California aún no ofrece esta información. Haz clic a continuación para que los líderes estatales sepan que te importa.
-      state_button: Si. Quiero saber.
-      district_header: No sabemos si las escuelas secundarias de California preparan a los niños para tener éxito en la universidad. Pero podemos.
-      district_body: Muchos estados comparten información sobre qué tan bien las escuelas secundarias públicas preparan a los estudiantes para ir a la universidad y tener éxito una vez que llegan allí. California aún no ofrece esta información. Haz clic a continuación para que los líderes estatales sepan que te importa.
-      district_button: Cambiemos esto.
-      profile_header: ¿Quieres saber si la escuela secundaria de tu hijo realmente está preparando a los niños para la universidad?
-      profile_body: Muchos estados comparten información sobre qué tan bien las escuelas secundarias públicas preparan a los estudiantes para ir a la universidad y tener éxito una vez que llegan allí. Actualmente, California no hace esta información disponible a los padres. Haz clic a continuación para que los líderes estatales sepan que esta información te importa.
-      profile_button: Vamonos.

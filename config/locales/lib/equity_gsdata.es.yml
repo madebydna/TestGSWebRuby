@@ -162,12 +162,12 @@ es:
             <p class="narrative-content">Esto muestra el porcentaje de estudiantes con discapacidades ausentes 15 días o más en esta escuela en comparación con el promedio estatal. Altos índices de absentismo significa menos tiempo para la enseñanza y el aprendizaje.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-            <p class="footnote"><a href='/gk/articles/5-cosas-que-no-hay-que-decir-a-los-chicos-con-dificultades-de-aprendizaje-y-de-atencion-sobre-el-regreso-a-la-escuela/?lang=es'>Asegúrese de no decir estas 5 cosas a su hijo</a> acerca del regreso a clases</p>
+            <p class="footnote"><a href='/gk/articles/disciplina-escolar-los-derechos-de-los-estudiantes-con-iep-o-un-plan-504/?lang=es'>Entérate de los derechos de tu hijo</a> cuando se trata de la disciplina escolar.</p>
           'Percentage of students suspended out of school': >
             <p class="narrative-content">Este índice muestra la suspensión de los estudiantes con discapacidades en esta escuela en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-            <p class="footnote"><a href='/gk/articles/5-cosas-que-no-hay-que-decir-a-los-chicos-con-dificultades-de-aprendizaje-y-de-atencion-sobre-el-regreso-a-la-escuela/?lang=es'>Asegúrese de no decir estas 5 cosas a su hijo</a> acerca del regreso a clases</p>
+            <p class="footnote"><a href='/gk/articles/disciplina-escolar-los-derechos-de-los-estudiantes-con-iep-o-un-plan-504/?lang=es'>Entérate de los derechos de tu hijo</a> cuando se trata de la disciplina escolar.</p>
           'Test scores':
             # one - subject begins with a vowel e.g. de English
             # other - subject begins with a consonant e.g. de Math
@@ -175,9 +175,9 @@ es:
               <p class="narrative-content">Esto muestra los resultados para los estudiantes con discapacidades en un examen de %{subject} dado a los estudiantes una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-              <p class="footnote"><a href='/gk/articles/8-pasos-para-que-el-programa-de-educacion-individualizado-iep-de-tu-hijo-se-implemente-correctamente/?lang=es'>Tome medidas para que el IEP de su hijo</a> se implemente al comienzo del nuevo año escolar.</p>
+              <p class="footnote">Pregúntale a la escuela de tu hijo <a href='/gk/articles/adaptaciones-que-son-y-como-funcionan/?lang=es'>sobre adaptaciones que pueden eliminar barreras para el aprendizaje.</a></p>
             other: >
               <p class="narrative-content">Esto muestra los resultados para los estudiantes con discapacidades en un examen de %{subject} dado a los estudiantes una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-              <p class="footnote"><a href='/gk/articles/8-pasos-para-que-el-programa-de-educacion-individualizado-iep-de-tu-hijo-se-implemente-correctamente/?lang=es'>Tome medidas para que el IEP de su hijo</a> se implemente al comienzo del nuevo año escolar.</p>
+              <p class="footnote">Pregúntale a la escuela de tu hijo <a href='/gk/articles/adaptaciones-que-son-y-como-funcionan/?lang=es'>sobre adaptaciones que pueden eliminar barreras para el aprendizaje.</a></p>

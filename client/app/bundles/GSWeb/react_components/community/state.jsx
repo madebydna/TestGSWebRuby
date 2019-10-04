@@ -10,7 +10,6 @@ import Ad from 'react_components/ad';
 import TopSchoolsStateful from './top_schools_stateful';
 import SchoolBrowseLinks from './school_browse_links';
 import CsaTopSchools from './csa_top_schools';
-import CsaInfo from './csa_info';
 import CityBrowseLinks from './city_browse_links';
 import DistrictsInState from "./districts_in_state";
 import RecentReviews from "./recent_reviews";
@@ -23,8 +22,7 @@ import withViewportSize from 'react_components/with_viewport_size';
 import { find as findSchools } from 'api_clients/schools';
 import { analyticsEvent } from 'util/page_analytics';
 import remove from 'util/array';
-import { t, capitalize } from '../../util/i18n';
-// import QualarooDistrictLink from '../qualaroo_district_link';
+import { t } from '../../util/i18n';
 
 class State extends React.Component {
   static defaultProps = {
@@ -189,13 +187,6 @@ class State extends React.Component {
                 schools={this.props.schools_data.schools.csa}
                 size={this.props.size}
                 locality={this.props.locality}
-              />
-            }
-            caCsaInfo={
-              <CsaInfo
-                community={this.pageType}
-                locality={this.props.locality}
-                caAdvocacy={true}
               />
             }
             academics={

@@ -192,7 +192,7 @@ SharingModal.defaultProps = {
 };
 
 SharingModal.propTypes = {
-  content: PropTypes.string.isRequired,
+  content: PropTypes.string,
   url: PropTypes.string,
   title: PropTypes.string,
   pageName: PropTypes.string,

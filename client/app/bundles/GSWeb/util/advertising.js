@@ -24,6 +24,9 @@ const slotTimers = {};
 
 const MAX_COUNTER = 10;
 const DELAY_IN_MS = 1000;
+const onGK = window.location.href.indexOf("/gk/") !== -1;
+const INDIRECT_CAMPAIGN_IDS = [208549694, 123081254]; // Google AdX  and Rubicon Project_Unlimited
+const INDIRECT_AD_REFRESH_RATE = 30000;
 
 const slotIdFromName = (name, slotOccurrenceNumber = 1) => {
   const slotName = capitalize(name).replace(' ', '_');
@@ -31,6 +34,15 @@ const slotIdFromName = (name, slotOccurrenceNumber = 1) => {
 };
 
 const slotRenderedHandler = function(event) {
+  // set timeout to refresh "indirect" ad on GK
+  if (onGK && INDIRECT_CAMPAIGN_IDS.indexOf(event.campaignId) !== -1) {
+    console.log('Conditions for AD REFRESH met', event.slot.getSlotElementId());
+    setTimeout(function(){
+      console.log('Refreshing ad', event.slot.getSlotElementId());
+      GS.ad.showAd(event.slot.getSlotElementId());
+    }, INDIRECT_AD_REFRESH_RATE);
+  }
+
   if (event.slot.onRenderEnded) {
     event.slot.onRenderEnded({ isEmpty: event.isEmpty });
   } else if (event.isEmpty) {
@@ -235,7 +247,9 @@ const _defineSlot = function($adSlot) {
   if (sizeMapping) {
     slot = slot.defineSizeMapping(sizeMapping);
   }
-  slots[getDivId($adSlot)] = slot.addService(googletag.pubads());
+  slots[getDivId($adSlot)] = slot.
+    setTargeting('refresh', 'true').
+    addService(googletag.pubads());
 };
 
 const defineAdOnce = ({

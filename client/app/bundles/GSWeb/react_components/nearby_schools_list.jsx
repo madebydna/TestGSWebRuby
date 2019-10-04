@@ -168,7 +168,7 @@ class NearbySchoolsList extends React.Component {
     if (this.waitingForInitialSchools()) {
       return this.renderSpinny();
     } else if (this.noSchoolsFound()) {
-      return <div style={{ 'text-align': 'center' }}>No schools found</div>;
+      return <div style={{ textAlign: 'center' }}>{t('no_schools_found')}</div>;
     }
     return (
       <div className="slider">

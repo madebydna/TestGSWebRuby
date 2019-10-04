@@ -27,12 +27,15 @@ module SearchTableConcerns
     growth_data_proxy_state? ?  ACADEMIC_PROGRESS_RATING : STUDENT_PROGRESS_RATING
   end
 
+  # finds most frequent state if revelance search is used and no state in query params
+  def most_frequent_state
+    mode(serialized_schools.map {|school| school.dig(:state) })
+  end
+
   # This method checks if the state is a growth_data_proxy_data_state which will use Academic Progress Rating
   # Otherwise it will return false if it is a growth_data_state (uses Student Progress Rating) or if the state
   # doesn't have any data at all (N/A but will use SPR as a fallback) 
   def growth_data_proxy_state?
-    # finds most frequent state if revelance search is used and no state in query params
-    most_frequent_state = mode(serialized_schools.map {|school| school.dig(:state) }) if state.nil?
     cache_data = StateCache.for_state('state_attributes', (state || most_frequent_state))&.cache_data
     return false if cache_data.nil?
     cache_data['growth_type'] == ACADEMIC_PROGRESS_RATING

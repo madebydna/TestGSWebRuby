@@ -13,7 +13,7 @@ module Solr
       # puts '-' * 60
       puts "\e[35m-\e[0m" * 60
       puts "\e[35mSolr query:\n\e[0m"
-      # puts uri.to_s
+      puts uri.to_s
       puts "\e[36m#{uri.to_s}\e[0m"
       puts "\e[35m-\e[0m" * 60
       return uri.to_s

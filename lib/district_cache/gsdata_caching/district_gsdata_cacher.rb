@@ -22,12 +22,16 @@ class DistrictGsdataCacher < DistrictCacher
   # 149: Percentage of teachers with less than three years experience
   # 152: Number of advanced courses per student
   # 154: Percentage of Students Enrolled
-  # 321: Percent of students enrolled in Algebra 1
-  # 322: Percent of students passing Algebra 1
+  # 335, Percent of Law Enforcement Staff
+  # 336, Percent of Security Guard Staff
+  # 337, Percent of Nurse Staff
+  # 338, Percent of Psychologist Staff
+  # 339, Percent of Social Worker Staff
+
 
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
 
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 67, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154, 321, 322].freeze
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154, 335, 336, 337, 338, 339].freeze
 
   # BREAKDOWN_TAG_NAMES = %w(
   #   ethnicity

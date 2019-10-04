@@ -1,6 +1,8 @@
 es:
   lib:
     teachers_staff:
+      'module_title': 'Profesores y personal'
+      'module_subtitle': 'A menudo los padres valoran clases pequeñas, pero la verdad es más complicada.'
       'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'Ratio of teacher salary to total number of teachers': 'El salario promedio de profesores'
       'Percentage of full time teachers who are certified': 'El porcentaje de profesores de tiempo completo que están certificados'
@@ -13,6 +15,17 @@ es:
       'Social Worker indicator': 'Trabajador social'
       'Law Enforcement Officer indicator': 'Oficial de la policia'
       'Security Guard indicator': 'Oficial de seguridad'
+      'other staff resources': 'El porcentaje de escuelas en este distrito con otros recursos personales'
+      'full-time': 'De tiempo completo'
+      'part-time': 'De medio tiempo'
+      'Percent of Nurse Staff': 'Enfermera'
+      'Percent of Psychologist Staff': 'Psicólogo'
+      'Percent of Social Worker Staff': 'Trabajador social'
+      'Percent of Law Enforcement Staff': 'Oficial de la policia'
+      'Percent of Security Guard Staff': 'Oficial de seguridad'
+      district:
+        'other staff resources': 'El porcentaje de escuelas en este distrito con otros recursos personales'
+        'other staff tooltip': 'Esto indica el porcentaje de escuelas en este distrito que tienen una enfermera, un psicólogo, un trabajador social,  un oficial de la policía, o un oficial de seguridad, a medio tiempo o tiempo completo.'
       data_point_info_texts:
         'Ratio of students to full time teachers': 'El promedio de estudiantes por cada profesor de tiempo completo en esta escuela; tenga en cuenta que este no es un reflejo del promedio de estudiantes por clase.'
         'Ratio of teacher salary to total number of teachers': 'El salario promedio de profesores trabajando de tiempo completo en esta escuela.'
@@ -24,6 +37,17 @@ es:
         'Social Worker indicator': 'Esto indica si la escuela tienen o no un trabajador social licenciado que trabaja medio tiempo o tiempo completo.'
         'Law Enforcement Officer indicator': 'Esto indica si la escuela tienen o no un oficial de la policía que trabaja medio tiempo o tiempo completo en el campus.'
         'Security Guard indicator': 'Esto indica si la escuela tienen o no un oficial de seguridad que trabaja medio tiempo o tiempo completo.'
+        district:
+          'Ratio of students to full time teachers': 'El promedio de estudiantes por cada profesor de tiempo completo en este distrito; tenga en cuenta que este no es un reflejo del promedio de estudiantes por clase.'
+          'Ratio of teacher salary to total number of teachers': 'El salario promedio de profesores trabajando de tiempo completo en este distrito.'
+          'Percentage of full time teachers who are certified': 'El porcentaje de profesores de tiempo completo en este distrito que han cumplido con todos los requisitos estándares de certificación del estado.'
+          'Ratio of students to full time counselors': 'El promedio de estudiantes por cada consejero en este distrito.'
+          'Percentage of teachers with less than three years experience': 'El porcentaje de profesores trabajando de tiempo completo en este distrito con 3 o más años de experiencia.'
+          'Percent of Nurse Staff': 'Esto indica el porcentaje de escuelas en este distrito que tienen una enfermera registrada a medio tiempo o tiempo completo.'
+          'Percent of Psychologist Staff': 'Esto indica el porcentaje de escuelas en este distrito que tienen un psicólogo licenciado a medio tiempo o tiempo completo.'
+          'Percent of Social Worker Staff': 'Esto indica el porcentaje de escuelas en este distrito que tienen un trabajador social licenciado a medio tiempo o tiempo completo.'
+          'Percent of Law Enforcement Staff': 'Esto indica el porcentaje de escuelas en este distrito que tienen un oficial de la policía a medio tiempo o tiempo completo en el campus.'
+          'Percent of Security Guard Staff': 'Esto indica el porcentaje de escuelas en este distrito que tienen un oficial de seguridad a medio tiempo o tiempo completo.'
       employment_level:
         'not_present': Ninguno
         'present':

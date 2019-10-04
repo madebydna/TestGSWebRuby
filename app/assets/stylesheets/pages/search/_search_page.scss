@@ -478,6 +478,10 @@ body {
         .heading {
           font-family: RobotoSlab-Light;
           font-size: $font-size-l4;
+          a {
+            font-size: 19px;
+            font-family: 'opensans-semibold';
+          }
         }
         .search-term {
           font-family: RobotoSlab-Bold;

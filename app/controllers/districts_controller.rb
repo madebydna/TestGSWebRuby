@@ -11,6 +11,10 @@ class DistrictsController < ApplicationController
   before_filter :redirect_unless_valid_district
   before_action :redirect_to_canonical_url
 
+  set_additional_js_translations(
+    teachers_staff: [:lib, :teachers_staff]
+  )
+
   def show
     cache_time = ENV_GLOBAL['district_page_cache_time']
     expires_in(cache_time.to_i, public: true, must_revalidate: true) if cache_time.present?
@@ -28,6 +32,7 @@ class DistrictsController < ApplicationController
     @translations = translations
     @csa_module = csa_state_solr_query.present?
     @students = students.students_demographics
+    @teachers_staff = teachers_staff_data
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     gon.dependencies = {
         highcharts: ActionController::Base.helpers.asset_path('highcharts.js')
@@ -80,7 +85,7 @@ class DistrictsController < ApplicationController
   end
 
   def district_cache_data_reader
-    @_district_cache_data_reader ||= DistrictCacheDataReader.new(district_record, district_cache_keys: ['test_scores_gsdata', 'district_characteristics', 'gsdata'])
+    @_district_cache_data_reader ||= DistrictCacheDataReader.new(district_record, district_cache_keys: CACHE_KEYS_FOR_READER + ['test_scores_gsdata', 'district_characteristics'])
   end
 
   def set_district_meta_tags
@@ -97,6 +102,10 @@ class DistrictsController < ApplicationController
 
   def students
     @_students ||= CommunityProfiles::Students.new(cache_data_reader: district_cache_data_reader)
+  end
+
+  def teachers_staff_data
+    @_teachers_staff_data ||= CommunityProfiles::TeachersStaff.new(district_cache_data_reader).data_values
   end
 
   def largest_district_in_city?
@@ -169,7 +178,6 @@ class DistrictsController < ApplicationController
           trailing_slash: true
         )
         cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if csa_state_solr_query.present?
-        cp[:caAdvocacyUrl] = free_the_data_path if state == 'ca'
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:calendarURL] = ENV_GLOBAL['calendar_service_url']
         cp[:zipCode] = district_record.mail_zipcode[0..4]
@@ -243,7 +251,7 @@ class DistrictsController < ApplicationController
   end
 
   def decorated_district
-    @_decorated_district ||= DistrictCache.cached_results_for([district_record], CACHE_KEYS_FOR_READER).decorate_districts([district_record]).first
+    @_decorated_district ||= district_cache_data_reader.decorate_district
   end
 
   def decorated_city

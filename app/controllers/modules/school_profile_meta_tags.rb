@@ -11,17 +11,17 @@ class SchoolProfileMetaTags
     if @school.state.downcase == 'dc'
       return_title_str << 'Washington, DC'
     else
-      return_title_str << @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
+      return_title_str << @school.city + ', ' + @school.state_name.titleize + ' - ' + @school.state
     end
     return_title_str << I18n.t(:title_suffix, scope: 'controllers.school_profile_controller.meta_tags')
   end
 
   def description
     if @school.preschool?
-      location_string = @school.state.downcase == 'dc' ? 'Washington, DC' : "#{@school.city}, #{@school.state_name.capitalize} (#{@school.state})"
+      location_string = @school.state.downcase == 'dc' ? 'Washington, DC' : "#{@school.city}, #{@school.state_name.titleize} (#{@school.state})"
       I18n.t('preschool_description', scope: 'controllers.school_profile_controller.meta_tags', school_name: @school.name, location_string: location_string)
     else
-      location_string = @school.state.downcase == 'dc' ? 'Washington, DC' : "#{@school.city}, #{@school.state_name.capitalize} - #{@school.state}"
+      location_string = @school.state.downcase == 'dc' ? 'Washington, DC' : "#{@school.city}, #{@school.state_name.titleize} - #{@school.state}"
       I18n.t('description', scope: 'controllers.school_profile_controller.meta_tags', school_name: @school.name, location_string: location_string)
     end
   end

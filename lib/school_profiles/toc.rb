@@ -33,15 +33,17 @@ module SchoolProfiles
       arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
 
       # NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
-      # The SP module has a no-data state, while The AP module DOES NOT have a no-data state.
-      # AP.visible? checks to see if the school has AP data AND if the school is (e,m)
-      # SP.visible? checks to see if the school has SP data OR if the school is (e,m)
-      # We only show the AP module if the school has data for AP AND the school is (e,m) AND the school DOES NOT have data for SP
-      # Else, if the school is (e,m), we show SP, whether SP has data, or not (no-data state)
-      if @academic_progress.visible? && !@student_progress.has_data?
-        arr << {column: 'Academics', label: 'academic_progress', present: true, rating: @academic_progress.academic_progress_rating, anchor: 'Academic_progress'}
-      elsif @student_progress.visible?
+      # If a school is in a SP state and is a elementary(E) or middle (M) school, it will display the StudentProgress module 
+      # If a school is in a SP state and is a high(H) school, it will check to see if any other H schools have this rating to display
+      # the module or not
+      # If a school is in a AP state and is a elementary(E) or middle (M) school, it will display the AcademicProgress module 
+      # If a school is in a AP state and is a high(H) school, it will check to see if any other H schools have this rating to display
+      # the module or not
+      # If a school is in a state with NEITHER AP or SP it will display NOTHING
+      if @student_progress.student_progress_state? && @student_progress.visible?
         arr << {column: 'Academics', label: 'student_progress', present: true, rating: @student_progress.rating, anchor: 'Student_progress'}
+      elsif @academic_progress.academic_progress_state? && @academic_progress.visible?
+        arr << {column: 'Academics', label: 'academic_progress', present: true, rating: @academic_progress.academic_progress_rating, anchor: 'Academic_progress'}
       end
 
       if @school.includes_level_code?(%w[m h]) || @stem_courses.visible?

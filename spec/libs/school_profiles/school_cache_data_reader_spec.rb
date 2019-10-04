@@ -95,10 +95,8 @@ describe SchoolProfiles::SchoolCacheDataReader do
     end
 
     describe '#state_attributes' do
-      let(:reader) { new_reader(school) }
-      let(:reader2) { new_reader(school2) }
-
       context 'school is part of a academic progress rating state' do
+        let(:reader) { new_reader(school) }
         it 'returns the right state attributes hash' do
           expect(reader.state_attributes).to eq({"growth_type" => "Academic Progress Rating"})
         end
@@ -109,12 +107,13 @@ describe SchoolProfiles::SchoolCacheDataReader do
       end
 
       context 'school is part of a student progress rating state' do
+        let(:reader) { new_reader(school2) }
         it 'returns the right state attributes hash' do
-          expect(reader2.state_attributes).to eq({"growth_type" => "Student Progress Rating"})
+          expect(reader.state_attributes).to eq({"growth_type" => "Student Progress Rating"})
         end
 
         it 'has the right growth type' do
-          expect(reader2.growth_type).to eq("Student Progress Rating")
+          expect(reader.growth_type).to eq("Student Progress Rating")
         end
       end
     end

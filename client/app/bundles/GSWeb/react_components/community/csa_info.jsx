@@ -2,43 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { t } from 'util/i18n';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
-import owlQuestionPng from 'community/owl_question.png';
 import { analyticsEvent } from "util/page_analytics";
 
 
-const handleTextGrouping = (community, locality, caAdvocacy) => {
-  if (caAdvocacy) {
-    let textGrouping = community === 'city' ? 'state' : community;
-    
-    return (
-      {
-        moduleIcon: owlQuestionPng,
-        headerText: t(`ca_csa_advocacy.${textGrouping}_header`),
-        blurbText: t(`ca_csa_advocacy.${textGrouping}_body`),
-        buttonText: t(`ca_csa_advocacy.${textGrouping}_button`),
-        buttonLink: locality.caAdvocacyUrl
-      }
-    );
+const handleTextGrouping = (community, locality) => (
+  {
+    moduleIcon: csaBadgeGenLg,
+    headerText: t('award_winners'),
+    blurbText: t('csa_district_schools_info_html'),
+    buttonText: `${t('see_winning_schools_in')} ${locality.stateLong}`,
+    buttonLink: locality.stateCsaBrowseUrl
   }
-    
-  return (
-    {
-      moduleIcon: csaBadgeGenLg,
-      headerText: t('award_winners'),
-      blurbText: t('csa_district_schools_info_html'),
-      buttonText: `${t('see_winning_schools_in')} ${locality.stateLong}`,
-      buttonLink: locality.stateCsaBrowseUrl
-    }
-  );
-}
+);
+
 const handleGoogleAnalytics = (community, action, label) => {
   analyticsEvent(community, action, label);
 }
 
-const CsaInfo = ({ community, locality, caAdvocacy }) => {
-  let { moduleIcon, headerText, blurbText, buttonText, buttonLink } = handleTextGrouping(community, locality, caAdvocacy);
-  let gaEvent = caAdvocacy ? 'CSA Advocacy' : 'CSA State List';
-
+export const CsaInfo = ({ community, locality }) => {
+  let { moduleIcon, headerText, blurbText, buttonText, buttonLink } = handleTextGrouping(community, locality);
+  let gaEvent = 'CSA State List';
+  
   return (
     <div className="csa-state-module">
       <h3>{headerText}</h3>
@@ -64,4 +48,12 @@ const CsaInfo = ({ community, locality, caAdvocacy }) => {
   );
 }
 
-export default CsaInfo;
+CsaInfo.propTypes = {
+  community: PropTypes.string.isRequired,
+  locality: PropTypes.object.isRequired
+}
+
+CsaInfo.defaultProps = {
+  community: undefined,
+  locality: {}
+}

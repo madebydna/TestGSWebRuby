@@ -64,20 +64,20 @@ class DistrictCacheResults
 
   def module_for_key(cache_key)
     case cache_key
-      when 'feed_test_scores'
-        DistrictCachedFeedTestScoresMethods
-      when 'ratings'
-        DistrictCachedRatingsMethods
-      when 'district_schools_summary'
-        DistrictCachedDistrictSchoolsSummaryMethods
-      when 'feed_district_characteristics'
-        FeedDistrictCachedCharacteristicsMethods
-      when 'district_characteristics'
-        DistrictCachedCharacteristicsMethods
-      when 'test_scores_gsdata'
-        DistrictCachedTestScoresMethods
-      when 'gsdata'
-        DistrictCachedGsdataMethods
+    when 'feed_test_scores'
+      DistrictCachedFeedTestScoresMethods
+    when 'ratings'
+      DistrictCachedRatingsMethods
+    when 'district_schools_summary'
+      DistrictCachedDistrictSchoolsSummaryMethods
+    when 'feed_district_characteristics'
+      FeedDistrictCachedCharacteristicsMethods
+    when 'district_characteristics'
+      DistrictCachedCharacteristicsMethods
+    when 'test_scores_gsdata'
+      DistrictCachedTestScoresMethods
+    when 'gsdata'
+      DistrictCachedGsdataMethods
     end
   end
 

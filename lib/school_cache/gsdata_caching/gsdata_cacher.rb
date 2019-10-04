@@ -22,7 +22,7 @@ class GsdataCaching::GsdataCacher < Cacher
   # 152: Number of advanced courses per student
   # 154: Percentage of Students Enrolled
   # 318: Percent of Students who Participated in the SAT/ACT in grades 9-12
-  # 320: Dual Enrollment: Percentage of students enrolled in Dual Enrollment classes grade 9-12
+  # 320: Percentage of students enrolled in Dual Enrollment classes grade 9-12
   # 321: Percent of students enrolled in Algebra 1
   # 322: Percent of students passing Algebra 1
   # 330: Law Enforcement Officer indicator

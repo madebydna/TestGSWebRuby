@@ -152,7 +152,6 @@ class CitiesController < ApplicationController
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
         cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if csa_state_solr_query.present?
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
-        cp[:caAdvocacyUrl] = free_the_data_path if state == 'ca'
         cp[:zip] = get_zip
         cp[:lat] = fetch_district_attr(decorated_city, :lat) || city_record&.lat
         cp[:lon] = fetch_district_attr(decorated_city, :lon) || city_record&.lon

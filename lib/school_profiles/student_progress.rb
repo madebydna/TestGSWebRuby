@@ -94,7 +94,7 @@ module SchoolProfiles
       description = data_label(description) if description
       methodology = rating_methodology
       methodology = data_label(methodology) if methodology
-      source = "#{@school.state_name.capitalize} #{label('Dept of Education')}, #{rating_year}"
+      source = "#{@school.state_name.titleize} #{label('Dept of Education')}, #{rating_year}"
 
       content = '<div class="sourcing">'
       content << '<h1>' + label('title') + '</h1>'
@@ -126,11 +126,13 @@ module SchoolProfiles
     end
 
     def visible?
-      has_data? || @school.includes_level_code?(%w(e m))
+      return true if (has_data? || @school.includes_level_code?(%w(e m)))
+      return true if @school.includes_level_code?(%w(h)) && @school_cache_data_reader.hs_enabled_growth_rating?
+      false
     end
 
     def student_progress_state?
-      school_cache_data_reader.growth_type == STUDENT_PROGRESS_RATING || school_cache_data_reader.growth_type == 'N/A'
+      school_cache_data_reader.growth_type == STUDENT_PROGRESS_RATING
     end
 
     def has_data?

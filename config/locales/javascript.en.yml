@@ -380,6 +380,7 @@ en:
     Continue: Continue
     Not right now: Not right now
     sources: Sources
+    no_schools_found: No schools found
     CSA Page:
       summary: >
         <span>In %{state}, %{total} public schools earned a College Success Award in %{year} based on their 
@@ -456,13 +457,3 @@ en:
             <p><span class="emphasis">Source&#58;</span> XQ</p>
           </div>
         </div>
-    ca_csa_advocacy:
-      state_header: Texas parents know. Florida parents know. Why don't we?
-      state_body: Most states share information about whether public high schools prepare students to go to college and succeed once they get there. California doesn’t yet offer this information. Click below to let state leaders know you care.
-      state_button: Yes. I want to know.
-      district_header: We don’t know if California high schools prepare kids to succeed in college. But we could.
-      district_body: Many states share information about whether public high schools prepare students to go to college and succeed once they get there. California doesn’t yet offer this information. Click below to let state leaders know you care.
-      district_button: Let's change this.
-      profile_header: Do you want to know if your child’s high school is actually preparing kids for college?
-      profile_body: Many states share information about how well public high schools prepare students to go to college and succeed once they get there. California doesn’t currently make this information available to parents. Click below to let state leaders know this information matters to you.
-      profile_button: Let’s go.

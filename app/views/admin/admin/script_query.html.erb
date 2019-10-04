@@ -1,7 +1,9 @@
+<% db_host = ActiveRecord::Base.configurations.dig('production','gs_schooldb','host') || '' %>
+
 <% if @current_running_script.length > 0 %>
   <div style="padding:0px 50px">
     <h3>Current Running Script Log Table</h3>
-    <h4>DB Host: <%= ENV_GLOBAL["db_host"] %></h4>
+    <h4>DB Host: <%= db_host %></h4>
       <table class="table table-striped">
         <tbody>
           <% %w(PID Username Filename Arguments StartTime Elapsed).each do |header| %>
@@ -21,7 +23,6 @@
       </table>
   </div>
 <% end %>
-<% db_host = ActiveRecord::Base.configurations.dig('production','gs_schooldb','host') || '' %>
 <% if @last_script_ran.length > 0 %>
   <div id="last-scripts" style="padding: 0px 50px">
     <h3>Finished Script Log Table</h3>

@@ -221,7 +221,6 @@ class StatesController < ApplicationController
           state: gs_legacy_url_encode(@state[:long]),
           trailing_slash: true
         ) if @csa_module
-        cp[:caAdvocacyUrl] = free_the_data_path if @state[:short] == 'ca'
       end
     end
   end 

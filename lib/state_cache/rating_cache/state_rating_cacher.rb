@@ -20,17 +20,16 @@ class StateRatingCacher < StateCacher
 
 
   def test_rating
-    Load.find_by_sql("SELECT l.data_type_id, l.date_valid, l.description FROM loads l
-      LEFT JOIN data_values v on v.load_id = l.id
-      WHERE l.data_type_id = #{TEST_SCORES_RATING_DATA_TYPE_ID} and v.state = '#{state}' and l.description is not NULL
-      GROUP BY l.id order by l.date_valid desc")
+    Omni::DataSet.by_state(state).
+                  where(data_type_id: TEST_SCORES_RATING_DATA_TYPE_ID).
+                  where("description is NOT NULL").
+                  order("date_valid desc")
   end
 
   def summary_rating
-    Load.find_by_sql("SELECT l.data_type_id, l.date_valid, l.description FROM loads l
-      LEFT JOIN data_values v on v.load_id = l.id
-      WHERE l.data_type_id = #{SUMMARY_RATING_DATA_TYPE_ID} and v.state = '#{state}'
-      GROUP BY l.id order by l.date_valid desc")
+    Omni::DataSet.by_state(state).
+                  where(data_type_id: SUMMARY_RATING_DATA_TYPE_ID).
+                  order("date_valid desc")
   end
   #
   # Determine if it is summary or test by looking at all caches for all schools in a state and if any of them have a

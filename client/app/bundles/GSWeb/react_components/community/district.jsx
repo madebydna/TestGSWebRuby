@@ -14,10 +14,14 @@ import Mobility from "./mobility";
 import Calendar from "./calendar";
 import Students from "./students";
 import StemCourses from "../school_profiles/stem_courses";
+import TeachersStaff from "./teachers_staff";
 import { init as initAdvertising } from "util/advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
-import { schoolsTocItem, academicsTocItem, ACADEMICS, advancedCoursesTocItem, STUDENTS, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS} from './toc_config';
+import { schoolsTocItem, academicsTocItem, ACADEMICS, advancedCoursesTocItem, STUDENTS, 
+  studentsTocItem, calendarTocItem, communityResourcesTocItem, 
+  nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS,
+  teachersStaffTocItem, TEACHERS_STAFF} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
@@ -115,6 +119,10 @@ class District extends React.Component {
     return data.filter(o => o.data && o.data.length > 0).length > 0
   }
 
+  hasTeachersStaffData(){
+    return this.props.teachers_staff.sources.length > 0;
+  }
+
   hasStudentDemographicData(){
     const  { ethnicityData, genderData, subgroupsData} = this.props.students;
     const hasEthnicityData = ethnicityData.filter(o => o.district_value > 0).length > 0
@@ -127,10 +135,11 @@ class District extends React.Component {
   }
 
   selectTocItems(){
-    let districtTocItems = [schoolsTocItem, academicsTocItem, advancedCoursesTocItem, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
+    let districtTocItems = [schoolsTocItem, academicsTocItem, advancedCoursesTocItem, teachersStaffTocItem, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());
+    districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === TEACHERS_STAFF && !this.hasTeachersStaffData());
     return districtTocItems;
   }
 
@@ -167,14 +176,6 @@ class District extends React.Component {
           <CsaInfo 
             community={this.pageType}
             locality={this.props.locality}
-            caAdvocacy={false}
-          />
-        }
-        caCsaInfo={
-          <CsaInfo 
-            community={this.pageType}
-            locality={this.props.locality}
-            caAdvocacy={true}
           />
         }
         mobility={
@@ -224,6 +225,7 @@ class District extends React.Component {
           />
         }
         students={<Students {...studentProps} />}
+        teachersStaff={this.hasTeachersStaffData() && <TeachersStaff size={this.props.viewportSize} data={this.props.teachers_staff} />}
         calendar={
           <Calendar 
             locality={this.props.locality}

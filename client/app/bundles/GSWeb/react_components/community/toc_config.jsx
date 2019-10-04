@@ -12,6 +12,7 @@ export const BROWSE_SCHOOLS = 'browse-schools';
 export const AWARD_WINNING_SCHOOLS = 'award-winning-schools';
 export const CITIES = 'cities';
 export const NEIGHBORING_CITIES = 'neighboring-cities';
+export const TEACHERS_STAFF = 'teachers-staff';
 
 export const browseSchoolsTocItem = {
   key: BROWSE_SCHOOLS,
@@ -101,5 +102,12 @@ export const neighboringCitiesTocItem = {
   key: NEIGHBORING_CITIES,
   label: t(NEIGHBORING_CITIES),
   anchor: '#neighboring-cities',
+  selected: false
+}
+
+export const teachersStaffTocItem = {
+  key: TEACHERS_STAFF,
+  label: t('teachers_staff.module_title'),
+  anchor: '#teachers-staff',
   selected: false
 }
