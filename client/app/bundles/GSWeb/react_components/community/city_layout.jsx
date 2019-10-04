@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { XS, SM, LG, MD, validSizes } from 'util/viewport';
-import OpenableCloseable from 'react_components/openable_closeable';
-import Button from 'react_components/button';
+import { XS, SM, validSizes } from 'util/viewport';
 import Ad from 'react_components/ad';
-import { t, capitalize } from 'util/i18n';
+import { t } from 'util/i18n';
 import { keepInViewport } from 'util/sticky';
 import { NEIGHBORING_CITIES } from './toc_config';
 import CityLinks from './city_links';
@@ -126,15 +124,6 @@ class CityLayout extends React.Component {
     );
   }
 
-  // CA Advocacy CSA
-  renderCaCsaModule() {
-    return this.props.locality.stateShort === 'CA' && (
-      <div>
-        {this.props.caCsaInfo}
-      </div>
-    );
-  }
-
   renderZillow(){
     return (
       this.props.zillow
@@ -183,21 +172,18 @@ class CityLayout extends React.Component {
         {this.renderBreadcrumbs()}
         {this.renderHero()}
         <div className="below-hero">
-          {/*<div className="content">*/}
             {this.renderToc()}
             <div className="community-modules">
               {this.props.viewportSize < SM && <Ad slot="citypage_first" sizeName="thin_banner_mobile" />}
               {this.renderSchools()}
               {this.renderBoxAd()}
               {this.renderCsaModule()}
-              {this.renderCaCsaModule()}
               {this.renderDistricts()}
               {this.renderMobility()}
               {this.renderZillow()}
               {this.renderReviews()}
               {this.renderNeighboringCities()}
             </div>
-          {/*</div>*/}
           {this.renderDesktopAd()}
         </div>
       </div>

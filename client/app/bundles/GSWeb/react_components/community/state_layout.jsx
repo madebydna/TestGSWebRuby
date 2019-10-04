@@ -153,15 +153,6 @@ class StateLayout extends React.Component {
     );
   }
 
-  // CA Advocacy CSA
-  renderCaCsaModule() {
-    return this.props.locality.nameShort === 'CA' && (
-      <div>
-        {this.props.caCsaInfo}
-      </div>
-    );
-  }
-
   renderReviews() {
     return (
       this.props.shouldDisplayReviews &&
@@ -187,7 +178,6 @@ class StateLayout extends React.Component {
               {this.props.viewportSize < SM && <Ad slot="statepage_first" sizeName="thin_banner_mobile" />}
               {this.renderSchools()}
               {this.renderCsaModule()}
-              {this.renderCaCsaModule()}
               {this.renderAcademics()}
               {this.renderBoxAd()}
               {this.renderStudentsModule()}
