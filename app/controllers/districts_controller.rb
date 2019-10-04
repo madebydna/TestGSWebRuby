@@ -4,7 +4,7 @@ class DistrictsController < ApplicationController
   include PageAnalytics
   include CommunityConcerns
 
-  CACHE_KEYS_FOR_READER = %w(district_schools_summary district_characteristics)
+  CACHE_KEYS_FOR_READER = %w(district_schools_summary district_characteristics gsdata)
 
 
   layout 'application'
