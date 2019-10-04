@@ -76,7 +76,8 @@ class DistrictCacheResults
       DistrictCachedCharacteristicsMethods
     when 'test_scores_gsdata'
       DistrictCachedTestScoresMethods
-
+    when 'gsdata'
+      DistrictCachedGsdataMethods
     end
   end
 
