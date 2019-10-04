@@ -80,7 +80,7 @@ class DistrictsController < ApplicationController
   end
 
   def district_cache_data_reader
-    @_district_cache_data_reader ||= DistrictCacheDataReader.new(district_record, district_cache_keys: ['test_scores_gsdata', 'district_characteristics', 'gsdata'])
+    @_district_cache_data_reader ||= DistrictCacheDataReader.new(district_record, district_cache_keys: CACHE_KEYS_FOR_READER + ['test_scores_gsdata', 'district_characteristics'])
   end
 
   def set_district_meta_tags
@@ -242,7 +242,7 @@ class DistrictsController < ApplicationController
   end
 
   def decorated_district
-    @_decorated_district ||= DistrictCache.cached_results_for([district_record], CACHE_KEYS_FOR_READER).decorate_districts([district_record]).first
+    @_decorated_district ||= district_cache_data_reader.decorate_district
   end
 
   def decorated_city

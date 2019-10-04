@@ -11,7 +11,7 @@ class DistrictCacheDataReader
   end
 
   def decorated_district
-    @_decorated_district ||= decorate_district(district)
+    @_decorated_district ||= decorate_district
   end
 
   def ethnicity_data
@@ -190,14 +190,11 @@ class DistrictCacheDataReader
   end
 
   def district_cache_query
-    DistrictCacheQuery.for_district(district).tap do |query|
-      query.include_cache_keys(district_cache_keys)
-    end
+    DistrictCache.for_district(district).include_cache_keys(district_cache_keys)
   end
 
-  def decorate_district(district)
-    query_results = district_cache_query.query
-    district_cache_results = DistrictCacheResults.new(DISTRICT_CACHE_KEYS, query_results)
+  def decorate_district
+    district_cache_results = DistrictCacheResults.new(DISTRICT_CACHE_KEYS, district_cache_query)
     district_cache_results.decorate_district(district)
   end
 
