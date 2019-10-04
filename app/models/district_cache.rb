@@ -13,7 +13,7 @@ class DistrictCache < ActiveRecord::Base
   end
 
   def self.for_districts(districts)
-    return [] if districts.empty?
+    return self.none if districts.empty?
 
     matching_clause = state_to_id_map(districts).map do |state,ids|
       sanitize_sql_for_conditions(["(state = ? and district_id IN (?))", state, ids])
