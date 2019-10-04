@@ -124,12 +124,16 @@ module CommunityProfiles
       end
     end
 
+    def gsdata_data
+      @cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata))
+    end
+
     def multiple_breakdowns_in_one_data_type
       [SAT_PERCENT_COLLEGE_READY, ACT_PERCENT_COLLEGE_READY, SAT_PARTICIPATION, ACT_PARTICIPATION, ACT_SCORE, SAT_SCORE]
     end
 
     def data_types_in_the_overview
-      [FOUR_YEAR_GRADE_RATE, SAT_PERCENT_COLLEGE_READY, ACT_PERCENT_COLLEGE_READY, SAT_PARTICIPATION, ACT_PARTICIPATION, ACT_SCORE, SAT_SCORE, AP_ENROLLED, AP_EXAMS_PASSED, SAT_PERCENT_COLLEGE_READY]
+      [FOUR_YEAR_GRADE_RATE, SAT_PERCENT_COLLEGE_READY, ACT_PERCENT_COLLEGE_READY, SAT_PARTICIPATION, ACT_PARTICIPATION, ACT_SCORE, SAT_SCORE, AP_ENROLLED, AP_EXAMS_PASSED, SAT_PERCENT_COLLEGE_READY, DUAL_ENROLLMENT_PARTICIPATION, IB_PROGRAM_PARTICIPATION]
     end
 
     def college_success_datatypes
@@ -141,6 +145,7 @@ module CommunityProfiles
     def data_type_hashes
       @_data_type_hashes ||= begin
         hashes = characteristics_data
+        hashes.merge!(gsdata_data)
         return [] if hashes.blank?
         handle_ACT_SAT_to_display!(hashes)
         hashes = hashes.map do |key, array|
