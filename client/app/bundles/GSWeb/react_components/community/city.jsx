@@ -181,8 +181,7 @@ class City extends React.Component {
           />
         }
         viewportSize={this.props.viewportSize}
-      >
-      </CityLayout>
+      />
     );
   }
 }

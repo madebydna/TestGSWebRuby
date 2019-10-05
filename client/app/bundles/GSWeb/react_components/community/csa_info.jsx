@@ -19,7 +19,7 @@ const handleGoogleAnalytics = (community, action, label) => {
   analyticsEvent(community, action, label);
 }
 
-export const CsaInfo = ({ community, locality }) => {
+const CsaInfo = ({ community, locality }) => {
   let { moduleIcon, headerText, blurbText, buttonText, buttonLink } = handleTextGrouping(community, locality);
   let gaEvent = 'CSA State List';
   
@@ -47,6 +47,8 @@ export const CsaInfo = ({ community, locality }) => {
     </div>
   );
 }
+
+export default CsaInfo;
 
 CsaInfo.propTypes = {
   community: PropTypes.string.isRequired,
