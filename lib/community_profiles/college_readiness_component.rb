@@ -145,7 +145,7 @@ module CommunityProfiles
     def data_type_hashes
       @_data_type_hashes ||= begin
         hashes = characteristics_data
-        hashes.merge!(gsdata_data)
+        hashes.merge!(gsdata_data) if entity_type == 'district'
         return [] if hashes.blank?
         handle_ACT_SAT_to_display!(hashes)
         hashes = hashes.map do |key, array|
