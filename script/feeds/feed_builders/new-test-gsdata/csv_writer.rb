@@ -67,7 +67,7 @@ module Feeds
           test_name = hash['test-name']
           test_abbr = hash['test-abbrv']
           if @write_description_file
-            add_description_to_array(test_name, test_abbr, hash['scale'], hash['most_recent_year'], hash['description'])
+            add_description_to_array(test_name, test_abbr, hash['scale'], hash['most-recent-year'], hash['description'])
           end
           write_state_info(test_name, test_abbr, csv)
           write_district_info(test_name, test_abbr, csv)
