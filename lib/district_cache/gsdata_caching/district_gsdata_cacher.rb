@@ -22,16 +22,28 @@ class DistrictGsdataCacher < DistrictCacher
   # 149: Percentage of teachers with less than three years experience
   # 152: Number of advanced courses per student
   # 154: Percentage of Students Enrolled
-  # 335, Percent of Law Enforcement Staff
-  # 336, Percent of Security Guard Staff
-  # 337, Percent of Nurse Staff
-  # 338, Percent of Psychologist Staff
-  # 339, Percent of Social Worker Staff
+  # 335: Percent of Law Enforcement Staff
+  # 336: Percent of Security Guard Staff
+  # 337: Percent of Nurse Staff
+  # 338: Percent of Psychologist Staff
+  # 339: Percent of Social Worker Staff
+  # 342: total revenue    
+  # 346: total expenditures 
+  # 351: per pupal revenue    
+  # 352: per pupal expenditures
+  # 353: percent federal revenue  
+  # 354: percent state revenue    
+  # 355: percent local revenue  
+  # 356: percent instructional expenditures 
+  # 357: percent support services expenditures  
+  # 358: percent other expenditures      
+  # 359: percent uncategorized expenditures   
 
 
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
 
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154, 335, 336, 337, 338, 339].freeze
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 152, 154, 335, 336, 337, 338, 339, 342, 346, 351, 352,
+                  353, 354, 355, 356, 357, 358, 359].freeze
 
   # BREAKDOWN_TAG_NAMES = %w(
   #   ethnicity
