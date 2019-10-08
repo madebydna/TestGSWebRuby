@@ -232,8 +232,7 @@ class State extends React.Component {
             }
             breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
             viewportSize={this.props.viewportSize}
-        >
-        </StateLayout>
+        />
     );
   }
 }

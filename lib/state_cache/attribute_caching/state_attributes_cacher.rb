@@ -25,7 +25,12 @@ module AttributeCaching
     # this method finds all schools with growth data in a state and bitwise and with all high schools in that state
     # This is to see if high schools in a particular state should display the growth/growth proxy data module on school profiles
     def hs_enabled_growth_rating?
-      schools_ids_with_growth_ratings = Omni::Rating.joins(data_set: :data_type).where(data_sets: {data_type_id: GROWTH_DATA_TYPES, state: state}).school_entity.active.select(:gs_id).distinct.map(&:gs_id)
+      schools_ids_with_growth_ratings = 
+        Omni::Rating.joins(data_set: :data_type)
+          .where(data_sets: {data_type_id: GROWTH_DATA_TYPES, state: state})
+          .school_entity.active.select(:gs_id)
+          .distinct
+          .map(&:gs_id)
       high_schools_ids = School.on_db(state) { School.active.where(level_code: 'h').pluck(:id)}
       (schools_ids_with_growth_ratings & high_schools_ids).length > 0
     end

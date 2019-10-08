@@ -255,8 +255,7 @@ class District extends React.Component {
           />
         }
         viewportSize={this.props.viewportSize}
-      >
-      </DistrictLayout>
+      />
     );
   }
 }
