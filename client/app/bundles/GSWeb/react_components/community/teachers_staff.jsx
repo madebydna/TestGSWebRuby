@@ -31,7 +31,7 @@ class TeachersStaff extends React.Component {
       {this.props.data.main_staff.map((item, index) => {
         return <DataRow {...item} key={`ts_row_${index}`} />
       })}
-      <div className="rating-container__more-items">
+      <div className="rating-container-more-items">
         <Drawer
           content={<OtherStaffTable {...this.props.data.other_staff} />}
           closedLabel={this.closedLabel()}

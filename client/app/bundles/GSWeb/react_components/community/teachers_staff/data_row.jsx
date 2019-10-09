@@ -12,7 +12,7 @@ function DataRow ({ state_value, district_value, name, type, tooltip }) {
         return <Ratio value={district_value} state_value={state_value} />;
       case 'percent_bar':
         return (
-        <div className="ts-row__two-thirds-xs ts-row__one-half-md bar-graph-display">
+        <div className="ts-row-two-thirds-xs ts-row-one-half-md bar-graph-display">
           <BarGraphBase label={`${district_value}`} score={district_value} state_average={state_value} />
         </div>);
       case 'dollar_amt':
@@ -24,7 +24,7 @@ function DataRow ({ state_value, district_value, name, type, tooltip }) {
 
   return (
     <div className="ts-row">
-      <div className="ts-row__two-thirds-xs ts-row__one-half-md rating-score-item__label">
+      <div className="ts-row-two-thirds-xs ts-row-one-half-md rating-score-item__label">
         {name}
         <QuestionMarkToolTip content={tooltip} className="tooltip" element_type="datatooltip"/>
       </div>
