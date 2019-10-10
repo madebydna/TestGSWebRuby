@@ -8,27 +8,15 @@ import { addQueryParamToUrl } from 'util/uri';
 import { SM } from 'util/viewport';
 
 const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
-  if (community === 'city') {
-    return(
-      <div className="grade-filter">
-        <span className="button-group">
-          <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
-          <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} />
-          <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} />
-        </span>
-      </div>
-    )
-  }else{
-    return (
-      <div className="grade-filter">
-        <span className="button-group">
-          {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
-          {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
-          {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
-        </span>
-      </div>
-    )
-  }
+  return (
+    <div className="grade-filter">
+      <span className="button-group">
+        {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
+        {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
+        {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
+      </span>
+    </div>
+  )
 }
 
 const regionName = (locality, community) => {
