@@ -27,7 +27,6 @@ describe TestScoresCaching::TestScoresCacherGsdata do
           context 'school contains HS level"' do
             let(:school) { build(:school, state: whitelist_state, level_code: 'h') }
             it 'returns an empty array' do
-
               qr     = [OpenStruct.new({ state: whitelist_state, data_type_id: 1 })]
               result = cacher.school_results_filter(qr)
               expect(result).to eq([])

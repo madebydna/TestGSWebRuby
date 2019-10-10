@@ -7,7 +7,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
 
   CACHE_EXCEPTIONS = :data_type, :percentage, :narrative, :label, :methodology
 
-  ALT_NULL_STATE_FILTER = %w(ct il mt)
+  ALT_NULL_STATE_FILTER = %w(de il mt nv)
 
   def data_type_tags
     self.class::DATA_TYPE_TAGS
@@ -45,7 +45,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     query_results.extend(TestScoreCalculations).max_year
   end
 
-  # This code is in support of JT-7249 - hopefully this will answer any questions
+  # This code is in support of JT-9244 - hopefully this will answer any questions
   def school_results_filter(qr)
     data_value = qr&.first
     state = data_value&.state&.downcase
