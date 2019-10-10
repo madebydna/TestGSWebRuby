@@ -11,13 +11,13 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
   return (
     <div className="grade-filter">
       <span className="button-group">
-        {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
-        {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
-        {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
+        {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e"} /> : null}
+        {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m"} /> : null}
+        {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h"} /> : null}
       </span>
     </div>
   )
-}
+};
 
 const regionName = (locality, community) => {
   if (locality.stateShort === 'DC') {
@@ -70,7 +70,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
           ))}
         </section>;
   }
-  
+
 	return (
     <div className="top-school-module">
       <div className="profile-module">
