@@ -4,6 +4,7 @@
 
 require 'ox'
 require 'mysql2'
+require 'diff/lcs'
 
 # This class iterates over a select group of fields and compares them for discrepancies in the database.
 class DirectoryCensusParser < ::Ox::Sax
@@ -64,12 +65,12 @@ class DirectoryCensusParser < ::Ox::Sax
 
     db_results = School.find_by_state_and_id(state, db_id)
 
-    @elements[id].each do |field,value|
-      if value != (db_results[field].to_s)
-        puts "discrepancy: -- state: #{state}\tuniversal_id: #{id}\tfield: #{field}\txml val: #{value}\t db val: #{db_results[field].to_s}"
+    @elements[id].each do |field, value|
+      diff = Diff::LCS.diff(value, db_results[field].to_s.squeeze(" "))
+      if diff.present?
+        puts "discrepancy: -- state: #{state}\tuniversal_id: #{id}\tfield: #{field}\txml val: #{value}\t db val: #{db_results[field].to_s}\t diff: #{diff}"
       end
     end
-
     @directory_info = nil
   end
 
