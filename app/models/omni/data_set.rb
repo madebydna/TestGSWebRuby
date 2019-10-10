@@ -24,5 +24,15 @@ module Omni
     def self.filter_by_data_type_tag(tag_name)
       joins(:data_type_tags).where(data_type_tags: {active: true, tag: tag_name})
     end
+
+    def self.max_year_for_data_type_id(data_type_id)
+      date = max_date_for_data_type_id(data_type_id)
+      return unless date
+      date.year
+    end
+
+    def self.max_date_for_data_type_id(data_type_id)
+      where(data_type_id: data_type_id).maximum('date_valid')
+    end
   end
 end

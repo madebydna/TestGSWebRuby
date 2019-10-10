@@ -7,6 +7,8 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
 
   CACHE_EXCEPTIONS = :data_type, :percentage, :narrative, :label, :methodology
 
+  ALT_NULL_STATE_FILTER = %w(ct il mt)
+
   def data_type_tags
     self.class::DATA_TYPE_TAGS
   end
@@ -48,19 +50,22 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     data_value = qr&.first
     state = data_value&.state&.downcase
     data_type_id = data_value&.data_type_id
-    school_id = data_value&.school_id
-    state_filter = %w(ct il mt)
+    return qr unless data_type_id.present?
 
-    if state_filter.include?(state) && state.present? && data_type_id.present?
-      state_latest_year = Load.max_year_for_data_type_id( data_type_id)
-      if state_latest_year && query_result_max_year < state_latest_year.year
-        school = School.find_by_state_and_id(state, school_id)
-        if school.high_school?
-          return []
-        end
+    if in_alt_whitelist?(state)
+      if query_result_max_year < state_latest_year(data_type_id)
+        return [] if school.high_school?
       end
     end
     qr
+  end
+
+  def in_alt_whitelist?(state)
+    ALT_NULL_STATE_FILTER.include?(state)
+  end
+
+  def state_latest_year(data_type_id)
+    @_state_latest_year ||= Omni::DataSet.max_year_for_data_type_id(data_type_id)
   end
 
   def query_results
