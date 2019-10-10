@@ -10,8 +10,10 @@ class Ratio extends React.Component {
           <span className="ratio-viz">:1</span>
         </div>
         <div className="rating-score-item__state-average ts-row__full-xs ts-row__two-thirds-md">
-            {t('State avg')} {this.props.state_value}
-          <span className="ratio-viz-state-avg">:1</span>
+            { this.props.state_value && 
+                `${t('State avg')} ${this.props.state_value}
+                  ${<span className="ratio-viz-state-avg">:1</span>}`
+            }
         </div>
       </div>
     );

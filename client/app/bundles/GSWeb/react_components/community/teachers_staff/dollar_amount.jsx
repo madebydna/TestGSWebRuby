@@ -8,7 +8,7 @@ class DollarAmount extends React.Component {
           {this.props.value}
         </div>
         <div className="rating-score-item__state-average ts-row__full-xs ts-row__two-thirds-md">
-          {gon.translations['State avg']} {this.props.state_value}
+          {this.props.state_value && `${gon.translations['State avg']} ${this.props.state_value}` }
         </div>
       </div>
     );

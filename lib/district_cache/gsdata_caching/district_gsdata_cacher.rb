@@ -74,6 +74,7 @@ class DistrictGsdataCacher < DistrictCacher
 
   def build_hash_for_cache
     district_cache_hash = Hash.new { |h, k| h[k] = [] }
+    # should have this filter by max year
     r = district_results
     r.each_with_object(district_cache_hash) do |result, cache_hash|
       result_hash = result_to_hash(result)

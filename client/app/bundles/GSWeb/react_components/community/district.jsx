@@ -12,6 +12,7 @@ import CsaInfo from './csa_info';
 import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import Calendar from "./calendar";
+import Finance from './finance';
 import Students from "./students";
 import StemCourses from "../school_profiles/stem_courses";
 import TeachersStaff from "./teachers_staff";
@@ -50,7 +51,8 @@ class District extends React.Component {
     locality: PropTypes.object,
     heroData: PropTypes.object,
     academics: PropTypes.object,
-    students: PropTypes.object
+    students: PropTypes.object,
+    finance: PropTypes.object
   };
 
   constructor(props) {
@@ -232,6 +234,11 @@ class District extends React.Component {
             pageType="District"
           />
         } 
+        finance={
+          <Finance
+            props={this.props.finance}
+          />
+        }
         zillow={
           <Zillow
               locality={this.props.locality}

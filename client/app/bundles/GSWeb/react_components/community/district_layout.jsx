@@ -81,6 +81,14 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderFinance() {
+    return (
+      <div id="finance" className="module-section">
+        {this.props.finance}
+      </div>
+    )
+  }
+
   renderMobility() {
     return (
       <div id="mobility" className="module-section">
@@ -224,6 +232,7 @@ class DistrictLayout extends React.Component {
             {this.renderStudentsModule()}
             {this.renderTeachersStaffModule()}
             {this.renderCalendar()}
+            {this.renderFinance()}
             {this.renderMobility()}
             {this.renderZillow()}
             {this.renderReviews()}
