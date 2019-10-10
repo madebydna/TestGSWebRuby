@@ -11,10 +11,6 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     self.class::DATA_TYPE_TAGS
   end
 
-  # def data_type_ids
-  #   @_data_type_ids ||= DataTypeTag.data_type_ids_for(data_type_tags).uniq
-  # end
-
   def build_hash_for_cache
     hashes = school_results.map { |r| result_to_hash(r) }
     hashes = inject_grade_all(hashes)
@@ -155,7 +151,6 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     missing_keys.count.zero?
   end
 
-
   def district_value(result)
     #   will not have district values if school is private
     return nil unless school.district_id.positive?
@@ -165,6 +160,5 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   def state_result(result)
     state_results_hash[Omni::TestDataValue.datatype_breakdown_year(result)]
   end
-
 
 end
