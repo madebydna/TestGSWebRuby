@@ -2,6 +2,7 @@ es:
   school_profiles:
     show_profile:
       overview: RESUMEN
+      environment: MEDIO AMBIENTE
       false_header:
         first_bullet: ¿Eres un administrador de esta escuela?
         second_bullet_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Claim school" data-ga-click-label="Private" href="/official-school-profile/">Reclame el perfil de tu escuela</a> para editar información general y compartir qué hace tu escuela única. <a href="/gk/schools/">Obtenga más información.</a>
