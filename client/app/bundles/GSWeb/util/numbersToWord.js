@@ -1,3 +1,5 @@
+import { t } from 'util/i18n';
+
 const wholeNumbers = (value, delimiter) =>{
   const validNumbers = new RegExp('^[0-9]+$');
   const numberSet = String(value).split(delimiter);
@@ -13,11 +15,11 @@ const findDenomination = value => {
   if(value.length > 12){
     return 'trillion';
   }else if(value.length > 9){
-    return 'billion';
+    return t('billion');
   }else if(value.length > 6){
-    return 'million';
+    return t('million');
   }else if(value.length > 3){
-    return 'thousand';
+    return t('thousand');
   }else{
     return '';
   }
