@@ -167,6 +167,7 @@ class District extends React.Component {
         schoolCounts={this.props.schools_data.counts}
         shouldDisplayReviews={this.props.reviews.length > 0}
         hasStudentDemographicData = {this.hasStudentDemographicData()}
+        shouldDisplayDistrictReview={this.props.finance.length > 0}
         translations={this.props.translations}
         topSchools={
           <TopSchoolsStateful

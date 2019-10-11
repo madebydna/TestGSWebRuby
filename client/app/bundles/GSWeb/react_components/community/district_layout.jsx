@@ -14,7 +14,8 @@ class DistrictLayout extends React.Component {
     breadcrumbs: PropTypes.element,
     heroData: PropTypes.object,
     shouldDisplayReviews: PropTypes.bool,
-    hasStudentDemographicData: PropTypes.bool
+    hasStudentDemographicData: PropTypes.bool,
+    shouldDisplayDistrictReview: PropTypes.bool
   };
 
   constructor(props) {
@@ -82,7 +83,7 @@ class DistrictLayout extends React.Component {
   }
 
   renderFinance() {
-    return (
+    return (this.props.shouldDisplayDistrictReview && 
       <div id="finance" className="module-section">
         {this.props.finance}
       </div>
