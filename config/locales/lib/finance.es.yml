@@ -9,8 +9,8 @@ es:
       'RevenueSources_tooltip': Este es un análisis de cuánto de los ingresos anuales totales de este distrito provienen de fuentes federales, estatales o locales, en comparación con los promedios estatales.
       'ExpenditureSources_tooltip': Este es un análisis de los gastos del distrito por categorías relacionadas con la educación pre K-12 (instrucción, apoyo, otro) y otros gastos.
       data_types:
-        'total revenue': 'Gasto total del distrito'
-        'per pupal revenue': 'Gasto promedio por estudiante'
+        'total revenue': 'Ingresos totales del distrito'
+        'per pupal revenue': 'Promedio de ingresos del distrito por  estudiante'
         'percent federal revenue': "% federal"
         'percent state revenue': "% del estado"
         'percent local revenue': "% local"
@@ -21,8 +21,8 @@ es:
         'percent other expenditures': '% otros gastos de pre K-12'
         'percent uncategorized expenditures': '% otros gastos'
       tool_tips:
-        'total revenue': 'Este es un análisis del gasto total de este distrito, incluyendo el gasto en educación pre K-12, educación de adultos, pagos a gobiernos, escuelas privadas o chárter, gastos en edificios, carreteras y herramientas y más.'
-        'per pupal revenue': 'Esto refleja cuánto dinero gastó este distrito por estudiante, en comparación con el promedio estatal. Esta cifra puede ayudarte a comparar distritos entre sí.'
+        'total revenue': 'Esto refleja el total de fondos anuales que este distrito recibió de fuentes locales, estatales y federales, en comparación con el promedio en todo el estado. (Mira ejemplos abajo.)'
+        'per pupal revenue': 'Esto refleja la cantidad de ingresos anuales del distrito por cada estudiante comparado con el promedio estatal. La cifra de ingresos del distrito por estudiante ofrece una forma útil de comparar distritos, ya que los ingresos totales varían mucho entre los distritos grandes y pequeños.'
         'percent federal revenue': "Esto muestra la parte de los ingresos de este distrito recibidos del gobierno federal, que puede incluir fondos para escuelas de Título 1 y programas como Escuelas Seguras y Libres de Drogas, la Acta para la Educación de los Individuos con Discapacidades, programas vocacionales y educación de tecnología, educación bilingüe y La Ley de Nutrición de Menores entre otros."
         'percent state revenue': "Esto muestra la parte de los ingresos de este distrito recibidos del estado, que puede incluir fondos para programas para la mejora del personal, educación especial, educación para estudiantes talentosos y excepcionalmente talentosos, educación bilingüe, educación vocacional, almuerzo escolar, transporte, beneficios para empleados e instalaciones, entre otros."
         'percent local revenue': "Esto refleja la parte de los ingresos de este distrito que provienen de fuentes locales, que pueden incluir contribuciones de organizaciones de padres como un PTA / PTO; impuestos locales a la propiedad, ventas o servicios públicos, tarifas pagadas por los estudiantes por libros de texto, transporte, almuerzo escolar, e ingresos por alquileres o ventas de propiedades, entre otros."

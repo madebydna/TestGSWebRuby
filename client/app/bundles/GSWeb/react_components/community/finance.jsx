@@ -10,7 +10,7 @@ import ReactDOMServer from 'react-dom/server';
 
 const Finance = ({dataValues, district}) => {
 
-  const financeDataValues = dataValues.map(item => <DataRow {...item} />)
+  const financeDataValues = dataValues.map(item => <DataRow key={item.name} {...item} />)
 
   const title = <div data-ga-click-label={t('finance.module_title')}>
     <h3>{t('finance.module_title')}</h3>
@@ -29,15 +29,14 @@ const Finance = ({dataValues, district}) => {
      <h1>{t('district_data_sources_and_info')}</h1>
      {dataValues.map(dataValue =>{
        if (dataValue.data){
-         return dataValue.data.map(subdata => {
-           return <div>
+         return dataValue.data.map(subdata => <div key={subdata.source.name}>
              <h4>{subdata.source.name}</h4>
              <p>{subdata.source.description}</p>
              <p>{subdata.source.source_and_year}</p>
            </div>
-         })
+         );
        }else{
-         return <div>
+         return <div key={dataValue.source.name}>
            <h4>{dataValue.source.name}</h4>
            <p>{dataValue.source.description}</p>
            <p>{dataValue.source.source_and_year}</p>
@@ -49,10 +48,7 @@ const Finance = ({dataValues, district}) => {
   const _sources = ReactDOMServer.renderToStaticMarkup(sourcesContent);
 
   const footer = <div data-ga-click-label={null}>
-    {/* <div data-ga-click-label={null}> */}
-      <InfoBox content={_sources} element_type="sources" pageType={'district'}>{t('See notes')}</InfoBox>
-      {/* {this.props.qualaroo_module_link && <GiveUsFeedback content={this.props.qualaroo_module_link} />} */}
-    {/* </div> */}
+    <InfoBox content={_sources} element_type="sources" pageType={'district'}>{t('See notes')}</InfoBox>
     <QualarooDistrictLink module='district_finance'
       districtId={district.district_id} state={district.state} type='yes_no' />
   </div>

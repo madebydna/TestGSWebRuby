@@ -10,7 +10,7 @@ en:
       'ExpenditureSources_tooltip': This is a breakdown of district spending by categories related to preK-12 education (instruction, support, other) and other spending.
       data_types:
        'total revenue': 'Total district revenue'
-       'per pupal revenue': 'Average spending per student'
+       'per pupal revenue': 'Average revenue per student'
        'percent federal revenue': "% federal"
        'percent state revenue': "% state"
        'percent local revenue': "% local"
@@ -21,8 +21,8 @@ en:
        'percent other expenditures': '% other preK-12 spending'
        'percent uncategorized expenditures': '% other spending'
       tool_tips:
-        'total revenue': 'This is a breakdown of this district’s total spending, including spending on preK-12 education, adult education, payments to governments, private or charter schools, spending on buildings, roads, and equipment, and more.'
-        'per pupal revenue': 'This reflects how much money this district spent on a per-student basis, compared to the state average. This figure can help you compare districts to one another.'
+        'total revenue': 'This reflects the total annual funds this district received from local, state, and federal sources, compared to the average across the state.  (See examples below).'
+        'per pupal revenue': 'This reflects how much annual revenue per student this district has compared to the state average. The revenue per student figure offers a helpful way to compare districts, since total revenues will vary greatly between large and small districts.'
         'percent federal revenue': "This shows the share of this district’s revenues received from the federal government, which can include funds for Title 1 schools and programs like Safe and Drug Free Schools, the Individuals with Disabilities Education Act, vocational and tech education, bilingual education, and the Child Nutrition Act, among others."
         'percent state revenue': "This shows the share of this district’s revenues received from the state government, which can include funds for programs including staff improvement, special education, gifted and talented education, bilingual education, vocational education, school lunch, transportation, employee benefits, and facilities, among others."
         'percent local revenue': "This reflects the share of this district’s revenues that came from local sources, which can include contributions from parent organizations like a PTA/PTO; local property, sales, or utility taxes, fees paid by students for textbooks, transportation, and school lunch, and revenues from rent or property sales, among others."

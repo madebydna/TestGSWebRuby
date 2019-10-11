@@ -56,7 +56,11 @@ class District extends React.Component {
     finance: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
-        source: PropTypes.string.isRequired,
+        source: PropTypes.shape({
+          name: PropTypes.string,
+          description: PropTypes.string,
+          source_and_year: PropTypes.string
+        }),
         tooltip: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired
       })

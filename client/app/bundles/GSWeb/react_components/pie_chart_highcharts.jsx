@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
@@ -13,7 +13,7 @@ const PieChartHighcharts = ({options}) => {
     }
   ));
   
-  const chartOptions = {
+  const initialOptions = {
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -22,7 +22,7 @@ const PieChartHighcharts = ({options}) => {
       height: 250
     },
     title: {
-      text: options.title ? `${options.title}` : null
+      text: null
     },
     tooltip: {
       pointFormatter: function(){
@@ -60,7 +60,8 @@ const PieChartHighcharts = ({options}) => {
     <div className="col-xs-12 col-sm-7">
       <HighchartsReact
         highcharts={Highcharts}
-        options={chartOptions}
+        // highcharts={window.Highcharts}
+        options={initialOptions}
       />
     </div>
   )

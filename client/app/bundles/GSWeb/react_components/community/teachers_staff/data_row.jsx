@@ -30,6 +30,7 @@ function DataRow ({ state_value, district_value, name, type, tooltip, data }) {
           return {
             name: source.name,
             value: source.district_value,
+            state_value: source.state_value,
             color: colors[idx],
             tooltip: source.tooltip
           }
