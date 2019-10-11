@@ -4,7 +4,7 @@ import HighchartsReact from 'highcharts-react-official';
 
 const PieChartHighcharts = ({options}) => {
 
-  const data = options.data.map((datum,idx) => (
+  const data = options.map((datum,idx) => (
     {
       name: datum.name,
       y: datum.value,

@@ -10,17 +10,28 @@ module CommunityProfiles
       @_finance_hash ||= @cache_data_reader.decorated_gsdata_datas(*FINANCE_DATA_TYPES)
     end
 
-    def finance_component(keys)
+    #array of data values sent to the frontend
+    def data_values
+      @_data_values ||= data_values_for_data_row(REVENUE) + 
+      data_values_for_pie_chart(SOURCES_OF_REVENUE) + 
+      data_values_for_data_row(EXPENDITURES) + 
+      data_values_for_pie_chart(SOURCES_OF_EXPENDITURES)
+    end
+
+    def data_values_for_data_row(keys)
       CommunityProfiles::FinanceComponent.new(data_hashes(*keys)).data_values
     end
 
-    def data_values
-      {}.tap do |hash|
-        hash[:revenue] = finance_component(REVENUE)
-        hash[:revenue_sources] = finance_component(REVENUE_SOURCES)
-        hash[:expenditure] = finance_component(EXPENDITURES)
-        hash[:expenditure_sources] = finance_component(EXPENDITURES_SOURCES)
-      end
+    def data_values_for_pie_chart(pie_chart_config)
+      Array.wrap(
+        {}.tap do |hash|
+          hash['data_type'] = pie_chart_config[:key]
+          hash['name'] = I18n.t(pie_chart_config[:key], scope: 'lib.finance')
+          hash['data'] = data_values_for_data_row(pie_chart_config[:data_keys])
+          hash['tooltip'] = I18n.t("#{pie_chart_config[:key]}_tooltip", scope: 'lib.finance')
+          hash['type'] = 'pie_chart'
+        end
+      )
     end
 
     def data_hashes(*keys)

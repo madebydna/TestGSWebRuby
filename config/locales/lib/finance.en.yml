@@ -4,10 +4,10 @@ en:
       'module_title': District finances
       'module_subtitle': "How a school district allocates funds can reflect its priorities. <a href='/gk/articles/school-board-candidates/'>Learn more about how these decisions are made.</a>"
       'parent_tip': "District decisions about how to spend money impact your child’s schooling. <a href='/gk/articles/taking-it-to-the-school-board/'>Here’s how parents can have an influence.</a>"
-      'Revenue sources': Revenue sources
-      'Spending by category': Spending by category
-      'revenue_tooltip': This is a breakdown of how much of this district’s total annual revenue came from federal, state, or local sources, compared to state averages.
-      'expenditure_tooltip': This is a breakdown of district spending by categories related to preK-12 education (instruction, support, other) and other spending.
+      'RevenueSources': Revenue sources
+      'ExpenditureSources': Spending by category
+      'RevenueSources_tooltip': This is a breakdown of how much of this district’s total annual revenue came from federal, state, or local sources, compared to state averages.
+      'ExpenditureSources_tooltip': This is a breakdown of district spending by categories related to preK-12 education (instruction, support, other) and other spending.
       data_types:
        'total revenue': 'Total district revenue'
        'per pupal revenue': 'Average spending per student'

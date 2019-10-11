@@ -36,6 +36,16 @@ module CommunityProfiles::FinanceConfig
     PER_PUPAL_EXPENDITURES
   ]
 
+  SOURCES_OF_REVENUE = {
+    key: 'RevenueSources',
+    data_keys: REVENUE_SOURCES  
+  }
+  
+  SOURCES_OF_EXPENDITURES = {
+    key: 'ExpenditureSources',
+    data_keys: EXPENDITURES_SOURCES
+  }
+
   ALL_EXPENDITURES_DATA_TYPES = EXPENDITURES + EXPENDITURES_SOURCES
 
   FINANCE_DATA_TYPES = ALL_REVENUE_DATA_TYPES + ALL_EXPENDITURES_DATA_TYPES
@@ -43,58 +53,58 @@ module CommunityProfiles::FinanceConfig
   CHAR_CACHE_ACCESSORS = [
     {
       key: TOTAL_REVENUE,
-      formatting:  [:to_f, :round, :dollars],
-      type: 'dollar_amt'
+      formatting:  [:to_f, :round],
+      type: 'large_dollar_amt'
     },
     {
       key: PER_PUPAL_REVENUE,
-      formatting: [:to_f, :round],
-      type: 'ratio'
+      formatting: [:to_f, :round, :dollars],
+      type: 'dollar_ratio'
     },
     {
       key: FEDERAL_REVENUE,
       formatting: [:to_f, :round],
-      type: 'percent_bar'
+      type: 'pie_slice'
     },
     {
       key: STATE_REVENUE,
       formatting: [:to_f, :round],
-      type: 'percent_bar'
+      type: 'pie_slice'
     },
     {
       key: LOCAL_REVENUE,
       formatting: [:to_f, :round],
-      type: 'percent_bar'
+      type: 'pie_slice'
     },
     {
       key: TOTAL_EXPENDITURES,
-      formatting:  [:to_f, :round, :dollars],
-      type: 'dollar_amt'
+      formatting:  [:to_f, :round],
+      type: 'large_dollar_amt'
     },
     {
       key: PER_PUPAL_EXPENDITURES,
-      formatting: [:to_f, :round],
-      type: 'ratio'
+      formatting: [:to_f, :round, :dollars],
+      type: 'dollar_ratio'
     },
     {
       key: INSTRUCTIONAL_EXPENDITURES,
       formatting: [:to_f, :round],
-      type: 'percent_bar'
+      type: 'pie_slice'
     },
     {
       key: SUPPORT_EXPENDITURES,
       formatting: [:to_f, :round],
-      type: 'percent_bar'
+      type: 'pie_slice'
     },
     {
       key: OTHER_EXPENDITURES,
       formatting: [:to_f, :round],
-      type: 'percent_bar'
+      type: 'pie_slice'
     },
     {
       key: UNCATEGORIZED_EXPENDITURES,
       formatting: [:to_f, :round],
-      type: 'percent_bar'
+      type: 'pie_slice'
     }
   ]
 

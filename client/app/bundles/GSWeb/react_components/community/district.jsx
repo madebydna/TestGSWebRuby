@@ -22,7 +22,7 @@ import Toc from "./toc";
 import { schoolsTocItem, academicsTocItem, ACADEMICS, advancedCoursesTocItem, STUDENTS, 
   studentsTocItem, calendarTocItem, communityResourcesTocItem, 
   nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS,
-  teachersStaffTocItem, TEACHERS_STAFF} from './toc_config';
+  teachersStaffTocItem, TEACHERS_STAFF, financeTocItem, FINANCE} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
@@ -35,6 +35,7 @@ class District extends React.Component {
     schools_data: {},
     breadcrumbs: [],
     reviews: [],
+    finance: [],
     csa_module: false
   };
 
@@ -52,7 +53,14 @@ class District extends React.Component {
     heroData: PropTypes.object,
     academics: PropTypes.object,
     students: PropTypes.object,
-    finance: PropTypes.object
+    finance: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        source: PropTypes.string.isRequired,
+        tooltip: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired
+      })
+    )
   };
 
   constructor(props) {
@@ -137,11 +145,12 @@ class District extends React.Component {
   }
 
   selectTocItems(){
-    let districtTocItems = [schoolsTocItem, academicsTocItem, advancedCoursesTocItem, teachersStaffTocItem, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
+    let districtTocItems = [schoolsTocItem, academicsTocItem, advancedCoursesTocItem, studentsTocItem, teachersStaffTocItem, calendarTocItem, financeTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());
     districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === TEACHERS_STAFF && !this.hasTeachersStaffData());
+    districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === FINANCE && this.props.finance.length === 0);
     return districtTocItems;
   }
 
@@ -236,7 +245,10 @@ class District extends React.Component {
         } 
         finance={
           <Finance
-            props={this.props.finance}
+            dataValues={this.props.finance}
+            district={
+              { districtId: this.props.locality.district_id, state: this.props.locality.state}
+            }
           />
         }
         zillow={

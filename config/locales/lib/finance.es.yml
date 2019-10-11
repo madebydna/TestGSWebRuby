@@ -4,10 +4,10 @@ es:
       'module_title': Finanzas del distrito
       'module_subtitle': "La forma en que un distrito escolar asigna fondos puede reflejar sus prioridades. <a href='/gk/articles/school-board-candidates/'>Obtén más información sobre cómo se toman estas decisiones.</a>."
       'parent_tip': "Las decisiones del distrito sobre cómo gastar dinero impactan la educación de tu hijo. <a href='gk/articles/taking-it-to-the-school-board/'>Así es como los padres pueden influir en estas decisiones.</a>"
-      'Revenue sources': Fuentes de ingresos
-      'Spending by category': Gasto por categoría
-      'revenue_tooltip': Este es un análisis de cuánto de los ingresos anuales totales de este distrito provienen de fuentes federales, estatales o locales, en comparación con los promedios estatales.
-      'expenditure_tooltip': Este es un análisis de los gastos del distrito por categorías relacionadas con la educación pre K-12 (instrucción, apoyo, otro) y otros gastos.
+      'RevenueSources': Fuentes de ingresos
+      'ExpenditureSources': Gasto por categoría
+      'RevenueSources_tooltip': Este es un análisis de cuánto de los ingresos anuales totales de este distrito provienen de fuentes federales, estatales o locales, en comparación con los promedios estatales.
+      'ExpenditureSources_tooltip': Este es un análisis de los gastos del distrito por categorías relacionadas con la educación pre K-12 (instrucción, apoyo, otro) y otros gastos.
       data_types:
         'total revenue': 'Gasto total del distrito'
         'per pupal revenue': 'Gasto promedio por estudiante'
