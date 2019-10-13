@@ -25,7 +25,7 @@ function DataRow ({ state_value, district_value, name, type, tooltip, data }) {
       case 'dollar_ratio':
         return <DollarRatio value={district_value} state_value={state_value} />;
       case 'pie_chart':
-        const colors = ['#0f69c4', '#2bdc99', '#f1830f', '#f1e634', '#6f2eb4', '#ef60d0', '#ca3154', '#999EFF'];
+        const colors = ['#184A7D', '#43BED9', '#2BDC99', '#DCA21A', '#ca3154', '#999EFF'];
         const options = data.map((source,idx) =>{
           return {
             name: source.name,
