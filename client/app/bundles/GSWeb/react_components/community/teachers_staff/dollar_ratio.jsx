@@ -8,7 +8,7 @@ const DollarRatio = ({ value, state_value }) =>
       <span className="ratio-viz">:1</span>
     </div>
     {state_value && <div className="stacked-state-average">
-      `${t('State avg')} ${state_value}`
+      {t('State avg')} {state_value}
       <span className="ratio-viz-state-avg">:1</span>
     </div>}
   </React.Fragment>;

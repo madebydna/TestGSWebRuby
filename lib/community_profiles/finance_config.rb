@@ -1,15 +1,15 @@
 module CommunityProfiles::FinanceConfig
-  TOTAL_REVENUE = 'total revenue'
-  TOTAL_EXPENDITURES = 'total expenditures'
-  PER_PUPAL_REVENUE = 'per pupal revenue'
-  PER_PUPAL_EXPENDITURES = 'per pupal expenditures'
-  FEDERAL_REVENUE= "percent federal revenue"
-  STATE_REVENUE= "percent state revenue"
-  LOCAL_REVENUE= "percent local revenue"
-  INSTRUCTIONAL_EXPENDITURES= "percent instructional expenditures"
-  SUPPORT_EXPENDITURES= "percent support services expenditures"
-  OTHER_EXPENDITURES= "percent other expenditures"
-  UNCATEGORIZED_EXPENDITURES= "percent uncategorized expenditures"
+  TOTAL_REVENUE = 'Total Revenue'
+  TOTAL_EXPENDITURES = 'Total Expenditures'
+  PER_PUPAL_REVENUE = 'Per Pupil Revenue'
+  PER_PUPAL_EXPENDITURES = 'Per Pupil Expenditures'
+  FEDERAL_REVENUE= "Percent Federal Revenue"
+  STATE_REVENUE= "Percent State Revenue"
+  LOCAL_REVENUE= "Percent Local Revenue"
+  INSTRUCTIONAL_EXPENDITURES= "Percent Instructional Expenditures"
+  SUPPORT_EXPENDITURES= "Percent Support Services Expenditures"
+  OTHER_EXPENDITURES= "Percent Other Expenditures"
+  UNCATEGORIZED_EXPENDITURES= "Percent Uncategorized Expenditures"
   
   REVENUE_SOURCES = [
     FEDERAL_REVENUE,

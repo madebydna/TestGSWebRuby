@@ -27,17 +27,17 @@ class DistrictGsdataCacher < DistrictCacher
   # 337: Percent of Nurse Staff
   # 338: Percent of Psychologist Staff
   # 339: Percent of Social Worker Staff
-  # 342: total revenue    
-  # 346: total expenditures 
-  # 351: per pupal revenue    
-  # 352: per pupal expenditures
-  # 353: percent federal revenue  
-  # 354: percent state revenue    
-  # 355: percent local revenue  
-  # 356: percent instructional expenditures 
-  # 357: percent support services expenditures  
-  # 358: percent other expenditures      
-  # 359: percent uncategorized expenditures   
+  # 342: Total Revenue    
+  # 346: Total Expenditures 
+  # 351: Per Pupil Revenue    
+  # 352: Per Pupil Expenditures
+  # 353: Percent Federal Revenue  
+  # 354: Percent State Revenue    
+  # 355: Percent Local Revenue  
+  # 356: Percent Instructional Expenditures 
+  # 357: Percent Support services Expenditures  
+  # 358: Percent Other Expenditures      
+  # 359: Percent Uncategorized Expenditures   
 
 
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
