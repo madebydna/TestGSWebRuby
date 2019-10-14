@@ -11,15 +11,15 @@ en:
       data_types:
        'total revenue': 'Total district revenue'
        'per pupal revenue': 'Average revenue per student'
-       'percent federal revenue': "% federal"
-       'percent state revenue': "% state"
-       'percent local revenue': "% local"
+       'percent federal revenue': "Federal"
+       'percent state revenue': "State"
+       'percent local revenue': "Local"
        'total expenditures': 'Total district spending'
        'per pupal expenditures': 'Average spending per student'
-       'percent instructional expenditures': '% instruction'
-       'percent support services expenditures': '% support services'
-       'percent other expenditures': '% other preK-12 spending'
-       'percent uncategorized expenditures': '% other spending'
+       'percent instructional expenditures': 'Instruction'
+       'percent support services expenditures': 'Support services'
+       'percent other expenditures': 'Other preK-12 spending'
+       'percent uncategorized expenditures': 'Other spending'
       tool_tips:
         'total revenue': 'This reflects the total annual funds this district received from local, state, and federal sources, compared to the average across the state.  (See examples below).'
         'per pupal revenue': 'This reflects how much annual revenue per student this district has compared to the state average. The revenue per student figure offers a helpful way to compare districts, since total revenues will vary greatly between large and small districts.'

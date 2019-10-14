@@ -45,11 +45,6 @@ const PieChartHighcharts = ({options}) => {
           formatter: function(){
             return Math.round(this.percentage) + '%';
           },
-          // style:{
-          //   color: 'black',
-          //   fontWeight: 'regular',
-          //   textOutline: 'none'
-          // },
           distance: 10
         },
         showInLegend: false

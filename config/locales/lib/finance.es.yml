@@ -11,15 +11,15 @@ es:
       data_types:
         'total revenue': 'Ingresos totales del distrito'
         'per pupal revenue': 'Promedio de ingresos del distrito por  estudiante'
-        'percent federal revenue': "% federal"
-        'percent state revenue': "% del estado"
-        'percent local revenue': "% local"
+        'percent federal revenue': "Federal"
+        'percent state revenue': "Del estado"
+        'percent local revenue': "Local"
         'total expenditures': 'Gasto total del distrito'
         'per pupal expenditures': 'Promedio de gastos por estudiante'
-        'percent instructional expenditures': '% instrucción'
-        'percent support services expenditures': '% servicios de apoyo'
-        'percent other expenditures': '% otros gastos de pre K-12'
-        'percent uncategorized expenditures': '% otros gastos'
+        'percent instructional expenditures': 'Instrucción'
+        'percent support services expenditures': 'Servicios de apoyo'
+        'percent other expenditures': 'Otros gastos de pre K-12'
+        'percent uncategorized expenditures': 'Otros gastos'
       tool_tips:
         'total revenue': 'Esto refleja el total de fondos anuales que este distrito recibió de fuentes locales, estatales y federales, en comparación con el promedio en todo el estado. (Mira ejemplos abajo.)'
         'per pupal revenue': 'Esto refleja la cantidad de ingresos anuales del distrito por cada estudiante comparado con el promedio estatal. La cifra de ingresos del distrito por estudiante ofrece una forma útil de comparar distritos, ya que los ingresos totales varían mucho entre los distritos grandes y pequeños.'
