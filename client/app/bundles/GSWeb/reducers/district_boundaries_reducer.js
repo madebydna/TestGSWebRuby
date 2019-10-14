@@ -127,12 +127,12 @@ export default (state, action) => {
       schools = groupBy(schools, o => stateAndIdKey(o));
       var newDistricts = { ...state.districts }
       newDistricts[stateAndIdKey(district)] = splitBoundariesOnDistrict(district);
-
       return {
         ...state,
         schools,
         districts: newDistricts,
         districtId: district.id,
+        district: district,
         state: district.state,
         loading: false,
         locationChangeFailure: false,

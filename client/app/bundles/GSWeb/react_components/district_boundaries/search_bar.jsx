@@ -164,7 +164,8 @@ export default class SearchBar extends React.Component {
               onChange={d => this.props.selectDistrict(d.id, d.state)}
               defaultLabel={t('search_or_click_map_for_districts')}
               defaultValue={this.props.district.id}
-              key={this.props.district.id}
+              value={`${this.props.district.state}${this.props.district.id}`}
+              // key={this.props.district.id}
             />
           </div>
           <div className="filter grade-filter">
