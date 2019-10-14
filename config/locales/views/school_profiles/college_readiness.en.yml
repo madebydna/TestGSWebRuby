@@ -39,13 +39,14 @@ en:
       ACT percent college ready: 'ACT college readiness rate'
       Percentage AP enrolled grades 9-12: 'AP course participation'
       Percentage of students passing 1 or more AP exams grades 9-12: 'Percentage of students passing 1 or more AP exams grades 9-12'
-      Percentage of students enrolled in Dual Enrollment classes grade 9-12: 'Percentage of students enrolled in Dual Enrollment classes grade 9-12'
+      Percentage of students enrolled in Dual Enrollment classes grade 9-12: 'Percentage of students enrolled in Dual Enrollment classes grades 9-12'
       Percentage of students enrolled in IB grades 9-12: 'Percentage of students enrolled in IB grades 9-12'
       faq:
         cta: Notice something missing or confusing?
         content_html: >
           <p>College readiness information comes from state or national education agencies (click on the "Sources" link for details).</p>
           <p>When information is missing in our display, it's most likely because this school did not offer an AP course, IB or dual enrollment classes, or participate in one of the two college readiness tests, the ACT or SAT (some states mandate which college readiness test schools use). It's also possible that the missing data was not included in the data we received from the state.</p>
+          <p>Did you find the information about college readiness useful? What can we do better? <a href="https://s.qualaroo.com/45194/34aea707-ec71-4130-b6bb-2864e0528c64" target="_blank">Share your feedback.</a></p>
           <p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page.</a></p>
       'Graduating seniors pursuing 4 year college/university': 'Graduates pursuing 4-year college'
@@ -84,30 +85,30 @@ en:
       csa_badge_html: >
         This school has earned a <span style='font-family:opensans-semibold'>%{blurb} College Success Award</span> based on its success in preparing students for college and ultimately career. <a href=%{csa_state_link}>See more winners</a>.
       data_point_info_texts:
-        '4-year high school graduation rate': 'Graduation rates reflect how many students graduate from this school on time.'
-        'Percentage of students enrolled in IB grades 9-12': >
+        4-year high school graduation rate: 'Graduation rates reflect how many students graduate from this school on time.'
+        Percent of students who meet UC/CSU entrance requirements: >
+          This is the percentage of graduates from this school who got a "C" or higher in the A-G courses required for
+          eligibility at University of California and California State University schools.
+          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a>.
+        Average SAT score: 'The SAT is a college admissions test which in 2015 had a total of 2400 possible points. This score reflects the average SAT score for students at this school. In 2016 the SAT changed to a 1600 point scale. Check back soon for updated information for this school.'
+        Average SAT score_new: 'The SAT is a college admissions test which has a total of 1600 possible points. This score reflects the average SAT score for students at this school.'
+        SAT percent participation: 'The SAT participation rate reflects the percentage of eligible students at this school who took the SAT.'
+        Percentage SAT/ACT participation grades 11-12: 'The SAT/ACT participation rate shows the percentage of eligible students in grades 11 or 12 at this school who took the SAT or ACT.'
+        Percent of Students who Participated in the SAT/ACT in grades 9-12: 'The SAT/ACT participation rate shows the percentage of eligible students at this school who took the SAT or ACT.'
+        Average ACT score: 'The ACT is a college admissions test with a total of 36 possible points. This score reflects the average ACT score for students at this school.'
+        ACT participation: 'The ACT participation rate shows the percentage of eligible students at this school who took the ACT.'
+        SAT percent college ready: 'The SAT college readiness rate reflects the minimum score needed on an SAT subject test to indicate about a 75 percent chance of obtaining a "C" or higher in the corresponding credit-bearing college course. The benchmarks are set based on national-level data.'
+        ACT percent college ready: 'The ACT college readiness rate reflects the minimum score needed on an ACT subject-area test to indicate about a 75 percent chance of obtaining a "C" or higher in the corresponding credit-bearing college course. The benchmarks are set based on national-level data.'
+        Percentage AP enrolled grades 9-12: 'Advanced Placement classes are college-level courses students can take in high school. The percentage of students taking AP classes may reflect whether the school culture is focused on college.'
+        AP Course Participation: 'Advanced Placement classes are college-level courses students can take in high school. The percentage of students taking AP classes may reflect whether the school culture is focused on college.'
+        Percentage of students passing 1 or more AP exams grades 9-12: 'The AP exam pass rate reflects how many students at this school earned a passing score on at least one AP exam. Students who do well on AP exams (passing with a score of 3, 4, or 5) may receive college credit.'
+        Percentage of students enrolled in Dual Enrollment classes grade 9-12: 'The Dual Enrollment participation rate reflects the percentage of students at this school who are taking college courses while in high school. Credits for these courses apply both to high school diploma requirements and college graduation requisites.'
+        Percentage of students enrolled in IB grades 9-12: >
           International Baccalaureate (IB) is an internationally recognized, high-standards program that emphasizes creative
           and critical thinking. A high school may have specific IB classes students can take, or a school-wide IB program
           that affects all classes. Some colleges give college credit for IB courses.
           <a href='/gk/articles/what-is-ib-international-baccalaureate/' target='_blank'>More about IB</a>
-        'Percentage of students enrolled in Dual Enrollment classes grade 9-12': 'The Dual Enrollment participation rate reflects the percentage of students at this school who are taking college courses while in high school. Credits for these courses apply both to high school diploma requirements and college graduation requisites.'
-        'Average SAT score': 'The SAT is a college admissions test which in 2015 had a total of 2400 possible points. This score reflects the average SAT score for students at this school. In 2016 the SAT changed to a 1600 point scale. Check back soon for updated information for this school.'
-        'Average SAT score_new': 'The SAT is a college admissions test which in 2016 had a total of 1600 possible points. This score reflects the average SAT score for students at this school.'
-        'SAT percent participation': 'The SAT participation rate reflects the percentage of eligible students at this school who took the SAT.'
-        'Percentage SAT/ACT participation grades 11-12': 'The SAT/ACT participation rate shows the percentage of eligible students at this school who took the SAT or ACT.'
-        'Percent of Students who Participated in the SAT/ACT in grades 9-12': 'The SAT/ACT participation rate shows the percentage of eligible students at this school who took the SAT or ACT.'
-        'SAT percent college ready': 'The SAT college readiness rate reflects the minimum score needed on an SAT subject test to indicate about a 75 percent chance of obtaining a “C” or higher in the corresponding credit-bearing college course. The benchmarks are set based on national-level data.'
-        'Average ACT score': 'The ACT is a college admissions test with a total of 36 possible points. This score reflects the average ACT score for students at this school.'
-        'ACT participation': 'The ACT participation rate shows the percentage of eligible students at this school who took the ACT.'
-        'ACT percent college ready': 'The ACT college readiness rate reflects the minimum score needed on an ACT subject-area test to indicate about a 75 percent chance of obtaining a “C” or higher in the corresponding credit-bearing college course. The benchmarks are set based on national-level data.'
-        'AP Course Participation': 'Advanced Placement classes are college-level courses students can take in high school. The percentage of students taking AP classes may reflect whether the school culture is focused on college.'
-        'Percent of students who meet UC/CSU entrance requirements': >
-          This is the percentage of graduates from this school who got a “C” or higher in the A-G courses required for
-          eligibility at University of California and California State University schools.
-          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a>.
-        'Percentage of students passing 1 or more AP exams grades 9-12': 'The AP exam pass rate reflects how many students at this school earned a passing score on at least one AP exam. Students who do well on AP exams (passing with a score of 3, 4, or 5) may receive college credit.'
-        'Percentage AP enrolled grades 9-12': 'Advanced Placement classes are rigorous classes with a final exam. The percentage of students taking AP exams may reflect whether the school culture is focused on college.'
-        'Graduating seniors pursuing 4 year college/university': 'This reflects the percentage of  graduates from this school who enrolled in a 4-year college or university immediately following high school.'
+        'Graduating seniors pursuing 4 year college/university': 'This reflects the percentage of graduates from this school who enrolled in a 4-year college or university immediately following high school.'
         'Graduating seniors pursuing 2 year college/university': 'This reflects the percentage of graduates from this school who enrolled in a 2-year college or university immediately following high school.'
         'Graduating seniors pursuing other college': 'This reflects the percentage of graduates from this high school who enrolled in college programs other than a 2-or-4-year college or university immediately following high school.'
         'Percent Enrolled in College Immediately Following High School': 'This reflects the percentage of graduates from this school who enrolled in college immediately following high school.'

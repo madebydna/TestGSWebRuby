@@ -49,6 +49,7 @@ es:
           clases de bachillerato internacional (IB) o inscripción doble, o participó en uno de los dos exámenes de preparación
           universitaria, el ACT o SAT (algunos estados determinan que exámenes de preparación universitaria las escuelas pueden utilizar).
           También es posible que los datos que faltan no estaban incluidos en los datos que recibimos del estado.</p>
+          <p>¿Ha encontrado la información de la preparación universitaria útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/34aea707-ec71-4130-b6bb-2864e0528c64" target="_blank">Comparte tus comentarios.</a></p>
           <p><a href="/gk/como-clasificamos/?lang=es#collegereadinessrating" target="_blank">Infórmese más sobre esta calificación.</a></p>
           <p>Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
       'Graduating seniors pursuing 4 year college/university': Estudiantes de último año que buscan una universidad de 4 años
@@ -87,31 +88,31 @@ es:
       csa_badge_html: >
         Esta escuela ha ganado un <span style='font-family:opensans-semibold'>%{blurb} College Success Award</span> basado en su éxito en preparar a los estudiantes para la universidad y finalmente para su carrera. <a href=%{csa_state_link}>Ver más ganadores</a>.
       data_point_info_texts:
-        'Percentage of students enrolled in IB grades 9-12': >
+        '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
+        Percent of students who meet UC/CSU entrance requirements: >
+          Este es el porcentaje de estudiantes graduados de esta escuela que recibieron una "C" o superior en los cursos
+          A-G requeridos para ser elegibles para atender a alguna de las escuelas de la
+          Universidad de California y Universidad del Estado de California.
+          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Obtén más información</a>.
+        Average SAT score: 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
+        Average SAT score_new: 'El SAT es una examen de admisión universitaria, cuyo puntaje más alto es de 1600 puntos. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela.'
+        SAT percent participation: 'El índice de participación en el SAT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT.'
+        Percentage SAT/ACT participation grades 11-12: 'El índice de participación en SAT/ACT refleja el porcentaje de estudiantes elegibles en los grados 11.° y 12.° de esta escuela que tomaron el SAT o ACT.'
+        Percent of Students who Participated in the SAT/ACT in grades 9-12: 'El índice de participación en SAT/ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT o ACT.'
+        Average ACT score: 'El ACT es un examen de admisión universitaria, cuyo puntaje más alto es de 36 puntos. Esta calificación refleja el puntaje promedio de las calificaciones en el ACT entre los estudiantes de esta escuela.'
+        ACT participation: 'El índice de participación en el ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el ACT.'
+        SAT percent college ready: 'La clasificación para la preparación universitaria SAT refleja el puntaje mínimo en un SAT subject test necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
+        ACT percent college ready: 'La clasificación para la preparación universitaria ACT refleja el puntaje mínimo de las pruebas de materia temáticas de ACT necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
+        Percentage AP enrolled grades 9-12: 'Los cursos de AP (cursos avanzados) son clases de nivel universitario que los estudiantes pueden tomar en la escuela secundaria. El porcentaje de estudiantes que toman cursos AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
+        AP Course Participation: 'Los cursos de AP (cursos avanzados) son clases de nivel universitario que los estudiantes pueden tomar en la escuela secundaria. El porcentaje de estudiantes que toman cursos AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
+        Percentage of students passing 1 or more AP exams grades 9-12: 'El índice de aprobación de los exámenes de AP (cursos avanzados) refleja cuántos estudiantes obtuvieron un puntaje mínimo en al menos uno de estos exámenes. Estudiantes que tienen éxito en los exámenes AP (con un resultado de un 3, 4 o 5) puedan recibir crédito universitario.'
+        Percentage of students enrolled in Dual Enrollment classes grade 9-12: 'La Clasificación para la Participación de Inscripción Doble refleja el porcentaje de estudiantes en esta escuela que toman cursos universitarios mientras están en la escuela secundaria. Los créditos para estos cursos se aplican a los requisitos para un diploma de la escuela secundaria y los requisitos de para graduación universitaria.'
+        Percentage of students enrolled in IB grades 9-12: >
           El Bachillerato Internacional (IB) es un programa de alto nivel reconocido internacionalmente que enfatiza
           el pensamiento creativo y crítico. Una escuela secundaria puede tener clases específicas de IB que
           los estudiantes pueden tomar, o un programa IB para toda la escuela que afecta a todas las clases.
           Algunas universidades dan créditos universitarios para los cursos del IB.
           <a href='/gk/articles/que-es-el-bachillerato-internacional-escuela-de-ib/?lang=es' target='_blank'>Más acerca de IB</a>
-        'Percentage of students enrolled in Dual Enrollment classes grade 9-12': 'La Clasificación para la Participación de Inscripción Doble refleja el porcentaje de estudiantes en esta escuela que toman cursos universitarios mientras están en la escuela secundaria. Los créditos para estos cursos se aplican a los requisitos para un diploma de la escuela secundaria y los requisitos de para graduación universitaria.'
-        '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
-        'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
-        'Average SAT score_new': 'El SAT es una prueba de admisión universitaria, que en 2016 tenía un total de 1600 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela.'
-        'SAT percent participation': 'El índice de participación en el SAT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT.'
-        'Percentage SAT/ACT participation grades 11-12': 'El índice de participación en SAT/ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT o ACT.'
-        'Percent of Students who Participated in the SAT/ACT in grades 9-12': 'El índice de participación en SAT/ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT o ACT.'
-        'SAT percent college ready': 'La clasificación para la preparación universitaria SAT refleja el puntaje mínimo en un SAT subject test necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
-        'Average ACT score': 'El ACT es un examen de admisión universitaria, cuyo puntaje más alto es de 36 puntos. Esta calificación refleja el puntaje promedio de las calificaciones en el ACT entre los estudiantes de esta escuela.'
-        'ACT participation': 'El índice de participación en el ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el ACT.'
-        'ACT percent college ready': 'La clasificación para la preparación universitaria ACT refleja el puntaje mínimo de las pruebas de materia temáticas de ACT necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
-        'AP Course Participation': 'Los cursos de AP (cursos avanzados) son clases de nivel universitario que los estudiantes pueden tomar en la escuela secundaria. El porcentaje de estudiantes que toman cursos AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
-        'Percent of students who meet UC/CSU entrance requirements': >
-               Este es el porcentaje de estudiantes graduados de esta escuela que recibieron una "C" o superior en los cursos
-               A-G requeridos para ser elegibles para atender a alguna de las escuelas de la
-               Universidad de California y Universidad del Estado de California.
-               <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Obtenga más información</a>.
-        'Percentage of students passing 1 or more AP exams grades 9-12': 'El índice de aprobación de los exámenes de AP (cursos avanzados) refleja cuántos estudiantes obtuvieron un puntaje mínimo en al menos uno de estos exámenes. Estudiantes que tienen éxito en los exámenes AP (con un resultado de un 3, 4 o 5) puedan recibir crédito universitario.'
-        'Percentage AP enrolled grades 9-12': 'Los cursos “AP” (Cursos Avanzados) son clases más rigurosas con un exámen final. El porcentaje de estudiantes que toman los exámenes AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
         'Graduating seniors pursuing 4 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 4 años inmediatamente después de la escuela secundaria.'
         'Graduating seniors pursuing 2 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 2 años inmediatamente después de la escuela secundaria.'
         'Graduating seniors pursuing other college': 'Esto refleja el porcentaje de graduados de esta escuela secundaria que se inscribieron en programas universitarios distintos de una universidad de 2 o 4 años inmediatamente después de la escuela secundaria.'
