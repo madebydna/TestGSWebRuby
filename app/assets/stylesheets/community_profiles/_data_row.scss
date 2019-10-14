@@ -1,0 +1,28 @@
+.pie-chart{
+  .pie-chart-legend-container{
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #EEEEEE;
+    cursor: pointer;
+  }
+
+  .square{
+    width:12px;
+    flex-grow: 0;
+    flex-shrink: 0; 
+    height:12px;
+    margin-right: 5px;
+    display: inline-block;
+  }
+
+  .title{
+    font-size: 12px;
+    flex-grow: 2;
+  }
+
+  .value{
+    font-size: 12px;
+    flex-grow: 1;
+    text-align: right;
+  }
+}

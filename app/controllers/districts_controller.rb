@@ -12,7 +12,10 @@ class DistrictsController < ApplicationController
   before_action :redirect_to_canonical_url
 
   set_additional_js_translations(
-    teachers_staff: [:lib, :teachers_staff]
+    {
+      teachers_staff: [:lib, :teachers_staff],
+      finance: [:lib, :finance]
+    }
   )
 
   def show
@@ -33,6 +36,7 @@ class DistrictsController < ApplicationController
     @csa_module = csa_state_solr_query.present?
     @students = students.students_demographics
     @teachers_staff = teachers_staff_data
+    @finance = finance.data_values
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     gon.dependencies = {
         highcharts: ActionController::Base.helpers.asset_path('highcharts.js')
@@ -106,6 +110,10 @@ class DistrictsController < ApplicationController
 
   def teachers_staff_data
     @_teachers_staff_data ||= CommunityProfiles::TeachersStaff.new(district_cache_data_reader).data_values
+  end
+
+  def finance
+    @_finance ||= CommunityProfiles::Finance.new(district_cache_data_reader)
   end
 
   def largest_district_in_city?

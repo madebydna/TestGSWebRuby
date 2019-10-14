@@ -13989,6 +13989,16 @@
       "integrity": "sha1-k0EP0hsAlzUVH4howvJx80J+I/0=",
       "dev": true
     },
+    "highcharts": {
+      "version": "7.2.0",
+      "resolved": "https://registry.npmjs.org/highcharts/-/highcharts-7.2.0.tgz",
+      "integrity": "sha512-jOlMzj3oRuqNBoJg+rqHZI9vnlLHipwVfceJr00gAreXu8268UwahEh7yBGI/m1wa6Uc/XoBMIuzMpXUFMvFdg=="
+    },
+    "highcharts-react-official": {
+      "version": "2.2.2",
+      "resolved": "https://registry.npmjs.org/highcharts-react-official/-/highcharts-react-official-2.2.2.tgz",
+      "integrity": "sha512-Xj9JOOL20Vmbl8gjgF2jN89Fx5zqbonjaK6SqwiM4vCjC/ZwtwXEquk+LkymzIVcd4H9Wb/9ASKhBJn5fNtN4g=="
+    },
     "history": {
       "version": "4.7.2",
       "resolved": "https://registry.npmjs.org/history/-/history-4.7.2.tgz",

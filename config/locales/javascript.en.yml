@@ -293,6 +293,10 @@ en:
     english-learners-info-text: This group includes all students classified as English language learners.
     students-participating-in-free-or-reduced-price-lunch-program: Students from low-income families
     students-participating-in-free-or-reduced-price-lunch-program-info-text: The students from low-income families designation is based on the percentage of students at this school who are eligible for free or reduced-price lunch.
+    trillion: trillion
+    billion: billion
+    million: million
+    thousand: thousand
     Gender: Gender
     Male: Male
     Female: Female
@@ -352,7 +356,7 @@ en:
     general_information_tooltip: Here you can learn about this school’s hours, enrollment, sports, classes and more.
     General Information: General information
     profile_data_sources_and_info: 'GreatSchools profile data sources &amp; information'
-    district_data_sources_and_info: 'GreatSchools district data sources &amp; information'
+    district_data_sources_and_info: 'GreatSchools district data sources & information'
     subjects: Subjects
     rating_html: 'Rating&nbsp;'
     courses: courses
