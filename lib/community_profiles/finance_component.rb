@@ -7,7 +7,7 @@ module CommunityProfiles
     end
 
     def data_values
-      return {} unless @data_hash.present?
+      return [] unless @data_hash.present?
       @data_hash.map do |data_hash|
         accessor = CHAR_CACHE_ACCESSORS.find {|h| h[:key] == data_hash[:data_type]}
         next if accessor.nil?
