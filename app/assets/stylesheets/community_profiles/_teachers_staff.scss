@@ -94,6 +94,17 @@
     padding: 0 0 0 10px;
   }
 
+  .stacked-state-average {
+    text-align: right;
+    float: right;
+    font-size: 12px;
+    padding: 5px 10px 0 0;
+    color: #71787e;
+    @media (max-width: 544px){
+      padding: 0;
+    }
+  }
+
   @media (min-width: 992px){
     .ts-row-one-half-md {
       float: left;

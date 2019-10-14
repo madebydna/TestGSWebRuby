@@ -10,9 +10,9 @@ const PieChartDataRow = props => {
           {props.options.map((datum,idx) =>{
             return <div className='pie-chart-legend-container' key={datum.name} data-slice-id={`${idx}`} >
               <div className="square" style={{backgroundColor: datum.color}}/>
+              <span><QuestionMarkToolTip  content={datum.tooltip} className="tooltip" element_type="datatooltip" /></span>
               <span className='title'>
-                <span><QuestionMarkToolTip  content={datum.tooltip} className="tooltip" element_type="datatooltip" /></span>
-                &nbsp;{datum.name}
+                {datum.name}
               </span>
               <div className='value'>{`${datum.value}%`}</div>
             </div>

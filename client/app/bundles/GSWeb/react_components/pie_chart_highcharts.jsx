@@ -36,14 +36,21 @@ const PieChartHighcharts = ({options}) => {
         innerSize: 30,
         depth: 45,
         minSize: 130,
+        size: '75%',
         animation:{
           duration: 1000
         },
         dataLabels: {
           enabled: true,
           formatter: function(){
-            return Math.round(this.percentage) + '%'
-          }
+            return Math.round(this.percentage) + '%';
+          },
+          // style:{
+          //   color: 'black',
+          //   fontWeight: 'regular',
+          //   textOutline: 'none'
+          // },
+          distance: 10
         },
         showInLegend: false
       }
