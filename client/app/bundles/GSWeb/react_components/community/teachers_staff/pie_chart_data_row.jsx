@@ -15,12 +15,11 @@ const PieChartDataRow = props => {
               <div className='pie-chart-legend-container' 
                   key={datum.name} 
                   onMouseEnter={() => setSlicedIdx(idx)} 
-                  onMouseLeave={()=> setSlicedIdx(null)}
+                  onMouseLeave={() => setSlicedIdx(null)}
               >
                 <div className="square" style={{backgroundColor: datum.color}}/>
                 <span className='title'>
                   {datum.name}
-                  <span><QuestionMarkToolTip  content={datum.tooltip} className="tooltip" element_type="datatooltip" /></span>
                 </span>
                 <div className='value'>
                   <span>{`${datum.value}%`}</span><br/>

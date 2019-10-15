@@ -6,8 +6,17 @@ es:
       'parent_tip': "Las decisiones del distrito sobre cómo gastar dinero impactan la educación de tu hijo. <a href='gk/articles/taking-it-to-the-school-board/'>Así es como los padres pueden influir en estas decisiones.</a>"
       'RevenueSources': Fuentes de ingresos
       'ExpenditureSources': Gasto por categoría
-      'RevenueSources_tooltip': Este es un análisis de cuánto de los ingresos anuales totales de este distrito provienen de fuentes federales, estatales o locales, en comparación con los promedios estatales.
-      'ExpenditureSources_tooltip': Este es un análisis de los gastos del distrito por categorías relacionadas con la educación pre K-12 (instrucción, apoyo, otro) y otros gastos.
+      'RevenueSources_tooltip_html': >
+        Este es un análisis de cuánto de los ingresos anuales totales de este distrito provienen de fuentes federales, estatales o locales, en comparación con los promedios estatales.
+        <br/><br/><span style="font-weight:bold;">Federal:</span> Fondos del gobierno federal, que pueden incluir dinero para escuelas de Título 1, programas vocacionales y educación de tecnología, educación bilingüe y La Ley de Nutrición de Menores, y más.
+        <br/><br/><span style="font-weight:bold;">Del estado:</span> Fondos del estado, que pueden incluir dinero para la mejora del personal, educación especial, educación para estudiantes talentosos y excepcionalmente talentosos, educación bilingüe y vocacional, almuerzo escolar, transporte, y beneficios para empleados, y más.
+        <br/><br/><span style="font-weight:bold;">Local:</span> Fondos que provienen de fuentes locales, que pueden incluir dinero de organizaciones de padres como un PTA/PTO; impuestos locales a la propiedad, ventas o servicios públicos, y transporte, y más.
+      'ExpenditureSources_tooltip_html': >
+        Este es un análisis de los gastos del distrito por categorías relacionadas con la educación pre K-12 y otros gastos.
+        <br/><br/><span style="font-weight:bold;">Instrucción:</span> El porcentaje de gastos del distrito en instrucción pre K-12, incluyendo salarios de maestros y materiales para programas regulares, especiales y vocacionales durante el año escolar y la escuela de verano, y más.
+        <br/><br/><span style="font-weight:bold;">Servicios de apoyo:</span> El porcentaje de gastos del distrito en apoyos administrativos, técnicos y logísticos para educación pre K-12, incluyendo desarrollo profesional, consejeros, transporte, materiales, y más.
+        <br/><br/><span style="font-weight:bold;">Otros gastos de pre K-12:</span> El porcentaje de gastos del distrito para la educación pre K-12 fuera de los servicios de instrucción y apoyo.
+        <br/><br/><span style="font-weight:bold;">Otros gastos:</span> El porcentaje de gastos del distrito en programas que no forman parte de la educación pre K-12, incluyendo los servicios comunitarios, la educación de adultos, y en gastos de capital como edificios y carreteras.
       data_types:
         'Total Revenue': 'Ingresos totales del distrito'
         'Per Pupil Revenue': 'Promedio de ingresos del distrito por  estudiante'
