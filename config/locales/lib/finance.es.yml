@@ -16,7 +16,7 @@ es:
         <br/><br/><span style="font-weight:bold;">Instrucción:</span> El porcentaje de gastos del distrito en instrucción pre K-12, incluyendo salarios de maestros y materiales para programas regulares, especiales y vocacionales durante el año escolar y la escuela de verano, y más.
         <br/><br/><span style="font-weight:bold;">Servicios de apoyo:</span> El porcentaje de gastos del distrito en apoyos administrativos, técnicos y logísticos para educación pre K-12, incluyendo desarrollo profesional, consejeros, transporte, materiales, y más.
         <br/><br/><span style="font-weight:bold;">Otros gastos de pre K-12:</span> El porcentaje de gastos del distrito para la educación pre K-12 fuera de los servicios de instrucción y apoyo.
-        <br/><br/><span style="font-weight:bold;">Otros gastos:</span> El porcentaje de gastos del distrito en programas que no forman parte de la educación pre K-12, incluyendo los servicios comunitarios, la educación de adultos, y en gastos de capital como edificios y carreteras.
+        <br/><br/><span style="font-weight:bold;">Otros gastos:</span> El porcentaje de gastos del distrito, incluyendo los servicios comunitarios, la educación de adultos, y en gastos de capital como edificios y carreteras.
       data_types:
         'Total Revenue': 'Ingresos totales del distrito'
         'Per Pupil Revenue': 'Promedio de ingresos del distrito por  estudiante'
