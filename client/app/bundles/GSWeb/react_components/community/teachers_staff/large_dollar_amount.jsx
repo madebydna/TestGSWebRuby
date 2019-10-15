@@ -3,7 +3,7 @@ import { humanReadableNumber } from '../../../util/numbersToWord';
 
 const LargeDollarAmount = ({ value, state_value }) => (
   <React.Fragment>
-    <div className="rating-score-item__score ts-row-full-xs ts-row-one-half-md">
+    <div className="rating-score-item__score ts-row-one-third-xs ts-row-one-half-md">
       ${humanReadableNumber(value)}
     </div>
     <div className="stacked-state-average">

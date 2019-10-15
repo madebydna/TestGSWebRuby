@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-const PieChartHighcharts = ({options}) => {
-
-  const data = options.map((datum,idx) => (
-    {
+const PieChartHighcharts = ({ options, slicedIdx}) => {
+  const data = options.map((datum,idx) => {
+    let sliced;
+    if (idx === slicedIdx){
+      sliced = true;
+    }
+    
+    return {
       name: datum.name,
       y: datum.value,
       legendIndex: idx,
-      color: datum.color
+      color: datum.color,
+      sliced: sliced
     }
-  ));
+  });
+
+  useEffect(()=>{
+    setpieChartOptions(initialOptions)
+  }, [slicedIdx])
   
   const initialOptions = {
     chart: {
@@ -58,12 +67,14 @@ const PieChartHighcharts = ({options}) => {
     }]
   }
 
+  const [pieChartOptions, setpieChartOptions] = useState(initialOptions)
+
   return(
     <div className="col-xs-12 col-sm-7">
       <HighchartsReact
         highcharts={Highcharts}
         // highcharts={window.Highcharts}
-        options={initialOptions}
+        options={pieChartOptions}
       />
     </div>
   )
