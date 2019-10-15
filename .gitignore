@@ -66,3 +66,7 @@ client/.tmp/
 
 # Visual Studio Code
 .vscode
+
+# Large files
+lib/data_loading/sample_source_file.csv
+lib/etl/ray/*

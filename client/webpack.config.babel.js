@@ -131,7 +131,7 @@ const config = {
   plugins: [
     {
       apply(compiler) {
-        compiler.plugin('done', (stats, done) => {
+        compiler.hooks.done.tap('done', (stats) => {
           const assets = {};
           for (const chunkGroup of stats.compilation.chunkGroups) {
             if (chunkGroup.name) {
@@ -142,7 +142,7 @@ const config = {
               assets[chunkGroup.name] = files;
             }
           }
-
+        
           if (!process.env.ANALYZE) {
             fs.writeFile(
               path.resolve(
@@ -154,7 +154,11 @@ const config = {
                 assetsByChunkName: assets,
                 publicPath: stats.compilation.outputOptions.publicPath
               }),
-              done
+              (err) => {
+                if (err) throw 'Error writing file app/assets/webpack/webpack.stats.json: ' + err;
+                // success case, the file was saved
+                console.log('app/assets/webpack/webpack.stats.json saved successfully');
+              }
             );
           }
         });

@@ -11,4 +11,5 @@ RAILS_ENV=test coverage=false bundle exec rspec \
 --format RSpec::Core::Formatters::FailuresHtmlFormatter \
 --out ./tmp/spec_failures_html_report.html \
 --format RspecJunitFormatter \
+--out ./tmp/unit_test_results.xml
 "$@"

@@ -1,0 +1,58 @@
+pipeline {
+  agent {
+    label 'jenkins-slave-ondemand'
+  }
+  environment {
+    DB_USER = credentials('db-user')
+    DB_PASS = credentials('db-pass')
+    PATH = "$HOME/.rbenv/bin:$HOME/.rbenv/shims:$HOME/.rbenv/plugins/ruby-build/bin:$PATH:/usr/local/sbin"
+  }
+  stages {
+    stage('Pre-build') {
+      steps {
+        echo 'Test ...'
+        sh 'sudo /sbin/route del default'
+        sh 'sudo /sbin/route add default gw 192.168.111.81'
+        sh 'sudo /sbin/route add -net 172.16.0.0 netmask 255.240.0.0 gw 192.168.111.187'
+        sh 'sudo /sbin/route add -net 192.168.121.0 netmask 255.255.255.0  gw 192.168.111.187'
+        sh 'netstat -rn'
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'rbenv local'
+        sh 'bundle install --deployment --without development'
+        script {
+          def command = $/mysqldump -hqa-db1.greatschools.org -d -u${DB_USER} -p${DB_PASS} --databases gs_schooldb localized_profiles us_geo community api _ak _al _ar _az _ca _co \
+          _ct _dc _de _fl _ga _hi _ia _id _il _in _ks _ky _la _ma _md _me _mi _mn _mo _ms _mt _nc _nd _ne _nh _nj _nm _nv _ny _oh _ok _or _pa _ri _sc \
+          _sd _tn _tx _ut _va _vt _wa _wi _wv _wy | sed -e 's/\(.*DATABASE.*\)`\(.*\)`/\1`\2_test`/;s/\(.*USE \)`\(.*\)`/\1`\2_test`/' | mysql -f -uroot/$
+          sh(script: command)
+        }
+        script {
+          def command = $/mysqldump -hqa-warehouse.greatschools.org -d -u${DB_USER} -p${DB_PASS} --databases omni gsdata | sed -e 's/\(.*DATABASE.*\)`\(.*\)`/\1`\2_test`/;s/\(.*USE \)`\(.*\)`/\1`\2_test`/' | mysql -f -uroot/$
+          sh(script: command)
+        }
+        sh 'mkdir -p app/assets/webpack'
+        sh 'rm -f app/assets/webpack/*'
+        sh 'npm install'
+        sh 'npm run build:production'
+      }
+    }
+    stage('Unit tests') {
+      steps {
+        sh './script/ci/run_unit_specs.sh'
+      }
+    }
+    stage('Feature tests') {
+      steps {
+        sh './script/ci/run_feature_specs.sh'
+      }
+    }
+  }
+  post { 
+    always { 
+      junit testResults: 'tmp/*.xml'
+      cleanWs()
+   }
+  }
+}
