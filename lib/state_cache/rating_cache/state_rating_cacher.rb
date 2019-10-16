@@ -40,17 +40,20 @@ class StateRatingCacher < StateCacher
   #
 
   def build_hash_for_cache
-    s = summary_rating&.first
-    if s&.date_valid
-      description = s.description.present? ? s.description : SUMMARY_DESCRIPTION
-      result_to_hash(s.date_valid.year, description, SUMMARY_RATING_NAME)
-    else
+    rating_type_id = Omni::DataSet.ratings_type_id(state)
+    if rating_type_id == SUMMARY_RATING_DATA_TYPE_ID
+      s = summary_rating&.first
+      if s&.date_valid
+        description = s.description.present? ? s.description : SUMMARY_DESCRIPTION
+        result_to_hash(s.date_valid&.year, description, SUMMARY_RATING_NAME)
+      end
+    elsif rating_type_id == TEST_SCORES_RATING_DATA_TYPE_ID
       tr = test_rating&.first
       if tr&.date_valid
-        result_to_hash(tr.date_valid.year, tr.description, TEST_SCORES_RATING_NAME)
-      else
-        {}
+        result_to_hash(tr.date_valid&.year, tr&.description, TEST_SCORES_RATING_NAME)
       end
+    else
+      {}
     end
   end
 
