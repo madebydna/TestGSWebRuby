@@ -50,13 +50,13 @@ module NumberToWord
   def self.denomination(value)
     case
     when value.length > 12
-      return 'trillion'
+      return I18n.t('trillion', scope: 'modules.number_to_word')
     when value.length > 9
-      return 'billion'
+      return I18n.t('billion', scope: 'modules.number_to_word')
     when value.length > 6
-      return 'million'
+      return I18n.t('million', scope: 'modules.number_to_word')
     when value.length > 3
-      return 'thousand'
+      return I18n.t('thousand', scope: 'modules.number_to_word')
     else
       return ''
     end
