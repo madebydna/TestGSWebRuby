@@ -7,16 +7,16 @@ en:
       'RevenueSources': Revenue sources
       'ExpenditureSources': Spending by category
       'RevenueSources_tooltip_html': >
-        This is a breakdown of how much of this district’s total annual funds came from federal, state, or local sources, compared to state averages.
-        <br/><br/><span style="font-weight:bold;">Federal:</span> Funds from the federal government, which can include money for Title 1 schools, vocational and tech education, bilingual education, and the Child Nutrition Act, and more.
-        <br/><br/><span style="font-weight:bold;">State:</span> Funds from the state government, which can include money for staff improvement, special education, gifted and talented, bilingual, and vocational education, school lunch, transportation, and employee benefits, and more.
-        <br/><br/><span style="font-weight:bold;">Local:</span> Funds from local sources, which can include money from parent organizations like a PTA/PTO; local property, sales, or utility taxes, and transportation, and more.
+        This is a breakdown of how much of this district’s total annual funds came from federal, state, or local sources, compared to state averages:
+        <br/><br/><span class="emphasis">Federal:</span> Funds from the federal government, which can include money for Title 1 schools, vocational and tech education, bilingual education, and the Child Nutrition Act, and more.
+        <br/><br/><span class="emphasis">State:</span> Funds from the state government, which can include money for staff improvement, special education, gifted and talented, bilingual, and vocational education, school lunch, transportation, and employee benefits, and more.
+        <br/><br/><span class="emphasis">Local:</span> Funds from local sources, which can include money from parent organizations like a PTA/PTO; local property, sales, or utility taxes, and transportation, and more.
       'ExpenditureSources_tooltip_html': >
-        This is a breakdown of annual district spending on preK-12 education and other categories
-        <br/><br/><span style="font-weight:bold;">Instruction:</span> The % of district spending on preK-12 instruction, including teacher salaries and materials for regular, special, and vocational programs during the school year and summer, and more.
-        <br/><br/><span style="font-weight:bold;">Support services:</span> The % of district spending on administrative, technical, and logistical supports for preK-12 education, including professional development, counselors, transportation, materials, and more.
-        <br/><br/><span style="font-weight:bold;">Other preK-12 spending:</span> The % of district spending on preK-12 expenditures outside of instruction and support services.
-        <br/><br/><span style="font-weight:bold;">Other spending:</span> The % of other district spending, including community services, adult education, and capital expenditures like buildings and roads.
+        This is a breakdown of annual district spending on preK-12 education and other categories:
+        <br/><br/><span class="emphasis">Instruction:</span> Spending on preK-12 instruction, including teacher salaries and materials for regular, special, and vocational programs during the school year and summer, and more.
+        <br/><br/><span class="emphasis">Support services:</span> Spending on administrative support for preK-12 education, including professional development, counselors, transportation, materials, and more.
+        <br/><br/><span class="emphasis">Other preK-12 spending:</span> Spending on preK-12 spending outside of instruction and support services.
+        <br/><br/><span class="emphasis">Other spending:</span> Other spending, including community services, adult education, and spending on things like buildings and roads.
       data_types:
         'Total Revenue': 'Total district revenue'
         'Per Pupil Revenue': 'Average revenue per student'

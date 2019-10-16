@@ -53,7 +53,7 @@ module CommunityProfiles::FinanceConfig
   CHAR_CACHE_ACCESSORS = [
     {
       key: TOTAL_REVENUE,
-      formatting:  [:to_f, :round],
+      formatting:  [:to_f, :round, :number_to_word],
       type: 'large_dollar_amt'
     },
     {
@@ -78,7 +78,7 @@ module CommunityProfiles::FinanceConfig
     },
     {
       key: TOTAL_EXPENDITURES,
-      formatting:  [:to_f, :round],
+      formatting:  [:to_f, :round, :number_to_word],
       type: 'large_dollar_amt'
     },
     {

@@ -32,6 +32,10 @@ module SchoolProfiles
       def self.dollars(value)
         ActiveSupport::NumberHelper.number_to_currency(value, precision:0)
       end
+
+      def self.number_to_word(value)
+        ::NumberToWord.human_readable_number(value)
+      end
     end
 
     attr_reader :value
