@@ -65,6 +65,11 @@
       .mobile-address {
         padding-top: 10px;
         display: block;
+        .badge-and-content{
+          .content{
+            white-space: pre-wrap;
+          }
+        }
       }
     }
     .vertical-items {
