@@ -50,7 +50,7 @@ class StateRatingCacher < StateCacher
     elsif rating_type_id == TEST_SCORES_RATING_DATA_TYPE_ID
       tr = test_rating&.first
       if tr&.date_valid
-        result_to_hash(tr.date_valid&.year, tr&.description, TEST_SCORES_RATING_NAME)
+        result_to_hash(tr.date_valid&.year, tr.description, TEST_SCORES_RATING_NAME)
       end
     else
       {}
