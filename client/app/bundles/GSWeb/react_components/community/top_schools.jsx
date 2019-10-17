@@ -12,9 +12,9 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
     return (
       <div className="grade-filter">
         <span className="button-group">
-          <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
-          <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} />
-          <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} />
+          <a onClick={() => handleGradeLevel("e")} className={levelCodes === "e" ? "active" : ''}>{t("Elementary")}</a>
+          <a onClick={() => handleGradeLevel("m")} className={levelCodes === "m" ? "active" : ''}>{t("Middle")}</a>
+          <a onClick={() => handleGradeLevel("h")} className={levelCodes === "h" ? "active" : ''}>{t("High")}</a>
         </span>
       </div>
     )
