@@ -375,7 +375,7 @@ $line-height-community: 1.428571429;
     @include flex-justify-center;
     .button-group {
       @include button-group;
-      button.active{
+      button.active, a.active {
         background-color: $school-color;
         border: 1px solid $form-field-border-color;
       }
@@ -416,6 +416,10 @@ $line-height-community: 1.428571429;
           }
         }
       }
+    }
+
+    .school-list-item.hide-school {
+      display: none;
     }
   }
 
