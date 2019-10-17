@@ -82,7 +82,7 @@ module Feeds
         test_arr << scale ? scale : nil
         test_arr << most_recent_year ? most_recent_year : nil
         test_arr << description ? description : nil
-        test_arr << @data_reader.state ? @data_reader.state  : nil
+        test_arr << @data_reader.state ? @data_reader.state&.upcase  : nil
         @data_for_test_description_file << test_arr
       end
 
@@ -131,7 +131,7 @@ module Feeds
         test_arr << h['score'] ? h['score'] : nil
         test_arr << h['proficiency-band-name'] ? h['proficiency-band-name'] : nil
         test_arr << h['number-tested'] ? h['number-tested'] : nil
-        test_arr << @data_reader.state ? @data_reader.state : nil
+        test_arr << @data_reader.state ? @data_reader.state&.upcase : nil
         test_arr
       end
 

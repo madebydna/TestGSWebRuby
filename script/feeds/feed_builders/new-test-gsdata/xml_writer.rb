@@ -31,7 +31,7 @@ module Feeds
             xml_builder.tag!('scale', hash['scale'])
             xml_builder.tag!('most-recent-year', hash['most-recent-year'])
             xml_builder.tag!('description', hash['description'])
-            xml_builder.tag!('state-abbrv', @data_reader.state)
+            xml_builder.tag!('state-abbrv', @data_reader.state&.upcase)
             write_state_info(test_name)
             write_district_info(test_name)
             write_school_info(test_name)
