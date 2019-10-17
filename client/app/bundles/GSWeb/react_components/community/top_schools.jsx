@@ -9,7 +9,7 @@ import { SM } from 'util/viewport';
 
 const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
   if (community === 'city') {
-    return(
+    return (
       <div className="grade-filter">
         <span className="button-group">
           <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
@@ -18,13 +18,13 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
         </span>
       </div>
     )
-  }else{
+  } else {
     return (
       <div className="grade-filter">
         <span className="button-group">
-          {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
-          {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
-          {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
+          {schoolLevels.elementary !== 0 ? <a onClick={() => handleGradeLevel("e")} className={levelCodes === "e" ? "active" : ''}>{t("Elementary")}</a> : null}
+          {schoolLevels.middle !== 0 ? <a onClick={() => handleGradeLevel("m")} className={levelCodes === "m" ? "active" : ''}>{t("Middle")}</a> : null}
+          {schoolLevels.high !== 0 ? <a onClick={() => handleGradeLevel("h")} className={levelCodes === "h" ? "active" : ''}>{t("High")}</a> : null}
         </span>
       </div>
     )
@@ -51,6 +51,44 @@ const browseLink = (link, levelCodes, community, size) => {
   return addQueryParamToUrl('gradeLevels', levelCodes, searchLink);
 }
 
+const assignDisplayType = (schools, levelCodes, size) => {
+  let displayedSchools = [];
+
+  displayedSchools.push(
+    schools.elementary.map(school => (
+      <TopSchoolTableRow
+        key={school.state + school.id}
+        {...school}
+        size={size}
+        display={levelCodes === 'e' ? true : false}
+      />
+    ))
+  )
+
+  displayedSchools.push(
+    schools.middle.map(school => (
+      <TopSchoolTableRow
+        key={school.state + school.id}
+        {...school}
+        size={size}
+        display={levelCodes === 'm' ? true : false}
+      />
+    ))
+  )
+
+  displayedSchools.push(
+    schools.high.map(school => (
+      <TopSchoolTableRow
+        key={school.state + school.id}
+        {...school}
+        size={size}
+        display={levelCodes === 'h' ? true : false}
+      />
+    ))
+  )
+  return displayedSchools;
+}
+
 const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, levelCodes, community, schoolLevels, locality }) => {
   let name = regionName(locality, community);
 
@@ -73,13 +111,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
                   </section>;
   } else {
     schoolList = <section className="top-school-list">
-          {schools.map(school => (
-            <TopSchoolTableRow
-              key={school.state + school.id}
-              {...school}
-              size={size}
-            />
-          ))}
+          {assignDisplayType(schools, levelCodes, size)}
         </section>;
   }
   
@@ -108,14 +140,14 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
 }
 
 TopSchools.propTypes = {
-  schools: PropTypes.arrayOf(PropTypes.shape(School.propTypes)).isRequired,
+  schools: PropTypes.object,
   handleGradeLevel: PropTypes.func,
   isLoading: PropTypes.bool,
   levelCodes: PropTypes.string
 };
 
 TopSchools.defaultProps = {
-  schools: [],
+  schools: {},
   handleGradeLevel: null,
   levelCodes: 'e'
 };
