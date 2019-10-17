@@ -13,8 +13,8 @@ module NumberToWord
     validNumbers = /^[0-9]+$/
     number_set = value.to_s.split(delimiter)
 
-    return number_set.first if number_set.length < 2 && validNumbers.match(number_set[0])
-    nil
+    return number_set.first if number_set.length < 3 && validNumbers.match(number_set[0])
+    raise(ArgumentError, "#{value} is not a valid number")
   end
 
   def self.convert_number(number)
@@ -29,7 +29,6 @@ module NumberToWord
       truncated = number[0...num_length - 9]
       fraction = number[truncated.length]
     when num_length > 6
-
       truncated = number[0...num_length - 6]
       fraction = number[truncated.length]
     when num_length > 3
