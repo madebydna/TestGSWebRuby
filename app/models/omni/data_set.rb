@@ -25,6 +25,16 @@ module Omni
       joins(:data_type_tags).where(data_type_tags: {active: true, tag: tag_name})
     end
 
+    def self.max_year_for_data_type_id(data_type_id)
+      date = max_date_for_data_type_id(data_type_id)
+      return unless date
+      date.year
+    end
+
+    def self.max_date_for_data_type_id(data_type_id)
+      where(data_type_id: data_type_id).maximum('date_valid')
+    end
+
     def self.ratings_type_id(state)
       rating_type = "select case when cnt = 1 then 155 else 160 end as data_type from
                   (select ds.state, count(*) cnt from data_sets ds
