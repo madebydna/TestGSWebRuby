@@ -6,7 +6,7 @@ en:
       title: College readiness
       tooltip_html: >
         <p>This rating shows how well students at this school are prepared for college compared to students at other
-        schools in this state, based on key measures, like graduation rates, college entrance tests and AP coursework
+        schools in this state, based on key measures, like graduation rates, college entrance tests and advanced coursework
         when available.</p><p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this
         rating.</a></p>
       subtitle_html: Learn more about how to help your child graduate ready for college. <a href="/gk/articles/jump-start-college-planning/" target="_blank">See how.</a>
@@ -17,6 +17,228 @@ en:
       historical:
         title: Past GreatSchools College Readiness Ratings
         subtitle: This chart shows how this school's GreatSchools College Readiness Rating has changed over time.
+      and: and
+      state: state
+      district: district
+      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and advanced coursework when available.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
+      sources_title: 'GreatSchools profile data sources &amp; information'
+      'GreatSchools Rating': 'GreatSchools College Readiness Rating'
+      'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
+      scoped_info_text: "<p style='font-family:opensans-semibold'>Are graduates from this %{entity} prepared to succeed in college? This section looks at important signs of college readiness.</p>
+      <p>See the schools in this state that won a <a href='/gk/csa-winners/' target='_blank'>College Success Award</a> for excellence in preparing students for college.</p>"
+      # DATA TYPE LABELS
+      4-year high school graduation rate: '4-year high school graduation rate'
+      Percent of students who meet UC/CSU entrance requirements: 'Percentage of graduates who meet UC/CSU entrance requirements'
+      Average SAT score: 'Average SAT score'
+      SAT percent participation: 'SAT participation rate'
+      Percentage SAT/ACT participation grades 11-12: 'SAT/ACT participation rate'
+      Percent of Students who Participated in the SAT/ACT in grades 9-12: 'SAT/ACT participation rate'
+      Average ACT score: 'Average ACT score'
+      ACT participation: 'ACT participation rate'
+      SAT percent college ready: 'SAT college readiness rate'
+      ACT percent college ready: 'ACT college readiness rate'
+      Percentage AP enrolled grades 9-12: 'AP course participation'
+      Percentage of students passing 1 or more AP exams grades 9-12: 'Percentage of students passing 1 or more AP exams grades 9-12'
+      Percentage of students enrolled in Dual Enrollment classes grade 9-12: 'Percentage of students enrolled in Dual Enrollment classes grades 9-12'
+      Percentage of students enrolled in IB grades 9-12: 'Percentage of students enrolled in IB grades 9-12'
+      faq:
+        cta: Notice something missing or confusing?
+        content_html: >
+          <p>College readiness information comes from state or national education agencies (click on the "Sources" link for details).</p>
+          <p>When information is missing in our display, it's most likely because this school did not offer an AP course, IB or dual enrollment classes, or participate in one of the two college readiness tests, the ACT or SAT (some states mandate which college readiness test schools use). It's also possible that the missing data was not included in the data we received from the state.</p>
+          <p>Did you find the information about college readiness useful? What can we do better? <a href="https://s.qualaroo.com/45194/34aea707-ec71-4130-b6bb-2864e0528c64" target="_blank">Share your feedback.</a></p>
+          <p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this rating.</a></p>
+          <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page.</a></p>
+      'Graduating seniors pursuing 4 year college/university': 'Graduates pursuing 4-year college'
+      'Graduating seniors pursuing 2 year college/university': 'Graduates pursuing 2-year college'
+      'Graduating seniors pursuing other college': 'Graduates pursuing other college programs'
+      'Percent Enrolled in College Immediately Following High School': 'Graduates pursuing college'
+      'Percent Needing Remediation for College': 'Graduates needing remediation in college'
+      'Graduates needing English remediation in college': 'Graduates needing English remediation in college'
+      'Graduates needing Math remediation in college': 'Graduates needing Math remediation in college'
+      'Graduates needing Science remediation in college': 'Graduates needing Science remediation in college'
+      'Graduates needing Reading remediation in college': 'Graduates needing Reading remediation in college'
+      'Graduates needing Writing remediation in college': 'Graduates needing Writing remediation in college'
+      'Percent Enrolled in College and Returned for a Second Year': 'Graduates who returned to college for a second year'
+      'Percent enrolled in any institution of higher learning in the last 0-16 months': 'Graduates pursuing college or vocational program'
+      'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': Graduates pursuing public college or vocational program
+      'Percent enrolled in any postsecondary institution within 12 months after graduation': Graduates pursuing college or vocational program
+      'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation': Graduates pursuing 2-year college or vocational program
+      'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation': Graduates pursuing 2-year college or vocational program
+      'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation': Graduates pursuing public 2-year college or vocational program
+      'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation': Graduates pursuing 4-year college or vocational program
+      'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation': Graduates pursuing 4-year college or vocational program
+      'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation': Graduates pursuing in-state public 4-year college or vocational program
+      'Percent enrolled in any in-state postsecondary institution within 12 months after graduation': Graduates pursuing in-state college or vocational program
+      'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation': Graduates pursuing in-state college or vocational program
+      'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation': Graduates pursuing out-of-state college or vocational program
+      'Percent enrolled in any postsecondary institution within 24 months after graduation': Graduates pursuing college or vocational program
+      'Percent enrolled in any postsecondary institution within 6 months after graduation': Graduates pursuing college or vocational program
+      'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Graduates pursuing college or vocational program
+      'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': Graduates pursuing in-state public college or vocational program
+      'Percent Enrolled in a public 4 year college and Returned for a Second Year': Graduates who returned to public 4-year college for a second year
+      'Percent Enrolled in a public 2 year college and Returned for a Second Year': Graduates who returned to public 2-year college for a second year
+      'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'Graduates pursuing 2-year college or vocational program'
+      'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Graduates pursuing 4-year college or vocational program'
+      'Percent of students who will attend out-of-state colleges': 'Graduates pursuing out-of-state college'
+      'Percent of students who will attend in-state colleges': 'Graduates pursuing in-state college'
+      csa_badge_html: >
+        This school has earned a <span style='font-family:opensans-semibold'>%{blurb} College Success Award</span> based on its success in preparing students for college and ultimately career. <a href=%{csa_state_link}>See more winners</a>.
+      data_point_info_texts:
+        4-year high school graduation rate: 'Graduation rates reflect how many students graduate from this school on time.'
+        Percent of students who meet UC/CSU entrance requirements: >
+          This is the percentage of graduates from this school who got a "C" or higher in the A-G courses required for
+          eligibility at University of California and California State University schools.
+          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a>.
+        Average SAT score: 'The SAT is a college admissions test which in 2015 had a total of 2400 possible points. This score reflects the average SAT score for students at this school. In 2016 the SAT changed to a 1600 point scale. Check back soon for updated information for this school.'
+        Average SAT score_new: 'The SAT is a college admissions test which has a total of 1600 possible points. This score reflects the average SAT score for students at this school.'
+        SAT percent participation: 'The SAT participation rate reflects the percentage of eligible students at this school who took the SAT.'
+        Percentage SAT/ACT participation grades 11-12: 'The SAT/ACT participation rate shows the percentage of eligible students in grades 11 or 12 at this school who took the SAT or ACT.'
+        Percent of Students who Participated in the SAT/ACT in grades 9-12: 'The SAT/ACT participation rate shows the percentage of eligible students at this school who took the SAT or ACT.'
+        Average ACT score: 'The ACT is a college admissions test with a total of 36 possible points. This score reflects the average ACT score for students at this school.'
+        ACT participation: 'The ACT participation rate shows the percentage of eligible students at this school who took the ACT.'
+        SAT percent college ready: 'The SAT college readiness rate reflects the minimum score needed on an SAT subject test to indicate about a 75 percent chance of obtaining a "C" or higher in the corresponding credit-bearing college course. The benchmarks are set based on national-level data.'
+        ACT percent college ready: 'The ACT college readiness rate reflects the minimum score needed on an ACT subject-area test to indicate about a 75 percent chance of obtaining a "C" or higher in the corresponding credit-bearing college course. The benchmarks are set based on national-level data.'
+        Percentage AP enrolled grades 9-12: 'Advanced Placement classes are college-level courses students can take in high school. The percentage of students taking AP classes may reflect whether the school culture is focused on college.'
+        AP Course Participation: 'Advanced Placement classes are college-level courses students can take in high school. The percentage of students taking AP classes may reflect whether the school culture is focused on college.'
+        Percentage of students passing 1 or more AP exams grades 9-12: 'The AP exam pass rate reflects how many students at this school earned a passing score on at least one AP exam. Students who do well on AP exams (passing with a score of 3, 4, or 5) may receive college credit.'
+        Percentage of students enrolled in Dual Enrollment classes grade 9-12: 'The Dual Enrollment participation rate reflects the percentage of students at this school who are taking college courses while in high school. Credits for these courses apply both to high school diploma requirements and college graduation requisites.'
+        Percentage of students enrolled in IB grades 9-12: >
+          International Baccalaureate (IB) is an internationally recognized, high-standards program that emphasizes creative
+          and critical thinking. A high school may have specific IB classes students can take, or a school-wide IB program
+          that affects all classes. Some colleges give college credit for IB courses.
+          <a href='/gk/articles/what-is-ib-international-baccalaureate/' target='_blank'>More about IB</a>
+        'Graduating seniors pursuing 4 year college/university': 'This reflects the percentage of graduates from this school who enrolled in a 4-year college or university immediately following high school.'
+        'Graduating seniors pursuing 2 year college/university': 'This reflects the percentage of graduates from this school who enrolled in a 2-year college or university immediately following high school.'
+        'Graduating seniors pursuing other college': 'This reflects the percentage of graduates from this high school who enrolled in college programs other than a 2-or-4-year college or university immediately following high school.'
+        'Percent Enrolled in College Immediately Following High School': 'This reflects the percentage of graduates from this school who enrolled in college immediately following high school.'
+        'Percent Needing Remediation for College': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - classes, which do not count towards a degree, in college.'
+        'Graduates needing English remediation in college': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - English classes in college, which do not count towards a degree.'
+        'Graduates needing Math remediation in college': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Math classes in college, which do not count towards a degree.'
+        'Graduates needing Science remediation in college': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Science classes in college, which do not count towards a degree.'
+        'Graduates needing Reading remediation in college': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Reading classes in college, which do not count towards a degree.'
+        'Graduates needing Writing remediation in college': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Writing classes in college, which do not count towards a degree.'
+        'Percent Enrolled in College and Returned for a Second Year': 'This reflects the percentage of graduates from this school who completed their first year of college and returned for a second year.'
+        'Percent enrolled in any institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 16 months of graduation.'
+        'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning within 12 months of graduation.
+        'Percent enrolled in any postsecondary institution within 12 months after graduation': This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 12 months of graduation.
+        'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation': This reflects the percentage of graduates from this school who enrolled in any 2-year institution of higher learning within 6 months of graduation.
+        'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any 2-year institution of higher learning immediately following high school.
+        'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any 2-year public in-state institution of higher learning immediately following high school.
+        'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation': This reflects the percentage of graduates from this school who enrolled in a 4-year institution of higher learning within 6 months of graduation.
+        'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation': This reflects the percentage of  graduates from this school who enrolled in any 4-year institution of higher learning immediately following high school.
+        'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of  graduates from this school who enrolled in any in-state public 4-year institution of higher learning immediately following high school.
+        'Percent enrolled in any in-state postsecondary institution within 12 months after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state institution of higher learning within 12 months of graduation.
+        'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state institution of higher learning immediately following high school.
+        'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any out-of-state institution of higher learning immediately following high school.
+        'Percent enrolled in any postsecondary institution within 24 months after graduation': This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 24 months of graduation.
+        'Percent enrolled in any postsecondary institution within 6 months after graduation': This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 6 months of graduation.
+        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning, or who intend to enroll in any out-of-state institution or in-state private institution within 18 months of graduation.
+        'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning immediately following high school.
+        'Percent Enrolled in a public 4 year college and Returned for a Second Year': This reflects the percentage of graduates from this school who completed their first year in a public 4-year college and returned for a second year.
+        'Percent Enrolled in a public 2 year college and Returned for a Second Year': This reflects the percentage of graduates from this school who completed their first year in a public 2-year college and returned for a second year.
+        'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in a 2-year institution of higher learning within 16 months of graduation.'
+        'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in a 4-year institution of higher learning within 16 months of graduation.'
+        'Percent of students who will attend out-of-state colleges': 'This reflects the percentage of graduates from this school who are enrolled in out-of-state colleges or universities.'
+        'Percent of students who will attend in-state colleges': 'This reflects the percentage of graduates from this school who are enrolled in in-state colleges or universities.'
+      narration:
+        college_success:
+          average: <span class="emphasis">about average</span>
+          above_average: <span class="emphasis">above average</span>
+          below_average: <span class="emphasis">below average</span>
+          about: <span class="emphasis">about average</span>
+          higher: <span class="emphasis">higher</span>
+          lower: <span class="emphasis">lower</span>
+          intro: >
+            <div class="auto-narration"><span class="content">Compared to state averages, students who graduate from this school have: </span>
+            <ul>
+          district_intro: >
+            <div class="auto-narration"><span class="content">Compared to state averages, students who graduate from this district have: </span>
+            <ul>
+          outro: </ul>%{end_more}</div>
+          'Percent Enrolled in College Immediately Following High School': college enrollment rates
+          'Percent enrolled in any institution of higher learning in the last 0-16 months': college enrollment rates
+          'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': enrollment rates in 4-year college
+          'Graduating seniors pursuing 4 year college/university': enrollment rates in 4-year college
+          'Percent of students who will attend out-of-state colleges': out-of-state college enrollment rates
+          'Percent of students who will attend in-state colleges': in-state college enrollment rates
+          'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': enrollment rates in 2-year college
+          'Graduating seniors pursuing 2 year college/university': enrollment rates in 2-year college
+          'Graduating seniors pursuing other college': enrollment rates in other college programs
+          'Percent Enrolled in College and Returned for a Second Year': rates of return for a second year of college
+          'Percent Needing Remediation for College': percentages of students who must take remedial classes before starting college coursework
+          'Graduates needing Reading remediation in college': percentages of students who must take remedial reading classes before starting college coursework
+          'Graduates needing Writing remediation in college': percentages of students who must take remedial writing classes before starting college coursework
+          'Graduates needing English remediation in college': percentages of students who must take remedial English classes before starting college coursework
+          'Graduates needing Science remediation in college': percentages of students who must take remedial science classes before starting college coursework
+          'Graduates needing Math remediation in college': percentages of students who must take remedial math classes before starting college coursework
+        _1_html: >
+          <div class="auto-narration">
+          <h3 class="negative">Very concerning:</h3>
+          <p>This school is <span class="emphasis">far below</span> the state average in key measures of college and career readiness.</p>
+          <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          </div>
+        _2_html: >
+          <div class="auto-narration">
+          <h3 class="negative">A worrisome sign:</h3>
+          <p>This school is <span class="emphasis">below</span> the state average in key measures of college and career readiness.</p>
+          <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          </div>
+        _3_html: >
+          <div class="auto-narration">
+          <h3 class="neutral">Worth a deeper look:</h3>
+          <p>This school is <span class="emphasis">about the same as</span> the state average in key measures of college and career readiness, but depending on the state,
+          average can mean only a minority of students are ready for college and career.</p>
+          <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating
+          without the coursework and test scores they need to succeed.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          </div>
+        _4_html: >
+          <div class="auto-narration">
+          <h3 class="positive">A promising sign:</h3>
+          <p>This school is <span class="emphasis">above</span> the state average in key measures of college and career readiness. </p>
+          <p>Even at schools with strong college and career readiness, there may be students who are not getting
+          the opportunities they need to succeed.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          </div>
+        _5_html: >
+          <div class="auto-narration">
+          <h3 class="positive">Good news!</h3>
+          <p>This school is <span class="emphasis">far above</span> the state average in key measures of college and career readiness.</p>
+          <p>Even at schools with strong college and career readiness, there may be students who are not getting
+          the opportunities they need to succeed.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          </div>
+        _college_success: >
+          <div class="auto-narration">
+          <p>Are graduates from this school prepared to succeed in college? This section looks at important signs of college readiness.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Students who are unprepared for college-level work may find themselves in <a href="/gk/articles/high-achiever-remedial-college/">costly remedial classes</a>
+          and are more likely to <a href="/gk/articles/dropping-out-of-college-record-numbers/">drop out of college</a>.
+          Use this data to start a conversation with someone in your community about how essential it is that high schools prepare students for success after graduation.</p>
+          </div>
+        _parent_tip_html: >
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
     college_success:
       title: College success
       subtitle_html: >

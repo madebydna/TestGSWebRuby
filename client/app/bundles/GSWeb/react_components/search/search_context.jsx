@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { find as findSchools, addSchool, deleteSchool, logSchool } from 'api_clients/schools';
+import { legacyUrlEncode } from 'util/uri';
 import { showAdByName as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
@@ -288,8 +289,8 @@ class SearchProvider extends React.Component {
   // school finder methods, based on obj state
   propsForFindSchools(props) {
     const csaYear = getCsaYears() ? parseInt(getCsaYears()[0]) : (props.csaYears ? props.csaYears[0] : null)
-    const district = props.district ? props.district.replace(/-/g, '_').replace(/ /g, '-').toLowerCase() : null;
-    const city = props.city ? props.city.replace(/-/g, '_').replace(/ /g, '-').toLowerCase() : null;
+    const district = props.district ? legacyUrlEncode(props.district) : null;
+    const city = props.city ? legacyUrlEncode(props.city) : null;
     return {
       city: city,
       district: district,

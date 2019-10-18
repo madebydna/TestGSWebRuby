@@ -14,7 +14,8 @@ class DistrictLayout extends React.Component {
     breadcrumbs: PropTypes.element,
     heroData: PropTypes.object,
     shouldDisplayReviews: PropTypes.bool,
-    hasStudentDemographicData: PropTypes.bool
+    hasStudentDemographicData: PropTypes.bool,
+    shouldDisplayDistrictReview: PropTypes.bool
   };
 
   constructor(props) {
@@ -77,6 +78,14 @@ class DistrictLayout extends React.Component {
       <div id="calendar" className="module-section">
         <h2 className="modules-title">{t('district_calendar')}</h2>
         {this.props.calendar}
+      </div>
+    )
+  }
+
+  renderFinance() {
+    return (this.props.shouldDisplayDistrictReview && 
+      <div id="finance" className="module-section">
+        {this.props.finance}
       </div>
     )
   }
@@ -224,6 +233,7 @@ class DistrictLayout extends React.Component {
             {this.renderStudentsModule()}
             {this.renderTeachersStaffModule()}
             {this.renderCalendar()}
+            {this.renderFinance()}
             {this.renderMobility()}
             {this.renderZillow()}
             {this.renderReviews()}

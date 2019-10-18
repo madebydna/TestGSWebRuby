@@ -12,6 +12,7 @@ import CsaInfo from './csa_info';
 import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import Calendar from "./calendar";
+import Finance from './finance';
 import Students from "./students";
 import StemCourses from "../school_profiles/stem_courses";
 import TeachersStaff from "./teachers_staff";
@@ -21,7 +22,7 @@ import Toc from "./toc";
 import { schoolsTocItem, academicsTocItem, ACADEMICS, advancedCoursesTocItem, STUDENTS, 
   studentsTocItem, calendarTocItem, communityResourcesTocItem, 
   nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS,
-  teachersStaffTocItem, TEACHERS_STAFF} from './toc_config';
+  teachersStaffTocItem, TEACHERS_STAFF, financeTocItem, FINANCE} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
@@ -34,6 +35,7 @@ class District extends React.Component {
     schools_data: {},
     breadcrumbs: [],
     reviews: [],
+    finance: [],
     csa_module: false
   };
 
@@ -50,7 +52,19 @@ class District extends React.Component {
     locality: PropTypes.object,
     heroData: PropTypes.object,
     academics: PropTypes.object,
-    students: PropTypes.object
+    students: PropTypes.object,
+    finance: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        source: PropTypes.shape({
+          name: PropTypes.string,
+          description: PropTypes.string,
+          source_and_year: PropTypes.string
+        }),
+        tooltip: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired
+      })
+    )
   };
 
   constructor(props) {
@@ -135,11 +149,12 @@ class District extends React.Component {
   }
 
   selectTocItems(){
-    let districtTocItems = [schoolsTocItem, academicsTocItem, advancedCoursesTocItem, teachersStaffTocItem, studentsTocItem, calendarTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
+    let districtTocItems = [schoolsTocItem, academicsTocItem, advancedCoursesTocItem, studentsTocItem, teachersStaffTocItem, calendarTocItem, financeTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());
     districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === TEACHERS_STAFF && !this.hasTeachersStaffData());
+    districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === FINANCE && this.props.finance.length === 0);
     return districtTocItems;
   }
 
@@ -152,6 +167,7 @@ class District extends React.Component {
         schoolCounts={this.props.schools_data.counts}
         shouldDisplayReviews={this.props.reviews.length > 0}
         hasStudentDemographicData = {this.hasStudentDemographicData()}
+        shouldDisplayDistrictReview={this.props.finance.length > 0}
         translations={this.props.translations}
         topSchools={
           <TopSchoolsStateful
@@ -232,6 +248,14 @@ class District extends React.Component {
             pageType="District"
           />
         } 
+        finance={
+          <Finance
+            dataValues={this.props.finance}
+            district={
+              { districtId: this.props.locality.district_id, state: this.props.locality.state}
+            }
+          />
+        }
         zillow={
           <Zillow
               locality={this.props.locality}
@@ -255,8 +279,7 @@ class District extends React.Component {
           />
         }
         viewportSize={this.props.viewportSize}
-      >
-      </DistrictLayout>
+      />
     );
   }
 }

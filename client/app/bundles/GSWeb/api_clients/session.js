@@ -19,7 +19,7 @@ export const changePassword = password =>
       new_password: password,
       confirm_password: password
     },
-    type: 'PUT',
+    type: 'POST',
     dataType: 'json',
     timeout: 6000
   });

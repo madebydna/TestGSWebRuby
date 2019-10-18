@@ -12,6 +12,7 @@
         <xs:element name="scale" type="Str100IncludeEmpty"/>
         <xs:element name="most-recent-year" type="xs:nonNegativeInteger"/>
         <xs:element name="description" type="Str50000"/>
+        <xs:element name="state-abbrv" type="Str2"/>
         <xs:element name="state">
           <xs:complexType>
             <xs:sequence>
@@ -71,6 +72,13 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+
+  <xs:simpleType name="Str2">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="2"/>
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:simpleType name="Str100IncludeEmpty">
     <xs:restriction base="xs:string">

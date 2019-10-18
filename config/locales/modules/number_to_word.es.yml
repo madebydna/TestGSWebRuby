@@ -1,0 +1,7 @@
+es:
+  modules:
+    number_to_word:
+      'trillion': trillón
+      'billion': billones
+      'million': millón
+      'thousand': mil

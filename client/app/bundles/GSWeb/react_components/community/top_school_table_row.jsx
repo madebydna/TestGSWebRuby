@@ -59,11 +59,16 @@ const renderDistrictName = (districtName, districtLink) => {
   }
 };
 
-const TopSchoolTableRow = (props) => (
-  <div className="school-list-item">
-    {renderSchoolItem(props)}
-  </div>
-);
+const TopSchoolTableRow = (props) => {
+  let classes = "school-list-item";
+  classes += props.display ? "" : " hide-school";
+
+  return (
+    <div className={classes}>
+      {renderSchoolItem(props)}
+    </div>
+  )
+};
 
 TopSchoolTableRow.propTypes = {
   id: PropTypes.number.isRequired,

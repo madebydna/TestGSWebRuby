@@ -104,12 +104,7 @@ module CommunityProfiles
         return [] if main_staff_hash.empty?
         MAIN_STAFF_DATA.reduce([]) do |memo, config|
           if value = get_max_year(main_staff_hash[config[:key]])
-            memo << base_data_for(config).merge({
-              district_value: to_value(value.district_value, config[:formatting]),
-              state_value: to_value(value.state_value, config[:formatting]),
-              year: Date.parse(value.source_date_valid).year,
-              source: value.source_name
-            })
+            memo << base_data_for(config).merge(MainStaffData.new(value, config[:formatting]).to_h)
           end 
           memo
         end
@@ -128,18 +123,9 @@ module CommunityProfiles
           full_time_value = select_latest_breakdown_value(other_staff_hash[name], "full-time")
           part_time_value = select_latest_breakdown_value(other_staff_hash[name], "part-time")
           if full_time_value || part_time_value
-            hash = base_data_for(config)
-            hash.merge!({
-              full_time_district_value: to_value(full_time_value.district_value, config[:formatting]),
-              full_time_state_value:  to_value(full_time_value.state_value, config[:formatting]),
-              year: Date.parse(full_time_value.source_date_valid).year,
-              source: full_time_value.source_name
-            }) if full_time_value.present?
-            hash.merge!({
-              part_time_district_value: to_value(part_time_value.district_value, config[:formatting]),
-              part_time_state_value: to_value(part_time_value.state_value, config[:formatting])
-            }) if part_time_value.present?
-            memo << hash
+            memo << base_data_for(config).merge(
+              OtherStaffData.new(full_time_value, part_time_value, config[:formatting]).to_h
+            )
           end
           memo
         end
@@ -151,10 +137,6 @@ module CommunityProfiles
     end
 
     private
-
-    def to_value(value, formatting)
-      SchoolProfiles::DataPoint.new(value).apply_formatting(*formatting).format
-    end
 
     def base_data_for(config)
       {

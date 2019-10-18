@@ -1,0 +1,43 @@
+es:
+  lib:
+    finance:
+      'module_title': Finanzas del distrito
+      'module_subtitle': "La forma en que un distrito escolar asigna fondos puede reflejar sus prioridades. <a href='/gk/articles/school-board-candidates/'>Obtén más información sobre cómo se toman estas decisiones.</a>"
+      'parent_tip': "Las decisiones del distrito sobre cómo gastar dinero impactan la educación de tu hijo. <a href='gk/articles/taking-it-to-the-school-board/'>Así es como los padres pueden influir en estas decisiones.</a>"
+      'RevenueSources': Fuentes de ingresos
+      'ExpenditureSources': Gasto por categoría
+      'RevenueSources_tooltip_html': >
+        Este es un análisis de cuánto de los ingresos anuales totales de este distrito provienen de fuentes federales, estatales o locales, en comparación con los promedios estatales:
+        <br/><br/><span class="emphasis">Federal:</span> Fondos del gobierno federal, que pueden incluir dinero para escuelas de Título 1, programas vocacionales y educación de tecnología, educación bilingüe y La Ley de Nutrición de Menores, y más.
+        <br/><br/><span class="emphasis">Del estado:</span> Fondos del estado, que pueden incluir dinero para la mejora del personal, educación especial, educación para estudiantes talentosos y excepcionalmente talentosos, educación bilingüe y vocacional, almuerzo escolar, transporte, y beneficios para empleados, y más.
+        <br/><br/><span class="emphasis">Local:</span> Fondos que provienen de fuentes locales, que pueden incluir dinero de organizaciones de padres como un PTA/PTO; impuestos locales a la propiedad, ventas o servicios públicos, y transporte, y más.
+      'ExpenditureSources_tooltip_html': >
+        Este es un análisis de los gastos del distrito por categorías relacionadas con la educación pre K-12 y otros gastos:
+        <br/><br/><span class="emphasis">Instrucción:</span> Gastos en instrucción pre K-12, incluyendo salarios de maestros y materiales para programas regulares, especiales y vocacionales durante el año escolar, el verano, y más.
+        <br/><br/><span class="emphasis">Servicios de apoyo:</span> Gastos en apoyos administrativos para educación pre K-12, incluyendo desarrollo profesional, consejeros, transporte, materiales, y más.
+        <br/><br/><span class="emphasis">Otros gastos de pre K-12:</span> Gastos para educación pre K-12 fuera de los servicios de instrucción y apoyo.
+        <br/><br/><span class="emphasis">Otros gastos:</span> Otros gastos, incluyendo los servicios comunitarios, la educación de adultos, y en gastos de capital como edificios y carreteras.
+      data_types:
+        'Total Revenue': 'Ingresos totales del distrito'
+        'Per Pupil Revenue': 'Promedio de ingresos del distrito por  estudiante'
+        'Percent Federal Revenue': "Federal"
+        'Percent State Revenue': "Del estado"
+        'Percent Local Revenue': "Local"
+        'Total Expenditures': 'Gasto total del distrito'
+        'Per Pupil Expenditures': 'Promedio de gastos por estudiante'
+        'Percent Instructional Expenditures': 'Instrucción'
+        'Percent Support Services Expenditures': 'Servicios de apoyo'
+        'Percent Other Expenditures': 'Otros gastos de pre K-12'
+        'Percent Uncategorized Expenditures': 'Otros gastos'
+      tool_tips:
+        'Total Revenue': 'Esto refleja el total de fondos anuales que este distrito recibió de fuentes locales, estatales y federales, en comparación con el promedio en todo el estado. (Mira ejemplos abajo.)'
+        'Per Pupil Revenue': 'Esto refleja la cantidad de ingresos anuales del distrito por cada estudiante comparado con el promedio estatal. La cifra de ingresos del distrito por estudiante ofrece una forma útil de comparar distritos, ya que los ingresos totales varían mucho entre los distritos grandes y pequeños.'
+        'Percent Federal Revenue': "Esto muestra la parte de los ingresos de este distrito recibidos del gobierno federal, que puede incluir fondos para escuelas de Título 1 y programas como Escuelas Seguras y Libres de Drogas, la Acta para la Educación de los Individuos con Discapacidades, programas vocacionales y educación de tecnología, educación bilingüe y La Ley de Nutrición de Menores entre otros."
+        'Percent State Revenue': "Esto muestra la parte de los ingresos de este distrito recibidos del estado, que puede incluir fondos para programas para la mejora del personal, educación especial, educación para estudiantes talentosos y excepcionalmente talentosos, educación bilingüe, educación vocacional, almuerzo escolar, transporte, beneficios para empleados e instalaciones, entre otros."
+        'Percent Local Revenue': "Esto refleja la parte de los ingresos de este distrito que provienen de fuentes locales, que pueden incluir contribuciones de organizaciones de padres como un PTA / PTO; impuestos locales a la propiedad, ventas o servicios públicos, tarifas pagadas por los estudiantes por libros de texto, transporte, almuerzo escolar, e ingresos por alquileres o ventas de propiedades, entre otros."
+        'Total Expenditures': 'Este es un análisis del gasto total de este distrito, incluyendo el gasto en educación pre K-12, educación de adultos, pagos a gobiernos, escuelas privadas o chárter, gastos en edificios, carreteras y herramientas y más.'
+        'Per Pupil Expenditures': 'Esto refleja cuánto dinero gastó este distrito por estudiante, en comparación con el promedio estatal. Esta cifra puede ayudarte a comparar distritos entre sí.'
+        'Percent Instructional Expenditures': 'Esto refleja el porcentaje de este gasto anual del distrito en salarios de maestros, beneficios, útiles escolares, materiales y otros costos asociados con la instrucción pre K-12, incluyendo los programas regulares, especiales y vocacionales, durante el año escolar y la escuela de verano.'
+        'Percent Support Services Expenditures': 'Esto refleja el porcentaje de este gasto anual del distrito en apoyos administrativos, técnicos y logísticos para educación pre K-12, incluyendo desarrollo profesional, consejeros, útiles escolares, transporte, materiales y más.'
+        'Percent Other Expenditures': 'Esto refleja el porcentaje de este gasto anual del distrito en otros gastos para la educación pre K-12 fuera de los servicios de instrucción y apoyo.'
+        'Percent Uncategorized Expenditures': 'Esto refleja el porcentaje de este gasto anual del distrito en programas que no forman parte de gastos para la educación pre K-12, incluyendo los servicios comunitarios, la educación de adultos, y en gastos como edificios, carreteras y otros mejoramientos.'

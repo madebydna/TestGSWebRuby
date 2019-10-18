@@ -167,6 +167,8 @@ module CommunityConcerns
               city = district_content_field(district_content, 'city')
               d[:id] = district_content_field(district_content, 'id')
               d[:districtName] = name
+              d[:city] = city
+              d[:state] = state.upcase
               d[:grades] = district_content_field(district_content, 'levels')
               d[:numSchools] = district_content_field(district_content, 'school_count')
               d[:url] = district_url(district_params(state, city, name))

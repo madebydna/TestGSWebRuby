@@ -3,13 +3,13 @@ import ReactDOMServer from 'react-dom/server';
 import InfoBox from '../../school_profiles/info_box';
 import { t } from '../../../util/i18n';
 
-class Sources extends React.Component {
+function Sources ({ sources }) {
 
-  renderSources() {
+  const renderSources = () => {
     return (
       <div className="sourcing">
         <h1>{t('district_data_sources_and_info')}</h1>
-        {this.props.sources.map((source, i)=>{
+        {sources.map((source, i)=>{
           return(
             <div key={`dist_source_${i}`}>
               <h4>{source.name}</h4>
@@ -22,10 +22,10 @@ class Sources extends React.Component {
     )
   }
 
-  render() {
-    const sources = ReactDOMServer.renderToStaticMarkup(this.renderSources());
-    return <InfoBox content={sources} element_type="sources" className='sources-link'>{ t('See notes') }</InfoBox>
-  }
+  const _sources = ReactDOMServer.renderToStaticMarkup(renderSources());
+  return (
+    <InfoBox content={_sources} element_type="sources" className='sources-link'>{ t('See notes') }</InfoBox>
+  );
 }
 
 export default Sources;

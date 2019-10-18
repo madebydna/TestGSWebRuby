@@ -8,8 +8,8 @@ module Feeds
       include Feeds::FeedConstants
       include Feeds::FeedHelper
 
-      HEADERS = %w(test-abbrv universal-id year subject grade score proficiency-band number-tested)
-      HEADERS_DESCRIPTION = %w(test-name test-abbrv scale most-recent-year description)
+      HEADERS = %w(test-abbrv universal-id year subject grade score proficiency-band number-tested state-abbrv)
+      HEADERS_DESCRIPTION = %w(test-name test-abbrv scale most-recent-year description state-abbrv)
 
 
 # For test data we need to rename the flat files and build the description files which are only used as flat files.
@@ -67,7 +67,7 @@ module Feeds
           test_name = hash['test-name']
           test_abbr = hash['test-abbrv']
           if @write_description_file
-            add_description_to_array(test_name, test_abbr, hash['scale'], hash['most_recent_year'], hash['description'])
+            add_description_to_array(test_name, test_abbr, hash['scale'], hash['most-recent-year'], hash['description'])
           end
           write_state_info(test_name, test_abbr, csv)
           write_district_info(test_name, test_abbr, csv)
@@ -82,6 +82,7 @@ module Feeds
         test_arr << scale ? scale : nil
         test_arr << most_recent_year ? most_recent_year : nil
         test_arr << description ? description : nil
+        test_arr << state_abbrv
         @data_for_test_description_file << test_arr
       end
 
@@ -130,6 +131,7 @@ module Feeds
         test_arr << h['score'] ? h['score'] : nil
         test_arr << h['proficiency-band-name'] ? h['proficiency-band-name'] : nil
         test_arr << h['number-tested'] ? h['number-tested'] : nil
+        test_arr << state_abbrv
         test_arr
       end
 
@@ -143,6 +145,10 @@ module Feeds
 
       def state_uid
         transpose_universal_id(@data_reader.state, nil, nil)
+      end
+
+      def state_abbrv
+        @data_reader.state ? @data_reader.state.upcase  : nil
       end
 
     end

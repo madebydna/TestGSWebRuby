@@ -182,7 +182,7 @@ export default class DistrictBoundaries extends React.Component {
         {...markerProps(s)}
         {...otherProps}
         {...{
-          key: `s${s.state}${s.id}${s.assigned}${s.highlighted}`,
+          key: `s${s.state}${s.id}`,
           openInfoWindow: m =>
             otherProps.openInfoWindow(createInfoWindow(s, utmCampaignCode), m),
           onClick: () => this.props.selectSchool(s.id, s.state),

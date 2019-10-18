@@ -1,0 +1,43 @@
+en:
+  lib:
+    finance:
+      'module_title': District finances
+      'module_subtitle': "How a school district allocates funds can reflect its priorities. <a href='/gk/articles/school-board-candidates/'>Learn more about how these decisions are made.</a>"
+      'parent_tip': "District decisions about how to spend money impact your child’s schooling. <a href='/gk/articles/taking-it-to-the-school-board/'>Here’s how parents can have an influence.</a>"
+      'RevenueSources': Revenue sources
+      'ExpenditureSources': Spending by category
+      'RevenueSources_tooltip_html': >
+        This is a breakdown of how much of this district’s total annual funds came from federal, state, or local sources, compared to state averages:
+        <br/><br/><span class="emphasis">Federal:</span> Funds from the federal government, which can include money for Title 1 schools, vocational and tech education, bilingual education, and the Child Nutrition Act, and more.
+        <br/><br/><span class="emphasis">State:</span> Funds from the state government, which can include money for staff improvement, special education, gifted and talented, bilingual, and vocational education, school lunch, transportation, and employee benefits, and more.
+        <br/><br/><span class="emphasis">Local:</span> Funds from local sources, which can include money from parent organizations like a PTA/PTO; local property, sales, or utility taxes, and transportation, and more.
+      'ExpenditureSources_tooltip_html': >
+        This is a breakdown of annual district spending on preK-12 education and other categories:
+        <br/><br/><span class="emphasis">Instruction:</span> Spending on preK-12 instruction, including teacher salaries and materials for regular, special, and vocational programs during the school year and summer, and more.
+        <br/><br/><span class="emphasis">Support services:</span> Spending on administrative support for preK-12 education, including professional development, counselors, transportation, materials, and more.
+        <br/><br/><span class="emphasis">Other preK-12 spending:</span> Spending on preK-12 spending outside of instruction and support services.
+        <br/><br/><span class="emphasis">Other spending:</span> Other spending, including community services, adult education, and spending on things like buildings and roads.
+      data_types:
+        'Total Revenue': 'Total district revenue'
+        'Per Pupil Revenue': 'Average revenue per student'
+        'Percent Federal Revenue': "Federal"
+        'Percent State Revenue': "State"
+        'Percent Local Revenue': "Local"
+        'Total Expenditures': 'Total district spending'
+        'Per Pupil Expenditures': 'Average spending per student'
+        'Percent Instructional Expenditures': 'Instruction'
+        'Percent Support Services Expenditures': 'Support services'
+        'Percent Other Expenditures': 'Other preK-12 spending'
+        'Percent Uncategorized Expenditures': 'Other spending'
+      tool_tips:
+        'Total Revenue': 'This reflects the total annual funds this district received from local, state, and federal sources, compared to the average across the state.  (See examples below).'
+        'Per Pupil Revenue': 'This reflects how much annual revenue per student this district has compared to the state average. The revenue per student figure offers a helpful way to compare districts, since total revenues will vary greatly between large and small districts.'
+        'Percent Federal Revenue': "This shows the share of this district’s revenues received from the federal government, which can include funds for Title 1 schools and programs like Safe and Drug Free Schools, the Individuals with Disabilities Education Act, vocational and tech education, bilingual education, and the Child Nutrition Act, among others."
+        'Percent State Revenue': "This shows the share of this district’s revenues received from the state government, which can include funds for programs including staff improvement, special education, gifted and talented education, bilingual education, vocational education, school lunch, transportation, employee benefits, and facilities, among others."
+        'Percent Local Revenue': "This reflects the share of this district’s revenues that came from local sources, which can include contributions from parent organizations like a PTA/PTO; local property, sales, or utility taxes, fees paid by students for textbooks, transportation, and school lunch, and revenues from rent or property sales, among others."
+        'Total Expenditures': 'This is a breakdown of this district’s total spending, including spending on preK-12 education, adult education, payments to governments, private or charter schools, spending on buildings, roads, and equipment, and more.'
+        'Per Pupil Expenditures': 'This reflects how much money this district spent on a per-student basis, compared to the state average. This figure can help you compare districts to one another.'
+        'Percent Instructional Expenditures': 'This reflects the percentage of this district’s annual spending on teacher salaries, benefits, supplies, materials and other costs associated with preK-12 instruction, including regular, special, and vocational, programs during the school year and summer school.'
+        'Percent Support Services Expenditures': 'This reflects the percentage of this district’s annual spending on administrative, technical, and logistical supports for preK -12 education, including professional development, counselors, supplies, transportation, materials, and more.'
+        'Percent Other Expenditures': 'This reflects the percentage of this district’s annual spending on other preK-12 expenditures outside of instruction and support services.'
+        'Percent Uncategorized Expenditures': 'This reflects the percentage this district’s annual spending on programs not part of preK-12 spending, including community services, adult education, and on capital expenditures like buildings, roads, and other improvements.'

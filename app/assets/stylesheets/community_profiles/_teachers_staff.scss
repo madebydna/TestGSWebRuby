@@ -1,4 +1,4 @@
-.teachers-staff {
+.teachers-staff, .finance {
   .module-header {
     .title-container {
       .title {
@@ -43,50 +43,50 @@
     border: none;
   }
 
-  .ts-row--no-border {
+  .ts-row-no-border {
     padding: 0;
     border-bottom: none;
   }
 
-  .ts-row--narrow {
+  .ts-row-narrow {
     padding: 0 20px 10px;
   }
 
-  .ts-row__full-xs {
+  .ts-row-full-xs {
     width: 100%;
   }
 
-  .ts-row__one-half-xs {
+  .ts-row-one-half-xs {
     float: left;
     width: 50%;
   }
 
-  .ts-row__one-quarter-xs {
+  .ts-row-one-quarter-xs {
     float: left;
     width: 25%;
   }
 
-  .ts-row__one-third-xs {
+  .ts-row-one-third-xs {
     float: left;
     width: 33.33%;
   }
 
-  .ts-row__two-thirds-xs {
+  .ts-row-two-thirds-xs {
     float: left;
     width: 66.66%;
   }
 
-  .ts-row.other-staff .ts-row__one-quarter-xs {
+  .ts-row.other-staff .ts-row-one-quarter-xs {
     padding-right: 10px;
   }
 
   .bar-graph-display .score {
     text-align: left;
     width: 40px;
-    padding-right: 10px;
+    padding-right: 0;
   }
 
-  .bar-graph-display .score--left-align {
+  .bar-graph-display .score-left-align {
     text-align: left!important;
   }
 
@@ -94,25 +94,41 @@
     padding: 0 0 0 10px;
   }
 
+  .stacked-state-average {
+    text-align: right;
+    float: right;
+    font-size: 12px;
+    padding-top: 5px;
+    color: #71787e;
+    @media (max-width: 544px){
+      padding: 0;
+    }
+  }
+
   @media (min-width: 992px){
-    .ts-row__one-half-md {
+    .ts-row-one-half-md {
       float: left;
       width: 50%;
     }
   
-    .ts-row__one-quarter-md {
+    .ts-row-one-quarter-md {
       float: left;
       width: 25%;
     }
   
-    .ts-row__one-third-md {
+    .ts-row-one-third-md {
       float: left;
       width: 33.33%;
     }
   
-    .ts-row__two-thirds-md {
+    .ts-row-two-thirds-md {
       float: left;
       width: 66.66%;
+    }
+
+    .ts-row-three-quarters-md {
+      float: left;
+      width: 75%;
     }
 
     .rating-score-item__state-average {
@@ -122,7 +138,7 @@
 
     .bar-graph-display .score {
       width: 33.33%;
-      padding-right: 0;
+      padding-right: 10px;
       text-align: right;
     }
 
@@ -139,6 +155,7 @@
   
   .rating-score-item__score {
     line-height: 1;
+    padding: 0;
   }
 
   .rating-score-item__state-average {
