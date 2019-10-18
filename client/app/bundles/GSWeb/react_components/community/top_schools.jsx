@@ -12,9 +12,9 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
     return (
       <div className="grade-filter">
         <span className="button-group">
-          <a onClick={() => handleGradeLevel("e")} className={levelCodes === "e" ? "active" : ''}>{t("Elementary")}</a>
-          <a onClick={() => handleGradeLevel("m")} className={levelCodes === "m" ? "active" : ''}>{t("Middle")}</a>
-          <a onClick={() => handleGradeLevel("h")} className={levelCodes === "h" ? "active" : ''}>{t("High")}</a>
+          <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
+          <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} />
+          <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} />
         </span>
       </div>
     )
@@ -22,14 +22,39 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
     return (
       <div className="grade-filter">
         <span className="button-group">
-          {schoolLevels.elementary !== 0 ? <a onClick={() => handleGradeLevel("e")} className={levelCodes === "e" ? "active" : ''}>{t("Elementary")}</a> : null}
-          {schoolLevels.middle !== 0 ? <a onClick={() => handleGradeLevel("m")} className={levelCodes === "m" ? "active" : ''}>{t("Middle")}</a> : null}
-          {schoolLevels.high !== 0 ? <a onClick={() => handleGradeLevel("h")} className={levelCodes === "h" ? "active" : ''}>{t("High")}</a> : null}
+          {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
+          {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
+          {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
         </span>
       </div>
     )
   }
 }
+
+// TODO: Determine whether <button> or <a> is more optimal for SEO
+// const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
+//   if (community === 'city') {
+//     return (
+//       <div className="grade-filter">
+//         <span className="button-group">
+//           <a href="javascript:void(0);" role="button" tabIndex="0" onClick={() => handleGradeLevel("e")} className={levelCodes === "e" ? "active" : ''}>{t("Elementary")}</a>
+//           <a href="javascript:void(0);" role="button" tabIndex="0" onClick={() => handleGradeLevel("m")} className={levelCodes === "m" ? "active" : ''}>{t("Middle")}</a>
+//           <a href="javascript:void(0);" role="button" tabIndex="0" onClick={() => handleGradeLevel("h")} className={levelCodes === "h" ? "active" : ''}>{t("High")}</a>
+//         </span>
+//       </div>
+//     );
+//   } else {
+//     return (
+//       <div className="grade-filter">
+//         <span className="button-group">
+//           {schoolLevels.elementary !== 0 ? <a href="javascript:void(0);" role="button" tabIndex="0" onClick={() => handleGradeLevel("e")} className={levelCodes === "e" ? "active" : ''}>{t("Elementary")}</a> : null}
+//           {schoolLevels.middle !== 0 ? <a href="javascript:void(0);" role="button" tabIndex="0" onClick={() => handleGradeLevel("m")} className={levelCodes === "m" ? "active" : ''}>{t("Middle")}</a> : null}
+//           {schoolLevels.high !== 0 ? <a href="javascript:void(0);" role="button" tabIndex="0" onClick={() => handleGradeLevel("h")} className={levelCodes === "h" ? "active" : ''}>{t("High")}</a> : null}
+//         </span>
+//       </div>
+//     );
+//   }
+// }
 
 const regionName = (locality, community) => {
   if (locality.stateShort === 'DC') {
