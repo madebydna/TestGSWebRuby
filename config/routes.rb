@@ -380,7 +380,7 @@ LocalizedProfiles::Application.routes.draw do
   post '/account/forgot-password', :to => 'forgot_password#send_reset_password_email'
 
   # This route handles a user's "reset password" post. When they submit a form with their new password, it posts here
-  put '/account/password', to: 'password#update', as: :password
+  post '/account/password', to: 'password#update', as: :password
   # When this route is requested, we should deliver a page with a form that allows the user to type in and confirm
   # a new password. The user must be logged in before they can see this form
   get '/account/password', to: 'password#show'
