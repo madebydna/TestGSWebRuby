@@ -123,7 +123,7 @@ module CommunityProfiles
 
     def district_academics_props
       {
-        title: I18n.t('.academics', scope: 'school_profiles.show'),
+        title: I18n.t('.academics', scope: 'community.academics'),
         anchor: 'Academics',
         analytics_id: 'Academics',
         subtitle: I18n.t('.district_subtext', scope: 'community.academics', achievement_gap_link: article_achievement_gap_path),
@@ -141,7 +141,7 @@ module CommunityProfiles
     def state_academics_props
       academic_state = States.state_name(cache_data_reader.state).capitalize
       {
-        title: I18n.t('.academics', scope: 'school_profiles.show'),
+        title: I18n.t('.academics', scope: 'community.academics'),
         anchor: 'Academics',
         analytics_id: 'Academics',
         subtitle: I18n.t('.state_subtext', scope: 'community.academics', achievement_gap_link: article_achievement_gap_path, state: academic_state),

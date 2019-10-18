@@ -222,12 +222,12 @@ module SchoolProfiles
         else
           key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
         end
-        I18n.t(key, scope: 'lib.college_readiness.narration', default: key).html_safe if key
+        I18n.t(key, scope: 'school_profiles.college_readiness.narration', default: key).html_safe if key
       end
     end
 
     def default_college_success_narration
-      I18n.t('_college_success', scope: 'lib.college_readiness.narration', default: '').html_safe
+      I18n.t('_college_success', scope: 'school_profiles.college_readiness.narration', default: '').html_safe
     end
 
     def college_success_narration
@@ -237,8 +237,8 @@ module SchoolProfiles
 
       return default_college_success_narration unless narratives.present?
 
-      intro = I18n.t(:intro, scope: 'lib.college_readiness.narration.college_success', default: '').html_safe
-      outro = I18n.t(:outro, scope: 'lib.college_readiness.narration.college_success', default: '',
+      intro = I18n.t(:intro, scope: 'school_profiles.college_readiness.narration.college_success', default: '').html_safe
+      outro = I18n.t(:outro, scope: 'school_profiles.college_readiness.narration.college_success', default: '',
                      end_more: SchoolProfilesController.show_more_end).html_safe
 
       "#{intro}#{narratives.first}#{SchoolProfilesController.show_more('College Success')}#{narratives.drop(1).join}#{outro}"
@@ -246,7 +246,7 @@ module SchoolProfiles
 
     def narration_for_value
       lambda do |c|
-        translation = I18n.t(c.data_type, scope: 'lib.college_readiness.narration.college_success', default: nil)&.html_safe
+        translation = I18n.t(c.data_type, scope: 'school_profiles.college_readiness.narration.college_success', default: nil)&.html_safe
         if translation.present? && c.school_value.present? && c.state_average.present?
           "<li>#{comparison_word(c.data_type, c.school_value, c.state_average)} #{translation}</li>"
         end
@@ -263,7 +263,7 @@ module SchoolProfiles
       else
         key = is_persistence ? :lower : :below_average
       end
-      I18n.t(key, scope: 'lib.college_readiness.narration.college_success', default: key.to_s).html_safe
+      I18n.t(key, scope: 'school_profiles.college_readiness.narration.college_success', default: key.to_s).html_safe
     end
 
     def empty_data?

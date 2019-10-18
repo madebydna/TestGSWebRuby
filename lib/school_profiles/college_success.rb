@@ -37,7 +37,7 @@ module SchoolProfiles
         lang: I18n.current_non_en_locale
       )
       {
-        csa_badge: I18n.t(:csa_badge_html, scope: 'lib.college_readiness', blurb: blurb, csa_state_link: csa_state_link).html_safe
+        csa_badge: I18n.t(:csa_badge_html, scope: 'school_profiles.college_readiness', blurb: blurb, csa_state_link: csa_state_link).html_safe
       }
     end
 
@@ -66,7 +66,7 @@ module SchoolProfiles
 
     def sources
       content = '<div class="sourcing">'
-      content += '<h1>' + translate('title') + '</h1>'
+      content += '<h1>' + translate('sources_title') + '</h1>'
       data_array = cs_component.data_type_hashes
       content += data_array.reduce('') do |string, hash|
         string += sources_text(hash)
@@ -105,8 +105,8 @@ module SchoolProfiles
 
     def faq
       @_faq ||= begin
-        Faq.new(cta: I18n.t(:cta, scope: 'lib.college_readiness.faq'),
-                        content: I18n.t(:content_html, scope: 'lib.college_readiness.faq'),
+        Faq.new(cta: I18n.t(:cta, scope: 'school_profiles.college_readiness.faq'),
+                        content: I18n.t(:content_html, scope: 'school_profiles.college_readiness.faq'),
                         element_type: 'faq')
       end
     end
@@ -116,11 +116,11 @@ module SchoolProfiles
     end
 
     def translate(key)
-      I18n.t(key.to_sym, scope: 'lib.college_readiness', default: I18n.db_t(key, default: key))
+      I18n.t(key.to_sym, scope: 'school_profiles.college_readiness', default: I18n.db_t(key, default: key))
     end
 
     def info_text(key)
-      I18n.t(key.to_sym, scope: 'lib.college_readiness.data_point_info_texts')
+      I18n.t(key.to_sym, scope: 'school_profiles.college_readiness.data_point_info_texts')
     end
 
     def school_csa_badge?

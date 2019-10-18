@@ -21,8 +21,8 @@ module SchoolProfiles
     end
 
     def faq
-      @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.college_readiness.faq'),
-                        content: I18n.t(:content_html, scope: 'lib.college_readiness.faq'),
+      @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'school_profiles.college_readiness.faq'),
+                        content: I18n.t(:content_html, scope: 'school_profiles.college_readiness.faq'),
                         element_type: 'faq')
     end
 
@@ -35,15 +35,15 @@ module SchoolProfiles
     end
 
     def info_text
-      I18n.t('lib.college_readiness.info_text')
+      I18n.t('school_profiles.college_readiness.info_text')
     end
 
     def data_label(key)
-      I18n.t(key.to_sym, scope: 'lib.college_readiness', default: I18n.db_t(key, default: key))
+      I18n.t(key.to_sym, scope: 'school_profiles.college_readiness', default: I18n.db_t(key, default: key))
     end
 
     def data_label_info_text(key)
-      I18n.t(key.to_sym, scope: 'lib.college_readiness.data_point_info_texts')
+      I18n.t(key.to_sym, scope: 'school_profiles.college_readiness.data_point_info_texts')
     end
 
     def school_value_present?(value)
@@ -145,7 +145,7 @@ module SchoolProfiles
 
     def sources
       content = '<div class="sourcing">'
-      content << '<h1>' + data_label('title') + '</h1>'
+      content << '<h1>' + data_label('sources_title') + '</h1>'
       if rating.present? && rating != 'NR'
         content << rating_source(year: rating_year, label: data_label('GreatSchools Rating'),
                                  description: rating_description, methodology: rating_methodology,

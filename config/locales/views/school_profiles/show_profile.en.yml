@@ -2,6 +2,7 @@ en:
   school_profiles:
     show_profile:
       overview: OVERVIEW
+      environment: ENVIRONMENT
       false_header:
         first_bullet: Are you an administrator at this school?
         second_bullet_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Claim school" data-ga-click-label="Private" href="/official-school-profile/">Claim your school’s profile</a> to edit general information and share what makes your school unique. <a href="/gk/schools/">Learn more.</a>

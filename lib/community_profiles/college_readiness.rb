@@ -141,7 +141,7 @@ module CommunityProfiles
 
       data_array = components.map(&:data_type_hashes)
                              .reduce(:+)
-                             .sort_by {|h| h.year}
+                             .sort_by {|h| h.year&.to_i}
                              .reverse
                              .uniq {|h| h.data_type}
       content << data_array.reduce('') do |string, hash|
