@@ -40,35 +40,22 @@ class TopSchoolsStateful extends React.Component {
   initialSchoolLoad({ elementary, middle, high, csa }) {
     if (elementary.length > 0) {
       this.state = {
-        levelCodes: 'e',
-        schools: elementary
+        levelCodes: 'e'
       }
     } else if (middle.length > 0) {
       this.state = {
-        levelCodes: 'm',
-        schools: middle
+        levelCodes: 'm'
       }
     } else if (high.length > 0) {
       this.state = {
-        levelCodes: 'h',
-        schools: high
-      }
-    } else if (csa.length > 0) {
-      this.state = {
-        schools: csa
+        levelCodes: 'h'
       }
     }
   }
 
   handleGradeLevel(str){
-    const schools = { 
-      'e': this.props.schoolsData.elementary, 
-      'm': this.props.schoolsData.middle, 
-      'h': this.props.schoolsData.high
-    }
     this.setState({
-      levelCodes: str,
-      schools: schools[str]
+      levelCodes: str
     })
   }
 
@@ -128,7 +115,7 @@ class TopSchoolsStateful extends React.Component {
     } else {
       return (
          <TopSchools
-          schools={this.state.schools}
+          schools={this.props.schoolsData}
           schoolLevels={this.props.schoolLevels}
           handleGradeLevel={this.handleGradeLevel}
           handleTabClick={this.handleTabClick}
