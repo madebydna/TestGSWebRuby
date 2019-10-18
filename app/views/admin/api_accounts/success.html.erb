@@ -1,7 +1,9 @@
-<% content_for :head do %><title>GreatSchools.org Public API Registration & Developer Hub</title><% end %>
+<% content_for :head do %><title>GreatSchools.org Public API Registration & Developer Hub</title>
+<% end %>
 <div class="api_request_success">
-  <%=	 image_tag 'school_profiles/owl.png' %>
-  <h3>Success! Your request has been submitted. We will respond to you within the next 3-5 business days.</h3>
-
-  <%= link_to 'Review API docs', 'https://www.greatschools.org/api/docs/technical-overview/' %>
+  <%= image_tag 'school_profiles/owl.png' %>
+  <h3>
+    <b><p>Success! Your API request has been submitted. You will receive an email with more information shortly. Thank you!</b>
+  </h3>
+  <%= link_to 'Review our API Technical Overview while you wait!', 'https://www.greatschools.org/api/docs/technical-overview/' %>
 </div>
