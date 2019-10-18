@@ -26,7 +26,7 @@ const MAX_COUNTER = 10;
 const DELAY_IN_MS = 1000;
 const onGK = window.location.href.indexOf("/gk/") !== -1;
 const INDIRECT_CAMPAIGN_IDS = [208549694, 123081254]; // Google AdX  and Rubicon Project_Unlimited
-const INDIRECT_AD_REFRESH_RATE = 30000;
+const INDIRECT_AD_REFRESH_RATE = 45000;
 
 const slotIdFromName = (name, slotOccurrenceNumber = 1) => {
   const slotName = capitalize(name).replace(' ', '_');
