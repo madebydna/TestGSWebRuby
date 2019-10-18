@@ -7,13 +7,11 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
 
   CACHE_EXCEPTIONS = :data_type, :percentage, :narrative, :label, :methodology
 
+  ALT_NULL_STATE_FILTER = %w(de il mt nv)
+
   def data_type_tags
     self.class::DATA_TYPE_TAGS
   end
-
-  # def data_type_ids
-  #   @_data_type_ids ||= DataTypeTag.data_type_ids_for(data_type_tags).uniq
-  # end
 
   def build_hash_for_cache
     hashes = school_results.map { |r| result_to_hash(r) }
@@ -47,24 +45,27 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     query_results.extend(TestScoreCalculations).max_year
   end
 
-  # This code is in support of JT-7249 - hopefully this will answer any questions
+  # This code is in support of JT-9244 - hopefully this will answer any questions
   def school_results_filter(qr)
     data_value = qr&.first
     state = data_value&.state&.downcase
     data_type_id = data_value&.data_type_id
-    school_id = data_value&.school_id
-    state_filter = %w(ct il mt)
+    return qr unless data_type_id.present?
 
-    if state_filter.include?(state) && state.present? && data_type_id.present?
-      state_latest_year = Load.max_year_for_data_type_id( data_type_id)
-      if state_latest_year && query_result_max_year < state_latest_year.year
-        school = School.find_by_state_and_id(state, school_id)
-        if school.high_school?
-          return []
-        end
+    if in_alt_whitelist?(state)
+      if query_result_max_year < state_latest_year(data_type_id)
+        return [] if school.high_school?
       end
     end
     qr
+  end
+
+  def in_alt_whitelist?(state)
+    ALT_NULL_STATE_FILTER.include?(state)
+  end
+
+  def state_latest_year(data_type_id)
+    @_state_latest_year ||= Omni::DataSet.max_year_for_data_type_id(data_type_id)
   end
 
   def query_results
@@ -155,7 +156,6 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
     missing_keys.count.zero?
   end
 
-
   def district_value(result)
     #   will not have district values if school is private
     return nil unless school.district_id.positive?
@@ -165,6 +165,5 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
   def state_result(result)
     state_results_hash[Omni::TestDataValue.datatype_breakdown_year(result)]
   end
-
 
 end

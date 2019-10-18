@@ -8,28 +8,16 @@ import { addQueryParamToUrl } from 'util/uri';
 import { SM } from 'util/viewport';
 
 const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
-  if (community === 'city') {
-    return (
-      <div className="grade-filter">
-        <span className="button-group">
-          <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} />
-          <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} />
-          <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} />
-        </span>
-      </div>
-    )
-  } else {
-    return (
-      <div className="grade-filter">
-        <span className="button-group">
-          {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e" ? true : false} /> : null}
-          {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m" ? true : false} /> : null}
-          {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h" ? true : false} /> : null}
-        </span>
-      </div>
-    )
-  }
-}
+  return (
+    <div className="grade-filter">
+      <span className="button-group">
+        {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e"} /> : null}
+        {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m"} /> : null}
+        {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h"} /> : null}
+      </span>
+    </div>
+  )
+};
 
 // TODO: Determine whether <button> or <a> is more optimal for SEO
 // const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) => {
@@ -139,7 +127,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
           {assignDisplayType(schools, levelCodes, size)}
         </section>;
   }
-  
+
 	return (
     <div className="top-school-module">
       <div className="profile-module">
