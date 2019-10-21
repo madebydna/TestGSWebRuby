@@ -257,6 +257,7 @@ es:
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare escuelas ahora&nbsp</a>o<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspdremover escuelas&nbsp</a><strong>para comparar en esta ubicación.'
 #    added for equity
     percentage of students: '% de estudiantes'
+    percentage: 'porcentaje'
     of students: 'de estudiantes'
     student: estudiante
     students: estudiantes
