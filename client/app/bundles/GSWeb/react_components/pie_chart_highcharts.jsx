@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { t } from 'util/i18n';
 
 const PieChartHighcharts = ({ options, slicedIdx}) => {
   const data = options.map((datum,idx) => {
@@ -35,7 +36,7 @@ const PieChartHighcharts = ({ options, slicedIdx}) => {
     },
     tooltip: {
       pointFormatter: function(){
-        return `<span style="color: ${this.color} ;">\u25CF</span> percentage: <b> ${Math.floor(this.percentage)}% </b>`;
+        return `<span style="color: ${this.color} ;">\u25CF</span> ${t('percentage')}: <b> ${Math.floor(this.percentage)}% </b>`;
       }
     },
     plotOptions: {

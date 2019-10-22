@@ -258,6 +258,7 @@ en:
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare schools now&nbsp</a>or<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspclear schools&nbsp</a><strong>to compare in this location.</strong>'
 #    added for equity
     percentage of students: '% of students'
+    percentage: 'percentage'
     of students: 'of students'
     student: student
     students: students
