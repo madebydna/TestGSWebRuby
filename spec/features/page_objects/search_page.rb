@@ -3,9 +3,11 @@ require 'features/page_objects/modules/footer'
 class SearchPage < SitePrism::Page
   include Footer
 
-  set_url_matcher /search\/search\.page/
+  set_url '/search/search.page{?query*}'
 
-  element :sort_dropdown, '.menu-item > select'
+  set_url_matcher /(search\/search\.page|#{States.any_state_name_regex}\/[\w\-\.]+\/[\w\-\.]+)\/?/
+
+  element :sort_dropdown, '.subheader .menu-item select'
 
   sections :school_rows, '.school-table tbody tr' do
     element :anchors, 'a'

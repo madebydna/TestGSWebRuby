@@ -403,7 +403,6 @@ class SchoolProfilesController < ApplicationController
     # this prevents an endless redirect loop for the profile pages
     # because of ApplicationController::url_options
     canonical_path = remove_query_params_from_url( school_path(school), [:lang] )
-
     # Add a trailing slash to the request path, only if one doesn't already exist.
     unless canonical_path == with_trailing_slash(request.path)
       redirect_to add_query_params_to_url(

@@ -4,6 +4,7 @@ require 'features/page_objects/modules/top_nav_section'
 
 class HomePage < SitePrism::Page
 
+  set_url '/'
   set_url_matcher /localhost:\d+\/$/
 
   element :header, 'h1', text: 'Guide your child to a great future'

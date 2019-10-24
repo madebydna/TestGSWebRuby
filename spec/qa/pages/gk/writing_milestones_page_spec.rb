@@ -1,11 +1,11 @@
 # frozen_string_literal: true
-
 require 'features/page_objects/gk_writing_milestones_page'
 
-xdescribe 'User visits GK writing milestones', type: :feature, remote: true, safe_for_prod: true do
-  before { visit '/gk/category/milestones-subjects/writing/' }
-  let(:page_object) { GkWritingMilestones.new }
-  subject { page_object }
+describe 'User visits GK writing milestones', type: :feature, remote: true, safe_for_prod: true do
+  subject { GkWritingMilestones.new }
+  before do
+    subject.load
+  end
   its(:heading) { is_expected.to have_text('Writing') }
   it { is_expected.to have_videos }
   its('videos.size') { is_expected.to eq(21) }

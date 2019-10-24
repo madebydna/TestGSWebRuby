@@ -1,12 +1,11 @@
-# require 'features/page_objects/header_section'
 require 'features/page_objects/modules/breadcrumbs'
-# require 'features/page_objects/modules/gs_rating'
-# require 'features/page_objects/modules/modals'
-# require 'features/page_objects/modules/school_profile_page'
+require 'features/page_objects/osp_page'
 
 class SchoolProfilesPage < SitePrism::Page
   include Breadcrumbs
   include CookieHelper
+
+  set_url '{/state}{/city}{/school_id_and_name}/'
 
   set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/$/
 
@@ -77,6 +76,21 @@ class SchoolProfilesPage < SitePrism::Page
     end
   end
 
+  class GeneralInfo < SitePrism::Section
+    element :title, '.module-header .title'
+    elements :tabs, ".tab-container > a"
+    element :edit_link, ".title a.anchor-button"
+
+    def tab_names
+      tabs.map { |tab| tab.text }
+    end
+
+    def go_to_osp_page
+      edit_link.click
+      OspPage.new
+    end
+  end
+
   element :h1, 'h1'
   element :gs_rating, '.rs-gs-rating'
   element :five_star_rating, '.rs-five-star-rating'
@@ -84,6 +98,7 @@ class SchoolProfilesPage < SitePrism::Page
 
   section :hero, '#hero' do
     element :rating_text, '.gsr-text'
+    element :rating, '.rs-gs-rating'
   end
 
   section :test_scores, RatingContainer, '.rs-test-scores'
@@ -91,21 +106,17 @@ class SchoolProfilesPage < SitePrism::Page
   section :advanced_courses, RatingContainer, '#AdvancedCourses'
   section :advanced_stem_courses, RatingContainer, '.stem-module'
   section :equity_overview, RatingContainer, '#EquityOverview'
-  section :general_information, RatingContainer, '#General_info'
+  section :general_information, GeneralInfo, '#General_info'
   section :race_ethnicity, RatingContainer, '#Race_ethnicity'
   section :low_income_students, RatingContainer, '#Low-income_students'
   section :students_with_disabilities, RatingContainer, '#Students_with_Disabilities'
-  section :students, '.students-container' do
-
-  end
   section :teachers_and_staff, RatingContainer, '#TeachersStaff'
-
-  section :student_diversity, Students, '.students-container'
+  section :student_diversity, Students, '#Students'
   section :review_summary, ReviewSummary, '.rs-review-summary'
   section :review_form, ReviewForm, '.review-form'
   section :review_list, ReviewList, '.review-list'
   section :homes_and_rentals, '#homes-and-rentals' do
-    element :title_bar, '.title-bar'
+    element :title, '.title'
   end
   section :neighborhood, '.neighborhood-module' do
 
@@ -172,7 +183,7 @@ class SchoolProfilesPage < SitePrism::Page
   def wait_for_react_component(component)
     dom_id = page.evaluate_script("$('[data-component-name=#{component}]').data('dom-id')")
     singleton_class.send(:element, "#{component}_react", "##{dom_id}")
-    send("#{component}_react") if send("wait_for_#{component}_react")
+    send("#{component}_react") if send("wait_until_#{component}_visible")
   end
 
   def advanced_courses_props
