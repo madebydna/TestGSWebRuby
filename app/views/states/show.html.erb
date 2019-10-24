@@ -7,7 +7,10 @@
   <%= stylesheet_link_tag "state", async: true %>
 <% end %>
 
-<div class="community-page">
+<div class="state-body">
+  <%= render 'school_profiles/breadcrumbs', breadcrumbs: @breadcrumbs %>
+  <%= render 'community/hero', school_count: @school_count %>
+
   <%= react_component("State", props: {
       cities: @cities,
       schoolCount: @school_count,
