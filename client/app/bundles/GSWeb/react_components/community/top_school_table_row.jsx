@@ -7,9 +7,9 @@ import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t, capitalize } from "util/i18n";
 import { getDistrictHref } from 'util/school';
 
-const renderSchoolItem = ({ name, rating, links, districtName, numReviews, parentRating, enrollment, gradeLevels, schoolType, address, state }) => {
+const renderSchoolItem = ({ name, rating, links, districtName, districtCity, numReviews, parentRating, enrollment, gradeLevels, schoolType, address, state }) => {
   const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
-  const districtLink = getDistrictHref(state, address.city, districtName);
+  const districtLink = getDistrictHref(state, districtCity, districtName);
 
   return <React.Fragment>
     <div className="content-container">

@@ -26,6 +26,7 @@ module Solr
           array << new_field(:city_untokenized, type: FieldTypes::STRING) { school.city&.downcase }
           array << new_field(:school_district_id, type: FieldTypes::STRING) { school.district_id }
           array << new_field(:school_district_name, type: FieldTypes::STRING) { school.district&.name }
+          array << new_field(:school_district_city, type: FieldTypes::STRING) { school.district&.city }
           array << new_field(:street, type: FieldTypes::STRING) { school.street&.downcase }
           array << new_field(:zipcode, type: FieldTypes::STRING) { school.zipcode }
           array << new_field(:county, type: FieldTypes::STRING) { school.county&.downcase }
