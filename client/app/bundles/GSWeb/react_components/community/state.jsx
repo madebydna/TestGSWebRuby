@@ -28,7 +28,7 @@ class State extends React.Component {
   static defaultProps = {
     schools_data: {},
     loadingSchools: false,
-    breadcrumbs: [],
+    // breadcrumbs: [],
     districts: [],
     reviews: [],
     cities: [],
@@ -41,12 +41,12 @@ class State extends React.Component {
     districts: PropTypes.arrayOf(PropTypes.object),
     reviews: PropTypes.arrayOf(PropTypes.object),
     viewportSize: PropTypes.oneOf(validViewportSizes).isRequired,
-    breadcrumbs: PropTypes.arrayOf(
-        PropTypes.shape({
-          text: PropTypes.string.isRequired,
-          url: PropTypes.string.isRequired
-        })
-    ),
+    // breadcrumbs: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //       text: PropTypes.string.isRequired,
+    //       url: PropTypes.string.isRequired
+    //     })
+    // ),
     locality: PropTypes.object.isRequired,
     cities: PropTypes.array,
     schoolCount: PropTypes.number,
@@ -230,7 +230,7 @@ class State extends React.Component {
                 locality={this.props.locality}
               />
             }
-            breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
+            // breadcrumbs={<Breadcrumbs items={this.props.breadcrumbs} />}
             viewportSize={this.props.viewportSize}
         />
     );

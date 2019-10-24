@@ -11,7 +11,7 @@ class StateLayout extends React.Component {
   static propTypes = {
     viewportSize: PropTypes.oneOf(validSizes).isRequired,
     searchBox: PropTypes.element.isRequired,
-    breadcrumbs: PropTypes.element,
+    // breadcrumbs: PropTypes.element,
     shouldDisplayDistricts: PropTypes.bool,
     shouldDisplayReviews: PropTypes.bool,
     hasSchoolLevelData: PropTypes.bool
@@ -20,17 +20,17 @@ class StateLayout extends React.Component {
   constructor(props) {
     super(props);
     this.ad = React.createRef();
-    this.breadcrumbs = React.createRef();
+    // this.breadcrumbs = React.createRef();
     this.toc = React.createRef();
     this.state = {}
   }
 
   componentDidMount() {
-    keepInViewport(this.breadcrumbs, {
-      initialTop: 60,
-      setTop: true,
-      setBottom: false
-    });
+    // keepInViewport(this.breadcrumbs, {
+    //   initialTop: 60,
+    //   setTop: true,
+    //   setBottom: false
+    // });
     keepInViewport(this.ad, {
       $elementsAbove: [$('.header_un')],
       $elementsBelow: [$('.footer')],
@@ -45,30 +45,30 @@ class StateLayout extends React.Component {
     });
   }
 
-  heroTitle(){
-    let { nameLong } = this.props.locality;
-    return t('state.state_hero_title', { parameters: { nameLong }});
-  }
+  // heroTitle(){
+  //   let { nameLong } = this.props.locality;
+  //   return t('state.state_hero_title', { parameters: { nameLong }});
+  // }
 
-  heroNarration(){
-    let { nameLong } = this.props.locality;
-    let schoolCount = this.props.schoolCount.toLocaleString();
+  // heroNarration(){
+  //   let { nameLong } = this.props.locality;
+  //   let schoolCount = this.props.schoolCount.toLocaleString();
 
-    return t('state.state_hero_narrative_html', { parameters: { nameLong, schoolCount } });
-  }
+  //   return t('state.state_hero_narrative_html', { parameters: { nameLong, schoolCount } });
+  // }
 
-  renderHero(){
-    return (<div id="hero">
-      <div>
-        <h1 className="state-hero-title">{this.heroTitle()}</h1>
-        <div className="state-hero-narrative">{this.heroNarration()}</div>
-      </div>
-    </div>);
-  }
+  // renderHero(){
+  //   return (<div id="hero">
+  //     <div>
+  //       <h1 className="state-hero-title">{this.heroTitle()}</h1>
+  //       <div className="state-hero-narrative">{this.heroNarration()}</div>
+  //     </div>
+  //   </div>);
+  // }
 
-  renderBreadcrumbs(){
-    return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
-  }
+  // renderBreadcrumbs(){
+  //   return <div className="breadcrumbs-container" ref={this.breadcrumbs}>{this.props.breadcrumbs}</div>
+  // }
 
   renderBoxAd() {
     return <div id="second-ad">
@@ -169,8 +169,8 @@ class StateLayout extends React.Component {
     return (
       <div className="state-body">
         {this.props.searchBox}
-        {this.renderBreadcrumbs()}
-        {this.renderHero()}
+        {/* {this.renderBreadcrumbs()} */}
+        {/* {this.renderHero()} */}
         <div className="below-hero">
           {/*<div className="content">*/}
             {this.renderToc()}
