@@ -1,0 +1,5 @@
+en:
+  community:
+    state:
+      hero_title: '%{name_long} Schools'
+      hero_narrative: There are %{school_count} public and private PK-12 schools in %{name_long}. Learn more about the schools, student demographics, and academics within the state, read parent reviews of local schools, and find information about specific cities and school districts.

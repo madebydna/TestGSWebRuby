@@ -1,0 +1,5 @@
+es:
+  community:
+    state:
+      hero_title: 'Escuelas de %{name_long}'
+      hero_narrative: Hay %{school_count} escuelas públicas y privadas de PK-12 en %{name_long}. Obtén más información sobre las escuelas, la demografía estudiantil, resultados académicos en el estado, lea opiniones de la comunidad, y busca información de ciudades y distritos escolares específicos.
