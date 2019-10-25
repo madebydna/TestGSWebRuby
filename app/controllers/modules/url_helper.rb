@@ -136,7 +136,6 @@ module UrlHelper
         params = school_params school
         params.merge! params_hash
       end
-
       super params
     end
     define_method "#{helper_name}_url" do |school, params_hash = {}|
