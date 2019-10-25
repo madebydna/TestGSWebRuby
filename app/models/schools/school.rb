@@ -21,7 +21,7 @@ class School < ActiveRecord::Base
   self.table_name='school'
   include StateSharding
 
-  attr_accessor :assigned, :canonical_url
+  attr_accessor :assigned
   attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active, :new_profile_school
   attr_writer :collections
   has_many :school_metadatas

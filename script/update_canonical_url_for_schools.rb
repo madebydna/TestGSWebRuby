@@ -11,8 +11,6 @@ script_args = {}
 states = %w(ak)
 states.each do |state|
   School.on_db(state).where(canonical_url: nil).active.limit(5).each do |school|
-    puts school.shard
-    puts school_path(school)
     school.update!(canonical_url: school_path(school))
   end
 end
