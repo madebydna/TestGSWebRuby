@@ -7,10 +7,13 @@ include UrlHelper
 ARGV << '-h' if ARGV.empty?
 script_args = {}
 
-# states = States.abbreviations
 states = %w(ak)
 states.each do |state|
-  School.on_db(state).where(canonical_url: nil).active.limit(5).each do |school|
-    school.update!(canonical_url: school_path(school))
+  School.on_db(state) do 
+    School.active.where(canonical_url: nil).each do |school|
+      # done this way since ActiveRecord#update seems bugged
+      school.canonical_url  = school_path(school)
+      school.save
+    end
   end
 end
