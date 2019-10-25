@@ -36,6 +36,7 @@ class CensusLoading::Loader < CensusLoading::Base
       ensure
         unless census_update.action == ACTION_NO_CACHE_BUILD
           Cacher.create_caches_for_data_type(entity, DATA_TYPE) if entity.is_a?(School)
+          DistrictCacher.create_caches_for_data_type(entity, DATA_TYPE) if entity.is_a?(District)
         end
       end
     end
