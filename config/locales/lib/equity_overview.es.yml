@@ -33,8 +33,8 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
-        escuela. ¿Hay diferencias%{more}grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
-        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?%{end_more}</p>
+        escuela. ¿Hay diferencias grandes?%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
+        iniciar una conversación en tu escuela acerca de cómo ayudar a que todos los estudiantes tengan éxito.%{end_more}</p>
       narrative_2_html: >
         <h3 class="negative">Un signo preocupante:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
@@ -44,8 +44,8 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
-        escuela. ¿Hay diferencias%{more}grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
-        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?%{end_more}</p>
+        escuela. ¿Hay diferencias grandes?%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
+        iniciar una conversación en tu escuela acerca de cómo ayudar a que todos los estudiantes tengan éxito.%{end_more}</p>
       narrative_3_html: >
         <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando tan bien como
@@ -54,8 +54,8 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
-        escuela. ¿Hay diferencias%{more}grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
-        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?%{end_more}</p>
+        escuela. ¿Hay diferencias grandes?%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
+        iniciar una conversación en tu escuela acerca de cómo ayudar a que todos los estudiantes tengan éxito.%{end_more}</p>
       narrative_4_html: >
         <h3 class="positive">Un signo prometedor:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mejor que otros
@@ -64,8 +64,8 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">¡Las escuelas que eliminan las diferencias entre distintos grupos de estudiantes están
-        haciendo algo bien! Explore %{sections} para%{more}informarse más. Hable con un maestro u otros padres sobre cómo
-        esta escuela está ayudando a todos los estudiantes a tener éxito – y cómo puede ayudar.%{end_more}</p>
+        haciendo algo bien! Explore %{sections} para informarse más.%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
+        iniciar una conversación en tu escuela acerca de cómo ayudar a que todos los estudiantes tengan éxito.%{end_more}</p>
       narrative_5_html: >
         <h3 class="positive">¡Buenas noticias!:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mucho mejor que
@@ -74,5 +74,5 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">¡Las escuelas que eliminan las diferencias entre distintos grupos de estudiantes están
-        haciendo algo bien! Explore %{sections} para%{more}informarse más. Hable con un maestro u otros padres sobre cómo
-        esta escuela está ayudando a todos los estudiantes a tener éxito – y cómo puede ayudar.%{end_more}</p>
+        haciendo algo bien! Explore %{sections} para informarse más.%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
+        iniciar una conversación en tu escuela acerca de cómo ayudar a que todos los estudiantes tengan éxito..%{end_more}</p>
