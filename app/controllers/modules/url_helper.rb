@@ -128,6 +128,8 @@ module UrlHelper
     "#{ENV_GLOBAL['catalog_server']}/#{path}".gsub('//','/').gsub('//','/').sub(':/', '://')
   end
 
+  # url helper method to help shape the params before sending it to the next level
+  # params_hash[:refresh_canonical_link] is used in the populate_canonical_url_for_schools script to refresh the db
   %w(school school_user).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
       return school.canonical_url if helper_name == 'school' && school.try(:canonical_url) && !params_hash[:refresh_canonical_link]
