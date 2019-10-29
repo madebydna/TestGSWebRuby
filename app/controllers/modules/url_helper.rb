@@ -130,25 +130,27 @@ module UrlHelper
 
   %w(school school_user).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
-      return school.canonical_url if helper_name == 'school' && school.try(:canonical_url)
+      return school.canonical_url if helper_name == 'school' && school.try(:canonical_url) && !params_hash[:refresh_canonical_link]
 
       if school.nil?
         params = school_params_hash params_hash
       else
-        GSLogger.error(:misc, nil, message:"#{school.name}(#{school.state}, #{school.id}) does not have a canonical url", vars: school) if helper_name == 'school'
+        GSLogger.error(:misc, nil, message:"#{school.name}(#{school.state}, #{school.id}) does not have a canonical url", vars: school) if helper_name == 'school' && !params_hash[:refresh_canonical_link]
         params = school_params school
+        params_hash.delete(:refresh_canonical_link)
         params.merge! params_hash
       end
       super params
     end
     define_method "#{helper_name}_url" do |school, params_hash = {}|
-      return root_url + school.canonical_url if helper_name == 'school' && school.try(:canonical_url)
+      return root_url + school.canonical_url if helper_name == 'school' && school.try(:canonical_url) && !params_hash[:refresh_canonical_link]
 
       if school.nil?
         params = school_params_hash params_hash
       else
-        GSLogger.error(:misc, nil, message:"#{school.name}(#{school.state}, #{school.id}) does not have a canonical url", vars: school) if helper_name == 'school'
+        GSLogger.error(:misc, nil, message:"#{school.name}(#{school.state}, #{school.id}) does not have a canonical url", vars: school) if helper_name == 'school' && !params_hash[:refresh_canonical_link]
         params = school_params school
+        params_hash.delete(:refresh_canonical_link)
         params.merge! params_hash
       end
       super params
