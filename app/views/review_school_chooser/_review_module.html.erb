@@ -18,7 +18,7 @@
     <%= review.comment %>
     <div class="ptm">
         <%= t('.school_name_html',
-              school_name: link_to(school_reviews_path(review.school),
+              school_name: link_to(school_reviews_path(review.school, anchor: 'Reviews'),
               class: 'link-darkgray open-sans_b') { review.school.name },
               city: review.school.city,
               state: review.school.state)

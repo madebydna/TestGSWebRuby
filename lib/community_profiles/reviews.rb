@@ -34,7 +34,7 @@ module CommunityProfiles
         .reverse
         .map.with_index do |user_reviews, idx|
         user_reviews.build_struct.merge({
-                                          school_name: reviews[idx)&.school&.name,
+                                          school_name: reviews[idx]&.school&.name,
                                           school_path: school_path(reviews[idx]&.school)
                                         })
       end

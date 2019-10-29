@@ -58,7 +58,7 @@ class ReviewTopicDecorator < Draper::Decorator
   end
 
   def school_url
-    h.school_reviews_path(nil, id: school_id, state_name: state_name, city: city, name: sample_review_school)
+    h.school_reviews_path(nil, id: school_id, state_name: state_name, city: city, name: sample_review_school, anchor: 'Reviews')
   end
 
   def topic_key
