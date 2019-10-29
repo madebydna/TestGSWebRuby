@@ -67,6 +67,8 @@ const anyStateNameRegex = function() {
   return new RegExp(components.join('|'), 'i');
 };
 
+const anyStateNamePartialRegex = keys(statesHash).map(name => name.replace(/\s/g,'-')).join('|');
+
 const isStateName = function(str) {
   return anyStateNameRegex().test(str);
 };
@@ -108,4 +110,4 @@ const titleizedName = str => {
 }
 
 
-export { anyStateNameRegex, isStateName, abbreviation, name, titleizedName, stateAbbreviations };
+export { anyStateNameRegex, anyStateNamePartialRegex, isStateName, abbreviation, name, titleizedName, stateAbbreviations };

@@ -161,12 +161,10 @@ const onDomContentLoaded = callback => {
 }
 
 export const isScrolledInViewport = (ele) => {
-  const element = ele.getBoundingClientRect();
-  const elemTop = element.top;
-  const elemBottom = element.bottom - 200;
-
-  const inView = elemTop < window.innerHeight && elemBottom >= 0;
-  return inView;
+  const boundingBox = ele.getBoundingClientRect();
+  const topY = boundingBox.top;
+  const bottomY = boundingBox.top + boundingBox.height;
+  return topY >= 0 && bottomY <= Math.min(document.documentElement.clientHeight, window.innerHeight || 0);
 }
 
 // this is the 2nd implementation of this function, meant to be more generic than original one in search code

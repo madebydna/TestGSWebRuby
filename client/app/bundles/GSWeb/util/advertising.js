@@ -4,7 +4,13 @@ import {
 } from 'components/ads/mobile_overlay';
 import { capitalize } from 'util/i18n';
 import log from 'util/log';
-import { remove } from 'lodash';
+import { remove, throttle } from 'lodash';
+import { isScrolledInViewport } from 'util/viewport';
+import { 
+  onRefreshablePage, 
+  INDIRECT_CAMPAIGN_IDS,
+  setForRefreshAfterMinViewTime,
+  checkElementViewability } from 'util/ad_refresh';
 
 const $ = window.jQuery;
 window.googletag = window.googletag || {};
@@ -21,12 +27,11 @@ const functionSlotDefinitionArray = [];
 const functionAdShowArray = [];
 const googleId = '/1002894/';
 const slotTimers = {};
+GS.ad.slotViewability = GS.ad.slotViewability || {};
+const slotViewability = GS.ad.slotViewability;
 
 const MAX_COUNTER = 10;
 const DELAY_IN_MS = 1000;
-const onGK = window.location.href.indexOf("/gk/") !== -1;
-const INDIRECT_CAMPAIGN_IDS = [208549694, 123081254]; // Google AdX  and Rubicon Project_Unlimited
-const INDIRECT_AD_REFRESH_RATE = 45000;
 
 const slotIdFromName = (name, slotOccurrenceNumber = 1) => {
   const slotName = capitalize(name).replace(' ', '_');
@@ -34,13 +39,31 @@ const slotIdFromName = (name, slotOccurrenceNumber = 1) => {
 };
 
 const slotRenderedHandler = function(event) {
-  // set timeout to refresh "indirect" ad on GK
-  if (onGK && INDIRECT_CAMPAIGN_IDS.indexOf(event.campaignId) !== -1) {
-    console.log('Conditions for AD REFRESH met', event.slot.getSlotElementId());
-    setTimeout(function(){
-      console.log('Refreshing ad', event.slot.getSlotElementId());
-      GS.ad.showAd(event.slot.getSlotElementId());
-    }, INDIRECT_AD_REFRESH_RATE);
+  // get id
+  const divId = event.slot.getSlotElementId();
+  const adId = event.creativeId;
+  const refreshableCampaign = INDIRECT_CAMPAIGN_IDS.indexOf(event.campaignId) !== -1;
+  const refreshable = refreshableCampaign && onRefreshablePage;
+  const slotVisible = isScrolledInViewport(document.getElementById(divId));
+  console.log("Recording AD shown for", divId, 'AD id', adId, 'refreshable campaign?', refreshableCampaign);
+
+  if (refreshable) {
+    console.log('Recording REFRESHABLE ad shown for ', divId);
+    // Record current ad in slotViewability
+    slotViewability[divId] = {
+      currentIndirectAd: adId || true,
+      markedForRefresh: false,
+      viewedAt: slotVisible ? new Date().getTime() : null
+    }
+    // Set currently visible ads for refresh if still visible after MIN_VIEW_TIME
+    if (slotVisible) setForRefreshAfterMinViewTime(divId);
+  } else {
+    // reset slotViewability
+    slotViewability[divId] = {
+      currentIndirectAd: false,
+      markedForRefresh: false,
+      viewedAt: null
+    };
   }
 
   if (event.slot.onRenderEnded) {
@@ -101,16 +124,19 @@ const onInitializeFuncs = [];
 
 const init = function() {
   loadGpt();
-  const dfp_slots = $('.gs_ad_slot').filter(':visible,[data-ad-defer-render]');
+
   if (gon.advertising_enabled) {
     googletag.cmd.push(() => {
       //    Remove after ab test
       if (!$.isEmptyObject(gon.ad_set_channel_ids)) {
         googletag.pubads().set('adsense_channel_ids', gon.ad_set_channel_ids);
       }
+      
+      const dfp_slots = $('.gs_ad_slot').filter(':visible,[data-ad-defer-render]');
 
       $(dfp_slots).each(function() {
         _defineSlot($(this));
+        slotViewability[getDivId($(this))] = {};
       });
 
       while (functionSlotDefinitionArray.length > 0) {
@@ -131,8 +157,14 @@ const init = function() {
       while (functionAdShowArray.length > 0) {
         functionAdShowArray.shift()();
       }
+      // custom initialization functions
       while (onInitializeFuncs.length > 0) {
         onInitializeFuncs.shift()();
+      }
+
+      if (onRefreshablePage) {
+        window.addEventListener("scroll", throttle(checkElementViewability, 500));
+        window.addEventListener("resize", throttle(checkElementViewability, 500));
       }
 
       initialized = true;
@@ -247,6 +279,7 @@ const _defineSlot = function($adSlot) {
   if (sizeMapping) {
     slot = slot.defineSizeMapping(sizeMapping);
   }
+  // Add to slots object, keyed by div id
   slots[getDivId($adSlot)] = slot.
     setTargeting('refresh', 'true').
     addService(googletag.pubads());
