@@ -30,7 +30,7 @@ en:
           the state average for all students.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
-          <p class="footnote">Low-income kids are really being left behind at this school. But some schools are doing an excellent job of serving all students.
+          <div class="footnote">Low-income kids are really being left behind at this school. But some schools are doing an excellent job of serving all students.
           <a href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
           <ul>
           <li><a href="/gk/equity-toolkit/#equity">Find out: what the heck is equity, anyway?</a></li>
@@ -39,72 +39,69 @@ en:
           <li><a href="/gk/equity-toolkit/#what-to-ask">5 things to ask your principal</a></li>
           <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned with your principal</a></li>
           </ul>%{end_more}
-          </p>
+          </div>
         _2_html: >
           <p class="title negative">A worrisome sign:</p>
           <p class="narrative-content">Test scores for low income students at this school fall <span class="emphasis">below</span> the state
           average for all students.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
-          <p class="footnote">Low-income kids are being left behind at this school. But some schools are doing an excellent job of serving all students.
-          <a href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
-          <ul>
+          <div class="footnote">Low-income kids are being left behind at this school. But some schools are doing an excellent job of serving all students.
+          <a href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<ul>
           <li><a href="/gk/equity-toolkit/#equity">Find out: what the heck is equity, anyway?</a></li>
           <li><a href="/gk/equity-toolkit/#best-practices">6 things the best high schools do to help low-income kids.</a></li>
           <li><a href="/gk/equity-toolkit/#compare">How well is your school serving low income kids, compared to other schools near you?</a></li>
           <li><a href="/gk/equity-toolkit/#what-to-ask">5 things to ask your principal</a></li>
           <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned with your principal</a></li>
           </ul>%{end_more}
-          </p>
+          </div>
         _3_html: >
           <p class="title neutral">Worth a deeper look:</p>
           <p class="narrative-content">Test scores for low income students at this school are <span class="emphasis">about the same as</span> the
           state average, though still below the scores for all students at top-performing schools in the state.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
-          <p class="footnote">Most schools struggle to support low-income students.  But some schools are succeeding.
+          <div class="footnote">Most schools struggle to support low-income students.  But some schools are succeeding.
           <a href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
-          <ul>
+          <span><ul>
           <li><a href="/gk/equity-toolkit/#equity">Find out: what the heck is equity, anyway?</a></li>
           <li><a href="/gk/equity-toolkit/#best-practices">6 things the best high schools do to help low-income kids.</a></li>
           <li><a href="/gk/equity-toolkit/#compare">How well is your school serving low income kids, compared to other schools near you?</a></li>
           <li><a href="/gk/equity-toolkit/#what-to-ask">5 things to ask your principal</a></li>
           <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned with your principal</a></li>
-          </ul>%{end_more}
-          </p>
+          </ul></span>%{end_more}
+          </div>
         _4_html: >
           <p class="title positive">A promising sign:</p>
           <p class="narrative-content">Test scores for low income students at this school are <span class="emphasis">above</span> the state
           average for all students.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
-          <p class="footnote">This school is doing better than most schools when it comes to supporting low-income
+          <div class="footnote">This school is doing better than most schools when it comes to supporting low-income
           students. But some schools are doing an excellent job at serving all students.
-          <a href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
-          <ul>
-          <li><a href="/gk/equity-toolkit/#equity">Find out: what the heck is equity, anyway?</a></li>
-          <li><a href="/gk/equity-toolkit/#best-practices">6 things the best high schools do to help low-income kids.</a></li>
-          <li><a href="/gk/equity-toolkit/#compare">How well is your school serving low income kids, compared to other schools near you?</a></li>
-          <li><a href="/gk/equity-toolkit/#what-to-ask">5 things to ask your principal</a></li>
-          <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned with your principal</a></li>
-          </ul>%{end_more}
-          </p>
+          <a href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<span><ul>
+            <li><a href="/gk/equity-toolkit/#equity">Find out: what the heck is equity, anyway?</a></li>
+            <li><a href="/gk/equity-toolkit/#best-practices">6 things the best high schools do to help low-income kids.</a></li>
+            <li><a href="/gk/equity-toolkit/#compare">How well is your school serving low income kids, compared to other schools near you?</a></li>
+            <li><a href="/gk/equity-toolkit/#what-to-ask">5 things to ask your principal</a></li>
+            <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned with your principal</a></li></ul></span>
+          %{end_more}
+          </div>
         _5_html: >
           <p class="title positive">Good news!</p>
           <p class="narrative-content">Test scores for low income students at this school <span class="emphasis">are far above</span> the state
           average for all students.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
-          <p class="footnote">This school is doing a much better job than most schools when it comes to supporting low-income students.
-          <a href="/gk/equity-toolkit/">This toolkit</a> will help you advocate for all kids.%{more}
-          <ul>
-          <li><a href="/gk/equity-toolkit/#equity">Find out: what the heck is equity, anyway?</a></li>
-          <li><a href="/gk/equity-toolkit/#best-practices">6 things the best high schools do to help low-income kids.</a></li>
-          <li><a href="/gk/equity-toolkit/#compare">How well is your school serving low income kids, compared to other schools near you?</a></li>
-          <li><a href="/gk/equity-toolkit/#what-to-ask">5 things to ask your principal</a></li>
-          <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned with your principal</a></li>
-          </ul>%{end_more}
-          </p>
+          <div class="footnote">This school is doing a much better job than most schools when it comes to supporting low-income students.
+          <a href="/gk/equity-toolkit/">This toolkit</a> will help you advocate for all kids.%{more}<span><ul>
+            <li><a href="/gk/equity-toolkit/#equity">Find out: what the heck is equity, anyway?</a></li>
+            <li><a href="/gk/equity-toolkit/#best-practices">6 things the best high schools do to help low-income kids.</a></li>
+            <li><a href="/gk/equity-toolkit/#compare">How well is your school serving low income kids, compared to other schools near you?</a></li>
+            <li><a href="/gk/equity-toolkit/#what-to-ask">5 things to ask your principal</a></li>
+            <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned with your principal</a></li></ul></span>
+          %{end_more}
+          </div>
       Test scores: Test scores
       'UC/CSU eligibility': 'UC/CSU eligibility'
       courses_title: Advanced coursework
