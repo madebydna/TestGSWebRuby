@@ -229,8 +229,10 @@
   </fieldType>
   <field name="Economically_disadvantaged" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="academic_progress_rating" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="student_progress_rating" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="advanced_courses_rating" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="city" type="text_location_synonyms" multiValued="false" indexed="true" stored="true"/>
+  <field name="city_untokenized" type="string" multiValued="false" indexed="true" stored="true"/>
   <field name="city_id" type="int" multiValued="false" indexed="true" required="false" stored="true"/>
   <field name="city_name" type="text_ss" indexed="true" stored="true"/>
   <field name="college_readiness_rating" type="int" multiValued="false" indexed="true" stored="true"/>
@@ -245,6 +247,7 @@
   <field name="level_codes" type="string" multiValued="true" indexed="true" stored="true"/>
   <field name="name" type="text_ss" multiValued="false" indexed="true" stored="true"/>
   <field name="number_of_schools" type="int" indexed="true" stored="true"/>
+  <field name="school_district_city" type="string" multiValued="false" indexed="true" stored="true"/>
   <field name="school_district_id" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="school_district_name" type="string" multiValued="false" indexed="true" stored="true"/>
   <field name="school_id" type="int" multiValued="false" indexed="true" stored="true"/>
@@ -255,6 +258,7 @@
   <field name="test_scores_rating" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="test_scores_rating_african_american" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="test_scores_rating_asian" type="int" multiValued="false" indexed="true" stored="true"/>
+  <field name="test_scores_rating_asian_or_pacific_islander" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="test_scores_rating_filipino" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="test_scores_rating_hawaiian" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="test_scores_rating_hispanic" type="int" multiValued="false" indexed="true" stored="true"/>
@@ -265,6 +269,7 @@
   <field name="test_scores_rating_race_unspecified" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="test_scores_rating_two_or_more_races" type="int" multiValued="false" indexed="true" stored="true"/>
   <field name="test_scores_rating_white" type="int" multiValued="false" indexed="true" stored="true"/>
-  <field name="type" type="string" indexed="true" stored="true"/>
+  <field name="document_type" type="string" indexed="true" stored="true"/>
   <field name="zipcode" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="csa_badge" type="int" multiValued="true" indexed="true" stored="true"/>
 </schema>

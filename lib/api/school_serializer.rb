@@ -26,6 +26,7 @@ class Api::SchoolSerializer
       id: school.id,
       districtId: school.district_id,
       districtName: school['district_name'] || school&.try(:district_name),
+      districtCity: school&.try(:school_district_city),
       levelCode: school.level_code,
       lat: school.lat,
       lon: school.lon,

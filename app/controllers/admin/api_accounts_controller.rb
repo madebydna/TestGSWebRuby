@@ -68,7 +68,7 @@ class Admin::ApiAccountsController < ApplicationController
 
   def create_api_key
     @api_account.save_unique_api_key
-    NewApiKeyEmail.deliver_to_api_user(@api_account)
+    # NewApiKeyEmail.deliver_to_api_user(@api_account)
     render json: { apiKey: @api_account.api_key}
   end
 

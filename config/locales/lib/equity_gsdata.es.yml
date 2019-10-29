@@ -10,7 +10,7 @@ es:
         una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el
         apoyo que necesitan para tener éxito.
       RE Test scores overview narration: >
-        Esta muestra la Calificación de los Resultados de Exámenes para diferentes razas o etnias. Grandes diferencias
+        Esto muestra la Calificación de los Resultados de Exámenes para diferentes razas o etnias. Grandes diferencias
         puede sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.
       RE Grad rates narration: >
         Esto muestra las tasas de graduación de diferentes razas o etnias. Grandes diferencias puede sugerir que algunos
@@ -31,48 +31,89 @@ es:
           para tener éxito.
         _1_html: >
           <p class="title negative">Muy preocupante:</p>
-          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela está
-          <span class="emphasis">muy por debajo</span> del promedio estatal para todos los estudiantes.</p>
+          <p class="narrative-content">Los resultados de los exámenes de los estudiantes de bajos ingresos en esta
+          escuela están <span class="emphasis">muy por debajo</span> del promedio estatal para todos los estudiantes.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo</a>%{more}<a href="/gk/milestones/?lang=es">que se espera que tu hijo aprenda en cada grado</a>,
-          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
+          <div class="footnote">Los estudiantes de bajos ingresos realmente están siendo dejados atrás en esta escuela.
+          Pero algunas escuelas están haciendo un excelente trabajo de servir a todos los estudiantes.
+          <a href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
+          <ul>
+          <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua: ¿qué es la equidad de todos modos?</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#compare">¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, en comparación con otras escuelas cercanas?</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask">5 cosas para preguntarle a tu director</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#principal-template">Comparte lo que has aprendido con tu director</a></li>
+          </ul>%{end_more}
+          </div>
         _2_html: >
           <p class="title negative">Un signo preocupante:</p>
-          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela está
-          <span class="emphasis">por debajo</span> del promedio estatal para todos los estudiantes.</p>
+          <p class="narrative-content">Los resultados de los exámenes de los estudiantes de bajos ingresos en esta
+          escuela están <span class="emphasis">por debajo</span> del promedio estatal para todos los estudiantes.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo</a>%{more}<a href="/gk/milestones/?lang=es">que se espera que tu hijo aprenda en cada grado</a>,
-          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
+          <div class="footnote">Los estudiantes de bajos ingresos realmente están siendo dejados atrás en esta escuela.
+          Pero algunas escuelas están haciendo un excelente trabajo de servir a todos los estudiantes.
+          <a href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
+          <ul>
+          <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua: ¿qué es la equidad de todos modos?</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#compare">¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, en comparación con otras escuelas cercanas?</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask">5 cosas para preguntarle a tu director</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#principal-template">Comparte lo que has aprendido con tu director</a></li>
+          </ul>%{end_more}
+          </div>
         _3_html: >
           <p class="title neutral">Vale la pena una mirada más profunda:</p>
-          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela
+          <p class="narrative-content">Los resultados de los exámenes de los estudiantes de bajos ingresos en esta escuela
           <span class="emphasis">son comparables</span> con el promedio estatal para todos los estudiantes, aunque
-          todavía por debajo de escuelas de rendimiento superior en el estado.</p>
+          todavía están por debajo de los resultados de estudiantes en escuelas de alto rendimiento en el estado.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo</a>%{more}<a href="/gk/milestones/?lang=es">que se espera que tu hijo aprenda en cada grado</a>,
-          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
+          <div class="footnote">La mayoría de las escuelas tienen dificultades para apoyar a los estudiantes de bajos ingresos.
+          Pero algunas escuelas están teniendo éxito.
+          <a href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}<ul>
+            <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua: ¿qué es la equidad de todos modos?</a></li>
+            <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</a></li>
+            <li><a href="/gk/equity-toolkit/?lang=es#compare">¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, en comparación con otras escuelas cercanas?</a></li>
+            <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask">5 cosas para preguntarle a tu director</a></li>
+            <li><a href="/gk/equity-toolkit/?lang=es#principal-template">Comparte lo que has aprendido con tu director</a></li></ul>
+          %{end_more}
+          </div>
         _4_html: >
           <p class="title positive">Un signo prometedor:</p>
-          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela están por
-          encima del promedio estatal para todos los estudiantes.</p>
+          <p class="narrative-content">Los resultados de los exámenes de los estudiantes de bajos ingresos en esta
+          escuela están <span class="emphasis">por encima</span> del promedio estatal para todos los estudiantes.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
-          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
+          <div class="footnote">Esta escuela está mejor que la mayoría de las escuelas cuando se trata de apoyar a los
+          estudiantes de bajos ingresos. Pero algunas escuelas están haciendo un excelente trabajo sirviendo a todos los estudiantes.
+          <a href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
+          <ul>
+          <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua: ¿qué es la equidad de todos modos?</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#compare">¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, en comparación con otras escuelas cercanas?</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask">5 cosas para preguntarle a tu director</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#principal-template">Comparte lo que has aprendido con tu director</a></li>
+          </ul>%{end_more}
+          </div>
         _5_html: >
           <p class="title positive">¡Buenas noticias!:</p>
-          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela están
-          <span class="emphasis">muy por encima</span> del promedio estatal para todos los estudiantes.</p>
+          <p class="narrative-content">Los resultados de los exámenes de los estudiantes de bajos ingresos en esta
+          escuela están <span class="emphasis">muy por encima</span> del promedio estatal para todos los estudiantes.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
-          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
+          <div class="footnote">Esta escuela está haciendo un trabajo mucho mejor que la mayoría de las escuelas cuando
+          se trata de apoyar a los estudiantes de bajos ingresos.
+          <a href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a abogar por todos los niños.%{more}
+          <ul>
+          <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua: ¿qué es la equidad de todos modos?</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#compare">¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, en comparación con otras escuelas cercanas?</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask">5 cosas para preguntarle a tu director</a></li>
+          <li><a href="/gk/equity-toolkit/?lang=es#principal-template">Comparte lo que has aprendido con tu director</a></li>
+          </ul>%{end_more}
+          </div>
       'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
       courses_title: Cursos avanzados
       Advanced coursework: Cursos avanzados
