@@ -9,11 +9,5 @@ json.average_rating school[:parentRating]
 json.number_of_reviews school[:numReviews]
 json.distance school[:distance]
 json.links(
-  show: school_path(
-    nil,
-    id: school[:id],
-    name: school[:name],
-    city: school.dig(:address,:city),
-    state_name: States.state_name(school[:state])
-  )
+  show: school[:links][:profile]
 )
