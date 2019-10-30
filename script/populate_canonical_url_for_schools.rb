@@ -32,10 +32,10 @@ begin log = ScriptLogger.record_log_instance(script_args); rescue;end
 begin
   states.each do |state|
     School.on_db(state) do
+      puts "Working on..."
+      puts "......#{state}"
       if should_update
         School.active.where(canonical_url: nil).each do |school|
-          puts "Working on..."
-          puts "......#{state}"
           # done this way since ActiveRecord#update and ActiveRecord#update_attributes seems bugged
           school.canonical_url  = school_path(school, trailing_slash: true)
           school.save
@@ -43,8 +43,6 @@ begin
         end
       elsif should_refresh
         School.active.each do |school|
-          puts "Working on..."
-          puts "......#{state}"
           # done this way since ActiveRecord#update and ActiveRecord#update_attributes seems bugged
           # send a param to school_path to not use the canonical_url found in the db
           school.canonical_url  = school_path(school, trailing_slash: true, refresh_canonical_link: should_refresh)
