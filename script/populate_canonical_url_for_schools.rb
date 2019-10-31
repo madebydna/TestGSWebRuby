@@ -43,7 +43,7 @@ begin
           counter += 1
         end
       elsif should_refresh
-        School.active.first(5).each do |school|
+        School.active.each do |school|
           # done this way since ActiveRecord#update and ActiveRecord#update_attributes seems bugged
           # send a param to school_path to not use the canonical_url found in the db
           link = school_path(school, trailing_slash: true, refresh_canonical_link: should_refresh)
