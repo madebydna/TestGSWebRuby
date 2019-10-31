@@ -38,16 +38,16 @@ begin
         School.active.where(canonical_url: nil).each do |school|
           # done this way since ActiveRecord#update and ActiveRecord#update_attributes seems bugged
           link = school_path(school, trailing_slash: true)
-          sql = "UPDATE _#{school.state.downcase}.school set canonical_url=#{link}, modified=modified where id=#{school.id};"
+          sql = "UPDATE _#{school.state.downcase}.school set canonical_url=\"#{link}\", modified=modified where id=#{school.id};"
           ActiveRecord::Base.connection.execute(sql)
           counter += 1
         end
       elsif should_refresh
-        School.active.each do |school|
+        School.active.first(5).each do |school|
           # done this way since ActiveRecord#update and ActiveRecord#update_attributes seems bugged
           # send a param to school_path to not use the canonical_url found in the db
           link = school_path(school, trailing_slash: true, refresh_canonical_link: should_refresh)
-          sql = "UPDATE _#{school.state.downcase}.school set canonical_url=#{link}, modified=modified where id=#{school.id};"
+          sql = "UPDATE _#{school.state.downcase}.school set canonical_url=\"#{link}\", modified=modified where id=#{school.id};"
           ActiveRecord::Base.connection.execute(sql)
           counter += 1
         end
