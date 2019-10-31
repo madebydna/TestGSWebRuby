@@ -132,12 +132,12 @@ module UrlHelper
   # params_hash[:refresh_canonical_link] is used in the populate_canonical_url_for_schools script to refresh the db
   %w(school school_user).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
-      return school.canonical_url if helper_name == 'school' && school.try(:canonical_url) && !params_hash[:refresh_canonical_link]
+      return school.canonical_url if use_db_canonical_url?(helper_name, school, params_hash)
 
       if school.nil?
         params = school_params_hash params_hash
       else
-        GSLogger.error(:misc, nil, message:"#{school.name}(#{school.state}, #{school.id}) does not have a canonical url", vars: school) if helper_name == 'school' && !params_hash[:refresh_canonical_link]
+        GSLogger.error(:misc, nil, message:"#{school.name}(#{school.state}, #{school.id}) does not have a canonical url", vars: school) if log_error?(helper_name, params_hash)
         params = school_params school
         params_hash.delete(:refresh_canonical_link)
         params.merge! params_hash
@@ -145,12 +145,12 @@ module UrlHelper
       super params
     end
     define_method "#{helper_name}_url" do |school, params_hash = {}|
-      return root_url + school.canonical_url if helper_name == 'school' && school.try(:canonical_url) && !params_hash[:refresh_canonical_link]
+      return root_url + school.canonical_url if use_db_canonical_url?(helper_name, school, params_hash)
 
       if school.nil?
         params = school_params_hash params_hash
       else
-        GSLogger.error(:misc, nil, message:"#{school.name}(#{school.state}, #{school.id}) does not have a canonical url", vars: school) if helper_name == 'school' && !params_hash[:refresh_canonical_link]
+        GSLogger.error(:misc, nil, message:"#{school.name}(#{school.state}, #{school.id}) does not have a canonical url", vars: school) if log_error?(helper_name, params_hash)
         params = school_params school
         params_hash.delete(:refresh_canonical_link)
         params.merge! params_hash
@@ -337,6 +337,16 @@ module UrlHelper
       url = 'https://www.zillow.com/'
     end
     "#{url}#{tracking_codes}"
+  end
+
+  private
+
+  def use_db_canonical_url?(helper_name, school, params_hash)
+    helper_name == 'school' && school.try(:canonical_url) && !params_hash[:refresh_canonical_link]
+  end
+
+  def log_error?(helper_name, params_hash)
+    helper_name == 'school' && !params_hash[:refresh_canonical_link]
   end
 
 end
