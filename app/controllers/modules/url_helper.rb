@@ -145,7 +145,7 @@ module UrlHelper
       super params
     end
     define_method "#{helper_name}_url" do |school, params_hash = {}|
-      return root_url + school.canonical_url if use_db_canonical_url?(helper_name, school, params_hash)
+      return root_url.chop + school.canonical_url if use_db_canonical_url?(helper_name, school, params_hash)
 
       if school.nil?
         params = school_params_hash params_hash
