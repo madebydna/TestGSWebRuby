@@ -50,6 +50,16 @@ class DistrictCacher
     }[key.to_s.to_sym]
   end
 
+  def self.create_caches_for_data_type(district, data_type)
+    cachers_for_data_type(data_type).each do |cacher_class|
+      begin
+        cacher_class.new(district).cache if cacher_class.active?
+      rescue => error
+        error_vars = { data_type: data_type, district_state: district.state, district_id: district.id, shard: district.shard_state }
+        GSLogger.error(:district_cache, error, vars: error_vars, message: 'Failed to build district cache')
+      end
+    end
+  end
 
   def self.active?
     true
