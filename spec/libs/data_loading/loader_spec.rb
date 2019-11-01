@@ -61,5 +61,11 @@ describe Loader do
         expect(Loader.determine_loading_class("non osp","ratings")).to eq(GsdataLoading::Loader)
       end
     end
+
+    context 'with the string "directory"' do
+      it 'should return DirectoryLoading::Loader' do
+        expect(Loader.determine_loading_class('somewhere','directory')).to eq(DirectoryLoading::Loader)
+      end
+    end
   end
 end

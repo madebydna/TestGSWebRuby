@@ -1,7 +1,7 @@
 es:
   lib:
     academic_progress:
-      'title': 'Progreso Académico'
+      'title': 'Progreso académico'
       'subtitle': '¿Cuánto ayudó esta escuela a los estudiantes a mejorar de un año al siguiente? Esta calificación compara las escuelas con similares niveles de conocimiento para medir el progreso del estudiante a lo largo del tiempo.'
       'sources_title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'source': 'Fuente'

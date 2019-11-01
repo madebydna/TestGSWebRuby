@@ -58,11 +58,11 @@ export default class ReviewsList extends React.Component {
   }
 
   renderOneUsersReviews(userReviews) {
-    let schoolUrl;
-    if (userReviews.school_url){
-      schoolUrl = userReviews.school_url;
+    let schoolPath;
+    if (userReviews.school_path){
+      schoolPath = userReviews.school_path;
       if (getQueryParam('lang') === 'es'){
-        userReviews.school_url = updateUrlParameter(schoolUrl,'lang','es')
+        userReviews.school_path = updateUrlParameter(schoolPath,'lang','es')
       }
     }
     
@@ -76,7 +76,7 @@ export default class ReviewsList extends React.Component {
       current_user_reported_reviews={this.state.currentUserReportedReviews}
       review_reported_callback={this.reviewReportedCallback}
       school_name = {userReviews.school_name}
-      school_url = {userReviews.school_url}
+      school_path = {userReviews.school_path}
     />)
   }
 

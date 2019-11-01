@@ -41,7 +41,9 @@ class Loader
         EspResponseLoading::Loader
       end
     elsif source != 'osp_form'
-      if census_data_type?(data_type)
+      if data_type == 'directory'
+        DirectoryLoading::Loader
+      elsif data_type == 'census' || census_data_type?(data_type)
         CensusLoading::Loader
       elsif data_type == 'newsletter'
         # ... just an example of how to extend

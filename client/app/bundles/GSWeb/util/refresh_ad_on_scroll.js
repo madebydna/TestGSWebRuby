@@ -15,7 +15,11 @@ const refreshAdOnScroll = function(adDivId, containerSelector, minHeight) {
   let eventName = 'scroll.adRefresh.' + adDivId;
   let scrollListenFrequency = 500;
 
+  
   let refreshAdIfEligible = function() {
+    if ((GS.ad.slotViewability[adDivId] || {})['currentIndirectAd']) {
+      return;
+    }
     var $container = $(containerSelector);
     var $window = $(window);
     var contentHeight = $container.height();

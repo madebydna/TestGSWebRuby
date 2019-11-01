@@ -10,6 +10,7 @@ class GSLogger
                                     school_profiles: 'SCHOOL_PROFILES',
                                     external_content_fetcher: 'EXTERNAL_CONTENT_FETCHER',
                                     school_cache: 'SCHOOL_CACHE',
+                                    district_cache: 'DISTRICT_CACHE',
                                     gk_action: 'GK_ACTION',
                                     shared_cache: 'SHARED_CACHE',
                                     preferences: 'PREFERENCES',

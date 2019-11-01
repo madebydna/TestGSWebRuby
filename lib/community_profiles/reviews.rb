@@ -34,13 +34,8 @@ module CommunityProfiles
         .reverse
         .map.with_index do |user_reviews, idx|
         user_reviews.build_struct.merge({
-                                          school_name: reviews&.dig(idx)&.school&.name,
-                                          school_url: school_path(nil,
-                                                                  id: reviews&.dig(idx)&.school_id,
-                                                                  name: reviews&.dig(idx)&.school&.name,
-                                                                  city: reviews&.dig(idx)&.school&.city,
-                                                                  state_name: States.state_name(reviews&.dig(idx)&.school&.state)
-                                          )
+                                          school_name: reviews[idx]&.school&.name,
+                                          school_path: school_path(reviews[idx]&.school)
                                         })
       end
     end

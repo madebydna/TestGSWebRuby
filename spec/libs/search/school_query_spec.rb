@@ -22,16 +22,22 @@ describe Search::SchoolQuery do
 
   describe '#result_summary' do
     {
-      [0, 'Alameda', 'CA'] => "Your search did not return any schools in <a href='/california/alameda/'>Alameda, CA</a>.",
-      [1, 'Alameda', 'CA'] => "Showing one school found in <a href='/california/alameda/'>Alameda, CA</a>",
-      [2, 'Alameda', 'CA'] => "Showing 1 to 2 of 2 schools found in <a href='/california/alameda/'>Alameda, CA</a>"
-    }.each do |args, expected|
-      context "given #{args.join(', ')} " do
+    # [lat, lon, radius, district_name, city, q, state],
+      [nil, nil, nil, nil, 'Alameda', nil, 'CA'] => 'city_browse',
+      [nil, nil, nil, nil, nil, nil, 'CA'] => 'state_browse',
+      [nil, nil, nil, nil, '', nil, 'CA'] => 'state_browse',
+      [3.0, 5.0, 25.0, nil, nil, nil, 'CA'] => 'distance',
+      [nil, nil, nil, 'Alameda Unified', 'Alameda', nil, 'CA'] => 'district_browse',
+      [nil, nil, nil, nil, nil, 'Montclair Elementary', 'CA'] => 'search_term',
+      [nil, nil, nil, nil, nil, nil, nil] => 'showing_number_of_schools',
+    }.each do |(lat, lon, radius, district_name, city, q, state), expected|
+      context "given #{[lat, lon, radius, district_name, city, q, state].inspect}" do
         it "should return #{expected}" do
-          total, city, state = *args
-          query = school_query_with_client_double(city: city, state: state)
-          results_double = double(total: total, index_of_first_result: 1, index_of_last_result: total)
-          expect(query.result_summary(results_double)).to eq(expected)
+          query = school_query_with_client_double(lat: lat, lon: lon, radius: radius, district_name: district_name, city: city, q: q, state: state)
+          results_double = double(total: 10, index_of_first_result: 1, index_of_last_result: 10)
+          expect(query).to receive(:t).with('schools').and_return('schools')
+          expect(query).to receive(:t).with(expected, anything)
+          query.result_summary(results_double)
         end
       end
     end

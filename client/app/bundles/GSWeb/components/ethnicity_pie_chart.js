@@ -1,4 +1,5 @@
 import { getScript } from '../util/dependency';
+import { t } from 'util/i18n';
 // TODO: import $
 
       //  If you change these colors they need to be changed in _students.html.erb and/or students.jsx
@@ -67,7 +68,7 @@ import { getScript } from '../util/dependency';
               } else {
                 val = Math.round(this.percentage)
               }
-              return '<span style="color:' + this.color + ';">\u25CF</span> percentage: <b>' + val + '</b>';
+              return '<span style="color:' + this.color + `;">\u25CF</span> ${t('percentage')}: <b>` + val + '</b>';
             }
           },
           series: [{

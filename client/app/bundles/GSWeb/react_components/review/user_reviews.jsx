@@ -16,7 +16,7 @@ export default class UserReviews extends React.Component {
     review_reported_callback: PropTypes.func,
     current_user_reported_reviews: PropTypes.array,
     school_name: PropTypes.string,
-    school_url: PropTypes.string
+    school_path: PropTypes.string
   };
 
   constructor(props) {
@@ -137,7 +137,7 @@ export default class UserReviews extends React.Component {
           {this.props.school_name &&
             <span>
               <span>{t('recent_reviews.review_for')} </span> 
-              <a href={this.props.school_url}>{this.props.school_name}</a> <br />
+              <a href={this.props.school_path}>{this.props.school_name}</a> <br />
             </span>}
           { userTypeSentence }
           { this.props.most_recent_date }

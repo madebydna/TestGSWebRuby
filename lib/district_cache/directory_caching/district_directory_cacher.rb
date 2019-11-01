@@ -8,7 +8,7 @@ class DistrictDirectoryCacher < DistrictCacher
   CACHE_KEY = 'district_directory'
 
   def self.listens_to?(data_type)
-    :district_directory == data_type
+    data_type == :district_directory || data_type == :directory
   end
 
   def self.active?

@@ -108,7 +108,7 @@ es:
       <p style="text-align: left;">La Calificación General de GreatSchools es una reflexión de múltiples medidas sobre la calidad de una escuela.
       <br/>Para algunas escuelas no tenemos suficientes datos de las agencias estatales o nacionales de educación para proporcionar una calificación.</p>
     assigned_description_html: >
-      Parece que este es su escuela <span style='text-transform: lowercase;' class="open-sans_sb">{school_level} asignado</span>, pero recomendamos doble control con el distrito o la escuela.
+      Parece que esta es tu escuela <span style='text-transform: lowercase;' class="open-sans_sb">{school_level} asignada</span>, pero recomendamos chequear con el distrito o la escuela.
     Preschools: Prescolares
     PreK: PreK
     Elementary: Primaria
@@ -257,6 +257,7 @@ es:
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare escuelas ahora&nbsp</a>o<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspdremover escuelas&nbsp</a><strong>para comparar en esta ubicación.'
 #    added for equity
     percentage of students: '% de estudiantes'
+    percentage: 'porcentaje'
     of students: 'de estudiantes'
     student: estudiante
     students: estudiantes

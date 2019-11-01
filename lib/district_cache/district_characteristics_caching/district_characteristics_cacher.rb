@@ -69,7 +69,7 @@ class DistrictCharacteristicsCacher < DistrictCacher
 
 
   def self.listens_to?(data_type)
-    data_type == :district_characteristics
+    data_type == :district_characteristics || data_type == :census
   end
 
   def self.active?
