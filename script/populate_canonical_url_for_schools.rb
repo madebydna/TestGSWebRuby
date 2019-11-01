@@ -29,18 +29,6 @@ counter = 0
 
 begin log = ScriptLogger.record_log_instance(script_args); rescue;end
 
-module ActiveRecord
-  module TimeStamp
-    module ClassMethods
-      def timestamp_attributes_for_update
-        super << 'modified'
-      end
-    end
-  end
-end
-
-ActiveRecord.include ActiveRecord::TimeStamp::ClassMethods
-
 begin
   states.each do |state|
     School.on_db("#{state}_rw") do
