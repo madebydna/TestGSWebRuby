@@ -108,7 +108,7 @@ module Search
         t('distance', **params)
       elsif district_name
         t('district_browse', **params)
-      elsif city
+      elsif city.present?
         t('city_browse', **params)
       elsif @q.present?
         t('search_term', **params)
