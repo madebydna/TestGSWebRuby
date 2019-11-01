@@ -12,7 +12,7 @@ export const onRefreshablePage = onGK || onSchoolPage; // || onStatePage || onCi
 
 
 export const INDIRECT_CAMPAIGN_IDS = [208549694, 123081254]; // Google AdX  and Rubicon Project_Unlimited
-export const INDIRECT_AD_REFRESH_RATE = 15000;
+export const INDIRECT_AD_REFRESH_RATE = 30000;
 export const MIN_VIEW_TIME = 1000;
 
 export const setAdSlotForRefresh = function(divId) {
