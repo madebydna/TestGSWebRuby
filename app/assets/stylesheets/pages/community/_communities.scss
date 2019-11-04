@@ -247,6 +247,19 @@ $line-height-community: 1.428571429;
       }
     }
   }
+  .toc.display-desktop {
+    top: 60px;
+
+    @include media-breakpoint-down(xs) {
+      display: none;
+    }
+  }
+
+  .toc.display-mobile { 
+    @include media-breakpoint-up(sm) {
+      display: none;
+    }
+  }
 }
 
 // Class to help draw blueish-gray lines
@@ -722,10 +735,3 @@ $line-height-community: 1.428571429;
   }
 }
 
-//@include media-breakpoint-down(xs) {
-//  .display-desktop { display:none }
-//}
-//
-//@include media-breakpoint-up(sm) {
-//  .display-mobile { display:none }
-//}
