@@ -27,7 +27,7 @@ class StatesController < ApplicationController
     @level_code = []
     @csa_years = []
     @csa_module = csa_state_solr_query.present?
-    @breadcrumbs = breadcrumbs 
+    @breadcrumbs = breadcrumbs
     @locality = locality 
     @cities = cities_data
     @top_schools = top_rated_schools
@@ -49,6 +49,7 @@ class StatesController < ApplicationController
     ad_setTargeting_through_gon
     data_layer_through_gon
     @academics = academics
+    @toc = toc
   end
 
   def school_state_title
@@ -199,6 +200,28 @@ class StatesController < ApplicationController
   # StructuredMarkup
   def prepare_json_ld
     breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
+  end
+
+  TOC_CONFIG = {
+    schools: { label: 'schools', anchor: '#schools' },
+    award_winning_schools: { label: 'award_winning_schools', anchor: '#award-winning-schools' },
+    academics: { label: 'academics', anchor: '#academics' },
+    students: { label: 'student_demographics', anchor: '#students' },
+    cities: { label: 'cities', anchor: '#cities' },
+    school_districts: { label: 'districts', anchor: '#districts' },
+    reviews: { label: 'reviews', anchor: '#reviews' }
+  }
+
+  def toc 
+    toc_items = [:schools, :award_winning_schools, :academics, :students, :cities, :school_districts, :reviews]
+
+    toc_items.delete(:award_winning_schools) unless @csa_module
+    toc_items.delete(:school_districts) if @districts.empty?
+    toc_items.delete(:academics) unless @academics[:data].present? 
+    toc_items.delete(:students) unless @students.students_demographics.present?
+    toc_items.delete(:reviews) if @reviews.empty?
+
+    toc_items.map { |item| TOC_CONFIG[item] }
   end
 
   def locality 
