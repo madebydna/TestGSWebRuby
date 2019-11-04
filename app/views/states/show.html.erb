@@ -7,21 +7,35 @@
   <%= stylesheet_link_tag "state", async: true %>
 <% end %>
 
-<div class="state-body">
-  <%= render 'school_profiles/breadcrumbs', breadcrumbs: @breadcrumbs %>
-  <%= render 'community/hero', school_count: @school_count %>
+<div class="community-page">
+  <div class="state-body">
+    <%= react_component('SearchBoxWrapper') %>
 
-  <%= react_component("State", props: {
-      cities: @cities,
-      schoolCount: @school_count,
-      school_levels: @school_levels,
-      schools_data: @top_schools,
-      breadcrumbs: @breadcrumbs,
-      locality: @locality,
-      districts: @districts,
-      csa_module: @csa_module,
-      reviews: @reviews,
-      students: @students.students_demographics,
-      academics: @academics
-  }) %>
+    <div class="breadcrumbs-container">
+      <%= render 'school_profiles/breadcrumbs', breadcrumbs: @breadcrumbs %>
+    </div>
+    <%= render 'community/hero', school_count: @school_count %>
+
+    <div class="below-hero">
+      <%= render 'community/toc' %>
+
+      <div class="community-modules">
+        <%= react_component("State", props: {
+            cities: @cities,
+            schoolCount: @school_count,
+            school_levels: @school_levels,
+            schools_data: @top_schools,
+            breadcrumbs: @breadcrumbs,
+            locality: @locality,
+            districts: @districts,
+            csa_module: @csa_module,
+            reviews: @reviews,
+            students: @students.students_demographics,
+            academics: @academics
+        }) %>
+      </div>
+
+      <%= render 'community/sticky_right_rail' %>
+    </div>
+  </div>
 </div>
