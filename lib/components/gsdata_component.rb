@@ -5,14 +5,16 @@ module Components
     def normalized_values
       @_normalized_values ||= begin
         values = cache_data_reader.decorated_gsdata_data(data_type).having_school_value
-
+        # binding.pry if data_type == 'Percentage of students suspended out of school'
         if valid_breakdowns.present?
           values = values.having_all_students_or_breakdown_in(valid_breakdowns)
         end
         if exact_breakdown_tags.present?
           values = values.for_all_students + values.having_exact_breakdown_tags(exact_breakdown_tags)
         end
-
+        if minimum_cutoff_date
+          values = values.recent_data_threshold(minimum_cutoff_date)
+        end
         values = values.having_most_recent_date
 
         # By now only school values and breakdowns we're interested in remain

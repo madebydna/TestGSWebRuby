@@ -168,6 +168,12 @@ class GsdataCaching::GsDataValue
       end.extend(CollectionMethods)
     end
 
+    def recent_data_threshold(year)
+      select do |dv|
+        dv.year.to_i > year
+      end.extend(CollectionMethods)
+    end
+
     def having_breakdown_tags(tags)
       tags = Array.wrap(tags)
       select do |dv|

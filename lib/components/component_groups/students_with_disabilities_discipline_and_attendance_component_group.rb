@@ -15,7 +15,7 @@ module Components
             component.type = 'person_gray'
             component.narration = t('narration.SD.Percentage of students suspended out of school')
             component.exact_breakdown_tags = ['disability']
-            component.valid_breakdowns = ['Students with disabilities']
+            component.valid_breakdowns = ['Students with disabilities','Students with IDEA catagory disabilities']
           end,
           GsdataComponent.new.tap do |component|
             component.cache_data_reader = cache_data_reader
