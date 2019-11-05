@@ -20,13 +20,7 @@
         <div>
           <%= link_to(
                   nearby_school.name,
-                  school_path(
-                      nil,
-                      state_name: States.state_name(nearby_school.state),
-                      city: nearby_school.city,
-                      name: nearby_school.name,
-                      id: nearby_school.id
-                  )
+                  school_path(nearby_school)
               ) %>
           <div class="school-info">
             <span><%= nearby_school.type %></span>

@@ -8,7 +8,7 @@ class Api::SavedSchoolsController < ApplicationController
 
   def create
     if fetch_user_saved_schools(current_user).include?([school_state, school_id])
-      GSLogger.warn(message:'School already in list', vars: params)
+      GSLogger.warn(:misc, nil, message:'School already in list', vars: params)
       render json: {status: 501}
     else
       school = School.on_db(school_state).active.find_by(id: school_id)
@@ -17,11 +17,11 @@ class Api::SavedSchoolsController < ApplicationController
         if saved_school.save
           render json: {status: 200}
         else
-          GSLogger.error(message:'Error saving school', vars: params)
+          GSLogger.error(:misc, nil, message:'Error saving school', vars: params)
           render json: {status: 400}
         end
       else
-        GSLogger.error(message:"Couldn't locate school", vars: params)
+        GSLogger.error(:misc, nil, message:"Couldn't locate school", vars: params)
         render json: {status: 400}
       end
     end
@@ -34,11 +34,11 @@ class Api::SavedSchoolsController < ApplicationController
         saved_school.destroy
         render json: {status: 200}
       else
-        GSLogger.error(message:'Error deleting school', vars: params)
+        GSLogger.error(:misc, nil, message:'Error deleting school', vars: params)
         render json: {status: 400}
       end
     else
-      GSLogger.warn(message:'School not in list', vars: params)
+      GSLogger.warn(:misc, nil, message:'School not in list', vars: params)
       render json: {status: 501}
     end
   end
