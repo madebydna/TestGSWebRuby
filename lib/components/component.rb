@@ -3,7 +3,7 @@
 module Components
   class Component
     attr_accessor :cache_data_reader, :data_type, :title, :type, :precision, :valid_breakdowns, :flagged,
-                  :exact_breakdown_tags
+                  :exact_breakdown_tags, :minimum_cutoff_date
     attr_writer :narration
 
     def initialize(precision: 0)
