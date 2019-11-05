@@ -1,4 +1,4 @@
-import { isScrolledInViewport } from 'util/viewport';
+import { isScrolledInViewportForAds } from 'util/viewport';
 import { anyStateNamePartialRegex } from 'util/states';
 
 const onGK = window.location.href.indexOf("/gk/") !== -1;
@@ -24,7 +24,7 @@ export const setAdSlotForRefresh = function(divId) {
 
 export const setForRefreshAfterMinViewTime = function(divId) {
   setTimeout(function(){
-    if (isScrolledInViewport(document.getElementById(divId))) {
+    if (isScrolledInViewportForAds(document.getElementById(divId))) {
       GS.ad.slotViewability[divId].markedForRefresh = true;
       setAdSlotForRefresh(divId);
     };
@@ -38,7 +38,7 @@ export const checkElementViewability = function() {
     let element = elements[i];
     if (!GS.ad.slotViewability[element.id]) { continue; }
     const {currentIndirectAd, viewedAt, markedForRefresh } = GS.ad.slotViewability[element.id];
-    if (isScrolledInViewport(element) && currentIndirectAd) {
+    if (isScrolledInViewportForAds(element) && currentIndirectAd) {
       const currentTime = new Date().getTime();
       if (!viewedAt) {
         // Ad has just become visible, record its viewedAt time

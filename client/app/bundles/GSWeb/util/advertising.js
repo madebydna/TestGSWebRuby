@@ -5,7 +5,7 @@ import {
 import { capitalize } from 'util/i18n';
 import log from 'util/log';
 import { remove, throttle } from 'lodash';
-import { isScrolledInViewport } from 'util/viewport';
+import { isScrolledInViewportForAds } from 'util/viewport';
 import { 
   onRefreshablePage, 
   INDIRECT_CAMPAIGN_IDS,
@@ -44,7 +44,7 @@ const slotRenderedHandler = function(event) {
   const adId = event.creativeId;
   const refreshableCampaign = INDIRECT_CAMPAIGN_IDS.indexOf(event.campaignId) !== -1;
   const refreshable = refreshableCampaign && onRefreshablePage;
-  const slotVisible = isScrolledInViewport(document.getElementById(divId));
+  const slotVisible = isScrolledInViewportForAds(document.getElementById(divId));
   console.log("Recording AD shown for", divId, 'AD id', adId, 'refreshable campaign?', refreshableCampaign);
 
   if (refreshable) {
