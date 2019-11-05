@@ -132,7 +132,7 @@ module UrlHelper
   # params_hash[:refresh_canonical_link] is used in the populate_canonical_url_for_schools script to refresh the db
   %w(school school_user).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
-      return add_query_params_to_url(school.canonical_url, true, params_hash) if use_db_canonical_url?(helper_name, school, params_hash)
+      return add_query_params_to_url(school.canonical_url, true, params_hash.compact) if use_db_canonical_url?(helper_name, school, params_hash)
 
       if school.nil?
         params = school_params_hash params_hash
@@ -145,7 +145,7 @@ module UrlHelper
       super params
     end
     define_method "#{helper_name}_url" do |school, params_hash = {}|
-      return add_query_params_to_url(root_url.chop + school.canonical_url, true, params_hash) if use_db_canonical_url?(helper_name, school, params_hash)
+      return add_query_params_to_url(root_url.chop + school.canonical_url, true, params_hash.compact) if use_db_canonical_url?(helper_name, school, params_hash)
 
       if school.nil?
         params = school_params_hash params_hash
