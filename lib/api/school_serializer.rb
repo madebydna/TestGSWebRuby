@@ -48,7 +48,7 @@ class Api::SchoolSerializer
       links: {
         profile: school_path(school, lang: I18n.current_non_en_locale),
         reviews: school_path(school, lang: I18n.current_non_en_locale) + '#Reviews',
-        collegeSuccess: school_path(school, lang: I18n.current_non_en_locale) + '#College_success'
+        collegeSuccess: school_path(school, lang: I18n.current_non_en_locale)+ '#College_success'
       },
       highlighted: false,
       pinned: (school.pinned if school.respond_to?(:pinned)),
