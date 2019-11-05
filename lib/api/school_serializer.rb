@@ -46,9 +46,9 @@ class Api::SchoolSerializer
       state: school.state.upcase,
       type: 'school',
       links: {
-        profile: school_path(school, trailing_slash: true, lang: I18n.current_non_en_locale),
-        reviews: school_path(school, anchor: 'Reviews', trailing_slash: true, lang: I18n.current_non_en_locale),
-        collegeSuccess: school_path(school, anchor: 'College_success', trailing_slash: true, lang: I18n.current_non_en_locale)
+        profile: school_path(school, lang: I18n.current_non_en_locale),
+        reviews: school_path(school, lang: I18n.current_non_en_locale) + '#Reviews',
+        collegeSuccess: school_path(school, lang: I18n.current_non_en_locale) + '#College_success'
       },
       highlighted: false,
       pinned: (school.pinned if school.respond_to?(:pinned)),
