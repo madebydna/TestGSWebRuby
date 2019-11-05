@@ -17,7 +17,7 @@ module Components
             component.type = 'person_gray'
             component.narration = t("narration.ER.#{suspension_scope}.Percentage of students suspended out of school")
             component.flagged = cache_data_reader.discipline_flag?
-            component.exact_breakdown_tags = []
+            component.exact_breakdown_tags = ["ethnicity"]
             component.valid_breakdowns = []
             component.minimum_cutoff_date = 2015
           end,
