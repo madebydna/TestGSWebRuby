@@ -198,6 +198,14 @@ $line-height-community: 1.428571429;
     top:60px;
   }
 
+  .ad-bar.display-desktop {
+    top: 60px;
+
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+  }
+
   //CSS for shared portion between City and District pages.
   .toc {
     margin: 20px 20px 0 0;
