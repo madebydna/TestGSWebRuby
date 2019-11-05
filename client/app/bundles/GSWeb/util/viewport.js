@@ -161,6 +161,15 @@ const onDomContentLoaded = callback => {
 }
 
 export const isScrolledInViewport = (ele) => {
+  const element = ele.getBoundingClientRect();
+  const elemTop = element.top;
+  const elemBottom = element.bottom - 200;
+
+  const inView = elemTop < window.innerHeight && elemBottom >= 0;
+  return inView;
+}
+
+export const isScrolledInViewportForAds = (ele) => {
   const boundingBox = ele.getBoundingClientRect();
   const topY = boundingBox.top;
   const bottomY = boundingBox.top + boundingBox.height;
