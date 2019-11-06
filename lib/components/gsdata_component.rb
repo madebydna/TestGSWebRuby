@@ -12,8 +12,8 @@ module Components
         if exact_breakdown_tags.present?
           values = values.for_all_students + values.having_exact_breakdown_tags(exact_breakdown_tags)
         end
-        if minimum_cutoff_date
-          values = values.recent_data_threshold(minimum_cutoff_date)
+        if minimum_cutoff_year
+          values = values.recent_data_threshold(minimum_cutoff_year)
         end
         values = values.having_most_recent_date
 
