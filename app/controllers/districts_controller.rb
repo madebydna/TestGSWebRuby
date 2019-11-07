@@ -37,6 +37,7 @@ class DistrictsController < ApplicationController
     @students = students.students_demographics
     @teachers_staff = teachers_staff_data
     @finance = finance.data_values
+    # @growth_rating = 
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     gon.dependencies = {
         highcharts: ActionController::Base.helpers.asset_path('highcharts.js')
@@ -72,6 +73,28 @@ class DistrictsController < ApplicationController
           csa_years: csa_badge.presence
       ).search
     end 
+  end
+
+  def facet_field_solr_results
+    @_facet_field_solr_results ||=begin
+      query_type = Search::SolrSchoolQuery
+      query_type.new(
+        state: state,
+        district_id: district_record&.id,
+        district_name: district_record&.name,
+        limit: 0
+      ).response.facet_fields
+    end
+  end
+
+  def state_facet_field_solr_results
+    @_state_facet_field_solr_results ||= begin
+      query_type = Search::SolrSchoolQuery
+      query_type.new(
+        state: state,
+        limit: 0
+      ).response.facet_fields
+    end
   end
 
   def translations
@@ -114,6 +137,16 @@ class DistrictsController < ApplicationController
 
   def finance
     @_finance ||= CommunityProfiles::Finance.new(district_cache_data_reader)
+  end
+
+  def growth_ratings
+    @_growth_ratings ||= CommunityProfiles::AcademicOrStudentProgress.new(growth_type, facet_field_solr_results.fetch("#{growth_type}_rating",[]), state_facet_field_solr_results.fetch("#{growth_type}_rating",[]))
+  end
+
+  def growth_type
+    mapping_hash = {'Academic Progress Rating' => 'academic_progress', 'Student Progress Rating' => 'student_progress', 'N/A' => 'N/A'}
+    growth_type = StateCache.for_state('state_attributes', state)&.cache_data&.fetch('growth_type', nil)
+    mapping_hash[growth_type]
   end
 
   def largest_district_in_city?

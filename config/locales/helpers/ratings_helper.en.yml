@@ -1,0 +1,6 @@
+en:
+  helpers:
+    ratings_helpers:
+      below_average: 'below average'
+      average: 'average'
+      above_average: 'above average'

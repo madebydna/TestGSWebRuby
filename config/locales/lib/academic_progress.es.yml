@@ -101,3 +101,24 @@ es:
           para padres:</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para apoyar
           el éxito continuo de la escuela.</p>
+      district_scope:
+        title: 'Progreso académico del distrito'
+        subtext: 'TBD'
+        tooltip_html: >
+          <p>¿Cuánto ayudan las escuelas a los estudiantes crecer cada año?</p>
+          <br/><br/><p> NEED TO FIX - Muchos estados publican datos del crecimiento del estudiante para reflejar cuánto progreso estudiantes están haciendo año tras año. Este estado no publica datos del crecimiento del estudiante. En cambio, estimamos con nuestra Calificación del Progreso Académico el progreso del estudiante comparando año con año en las calificaciones de grado y sujeto en esta escuela frente a todas las escuelas del estado que comenzaron con similares niveles de conocimiento. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Academic Progress Ratings.</p>
+          <br/><br/><a href='https://www.greatschools.org/gk/ratings/#academicprogressrating'>Infórmese más sobre esta calificación.</a>
+        graphic_header: TBD
+        graphic_header_tooltip: TBD
+        narrative:
+          below_average_html: >
+            <div>Un signo preocupante:</div>
+            <p>Los estudiantes de esta escuela están progresando <span style="font-weight:emphasis;">menos</span> académicamente en comparación al año anterior, y a otros estudiantes similares en el estado. Un mayor número de escuelas en este distrito tiene estudiantes que están haciendo <span style="font-weight:emphasis;">menos</span> progreso académico que el promedio estatal.</p>
+          average_html: >
+            <div>Vale la pena una mirada más profunda:</div>
+            <p>Los estudiantes de esta escuela están <span style="font-weight:emphasis;">en promedio</span> logrando un progreso académico en comparación al año anterior, y a otros estudiantes similares en el estado. Los estudiantes en la mayoría de las escuelas en este distrito están haciendo un progreso académico <span style="font-weight:emphasis;">promedio</span> en comparación con otras escuelas en el estado.</p>
+          above_average_html: >
+            <div>Un signo prometedor:</div>
+            <p>Los estudiantes de esta escuela están haciendo <span style="font-weight:emphasis;">más</span> progreso académico en comparación al año anterior, y a otros estudiantes similares en el estado. Un mayor número de escuelas en este distrito tiene estudiantes que están progresando <span style="font-weight:emphasis;">más</span> académicamente que el promedio estatal.</p>
+          even_distribution_html: >
+            <div>TBD</div>
