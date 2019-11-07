@@ -44,19 +44,19 @@ class TXTestProcessor2018STAAR < GS::ETL::TestProcessor
 
   source("tx_staar_2018_state.txt",[], col_sep: "\t") do |s|
     s.transform('Fill missing default fields', Fill, {
-      entity_level: 'state',
+      entity_type: 'state',
       })
   end
-  # source("tx_staar_2018_district.txt",[], col_sep: "\t") do |s|
-  #   s.transform('Fill missing default fields', Fill, {
-  #     entity_level: 'district',
-  #     })
-  # end
-  # source("tx_staar_2018_school.txt",[], col_sep: "\t") do |s|
-  #   s.transform('Fill missing default fields', Fill, {
-  #     entity_level: 'school',
-  #     })
-  # end
+  source("tx_staar_2018_district.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      entity_type: 'district',
+      })
+  end
+  source("tx_staar_2018_school.txt",[], col_sep: "\t") do |s|
+    s.transform('Fill missing default fields', Fill, {
+      entity_type: 'school',
+      })
+  end
 
   
   shared do |s|
@@ -76,6 +76,8 @@ class TXTestProcessor2018STAAR < GS::ETL::TestProcessor
       test_data_type_id: 272, 
       year: 2018,
       notes: 'DXT-2833: TX STAAR',
+      date_valid: '2018-01-01 00:00:00',
+      description: 'In 2017-2018, the State of Texas Assessments of Academic Readiness (STAAR) was used to test students in reading and math in grades 3 through 8; in writing in grades 4 and 7; in science in grades 5 and 8; in social studies in grade 8; and end-of-course assessments for English I and II, Algebra I, Biology and US History. STAAR is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of Texas. The goal is for all students to score at or above the state standard.'
     })
     .transform('Transpose value columns', Transposer,
        :proficiency_band,
@@ -89,16 +91,16 @@ class TXTestProcessor2018STAAR < GS::ETL::TestProcessor
     .transform("Adding column _id from proficiency band",
       HashLookup, :proficiency_band, key_map_pro, to: :proficiency_band_id)
     .transform("Creating StateID", WithBlock) do |row|
-      if row[:entity_level]=='school' 
+      if row[:entity_type]=='school' 
           row[:state_id] = row[:school_id].rjust(9,'0')
-      elsif row[:entity_level]=='district'
+      elsif row[:entity_type]=='district'
           row[:state_id] = row[:district_id].rjust(6,'0')
       end
       row
     end
     .transform('Fill missing ids and names with entity_level', WithBlock) do |row|
       [:state_id, :school_id, :district_id, :school_name, :district_name].each do |col|
-        row[col] ||= row[:entity_level]
+        row[col] ||= row[:entity_type]
       end
       row
     end
