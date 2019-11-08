@@ -1,0 +1,24 @@
+es:
+  lib:
+    summary_rating:
+      district_scope:
+        title: La Calificación General del Distrito
+        subtext: ¿Qué tan bien están las escuelas en este distrito en comparación con las escuelas en todo el estado?
+        tooltip_html: >
+          <div>La Calificación General de GreatSchools proporciona una visión general de la calidad de la escuela basada en múltiples medidas, como lo académico, la equidad y el entorno escolar, en comparación con otras escuelas públicas del estado. En esta sección puedes ver un resumen de las escuelas en este distrito que tienen Calificaciones Generales que están por encima del promedio, por debajo del promedio o aproximadamente el promedio.</div>
+          <br/><br/><a href="/gk/ratings/">Aprende más sobre esta clasificación.</a>
+        graphic_header: ¿Cómo se compara este distrito con el resto del estado?
+        graphic_header_tooltip: Este cuadro muestra el porcentaje de escuelas en este distrito con Calificaciones Generales que están por encima del promedio (7-10), promedio (5-6) o por debajo del promedio (1-4) en comparación con los promedios estatales.
+        narrative:
+          below_average_html: >
+            <div>Un signo preocupante:</div>
+            <p>Más escuelas en este distrito están calificadas por <span class="emphasis">debajo del promedio</span> estatal en calidad escolar.</p>
+          average_html: >
+            <div>Vale la pena una mirada más profunda:</div>
+            <p>Muchas de las escuelas en este distrito están calificadas del <span class="emphasis">promedio</span> en calidad escolar.</p>
+          above_average_html: >
+            <div>Un signo prometedor:</div>
+            <p>Un mayor número de escuelas en este distrito están calificadas por <span class="emphasis">encima del promedio</span> en calidad escolar.</p>
+          even_distribution_html: >
+            <div>Vale la pena una mirada más profunda:</div>
+            <p>Este distrito tiene <span class="emphasis">un historial mixto</span>. Mira por abajo para ver qué porcentaje de escuelas en este distrito están calificadas <span class="emphasis">por encima del promedio</span>, <span class="emphasis">promedio</span> o <span class="emphasis">por debajo del promedio</span> en calidad escolar.</p>

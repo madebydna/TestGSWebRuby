@@ -37,12 +37,12 @@ class DistrictsController < ApplicationController
     @students = students.students_demographics
     @teachers_staff = teachers_staff_data
     @finance = finance.data_values
-    # @growth_rating = 
+    @growth_rating = growth_rating
+    @summary_rating = summary_rating
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     gon.dependencies = {
         highcharts: ActionController::Base.helpers.asset_path('highcharts.js')
     }
-    set_district_meta_tags
     set_ad_targeting_props
     set_page_analytics_data
   end
@@ -139,14 +139,39 @@ class DistrictsController < ApplicationController
     @_finance ||= CommunityProfiles::Finance.new(district_cache_data_reader)
   end
 
-  def growth_ratings
-    @_growth_ratings ||= CommunityProfiles::AcademicOrStudentProgress.new(growth_type, facet_field_solr_results.fetch("#{growth_type}_rating",[]), state_facet_field_solr_results.fetch("#{growth_type}_rating",[]))
+  def growth_type
+    StateCache.for_state('state_attributes', state)&.cache_data&.fetch('growth_type', nil)
   end
 
-  def growth_type
-    mapping_hash = {'Academic Progress Rating' => 'academic_progress', 'Student Progress Rating' => 'student_progress', 'N/A' => 'N/A'}
-    growth_type = StateCache.for_state('state_attributes', state)&.cache_data&.fetch('growth_type', nil)
-    mapping_hash[growth_type]
+  def growth_rating
+    @_growth_rating ||=begin
+      return {} if growth_type == "N/A"
+      growth_type == 'Academic Progress Rating' ? academic_progress : student_progress
+    end
+  end
+
+  def academic_progress
+    @_academic_progress ||= begin
+      academic_facet_results = facet_field_solr_results.fetch("academic_progress_rating",[])
+      state_academic_facet_results = state_facet_field_solr_results.fetch("academic_progress_rating",[])
+      CommunityProfiles::AcademicProgress.new(academic_facet_results, state_academic_facet_results).data_values
+    end
+  end
+
+  def student_progress
+    @_student_progress ||= begin
+      student_facet_results = facet_field_solr_results.fetch("student_progress_rating", [])
+      state_student_facet_results = state_facet_field_solr_results.fetch("student_progress_rating", [])
+      CommunityProfiles::StudentProgress.new(student_facet_results, state_student_facet_results).data_values
+    end
+  end
+
+  def summary_rating
+    @summary_rating ||= begin
+      summary_facet_results = facet_field_solr_results.fetch("summary_rating", [])
+      state_summary_facet_results = state_facet_field_solr_results.fetch("summary_rating", [])
+      CommunityProfiles::SummaryRating.new(state_summary_facet_results, state_summary_facet_results).data_values
+    end
   end
 
   def largest_district_in_city?
