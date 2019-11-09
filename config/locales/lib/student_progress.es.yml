@@ -106,6 +106,7 @@ es:
           apoyar el éxito continuo de la escuela.</p>
       district_scope:
         title: 'Progreso estudiantil del distrito'
+        source_title: Las fuentes de datos y informacion de los perfiles de distritos de GreatSchools
         subtext: '¿Cuánto aprenden los estudiantes en este distrito en comparación con el resto del estado?'
         toc_item: 'Progreso estudiantil'
         data_point_label: "Distrito"

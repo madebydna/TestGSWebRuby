@@ -24,6 +24,7 @@ module CommunityProfiles
           }
           hash['type'] = accessor[:type]
           hash['tooltip'] = I18n.t(data_hash[:data_type], scope: 'lib.finance.tool_tips')
+          hash['color'] = accessor[:color] if accessor[:color]
         end
       end.compact
     end

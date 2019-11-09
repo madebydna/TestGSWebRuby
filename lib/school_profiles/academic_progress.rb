@@ -106,7 +106,7 @@ module SchoolProfiles
     def academic_progress_sources
       content = '<div class="sourcing">'
       content << '<h1>' + static_label('sources_title') + '</h1>'
-      content << rating_source(year: source_year, label: static_label('Great schools rating'),
+      content << rating_source(year: source_year, label: static_label('Greatschools rating'),
                                description: academic_progress_rating_description, methodology: academic_progress_rating_methodology,
                                more_anchor: 'academicprogressrating')
       content

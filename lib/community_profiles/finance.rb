@@ -30,6 +30,7 @@ module CommunityProfiles
           hash['data'] = data_values_for_data_row(pie_chart_config[:data_keys])
           hash['tooltip'] = I18n.t("#{pie_chart_config[:key]}_tooltip_html", scope: 'lib.finance')
           hash['type'] = 'pie_chart'
+          hash['color'] = pie_chart_config[:color]
         end
       )
     end

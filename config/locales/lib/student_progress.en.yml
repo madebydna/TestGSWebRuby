@@ -88,6 +88,7 @@ en:
           <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school's success.</p>
       district_scope:
         title: 'District student progress'
+        source_title: GreatSchools district data sources & information
         subtext: 'How much are students learning in this district compared to the rest of the state?'
         toc_item: 'Student progress'
         data_point_label: 'District'

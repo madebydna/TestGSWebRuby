@@ -5,7 +5,7 @@ es:
       'subtitle': '¿Cuánto ayudó esta escuela a los estudiantes a mejorar de un año al siguiente? Esta calificación compara las escuelas con similares niveles de conocimiento para medir el progreso del estudiante a lo largo del tiempo.'
       'sources_title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'source': 'Fuente'
-      'Great schools rating': 'La Calificación de Progreso Académico de GreatSchools'
+      'Greatschools rating': 'La Calificación de Progreso Académico de GreatSchools'
       info_text: >
         <p style='text-align:left'>¿Cuánto ayudan las escuelas y los maestros a los estudiantes crecer cada año?</p>
         <p style='text-align:left'>Muchos estados publican datos del crecimiento del estudiante para reflejar cuánto progreso estudiantes están
