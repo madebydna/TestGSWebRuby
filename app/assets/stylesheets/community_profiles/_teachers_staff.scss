@@ -1,4 +1,4 @@
-.teachers-staff, .finance {
+.teachers-staff, .finance, .academic_progress, .student_progress {
   .module-header {
     .title-container {
       .title {
@@ -23,8 +23,10 @@
     margin: 0;
   }
 
-  .info-circle {
-    margin: -6px 0 0 5px;
+  .ts-row{
+    .info-circle {
+      margin: -6px 0 0 5px;
+    }
   }
 
   .score-display {

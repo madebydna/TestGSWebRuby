@@ -82,24 +82,27 @@ en:
           <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s success.</p>
       district_scope:
         title: 'District academic progress'
+        source_title: GreatSchools district data sources & information
         subtext: 'How much are students learning in this district compared to the rest of the state?'
+        toc_item: 'Academic progress'
+        data_point_label: 'District'
         tooltip_html: >
           <p>How much do schools help students grow each year?</p>
-          <br/><br/><p>Many states publish student growth data to reflect how much progress students are making year-over-year. This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student progress by comparing year-over-year test scores by grade and subject at this school compared to all schools in the state that started with similar proficiency levels. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Academic Progress Ratings.</p>
-          <br/><br/><a href='/gk/ratings/#academicprogressrating'>Learn more about this rating.</a>
+          <p>Many states publish student growth data to reflect how much progress students are making year-over-year. This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student progress by comparing year-over-year test scores by grade and subject at this school compared to all schools in the state that started with similar proficiency levels. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Academic Progress Ratings.</p>
+          <a href='/gk/ratings/#academicprogressrating'>Learn more about this rating.</a>
         graphic_header: How does this district compare with the rest of the state? 
         graphic_header_tooltip: This pie chart shows the percentage of schools in this district with Academic Progress Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
         narrative:
           below_average_html: >
-            <div>A worrisome sign:</div>
-            <p>This district has a larger number of schools whose students are making <span style="font-weight:emphasis;">less</span> academic progress than their peers at other schools in the state.</p>
+            <span class="emphasis" style="color:#CB5C35;">A worrisome sign:</span>
+            <p>This district has a larger number of schools whose students are making <span class="emphasis">less</span> academic progress than their peers at other schools in the state.</p>
           average_html: >
-            <div>Worth a deeper look:</div>
-            <p>Students at many of the schools in this district are making <span style="font-weight:emphasis;">about the same</span> academic progress as the state average.</p>
+            <span class="emphasis" style="color:#AB8F0E;">Worth a deeper look:</span>
+            <p>Students at many of the schools in this district are making <span class="emphasis">about the same</span> academic progress as the state average.</p>
           above_average_html: >
-            <div>A promising sign:</div>
-            <p>A larger number of schools in this district have students who are making <span style="font-weight:emphasis;">more</span> academic progress than their peers at other schools in the state.</p>
+            <span class="emphasis" style="color:#367A1E;">A promising sign:</span>
+            <p>A larger number of schools in this district have students who are making <span class="emphasis">more</span> academic progress than their peers at other schools in the state.</p>
           even_distribution_html: >
-            <div>Worth a deeper look:</div>
-            <p>This district has <span style="font-weight:emphasis;">a mixed record</span> of helping students improve over time. Look below to see what percentage of schools in this district are making <span style="font-weight:emphasis;">more, less, or about the same</span> progress as other schools in the state.</p>
+            <span class="emphasis" style="color:#AB8F0E;">Worth a deeper look:</span>
+            <p>This district has <span class="emphasis">a mixed record</span> of helping students improve over time. Look below to see what percentage of schools in this district are making <span class="emphasis">more, less, or about the same</span> progress as other schools in the state.</p>
       

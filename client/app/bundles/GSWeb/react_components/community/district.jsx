@@ -12,6 +12,7 @@ import CsaInfo from './csa_info';
 import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import Calendar from "./calendar";
+import GrowthRating from './growth_rating';
 import Finance from './finance';
 import Students from "./students";
 import StemCourses from "../school_profiles/stem_courses";
@@ -268,6 +269,14 @@ class District extends React.Component {
             community={this.pageType}
             reviews={this.props.reviews}
             locality={this.props.locality}
+          />
+        }
+        growth={
+          <GrowthRating
+            growthData={this.props.growthData}
+            district={
+              { districtId: this.props.locality.district_id, state: this.props.locality.stateShort }
+            }
           />
         }
         heroData={this.props.heroData}

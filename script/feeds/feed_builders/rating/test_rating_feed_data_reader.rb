@@ -13,8 +13,8 @@ module Feeds
     end
 
     def get_ratings_master_data(state)
-      state_info = StateCache.for_state('ratings', state)
-      JSON.parse(state_info.value)
+      state_info = StateCache.for_state('feed_ratings', state)
+      JSON.parse(state_info.value).fetch('summary_or_test_score_rating', {})
     end
 
     private

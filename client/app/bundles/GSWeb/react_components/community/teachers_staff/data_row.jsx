@@ -7,7 +7,7 @@ import PieChartDataRow from './pie_chart_data_row';
 import BarGraphBase from '../../equity/graphs/bar_graph_base';
 import QuestionMarkToolTip from '../../school_profiles/question_mark_tooltip';
 
-function DataRow ({ state_value, district_value, name, type, tooltip, data }) {
+const DataRow = ({ state_value, district_value, name, type, tooltip, data }) => {
 
   const render_visualization = () => {
     switch(type) {
@@ -30,6 +30,7 @@ function DataRow ({ state_value, district_value, name, type, tooltip, data }) {
           return {
             name: source.name,
             value: source.district_value,
+            value_label: source.value_label,
             state_value: source.state_value,
             color: colors[idx],
             tooltip: source.tooltip

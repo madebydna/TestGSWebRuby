@@ -103,23 +103,26 @@ es:
           el éxito continuo de la escuela.</p>
       district_scope:
         title: 'Progreso académico del distrito'
+        source_title: Las fuentes de datos y informacion de los perfiles de distritos de GreatSchools
         subtext: '¿Cuánto aprenden los estudiantes en este distrito en comparación con el resto del estado?'
+        toc_item: 'Progreso académico'
+        data_point_label: "Distrito"
         tooltip_html: >
           <p>¿Cuánto ayudan las escuelas a los estudiantes crecer cada año?</p>
-          <br/><br/><p> NEED TO FIX - Muchos estados publican datos del crecimiento del estudiante para reflejar cuánto progreso estudiantes están haciendo año tras año. Este estado no publica datos del crecimiento del estudiante. En cambio, estimamos con nuestra Calificación del Progreso Académico el progreso del estudiante comparando año con año en las calificaciones de grado y sujeto en esta escuela frente a todas las escuelas del estado que comenzaron con similares niveles de conocimiento. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Academic Progress Ratings.</p>
-          <br/><br/><a href='/gk/ratings/#academicprogressrating'>Infórmese más sobre esta calificación.</a>
+          <p>Muchos estados publican datos del crecimiento del estudiante para reflejar cuánto progreso estudiantes están haciendo año tras año. Este estado no publica datos del crecimiento del estudiante. En cambio, estimamos con nuestra Calificación del Progreso Académico el progreso del estudiante comparando año tras año en las calificaciones de grado y sujeto en esta escuela frente a todas las escuelas del estado que comenzaron con similares niveles de conocimiento. En esta sección puedes ver un resumen del porcentaje de escuelas en este distrito con Calificaciones de Progreso Académico que están por encima del promedio, por debajo del promedio o aproximadamente el promedio.</p>
+          <a href='/gk/ratings/#academicprogressrating'>Aprende más sobre esta clasificación.</a>
         graphic_header: ¿Cómo se compara este distrito con el resto del estado?
         graphic_header_tooltip: Este cuadro muestra el porcentaje de escuelas en este distrito con Calificaciones del Progreso Académico/Estudiantil que están por encima del promedio (7-10), promedio (5-6) o por debajo del promedio (1-4) en comparación con los promedios estatales.
         narrative:
           below_average_html: >
-            <div>Un signo preocupante:</div>
+            <span class="emphasis" style="color:#CB5C35;">Un signo preocupante:</span>
             <p>Los estudiantes de esta escuela están progresando <span class="emphasis;">menos</span> académicamente en comparación al año anterior, y a otros estudiantes similares en el estado. Un mayor número de escuelas en este distrito tiene estudiantes que están haciendo <span class="emphasis;">menos</span> progreso académico que el promedio estatal.</p>
           average_html: >
-            <div>Vale la pena una mirada más profunda:</div>
+            <span class="emphasis" style="color:#AB8F0E;">Vale la pena una mirada más profunda:</span>
             <p>Los estudiantes de esta escuela están <span class="emphasis;">en promedio</span> logrando un progreso académico en comparación al año anterior, y a otros estudiantes similares en el estado. Los estudiantes en la mayoría de las escuelas en este distrito están haciendo un progreso académico <span class="emphasis;">promedio</span> en comparación con otras escuelas en el estado.</p>
           above_average_html: >
-            <div>Un signo prometedor:</div>
+            <span class="emphasis" style="color:#367A1E;">Un signo prometedor:</span>
             <p>Los estudiantes de esta escuela están haciendo <span class="emphasis">más</span> progreso académico en comparación al año anterior, y a otros estudiantes similares en el estado. Un mayor número de escuelas en este distrito tiene estudiantes que están progresando <span class="emphasis;">más</span> académicamente que el promedio estatal.</p>
           even_distribution_html: >
-            <div>Vale la pena una mirada más profunda:</div>
+            <span class="emphasis" style="color:#AB8F0E;">Vale la pena una mirada más profunda:</span>
             <p>Este distrito tiene un historial mixto de ayudar a los estudiantes a mejorar con el tiempo. Mira por abajo para ver qué porcentaje de escuelas en este distrito están haciendo <span class="emphasis">más, menos o aproximadamente el mismo</span> progreso que.</p>

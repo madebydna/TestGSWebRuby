@@ -4,7 +4,7 @@ class StateCacher
 
   # Known data types:
   # :state_characteristics, :test_scores_gsdata, :feed_test_scores_gsdata, :feed_test_description_gsdata, :gsdata, 
-  # :ratings :district_largest, :school_levels, :state_attributes
+  # :ratings :district_largest, :school_levels, :state_attributes, :feed_ratings
 
 
   def initialize(state)
@@ -38,6 +38,7 @@ class StateCacher
         feed_test_scores_gsdata: TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata,
         feed_test_description_gsdata: TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata,
         gsdata: StateGsdataCacher,
+        feed_ratings: StateFeedRatingCacher,
         ratings: StateRatingCacher,
         district_largest: StateDistrictLargestCacher,
         school_levels: LevelCaching::StateLevelCacher,
@@ -68,6 +69,7 @@ class StateCacher
        TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata,
        StateGsdataCacher,
        StateRatingCacher,
+       StateFeedRatingCacher,
        StateDistrictLargestCacher,
        LevelCaching::StateLevelCacher,
        AttributeCaching::StateAttributesCacher

@@ -65,6 +65,14 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderGrowthModule(){
+    return (
+      <div id="growth" className="module-section">
+        {this.props.growth}
+      </div>
+    )
+  }
+
   renderStemCourses() {
     return this.props.shouldDisplayStemCourses && (
       <div id="advanced_courses" className="module-section">
@@ -229,6 +237,7 @@ class DistrictLayout extends React.Component {
             {this.renderBoxAd()}
             {this.renderCsaModule()}
             {this.renderAcademics()}
+            {this.renderGrowthModule()}
             {this.renderStemCourses()}
             {this.renderStudentsModule()}
             {this.renderTeachersStaffModule()}

@@ -154,7 +154,11 @@ class DistrictsController < ApplicationController
     @_academic_progress ||= begin
       academic_facet_results = facet_field_solr_results.fetch("academic_progress_rating",[])
       state_academic_facet_results = state_facet_field_solr_results.fetch("academic_progress_rating",[])
-      CommunityProfiles::AcademicProgress.new(academic_facet_results, state_academic_facet_results).data_values
+      facet_results = {}.tap do |h|
+        h['community'] = academic_facet_results
+        h['state'] = state_academic_facet_results
+      end
+      CommunityProfiles::AcademicProgress.new(facet_results, state).data_values
     end
   end
 
@@ -162,7 +166,11 @@ class DistrictsController < ApplicationController
     @_student_progress ||= begin
       student_facet_results = facet_field_solr_results.fetch("student_progress_rating", [])
       state_student_facet_results = state_facet_field_solr_results.fetch("student_progress_rating", [])
-      CommunityProfiles::StudentProgress.new(student_facet_results, state_student_facet_results).data_values
+      facet_results = {}.tap do |h|
+        h['community'] = student_facet_results
+        h['state'] = state_student_facet_results
+      end
+      CommunityProfiles::StudentProgress.new(facet_results, state).data_values
     end
   end
 
@@ -170,7 +178,7 @@ class DistrictsController < ApplicationController
     @summary_rating ||= begin
       summary_facet_results = facet_field_solr_results.fetch("summary_rating", [])
       state_summary_facet_results = state_facet_field_solr_results.fetch("summary_rating", [])
-      CommunityProfiles::SummaryRating.new(state_summary_facet_results, state_summary_facet_results).data_values
+      CommunityProfiles::SummaryRating.new(summary_facet_results, state_summary_facet_results).data_values
     end
   end
 
