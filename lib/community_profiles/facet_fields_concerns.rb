@@ -47,6 +47,7 @@ module CommunityProfiles::FacetFieldsConcerns
   end
 
   def convert_to_percentage_hash(result_set)
+    return {} if total_schools(result_set).zero?
     RATINGS_KEYS_ARRAY.each_with_object({}) do |key, hash|
       hash[key] = ((result_set[key].to_f / total_schools(result_set)) * 100).round
     end

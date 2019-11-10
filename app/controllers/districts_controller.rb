@@ -174,11 +174,16 @@ class DistrictsController < ApplicationController
     end
   end
 
+  # under the assumption that TestScore only states will have their scores reflected on as Summary rating
   def summary_rating
-    @summary_rating ||= begin
+    @_summary_rating ||= begin
       summary_facet_results = facet_field_solr_results.fetch("summary_rating", [])
       state_summary_facet_results = state_facet_field_solr_results.fetch("summary_rating", [])
-      CommunityProfiles::SummaryRating.new(summary_facet_results, state_summary_facet_results).data_values
+      facet_results = {}.tap do |h|
+        h['community'] = summary_facet_results
+        h['state'] = state_summary_facet_results
+      end
+      CommunityProfiles::SummaryRating.new(facet_results, state).data_values
     end
   end
 

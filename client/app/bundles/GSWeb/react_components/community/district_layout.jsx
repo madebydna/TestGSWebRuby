@@ -182,6 +182,9 @@ class DistrictLayout extends React.Component {
           </a>
         </div>
         {this.props.browseSchools}
+        <div id="summary-rating">
+          {this.props.summaryRating}
+        </div>
         {this.props.schoolCounts.all > 0 ? this.props.topSchools: null}
       </div>
     )

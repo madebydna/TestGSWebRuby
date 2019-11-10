@@ -9,7 +9,8 @@ export const links = {
     district_teacher_staff: 'https://s.qualaroo.com/45194/d78ef262-4001-4355-9e73-78458cec1d0',
     district_finance: 'https://s.qualaroo.com/45194/585b9623-35c3-46c4-aab1-76b20b9d1880',
     district_academic_progress: 'https://s.qualaroo.com/45194/e862a02b-4f52-4842-9d24-c4a3a99bc498',
-    district_student_progress: 'https://s.qualaroo.com/45194/1028985e-ac08-45b8-9cd5-4b0be31bc8d2'
+    district_student_progress: 'https://s.qualaroo.com/45194/1028985e-ac08-45b8-9cd5-4b0be31bc8d2',
+    district_summary_rating: 'https://s.qualaroo.com/45194/0580d160-c844-4488-944d-e72dda0b8917'
   }
 }
 

@@ -13,6 +13,7 @@ import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import Calendar from "./calendar";
 import GrowthRating from './growth_rating';
+import SummaryRating from './summary_rating';
 import Finance from './finance';
 import Students from "./students";
 import StemCourses from "../school_profiles/stem_courses";
@@ -274,6 +275,14 @@ class District extends React.Component {
         growth={
           <GrowthRating
             growthData={this.props.growthData}
+            district={
+              { districtId: this.props.locality.district_id, state: this.props.locality.stateShort }
+            }
+          />
+        }
+        summaryRating={
+          <SummaryRating 
+            summaryRatingData={this.props.summaryRatingData}
             district={
               { districtId: this.props.locality.district_id, state: this.props.locality.stateShort }
             }
