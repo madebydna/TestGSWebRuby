@@ -86,6 +86,8 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school's success.</p>
+      javascript:
+        toc_item: Student progress
       district_scope:
         title: 'District student progress'
         source_title: GreatSchools district data sources & information

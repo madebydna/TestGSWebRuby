@@ -14,7 +14,9 @@ class DistrictsController < ApplicationController
   set_additional_js_translations(
     {
       teachers_staff: [:lib, :teachers_staff],
-      finance: [:lib, :finance]
+      finance: [:lib, :finance],
+      academic_progress: [:lib, :academic_progress, :javascript],
+      student_progress: [:lib, :student_progress, :javascript]
     }
   )
 
@@ -140,12 +142,12 @@ class DistrictsController < ApplicationController
   end
 
   def growth_type
-    StateCache.for_state('state_attributes', state)&.cache_data&.fetch('growth_type', nil)
+    @_growth_type ||= StateCache.for_state('state_attributes', state)&.cache_data&.fetch('growth_type', nil)
   end
 
   def growth_rating
     @_growth_rating ||=begin
-      return {} if growth_type == "N/A"
+      return {} if growth_type == "N/A" || growth_type.nil?
       growth_type == 'Academic Progress Rating' ? academic_progress : student_progress
     end
   end

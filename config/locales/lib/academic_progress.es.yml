@@ -101,11 +101,12 @@ es:
           para padres:</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para apoyar
           el éxito continuo de la escuela.</p>
+      javascript:
+        toc_item: 'Progreso académico'
       district_scope:
         title: 'Progreso académico del distrito'
         source_title: Las fuentes de datos y informacion de los perfiles de distritos de GreatSchools
         subtext: '¿Cuánto aprenden los estudiantes en este distrito en comparación con el resto del estado?'
-        toc_item: 'Progreso académico'
         data_point_label: "Distrito"
         tooltip_html: >
           <p>¿Cuánto ayudan las escuelas a los estudiantes crecer cada año?</p>

@@ -67,7 +67,7 @@ class DistrictLayout extends React.Component {
 
   renderGrowthModule(){
     return (
-      <div id="growth" className="module-section">
+      this.props.shouldDisplayGrowthRating && <div id={this.props.growthAnchor} className="module-section">
         {this.props.growth}
       </div>
     )
@@ -182,9 +182,9 @@ class DistrictLayout extends React.Component {
           </a>
         </div>
         {this.props.browseSchools}
-        <div id="summary-rating">
+        {this.props.shouldDisplaySummaryRating && <div id="summary-rating">
           {this.props.summaryRating}
-        </div>
+        </div>}
         {this.props.schoolCounts.all > 0 ? this.props.topSchools: null}
       </div>
     )

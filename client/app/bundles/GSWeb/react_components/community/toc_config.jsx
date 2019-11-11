@@ -14,6 +14,8 @@ export const CITIES = 'cities';
 export const NEIGHBORING_CITIES = 'neighboring-cities';
 export const TEACHERS_STAFF = 'teachers-staff';
 export const FINANCE = 'finance';
+export const ACADEMIC_PROGRESS = 'academic_progress';
+export const STUDENT_PROGRESS = 'student_progress';
 
 export const browseSchoolsTocItem = {
   key: BROWSE_SCHOOLS,
@@ -117,5 +119,19 @@ export const financeTocItem = {
   key: FINANCE,
   label: t('finance.module_title'),
   anchor: '#finance',
+  selected: false
+}
+
+export const academicProgressTocItem = {
+  key: ACADEMIC_PROGRESS,
+  label: t('academic_progress.toc_item'),
+  anchor: '#academic_progress',
+  selected: false
+}
+
+export const studentProgressTocItem = {
+  key: STUDENT_PROGRESS,
+  label: t('student_progress.toc_item'),
+  anchor: '#student_progress',
   selected: false
 }

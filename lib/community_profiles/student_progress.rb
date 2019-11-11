@@ -58,7 +58,6 @@ module CommunityProfiles
         h['key'] = 'student_progress'
         h['title'] = I18n.t('title', scope: "lib.student_progress.district_scope")
         h['subtext'] = I18n.t('subtext', scope: "lib.student_progress.district_scope")
-        h['toc_item'] = I18n.t('toc_item', scope: "lib.student_progress.district_scope")
         h['narration'] = I18n.t("#{narration_logic}_html", scope: "lib.student_progress.district_scope.narrative")
         h['tooltip'] = I18n.t("tooltip_html", scope: "lib.student_progress.district_scope")
         h['graphic_header'] = I18n.t("graphic_header", scope: "lib.student_progress.district_scope")

@@ -80,11 +80,12 @@ en:
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
           <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s success.</p>
+      javascript:
+        toc_item: 'Academic progress'
       district_scope:
         title: 'District academic progress'
         source_title: GreatSchools district data sources & information
         subtext: 'How much are students learning in this district compared to the rest of the state?'
-        toc_item: 'Academic progress'
         data_point_label: 'District'
         tooltip_html: >
           <p>How much do schools help students grow each year?</p>

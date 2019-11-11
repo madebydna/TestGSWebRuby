@@ -104,6 +104,8 @@ es:
           para padres</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para
           apoyar el éxito continuo de la escuela.</p>
+      javascript:
+        toc_item: Progreso estudiantil    
       district_scope:
         title: 'Progreso estudiantil del distrito'
         source_title: Las fuentes de datos y informacion de los perfiles de distritos de GreatSchools
