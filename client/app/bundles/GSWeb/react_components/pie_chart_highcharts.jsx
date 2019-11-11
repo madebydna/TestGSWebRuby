@@ -62,7 +62,6 @@ const PieChartHighcharts = ({ options, slicedIdx}) => {
     },
     credits: false,
     series: [{
-      // name: 'Brands',
       colorByPoint: true,
       data: data
     }]
@@ -74,7 +73,6 @@ const PieChartHighcharts = ({ options, slicedIdx}) => {
     <div className="col-xs-12 col-sm-7">
       <HighchartsReact
         highcharts={Highcharts}
-        // highcharts={window.Highcharts}
         options={pieChartOptions}
       />
     </div>
