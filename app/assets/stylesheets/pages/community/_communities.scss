@@ -88,6 +88,12 @@ $line-height-community: 1.428571429;
       margin-left: 0;
     }
 
+    .display-mobile {
+      @include media-breakpoint-up(sm) {
+        display: none;
+      }
+    }
+
     .modules-title {
       font-family: 'opensans-bold';
       font-size: 20px;
