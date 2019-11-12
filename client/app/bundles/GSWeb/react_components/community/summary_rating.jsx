@@ -21,6 +21,7 @@ const SummaryRating = ({ summaryRatingData, district }) => {
       tooltip={summaryRatingData.graphic_header_tooltip}
       type={'pie_chart'}
       data={summaryRatingData.data}
+      className={"ts-row-two-thirds-xs ts-row-full-md rating-score-item__label"}
     />
   </div>
 

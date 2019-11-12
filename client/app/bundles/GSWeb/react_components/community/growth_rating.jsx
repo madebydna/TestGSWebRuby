@@ -21,6 +21,7 @@ const GrowthRating = ({ growthData, district}) => {
       tooltip={growthData.graphic_header_tooltip}
       type={'pie_chart'}
       data={growthData.data}
+      className = {"ts-row-two-thirds-xs ts-row-full-md rating-score-item__label"}
     />
   </div>
 

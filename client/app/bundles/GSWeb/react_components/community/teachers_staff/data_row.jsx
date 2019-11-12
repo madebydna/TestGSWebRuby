@@ -7,7 +7,7 @@ import PieChartDataRow from './pie_chart_data_row';
 import BarGraphBase from '../../equity/graphs/bar_graph_base';
 import QuestionMarkToolTip from '../../school_profiles/question_mark_tooltip';
 
-const DataRow = ({ state_value, district_value, name, type, tooltip, data }) => {
+const DataRow = ({ state_value, district_value, name, type, tooltip, data, className = "ts-row-two-thirds-xs ts-row-one-half-md rating-score-item__label" }) => {
 
   const render_visualization = () => {
     switch(type) {
@@ -43,7 +43,7 @@ const DataRow = ({ state_value, district_value, name, type, tooltip, data }) => 
 
   return (
     <div className="ts-row">
-      <div className="ts-row-two-thirds-xs ts-row-one-half-md rating-score-item__label">
+      <div className={className}>
         {name}
         <QuestionMarkToolTip content={tooltip} className="tooltip" element_type="datatooltip"/>
       </div>
