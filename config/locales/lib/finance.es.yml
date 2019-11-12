@@ -2,8 +2,8 @@ es:
   lib:
     finance:
       'module_title': Finanzas del distrito
-      'module_subtitle': "La forma en que un distrito escolar asigna fondos puede reflejar sus prioridades. <a href='/gk/articles/school-board-candidates/'>Obtén más información sobre cómo se toman estas decisiones.</a>"
-      'parent_tip': "Las decisiones del distrito sobre cómo gastar dinero impactan la educación de tu hijo. <a href='gk/articles/taking-it-to-the-school-board/'>Así es como los padres pueden influir en estas decisiones.</a>"
+      'module_subtitle': "La forma en que un distrito escolar asigna fondos puede reflejar sus prioridades. <a href='/gk/articles/lo-que-todos-los-padres-deben-saber-sobre-la-junta-de-educacion/?lang=es'>Obtén más información sobre cómo se toman estas decisiones.</a>"
+      'parent_tip': "Las decisiones del distrito sobre cómo gastar dinero impactan la educación de tu hijo. <a href='/gk/articles/5-pasos-para-trabajar-con-la-junta-escolar/?lang=es'>Así es como los padres pueden influir en estas decisiones.</a>"
       'RevenueSources': Fuentes de ingresos
       'ExpenditureSources': Gasto por categoría
       'RevenueSources_tooltip_html': >
