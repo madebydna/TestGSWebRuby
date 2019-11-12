@@ -17,8 +17,6 @@ class StateRatingCacher < StateCacher
     # no breakdown ids needed for this data type
     # add in 'breakdowns.name to select if separating by breakdown'
     @_state_results ||= Omni::Rating.joins(data_set: [:data_type, :source])
-                                    # .joins(:breakdown)
-                                    .where(data_sets: {data_type_id: DATA_TYPE_IDS, state: state})
                                     .school_entity
                                     .order('data_sets.date_valid DESC')
                                     .active
@@ -43,10 +41,11 @@ class StateRatingCacher < StateCacher
     )
   end
 
+  # can add breakdowns, state_value, breakdown_tags when available here
   def result_to_hash(result)
     {}.tap do |h|
-      h['source_date_valid'] = result.date_valid
       h['year'] = result.date_valid.year
+      h['source_date_valid'] = result.date_valid
       h['source_name'] = result.source
       h['description'] = result.description if result.description
     end
