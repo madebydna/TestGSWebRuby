@@ -13,3 +13,6 @@ en:
         reviews: Reviews
       explore_in_state: Explore schools in %{name_long}
       explore_by_type: Explore schools by type
+      districts_header: Largest school districts in %{name_long}
+      recent_reviews:
+        title: Recent school reviews from schools in %{name_long}
