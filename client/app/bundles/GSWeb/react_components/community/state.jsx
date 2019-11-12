@@ -1,7 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Breadcrumbs from 'react_components/breadcrumbs';
+// import Breadcrumbs from 'react_components/breadcrumbs';
 import StateLayout from './state_layout';
 import DataModule from "react_components/data_module";
 import InfoBox from 'react_components/school_profiles/info_box';

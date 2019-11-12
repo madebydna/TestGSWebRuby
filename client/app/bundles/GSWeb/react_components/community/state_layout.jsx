@@ -21,7 +21,7 @@ class StateLayout extends React.Component {
     super(props);
     this.ad = React.createRef();
     // this.breadcrumbs = React.createRef();
-    this.toc = React.createRef();
+    // this.toc = React.createRef();
     this.state = {}
   }
 
@@ -31,18 +31,18 @@ class StateLayout extends React.Component {
     //   setTop: true,
     //   setBottom: false
     // });
-    keepInViewport(this.ad, {
-      $elementsAbove: [$('.header_un')],
-      $elementsBelow: [$('.footer')],
-      setTop: true,
-      setBottom: true
-    });
-    keepInViewport(this.toc, {
-      $elementsAbove: [$('.header_un')],
-      $elementsBelow: [$('.footer')],
-      setTop: true,
-      setBottom: true
-    });
+    // keepInViewport(this.ad, {
+    //   $elementsAbove: [$('.header_un')],
+    //   $elementsBelow: [$('.footer')],
+    //   setTop: true,
+    //   setBottom: true
+    // });
+    // keepInViewport(this.toc, {
+    //   $elementsAbove: [$('.header_un')],
+    //   $elementsBelow: [$('.footer')],
+    //   setTop: true,
+    //   setBottom: true
+    // });
   }
 
   // heroTitle(){
@@ -76,11 +76,11 @@ class StateLayout extends React.Component {
     </div>
   }
 
-  renderDesktopAd(){
-    return this.props.viewportSize > SM && <div className="ad-bar sticky" >
-        <Ad slot="statepage_first" sizeName="box_or_tall" />
-    </div>
-  }
+  // renderDesktopAd(){
+  //   return this.props.viewportSize > SM && <div className="ad-bar sticky">
+  //       <Ad slot="statepage_first" sizeName="box_or_tall" />
+  //   </div>
+  // }
 
   renderToc(){
     return this.props.viewportSize > XS && <div ref={this.toc} className="toc sticky">{this.props.toc}</div>
@@ -167,28 +167,17 @@ class StateLayout extends React.Component {
 
   render() {
     return (
-      <div className="state-body">
-        {this.props.searchBox}
-        {/* {this.renderBreadcrumbs()} */}
-        {/* {this.renderHero()} */}
-        <div className="below-hero">
-          {/*<div className="content">*/}
-            {this.renderToc()}
-            <div className="community-modules">
-              {this.props.viewportSize < SM && <Ad slot="statepage_first" sizeName="thin_banner_mobile" />}
-              {this.renderSchools()}
-              {this.renderCsaModule()}
-              {this.renderAcademics()}
-              {this.renderBoxAd()}
-              {this.renderStudentsModule()}
-              {this.renderCities()}
-              {this.renderDistricts()}
-              {this.renderReviews()}
-            </div>
-          {/*</div>*/}
-          {this.renderDesktopAd()}
-        </div>
-      </div>
+      <React.Fragment>
+          {this.props.viewportSize < SM && <Ad slot="statepage_first" sizeName="thin_banner_mobile" />}
+          {this.renderSchools()}
+          {this.renderCsaModule()}
+          {this.renderAcademics()}
+          {this.renderBoxAd()}
+          {this.renderStudentsModule()}
+          {this.renderCities()}
+          {this.renderDistricts()}
+          {this.renderReviews()}
+      </React.Fragment>
     );
   }
 }
