@@ -118,7 +118,7 @@ es:
           <p>La Calificación de GreatSchools del Progreso Estudantil compara el progreso académico a lo largo del tiempo para esta escuela con todas las escuelas en el estado usando datos del crecimiento académico del estudiante proporcionados por el Departamento de Educación. En esta sección, puedes ver un resumen del porcentaje de escuelas en este distrito con Calificaciones del Progreso Estudiantil que están por encima del promedio, por debajo del promedio o aproximadamente el promedio.</p>
           <a href='/gk/ratings/#studentprogressrating'>Aprende más sobre  esta clasificación.</a>
         graphic_header: ¿Cómo se compara este distrito con el resto del estado?
-        graphic_header_tooltip: Este cuadro muestra el porcentaje de escuelas en este distrito con Calificaciones del Progreso Académico/Estudiantil que están por encima del promedio (7-10), promedio (5-6) o por debajo del promedio (1-4) en comparación con los promedios estatales.
+        graphic_header_tooltip: Este cuadro muestra el porcentaje de escuelas en este distrito con Calificaciones del Progreso Estudiantil que están por encima del promedio (7-10), promedio (5-6) o por debajo del promedio (1-4) en comparación con los promedios estatales.
         narrative:
           below_average_html: >
             <span class="emphasis" style="color:#CB5C35;">Un signo preocupante:</span>

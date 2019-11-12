@@ -22,7 +22,7 @@ const PieChartHighcharts = ({ options, slicedIdx}) => {
   useEffect(()=>{
     setpieChartOptions(initialOptions)
   }, [slicedIdx])
-  
+
   const initialOptions = {
     chart: {
       plotBackgroundColor: null,
@@ -36,7 +36,7 @@ const PieChartHighcharts = ({ options, slicedIdx}) => {
     },
     tooltip: {
       pointFormatter: function(){
-        return `<span style="color: ${this.color} ;">\u25CF</span> ${t('percentage')}: <b> ${Math.floor(this.percentage)}% </b>`;
+        return `<span style="color: ${this.color} ;">\u25CF</span> ${t('percentage')}: <b> ${Math.floor(this.y)}% </b>`;
       }
     },
     plotOptions: {
@@ -53,7 +53,7 @@ const PieChartHighcharts = ({ options, slicedIdx}) => {
         dataLabels: {
           enabled: true,
           formatter: function(){
-            return Math.round(this.percentage) + '%';
+            return Math.round(this.y) + '%';
           },
           distance: 10
         },
