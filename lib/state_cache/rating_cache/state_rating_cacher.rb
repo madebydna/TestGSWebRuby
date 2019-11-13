@@ -8,15 +8,18 @@ class StateRatingCacher < StateCacher
   # school was used. Need to discuss how to tackle this
   
   # DATA_TYPES INCLUDED
+  # 155 Test Score Rating
   # 157	Student Progress Rating
   # 159	Academic Progress Rating
+  # 160	Summary Rating
 
-  DATA_TYPE_IDS = %w(157 159)
+  DATA_TYPE_IDS = %w(155 157 159 160)
 
   def state_results
     # no breakdown ids needed for this data type
     # add in 'breakdowns.name to select if separating by breakdown'
     @_state_results ||= Omni::Rating.joins(data_set: [:data_type, :source])
+                                    .where(data_sets: {data_type_id: DATA_TYPE_IDS, state: state})
                                     .school_entity
                                     .order('data_sets.date_valid DESC')
                                     .active
@@ -46,6 +49,7 @@ class StateRatingCacher < StateCacher
     {}.tap do |h|
       h['year'] = result.date_valid.year
       h['source_date_valid'] = result.date_valid
+      h['date_in_word'] = result.date_valid.strftime("%B %d, %Y")
       h['source_name'] = result.source
       h['description'] = result.description if result.description
     end

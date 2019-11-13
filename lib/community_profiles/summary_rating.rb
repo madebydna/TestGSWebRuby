@@ -36,6 +36,24 @@ module CommunityProfiles
       end
     end
 
+    def summary_rating_type
+      @_summary_rating_type ||= begin
+        cache_data = StateCache.for_state('state_attributes', state)&.cache_data
+        cache_data.fetch("summary_rating_type", nil)
+      end
+    end
+
+    def valid_date_in_words
+      @_source_date_valid ||= begin
+        cache_data = StateCache.for_state('ratings', state)&.cache_data
+        source_info = cache_data.fetch(summary_rating_type, [])
+                              .sort_by {|x| x['year']}
+                              .reverse
+                              .first
+        source_info.fetch('date_in_word', nil)
+      end
+    end
+
     def data_values
       return {} if total_schools(community_results_counts).zero?
       
@@ -48,7 +66,7 @@ module CommunityProfiles
         h['graphic_header'] = I18n.t("graphic_header", scope: "lib.summary_rating.district_scope")
         h['graphic_header_tooltip'] = I18n.t("graphic_header_tooltip", scope: "lib.summary_rating.district_scope")
         h['data'] = data_points
-        h['source'] = I18n.t("source_html", scope: "lib.summary_rating.district_scope")
+        h['source'] = I18n.t("source_html", scope: "lib.summary_rating.district_scope", date_in_words: valid_date_in_words)
       end
     end
 
