@@ -39,9 +39,9 @@ module Feeds
       def write_school_info(school_hash)
           within_tag('test-rating-value') do
             xml_builder.tag!('universal-id', school_hash[:id].to_s)
-            xml_builder.tag!('test-rating-id', school_hash[:test_rating_id])
+            xml_builder.tag!('test-rating-id', school_hash[:test_rating_id].to_s)
             xml_builder.tag!('rating', school_hash[:rating].to_s)
-            xml_builder.tag!('url', school_hash[:url])
+            xml_builder.tag!('url', school_hash[:url].to_s)
           end
       end
 
