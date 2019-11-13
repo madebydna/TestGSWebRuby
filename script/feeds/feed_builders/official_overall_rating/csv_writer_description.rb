@@ -9,7 +9,7 @@ module Feeds
       include Feeds::FeedHelper
 
       def initialize(data_reader, output_path)
-        @column_titles = %w(Subrating Description Year)
+        @column_titles = %w(id year description)
         @feed_file_path = output_path
         @data_reader = data_reader
       end
@@ -19,19 +19,17 @@ module Feeds
       def write_info
         CSV.open(@feed_file_path, 'w', {:col_sep => column_separator}) do |csv|
           csv << @column_titles
-          @data_reader.state_results.each_value do |ratings_data|
-            state_description = get_info(ratings_data)
+            state_description = get_info(@data_reader.state_results)
             csv << state_description if state_description
-          end
         end
       end
 
       def get_info(ratings_data)
-        unless ratings_data.empty? || SUBRATING_LIST.exclude?(ratings_data[:name])
+        if ratings_data.present?
           rating_description = []
-          rating_description << ratings_data[:name]
-          rating_description << ratings_data[:description]
-          rating_description << ratings_data[:year]
+          rating_description << ratings_data['id']
+          rating_description << ratings_data['year']
+          rating_description << ratings_data['description']
         end
       end
 

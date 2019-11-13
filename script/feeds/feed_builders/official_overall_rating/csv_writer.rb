@@ -8,17 +8,8 @@ module Feeds
       include Feeds::FeedConstants
       include Feeds::FeedHelper
 
-      SUBRATING_LIST = ['Test Scores',
-                        'College Readiness',
-                        'Equity',
-                        'Academic Progress',
-                        'Student Growth',
-                        'Low Income',
-                        'Attendance Flag',
-                        'Discipline Flag']
-
       def initialize(data_reader, output_path)
-        @column_titles = %w(Universal-Id Url).insert(1, *SUBRATING_LIST)
+        @column_titles = %w(test-rating-id universal-id rating url)
         @feed_file_path = output_path
         @data_reader = data_reader
       end
@@ -48,18 +39,13 @@ module Feeds
       end
 
       def get_info(school_hash)
-        unless school_hash[:ratings].empty?
+        if school_hash['rating'].present?
           school_ratings = []
-          school_ratings << school_uid(school_hash[:id])
-          SUBRATING_LIST.each do |title|
-            school_ratings << (school_hash[:ratings] && school_hash[:ratings][title] ? school_hash[:ratings][title].school_value : nil)
-          end
-          school_ratings << school_hash[:url]
+          school_ratings << school_hash['test-rating-id']
+          school_ratings << school_hash['universal-id']
+          school_ratings << school_hash['rating']
+          school_ratings << school_hash['url']
         end
-      end
-
-      def school_uid(id)
-        transpose_universal_id(@data_reader.state, Struct.new(:id).new(id), ENTITY_TYPE_SCHOOL)
       end
 
     end

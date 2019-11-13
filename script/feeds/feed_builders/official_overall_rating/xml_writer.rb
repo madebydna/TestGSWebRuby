@@ -33,17 +33,11 @@ module Feeds
       end
 
       def write_schools_info
-        @data_reader.each_result { |hash| write_school_info(hash) if hash[:rating].present? }
+        @data_reader.each_result { |hash| write_school_info(hash) if hash['rating'].present? }
       end
 
       def write_school_info(school_hash)
         write_xml_tag(school_hash, 'test-rating-value')
-        # within_tag('test-rating-value') do
-        #     xml_builder.tag!('universal-id', school_hash[:id].to_s)
-        #     xml_builder.tag!('test-rating-id', school_hash[:test_rating_id].to_s)
-        #     xml_builder.tag!('rating', school_hash[:rating].to_s)
-        #     xml_builder.tag!('url', school_hash[:url].to_s)
-        #   end
       end
 
       def file

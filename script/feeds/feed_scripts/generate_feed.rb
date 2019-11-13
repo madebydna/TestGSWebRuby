@@ -30,6 +30,7 @@ module Feeds
         new_test_gsdata: Feeds::NewTestGsdata::AllStudentsDataReader,
         new_test_subgroup_gsdata: Feeds::NewTestGsdata::DataReader,
         official_overall_rating: Feeds::OfficialOverallRating::DataReader,
+        official_overall_rating_flat: Feeds::OfficialOverallRating::DataReader,
         official_overall_rating_description: Feeds::OfficialOverallRating::DataReader,
     }
 
@@ -54,7 +55,9 @@ module Feeds
             txt: Feeds::NewTestGsdata::SubgroupsCsvWriter
         },
         official_overall_rating: {
-            xml: Feeds::OfficialOverallRating::XmlWriter,
+            xml: Feeds::OfficialOverallRating::XmlWriter
+        },
+        official_overall_rating_flat:{
             txt: Feeds::OfficialOverallRating::CsvWriter,
             csv: Feeds::OfficialOverallRating::CsvWriter
         },

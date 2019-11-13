@@ -7,7 +7,7 @@ module Feeds
       include UrlHelper
       include Feeds::FeedConstants
       include Feeds::FeedHelper
-      include CachedRatingsMethods
+      # include CachedRatingsMethods
 
       attr_reader :state, :schools
 
@@ -31,7 +31,7 @@ module Feeds
       end
 
       def state_results
-        state_data = JSON.parse(StateCache.for_state('ratings', @state)&.value)
+        state_data = JSON.parse(StateCache.for_state('feed_ratings', @state)&.value)
         @rating_type = state_data['type']
         {}.tap do |hash|
           hash['id'] = test_type_to_id
@@ -39,8 +39,6 @@ module Feeds
           hash['description'] = state_data['description']
         end
       end
-
-      private
 
       def test_type_to_id
         @_test_type_to_id ||= begin
@@ -65,9 +63,9 @@ module Feeds
           ratings_caches.map do |school|
             {
                 'universal-id' => school_uid(school.id),
-                'url' => school_url(school),
                 'test-rating-id' => test_type_to_id,
-                'rating' => school_rating(school)
+                'rating' => school_rating(school),
+                'url' => school_url(school)
             }
           end
         end
@@ -81,6 +79,8 @@ module Feeds
           school_cache_results.decorate_schools(schools)
         end
       end
+
+      private
 
       def school_uid(id)
         transpose_universal_id(@state, Struct.new(:id).new(id), ENTITY_TYPE_SCHOOL)
