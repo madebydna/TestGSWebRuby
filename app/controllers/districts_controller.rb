@@ -179,6 +179,7 @@ class DistrictsController < ApplicationController
   # under the assumption that TestScore only states will have their scores reflected on as Summary rating
   def summary_rating
     @_summary_rating ||= begin
+      return [] unless StateCache.for_state('state_attributes', state)&.cache_data.fetch('summary_rating_type', false) == "Summary Rating"
       summary_facet_results = facet_field_solr_results.fetch("summary_rating", [])
       state_summary_facet_results = state_facet_field_solr_results.fetch("summary_rating", [])
       facet_results = {}.tap do |h|
