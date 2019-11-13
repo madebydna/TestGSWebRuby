@@ -16,6 +16,9 @@ module Feeds
           'test_rating' => 'local-gs-test-rating-feed',
           'subrating' => 'local-gs-subrating-feed',
           'subrating_description' => 'local-gs-subrating-description-feed',
+          'official_overall_rating_flat' => 'local-gs-official-overall-rating-result-feed',
+          'official_overall_rating_flat_description' => 'local-gs-official-overall-rating-feed',
+          'official_overall_rating' => 'local-gs-official-overall-rating-feed',
           'old_test_gsdata' => 'local-gs-test-feed',
           'old_test_subgroup_gsdata' => 'local-gs-test-subgroup-feed',
           'new_test_gsdata' => 'local-gs-new-test-feed',
@@ -28,7 +31,7 @@ module Feeds
           'proficiency_band' => 'gs-proficiency-band',
       }
 
-      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description)
+      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description official_overall_rating official_overall_rating_description)
 
       VALID_FEED_FORMATS = %w(xml csv txt)
 

@@ -9,16 +9,18 @@ require_relative '../feed_builders/subrating/data_reader'
 require_relative '../feed_builders/subrating/xml_writer'
 require_relative '../feed_builders/subrating/csv_writer'
 require_relative '../feed_builders/subrating/csv_writer_description'
-require_relative '../feed_builders/old-test-gsdata/data_reader'
-require_relative '../feed_builders/old-test-gsdata/all_students_data_reader'
-require_relative '../feed_builders/old-test-gsdata/xml_writer'
-require_relative '../feed_builders/old-test-gsdata/subgroups_xml_writer'
+
 require_relative '../feed_builders/new-test-gsdata/data_reader'
 require_relative '../feed_builders/new-test-gsdata/all_students_data_reader'
 require_relative '../feed_builders/new-test-gsdata/xml_writer'
 require_relative '../feed_builders/new-test-gsdata/subgroups_xml_writer'
 require_relative '../feed_builders/new-test-gsdata/csv_writer'
 require_relative '../feed_builders/new-test-gsdata/subgroups_csv_writer'
+
+require_relative '../feed_builders/official_overall_rating/data_reader'
+require_relative '../feed_builders/official_overall_rating/xml_writer'
+require_relative '../feed_builders/official_overall_rating/csv_writer'
+require_relative '../feed_builders/official_overall_rating/csv_writer_description'
 
 module Feeds
   class GenerateFeed
@@ -27,6 +29,8 @@ module Feeds
         subrating_description: Feeds::Subrating::DataReader,
         new_test_gsdata: Feeds::NewTestGsdata::AllStudentsDataReader,
         new_test_subgroup_gsdata: Feeds::NewTestGsdata::DataReader,
+        official_overall_rating: Feeds::OfficialOverallRating::DataReader,
+        official_overall_rating_description: Feeds::OfficialOverallRating::DataReader,
     }
 
     DATA_WRITERS = {
@@ -39,12 +43,6 @@ module Feeds
             txt: Feeds::Subrating::CsvWriterDescription,
             csv: Feeds::Subrating::CsvWriterDescription
         },
-        old_test_gsdata: {
-            xml: Feeds::OldTestGsdata::XmlWriter
-        },
-        old_test_subgroup_gsdata: {
-            xml: Feeds::OldTestGsdata::SubgroupsXmlWriter
-        },
         new_test_gsdata: {
             xml: Feeds::NewTestGsdata::XmlWriter,
             csv: Feeds::NewTestGsdata::CsvWriter,
@@ -54,6 +52,15 @@ module Feeds
             xml: Feeds::NewTestGsdata::SubgroupsXmlWriter,
             csv: Feeds::NewTestGsdata::SubgroupsCsvWriter,
             txt: Feeds::NewTestGsdata::SubgroupsCsvWriter
+        },
+        official_overall_rating: {
+            xml: Feeds::OfficialOverallRating::XmlWriter,
+            txt: Feeds::OfficialOverallRating::CsvWriter,
+            csv: Feeds::OfficialOverallRating::CsvWriter
+        },
+        official_overall_rating_description: {
+            txt: Feeds::OfficialOverallRating::CsvWriterDescription,
+            csv: Feeds::OfficialOverallRating::CsvWriterDescription
         },
     }
 
