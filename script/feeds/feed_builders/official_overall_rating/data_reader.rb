@@ -64,10 +64,10 @@ module Feeds
         @_ratings_hashes ||= begin
           ratings_caches.map do |school|
             {
-                id: school_uid(school.id),
-                url: school_url(school),
-                test_rating_id: test_type_to_id,
-                rating: school_rating(school)
+                'universal-id' => school_uid(school.id),
+                'url' => school_url(school),
+                'test-rating-id' => test_type_to_id,
+                'rating' => school_rating(school)
             }
           end
         end
