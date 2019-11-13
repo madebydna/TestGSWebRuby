@@ -1,31 +1,44 @@
 # frozen_string_literal: true
 
 module Feeds
-  module ProficiencyBand
+  module OfficialOverallRating
     class XmlWriter
       include Feeds::FeedConstants
+      include Feeds::FeedHelper
 
-      def initialize(root_element, schema, feed_file_path)
-        @root_element = root_element
-        @schema = schema
-        @feed_file_path = feed_file_path
+      def initialize(data_reader, output_path)
+        @root_element = 'gs-official-overall-rating-feed'
+        @schema = 'http://www.greatschools.org/feeds/gs-official-overall-rating.xsd'
+        @feed_file_path = output_path
+        @data_reader = data_reader
       end
 
-      def write_feed(proficiency_band_feed, proficiency_band_group_feed)
+      def write_feed
         within_root_node do
-          proficiency_band_feed.each_result do |data|
-            write_xml_tag(data, 'proficiency-band')
-          end
-          proficiency_band_group_feed.each_result do |data|
-            write_xml_tag(data, 'proficiency-band-group')
-          end
+          write_state_info
+          write_schools_info
         end
         close_file
       end
 
-
       private
 
+      def write_state_info
+        state_results = @data_reader.state_results
+        within_tag('test-rating') do
+          xml_builder.tag!('id', state_results['id'])
+          xml_builder.tag!('year', state_results['year'])
+          xml_builder.tag!('description', state_results['description'])
+        end
+      end
+
+      def write_schools_info
+        @data_reader.each_result { |hash| write_school_info(hash) if hash['rating'].present? }
+      end
+
+      def write_school_info(school_hash)
+        write_xml_tag(school_hash, 'test-rating-value')
+      end
 
       def file
         @_file ||= File.open(@feed_file_path, 'w')
@@ -51,6 +64,12 @@ module Feeds
 
       def close_file
         file.close
+      end
+
+      def within_tag(tag_name)
+        xml_builder.tag! tag_name do
+          yield(xml_builder)
+        end
       end
 
       def write_xml_tag(data, tag_name)

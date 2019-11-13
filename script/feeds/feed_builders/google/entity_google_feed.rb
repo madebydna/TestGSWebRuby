@@ -25,17 +25,38 @@ module Feeds
       end
     end
 
+    # def objects_with_cache_data(id)
+    #   cache_query_class = Object.const_get("#{@model}CacheQuery")
+    #   cache_results_class = Object.const_get("#{@model}CacheResults")
+    #   keys = FeedConstants.const_get("DIRECTORY_FEED_#{@model.upcase}_CACHE_KEYS")
+    #   query = cache_query_class.new.include_cache_keys(keys)
+    #   query = query.send("include_#{@model.downcase}s", @state, id)
+    #   query_results = query.query_and_use_cache_keys
+    #   cache_results = cache_results_class.new(keys, query_results)
+    #   c = cache_results.data_hash if cache_results
+    #   c.first.second if c && c.first
+    # end
+
+
     def objects_with_cache_data(id)
-      cache_query_class = Object.const_get("#{@model}CacheQuery")
-      cache_results_class = Object.const_get("#{@model}CacheResults")
       keys = FeedConstants.const_get("DIRECTORY_FEED_#{@model.upcase}_CACHE_KEYS")
-      query = cache_query_class.new.include_cache_keys(keys)
-      query = query.send("include_#{@model.downcase}s", @state, id)
-      query_results = query.query_and_use_cache_keys
-      cache_results = cache_results_class.new(keys, query_results)
-      c = cache_results.data_hash if cache_results
-      c.first.second if c && c.first
+      qr = query_results(keys, id)
+      cache_results_class = Object.const_get("#{@model}CacheResults")
+      cache_results = cache_results_class.new(keys, qr)
+      cache_results&.data_hash&.first&.second
     end
+
+    def query_results(keys, id)
+      if @model == "District"
+        DistrictCache.include_cache_keys(keys).for_state_and_id(@state, id)
+      else
+        cache_query_class = Object.const_get("#{@model}CacheQuery")
+        query = cache_query_class.new.include_cache_keys(keys)
+        query = query.send("include_#{@model.downcase}s", @state, id)
+        query.query_and_use_cache_keys
+      end
+    end
+
 
   end
 end
