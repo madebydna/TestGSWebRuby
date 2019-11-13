@@ -48,6 +48,7 @@ module CommunityProfiles
         h['graphic_header'] = I18n.t("graphic_header", scope: "lib.summary_rating.district_scope")
         h['graphic_header_tooltip'] = I18n.t("graphic_header_tooltip", scope: "lib.summary_rating.district_scope")
         h['data'] = data_points
+        h['source'] = I18n.t("source_html", scope: "lib.summary_rating.district_scope")
       end
     end
 

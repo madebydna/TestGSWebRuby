@@ -22,3 +22,9 @@ es:
           even_distribution_html: >
             <span class="emphasis" style="color:#AB8F0E;">Vale la pena una mirada más profunda:</span>
             <p>Este distrito tiene <span class="emphasis">un historial mixto</span>. Mira por abajo para ver qué porcentaje de escuelas en este distrito están calificadas <span class="emphasis">por encima del promedio</span>, <span class="emphasis">promedio</span> o <span class="emphasis">por debajo del promedio</span> en calidad escolar.</p>
+        source_html: >
+          <div class="sourcing">
+            <h1>Las fuentes de datos y informacion de los perfiles de distritos de GreatSchools</h1>
+            <p>La Calificación General de GreatSchools es una reflexión de múltiples medidas sobre la calidad de la escuela en base a los componentes de calificación disponibles para cada escuela. Para ver cómo se calculó la Calificación General para una escuela en este distrito, visita el perfil de la escuela y haz clic en el signo de interrogación junto a la Calificación General en la parte superior de la página.</p>
+            <a href="/gk/ratings/">Infórmate más sobre las Calificaciones de GreatSchools.</a>
+          </div>

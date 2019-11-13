@@ -89,7 +89,7 @@ en:
         data_point_label: 'District'
         tooltip_html: >
           <p>How much do schools help students grow each year?</p>
-          <p>Many states publish student growth data to reflect how much progress students are making year-over-year. This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student progress by comparing year-over-year test scores by grade and subject at this school compared to all schools in the state that started with similar proficiency levels. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Academic Progress Ratings.</p>
+          <p>Many states publish student growth data to reflect how much progress students are making year-over-year. This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student progress by comparing year-over-year test scores by grade and subject at each school compared to all schools in the state that started with similar proficiency levels. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Academic Progress Ratings.</p>
           <a href='/gk/ratings/#academicprogressrating'>Learn more about this rating.</a>
         graphic_header: How does this district compare with the rest of the state? 
         graphic_header_tooltip: This pie chart shows the percentage of schools in this district with Academic Progress Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
