@@ -87,7 +87,6 @@
           }) %>
         </div>
 
-        <%# Student Demographics module %>
         <% if @students.ethnicity_student_demo_data || @students.gender_student_demo_data || @students.subgroups_student_demo_data %>
           <div id="students" class="module-section">
             <%= react_component("Students", props: {
@@ -100,11 +99,6 @@
             }) %>
           </div>
         <% end %>
-
-        <%# NOTE: Temporary fix for the React Hooks issues preventing the above code from working. %>
-        <%#= react_component("State", props: {
-            students: @students.students_demographics
-        }) %>
 
         <%# TODO: Add viewportSize check to React component itself %>
         <div id="cities" class="module-section">
