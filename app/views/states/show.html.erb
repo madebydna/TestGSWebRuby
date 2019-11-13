@@ -21,7 +21,7 @@
 
       <div class="community-modules">
         <div class="display-mobile">
-          <%= react_component("Ad", props: {
+          <%= react_component("AdWrapper", props: {
               slot: "statepage_first",
               sizeName: "thin_banner_mobile"
           }) %>
@@ -31,7 +31,7 @@
           <div class="modules-title"><%= I18n.t('explore_in_state', scope: 'community.state', name_long: @state[:long].titleize) %></div>
 
           <%# TODO: Add viewportSize check to React component itself %>
-          <%= react_component("TopSchoolsStateful", props: {
+          <%= react_component("TopSchoolsStatefulWrapper", props: {
               community: 'state',
               schoolsData: @top_schools[:schools],
               locality: @locality,
@@ -41,7 +41,7 @@
           <%# TODO: Add viewportSize check to React component itself %>
           <% if @school_levels %>
             <div class="modules-title"><%= I18n.t('explore_by_type', scope: 'community.state') %></div>
-            <%= react_component("SchoolBrowseLinks", props: {
+            <%= react_component("SchoolBrowseLinksWrapper", props: {
                 community: 'state',
                 locality: @locality,
                 schoolLevels: @school_levels
@@ -52,7 +52,7 @@
         <%# TODO: Add viewportSize check to React component itself %>
         <% if @csa_module %>
           <div id="award-winning-schools" class="module-section">
-            <%= react_component("CsaTopSchools", props: {
+            <%= react_component("CsaTopSchoolsWrapper", props: {
                 community: 'state',
                 schools: @top_schools[:schools][:csa],
                 locality: @locality
@@ -61,7 +61,7 @@
         <% end %>
 
         <div id="academics" class="module-section">
-          <%= react_component("AcademicsDataModule", props: {
+          <%= react_component("AcademicsDataModuleWrapper", props: {
               title: @academics[:title],
               anchor: @academics[:anchor],
               subtitle: @academics[:subtitle],
@@ -81,7 +81,7 @@
         </div>
 
         <div id="second-ad">
-          <%= react_component("Ad", props: {
+          <%= react_component("AdWrapper", props: {
               slot: "statepage_second",
               sizeName: "box"
           }) %>
@@ -89,7 +89,7 @@
 
         <% if @students.ethnicity_student_demo_data || @students.gender_student_demo_data || @students.subgroups_student_demo_data %>
           <div id="students" class="module-section">
-            <%= react_component("Students", props: {
+            <%= react_component("StudentsWrapper", props: {
                 ethnicityData: @students.students_demographics['ethnicityData'],
                 subgroupsData: @students.students_demographics['subgroupsData'],
                 genderData: @students.students_demographics['genderData'],
@@ -102,7 +102,7 @@
 
         <%# TODO: Add viewportSize check to React component itself %>
         <div id="cities" class="module-section">
-          <%= react_component("CityBrowseLinks", props: {
+          <%= react_component("CityBrowseLinksWrapper", props: {
                 community: 'state',
                 locality: @locality,
                 cities: @cities
@@ -112,7 +112,7 @@
         <% if @districts.length > 0 %>
           <div id="districts" class="module-section">
             <div class="modules-title"><%= I18n.t('districts_header', scope: 'community.state', name_long: @state[:long].titleize) %></div>
-            <%= react_component("DistrictsInState", props: {
+            <%= react_component("DistrictsInStateWrapper", props: {
                 districts: @districts,
                 locality: @locality
             }) %>
@@ -124,7 +124,7 @@
             <div class="rating-container reviews-module">
               <h3><%= I18n.t('recent_reviews.title', scope: 'community.state', name_long: @state[:long].titleize) %></h3>
 
-              <%= react_component("RecentReviews", props: {
+              <%= react_component("RecentReviewsWrapper", props: {
                   community: 'state',
                   reviews: @reviews,
                   locality: @locality

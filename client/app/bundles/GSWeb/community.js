@@ -2,7 +2,7 @@ import ReactOnRails from "react-on-rails";
 import District from "./react_components/community/district";
 import City from "./react_components/community/city";
 import State from "./react_components/community/state";
-import SearchBox from 'react_components/search_box';
+import SearchBoxWrapper from 'react_components/search_box_wrapper';
 import withViewportSize from 'react_components/with_viewport_size';
 import TopSchoolsStateful from 'react_components/community/top_schools_stateful';
 import CsaTopSchools from 'react_components/community/csa_top_schools';
@@ -18,22 +18,31 @@ import { scrollToElement } from 'util/scrolling';
 import { keepInViewport, isScrolledInViewport } from 'util/viewport';
 import { throttle } from 'lodash';
 
-const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
+const TopSchoolsStatefulWrapper = withViewportSize({ propName: 'size' })(TopSchoolsStateful);
+const CsaTopSchoolsWrapper = withViewportSize({ propName: 'size' })(CsaTopSchools);
+const SchoolBrowseLinksWrapper = withViewportSize({ propName: 'size' })(SchoolBrowseLinks);
+const AcademicsDataModuleWrapper = withViewportSize({ propName: 'size' })(AcademicsDataModule);
+const StudentsWrapper = withViewportSize({ propName: 'size' })(Students);
+const CityBrowseLinksWrapper = withViewportSize({ propName: 'size' })(CityBrowseLinks);
+const DistrictsInStateWrapper = withViewportSize({ propName: 'size' })(DistrictsInState);
+const RecentReviewsWrapper = withViewportSize({ propName: 'size' })(RecentReviews);
+const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
+
 
 ReactOnRails.register({
   District,
   City,
   State,
   SearchBoxWrapper,
-  TopSchoolsStateful,
-  CsaTopSchools,
-  SchoolBrowseLinks,
-  AcademicsDataModule,
-  Students,
-  CityBrowseLinks,
-  DistrictsInState,
-  RecentReviews,
-  Ad
+  TopSchoolsStatefulWrapper,
+  CsaTopSchoolsWrapper,
+  SchoolBrowseLinksWrapper,
+  AcademicsDataModuleWrapper,
+  StudentsWrapper,
+  CityBrowseLinksWrapper,
+  DistrictsInStateWrapper,
+  RecentReviewsWrapper,
+  AdWrapper
 });
 
 $(() => {
