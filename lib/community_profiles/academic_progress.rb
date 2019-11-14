@@ -1,7 +1,6 @@
 module CommunityProfiles
   class AcademicProgress
     include Rails.application.routes.url_helpers
-    include FacetFieldsConcerns
     include RatingSourceConcerns
 
     attr_reader :facet_results, :state_facet_results, :state
