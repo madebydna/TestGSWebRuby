@@ -52,6 +52,13 @@
 
 }
 
+.display-mobile {
+  > div {
+    margin-left: 0px;
+    margin-bottom: 20px;
+  }
+}
+
 //CSS rules for the districts in a state module
 .districts-in-state-module {
   margin-bottom: 15px;
