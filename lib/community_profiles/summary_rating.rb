@@ -1,8 +1,5 @@
 module CommunityProfiles
   class SummaryRating
-    include Rails.application.routes.url_helpers
-    include FacetFieldsConcerns
-    include RatingSourceConcerns
 
     attr_reader :facet_results, :state_facet_results, :state
 
@@ -12,34 +9,18 @@ module CommunityProfiles
       @state = state
     end
 
-    def community_results_counts
-      @_community_results_counts ||=begin
-        school_counts(facet_results)
-      end
+    def ratings_narration
+      @_ratings_narration ||= CommunityProfiles::RatingsNarration.new(facet_results)
     end
 
-    def community_results_percentages
-      @_community_results_percentages ||=begin
-        convert_to_percentage_hash(community_results_counts)
-      end
-    end
-
-    def state_results_counts
-      @_state_results_counts ||=begin
-        school_counts(state_facet_results)
-      end
-    end
-
-    def state_results_percentages
-      @_state_results_percentages ||=begin
-        convert_to_percentage_hash(state_results_counts)
-      end
+    def state_ratings_narration
+      @_state_ratings_narration ||= CommunityProfiles::RatingsNarration.new(state_facet_results)
     end
 
     def summary_rating_type
       @_summary_rating_type ||= begin
         cache_data = StateCache.for_state('state_attributes', state)&.cache_data
-        cache_data.fetch("summary_rating_type", nil)
+        cache_data&.fetch("summary_rating_type", nil)
       end
     end
 
@@ -50,18 +31,18 @@ module CommunityProfiles
                               .sort_by {|x| x['year']}
                               .reverse
                               .first
-        source_info.fetch('date_in_word', nil)
+        source_info&.fetch('date_in_word', nil)
       end
     end
 
     def data_values
-      return {} if total_schools(community_results_counts).zero?
+      return {} if ratings_narration.total_counts.zero?
       
       {}.tap do |h|
         h['key'] = 'summary_rating'
         h['title'] = I18n.t('title', scope: "lib.summary_rating.district_scope")
         h['subtext'] = I18n.t('subtext', scope: "lib.summary_rating.district_scope")
-        h['narration'] = I18n.t("#{narration_logic}_html", scope: "lib.summary_rating.district_scope.narrative")
+        h['narration'] = I18n.t("#{ratings_narration.narration_logic}_html", scope: "lib.summary_rating.district_scope.narrative")
         h['tooltip'] = I18n.t("tooltip_html", scope: "lib.summary_rating.district_scope")
         h['graphic_header'] = I18n.t("graphic_header", scope: "lib.summary_rating.district_scope")
         h['graphic_header_tooltip'] = I18n.t("graphic_header_tooltip", scope: "lib.summary_rating.district_scope")
@@ -78,13 +59,13 @@ module CommunityProfiles
         'below_average' => '#CB5C35'
       }
 
-      community_results_percentages.map do |rating, percentage|
+      ratings_narration.ratings_percentage_hash.map do |rating, percentage|
         {}.tap do |h|
           h['key'] = rating
           h['name'] = I18n.t(rating, scope: 'helpers.ratings_helpers')
           h['value_label'] = I18n.t("data_point_label", scope: "lib.academic_progress.district_scope")
           h['district_value'] = SchoolProfiles::DataPoint.new(percentage).apply_formatting([:round]).format
-          h['state_value'] = SchoolProfiles::DataPoint.new(state_results_percentages[rating]).apply_formatting([:round]).format
+          h['state_value'] = SchoolProfiles::DataPoint.new(state_ratings_narration.ratings_percentage_hash[rating]).apply_formatting([:round]).format
           h['color'] = colors[rating]
         end
       end
