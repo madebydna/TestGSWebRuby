@@ -7,7 +7,7 @@ class TestScoresCaching::TestScoresCacherGsdata < Cacher
 
   CACHE_EXCEPTIONS = :data_type, :percentage, :narrative, :label, :methodology
 
-  ALT_NULL_STATE_FILTER = %w(de il mt nv)
+  ALT_NULL_STATE_FILTER = %w(de il mt nv ct)
 
   def data_type_tags
     self.class::DATA_TYPE_TAGS

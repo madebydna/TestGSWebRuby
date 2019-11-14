@@ -23,11 +23,14 @@ module CommunityProfiles
     end
 
     def data_values_for_pie_chart(pie_chart_config)
+      data = data_values_for_data_row(pie_chart_config[:data_keys])
+      return [] if data.empty?
+
       Array.wrap(
         {}.tap do |hash|
           hash['data_type'] = pie_chart_config[:key]
           hash['name'] = I18n.t(pie_chart_config[:key], scope: 'lib.finance')
-          hash['data'] = data_values_for_data_row(pie_chart_config[:data_keys])
+          hash['data'] = data
           hash['tooltip'] = I18n.t("#{pie_chart_config[:key]}_tooltip_html", scope: 'lib.finance')
           hash['type'] = 'pie_chart'
           hash['color'] = pie_chart_config[:color]

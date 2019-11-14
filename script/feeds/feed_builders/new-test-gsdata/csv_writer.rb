@@ -148,7 +148,7 @@ module Feeds
       end
 
       def state_abbrv
-        @data_reader.state ? @data_reader.state.upcase  : nil
+        @data_reader&.state&.upcase
       end
 
     end

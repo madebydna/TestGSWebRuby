@@ -5,11 +5,15 @@ class DistrictCache < ActiveRecord::Base
   KEYS = [:test_scores, :directory_census, :district_directory, :feed_district_characteristics]
 
   def self.for_district(district)
-    where(state: district.state, district_id: district.id)
+    for_state_and_id(district.state, district.id)
   end
 
   def self.include_cache_keys(keys)
     where(name: keys)
+  end
+
+  def self.for_state_and_id(state, district_id)
+    where(state: state, district_id: district_id)
   end
 
   def self.for_districts(districts)
