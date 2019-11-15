@@ -16,6 +16,7 @@
     </div>
     <%= render 'community/hero', school_count: @school_count %>
 
+    <!-- First Ad -->
     <div class="display-mobile">
       <%= react_component("AdWrapper", props: {
           slot: "statepage_first",
@@ -24,13 +25,16 @@
     </div>
 
     <div class="below-hero">
+      <!-- TOC -->
       <%= render 'community/toc' %>
 
+      <!-- Main Content -->
       <div class="community-modules">
+        <!-- Schools -->
         <div id="schools" class="module-section">
           <div class="modules-title"><%= I18n.t('explore_in_state', scope: 'community.state', name_long: @state[:long].titleize) %></div>
 
-          <%# TODO: Add viewportSize check to React component itself %>
+          <!-- Top Schools -->
           <%= react_component("TopSchoolsStatefulWrapper", props: {
               community: 'state',
               schoolsData: @top_schools[:schools],
@@ -38,7 +42,7 @@
               schoolLevels: @top_schools[:counts]
           }) %>
 
-          <%# TODO: Add viewportSize check to React component itself %>
+          <!-- School Browse Links (Explore schools by type) -->
           <% if @school_levels %>
             <div class="modules-title"><%= I18n.t('explore_by_type', scope: 'community.state') %></div>
             <%= react_component("SchoolBrowseLinksWrapper", props: {
@@ -49,7 +53,7 @@
           <% end %>
         </div>
 
-        <%# TODO: Add viewportSize check to React component itself %>
+        <!-- CSA Top Schools (Award-winning schools) -->
         <% if @csa_module %>
           <div id="award-winning-schools" class="module-section">
             <%= react_component("CsaTopSchoolsWrapper", props: {
@@ -60,6 +64,7 @@
           </div>
         <% end %>
 
+        <!-- Academics -->
         <div id="academics" class="module-section">
           <%= react_component("AcademicsDataModuleWrapper", props: {
               title: @academics[:title],
@@ -80,6 +85,7 @@
           }) %>
         </div>
 
+        <!-- Second Ad -->
         <div id="second-ad">
           <%= react_component("AdWrapper", props: {
               slot: "statepage_second",
@@ -87,6 +93,7 @@
           }) %>
         </div>
 
+        <!-- Student Demographics -->
         <% if @students.ethnicity_student_demo_data || @students.gender_student_demo_data || @students.subgroups_student_demo_data %>
           <div id="students" class="module-section">
             <%= react_component("StudentsWrapper", props: {
@@ -100,15 +107,12 @@
           </div>
         <% end %>
 
-        <%# TODO: Add viewportSize check to React component itself %>
+        <!-- City Browse Links (Cities) -->
         <div id="cities" class="module-section">
-          <%= react_component("CityBrowseLinksWrapper", props: {
-                community: 'state',
-                locality: @locality,
-                cities: @cities
-            }) %>
+          <%= render 'community/city_browse_links', cities: @cities, locality: @locality %>
         </div>
 
+        <!-- Districts -->
         <% if @districts.length > 0 %>
           <div id="districts" class="module-section">
             <div class="modules-title"><%= I18n.t('districts_header', scope: 'community.state', name_long: @state[:long].titleize) %></div>
@@ -119,6 +123,7 @@
           </div>
         <% end %>
 
+        <!-- Reviews -->
         <% if @reviews.length > 0 %>
           <div id="reviews" class="module-section">
             <div class="rating-container reviews-module">
@@ -134,6 +139,7 @@
         <% end %>
       </div>
 
+      <!-- Sticky Right Rail -->
       <%= render 'community/sticky_right_rail' %>
 
     </div>
