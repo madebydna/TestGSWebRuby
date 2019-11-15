@@ -97,7 +97,7 @@ module SearchControllerConcerns
       city: city,
       state: state,
       school_keys: filtered_school_keys,
-      district_id: district_record&.id,
+      district_id: district_record&.district_id,
       district_name: district_record&.name,
       location_label: location_label_param,
       level_codes: level_codes,
@@ -221,7 +221,7 @@ module SearchControllerConcerns
       if location_given? && street_address?
         schools = attendance_zone_query.search_by_level
         schools.each do |school|
-          district = District.on_db(school.state.downcase)&.find_by(id: school.district_id)&.name
+          district = DistrictRecord.where(state: school.state.downcase).find_by(district_id: school.district_id)&.name
           school.define_singleton_method(:district_name) {district}
         end
         schools

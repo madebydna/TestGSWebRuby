@@ -51,7 +51,7 @@ describe SchoolProfileDecorator do
 
     context 'with two levels for a school' do
       subject do
-        SchoolProfileDecorator.decorate(FactoryBot.build(:alameda_high_school,lat: 30.111, lon: -120.22, type: 'private', level_code: 'e,m'))
+        SchoolProfileDecorator.decorate(FactoryBot.build(:alameda_high_school, lat: 30.111, lon: -120.22, type: 'private', level_code: 'e,m'))
       end
       it 'should return url' do
         search_url = '/search/search.page'
@@ -71,14 +71,14 @@ describe SchoolProfileDecorator do
 
   describe "#type_url" do
     before do
-      @district = FactoryBot.create(:district, name: 'Alameda City Unified')
+      @district = create(:district_record, name: 'Alameda City Unified')
     end
     after do
-      clean_dbs :ca
+      clean_dbs :gs_schooldb
     end
     context "with a public school" do
       subject do
-        SchoolProfileDecorator.decorate(FactoryBot.build(:alameda_high_school, lat: 30.111, lon: -120.22, zipcode: 90406, district_id: @district.id))
+        SchoolProfileDecorator.decorate(FactoryBot.build(:alameda_high_school, lat: 30.111, lon: -120.22, zipcode: 90406, district_id: @district.district_id))
       end
       it "should return district browse for public schools" do
         type_url = 'http://localhost/california/alameda/alameda-city-unified/schools/'

@@ -172,9 +172,9 @@ module SearchRequestParams
     
     @_district_record ||= begin
       if district_id
-        District.on_db(state).where(id: district_id).first
+        DistrictRecord.by_state(state.to_s).where(district_id: district_id).first
       elsif district
-        District.on_db(state).where(name: district).first
+        DistrictRecord.by_state(state.to_s).where(name: district).first
       end
     end
   end

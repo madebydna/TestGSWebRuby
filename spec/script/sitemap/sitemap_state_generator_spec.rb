@@ -81,7 +81,7 @@ describe SitemapStateGenerator do
 
   describe '#districts' do
     it 'fetches all districts in state' do
-      expect(District).to receive_message_chain(:on_db, :active, :order)
+      expect(DistrictRecord).to receive_message_chain(:by_state, :active, :order)
       generator.send(:districts)
     end
   end

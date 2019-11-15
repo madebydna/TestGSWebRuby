@@ -84,7 +84,7 @@ module CommunityProfiles
 
     def data_values
       { state: data_reader.district.state,
-        district_id: data_reader.district.id,
+        district_id: data_reader.district.district_id,
         main_staff: main_staff_data,
         other_staff: {
           name: data_label_district('other staff resources'),

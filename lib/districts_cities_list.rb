@@ -14,10 +14,10 @@ class DistrictsCitiesList
 
   def districts_cities_counties
     @_districts_cities_counties ||= (
-      District.on_db(state.downcase.to_sym)
-        .where(active: 1)
-        .order(name: :asc)
-        .select(:name, :city, :county).to_a
+      DistrictRecord.by_state(state.downcase)
+        .active
+        .order(:name)
+        .select(:unique_id, :name, :district_id, :state, :city, :county)
         .map(&:serializable_hash)
     )
   end

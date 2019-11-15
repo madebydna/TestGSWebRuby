@@ -75,7 +75,7 @@ class Api::DistrictsController < ApplicationController
 
   def get_districts
     @_get_districts ||= (
-      districts = District.on_db(state.to_s.downcase.to_sym).
+      districts = DistrictRecord.where(state: state.to_s.downcase).
         where(criteria).
         active.
         limit(limit).
@@ -83,18 +83,20 @@ class Api::DistrictsController < ApplicationController
 
       if lat.present? && lon.present? && radius.present?
         districts = districts.
-          select("*, #{District.query_distance_function(lat,lon)} as distance").
+          select("*, #{DistrictRecord.query_distance_function(lat,lon)} as distance").
           having("distance < #{radius}").
           order('distance asc')
       else
-        districts = districts.order(:id)
+        districts = districts.order(:district_id)
       end
       districts
     )
   end
 
   def criteria
-    params.slice(:id, :charter_only)
+    orig = params.slice(:id, :charter_only)
+    orig["district_id"] = orig.delete("id") if orig["id"]
+    orig
   end
 
   def state

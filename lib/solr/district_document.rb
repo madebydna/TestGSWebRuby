@@ -35,7 +35,7 @@ module Solr
     def district
       @district ||= begin
         raise "Illegal state: district or state and district_id are required" unless @state && @district_id
-        District.on_db(@state.downcase.to_sym).find_by_id(@district_id)
+        DistrictRecord.by_state(@state.downcase).find_by(district_id: @district_id)
       end
     end
   end

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe CommunityProfiles::TeachersStaff do
-  after { do_clean_dbs(:ca, :gs_schooldb) }
-  let!(:district) { FactoryBot.create_on_shard(:ca, :district) }
+  after { do_clean_dbs(:gs_schooldb) }
+  let!(:district) { create(:district_record) }
   let(:cache_reader) { 
     DistrictCacheDataReader.new(district, district_cache_keys: ['gsdata']) 
   }
@@ -25,7 +25,7 @@ describe CommunityProfiles::TeachersStaff do
     end
 
     it "has district_id key with the district's id" do
-      expect(data[:district_id]).to eq(district.id)
+      expect(data[:district_id]).to eq(district.district_id)
     end
   end
 
@@ -211,7 +211,7 @@ describe CommunityProfiles::TeachersStaff do
   end
 
   def create_gsdata_cache(value)
-    create(:district_cache, district_id: district.id, state: district.state, 
+    create(:district_cache, district_id: district.district_id, state: district.state, 
       name: "gsdata", value: value.to_json)
   end
 

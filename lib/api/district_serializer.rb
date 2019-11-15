@@ -16,7 +16,7 @@ class Api::DistrictSerializer
     district_params[:trailing_slash] = true
     district_params[:lang] = I18n.current_non_en_locale
     h = {
-      id: district.id,
+      id: district.district_id,
       districtName: district.try(:name),
       lat: district.lat,
       lon: district.lon,

@@ -60,7 +60,7 @@ class DistrictsController < ApplicationController
     query_type = Search::SolrSchoolQuery
     query_type.new(
           state: state,
-          district_id: district_record&.id,
+          district_id: district_record&.district_id,
           level_codes: @level_code.compact,
           limit: default_top_schools_limit,
           sort_name: 'rating',
@@ -86,7 +86,7 @@ class DistrictsController < ApplicationController
       query_type = Search::SolrSchoolQuery
       query_type.new(
         state: state,
-        district_id: district_record&.id,
+        district_id: district_record&.district_id,
         district_name: district_record&.name,
         limit: 0
       ).response.facet_fields
@@ -251,7 +251,7 @@ class DistrictsController < ApplicationController
   def locality
     @_locality ||= begin
       Hash.new.tap do |cp|
-        cp[:district_id] = district_record.id
+        cp[:district_id] = district_record.district_id
         cp[:name] = district_record.name
         cp[:address] = district_record.mail_street if district_record.mail_street.present?
         cp[:city] = district_record.city

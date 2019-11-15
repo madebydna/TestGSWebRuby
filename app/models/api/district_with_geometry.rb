@@ -4,7 +4,7 @@ class Api::DistrictWithGeometry < SimpleDelegator
   def self.apply_geometry_data!(district)
     geometries = 
       DistrictGeometry.select('level_code, AsText(geom) as geom').
-      where(state: district.state, district_id: district.id)
+      where(state: district.state, district_id: district.district_id)
 
     new(district).tap do |s|
       s.boundaries = geometries.each_with_object({}) do |result, hash|

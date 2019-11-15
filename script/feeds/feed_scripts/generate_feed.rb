@@ -100,9 +100,9 @@ module Feeds
 
     def districts(state)
       if district_ids.present?
-        District.find_by_state_and_ids(state, district_ids)
+        DistrictRecord.find_by_state_and_ids(state, district_ids)
       else
-        District.on_db(state.downcase.to_sym).active.order(:id)
+        DistrictRecord.by_state(state.downcase).active.order(:district_id)
       end
     end
 

@@ -16,7 +16,7 @@ module CommunityProfiles
     end
 
     def qualaroo_module_link
-      qualaroo_iframe(:advanced_stem, @cache_data_reader.district.state, @cache_data_reader.district.id.to_s)
+      qualaroo_iframe(:advanced_stem, @cache_data_reader.district.state, @cache_data_reader.district.district_id.to_s)
     end
 
     def data_types_and_visualizations
