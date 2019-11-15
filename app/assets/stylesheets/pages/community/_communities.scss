@@ -509,6 +509,13 @@ $line-height-community: 1.428571429;
         width: 100%;
         margin-left: -8px;
       }
+      .blue-line.hide-line {
+        display: block;
+        
+        @include media-breakpoint-up(lg) {
+          display: none;
+        }
+      }
       a, p {
         font-size: $font-size;
         font-family: 'opensans-semibold';
