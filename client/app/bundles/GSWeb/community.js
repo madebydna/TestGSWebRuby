@@ -72,7 +72,7 @@ $(() => {
   //   setBottom: true
   // });
 
-  $('.toc li').on('click', function(e) {
+  $('.state-body .toc li').on('click', function(e) {
     let elem = e.currentTarget;
     if (elem.nodeName === 'LI') {
       let anchor = elem.getAttribute('anchor');
@@ -85,7 +85,7 @@ $(() => {
     const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele));
     const selectedToc = tocElements.length > 0 ? tocElements[0].id : [];
 
-    window.document.querySelectorAll('.toc li').forEach(element => {
+    window.document.querySelectorAll('.state-body .toc li').forEach(element => {
       if (element.getAttribute('anchor') === `#${selectedToc}`) {
         element.classList.add('selected');
       } else {
