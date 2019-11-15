@@ -3,7 +3,7 @@ module CookieHelper
     host = Capybara.app_host ? URI(Capybara.app_host).host : '127.0.0.1'
     if page.driver.class.name == 'Capybara::Selenium::Driver'
       cookie_settable = Capybara.current_session.driver.browser
-      cookie_settable.manage.add_cookie({name: name, value: value, domain: host})
+      cookie_settable.manage.add_cookie({name: name, value: value })
     else
       cookie_settable = page.driver.browser
       cookie_settable.set_cookie("#{name}=#{value}; domain=#{host}")

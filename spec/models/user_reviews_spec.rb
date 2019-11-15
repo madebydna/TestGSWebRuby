@@ -1,14 +1,11 @@
 require "spec_helper"
 
 describe UserReviews do
+  let(:school) { build(:school) }
 
   describe "#partition" do
-    def user_reviews(reviews)
-      UserReviews.new(reviews)
-    end
 
     it "returns nil five_star_review if non exist" do
-      school = build(:school)
       reviews = build_list(:review, 3, school: school)
 
       five_star_review, = UserReviews.new(reviews, school).partition
@@ -16,23 +13,21 @@ describe UserReviews do
     end
 
     it "returns correct set of non-five-star reviews" do
-      school = build(:school)
       reviews = build_list(:review, 3, school: school)
       _, other_reviews = UserReviews.new(reviews, school).partition
       expect(other_reviews).to eq(reviews)
     end
 
-    it "raises an error if there are more than one five-star-review" do
-      school = build(:school)
+    it "only allows one five-star-review" do
       reviews = build_list(:review, 3, school: school)
       five_star_reviews = build_list(:five_star_review, 2, school: school)
       combined_reviews = reviews + five_star_reviews
 
-      expect { user_reviews(combined_reviews).partition }.to raise_error
+      five_star_review, other_reviews = UserReviews.new(combined_reviews, school).partition
+      expect(five_star_review).to eq(five_star_reviews.first)
     end
 
-    it "returns correct five five review and no other reviews" do
-      school = build(:school)
+    it "returns correct five star review and no other reviews" do
       reviews = [ build(:five_star_review, school: school) ]
 
       five_star_review, other_reviews = UserReviews.new(reviews, school).partition
@@ -41,7 +36,6 @@ describe UserReviews do
     end
 
     it "returns correct five star review and other reviews" do
-      school = build(:school)
       reviews = [
         build(:review, school: school),
         build(:review, school: school),
@@ -56,7 +50,6 @@ describe UserReviews do
   end
 
   describe "#review_to_hash" do
-    let(:school) { build(:school) }
     let(:review) do
         build(:five_star_review, created: Date.parse("2012-01-01"), school: school)
     end
@@ -72,7 +65,6 @@ describe UserReviews do
   end
 
   describe "#build_struct" do
-    let(:school) { build(:school) }
     let(:reviews) do
       [
         build(:five_star_review, created: Date.parse("2012-01-01"), school: school),

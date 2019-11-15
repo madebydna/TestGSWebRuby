@@ -21,9 +21,9 @@ module CachePopulator
     def run_with_validation
       if valid?
         states_to_cache.each do |state|
-          puts "Working on state: #{state}"
+          puts "Working on state: #{state}" unless Rails.env.test?
           keys_to_cache.each do |cache_key|
-              puts "... doing cache key: #{cache_key}"
+              puts "... doing cache key: #{cache_key}" unless Rails.env.test?
               yield state, cache_key
           end
         end

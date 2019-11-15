@@ -1,15 +1,6 @@
-#! /usr/bin/env bash
+#!/bin/bash
 
 export DISPLAY="${DISPLAY:=:99}"
-
-file=/usr/local/bin/restart_xvfb.sh
-
-if [[ -x "$file" ]]
-then
-  $file
-else
-  echo "$file not found. Skipping."
-fi
 
 RAILS_ENV=test coverage=false bundle exec rspec \
 --tag ~remote \
@@ -21,5 +12,4 @@ RAILS_ENV=test coverage=false bundle exec rspec \
 --format RSpec::Core::Formatters::FailuresHtmlFormatter \
 --out ./tmp/feature_spec_failures_html_report.html \
 --format RspecJunitFormatter \
---out ./tmp/feature_test_results.xml
 "$@"
