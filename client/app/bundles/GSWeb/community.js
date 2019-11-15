@@ -1,7 +1,6 @@
 import ReactOnRails from "react-on-rails";
 import District from "./react_components/community/district";
 import City from "./react_components/community/city";
-import State from "./react_components/community/state";
 import SearchBoxWrapper from 'react_components/search_box_wrapper';
 import withViewportSize from 'react_components/with_viewport_size';
 import TopSchoolsStateful from 'react_components/community/top_schools_stateful';
@@ -9,7 +8,6 @@ import CsaTopSchools from 'react_components/community/csa_top_schools';
 import SchoolBrowseLinks from 'react_components/community/school_browse_links';
 import AcademicsDataModule from 'react_components/community/academics_data_module';
 import Students from 'react_components/community/students';
-import CityBrowseLinks from 'react_components/community/city_browse_links';
 import DistrictsInState from 'react_components/community/districts_in_state';
 import RecentReviews from 'react_components/community/recent_reviews';
 import Ad from 'react_components/ad';
@@ -23,7 +21,6 @@ const CsaTopSchoolsWrapper = withViewportSize({ propName: 'size' })(CsaTopSchool
 const SchoolBrowseLinksWrapper = withViewportSize({ propName: 'size' })(SchoolBrowseLinks);
 const AcademicsDataModuleWrapper = withViewportSize({ propName: 'size' })(AcademicsDataModule);
 const StudentsWrapper = withViewportSize({ propName: 'size' })(Students);
-const CityBrowseLinksWrapper = withViewportSize({ propName: 'size' })(CityBrowseLinks);
 const DistrictsInStateWrapper = withViewportSize({ propName: 'size' })(DistrictsInState);
 const RecentReviewsWrapper = withViewportSize({ propName: 'size' })(RecentReviews);
 const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
@@ -32,14 +29,12 @@ const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
 ReactOnRails.register({
   District,
   City,
-  State,
   SearchBoxWrapper,
   TopSchoolsStatefulWrapper,
   CsaTopSchoolsWrapper,
   SchoolBrowseLinksWrapper,
   AcademicsDataModuleWrapper,
   StudentsWrapper,
-  CityBrowseLinksWrapper,
   DistrictsInStateWrapper,
   RecentReviewsWrapper,
   AdWrapper
