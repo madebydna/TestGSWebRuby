@@ -87,11 +87,27 @@ module CommunityProfiles
       @_gender_data_source ||= gender_data.values.flatten.map {|hash| {source: hash['source'], year: hash['year']} }.uniq.first
     end
 
+    # Filtered data for the Student Demographics community module
+    def ethnicity_student_demo_data
+      ethnicity_data.select { |h| h["#{community_type}_value".to_sym] > 0 }
+    end
+
+    def subgroups_student_demo_data
+      if subgroups_data.any? { |k, v| (v.length > 0) && (v[0]['breakdown'] === 'All students') && (v[0]["#{community_type}_value"] > 0) }
+        return subgroups_data
+      end
+      {}
+    end
+
+    def gender_student_demo_data
+      gender_data.reject { |k, v| v.empty? }
+    end
+
     def students_demographics
       {}.tap do |h|
-        h['ethnicityData'] = ethnicity_data
-        h['subgroupsData'] = subgroups_data
-        h['genderData'] = gender_data
+        h['ethnicityData'] = ethnicity_student_demo_data
+        h['subgroupsData'] = subgroups_student_demo_data
+        h['genderData'] = gender_student_demo_data
         h['translations'] = translations
         h['sources'] = sources_text
       end

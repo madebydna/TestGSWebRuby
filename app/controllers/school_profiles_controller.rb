@@ -281,12 +281,24 @@ class SchoolProfilesController < ApplicationController
   end
 
   def breadcrumbs
-    {
-      StructuredMarkup.state_breadcrumb_text(school.state) => state_path(state_params(school.state)),
-      StructuredMarkup.city_breadcrumb_text(state: school.state, city: school.city) => city_path(city_params(school.state, school.city)),
-      t('controllers.school_profile_controller.schools') => search_city_browse_path(city_params(school.state, school.city)),
-      t('controllers.school_profile_controller.school_profile') => nil
-    }
+    [
+      {
+        text: StructuredMarkup.state_breadcrumb_text(school.state),
+        url: state_path(state_params(school.state))
+      },
+      {
+        text: StructuredMarkup.city_breadcrumb_text(state: school.state, city: school.city),
+        url: city_path(city_params(school.state, school.city))
+      },
+      {
+        text: t('controllers.school_profile_controller.schools'),
+        url: search_city_browse_path(city_params(school.state, school.city))
+      },
+      {
+        text: t('controllers.school_profile_controller.school_profile'),
+        url: nil
+      }
+    ]
   end
 
   def teachers_staff

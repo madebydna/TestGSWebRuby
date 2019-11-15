@@ -3,15 +3,15 @@
 <% unless breadcrumbs.nil? || breadcrumbs.empty? %>
   <div class="breadcrumbs">
     <div class="container">
-      <% breadcrumbs.each_with_index do |(text, url), index| %>
+      <% breadcrumbs.each_with_index do |breadcrumb, index| %>
         <% if index > mobile_cutoff %>
           <span class="hidden-xs-inline">
         <% end %>
         <span><%= ' > ' if index > 0 %></span>
-        <% if url.nil? %>
-          <span><%= text %></span>
+        <% if breadcrumb[:url].nil? %>
+          <span><%= breadcrumb[:text] %></span>
         <% else %>
-          <span><%= link_to text, url %></span>
+          <span><%= link_to breadcrumb[:text], breadcrumb[:url] %></span>
         <% end %>
         <% if index > mobile_cutoff %>
           </span>
