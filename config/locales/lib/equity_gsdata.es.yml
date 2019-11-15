@@ -37,7 +37,7 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Los estudiantes de bajos ingresos realmente están siendo dejados atrás en esta escuela.
           Pero algunas escuelas están haciendo un excelente trabajo de servir a todos los estudiantes.
-          <a href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
           <ul>
             <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua</a>: ¿qué es la equidad de todos modos?</li>
             <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
@@ -54,7 +54,7 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Los estudiantes de bajos ingresos realmente están siendo dejados atrás en esta escuela.
           Pero algunas escuelas están haciendo un excelente trabajo de servir a todos los estudiantes.
-          <a href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
           <ul>
             <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua</a>: ¿qué es la equidad de todos modos?</li>
             <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
@@ -72,7 +72,7 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">La mayoría de las escuelas tienen dificultades para apoyar a los estudiantes de bajos ingresos.
           Pero algunas escuelas están teniendo éxito.
-          <a href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}<ul>
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}<ul>
             <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua</a>: ¿qué es la equidad de todos modos?</li>
             <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
             <li>¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, <a href="/gk/equity-toolkit/?lang=es#compare">en comparación con otras escuelas cercanas?</a></li>
@@ -88,7 +88,7 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Esta escuela está mejor que la mayoría de las escuelas cuando se trata de apoyar a los
           estudiantes de bajos ingresos. Pero algunas escuelas están haciendo un excelente trabajo sirviendo a todos los estudiantes.
-          <a href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
           <ul>
             <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua</a>: ¿qué es la equidad de todos modos?</li>
             <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
@@ -105,7 +105,7 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Esta escuela está haciendo un trabajo mucho mejor que la mayoría de las escuelas cuando
           se trata de apoyar a los estudiantes de bajos ingresos.
-          <a href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a abogar por todos los niños.%{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a abogar por todos los niños.%{more}
           <ul>
             <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua</a>: ¿qué es la equidad de todos modos?</li>
             <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
