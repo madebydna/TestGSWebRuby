@@ -8,17 +8,140 @@
 <% end %>
 
 <div class="community-page">
-  <%= react_component("State", props: {
-      cities: @cities,
-      schoolCount: @school_count,
-      school_levels: @school_levels,
-      schools_data: @top_schools,
-      breadcrumbs: @breadcrumbs,
-      locality: @locality,
-      districts: @districts,
-      csa_module: @csa_module,
-      reviews: @reviews,
-      students: @students.students_demographics,
-      academics: @academics
-  }) %>
+  <div class="state-body">
+    <%= react_component('SearchBoxWrapper') %>
+
+    <div class="breadcrumbs-container">
+      <%= render 'school_profiles/breadcrumbs', breadcrumbs: @breadcrumbs %>
+    </div>
+    <%= render 'community/hero', school_count: @school_count %>
+
+    <!-- First Ad -->
+    <div class="display-mobile">
+      <%= react_component("AdWrapper", props: {
+          slot: "statepage_first",
+          sizeName: "thin_banner_mobile"
+      }) %>
+    </div>
+
+    <div class="below-hero">
+      <!-- TOC -->
+      <%= render 'community/toc' %>
+
+      <!-- Main Content -->
+      <div class="community-modules">
+        <!-- Schools -->
+        <div id="schools" class="module-section">
+          <div class="modules-title"><%= I18n.t('explore_in_state', scope: 'community.state', name_long: @state[:long].titleize) %></div>
+
+          <!-- Top Schools -->
+          <%= react_component("TopSchoolsStatefulWrapper", props: {
+              community: 'state',
+              schoolsData: @top_schools[:schools],
+              locality: @locality,
+              schoolLevels: @top_schools[:counts]
+          }) %>
+
+          <!-- School Browse Links (Explore schools by type) -->
+          <% if @school_levels %>
+            <div class="modules-title"><%= I18n.t('explore_by_type', scope: 'community.state') %></div>
+            <%= react_component("SchoolBrowseLinksWrapper", props: {
+                community: 'state',
+                locality: @locality,
+                schoolLevels: @school_levels
+            }) %>
+          <% end %>
+        </div>
+
+        <!-- CSA Top Schools (Award-winning schools) -->
+        <% if @csa_module %>
+          <div id="award-winning-schools" class="module-section">
+            <%= react_component("CsaTopSchoolsWrapper", props: {
+                community: 'state',
+                schools: @top_schools[:schools][:csa],
+                locality: @locality
+            }) %>
+          </div>
+        <% end %>
+
+        <!-- Academics -->
+        <div id="academics" class="module-section">
+          <%= react_component("AcademicsDataModuleWrapper", props: {
+              title: @academics[:title],
+              anchor: @academics[:anchor],
+              subtitle: @academics[:subtitle],
+              info_text: @academics[:info_text],
+              icon_classes: @academics[:icon_classes],
+              sources: @academics[:sources],
+              share_content: @academics[:share_content],
+              rating: @academics[:rating],
+              data: @academics[:data],
+              analytics_id: @academics[:analytics_id],
+              showTabs: @academics[:showTabs],
+              faq: @academics[:faq],
+              feedback: @academics[:feedback],
+              suppressIfEmpty: true,
+              pageType: 'state'
+          }) %>
+        </div>
+
+        <!-- Second Ad -->
+        <div id="second-ad">
+          <%= react_component("AdWrapper", props: {
+              slot: "statepage_second",
+              sizeName: "box"
+          }) %>
+        </div>
+
+        <!-- Student Demographics -->
+        <% if @students.ethnicity_student_demo_data || @students.gender_student_demo_data || @students.subgroups_student_demo_data %>
+          <div id="students" class="module-section">
+            <%= react_component("StudentsWrapper", props: {
+                ethnicityData: @students.students_demographics['ethnicityData'],
+                subgroupsData: @students.students_demographics['subgroupsData'],
+                genderData: @students.students_demographics['genderData'],
+                translations: @students.students_demographics['translations'],
+                sources: @students.students_demographics['sources'],
+                pageType: 'state'
+            }) %>
+          </div>
+        <% end %>
+
+        <!-- City Browse Links (Cities) -->
+        <div id="cities" class="module-section">
+          <%= render 'community/city_browse_links', cities: @cities, locality: @locality %>
+        </div>
+
+        <!-- Districts -->
+        <% if @districts.length > 0 %>
+          <div id="districts" class="module-section">
+            <div class="modules-title"><%= I18n.t('districts_header', scope: 'community.state', name_long: @state[:long].titleize) %></div>
+            <%= react_component("DistrictsInStateWrapper", props: {
+                districts: @districts,
+                locality: @locality
+            }) %>
+          </div>
+        <% end %>
+
+        <!-- Reviews -->
+        <% if @reviews.length > 0 %>
+          <div id="reviews" class="module-section">
+            <div class="rating-container reviews-module">
+              <h3><%= I18n.t('recent_reviews.title', scope: 'community.state', name_long: @state[:long].titleize) %></h3>
+
+              <%= react_component("RecentReviewsWrapper", props: {
+                  community: 'state',
+                  reviews: @reviews,
+                  locality: @locality
+              }) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Sticky Right Rail -->
+      <%= render 'community/sticky_right_rail' %>
+
+    </div>
+  </div>
 </div>

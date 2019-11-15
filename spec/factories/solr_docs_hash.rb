@@ -37,6 +37,40 @@ FactoryBot.define do
     initialize_with { attributes.stringify_keys }
   end
 
+  factory :solr_compare_school_result_hash, class:Hash do
+      sequence :school_id do |n| 
+        n 
+      end
+      sequence :id do |n| 
+        "School ca-#{n}"
+      end
+      document_type "School"
+      name "Piedmont High School"
+      sortable_name "piedmont high school"
+      city "Piedmont"
+      city_untokenized "piedmont"
+      school_district_id 15
+      school_district_name "Piedmont City Unified School District"
+      street "800 magnolia avenue"
+      zipcode "94611"
+      county "alameda"
+      state "ca"
+      latlon "37.823673-122.232903"
+      level_codes ["h"]
+      entity_type "public"
+      summary_rating 10
+      test_scores_rating 10
+      college_readiness_rating 10
+      advanced_courses_rating 10
+      test_scores_rating_asian 10
+      test_scores_rating_hispanic 8
+      test_scores_rating_two_or_more_races 10
+      test_scores_rating_white 10
+      created "2019-08-10T00:45:39.483Z"
+      distance 6.7358036 
+      initialize_with { attributes.stringify_keys }
+    end
+
   factory :solr_city_result_hash, class:Hash do
     contentKey { "city#ohEdgerton" }
     document_type { "city" }

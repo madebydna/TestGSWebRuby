@@ -12,7 +12,7 @@ class SDTestProcessor20172018SBACSDSA < GS::ETL::TestProcessor
       if row[:subject] == 'science'
         row[:notes] = 'DXT-3131: SD SDSA'
         row[:test_data_type] = 'SDSA'
-        row[:test_data_type_id] = 361
+        row[:test_data_type_id] = 364
       elsif row[:subject] == 'math' || row[:subject] == 'ela'
         row[:notes] = 'DXT-3131: SD SBAC'
         row[:test_data_type] = 'SBAC'

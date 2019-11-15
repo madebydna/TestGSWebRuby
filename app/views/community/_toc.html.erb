@@ -1,0 +1,7 @@
+<div class="toc sticky display-desktop">
+  <ul>
+    <% @toc.each do |item| %>
+      <li anchor="<%= item[:anchor] %>"><div><%= I18n.t("community.state.toc.#{item[:label]}").capitalize %></div></li>
+    <% end %>
+  </ul>
+</div>

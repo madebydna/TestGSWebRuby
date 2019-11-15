@@ -65,6 +65,14 @@ class DistrictLayout extends React.Component {
     )
   }
 
+  renderGrowthModule(){
+    return (
+      this.props.shouldDisplayGrowthRating && <div id={this.props.growthAnchor} className="module-section">
+        {this.props.growth}
+      </div>
+    )
+  }
+
   renderStemCourses() {
     return this.props.shouldDisplayStemCourses && (
       <div id="advanced_courses" className="module-section">
@@ -174,6 +182,9 @@ class DistrictLayout extends React.Component {
           </a>
         </div>
         {this.props.browseSchools}
+        {this.props.shouldDisplaySummaryRating && <div id="summary-rating">
+          {this.props.summaryRating}
+        </div>}
         {this.props.schoolCounts.all > 0 ? this.props.topSchools: null}
       </div>
     )
@@ -229,6 +240,7 @@ class DistrictLayout extends React.Component {
             {this.renderBoxAd()}
             {this.renderCsaModule()}
             {this.renderAcademics()}
+            {this.renderGrowthModule()}
             {this.renderStemCourses()}
             {this.renderStudentsModule()}
             {this.renderTeachersStaffModule()}

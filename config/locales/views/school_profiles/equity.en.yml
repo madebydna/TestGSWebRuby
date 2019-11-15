@@ -4,17 +4,17 @@ en:
       title: Equity
       Race ethnicity: 'Race/ethnicity'
       Race ethnicity subtitle: >
-        <a href="/gk/equity-toolkit/">These 5 things</a> will help you start a conversation at your school about helping all students succeed.
+        <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="These 5 things" href="/gk/equity-toolkit/">These 5 things</a> will help you start a conversation at your school about helping all students succeed.
       Race ethnicity tooltip: >
         This section reflects test scores and other important measures for students at this school across different races/ethnicities. <br/><br/> Note: When the population of a subgroup is too small to provide reliable data, that subgroup does not show up in the display. This may cause certain races/ethnicities to not be included in some charts within this section.
       Race ethnicity icon: 'icon-pie'
       Race ethnicity no data: This section reflects how well this school serves students from different races and ethnicities.
       'Low-income students': 'Low-income students'
       Low income subtitle: >
-        Want low-income kids to get a fair shake? These <a href="/gk/ratings/#lowincomerating">5 simple things</a> will help you advocate for all students.
+        Want low-income kids to get a fair shake? These <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="5 simple things" href="/gk/equity-toolkit/">5 simple things</a> will help you advocate for all students.
       Low income tooltip: >
         The low-income rating reflects state test scores for students at this school who qualify for free or
-        reduced-price lunch compared to all students in the state. <a href="/gk/ratings/#lowincomerating" target="_blank">Learn more about this rating.</a>
+        reduced-price lunch compared to all students in the state. <a href="/gk/equity-toolkit/" target="_blank">Learn more about this rating.</a>
       Low income icon: 'icon-pie'
       Low income no data: This section reflects how well this school serves students from low-income families.
       Students with Disabilities: Students with disabilities

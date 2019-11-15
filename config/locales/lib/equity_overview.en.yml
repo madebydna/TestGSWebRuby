@@ -5,7 +5,7 @@ en:
       subtitle_html: >
         Is this school offering opportunity for all its students, or leaving some kids behind?
         Successful schools are working to
-        <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/" target="_blank"> close the achievement
+        <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="close the achievement gap" href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/" target="_blank"> close the achievement
         gap</a>.
       no_data_summary_html: >
         <p>In this section, we publish a rating that reflects how well this school is meeting the needs of its disadvantaged students, including those from low-income families and underserved races/ethnicities, relative to all its students, compared to other schools in the state.</p>

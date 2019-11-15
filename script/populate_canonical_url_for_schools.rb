@@ -46,7 +46,7 @@ begin
         School.active.each do |school|
           # done this way since ActiveRecord#update and ActiveRecord#update_attributes seems bugged
           # send a param to school_path to not use the canonical_url found in the db
-          link = "\"#{school_path(school, trailing_slash: true, refresh_canonical_link: should_refresh)}\""
+          link = "\"#{school_path(school, trailing_slash: true, refresh_canonical_link: nil)}\""
           sql = "UPDATE _#{school.state.downcase}.school set canonical_url= #{link}, modified=modified where id=#{school.id};"
           School.connection.execute(sql)
           counter += 1

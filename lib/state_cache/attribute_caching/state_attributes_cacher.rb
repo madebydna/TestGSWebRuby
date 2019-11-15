@@ -3,9 +3,10 @@ module AttributeCaching
     CACHE_KEY = 'state_attributes'
     #157 is Growth Data (Student Progress Rating) and 159 is Growth Proxy Data (Academic Progress Rating)
     GROWTH_DATA_TYPES = [157, 159]
+    SUMMARY_RATING_DATA_TYPE_ID = 160
 
     def attributes
-      %w(growth_type hs_enabled_growth_rating)
+      %w(growth_type hs_enabled_growth_rating summary_rating_type)
     end
 
     def growth_type_rating
@@ -20,6 +21,10 @@ module AttributeCaching
           .first
           &.name
       end
+    end
+
+    def summary_rating_type
+      Omni::DataSet.ratings_type_id(state) == SUMMARY_RATING_DATA_TYPE_ID ? 'Summary Rating' : "Test Score Rating"
     end
 
     # this method finds all schools with growth data in a state and bitwise and with all high schools in that state
@@ -42,6 +47,8 @@ module AttributeCaching
           hash[key] = growth_type_rating == nil ? 'N/A' : growth_type_rating
         when 'hs_enabled_growth_rating'
           hash[key] = hs_enabled_growth_rating?
+        when 'summary_rating_type'
+          hash[key] = summary_rating_type
         end
       end
     end

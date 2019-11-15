@@ -78,4 +78,4 @@ Students.defaultProps = {
   genderData: {}
 };
 
-export default Students;
+export default props => <Students {...props}/>;

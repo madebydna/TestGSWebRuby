@@ -1,4 +1,5 @@
-.teachers-staff, .finance {
+.teachers-staff, .finance, .academic_progress, .student_progress, .summary_rating {
+  margin-bottom: 10px;
   .module-header {
     .title-container {
       .title {
@@ -23,8 +24,10 @@
     margin: 0;
   }
 
-  .info-circle {
-    margin: -6px 0 0 5px;
+  .ts-row{
+    .info-circle {
+      margin: -6px 0 0 5px;
+    }
   }
 
   .score-display {
@@ -109,6 +112,11 @@
     .ts-row-one-half-md {
       float: left;
       width: 50%;
+    }
+
+    .ts-row-full-md {
+      float: left;
+      width: 100%;
     }
   
     .ts-row-one-quarter-md {

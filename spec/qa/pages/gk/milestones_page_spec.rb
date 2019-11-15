@@ -1,11 +1,12 @@
 # frozen_string_literal: true
-
 require 'features/page_objects/gk_milestones_page'
 
-xdescribe 'User visits GK milestones', type: :feature, remote: true, safe_for_prod: true do
-  before { visit gk_milestones_path }
-  let(:page_object) { GkMilestones.new }
-  subject { page_object }
+describe 'User visits GK milestones', type: :feature, remote: true, safe_for_prod: true do
+  subject { GkMilestones.new }
+  before do
+    subject.load
+  end
+
   its(:heading) { is_expected.to have_text('Milestones') }
   its('grade_nav_circles.size') { is_expected.to eq(6) }
   it 'should have correct grades' do

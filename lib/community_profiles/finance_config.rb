@@ -64,17 +64,20 @@ module CommunityProfiles::FinanceConfig
     {
       key: FEDERAL_REVENUE,
       formatting: [:to_f, :round],
-      type: 'pie_slice'
+      type: 'pie_slice',
+      color: '#184A7D'
     },
     {
       key: STATE_REVENUE,
       formatting: [:to_f, :round],
-      type: 'pie_slice'
+      type: 'pie_slice',
+      color: '#43BED9'
     },
     {
       key: LOCAL_REVENUE,
       formatting: [:to_f, :round],
-      type: 'pie_slice'
+      type: 'pie_slice',
+      color: '#2BDC99'
     },
     {
       key: TOTAL_EXPENDITURES,
@@ -89,22 +92,26 @@ module CommunityProfiles::FinanceConfig
     {
       key: INSTRUCTIONAL_EXPENDITURES,
       formatting: [:to_f, :round],
-      type: 'pie_slice'
+      type: 'pie_slice',
+      color: '#184A7D'
     },
     {
       key: SUPPORT_EXPENDITURES,
       formatting: [:to_f, :round],
-      type: 'pie_slice'
+      type: 'pie_slice',
+      color: '#43BED9'
     },
     {
       key: OTHER_EXPENDITURES,
       formatting: [:to_f, :round],
-      type: 'pie_slice'
+      type: 'pie_slice',
+      color: '#2BDC99'
     },
     {
       key: UNCATEGORIZED_EXPENDITURES,
       formatting: [:to_f, :round],
-      type: 'pie_slice'
+      type: 'pie_slice',
+      color: '#DCA21A'
     }
   ]
 

@@ -12,6 +12,8 @@ import CsaInfo from './csa_info';
 import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
 import Calendar from "./calendar";
+import GrowthRating from './growth_rating';
+import SummaryRating from './summary_rating';
 import Finance from './finance';
 import Students from "./students";
 import StemCourses from "../school_profiles/stem_courses";
@@ -22,10 +24,13 @@ import Toc from "./toc";
 import { schoolsTocItem, academicsTocItem, ACADEMICS, advancedCoursesTocItem, STUDENTS, 
   studentsTocItem, calendarTocItem, communityResourcesTocItem, 
   nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS,
-  teachersStaffTocItem, TEACHERS_STAFF, financeTocItem, FINANCE} from './toc_config';
+  teachersStaffTocItem, TEACHERS_STAFF, financeTocItem, FINANCE, academicProgressTocItem, ACADEMIC_PROGRESS,
+  studentProgressTocItem, STUDENT_PROGRESS
+} from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
 import Zillow from "./zillow";
+import { compact } from 'lodash';
 import remove from 'util/array';
 import { t, capitalize } from '../../util/i18n';
 import QualarooDistrictLink from '../qualaroo_district_link';
@@ -148,8 +153,21 @@ class District extends React.Component {
     return hasEthnicityData || hasGenderData || hasSubgroupsData;
   }
 
+  shouldDisplayGrowthRating = () => Object.keys(this.props.growthData).length > 0;
+
+  growthRatingTocItem = () => {
+    if (!this.shouldDisplayGrowthRating()){ return undefined;}
+    if(this.props.growthData.key === ACADEMIC_PROGRESS){
+      return academicProgressTocItem;
+    } else if (this.props.growthData.key === STUDENT_PROGRESS){
+      return studentProgressTocItem;
+    }else{
+      return undefined;
+    }
+  }
+
   selectTocItems(){
-    let districtTocItems = [schoolsTocItem, academicsTocItem, advancedCoursesTocItem, studentsTocItem, teachersStaffTocItem, calendarTocItem, financeTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem];
+    let districtTocItems = compact([schoolsTocItem, academicsTocItem, this.growthRatingTocItem(), advancedCoursesTocItem, studentsTocItem, teachersStaffTocItem, calendarTocItem, financeTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem]);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());
@@ -268,6 +286,25 @@ class District extends React.Component {
             community={this.pageType}
             reviews={this.props.reviews}
             locality={this.props.locality}
+          />
+        }
+        shouldDisplayGrowthRating={this.shouldDisplayGrowthRating()}
+        growthAnchor={this.props.growthData.key}
+        growth={
+          <GrowthRating
+            growthData={this.props.growthData}
+            district={
+              { districtId: this.props.locality.district_id, state: this.props.locality.stateShort }
+            }
+          />
+        }
+        shouldDisplaySummaryRating={Object.keys(this.props.summaryRatingData).length > 0}
+        summaryRating={
+          <SummaryRating 
+            summaryRatingData={this.props.summaryRatingData}
+            district={
+              { districtId: this.props.locality.district_id, state: this.props.locality.stateShort }
+            }
           />
         }
         heroData={this.props.heroData}

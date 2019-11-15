@@ -19,7 +19,7 @@ module Components
             component.flagged = cache_data_reader.discipline_flag?
             component.exact_breakdown_tags = ["ethnicity"]
             component.valid_breakdowns = []
-            component.minimum_cutoff_date = 2015
+            component.minimum_cutoff_year = 2015
           end,
           GsdataComponent.new.tap do |component|
             component.cache_data_reader = cache_data_reader

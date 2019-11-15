@@ -88,6 +88,12 @@ $line-height-community: 1.428571429;
       margin-left: 0;
     }
 
+    .display-mobile {
+      @include media-breakpoint-up(sm) {
+        display: none;
+      }
+    }
+
     .modules-title {
       font-family: 'opensans-bold';
       font-size: 20px;
@@ -198,6 +204,14 @@ $line-height-community: 1.428571429;
     top:60px;
   }
 
+  .ad-bar.display-desktop {
+    top: 60px;
+
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+  }
+
   //CSS for shared portion between City and District pages.
   .toc {
     margin: 20px 20px 0 0;
@@ -245,6 +259,19 @@ $line-height-community: 1.428571429;
           margin-left: 15px;
         }
       }
+    }
+  }
+  .toc.display-desktop {
+    top: 60px;
+
+    @include media-breakpoint-down(xs) {
+      display: none;
+    }
+  }
+
+  .toc.display-mobile { 
+    @include media-breakpoint-up(sm) {
+      display: none;
     }
   }
 }
@@ -481,6 +508,13 @@ $line-height-community: 1.428571429;
         margin: 0;
         width: 100%;
         margin-left: -8px;
+      }
+      .blue-line.hide-line {
+        display: block;
+        
+        @include media-breakpoint-up(lg) {
+          display: none;
+        }
       }
       a, p {
         font-size: $font-size;
@@ -722,10 +756,3 @@ $line-height-community: 1.428571429;
   }
 }
 
-//@include media-breakpoint-down(xs) {
-//  .display-desktop { display:none }
-//}
-//
-//@include media-breakpoint-up(sm) {
-//  .display-mobile { display:none }
-//}

@@ -1,8 +1,4 @@
-
-
-describe 'newsletters', type: :feature, remote: true do
-  before { skip("Fix failing specs") } 
-
+describe 'Newsletters', remote: true do
   context 'on the home page' do
     before { visit '/' }
     feature 'I can click newsletter link in footer to sign up' do
@@ -19,12 +15,11 @@ describe 'newsletters', type: :feature, remote: true do
     end
   end
 
-  context 'on Alameda High School' do
+  context 'on Alameda High School', type: :feature, js: true do
     before { visit '/california/alameda/1-Alameda-High-School/' }
     feature 'I can click newsletter link in sticky CTA to sign up' do
-      pending 'CTA changed'
       before do
-        within('.blue-background-hero') { click_link 'Save' }
+        find('a.js-followThisSchool', match: :first).click
       end
       it 'I should see the newsletter modal' do
         within('.remodal') do
@@ -32,23 +27,19 @@ describe 'newsletters', type: :feature, remote: true do
         end
       end
       it 'I can sign up and see school on my account page' do
-        within('.remodal') do
-          email = "ssprouse+rspec_#{Time.now.strftime('%s')}@greatschools.org"
-          fill_in('email', with: email)
-          click_button('Sign up')
-        end
+        register_in_email_modal
         sleep 10 # need to wait long enough for modal ajax call to complete and save database records
         visit '/account/'
         # should force capybara to wait at least a couple seconds for this to appear
-        expect(page).to have_content('My School List') 
+        expect(page).to have_content('My School List')
 
-        within(:xpath, '/html/body/div[8]') do
-          expect(page).to have_content('Alameda High School')
+        within('.drawer', text: /Email Subscriptions/) do
+          arrow = find('.i-32-close-arrow-head', match: :first)
+          arrow.click
         end
 
-        page.execute_script("$('.i-32-close-arrow-head').trigger('click');") # tried geting elements and using capybara click, didnt work
-        expect(page).to have_content('Alameda High School, Alameda , CA') # tests for MSS subscription
-        expect(find('#greatnews')).to be_checked
+        expect(find('input[name="greatnews"]', match: :first)).to be_checked
+        expect(page).to have_content('Alameda High School') # tests for MSS subscription
       end
     end
 

@@ -170,7 +170,7 @@ class GsdataCaching::GsDataValue
 
     def recent_data_threshold(year)
       select do |dv|
-        dv.year.to_i > year
+        dv.year.to_i >= year
       end.extend(CollectionMethods)
     end
 

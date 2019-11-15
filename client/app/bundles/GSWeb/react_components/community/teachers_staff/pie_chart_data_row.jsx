@@ -22,7 +22,7 @@ const PieChartDataRow = props => {
                   {datum.name}
                 </span>
                 <div className='value'>
-                  <span>{`${datum.value}%`}</span><br/>
+                  {datum.value_label && <span>{datum.value_label}:&nbsp;</span>}<span className='emphasis'>{`${datum.value}%`}</span><br/>
                   {datum.state_value && <span className="state-average">{t('State avg')} {datum.state_value}%</span>}
                 </div>
               </div>

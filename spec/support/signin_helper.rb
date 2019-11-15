@@ -12,7 +12,7 @@ module SigninHelper
     within('#login_form') do
       fill_in('email', :with => 'adam_kecbnxu_schrockescu@tfbnw.net')
       fill_in('pass', :with => 'password')
-      click_button('loginbutton')
+      find('input[name="login"]').click
     end
   end
 
@@ -34,6 +34,7 @@ module SigninHelper
     end
   end
 
+  # TODO: Remove one of these helpers, as they are the same from a Capybara POV
   # Same as #register_in_modal, but no terms checkbox
   def register_in_email_modal
     within('.remodal') do

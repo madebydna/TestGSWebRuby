@@ -137,10 +137,8 @@ module UrlHelper
       if school.nil?
         params = school_params_hash params_hash
       else
-        GSLogger.error(:misc, nil, message:"#{school.name}(#{school.state}, #{school.id}) does not have a canonical url", vars: school) if log_error?(helper_name, params_hash)
         params = school_params school
-        params_hash.delete(:refresh_canonical_link)
-        params.merge! params_hash
+        params.merge! params_hash.compact
       end
       super params
     end
@@ -150,10 +148,8 @@ module UrlHelper
       if school.nil?
         params = school_params_hash params_hash
       else
-        GSLogger.error(:misc, nil, message:"#{school.name}(#{school.state}, #{school.id}) does not have a canonical url", vars: school) if log_error?(helper_name, params_hash)
         params = school_params school
-        params_hash.delete(:refresh_canonical_link)
-        params.merge! params_hash
+        params.merge! params_hash.compact
       end
       super params
     end
@@ -342,11 +338,7 @@ module UrlHelper
   private
 
   def use_db_canonical_url?(helper_name, school, params_hash)
-    helper_name == 'school' && school.try(:canonical_url) && !params_hash[:refresh_canonical_link]
-  end
-
-  def log_error?(helper_name, params_hash)
-    helper_name == 'school' && !params_hash[:refresh_canonical_link]
+    helper_name == 'school' && school.try(:canonical_url) && !params_hash.has_key?(:refresh_canonical_link)
   end
 
 end

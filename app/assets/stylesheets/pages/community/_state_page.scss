@@ -1,12 +1,12 @@
 // State specific css on the hero header
 
 #hero{
-  div{
+  > div {
     max-width: 500px;
-    
-    .state-hero-narrative {
-      font-size: $font-size;
-    }
+  }
+      
+  div > div.state-hero-narrative {
+    font-size: 16px;
   }
   
   @include media-breakpoint-down(sm) {
@@ -50,6 +50,13 @@
     }
   }
 
+}
+
+.display-mobile {
+  > div {
+    margin-left: 0px;
+    margin-bottom: 20px;
+  }
 }
 
 //CSS rules for the districts in a state module

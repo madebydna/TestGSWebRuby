@@ -31,7 +31,7 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
           <div class="footnote">Low-income kids are really being left behind at this school. But some schools are doing an excellent job of serving all students.
-          <a href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
           <ul>
             <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
             <li><a href="/gk/equity-toolkit/#best-practices">6 things</a> the best high schools do to help low-income kids.</li>
@@ -47,7 +47,7 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
           <div class="footnote">Low-income kids are being left behind at this school. But some schools are doing an excellent job of serving all students.
-          <a href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<ul>
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<ul>
             <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
             <li><a href="/gk/equity-toolkit/#best-practices">6 things</a> the best high schools do to help low-income kids.</li>
             <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare">compared to other schools near you?</a></li>
@@ -62,7 +62,7 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
           <div class="footnote">Most schools struggle to support low-income students.  But some schools are succeeding.
-          <a href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
           <span><ul>
             <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
             <li><a href="/gk/equity-toolkit/#best-practices">6 things</a> the best high schools do to help low-income kids.</li>
@@ -79,7 +79,7 @@ en:
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
           <div class="footnote">This school is doing better than most schools when it comes to supporting low-income
           students. But some schools are doing an excellent job at serving all students.
-          <a href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<span><ul>
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<span><ul>
             <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
             <li><a href="/gk/equity-toolkit/#best-practices">6 things</a> the best high schools do to help low-income kids.</li>
             <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare">compared to other schools near you?</a></li>
@@ -94,7 +94,7 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
           <div class="footnote">This school is doing a much better job than most schools when it comes to supporting low-income students.
-          <a href="/gk/equity-toolkit/">This toolkit</a> will help you advocate for all kids.%{more}<span><ul>
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you advocate for all kids.%{more}<span><ul>
             <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
             <li><a href="/gk/equity-toolkit/#best-practices">6 things</a> the best high schools do to help low-income kids.</li>
             <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare">compared to other schools near you?</a></li>

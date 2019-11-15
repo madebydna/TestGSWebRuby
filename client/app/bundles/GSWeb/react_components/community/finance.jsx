@@ -9,7 +9,6 @@ import DataRow from './teachers_staff/data_row';
 import ReactDOMServer from 'react-dom/server';
 
 const Finance = ({dataValues, district}) => {
-
   const financeDataValues = dataValues.map(item => <DataRow key={item.name} {...item} />)
 
   const title = <div data-ga-click-label={t('finance.module_title')}>

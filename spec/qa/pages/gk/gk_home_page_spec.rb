@@ -1,11 +1,9 @@
 # frozen_string_literal: true
-
 require 'features/page_objects/gk_home_page'
 
-xdescribe 'User visits GK home', type: :feature, remote: true, safe_for_prod: true do
-  before { visit greatkids_home_path }
-  let(:page_object) { GkHomePage.new }
-  subject { page_object }
+describe 'User visits GK home', type: :feature, remote: true, safe_for_prod: true do
+  subject(:page_object) { GkHomePage.new  }
+  before { page_object.load }
   
   it { is_expected.to have_heading }
   its('heading.text') { is_expected.to be_present }

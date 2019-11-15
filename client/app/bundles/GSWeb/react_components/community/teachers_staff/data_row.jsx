@@ -7,7 +7,7 @@ import PieChartDataRow from './pie_chart_data_row';
 import BarGraphBase from '../../equity/graphs/bar_graph_base';
 import QuestionMarkToolTip from '../../school_profiles/question_mark_tooltip';
 
-function DataRow ({ state_value, district_value, name, type, tooltip, data }) {
+const DataRow = ({ state_value, district_value, name, type, tooltip, data, className = "ts-row-two-thirds-xs ts-row-one-half-md rating-score-item__label" }) => {
 
   const render_visualization = () => {
     switch(type) {
@@ -25,13 +25,13 @@ function DataRow ({ state_value, district_value, name, type, tooltip, data }) {
       case 'dollar_ratio':
         return <DollarRatio value={district_value} state_value={state_value} />;
       case 'pie_chart':
-        const colors = ['#184A7D', '#43BED9', '#2BDC99', '#DCA21A', '#ca3154', '#999EFF'];
-        const options = data.map((source,idx) =>{
+        const options = data.map(source =>{
           return {
             name: source.name,
             value: source.district_value,
+            value_label: source.value_label,
             state_value: source.state_value,
-            color: colors[idx],
+            color: source.color,
             tooltip: source.tooltip
           }
         })
@@ -43,7 +43,7 @@ function DataRow ({ state_value, district_value, name, type, tooltip, data }) {
 
   return (
     <div className="ts-row">
-      <div className="ts-row-two-thirds-xs ts-row-one-half-md rating-score-item__label">
+      <div className={className}>
         {name}
         <QuestionMarkToolTip content={tooltip} className="tooltip" element_type="datatooltip"/>
       </div>

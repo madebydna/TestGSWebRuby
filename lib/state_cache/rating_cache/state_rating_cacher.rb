@@ -1,68 +1,57 @@
 # frozen_string_literal: true
 
-# cache data for state from the gsdata database
 class StateRatingCacher < StateCacher
-  CACHE_KEY = 'ratings'
+  CACHE_KEY = 'ratings'.freeze
 
-  SUMMARY_RATING_DATA_TYPE_ID = 160
-  TEST_SCORES_RATING_DATA_TYPE_ID = 155
-  SUMMARY_RATING_NAME = 'Summary Rating'
-  TEST_SCORES_RATING_NAME = 'Test Score Rating'
+  # This is not a true State Rating hash as omni currently does not
+  # have state entity data loaded. For data type ids 157 and 159, the latest data set from
+  # school was used. Need to discuss how to tackle this
+  
+  # DATA_TYPES INCLUDED
+  # 155 Test Score Rating
+  # 157	Student Progress Rating
+  # 159	Academic Progress Rating
+  # 160	Summary Rating
 
-  # needs to contain
-  # - rating type - summary or test
-  # - description
-  # - year or date
-  #
-  # Summary description is currently not in database and is static across states
-  SUMMARY_DESCRIPTION = "The GreatSchools Rating helps parents compare schools within a state based on a variety of school quality indicators and provides a helpful picture of how effectively each school serves all of its students. Ratings are on a scale of 1 (below average) to 10 (above average) and can include test scores, college readiness, academic progress, advanced courses, equity, discipline and attendance data. We also advise parents to visit schools, consider other information on school performance and programs, and consider family needs as part of the school selection process."
-  # Test scores rating description is in database and varies across states
+  DATA_TYPE_IDS = %w(155 157 159 160)
 
-
-  def test_rating
-    Omni::DataSet.by_state(state).
-                  where(data_type_id: TEST_SCORES_RATING_DATA_TYPE_ID).
-                  where("description is NOT NULL").
-                  order("date_valid desc")
+  def state_results
+    # no breakdown ids needed for this data type
+    # add in 'breakdowns.name to select if separating by breakdown'
+    @_state_results ||= Omni::Rating.joins(data_set: [:data_type, :source])
+                                    .where(data_sets: {data_type_id: DATA_TYPE_IDS, state: state})
+                                    .school_entity
+                                    .order('data_sets.date_valid DESC')
+                                    .active
+                                    .select('data_sets.date_valid, data_sets.description, sources.name as source, data_types.name, data_types.id as data_type_id')
+                                    .distinct
   end
-
-  def summary_rating
-    Omni::DataSet.by_state(state).
-                  where(data_type_id: SUMMARY_RATING_DATA_TYPE_ID).
-                  order("date_valid desc")
-  end
-  #
-  # Determine if it is summary or test by looking at all caches for all schools in a state and if any of them have a
-  # Summary rating than it is a summary rating state.
-  #
-  # Otherwise it is a test score rating state and gets the date and description from the query above.
-  # and max date on results
-  #
 
   def build_hash_for_cache
-    rating_type_id = Omni::DataSet.ratings_type_id(state)
-    if rating_type_id == SUMMARY_RATING_DATA_TYPE_ID
-      s = summary_rating&.first
-      if s&.date_valid
-        description = s.description.present? ? s.description : SUMMARY_DESCRIPTION
-        result_to_hash(s.date_valid&.year, description, SUMMARY_RATING_NAME)
+    @_build_hash_for_cache ||= (
+      state_cache_hash = Hash.new { |h, k| h[k] = [] }
+
+      valid_data = state_results.group_by(&:data_type_id).reduce([]) do |accum, (data_type_id, data_values)|
+        most_recent_date = data_values.map(&:date_valid).max
+        data_values.select! {|dv| dv.date_valid == most_recent_date}
+        accum.concat(data_values)
       end
-    elsif rating_type_id == TEST_SCORES_RATING_DATA_TYPE_ID
-      tr = test_rating&.first
-      if tr&.date_valid
-        result_to_hash(tr.date_valid&.year, tr.description, TEST_SCORES_RATING_NAME)
+
+      valid_data.each_with_object(state_cache_hash) do |result, cache_hash|
+        result_hash = result_to_hash(result)
+        state_cache_hash[result.name] << result_hash
       end
-    else
-      {}
-    end
+    )
   end
 
-  def result_to_hash(year, description, type)
+  # can add breakdowns, state_value, breakdown_tags when available here
+  def result_to_hash(result)
     {}.tap do |h|
-      h[:year] = year
-      h[:description] = description
-      h[:type] = type
+      h['year'] = result.date_valid.year
+      h['source_date_valid'] = result.date_valid
+      h['date_in_word'] = result.date_valid.strftime("%B %d, %Y")
+      h['source_name'] = result.source
+      h['description'] = result.description if result.description
     end
   end
-
 end
