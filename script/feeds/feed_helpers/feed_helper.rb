@@ -1,5 +1,5 @@
 require_relative '../feed_config/feed_constants'
-require_relative 'feed_data_helper'
+# require_relative 'feed_data_helper'
 
 module Feeds
   module FeedHelper
