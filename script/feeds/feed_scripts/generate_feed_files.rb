@@ -1,13 +1,9 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require_relative '../feed_helpers/feed_helper'
-require_relative '../feed_helpers/feed_data_helper'
 require_relative '../feed_helpers/arguments'
 require_relative '../feed_helpers/feed_logger'
 
 require_relative '../feed_config/feed_constants'
-
-# require_relative '../feed_builders/test_score/test_score_feed'
-# require_relative '../feed_builders/rating/test_rating_feed'
 require_relative '../feed_builders/directory/directory_feed'
 require_relative '../feed_builders/city/feed_generator'
 require_relative '../feed_builders/proficiency-band/feed_generator'
@@ -64,13 +60,7 @@ module Feeds
 
     def feed_generation_class(key)
       {
-          # test_scores:       Feeds::TestScoreFeed,
-          # test_subgroup:     Feeds::TestScoreFeed,
-          # test_rating:       Feeds::TestRatingFeed,
-          # official_overall:  Feeds::TestRatingFeed,
           directory_feed:    Feeds::DirectoryFeed,
-          # city:              Feeds::City::FeedGenerator,
-          # proficiency_band:  Feeds::ProficiencyBand::FeedGenerator,
       }[key.to_s.to_sym]
     end
   end
