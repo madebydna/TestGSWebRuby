@@ -47,6 +47,7 @@ class DistrictsController < ApplicationController
     }
     set_ad_targeting_props
     set_page_analytics_data
+    set_district_meta_tags
   end
 
   private
