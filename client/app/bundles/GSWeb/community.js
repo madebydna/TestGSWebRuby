@@ -14,6 +14,7 @@ import Ad from 'react_components/ad';
 import commonPageInit from './common';
 import { scrollToElement } from 'util/scrolling';
 import { keepInViewport, isScrolledInViewport } from 'util/viewport';
+import { init as initAdvertising, enableAdCloseButtons, applyStylingToIFrameAd } from 'util/advertising';
 import { throttle } from 'lodash';
 
 const TopSchoolsStatefulWrapper = withViewportSize({ propName: 'size' })(TopSchoolsStateful);
@@ -23,7 +24,6 @@ const AcademicsDataModuleWrapper = withViewportSize({ propName: 'size' })(Academ
 const StudentsWrapper = withViewportSize({ propName: 'size' })(Students);
 const DistrictsInStateWrapper = withViewportSize({ propName: 'size' })(DistrictsInState);
 const RecentReviewsWrapper = withViewportSize({ propName: 'size' })(RecentReviews);
-const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
 
 
 ReactOnRails.register({
@@ -37,7 +37,7 @@ ReactOnRails.register({
   StudentsWrapper,
   DistrictsInStateWrapper,
   RecentReviewsWrapper,
-  AdWrapper
+  Ad
 });
 
 $(() => {
@@ -94,6 +94,6 @@ $(() => {
     });
   }, 100));
 
+  initAdvertising();
 
-  
 });
