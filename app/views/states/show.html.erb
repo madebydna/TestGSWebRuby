@@ -20,7 +20,7 @@
     <div class="below-hero">
       <%= render 'community/toc' %><div class="community-modules">
       
-        <!-- First Ad -->
+        <%# First Ad %>
         <div class="display-mobile">
           <%= react_component("AdWrapper", props: {
               slot: "statepagemobile_first",
@@ -28,11 +28,11 @@
           }) %>
         </div>
 
-        <!-- Schools -->
+        <%# Schools %>
         <div id="schools" class="module-section">
           <div class="modules-title"><%= I18n.t('explore_in_state', scope: 'community.state', name_long: @state[:long].titleize) %></div>
 
-          <!-- Top Schools -->
+          <%# Top Schools %>
           <%= react_component("TopSchoolsStatefulWrapper", props: {
               community: 'state',
               schoolsData: @top_schools[:schools],
@@ -40,7 +40,7 @@
               schoolLevels: @top_schools[:counts]
           }) %>
 
-          <!-- School Browse Links (Explore schools by type) -->
+          <%# School Browse Links (Explore schools by type) %>
           <% if @school_levels %>
             <div class="modules-title"><%= I18n.t('explore_by_type', scope: 'community.state') %></div>
             <%= react_component("SchoolBrowseLinksWrapper", props: {
@@ -51,7 +51,7 @@
           <% end %>
         </div>
 
-        <!-- CSA Top Schools (Award-winning schools) -->
+        <%# CSA Top Schools (Award-winning schools) %>
         <% if @csa_module %>
           <div id="award-winning-schools" class="module-section">
             <%= react_component("CsaTopSchoolsWrapper", props: {
@@ -62,7 +62,7 @@
           </div>
         <% end %>
 
-        <!-- Academics -->
+        <%# Academics %>
         <div id="academics" class="module-section">
           <%= react_component("AcademicsDataModuleWrapper", props: {
               title: @academics[:title],
@@ -83,7 +83,7 @@
           }) %>
         </div>
 
-        <!-- Second Ad -->
+        <%# Second Ad %>
         <div id="second-ad">
           <%= react_component("AdWrapper", props: {
               slot: "statepage_second",
@@ -91,7 +91,7 @@
           }) %>
         </div>
 
-        <!-- Student Demographics -->
+        <%# Student Demographics %>
         <% if @students.ethnicity_student_demo_data || @students.gender_student_demo_data || @students.subgroups_student_demo_data %>
           <div id="students" class="module-section">
             <%= react_component("StudentsWrapper", props: {
@@ -105,12 +105,12 @@
           </div>
         <% end %>
 
-        <!-- City Browse Links (Cities) -->
+        <%# City Browse Links (Cities) %>
         <div id="cities" class="module-section">
           <%= render 'community/city_browse_links', cities: @cities, locality: @locality %>
         </div>
 
-        <!-- Districts -->
+        <%# Districts %>
         <% if @districts.length > 0 %>
           <div id="districts" class="module-section">
             <div class="modules-title"><%= I18n.t('districts_header', scope: 'community.state', name_long: @state[:long].titleize) %></div>
@@ -121,7 +121,7 @@
           </div>
         <% end %>
 
-        <!-- Reviews -->
+        <%# Reviews %>
         <% if @reviews.length > 0 %>
           <div id="reviews" class="module-section">
             <div class="rating-container reviews-module">
