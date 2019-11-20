@@ -24,6 +24,7 @@ const AcademicsDataModuleWrapper = withViewportSize({ propName: 'size' })(Academ
 const StudentsWrapper = withViewportSize({ propName: 'size' })(Students);
 const DistrictsInStateWrapper = withViewportSize({ propName: 'size' })(DistrictsInState);
 const RecentReviewsWrapper = withViewportSize({ propName: 'size' })(RecentReviews);
+const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
 
 
 ReactOnRails.register({
@@ -37,7 +38,7 @@ ReactOnRails.register({
   StudentsWrapper,
   DistrictsInStateWrapper,
   RecentReviewsWrapper,
-  Ad
+  AdWrapper
 });
 
 $(() => {
