@@ -16,16 +16,18 @@
     </div>
     <%= render 'community/hero', school_count: @school_count %>
 
-    <!-- First Ad -->
-    <div class="display-mobile">
-      <%= react_component("AdWrapper", props: {
-          slot: "statepagemobile_first",
-          sizeName: "thin_banner_mobile"
-      }) %>
-    </div>
 
     <div class="below-hero">
       <%= render 'community/toc' %><div class="community-modules">
+      
+        <!-- First Ad -->
+        <div class="display-mobile">
+          <%= react_component("AdWrapper", props: {
+              slot: "statepagemobile_first",
+              sizeName: "thin_banner_mobile"
+          }) %>
+        </div>
+
         <!-- Schools -->
         <div id="schools" class="module-section">
           <div class="modules-title"><%= I18n.t('explore_in_state', scope: 'community.state', name_long: @state[:long].titleize) %></div>
