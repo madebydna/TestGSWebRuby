@@ -7,7 +7,6 @@ module Feeds
       include UrlHelper
       include Feeds::FeedConstants
       include Feeds::FeedHelper
-      # include CachedRatingsMethods
 
       attr_reader :state, :schools
 
@@ -19,7 +18,8 @@ module Feeds
       def initialize(state, schools, _)
         @state = state
         @schools = schools
-        @rating_type = 'Summary Rating'
+        @state_data = JSON.parse(StateCache.for_state('feed_ratings', @state)&.value)
+        @rating_type = @state_data['type']
       end
 
       def default_url_options
@@ -31,12 +31,10 @@ module Feeds
       end
 
       def state_results
-        state_data = JSON.parse(StateCache.for_state('feed_ratings', @state)&.value)
-        @rating_type = state_data['type']
         {}.tap do |hash|
           hash['id'] = test_type_to_id
-          hash['year'] = state_data['year']
-          hash['description'] = state_data['description']
+          hash['year'] = @state_data['year']
+          hash['description'] = @state_data['description']
         end
       end
 
