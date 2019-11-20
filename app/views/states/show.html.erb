@@ -18,18 +18,14 @@
 
     <!-- First Ad -->
     <div class="display-mobile">
-      <%= react_component("Ad", props: {
-          slot: "statepage_first",
+      <%= react_component("AdWrapper", props: {
+          slot: "statepagemobile_first",
           sizeName: "thin_banner_mobile"
       }) %>
     </div>
 
     <div class="below-hero">
-      <!-- TOC -->
-      <%= render 'community/toc' %>
-
-      <!-- Main Content -->
-      <div class="community-modules">
+      <%= render 'community/toc' %><div class="community-modules">
         <!-- Schools -->
         <div id="schools" class="module-section">
           <div class="modules-title"><%= I18n.t('explore_in_state', scope: 'community.state', name_long: @state[:long].titleize) %></div>
@@ -87,7 +83,7 @@
 
         <!-- Second Ad -->
         <div id="second-ad">
-          <%= react_component("Ad", props: {
+          <%= react_component("AdWrapper", props: {
               slot: "statepage_second",
               sizeName: "box"
           }) %>
@@ -137,11 +133,7 @@
             </div>
           </div>
         <% end %>
-      </div>
-
-      <!-- Sticky Right Rail -->
-      <%= render 'community/sticky_right_rail' %>
-
+      </div><%= render 'community/sticky_right_rail' %>
     </div>
   </div>
 </div>
