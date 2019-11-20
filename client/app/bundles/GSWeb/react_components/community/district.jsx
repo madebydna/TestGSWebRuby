@@ -25,7 +25,7 @@ import { schoolsTocItem, academicsTocItem, ACADEMICS, advancedCoursesTocItem, ST
   studentsTocItem, calendarTocItem, communityResourcesTocItem, 
   nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS,
   teachersStaffTocItem, TEACHERS_STAFF, financeTocItem, FINANCE, academicProgressTocItem, ACADEMIC_PROGRESS,
-  studentProgressTocItem, STUDENT_PROGRESS
+  studentProgressTocItem, STUDENT_PROGRESS, ADVANCED_COURSES
 } from './toc_config';
 import withViewportSize from "react_components/with_viewport_size";
 import { find as findSchools } from "api_clients/schools";
@@ -155,6 +155,10 @@ class District extends React.Component {
 
   shouldDisplayGrowthRating = () => Object.keys(this.props.growthData).length > 0;
 
+  hasStemCoursesData() {
+    return this.props.stemCourses.courses.length > 0;
+  }
+
   growthRatingTocItem = () => {
     if (!this.shouldDisplayGrowthRating()){ return undefined;}
     if(this.props.growthData.key === ACADEMIC_PROGRESS){
@@ -168,6 +172,7 @@ class District extends React.Component {
 
   selectTocItems(){
     let districtTocItems = compact([schoolsTocItem, academicsTocItem, this.growthRatingTocItem(), advancedCoursesTocItem, studentsTocItem, teachersStaffTocItem, calendarTocItem, financeTocItem, communityResourcesTocItem, nearbyHomesForSaleTocItem, reviewsTocItem]);
+    districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ADVANCED_COURSES && !this.hasStemCoursesData());
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === REVIEWS && this.props.reviews.length === 0);
     districtTocItems = remove(districtTocItems, (tocItem)=> tocItem.key === ACADEMICS && !this.hasAcademicsData());
     districtTocItems = remove(districtTocItems, (tocItem) => tocItem.key === STUDENTS && !this.hasStudentDemographicData());
@@ -243,7 +248,7 @@ class District extends React.Component {
             pageType={this.pageType}
           />
         }
-        shouldDisplayStemCourses={this.props.stemCourses.courses.length > 0}
+        shouldDisplayStemCourses={this.hasStemCoursesData()}
         stemCourses={
           <StemCourses
             courses={this.props.stemCourses.courses}
