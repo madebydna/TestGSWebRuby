@@ -53,6 +53,10 @@
 }
 
 .display-mobile {
+  @include media-breakpoint-up(sm) {
+    display: none;
+  }
+
   > div {
     margin-left: 0px;
     margin-bottom: 20px;
