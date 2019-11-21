@@ -16,9 +16,7 @@ class StatesController < ApplicationController
   layout 'application'
 
   set_additional_js_translations(
-    {
-      top_schools: [:community, :top_schools]
-    }
+    top_schools: [:community, :top_schools]
   )
 
   def show

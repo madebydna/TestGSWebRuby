@@ -8,9 +8,7 @@ class CitiesController < ApplicationController
   before_filter :redirect_unless_valid_city
 
   set_additional_js_translations(
-    {
-      top_schools: [:community, :top_schools]
-    }
+    top_schools: [:community, :top_schools]
   )
 
   def show
