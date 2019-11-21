@@ -14,16 +14,16 @@ describe Omni::DataSet do
     context 'data set exists with a note that includes the keyword' do
       context 'the number of associated data sets for the most recent date is 1' do
         it 'returns the test score id' do
-          create(:data_set, state: school.state, data_type: data_type, source: source, notes: Omni::DataSet::KEYWORD)
-          expect(Omni::DataSet.ratings_type_id(school.state)).to eq(Omni::Rating::TEST_SCORE)
+          create(:data_set, state: school.state, data_type: data_type, source: source, notes: Omni::DataType::SUMMARY_RATING_NAME)
+          expect(Omni::DataSet.ratings_type_id(school.state)).to eq(Omni::DataType::TEST_SCORES_RATING_DATA_TYPE_ID)
         end
       end
 
       context 'the number of associated data sets for the most recent date is not 1' do
         it 'returns the summary rating id' do
-          create(:data_set, state: school.state, data_type: data_type, source: source, notes: Omni::DataSet::KEYWORD)
-          create(:data_set, state: school.state, data_type: data_type, source: source, notes: Omni::DataSet::KEYWORD)
-          expect(Omni::DataSet.ratings_type_id(school.state)).to eq(Omni::Rating::SUMMARY)
+          create(:data_set, state: school.state, data_type: data_type, source: source, notes: Omni::DataType::SUMMARY_RATING_NAME)
+          create(:data_set, state: school.state, data_type: data_type, source: source, notes: Omni::DataType::SUMMARY_RATING_NAME)
+          expect(Omni::DataSet.ratings_type_id(school.state)).to eq(Omni::DataType::SUMMARY_RATING_DATA_TYPE_ID)
         end
       end
     end
