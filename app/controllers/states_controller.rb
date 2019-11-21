@@ -15,6 +15,12 @@ class StatesController < ApplicationController
   before_action :set_login_redirect
   layout 'application'
 
+  set_additional_js_translations(
+    {
+      top_schools: [:community, :top_schools]
+    }
+  )
+
   def show
     #PT-1205 Special case for dc to redirect to /washington-dc/washington city page
     if @state[:short] == 'dc'

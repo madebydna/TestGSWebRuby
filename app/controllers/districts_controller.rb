@@ -16,7 +16,9 @@ class DistrictsController < ApplicationController
       teachers_staff: [:lib, :teachers_staff],
       finance: [:lib, :finance],
       academic_progress: [:lib, :academic_progress, :javascript],
-      student_progress: [:lib, :student_progress, :javascript]
+      student_progress: [:lib, :student_progress, :javascript],
+      calendar: [:lib, :calendar],
+      top_schools: [:community, :top_schools]
     }
   )
 

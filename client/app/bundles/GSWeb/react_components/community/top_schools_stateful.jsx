@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TopSchools from "./top_schools";
 import CsaTopSchools from "./csa_top_schools";
-import School from "react_components/search/school";
-import { SM, validSizes as validViewportSizes } from "util/viewport";
-import * as APISchools from 'api_clients/schools';
+import { validSizes as validViewportSizes } from "util/viewport";
 import SectionNavigation from '../equity/tabs/section_navigation';
 import ModuleTab from 'react_components/school_profiles/module_tab';
 import { t } from "util/i18n";
@@ -32,9 +30,6 @@ class TopSchoolsStateful extends React.Component {
       active: props.active 
     };
     this.initialSchoolLoad(props.schoolsData);
-    this.handleGradeLevel = this.handleGradeLevel.bind(this);
-    this.handleTabClick = this.handleTabClick.bind(this);
-    this.renderTabsContainer = this.renderTabsContainer.bind(this);
   }
 
   initialSchoolLoad({ elementary, middle, high, csa }) {
@@ -53,13 +48,13 @@ class TopSchoolsStateful extends React.Component {
     }
   }
 
-  handleGradeLevel(str){
+  handleGradeLevel = (str) => {
     this.setState({
       levelCodes: str
     })
   }
 
-  handleTabClick(index) {
+  handleTabClick = (index) => {
     this.setState({ active: index });
   }
 
@@ -77,7 +72,7 @@ class TopSchoolsStateful extends React.Component {
     }.bind(this));
   }
     
-  renderTabsContainer() {
+  renderTabsContainer = () => {
     let tabs = this.tabs();
     if (tabs.length === 1) {
       if (this.props.community === 'state') {

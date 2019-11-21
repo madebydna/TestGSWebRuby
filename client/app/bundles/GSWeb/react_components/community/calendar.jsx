@@ -132,13 +132,13 @@ class Calendar extends React.Component {
     return (
       <div className="row bar-graph-display">
         <div className="test-score-container clearfix calendar-header">
-          <div className="col-sm-2">{ t('date') }</div>
+          <div className="col-sm-2">{ t('calendar.date') }</div>
           <div className="col-sm-1"></div>
           <div className="col-sm-9">
-            {t('event')}
+            {t('calendar.event')}
             { this.state.verified && 
               <span className="verified">
-                <ModalTooltip content={t('district_calendar_verified')}>
+                <ModalTooltip content={t('calendar.verified')}>
                   <img src={claimedBadge}/>
                 </ModalTooltip>
               </span> 
@@ -171,7 +171,7 @@ class Calendar extends React.Component {
       const [year, intMonth, day] = this.state.lastUpdated;
       const date = new Date(year, intMonth - 1, day);
       const month = date.toLocaleString('en-us', { month: 'long' })
-      lastUpdated = <div className="last-updated">{`${capitalize(t('last updated'))}: ${month} ${day}, ${year}`}</div>;
+      lastUpdated = <div className="last-updated">{`${capitalize(t('calendar.last updated'))}: ${month} ${day}, ${year}`}</div>;
     }
 
     if (this.state.isLoading === true) {
@@ -187,12 +187,12 @@ class Calendar extends React.Component {
       return (
         <section className="calendar-module">
           <div className="null-state">
-            <h4>{ t('district_calendar_no_results') }</h4>
+            <h4>{ t('calendar.no_results') }</h4>
           </div>
         </section>
       )
     } else {
-      const sources = t('district_calendar_sources_html');
+      const sources = t('calendar.sources_html');
         return (
           <React.Fragment>
             <section className="calendar-module">
