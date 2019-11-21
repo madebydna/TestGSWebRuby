@@ -1,0 +1,15 @@
+en:
+  lib:
+    calendar:
+      date: Date
+      verified: This calendar is being updated by a verified administrator.
+      event: Event
+      last updated: last updated
+      no_results: Currently, this information is not available.
+      sources_html: >
+        <div class="sources-text">
+          <h3>GreatSchools district data sources & information</h3>
+          <div>Calendar</div>
+          <p><span>Sources&#58;</span> Tandem</p>
+        </div>
+
