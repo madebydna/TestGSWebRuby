@@ -9,6 +9,9 @@ module Omni
     SCHOOL_ENTITY = 'school'
     TAGS = %w(rating summary_rating_weight csa)
 
+    SUMMARY = 160
+    TEST_SCORE = 155
+
     belongs_to :data_set
     belongs_to :breakdown
 

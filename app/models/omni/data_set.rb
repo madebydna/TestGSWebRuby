@@ -7,6 +7,7 @@ module Omni
     FEEDS = 'feeds'
     WEB = 'web'
     NONE = 'none'
+    KEYWORD = 'Summary Rating'
 
     has_many :test_data_values
     has_many :data_type_tags, through: :data_type
@@ -36,19 +37,20 @@ module Omni
     end
 
     # This next query is strictly used to determine if a state has test score ratings or summary ratings.
-    # 155 is test score and 160 is summary.
     # This query will always return either 155 or 160 based on the cnt returned from the rest of the query.
     # It gets the number of times Summary Rating is found in the notes field of data_sets and
     # date_valid is the same for a state.
     # I believe that what it is getting at is there is only one component of summary rating when
     # it is a test score rating.
     def self.ratings_type_id(state)
-      rating_type = "select case when cnt = 1 then 155 else 160 end as data_type from
-                  (select ds.state, count(*) cnt from data_sets ds
-                  join (select state, max(date_valid) dv from data_sets
-                  where notes like '%Summary Rating' and state='#{state}') mx
-                  on mx.state = ds.state and mx.dv = ds.date_valid
-                  group by ds.state) s;"
+      rating_type = "select case when cnt = 1 then #{Omni::Rating::TEST_SCORE}
+                     else #{Omni::Rating::SUMMARY} end as data_type
+                     from
+                    (select ds.state, count(*) cnt from data_sets ds
+                    join (select state, max(date_valid) dv from data_sets
+                    where notes like '%#{KEYWORD}' and state='#{state}') mx
+                    on mx.state = ds.state and mx.dv = ds.date_valid
+                    group by ds.state) s;"
       connection.execute(rating_type)&.first&.first
     end
   end
