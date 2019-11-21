@@ -47,7 +47,7 @@ module Feeds
       def xml_builder
         @_xml_builder ||= begin
           xml = Builder::XmlMarkup.new(:target => file, :indent => 1)
-          xml.instruct! :xml, :version => '1.0', :encoding => 'UTF-8'
+          xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
           xml
         end
       end
