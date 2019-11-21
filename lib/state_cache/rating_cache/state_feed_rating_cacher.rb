@@ -4,10 +4,10 @@
 class StateFeedRatingCacher < StateCacher
   CACHE_KEY = 'feed_ratings'
 
-  SUMMARY_RATING_DATA_TYPE_ID = 160
+  SUMMARY_RATING_DATA_TYPE_ID     = 160
   TEST_SCORES_RATING_DATA_TYPE_ID = 155
-  SUMMARY_RATING_NAME = 'Summary Rating'
-  TEST_SCORES_RATING_NAME = 'Test Score Rating'
+  SUMMARY_RATING_NAME             = 'Summary Rating'
+  TEST_SCORES_RATING_NAME         = 'Test Score Rating'
 
   # needs to contain
   # - rating type - summary or test
@@ -20,17 +20,18 @@ class StateFeedRatingCacher < StateCacher
 
 
   def test_rating
-    Omni::DataSet.by_state(state).
-                  where(data_type_id: TEST_SCORES_RATING_DATA_TYPE_ID).
-                  where("description is NOT NULL").
-                  order("date_valid desc")
+    Omni::DataSet.by_state(state)
+      .where(data_type_id: TEST_SCORES_RATING_DATA_TYPE_ID)
+      .where("description is NOT NULL")
+      .order("date_valid desc")
   end
 
   def summary_rating
-    Omni::DataSet.by_state(state).
-                  where(data_type_id: SUMMARY_RATING_DATA_TYPE_ID).
-                  order("date_valid desc")
+    Omni::DataSet.by_state(state)
+      .where(data_type_id: SUMMARY_RATING_DATA_TYPE_ID)
+      .order("date_valid desc")
   end
+
   #
   # Determine if it is summary or test by looking at all caches for all schools in a state and if any of them have a
   # Summary rating than it is a summary rating state.
@@ -59,9 +60,9 @@ class StateFeedRatingCacher < StateCacher
 
   def result_to_hash(year, description, type)
     {}.tap do |h|
-      h[:year] = year
+      h[:year]        = year
       h[:description] = description
-      h[:type] = type
+      h[:type]        = type
     end
   end
 
