@@ -47,16 +47,7 @@ en:
     community_resources: community resources
     county: county
     data_not_provided_by_the_school: Data not provided by the school
-    date: Date
     district_calendar: District calendar
-    district_calendar_no_results: Currently, this information is not available.
-    district_calendar_verified: This calendar is being updated by a verified administrator.
-    district_calendar_sources_html: >
-      <div class="sources-text">
-        <h3>GreatSchools district data sources & information</h3>
-        <div>Calendar</div>
-        <p><span>Sources&#58;</span> Tandem</p>
-      </div>
     districts: Districts
     Email: Email
     Permalink: Permalink
@@ -66,7 +57,6 @@ en:
     enter_an_address_to_see_schools: Enter an address to see schools
     search_or_click_map_for_districts: Search or click map for districts
     view_in_map: View in map
-    event: Event
     website: Website
     homes_for_sale: Homes for sale
     nearby_homes_for_sale: Nearby homes for sale
@@ -222,23 +212,6 @@ en:
       proficient_or_better: Proficient or better
       at_grade_level: Proficient
     This school: This school
-    top_schools:
-      state_top_schools_header: Best public schools in {state}
-      top_schools: Top schools
-      top_schools_blurbs: >
-        These are some of the top-rated public schools in {name} <a href="/gk/ratings/#summary-rating">based on a variety of measures</a>, including academic performance and <a href="/gk/ratings/#equityrating">equity</a>. Click to see the full list of schools sorted by rating. <a href="/gk/ratings/">About the GreatSchools rating</a>
-      csa_top_schools_blurb: >
-        These are some of the best public high schools in {name} at preparing students for success in college. The <a href="/gk/csa-winners/">College Success Award</a> recognizes schools that do an exemplary job getting students to enroll in and stick with college, including those that beat the odds by better serving low-income students.
-      learn_more: Learn more
-      no_elemCity: There are no elementary schools with a GreatSchools rating for this city
-      no_midCity: There are no middle schools with a GreatSchools rating for this city
-      no_highCity: There are no high schools with a GreatSchools rating for this city
-      no_elemDistrict: There are no elementary schools with a GreatSchools rating for this district
-      no_midDistrict: There are no middle schools with a GreatSchools rating for this district
-      no_highDistrict: There are no high schools with a GreatSchools rating for this district 
-      see_elem: See more elementary schools
-      see_mid: See more middle schools
-      see_high: See more high schools
     recent_reviews:
       title: Recent school reviews from schools in
       review_for: Review for
@@ -246,7 +219,6 @@ en:
       city_blurb: Does your child attend a school in this city?
       Add a review: Add a review
     State average: State average
-    too_many_schools_error_html: '<strong>You&#39ve already selected 4 schools to compare.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspCompare schools.</a>'
     not_rated_school: Not rated school
     school_boundary: School boundary
     district_boundary: District boundary
@@ -254,9 +226,6 @@ en:
     view_less: View less »
     view_more: View more »
     weak_fit: Weak fit
-    wrong_state_error_start_html: '<strong>You&#39re currently comparing schools in&nbsp'
-    wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare schools now&nbsp</a>or<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspclear schools&nbsp</a><strong>to compare in this location.</strong>'
-#    added for equity
     percentage of students: '% of students'
     percentage: 'percentage'
     of students: 'of students'
@@ -268,20 +237,6 @@ en:
     School value: School value
     Sponsored Ad: Sponsored Listing
     sponsored_tooltip_blurb: Sponsored listings are paid advertisements. As a nonprofit, advertising helps make it possible to provide our site free to millions of parents. 
-    RE Test scores narration: >
-      This shows results across different races/ethnicities on {subject} test given to students once a year. Big
-      differences may suggest that some student groups are not getting the support they need to succeed.
-    RE Grad rates narration: >
-      This shows graduation rates for different races/ethnicities. Big differences may suggest that some students are
-      not getting the support they need to succeed.
-    RE UC/CSU eligibility narration: >
-      This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for
-      University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.
-    'SD Test scores narration': >
-      <p class="narrative-content">This shows results for students with disabilities on a {subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
-      <hr />
-      <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
-      <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
     Test scores: Test scores
     Graduation rates: Graduation rates
     'UC/CSU eligibility': 'UC/CSU eligibility'
@@ -303,7 +258,6 @@ en:
     Agree: Agree
     Strongly agree: Strongly agree
     Review Guidelines: Review guidelines
-    last updated: last updated
     Cancel: Cancel
     Submit: Submit
     Required: Required
@@ -392,53 +346,6 @@ en:
         </span>
       summary_mobile: >
         <span>In %{state}, %{total} public schools have earned a %{year} GreatSchools College Success Award based on their success in preparing students for college and ultimately career. <a href="/gk/csa-winners/">Learn more</a>.</span>
-    tour1:
-      step1: GreatSchools is the leading national nonprofit providing school & parenting information. We collect data from state & federal sources to help you understand school quality and find the best educational opportunities for your child.
-      step2_title_html: '<div class="tutorial-header">Summary rating</div><br/>'
-      step2: GreatSchools is a national nonprofit. Our Summary Rating provides you with a snapshot of this school's quality, based on multiple measures, compared to other public schools in the state.
-      step2_test_scores_only_title_html: '<div class="tutorial-header">Test Score Rating</div><br/>'
-      step2_test_scores_only: GreatSchools is a national nonprofit. The Test Score Rating compares test scores at this school to other public schools in the state. In most states, a school’s overall rating is a Summary Rating based on multiple measures of school quality. This state does not provide enough data for us to calculate a Summary Rating, so we instead display the Test Score Rating.
-      step3_title_html: '<div class="tutorial-header">Academics</div><br/>'
-      step3: This section shows ratings and data for key themes related to academic success including test scores and more.
-      step4_title_html: '<div class="tutorial-header">Equity</div><br/>'
-      step4: How well are different student groups served at this school? Low ratings may mean some student groups are not getting the support they need.
-      step5_title_html: '<div class="tutorial-header">Environment</div><br/>'
-      step5: Want to learn more about the school? This section shows student demographics, student & counselor ratios, neighborhood, and more.
-      step6_title_html: '<div class="tutorial-header">Reviews</div><br/>'
-      step6: Here, parents and others in the school community share their experiences with this school. Please share your experience too!
-      step7_title_html: '<div class="tutorial-header">Nearby schools</div><br/>'
-      step7: Scroll through nearby high-performing schools so you can better understand the school options in your area.
-      step8_title_html: '<div class="tutorial-header">Helpful hints</div><br/>'
-      step8_p1: Click on the "?" to view more info and answers to frequently asked questions.
-      step8_p2: Parent tips will show useful info to help your child succeed in school.
-      step8_p3: Click on "Sources" to view where the data comes from.
-      step8_parent_tips: Parent tips
-      step8_sources: Sources
-      step9_html: '<h1>All done!</h1><div>Have a few more minutes? Learn<br/>more about the school&apos;s Academics,<br/>Equity and Environment sections.</div><br/><p><button class="tour-cta js-start-second-tour active">Continue</button><div> <a class="js-close-school-tour" style="cursor: pointer;">Not right now </a></p></br><p>Was this useful? <a href="https://s.qualaroo.com/45194/49372ef1-a8d5-47be-8507-f4a208ece19b" target="_blank">Give us your feedback</a></p></div>'
-    tour2:
-      step1_title_html: '<div class="tutorial-header">College readiness</div><br/>'
-      step1: How well does this school prepare its students for college? This section offers information about college entrance tests, Advanced Placement (AP) coursework, graduation rates and more.
-      step2_title_html: '<div class="tutorial-header">Test scores</div><br/>'
-      step2: Here you'll find a snapshot of this school's proficiency levels in key subjects, based on test scores and compared to state averages, with "Parent tips" you can use to learn more.
-      step3_title_html: '<div class="tutorial-header">Student progress</div><br/>'
-      step3: The Student Progress Rating gives you a sense of how much academic improvement students at this school have made year-over-year (also known as “growth”) compared with other schools in the state.
-      step4_title_html: '<div class="tutorial-header">Advanced courses</div><br/>'
-      step4: This section looks at how well this school is doing in encouraging a large number of its students to take advanced courses, both overall and within key subject areas.
-      step5_title_html: '<div class="tutorial-header">Advanced STEM courses</div><br/>'
-      step5: Taking advanced STEM (science, technology, engineering, and math) courses is more important than ever for today's students.
-      step6_title_html: '<div class="tutorial-header">Race/ethnicity</div><br/>'
-      step6: This section helps you understand how well a school is serving all of its students, looking at information like test scores and suspension rates for different racial and ethnic groups at this school.
-      step7_title_html: '<div class="tutorial-header">Low-income students</div><br/>'
-      step7: This section looks at how well this school is serving its students from low-income families, looking at information like test scores and graduation rates.
-      step8_title_html: '<div class="tutorial-header">Students with disabilities</div><br/>'
-      step8: From this section, you can learn about test scores, chronic absenteeism and suspension rates at this school for students who have physical or learning disabilities, compared to state averages.
-      step9_title_html: '<div class="tutorial-header">General information</div><br/>'
-      step9: Here you will find information like the school's hours, transportation options, how to enroll, clubs and more.
-      step10_title_html: '<div class="tutorial-header">Students</div><br/>'
-      step10: The Students section offers a snapshot of the diversity of the student population at this school.
-      step11_title_html: '<div class="tutorial-header">Teachers & staff</div><br/>'
-      step11: Here you can find out more about the student per teacher or counselor ratios, teacher tenure and more.
-      step12: '<div><img alt="" height="42" src="/assets/school_profiles/owl.png" style="vertical-align: sub;" width="39" />&nbsp;<h1 style="display:inline-block;">&nbsp;All done!</h1></div><div><p>Thank you for taking time to walk through our new profiles.&nbsp;<br>&nbsp;</p><p>Was this useful? <a id="school-tour-feedback" style="cursor: pointer;">Give us your feedback</a></p><p>Does your child go to this school? <a href="#Reviews" class="js-close-school-tour">Review this school</p><p><button class="tour-cta active js-close-school-tour">Done</button></p></div></div>'
     csa_callout_html: >
       <span class="csa-callout-text">This school is a College Success Award winner! <a href='#College_readiness*College_success'>See details.</a></span>
     csa_district_schools_info_html: The <a href="/gk/csa-winners/">College Success Awards</a> recognize public high schools that stand out in ​getting students enrolled in - and staying with - college.

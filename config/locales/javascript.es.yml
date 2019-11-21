@@ -47,16 +47,7 @@ es:
     community_resources: recursos de la comunidad 
     county: condado
     data_not_provided_by_the_school: Datos no provistos por la escuela
-    date: Fecha
     district_calendar: Calendario del distrito
-    district_calendar_no_results: En este momento, esta información no está disponible.
-    district_calendar_verified: This calendar is being updated by a verified administrator.
-    district_calendar_sources_html: >
-      <div class="sources-text">
-        <h3>Las fuentes de datos y información de los perfiles de distritos de GreatSchools</h3>
-        <div>Calendario</div>
-        <p><span>Fuente&#58;</span> Tandem</p>
-      </div>
     districts: Distritos
     Email: Correo electrónico
     Permalink: Enlace permanente
@@ -66,7 +57,6 @@ es:
     enter_an_address_to_see_schools: Escribe una dirección para ver las escuelas
     search_or_click_map_for_districts: Busca o haga clic en el mapa para los distritos escolares
     view_in_map: Vea en el mapa
-    event: Evento
     website: Página web
     homes_for_sale: Casas en venta
     nearby_homes_for_sale: Casas cercanas a la venta
@@ -221,23 +211,6 @@ es:
       proficient_or_better: Competente o mejor
       at_grade_level: a nivel de grado
     This school: Esta escuela
-    top_schools:
-      state_top_schools_header: Las mejores escuelas en {state}
-      top_schools: Escuelas con una calificación alta
-      top_schools_blurbs: >
-        Estas son algunas de las escuelas públicas mejor calificadas en {name} <a href="/gk/como-clasificamos/?lang=es#summary-rating">basadas en una variedad de medidas</a>, incluyendo el rendimiento académico y la <a href="/gk/como-clasificamos/?lang=es#equityrating">equidad</a>. Haz clic para ver la lista completa de escuelas ordenadas por clasificación. <a href="/gk/como-clasificamos/?lang=es">Sobre la calificación de GreatSchools</a>
-      csa_top_schools_blurb: >
-        Estas son algunas de las mejores escuelas secundarias públicas en {name} preparando a los estudiantes para el éxito en la universidad. El <a href="/gk/csa-winners/">College Success Award</a> reconoce a las escuelas que realizan un trabajo ejemplar al hacer que los estudiantes se inscriban y se mantengan en la universidad, incluyendo las escuelas que superan las probabilidades prestando un mejor servicio a los estudiantes de bajos ingresos.
-      learn_more: Obtenga más información
-      no_elemCity: No hay escuelas primarias con una Calificación General de GreatSchools en esta ciudad
-      no_midCity: No hay escuelas intermedias con una Calificación General de GreatSchools en esta ciudad
-      no_highCity: No hay escuelas secundarias con una Calificación General de GreatSchools en esta ciudad
-      no_elemDistrict: No hay escuelas primarias con una Calificación General de GreatSchools en esta distrito
-      no_midDistrict: No hay escuelas intermedias con una Calificación General de GreatSchools en esta distrito
-      no_highDistrict: No hay escuelas secundarias con una Calificación General de GreatSchools en esta distrito
-      see_elem: Vea más escuelas primarias
-      see_mid: Vea más escuelas intermedias
-      see_high: Vea más escuelas secundarias
     recent_reviews:
       title: Comentarios recientes de escuelas en
       review_for: Comentarios para
@@ -245,7 +218,6 @@ es:
       city_blurb: ¿Su hijo asiste a una escuela en esta ciudad?
       Add a review: Agrega un comentario
     State average: Promedio estatal
-    too_many_schools_error_html: '<strong>Ya ha seleccionado 4 escuelas para comparar.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspComparar las escuelas.</a>'
     not_rated_school: Escuela sin clasificación
     school_boundary: Límite de la escuela
     district_boundary: Límite de el distrito escolar
@@ -253,9 +225,6 @@ es:
     view_less: Ver menos »
     view_more: Ver más »
     weak_fit: Bajo
-    wrong_state_error_start_html: '<strong>Estás comparando escuelas en '
-    wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare escuelas ahora&nbsp</a>o<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspdremover escuelas&nbsp</a><strong>para comparar en esta ubicación.'
-#    added for equity
     percentage of students: '% de estudiantes'
     percentage: 'porcentaje'
     of students: 'de estudiantes'
@@ -268,21 +237,6 @@ es:
     School value: Valor de la escuela
     Sponsored Ad: Listado Patrocindao
     sponsored_tooltip_blurb: Los listados patrocinados son anuncios pagados. Como organización sin fines de lucro, esta publicidad ayuda a que nuestro sitio sea gratuito para millones de padres. Aprende más.
-    RE Test scores narration: >
-      Esto muestra resultados de diferentes razas y etnicidades en un examen de {subject} dado a los estudiantes
-      una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el
-      apoyo que necesitan para tener éxito.
-    RE Grad rates narration: >
-      Esto muestra las tasas de graduación de diferentes razas o etnias. Grandes diferencias puede sugerir que algunos
-      estudiantes no están recibiendo el apoyo que necesitan para tener éxito.
-    RE UC/CSU eligibility narration: >
-      Esto muestra los porcentajes de graduados que han tomado el A-G clases requeridas necesarias para ser elegible
-      para la Universidad de CA y colegios de CA State. <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información</a> acerca de estos requisitos.
-    'SD Test scores narration': >
-      <p class="narrative-content">Esto muestra los resultados para los estudiantes con discapacidades en un examen de {subject} dado a los estudiantes una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.</p>
-      <hr />
-      <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-      <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a que los estudiantes con discapacidades obtengan resultados académicos exitosos.</p>
     Test scores: 'Resultados de exámenes'
     Graduation rates: 'Índices de Graduación'
     'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
@@ -304,7 +258,6 @@ es:
     Agree: De acuerdo
     Strongly agree: Totalmente de acuerdo
     Review Guidelines: Guia para comentarios
-    last updated: última actualización
     Cancel: Cancelar
     Submit: Enviar
     Required: Requerido
@@ -393,53 +346,6 @@ es:
         </span>
       summary_mobile: >
         <span>En %{state}, %{total} escuelas públicas han ganado un %{year} GreatSchools College Success Award basado en su éxito en la preparación de los estudiantes para la universidad y, finalmente, la carrera. <a href="/gk/csa-winners/">Aprende más</a>.</span>
-    tour1:
-      step1: GreatSchool es la organización nacional sin fines de lucro líder en información de escuelas y padres. Recaudamos información de fuentes estatales y federales para ayudarle a entender lo que es la calidad escolar y encontrar las mejores oportunidades educativas para sus hijos.
-      step2_title_html: '<div class="tutorial-header">El Resumen de Calificaciones</div><br/>'
-      step2: GreatSchool es la organización nacional sin fines de lucro. El Resumen de Calificaciones ofrece una visión rápida de la calidad de esta escuela en comparación a otras escuelas en el estado.
-      step2_test_scores_only_title_html: '<div class="tutorial-header">Las Calificaciones de los Resultados de Exámenes</div><br/>'
-      step2_test_scores_only: GreatSchools es una organización nacional sin fines de lucro. La Calificación de los Resultados de Exámenes compara los resultados de los exámenes en esta escuela con otras escuelas públicas en el estado. En la mayoría de los estados, la Calificación General de una escuela es una calificación resumida basada en múltiples medidas de la calidad de la escuela. Este estado no proporciona suficientes datos para que podamos calcular una Calificación General, por lo que en su lugar mostramos la La Calificación de los Resultados de Exámenes.
-      step3_title_html: '<div class="tutorial-header">ACADÉMICA</div><br/>'
-      step3: Esta sección muestra calificaciones e información sobre temas clave para el éxito académico, incluyendo resultados de exámenes y más.
-      step4_title_html: '<div class="tutorial-header">Equidad</div><br/>'
-      step4: ¿Cómo trabaja esta escuela con los distintos grupos de estudiantes?  Tener calificaciones bajas puede significar que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan.
-      step5_title_html: '<div class="tutorial-header">Medio Ambiente</div><br/>'
-      step5: ¿Quiere saber más de la escuela? Esta sección le muestra la demografía de estudiantes, los índices de estudiantes por consejero, vecindarios, y más.
-      step6_title_html: '<div class="tutorial-header">Opiniones</div><br/>'
-      step6: Aquí, los padres y otros en la comunidad escolar comparten sus experiencias con esta escuela.
-      step7_title_html: '<div class="tutorial-header">Todas las escuelas cercanas</div><br/>'
-      step7: Desplace el cursor para ver otras escuelas cercanas de alto rendimiento y poder entender más las opciones de educación en su área.
-      step8_title_html: '<div class="tutorial-header">Consejos Útiles</div><br/>'
-      step8_p1: Haga clic en “?” para ver más información y respuestas a preguntas comunes.
-      step8_p2:  “Consejos para padres” le mostrará información útil para ayudar a que su hijo tenga éxito en la escuela.
-      step8_p3:  Haga clic en “Fuentes”  para ver de dónde viene la información.
-      step8_parent_tips: Consejos para padres
-      step8_sources: Fuentes
-      step9_html: '<h1>¡Terminado!</h1><div>¿Tiene unos minutos más? Infórmese más en las secciones de Contenido Académico, Igualdad y Ambiente de la escuela.</div><br/><p><button class="tour-cta js-start-second-tour active">Continuar</button><div> <a class="js-close-school-tour" style="cursor: pointer;">No en este momento</a><p/><br/><p>¿Esto estuvo útil? <a href="https://s.qualaroo.com/45194/49372ef1-a8d5-47be-8507-f4a208ece19b" target="_blank">Danos tu opinion</a></p></div>'
-    tour2:
-      step1_title_html: '<div class="tutorial-header">Preparación universitaria</div><br/>'
-      step1: ¿Cómo prepara esta escuela a sus estudiantes para la Universidad? Esta sección ofrece información sobre exámenes de ingreso a la Universidad, cursos de Ubicación Avanzada (AP), índices de graduación y más.
-      step2_title_html: '<div class="tutorial-header">Resultados de exámenes</div><br/>'
-      step2: Aquí verá un resumen de los niveles de competencia de esta escuela en materias importantes, en base a resultados de exámenes y comparados con el promedio estatal, con “Consejos para Padres” que puede usar para informarse más.
-      step3_title_html: '<div class="tutorial-header">Progreso estudiantil</div><br/>'
-      step3: El Índice de Progreso de Estudiantes da una idea de cuánto han mejorado académicamente los estudiantes en esta escuela cada año (también conocido como “crecimiento”) en comparación a otras escuelas en el estado.
-      step4_title_html: '<div class="tutorial-header">Cursos avanzados</div><br/>'
-      step4: Esta sección analiza si esta escuela está alentando a un gran número de estudiantes a tomar cursos avanzados, en general y en áreas de materias clave.
-      step5_title_html: '<div class="tutorial-header">Cursos avanzados de STEM</div><br/>'
-      step5: Tomar cursos avanzados de STEM (ciencia, tecnología, ingeniería y matemática) hoy es más importante que nunca para los estudiantes. Esta sección resalta la participación de esta escuela en cursos avanzados de STEM.
-      step6_title_html: '<div class="tutorial-header">Raza/etnicidad</div><br/>'
-      step6: Esta sección ayuda a entender si una escuela está trabajando bien con todos sus estudiantes, considerando información como resultados de exámenes e índices de suspensión en distintos grupos raciales y étnicos en esta escuela.
-      step7_title_html: '<div class="tutorial-header">Estudiantes de bajos ingresos</div><br/>'
-      step7: Esta sección analiza si esta escuela está trabajando bien con sus estudiantes de familias de bajos ingresos, considerando información como resultados de exámenes e índices de graduación.
-      step8_title_html: '<div class="tutorial-header">Estudiantes con discapacidades</div><br/>'
-      step8: En esta sección puede obtener información sobre resultados de exámenes, ausentismo crónico e índices de suspensión en esta escuela para estudiantes que tienen discapacidades físicas o de aprendizaje, en comparación a promedios del estado.
-      step9_title_html: '<div class="tutorial-header">Información general</div><br/>'
-      step9: Aquí encontrará información como los horarios de la escuela, opciones de transporte, cómo inscribirse, clubes y más.
-      step10_title_html: '<div class="tutorial-header">Estudiantes</div><br/>'
-      step10: La sección de Estudiantes ofrece el detalle de la diversidad en la población de estudiantes de esta escuela.
-      step11_title_html: '<div class="tutorial-header">Profesores y personal</div><br/>'
-      step11: Acá puede obtener más información sobre el índice de estudiantes por maestro o consejero, antigüedad de los maestros y más.
-      step12: '<div><img alt="" height="42" src="/assets/school_profiles/owl.png" style="vertical-align: sub;" width="39" />&nbsp;<h1 style="display:inline-block;">&nbsp;¡Terminado!</h1></div><div><p>Gracias por ver nuestros nuevos perfiles.&nbsp;&nbsp;</p><p>¿Esto estuvo útil? <a id="school-tour-feedback" style="cursor: pointer;">Danos tu opinion</a></p><p>¿Su hijo va a la escuela?<a href="#Reviews" class="js-close-school-tour">Incluya su opinión sobre esta escuela</p><p><button class="tour-cta active js-close-school-tour">Terminado</button></p></div></div>'
     csa_callout_html: >
       <span class="csa-callout-text">¡Esta escuela ha ganado un College Success Award! <a href='#College_readiness*College_success'>Vea más detalles.</a></span>
     csa_district_schools_info_html: Los <a href="/gk/csa-winners/">College Success Awards</a> reconocen a las escuelas secundarias públicas que se sobresalen a lograr que los estudiantes se matriculen y permanezcan en la universidad.

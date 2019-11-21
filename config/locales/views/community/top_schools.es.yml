@@ -1,0 +1,13 @@
+es:
+  community:
+    top_schools:
+      state_top_schools_header: Las mejores escuelas en {state}
+      top_schools: Escuelas con una calificación alta
+      top_schools_blurbs: >
+        Estas son algunas de las escuelas públicas mejor calificadas en {name} <a href="/gk/como-clasificamos/?lang=es#summary-rating">basadas en una variedad de medidas</a>, incluyendo el rendimiento académico y la <a href="/gk/como-clasificamos/?lang=es#equityrating">equidad</a>. Haz clic para ver la lista completa de escuelas ordenadas por clasificación. <a href="/gk/como-clasificamos/?lang=es">Sobre la calificación de GreatSchools</a>
+      csa_top_schools_blurb: >
+        Estas son algunas de las mejores escuelas secundarias públicas en {name} preparando a los estudiantes para el éxito en la universidad. El <a href="/gk/csa-winners/">College Success Award</a> reconoce a las escuelas que realizan un trabajo ejemplar al hacer que los estudiantes se inscriban y se mantengan en la universidad, incluyendo las escuelas que superan las probabilidades prestando un mejor servicio a los estudiantes de bajos ingresos.
+      learn_more: Obtenga más información
+      see_elem: Vea más escuelas primarias
+      see_mid: Vea más escuelas intermedias
+      see_high: Vea más escuelas secundarias

@@ -1,0 +1,14 @@
+es:
+  lib:
+    calendar:
+      date: Fecha
+      verified: Este calendario está siendo actualizado por un administrador.
+      event: Evento
+      last updated: última actualización
+      no_results: En este momento, esta información no está disponible.
+      sources_html: >
+        <div class="sources-text">
+          <h3>Las fuentes de datos y información de los perfiles de distritos de GreatSchools</h3>
+          <div>Calendario</div>
+          <p><span>Fuente&#58;</span> Tandem</p>
+        </div>
