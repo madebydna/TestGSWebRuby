@@ -18,6 +18,7 @@ en:
         zero: Your search did not return any schools near %{location}
         one: Showing one school found near %{location}
         other: Showing %{first} to %{last} of %{count_delimited} schools found near %{location}
+        this location: this location
       search_term:
         zero: Your search for <span class="search-term">%{search_term}</span> did not return any results.
         one: Showing one school found for %{search_term}

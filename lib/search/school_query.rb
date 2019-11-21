@@ -102,7 +102,7 @@ module Search
         district_url: district_url,
         search_term: Rails::Html::FullSanitizer.new.sanitize(@q.presence),
         level_code_long: level_code_long(results.total),
-        location: location_label || @q
+        location: location_label || @q || t('distance.this location')
       }
       if lat && lon && radius
         t('distance', **params)
