@@ -1,9 +1,11 @@
 require 'features/page_objects/modules/breadcrumbs'
+require 'features/page_objects/modules/join_modals'
 require 'features/page_objects/osp_page'
 
 class SchoolProfilesPage < SitePrism::Page
   include Breadcrumbs
   include CookieHelper
+  include EmailJoinModal
 
   set_url '{/state}{/city}{/school_id_and_name}/'
 
@@ -50,12 +52,14 @@ class SchoolProfilesPage < SitePrism::Page
   class ReviewForm < SitePrism::Section
     element :five_star_question_cta, ".five-star-question-cta"
     elements :cta_stars, ".five-star-question-cta__star"
+    element :five_star_rating, :xpath, '//div[@class="five-star-question-cta__star"][4]' # can't get proper selector
     element :completed_five_star_question, ".review-question > div > .five-star-rating"
     elements :questions, ".review-question"
     elements :text_areas, "textarea"
     element :submit, ".button.cta"
+    element :rate_your_experience_textarea, ".question_1 textarea"
     def submit_form
-        submit.click
+      submit.click
     end
   end
 

@@ -22,7 +22,6 @@ describe 'Reset password page' do
       it 'should display the forgot password page' do
         expect(ForgotPasswordPage.new).to be_displayed
       end
-
     end
 
 end
