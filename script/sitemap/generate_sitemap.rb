@@ -2,10 +2,12 @@
 
 require_relative('sitemap_generator')
 
-log = ScriptLogger.record_log_instance rescue nil
+output_dir = ARGV[0] || ENV['PWD']
+
+log = ScriptLogger.record_log_instance(output_dir: output_dir) rescue nil
 
 begin
-  SitemapGenerator.new.generate
+  SitemapGenerator.new.generate(output_dir)
   log.finish_logging_session(1, "Finished generating sitemap") rescue nil
 rescue => e
   log.finish_logging_session(0, e) rescue nil

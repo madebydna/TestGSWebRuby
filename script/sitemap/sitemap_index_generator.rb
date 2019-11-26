@@ -5,7 +5,7 @@ require_relative 'sitemap_xml_writer'
 class SitemapIndexGenerator < SitemapXmlWriter
   WORDPRESS_SITEMAP_URL = 'https://www.greatschools.org/gk/sitemap_index.xml'
 
-  def initialize
+  def initialize(output_dir)
     super
     @root_element = 'sitemapindex'
     @file_path = 'sitemap.xml'

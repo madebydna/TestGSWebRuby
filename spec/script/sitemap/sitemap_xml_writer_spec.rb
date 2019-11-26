@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'sitemap/sitemap_xml_writer'
 
 describe SitemapXmlWriter do
-  subject(:writer) { SitemapXmlWriter.new }
+  subject(:writer) { SitemapXmlWriter.new('.') }
 
   let(:mock_builder) { double('XmlMarkup') }
   let(:expected_xml_output) { [] }

@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'sitemap/sitemap_index_generator'
 
 describe SitemapIndexGenerator do
-  subject(:generator) { SitemapIndexGenerator.new }
+  subject(:generator) { SitemapIndexGenerator.new('.') }
   let(:current_date) { Time.new.strftime('%Y-%m-%d') }
 
   describe '#write_feed' do

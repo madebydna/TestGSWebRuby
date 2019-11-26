@@ -2,19 +2,20 @@
 
 class SitemapXmlWriter
 
-  attr_reader :file_path, :root_element, :schema, :current_date
+  attr_reader :output_dir, :file_path, :root_element, :schema, :current_date
 
   SITEMAP_INDEX_SCHEMA = 'https://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd'
   SITEMAP_SCHEMA = 'https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd'
 
-  def initialize
+  def initialize(output_dir)
     @current_date = Time.new.strftime('%Y-%m-%d')
+    @output_dir = output_dir
   end
 
   private
 
   def file
-    @_file ||= File.open(@file_path, 'w')
+    @_file ||= File.open(File.join(@output_dir, @file_path), 'w')
   end
 
   def xml_builder

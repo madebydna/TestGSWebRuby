@@ -21,12 +21,12 @@ class SitemapStateGenerator < SitemapXmlWriter
   CITY_BROWSE_FREQ = 'weekly'
   CITY_BROWSE_PRIORITY = '0.7'
 
-  def initialize(state)
+  def initialize(output_dir, state)
+    super(output_dir)
     @state = state
     @root_element = 'urlset'
     @file_path = "sitemap-#{state}.xml"
     @schema = SITEMAP_SCHEMA
-    @current_date = Time.new.strftime('%Y-%m-%d')
   end
 
   def write_feed

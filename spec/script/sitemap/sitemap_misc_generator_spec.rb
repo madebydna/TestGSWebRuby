@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'sitemap/sitemap_misc_generator'
 
 describe SitemapMiscGenerator do
-  subject(:generator) { SitemapMiscGenerator.new }
+  subject(:generator) { SitemapMiscGenerator.new('.') }
 
   describe '#write_feed' do
     it 'writes out homepage and boundary links' do

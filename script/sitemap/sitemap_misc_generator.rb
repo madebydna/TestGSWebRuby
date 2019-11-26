@@ -5,7 +5,7 @@ require_relative 'sitemap_xml_writer'
 class SitemapMiscGenerator < SitemapXmlWriter
   include Rails.application.routes.url_helpers
 
-  def initialize
+  def initialize(output_path)
     super
     @root_element = 'urlset'
     @file_path = "sitemap-misc.xml"

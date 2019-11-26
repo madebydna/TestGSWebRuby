@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'sitemap/sitemap_state_generator'
 
 describe SitemapStateGenerator do
-  subject(:generator) { SitemapStateGenerator.new(state) }
+  subject(:generator) { SitemapStateGenerator.new('.', state) }
   let(:state) { 'nj' }
 
   describe '#write_state_url' do
