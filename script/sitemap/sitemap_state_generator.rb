@@ -30,7 +30,6 @@ class SitemapStateGenerator < SitemapXmlWriter
   end
 
   def write_feed
-    puts "Working on #{@state}"
     within_root_node do
       # write state url
       write_state_url
@@ -51,7 +50,9 @@ class SitemapStateGenerator < SitemapXmlWriter
   ##############
 
   def cities
-    City.cities_in_state(@state)
+    City.cities_in_state(@state).reject do |city|
+      School.within_city(@state, city.name).count < 3
+    end
   end
 
   def schools

@@ -87,9 +87,36 @@ describe SitemapStateGenerator do
   end
 
   describe '#cities' do
-    it 'fetches all cities in state' do
-      expect(City).to receive(:cities_in_state).with(state)
-      generator.send(:cities)
+    context 'with two cities having 3 or more active schools' do
+      before do
+        city1 = instance_double('City', name: '1')
+        city2 = instance_double('City', name: '2')
+        city3 = instance_double('City', name: '3')
+        city4 = instance_double('City', name: '4')
+        city5 = instance_double('City', name: '5')
+
+        expect(City).to receive(:cities_in_state).with(state).and_return([city1, city2, city3, city4, city5])
+
+        schools1 = double(count: 0)
+        schools2 = double(count: 1)
+        schools3 = double(count: 2)
+        schools4 = double(count: 3)
+        schools5 = double(count: 145)
+        [city1, schools1,
+         city2, schools2,
+         city3, schools3,
+         city4, schools4,
+         city5, schools5].each_slice(2) do |city, school_relation|
+          expect(School).to receive(:within_city).with(state, city.name).and_return(school_relation)
+          expect(school_relation).to receive(:count).and_return(school_relation.count)
+        end
+      end
+
+      context 'the number of cities returned' do
+        subject { generator.send(:cities).size }
+
+        it { is_expected.to eq(2) }
+      end
     end
   end
 end
