@@ -1,21 +1,129 @@
 <% content_for :page_javascripts do %>
-    <%= webpack_javascript_include_tag 'react-redux', defer: true %>
-    <%= webpack_javascript_include_tag 'community', defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'community', defer: true %>
 <% end %>
 <% content_for :page_stylesheets do %>
-    <%= stylesheet_link_tag "community_post_load", async: true %>
-    <%= stylesheet_link_tag "city", async: true %>
+  <%= stylesheet_link_tag "community_post_load", async: true %>
+  <%= stylesheet_link_tag "city", async: true %>
 <% end %>
 
 <div class="community-page">
-  <%= react_component("City", props: {
-      schools_data: @top_schools,
-      breadcrumbs: @breadcrumbs,
-      locality: @locality,
-      districts: @districts,
-      school_levels: @school_levels,
-      reviews: @reviews,
-      csa_module: @csa_module,
-      neighboring_cities: @neighboring_cities
-    }) %>
+  <div class="city-body">
+    <%= react_component('SearchBoxWrapper') %>
+
+    <div class="breadcrumbs-container">
+      <%= render 'community/breadcrumbs', breadcrumbs: @breadcrumbs %>
+    </div>
+    <%= render 'cities/hero', city: @locality[:city], state_long: @locality[:stateLong], state_short: @locality[:stateShort], county: @locality[:county] %>
+
+
+    <div class="below-hero">
+      <%# TODO: FIX TOC %>
+      <%= render 'community/toc' %><div class="community-modules">
+      
+        <%# First Ad %>
+        <%# TODO: Ask Kim to add new slot names %>
+        <div class="display-mobile">
+          <%= react_component("AdWrapper", props: {
+              slot: "citypagemobile_first",
+              sizeName: "thin_banner_mobile"
+          }) %>
+        </div>
+
+        <%# Schools %>
+        <div id="schools" class="module-section">
+          <h2 class="modules-title"><%= I18n.t('find_schools_in', scope: 'community.city') %> <%= @locality[:city] %></h2>
+
+          <%# School Browse Links (Find schools in city) %>
+          <% if @school_levels %>
+            <%= react_component("SchoolBrowseLinksWrapper", props: {
+                community: 'city',
+                locality: @locality,
+                schoolLevels: @school_levels
+            }) %>
+          <% end %>
+
+          <%# Top Schools %>
+          <%= react_component("TopSchoolsStatefulWrapper", props: {
+              community: 'city',
+              schoolsData: @top_schools[:schools],
+              locality: @locality,
+              schoolLevels: @top_schools[:counts]
+          }) %>
+        </div>
+
+        <%# Second Ad %>
+        <div id="second-ad">
+          <%= react_component("AdWrapper", props: {
+              slot: "citypage_second",
+              sizeName: "box"
+          }) %>
+        </div>
+
+        <%# CSA Generic Module %>
+        <% if @top_schools[:schools][:csa].length == 0 && @csa_module %>
+          <div>
+            <%= react_component("CsaInfo", props: {
+                community: 'city',
+                locality: @locality
+            }) %>
+          </div>
+        <% end %>
+
+        <%# Districts %>
+        <% if @districts.length > 0 %>
+          <div id="districts" class="module-section">
+            <h2 class="modules-title"><%= I18n.t('districts_header', scope: 'community.city', city: @locality[:city]) %></h2>
+            <%= react_component("DistrictsInCityWrapper", props: {
+                districts: @districts
+            }) %>
+          </div>
+        <% end %>
+        
+        <%# Mobility %>
+        <div id="mobility" class="module-section">
+          <h2 class="modules-title"><%= I18n.t('mobility.title', scope: 'community.city') %> <%= @locality[:city] %></h2>
+          <%= react_component("Mobility", props: {
+              locality: @locality,
+              pageType: 'City'
+          }) %>
+        </div>
+
+        <%# Zillow %>
+        <%= react_component("Zillow", props: {
+            locality: @locality,
+            utmCampaign: 'citypage',
+            pageType: 'city'
+        }) %>
+
+        <%# Reviews %>
+        <% if @reviews.length > 0 %>
+          <div id="reviews" class="module-section">
+            <div class="rating-container reviews-module">
+              <h3><%= I18n.t('title', scope: 'community.recent_reviews') %> <%= @locality[:city] %></h3>
+
+              <%= react_component("RecentReviewsWrapper", props: {
+                  community: 'city',
+                  reviews: @reviews,
+                  locality: @locality
+              }) %>
+            </div>
+          </div>
+        <% end %>
+
+        <%# Neighboring Cities %>
+        <% if @neighboring_cities.length > 0 %>
+          <div id="neighboring-cities" class="module-section">
+            <section class="links-module">
+              <h3><%= I18n.t('neighboring_cities', scope: 'community.city') %></h3>
+              <%= react_component("CityLinksWrapper", props: {
+                  cities: @neighboring_cities
+              }) %>
+            </section>
+          </div>
+        <% end %>
+
+      </div><%= render 'community/sticky_right_rail', ad_slot_name: "citypage_first" %>
+    </div>
+  </div>
 </div>
