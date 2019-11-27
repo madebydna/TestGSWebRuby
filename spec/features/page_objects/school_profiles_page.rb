@@ -111,7 +111,7 @@ class SchoolProfilesPage < SitePrism::Page
   section :low_income_students, RatingContainer, '#Low-income_students'
   section :students_with_disabilities, RatingContainer, '#Students_with_Disabilities'
   section :teachers_and_staff, RatingContainer, '#TeachersStaff'
-  section :student_diversity, Students, '#Students'
+  section :student_diversity, Students, '#Students,#Students-empty'
   section :review_summary, ReviewSummary, '.rs-review-summary'
   section :review_form, ReviewForm, '.review-form'
   section :review_list, ReviewList, '.review-list'

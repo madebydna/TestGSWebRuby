@@ -12,7 +12,7 @@ describe CensusDataSet do
     end
 
     it 'should be saveable' do
-      expect { @data_set.on_db(:ca).save! }.to change { @data_set.id}.from(NilClass).to(Fixnum)
+      expect { @data_set.on_db(:ca).save! }.to change { @data_set.id}.from(NilClass).to(Integer)
     end
   end
 

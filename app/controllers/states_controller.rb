@@ -169,6 +169,7 @@ class StatesController < ApplicationController
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
     if show_ads?
+      
       page_view_metadata.each do |key, value|
         ad_targeting_gon_hash[key] = value
       end
@@ -185,7 +186,12 @@ class StatesController < ApplicationController
     method_base = "#{controller_name}_#{action_name}"
     title_method = "#{method_base}_title".to_sym
     description_method = "#{method_base}_description".to_sym
-    set_meta_tags title: send(title_method), description: send(description_method)
+    set_meta_tags(
+      title: send(title_method),
+      description: send(description_method),
+      alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
+      canonical: state_url(state_params(@state[:short]))
+    )
   end
 
   def breadcrumbs
