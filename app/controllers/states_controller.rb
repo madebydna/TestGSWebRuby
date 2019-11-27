@@ -223,7 +223,7 @@ class StatesController < ApplicationController
   }
 
   def toc 
-    toc_items = [:schools, :award_winning_schools, :academics, :students, :cities, :school_districts, :reviews]
+    toc_items = TOC_CONFIG.keys
 
     toc_items.delete(:award_winning_schools) unless @csa_module
     toc_items.delete(:school_districts) if @districts.empty?

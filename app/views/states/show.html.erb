@@ -12,9 +12,9 @@
     <%= react_component('SearchBoxWrapper') %>
 
     <div class="breadcrumbs-container">
-      <%= render 'school_profiles/breadcrumbs', breadcrumbs: @breadcrumbs %>
+      <%= render 'community/breadcrumbs', breadcrumbs: @breadcrumbs %>
     </div>
-    <%= render 'community/hero', school_count: @school_count %>
+    <%= render 'hero', school_count: @school_count %>
 
 
     <div class="below-hero">
@@ -30,7 +30,7 @@
 
         <%# Schools %>
         <div id="schools" class="module-section">
-          <div class="modules-title"><%= I18n.t('explore_in_state', scope: 'community.state', name_long: @state[:long].titleize) %></div>
+          <h2 class="modules-title"><%= I18n.t('explore_in_state', scope: 'community.state', name_long: @state[:long].titleize) %></h2>
 
           <%# Top Schools %>
           <%= react_component("TopSchoolsStatefulWrapper", props: {
@@ -42,7 +42,7 @@
 
           <%# School Browse Links (Explore schools by type) %>
           <% if @school_levels %>
-            <div class="modules-title"><%= I18n.t('explore_by_type', scope: 'community.state') %></div>
+            <h2 class="modules-title"><%= I18n.t('explore_by_type', scope: 'community.state') %></h2>
             <%= react_component("SchoolBrowseLinksWrapper", props: {
                 community: 'state',
                 locality: @locality,
@@ -113,7 +113,7 @@
         <%# Districts %>
         <% if @districts.length > 0 %>
           <div id="districts" class="module-section">
-            <div class="modules-title"><%= I18n.t('districts_header', scope: 'community.state', name_long: @state[:long].titleize) %></div>
+            <h2 class="modules-title"><%= I18n.t('districts_header', scope: 'community.state', name_long: @state[:long].titleize) %></h2>
             <%= react_component("DistrictsInStateWrapper", props: {
                 districts: @districts,
                 locality: @locality
@@ -125,7 +125,7 @@
         <% if @reviews.length > 0 %>
           <div id="reviews" class="module-section">
             <div class="rating-container reviews-module">
-              <h3><%= I18n.t('recent_reviews.title', scope: 'community.state', name_long: @state[:long].titleize) %></h3>
+              <h3><%= I18n.t('title', scope: 'community.recent_reviews') %> <%= @state[:long].titleize %></h3>
 
               <%= react_component("RecentReviewsWrapper", props: {
                   community: 'state',
@@ -135,7 +135,7 @@
             </div>
           </div>
         <% end %>
-      </div><%= render 'community/sticky_right_rail' %>
+      </div><%= render 'community/sticky_right_rail', ad_slot_name: "statepage_first" %>
     </div>
   </div>
 </div>
