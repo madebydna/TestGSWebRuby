@@ -11,9 +11,7 @@ const cityBrowseLinks = ({locality, size, cities}) => {
   return (
     <section className="links-module">
       {browseSchoolBlurb}
-      <ul>
-        <CityLinks cities={cities} size={size} />
-      </ul>
+      <CityLinks cities={cities} size={size} />
       <div className="separator">
         <div className="blue-line" />
       </div>
