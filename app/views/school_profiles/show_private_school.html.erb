@@ -3,7 +3,7 @@
   <%= webpack_javascript_include_tag 'school-profiles', defer: true %>
 <% end %>
 <div class="school-profile">
-  <%= render 'breadcrumbs', breadcrumbs: @private_school_profile.breadcrumbs %>
+  <%= render 'community/breadcrumbs', breadcrumbs: @private_school_profile.breadcrumbs %>
   <%= render 'hero', hero: @private_school_profile.hero %>
   <%= render 'school_profile_sticky_cta', rating: '' %>
   <!-- main content -->
