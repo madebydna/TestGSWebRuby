@@ -22,7 +22,7 @@ shared_context 'signed in verified user' do
 
   after do
     log_out_user
-    clean_models User
+    do_clean_models User
   end
 end
 
@@ -38,6 +38,6 @@ shared_context 'signed in provisional user' do
 
   after do
     log_out_user
-    clean_models User
+    do_clean_models User
   end
 end

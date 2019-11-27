@@ -1,10 +1,5 @@
 require 'spec_helper'
 
-
-shared_example 'does not set any google ad targeting attributes' do
-  expect(subject).to be_blank
-end
-
 describe ReviewSchoolChooserController do
   let(:current_user) { FactoryBot.build(:user) }
   let(:overall_topic) { FactoryBot.build(:overall_topic, id: 1, active: 1) }

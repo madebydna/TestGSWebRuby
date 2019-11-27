@@ -29,6 +29,7 @@ class CitiesController < ApplicationController
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props
     set_page_analytics_data
+    @toc = toc
   end
 
   private
@@ -186,6 +187,25 @@ class CitiesController < ApplicationController
         url: city_url(city_params(state, city))
       }
     ]
+  end
+
+  TOC_CONFIG = {
+    schools: { label: 'schools', anchor: '#schools' },
+    school_districts: { label: 'districts', anchor: '#districts' },
+    community_resources: { label: 'community_resources', anchor: '#mobility' },
+    nearby_homes_for_sale: { label: 'nearby_homes_for_sale_and_rent', anchor: '#homes-and-rentals' },
+    reviews: { label: 'reviews', anchor: '#reviews' },
+    neighboring_cities: { label: 'neighboring_cities', anchor: '#neighboring-cities' }
+  }
+
+  def toc 
+    toc_items = TOC_CONFIG.keys
+    
+    toc_items.delete(:reviews) if @reviews.empty?
+    toc_items.delete(:school_districts) if @districts.empty?
+    toc_items.delete(:neighboring_cities) if @neighboring_cities.empty?
+
+    toc_items.map { |item| TOC_CONFIG[item] }
   end
 
   def neighboring_cities_data

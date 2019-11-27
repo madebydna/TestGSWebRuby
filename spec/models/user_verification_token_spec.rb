@@ -20,9 +20,10 @@ describe UserVerificationToken do
 
   describe '.parse' do
     context 'with malformed token' do
-      it 'should raise error' do
+      it 'should raise custom error' do
         expect{UserVerificationToken.parse(malformed_verification_token)}
-          .to raise_error
+          .to raise_error(UserVerificationToken::UserVerificationTokenParseError, 
+          "Malformed user verification token: #{malformed_verification_token}; Missing user id")
       end
     end
 
@@ -69,7 +70,7 @@ describe UserVerificationToken do
       it 'should raise error' do
         user_verification_token = UserVerificationToken.new(1)
         allow(user_verification_token).to receive(:user).and_return(nil)
-        expect{ user_verification_token.generate }.to raise_error
+        expect{ user_verification_token.generate }.to raise_error(RuntimeError, "Must initialize UserAuthenticationToken with a user")
       end
     end
   end

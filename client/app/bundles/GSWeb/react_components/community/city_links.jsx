@@ -13,7 +13,7 @@ const cityLinks = ({ size, cities }) => {
           {renderBlueLine(idx, cities.length, size)}
         </li>
     ));
-    return renderedList;
+    return <ul>{renderedList}</ul>;
 }
 
 // large screens display cities in two cols with 4 cities each

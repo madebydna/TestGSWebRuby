@@ -1,0 +1,13 @@
+<div id="hero">
+  <div>
+    <div class="icon-city"></div>
+    <h1 class="hero-title"><%= city %>, <%= state_short %></h1>
+    <div class="city-hero-narrative">
+      <% if county %>
+        <%= I18n.t('hero_narrative', scope: 'community.city', city: city, state_long: state_long, county: county) %>
+      <% else %>
+        <%= I18n.t('hero_narrative_no_county', scope: 'community.city', city: city, state_long: state_long) %>
+      <% end %>
+    </div>
+  </div>
+</div>

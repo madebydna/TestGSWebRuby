@@ -63,27 +63,27 @@ shared_example 'should have switch schools link' do
 end
 
 shared_example 'should have go to school profile button' do
-  subject.find_button('Go to school profile', exact: true)
+  subject.find_button('Go to school profile')
   end
 
 shared_example 'should have go to school profile link' do
-  subject.find_link('Go to school profile', exact: true)
+  subject.find_link('Go to school profile')
   end
 
 shared_example 'should have begin writing here link' do
-  subject.find_link('Begin writing here.', exact: true)
+  subject.find_link('Begin writing here.')
   end
 
 shared_example 'should have write administratro reviews link' do
-  subject.find_link('Write administrator reviews', exact: true)
+  subject.find_link('Write administrator reviews')
   end
 
 shared_example 'should have need help link' do
-  subject.find_link('Need help?', exact: true)
+  subject.find_link('Need help?')
   end
 
 shared_example 'should have save edits link' do
-  subject.find_link('Save edits', exact: true)
+  subject.find_link('Save edits')
 end
 
 shared_example 'should display calendar picker' do
@@ -91,7 +91,7 @@ shared_example 'should display calendar picker' do
 end
 
 shared_example 'should have element with text' do | element, text|
-  subject.find( element, text: text, exact: true)
+  subject.find( element, text: text)
 end
 
 shared_example 'should have link' do |link, url|
@@ -99,7 +99,7 @@ shared_example 'should have link' do |link, url|
 end
 
 shared_example 'should have link text on page' do |text|
-  subject.find_link(text, exact: true)
+  subject.find_link(text)
 end
 
 shared_example 'should have field on page with text' do |field, text|

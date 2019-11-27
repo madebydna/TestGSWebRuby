@@ -5,11 +5,16 @@ import SearchBoxWrapper from 'react_components/search_box_wrapper';
 import withViewportSize from 'react_components/with_viewport_size';
 import TopSchoolsStateful from 'react_components/community/top_schools_stateful';
 import CsaTopSchools from 'react_components/community/csa_top_schools';
+import CsaInfo from 'react_components/community/csa_info';
 import SchoolBrowseLinks from 'react_components/community/school_browse_links';
 import AcademicsDataModule from 'react_components/community/academics_data_module';
 import Students from 'react_components/community/students';
 import DistrictsInState from 'react_components/community/districts_in_state';
+import DistrictsInCity from 'react_components/community/districts_in_city';
+import Mobility from 'react_components/community/mobility';
+import Zillow from 'react_components/community/zillow';
 import RecentReviews from 'react_components/community/recent_reviews';
+import CityLinks from 'react_components/community/city_links';
 import Ad from 'react_components/ad';
 import commonPageInit from './common';
 import { scrollToElement } from 'util/scrolling';
@@ -23,7 +28,9 @@ const SchoolBrowseLinksWrapper = withViewportSize({ propName: 'size' })(SchoolBr
 const AcademicsDataModuleWrapper = withViewportSize({ propName: 'size' })(AcademicsDataModule);
 const StudentsWrapper = withViewportSize({ propName: 'size' })(Students);
 const DistrictsInStateWrapper = withViewportSize({ propName: 'size' })(DistrictsInState);
+const DistrictsInCityWrapper = withViewportSize({ propName: 'size' })(DistrictsInCity);
 const RecentReviewsWrapper = withViewportSize({ propName: 'size' })(RecentReviews);
+const CityLinksWrapper = withViewportSize({ propName: 'size' })(CityLinks);
 const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
 
 
@@ -33,11 +40,16 @@ ReactOnRails.register({
   SearchBoxWrapper,
   TopSchoolsStatefulWrapper,
   CsaTopSchoolsWrapper,
+  CsaInfo,
   SchoolBrowseLinksWrapper,
   AcademicsDataModuleWrapper,
   StudentsWrapper,
   DistrictsInStateWrapper,
+  DistrictsInCityWrapper,
+  Mobility,
+  Zillow,
   RecentReviewsWrapper,
+  CityLinksWrapper,
   AdWrapper
 });
 
@@ -82,11 +94,34 @@ $(() => {
     }
   );
 
+  // Can remove these state/city selectors once district has also been migrated to ERB
+  $('.city-body .toc li').on('click', function(e) {
+    let elem = e.currentTarget;
+    if (elem.nodeName === 'LI') {
+      let anchor = elem.getAttribute('anchor');
+      scrollToElement(anchor, ()=>{}, -60);
+      }
+    }
+  );
+
   $(window).on('scroll', throttle(function() {
     const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele));
     const selectedToc = tocElements.length > 0 ? tocElements[0].id : [];
 
     window.document.querySelectorAll('.state-body .toc li').forEach(element => {
+      if (element.getAttribute('anchor') === `#${selectedToc}`) {
+        element.classList.add('selected');
+      } else {
+        element.classList.remove('selected');
+      }
+    });
+  }, 100));
+
+  $(window).on('scroll', throttle(function() {
+    const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele));
+    const selectedToc = tocElements.length > 0 ? tocElements[0].id : [];
+
+    window.document.querySelectorAll('.city-body .toc li').forEach(element => {
       if (element.getAttribute('anchor') === `#${selectedToc}`) {
         element.classList.add('selected');
       } else {
