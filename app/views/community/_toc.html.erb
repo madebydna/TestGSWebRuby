@@ -1,7 +1,11 @@
 <div class="toc sticky display-desktop">
   <ul>
-    <% @toc.each do |item| %>
-      <li anchor="<%= item[:anchor] %>"><div><%= I18n.t("community.state.toc.#{item[:label]}").capitalize %></div></li>
+    <% @toc.each_with_index do |item, idx| %>
+      <% if idx == 0 %>
+        <li anchor="<%= item[:anchor] %>" class="selected"><div><%= I18n.t("community.toc.#{item[:label]}").capitalize %></div></li>
+      <% else %>
+        <li anchor="<%= item[:anchor] %>"><div><%= I18n.t("community.toc.#{item[:label]}").capitalize %></div></li>
+      <% end %>
     <% end %>
   </ul>
 </div>
