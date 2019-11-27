@@ -35,20 +35,21 @@ module Omni
       where(data_type_id: data_type_id).maximum('date_valid')
     end
 
-    # This next query is strictly used to determine if a state has test score ratings or summary ratings.
-    # 155 is test score and 160 is summary.
-    # This query will always return either 155 or 160 based on the cnt returned from the rest of the query.
+    # Determines if a state has test score ratings or summary ratings.
+    # Returns either 155 or 160 based on the cnt returned from the rest of the query.
     # It gets the number of times Summary Rating is found in the notes field of data_sets and
     # date_valid is the same for a state.
     # I believe that what it is getting at is there is only one component of summary rating when
     # it is a test score rating.
     def self.ratings_type_id(state)
-      rating_type = "select case when cnt = 1 then 155 else 160 end as data_type from
-                  (select ds.state, count(*) cnt from data_sets ds
-                  join (select state, max(date_valid) dv from data_sets
-                  where notes like '%Summary Rating' and state='#{state}') mx
-                  on mx.state = ds.state and mx.dv = ds.date_valid
-                  group by ds.state) s;"
+      rating_type = "select case when cnt = 1 then #{Omni::DataType::TEST_SCORES_RATING_DATA_TYPE_ID}
+                     else #{Omni::DataType::SUMMARY_RATING_DATA_TYPE_ID} end as data_type
+                     from
+                    (select ds.state, count(*) cnt from data_sets ds
+                    join (select state, max(date_valid) dv from data_sets
+                    where notes like '%#{Omni::DataType::SUMMARY_RATING_NAME}' and state='#{state}') mx
+                    on mx.state = ds.state and mx.dv = ds.date_valid
+                    group by ds.state) s;"
       connection.execute(rating_type)&.first&.first
     end
   end
