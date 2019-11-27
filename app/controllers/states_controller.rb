@@ -169,6 +169,7 @@ class StatesController < ApplicationController
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
     if show_ads?
+      
       page_view_metadata.each do |key, value|
         ad_targeting_gon_hash[key] = value
       end
