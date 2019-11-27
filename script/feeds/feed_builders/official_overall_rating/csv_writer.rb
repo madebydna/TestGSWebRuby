@@ -23,10 +23,7 @@ module Feeds
       def write_info
         CSV.open(@feed_file_path, 'w', {:col_sep => column_separator}) do |csv|
           csv << @column_titles
-          @data_reader.each_result do |hash|
-            school_info = get_info(hash)
-            csv << school_info if school_info
-          end
+            @data_reader.each_result { |hash| csv << get_info(hash) if hash['rating'].present? }
         end
       end
 
@@ -39,13 +36,11 @@ module Feeds
       end
 
       def get_info(school_hash)
-        if school_hash['rating'].present?
-          school_ratings = []
-          school_ratings << school_hash['test-rating-id']
-          school_ratings << school_hash['universal-id']
-          school_ratings << school_hash['rating']
-          school_ratings << school_hash['url']
-        end
+        school_ratings = []
+        school_ratings << school_hash['test-rating-id']
+        school_ratings << school_hash['universal-id']
+        school_ratings << school_hash['rating']
+        school_ratings << school_hash['url']
       end
 
     end

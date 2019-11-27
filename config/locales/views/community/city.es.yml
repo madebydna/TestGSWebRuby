@@ -1,0 +1,24 @@
+es:
+  community:
+    city:
+      hero_narrative: '%{city} es una ciudad en el condado de %{county}, %{state_long}'
+      hero_narrative_no_county: '%{city} es una ciudad en %{state_long}'
+      find_schools_in: Encuentra escuelas en
+      districts_header: Distritos escolares en %{city}
+      mobility:
+        title: Recursos comunitarios en
+        transportation_narration: Opciones de transporte cerca de las escuelas
+        help: >
+          MobilityScore® le ayuda a comprender lo fácil que es viajar. Funciona en cualquier ubicación o dirección dentro 
+          de los EE. UU. y Canadá y le proporciona una calificación que va desde 0 (sin opciones de movilidad) hasta 100 
+          (excelentes opciones de movilidad). ¡MobilityScore tiene en cuenta todas tus opciones, desde el transporte público 
+          hasta el carsharing, el bikesharing, el ridesharing, las bicicletas e incluso los scooters!
+        sources_html: >
+          <div class="sources-text">
+            <h3>Fuentes de los datos de comunidades y información en GreatSchools </h3>
+            <div>Transporte</div>
+            <p><span>Fuente&#58;</span> MobilityScore&reg;</p>
+          <div>
+        no_score_city: Esta sección muestra las opciones de transporte que se ofrecen en esta ciudad. En este momento, esta información no está disponible.
+        no_score_district: Esta sección muestra las opciones de transporte que se ofrecen en esta distrito. En este momento, esta información no está disponible.
+      neighboring_cities: Ciudades cercanas

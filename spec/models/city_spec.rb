@@ -64,4 +64,35 @@ describe City do
       expect(City.find_neighbors(san_francisco)).not_to include(other_state)
     end
   end
+
+  describe '.cities_in_state' do
+    context 'with two active cities in AK and one in CA' do
+      before do
+        FactoryBot.create(:city, name: 'AK1', state: 'ak')
+        FactoryBot.create(:city, name: 'AK2', state: 'ak')
+        FactoryBot.create(:city, name: 'AK3', state: 'ak', active: 0)
+        FactoryBot.create(:city, name: 'CA1', state: 'ca')
+        FactoryBot.create(:city, name: 'CA2', state: 'ca', active: 0)
+        FactoryBot.create(:city, name: 'DE1', state: 'de', active: 0)
+      end
+
+      context 'the count in AK' do
+        subject { City.cities_in_state(:ak).count }
+
+        it { is_expected.to eq(2) }
+      end
+
+      context 'the count in CA' do
+        subject { City.cities_in_state(:ca).count }
+
+        it { is_expected.to eq(1) }
+      end
+
+      context 'the count in DE' do
+        subject { City.cities_in_state(:de).count }
+
+        it { is_expected.to eq(0) }
+      end
+    end
+  end
 end

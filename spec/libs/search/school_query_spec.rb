@@ -35,6 +35,7 @@ describe Search::SchoolQuery do
         it "should return #{expected}" do
           query = school_query_with_client_double(lat: lat, lon: lon, radius: radius, district_name: district_name, city: city, q: q, state: state)
           results_double = double(total: 10, index_of_first_result: 1, index_of_last_result: 10)
+          allow(query).to receive(:location).and_return(false)
           expect(query).to receive(:t).with('schools').and_return('schools')
           expect(query).to receive(:t).with(expected, anything)
           query.result_summary(results_double)

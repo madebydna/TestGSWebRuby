@@ -31,6 +31,10 @@ class City < ActiveRecord::Base
     City.all.order(id: :asc).active
   end
 
+  def self.cities_in_state(state)
+    City.where(state: state).active.order('name')
+  end
+
   def self.find_neighbors(city)
     select_sql = <<~SQL
       id, name, state, (

@@ -61,7 +61,7 @@ class CensusDataResults
   end
 
   def for_data_type!(data_type)
-    if data_type.is_a? Fixnum
+    if data_type.is_a? Integer
       select! { |census_data_set| census_data_set.census_data_type.id == data_type }
     else
       select! { |census_data_set| census_data_set.data_type.downcase == data_type.to_s.downcase }

@@ -1,5 +1,5 @@
 <% content_for :head do %>
-  <link rel="preload" href="<%= asset_path('school_profiles/hero_bg.jpg') %>" as="image">
+<!--  <link rel="preload" href="<%#= asset_path('school_profiles/hero_bg.jpg') %>" as="image">-->
 <% end %>
 <% content_for :page_javascripts do %>
   <%= webpack_javascript_include_tag 'react-redux', defer: true %>
@@ -7,7 +7,7 @@
 <% end %>
 <div class="overlay" style="display:none"></div>
 <div class="school-profile">
-    <%= render 'breadcrumbs', breadcrumbs: @school_profile.breadcrumbs %>
+    <%= render 'community/breadcrumbs', breadcrumbs: @school_profile.breadcrumbs %>
     <%= render 'hero', hero: @school_profile.hero %>
     <%= render 'school_profile_sticky_cta', rating: @school_profile.hero.gs_rating %>
 

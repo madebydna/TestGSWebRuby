@@ -8,7 +8,10 @@ class SchoolProfilesController < ApplicationController
   PAGE_NAME = "GS:SchoolProfile:SinglePage"
 
   set_additional_js_translations(
-    osp_school_info: [:school_profiles, :osp_school_info]
+    {
+      osp_school_info: [:school_profiles, :osp_school_info],
+      school_profile_tour: [:school_profiles, :school_profile_tour]
+    }
   )
 
   def show

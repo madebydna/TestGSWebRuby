@@ -15,6 +15,10 @@ class StatesController < ApplicationController
   before_action :set_login_redirect
   layout 'application'
 
+  set_additional_js_translations(
+    top_schools: [:community, :top_schools]
+  )
+
   def show
     #PT-1205 Special case for dc to redirect to /washington-dc/washington city page
     if @state[:short] == 'dc'
@@ -165,6 +169,7 @@ class StatesController < ApplicationController
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
     if show_ads?
+      
       page_view_metadata.each do |key, value|
         ad_targeting_gon_hash[key] = value
       end
@@ -181,7 +186,12 @@ class StatesController < ApplicationController
     method_base = "#{controller_name}_#{action_name}"
     title_method = "#{method_base}_title".to_sym
     description_method = "#{method_base}_description".to_sym
-    set_meta_tags title: send(title_method), description: send(description_method)
+    set_meta_tags(
+      title: send(title_method),
+      description: send(description_method),
+      alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
+      canonical: state_url(state_params(@state[:short]))
+    )
   end
 
   def breadcrumbs
@@ -213,7 +223,7 @@ class StatesController < ApplicationController
   }
 
   def toc 
-    toc_items = [:schools, :award_winning_schools, :academics, :students, :cities, :school_districts, :reviews]
+    toc_items = TOC_CONFIG.keys
 
     toc_items.delete(:award_winning_schools) unless @csa_module
     toc_items.delete(:school_districts) if @districts.empty?

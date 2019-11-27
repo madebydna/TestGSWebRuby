@@ -1,0 +1,50 @@
+en:
+  school_profiles:
+    school_profile_tour:
+      tour1:
+        step1: GreatSchools is the leading national nonprofit providing school & parenting information. We collect data from state & federal sources to help you understand school quality and find the best educational opportunities for your child.
+        step2_title_html: '<div class="tutorial-header">Summary rating</div><br/>'
+        step2: GreatSchools is a national nonprofit. Our Summary Rating provides you with a snapshot of this school's quality, based on multiple measures, compared to other public schools in the state.
+        step2_test_scores_only_title_html: '<div class="tutorial-header">Test Score Rating</div><br/>'
+        step2_test_scores_only: GreatSchools is a national nonprofit. The Test Score Rating compares test scores at this school to other public schools in the state. In most states, a school’s overall rating is a Summary Rating based on multiple measures of school quality. This state does not provide enough data for us to calculate a Summary Rating, so we instead display the Test Score Rating.
+        step3_title_html: '<div class="tutorial-header">Academics</div><br/>'
+        step3: This section shows ratings and data for key themes related to academic success including test scores and more.
+        step4_title_html: '<div class="tutorial-header">Equity</div><br/>'
+        step4: How well are different student groups served at this school? Low ratings may mean some student groups are not getting the support they need.
+        step5_title_html: '<div class="tutorial-header">Environment</div><br/>'
+        step5: Want to learn more about the school? This section shows student demographics, student & counselor ratios, neighborhood, and more.
+        step6_title_html: '<div class="tutorial-header">Reviews</div><br/>'
+        step6: Here, parents and others in the school community share their experiences with this school. Please share your experience too!
+        step7_title_html: '<div class="tutorial-header">Nearby schools</div><br/>'
+        step7: Scroll through nearby high-performing schools so you can better understand the school options in your area.
+        step8_title_html: '<div class="tutorial-header">Helpful hints</div><br/>'
+        step8_p1: Click on the "?" to view more info and answers to frequently asked questions.
+        step8_p2: Parent tips will show useful info to help your child succeed in school.
+        step8_p3: Click on "Sources" to view where the data comes from.
+        step8_parent_tips: Parent tips
+        step8_sources: Sources
+        step9_html: '<h1>All done!</h1><div>Have a few more minutes? Learn<br/>more about the school&apos;s Academics,<br/>Equity and Environment sections.</div><br/><p><button class="tour-cta js-start-second-tour active">Continue</button><div> <a class="js-close-school-tour" style="cursor: pointer;">Not right now </a></p></br><p>Was this useful? <a href="https://s.qualaroo.com/45194/49372ef1-a8d5-47be-8507-f4a208ece19b" target="_blank">Give us your feedback</a></p></div>'
+      tour2:
+        step1_title_html: '<div class="tutorial-header">College readiness</div><br/>'
+        step1: How well does this school prepare its students for college? This section offers information about college entrance tests, Advanced Placement (AP) coursework, graduation rates and more.
+        step2_title_html: '<div class="tutorial-header">Test scores</div><br/>'
+        step2: Here you'll find a snapshot of this school's proficiency levels in key subjects, based on test scores and compared to state averages, with "Parent tips" you can use to learn more.
+        step3_title_html: '<div class="tutorial-header">Student progress</div><br/>'
+        step3: The Student Progress Rating gives you a sense of how much academic improvement students at this school have made year-over-year (also known as “growth”) compared with other schools in the state.
+        step4_title_html: '<div class="tutorial-header">Advanced courses</div><br/>'
+        step4: This section looks at how well this school is doing in encouraging a large number of its students to take advanced courses, both overall and within key subject areas.
+        step5_title_html: '<div class="tutorial-header">Advanced STEM courses</div><br/>'
+        step5: Taking advanced STEM (science, technology, engineering, and math) courses is more important than ever for today's students.
+        step6_title_html: '<div class="tutorial-header">Race/ethnicity</div><br/>'
+        step6: This section helps you understand how well a school is serving all of its students, looking at information like test scores and suspension rates for different racial and ethnic groups at this school.
+        step7_title_html: '<div class="tutorial-header">Low-income students</div><br/>'
+        step7: This section looks at how well this school is serving its students from low-income families, looking at information like test scores and graduation rates.
+        step8_title_html: '<div class="tutorial-header">Students with disabilities</div><br/>'
+        step8: From this section, you can learn about test scores, chronic absenteeism and suspension rates at this school for students who have physical or learning disabilities, compared to state averages.
+        step9_title_html: '<div class="tutorial-header">General information</div><br/>'
+        step9: Here you will find information like the school's hours, transportation options, how to enroll, clubs and more.
+        step10_title_html: '<div class="tutorial-header">Students</div><br/>'
+        step10: The Students section offers a snapshot of the diversity of the student population at this school.
+        step11_title_html: '<div class="tutorial-header">Teachers & staff</div><br/>'
+        step11: Here you can find out more about the student per teacher or counselor ratios, teacher tenure and more.
+        step12: '<div><img alt="" height="42" src="/assets/school_profiles/owl.png" style="vertical-align: sub;" width="39" />&nbsp;<h1 style="display:inline-block;">&nbsp;All done!</h1></div><div><p>Thank you for taking time to walk through our new profiles.&nbsp;<br>&nbsp;</p><p>Was this useful? <a id="school-tour-feedback" style="cursor: pointer;">Give us your feedback</a></p><p>Does your child go to this school? <a href="#Reviews" class="js-close-school-tour">Review this school</p><p><button class="tour-cta active js-close-school-tour">Done</button></p></div></div>'

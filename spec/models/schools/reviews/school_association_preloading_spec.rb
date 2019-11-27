@@ -20,7 +20,7 @@ describe SchoolAssociationPreloading do
     end
 
     it 'works for ActiveRecord relations that have a state and school_id method' do
-      expect { Review.has_comment.extend(SchoolAssociationPreloading) }.not_to raise_error(ArgumentError)
+      expect { Review.has_comment.extend(SchoolAssociationPreloading) }.not_to raise_error
     end
 
     it 'does not work for non ActiveRecord relations' do 

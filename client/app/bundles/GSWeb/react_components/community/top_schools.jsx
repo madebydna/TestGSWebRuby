@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../button";
 import TopSchoolTableRow from './top_school_table_row';
-import School from 'react_components/search/school';
 import { t } from "util/i18n";
 import { addQueryParamToUrl } from 'util/uri';
 import { SM } from 'util/viewport';
@@ -11,9 +10,9 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
   return (
     <div className="grade-filter">
       <span className="button-group">
-        {schoolLevels.elementary !== 0 ? <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e"} /> : null}
-        {schoolLevels.middle !== 0 ? <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m"} /> : null}
-        {schoolLevels.high !== 0 ? <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h"} /> : null}
+        {schoolLevels.elementary > 0 && <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e"} /> }
+        {schoolLevels.middle > 0 && <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m"} /> }
+        {schoolLevels.high > 0 && <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h"} /> }
       </span>
     </div>
   )
@@ -108,12 +107,6 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
   let schoolList;
   const seeSchoolMap = {
     "e": t("top_schools.see_elem"), "m": t("top_schools.see_mid"), "h": t("top_schools.see_high")
-  }
-  const noSchoolsMapCity = {
-    "e": t("top_schools.no_elemCity"), "m": t("top_schools.no_midCity"), "h": t("top_schools.no_highCity")
-  }
-  const noSchoolsMapDistrict = {
-    "e": t("top_schools.no_elemDistrict"), "m": t("top_schools.no_midDistrict"), "h": t("top_schools.no_highDistrict")
   }
 
   if (schools.length === 0) {

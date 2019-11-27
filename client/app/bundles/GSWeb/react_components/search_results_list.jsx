@@ -22,12 +22,19 @@ const t = translateWithDictionary({
   }
 });
 
+function sanitize(tokens) {
+  return tokens
+      .join('*****')
+      .replace(/([()[{+.$^\\|?])/g, '\\$1')
+      .split('*****')
+}
+
 const boldSearchTerms = (string, substring) => {
   const tokens = substring.trim().split(/,|\s+/);
   // The following separates string into chunks of matching and non matching substrings
   // We cannot inject a variable into a regex literal, hence 'new RegExp'. Noteworthy that split returns the matched
   // string when fed a group-capturing regex (compare 'Some string'.split(' '), which returns ['some','string'], not ['some',' ','string']
-  let cleanTokens = tokens.join('*****').replace(/[^a-zA-Z 0-9\-\,\']\s+/g,'').split('*****');
+  let cleanTokens = sanitize(tokens);
   const matchesAndNonMatches = string.split(
     new RegExp(`\\b(${cleanTokens.join('|')})`, 'gi')
   );
