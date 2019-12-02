@@ -14,6 +14,7 @@ class OspPage < SitePrism::Page
     elements :active_buttons, ".btn.active"
     elements :conditionalMultiSelectTrigger, ".js-disableTriggerElement"
     elements :conditionalMultiSelectTarget, ".js-disableTarget"
+    element :submit, "button[type='submit']"
   end
 
 end
