@@ -1,4 +1,7 @@
 .pie-chart{
+  @include media-breakpoint-up(sm) {
+    padding: 30px 0;
+  }
   .pie-chart-legend-container{
     display: flex;
     padding: 10px 0;
