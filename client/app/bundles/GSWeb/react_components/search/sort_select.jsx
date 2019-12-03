@@ -146,6 +146,7 @@ const SortSelect = () => (
             (options.find(obj => obj.key === sort) || options[0]).label
           }
           defaultValue={sort}
+          value={sort}
         />
       );
     }}
