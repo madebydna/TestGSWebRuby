@@ -22,7 +22,9 @@ class Admin::AdminController < ApplicationController
     if @school
       link = "\"#{school_path(@school, trailing_slash: true, refresh_canonical_link: nil)}\""
       sql = "UPDATE _#{@school.state.downcase}.school set canonical_url= #{link}, modified=modified where id=#{@school.id};"
-      School.connection.execute(sql)
+      School.on_db("#{state}_rw") do
+        School.connection.execute(sql)
+      end
     else
       flash[:error] = "Couldn't find the school!"
     end

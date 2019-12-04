@@ -4,7 +4,7 @@
     <h4>A school in <%= "#{@school.city}, #{@school.state}" %></h4>
     <div class="mb-2">
       <p>Current Canonical URL is: <span class="font-weight-bold canonical-url-hero"><%= @school.canonical_url ? root_url.chop + @school.canonical_url : 'N/A' %></span></p>
-      <%= form_tag "/admin/gsr/school-profiles/#{@school.state.downcase}/#{@school.id}/update", method: :post, remote: true do %>
+      <%= form_tag admin_school_profiles_update_path, method: :post, remote: true do %>
         <%= button_tag 'Press Here to Regenerate', data: {confirm: "Are you sure?"}, class: 'btn btn-warning', style: 'margin-bottom: 10px;' %>
       <% end %>
     </div>
