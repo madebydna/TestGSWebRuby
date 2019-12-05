@@ -355,8 +355,9 @@ $(window).on('load', function() {
   initAdvertising();
 
   var moduleIds = [
-    '#TestScores',
     '#CollegeReadiness',
+    '#TestScores',
+    '#StemCourses',
     '#CollegeSuccess',
     '#StudentProgress',
     '#EquityOverview',
@@ -364,6 +365,7 @@ $(window).on('load', function() {
     '#EquityRaceEthnicity',
     '#EquityLowIncome',
     '#EquityDisabilities',
+    '#osp-school-info',
     '#Students',
     '#TeachersStaff',
     '#Reviews',
