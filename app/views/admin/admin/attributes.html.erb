@@ -1,0 +1,17 @@
+<% if @school %>
+  <div style="padding:0px 50px">
+    <h1><%= @school.name %></h1>
+    <h4>A school in <%= "#{@school.city}, #{@school.state}" %></h4>
+    <div class="mb-2">
+      <p>Current Canonical URL is: <span class="font-weight-bold canonical-url-hero"><%= @school.canonical_url ? root_url.chop + @school.canonical_url : 'N/A' %></span></p>
+      <%= form_tag admin_school_profiles_update_path, method: :post, remote: true do %>
+        <%= button_tag 'Press Here to Regenerate', data: {confirm: "Are you sure?"}, class: 'btn btn-warning', style: 'margin-bottom: 10px;' %>
+      <% end %>
+    </div>
+    <div class="school-attributes-table">
+      <%= render partial: 'school_attributes_table', locals: {school: @school} %>
+    </div>
+  </div>
+<% else %>
+  <h3>No School found!</h3>
+<% end %>

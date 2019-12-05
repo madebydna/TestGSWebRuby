@@ -103,6 +103,12 @@ module States
     return Regexp.new regex, 'i'
   end
 
+  def self.route_friendly_any_state_abbreviation_regex
+    regex = ''
+    regex << state_hash.values.join('|')
+    return Regexp.new regex, 'i'
+  end
+
   def self.abbreviations
     abbreviation_hash.keys.sort
   end

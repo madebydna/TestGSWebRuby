@@ -13,6 +13,26 @@ class Admin::AdminController < ApplicationController
 
   end
 
+  def attributes
+    @school = School.on_db(state).find_by(id: school_id)
+  end
+
+  def update_school
+    @school = School.on_db(state).find_by(id: school_id)
+    if @school
+      link = "\"#{school_path(@school, trailing_slash: true, refresh_canonical_link: nil)}\""
+      sql = "UPDATE _#{@school.state.downcase}.school set canonical_url= #{link}, modified=modified where id=#{@school.id};"
+      School.on_db("#{state}_rw") do
+        School.connection.execute(sql)
+      end
+    else
+      flash[:error] = "Couldn't find the school!"
+    end
+
+    @school = School.on_db(state).find_by(id: school_id)
+
+  end
+
   def script_query
     @last_script_ran = ScriptLogger.where.not(output:nil).order(end: :desc).limit(limit)
     @range_of_num_of_scripts = ScriptLogger.all.count > 10 ? 10 : ScriptLogger.all.count
@@ -37,6 +57,14 @@ class Admin::AdminController < ApplicationController
   end
 
   private
+
+  def school_id
+    params[:schoolId]
+  end
+
+  def state
+    params[:state]
+  end
 
   def init_page
     gon.pagename = 'admin_help'

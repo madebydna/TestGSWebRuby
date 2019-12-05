@@ -276,6 +276,12 @@ LocalizedProfiles::Application.routes.draw do
     get '/examples-and-gotchas', action: :examples_and_gotchas
 
     scope '/school-profiles', as: :school_profiles do
+      get '/:state/:schoolId', action: :attributes, constraints: {
+        state: States.route_friendly_any_state_abbreviation_regex,
+        schoolId: /\d+/
+      }
+      post '/:state/:schoolId/update', to: 'admin#update_school', as: :update
+
     end
 
     get '/style-guide/', to: 'style_guide#index'
