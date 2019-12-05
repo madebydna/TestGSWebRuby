@@ -360,6 +360,7 @@ $(window).on('load', function() {
     '#StemCourses',
     '#CollegeSuccess',
     '#StudentProgress',
+    '#AcademicProgress',
     '#EquityOverview',
     '#Equity',
     '#EquityRaceEthnicity',
