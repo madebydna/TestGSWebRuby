@@ -388,6 +388,7 @@ $(window).on('load', function() {
   registerPredefinedInterrupts(['mobileOverlayAd', 'qualaroo'])
   runInterrupts(['interstitial', 'profileTour', 'mobileOverlayAd', 'qualaroo'])
 
+
   $('#toc').on('click', 'a', function(e) {
     const ANCHOR_REGEX = /^#[^ ]+$/;
     let elem = e.currentTarget;
