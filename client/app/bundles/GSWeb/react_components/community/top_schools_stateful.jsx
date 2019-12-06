@@ -14,7 +14,7 @@ class TopSchoolsStateful extends React.Component {
     locality: PropTypes.object.isRequired,
     community: PropTypes.string.isRequired,
     schoolLevels: PropTypes.object,
-    summaryType: PropTypes.string.isRequired
+    summaryType: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
