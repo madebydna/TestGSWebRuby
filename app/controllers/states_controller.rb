@@ -35,6 +35,7 @@ class StatesController < ApplicationController
     @locality = locality 
     @cities = cities_data
     @top_schools = top_rated_schools
+    @summary_type = summary_rating_type
     @districts = district_largest.to_hash
     @school_count = school_levels.try(:fetch, :all, nil).presence || School.within_state(state).count
     @school_levels = school_levels

@@ -43,6 +43,7 @@ class DistrictsController < ApplicationController
     @finance = finance.data_values
     @growth_rating = growth_rating
     @summary_rating = summary_rating
+    @summary_type = summary_rating_type
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     gon.dependencies = {
         highcharts: ActionController::Base.helpers.asset_path('highcharts.js')
@@ -179,7 +180,6 @@ class DistrictsController < ApplicationController
     end
   end
 
-  # under the assumption that TestScore only states will have their scores reflected on as Summary rating
   def summary_rating
     @_summary_rating ||= begin
       return [] unless StateCache.for_state('state_attributes', state)&.cache_data&.fetch('summary_rating_type', false) == "Summary Rating"

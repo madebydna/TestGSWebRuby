@@ -69,7 +69,8 @@ class District extends React.Component {
         tooltip: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired
       })
-    )
+    ),
+    summaryType: PropTypes.string
   };
 
   constructor(props) {
@@ -199,6 +200,7 @@ class District extends React.Component {
             size={this.props.viewportSize}
             locality={this.props.locality}
             schoolLevels={this.props.schools_data.counts}
+            summaryType={this.props.summaryType}
           />
         }
         browseSchools={

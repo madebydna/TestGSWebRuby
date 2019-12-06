@@ -19,6 +19,7 @@ class CitiesController < ApplicationController
     @csa_years = []
     set_city_meta_tags
     @top_schools =  top_rated_schools
+    @summary_type = summary_rating_type
     @breadcrumbs = breadcrumbs
     @school_levels = school_levels
     @districts = district_content(decorated_city)

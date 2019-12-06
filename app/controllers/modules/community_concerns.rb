@@ -11,6 +11,13 @@ module CommunityConcerns
       decorate_schools(page_of_results)
     end
 
+  def summary_rating_type
+    @_summary_rating_type ||= begin
+      cache_data = StateCache.for_state('state_attributes', state)&.cache_data
+      cache_data&.fetch("summary_rating_type", nil)
+    end
+  end
+
     def school_levels
       return @_school_levels if defined?(@_school_levels)
       @_school_levels = begin
