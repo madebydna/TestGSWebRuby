@@ -5,8 +5,8 @@ require_relative '../feed_helpers/feed_logger'
 
 require_relative '../feed_config/feed_constants'
 require_relative '../feed_builders/directory/directory_feed'
-require_relative '../feed_builders/city/feed_generator'
-require_relative '../feed_builders/proficiency-band/feed_generator'
+#require_relative '../feed_builders/city/feed_generator'
+#require_relative '../feed_builders/proficiency-band/feed_generator'
 
 
 
