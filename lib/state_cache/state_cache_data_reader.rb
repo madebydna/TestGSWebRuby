@@ -31,7 +31,7 @@ class StateCacheDataReader
   end
 
   def state_attribute(cache_key)
-     decorated_state.fetch_state_attribute(cache_key)
+    decorated_state.state_attribute(cache_key)
   end
 
   def ratings
