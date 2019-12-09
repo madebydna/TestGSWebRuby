@@ -121,6 +121,10 @@ class DistrictsController < ApplicationController
     @_district_cache_data_reader ||= DistrictCacheDataReader.new(district_record, district_cache_keys: CACHE_KEYS_FOR_READER + ['test_scores_gsdata', 'gsdata'])
   end
 
+  def state_cache_data_reader
+    @_state_cache_data_reader ||= StateCacheDataReader.new(state, state_cache_keys: ['state_attributes', 'ratings'])
+  end
+
   def set_district_meta_tags
     district_params_hash = district_params(state, district_record.city, district)
     set_meta_tags(alternate: {en: url_for(lang: nil), es: url_for(lang: :es)},
@@ -146,7 +150,7 @@ class DistrictsController < ApplicationController
   end
 
   def growth_type
-    @_growth_type ||= StateCache.for_state('state_attributes', state)&.cache_data&.fetch('growth_type', nil)
+    @_growth_type ||= state_cache_data_reader.state_attribute('growth_type')
   end
 
   def growth_rating
@@ -164,7 +168,7 @@ class DistrictsController < ApplicationController
         h['community'] = academic_facet_results
         h['state'] = state_academic_facet_results
       end
-      CommunityProfiles::AcademicProgress.new(facet_results, state).data_values
+      CommunityProfiles::AcademicProgress.new(facet_results, state_cache_data_reader).data_values
     end
   end
 
@@ -176,7 +180,7 @@ class DistrictsController < ApplicationController
         h['community'] = student_facet_results
         h['state'] = state_student_facet_results
       end
-      CommunityProfiles::StudentProgress.new(facet_results, state).data_values
+      CommunityProfiles::StudentProgress.new(facet_results, state_cache_data_reader).data_values
     end
   end
 
@@ -189,7 +193,7 @@ class DistrictsController < ApplicationController
         h['community'] = summary_facet_results
         h['state'] = state_summary_facet_results
       end
-      CommunityProfiles::SummaryRating.new(facet_results, state).data_values
+      CommunityProfiles::SummaryRating.new(facet_results, state_cache_data_reader).data_values
     end
   end
 

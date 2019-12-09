@@ -13,8 +13,7 @@ module CommunityConcerns
 
   def summary_rating_type
     @_summary_rating_type ||= begin
-      cache_data = StateCache.for_state('state_attributes', state)&.cache_data
-      cache_data&.fetch("summary_rating_type", false)
+      state_cache_data_reader.state_attribute('summary_rating_type')
     end
   end
 

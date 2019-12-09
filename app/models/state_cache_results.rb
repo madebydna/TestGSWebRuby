@@ -33,14 +33,18 @@ class StateCacheResults
 
   def module_for_key(cache_key)
     case cache_key
-      when 'state_characteristics'
-        StateCachedCharacteristicsMethods
-      when 'district_largest'
-        StateCachedDistrictLargestMethods
-      when 'test_scores_gsdata'
-        StateCachedTestScoresMethods
-      when 'school_levels'
-        StateCachedSchoolLevelsMethods
+    when 'state_characteristics'
+      StateCachedCharacteristicsMethods
+    when 'district_largest'
+      StateCachedDistrictLargestMethods
+    when 'test_scores_gsdata'
+      StateCachedTestScoresMethods
+    when 'school_levels'
+      StateCachedSchoolLevelsMethods
+    when 'state_attributes'
+      StateCachedStateAttributeMethods
+    when 'ratings'
+      StateCachedRatingMethods
     end
   end
 

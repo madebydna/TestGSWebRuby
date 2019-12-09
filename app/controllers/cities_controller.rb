@@ -33,6 +33,10 @@ class CitiesController < ApplicationController
     @toc = toc
   end
 
+  def state_cache_data_reader
+    @_state_cache_data_reader ||= StateCacheDataReader.new(state, state_cache_keys: ['state_attributes', 'ratings'])
+  end
+
   private
 
   def set_city_meta_tags

@@ -3,12 +3,12 @@ module CommunityProfiles
     include Rails.application.routes.url_helpers
     include RatingSourceConcerns
 
-    attr_reader :facet_results, :state_facet_results, :state
+    attr_reader :facet_results, :state_facet_results, :state_cache_data_reader
 
-    def initialize(facet_results = {}, state)
+    def initialize(facet_results = {}, state_cache_data_reader)
       @facet_results = facet_results["community"]
       @state_facet_results = facet_results["state"]
-      @state = state
+      @state_cache_data_reader = state_cache_data_reader
     end
 
     def ratings_narration
@@ -19,12 +19,15 @@ module CommunityProfiles
       @_state_ratings_narration ||= CommunityProfiles::RatingsNarration.new(state_facet_results)
     end
 
+    def ratings_cache
+      @_ratings_cache ||= state_cache_data_reader.ratings
+    end
+
     def sources
-      cache_data = StateCache.for_state('ratings', state)&.cache_data
-      source_info = cache_data.fetch("Academic Progress Rating",[])
-                              .sort_by {|x| x['year']}
-                              .reverse
-                              .first
+      source_info = ratings_cache.fetch("Academic Progress Rating",[])
+                                 .sort_by {|x| x['year']}
+                                 .reverse
+                                 .first
 
       content = '<div class="sourcing">'
       content << '<h1>' + I18n.t('source_title', scope: "lib.academic_progress.district_scope") + '</h1>'
