@@ -2,13 +2,8 @@ $LOAD_PATH.unshift File.dirname(__FILE__)
 require_relative '../feed_helpers/feed_helper'
 require_relative '../feed_helpers/arguments'
 require_relative '../feed_helpers/feed_logger'
-
 require_relative '../feed_config/feed_constants'
 require_relative '../feed_builders/directory/directory_feed'
-#require_relative '../feed_builders/city/feed_generator'
-#require_relative '../feed_builders/proficiency-band/feed_generator'
-
-
 
 module Feeds
   class GenerateFeedFiles
@@ -24,8 +19,13 @@ module Feeds
       arguments.states.each do |state|
         begin
           Feeds::FeedLog.log.debug "Starting Feed Generation for state #{state}"
-          generate_all_feeds(arguments.district_ids, arguments.school_ids, arguments.batch_size,state,arguments.feed_names,
-                             arguments.location,arguments.names)
+          generate_all_feeds(arguments.district_ids,
+                             arguments.school_ids,
+                             arguments.batch_size,
+                             state,
+                             arguments.feed_names,
+                             arguments.location,
+                             arguments.names)
           Feeds::FeedLog.log.debug "Ending Feed Generation for state #{state}"
         rescue => e
           Feeds::FeedLog.log.error e
