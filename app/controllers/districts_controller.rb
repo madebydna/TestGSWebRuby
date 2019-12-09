@@ -38,7 +38,7 @@ class DistrictsController < ApplicationController
     @reviews = reviews_formatted.reviews_list
     @translations = translations
     @csa_module = csa_state_solr_query.present?
-    @students = students.students_demographics
+    @students = students
     @teachers_staff = teachers_staff_data
     @finance = finance.data_values
     @growth_rating = growth_rating

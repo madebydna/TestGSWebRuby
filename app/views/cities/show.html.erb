@@ -81,7 +81,7 @@
         
         <%# Mobility %>
         <div id="mobility" class="module-section">
-          <h2 class="modules-title"><%= I18n.t('mobility.title', scope: 'community.city') %> <%= @locality[:city] %></h2>
+          <h2 class="modules-title"><%= I18n.t('title', scope: 'community.mobility') %> <%= @locality[:city] %></h2>
           <%= react_component("Mobility", props: {
               locality: @locality,
               pageType: 'City'
@@ -101,7 +101,7 @@
             <div class="rating-container reviews-module">
               <h3><%= I18n.t('title', scope: 'community.recent_reviews') %> <%= @locality[:city] %></h3>
 
-              <%= react_component("RecentReviewsWrapper", props: {
+              <%= react_component("RecentReviews", props: {
                   community: 'city',
                   reviews: @reviews,
                   locality: @locality
