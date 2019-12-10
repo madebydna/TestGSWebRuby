@@ -73,7 +73,7 @@ class SitemapStateGenerator < SitemapXmlWriter
 
   def write_profile_urls
     schools.each do |school|
-      write_url(school_url(school, trailing_slash: true), PROFILE_FREQ, PROFILE_PRIORITY)
+      write_url(school_url(school), PROFILE_FREQ, PROFILE_PRIORITY)
     end
   end
 
