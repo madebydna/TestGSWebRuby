@@ -63,6 +63,48 @@ class UserController < ApplicationController
     redirect_to signin_url
   end
 
+  def send_verify_email_admin
+    email = params[:email]
+    email_sent = false
+    if email.present?
+      user = User.where(email: email).first
+      if user.present?
+        EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
+        email_sent = true
+      end
+    end
+    render json: {
+        'email_sent': email_sent
+    }
+  end
+
+  def send_reset_password_email_admin
+    email = params[:email]
+    email_sent = false
+    if email.present?
+      user = User.where(email: email).first
+      if user.present?
+        ResetPasswordEmail.deliver_to_user(
+            user,
+            create_reset_password_url(user)
+        )
+        email_sent = true
+      end
+    end
+    render json: {
+        'email_sent': email_sent
+    }
+  end
+
+  def user_login_verification_status
+    email = params[:email]
+    user = User.where(email: email).first
+
+    render json: {
+        'user_status': user_status(user)
+    }
+  end
+
   def update_user_city_state
     if current_user
       state_locale =   States.abbreviation(params[:userState])
@@ -120,4 +162,25 @@ class UserController < ApplicationController
       gradeLevels: current_user.student_grade_levels.map(&:grade)
     }
   end
+
+  def verification_missing?(user)
+    user.present? && !user['email_verified'] ? true : false
+  end
+
+  def user_password_missing?(user)
+    user.present? && user['password'].present? ? true : false
+  end
+
+  def user_status(user)
+    if user.blank?
+      'no_user'
+    elsif verification_missing?(user)
+      'verification_missing'
+    elsif user_password_missing?(user)
+      'password_missing'
+    else
+      'user_complete'
+    end
+  end
+
 end

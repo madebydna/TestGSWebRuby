@@ -1,0 +1,36 @@
+<%= render 'admin/shared/page_javascripts' %>
+<% content_for :page_javascripts do %>
+  <script type="text/javascript">
+    $(function() {
+      $.getScript("<%= asset_path('page_initializers/admin/user_help.js') %>")
+    })
+  </script>
+<% end %>
+
+<div class="row ptl mll">
+  <div class="col-xs-12 ">
+    <div style="width:800px; margin:auto">
+      <br />
+      <br />
+      <form id="js_userHelpForm" class="row">
+        <legend>Find a user by email</legend>
+        <div class="col-xs-10 col-sm-4 col-md-4 col-lg-4" style="margin-top: 25px;">
+          <input type="text" class="email" name="email" placeholder="Email" style="width: 250px;">
+        </div>
+        <div class="col-xs-9 col-sm-2 col-md-2 col-lg-2" style="margin-top: 22px;">
+          <button type="submit" class="btn btn-primary" id="submit">Search</button>
+        </div>
+      </form>
+      <br />
+      <div id="userNotFound" class="dn">User not found</div>
+      <div id="userVerification" class="dn">Missing verification <button class="sendUserEmail" data-url="/gsr/user/send_verify_email">Resend Verification Email</button></div>
+      <div id="userResetPassword" class="dn">Password missing <button class="sendUserEmail" data-url="/gsr/user/send_reset_password_email">Send Password Reset Email</button></div>
+      <div id="allGoodResetPassword" class="dn">All is good <button class="sendUserEmail" data-url="/gsr/user/send_reset_password_email">Send Password Reset Email</button></div>
+      <div id="emailSent" class="dn">Email Sent - may take a few minutes to arrive.</div>
+      <div id="emailSendFailed" class="dn">Email Send Failed</div>
+      <div id="ajaxFailed" class="dn">Server call had an error</div>
+      <br />
+      <br />
+    </div>
+  </div>
+</div>
