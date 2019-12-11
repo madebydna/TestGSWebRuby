@@ -168,7 +168,7 @@ class UserController < ApplicationController
   end
 
   def user_password_missing?(user)
-    user.present? && user['password'].present? ? true : false
+    user.present? && user['password'].blank? ? true : false
   end
 
   def user_status(user)
