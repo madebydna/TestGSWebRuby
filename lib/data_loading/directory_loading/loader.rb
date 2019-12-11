@@ -10,13 +10,10 @@ class DirectoryLoading::Loader < Loader
 
       directory_update = DirectoryLoading::Update.new(data_type, update)
 
-      # Raises entity not found exception if one doesn't exist with that ID
       entity = directory_update.entity
 
       begin
-        # We only support cache builds at this time
-      rescue Exception => e
-        raise e.message
+        # Space reserved for future implementations
       ensure
         Cacher.create_caches_for_data_type(entity, DATA_TYPE) if entity.is_a?(School)
         DistrictCacher.create_caches_for_data_type(entity, DATA_TYPE) if entity.is_a?(District)
