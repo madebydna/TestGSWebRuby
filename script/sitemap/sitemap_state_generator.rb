@@ -32,7 +32,7 @@ class SitemapStateGenerator < SitemapXmlWriter
   def write_feed
     within_root_node do
       # write state url
-      write_state_url
+      write_state_url unless @state == 'dc'
       # write profile urls
       write_profile_urls
       # write district urls
