@@ -51,6 +51,7 @@ class DistrictsController < ApplicationController
     set_ad_targeting_props
     set_page_analytics_data
     set_district_meta_tags
+    @toc = toc.district_toc
   end
 
   private
@@ -307,6 +308,10 @@ class DistrictsController < ApplicationController
         url: city_district_url(state: canonical_district_params[:state], city: canonical_district_params[:city], district: canonical_district_params[:district])
       }
     ]
+  end
+
+  def toc
+    CommunityProfiles::Toc.new(advanced_courses: @stem_courses, reviews: @reviews, academics: @academics_props, student_demographics: @students, teachers_staff: @teachers_staff, finance: @finance, growth_rating: @growth_rating)
   end
 
   def school_count(key)

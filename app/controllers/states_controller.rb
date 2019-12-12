@@ -54,7 +54,7 @@ class StatesController < ApplicationController
     ad_setTargeting_through_gon
     data_layer_through_gon
     @academics = academics
-    @toc = toc
+    @toc = toc.state_toc
   end
 
   def school_state_title
@@ -213,26 +213,8 @@ class StatesController < ApplicationController
     breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
   end
 
-  TOC_CONFIG = {
-    schools: { label: 'schools', anchor: '#schools' },
-    award_winning_schools: { label: 'award_winning_schools', anchor: '#award-winning-schools' },
-    academics: { label: 'academics', anchor: '#academics' },
-    students: { label: 'student_demographics', anchor: '#students' },
-    cities: { label: 'cities', anchor: '#cities' },
-    school_districts: { label: 'districts', anchor: '#districts' },
-    reviews: { label: 'reviews', anchor: '#reviews' }
-  }
-
-  def toc 
-    toc_items = TOC_CONFIG.keys
-
-    toc_items.delete(:award_winning_schools) unless @csa_module
-    toc_items.delete(:school_districts) if @districts.empty?
-    toc_items.delete(:academics) unless @academics[:data].present? 
-    toc_items.delete(:students) unless @students.students_demographics.present?
-    toc_items.delete(:reviews) if @reviews.empty?
-
-    toc_items.map { |item| TOC_CONFIG[item] }
+  def toc
+    CommunityProfiles::Toc.new(csa_module: @csa_module, school_districts: @districts, academics: @academics, student_demographics: @students, reviews: @reviews)
   end
 
   def locality 

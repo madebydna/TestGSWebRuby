@@ -98,21 +98,11 @@ $(() => {
   //   setBottom: true
   // });
 
-  $('.state-body .toc li').on('click', function(e) {
+  $('.toc li').on('click', function(e) {
     let elem = e.currentTarget;
     if (elem.nodeName === 'LI') {
       let anchor = elem.getAttribute('anchor');
-      scrollToElement(anchor, ()=>{}, -60);
-      }
-    }
-  );
-
-  // Can remove these state/city selectors once district has also been migrated to ERB
-  $('.city-body .toc li').on('click', function(e) {
-    let elem = e.currentTarget;
-    if (elem.nodeName === 'LI') {
-      let anchor = elem.getAttribute('anchor');
-      scrollToElement(anchor, ()=>{}, -60);
+      scrollToElement(`#${anchor}`, ()=>{}, -60);
       }
     }
   );
@@ -121,21 +111,8 @@ $(() => {
     const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele));
     const selectedToc = tocElements.length > 0 ? tocElements[0].id : [];
 
-    window.document.querySelectorAll('.state-body .toc li').forEach(element => {
-      if (element.getAttribute('anchor') === `#${selectedToc}`) {
-        element.classList.add('selected');
-      } else {
-        element.classList.remove('selected');
-      }
-    });
-  }, 100));
-
-  $(window).on('scroll', throttle(function() {
-    const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele));
-    const selectedToc = tocElements.length > 0 ? tocElements[0].id : [];
-
-    window.document.querySelectorAll('.city-body .toc li').forEach(element => {
-      if (element.getAttribute('anchor') === `#${selectedToc}`) {
+    window.document.querySelectorAll('.toc li').forEach(element => {
+      if (element.getAttribute('anchor') === selectedToc) {
         element.classList.add('selected');
       } else {
         element.classList.remove('selected');
