@@ -17,7 +17,10 @@ module StateCachedStateAttributeMethods
   end
 
   def state_attribute(key_name)
-    GSLogger.error(:misc, nil, message:"State Attributes missing for #{key_name}", vars: {key_name: key_name, state: state}) if fetch_state_attribute(key_name).nil?
-    fetch_state_attribute(key_name)
+    begin
+      state_attributes.fetch(key_name)
+    rescue
+      GSLogger.error(:misc, nil, message:"State Attributes for #{state} is missing key name: #{key_name}", vars: {key_name: key_name, state: state})
+    end
   end
 end

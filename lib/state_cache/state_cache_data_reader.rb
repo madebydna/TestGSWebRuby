@@ -30,6 +30,10 @@ class StateCacheDataReader
     decorated_state.school_levels
   end
 
+  def state_attributes
+    decorated_state.state_attributes
+  end
+
   def state_attribute(cache_key)
     decorated_state.state_attribute(cache_key)
   end
