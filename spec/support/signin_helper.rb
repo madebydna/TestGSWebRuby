@@ -19,14 +19,33 @@ module SigninHelper
   # qa-testuser is a google email alias currently forwarding 
   # to asingh@greatschools.org
   def sign_in_as_testuser
+    sign_in_user(
+      email: 'qa-testuser@greatschools.org', 
+      password: 'secret123')
+  end
+
+  def sign_in_user(email:, password:)
     visit('/gsr/login/')
-    fill_in('email', with: 'qa-testuser@greatschools.org')
-    fill_in('password', with: 'secret123')
+    fill_in('email', with: email)
+    fill_in('password', with: password)
     click_button('Log in')
   end
 
+  def logout_user
+    visit('/logout/')
+    sleep(1)
+  end
+
   def random_email
-    "ssprouse+rspec_#{Time.now.strftime('%s')}@greatschools.org"
+    "qa-testuser+rspec_#{Time.now.strftime('%s')}@greatschools.org"
+  end
+
+  def register_new_user(email: random_email)
+    page = JoinPage.new
+    page.load
+    page.signup_link.click
+    page.signup_form.email_field.set(email)
+    page.signup_form.signup_btn.click
   end
 
   def register_in_modal

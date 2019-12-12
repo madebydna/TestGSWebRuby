@@ -19,9 +19,7 @@ describe 'User Registration Flows', remote: true do
 
   describe 'Signing in as an existing user' do
     before do 
-      # create user for testing in qa-db1
-      # SigninHelper's sign_in_as_ssprouse method doesn't work any longer
-      # create equivalent to above method
+      sign_in_as_testuser
     end
 
     it 'should redirect to the home page'
