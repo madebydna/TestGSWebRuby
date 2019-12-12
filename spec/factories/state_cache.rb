@@ -17,6 +17,17 @@ FactoryBot.define do
         }.to_json
       }
     end
+
+    trait :with_state_attributes do
+      name 'state_attributes'
+      value {
+        {
+          "growth_type" => "Academic Progress Rating",
+          "hs_enabled_growth_rating" => false,
+          "summary_rating_type" => "Summary Rating"
+        }.to_json
+      }
+    end
   end
 
 end

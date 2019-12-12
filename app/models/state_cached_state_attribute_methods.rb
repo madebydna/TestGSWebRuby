@@ -5,22 +5,12 @@ module StateCachedStateAttributeMethods
     @_state_attributes ||= cache_data.fetch('state_attributes', {})
   end
 
-  def fetch_state_attribute(key_name)
-    case key_name
-    when 'growth_type'
-      state_attributes.dig('growth_type')
-    when 'hs_enabled_growth_rating'
-      state_attributes.dig('hs_enabled_growth_rating')
-    when 'summary_rating_type'
-      state_attributes.dig('summary_rating_type')
-    end
-  end
-
   def state_attribute(key_name)
     begin
       state_attributes.fetch(key_name)
-    rescue
-      GSLogger.error(:misc, nil, message:"State Attributes for #{state} is missing key name: #{key_name}", vars: {key_name: key_name, state: state})
+    rescue => e 
+      GSLogger.error(:misc, nil, message: "#{e}", vars: {key_name: key_name, state: state})
+      nil
     end
   end
 end
