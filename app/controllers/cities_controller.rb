@@ -18,7 +18,7 @@ class CitiesController < ApplicationController
     @level_code = []
     @csa_years = []
     set_city_meta_tags
-    @top_schools =  top_rated_schools
+    @top_schools = top_rated_schools
     @summary_type = summary_rating_type
     @breadcrumbs = breadcrumbs
     @school_levels = school_levels
@@ -30,7 +30,7 @@ class CitiesController < ApplicationController
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     set_ad_targeting_props
     set_page_analytics_data
-    @toc = toc
+    @toc = toc.city_toc
   end
 
   def state_cache_data_reader
@@ -194,23 +194,8 @@ class CitiesController < ApplicationController
     ]
   end
 
-  TOC_CONFIG = {
-    schools: { label: 'schools', anchor: '#schools' },
-    school_districts: { label: 'districts', anchor: '#districts' },
-    community_resources: { label: 'community_resources', anchor: '#mobility' },
-    nearby_homes_for_sale: { label: 'nearby_homes_for_sale_and_rent', anchor: '#homes-and-rentals' },
-    reviews: { label: 'reviews', anchor: '#reviews' },
-    neighboring_cities: { label: 'neighboring_cities', anchor: '#neighboring-cities' }
-  }
-
-  def toc 
-    toc_items = TOC_CONFIG.keys
-    
-    toc_items.delete(:reviews) if @reviews.empty?
-    toc_items.delete(:school_districts) if @districts.empty?
-    toc_items.delete(:neighboring_cities) if @neighboring_cities.empty?
-
-    toc_items.map { |item| TOC_CONFIG[item] }
+  def toc
+    CommunityProfiles::Toc.new(reviews: @reviews, school_districts: @districts, neighboring_cities: @neighboring_cities)
   end
 
   def neighboring_cities_data

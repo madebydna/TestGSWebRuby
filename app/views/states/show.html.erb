@@ -80,7 +80,8 @@
               faq: @academics[:faq],
               feedback: @academics[:feedback],
               suppressIfEmpty: true,
-              pageType: 'state'
+              pageType: 'state',
+              locality: @locality
           }) %>
         </div>
 
@@ -95,7 +96,7 @@
         <%# Student Demographics %>
         <% if @students.ethnicity_student_demo_data || @students.gender_student_demo_data || @students.subgroups_student_demo_data %>
           <div id="students" class="module-section">
-            <%= react_component("StudentsWrapper", props: {
+            <%= react_component("Students", props: {
                 ethnicityData: @students.students_demographics['ethnicityData'],
                 subgroupsData: @students.students_demographics['subgroupsData'],
                 genderData: @students.students_demographics['genderData'],
@@ -128,7 +129,7 @@
             <div class="rating-container reviews-module">
               <h3><%= I18n.t('title', scope: 'community.recent_reviews') %> <%= @state[:long].titleize %></h3>
 
-              <%= react_component("RecentReviewsWrapper", props: {
+              <%= react_component("RecentReviews", props: {
                   community: 'state',
                   reviews: @reviews,
                   locality: @locality

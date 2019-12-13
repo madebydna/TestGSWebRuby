@@ -7,11 +7,18 @@ import TopSchoolsStateful from 'react_components/community/top_schools_stateful'
 import CsaTopSchools from 'react_components/community/csa_top_schools';
 import CsaInfo from 'react_components/community/csa_info';
 import SchoolBrowseLinks from 'react_components/community/school_browse_links';
+import SummaryRating from 'react_components/community/summary_rating';
+import GrowthRating from 'react_components/community/growth_rating';
+import StemCourses from 'react_components/school_profiles/stem_courses';
 import AcademicsDataModule from 'react_components/community/academics_data_module';
 import Students from 'react_components/community/students';
+import TeachersStaff from 'react_components/community/teachers_staff';
 import DistrictsInState from 'react_components/community/districts_in_state';
 import DistrictsInCity from 'react_components/community/districts_in_city';
+import Calendar from 'react_components/community/calendar';
+import Finance from 'react_components/community/finance';
 import Mobility from 'react_components/community/mobility';
+import XQSchoolBoardFinder from 'react_components/community/xq_school_board_finder';
 import Zillow from 'react_components/community/zillow';
 import RecentReviews from 'react_components/community/recent_reviews';
 import CityLinks from 'react_components/community/city_links';
@@ -26,10 +33,9 @@ const TopSchoolsStatefulWrapper = withViewportSize({ propName: 'size' })(TopScho
 const CsaTopSchoolsWrapper = withViewportSize({ propName: 'size' })(CsaTopSchools);
 const SchoolBrowseLinksWrapper = withViewportSize({ propName: 'size' })(SchoolBrowseLinks);
 const AcademicsDataModuleWrapper = withViewportSize({ propName: 'size' })(AcademicsDataModule);
-const StudentsWrapper = withViewportSize({ propName: 'size' })(Students);
+const TeachersStaffWrapper = withViewportSize({ propName: 'size' })(TeachersStaff);
 const DistrictsInStateWrapper = withViewportSize({ propName: 'size' })(DistrictsInState);
 const DistrictsInCityWrapper = withViewportSize({ propName: 'size' })(DistrictsInCity);
-const RecentReviewsWrapper = withViewportSize({ propName: 'size' })(RecentReviews);
 const CityLinksWrapper = withViewportSize({ propName: 'size' })(CityLinks);
 const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
 
@@ -42,13 +48,20 @@ ReactOnRails.register({
   CsaTopSchoolsWrapper,
   CsaInfo,
   SchoolBrowseLinksWrapper,
+  SummaryRating,
+  GrowthRating,
+  StemCourses,
   AcademicsDataModuleWrapper,
-  StudentsWrapper,
+  Students,
+  TeachersStaffWrapper,
   DistrictsInStateWrapper,
   DistrictsInCityWrapper,
+  Calendar,
+  Finance,
   Mobility,
+  XQSchoolBoardFinder,
   Zillow,
-  RecentReviewsWrapper,
+  RecentReviews,
   CityLinksWrapper,
   AdWrapper
 });
@@ -85,21 +98,11 @@ $(() => {
   //   setBottom: true
   // });
 
-  $('.state-body .toc li').on('click', function(e) {
+  $('.toc li').on('click', function(e) {
     let elem = e.currentTarget;
     if (elem.nodeName === 'LI') {
       let anchor = elem.getAttribute('anchor');
-      scrollToElement(anchor, ()=>{}, -60);
-      }
-    }
-  );
-
-  // Can remove these state/city selectors once district has also been migrated to ERB
-  $('.city-body .toc li').on('click', function(e) {
-    let elem = e.currentTarget;
-    if (elem.nodeName === 'LI') {
-      let anchor = elem.getAttribute('anchor');
-      scrollToElement(anchor, ()=>{}, -60);
+      scrollToElement(`#${anchor}`, ()=>{}, -60);
       }
     }
   );
@@ -108,21 +111,8 @@ $(() => {
     const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele));
     const selectedToc = tocElements.length > 0 ? tocElements[0].id : [];
 
-    window.document.querySelectorAll('.state-body .toc li').forEach(element => {
-      if (element.getAttribute('anchor') === `#${selectedToc}`) {
-        element.classList.add('selected');
-      } else {
-        element.classList.remove('selected');
-      }
-    });
-  }, 100));
-
-  $(window).on('scroll', throttle(function() {
-    const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele));
-    const selectedToc = tocElements.length > 0 ? tocElements[0].id : [];
-
-    window.document.querySelectorAll('.city-body .toc li').forEach(element => {
-      if (element.getAttribute('anchor') === `#${selectedToc}`) {
+    window.document.querySelectorAll('.toc li').forEach(element => {
+      if (element.getAttribute('anchor') === selectedToc) {
         element.classList.add('selected');
       } else {
         element.classList.remove('selected');

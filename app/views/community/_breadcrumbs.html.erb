@@ -7,7 +7,9 @@
         <% if index > mobile_cutoff %>
           <span class="hidden-xs-inline">
         <% end %>
-        <span><%= ' > ' if index > 0 %></span>
+        <% if index > 0 %>
+          <span><%= ' > ' %></span>
+        <% end %>
         <% if breadcrumb[:url].nil? %>
           <span><%= breadcrumb[:text] %></span>
         <% else %>

@@ -1,0 +1,18 @@
+en:
+  community:
+    mobility:
+      title: Community resources in
+      transportation_narration: Transportation options near the schools
+      help: >
+        MobilityScore® helps you understand how easy it is to get around. It works at any location or 
+        address within the US and Canada and gives you a score ranging from 0 (no mobility choices) 
+        to 100 (excellent mobility choices). MobilityScore takes into account all your options, from 
+        public transit to carsharing, bikesharing, ridesharing, bikes, and even scooters!
+      sources_html: >
+        <div class="sources-text">
+          <h3>GreatSchools community data sources & information</h3>
+          <div>Transportation</div>
+          <p><span>Sources&#58;</span> MobilityScore&reg;</p>
+        </div>
+      no_score_city: This section shows the transportation option offered at this city. Currently, this information is not available.
+      no_score_district: This section shows the transportation option offered in this district. Currently, this information is not available.
