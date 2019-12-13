@@ -7,27 +7,6 @@
     <%= stylesheet_link_tag "district", async: true %>
 <% end %>
 
-<!-- div class="community-page">
-  <%= react_component("District", props: {
-      schools_data: @top_schools,
-      school_levels: @school_levels,
-      breadcrumbs: @breadcrumbs,
-      locality: @locality,
-      heroData: @hero_data,
-      academics: @academics_props,
-      stemCourses: @stem_courses,
-      reviews: @reviews,
-      translations: @translations,
-      csa_module: @csa_module,
-      students: @students,
-      teachers_staff: @teachers_staff,
-      finance: @finance,
-      growthData: @growth_rating,
-      summaryRatingData: @summary_rating,
-      summaryType: @summary_type
-    }) %>
-</div -->
-
 <div class="community-page">
   <div class="district-body">
     <%= react_component('SearchBoxWrapper') %>
