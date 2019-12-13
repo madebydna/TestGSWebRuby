@@ -11,6 +11,12 @@ module CommunityConcerns
       decorate_schools(page_of_results)
     end
 
+  def summary_rating_type
+    @_summary_rating_type ||= begin
+      state_cache_data_reader.state_attribute('summary_rating_type')
+    end
+  end
+
     def school_levels
       return @_school_levels if defined?(@_school_levels)
       @_school_levels = begin

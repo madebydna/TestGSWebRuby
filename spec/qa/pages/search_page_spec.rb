@@ -96,98 +96,6 @@ describe 'Search page', remote: true do
       end
     end
 
-    describe 'With a long name search', type: :feature do
-      before do
-        subject.load(query: { distance: 5, gradeLevels: 'p', lat: 40.803768, 
-          locationSearchString: 10025, locationType: 'street_address', lon: -73.961739, 
-          normalizedAddress: 10025, sort: 'name', sortBy: 'DISTANCE', state: 'NY' })
-      end
-
-      it { is_expected.to be_displayed }
-    end
-
-    describe 'With address search', type: :feature do
-      before do
-        subject.load(query: { lat: 37.8077447, 
-          zipCode: 94612, 
-          lon: -122.2653488, 
-          locationType: 'premise', 
-          city: 'Oakland', 
-          distance: 5, 
-          locationSearchString: '1999 Harrison Ave Oakland CA',
-          normalizedAddress: 'Lake Merrit Plaza, 1999 Harrison St, Oakland, CA, 94612', 
-          sortBy: 'DISTANCE', 
-          state: 'CA' })
-      end
-     
-      it { is_expected.to be_displayed }
-    end
-
-    describe 'With assigned schools', type: :feature do
-      before do
-        subject.load(query: {lat: "32.7949839",
-          lon: "-96.8234392",
-          zipCode: "75207",
-          state: "TX",
-          locationType: "street_address",
-          normalizedAddress: "1827 Market Center Blvd, Dallas, TX 75207",
-          city: "Dallas",
-          sortBy: "DISTANCE",
-          locationSearchString: "1827 Market Center Boulevard, Dallas, TX 75207",
-          distance: "5"})
-      end
-      
-      it { is_expected.to be_displayed }
-    end
-
-    describe 'With zip code search', type: :feature do
-      before do
-        subject.load(query: {lat: "37.7944092",
-          lon: "-122.2455364",
-          zipCode: "94606",
-          state: "CA",
-          locationType: "postal_code",
-          normalizedAddress: "Oakland, CA 94606",
-          city: "Oakland",
-          sortBy: "DISTANCE",
-          locationSearchString: "94606",
-          distance: "5"})
-      end
-      
-      it { is_expected.to be_displayed }
-    end
-
-    describe 'With shasta county', type: :feature do
-      before do
-        visit '/california/redding/shasta-county-office-of-education-school-district/schools/'
-      end
-      
-      it { is_expected.to be_displayed }
-    end
-
-    describe 'Grant elementary school', type: :feature do
-      before do
-        visit  '/new-mexico/las-cruces/las-cruces-public-schools/schools/'
-      end
-      it { is_expected.to be_displayed }
-    end
-
-    describe 'Accessing page 3', type: :feature do
-      before do
-        subject.load(query: {city: "Oakland",
-          distance: "5",
-          lat: "37.8077447",
-          locationSearchString: "1999 Harrison Ave Oakland, CA",
-          locationType: "premise",
-          lon: "-122.2653488",
-          normalizedAddress: "Lake Merritt Plaza, 1999 Harrison St, Oakland, CA 94612",
-          page: "3",
-          state: "CA",
-          zipCode: "94612"})
-      end
-      it { is_expected.to be_displayed }
-    end
-
     describe 'Sort by school name', type: :feature do
       before do
         subject.load(query: {city: "Oakland",
@@ -203,6 +111,7 @@ describe 'Search page', remote: true do
       end
 
       it { is_expected.to be_displayed }
+      it 'should display alphabetically first school on top' # 1st Presbyterian Child Development Center
     end
 
     describe 'Sort by distance', type: :feature do
@@ -220,15 +129,134 @@ describe 'Search page', remote: true do
       end
 
       it { is_expected.to be_displayed }
+      it 'should display closest school first' # Clickstudy International
+    end
+  end
+
+
+  describe 'Search parameters' do
+    describe 'address search', type: :feature do
+      context 'without assigned schools' do
+        before do
+          subject.load(query: {:lat=>"37.8077447",
+            :lon=>"-122.2653488",
+            :zipCode=>"94612",
+            :state=>"CA",
+            :locationType=>"premise",
+            :normalizedAddress=>"Lake Merritt Plaza, 1999 Harrison St, Oakland, CA 94612",
+            :city=>"Oakland",
+            :sortBy=>"DISTANCE",
+            :locationSearchString=>"1999 Harrison Ave Oakland, CA",
+            :distance=>"5"}
+          )
+        end
+        it 'should be sorted by GreatSchools Rating by default'
+        it 'should have top school listed first' # Crocker Highlands Elementary School
+        it 'should have correct result text' # ... schools found near 1999 Harrison Ave Oakland, CA
+      end
+  
+      context 'with assigned schools' do
+        before do
+          subject.load(query: {:lat=>"32.7949839",
+            :lon=>"-96.8234392",
+            :zipCode=>"75207",
+            :state=>"TX",
+            :locationType=>"street_address",
+            :normalizedAddress=>"1827 Market Center Blvd, Dallas, TX 75207",
+            :city=>"Dallas",
+            :sortBy=>"DISTANCE",
+            :locationSearchString=>"1827 Market Center Boulevard, Dallas, TX 75207",
+            :distance=>"5"}
+          )
+        end
+  
+        it 'should have an elementary, middle, and high assigned schools as the top 3 results'
+  
+        it 'should show GS ratings for assigned schools'
+      end
     end
 
-    describe 'Name search with lowercase state name, like alameda, california', type: :feature do
+    describe 'zip code search', type: :feature do
       before do
-        subject.load(query: {q: "san jose california"})
+        subject.load(query: {lat: "37.7944092",
+          lon: "-122.2455364",
+          zipCode: "94606",
+          state: "CA",
+          locationType: "postal_code",
+          normalizedAddress: "Oakland, CA 94606",
+          city: "Oakland",
+          sortBy: "DISTANCE",
+          locationSearchString: "94606",
+          distance: "5"})
       end
       
       it { is_expected.to be_displayed }
+      it 'should have highest rated school first' # Crocker Highlands Elementary School
+      it 'should have correct result text' # .. schools found near Oakland, CA 94606
     end
+  end
+
+  context 'with long district name', type: :feature do
+    before do
+      visit '/california/redding/shasta-county-office-of-education-school-district/schools/'
+    end
+    
+    it { is_expected.to be_displayed }
+    it 'links to correct district' # Shasta County Office Of Education School District
+  end
+
+  # What is the significance of this test?
+  describe 'Las Cruces Public School district', type: :feature do
+    before do
+      visit  '/new-mexico/las-cruces/las-cruces-public-schools/schools/'
+    end
+    it { is_expected.to be_displayed }
+    # Desert Hills Elementary School should be first
+  end
+
+  context 'with a long first school name' do
+    before do
+      subject.load(query: {lat: 40.803768, lon: -73.961739, sort: 'distance'})
+    end
+    
+    it 'should be displayed fully'
+    # Adults and Children in Trust (A.C.T.) - ACT Preschool, ACT Nursery, ACT Early Years (Toddler Classes)
+  end
+
+  context 'With multiple pages of search results' do
+    describe 'pagination links' do
+      it 'are displayed'
+      it 'are working'
+    end
+    describe 'accessing page 3 directly', type: :feature do
+      before do
+        subject.load(query: {city: "Oakland",
+          distance: "5",
+          lat: "37.8077447",
+          locationSearchString: "1999 Harrison Ave Oakland, CA",
+          locationType: "premise",
+          lon: "-122.2653488",
+          normalizedAddress: "Lake Merritt Plaza, 1999 Harrison St, Oakland, CA 94612",
+          page: "3",
+          state: "CA",
+          zipCode: "94612"})
+      end
+      it { is_expected.to be_displayed }
+    end
+  end
+
+  describe 'Name search with lowercase state name, like alameda, california', type: :feature do
+    before do
+      subject.load(query: {q: "san jose california"})
+    end
+    
+    it { is_expected.to be_displayed }
+  end
+
+  describe 'Ads in search results' do
+    it 'are all displayed'
+    it 'displayed in their correct locations' # every fifth slot
+    it 'are displayed on short result pages' # https://qa.greatschools.org/california/coulterville/schools/ 
   end
 
 end

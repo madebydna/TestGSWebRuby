@@ -5,6 +5,8 @@ en:
       top_schools: Top schools
       top_schools_blurbs: >
         These are some of the top-rated public schools in {name} <a href="/gk/ratings/#summary-rating">based on a variety of measures</a>, including academic performance and <a href="/gk/ratings/#equityrating">equity</a>. Click to see the full list of schools sorted by rating. <a href="/gk/ratings/">About the GreatSchools rating</a>
+      top_schools_test_score_ratings_blurb: >
+        These are some of the top-rated public schools in {name} based on their Test Score Rating. Click to see the full list of schools sorted by rating.<a href="/gk/ratings/">About the GreatSchools rating</a>
       csa_top_schools_blurb: >
         These are some of the best public high schools in {name} at preparing students for success in college. The <a href="/gk/csa-winners/">College Success Award</a> recognizes schools that do an exemplary job getting students to enroll in and stick with college, including those that beat the odds by better serving low-income students.
       learn_more: Learn more

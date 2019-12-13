@@ -355,15 +355,18 @@ $(window).on('load', function() {
   initAdvertising();
 
   var moduleIds = [
-    '#TestScores',
     '#CollegeReadiness',
+    '#TestScores',
+    '#StemCourses',
     '#CollegeSuccess',
     '#StudentProgress',
+    '#AcademicProgress',
     '#EquityOverview',
     '#Equity',
     '#EquityRaceEthnicity',
     '#EquityLowIncome',
     '#EquityDisabilities',
+    '#osp-school-info',
     '#Students',
     '#TeachersStaff',
     '#Reviews',
@@ -384,6 +387,7 @@ $(window).on('load', function() {
 
   registerPredefinedInterrupts(['mobileOverlayAd', 'qualaroo'])
   runInterrupts(['interstitial', 'profileTour', 'mobileOverlayAd', 'qualaroo'])
+
 
   $('#toc').on('click', 'a', function(e) {
     const ANCHOR_REGEX = /^#[^ ]+$/;

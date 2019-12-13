@@ -25,19 +25,21 @@ class School < ActiveRecord::Base
   attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active, :new_profile_school
   attr_writer :collections
   has_many :school_metadatas
-  belongs_to :district
 
-
-  scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
+  scope :held, -> { joins("INNER JOIN #{School.gs_schooldb_name}.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
 
   scope :not_preschool_only, -> { where.not(level_code: 'p') }
 
   scope :active, -> { where(active: true) }
 
   scope :include_district_name, lambda {
-    select("#{School.table_name}.*, #{District.table_name}.name as district_name").
-    joins("LEFT JOIN district on school.district_id = district.id")
+    select("#{School.table_name}.*, dr.name as district_name").
+    joins("LEFT JOIN #{School.gs_schooldb_name}.district_records as dr on school.district_id = dr.district_id and dr.state = #{School.table_name}.state")
   }
+
+  def self.gs_schooldb_name
+    Rails.env.test? ? "gs_schooldb_test" : "gs_schooldb"
+  end
 
   scope :preschool_schools, -> { where('level_code like ?', "%#{LEVEL_CODES[:preschool]}%") }
   scope :elementary_schools, -> { where('level_code like ?', "%#{LEVEL_CODES[:elementary]}%") }
@@ -77,7 +79,6 @@ class School < ActiveRecord::Base
           hash[obj.state] ||= []
           hash[obj.state] << obj.school_id
       end
-
     schools = 
       state_to_id_map.flat_map do |(state, ids)|
         if block_given?
@@ -94,6 +95,7 @@ class School < ActiveRecord::Base
     associate_state_school_ids_hash.values.compact
   end
 
+  # TODO Appears unused
   def self.within_district(district)
     on_db(district.shard).active.where(district_id: district.id)
   end
@@ -247,11 +249,8 @@ class School < ActiveRecord::Base
     level_code.split(',') if level_code.present?
   end
 
-  #Temporary work around, since with db charmer we cannot directly say school.district.name.
-  #It looks at the wrong database in that case.
   def district
-    return @district if defined?(@district)
-    @district = District.on_db(self.shard).where(id: self.district_id).first
+    @district ||= DistrictRecord.by_state(self.shard).where(district_id: self.district_id).first
   end
 
   # returns true if school is on held school list (associated with school reviews)
@@ -364,6 +363,7 @@ class School < ActiveRecord::Base
     end
   end
 
+  # TODO: appears unused
   def self.for_collection_ordered_by_name(state,collection_id)
     raise ArgumentError, 'state and collection_id provided must be provided' unless state.present? && collection_id.present?
     collection = Collection.find(collection_id)

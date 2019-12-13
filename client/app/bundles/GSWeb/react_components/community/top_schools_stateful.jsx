@@ -14,6 +14,7 @@ class TopSchoolsStateful extends React.Component {
     locality: PropTypes.object.isRequired,
     community: PropTypes.string.isRequired,
     schoolLevels: PropTypes.object,
+    summaryType: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
@@ -119,6 +120,7 @@ class TopSchoolsStateful extends React.Component {
           levelCodes={this.state.levelCodes}
           community={this.props.community}
           locality={this.props.locality}
+          summaryType={this.props.summaryType}
         />
       );
     }

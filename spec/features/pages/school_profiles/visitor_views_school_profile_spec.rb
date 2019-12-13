@@ -66,8 +66,8 @@ describe 'Visitor' do
   end
 
   scenario 'sees the school\'s district name' do
-    district = create(:alameda_city_unified)
-    school = create(:school_with_new_profile, district_id: district.id)
+    district = create(:alameda_city_unified_district_record)
+    school = create(:school_with_new_profile, district_id: district.district_id)
     visit school_path(school)
     expect(page).to have_content(district.name)
   end

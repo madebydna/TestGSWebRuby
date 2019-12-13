@@ -16,10 +16,12 @@ module SigninHelper
     end
   end
 
-  def sign_in_as_ssprouse
+  # qa-testuser is a google email alias currently forwarding 
+  # to asingh@greatschools.org
+  def sign_in_as_testuser
     visit('/gsr/login/')
-    fill_in('email', with: 'ssprouse@greatschools.org')
-    fill_in('password', with: '0!apdoQu_3A')
+    fill_in('email', with: 'qa-testuser@greatschools.org')
+    fill_in('password', with: 'secret123')
     click_button('Log in')
   end
 

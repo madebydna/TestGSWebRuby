@@ -6,7 +6,6 @@ class ComparePage < SitePrism::Page
   include Footer
 
   set_url '/compare{?query*}'
-  set_url_matcher /\/compare\?/
 
   section :school_table, 'section.school-table' do
     element :pinned_school,  '.school.pinned'

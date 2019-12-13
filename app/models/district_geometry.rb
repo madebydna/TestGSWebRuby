@@ -7,7 +7,7 @@ class DistrictGeometry < ActiveRecord::Base
   scope :order_by_area, -> { order('ST_area(geom) ASC') }
 
   def district
-    @_district ||= District.on_db(state.to_s.downcase.to_sym).find_by(active:1, id: district_id)
+    @_district ||= DistrictRecord.by_state(state.to_s.downcase).find_by(active:1, district_id: district_id)
   end
 
   def coordinates

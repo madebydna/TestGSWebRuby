@@ -17,7 +17,7 @@ module Feeds
           'subrating' => 'local-gs-subrating-feed',
           'subrating_description' => 'local-gs-subrating-description-feed',
           'official_overall_rating_flat' => 'local-gs-official-overall-rating-result-feed-flat',
-          'official_overall_rating_description' => 'local-gs-official-overall-rating-feed',
+          'official_overall_rating_description' => 'local-gs-official-overall-rating-feed-flat',
           'official_overall_rating' => 'local-gs-official-overall-rating-feed',
           'old_test_gsdata' => 'local-gs-test-feed',
           'old_test_subgroup_gsdata' => 'local-gs-test-subgroup-feed',

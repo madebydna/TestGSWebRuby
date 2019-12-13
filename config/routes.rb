@@ -276,8 +276,15 @@ LocalizedProfiles::Application.routes.draw do
     get '/examples-and-gotchas', action: :examples_and_gotchas
 
     scope '/school-profiles', as: :school_profiles do
+      get '/:state/:schoolId', action: :attributes, constraints: {
+        state: States.route_friendly_any_state_abbreviation_regex,
+        schoolId: /\d+/
+      }
+      post '/:state/:schoolId/update', to: 'admin#update_school', as: :update
+
     end
 
+    get '/user-help/', to: 'users#user_help'
     get '/style-guide/', to: 'style_guide#index'
     get '/style-guide/:category/:page', to: 'style_guide#render_page'
 
@@ -337,6 +344,8 @@ LocalizedProfiles::Application.routes.draw do
   post '/gsr/user/save_city_state', :to => 'user#update_user_city_state'
   post '/gsr/user/save_grade_selection', :to => 'user#update_user_grade_selection'
   post '/gsr/user/delete_grade_selection', :to => 'user#delete_user_grade_selection'
+  post '/gsr/user/send_verify_email', :to => 'user#send_verify_email_admin'
+  post '/gsr/user/send_reset_password_email', :to => 'user#send_reset_password_email_admin'
 
   resources :subscriptions, except: [:index], path: '/gsr/user/subscriptions'
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'
@@ -356,6 +365,7 @@ LocalizedProfiles::Application.routes.draw do
   # This route needs to be either merged with authenticate_token, or renamed to be more consistent with that one
   # JIRA: JT-385
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
+  get '/gsr/user/user-status', as: :user_login_verification_status, to: 'user#user_login_verification_status'
   get '/school-district-boundaries-map', as: :district_boundary, to: 'district_boundaries#show'
   get '/my-school-list', to: 'my_school_list#show', as: :my_school_list
 

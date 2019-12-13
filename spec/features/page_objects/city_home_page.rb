@@ -10,6 +10,8 @@ class CityHomePage < SitePrism::Page
   include Breadcrumbs
   include Footer
 
+  set_url '/{state}/{city}/'
+
   section :top_rated_schools_section, PageObjects::TopRatedSchools::Section, '#top-rated-schools-in-city'
 
   section :email_signup_section, '.js-shared-email-signup' do

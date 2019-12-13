@@ -5,7 +5,7 @@ class DistrictCache < ActiveRecord::Base
   KEYS = [:test_scores, :directory_census, :district_directory, :feed_district_characteristics]
 
   def self.for_district(district)
-    for_state_and_id(district.state, district.id)
+    for_state_and_id(district.state, district.district_id)
   end
 
   def self.include_cache_keys(keys)
@@ -41,7 +41,7 @@ class DistrictCache < ActiveRecord::Base
   def self.state_to_id_map(districts)
     districts.group_by(&:state).tap do |hash|
       hash.each do |k, v|
-        hash[k] = v.map(&:id)
+        hash[k] = v.map(&:district_id)
       end
     end
   end

@@ -20,10 +20,10 @@ describe "Districts API" do
 
   describe 'show' do
     it 'Returns district 1 by ID' do
-      s1 = create(:alameda_city_unified)
-      create(:oakland_unified)
+      s1 = create(:alameda_city_unified_district_record)
+      create(:oakland_unified_district_record)
 
-      get "/gsr/api/districts/#{s1.id}?state=ca"
+      get "/gsr/api/districts/#{s1.district_id}?state=ca"
       expect(status).to eq(200)
       expect(errors).to be_blank
       expect(json).to be_present
@@ -31,10 +31,10 @@ describe "Districts API" do
     end
 
     it 'Returns district 2 by ID' do
-      create(:alameda_city_unified)
-      s2 = create(:oakland_unified)
+      create(:alameda_city_unified_district_record)
+      s2 = create(:oakland_unified_district_record)
 
-      get "/gsr/api/districts/#{s2.id}?state=ca"
+      get "/gsr/api/districts/#{s2.district_id}?state=ca"
       expect(status).to eq(200)
       expect(errors).to be_blank
       expect(json).to be_present
@@ -48,8 +48,8 @@ describe "Districts API" do
     end
 
     it 'does not return inactive district' do
-      s = create(:alameda_city_unified, active: false)
-      get "/gsr/api/districts/#{s.id}?state=#{s.state}", format: :json
+      s = create(:alameda_city_unified_district_record, active: false)
+      get "/gsr/api/districts/#{s.district_id}?state=#{s.state}", format: :json
       expect(status).to eq(200)
       expect(errors).to be_blank
       expect(json).to be_blank
@@ -63,7 +63,7 @@ describe "Districts API" do
     end
 
     context 'with geometry data available for district' do
-      let(:district) { create(:alameda_city_unified) }
+      let(:district) { create(:alameda_city_unified_district_record) }
       before do
         str = 'MULTIPOLYGON(((1 1,1 10,10 10,10 1,1 1)))'
         create_geo_data(str)
@@ -79,7 +79,7 @@ describe "Districts API" do
       end
 
       it 'Doesnt include geometry by default' do
-        get "/gsr/api/districts/#{district.id}?state=ca"
+        get "/gsr/api/districts/#{district.district_id}?state=ca"
         expect(status).to eq(200)
         expect(errors).to be_blank
         expect(json).to be_present
@@ -87,7 +87,7 @@ describe "Districts API" do
       end
 
       it 'Returns boundary data when asked' do
-        get "/gsr/api/districts/#{district.id}?state=ca&boundary_level=e&extras=boundaries"
+        get "/gsr/api/districts/#{district.district_id}?state=ca&boundary_level=e&extras=boundaries"
         expect(status).to eq(200)
         expect(errors).to be_blank
         expect(json).to be_present
@@ -113,8 +113,8 @@ describe "Districts API" do
     end
 
     it 'Returns some districts' do
-      create(:alameda_city_unified)
-      create(:oakland_unified)
+      create(:alameda_city_unified_district_record)
+      create(:oakland_unified_district_record)
 
       get '/gsr/api/districts/?state=ca', format: :json
       expect(status).to eq(200)
@@ -123,7 +123,7 @@ describe "Districts API" do
     end
 
     it 'does not find inactive district' do
-      create(:alameda_city_unified, active: false)
+      create(:alameda_city_unified_district_record, active: false)
       get '/gsr/api/districts/?state=ca', format: :json
       expect(status).to eq(200)
       expect(errors).to be_blank
@@ -131,8 +131,8 @@ describe "Districts API" do
     end
 
     it 'Obeys limit param' do
-      create(:alameda_city_unified, name: 'Oakland unified')
-      create(:oakland_unified)
+      create(:alameda_city_unified_district_record, name: 'Oakland unified')
+      create(:oakland_unified_district_record)
 
       get '/gsr/api/districts/?state=ca&limit=1', format: :json
       expect(status).to eq(200)
@@ -142,8 +142,8 @@ describe "Districts API" do
     end
 
     it 'Obeys offset param' do
-      create(:alameda_city_unified)
-      create(:oakland_unified, name: 'Oakland unified')
+      create(:alameda_city_unified_district_record)
+      create(:oakland_unified_district_record, name: 'Oakland unified')
 
       get '/gsr/api/districts/?state=ca&offset=1', format: :json
       expect(status).to eq(200)
@@ -153,8 +153,8 @@ describe "Districts API" do
     end
 
     it 'adds "next" when there are more results' do
-      create(:alameda_city_unified)
-      create(:oakland_unified)
+      create(:alameda_city_unified_district_record)
+      create(:oakland_unified_district_record)
 
       get '/gsr/api/districts/?state=ca&limit=1', format: :json
       expect(status).to eq(200)
@@ -164,8 +164,8 @@ describe "Districts API" do
     end
 
     it 'adds "prev" when there are prior results' do
-      create(:alameda_city_unified)
-      create(:oakland_unified)
+      create(:alameda_city_unified_district_record)
+      create(:oakland_unified_district_record)
 
       get '/gsr/api/districts/?state=ca&offset=1'
       expect(status).to eq(200)
@@ -175,10 +175,10 @@ describe "Districts API" do
     end
 
     it 'adds district schools summary when available' do
-      district = create(:alameda_city_unified)
+      district = create(:alameda_city_unified_district_record)
       create(:cached_district_schools_summary,
              state: district.state,
-             district_id: district.id)
+             district_id: district.district_id)
       get '/gsr/api/districts/?state=ca'
       expect(status).to eq(200)
       expect(errors).to be_blank
@@ -186,7 +186,7 @@ describe "Districts API" do
     end
 
     context 'with geometry data available for district' do
-      let(:district) { create(:alameda_city_unified) }
+      let(:district) { create(:alameda_city_unified_district_record) }
       before do
         str = 'MULTIPOLYGON(((1 1,1 10,10 10,10 1,1 1)))'
         create_geo_data(str)
@@ -213,7 +213,7 @@ describe "Districts API" do
   def create_geo_data(str)
     DistrictGeometry.connection.execute(
         "insert into school_district_geometry(state, district_id, level_code, geom, nces_disid)
-         values('#{district.state}', #{district.id}, 'e,m,h', GeomFromText('#{str}'), '1');")
+         values('#{district.state}', #{district.district_id}, 'e,m,h', GeomFromText('#{str}'), '1');")
   end
 
 end

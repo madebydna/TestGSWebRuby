@@ -92,5 +92,39 @@ describe 'StateCacheDataReader' do
       end
 
     end
+
+    describe '#state_attributes' do
+      subject { new_reader(state, state_cache_keys: 'state_attributes') }
+
+      before do
+        @state_cache = FactoryBot.create(:state_cache, :with_state_attributes)
+      end
+
+      after { clean_dbs :gs_schooldb }
+
+      it "should returned the parsed hash from the state cache" do
+        expect(subject.state_attributes).to eq(JSON.parse(@state_cache.value))
+      end
+
+    end
+
+    describe '#state_attribute' do
+      subject { new_reader(state, state_cache_keys: 'state_attributes') }
+
+      before do
+        @state_cache = FactoryBot.create(:state_cache, :with_state_attributes)
+      end
+
+      after { clean_dbs :gs_schooldb }
+
+      it "should returned the parsed hash from the state cache" do
+        expect(subject.state_attribute('growth_type')).to eq("Academic Progress Rating")
+      end
+
+      it 'should raise an error when an unknown key is passed in' do
+        expect(subject.state_attribute('foobarbaz')).to be_nil
+      end
+
+    end
   end
 end

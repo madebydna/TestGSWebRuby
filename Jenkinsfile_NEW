@@ -101,7 +101,11 @@ pipeline {
   }
   post {
     success {
-      slackSend (color: '#228B22', message: "SUCCESSFUL: Job '${env.JOB_NAME} [build #${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      script {
+        if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'nextrel') {
+          slackSend (color: '#228B22', message: "SUCCESSFUL: Job '${env.JOB_NAME} [build #${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+      }
       emailext (
         subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", to: "asingh@greatschools.org",
         body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
@@ -110,7 +114,11 @@ pipeline {
       )
     }
     failure {
-      slackSend (color: '#B22222', message: "FAILED: Job '${env.JOB_NAME} [build #${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      script {
+        if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'nextrel') {
+          slackSend (color: '#B22222', message: "FAILED: Job '${env.JOB_NAME} [build #${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+      }
       emailext (
         subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", to: "asingh@greatschools.org",
         body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
@@ -119,7 +127,11 @@ pipeline {
       )
     }
     unstable {
-      slackSend (color: '#FFFF33', message: "UNSTABLE: Job '${env.JOB_NAME} [build #${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      script {
+        if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'nextrel') {
+          slackSend (color: '#FFFF33', message: "UNSTABLE: Job '${env.JOB_NAME} [build #${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+      }
       emailext (
         subject: "UNSTABLE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'", to: "asingh@greatschools.org",
         body: """<p>UNSTABLE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>

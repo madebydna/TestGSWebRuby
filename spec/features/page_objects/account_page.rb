@@ -3,7 +3,6 @@ class AccountPage < SitePrism::Page
   include Footer
 
   set_url '/account/'
-  set_url_matcher /\/account\/$/
   
   class EmailSubscriptions < SitePrism::Section
     element :closed_arrow, '.i-32-close-arrow-head'

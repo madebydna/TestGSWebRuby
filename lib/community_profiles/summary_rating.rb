@@ -1,12 +1,12 @@
 module CommunityProfiles
   class SummaryRating
 
-    attr_reader :facet_results, :state_facet_results, :state
+    attr_reader :facet_results, :state_facet_results, :state_cache_data_reader
 
-    def initialize(facet_results = {}, state)
+    def initialize(facet_results = {}, state_cache_data_reader)
       @facet_results = facet_results["community"]
       @state_facet_results = facet_results["state"]
-      @state = state
+      @state_cache_data_reader = state_cache_data_reader
     end
 
     def ratings_narration
@@ -18,19 +18,19 @@ module CommunityProfiles
     end
 
     def summary_rating_type
-      @_summary_rating_type ||= begin
-        cache_data = StateCache.for_state('state_attributes', state)&.cache_data
-        cache_data&.fetch("summary_rating_type", nil)
-      end
+      @_summary_rating_type ||= state_cache_data_reader.state_attribute('summary_rating_type')
+    end
+
+    def ratings
+      @_ratings ||= state_cache_data_reader.ratings
     end
 
     def valid_date_in_words
       @_source_date_valid ||= begin
-        cache_data = StateCache.for_state('ratings', state)&.cache_data
-        source_info = cache_data.fetch(summary_rating_type, [])
-                              .sort_by {|x| x['year']}
-                              .reverse
-                              .first
+        cache_data = ratings.fetch(summary_rating_type, [])
+        source_info = cache_data.sort_by {|x| x['year']}
+                                .reverse
+                                .first
         source_info&.fetch('date_in_word', nil)
       end
     end

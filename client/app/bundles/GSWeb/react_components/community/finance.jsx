@@ -49,7 +49,7 @@ const Finance = ({dataValues, district}) => {
   const footer = <div data-ga-click-label={null}>
     <InfoBox content={_sources} element_type="sources" pageType={'district'}>{t('See notes')}</InfoBox>
     <QualarooDistrictLink module='district_finance'
-      districtId={district.district_id} state={district.state} type='yes_no' />
+      districtId={district.districtId} state={district.state} type='yes_no' />
   </div>
   
   return (

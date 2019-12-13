@@ -24,7 +24,7 @@ module SchoolProfiles
         'State'       => school.state, # abbreviation
         'type'        => school.type,  # private, public, charter
         'zipcode'     => school.zipcode,
-        'district_id' => school.district.present? ? school.district.id.to_s : "",
+        'district_id' => school.district.present? ? school.district.district_id.to_s : "",
         'template'    => SCHOOL_PROFILE_TEMPLATE,
         'number_of_reviews_with_comments' =>  school_reviews_count,
         # untruncated values

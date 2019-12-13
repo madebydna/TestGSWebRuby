@@ -74,7 +74,7 @@ const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqCo
     <InfoTextAndCircle cta={faqCta} content={faqContent} element_type="faq" />
   </div>
 
-  return <div>
+  return <div id="StemCourses">
     <a className="anchor-mobile-offset" name="Advanced_courses"></a>
     <BasicDataModuleLayout
       share_content = {share_content}

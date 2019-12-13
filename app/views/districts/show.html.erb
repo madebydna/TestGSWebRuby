@@ -8,23 +8,227 @@
 <% end %>
 
 <div class="community-page">
-  <%= react_component("District", props: {
-      schools_data: @top_schools,
-      school_levels: @school_levels,
-      breadcrumbs: @breadcrumbs,
-      locality: @locality,
-      heroData: @hero_data,
-      academics: @academics_props,
-      stemCourses: @stem_courses,
-      reviews: @reviews,
-      translations: @translations,
-      csa_module: @csa_module,
-      students: @students,
-      teachers_staff: @teachers_staff,
-      finance: @finance,
-      growthData: @growth_rating,
-      summaryRatingData: @summary_rating
-    }) %>
-</div>
+  <div class="district-body">
+    <%= react_component('SearchBoxWrapper') %>
 
+    <div class="breadcrumbs-container">
+      <%= render 'community/breadcrumbs', breadcrumbs: @breadcrumbs %>
+    </div>
+    <%= render 'districts/hero', 
+          district: @locality[:name], 
+          address: @locality[:address], 
+          city: @locality[:city], 
+          state_short: @locality[:stateShort], 
+          zip_code: @locality[:zipCode], 
+          phone: @locality[:phone], 
+          district_url: @locality[:districtUrl], 
+          enrollment: @hero_data[:enrollment], 
+          grades: @hero_data[:grades], 
+          school_count: @hero_data[:schoolCount], 
+          narration: @hero_data[:narration] 
+    %>
+
+    <div class="below-hero">
+      <%= render 'community/toc' %><div class="community-modules">
+      
+        <%# First Ad %>
+        <div class="display-mobile">
+          <%= react_component("AdWrapper", props: {
+              slot: "districtpagemobile_first",
+              sizeName: "thin_banner_mobile"
+          }) %>
+        </div>
+
+        <%# Schools %>
+        <div id="schools" class="module-section">
+          <h2 class="modules-title"><%= I18n.t('find_schools_in', scope: 'community.district') %> <%= @locality[:name] %></h2>
+
+          <div class="xq-partnership">
+            <%= @translations[:inPartnershipWith] %>
+            <a href='https://xqsuperschool.org/school-board-thing' target="_blank" rel="nofollow">
+              <%= image_tag('community/xq-sm.png', alt: 'xq icon') %>
+            </a>
+          </div>
+
+          <%# School Browse Links (Find schools in district) %>
+          <% if @school_levels %>
+            <%= react_component("SchoolBrowseLinksWrapper", props: {
+                community: 'district',
+                locality: @locality,
+                schoolLevels: @school_levels
+            }) %>
+          <% end %>
+
+          <%# Summary Rating %>
+          <% if @summary_rating.length > 0 %>
+            <div id="summary-rating">
+              <%= react_component("SummaryRating", props: {
+                  summaryRatingData: @summary_rating,
+                  district: { districtId: @locality[:district_id], state: @locality[:stateShort] }
+              }) %>
+            </div>
+          <% end %>
+
+          <%# Top Schools %>
+          <% if @top_schools[:counts][:all] > 0 %>
+            <%= react_component("TopSchoolsStatefulWrapper", props: {
+                community: 'district',
+                schoolsData: @top_schools[:schools],
+                locality: @locality,
+                schoolLevels: @top_schools[:counts]
+            }) %>
+          <% end %>
+
+        </div>
+
+        <%# Second Ad %>
+        <div id="second-ad">
+          <%= react_component("AdWrapper", props: {
+              slot: "districtpage_second",
+              sizeName: "box"
+          }) %>
+        </div>
+
+        <%# CSA Generic Module %>
+        <% if @top_schools[:schools][:csa].length == 0 && @csa_module %>
+          <div>
+            <%= react_component("CsaInfo", props: {
+                community: 'district',
+                locality: @locality
+            }) %>
+          </div>
+        <% end %>
+
+        <%# Academics %>
+        <div id="academics" class="module-section">
+          <%= react_component("AcademicsDataModuleWrapper", props: {
+              title: @academics_props[:title],
+              anchor: @academics_props[:anchor],
+              subtitle: @academics_props[:subtitle],
+              info_text: @academics_props[:info_text],
+              icon_classes: @academics_props[:icon_classes],
+              sources: @academics_props[:sources],
+              share_content: @academics_props[:share_content],
+              rating: @academics_props[:rating],
+              data: @academics_props[:data],
+              analytics_id: @academics_props[:analytics_id],
+              showTabs: @academics_props[:showTabs],
+              faq: @academics_props[:faq],
+              feedback: @academics_props[:feedback],
+              suppressIfEmpty: true,
+              pageType: 'district',
+              locality: @locality
+          }) %>
+        </div>
+
+        <%# Growth %>
+        <% if @growth_rating.length > 0 %>
+          <div id="<%= @growth_rating[:key] %>" class="module-section">
+            <%= react_component("GrowthRating", props: {
+                growthData: @growth_rating,
+                district: { districtId: @locality[:district_id], state: @locality[:stateShort] }
+            }) %>
+          </div>
+        <% end %>
+
+        <%# STEM Courses %>
+        <% if @stem_courses[:courses].length > 0 %>
+          <div id="advanced_courses" class="module-section">
+            <%= react_component("StemCourses", props: {
+                courses: @stem_courses[:courses],
+                sources: @stem_courses[:sources],
+                share_content: @stem_courses[:share_content],
+                title: @stem_courses[:title],
+                titleTooltipText: @stem_courses[:titleTooltipText],
+                subtitle: @stem_courses[:subtitle],
+                parentTip: @stem_courses[:parentTip],
+                faqCta: @stem_courses[:faqCta],
+                faqContent: @stem_courses[:faqContent],
+                qualaroo_module_link: @stem_courses[:qualaroo_module_link],
+            }) %>
+          </div>
+        <% end %>
+
+        <%# Student Demographics %>
+        <% if @students.ethnicity_student_demo_data || @students.gender_student_demo_data || @students.subgroups_student_demo_data %>
+          <div id="students" class="module-section">
+            <%= react_component("Students", props: {
+                ethnicityData: @students.students_demographics['ethnicityData'],
+                subgroupsData: @students.students_demographics['subgroupsData'],
+                genderData: @students.students_demographics['genderData'],
+                translations: @students.students_demographics['translations'],
+                sources: @students.students_demographics['sources'],
+                pageType: 'district'
+            }) %>
+          </div>
+        <% end %>
+
+        <%# Teachers & Staff %>
+        <% if @teachers_staff[:sources].length > 0 %>
+          <div id="teachers-staff" class="module-section">
+            <%= react_component("TeachersStaffWrapper", props: {
+                data: @teachers_staff
+            }) %>
+          </div>
+        <% end %>
+
+        <%# Calendar %>
+        <div id="calendar" class="module-section">
+          <h2 class="modules-title"><%= I18n.t('district_calendar', scope: 'community.district') %></h2>
+          <%= react_component("Calendar", props: {
+              locality: @locality,
+              pageType: 'District'
+          }) %>
+        </div>
+
+        <%# Finance %>
+        <% if @finance.length > 0 %>
+          <div id="finance" class="module-section">
+            <%= react_component("Finance", props: {
+                dataValues: @finance,
+                district: { districtId: @locality[:district_id], state: @locality[:stateShort] }
+            }) %>
+          </div>
+        <% end %>
+        
+        <%# Mobility %>
+        <div id="mobility" class="module-section">
+          <h2 class="modules-title"><%= I18n.t('title', scope: 'community.mobility') %> <%= @locality[:name] %></h2>
+          <%= react_component("XQSchoolBoardFinder", props: {
+              locality: @locality
+          }) %>
+          <%= react_component("Mobility", props: {
+              locality: @locality,
+              pageType: 'District'
+          }) %>
+        </div>
+
+        <%# Zillow %>
+        <%= react_component("Zillow", props: {
+            locality: @locality,
+            utmCampaign: 'districtpage',
+            pageType: 'district'
+        }) %>
+
+        <%# Reviews %>
+        <% if @reviews.length > 0 %>
+          <div id="reviews" class="module-section">
+            <div class="rating-container reviews-module">
+              <h3><%= I18n.t('title', scope: 'community.recent_reviews') %> <%= @locality[:name] %></h3>
+
+              <%= react_component("RecentReviews", props: {
+                  community: 'district',
+                  reviews: @reviews,
+                  locality: @locality
+              }) %>
+            </div>
+          </div>
+        <% end %>
+
+      </div><%= render 'community/sticky_right_rail', ad_slot_name: "districtpage_first" %>
+    </div>
+
+
+  </div>
+</div>
 

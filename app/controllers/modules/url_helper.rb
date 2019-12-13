@@ -132,7 +132,7 @@ module UrlHelper
   # params_hash[:refresh_canonical_link] is used in the populate_canonical_url_for_schools script to refresh the db
   %w(school school_user).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
-      return add_query_params_to_url(school.canonical_url, true, params_hash.compact) if use_db_canonical_url?(helper_name, school, params_hash)
+      return add_query_params_to_url(school.canonical_url, true, remove_default_params_options(params_hash.compact)) if use_db_canonical_url?(helper_name, school, params_hash)
 
       if school.nil?
         params = school_params_hash params_hash
@@ -143,7 +143,7 @@ module UrlHelper
       super params
     end
     define_method "#{helper_name}_url" do |school, params_hash = {}|
-      return add_query_params_to_url(root_url.chop + school.canonical_url, true, params_hash.compact) if use_db_canonical_url?(helper_name, school, params_hash)
+      return add_query_params_to_url(root_url.chop + school.canonical_url, true, remove_default_params_options(params_hash.compact)) if use_db_canonical_url?(helper_name, school, params_hash)
 
       if school.nil?
         params = school_params_hash params_hash
@@ -339,6 +339,13 @@ module UrlHelper
 
   def use_db_canonical_url?(helper_name, school, params_hash)
     helper_name == 'school' && school.try(:canonical_url) && !params_hash.has_key?(:refresh_canonical_link)
+  end
+
+  def remove_default_params_options(params_hash)
+    default_options = %i(anchor only_path trailing_slash host protocol user password)
+    shallow_copy_of_hash = params_hash.clone
+    default_options.each {|option| shallow_copy_of_hash.delete(option)}
+    shallow_copy_of_hash
   end
 
 end

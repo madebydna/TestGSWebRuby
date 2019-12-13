@@ -101,7 +101,7 @@ const assignDisplayType = (schools, levelCodes, size) => {
   return displayedSchools;
 }
 
-const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, levelCodes, community, schoolLevels, locality }) => {
+const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, levelCodes, community, schoolLevels, locality, summaryType }) => {
   let name = regionName(locality, community);
 
   let schoolList;
@@ -121,6 +121,8 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
         </section>;
   }
 
+  const ts_blurb = summaryType === 'Summary Rating' ? t('top_schools.top_schools_blurbs', { parameters: { name } }) : t('top_schools.top_schools_test_score_ratings_blurb', { parameters: { name } })
+
 	return (
     <div className="top-school-module">
       <div className="profile-module">
@@ -128,7 +130,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
         <div className="top-school-info">
           <div>
             <p>
-              <span dangerouslySetInnerHTML={{__html: t('top_schools.top_schools_blurbs', { parameters: { name } })}}/>
+              <span dangerouslySetInnerHTML={{ __html: ts_blurb }}/>
             </p>
           </div>
         </div>

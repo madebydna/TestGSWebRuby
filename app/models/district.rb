@@ -5,6 +5,7 @@ class District < ActiveRecord::Base
   has_many :schools
 
   scope :active, -> { where(active: true) }
+  # TODO: appears unused
   scope :not_charter_only, -> { where(charter_only: 0)}
 
   def self.find_by_state_and_name(state, name)
@@ -20,6 +21,7 @@ class District < ActiveRecord::Base
       where(id: ids).active
   end
 
+  # TODO: appears unused
   def self.find_by_state_and_city(state, city)
     District.on_db(state.downcase.to_sym).
         where(city: city).active
@@ -30,14 +32,17 @@ class District < ActiveRecord::Base
     District.on_db(state.downcase.to_sym).active.order(:id).select(:id).map(&:id)
   end
 
+  # TODO: appears unused
   def boilerplate_object
     @boilerplate_object ||= DistrictBoilerplate.find_for_district(self).first
   end
 
+  # TODO: appears unused
   def state_level_boilerplate_object
     @state_level_boilerplate_object ||= DistrictStateLevelBoilerplate.find_for_district(self).first
   end
 
+  # TODO: spec exists, but appears unused
   def nearby_districts
     nearby_district_objects = 
       NearbyDistrict.find_by_district(self).sorted_by_distance
@@ -47,6 +52,7 @@ class District < ActiveRecord::Base
     districts.sort_by { |d| neighbor_ids.index(d.id) }
   end
 
+  # TODO: appears unused
   # Returns numeric value or nil
   # Memoizes its result
   def rating
@@ -56,6 +62,7 @@ class District < ActiveRecord::Base
     )
   end
 
+  # TODO: appears unused
   def schools_by_rating_desc
     @district_schools_by_rating_desc ||= (
       schools = School.within_district(self)
@@ -78,21 +85,8 @@ class District < ActiveRecord::Base
     )
   end
 
+  # TODO: appears unused
   def self.by_number_of_schools_desc(state,city)
     District.on_db(state.downcase.to_sym).active.where(city: city.name).order(num_schools: :desc)
-  end
-
-  def self.query_distance_function(lat, lon)
-    miles_center_of_earth = 3959
-    "(
-    #{miles_center_of_earth} *
-     acos(
-       cos(radians(#{lat})) *
-       cos( radians( `lat` ) ) *
-       cos(radians(`lon`) - radians(#{lon})) +
-       sin(radians(#{lat})) *
-       sin( radians(`lat`) )
-     )
-   )".squish
   end
 end

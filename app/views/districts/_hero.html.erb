@@ -1,0 +1,46 @@
+<% school_count_formatted = number_with_delimiter(school_count) %>
+<% enrollment_formatted = number_with_delimiter(enrollment.round) %>
+
+<div id="hero">
+  <div>
+    <div class="icon-nearby_2"></div>
+    <h1 class="hero-title"><%= district %></h1>
+    <div class="district-hero-contact-info">
+      <% if address %>
+        <span class="content"><%= address %>, <%= city %>, <%= state_short %> <%= zip_code %></span>
+      <% end %>
+      <% if phone %>
+        <span class="badge-and-content phone">
+        <span class="badge icon-phone"></span>
+        <span class="content"><%= phone %></span>
+      </span>
+      <% end %>
+      <% if district_url %>
+        <span class="badge-and-content link">
+        <span class="badge icon-link"></span>
+        <span><a class="content" href="<%= district_url %>" target='_blank'><%= I18n.t('website', scope: 'community.district') %></a></span>
+      <% end %>
+    </div>
+    <% if narration %>
+      <div class='district-hero-narrative'>
+        <%= narration %>
+      </div>
+    <% end %>
+    <div class="district-hero-stats">
+      <div>
+        <div><%= I18n.t('schools', scope: 'community.district').upcase %></div>
+        <div><%= school_count_formatted %></div>
+      </div>
+      <% if enrollment %>
+        <div>
+          <div><%= I18n.t('students', scope: 'community.district').upcase %></div>
+          <div><%= enrollment_formatted %></div>
+        </div>
+      <% end %>
+      <div>
+        <div><%= I18n.t('grades', scope: 'community.district').upcase %></div>
+        <div><%= grades %></div>
+      </div>
+    </div>
+  </div>
+</div>

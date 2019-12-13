@@ -4,12 +4,12 @@ describe DistrictCache do
   after { clean_dbs :gs_schooldb, :ca, :hi }
 
   before do
-    @district1 = FactoryBot.create_on_shard(:ca, :district, state: "CA")
-    @district2 = FactoryBot.create_on_shard(:ca, :district, state: "CA")
-    @district3 = FactoryBot.create_on_shard(:hi, :district, state: "HI")
-    @district_cache1 = FactoryBot.create(:district_cache, state: 'ca', district_id: @district1.id, name: 'feed_test_scores_gsdata')
-    @district_cache2 = FactoryBot.create(:district_cache, state: 'ca', district_id: @district2.id, name: 'ratings')
-    @district_cache3 = FactoryBot.create(:district_cache, district_id: @district3.id, state: 'hi', name: 'ratings')
+    @district1 = FactoryBot.create(:district_record, state: "ca", district_id: 1)
+    @district2 = FactoryBot.create(:district_record, state: "ca", district_id: 2)
+    @district3 = FactoryBot.create(:district_record, state: "hi")
+    @district_cache1 = FactoryBot.create(:district_cache, state: 'ca', district_id: @district1.district_id, name: 'feed_test_scores_gsdata')
+    @district_cache2 = FactoryBot.create(:district_cache, state: 'ca', district_id: @district2.district_id, name: 'ratings')
+    @district_cache3 = FactoryBot.create(:district_cache, state: 'hi', district_id: @district3.district_id, name: 'ratings')
   end
   
   describe '.for_district' do

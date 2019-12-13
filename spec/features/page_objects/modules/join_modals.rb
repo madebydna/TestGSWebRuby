@@ -29,7 +29,7 @@ module EmailJoinModal
     page_class.class_eval do
       include Modals
       section :email_join_modal, EmailJoinModalSection, '.email-join-modal'
-      section :join_modal, JoinModalSection, '.js-submit-review-modal, .js-save-search-modal'
+      section :join_modal, JoinModalSection, '.js-submit-review-modal, .js-save-search-modal, .js-school-user-modal'
     end
   end
 end

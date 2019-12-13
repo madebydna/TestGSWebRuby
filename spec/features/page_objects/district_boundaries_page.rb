@@ -5,5 +5,6 @@ class DistrictBoundariesPage < SitePrism::Page
   include Footer
   include TopNavSection
 
-  set_url_matcher /\/school-district-boundaries-map\//
+  set_url '/school-district-boundaries-map/{?query*}'
+
 end

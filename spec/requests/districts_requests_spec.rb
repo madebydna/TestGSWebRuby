@@ -10,12 +10,12 @@ describe 'District home page requests' do
 
   describe 'In California' do
     before do
-      FactoryBot.create(:district, name: 'San Francisco Unified', city: 'San Francisco')
+      FactoryBot.create(:district_record, name: 'San Francisco Unified', city: 'San Francisco')
       get test_url
     end
 
     after do
-      clean_models(:ca, District)
+      clean_models(:gs_schooldb, DistrictRecord)
     end
 
     describe 'With a correct path' do
@@ -35,16 +35,13 @@ describe 'District home page requests' do
   end
 
   describe 'In New Jersey' do
-    before do
-      # Note because of model sharding (and FactoryBot's obliviousness to it) to properly save a sharded FactoryBot
-      # model to a database other than the default (:ca) this is what you need to do
-      nj_district = FactoryBot.build(:district, name: 'Jersey City Unified', city: 'Jersey City', state: 'NJ')
-      District.on_db(:nj) { nj_district.save }
+    before do    
+      nj_district = FactoryBot.create(:district_record, name: 'Jersey City Unified', city: 'Jersey City', state: 'nj')
       get test_url
     end
 
     after do
-      clean_models(:nj, District)
+      clean_models(:gs_schooldb, DistrictRecord)
     end
 
     describe 'With a correct path' do

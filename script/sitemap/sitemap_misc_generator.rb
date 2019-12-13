@@ -17,7 +17,7 @@ class SitemapMiscGenerator < SitemapXmlWriter
       # Homepage
       write_url('https://www.greatschools.org/', 'monthly', '1.0')
       # School/District boundary map
-      write_url(district_boundary_url, 'monthly', '0.7')
+      write_url(district_boundary_url(trailing_slash: true), 'monthly', '0.7')
     end
     close_file
   end

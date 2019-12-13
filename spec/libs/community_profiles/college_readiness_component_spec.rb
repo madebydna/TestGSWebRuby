@@ -1,12 +1,12 @@
 require "spec_helper"
 
 describe CommunityProfiles::CollegeReadinessComponent do
-    let!(:district) { create(:district) }
+    let!(:district) { create(:district_record) }
     let(:cache_reader) { 
         DistrictCacheDataReader.new(district, district_cache_keys: ['district_characteristics']) 
     }
     before do
-        create(:district_cache, district_id: district.id, state: district.state,
+        create(:district_cache, district_id: district.district_id, state: district.state,
             name: "district_characteristics", value: {
             "Students participating in free or reduced-price lunch program" => [
                 # Entry is not included in included_data_types
@@ -104,7 +104,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
         }.to_json)
     end
 
-    after { clean_models(District, DistrictCache) }
+    after { do_clean_models(:gs_schooldb, DistrictRecord, DistrictCache) }
 
     subject { CommunityProfiles::CollegeReadinessComponent.new('college_success', cache_reader) }
 

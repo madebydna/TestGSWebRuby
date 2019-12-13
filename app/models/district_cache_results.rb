@@ -17,7 +17,7 @@ class DistrictCacheResults
 
   def decorate_districts(districts)
     [*districts].map do |district|
-      decorated = DistrictCacheDecorator.new(district, @district_data[[district.state, district.id]] || {})
+      decorated = DistrictCacheDecorator.new(district, @district_data[[district.state, district.district_id]] || {})
       @cache_keys.each do |key|
         if module_for_key(key)
           decorated.send(:extend, (module_for_key(key)))
