@@ -60,7 +60,7 @@
           <% end %>
 
           <%# Summary Rating %>
-          <% if @summary_rating.keys.length > 0 %>
+          <% if @summary_rating.length > 0 %>
             <div id="summary-rating">
               <%= react_component("SummaryRating", props: {
                   summaryRatingData: @summary_rating,
@@ -122,7 +122,7 @@
         </div>
 
         <%# Growth %>
-        <% if @growth_rating.keys.length > 0 %>
+        <% if @growth_rating.length > 0 %>
           <div id="<%= @growth_rating[:key] %>" class="module-section">
             <%= react_component("GrowthRating", props: {
                 growthData: @growth_rating,
