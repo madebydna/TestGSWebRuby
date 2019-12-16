@@ -13,7 +13,7 @@ class DistrictCache < ActiveRecord::Base
   end
 
   def self.for_state_and_id(state, district_id)
-    where(state: state, district_id: district_id)
+    where(state: state.upcase, district_id: district_id)
   end
 
   def self.for_districts(districts)
