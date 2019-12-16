@@ -177,7 +177,7 @@ describe "Districts API" do
     it 'adds district schools summary when available' do
       district = create(:alameda_city_unified_district_record)
       create(:cached_district_schools_summary,
-             state: district.state,
+             state: district.state.upcase,
              district_id: district.district_id)
       get '/gsr/api/districts/?state=ca'
       expect(status).to eq(200)

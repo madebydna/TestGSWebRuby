@@ -6,7 +6,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
         DistrictCacheDataReader.new(district, district_cache_keys: ['district_characteristics']) 
     }
     before do
-        create(:district_cache, district_id: district.district_id, state: district.state,
+        create(:district_cache, district_id: district.district_id, state: district.state.upcase,
             name: "district_characteristics", value: {
             "Students participating in free or reduced-price lunch program" => [
                 # Entry is not included in included_data_types

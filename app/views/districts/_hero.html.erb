@@ -1,5 +1,5 @@
 <% school_count_formatted = number_with_delimiter(school_count) %>
-<% enrollment_formatted = number_with_delimiter(enrollment.round) %>
+<% enrollment_formatted = number_with_delimiter(enrollment.try(:round)) %>
 
 <div id="hero">
   <div>
