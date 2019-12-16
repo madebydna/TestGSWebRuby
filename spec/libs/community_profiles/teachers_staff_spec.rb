@@ -211,7 +211,7 @@ describe CommunityProfiles::TeachersStaff do
   end
 
   def create_gsdata_cache(value)
-    create(:district_cache, district_id: district.district_id, state: district.state, 
+    create(:district_cache, district_id: district.district_id, state: district.state.upcase, 
       name: "gsdata", value: value.to_json)
   end
 
