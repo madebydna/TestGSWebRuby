@@ -1,5 +1,5 @@
 import React from 'react';
-import ollie from 'school_profiles/owl_tutorial_prompt.png';
+import ollie from 'school_profiles/owl_tutorial_prompt.svg';
 import { t } from 'util/i18n';
 import OpenableCloseable from './openable_closeable';
 import { links } from '../components/links';
