@@ -60,7 +60,7 @@ class SitemapStateGenerator < SitemapXmlWriter
   end
 
   def districts
-    DistrictRecord.by_state(@state).active.order(:id)
+    DistrictRecord.by_state(@state).active.order(:district_id)
   end
 
   ###########
