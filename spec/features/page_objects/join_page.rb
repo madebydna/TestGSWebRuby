@@ -5,7 +5,7 @@ class JoinPage < SitePrism::Page
   include FlashMessages
   include Footer
 
-  set_url '/gsr/login'
+  set_url '/gsr/login/'
 
   element :signup_link, 'a', text: 'Sign up'
   element :forgot_password_link, 'a', text: 'Forgot your password?' 
