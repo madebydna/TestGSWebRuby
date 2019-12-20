@@ -68,25 +68,25 @@ class SitemapStateGenerator < SitemapXmlWriter
   ###########
 
   def write_state_url
-    write_url(state_url(state_params(@state).merge(trailing_slash: true)), STATE_FREQ, STATE_PRIORITY)
+    write_url('https://www.greatschools.org' + state_path(state_params(@state).merge(trailing_slash: true)), STATE_FREQ, STATE_PRIORITY)
   end
 
   def write_profile_urls
     schools.each do |school|
-      write_url(school_url(school, trailing_slash: true), PROFILE_FREQ, PROFILE_PRIORITY)
+      write_url('https://www.greatschools.org' + school_path(school, trailing_slash: true), PROFILE_FREQ, PROFILE_PRIORITY)
     end
   end
 
   def write_city_urls
     cities.each do |city|
-      write_url(city_url(city_params(@state, city.name).merge(trailing_slash: true)), CITY_FREQ, CITY_PRIORITY)
-      write_url(search_city_browse_url(city_params(@state, city.name).merge(trailing_slash: true)), CITY_BROWSE_FREQ, CITY_BROWSE_PRIORITY)
+      write_url('https://www.greatschools.org' + city_path(city_params(@state, city.name).merge(trailing_slash: true)), CITY_FREQ, CITY_PRIORITY)
+      write_url('https://www.greatschools.org' + search_city_browse_path(city_params(@state, city.name).merge(trailing_slash: true)), CITY_BROWSE_FREQ, CITY_BROWSE_PRIORITY)
     end
   end
 
   def write_district_urls
     districts.each do |district|
-      write_url(district_url(district_params(@state, district.city, district.name).merge(trailing_slash: true)), DISTRICT_FREQ, DISTRICT_PRIORITY)
+      write_url('https://www.greatschools.org' + district_path(district_params(@state, district.city, district.name).merge(trailing_slash: true)), DISTRICT_FREQ, DISTRICT_PRIORITY)
     end
   end
 end

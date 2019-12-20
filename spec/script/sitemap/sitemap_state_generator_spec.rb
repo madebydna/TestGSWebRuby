@@ -9,7 +9,7 @@ describe SitemapStateGenerator do
 
   describe '#write_state_url' do
     it 'writes out state homepage' do
-      expect(generator).to receive(:write_url).with('http://localhost/new-jersey/',
+      expect(generator).to receive(:write_url).with('https://www.greatschools.org/new-jersey/',
                                                     SitemapStateGenerator::STATE_FREQ,
                                                     SitemapStateGenerator::STATE_PRIORITY)
       generator.send(:write_state_url)
@@ -24,10 +24,10 @@ describe SitemapStateGenerator do
     end
 
     it 'expects #write_url to be called with each school profile url' do
-      expect(generator).to receive(:write_url).with('http://localhost/california/alameda/1-Alameda-High-School/',
+      expect(generator).to receive(:write_url).with('https://www.greatschools.org/california/alameda/1-Alameda-High-School/',
                                                     SitemapStateGenerator::PROFILE_FREQ,
                                                     SitemapStateGenerator::PROFILE_PRIORITY)
-      expect(generator).to receive(:write_url).with('http://localhost/california/alameda/2-Bay-Farm/',
+      expect(generator).to receive(:write_url).with('https://www.greatschools.org/california/alameda/2-Bay-Farm/',
                                                     SitemapStateGenerator::PROFILE_FREQ,
                                                     SitemapStateGenerator::PROFILE_PRIORITY)
       generator.send(:write_profile_urls)
@@ -41,7 +41,7 @@ describe SitemapStateGenerator do
     end
 
     it 'expects #write_url to be called with each district url' do
-      expect(generator).to receive(:write_url).with('http://localhost/new-jersey/odessa/appoquinimink-school-district/',
+      expect(generator).to receive(:write_url).with('https://www.greatschools.org/new-jersey/odessa/appoquinimink-school-district/',
                                                     SitemapStateGenerator::DISTRICT_FREQ,
                                                     SitemapStateGenerator::DISTRICT_PRIORITY)
       generator.send(:write_district_urls)
@@ -56,16 +56,16 @@ describe SitemapStateGenerator do
     end
 
     it 'expects #write_url to be called with each city url and city browse url' do
-      expect(generator).to receive(:write_url).with('http://localhost/new-jersey/anchorage/',
+      expect(generator).to receive(:write_url).with('https://www.greatschools.org/new-jersey/anchorage/',
                                                     SitemapStateGenerator::CITY_FREQ,
                                                     SitemapStateGenerator::CITY_PRIORITY)
-      expect(generator).to receive(:write_url).with('http://localhost/new-jersey/anchorage/schools/',
+      expect(generator).to receive(:write_url).with('https://www.greatschools.org/new-jersey/anchorage/schools/',
                                                     SitemapStateGenerator::CITY_BROWSE_FREQ,
                                                     SitemapStateGenerator::CITY_BROWSE_PRIORITY)
-      expect(generator).to receive(:write_url).with('http://localhost/new-jersey/new-york/',
+      expect(generator).to receive(:write_url).with('https://www.greatschools.org/new-jersey/new-york/',
                                                     SitemapStateGenerator::CITY_FREQ,
                                                     SitemapStateGenerator::CITY_PRIORITY)
-      expect(generator).to receive(:write_url).with('http://localhost/new-jersey/new-york/schools/',
+      expect(generator).to receive(:write_url).with('https://www.greatschools.org/new-jersey/new-york/schools/',
                                                     SitemapStateGenerator::CITY_BROWSE_FREQ,
                                                     SitemapStateGenerator::CITY_BROWSE_PRIORITY)
       generator.send(:write_city_urls)
