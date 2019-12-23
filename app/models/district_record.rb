@@ -25,7 +25,7 @@ class DistrictRecord < ActiveRecord::Base
   end
 
   def self.ids_by_state(state)
-    by_state(state).active.pluck(:district_id)
+    by_state(state).pluck(:district_id)
   end
 
   def self.find_by_state_and_ids(state, ids = [])
