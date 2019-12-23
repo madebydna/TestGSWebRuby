@@ -28,6 +28,10 @@ class DistrictRecord < ActiveRecord::Base
     by_state(state).pluck(:district_id)
   end
 
+  def self.ids_by_state_active(state)
+    by_state(state).active.pluck(:district_id)
+  end
+
   def self.find_by_state_and_ids(state, ids = [])
     by_state(state.downcase).
       where(district_id: ids).active

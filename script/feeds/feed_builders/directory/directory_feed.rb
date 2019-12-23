@@ -19,7 +19,7 @@ module Feeds
 
     def initialize(attributes = {})
       @state = attributes[:state]
-      @district_ids = attributes[:district_ids].present? ? attributes[:district_ids] :  DistrictRecord.ids_by_state(@state)
+      @district_ids = attributes[:district_ids].present? ? attributes[:district_ids] :  DistrictRecord.ids_by_state_active(@state)
       @school_ids = attributes[:school_ids].present? ? attributes[:school_ids] : School.ids_by_state(@state)
       @feed_file_path = attributes[:feed_file]
       @root_element = attributes[:root_element]
