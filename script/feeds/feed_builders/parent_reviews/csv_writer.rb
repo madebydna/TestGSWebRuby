@@ -8,7 +8,7 @@ module Feeds
       include Feeds::FeedConstants
       include Feeds::FeedHelper
 
-      HEADERS = %w(universal-id	id	who	posted comments	quality	url)
+      HEADERS = %w(universal-id id who posted comments quality url)
 
       def initialize(data_reader, output_path)
         @feed_file_path = output_path
