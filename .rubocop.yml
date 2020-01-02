@@ -10,3 +10,5 @@ Metrics/BlockLength:
     - 'lib/etl/spec/**/*.rb'
 Style/NumericPredicate:
   Enabled: false
+Bundler/OrderedGems:
+  Enabled: false

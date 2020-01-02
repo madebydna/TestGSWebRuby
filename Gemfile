@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 source "https://rubygems.org"
 
 # WARNING: Before upgrading rails version check the following extension to the
