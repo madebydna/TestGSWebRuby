@@ -29,9 +29,11 @@ module Feeds
           'google_feed' => 'local-google-feed',
           'city' => 'local-greatschools-city-feed',
           'proficiency_band' => 'gs-proficiency-band',
+          'parent_reviews' => 'local-gs-parent-review-feed',
+          'parent_reviews_flat' => 'local-gs-parent-review-feed-flat'
       }
 
-      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description official_overall_rating official_overall_rating_description official_overall_rating_flat)
+      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description official_overall_rating official_overall_rating_description official_overall_rating_flat parent_reviews parent_reviews_flat)
 
       VALID_FEED_FORMATS = %w(xml csv txt)
 
@@ -58,6 +60,7 @@ module Feeds
           'feed_test_scores_gsdata' => 'https://www.greatschools.org/feeds/gs-test.xsd',
           'feed_test_scores_subgroup_gsdata' => 'https://www.greatschools.org/feeds/gs-test-subgroups.xsd',
           'subrating' => 'https://www.greatschools.org/feeds/gs-subrating.xsd',
+          'parent_reviews' => 'https://www.greatschools.org/feeds/local-gs-parent-review.xsd',
       }
       FEED_TO_ROOT_ELEMENT_MAPPING = {
           'test_scores' => 'gs-test-feed',

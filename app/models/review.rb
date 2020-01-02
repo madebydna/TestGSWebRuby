@@ -42,6 +42,7 @@ class Review < ActiveRecord::Base
   scope :has_comment, -> { where('reviews.comment IS NOT NULL and reviews.comment != ""')}
   scope :selection_filter, ->(show_by_group) { where(:user_type => show_by_group) unless show_by_group == 'all' || show_by_group.nil? || show_by_group.empty? }
   scope :five_star_review, -> { joins(question: :review_topic).where('review_topics.id = 1') }
+  scope :by_state, ->(state) { where(state: state) }
 
   # TODO: i18n this message
   validates_uniqueness_of( :member_id,
