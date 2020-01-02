@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 # WARNING: Before upgrading rails version check the following extension to the
-# Rails ActionDispatch::HTTP::URL.url_for 
+# Rails ActionDispatch::HTTP::URL.url_for
 gem 'rails', '4.2.8'
 
 gem 'mysql2', '0.4.10'
 
 # This gem provides jQuery and the jQuery-ujs driver for your Rails 3+ application.
 # Used by pages that use JS through rails asset pipeline and not webpack/react
-# Such as review moderation pages and reviews landing page 
+# Such as review moderation pages and reviews landing page
 gem 'jquery-rails'
 
 # This gem provides jquery-cookie.js assets for your Rails 3 application.
@@ -214,9 +216,12 @@ group :development, :test do
 
   # Ruby code style checking tool.
   # USED: Manually and by Jenkins
-  gem 'rubocop', '= 0.52.0', require: false
+  # gem 'rubocop', '= 0.52.0', require: false
+  gem 'rubocop', require: false
   # A formatter for rubocop that outputs in checkstyle format
   gem 'rubocop-checkstyle_formatter', require: false
+
+  gem 'overcommit'
 
   # gem to use pry rails when using rails console. Give formatting issues superior to standard irb
   gem 'pry-rails'
