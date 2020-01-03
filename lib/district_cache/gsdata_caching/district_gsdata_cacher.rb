@@ -33,7 +33,7 @@ class DistrictGsdataCacher < DistrictCacher
   # 339: Percent of Social Worker Staff
   # 342: Total Revenue
   # 346: Total Expenditures
- # 351: Per Pupil Revenue
+  # 351: Per Pupil Revenue
   # 352: Per Pupil Expenditures
   # 353: Percent Federal Revenue
   # 354: Percent State Revenue
