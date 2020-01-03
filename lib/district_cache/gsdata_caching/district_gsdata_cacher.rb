@@ -31,24 +31,24 @@ class DistrictGsdataCacher < DistrictCacher
   # 337: Percent of Nurse Staff
   # 338: Percent of Psychologist Staff
   # 339: Percent of Social Worker Staff
-  # 342: Total Revenue    
-  # 346: Total Expenditures 
-  # 351: Per Pupil Revenue    
+  # 342: Total Revenue
+  # 346: Total Expenditures
+ # 351: Per Pupil Revenue
   # 352: Per Pupil Expenditures
-  # 353: Percent Federal Revenue  
-  # 354: Percent State Revenue    
-  # 355: Percent Local Revenue  
-  # 356: Percent Instructional Expenditures 
-  # 357: Percent Support services Expenditures  
-  # 358: Percent Other Expenditures      
-  # 359: Percent Uncategorized Expenditures   
+  # 353: Percent Federal Revenue
+  # 354: Percent State Revenue
+  # 355: Percent Local Revenue
+  # 356: Percent Instructional Expenditures
+  # 357: Percent Support services Expenditures
+  # 358: Percent Other Expenditures
+  # 359: Percent Uncategorized Expenditures
 
 
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
 
-  DATA_TYPE_IDS = [23, 27, 35, 51, 55, 59, 63, 67, 71, 83, 91, 95, 99, 119, 
-    133, 149, 152, 154, 320, 321, 322, 335, 336, 337, 338, 339, 342, 346, 351, 
-    352, 353, 354, 355, 356, 357, 358, 359].freeze
+  DATA_TYPE_IDS = [23, 27, 35, 51, 55, 59, 63, 67, 71, 83, 91, 95, 99, 119,
+                   133, 149, 152, 154, 320, 321, 322, 335, 336, 337, 338, 339, 342, 346, 351,
+                   352, 353, 354, 355, 356, 357, 358, 359].freeze
 
   # BREAKDOWN_TAG_NAMES = %w(
   #   ethnicity

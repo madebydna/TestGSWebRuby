@@ -58,9 +58,11 @@ module CommunityProfiles
 
       # JT-8787: Displayed ACT & SAT data must be within 2 years of one another, otherwise hide the older data type
       if act_content && sat_content && ((act_content - sat_content).abs > 2)
-        act_content > sat_content ? 
-          remove_crdc_breakdown!(hash, SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY) :
+        if act_content > sat_content
+          remove_crdc_breakdown!(hash, SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY)
+        else
           remove_crdc_breakdown!(hash, ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY)
+        end
       end
       if act_content || sat_content
         remove_crdc_breakdown!(hash, ACT_SAT_PARTICIPATION, ACT_SAT_PARTICIPATION_9_12)

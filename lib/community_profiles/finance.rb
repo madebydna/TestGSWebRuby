@@ -12,9 +12,9 @@ module CommunityProfiles
 
     #array of data values sent to the frontend
     def data_values
-      @_data_values ||= data_values_for_data_row(REVENUE) + 
-      data_values_for_pie_chart(SOURCES_OF_REVENUE) + 
-      data_values_for_data_row(EXPENDITURES) + 
+      @_data_values ||= data_values_for_data_row(REVENUE) +
+      data_values_for_pie_chart(SOURCES_OF_REVENUE) +
+      data_values_for_data_row(EXPENDITURES) +
       data_values_for_pie_chart(SOURCES_OF_EXPENDITURES)
     end
 
@@ -40,7 +40,7 @@ module CommunityProfiles
 
     def data_hashes(*keys)
       keys.reduce([]) do |accum, key|
-        next unless finance_hash[key].present?
+        next accum unless finance_hash[key].present?
         accum += finance_hash[key].having_most_recent_date.map(&:to_hash)
       end
     end

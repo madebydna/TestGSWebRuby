@@ -596,7 +596,7 @@ describe CollectionConfig do
     context 'with missing or malformed data' do
       it 'returns nil' do
         results = [ CollectionConfig.enrollment_module([], 'preschool'),
-        CollectionConfig.enrollment_module([FactoryBot.create(:bogus_collection_config)], 'preschool') ]
+                    CollectionConfig.enrollment_module([FactoryBot.create(:bogus_collection_config)], 'preschool') ]
         results.each do |result|
           expect(result[:public]).to be_nil
           expect(result[:private]).to be_nil

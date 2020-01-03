@@ -1,10 +1,9 @@
 module SchoolDataValidator
 
 
-  BREAKDOWN_LIST = [ 'White', 'Asian', 'Native_American_or_Native_Alaskan', 'Pacific_Islander', 'All_students', 'Multiracial',
-    'Filipino', 'Hispanic', 'African_American', 'Male', 'Female', 'Not_economically_disadvantaged', 'Students_with_disabilities',
-    'General_Education_students', 'Economically_disadvantaged', 'Limited_English_proficient', 'Not_limited_English_proficient'
-  ]
+  BREAKDOWN_LIST = ['White', 'Asian', 'Native_American_or_Native_Alaskan', 'Pacific_Islander', 'All_students', 'Multiracial',
+                    'Filipino', 'Hispanic', 'African_American', 'Male', 'Female', 'Not_economically_disadvantaged', 'Students_with_disabilities',
+                    'General_Education_students', 'Economically_disadvantaged', 'Limited_English_proficient', 'Not_limited_English_proficient']
 
 
   def is_valid_school_data_field?(field)

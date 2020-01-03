@@ -221,6 +221,7 @@ group :development, :test do
   # A formatter for rubocop that outputs in checkstyle format
   gem 'rubocop-checkstyle_formatter', require: false
 
+  # Tool used to manage and configure webhooks including firing off rubocop on commits
   gem 'overcommit'
 
   # gem to use pry rails when using rails console. Give formatting issues superior to standard irb
