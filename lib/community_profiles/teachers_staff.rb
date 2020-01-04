@@ -4,61 +4,63 @@ module CommunityProfiles
     attr_reader :data_reader
     attr_accessor :sources
 
-    OTHER_STAFF_DATA = [
-      {
-        key: 'Percent of Nurse Staff',
-        formatting:  [:to_f, :round, :percent],
-        type: 'other_staff'
-      },
-      {
-        key: 'Percent of Psychologist Staff',
-        formatting:  [:to_f, :round, :percent],
-        type: 'other_staff'
-      },
-      {
-        key: 'Percent of Social Worker Staff',
-        formatting:  [:to_f, :round, :percent],
-        type: 'other_staff'
-      },
-      {
-        key: 'Percent of Law Enforcement Staff',
-        formatting:  [:to_f, :round, :percent],
-        type: 'other_staff'
-      },
-      {
-        key: 'Percent of Security Guard Staff',
-        formatting:  [:to_f, :round, :percent],
-        type: 'other_staff'
-      }
-    ]
+    OTHER_STAFF_DATA =
+      [
+        {
+          key: 'Percent of Nurse Staff',
+          formatting:  [:to_f, :round, :percent],
+          type: 'other_staff'
+        },
+        {
+          key: 'Percent of Psychologist Staff',
+          formatting:  [:to_f, :round, :percent],
+          type: 'other_staff'
+        },
+        {
+          key: 'Percent of Social Worker Staff',
+          formatting:  [:to_f, :round, :percent],
+          type: 'other_staff'
+        },
+        {
+          key: 'Percent of Law Enforcement Staff',
+          formatting:  [:to_f, :round, :percent],
+          type: 'other_staff'
+        },
+        {
+          key: 'Percent of Security Guard Staff',
+          formatting:  [:to_f, :round, :percent],
+          type: 'other_staff'
+        }
+      ]
 
-    MAIN_STAFF_DATA = [
-      {
-        key: 'Ratio of students to full time teachers',
-        formatting: [:to_f, :round],
-        type: 'ratio'
-      },
-      {
-        key: 'Ratio of students to full time counselors',
-        formatting: [:to_f, :round],
-        type: 'ratio'
-      },
-      {
-        key: 'Percentage of teachers with less than three years experience',
-        formatting: [:to_f, :invert_using_one_hundred, :round],
-        type: 'percent_bar'
-      },
-      {
-        key: 'Percentage of full time teachers who are certified',
-        formatting: [:to_f, :round],
-        type: 'percent_bar'
-      },
-      {
-        key: 'Ratio of teacher salary to total number of teachers',
-        formatting:  [:to_f, :round, :dollars],
-        type: 'dollar_amt'
-      }
-    ]
+    MAIN_STAFF_DATA =
+      [
+        {
+          key: 'Ratio of students to full time teachers',
+          formatting: [:to_f, :round],
+          type: 'ratio'
+        },
+        {
+          key: 'Ratio of students to full time counselors',
+          formatting: [:to_f, :round],
+          type: 'ratio'
+        },
+        {
+          key: 'Percentage of teachers with less than three years experience',
+          formatting: [:to_f, :invert_using_one_hundred, :round],
+          type: 'percent_bar'
+        },
+        {
+          key: 'Percentage of full time teachers who are certified',
+          formatting: [:to_f, :round],
+          type: 'percent_bar'
+        },
+        {
+          key: 'Ratio of teacher salary to total number of teachers',
+          formatting:  [:to_f, :round, :dollars],
+          type: 'dollar_amt'
+        }
+      ]
 
     CACHE_ACCESSORS = MAIN_STAFF_DATA + OTHER_STAFF_DATA
 
@@ -69,17 +71,17 @@ module CommunityProfiles
 
     def main_staff_data_types
       @_main_staff_data_types ||=
-      MAIN_STAFF_DATA.map { |mapping| mapping[:key] }
+        MAIN_STAFF_DATA.map { |mapping| mapping[:key] }
     end
 
     def other_staff_data_types
       @_other_staff_data_types ||=
-      OTHER_STAFF_DATA.map { |mapping| mapping[:key] }
+        OTHER_STAFF_DATA.map { |mapping| mapping[:key] }
     end
 
     def included_data_types
       @_included_data_types ||=
-      CACHE_ACCESSORS.map { |mapping| mapping[:key] }
+        CACHE_ACCESSORS.map { |mapping| mapping[:key] }
     end
 
     def data_values
@@ -105,7 +107,7 @@ module CommunityProfiles
         MAIN_STAFF_DATA.reduce([]) do |memo, config|
           if value = get_max_year(main_staff_hash[config[:key]])
             memo << base_data_for(config).merge(MainStaffData.new(value, config[:formatting]).to_h)
-          end 
+          end
           memo
         end
       end
@@ -116,7 +118,7 @@ module CommunityProfiles
     end
 
     def other_staff_data
-      @other_staff_data ||= begin 
+      @other_staff_data ||= begin
         return [] if other_staff_hash.empty?
         OTHER_STAFF_DATA.reduce([]) do |memo, config|
           name = config[:key]
@@ -168,7 +170,7 @@ module CommunityProfiles
 
     def select_latest_breakdown_value(array, breakdown)
       return nil unless array.present?
-      all_values = array.select{|v| v.breakdowns.include?(breakdown) }
+      all_values = array.select {|v| v.breakdowns.include?(breakdown) }
       get_max_year(all_values)
     end
 
