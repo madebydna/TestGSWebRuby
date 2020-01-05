@@ -18,7 +18,6 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    Ascii85 (1.0.2)
     actionmailer (4.2.8)
       actionpack (= 4.2.8)
       actionview (= 4.2.8)
@@ -55,7 +54,6 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
-    afm (0.2.2)
     akami (1.2.2)
       gyoku (>= 0.4.0)
       nokogiri
@@ -153,10 +151,6 @@ GEM
     file-tail (1.1.0)
       tins (~> 1.0)
     formatador (0.2.5)
-    geokit (1.10.0)
-    geokit-rails (2.2.0)
-      geokit (~> 1.5)
-      rails (>= 3.0)
     gherkin (5.1.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -186,16 +180,8 @@ GEM
       rspec (>= 2.14, < 4.0)
     gyoku (1.1.1)
       builder (>= 2.1.2)
-    haml (4.0.3)
-      tilt
-    haml-rails (0.5.3)
-      actionpack (>= 4.0.1)
-      activesupport (>= 4.0.1)
-      haml (>= 3.1, < 5.0)
-      railties (>= 4.0.1)
     has_scope (0.5.1)
     hashdiff (0.3.7)
-    hashery (2.1.1)
     hashie (2.1.1)
     highline (1.7.2)
     hike (1.2.3)
@@ -285,12 +271,6 @@ GEM
     parallel (1.12.0)
     parser (2.4.0.2)
       ast (~> 2.3)
-    pdf-reader (1.3.3)
-      Ascii85 (~> 1.0.0)
-      afm (~> 0.2.0)
-      hashery (~> 2.0)
-      ruby-rc4
-      ttfunk
     powerpack (0.1.1)
     protected_attributes (1.0.7)
       activemodel (>= 4.0.1, < 5.0)
@@ -399,12 +379,10 @@ GEM
     ruby-hmac (0.4.0)
     ruby-prof (0.15.1)
     ruby-progressbar (1.9.0)
-    ruby-rc4 (0.1.5)
     ruby2ruby (2.1.3)
       ruby_parser (~> 3.1)
       sexp_processor (~> 4.0)
     ruby_dep (1.5.0)
-    ruby_gntp (0.3.4)
     ruby_parser (3.6.4)
       sexp_processor (~> 4.1)
     rubyntlm (0.4.0)
@@ -477,7 +455,6 @@ GEM
     timecop (0.7.1)
     tins (1.3.4)
     to_regexp (0.2.1)
-    ttfunk (1.2.2)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (2.5.0)
@@ -520,20 +497,17 @@ DEPENDENCIES
   capybara (~> 3.18.0)
   capybara-mechanize (~> 1.11.0)
   capybara-screenshot (~> 1.0.23)
-  childprocess
   coffee-rails (~> 4.0.1)
   cucumber (~> 3)
   cucumber-rails (~> 1.7.0)
   db-charmer!
   draper (~> 2.1.0)
   factory_bot_rails (~> 4.11.0)
-  geokit-rails
   gon
   guard
   guard-bundler
   guard-livereload
   guard-rspec (= 4.2.9)
-  haml-rails
   has_scope
   hashie
   i18n-tasks (~> 0.8.3)
@@ -543,7 +517,6 @@ DEPENDENCIES
   jquery-rails
   json-schema
   kaminari (= 0.16.1)
-  launchy
   lodash-rails
   machinist (>= 2.0.0.beta2)
   mechanize
@@ -553,7 +526,6 @@ DEPENDENCIES
   nokogiri (= 1.8.1)
   oj
   ox
-  pdf-reader
   protected_attributes
   pry-rails
   quiet_assets
@@ -572,7 +544,6 @@ DEPENDENCIES
   rubocop-checkstyle_formatter
   ruby-hmac (~> 0.4.0)
   ruby-prof
-  ruby_gntp
   rubyntlm (~> 0.4.0)
   safe_attributes
   sass-rails (~> 4.0.1)

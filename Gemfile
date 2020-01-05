@@ -20,7 +20,6 @@ gem 'jquery-rails'
 # Use jquery-cookie with Rails 3 (http://github.com/RyanScottLewis/jquery-cookie-rails)
 gem 'jquery-cookie-rails'
 
-# It provides all the basic DataTables files, and a few of the extras.
 # USED: reviews_moderation_init.js
 # jquery datatables for rails (https://github.com/rweng/jquery-datatables-rails)
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
@@ -101,19 +100,16 @@ gem 'draper', '~> 2.1.0'
 # URI Implementation (https://github.com/sporkmonger/addressable)
 gem 'addressable'
 
-# Protect attributes from mass-assignment in ActiveRecord models.
 # USED: All over. Search for attr_accessible
 # Protect attributes from mass assignment in Active Record models (https://github.com/rails/protected_attributes)
 gem 'protected_attributes'
 
-# Nokogiri is an HTML, XML, SAX, and Reader parser.
 # USED: Only by script/feeds/feed_scripts/validate_feed_files as far as I can tell
 # This was added back in the early days though
 # TODO: Verify not used outside of development environment and move there
 # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 gem 'nokogiri', '= 1.8.1'
 
-# SOAP client
 # USED: To communicate with ExactTarget. See exact_target.rb
 # Heavy metal SOAP client (http://savonrb.com)
 gem 'savon', '~> 2.6.0'
@@ -136,7 +132,6 @@ gem 'jbuilder'
 # Ruby JSON Schema Validator (http://github.com/ruby-json-schema/json-schema/tree/master)
 gem 'json-schema'
 
-# Used for parsing JSON, such as from school cache
 # A fast JSON parser and serializer. (http://www.ohler.com/oj)
 gem 'oj'
 
@@ -154,7 +149,6 @@ group :development do
   # A thin and fast web server (http://code.macournoyer.com/thin/)
   gem 'thin'
 
-  # Guard automatically watches files for changes and re-runs bundler, rspec, etc
   # Guard keeps an eye on your file modifications (http://guardgem.org)
   gem 'guard'
   # Guard gem for Bundler (https://rubygems.org/gems/guard-bundler)
@@ -223,19 +217,11 @@ group :development, :test do
   # Ruby fast debugger - base + CLI (https://github.com/deivid-rodriguez/byebug)
   gem 'byebug'
 
-  # Supporting Gem for Rails Panel for Chrome
-  # gem 'meta_request'
-
   # execute  "rails_best_practices -f html ."  on the command line to generate an html report
   # beware of false positives for things like unused methods
   # a code metric tool for rails codes. (http://rails-bestpractices.com)
   gem 'rails_best_practices'
 
-  # Use haml for template engine. Also specified in application.rb
-  # let your Gemfile do the configuring (http://github.com/indirect/haml-rails)
-  gem 'haml-rails'
-
-  # Test coverage tool
   # Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites (http://github.com/colszowka/simplecov)
   gem 'simplecov', '~> 0.8.0'
   # Default HTML formatter for SimpleCov code coverage tool for ruby 1.9+ (https://github.com/colszowka/simplecov-html)
@@ -243,53 +229,28 @@ group :development, :test do
   # Rcov style formatter for SimpleCov (http://github.com/fguillen/simplecov-rcov)
   gem 'simplecov-rcov'
 
-  # This gem aims at being a simple and reliable solution for controlling external programs running in the background on any Ruby / OS combination. (http://github.com/jarib/childprocess)
-  gem 'childprocess'
-
-  # Allows Ruby to communicate with growl, for system messaging. e.g. you can pop up an alert when your tests fail
-  # Ruby library for GNTP(Growl Notification Transport Protocol) client (http://snaka.github.com/ruby_gntp/)
-  gem 'ruby_gntp'
-
-  # Turn off assets logging in development
   # Turn off rails assets log. (http://github.com/evrone/quiet_assets)
   gem 'quiet_assets'
 
-  # ruby documentation generation tool
   # Documentation tool for consistent and usable documentation in Ruby. (http://yardoc.org)
   gem 'yard'
 
-  # helper class for launching cross-platform applications
-  # common approach to launching external application from within ruby programs.
-  # Launchy is helper class for launching cross-platform applications in a fire and forget manner. (http://github.com/copiousfreetime/launchy)
-  gem 'launchy'
-
-  # PDF parser conforming as much as possible to the PDF specification from Adobe
-  # A library for accessing the content of PDF files (http://github.com/yob/pdf-reader)
-  gem 'pdf-reader'
-
-  # Workarounds before ruby-core officially supports Proc#to_source
-  # TODO Investigate removal
   # Sourcify was written in the days of ruby 1.9.x, it should be buggy for anything beyond that.
   # Workarounds before ruby-core officially supports Proc#to_source (& friends) (http://github.com/ngty/sourcify)
   gem 'sourcify'
 
-  #  translation tasks gem
   # Manage localization and translation with the awesome power of static analysis (https://github.com/glebm/i18n-tasks)
   gem 'i18n-tasks', '~> 0.8.3'
 
-  # Ruby code style checking tool.
   # USED: Manually and by Jenkins
   # Automatic Ruby code style checking tool. (https://github.com/bbatsov/rubocop)
   gem 'rubocop', '= 0.52.0', require: false
-  # A formatter for rubocop that outputs in checkstyle format
   # A formatter for rubocop that outputs in checkstyle format (https://github.com/eitoball/rubocop-checkstyle_formatter)
   gem 'rubocop-checkstyle_formatter', require: false
 
-  # gem to use pry rails when using rails console. Give formatting issues superior to standard irb
   # Use Pry as your rails console (https://github.com/rweng/pry-rails)
   gem 'pry-rails'
 
-  # Adds
   # factory_bot_rails provides integration between factory_bot and rails 4.2 or newer (https://github.com/thoughtbot/factory_bot_rails)
   gem "factory_bot_rails", '~> 4.11.0'
 end
@@ -315,9 +276,6 @@ gem 'uglifier', '>= 1.0.3'
 gem 'rgeo'
 # An RGeo module providing spatial extensions to ActiveRecord. (https://github.com/rgeo/rgeo-activerecord)
 gem 'rgeo-activerecord', '= 4.0.5'
-
-# Geokit helpers for rails apps. (http://github.com/geokit/geokit-rails)
-gem 'geokit-rails'
 
 group :profile do
   # Fast Ruby profiler (https://github.com/ruby-prof/ruby-prof)
