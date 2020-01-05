@@ -316,8 +316,6 @@ gem 'rgeo'
 # An RGeo module providing spatial extensions to ActiveRecord. (https://github.com/rgeo/rgeo-activerecord)
 gem 'rgeo-activerecord', '= 4.0.5'
 
-# Provides location-based goodness for your Rails app. Can't see where this is used. Possible candidate for removal.
-# TODO Investigate removal
 # Geokit helpers for rails apps. (http://github.com/geokit/geokit-rails)
 gem 'geokit-rails'
 

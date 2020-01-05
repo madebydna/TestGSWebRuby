@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'ruby-prof'
-
 module Omni
   class TestDataValue < ActiveRecord::Base
     db_magic connection: :omni
