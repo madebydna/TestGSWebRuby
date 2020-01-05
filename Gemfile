@@ -44,7 +44,6 @@ gem 'db-charmer', git: 'git://github.com/kovyrin/db-charmer.git', branch: 'rails
 # Useful for legacy database support, adds support for reserved word column names with ActiveRecord (http://github.com/bjones/safe_attributes)
 gem 'safe_attributes'
 
-# Hashie is a simple collection of useful Hash extensions
 # USED: primarily Hashie::Mash all over the place.
 # Your friendly neighborhood hash library. (https://github.com/intridea/hashie)
 gem 'hashie'
@@ -144,7 +143,6 @@ gem 'oj'
 # sampling callstack-profiler for ruby 2.1+ (http://github.com/tmm1/stackprof)
 gem 'stackprof'
 
-# fast xml parsing library
 # A fast XML parser and object serializer. (http://www.ohler.com/ox)
 gem 'ox'
 
@@ -168,7 +166,6 @@ group :development do
   # rspec command for spring (https://github.com/jonleighton/spring-commands-rspec)
   gem 'spring-commands-rspec'
 
-  # Profiling toolkit for Rack applications with Rails integration.
   # USED: in development env. See config/initializers/rack_profiler.rb
   # Profiles loading speed for rack applications. (http://miniprofiler.com)
   gem 'rack-mini-profiler', require: false
@@ -246,7 +243,6 @@ group :development, :test do
   # Rcov style formatter for SimpleCov (http://github.com/fguillen/simplecov-rcov)
   gem 'simplecov-rcov'
 
-  # solution for controlling external programs running in the background
   # This gem aims at being a simple and reliable solution for controlling external programs running in the background on any Ruby / OS combination. (http://github.com/jarib/childprocess)
   gem 'childprocess'
 
@@ -310,12 +306,10 @@ gem 'sass-rails',   '~> 4.0.1'
 # CoffeeScript adapter for the Rails asset pipeline. (https://github.com/rails/coffee-rails)
 gem 'coffee-rails', '~> 4.0.1'
 
-# Uglifier minifies JavaScript files by wrapping UglifyJS to be accessible in Ruby
 # USED: Rails automatically adds the uglifier gem to your Gemfile, which is used by Sprockets for asset compression
 # Ruby wrapper for UglifyJS JavaScript compressor (http://github.com/lautis/uglifier)
 gem 'uglifier', '>= 1.0.3'
 
-# Geospatial data library for Ruby and ActiveRecord extensions and tools for spatial connection adapters
 # Seems to be only used by the API
 # RGeo is a geospatial data library for Ruby. (https://github.com/rgeo/rgeo)
 gem 'rgeo'
