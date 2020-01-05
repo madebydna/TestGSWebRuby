@@ -4,6 +4,7 @@ source "https://rubygems.org"
 # Rails ActionDispatch::HTTP::URL.url_for 
 gem 'rails', '4.2.8'
 
+# Mysql library for Ruby - binding to libmysql
 gem 'mysql2', '0.4.10'
 
 # This gem provides jQuery and the jQuery-ujs driver for your Rails 3+ application.
@@ -27,9 +28,6 @@ gem 'kaminari', '0.16.1'
 # Provide various react builds to your asset bundle
 # Transform .jsx in the asset pipeline
 gem 'react_on_rails', '~> 10.1.4'
-
-# Add database sharding support to Active Record
-# gem 'ar-octopus', '0.6.0' <-- evil
 
 # No Rails 4:
 # gem 'db-charmer', '1.8.4', :require => 'db_charmer'
@@ -175,8 +173,6 @@ end
 
 group :development, :test do
   gem 'byebug'
-  # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
-  #gem 'awesome_print', :require => 'ap'
 
   # Supporting Gem for Rails Panel for Chrome
   # gem 'meta_request'
@@ -193,6 +189,7 @@ group :development, :test do
   gem 'simplecov-html', '~> 0.8.0'
   gem 'simplecov-rcov'
 
+  # solution for controlling external programs running in the background
   gem 'childprocess'
 
   # Allows Ruby to communicate with growl, for system messaging. e.g. you can pop up an alert when your tests fail
@@ -201,12 +198,19 @@ group :development, :test do
   # Turn off assets logging in development
   gem 'quiet_assets'
 
+  # ruby documentation generation tool
   gem 'yard'
 
+  # helper class for launching cross-platform applications
+  # common approach to launching external application from within ruby programs.
   gem 'launchy'
 
+  # PDF parser conforming as much as possible to the PDF specification from Adobe
   gem 'pdf-reader'
 
+  # Workarounds before ruby-core officially supports Proc#to_source
+  # TODO Investigate removal
+  # Sourcify was written in the days of ruby 1.9.x, it should be buggy for anything beyond that.
   gem 'sourcify'
 
   #  translation tasks gem
@@ -221,6 +225,7 @@ group :development, :test do
   # gem to use pry rails when using rails console. Give formatting issues superior to standard irb
   gem 'pry-rails'
 
+  # Adds
   gem "factory_bot_rails", '~> 4.11.0'
 end
 
@@ -234,17 +239,17 @@ gem 'sass-rails',   '~> 4.0.1'
 # USED: Rails automatically adds the coffee-rails gem to your Gemfile, which is used by Sprockets for asset compression
 gem 'coffee-rails', '~> 4.0.1'
 
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', :platforms => :ruby
-
-#gem 'compass-rails', '~> 2.0.alpha.0'
-
 # Uglifier minifies JavaScript files by wrapping UglifyJS to be accessible in Ruby
 # USED: Rails automatically adds the uglifier gem to your Gemfile, which is used by Sprockets for asset compression
 gem 'uglifier', '>= 1.0.3'
 
+# Geospatial data library for Ruby and ActiveRecord extensions and tools for spatial connection adapters
+# Seems to be only used by the API
 gem 'rgeo'
 gem 'rgeo-activerecord', '= 4.0.5'
+
+# Provides location-based goodness for your Rails app. Can't see where this is used. Possible candidate for removal.
+# TODO Investigate removal
 gem 'geokit-rails'
 
 group :profile do
