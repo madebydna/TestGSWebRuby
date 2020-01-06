@@ -57,7 +57,7 @@ pipeline {
           stash includes: 'app/assets/webpack/*', name: 'assets'
           sh 'mkdir -p tmp'
           // reportOnAssetSizes()
-          reportRubocopOffenses()
+          // reportRubocopOffenses() -- this takes a long time, do we need it?
         }
       }
     }
