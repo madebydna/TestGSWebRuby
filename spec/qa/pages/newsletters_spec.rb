@@ -27,7 +27,7 @@ describe 'Newsletters', remote: true do
         end
       end
       it 'I can sign up and see school on my account page' do
-        register_in_email_modal
+        register_in_modal
         sleep 10 # need to wait long enough for modal ajax call to complete and save database records
         visit '/account/'
         # should force capybara to wait at least a couple seconds for this to appear

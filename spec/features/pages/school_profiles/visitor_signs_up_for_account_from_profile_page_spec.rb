@@ -2,7 +2,11 @@ require 'spec_helper'
 require 'features/page_objects/school_profiles_page'
 
 describe 'Visitor' do
-  before { skip }
+  subject { SchoolProfilesPage.new }
+  before do
+    stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {})
+  end
+  
   after do
     clean_dbs(:gs_schooldb)
     clean_models(:ca, School)
@@ -10,13 +14,11 @@ describe 'Visitor' do
 
   scenario 'is redirected back to profile page after signing up for account', js: true do
     school = create(:school_with_new_profile)
-    visit school_path(school)
-    page_object = SchoolProfilesPage.new
-
-    page_object.sign_in.click
+    subject.load(state: 'california', city: 'alameda', school_id_and_name: "#{school.id}-A-demo-school")
+    subject.sign_in.click
     register_new_account
 
-    expect(page).to have_content(school.name)
+    expect(subject).to have_content(school.name)
   end
 
   def register_new_account

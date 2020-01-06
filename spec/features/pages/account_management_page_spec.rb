@@ -2,97 +2,96 @@ require 'spec_helper'
 require 'features/contexts/shared_contexts_for_signed_in_users'
 require 'features/examples/footer_examples'
 require 'features/page_objects/account_page'
+require 'features/page_objects/join_page'
 
-feature 'Account management page' do
-  before do
-  end
-
-  subject do
-    visit manage_account_path
-    AccountPage.new
-  end
+describe 'Account management page', js: true do
+  let(:login_page) { JoinPage.new }
+  subject { AccountPage.new }
 
   after do
-    clean_models :gs_schooldb,EspMembership, MemberRole, Role, Subscription
+    clean_dbs :gs_schooldb
   end
 
-  feature 'requires user to be logged in' do
+  describe 'requires user to be logged in' do
     context 'when user is not logged in' do
       it 'should return to the login page' do
+        subject.load
+        expect(login_page).to be_loaded
       end
     end
   end
 
-  feature 'User is logged in' do
+  describe 'A registered and verified user' do
     include_context 'signed in verified user'
 
-    include_examples 'should have a footer'
-
-    # scenario 'It displays change password link' do
-    #   change_password_div = subject.first('div', text: /\AChange Password\z/)
-    #   expect(change_password_div).to be_present
-    #   expect(subject).to have_selector('form input[name=new_password]')
-    #   expect(subject).to have_selector('form input[name=confirm_password]')
-    # end
-
     context 'when user has approved osp membership' do
-      before { skip }
-      let!(:esp_membership) {FactoryBot.create(:esp_membership,:with_approved_status,:member_id=> user.id )}
+      before do
+        FactoryBot.create(:esp_membership, :with_approved_status, member_id: user.id )
+        subject.load
+      end
+
       scenario 'It displays link to edit osp' do
-        expect(subject).to have_content('Edit School Profile')
+        expect(subject).to be_loaded
+        expect(subject).to have_content("Edit School Profile")
       end
     end
 
     context 'when user has provisional osp membership' do
-      before { skip }
-      let!(:esp_membership) {FactoryBot.create(:esp_membership,:with_provisional_status,:member_id=> user.id,:school_id=>1,:state=> 'mi' )}
+      before do
+        FactoryBot.create(:esp_membership,:with_provisional_status, member_id: user.id, school_id: 1, state: 'mi')
+        subject.load
+      end
+
       scenario 'It displays link to edit osp' do
         expect(subject).to have_content('Edit School Profile')
       end
     end
 
     context 'when user is osp super user' do
-      before { skip }
-      let!(:esp_superuser_role) {FactoryBot.create(:role )}
-      let!(:member_role) {FactoryBot.create(:member_role,member_id: user.id,role_id:esp_superuser_role.id)}
+      before do
+        esp_superuser_role = FactoryBot.create(:role)
+        FactoryBot.create(:member_role,member_id: user.id,role_id:esp_superuser_role.id)
+        subject.load
+      end
+
       scenario 'It displays link to edit osp' do
         expect(subject).to have_content('Edit School Profile')
       end
     end
 
-
     context 'When user has subscriptions' do
-      let!(:osp_subscription) {FactoryBot.create(:subscription,list: 'osp',member_id: user.id)}
-      let!(:gs_subscription) {FactoryBot.create(:subscription,list: 'greatnews',member_id: user.id)}
-
-      scenario 'It should display subscriptions with pretty long_names names if subscription product is present otherwise just the name' do
-        pending('PT-1213: No longer applicable. Delete and make new spec coverage for account management page subscription functionality')
-        expect(user.subscriptions.size).to eq(2)
-        expect(subject).to have_content(Subscription.subscription_product('greatnews').long_name)
-        expect(subject).to have_content('osp') #does not have a subscription product hardcoded, hence so long name
+      let(:content) { subject.email_subscriptions.content }
+      before do
+        FactoryBot.create(:subscription, list: 'osp', member_id: user.id)
+        FactoryBot.create(:subscription, list: 'greatnews', member_id: user.id)
+        subject.load
+        subject.email_subscriptions.closed_arrow.click
+        subject.email_subscriptions.wait_until_content_visible
       end
 
-      scenario 'user can unsubscribe ' do
-        pending('PT-1213: No longer applicable. Delete and make new spec coverage for account management page subscription functionality')
-        expect do
-          begin
-            subject.within(".js-subscription-#{osp_subscription.id}") {click_on("Unsubscribe")}
-          rescue ActionView::MissingTemplate
-            #no op. For some reason capybara does not look for subscriptions/destroy.js.erb and instead looks for subscriptions/destroy.erb
-          end
-        end.to change(user.subscriptions, :count).by(-1)
+      it 'should indicate subscriptions' do
+        expect(user.subscriptions.size).to eq(2)
+        expect(content.greatnews_checkbox).to be_checked
+        expect(content.osp_checkbox).to be_checked
+      end
 
+      it 'should allow user to unsubscribe ' do
+        expect do
+          content.greatnews_checkbox.uncheck
+          sleep(3)
+        end.to change(user.subscriptions, :count).by(-1)
       end
     end
 
     context 'with no user profile' do
-      before { skip }
-      before { user.user_profile.destroy }
-      scenario 'It displays the password reset form' do
-        change_password_div = subject.first('div', text: /\AChange Password\z/)
-        expect(change_password_div).to be_present
-        expect(subject).to have_selector('form input[name=new_password]')
-        expect(subject).to have_selector('form input[name=confirm_password]')
+      # TODO: Is this still meaningful? What is a user profile used for?
+      before do 
+        user.user_profile.destroy
+        subject.load
+      end
+      it 'still displays the password reset form' do
+        save_and_open_screenshot
+        expect(subject).to have_change_password
       end
     end
   end

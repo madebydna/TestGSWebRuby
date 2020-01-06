@@ -40,26 +40,17 @@ module SigninHelper
     "qa-testuser+rspec_#{Time.now.strftime('%s')}@greatschools.org"
   end
 
-  def register_new_user(email: random_email)
+  def register_new_user(email: random_email, load_join_page: true)
     page = JoinPage.new
-    page.load
+    page.load if load_join_page
     page.signup_link.click
     page.signup_form.email_field.set(email)
     page.signup_form.signup_btn.click
   end
 
-  def register_in_modal
+  def register_in_modal(email: random_email)
     within('.remodal') do
-      fill_in('email', with: random_email)
-      click_button('Sign up')
-    end
-  end
-
-  # TODO: Remove one of these helpers, as they are the same from a Capybara POV
-  # Same as #register_in_modal, but no terms checkbox
-  def register_in_email_modal
-    within('.remodal') do
-      fill_in('email', with: random_email)
+      fill_in('email', with: email)
       click_button('Sign up')
     end
   end

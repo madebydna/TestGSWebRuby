@@ -8,6 +8,8 @@ class AccountPage < SitePrism::Page
     element :mystat_checkbox, 'input[name="mystat"]'
     element :greatnews_checkbox , 'input[name="greatnews"]'
     element :sponsor_checkbox , 'input[name="sponsor"]'
+    element :osp_checkbox , 'input[name="osp"]'
+    element :osp_parter_promos_checkbox, 'input[name="osp_partner_promos"]'
   end
   
   class EmailSubscriptions < SitePrism::Section

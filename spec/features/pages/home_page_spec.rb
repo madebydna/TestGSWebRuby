@@ -1,10 +1,12 @@
 # require 'spec_helper'
 require 'features/page_objects/home_page'
 require 'features/page_objects/search_page'
+require 'features/page_objects/account_page'
 
 describe 'User visits Home Page' do
-  before { visit home_path }
-  subject(:page_object) { HomePage.new }
+  subject(:subject) { HomePage.new }
+  before { subject.load  }
+  
   context 'successfully' do
     it { is_expected.to have_header  }
   end
@@ -42,6 +44,50 @@ describe 'User visits Home Page' do
       it 'should have a link to Parenting' do
         subject.click_dropdown
         expect(subject.gk_content_dropdown.content_links.first.text).to eq( "Parenting")
+      end
+    end
+  end
+
+  describe 'signup via newsletter link', js: true do
+    before { @email = random_email }
+    after { clean_dbs(:gs_schooldb) }
+
+    let(:account_page) { AccountPage.new }
+    
+    context 'with some grades selected and no partner offers' do
+      before do
+        subject.footer.newsletter_link.click
+        subject.email_newsletter_modal.sign_up(@email, [2,5], false)
+        expect(subject).to have_newsletter_success_modal
+        account_page.load
+      end
+
+      it 'should subscribe user to selected grades' do
+        second_grade = account_page.grade_level_subscriptions.content.find_input('second_grade')
+        fifth_grade = account_page.grade_level_subscriptions.content.find_input('fifth_grade')
+        expect(second_grade).to be_checked
+        expect(fifth_grade).to be_checked
+      end
+
+      it 'should not subscribe user to partner offers' do
+        account_page.email_subscriptions.closed_arrow.click
+        account_page.email_subscriptions.wait_until_content_visible
+        expect(account_page.email_subscriptions.content.sponsor_checkbox).not_to be_checked
+      end
+    end
+
+    context 'with parter email checkbox selected' do
+      before do
+        subject.footer.newsletter_link.click
+        subject.email_newsletter_modal.sign_up(@email, [], true)
+        expect(subject).to have_newsletter_success_modal
+        account_page.load
+      end
+
+      it 'should not subscribe user to partner offers mail' do
+        account_page.email_subscriptions.closed_arrow.click
+        account_page.email_subscriptions.wait_until_content_visible
+        expect(account_page.email_subscriptions.content.sponsor_checkbox).to be_checked
       end
     end
   end

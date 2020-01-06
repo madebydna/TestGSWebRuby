@@ -11,7 +11,7 @@ describe 'Forgot password page' do
   end
 
   before do
-    visit '/account/forgot-password/'
+    page_object.load
   end
 
   after do
@@ -28,29 +28,32 @@ describe 'Forgot password page' do
   context 'when I enter email that has no user', js: true do
     let (:user) { FactoryBot.build(:user) }
     before do
-      page_object.fill_in_email_field  user.email
+      page_object.fill_in_email_field user.email
     end
 
     when_I :click_continue_button do
       it 'should not display the join page' do
         expect(JoinPage.new).to_not be_displayed
       end
+
       it 'should display error message' do
-        skip("Failing b/c of site_prism update (Error: Unused parameters passed to Capybara::Queries::SelectorQuery)")
-        message = "There is no account associated with that email address. Would you like to join GreatSchools? x"
-        expect(subject).to have_flash_errors(message)
+        expect(subject.flash_errors.first.text).to match(/^There is no account associated with that email address/)
       end
     end
   end
+
   context 'when I enter email for verfied user', js: true do
     let (:verified_user) { FactoryBot.create(:verified_user) }
+
     before do
-      page_object.fill_in_email_field  verified_user.email
+      page_object.fill_in_email_field verified_user.email
     end
+
     when_I :click_continue_button do
       it 'should display the join page' do
         expect(JoinPage.new).to be_displayed
       end
+
       it 'should send reset password email' do
         expect(JoinPage.new).to be_displayed
         sent_email = ExactTarget.last_delivery_args
@@ -72,6 +75,7 @@ describe 'Forgot password page' do
             school: FactoryBot.create(:school, state: 'ca')
           )
         }
+
         it 'should display the reset password page' do
           expect(JoinPage.new).to be_displayed
           sent_email = ExactTarget.last_delivery_args
@@ -79,6 +83,7 @@ describe 'Forgot password page' do
           visit verification_link
           expect(ResetPasswordPage.new).to be_displayed
         end
+
         it 'activates the the user\'s non-flagged reviews' do
           expect(JoinPage.new).to be_displayed
           sent_email = ExactTarget.last_delivery_args
@@ -93,11 +98,13 @@ describe 'Forgot password page' do
 
   context 'when I enter email for unverified user', js: true do
     let (:unverified_user) { FactoryBot.create(:new_user) }
+    
     before do
       page_object.fill_in_email_field  unverified_user.email
     end
+    
     when_I :click_continue_button do
-      it 'should  display the join page' do
+      it 'should display the join page' do
         expect(JoinPage.new).to be_displayed
       end
       
@@ -105,6 +112,7 @@ describe 'Forgot password page' do
         expect(JoinPage.new).to be_displayed
         sent_email = ExactTarget.last_delivery_args
         expect(sent_email).to be_present
+        p ["sent email", sent_email]
         expect(sent_email[:key]).to eq(ResetPasswordEmail.exact_target_email_key)
       end
 

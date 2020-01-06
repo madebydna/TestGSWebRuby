@@ -1,11 +1,15 @@
 require 'features/page_objects/modules/join_modals'
 require 'features/page_objects/modules/flash_messages'
 require 'features/page_objects/modules/top_nav_section'
+require 'features/page_objects/modules/footer'
+require 'features/page_objects/modules/modals'
 
 class HomePage < SitePrism::Page
+  include TopNavSection
+  include Footer
+  include Modals
 
   set_url '/'
-  set_url_matcher /localhost:\d+\/$/
 
   element :header, 'h1', text: 'Guide your child to a great future'
   element :school_search_button, 'form[name=schoolResultsSearchForm] button.search-btn'

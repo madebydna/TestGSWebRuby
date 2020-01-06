@@ -11,6 +11,7 @@ describe 'School profiles' do
   describe 'Submitting a new review' do
     
     context 'as an unregistered user', remote: true, type: :feature, js: true do
+      # Note: this is also tested in qa/pages/join_page_spec.rb
       it 'should indicate that my review is saved and ask me to verify my email' do
         pending 'Cannot reliably click the five-star rating'
         # choose five-star rating and fill out form

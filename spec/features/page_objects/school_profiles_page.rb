@@ -1,11 +1,13 @@
 require 'features/page_objects/modules/breadcrumbs'
 require 'features/page_objects/modules/join_modals'
+require 'features/page_objects/modules/top_nav_section'
 require 'features/page_objects/osp_page'
 
 class SchoolProfilesPage < SitePrism::Page
   include Breadcrumbs
   include CookieHelper
   include EmailJoinModal
+  include TopNavSection
 
   set_url '{/state}{/city}{/school_id_and_name}/'
 
@@ -52,7 +54,7 @@ class SchoolProfilesPage < SitePrism::Page
   class ReviewForm < SitePrism::Section
     element :five_star_question_cta, ".five-star-question-cta"
     elements :cta_stars, ".five-star-question-cta__star"
-    element :five_star_rating, :xpath, '//div[@class="five-star-question-cta__star"][4]' # can't get proper selector
+    element :five_star_rating, :xpath, './div/div/div[2]/div[6]/div/div[1]'
     element :completed_five_star_question, ".review-question > div > .five-star-rating"
     elements :questions, ".review-question"
     elements :text_areas, "textarea"
@@ -100,10 +102,19 @@ class SchoolProfilesPage < SitePrism::Page
   element :five_star_rating, '.rs-five-star-rating'
   element :sign_in, '.account_nav_out > a'
 
+
+  class HeroLinks < SitePrism::Section
+    element :save_school_link, 'a.js-followThisSchool'
+    element :review_link, 'a', text: "Review"
+    element :nearby_schools_link, 'a', text: "Nearby schools"
+  end
+
   section :hero, '#hero' do
     element :rating_text, '.gsr-text'
     element :rating, '.rs-gs-rating'
   end
+
+  section :hero_links, HeroLinks, '.cta-container'
 
   section :test_scores, RatingContainer, '.rs-test-scores'
   section :college_readiness, RatingContainer, '#College_readiness'
