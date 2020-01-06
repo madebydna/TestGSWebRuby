@@ -26,7 +26,7 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 
 # Used in moderation.html.erb for review moderation
 # A pagination engine plugin for Rails 3+ and other modern frameworks (https://github.com/amatsuda/kaminari)
-gem 'kaminari', '0.16.1'
+gem 'kaminari', '1.1.1'
 
 # Provide various react builds to your asset bundle
 # Transform .jsx in the asset pipeline
@@ -82,7 +82,6 @@ gem 'rsolr'
 # Maps controller filters to your resource scopes. (http://github.com/plataformatec/has_scope)
 gem 'has_scope'
 
-# Per-request global storage for Rack.
 # USED: lib/school_profiles/AdsSwitch
 # TODO: Can we do this a different way and remove this gem?
 # RequestStore gives you per-request global storage. (http://github.com/steveklabnik/request_store)
@@ -119,12 +118,10 @@ gem 'savon', '~> 2.6.0'
 # Ruby/NTLM library. (https://github.com/winrb/rubyntlm)
 gem 'rubyntlm', '~> 0.4.0'
 
-# Retrieve the binding of a method's caller.
 # USED: By GsLogger. See AT-873
 # Retrieve the binding of a method's caller. Can also retrieve bindings even further up the stack. (http://github.com/banister/binding_of_caller)
 gem 'binding_of_caller', '~> 0.7.2'
 
-# Create JSON structures via a Builder-style DSL
 # USED: Multiple places. Search for *.jbuilder for example
 # Create JSON structures via a Builder-style DSL (https://github.com/rails/jbuilder)
 gem 'jbuilder'
