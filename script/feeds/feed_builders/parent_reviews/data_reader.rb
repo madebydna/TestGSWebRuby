@@ -42,7 +42,7 @@ module Feeds
               {}.tap do |h|
                 h['universal-id'] = school_uid(review['school_id'])
                 h['comments'] = clean_comments(review['comment'])
-                h['who'] = member_type(school_members["#{review['member_id']}#{review['school_id']}"])
+                h['who'] = member_type(school_members["#{review['member_id']}-#{review['school_id']}"])
                 h['quality'] = quality_type(review_answers[review['id']])
                 h['url'] = "https://www.greatschools.org#{school_path(review_school)}"
               end
@@ -79,7 +79,7 @@ module Feeds
                     .where(member_id: school_member_ids, school_id: school_ids)
                     .select(:id, :school_id, :member_id, :user_type)
                     .each_with_object({}) do |member, hash|
-                      hash["#{member.member_id}#{member.school_id}"] = { "who" => member.user_type }
+                      hash["#{member.member_id}-#{member.school_id}"] = { "who" => member.user_type }
                     end
         end
       end
