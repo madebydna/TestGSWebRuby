@@ -138,6 +138,9 @@ group :development do
   gem 'guard-livereload'
   gem 'spring-commands-rspec'
 
+  # Tool used to manage and configure webhooks including firing off rubocop on commits
+  gem 'overcommit'
+
   # Profiling toolkit for Rack applications with Rails integration.
   # USED: in development env. See config/initializers/rack_profiler.rb
   gem 'rack-mini-profiler', require: false
@@ -216,13 +219,10 @@ group :development, :test do
 
   # Ruby code style checking tool.
   # USED: Manually and by Jenkins
-  gem 'rubocop', '= 0.52.0', require: false
+  gem 'rubocop', require: false
 
   # A formatter for rubocop that outputs in checkstyle format
   gem 'rubocop-checkstyle_formatter', require: false
-
-  # Tool used to manage and configure webhooks including firing off rubocop on commits
-  gem 'overcommit'
 
   # gem to use pry rails when using rails console. Give formatting issues superior to standard irb
   gem 'pry-rails'
