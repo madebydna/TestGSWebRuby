@@ -8,7 +8,7 @@ module Feeds
 
       def initialize(data_reader, output_path)
         @root_element = 'gs-parent-review-feed'
-        @schema = 'http://www.greatschools.org/feeds/local-gs-parent-review.xsd'
+        @schema = 'https://www.greatschools.org/feeds/local-gs-parent-review.xsd'
         @feed_file_path = output_path
         @data_reader = data_reader
       end
