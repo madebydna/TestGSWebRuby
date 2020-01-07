@@ -138,9 +138,6 @@ group :development do
   gem 'guard-livereload'
   gem 'spring-commands-rspec'
 
-  # Tool used to manage and configure webhooks including firing off rubocop on commits
-  gem 'overcommit'
-
   # Profiling toolkit for Rack applications with Rails integration.
   # USED: in development env. See config/initializers/rack_profiler.rb
   gem 'rack-mini-profiler', require: false
@@ -213,6 +210,9 @@ group :development, :test do
   gem 'pdf-reader'
 
   gem 'sourcify'
+
+  # Tool used to manage and configure webhooks including firing off rubocop on commits
+  gem 'overcommit'
 
   #  translation tasks gem
   gem 'i18n-tasks', '~> 0.8.3'
