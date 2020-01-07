@@ -12,7 +12,7 @@ def runCommonSteps() {
   sh 'script/ci/build_env.sh'
   sh 'mkdir -p vendor/cache'
   unstash 'bundle'
-  sh 'bundle install --local > /dev/null'
+  sh 'bundle install --local --without development'
   sh 'rbenv rehash'
   unstash 'assets'
 }
@@ -47,7 +47,7 @@ pipeline {
       steps {
         sh 'script/ci/build_env.sh'
         withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
-          sh 'bundle install --deployment --without development --path vendor/bundle > /dev/null'
+          sh 'bundle install --deployment --without development --path > /dev/null'
           sh 'bundle package > /dev/null'
           stash includes: 'vendor/cache/*', name: 'bundle'
           sh 'rm -rf app/assets/webpack'
