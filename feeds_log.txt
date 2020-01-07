@@ -1,3 +1,0 @@
-# Logfile created on 2020-01-06 13:45:42 -0800 by logger.rb/56815
-[2020-01-06 13:45:42] DEBUG  : Writing /tmp/new-testlocal-gs-parent-review-feed-AK.xml started 2020-01-06 13:45:42 -0800
-[2020-01-06 13:45:44] DEBUG  : Done writing /tmp/new-testlocal-gs-parent-review-feed-AK.xml, took 00:00:01:000
