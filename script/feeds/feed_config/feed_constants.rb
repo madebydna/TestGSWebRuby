@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Feeds
   module FeedConstants
       FEED_CACHE_KEYS = %w(feed_test_scores ratings)
@@ -30,10 +32,11 @@ module Feeds
           'city' => 'local-greatschools-city-feed',
           'proficiency_band' => 'gs-proficiency-band',
           'parent_reviews' => 'local-gs-parent-review-feed',
-          'parent_reviews_flat' => 'local-gs-parent-review-feed-flat'
+          'parent_reviews_flat' => 'local-gs-parent-review-feed-flat',
+          'parent_ratings_flat' => 'local-gs-parent-ratings-feed-flat'
       }
 
-      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description official_overall_rating official_overall_rating_description official_overall_rating_flat parent_reviews parent_reviews_flat)
+      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description official_overall_rating official_overall_rating_description official_overall_rating_flat parent_reviews parent_reviews_flat parent_ratings_flat)
 
       VALID_FEED_FORMATS = %w(xml csv txt)
 
