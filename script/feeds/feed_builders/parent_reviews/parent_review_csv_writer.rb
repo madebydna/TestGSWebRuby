@@ -4,7 +4,7 @@ require 'csv'
 
 module Feeds
   module ParentReview
-    class CsvWriter
+    class ParentReviewCsvWriter
       include Feeds::FeedConstants
       include Feeds::FeedHelper
 
