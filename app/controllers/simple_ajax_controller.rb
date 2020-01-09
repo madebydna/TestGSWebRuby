@@ -34,18 +34,6 @@ class SimpleAjaxController < ApplicationController
     end
   end
 
-  def get_school_and_forward
-    school_id = params[:school_id]
-    state = params[:state]
-
-    school = School.find_by_state_and_id(state,school_id)
-    if school.present?
-      redirect_to (build_schools_review_path(school))
-    else
-      render 'error/school_not_found', layout: 'error', status: 404
-    end
-  end
-
  def build_schools_review_path(school)
    path = school_reviews_path(school)
    if params[:morganstanley].present?

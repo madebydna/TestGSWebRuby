@@ -6,8 +6,6 @@ LocalizedProfiles::Application.routes.draw do
   get ENV_GLOBAL['home_path'], as: :home, to: 'home#show'
   # This route ("/gsr/home/") is REQUIRED by Apache as long as we are running Tomcat
   get '/gsr/home', as: :home_show, to: 'home#show'
-  # Route for Search Prototype
-  # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
   get '/account', as: :manage_account, to: 'account_management#show'
 
@@ -17,103 +15,92 @@ LocalizedProfiles::Application.routes.draw do
   get '/reviews/', as: :review_choose_school, to: 'review_school_chooser#show'
   get '/morgan-stanley/', as: :morgan_stanley, to: 'review_school_chooser#morgan_stanley'
 
-    # This city regex allows for all characters except /
-    # http://guides.rubyonrails.org/routing.html#specifying-constraints
+  # This city regex allows for all characters except /
+  # http://guides.rubyonrails.org/routing.html#specifying-constraints
   city_regex = /[^\/]+/
 
   # Routes for search pages
   get ':state/schools/', constraints: { state: States.any_state_name_regex }, as: :search_state_browse, to: 'search#search'
-
   get ':state/:city/schools/', constraints: { state: States.any_state_name_regex, city: city_regex }, as: :search_city_browse, to: 'search#search'
-
   get ':state/:city/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/,
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
       to: redirect {|params, request| "#{request.path.chomp('/').concat('/').sub("/#{params[:level]}/", '/schools/')}?gradeLevels=#{params[:level][0]}" }
-
   get ':state/:city/:type/schools/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/,
                     type: /public|public-charter|private/},
       to: redirect {|params, request| "#{request.path.chomp('/').concat('/').sub("/#{params[:type]}/", '/')}?st=#{params[:type].split('-').last}" }
-
   get ':state/:city/:type/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/,
                     type: /public|public-charter|private/,
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
       to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}/#{params[:level]}", '/schools/')}?gradeLevels=#{params[:level][0]}&st=#{params[:type].split('-').last}" }
-
   get ':state/:city/:district_name/schools/', constraints: { state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/ }, as: :search_district_browse, to: 'search#search'
     # This city regex allows for all characters except /
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
-
   get ':state/:city/:district_name/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/,
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
       to: redirect {|params, request| "#{request.path.chomp('/').concat('/').sub("/#{params[:level]}/", '/schools/')}?gradeLevels=#{params[:level][0]}" }
-
   get ':state/:city/:district_name/:type/schools/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/,
                     type: /public|public-charter|private/},
       to: redirect {|params, request| "#{request.path.chomp('/').concat('/').sub("/#{params[:type]}/", '/')}?st=#{params[:type].split('-').last}" }
-
   get ':state/:city/:district_name/:type/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/,
                     type: /public|public-charter|private/,
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
       to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}/#{params[:level]}", '/schools/')}?gradeLevels=#{params[:level][0]}&st=#{params[:type].split('-').last}" }
 
+  # referenced as search_path in old top nav (deprecated_application) layout
   scope '/search/search.page', as: :search do
     get '', to: 'search#search'
   end
 
-  get '/search/nearbySearch.page', as: :search_by_zip, to: 'search#by_zip'
-
   get '/find-schools/', as: :default_search, to: redirect('/')
 
+  # Add/remove school routes
   match '/add_school', to: 'add_schools#new', via: :get
   match '/add_school', to: 'add_schools#create', via: :post
   match '/remove_school', to: 'remove_schools#new', via: :get
   match '/remove_school', to: 'remove_schools#create', via: :post
+  
   get '/school_change_request/success', as: :new_remove_school_submission_success, to: 'add_schools#success'
 
   resources :user_preferences, only: [:edit]
 
+  # Alternative preferences routes
   get '/preferences/' => 'user_email_preferences#show', as: 'user_preferences'
   post '/preferences/' => 'user_email_preferences#update', as: 'user_preferences_update'
-
   post '/unsubscribe/' => 'user_email_unsubscribes#create', as: 'user_email_unsubscribes'
   get '/unsubscribe/' => 'user_email_unsubscribes#new', as: 'unsubscribe'
 
-  resources :saved_searches, only: [:create, :destroy], path: '/gsr/ajax/saved_search'
-
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
-  get '/compare_schools', to: 'compare_schools#fetch_schools'
   get '/community/', to: 'community_landing#show',as: :community_landing
 
+  # OSP routes
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
   get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
   match '/official-school-profile/register.page', to: 'osp_registration#new', as: :osp_registration, via: [:get]
   match '/official-school-profile/register.page', to: 'osp_registration#submit',as: :osp_registration_submit, via: [:post]
   get '/official-school-profile/dashboard/', to: 'osp_landing#dashboard', as: :osp_dashboard
-
-   get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
-
+  get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
   post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
 
+  # Legacy suggestion routes
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
   get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
-  get '/gsr/user/account_subscriptions', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
+  
+  # For WP footer/header integration
   get '/gsr/footer', to: 'footer#show'
   get '/gsr/header', to: 'header#show'
 
+  # Widget routes
   get '/widget/', :to => 'widget#show', as: :widget
   post '/widget/', :to => 'widget#create'
   match '/widget/map' => 'widget#map_and_links', via: [:get, :post]
   match '/widget/schoolSearch.page' => 'widget#map', via: [:get, :post]
-
-  # todo delete this when java is gone
-  get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'
 
   # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
@@ -240,6 +227,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/status/error404.page'
   end
 
+  # API key request routes
   get '/api/request-api-key/', to: 'admin/api_accounts#register', as: :request_api_key
   get '/api/request-api-key/success/', to: 'admin/api_accounts#success', as: :request_api_key_success
   post '/api/request-api-key/', to: 'admin/api_accounts#create_api_account', as: :post_request_api_key
@@ -256,7 +244,7 @@ LocalizedProfiles::Application.routes.draw do
     end
     resources :districts
     resource :widget_logs, only: [:create]
-    resources :students
+    resources :students, only: [:show, :create]
     resources :subscriptions, only: [:create, :destroy]
     get '/autosuggest', to: 'autosuggest#show'
     post '/save_school', to: 'saved_schools#create'
@@ -264,6 +252,7 @@ LocalizedProfiles::Application.routes.draw do
     post '/log_saved_school', to: 'saved_schools_log#create'
   end
 
+  # API documentation route
   match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs
 
   get '/admin/gsr/widget-test', to: 'widget#test'
@@ -271,7 +260,6 @@ LocalizedProfiles::Application.routes.draw do
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
     resources :api_accounts, except: [:show, :destroy]
     post '/api_accounts/create_api_key', to: 'api_accounts#create_api_key', as: :create_api_key
-    get '/omniture-test', action: :omniture_test, as: :omniture_test
     get '/info', action: :info
     get '/examples-and-gotchas', action: :examples_and_gotchas
 
@@ -281,7 +269,6 @@ LocalizedProfiles::Application.routes.draw do
         schoolId: /\d+/
       }
       post '/:state/:schoolId/update', to: 'admin#update_school', as: :update
-
     end
 
     get '/user-help/', to: 'users#user_help'
@@ -294,12 +281,13 @@ LocalizedProfiles::Application.routes.draw do
     get '/script-query', action: :script_query
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
-      resources :schools do
+      resources :schools, only: [] do # admin#schools only has moderate action
         get 'moderate'
       end
     end
 
-    resources :reviews do
+    # Admin review routes
+    resources :reviews, only: [:update] do
       get 'moderation', on: :collection
       get 'schools', on: :collection
       get 'users', on: :collection
@@ -318,10 +306,9 @@ LocalizedProfiles::Application.routes.draw do
     # Thought from SS: I wonder why we do this, rather than immediately sending the "forgot password" email to the user
     get  '/reset_password', to: 'users#generate_reset_password_link' , as: :generate_reset_password_link
 
-
     get  '/users/search'
 
-    resources :held_school do
+    resources :held_school, only: [:create, :update, :destroy] do
       member do
         put 'remove_hold'
       end
@@ -331,36 +318,50 @@ LocalizedProfiles::Application.routes.draw do
 
     get '/duplicate-membership', to: 'osp_demigod#show'
     post '/duplicate-membership', to: 'osp_demigod#create'
-  end
+  end # end admin namespace
+
+  # OSP moderation routes
+  # controller, routes and views should move under admin namespace
+  get '/admin/gsr/osp-moderation', to: 'osp_moderation#index', as: :osp_moderation_index
+  post '/admin/gsr/osp-moderation', to: 'osp_moderation#update', as: :osp_moderation_update
+  get '/admin/gsr/osp-search', to: 'osp_moderation#osp_search', as: :osp_search
+  get '/admin/gsr/osp/:id', to: 'osp_moderation#edit', as: :osp_edit
+  post '/admin/gsr/osp/:id', to: 'osp_moderation#update_osp_list_member', as: :osp_update_list_member
+  
+  # WP route
   post '/gsr/ajax/wordpress_submit', to: 'wordpress_interface#call_from_wordpress', as: :call_from_wordpress
+  
+  # Review routes with /gsr prefix
   post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review
   post '/gsr/reviews/', to: 'reviews#create', as: :create_reviews
-  post '/gsr/reviews/:id/vote', :to => 'review_votes#create'
-  post '/gsr/reviews/:id/unvote', :to => 'review_votes#destroy'
+  
   get '/gsr/ajax/get_cities_alphabetically', :to => 'simple_ajax#get_cities_alphabetically'
   get '/gsr/ajax/get_schools_with_link', :to => 'simple_ajax#get_schools_with_link'
-  get '/gsr/ajax/get_school_and_forward', to: 'simple_ajax#get_school_and_forward', as: :get_school_and_forward
+
+  # User-related routes
   get '/gsr/validations/validate_user_can_log_in', :to => 'user#validate_user_can_log_in'
   get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
   get '/gsr/validations/need_to_signin', :to => 'user#need_to_signin'
-  post '/gsr/user/save_city_state', :to => 'user#update_user_city_state'
   post '/gsr/user/save_grade_selection', :to => 'user#update_user_grade_selection'
   post '/gsr/user/delete_grade_selection', :to => 'user#delete_user_grade_selection'
   post '/gsr/user/send_verify_email', :to => 'user#send_verify_email_admin'
   post '/gsr/user/send_reset_password_email', :to => 'user#send_reset_password_email_admin'
-
-  resources :subscriptions, except: [:index], path: '/gsr/user/subscriptions'
+  resources :subscriptions, only: [:create, :destroy], path: '/gsr/user/subscriptions'
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'
-  resources :favorite_schools, except: [:index], path: '/gsr/user/favorites'
+  resources :favorite_schools, only: [:create, :destroy], path: '/gsr/user/favorites'
 
+  # Routes to trigger modals
   get '/gsr/modals/signup_and_follow_school_modal',:to=> 'modals#signup_and_follow_school_modal', as: :signup_and_follow_school_modal
   get '/gsr/modals/school_user_modal',:to=> 'modals#school_user_modal', as: :school_user_modal
   get '/gsr/modals/dependencies', to: 'modals#dependencies'
   get '/gsr/modals/:modal', to: 'modals#show', as: :modal
+  
+  # Loaded from WP
   get '/gsr/assets', to: 'assets#show'
 
+  # User authentication routes
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/gsr/session/register_email', to: 'signin#register_email_unless_exists', :as => :register_email, via: [:post]
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]
@@ -370,21 +371,16 @@ LocalizedProfiles::Application.routes.draw do
   # JIRA: JT-385
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
   get '/gsr/user/user-status', as: :user_login_verification_status, to: 'user#user_login_verification_status'
-  get '/school-district-boundaries-map', as: :district_boundary, to: 'district_boundaries#show'
+  get '/join', :to => 'signin#new_join', :as => :join
+  get '/gsr/login', :to => 'signin#new', :as => :signin
+  
+  # My school list route
   get '/my-school-list', to: 'my_school_list#show', as: :my_school_list
 
-  # post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
-  #     state: States.any_state_name_regex,
-  #     schoolId: /\d+/,
-  #     school_name: /.+/
-  # }
-
-  # Passwords:
-
+  # Password routes
   # Authenticates the user using a hash, and then redirects
   # Example usage: send user here when they click a link in a "forgot password" email
   get '/gsr/authenticate-token', :as => :authenticate_token, :to => 'signin#authenticate_token_and_redirect'
-
   # When this route is requested, we will deliver a form to the user, where they will provide their email address
   # so that we can send them a "forgot password" link
   get '/account/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
@@ -392,28 +388,20 @@ LocalizedProfiles::Application.routes.draw do
   # and need a "forgot password" email. We'll send them an email with a link, and that link will allow us to
   # authenticate them so they can go ahead and change their password
   post '/account/forgot-password', :to => 'forgot_password#send_reset_password_email'
-
   # This route handles a user's "reset password" post. When they submit a form with their new password, it posts here
   post '/account/password', to: 'password#update', as: :password
   # When this route is requested, we should deliver a page with a form that allows the user to type in and confirm
   # a new password. The user must be logged in before they can see this form
   get '/account/password', to: 'password#show'
 
+  # District Boundary route
+  get '/school-district-boundaries-map', as: :district_boundary, to: 'district_boundaries#show'
 
-  get '/admin/gsr/osp-moderation', to: 'osp_moderation#index', as: :osp_moderation_index
-  post '/admin/gsr/osp-moderation', to: 'osp_moderation#update', as: :osp_moderation_update
-  get '/admin/gsr/osp-search', to: 'osp_moderation#osp_search', as: :osp_search
-  get '/admin/gsr/osp/:id', to: 'osp_moderation#edit', as: :osp_edit
-  post '/admin/gsr/osp/:id', to: 'osp_moderation#update_osp_list_member', as: :osp_update_list_member
-
-  get '/join', :to => 'signin#new_join', :as => :join
-  get '/gsr/login', :to => 'signin#new', :as => :signin
-
+  # State routes
   scope '/:state', as: :state, constraints: {
       state: States.any_state_name_regex,
   } do
     get '', to: 'states#show'
-    get 'browse', to: 'states#foobar', as: :browse
     get '/college-success-award', to: 'college_success_award#search', as: :college_success_awards_list
     get 'guided-search', to: redirect { |params, _|
       "/#{params[:state]}/"
@@ -434,12 +422,11 @@ LocalizedProfiles::Application.routes.draw do
     } do
     get "(:path)", to: "school_profiles#show"
 
-#     Old Profile Route
+    # Old Profile Route
     resources :reviews, only: [:create], controller: 'school_profile_reviews'
     # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
     resource :user, only: [:create], controller: 'school_user', action: 'create'
   end
-
 
   # Routes for city page
   scope '/:state/:city', as: :city, constraints: {
@@ -455,23 +442,14 @@ LocalizedProfiles::Application.routes.draw do
   } do
 
     get '', to: 'cities#show'
-    get 'events', to: 'cities#events', as: :events
-    get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
-    get 'enrollment', to: 'cities#enrollment', as: :enrollment
     get 'schools', to: 'error#page_not_found', as: :browse
     get 'guided-search', to: redirect { |params, _|
       "/#{params[:state]}/#{params[:city]}/"
     }, as: :guided_search
 
-    scope '/enrollment', as: :enrollment do
-      get '/:tab', to: 'cities#enrollment'
-    end
     get 'programs', to: 'cities#programs', as: :programs
 
     scope '/education-community', as: :education_community do
-      get '', to: 'cities#community'
-      get '/education', to: 'cities#community'
-      get '/funders', to: 'cities#community'
       get '/partner', to: 'cities#partner', as: :partner
     end
 
@@ -482,7 +460,7 @@ LocalizedProfiles::Application.routes.draw do
       # http://guides.rubyonrails.org/routing.html#specifying-constraints
       district: /(?!preschools)[^\/]+/
     }
-  end
+  end # end routes for city page
 
   # NOTE: this must come after the city scope, because it will match anything after the city name
   # TODO: DRY this up. Or delete the above version and rename all city_district_* helpers to district_*
@@ -493,9 +471,11 @@ LocalizedProfiles::Application.routes.draw do
       district: /(?!preschools)[^\/]+/
   }
 
+  # Routes for form to add LeadGen records
   get '/ads/leadGen.page', to: 'lead_gen#show'
   post '/ads/leadGen.page', to: 'lead_gen#save'
 
+  # Redirect routes (school profile, state, or home page)
   get '/school/overview.page', to: 'legacy_profile_redirect#show'
   get '/school/parentReviews.page', to: 'legacy_profile_redirect#show'
   get '/school/rating.page', to: 'legacy_profile_redirect#show'
@@ -535,12 +515,12 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'school_profiles#show'
   end
 
-  #Handle old city homepage structure
+  # Handle old city homepage structure
   get '/city/:city/:state_abbr(/*other)', to: 'cities_list#old_homepage', constraints: {
       city: /[^\/]+/
   }
 
-  #Handle City SEO pages
+  # Handle City SEO pages
   get '/schools/cities/:state_name/:state_abbr/', to: 'cities_list#show', as: 'cities_list'
 
   scope '/schools/cities/:state_name/:state_abbr/:letter', as: 'cities_list_paginated' do
@@ -549,7 +529,7 @@ LocalizedProfiles::Application.routes.draw do
     }
   end
 
-  #Handle District SEO pages
+  # Handle District SEO pages
   get '/schools/districts/:state_name/:state_abbr/', to: 'districts_list#show', as: 'districts_list'
 
   scope '/schools/districts/:state_name/:state_abbr/:letter', as: 'districts_list_paginated' do
@@ -558,7 +538,7 @@ LocalizedProfiles::Application.routes.draw do
     }
   end
 
-  #Handle old School list SEO pages (has to come below cities_list and districts_list routes)
+  # Handle old School list SEO pages (has to come below cities_list and districts_list routes)
   get '/schools/:state_name/:state_abbr/', to: 'schools_list#show', as: :schools_list
 
   # error handlers

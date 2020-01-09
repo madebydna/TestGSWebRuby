@@ -2,13 +2,12 @@ class CommunityLandingController < ApplicationController
 
   before_action :set_city_state
 
-
   def show
     gon.pagename = 'GS:Home:CommunityLandingPage'
     set_meta_tags title: 'Connect With Greatschools',
                   description:'Tell your school\'s story. Connect with Greatschools'
 
-    render 'home/community_landing',status:404
+    render 'home/community_landing', status: 404
 
  end
 end

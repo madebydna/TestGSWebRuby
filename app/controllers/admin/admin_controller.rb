@@ -48,14 +48,6 @@ class Admin::AdminController < ApplicationController
     params[:limit].to_i == 0 ? 5 : params[:limit].to_i
   end
 
-  def omniture_test
-    gon.pagename = 'omniture_test'
-    gon.omniture_pagename = 'omniture_test'
-    gon.omniture_hier1 = 'omniture_test,test_page'
-    gon.omniture_sprops = {'userLoginStatus' => 'Logged In', 'schoolRating' => 7}
-    gon.omniture_evars = {'review_updates_mss_traffic_driver' => 'testing'}
-  end
-
   private
 
   def school_id
