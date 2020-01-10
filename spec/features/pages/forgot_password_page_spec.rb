@@ -97,9 +97,10 @@ describe 'Forgot password page' do
       page_object.fill_in_email_field  unverified_user.email
     end
     when_I :click_continue_button do
-      it 'should display the join page' do
+      it 'should  display the join page' do
         expect(JoinPage.new).to be_displayed
       end
+      
       it 'should send reset password email' do
         expect(JoinPage.new).to be_displayed
         sent_email = ExactTarget.last_delivery_args

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'ruby-prof'
-
 class DataValue < ActiveRecord::Base
   self.table_name = 'data_values'
 

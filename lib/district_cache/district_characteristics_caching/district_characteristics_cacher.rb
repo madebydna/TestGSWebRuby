@@ -4,15 +4,15 @@ class DistrictCharacteristicsCacher < DistrictCacher
   include DistrictCacheValidation
 
   CACHE_KEY = 'district_characteristics'
-  DIRECTORY_CENSUS_DATA_TYPES = [6, 8, 9, 17, 76, 77, 78, 102, 123, 124, 178, 179, 182, 262, 273, 277, 296, 298, 
-    319, 320, 321, 325, 417, 419, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 
-    459, 460, 461]
+  DIRECTORY_CENSUS_DATA_TYPES = [6, 8, 9, 17, 76, 77, 78, 102, 123, 124, 178, 179, 182, 262, 273, 277, 296, 298, 319, 320, 321,
+                                 325, 417, 419, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458,
+                                 459, 460, 461]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
   # 3 - Master's degree
   # 4 - Doctorate's degree
   # 5 - Student teacher ratio
-  # 6 - Students participating in free or reduced-price lunch program  
+  # 6 - Students participating in free or reduced-price lunch program
   # 8 - English Learners
   # 9 - Ethnicity
   # 12 - Average years of teacher experience
@@ -27,8 +27,8 @@ class DistrictCharacteristicsCacher < DistrictCacher
   # 42 - Head official email
   # 76 - Graduating seniors pursuing 4 year college/university
   # 77 - Graduating seniors pursuing 2 year college/university
-  # 78 - Graduating seniors pursuing other college                                                                                                                                                      
-  # 102 - ACT participation 
+  # 78 - Graduating seniors pursuing other college
+  # 102 - ACT participation
   # 103 - at least 5 years teaching experience
   # 123 - Female
   # 124 - Male
@@ -41,14 +41,14 @@ class DistrictCharacteristicsCacher < DistrictCacher
   # 262 - Percent enrolled in any institution of higher learning in the last 0-16 months
   # 273 - Percent enrolled in a 2-year institution of higher learning in the last 0-16 months
   # 277 - Percent enrolled in a 4-year institution of higher learning in the last 0-16 months
-  # 296 - SAT percent college ready  
+  # 296 - SAT percent college ready
   # 298 - 4-year high school graduation rate
   # 319 - Average ACT score
   # 320 - Percent of students who will attend out-of-state colleges
   # 321 - Percent of students who will attend in-state colleges
-  # 325 - ACT percent college ready 
-  # 417 - Percent of Students Passing AP/IB Exams 
-  # 419 - Percent of students who meet UC/CSU entrance requirements 
+  # 325 - ACT percent college ready
+  # 417 - Percent of Students Passing AP/IB Exams
+  # 419 - Percent of students who meet UC/CSU entrance requirements
   # 443 - Percent enrolled in any public in-state postsecondary institution within 12 months after graduation
   # 444 - Percent enrolled in any postsecondary institution within 12 months after graduation
   # 447 - Percent enrolled in any 2 year postsecondary institution within 6 months after graduation

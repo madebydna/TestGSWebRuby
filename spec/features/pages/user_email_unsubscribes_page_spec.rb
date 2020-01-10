@@ -12,6 +12,7 @@ describe 'unsubscribe page' do
   end
 
   let(:user) { FactoryBot.create(:user, id: 1) }
+  
   after do
     clean_dbs(:gs_schooldb)
   end

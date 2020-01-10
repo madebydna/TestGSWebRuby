@@ -40,15 +40,15 @@ class HomeController < ApplicationController
 
     # NOTE: this is temporary until we get the final list from product
     @city_list_for_footer = ['Albuquerque, NM', 'Allentown, PA', 'Anchorage, AK', 'Atlanta, GA', 'Austin, TX', 'Baltimore, MD', 'Bellingham, WA',
-    'Boise, ID', 'Boston, MA', 'Bridgeport, CT', 'Charleston, WV', 'Charlotte, NC', 'Chicago, IL', 'Colorado Springs, CO',
-    'Columbus, OH', 'Dallas, TX', 'Denver, CO', 'Des Moines, IA', 'Detroit, MI', 'Fort Lauderdale, FL', 'Grand Rapids, MI',
-    'Honolulu, HI', 'Houston, TX', 'Huntsville, AL', 'Indianapolis, IN', 'Irvine, CA', 'Jacksonville, FL', 'Kansas City, MO',
-    'Las Vegas, NV', 'Little Rock, AR', 'Long Beach, CA', 'Los Angeles, CA', 'Manchester, NH', 'Marietta, GA', 'Memphis, TN',
-    'Miami, FL', 'Milwaukee, WI', 'Minneapolis, MN', 'New Orleans, LA', 'New York, NY', 'Newark, NJ', 'Oakland, CA',
-    'Oklahoma City, OK', 'Omaha, NE', 'Orlando, FL', 'Pasadena, CA', 'Philadelphia, PA', 'Phoenix, AZ', 'Sacramento, CA',
-    'Salt Lake City, UT', 'San Antonio, TX', 'San Diego, CA', 'San Francisco, CA', 'San Jose, CA', 'Seattle, WA', 'Sioux Falls, SD',
-    'Tacoma, WA', 'Tampa, FL', 'Temecula, CA', 'Tucson, AZ', 'Virginia Beach, VA', 'Washington, DC', 'West Palm Beach, FL',
-    'Wilmington, DE']
+                             'Boise, ID', 'Boston, MA', 'Bridgeport, CT', 'Charleston, WV', 'Charlotte, NC', 'Chicago, IL', 'Colorado Springs, CO',
+                             'Columbus, OH', 'Dallas, TX', 'Denver, CO', 'Des Moines, IA', 'Detroit, MI', 'Fort Lauderdale, FL', 'Grand Rapids, MI',
+                             'Honolulu, HI', 'Houston, TX', 'Huntsville, AL', 'Indianapolis, IN', 'Irvine, CA', 'Jacksonville, FL', 'Kansas City, MO',
+                             'Las Vegas, NV', 'Little Rock, AR', 'Long Beach, CA', 'Los Angeles, CA', 'Manchester, NH', 'Marietta, GA', 'Memphis, TN',
+                             'Miami, FL', 'Milwaukee, WI', 'Minneapolis, MN', 'New Orleans, LA', 'New York, NY', 'Newark, NJ', 'Oakland, CA',
+                             'Oklahoma City, OK', 'Omaha, NE', 'Orlando, FL', 'Pasadena, CA', 'Philadelphia, PA', 'Phoenix, AZ', 'Sacramento, CA',
+                             'Salt Lake City, UT', 'San Antonio, TX', 'San Diego, CA', 'San Francisco, CA', 'San Jose, CA', 'Seattle, WA', 'Sioux Falls, SD',
+                             'Tacoma, WA', 'Tampa, FL', 'Temecula, CA', 'Tucson, AZ', 'Virginia Beach, VA', 'Washington, DC', 'West Palm Beach, FL',
+                             'Wilmington, DE']
   end
 
   def page_view_metadata
