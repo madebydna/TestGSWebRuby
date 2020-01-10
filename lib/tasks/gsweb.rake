@@ -8,6 +8,8 @@ namespace :gsweb do
       sh 'bundle install'
       Rake::Task['db:create'].invoke
 
+      sh 'overcommit -i'
+
       # Note this only creates one state db - CA
       development_dbs_to_create =
         'gs_schooldb',
@@ -30,14 +32,14 @@ namespace :gsweb do
     require 'sample_data_helper'
     load_sample_data 'alameda_high_school_profile', Rails.env
   end
-  
+
   task :use_dev_db do
     database_local = Rails.root.join('config', 'database_local.yml')
-    database_local_point_at_dev = 
+    database_local_point_at_dev =
     Rails.root.join('config', 'database_local.point_at_dev.yml')
 
     File.open(database_local, 'a') do |f|
-      f << "\n" 
+      f << "\n"
       f << File.read(database_local_point_at_dev)
     end
   end
@@ -88,7 +90,7 @@ namespace :gsweb do
 
   task :use_localhost_db do
     database_local = Rails.root.join('config', 'database_local.yml')
-    database_local_point_at_dev = 
+    database_local_point_at_dev =
     Rails.root.join('config', 'database_local.point_at_dev.yml')
 
     new_database_local = File.read(database_local).

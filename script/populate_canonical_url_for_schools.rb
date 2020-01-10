@@ -2,6 +2,8 @@
 
 require 'optparse'
 
+# violates rubocop Style/MixinUsage rule
+# TODO: Convert to class and include these modules. Then can run the main program as an instance of the class
 include Rails.application.routes.url_helpers
 include UrlHelper
 
@@ -27,7 +29,7 @@ raise ArgumentError.new("Need to supply valid states!") unless states.all? {|s| 
 
 counter = 0
 
-begin log = ScriptLogger.record_log_instance(script_args); rescue;end
+begin log = ScriptLogger.record_log_instance(script_args); rescue; end
 
 begin
   states.each do |state|
@@ -55,13 +57,13 @@ begin
     end
   end
 
-  begin log.finish_logging_session(1, "Updated #{counter} canonical urls"); rescue;end
+  begin log.finish_logging_session(1, "Updated #{counter} canonical urls"); rescue; end
 
 rescue => e
-  begin log.finish_logging_session(0, e); rescue;end
+  begin log.finish_logging_session(0, e); rescue; end
   raise
 rescue SignalException
-  begin log = log.finish_logging_session(0, "Process ended early. User manually cancelled process."); rescue;end
+  begin log = log.finish_logging_session(0, "Process ended early. User manually cancelled process."); rescue; end
   abort
 end
 

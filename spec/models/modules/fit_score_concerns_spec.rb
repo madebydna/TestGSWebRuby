@@ -213,31 +213,31 @@ describe FitScoreConcerns do
             configure_expectations model_type, academic_focus: %w(vocational visual_arts)
             fit_score_model_assertions max_fit:2, fit:2,
                 breakdown: [{category:'school_focus',filter:'arts',match:true,match_status: :yes},
-                {category:'school_focus',filter:'career_tech',match:true,match_status: :yes}]
+                            {category:'school_focus',filter:'career_tech',match:true,match_status: :yes}]
           end
           describe 'and only career_tech is there' do
             configure_expectations model_type, academic_focus: %w(vocational)
             fit_score_model_assertions max_fit:2, fit:1,
                 breakdown: [{category:'school_focus',filter:'career_tech',match:true,match_status: :yes},
-                {category:'school_focus',filter:'arts',match:false,match_status: :no}]
+                            {category:'school_focus',filter:'arts',match:false,match_status: :no}]
           end
           describe 'and only arts is there' do
             configure_expectations model_type, academic_focus: %w(visual_arts)
             fit_score_model_assertions max_fit:2, fit:1,
                 breakdown: [{category:'school_focus',filter:'arts',match:true,match_status: :yes},
-                {category:'school_focus',filter:'career_tech',match:false,match_status: :no}]
+                            {category:'school_focus',filter:'career_tech',match:false,match_status: :no}]
           end
           describe 'and academic_focus is none' do
             configure_expectations model_type, academic_focus: %w(none)
             fit_score_model_assertions max_fit:2, fit:0,
                 breakdown: [{category:'school_focus',filter:'arts',match:false,match_status: :no},
-                {category:'school_focus',filter:'career_tech',match:false,match_status: :no}]
+                            {category:'school_focus',filter:'career_tech',match:false,match_status: :no}]
           end
           describe 'and academic_focus has not been responded to' do
             configure_expectations(model_type, {})
             fit_score_model_assertions max_fit:2, fit:0,
                 breakdown: [{category:'school_focus',filter:'arts',match:false,match_status: :no_data},
-                {category:'school_focus',filter:'career_tech',match:false,match_status: :no_data}]
+                            {category:'school_focus',filter:'career_tech',match:false,match_status: :no_data}]
           end
         end
       end

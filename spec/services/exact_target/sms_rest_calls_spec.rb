@@ -43,57 +43,55 @@ describe ExactTarget::SmsRestCalls do
 
   def correct_json_hash
     {
-      "contactKey"=> phone_number,
-      "attributeSets"=> [
-        {
-        "name"=> "MobileConnect Demographics",
-        "items"=> [{
-          "values"=> [{
-            "name"=> "Mobile Number",
-            "value"=> "15105555555"
-          },
-          {
-            "name"=> "Locale",
-            "value"=> "US"
-          },
-          {
-            "name"=> "Status",
-            "value"=> 1
-          },
-          {
-            "name"=> "Source",
-            "value"=> 2
-          }]
-        }]
-      }]
+      "contactKey" => phone_number,
+      "attributeSets" => [{
+                           "name"=> "MobileConnect Demographics",
+                           "items"=> [{
+                                        "values"=> [{
+                                                      "name"=> "Mobile Number",
+                                                      "value"=> "15105555555"
+                                                    },
+                                                    {
+                                                      "name"=> "Locale",
+                                                      "value"=> "US"
+                                                    },
+                                                    {
+                                                      "name"=> "Status",
+                                                      "value"=> 1
+                                                    },
+                                                    {
+                                                      "name"=> "Source",
+                                                      "value"=> 2
+                                                    }]
+                                      }]
+                        }]
     }
   end
 
   def correct_update_json_hash
     {
-      "contactKey"=>  "15105555555",
-      "attributeSets"=> [
-        {
-          "name"=> "MobileConnect Demographics",
-          "items"=> [{
-            "values"=> [{
-              "name"=> "Mobile Number",
-              "value"=> "15105555555"
-            },
-            {
-              "name"=> "Locale",
-              "value"=> "US"
-            },
-            {
-              "name"=> "Status",
-              "value"=> 1
-            },
-            {
-              "name"=> "Source",
-              "value"=> 13
-            }]
-          }]
-        }]
+      "contactKey"=> "15105555555",
+      "attributeSets"=> [{
+                          "name"=> "MobileConnect Demographics",
+                          "items"=> [{
+                                      "values"=> [{
+                                                    "name"=> "Mobile Number",
+                                                    "value"=> "15105555555"
+                                                  },
+                                                  {
+                                                    "name"=> "Locale",
+                                                    "value"=> "US"
+                                                  },
+                                                  {
+                                                    "name"=> "Status",
+                                                    "value"=> 1
+                                                  },
+                                                  {
+                                                    "name"=> "Source",
+                                                    "value"=> 13
+                                                  }]
+                                    }]
+                          }]
     }
   end
 end

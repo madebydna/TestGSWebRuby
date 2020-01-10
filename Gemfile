@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 # WARNING: Before upgrading rails version check the following extension to the
-# Rails ActionDispatch::HTTP::URL.url_for 
+# Rails ActionDispatch::HTTP::URL.url_for
 # Full-stack web application framework. (http://rubyonrails.org)
 gem 'rails', '4.2.8'
 
@@ -10,7 +12,7 @@ gem 'mysql2', '0.4.10'
 
 # This gem provides jQuery and the jQuery-ujs driver for your Rails 3+ application.
 # Used by pages that use JS through rails asset pipeline and not webpack/react
-# Such as review moderation pages and reviews landing page 
+# Such as review moderation pages and reviews landing page
 # Use jQuery with Rails 3+ (http://rubygems.org/gems/jquery-rails)
 gem 'jquery-rails'
 
@@ -157,6 +159,10 @@ group :development do
   # rspec command for spring (https://github.com/jonleighton/spring-commands-rspec)
   gem 'spring-commands-rspec'
 
+  # Tool used to manage and configure webhooks including firing off rubocop on commits
+  gem 'overcommit'
+
+  # Profiling toolkit for Rack applications with Rails integration.
   # USED: in development env. See config/initializers/rack_profiler.rb
   # Profiles loading speed for rack applications. (http://miniprofiler.com)
   gem 'rack-mini-profiler', require: false

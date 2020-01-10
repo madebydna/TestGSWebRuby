@@ -4,9 +4,8 @@ class SchoolLoading::Loader < SchoolLoading::Base
 
   def load!
     begin
-
       if updates.present?
-        to_be_updated_value =  updates.map{|update| update["value"] }.join(",")
+        to_be_updated_value =  updates.map {|update| update["value"] }.join(",")
         to_be_updated_column_name = data_type
         school_update = SchoolLoading::Update.new(data_type, updates.first)
         database = school_update.entity_state.to_s.downcase.to_sym

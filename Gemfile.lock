@@ -276,6 +276,8 @@ GEM
       shellany (~> 0.0)
     ntlm-http (0.1.1)
     oj (3.3.9)
+    overcommit (0.23.0)
+      childprocess (~> 0.5.0)
     ox (2.8.2)
     parallel (1.12.0)
     parser (2.4.0.2)
@@ -534,6 +536,7 @@ DEPENDENCIES
   mysql2 (= 0.4.10)
   nokogiri (= 1.8.1)
   oj
+  overcommit
   ox
   protected_attributes
   pry-rails

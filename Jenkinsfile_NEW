@@ -12,13 +12,13 @@ def runCommonSteps() {
   sh 'script/ci/build_env.sh'
   sh 'mkdir -p vendor/cache'
   unstash 'bundle'
-  sh 'bundle install --local > /dev/null'
+  sh 'bundle install --local --without development'
   sh 'rbenv rehash'
   unstash 'assets'
 }
 
 def runUnitSpecs(groupNum) {
-  withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {  
+  withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
     runCommonSteps()
     sh "script/ci/run_unit_specs.sh --out tmp/rspec-${groupNum}.xml `./script/ci/unit_rspec_group.rb 2 ${groupNum}`"
     junit testResults: 'tmp/*.xml'
@@ -26,7 +26,7 @@ def runUnitSpecs(groupNum) {
 }
 
 def runFeatureSpecs(groupNum) {
-  withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {  
+  withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
     runCommonSteps()
     sh "script/ci/run_feature_specs.sh --out tmp/features_rspec-${groupNum}.xml `./script/ci/feature_rspec_group.rb 2 ${groupNum}`"
     junit testResults: 'tmp/*.xml'
