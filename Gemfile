@@ -28,7 +28,7 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 
 # Used in moderation.html.erb for review moderation
 # A pagination engine plugin for Rails 3+ and other modern frameworks (https://github.com/amatsuda/kaminari)
-gem 'kaminari', '1.1.1'
+gem 'kaminari', '0.16.1'
 
 # Provide various react builds to your asset bundle
 # Transform .jsx in the asset pipeline
