@@ -7,7 +7,30 @@ class SearchPage < SitePrism::Page
 
   set_url_matcher /(search\/search\.page|#{States.any_state_name_regex}\/[\w\-\.]+\/[\w\-\.]+)\/?/
 
+  class PaginationButtons < SitePrism::Section
+    elements :anchor_buttons, '.anchor-button'
+    element :anchor_button_2, '.anchor-button', text: '2'
+  end
+
+  class SchoolResult < SitePrism::Section
+    elements :distances, 'div', text: /Distance/
+    elements :ratings, '.tipso_style .circle-rating--small'
+    element :result_item_1_link, 'li a', match: :first
+  end
+
+  class SchoolList < SitePrism::Section
+    elements :result_items, 'li'
+    elements :result_item_names, 'li a.name'
+    elements :assigned_schools, '.assigned'
+    section :result_content, SchoolResult, 'ol'
+  end
+
+  section :pagination_buttons, PaginationButtons, '.pagination-buttons'
+  section :school_list, SchoolList, '.school-list'
+
   element :sort_dropdown, '.subheader .menu-item select'
+  element :pagination_summary, '.pagination-summary'
+  element :pagination_summary_entity_link, '.pagination-summary a'
 
   sections :school_rows, '.school-table tbody tr' do
     element :anchors, 'a'
