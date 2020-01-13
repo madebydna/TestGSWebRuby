@@ -115,7 +115,7 @@ module Feeds
       end
 
       def district_ids
-        @districts.map(&:id)
+        @districts.map(&:district_id)
       end
 
       def state_test_info
