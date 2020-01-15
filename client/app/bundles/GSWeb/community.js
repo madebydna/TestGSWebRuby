@@ -91,21 +91,17 @@ $(() => {
     setTop: true,
     setBottom: true
   });
-  // keepInViewport('.toc', {
-  //   elementsAboveFunc: () => [].slice.call(window.document.querySelectorAll('.header_un')),
-  //   elementsBelowFunc: () => [].slice.call(window.document.querySelectorAll('.footer')),
-  //   setTop: true,
-  //   setBottom: true
-  // });
 
-  $('.toc li').on('click', function(e) {
-    let elem = e.currentTarget;
-    if (elem.nodeName === 'LI') {
-      let anchor = elem.getAttribute('anchor');
-      scrollToElement(`#${anchor}`, ()=>{}, -60);
+  const links = document.querySelectorAll(".toc li");
+  links.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const elem = e.currentTarget;
+      if (elem.nodeName === 'LI') {
+        const anchor = elem.getAttribute('anchor');
+        scrollToElement(`#${anchor}`, () => {}, -60);
       }
-    }
-  );
+    });
+  });
 
   $(window).on('scroll', throttle(function() {
     const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele));
