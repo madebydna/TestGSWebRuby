@@ -39,7 +39,6 @@ const DistrictsInCityWrapper = withViewportSize({ propName: 'size' })(DistrictsI
 const CityLinksWrapper = withViewportSize({ propName: 'size' })(CityLinks);
 const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
 
-
 ReactOnRails.register({
   District,
   City,
@@ -68,17 +67,6 @@ ReactOnRails.register({
 
 $(() => {
   commonPageInit();
-  $('body').on('click', '.js-test-score-details', function () {
-    var grades = $(this).closest('.bar-graph-display').parent().find('.grades');
-    if(grades.css('display') == 'none') {
-      grades.slideDown();
-      $(this).find('span').removeClass('rotate-text-270');
-    }
-    else{
-      grades.slideUp();
-      $(this).find('span').addClass('rotate-text-270');
-    }
-  });
 
   keepInViewport('.breadcrumbs-container', {
     initialTop: 60,
