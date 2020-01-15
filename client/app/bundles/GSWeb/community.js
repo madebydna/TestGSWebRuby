@@ -85,6 +85,7 @@ $(() => {
     setTop: true,
     setBottom: false
   });
+
   keepInViewport('.js-ad-hook', {
     elementsAboveFunc: () => [].slice.call(window.document.querySelectorAll('.header_un')),
     elementsBelowFunc: () => [].slice.call(window.document.querySelectorAll('.footer')),
@@ -92,30 +93,33 @@ $(() => {
     setBottom: true
   });
 
-  const links = document.querySelectorAll(".toc li");
-  links.forEach((link) => {
+  const tocLinks = document.querySelectorAll(".toc li");
+  tocLinks.forEach((link) => {
     link.addEventListener('click', (e) => {
       const elem = e.currentTarget;
       if (elem.nodeName === 'LI') {
         const anchor = elem.getAttribute('anchor');
-        scrollToElement(`#${anchor}`, () => {}, -60);
+        scrollToElement(`#${anchor}`, () => {
+        }, -60);
       }
     });
   });
 
-  $(window).on('scroll', throttle(function() {
+  function myFunction() {
     const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele));
     const selectedToc = tocElements.length > 0 ? tocElements[0].id : [];
 
-    window.document.querySelectorAll('.toc li').forEach(element => {
+    tocLinks.forEach(element => {
       if (element.getAttribute('anchor') === selectedToc) {
         element.classList.add('selected');
       } else {
         element.classList.remove('selected');
       }
     });
-  }, 100));
+  }
 
+  window.onscroll = throttle(function () {
+    myFunction()
+  }, 100);
   initAdvertising();
-
 });
