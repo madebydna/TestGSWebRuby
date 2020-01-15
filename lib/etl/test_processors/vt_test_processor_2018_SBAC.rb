@@ -32,14 +32,10 @@ class VTTestProcessor2018SBAC < GS::ETL::TestProcessor
 	}
 	
 	map_prof_band_id = { 
-		proficient_and_above: 1
+		'total_proficient_and_above' => 1
 	}
 
-	source('vt_2018.txt',[],col_sep:"\t") do |s|
-		s.transform('',MultiFieldRenamer,{
-			entity_type: entity
-		})
-	end
+	source('vt_2018.txt',[],col_sep:"\t")
 
 
 
@@ -49,21 +45,11 @@ class VTTestProcessor2018SBAC < GS::ETL::TestProcessor
 			notes: 'DXT-3377 VT SBAC',
 			test_data_type: 'VT SBAC',
          	test_data_type_id: 218, 
-			description: = 'In 2017-2018, students in Vermont took The Smarter Balanced assessment. This assessment of English Language Arts and Mathematics asks students to demonstrate and apply their knowledge and skills in areas such as critical thinking, analytical writing, and problem solving. The Smarter Balanced assessment is aligned with the Common Core State Standards, uses state of the art computer adaptive testing and accessibility technologies, and provides a continuum of summative, interim and formative tools that can be used for a variety of educational purposes. This assessment tests students in English Language Arts and Mathematics from grades 3 to 9.'
+			description: 'In 2017-2018, students in Vermont took The Smarter Balanced assessment. This assessment of English Language Arts and Mathematics asks students to demonstrate and apply their knowledge and skills in areas such as critical thinking, analytical writing, and problem solving. The Smarter Balanced assessment is aligned with the Common Core State Standards, uses state of the art computer adaptive testing and accessibility technologies, and provides a continuum of summative, interim and formative tools that can be used for a variety of educational purposes. This assessment tests students in English Language Arts and Mathematics from grades 3 to 9.'
 		})
-		.transform('map breakdown id',HashLookup,:subgroup,map_breakdown_id, to: :breakdown_id)
+		.transform('map breakdown id',HashLookup,:breakdown,map_breakdown_id, to: :breakdown_id)
 		.transform('map subject id',HashLookup,:subject, map_subject_id, to: :subject_id)
-		.transform('map prof band id',HashLookup,:proficiency_band, map_prof_band_id,to: :proficiency_band_id)	
-        .transform("Creating StateID", WithBlock) do |row|
-     		 if row[:entity_type] == 'state'
-       			row[:state_id] = 'state'
-     		elsif row[:entity_type] == 'school'
-        		row[:state_id] = row[:school_state_id]
-        	elsif row[:entity_type] =='district'
-        		row[:state_id] = row[:district_state_id]
-            end
-            row
-        end
+		.transform('map prof band id',HashLookup,:proficiency_band, map_prof_band_id,to: :proficiency_band_id)
 	end
 
 	def config_hash
@@ -72,7 +58,6 @@ class VTTestProcessor2018SBAC < GS::ETL::TestProcessor
 		state: 'vt'
 		}
 	end
-
 end
 
 VTTestProcessor2018SBAC.new(ARGV[0],max:nil,offset:nil).run
