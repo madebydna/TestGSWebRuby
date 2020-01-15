@@ -66,6 +66,14 @@ describe DistrictRecord do
         DistrictRecord.update_from_district(district, "ca")
         expect(@ca_1.reload.name).to eq("Awesome Schools of Alameda")
       end
+
+      it "raises RecordInvalid with full error messages if invalid update" do
+        district = FactoryBot.create_on_shard(:ca, :district, id: @ca_1.district_id, name: @ca_1.name)
+        district.name = ""
+        expect {
+          DistrictRecord.update_from_district(district, "ca")
+        }.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name can't be blank")
+      end
     end
   end
 

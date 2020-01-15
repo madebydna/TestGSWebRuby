@@ -12,16 +12,13 @@ class DirectoryLoading::Loader < Loader
 
       entity = directory_update.entity
 
-      begin
-        if entity.is_a?(District)
-          district = District.on_db(directory_update.shard).find(directory_update.entity_id)
-          DistrictRecord.update_from_district(district, directory_update.shard)
-        end
-      rescue Exception => e
-        raise e.message
-      ensure
-        Cacher.create_caches_for_data_type(entity, DATA_TYPE) if entity.is_a?(School)
+      if entity.is_a?(District)
+        district = District.on_db(directory_update.shard).find(directory_update.entity_id)
+        DistrictRecord.update_from_district(district, directory_update.shard)
+      elsif entity.is_a?(School)
+        Cacher.create_caches_for_data_type(entity, DATA_TYPE)
       end
+
     end
   end
 end
