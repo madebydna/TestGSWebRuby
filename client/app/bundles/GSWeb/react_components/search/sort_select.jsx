@@ -23,13 +23,16 @@ const dictionary = {
 };
 
 const ratingDictionary = {
-  en: {},
+  en: {
+    'Economically_disadvantaged': 'Low-income'
+  },
   es: {
     'Test Scores Rating': 'Resultados de Exámenes',
     'Student Progress Rating': 'Progreso del Estudiante',
     'Academic Progress Rating': 'Progreso Académico',
     'College Readiness Rating': 'Preparación Universitaria',
-    'Equity Overview Rating': 'Resumen de Equidad'
+    'Equity Overview Rating': 'Resumen de Equidad',
+    'Economically_disadvantaged': 'De bajos ingresos'
   }
 };
 
@@ -107,13 +110,6 @@ const ratingBreakdownFieldDictionary = Object.keys(ratingDictionary.es).reduce(
       })} (${tBreakdown(breakdown, { locale: 'es' })})`;
     });
 
-    dict.en["Economically_disadvantaged"] = `${tRatingLabel("Test Scores Rating", {
-      locale: 'en'
-    })} (${tBreakdown("Economically disadvantaged", { locale: 'en' })})`;
-    dict.es["Economically_disadvantaged"] = `${tRatingLabel("Test Scores Rating", {
-      locale: 'es'
-    })} (${tBreakdown("Economically disadvantaged", { locale: 'es' })})`;
-
     return dict;
   },
   {
@@ -135,7 +131,8 @@ const t = translateWithDictionary(
 const SortSelect = () => (
   <SortContext.Consumer>
     {({ sort, onSortChanged, sortOptions }) => {
-      const options = sortOptions.map(k => ({ key: k, label: t(k) }));
+      const options = sortOptions.filter(s => s !== 'summary_rating').map(k => ({ key: k, label: t(k) }));
+
       return (
         <Select
           objects={options}
