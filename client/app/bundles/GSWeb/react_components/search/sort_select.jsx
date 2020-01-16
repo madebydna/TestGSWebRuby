@@ -84,7 +84,8 @@ const breakdownDictionary = {
     'Hawaiian Native/Pacific Islander': 'Islas del Pacífico',
     'Native Hawaiian or Other Pacific Islander': 'Islas del Pacífico',
     'Economically disadvantaged': 'De bajos ingresos',
-    'Low Income': 'De bajos ingresos'
+    'Low Income': 'De bajos ingresos',
+    'Filipino': 'Filipinos'
   }
 };
 
