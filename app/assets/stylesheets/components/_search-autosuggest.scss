@@ -29,7 +29,7 @@
     }
   }
 
-  .search-results-list-item {
+  .search-results-list-item,.search-results-show-all-option {
     cursor: pointer;
   }
 
@@ -101,7 +101,7 @@
       margin-left: 0;
     }
   }
-  
+
   .search-mode-homepage{
     // Class added to search box to allow mobile user to have more room to search
     // Overwrites CSS from search-box class
