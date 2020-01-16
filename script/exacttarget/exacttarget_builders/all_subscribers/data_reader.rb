@@ -44,6 +44,7 @@ module ExactTarget
             user['updated'] # need to format
             user['time_added'] # need to format
             # user['hash_token'] # need to generate this?
+            # UserVerificationToken
             user['how']
             user['town']
             # user['state'] # no idea where this comes from - kill

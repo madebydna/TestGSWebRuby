@@ -259,6 +259,9 @@ GEM
     net-http-digest_auth (1.4.1)
     net-http-persistent (3.0.1)
       connection_pool (~> 2.2)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (5.2.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     nori (2.4.0)
@@ -525,6 +528,7 @@ DEPENDENCIES
   meta-tags
   mini_fb
   mysql2 (= 0.4.10)
+  net-sftp (~> 2.1, >= 2.1.2)
   nokogiri (= 1.8.1)
   oj
   overcommit
