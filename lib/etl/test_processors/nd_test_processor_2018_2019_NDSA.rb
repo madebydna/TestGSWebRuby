@@ -39,10 +39,18 @@ class NDTestProcessor20182019NDSA < GS::ETL::TestProcessor
       proficiency_band_id: 1,
       test_data_type: 'NDSA',
       test_data_type_id: 206,
-      description: 'In 2016-17, North Dakota used the North Dakota State Assessment (NDSA) to test students in grades 3 through 8 and 11 in reading and math, and in science in grades 4, 8 and 11. Results represent students enrolled in the school for the entire academic year. The NDSA is a standards-based test, which means it measures how well students are mastering the specific skills defined for each grade by the state of North Dakota. The goal is for all students to score at or above the proficient level.',
       notes: 'DXT-3379: ND NDSA',
-      date_valid: '2018-01-01 00:00:00',
+      date_valid: '2019-01-01 00:00:00',
     })
+    .transform('Add description')
+    .transform("Add description", WithBlock) do |row|
+      if row[:year] == 2018
+        row[:description] = 'In 2017-18, North Dakota used the North Dakota State Assessment (NDSA) to test students in grades 3 through 8 and grade 10 in reading and math, and in science in grades 4, 8 and 11. Results represent students enrolled in the school for the entire academic year. The NDSA is a standards-based test, which means it measures how well students are mastering the specific skills defined for each grade by the state of North Dakota. The goal is for all students to score at or above the proficient level.'
+      elsif row[:year] == 2019
+        row[:description] = 'In 2018-19, North Dakota used the North Dakota State Assessment (NDSA) to test students in grades 3 through 8 and grade 10 in reading and math, and in science in grades 4, 8 and 11. Results represent students enrolled in the school for the entire academic year. The NDSA is a standards-based test, which means it measures how well students are mastering the specific skills defined for each grade by the state of North Dakota. The goal is for all students to score at or above the proficient level.'
+      end
+      row
+    end
     .transform("Map breakdown id", HashLookup, :breakdown, map_nd_breakdown, to: :breakdown_id)
     .transform("Map subject id", HashLookup, :subject, map_nd_subject, to: :subject_id)
   end
