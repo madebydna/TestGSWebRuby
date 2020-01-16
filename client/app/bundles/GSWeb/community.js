@@ -26,7 +26,7 @@ import Ad from 'react_components/ad';
 import commonPageInit from './common';
 import { scrollToElement } from 'util/scrolling';
 import { keepInViewport, isScrolledInViewport } from 'util/viewport';
-import { init as initAdvertising, enableAdCloseButtons, applyStylingToIFrameAd } from 'util/advertising';
+import { init as initAdvertising } from 'util/advertising';
 import { throttle } from 'lodash';
 
 const TopSchoolsStatefulWrapper = withViewportSize({ propName: 'size' })(TopSchoolsStateful);
