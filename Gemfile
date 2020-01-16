@@ -10,6 +10,10 @@ gem 'rails', '4.2.8'
 # A simple, fast Mysql library for Ruby, binding to libmysql (https://github.com/brianmario/mysql2)
 gem 'mysql2', '0.4.10'
 
+# Supports sftp for uploading and downloading files to ExactTarget
+# https://github.com/net-ssh/net-sftp
+gem 'net-sftp', '~> 2.1', '>= 2.1.2'
+
 # This gem provides jQuery and the jQuery-ujs driver for your Rails 3+ application.
 # Used by pages that use JS through rails asset pipeline and not webpack/react
 # Such as review moderation pages and reviews landing page
