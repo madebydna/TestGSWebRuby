@@ -107,7 +107,7 @@ $(() => {
     });
   });
 
-  function myFunction() {
+  function tocSelect() {
     const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele));
     const selectedToc = tocElements.length > 0 ? tocElements[0].id : [];
 
@@ -121,7 +121,7 @@ $(() => {
   }
 
   window.onscroll = throttle(function () {
-    myFunction()
+    tocSelect()
   }, 100);
   initAdvertising();
 });
