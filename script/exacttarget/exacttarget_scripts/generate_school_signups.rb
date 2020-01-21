@@ -1,4 +1,5 @@
 require_relative '../exacttarget_config/exacttarget_constants'
+require_relative '../exacttarget_helpers/exacttarget_sftp'
 require_relative '../exacttarget_builders/school_signup_data_extension/data_reader'
 require_relative '../exacttarget_builders/school_signup_data_extension/csv_writer'
 
