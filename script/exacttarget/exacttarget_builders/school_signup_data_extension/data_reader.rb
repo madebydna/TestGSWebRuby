@@ -9,13 +9,12 @@ module Exacttarget
       # index on list + state, 2.5min runtime
       # using "select_all", 1m13s
       def school_signups
-        States::STATE_HASH.values.each do |state|
+        States::STATE_HASH.values.uniq.each do |state|
           Subscription.connection.select_all(generate_sql(state).squish).each do |signup|
             yield CsvWriter::HEADERS.map {|header| signup[header] }
           end
         end
       end
-
 
       private
 
