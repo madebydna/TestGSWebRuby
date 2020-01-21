@@ -17,15 +17,10 @@ module Exacttarget
             csv << signup
           end
         end
-        zip_file
-        upload_file
       end
 
       def zip_file
-        file = File.new("#{LOCAL_PATH}.zip", "w")
-        Zip::File.open(file.path, Zip::File::CREATE) do |zipfile|
-          zipfile.add(File.basename(LOCAL_PATH), LOCAL_PATH)
-        end
+        ExacttargetZip.new.zip(LOCAL_PATH)
       end
 
       def upload_file
