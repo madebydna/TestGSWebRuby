@@ -2,53 +2,41 @@
 
 require 'csv'
 
-module Feeds
-  module OfficialOverallRating
+module Exacttarget
+  module AllSubscribers
     class CsvWriter
-      include Feeds::FeedConstants
-      include Feeds::FeedHelper
 
-      def initialize(data_reader, output_path)
-        @column_titles = "member_id,Email Address,opted_in,first_name,email_verified,gender,updated,time_added,
-            hash_token,how,city,state,GreatNews,Learning Disabilities,Chooser Pack,Sponsor,
-            Summer Brain Drain,Summer Brain Drain Start Week,Grade by grade,MyStats,
-            School 1 Id,School 1 State,School 1 Name,School 1 City, School 1 Level,
-            School 2 Id,School 2 State,School 2 Name,School 2 City, School 2 Level,
-            School 3 Id,School 3 State,School 3 Name,School 3 City, School 3 Level,
-            School 4 Id,School 4 State,School 4 Name,School 4 City, School 4 Level,
-            Grade PK,Grade KG,Grade 1,Grade 2,Grade 3,Grade 4,Grade 5,Grade 6,
-            Grade 7,Grade 8,Grade 9,Grade 10,Grade 11,Grade 12,OSP"
-        @feed_file_path = output_path
-        @data_reader = data_reader
+      FILE_PATH = '/tmp/et_members.csv'
+      REMOTE_FILE_PATH = '/Imports/et_members.csv'
+      COLUMN_HEADERS = %w(member_id 'Email Address' updated time_added Hash_token how)
+
+      def initialize
+        @data_reader = DataReader.new
       end
 
-      def write_feed
-        write_info
-      end
-
-      private
-
-      def write_info
-        CSV.open(@feed_file_path, 'w', {:col_sep => column_separator}) do |csv|
-          csv << @column_titles
-            @data_reader.each_result { |hash| csv << get_info(hash) if hash['rating'].present? }
+      def write_file
+        CSV.open(FILE_PATH, 'w') do |csv|
+          csv << COLUMN_HEADERS
+          @data_reader.each_updated_user { |user| csv << get_info(user) if user.present?}
         end
       end
 
-      def column_separator
-        if File.extname(@feed_file_path) == '.txt'
-          "\t"
-        else
-          ','
-        end
+      def zip_file
+        ExacttargetZip.new.zip(FILE_PATH)
       end
 
-      def get_info(school_hash)
-        school_ratings = []
-        school_ratings << school_hash['test-rating-id']
-        school_ratings << school_hash['universal-id']
-        school_ratings << school_hash['rating']
-        school_ratings << school_hash['url']
+      def upload_file
+        ExacttargetSFTP.new.upload("#{FILE_PATH}.zip")
+      end
+
+      def get_info(user)
+        user_info = []
+        user_info << user['id']
+        user_info << user['email']
+        user_info << user['updated']
+        user_info << user['time_added']
+        user_info << UserVerificationToken.token(user['id'])
+        user_info << user['how']
       end
 
     end
