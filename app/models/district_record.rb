@@ -59,7 +59,16 @@ class DistrictRecord < ActiveRecord::Base
       :manual_edit_date,
       :notes)
     )
-    dr.save!
+    # Note: this is required to see the actual attributes that failed validation because we
+    # overwrite Rails's default error message
+    begin
+      dr.save!
+    rescue ActiveRecord::RecordInvalid => error
+      message = dr.errors.messages.sort_by {|attr,msg| attr.to_s }.map do |attr, msg|
+        "#{attr.capitalize} #{msg.first}"
+      end.join("; ")
+      raise "Validation failed: #{message}"
+    end
   end
 
     def city_record

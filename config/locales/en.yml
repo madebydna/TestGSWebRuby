@@ -68,6 +68,8 @@ en:
             plain_text_password:
               too_long: Your password must be between 6 and 14 characters.
               too_short: Your password must be between 6 and 14 characters.
+  errors:
+    format: ! '%{message}'
   forms:
     admin:
       errors:

@@ -71,6 +71,8 @@ es:
             plain_text_password:
               too_long: La contraseña debe tener entre 6 y 14 caracteres.
               too_short: La contraseña debe tener entre 6 y 14 caracteres.
+  errors:
+    format: ! '%{message}'
   forms:
     admin:
       errors:
