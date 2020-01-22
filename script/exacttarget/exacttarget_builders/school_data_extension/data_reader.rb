@@ -8,6 +8,7 @@ module Exacttarget
 
       def each_school
         State.all.pluck('state').each do |state|
+          puts "Current state: #{state}"
           School.on_db(state.downcase.to_sym).active.order(:id).not_preschool_only.each do |school|
             yield school
           end
