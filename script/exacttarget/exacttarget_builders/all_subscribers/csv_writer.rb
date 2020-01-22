@@ -7,7 +7,6 @@ module Exacttarget
     class CsvWriter
 
       FILE_PATH = '/tmp/et_members.csv'
-      REMOTE_FILE_PATH = '/Imports/et_members.csv'
       COLUMN_HEADERS = %w(member_id 'Email Address' updated time_added Hash_token how)
 
       def initialize
