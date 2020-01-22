@@ -127,6 +127,10 @@ module SchoolProfiles
       decorated_school.equity_overview_rating_year
     end
 
+    def academic_progress_rating
+      decorated_school.academic_progress_rating
+    end
+
     def academic_progress_rating_hash
       decorated_school.academic_progress_rating_hash
     end
@@ -137,6 +141,10 @@ module SchoolProfiles
 
     def historical_student_progress_ratings
       decorated_school.historical_student_growth_ratings
+    end
+
+    def advanced_courses_rating
+      decorated_school.courses_rating
     end
 
     def equity_ratings_breakdown(breakdown)
