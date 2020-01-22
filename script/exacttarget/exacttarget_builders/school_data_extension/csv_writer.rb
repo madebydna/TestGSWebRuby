@@ -9,13 +9,15 @@ module Exacttarget
 
       FILE_PATH = '/tmp/et_schools.csv'
       COLUMN_HEADERS = %w(id
+                          school_id
                           school_type
                           level_code
-                          state name
+                          state
+                          name
                           city
                           zip_code
                           district_id
-                          gs_url
+                          canonical_url
                           Summary_Rating
                           Advanced_Course_Rating
                           Test_Score_Rating
@@ -61,6 +63,7 @@ module Exacttarget
         gsdata_info = school_cache_data_reader.decorated_gsdata_datas(*GSDATA_CONTENT)
         test_scores = @data_reader.test_scores(school, school_cache_data_reader)
         school_info = []
+        school_info << school['state'] + "-" + school['id'].to_s
         school_info << school['id']
         school_info << school['type']
         school_info << school['level_code']
