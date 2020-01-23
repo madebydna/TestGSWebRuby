@@ -169,12 +169,12 @@ module SearchRequestParams
 
   def district_record
     return nil unless state && (district_id || district)
-    
+
     @_district_record ||= begin
       if district_id
-        DistrictRecord.by_state(state.to_s).where(district_id: district_id).first
+        DistrictRecord.by_state(state.to_s).where(district_id: district_id).active.first
       elsif district
-        DistrictRecord.by_state(state.to_s).where(name: district).first
+        DistrictRecord.by_state(state.to_s).where(name: district).active.first
       end
     end
   end
@@ -185,12 +185,12 @@ module SearchRequestParams
 
   def county_object
     if defined?(@_county_object)
-      return @_county_object 
+      return @_county_object
     end
     @_county_object = city_record&.county
   end
 
-  def location_label_param 
+  def location_label_param
     params[:locationLabel] || params[:locationSearchString]
   end
 
@@ -220,7 +220,7 @@ module SearchRequestParams
 
   def state_browse?
     state.present? && city.blank? && district.blank? && !zip_code_search?
-  end 
+  end
 
   def zip_code_search?
     params[:locationType]&.downcase == 'zip'
@@ -241,7 +241,7 @@ module SearchRequestParams
     elsif street_address?
       :address
     elsif state_browse?
-      :state_browse 
+      :state_browse
     else
       :other
     end
@@ -400,7 +400,7 @@ module SearchRequestParams
 
   private
 
-  def ensure_array_param(param_name, delim = ',') 
+  def ensure_array_param(param_name, delim = ',')
     v = params[param_name] || []
     v.is_a?(Array) ? v : v.split(delim)
   end
