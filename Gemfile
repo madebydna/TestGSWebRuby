@@ -16,6 +16,8 @@ gem 'net-sftp', '~> 2.1', '>= 2.1.2'
 
 gem 'csvlint'
 
+gem 'rubyzip'
+
 # This gem provides jQuery and the jQuery-ujs driver for your Rails 3+ application.
 # Used by pages that use JS through rails asset pipeline and not webpack/react
 # Such as review moderation pages and reviews landing page
