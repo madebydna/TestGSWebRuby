@@ -62,11 +62,11 @@ class FeedConfig
   # Flat Feed Files
 
   def parent_reviews_flat_feed_files
-    @state_abbreviations.map { |state| "local-gs-parent-review-feed-#{state}.xml" }
+    @state_abbreviations.map { |state| "local-gs-parent-review-feed-flat-#{state}.txt" }
   end
 
   def parent_ratings_flat_feed_files
-    @state_abbreviations.map { |state| "local-gs-parent-review-feed-#{state}.xml" }
+    @state_abbreviations.map { |state| "local-gs-parent-ratings-feed-flat#{state}.txt" }
   end
 
   def all_flat_feed_files

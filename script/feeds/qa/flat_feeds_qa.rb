@@ -4,6 +4,7 @@
 
 require 'optparse'
 require 'feeds/feed_config'
+require 'feeds/qa/flat_feed_validator'
 
 # parse arguments and store them into an options hash
 ARGV << '-h' if ARGV.empty?
@@ -22,7 +23,7 @@ feed_config = FeedConfig.new(
   archive_directory: script_args[:archive_directory] || File.join('/', 'home', 'feeds', 'archive')
 )
 
-class FeedQa
+class FlatFeedQa
   def initialize(feed_config:)
     @feed_config = feed_config
     @flat_feed_validator = FlatFeedValidator.new(feed_config: feed_config)
@@ -41,6 +42,6 @@ class FeedQa
   end
 end
 
-qa_runner = FeedQa.new(feed_config: feed_config)
+qa_runner = FlatFeedQa.new(feed_config: feed_config)
 qa_runner.qa
 qa_runner.success? ? exit(0) : exit(1)
