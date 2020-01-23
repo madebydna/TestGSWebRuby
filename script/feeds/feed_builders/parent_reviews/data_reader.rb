@@ -8,7 +8,7 @@ module Feeds
       include Feeds::FeedConstants
       include Feeds::FeedHelper
 
-      attr_reader :state, :schools, :limit
+      attr_reader :state, :schools
 
       def initialize(state, schools, _)
         @state = state
