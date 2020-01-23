@@ -573,6 +573,7 @@ DEPENDENCIES
   ruby-hmac (~> 0.4.0)
   ruby-prof
   rubyntlm (~> 0.4.0)
+  rubyzip
   safe_attributes
   sass-rails (~> 4.0.1)
   savon (~> 2.6.0)
