@@ -13,7 +13,7 @@ class DistrictRecord < ActiveRecord::Base
   before_validation :unique_id, on: :create
 
   validates :state, :district_id, :city, :county,
-  :name, :street, :zipcode, :level_code, :level, presence: true
+  :name, :street, :zipcode, :level_code, presence: true
   validates :district_id, uniqueness: { scope: :state }, on: :create
 
   scope :by_state, ->(state) { where(state: state) }
@@ -46,8 +46,8 @@ class DistrictRecord < ActiveRecord::Base
    )".squish
   end
 
-  def self.update_from_district(district, state)
-    dr = self.find("#{state}-#{district.id}")
+  def self.update_from_district(district, state, log: false)
+    dr = self.find_by(unique_id: "#{state}-#{district.id}")
     dr ||= self.new(unique_id: "#{state}-#{district.id}", state: state.to_s, district_id: district.id)
     dr.assign_attributes(
       district.attributes.symbolize_keys.except(
@@ -62,6 +62,10 @@ class DistrictRecord < ActiveRecord::Base
     # Note: this is required to see the actual attributes that failed validation because we
     # overwrite Rails's default error message
     begin
+      if log && dr.changed?
+        puts "DistrictRecord #{dr.unique_id} has changed"
+        p dr.changes
+      end
       dr.save!
     rescue ActiveRecord::RecordInvalid => error
       message = dr.errors.messages.sort_by {|attr,msg| attr.to_s }.map do |attr, msg|
