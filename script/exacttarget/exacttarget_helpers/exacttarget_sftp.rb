@@ -13,7 +13,7 @@ module Exacttarget
       local_location ||= "/tmp/"
       Net::SFTP.start(ENV_GLOBAL['exacttarget_host'], ENV_GLOBAL['exacttarget_username'], :password => ENV_GLOBAL['exacttarget_password']) do |sftp|
         # upload a file or directory to the remote host
-        sftp.download!(remote_file, local_location) if remote_file
+        sftp.download!(remote_file, File.join(local_location, File.basename(remote_file))) if remote_file
       end
     end
   end
