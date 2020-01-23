@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'csv'
+require 'csvlint'
 require ' ../../../..//lib/school_profiles/test_scores'
 
 module Exacttarget
@@ -25,7 +26,7 @@ module Exacttarget
                           Student_Progress_Rating
                           Equity_Rating
                           Academic_Progress_Rating
-                          CSA Badge
+                          CSA_Badge
                           Ratio_of_students_to_full_time_teachers
                           Ratio_of_students_to_full_time_counselors
                           Percentage_of_teachers_with_three_or_more_years_experience
@@ -48,6 +49,11 @@ module Exacttarget
           csv << COLUMN_HEADERS
           @data_reader.each_school { |school| csv << get_info(school) if school.present?}
         end
+      end
+
+      def validate_file
+        validator = Csvlint::Validator.new(FILE_PATH)
+        validator.validate
       end
 
       def zip_file
