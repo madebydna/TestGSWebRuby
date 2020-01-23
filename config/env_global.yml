@@ -44,7 +44,7 @@ home_path: "/"
 mail_enabled: true
 
 # ExactTarget sftp
-exacttarget_hostname: ftp1.exacttarget.com
+exacttarget_host: ftp1.exacttarget.com
 exacttarget_username: 86987
 exacttarget_password: 42aPefus
 
