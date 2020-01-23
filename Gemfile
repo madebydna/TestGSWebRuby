@@ -14,6 +14,8 @@ gem 'mysql2', '0.4.10'
 # https://github.com/net-ssh/net-sftp
 gem 'net-sftp', '~> 2.1', '>= 2.1.2'
 
+gem 'csvlint'
+
 # This gem provides jQuery and the jQuery-ujs driver for your Rails 3+ application.
 # Used by pages that use JS through rails asset pipeline and not webpack/react
 # Such as review moderation pages and reviews landing page
@@ -221,6 +223,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'rb-readline'
   # Ruby fast debugger - base + CLI (https://github.com/deivid-rodriguez/byebug)
   gem 'byebug'
 
