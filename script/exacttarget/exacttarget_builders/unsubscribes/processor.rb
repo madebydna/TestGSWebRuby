@@ -1,4 +1,3 @@
-require 'csv'
 module Exacttarget
   module Unsubscribes
     class Processor
@@ -14,9 +13,13 @@ module Exacttarget
       end
 
       def run
-        data = CSV.read("/tmp/#{@file_name}")
-        data.each do |row|
-          p row
+        # Awkward file reading necessary because ET has funny encoding and line breaks
+        file = File.read("/tmp/#{@file_name}").force_encoding('UTF-16LE').encode!('UTF-8')
+        file.split("\r\n").each_with_index do |line, i|
+          next if i == 0
+          et_id, date_unsubscribed, email, status = line.chomp.split(",")
+          user = User.find_by(email: email)
+          UserSubscriptionManager.new(user).unsubscribe
         end
       end
     end
