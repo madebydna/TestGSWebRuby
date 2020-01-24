@@ -24,24 +24,22 @@ feed_config = FeedConfig.new(
 )
 
 class FlatFeedQa
+  attr_reader :results
+
   def initialize(feed_config:)
     @feed_config = feed_config
     @flat_feed_validator = FlatFeedValidator.new(feed_config: feed_config)
-    @success = true
   end
 
   def qa
-    results = @flat_feed_validator.verify
-    @success = false if results.any?
-    results.each { |result| puts result }
-    results
+    @results = @flat_feed_validator.verify
   end
 
   def success?
-    @success == true
+    @results.empty?
   end
 end
 
 qa_runner = FlatFeedQa.new(feed_config: feed_config)
-qa_runner.qa
+puts qa_runner.qa
 qa_runner.success? ? exit(0) : exit(1)

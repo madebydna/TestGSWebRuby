@@ -13,8 +13,8 @@ class FlatFeedValidator
       csv_new_file = CSV.read(new_file, {:col_sep => "\t"})
       exact_matches = (csv_old_file & csv_new_file).length
       max_lines = [csv_old_file.length, csv_new_file.length].max
-      difference_pct = (1 - exact_matches.to_f / max_lines).round(2)
-      all_entries_over_threshold << "#{File.basename(new_file)}\t#{difference_pct}%" if difference_pct > 0.10
+      difference_pct = (1 - exact_matches.to_f / max_lines).round(4)
+      all_entries_over_threshold << "#{File.basename(new_file)}\t#{difference_pct * 100}%" if difference_pct > 0.10
     end
 
     all_entries_over_threshold
