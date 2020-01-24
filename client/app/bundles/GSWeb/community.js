@@ -26,7 +26,7 @@ import Ad from 'react_components/ad';
 import commonPageInit from './common';
 import { scrollToElement } from 'util/scrolling';
 import { keepInViewport, isScrolledInViewport } from 'util/viewport';
-import { init as initAdvertising, enableAdCloseButtons, applyStylingToIFrameAd } from 'util/advertising';
+import { init as initAdvertising } from 'util/advertising';
 import { throttle } from 'lodash';
 
 const TopSchoolsStatefulWrapper = withViewportSize({ propName: 'size' })(TopSchoolsStateful);
@@ -68,9 +68,11 @@ ReactOnRails.register({
 
 $(() => {
   commonPageInit();
+  // Todo animations like slidedown are tough to implement in vanilla javascript so leaving here
+  //  until we figure out what to do with these
   $('body').on('click', '.js-test-score-details', function () {
-    var grades = $(this).closest('.bar-graph-display').parent().find('.grades');
-    if(grades.css('display') == 'none') {
+    const grades = $(this).closest('.bar-graph-display').parent().find('.grades');
+    if(grades.css('display') === 'none') {
       grades.slideDown();
       $(this).find('span').removeClass('rotate-text-270');
     }
@@ -85,41 +87,41 @@ $(() => {
     setTop: true,
     setBottom: false
   });
+
   keepInViewport('.js-ad-hook', {
     elementsAboveFunc: () => [].slice.call(window.document.querySelectorAll('.header_un')),
     elementsBelowFunc: () => [].slice.call(window.document.querySelectorAll('.footer')),
     setTop: true,
     setBottom: true
   });
-  // keepInViewport('.toc', {
-  //   elementsAboveFunc: () => [].slice.call(window.document.querySelectorAll('.header_un')),
-  //   elementsBelowFunc: () => [].slice.call(window.document.querySelectorAll('.footer')),
-  //   setTop: true,
-  //   setBottom: true
-  // });
 
-  $('.toc li').on('click', function(e) {
-    let elem = e.currentTarget;
-    if (elem.nodeName === 'LI') {
-      let anchor = elem.getAttribute('anchor');
-      scrollToElement(`#${anchor}`, ()=>{}, -60);
+  const tocLinks = document.querySelectorAll(".toc li");
+  tocLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const elem = e.currentTarget;
+      if (elem.nodeName === 'LI') {
+        const anchor = elem.getAttribute('anchor');
+        scrollToElement(`#${anchor}`, () => {
+        }, -60);
       }
-    }
-  );
+    });
+  });
 
-  $(window).on('scroll', throttle(function() {
+  function tocSelect() {
     const tocElements = [...document.querySelectorAll('.module-section')].filter(ele => isScrolledInViewport(ele));
     const selectedToc = tocElements.length > 0 ? tocElements[0].id : [];
 
-    window.document.querySelectorAll('.toc li').forEach(element => {
+    tocLinks.forEach(element => {
       if (element.getAttribute('anchor') === selectedToc) {
         element.classList.add('selected');
       } else {
         element.classList.remove('selected');
       }
     });
-  }, 100));
+  }
 
+  window.onscroll = throttle(function () {
+    tocSelect()
+  }, 100);
   initAdvertising();
-
 });

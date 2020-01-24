@@ -124,7 +124,8 @@
 
         <%# Growth %>
         <% if @growth_rating.length > 0 %>
-          <div id="<%= @growth_rating[:key] %>" class="module-section">
+
+          <div id="<%= @growth_rating["key"] %>" class="module-section">
             <%= react_component("GrowthRating", props: {
                 growthData: @growth_rating,
                 district: { districtId: @locality[:district_id], state: @locality[:stateShort] }
