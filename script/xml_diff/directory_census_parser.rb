@@ -65,8 +65,7 @@ class DirectoryCensusParser < ::Ox::Sax
     db_results = School.find_by_state_and_id(state, db_id)
 
     @elements[id].each do |field, value|
-      diff = Diff::LCS.diff(value, db_results[field].to_s.squeeze(" "))
-      if diff.present?
+      if value != (db_results[field].to_s.squeeze(" "))
         puts "discrepancy: -- state: #{state}\tuniversal_id: #{id}\tfield: #{field}\txml val: #{value}\t db val: #{db_results[field].to_s}"
       end
     end

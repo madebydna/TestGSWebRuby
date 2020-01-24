@@ -2,5 +2,5 @@
 es:
   states:
     show:
-      title: '2019 %{state_long_name_with_caps} Escuelas | Calificaciones de escuelas públicas, charter y privadas'
+      title: '%{year} %{state_long_name_with_caps} Escuelas | Calificaciones de escuelas públicas, charter y privadas'
       description: 'GreatSchools tiene calificaciones y comentarios para %{state_school_count} escuelas primarias, intermedias y secundarias en %{state_long_name_with_caps}. Encuentra la mejor escuela pública, charter o privada para tu hijo.'

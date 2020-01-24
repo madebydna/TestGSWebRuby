@@ -111,7 +111,7 @@ module Password
       if email_verified?
         self.encrypted_password = encrypted_pw
       else
-        self.encrypted_password = password + PROVISIONAL_PREFIX + encrypted_pw
+        self.encrypted_password = 'filler' + PROVISIONAL_PREFIX + encrypted_pw
       end
     end
   end

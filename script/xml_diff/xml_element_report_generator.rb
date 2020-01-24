@@ -19,7 +19,7 @@ module XmlDiff
       @parser.parse.each_with_object({}) do |(name, count), memo|
         other_count = other_hash[name]
         if other_count
-          memo[name] = (other_count - count).abs / (other_count.nonzero? || 1)
+          memo[name] = (other_count - count).abs.to_f / (other_count.nonzero? || 1)
         else
           memo[name] = 1
         end

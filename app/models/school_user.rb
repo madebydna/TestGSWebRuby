@@ -37,6 +37,8 @@ class SchoolUser < ActiveRecord::Base
 
   after_initialize :initialize_attributes
 
+  scope :by_state, -> (state) { where(state: state) }
+
   def initialize_attributes
     if new_record?
       self.user_type = Affiliation::UNKNOWN if read_attribute(:user_type).nil?

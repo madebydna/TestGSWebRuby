@@ -4,8 +4,8 @@ class SitemapXmlWriter
 
   attr_reader :output_dir, :file_path, :root_element, :schema, :current_date
 
-  SITEMAP_INDEX_SCHEMA = 'https://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd'
-  SITEMAP_SCHEMA = 'https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd'
+  SITEMAP_INDEX_SCHEMA = 'http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd'
+  SITEMAP_SCHEMA = 'http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd'
 
   def initialize(output_dir)
     @current_date = Time.new.strftime('%Y-%m-%d')
@@ -30,8 +30,8 @@ class SitemapXmlWriter
     xml_builder.tag!(
         @root_element,
         'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-        :'xsi:schemaLocation' => "https://www.sitemaps.org/schemas/sitemap/0.9 #{@schema}",
-        :xmlns => 'https://www.sitemaps.org/schemas/sitemap/0.9'
+        :'xsi:schemaLocation' => "http://www.sitemaps.org/schemas/sitemap/0.9 #{@schema}",
+        :xmlns => 'http://www.sitemaps.org/schemas/sitemap/0.9'
     ) do
       yield(xml_builder)
     end

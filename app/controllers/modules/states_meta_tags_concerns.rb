@@ -13,7 +13,7 @@ module StatesMetaTagsConcerns
   end 
 
   def states_show_title
-    t('.title', state_long_name_with_caps: state_long_name_with_caps)
+    t('.title', year: Date.current.year, state_long_name_with_caps: state_long_name_with_caps)
   end
 
   def states_show_description

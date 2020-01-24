@@ -18,9 +18,9 @@ en:
     report_review:
       email_verification_required: Thank you! One more step - please click on the verification link we’ve emailed you, and this review will be reported.
       login_required: Please sign in or register to report a review.
-      reported: Thank you. You have reported this review. 
+      reported: Thank you. You have reported this review.
     review:
-      activated: All set! We have submitted your review. Thank you for helping other families by sharing your experiences. 
+      activated: All set! We have submitted your review. Thank you for helping other families by sharing your experiences.
       login_required: You need to log in or register your email in order to post a review.
       pending_email_verification: "Thank you! One more step - please click on the verification link we’ve emailed you, and we’ll submit your review."
       pending_moderation: Please note that it can take up to 48 hours for your review to be posted to our site.

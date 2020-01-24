@@ -121,7 +121,7 @@ describe OspRegistrationController do
     end
 
     context 'with a non osp user with bad data posted' do
-      victim_attrs = {email: 'victim@hogwarts.uk', password: 'victim_pass'}
+      victim_attrs = {email: 'victim@hogwarts.uk'}
       victim_membership_attrs = { job_title: 'the principle', state: 'de', school_id: 2 }
       let!(:victim) { FactoryBot.create(:user, victim_attrs) }
       let!(:victim_membership) { FactoryBot.create(:esp_membership, victim_membership_attrs.merge(member_id: victim.id)) }
@@ -186,7 +186,7 @@ describe OspRegistrationController do
     end
 
     context 'when creating a new user and trying to use an existing account ' do
-      victim_attrs = { email: 'victim@hogwarts.uk', password: 'victim_pass'}
+      victim_attrs = { email: 'victim@hogwarts.uk'}
       victim_membership_attrs = { job_title: 'the principle', state: 'de', school_id: 2 }
       let!(:victim) { FactoryBot.create(:user, victim_attrs) }
       let!(:victim_membership) { FactoryBot.create(:esp_membership, victim_membership_attrs.merge(member_id: victim.id)) }

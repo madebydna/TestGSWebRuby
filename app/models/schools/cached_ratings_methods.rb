@@ -122,7 +122,8 @@ module CachedRatingsMethods
       :'Native Hawaiian or Other Pacific Islander' => "Pacific Islander",
       :'Economically disadvantaged' => "Low-income",
       :'Low Income' => "Low-income",
-      :'Hispanic' => "Hispanic"
+      :'Hispanic' => "Hispanic",
+      :'Filipino' => "Filipino"
     }
   end
 
