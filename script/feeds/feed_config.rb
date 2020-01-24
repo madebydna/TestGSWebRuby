@@ -73,11 +73,17 @@ class FeedConfig
     parent_reviews_flat_feed_files + parent_ratings_flat_feed_files
   end
 
+  # def each_pair_old_and_new_flat_feed_files
+  #   all_flat_feed_files.each do |file|
+  #     old_file = File.join(previous_archive_directory, file)
+  #     new_file = File.join(current_archive_directory, file)
+  #     yield(old_file, new_file)
+  #   end
+  # end
+
   def each_pair_old_and_new_flat_feed_files
-    all_flat_feed_files.each do |file|
-      old_file = File.join(previous_archive_directory, file)
-      new_file = File.join(current_archive_directory, file)
-      yield(old_file, new_file)
-    end
+    old_file = "/tmp/local-gs-parent-review-feed-flat-AK.txt"
+    new_file = "/tmp/local-gs-parent-review-feed-flat-AK.txt"
+    yield(old_file, new_file)
   end
 end
