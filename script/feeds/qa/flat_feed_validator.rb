@@ -9,8 +9,8 @@ class FlatFeedValidator
   def verify
     all_entries_over_threshold = []
     feed_config.each_pair_old_and_new_flat_feed_files do |old_file, new_file|
-      csv_old_file = CSV.read(old_file, {:col_sep => "\t", encoding: "bom|utf-8"})
-      csv_new_file = CSV.read(new_file, {:col_sep => "\t", encoding: "bom|utf-8"})
+      csv_old_file = CSV.read(old_file, {:col_sep => "\t", encoding: "bom|utf-8", quote_char: "|"})
+      csv_new_file = CSV.read(new_file, {:col_sep => "\t", encoding: "bom|utf-8", quote_char: "|"})
       exact_matches = (csv_old_file & csv_new_file).length
       max_lines = [csv_old_file.length, csv_new_file.length].max
       difference_pct = (1 - exact_matches.to_f / max_lines).round(4)
