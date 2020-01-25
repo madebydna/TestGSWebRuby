@@ -66,7 +66,7 @@ class FeedConfig
   end
 
   def parent_ratings_flat_feed_files
-    @state_abbreviations.map { |state| "local-gs-parent-ratings-feed-flat#{state}.txt" }
+    @state_abbreviations.map { |state| "local-gs-parent-ratings-feed-flat-#{state}.txt" }
   end
 
   def all_flat_feed_files
