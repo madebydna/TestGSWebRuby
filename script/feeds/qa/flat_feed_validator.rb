@@ -12,7 +12,7 @@ class FlatFeedValidator
       old_file_count = `wc -l "#{old_file}"`.strip.split(' ').first.to_i
       new_file_count = `wc -l "#{new_file}"`.strip.split(' ').first.to_i
       element_diff_count = (old_file_count - new_file_count).abs
-      max_lines = [csv_old_file.length, csv_new_file.length].max
+      max_lines = [old_file_count, new_file_count].max
       difference_pct = (element_diff_count.to_f / max_lines)
       all_entries_over_threshold << "#{File.basename(new_file)}\t#{(difference_pct * 100).round(2)}%\tOld:#{old_file_count}/New:#{new_file_count} lines" if difference_pct > 0.10
     end
