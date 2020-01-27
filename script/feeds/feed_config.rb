@@ -104,7 +104,8 @@ class FeedConfig
   # end
 
   def all_flat_feed_files
-    parent_reviews_flat_feed_files + parent_ratings_flat_feed_files
+    parent_reviews_flat_feed_files + parent_ratings_flat_feed_files + local_new_test_flat_feed_files + local_gs_new_test_subgroup_flat_feed_files +
+      subrating_description_flat_feed_files + subrating_flat_feed_files
   end
 
   def each_pair_old_and_new_flat_feed_files
