@@ -9,8 +9,8 @@ class FlatFeedValidator
   def verify
     all_entries_over_threshold = []
     feed_config.each_pair_old_and_new_flat_feed_files do |old_file, new_file|
-      old_file_count = system(`wc -l "#{old_file}"`).strip.split(' ').first.to_i
-      new_file_count = system(`wc -l "#{new_file}"`).strip.split(' ').first.to_i
+      old_file_count = `wc -l "#{old_file}"`.strip.split(' ').first.to_i
+      new_file_count = `wc -l "#{new_file}"`.strip.split(' ').first.to_i
       element_diff_count = (old_file_count - new_file_count).abs
       max_lines = [csv_old_file.length, csv_new_file.length].max
       difference_pct = (element_diff_count.to_f / max_lines)
