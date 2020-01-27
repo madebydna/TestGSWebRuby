@@ -111,8 +111,6 @@ gem 'protected_attributes'
 # Nokogiri (鋸) is an HTML, XML, SAX, and Reader parser
 gem 'nokogiri', '= 1.8.1'
 
-gem 'csv', '~> 3.0'
-
 # USED: To communicate with ExactTarget. See exact_target.rb
 # Heavy metal SOAP client (http://savonrb.com)
 gem 'savon', '~> 2.6.0'
