@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require ' ../../../..//lib/school_profiles/school_cache_data_reader'
+require ' /lib/school_profiles/school_cache_data_reader'
+require ' /lib/school_profiles/test_scores'
 
 module Exacttarget
   module SchoolDataExtension
