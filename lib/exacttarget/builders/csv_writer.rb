@@ -20,6 +20,7 @@ module Exacttarget
       def validate_file
         validator = Csvlint::Validator.new(FILE_PATH)
         validator.validate
+        validator
       end
 
     end
