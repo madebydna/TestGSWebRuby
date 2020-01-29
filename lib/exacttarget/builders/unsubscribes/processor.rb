@@ -10,7 +10,7 @@ module Exacttarget
         end
 
         def download_file
-          Exacttarget::ExacttargetSFTP.new.download("/Import/#{@file_name}")
+          Exacttarget::Helpers::SFTP.new.download("/Import/#{@file_name}")
         end
 
         def run
