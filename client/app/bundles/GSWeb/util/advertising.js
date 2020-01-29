@@ -6,8 +6,8 @@ import { capitalize } from 'util/i18n';
 import log from 'util/log';
 import { remove, throttle } from 'lodash';
 import { isScrolledInViewportForAds } from 'util/viewport';
-import { 
-  onRefreshablePage, 
+import {
+  onRefreshablePage,
   INDIRECT_CAMPAIGN_IDS,
   setForRefreshAfterMinViewTime,
   checkElementViewability } from 'util/ad_refresh';
@@ -131,7 +131,7 @@ const init = function() {
       if (!$.isEmptyObject(gon.ad_set_channel_ids)) {
         googletag.pubads().set('adsense_channel_ids', gon.ad_set_channel_ids);
       }
-      
+
       const dfp_slots = $('.gs_ad_slot').filter(':visible,[data-ad-defer-render]');
 
       $(dfp_slots).each(function() {
@@ -186,7 +186,7 @@ const getSizeMappings = function() {
       .sizeMapping()
       .addSize([992, 300], [[300, 600], [300, 250]])
       .addSize([768, 120], [[728, 90]])
-      .addSize([0, 0], [[300, 250]])
+      .addSize([0, 0], [[320, 100],[300, 250]])
       .build(),
     banner_tall: googletag
       .sizeMapping()
@@ -228,7 +228,7 @@ const getSizeMappings = function() {
       .sizeMapping()
       .addSize([992, 300], [[728, 90], [970, 250]])
       .addSize([768, 120], [[728, 90]])
-      .addSize([0, 0], [[320, 50], [300, 250]])
+      .addSize([0, 0], [[320, 50], [300, 250], [320, 100]])
       .build(),
     prestitial: googletag
       .sizeMapping()
@@ -500,7 +500,7 @@ const applyStylingToIFrameAd = (selector, dimension, styling, counter = 0 ) => {
         }
       }
     }
-    
+
   setTimeout(() => applyStylingToIFrameAd(selector, dimension, styling, counter++), DELAY_IN_MS)
 }
 
