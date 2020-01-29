@@ -9,10 +9,6 @@ module Exacttarget
   module Builders
     class CsvWriter
 
-      def initialize
-        @data_reader = DataReader.new
-      end
-
       def zip_file
         Zip.new.zip(FILE_PATH)
       end

@@ -2,12 +2,16 @@
 require_relative 'data_reader'
 
 module Exacttarget
-  module Builder
+  module Builders
     module AllSubscribers
       class CsvWriterComponent < Exacttarget::Builder::CsvWriter
 
         FILE_PATH = '/tmp/et_members.csv'
         HEADERS = ['member_id','Email Address','updated','time_added','Hash_token','how']
+
+        def initialize
+          @data_reader = DataReader.new
+        end
 
         def write_file
           CSV.open(FILE_PATH, 'w') do |csv|
