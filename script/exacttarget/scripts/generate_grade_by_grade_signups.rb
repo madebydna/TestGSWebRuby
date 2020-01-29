@@ -9,4 +9,4 @@
 writer = Exacttarget::Builders::GradeByGradeDataExtension::CsvWriterComponent.new
 # writer.write_file # should output to /tmp/et_grade_by_grade_signups.csv
 writer.zip_file
-writer.upload_file
+# writer.upload_file
