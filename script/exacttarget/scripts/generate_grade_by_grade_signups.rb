@@ -7,6 +7,6 @@
 # run it locally
 # bundle exec rails runner script/exacttarget/exacttarget_scripts/generate_grade_by_grade_signups.rb
 writer = Exacttarget::Builders::GradeByGradeDataExtension::CsvWriterComponent.new
-writer.write_file # should output to /tmp/et_grade_by_grade_signups.csv
+# writer.write_file # should output to /tmp/et_grade_by_grade_signups.csv
 writer.zip_file
 writer.upload_file

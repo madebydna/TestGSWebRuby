@@ -2,23 +2,23 @@
 
 require 'csv'
 require 'csvlint'
-require_relative '../helpers/sftp'
-require_relative '../helpers/zip'
+# require_relative '../helpers/sftp'
+# require_relative '../helpers/zip'
 
 module Exacttarget
   module Builders
     class CsvWriter
 
       def zip_file
-        Zip.new.zip(FILE_PATH)
+        Exacttarget::Helpers::Zip.new.zip(file_path)
       end
 
       def upload_file
-        SFTP.new.upload("#{FILE_PATH}.zip")
+        Exacttarget::Helpers::SFTP.new.upload("#{file_path}.zip")
       end
 
       def validate_file
-        validator = Csvlint::Validator.new(FILE_PATH)
+        validator = Csvlint::Validator.new(file_path)
         validator.validate
         validator
       end

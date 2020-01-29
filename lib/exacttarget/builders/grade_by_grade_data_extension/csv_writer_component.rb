@@ -12,6 +12,10 @@ module Exacttarget
           @data_reader = DataReader.new
         end
 
+        def file_path
+          FILE_PATH
+        end
+
         def write_file
           CSV.open(FILE_PATH, 'w') do |csv|
             csv << HEADERS
