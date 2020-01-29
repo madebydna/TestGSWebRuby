@@ -1,4 +1,3 @@
-require 'data_reader'
 module Exacttarget
   module Builders
     module GradeByGradeDataExtension

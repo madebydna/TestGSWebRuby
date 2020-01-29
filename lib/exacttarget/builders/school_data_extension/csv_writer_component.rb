@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# require_relative 'data_reader'
-
 module Exacttarget
   module Builders
     module SchoolDataExtension
