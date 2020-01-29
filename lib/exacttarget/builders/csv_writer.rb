@@ -9,8 +9,11 @@ module Exacttarget
   module Builders
     class CsvWriter
 
+      def file_path
+        puts "Not Me"
+      end
       def zip_file
-        Exacttarget::Helpers::Zip.new.zip(file_path)
+        Exacttarget::Helpers::EtZip.new.zip(file_path)
       end
 
       def upload_file
