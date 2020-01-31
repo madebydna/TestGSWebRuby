@@ -5,11 +5,12 @@
   <% if held_school %>
     School on hold since <%= held_school.created %>
     <br/>
-    <%= form_for(held_school,
-                 method: :delete,
-                 url: admin_held_school_path(held_school)) do |f| %>
-      <%= f.button('Remove hold (will delete notes)', value: 'Remove hold (will delete notes)',
-                   class: 'btn btn-sm btn-primary mvm', data: { disable_with: 'Removing hold...' }) %>
+    <%= form_for(held_school, method: :put, url: remove_hold_admin_held_school_path(held_school)) do |f| %>
+      <%= f.button('Remove hold',
+                   value: 'Remove hold',
+                   class: 'btn btn-sm btn-primary mvm',
+                   data: { disable_with: 'Removing hold...' })
+      %>
     <% end %>
   <% else %>
     School not on hold

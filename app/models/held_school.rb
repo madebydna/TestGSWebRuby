@@ -4,9 +4,20 @@ class HeldSchool < ActiveRecord::Base
 
   db_magic :connection => :gs_schooldb
 
-  attr_accessible :school_id, :state, :notes
+  attr_accessible :school_id, :state, :notes, :active
 
   validates_presence_of :school_id
+
+  scope :active_hold, -> { where(active: 1) }
+  scope :inactive_hold, -> { where(active: 0) }
+
+  def self.on_hold(state, school_id)
+    HeldSchool.where(state: state, school_id: school_id).active_hold.first
+  end
+
+  def remove_hold
+    self.update(active: 0)
+  end
 
   def school
     School.on_db(state.downcase.to_sym).find school_id rescue nil
