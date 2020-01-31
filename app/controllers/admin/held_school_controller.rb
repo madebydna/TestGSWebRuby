@@ -3,11 +3,20 @@ class Admin::HeldSchoolController < ApplicationController
   layout 'deprecated_application'
 
   def create
-    held_school = HeldSchool.new params[:held_school]
-    if held_school.save
-      flash_notice 'School has been put on hold.'
+    hold = HeldSchool.where(state: params[:held_school][:state], id: params[:held_school][:school_id]).first
+    if hold
+      if hold.update(active: 1, notes: params[:held_school][:notes])
+        flash_notice 'School has been put on hold.'
+      else
+        flash_error 'Sorry, there was an error putting the school on hold.'
+      end
     else
-      flash_error 'Sorry, there was an error putting the school on hold.'
+      hold = HeldSchool.new params[:held_school]
+      if hold.save
+        flash_notice 'School has been put on hold.'
+      else
+        flash_error 'Sorry, there was an error putting the school on hold.'
+      end
     end
 
     redirect_back

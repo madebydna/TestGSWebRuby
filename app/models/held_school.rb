@@ -8,11 +8,8 @@ class HeldSchool < ActiveRecord::Base
 
   validates_presence_of :school_id
 
-  scope :active_hold, -> { where(active: 1) }
-  scope :inactive_hold, -> { where(active: 0) }
-
   def self.on_hold(state, school_id)
-    HeldSchool.where(state: state, school_id: school_id).active_hold.first
+    HeldSchool.where(state: state, school_id: school_id, active: 1).first
   end
 
   def remove_hold
