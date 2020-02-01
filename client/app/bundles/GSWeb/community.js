@@ -24,6 +24,7 @@ import RecentReviews from 'react_components/community/recent_reviews';
 import CityLinks from 'react_components/community/city_links';
 import Ad from 'react_components/ad';
 import commonPageInit from './common';
+import { enableAutoAnchoring, initAnchorHashUpdater } from 'components/anchor_router';
 import { scrollToElement } from 'util/scrolling';
 import { keepInViewport, isScrolledInViewport } from 'util/viewport';
 import { init as initAdvertising } from 'util/advertising';
@@ -102,6 +103,7 @@ $(() => {
       if (elem.nodeName === 'LI') {
         const anchor = elem.getAttribute('anchor');
         scrollToElement(`#${anchor}`, () => {
+          history.replaceState(undefined, undefined, `#${anchor}`);
         }, -60);
       }
     });
@@ -124,4 +126,21 @@ $(() => {
     tocSelect()
   }, 100);
   initAdvertising();
+
+  initAnchorHashUpdater();
+
+  enableAutoAnchoring({
+    'Academics': '#academics .profile-module .panel',
+    'academic_progress': '#academic_progress .profile-module',
+    'student_profess': '#student_progress .profile-module',
+    'TopSchools': '.top-school-module .profile-module',
+    'advanced_courses': '#advanced_courses .panel',
+    'students': '#students .students-module',
+    'teachers-staff': '#teachers-staff .profile-module',
+    'calendar': '#calendar',
+    'finance': '#finance .profile-module',
+    'mobility': '#mobility',
+    'homes-and-rentals': '#homes-and-rentals',
+    'reviews': '#reviews'
+  });
 });

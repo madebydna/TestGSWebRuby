@@ -28,7 +28,7 @@ class TopSchoolsStateful extends React.Component {
     this.state = {
       size: props.size,
       schoolLevels: props.schoolLevels,
-      active: props.active 
+      active: props.active
     };
     this.initialSchoolLoad(props.schoolsData);
   }
@@ -47,6 +47,32 @@ class TopSchoolsStateful extends React.Component {
         levelCodes: 'h'
       }
     }
+
+    const anchorLink = this.anchorLinkParamter();
+    if(anchorLink){
+      switch(anchorLink){
+        case 'ElementarySchools':
+          if (elementary.length > 0) { this.state = { levelCodes: 'e' }; }
+          break;
+        case 'MiddleSchools':
+          if (middle.length > 0) { this.state = {levelCodes: 'm' }; }
+          break;
+        case 'HighSchools':
+          if (high.length > 0) { this.state = { levelCodes: 'h' }; }
+          break;
+      }
+    }
+  }
+
+  anchorLinkParamter = () => {
+    if (window.location.hash.length > 1){
+      const queryFragment = window.location.hash.slice(1).split("*");
+      if (queryFragment.includes("TopSchools")) {
+        return queryFragment[1];
+      }
+      return false;
+    }
+    return false;
   }
 
   handleGradeLevel = (str) => {
@@ -66,13 +92,13 @@ class TopSchoolsStateful extends React.Component {
     }
     return tabs;
   }
-  
+
   makeTabs() {
     return this.tabs().map(function (item, index) {
       return <ModuleTab title={item} key={index} pageType={this.props.community} />
     }.bind(this));
   }
-    
+
   renderTabsContainer = () => {
     let tabs = this.tabs();
     if (tabs.length === 1) {
