@@ -62,7 +62,6 @@ const sourcesToHtml = function(sources) {
 
 const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqContent, courses, sources, qualaroo_module_link, share_content }) => {
 
-
   let titleElement = <div data-ga-click-label={title}>
     <h3>{title}</h3>&nbsp;
     <QuestionMarkTooltip content={titleTooltipText} element_type='toptooltip' />
