@@ -4,7 +4,7 @@ class HeldSchool < ActiveRecord::Base
 
   db_magic :connection => :gs_schooldb
 
-  attr_accessible :school_id, :state, :notes, :active
+  attr_accessible :school_id, :state, :notes, :active, :placed_on_hold_at
 
   validates_presence_of :school_id
 
