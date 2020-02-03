@@ -25,8 +25,8 @@ class HeldSchool < ActiveRecord::Base
     self.school_id = school.id
   end
 
-  def self.has_school?(school)
-    HeldSchool.exists?(school_id: school.id, state: school.state)
+  def self.active_hold?(school)
+    HeldSchool.exists?(school_id: school.id, state: school.state, active: 1)
   end
 
 end
