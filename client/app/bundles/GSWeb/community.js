@@ -132,7 +132,7 @@ $(() => {
   enableAutoAnchoring({
     'Academics': '#academics .profile-module .panel',
     'academic_progress': '#academic_progress .profile-module',
-    'student_profess': '#student_progress .profile-module',
+    'student_progress': '#student_progress .profile-module',
     'TopSchools': '.top-school-module .profile-module',
     'advanced_courses': '#advanced_courses .panel',
     'students': '#students .students-module',
@@ -141,6 +141,11 @@ $(() => {
     'finance': '#finance .profile-module',
     'mobility': '#mobility',
     'homes-and-rentals': '#homes-and-rentals',
-    'reviews': '#reviews'
+    'reviews': '#reviews',
+    'districts': '#districts .districts-in-state-module',
+    'cities': '#cities .links-module',
+    'neighboring-cities': '#neighboring-cities',
+    'award-winning-schools': '#award-winning-schools',
+    'CollegeSuccessAwardWinners': '.top-school-module .profile-module'
   });
 });

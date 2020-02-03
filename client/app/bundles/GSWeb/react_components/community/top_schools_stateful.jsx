@@ -60,6 +60,8 @@ class TopSchoolsStateful extends React.Component {
         case 'HighSchools':
           if (high.length > 0) { this.state = { levelCodes: 'h' }; }
           break;
+        case 'CollegeSuccessAwardWinners':
+          if (csa.length > 0) {this.state = { active: 1 }}
       }
     }
   }
@@ -69,6 +71,8 @@ class TopSchoolsStateful extends React.Component {
       const queryFragment = window.location.hash.slice(1).split("*");
       if (queryFragment.includes("TopSchools")) {
         return queryFragment[1];
+      } else if (queryFragment.includes("CollegeSuccessAwardWinners")){
+        return queryFragment[0];
       }
       return false;
     }
@@ -95,7 +99,8 @@ class TopSchoolsStateful extends React.Component {
 
   makeTabs() {
     return this.tabs().map(function (item, index) {
-      return <ModuleTab title={item} key={index} pageType={this.props.community} />
+      const anchorLink = item.split(" ").map(i => i.charAt(0).toUpperCase() + i.substring(1)).join("")
+      return <ModuleTab anchorLink={anchorLink} title={item} key={index} pageType={this.props.community} />
     }.bind(this));
   }
 
