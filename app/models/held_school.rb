@@ -8,10 +8,6 @@ class HeldSchool < ActiveRecord::Base
 
   validates_presence_of :school_id
 
-  def self.on_hold(state, school_id)
-    HeldSchool.where(state: state, school_id: school_id, active: 1).first
-  end
-
   def remove_hold
     self.update(active: 0)
   end
