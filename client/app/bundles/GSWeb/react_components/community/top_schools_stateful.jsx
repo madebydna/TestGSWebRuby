@@ -9,7 +9,12 @@ import { t } from "util/i18n";
 
 class TopSchoolsStateful extends React.Component {
   static propTypes = {
-    schoolsData: PropTypes.object,
+    schoolsData: PropTypes.shape({
+      elementary: PropTypes.arrayOf(PropTypes.object),
+      middle: PropTypes.arrayOf(PropTypes.object),
+      high: PropTypes.arrayOf(PropTypes.object),
+      cas: PropTypes.arrayOf(PropTypes.object)
+    }),
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     locality: PropTypes.object.isRequired,
     community: PropTypes.string.isRequired,
@@ -63,8 +68,12 @@ class TopSchoolsStateful extends React.Component {
         case 'CollegeSuccessAwardWinners':
           if (csa.length > 0) {this.state = { active: 1 }}
           break;
+        default:
+          return null;
       }
     }
+
+    return null;
   }
 
   anchorLinkParamter = () => {
