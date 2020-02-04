@@ -62,6 +62,7 @@ class TopSchoolsStateful extends React.Component {
           break;
         case 'CollegeSuccessAwardWinners':
           if (csa.length > 0) {this.state = { active: 1 }}
+          break;
       }
     }
   }
