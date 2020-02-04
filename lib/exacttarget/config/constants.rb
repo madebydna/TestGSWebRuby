@@ -8,8 +8,7 @@ module Exacttarget
           list_signups: SubscriptionListDataExtension,
           member_list: AllSubscribers,
           school_list: SchoolDataExtension,
-          school_signups: SchoolSignupDataExtension,
-          unsubscribes: Unsubscribes
+          school_signups: SchoolSignupDataExtension
       }
     end
   end
