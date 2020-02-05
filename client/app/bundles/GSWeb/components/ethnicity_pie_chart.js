@@ -11,19 +11,19 @@ import { t } from 'util/i18n';
     const returnvalue = [];
     data.forEach((value,index)=>{
       returnvalue.push({
-        name: value['breakdown'],
+        name: value.breakdown,
         legendIndex: index,
         y: Math.round(value[`${valueType}_value`]),
         color: ethnicityColors[index]
       });
-    })
+    });
     return returnvalue;
   };
 
   const generateEthnicityChart = function (data, valueType = 'school') {
     if (data.length > 0) {
       const callback = function () {
-        const chart = document.querySelector(ethnicityGraph)
+        const chart = document.querySelector(ethnicityGraph);
         let chart_height = 400;
 
         if (chart.offsetWidth < 400) {
@@ -66,7 +66,7 @@ import { t } from 'util/i18n';
               if (this.percentage < 1) {
                 val = "<1";
               } else {
-                val = Math.round(this.percentage)
+                val = Math.round(this.percentage);
               }
               return '<span style="color:' + this.color + `;">\u25CF</span> ${t('percentage')}: <b>` + val + '</b>';
             }
@@ -82,17 +82,17 @@ import { t } from 'util/i18n';
           if (typeof (sliceId) !== 'undefined' && ethnicityChartForHighlight.series[0].data[sliceId]) {
             ethnicityChartForHighlight.series[0].data[sliceId].select();
           }
-        }
+        };
         document.querySelectorAll('.js-highlightPieChart').forEach(selector=>{
-          selector.addEventListener('mouseover', highlightSlice)
-          selector.addEventListener('mouseout', highlightSlice)
-        })
+          selector.addEventListener('mouseover', highlightSlice);
+          selector.addEventListener('mouseout', highlightSlice);
+        });
       };
 
       if(window.Highcharts) {
         callback();
       } else {
-        getScript(gon.dependencies['highcharts']).done(callback);
+        getScript(gon.dependencies.highcharts).done(callback);
       }
     }
   };
