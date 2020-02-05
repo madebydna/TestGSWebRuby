@@ -3,7 +3,6 @@ module Exacttarget
     module SchoolSignupDataExtension
       class DataReader
 
-        include ExacttargetConstants
         LIST_TYPES = %w(mystat mystat_private)
 
         # Currently (01/20) 12Mil+ records!

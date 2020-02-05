@@ -32,6 +32,7 @@ class ExacttargetJobs
     writer.write_file
     validator = writer.validate_file
     if validator.valid?
+      puts "Working on: #{MAPPING_CLASSES[key]}"
       writer.zip_file
       writer.upload_file
     else
