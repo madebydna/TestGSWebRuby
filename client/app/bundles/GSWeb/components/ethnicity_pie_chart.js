@@ -54,7 +54,7 @@ import { t } from 'util/i18n';
                   if(this.percentage < 1){
                     return '<1%';
                   }
-                  return Math.round(this.percentage) + '%';
+                  return Math.round(this.percentage) +  '%';
                 },
                 distance: 15
               }
