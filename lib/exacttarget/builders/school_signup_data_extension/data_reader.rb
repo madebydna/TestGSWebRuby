@@ -12,7 +12,7 @@ module Exacttarget
         def school_signups
           States::STATE_HASH.values.uniq.each do |state|
             Subscription.connection.select_all(generate_sql(state).squish).each do |signup|
-              yield CsvWriter::HEADERS.map {|header| signup[header] }
+              yield CsvWriterComponent::HEADERS.map {|header| signup[header] }
             end
           end
         end

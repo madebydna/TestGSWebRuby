@@ -3,7 +3,7 @@
 module Exacttarget
   module Builders
     module AllSubscribers
-      class CsvWriterComponent < Exacttarget::Builder::CsvWriter
+      class CsvWriterComponent < Exacttarget::Builders::CsvWriter
 
         FILE_PATH = '/tmp/et_members.csv'
         HEADERS = ['member_id','Email Address','updated','time_added','Hash_token','how']

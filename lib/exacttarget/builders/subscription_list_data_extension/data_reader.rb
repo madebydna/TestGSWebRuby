@@ -7,7 +7,7 @@ module Exacttarget
 
         def list_signups
           Subscription.where(list: LIST_TYPES).find_each do |signup|
-            yield CsvWriter::HEADERS.map {|header| signup[header] }
+            yield CsvWriterComponent::HEADERS.map {|header| signup[header] }
           end
         end
 
