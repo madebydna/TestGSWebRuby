@@ -43,15 +43,6 @@ class ILTestProcessor20182019PARCCIAR < GS::ETL::TestProcessor
 		'Mathematics' => 5
 	}
 
-	# source('il_test.txt',[],col_sep:"\t") do |s|
-	# 	s.transform('test data type',Fill,{
-	# 	test_data_type_id: 297,
-	# 	test_data_type: 'IL PARCC',
-	# 	date_valid: '2018-01-01 00:00:00',
-	# 	notes: 'DXT-3375: IL PARCC',
-	# 	description: 'In 2017-18, students in Illinois took The Partnership for Assessment of Readiness for College and Careers (PARCC). PARCC is the state assessment and accountability measure for Illinois students enrolled in a public school district. PARCC assesses the New Illinois Learning Standards Incorporating the Common Core and will be administered to students in English Language Arts and Mathematics in grades 3-8.'
-	# 	})
-	# end
 
 	source('il_2018_parcc.txt',[],col_sep:"\t") do |s|
 		s.transform('test data type',Fill,{
