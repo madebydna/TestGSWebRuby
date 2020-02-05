@@ -52,7 +52,6 @@ const BasicDataModuleRow = ({
     }
     return <a onClick={()=> handleClick(link)} rel="nofollow" className="anchor-button" href={link}>Compare</a>
   }
-  const hasTriggerLink = (link && renderCompareLink()) || drawerTrigger;
   return (
     <div className="row bar-graph-display">
       <div className="test-score-container clearfix">
@@ -61,7 +60,7 @@ const BasicDataModuleRow = ({
           { (percentage || number_students_tested) && display_percentages && renderStudentPercentage() }
         </div>
         <div className="col-sm-1" />
-        <div className={`col-xs-9 ${hasTriggerLink ? "col-sm-4" : "col-sm-5"}`}>
+        <div className="col-xs-9 col-sm-4">
           {children}
         </div>
         <div className="compare-link">
