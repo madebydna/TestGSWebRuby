@@ -21,6 +21,10 @@ module Exacttarget
         validator
       end
 
+      def write_file
+        raise NotImplementedError.new("#write_file must be defined in the CsvWriterComponent class")
+      end
+
     end
   end
 end
