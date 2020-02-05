@@ -21,7 +21,7 @@ import { t } from 'util/i18n';
   };
 
   const generateEthnicityChart = function (data, valueType = 'school') {
-    if (data) {
+    if (data.length > 0) {
       const callback = function () {
         const chart = document.querySelector(ethnicityGraph)
         let chart_height = 400;
@@ -30,7 +30,7 @@ import { t } from 'util/i18n';
           chart_height = chart.offsetWidth - 40;
         }
         const ethnicityData = buildEthnicityDataFromGon(data, valueType);
-        
+
         const ethnicityChartForHighlight = Highcharts.chart(chart, {
           chart: {
             type: 'pie',
