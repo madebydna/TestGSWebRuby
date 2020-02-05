@@ -2,9 +2,9 @@ import { getScript } from '../util/dependency';
 import { t } from 'util/i18n';
 // TODO: import $
 
-      //  If you change these colors they need to be changed in _students.html.erb and/or students.jsx
+  //  If you change these colors they need to be changed in _students.html.erb and/or students.jsx
   const ethnicityColors = ['#0f69c4', '#2bdc99', '#f1830f', '#f1e634', '#6f2eb4', '#ef60d0', '#ca3154', '#999EFF'];
-      // write the graph to this location in html
+  // write the graph to this location in html
   const ethnicityGraph = '#ethnicity-graph';
 
   const buildEthnicityDataFromGon = function (data, valueType) {
