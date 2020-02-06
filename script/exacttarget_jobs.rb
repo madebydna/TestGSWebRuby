@@ -21,20 +21,29 @@ class ExacttargetJobs
   end
 
   def unsubscribe_run
-    processor = Exacttarget::Unsubscribes::Processor.new
+    processor = Exacttarget::Builders::Unsubscribes::Processor.new
+    puts "Working on: Unsubscribes"
+    print "...downloading..."
     processor.download_file
+    print "...running..."
     processor.run
+    puts "success"
   end
 
   def write_to_file(key)
     writer_string = "Exacttarget::Builders::#{MAPPING_CLASSES[key]}::CsvWriterComponent"
     writer = writer_string.constantize.new
+    puts "Working on: #{MAPPING_CLASSES[key]}"
+    print "...writing..."
     writer.write_file
+    print "validating..."
     validator = writer.validate_file
     if validator.valid?
-      puts "Working on: #{MAPPING_CLASSES[key]}"
+      print "zipping..."
       writer.zip_file
+      print "uploading..."
       writer.upload_file
+      puts "success"
     else
       # validator.errors
       puts 'ERROR: Invalid file.'
