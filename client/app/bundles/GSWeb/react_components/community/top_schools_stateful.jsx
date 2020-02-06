@@ -53,7 +53,7 @@ class TopSchoolsStateful extends React.Component {
       }
     }
 
-    const anchorLink = this.anchorLinkParamter();
+    const anchorLink = this.anchorLinkParameter();
     if(anchorLink){
       switch(anchorLink){
         case 'ElementarySchools':
@@ -76,7 +76,7 @@ class TopSchoolsStateful extends React.Component {
     return null;
   }
 
-  anchorLinkParamter = () => {
+  anchorLinkParameter = () => {
     if (window.location.hash.length > 1){
       const queryFragment = window.location.hash.slice(1).split("*");
       if (queryFragment.includes("TopSchools")) {
