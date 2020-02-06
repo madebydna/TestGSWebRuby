@@ -6,7 +6,7 @@ describe 'Visitor' do
   before do
     stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {})
   end
-  
+
   after do
     clean_dbs(:gs_schooldb)
     clean_models(:ca, School)
@@ -15,8 +15,7 @@ describe 'Visitor' do
   scenario 'is redirected back to profile page after signing up for account', js: true do
     school = create(:school_with_new_profile)
     subject.load(state: 'california', city: 'alameda', school_id_and_name: "#{school.id}-A-demo-school")
-    subject.wait_until_sign_in_visible
-    subject.sign_in.click
+    subject.top_nav.menu.signin_link.click
     register_new_account
 
     expect(subject).to have_content(school.name)
