@@ -21,15 +21,17 @@ class CensusLoading::Loader < CensusLoading::Base
 
       begin
         if census_update.action == ACTION_DISABLE
-          disable!(census_update)
+          # No more writes to census tables!
+          # disable!(census_update)
           # If we choose to support delete later, we can uncomment this and then create the delete method below
           # elsif census_update.action == 'delete'
           #   delete!(census_update)
         elsif census_update.action == ACTION_BUILD_CACHE
           # do nothing
         else
-          insert_into!(census_update, entity)
-          CharacteristicsCaching::Base.clear_rails_caches
+          # No more writes to census tables!
+          # insert_into!(census_update, entity)
+          # CharacteristicsCaching::Base.clear_rails_caches
         end
       rescue Exception => e
         raise e.message
