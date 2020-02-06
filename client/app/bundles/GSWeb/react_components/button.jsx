@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ label, active, ...other } = {}) => (
-  <button className={active ? 'active' : ''} {...other}>
+const Button = ({ label, active, additionalClassNames, ...other } = {}) => (
+  <button className={`${active ? 'active' : ''} ${additionalClassNames}`} {...other}>
     {label}
   </button>
 );

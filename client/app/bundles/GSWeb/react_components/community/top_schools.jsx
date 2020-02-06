@@ -10,9 +10,9 @@ const renderButtons = (handleGradeLevel, community, schoolLevels, levelCodes) =>
   return (
     <div className="grade-filter">
       <span className="button-group">
-        {schoolLevels.elementary > 0 && <Button onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e"} /> }
-        {schoolLevels.middle > 0 && <Button onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m"} /> }
-        {schoolLevels.high > 0 && <Button onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h"} /> }
+        {schoolLevels.elementary > 0 && <Button data-anchor="TopSchools*ElementarySchools" additionalClassNames="js-updateLocationHash" onClick={() => handleGradeLevel("e")} label={t("Elementary")} active={levelCodes === "e"} /> }
+        {schoolLevels.middle > 0 && <Button data-anchor="TopSchools*MiddleSchools" additionalClassNames="js-updateLocationHash" onClick={() => handleGradeLevel("m")} label={t("Middle")} active={levelCodes === "m"} /> }
+        {schoolLevels.high > 0 && <Button data-anchor="TopSchools*HighSchools" additionalClassNames="js-updateLocationHash" onClick={() => handleGradeLevel("h")} label={t("High")} active={levelCodes === "h"} /> }
       </span>
     </div>
   )
@@ -123,8 +123,8 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
 
   const ts_blurb = summaryType === 'Summary Rating' ? t('top_schools.top_schools_blurbs', { parameters: { name } }) : t('top_schools.top_schools_test_score_ratings_blurb', { parameters: { name } })
 
-	return (
-    <div className="top-school-module">
+  return(
+    <div id="TopSchools" className="top-school-module">
       <div className="profile-module">
         { renderTabsContainer() }
         <div className="top-school-info">

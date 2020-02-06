@@ -20,7 +20,7 @@ const BasicDataModuleLayout = ({
     <div
       id={id}
       className={`rating-container ${className}`}
-      data-ga-click-label={title}
+      data-ga-click-label={className}
     >
       <a className="anchor-mobile-offset" name={id} />
       <div className="profile-module">

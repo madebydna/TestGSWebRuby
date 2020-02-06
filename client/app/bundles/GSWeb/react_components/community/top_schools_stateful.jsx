@@ -9,7 +9,12 @@ import { t } from "util/i18n";
 
 class TopSchoolsStateful extends React.Component {
   static propTypes = {
-    schoolsData: PropTypes.object,
+    schoolsData: PropTypes.shape({
+      elementary: PropTypes.arrayOf(PropTypes.object),
+      middle: PropTypes.arrayOf(PropTypes.object),
+      high: PropTypes.arrayOf(PropTypes.object),
+      cas: PropTypes.arrayOf(PropTypes.object)
+    }),
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     locality: PropTypes.object.isRequired,
     community: PropTypes.string.isRequired,
@@ -28,7 +33,7 @@ class TopSchoolsStateful extends React.Component {
     this.state = {
       size: props.size,
       schoolLevels: props.schoolLevels,
-      active: props.active 
+      active: props.active
     };
     this.initialSchoolLoad(props.schoolsData);
   }
@@ -47,6 +52,41 @@ class TopSchoolsStateful extends React.Component {
         levelCodes: 'h'
       }
     }
+
+    const anchorLink = this.anchorLinkParameter();
+    if(anchorLink){
+      switch(anchorLink){
+        case 'ElementarySchools':
+          if (elementary.length > 0) { this.state = { levelCodes: 'e' }; }
+          break;
+        case 'MiddleSchools':
+          if (middle.length > 0) { this.state = {levelCodes: 'm' }; }
+          break;
+        case 'HighSchools':
+          if (high.length > 0) { this.state = { levelCodes: 'h' }; }
+          break;
+        case 'CollegeSuccessAwardWinners':
+          if (csa.length > 0) {this.state = { active: 1 }}
+          break;
+        default:
+          return null;
+      }
+    }
+
+    return null;
+  }
+
+  anchorLinkParameter = () => {
+    if (window.location.hash.length > 1){
+      const queryFragment = window.location.hash.slice(1).split("*");
+      if (queryFragment.includes("TopSchools")) {
+        return queryFragment[1];
+      } else if (queryFragment.includes("CollegeSuccessAwardWinners")){
+        return queryFragment[0];
+      }
+      return false;
+    }
+    return false;
   }
 
   handleGradeLevel = (str) => {
@@ -66,13 +106,14 @@ class TopSchoolsStateful extends React.Component {
     }
     return tabs;
   }
-  
+
   makeTabs() {
     return this.tabs().map(function (item, index) {
-      return <ModuleTab title={item} key={index} pageType={this.props.community} />
+      const anchorLink = item.split(" ").map(i => i.charAt(0).toUpperCase() + i.substring(1)).join("")
+      return <ModuleTab anchorLink={anchorLink} title={item} key={index} pageType={this.props.community} />
     }.bind(this));
   }
-    
+
   renderTabsContainer = () => {
     let tabs = this.tabs();
     if (tabs.length === 1) {
