@@ -255,8 +255,8 @@ class School < ActiveRecord::Base
 
   # returns true if school is on held school list (associated with school reviews)
   def held?
-    if !defined?(@held)
-      @held = HeldSchool.has_school?(self)
+    unless defined?(@held)
+      @held = HeldSchool.active_hold?(self)
     end
     @held
   end

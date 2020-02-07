@@ -321,7 +321,11 @@ LocalizedProfiles::Application.routes.draw do
 
     get  '/users/search'
 
-    resources :held_school
+    resources :held_school do
+      member do
+        put 'remove_hold'
+      end
+    end
 
     resources :data_load_schedules, path: '/data-planning'
 

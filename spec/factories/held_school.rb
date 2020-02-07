@@ -5,6 +5,7 @@ FactoryBot.define do
     school_id 1
     state 'CA'
     notes 'foo'
+    active 1
   end
 
 end
