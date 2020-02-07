@@ -13,7 +13,7 @@ class TopSchoolsStateful extends React.Component {
       elementary: PropTypes.arrayOf(PropTypes.object),
       middle: PropTypes.arrayOf(PropTypes.object),
       high: PropTypes.arrayOf(PropTypes.object),
-      cas: PropTypes.arrayOf(PropTypes.object)
+      csa: PropTypes.arrayOf(PropTypes.object)
     }),
     size: PropTypes.oneOf(validViewportSizes).isRequired,
     locality: PropTypes.object.isRequired,
