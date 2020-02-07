@@ -43,6 +43,11 @@ home_path: "/"
 # Enable/disable Rails ActionMailer. (We don't use ActionMailer though)
 mail_enabled: true
 
+# ExactTarget sftp
+exacttarget_host: ftp1.exacttarget.com
+exacttarget_username: 86987
+exacttarget_password: 42aPefus
+
 # ExactTarget api keys
 exacttarget_api_key: API_86987
 exacttarget_api_secret: welcome@1

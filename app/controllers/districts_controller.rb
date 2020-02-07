@@ -70,8 +70,8 @@ class DistrictsController < ApplicationController
         )
   end
 
-  def csa_state_solr_query 
-    @_csa_state_solr_query ||= begin 
+  def csa_state_solr_query
+    @_csa_state_solr_query ||= begin
       csa_badge = ['*']
       query_type = Search::SolrSchoolQuery
       query_type.new(
@@ -79,7 +79,7 @@ class DistrictsController < ApplicationController
           limit: 1,
           csa_years: csa_badge.presence
       ).search
-    end 
+    end
   end
 
   def facet_field_solr_results
@@ -213,7 +213,7 @@ class DistrictsController < ApplicationController
   def districts_title
     additional_district_text = state.downcase == 'dc' ? ', DC' : ''
 
-    t('controllers.districts_controller.meta_title', district_name: district_record.name.gs_capitalize_words, additional_district_text: additional_district_text, city: district_record.city, state: district_record.state)
+    t('controllers.districts_controller.meta_title', district_name: district_record.name.gs_capitalize_words, additional_district_text: additional_district_text, city: district_record.city, state: district_record.state.upcase)
   end
 
   def districts_description
@@ -353,10 +353,10 @@ class DistrictsController < ApplicationController
   end
 
   def reviews
-    @_reviews ||= 
+    @_reviews ||=
       Review
         .active
-          .where(school_id: 
+          .where(school_id:
             School.on_db(district_record.state.downcase) { School.active.where(district_id: district_record.id).ids },
             state: district_record.state.downcase)
             .where(review_question_id: 1)

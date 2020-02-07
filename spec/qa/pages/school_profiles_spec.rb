@@ -44,7 +44,7 @@ describe 'School profiles page', remote: true do
         click_link 'Newsletter'
       end
       sleep 10
-      register_in_email_modal
+      register_in_modal
       sleep 5
       expect(page).to have_text("Success!\nYou've signed up to receive updates")
       confirm_school_signup

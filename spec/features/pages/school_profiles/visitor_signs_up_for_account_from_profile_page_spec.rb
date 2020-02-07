@@ -1,22 +1,27 @@
 require 'spec_helper'
 require 'features/page_objects/school_profiles_page'
+require 'features/page_objects/home_page'
 
 describe 'Visitor' do
-  before { skip }
+  subject { SchoolProfilesPage.new }
+  before do
+    stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {})
+  end
+
   after do
     clean_dbs(:gs_schooldb)
     clean_models(:ca, School)
   end
 
-  scenario 'is redirected back to profile page after signing up for account', js: true do
+  scenario 'is redirected to the home page after signing up for account', js: true do
     school = create(:school_with_new_profile)
-    visit school_path(school)
-    page_object = SchoolProfilesPage.new
-
-    page_object.sign_in.click
+    subject.load(state: 'california', city: 'alameda', school_id_and_name: "#{school.id}-A-demo-school")
+    subject.top_nav.menu.signin_link.click
     register_new_account
 
-    expect(page).to have_content(school.name)
+    home_page = HomePage.new
+    expect(home_page).to be_loaded
+    expect(home_page.top_nav.menu).to have_account_link
   end
 
   def register_new_account

@@ -5,7 +5,7 @@ class ForgotPasswordPage < SitePrism::Page
   include Footer
   include FlashMessages
 
-  set_url_matcher /\/account\/forgot-password\//
+  set_url '/account/forgot-password/'
 
   element :email_field, 'input[name="email"]'
   element :continue_button, 'button', text: 'Continue'

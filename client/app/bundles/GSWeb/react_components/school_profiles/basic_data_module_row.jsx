@@ -52,7 +52,6 @@ const BasicDataModuleRow = ({
     }
     return <a onClick={()=> handleClick(link)} rel="nofollow" className="anchor-button" href={link}>Compare</a>
   }
-
   return (
     <div className="row bar-graph-display">
       <div className="test-score-container clearfix">
@@ -60,7 +59,7 @@ const BasicDataModuleRow = ({
           {breakdown}&nbsp;{ tooltip_html && <QuestionMarkTooltip content={tooltip_html} className="tooltip" element_type="datatooltip" /> }
           { (percentage || number_students_tested) && display_percentages && renderStudentPercentage() }
         </div>
-        <div className="col-sm-1"></div>
+        <div className="col-sm-1" />
         <div className="col-xs-9 col-sm-4">
           {children}
         </div>
@@ -80,10 +79,11 @@ BasicDataModuleRow.propTypes = {
   number_students_tested: PropTypes.number,
   drawerTrigger: PropTypes.element,
   tooltip_html: PropTypes.string,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  link: PropTypes.string
 }
 
-BasicDataModuleRow.DefaultProps = {
+BasicDataModuleRow.defaultProps = {
   display_percentages: false
 }
 
