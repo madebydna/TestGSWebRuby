@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'features/page_objects/school_profiles_page'
+require 'features/page_objects/home_page'
 
 describe 'Visitor' do
   subject { SchoolProfilesPage.new }
@@ -12,13 +13,15 @@ describe 'Visitor' do
     clean_models(:ca, School)
   end
 
-  scenario 'is redirected back to profile page after signing up for account', js: true do
+  scenario 'is redirected to the home page after signing up for account', js: true do
     school = create(:school_with_new_profile)
     subject.load(state: 'california', city: 'alameda', school_id_and_name: "#{school.id}-A-demo-school")
     subject.top_nav.menu.signin_link.click
     register_new_account
 
-    expect(subject).to have_content(school.name)
+    home_page = HomePage.new
+    expect(home_page).to be_loaded
+    expect(home_page.top_nav.menu).to have_account_link
   end
 
   def register_new_account
