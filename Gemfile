@@ -10,6 +10,15 @@ gem 'rails', '4.2.8'
 # A simple, fast Mysql library for Ruby, binding to libmysql (https://github.com/brianmario/mysql2)
 gem 'mysql2', '0.4.10'
 
+# A pure Ruby implementation of the SFTP client protocol (https://github.com/net-ssh/net-sftp)
+gem 'net-sftp', '~> 2.1', '>= 2.1.2'
+
+# CSV Validator
+gem 'csvlint'
+
+# rubyzip is a ruby module for reading and writing zip files (http://github.com/rubyzip/rubyzip)
+gem 'rubyzip'
+
 # This gem provides jQuery and the jQuery-ujs driver for your Rails 3+ application.
 # Used by pages that use JS through rails asset pipeline and not webpack/react
 # Such as review moderation pages and reviews landing page
@@ -160,6 +169,7 @@ group :development do
   gem 'spring-commands-rspec'
 
   # Tool used to manage and configure webhooks including firing off rubocop on commits
+  # Git hook manager (https://github.com/causes/overcommit)
   gem 'overcommit'
 
   # Profiling toolkit for Rack applications with Rails integration.
@@ -217,7 +227,10 @@ group :test do
 end
 
 group :development, :test do
-  # Ruby fast debugger - base + CLI (https://github.com/deivid-rodriguez/byebug)
+  # Pure-Ruby Readline Implementation (http://github.com/ConnorAtherton/rb-readline)
+  gem 'rb-readline'
+
+  # Ruby 2.0 fast debugger - base + CLI (http://github.com/deivid-rodriguez/byebug)
   gem 'byebug'
 
   # execute  "rails_best_practices -f html ."  on the command line to generate an html report

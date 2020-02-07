@@ -1,0 +1,1 @@
+Delete from gs_schooldb.review_flags where id=796629;
