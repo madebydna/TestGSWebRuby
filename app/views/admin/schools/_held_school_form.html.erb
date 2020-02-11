@@ -2,7 +2,7 @@
 <% held_school %>
 
 <div class="rs-held-school-container">
-  <% if held_school && held_school.active == 1 %>
+  <% if held_school&.active? %>
     School on hold since <%= held_school.placed_on_hold_at %>
     <br/>
     <%= form_for(held_school, method: :put, url: remove_hold_admin_held_school_path(held_school)) do |f| %>
