@@ -15,7 +15,7 @@ class SchoolModerationPage < SitePrism::Page
   class HeldSchoolSection < SitePrism::Section
     element :notes_box, 'textarea[name="held_school[notes]"]'
     element :submit_button, 'button', text: 'Put school on hold'
-    element :remove_held_status_button, 'button', text: 'Remove hold (will delete notes)'
+    element :remove_held_status_button, 'button', text: 'Remove hold'
 
     def on_hold?
       text.match /School on hold/
