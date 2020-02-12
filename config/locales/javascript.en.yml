@@ -36,7 +36,7 @@ en:
     city_hero_no_county_html: <div class="city-hero-narrative">{city} is a city in {stateLong}</div>
     neighboring-cities: Neighboring cities
     state:
-      state_hero_narrative_html: There are {schoolCount} public and private PK-12 schools in {nameLong}. Learn more about the schools, student demographics, and academics within the state, read parent reviews of local schools, and find information about specific cities and school districts. 
+      state_hero_narrative_html: There are {schoolCount} public and private PK-12 schools in {nameLong}. Learn more about the schools, student demographics, and academics within the state, read parent reviews of local schools, and find information about specific cities and school districts.
       state_hero_title: '{nameLong} Schools'
       districts_header: Largest school districts in {nameLong}
       explore_in_state: Explore schools in {nameLong}
@@ -90,7 +90,7 @@ en:
     Filter: Filter
     Currently unrated: Currently unrated
     rating_description_html: >
-      <p style="text-align: left;">GreatSchools’ Summary Rating provides an overall snapshot of school quality. Ratings follow a 1-10 scale:
+      <p style="text-align: left;">GreatSchools’ Summary Rating provides an overall snapshot of school quality. Ratings follow a 1-10 scale, where top-rated schools are "10s":
       <ul style="text-align: left;"><li>ratings between 1-4 signal “below average”</li>
       <li>5-6 indicate “average”</li>
       <li>ratings of 7-10 are “above average”</li></ul></p>
@@ -140,9 +140,9 @@ en:
       title: Community resources in
       transportation_narration: Transportation options near the schools
       help: >
-        MobilityScore® helps you understand how easy it is to get around. It works at any location or 
-        address within the US and Canada and gives you a score ranging from 0 (no mobility choices) 
-        to 100 (excellent mobility choices). MobilityScore takes into account all your options, from 
+        MobilityScore® helps you understand how easy it is to get around. It works at any location or
+        address within the US and Canada and gives you a score ranging from 0 (no mobility choices)
+        to 100 (excellent mobility choices). MobilityScore takes into account all your options, from
         public transit to carsharing, bikesharing, ridesharing, bikes, and even scooters!
       sources_html: >
         <div class="sources-text">
@@ -236,7 +236,7 @@ en:
     State avg: 'State avg:'
     School value: School value
     Sponsored Ad: Sponsored Listing
-    sponsored_tooltip_blurb: Sponsored listings are paid advertisements. As a nonprofit, advertising helps make it possible to provide our site free to millions of parents. 
+    sponsored_tooltip_blurb: Sponsored listings are paid advertisements. As a nonprofit, advertising helps make it possible to provide our site free to millions of parents.
     Test scores: Test scores
     Graduation rates: Graduation rates
     'UC/CSU eligibility': 'UC/CSU eligibility'
@@ -338,10 +338,10 @@ en:
     no_schools_found: No schools found
     CSA Page:
       summary: >
-        <span>In %{state}, %{total} public schools earned a College Success Award in %{year} based on their 
-            success in preparing students for college and ultimately career. The College Success awards 
-            recognize public high schools that stand out in getting students enrolled in - and staying 
-            with - college.  
+        <span>In %{state}, %{total} public schools earned a College Success Award in %{year} based on their
+            success in preparing students for college and ultimately career. The College Success awards
+            recognize public high schools that stand out in getting students enrolled in - and staying
+            with - college.
           <a href="/gk/csa-winners/">Learn more</a>.
         </span>
       summary_mobile: >
