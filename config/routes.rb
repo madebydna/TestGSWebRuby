@@ -4,8 +4,6 @@ LocalizedProfiles::Application.routes.draw do
 
   root 'home#show'
   get ENV_GLOBAL['home_path'], as: :home, to: 'home#show'
-  # This route ("/gsr/home/") is REQUIRED by Apache as long as we are running Tomcat
-  get '/gsr/home', as: :home_show, to: 'home#show'
 
   get '/account', as: :manage_account, to: 'account_management#show'
 
@@ -64,7 +62,7 @@ LocalizedProfiles::Application.routes.draw do
   match '/add_school', to: 'add_schools#create', via: :post
   match '/remove_school', to: 'remove_schools#new', via: :get
   match '/remove_school', to: 'remove_schools#create', via: :post
-  
+
   get '/school_change_request/success', as: :new_remove_school_submission_success, to: 'add_schools#success'
 
   resources :user_preferences, only: [:edit]
@@ -76,7 +74,6 @@ LocalizedProfiles::Application.routes.draw do
   get '/unsubscribe/' => 'user_email_unsubscribes#new', as: 'unsubscribe'
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
-  get '/community/', to: 'community_landing#show',as: :community_landing
 
   # OSP routes
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
@@ -87,11 +84,11 @@ LocalizedProfiles::Application.routes.draw do
   get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
   post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
 
-  # Legacy suggestion routes
+  # Search autocomplete suggestion routes
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
   get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
-  
+
   # For WP footer/header integration
   get '/gsr/footer', to: 'footer#show'
   get '/gsr/header', to: 'header#show'
@@ -272,8 +269,6 @@ LocalizedProfiles::Application.routes.draw do
     end
 
     get '/user-help/', to: 'users#user_help'
-    get '/style-guide/', to: 'style_guide#index'
-    get '/style-guide/:category/:page', to: 'style_guide#render_page'
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
     get '/first-active-school-url-per-state', to: 'first_active_school_url_per_state#show'
@@ -327,14 +322,14 @@ LocalizedProfiles::Application.routes.draw do
   get '/admin/gsr/osp-search', to: 'osp_moderation#osp_search', as: :osp_search
   get '/admin/gsr/osp/:id', to: 'osp_moderation#edit', as: :osp_edit
   post '/admin/gsr/osp/:id', to: 'osp_moderation#update_osp_list_member', as: :osp_update_list_member
-  
+
   # WP route
   post '/gsr/ajax/wordpress_submit', to: 'wordpress_interface#call_from_wordpress', as: :call_from_wordpress
-  
+
   # Review routes with /gsr prefix
   post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review
   post '/gsr/reviews/', to: 'reviews#create', as: :create_reviews
-  
+
   get '/gsr/ajax/get_cities_alphabetically', :to => 'simple_ajax#get_cities_alphabetically'
   get '/gsr/ajax/get_schools_with_link', :to => 'simple_ajax#get_schools_with_link'
 
@@ -349,7 +344,6 @@ LocalizedProfiles::Application.routes.draw do
   post '/gsr/user/send_verify_email', :to => 'user#send_verify_email_admin'
   post '/gsr/user/send_reset_password_email', :to => 'user#send_reset_password_email_admin'
   resources :subscriptions, only: [:create, :destroy], path: '/gsr/user/subscriptions'
-  get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'
   resources :favorite_schools, only: [:create, :destroy], path: '/gsr/user/favorites'
 
   # Routes to trigger modals
@@ -357,7 +351,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/modals/school_user_modal',:to=> 'modals#school_user_modal', as: :school_user_modal
   get '/gsr/modals/dependencies', to: 'modals#dependencies'
   get '/gsr/modals/:modal', to: 'modals#show', as: :modal
-  
+
   # Loaded from WP
   get '/gsr/assets', to: 'assets#show'
 
@@ -373,7 +367,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/user/user-status', as: :user_login_verification_status, to: 'user#user_login_verification_status'
   get '/join', :to => 'signin#new_join', :as => :join
   get '/gsr/login', :to => 'signin#new', :as => :signin
-  
+
   # My school list route
   get '/my-school-list', to: 'my_school_list#show', as: :my_school_list
 
@@ -446,12 +440,6 @@ LocalizedProfiles::Application.routes.draw do
     get 'guided-search', to: redirect { |params, _|
       "/#{params[:state]}/#{params[:city]}/"
     }, as: :guided_search
-
-    get 'programs', to: 'cities#programs', as: :programs
-
-    scope '/education-community', as: :education_community do
-      get '/partner', to: 'cities#partner', as: :partner
-    end
 
     # NOTE: this must come last in the city scope, because it will match
     # anything after the cty name

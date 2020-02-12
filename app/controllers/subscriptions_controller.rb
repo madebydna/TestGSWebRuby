@@ -14,21 +14,6 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  # Route for adding subscriptions from a direct link for marketers 
-  # https://jira.greatschools.org/browse/PT-444
-  def subscription_from_link
-    if params[:list] == 'greatnews' || params[:list] == 'gsnewsletter'
-      params[:message] = 'You\'ve signed up to receive GreatSchools\'s newsletter'
-      if logged_in?
-        attempt_sign_up(params, home_path)
-      else
-        handle_not_logged_in(params)
-      end
-    else
-      redirect_to home_path
-    end
-  end
-
   def destroy
     success = false
     message = ''
