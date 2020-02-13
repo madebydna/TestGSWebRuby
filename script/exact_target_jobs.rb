@@ -12,8 +12,8 @@ class ExactTargetJobs
     ptr = @process_to_run.to_sym
     map_class = MAPPING_CLASSES[ptr]
     if ptr == :all
-      MAPPING_CLASSES.each {| key, _ | write_to_file(key)}
       unsubscribe_run
+      MAPPING_CLASSES.each {| key, _ | write_to_file(key)}
     elsif map_class
       write_to_file(ptr)
     else
