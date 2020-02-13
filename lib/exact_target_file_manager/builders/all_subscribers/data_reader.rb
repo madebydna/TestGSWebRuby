@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Exacttarget
+module ExactTargetFileManager
   module Builders
     module AllSubscribers
       class DataReader

@@ -1,4 +1,4 @@
-module Exacttarget
+module ExactTargetFileManager
   module Builders
     module Unsubscribes
       class Processor
@@ -10,7 +10,7 @@ module Exacttarget
         end
 
         def download_file
-          Exacttarget::Helpers::SFTP.new.download("/Import/#{@file_name}")
+          ExactTargetFileManager::Helpers::SFTP.new.download("/Import/#{@file_name}")
         end
 
         def run

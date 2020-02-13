@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Exacttarget
+module ExactTargetFileManager
   module Builders
     module AllSubscribers
-      class CsvWriterComponent < Exacttarget::Builders::CsvWriter
+      class CsvProcessorComponent < ExactTargetFileManager::Builders::EtProcessor
 
         FILE_PATH = '/tmp/et_members.csv'
         HEADERS = ['member_id','Email Address','updated','time_added','Hash_token','how']

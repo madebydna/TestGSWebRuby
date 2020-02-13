@@ -1,15 +1,10 @@
-# frozen_string_literal: true
-
-# require ' /lib/school_profiles/school_cache_data_reader'
-# require ' /lib/school_profiles/test_scores'
-
-module Exacttarget
+module ExactTargetFileManager
   module Builders
     module SchoolDataExtension
       class DataReader
 
         def each_school
-          State.all.pluck('state').each do |state|
+          States::STATE_HASH.values.uniq.each do |state|
             puts "Current state: #{state}"
             School.on_db(state.downcase.to_sym).active.order(:id).not_preschool_only.each do |school|
               yield school

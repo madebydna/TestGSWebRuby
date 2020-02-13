@@ -2,7 +2,7 @@
 
 require 'zip'
 
-module Exacttarget
+module ExactTargetFileManager
   module Helpers
     class EtZip
       def zip(local_path)

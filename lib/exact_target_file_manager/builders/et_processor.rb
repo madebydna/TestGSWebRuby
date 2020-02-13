@@ -3,16 +3,16 @@
 require 'csv'
 require 'csvlint'
 
-module Exacttarget
+module ExactTargetFileManager
   module Builders
-    class CsvWriter
+    class EtProcessor
 
       def zip_file
-        Exacttarget::Helpers::EtZip.new.zip(self.class::FILE_PATH)
+        ExactTargetFileManager::Helpers::EtZip.new.zip(self.class::FILE_PATH)
       end
 
       def upload_file
-        Exacttarget::Helpers::SFTP.new.upload("#{self.class::FILE_PATH}.zip")
+        ExactTargetFileManager::Helpers::SFTP.new.upload("#{self.class::FILE_PATH}.zip")
       end
 
       def validate_file

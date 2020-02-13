@@ -1,7 +1,7 @@
-module Exacttarget
+module ExactTargetFileManager
   module Builders
     module SchoolSignupDataExtension
-      class CsvWriterComponent < Exacttarget::Builders::CsvWriter
+      class CsvProcessorComponent < ExactTargetFileManager::Builders::EtProcessor
 
         HEADERS = %w(id member_id state school_id language)
         FILE_PATH = "/tmp/et_school_signups.csv"
@@ -13,8 +13,8 @@ module Exacttarget
         def write_file
           CSV.open(FILE_PATH, 'w') do |csv|
             csv << HEADERS
-            @data_reader.school_signups do |signup|
-              csv << signup
+            @data_reader.school_sign_ups do |sign_up|
+              csv << HEADERS.map {|header| sign_up[header] } if sign_up.present?
             end
           end
         end

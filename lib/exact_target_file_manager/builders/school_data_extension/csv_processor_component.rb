@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Exacttarget
+module ExactTargetFileManager
   module Builders
     module SchoolDataExtension
-      class CsvWriterComponent < Exacttarget::Builders::CsvWriter
+      class CsvProcessorComponent < ExactTargetFileManager::Builders::EtProcessor
 
         FILE_PATH = '/tmp/et_schools.csv'
         HEADERS = %w(

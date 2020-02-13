@@ -1,4 +1,4 @@
-module Exacttarget
+module ExactTargetFileManager
   module Builders
     module SchoolSignupDataExtension
       class DataReader
@@ -8,10 +8,10 @@ module Exacttarget
         # Currently (01/20) 12Mil+ records!
         # index on list + state, 2.5min runtime
         # using "select_all", 1m13s
-        def school_signups
+        def school_sign_ups
           States::STATE_HASH.values.uniq.each do |state|
-            Subscription.connection.select_all(generate_sql(state).squish).each do |signup|
-              yield CsvWriterComponent::HEADERS.map {|header| signup[header] }
+            Subscription.connection.select_all(generate_sql(state).squish).each do |sign_up|
+              yield sign_up
             end
           end
         end
