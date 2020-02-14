@@ -15,7 +15,9 @@ class ReviewPublishedMssEmail < AbstractExactTargetMailer
   end
 
   def school_link_review_url
-    "https://www.greatschools.org" + school_reviews_path(@school, anchor: 'Reviews')
+    anchor = 'Reviews'
+    link = "https://www.greatschools.org" + school_reviews_path(@school, anchor: anchor)
+    link.include?("#") ? link : "#{link}##{anchor}"
   end
 
   def trigger_email
