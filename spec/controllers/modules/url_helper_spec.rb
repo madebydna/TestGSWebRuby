@@ -380,27 +380,6 @@ describe UrlHelper do
     end
   end
 
-  shared_examples_for 'change what you can' do
-    {
-        unknown: 'gstrackingpagefail'
-    }.each do |action, default_campaign|
-      it "should use #{default_campaign} for #{action} action" do
-        allow(helper).to receive(:action_name).and_return(action.to_s)
-        expect(subject).to eq("#{expected_url}#{default_campaign}")
-      end
-    end
-
-    describe 'with a campaign parameter' do
-      let (:campaign) { 'spec' }
-      subject { helper.zillow_url(state, zipcode, campaign) }
-
-      it 'should use provided campaign parameter regardless of action' do
-        allow(helper).to receive(:action_name).and_return('show')
-        expect(subject).to eq("#{expected_url}#{campaign}")
-      end
-    end
-  end
-
   describe 'swap out admin in email url for www' do
     subject { helper.email_send_link_no_admin(url) }
 
