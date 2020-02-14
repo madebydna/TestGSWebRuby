@@ -9,7 +9,7 @@ module OspHelper
       redirect: '/official-school-profile/dashboard/',
       s_cid: tracking_code
     )
-    verify_email_url(verification_link_params)
+    verify_email_url(verification_link_params).gsub("admin.greatschools.org", "www.greatschools.org")
   end
 
   def send_email_to_osp(membership, status)
