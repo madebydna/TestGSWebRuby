@@ -191,7 +191,11 @@ class OspRegistrationController < ApplicationController
         redirect: '/official-school-profile/dashboard/',
         s_cid: tracking_code
     )
-    verify_email_url(verification_link_params).gsub("admin.greatschools.org", "www.greatschools.org")
+    email_send_link_no_admin(verify_email_url(verification_link_params))
+  end
+
+  def email_send_link_no_admin(url)
+    url.gsub("admin.greatschools.org", "www.greatschools.org")
   end
 
   def sign_up_user_for_subscriptions!(user, school, subscriptions)

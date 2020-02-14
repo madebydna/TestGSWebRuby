@@ -380,4 +380,68 @@ describe UrlHelper do
     end
   end
 
+  shared_examples_for 'change what you can' do
+    {
+        unknown: 'gstrackingpagefail'
+    }.each do |action, default_campaign|
+      it "should use #{default_campaign} for #{action} action" do
+        allow(helper).to receive(:action_name).and_return(action.to_s)
+        expect(subject).to eq("#{expected_url}#{default_campaign}")
+      end
+    end
+
+    describe 'with a campaign parameter' do
+      let (:campaign) { 'spec' }
+      subject { helper.zillow_url(state, zipcode, campaign) }
+
+      it 'should use provided campaign parameter regardless of action' do
+        allow(helper).to receive(:action_name).and_return('show')
+        expect(subject).to eq("#{expected_url}#{campaign}")
+      end
+    end
+  end
+
+  describe 'swap out admin in email url for www' do
+    subject { helper.email_send_link_no_admin(url) }
+
+    context 'admin within reset password url' do
+      let(:url) {'https://admin.greatschools.org/gsr/authenticate-token/?date=983839&id=kasjdfkajsfkal&redirect=https%3A%2F%2Fadmin.greatschools.org%2Faccount%2Fpassword%2F&s_cid=eml_passwordreset'}
+      let(:expected_url) {'https://www.greatschools.org/gsr/authenticate-token/?date=983839&id=kasjdfkajsfkal&redirect=https%3A%2F%2Fwww.greatschools.org%2Faccount%2Fpassword%2F&s_cid=eml_passwordreset'}
+      it 'changed to www' do
+        expect(subject).to eq(expected_url)
+      end
+    end
+
+    context 'admin within osp url' do
+      let(:url) {'https://admin.greatschools.org/school/esp/form.page?page=1&schoolId=2244&state=ca'}
+      let(:expected_url) {'https://www.greatschools.org/school/esp/form.page?page=1&schoolId=2244&state=ca'}
+      it 'changed to www' do
+        expect(subject).to eq(expected_url)
+      end
+    end
+
+    context 'admin in url only should change one' do
+      let(:url) {'https://admin.greatschools.org/school/esp/form.page?page=1&schoolId=2244&state=caadmin'}
+      let(:expected_url) {'https://www.greatschools.org/school/esp/form.page?page=1&schoolId=2244&state=caadmin'}
+      it 'changed to www as part of url' do
+        expect(subject).to eq(expected_url)
+      end
+    end
+
+    context 'sw3 within reset password url should not change' do
+      let(:url) {'https://sw3.greatschools.org/gsr/authenticate-token/?date=983839&id=kasjdfkajsfkal&redirect=https%3A%2F%2Fsw3.greatschools.org%2Faccount%2Fpassword%2F&s_cid=eml_passwordreset'}
+      it 'no change' do
+        expect(subject).to eq(url)
+      end
+    end
+
+    context 'sw3 in url for osp url' do
+      let(:url) {'http://sw3.greatschools.org/school/esp/form.page?page=1&schoolId=2244&state=ca'}
+      it 'no change' do
+        expect(subject).to eq(url)
+      end
+    end
+
+  end
+
 end

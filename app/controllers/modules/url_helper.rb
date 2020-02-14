@@ -179,7 +179,11 @@ module UrlHelper
       redirect: post_registration_redirect.to_s,
       s_cid: tracking_code
     )
-    verify_email_url(verification_link_params).gsub("admin.greatschools.org", "www.greatschools.org")
+    email_send_link_no_admin(verify_email_url(verification_link_params))
+  end
+
+  def email_send_link_no_admin(url)
+    url.gsub("admin.greatschools.org", "www.greatschools.org")
   end
 
   # remove hash/anchor if it exists - write anchor to current url.
