@@ -5,7 +5,6 @@ class ExactTargetJobs
 
   def initialize(process_to_run)
     @process_to_run = process_to_run
-
   end
 
   def run
@@ -16,7 +15,7 @@ class ExactTargetJobs
       MAPPING_CLASSES.each {| key, _ | write_to_file(key)}
     elsif map_class
       write_to_file(ptr)
-    else
+    elsif ptr == :unsubscribes
       unsubscribe_run
     end
   end
@@ -32,7 +31,7 @@ class ExactTargetJobs
       processor.run
       puts "success"
       log.finish_logging_session(1, "Success: completed downloading Unsubscribes and updating") rescue nil
-    rescue Exception => e
+    rescue StandardError => e
       puts e.message          # Human readable error
       log.finish_logging_session(0, "ERROR: unsubscribes failed, error: #{e.message}") rescue nil
     end
@@ -61,7 +60,7 @@ class ExactTargetJobs
         puts validator.errors
         log.finish_logging_session(0, "ERROR: did not complete uploading ET processing") rescue nil
       end
-    rescue Exception => e
+    rescue StandardError => e
       puts e.message          # Human readable error
       log.finish_logging_session(0, "ERROR: unsubscribes failed, key: #{key}, error: #{e.message}") rescue nil
     end
