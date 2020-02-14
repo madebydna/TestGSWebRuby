@@ -1,5 +1,5 @@
 class ExactTarget
-  class SmsRest
+  module SmsRest
     attr_reader :auth_token_manager
     def initialize
       @sms_rest_calls = ExactTarget::SmsRestCalls.new

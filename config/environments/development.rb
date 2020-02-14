@@ -59,7 +59,9 @@ LocalizedProfiles::Application.configure do
   config.quiet_assets = true
 
   # Don't cache in dev environment
-  config.cache_store = :null_store
+  # config.cache_store = :null_store
+  # For testing Rails cache locally
+  config.cache_store = :memory_store, { size: 128.megabytes }
 
   if ENV_GLOBAL['media_server'].present?
     config.action_controller.asset_host = ENV_GLOBAL['media_server']

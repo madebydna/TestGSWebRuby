@@ -6,16 +6,15 @@ require 'json'
 
 class ExactTarget
   class AuthTokenManager
-    EXACT_TARGET_ACCESS_KEY_DB = 'et_rest_access_token'
+    EXACT_TARGET_ACCESS_KEY_CACHE = 'et_rest_access_token'
 
     def self.fetch_access_token
       new.fetch_access_token
     end
 
-    # This gets the token if needed and returns a new token good for an hour
-    # v1/requestToken
+    # This gets the token if needed and returns a new token good for ~18 min
     def fetch_access_token
-      at = access_token_from_db
+      at = access_token_from_cache
       at.present? ? at : fetch_new_access_token
     end
 
@@ -25,19 +24,18 @@ class ExactTarget
 
     def fetch_new_access_token
       et_response = exact_target_response
-      set_access_token_in_db(et_response)
+      set_access_token_in_cache(et_response)
       et_response.access_token
     end
 
-    def access_token_from_db
-      SharedCache.get_cache_value(EXACT_TARGET_ACCESS_KEY_DB)
+    def access_token_from_cache
+      Rails.cache.read(EXACT_TARGET_ACCESS_KEY_CACHE)
     end
 
-    def set_access_token_in_db(exact_target_response)
-      SharedCache.set_cache_value(EXACT_TARGET_ACCESS_KEY_DB,
-                                  exact_target_response.access_token,
-                                  exact_target_response.expiration_datetime
-                                 )
+    def set_access_token_in_cache(exact_target_response)
+      Rails.cache.write(EXACT_TARGET_ACCESS_KEY_CACHE,
+        exact_target_response.access_token,
+        expires_in: exact_target_response.expiration_datetime)
     end
 
     def exact_target_response
@@ -52,8 +50,8 @@ class ExactTarget
       attr_reader :access_token
 
       def initialize(access_hash)
-        @access_token = access_hash['accessToken']
-        @expires_in = access_hash['expiresIn']
+        @access_token = access_hash['access_token']
+        @expires_in = access_hash['expires_in']
       end
 
       def expiration_datetime
