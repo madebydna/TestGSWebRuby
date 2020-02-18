@@ -12,10 +12,6 @@ module OspHelper
     email_send_link_no_admin(verify_email_url(verification_link_params))
   end
 
-  def email_send_link_no_admin(url)
-    url.gsub("admin.greatschools.org", "www.greatschools.org")
-  end
-
   def send_email_to_osp(membership, status)
     if status == 'approved'
       OspApprovalEmail.deliver_to_user(membership.user,

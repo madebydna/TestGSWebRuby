@@ -194,10 +194,6 @@ class OspRegistrationController < ApplicationController
     email_send_link_no_admin(verify_email_url(verification_link_params))
   end
 
-  def email_send_link_no_admin(url)
-    url.gsub("admin.greatschools.org", "www.greatschools.org")
-  end
-
   def sign_up_user_for_subscriptions!(user, school, subscriptions)
     subscriptions ||= []
     if subscriptions.include?('mystat_osp')
