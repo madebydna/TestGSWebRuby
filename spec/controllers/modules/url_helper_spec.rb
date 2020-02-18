@@ -380,43 +380,43 @@ describe UrlHelper do
     end
   end
 
-  describe 'swap out admin in email url for www' do
+  describe '#email_send_link_no_admin' do
     subject { helper.email_send_link_no_admin(url) }
 
-    context 'admin within reset password url' do
+    context 'when provided admin within reset password url' do
       let(:url) {'https://admin.greatschools.org/gsr/authenticate-token/?date=983839&id=kasjdfkajsfkal&redirect=https%3A%2F%2Fadmin.greatschools.org%2Faccount%2Fpassword%2F&s_cid=eml_passwordreset'}
       let(:expected_url) {'https://www.greatschools.org/gsr/authenticate-token/?date=983839&id=kasjdfkajsfkal&redirect=https%3A%2F%2Fwww.greatschools.org%2Faccount%2Fpassword%2F&s_cid=eml_passwordreset'}
-      it 'changed to www' do
+      it 'should see admin changed to www' do
         expect(subject).to eq(expected_url)
       end
     end
 
-    context 'admin within osp url' do
+    context 'when provided admin within osp url' do
       let(:url) {'https://admin.greatschools.org/school/esp/form.page?page=1&schoolId=2244&state=ca'}
       let(:expected_url) {'https://www.greatschools.org/school/esp/form.page?page=1&schoolId=2244&state=ca'}
-      it 'changed to www' do
+      it 'should see admin changed to www' do
         expect(subject).to eq(expected_url)
       end
     end
 
-    context 'admin in url only should change one' do
+    context 'when provided admin in url only should change one' do
       let(:url) {'https://admin.greatschools.org/school/esp/form.page?page=1&schoolId=2244&state=caadmin'}
       let(:expected_url) {'https://www.greatschools.org/school/esp/form.page?page=1&schoolId=2244&state=caadmin'}
-      it 'changed to www as part of url' do
+      it 'should see admin changed to www when part of url' do
         expect(subject).to eq(expected_url)
       end
     end
 
-    context 'sw3 within reset password url should not change' do
+    context 'when provided sw3 within reset password url should not change' do
       let(:url) {'https://sw3.greatschools.org/gsr/authenticate-token/?date=983839&id=kasjdfkajsfkal&redirect=https%3A%2F%2Fsw3.greatschools.org%2Faccount%2Fpassword%2F&s_cid=eml_passwordreset'}
-      it 'no change' do
+      it 'should see no change' do
         expect(subject).to eq(url)
       end
     end
 
-    context 'sw3 in url for osp url' do
+    context 'when provided sw3 in url for osp url' do
       let(:url) {'http://sw3.greatschools.org/school/esp/form.page?page=1&schoolId=2244&state=ca'}
-      it 'no change' do
+      it 'should see no change' do
         expect(subject).to eq(url)
       end
     end
