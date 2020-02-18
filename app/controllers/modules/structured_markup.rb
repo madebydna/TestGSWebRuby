@@ -223,8 +223,9 @@ module StructuredMarkup
       hash['aggregateRating'] = aggregate_rating_hash(school_reviews)
     end
     if school_reviews && school_reviews.number_of_active_reviews > 0
-      last_review = reviews_on_demand ? REVIEW_COUNT : -1
-      hash['review'] = reviews_array(school_reviews, reviews_on_demand)
+      arr_of_reviews = reviews_array(school_reviews, reviews_on_demand)
+      # Limit to single review when no aggregateRating (required by Google Rich Results Validator)
+      hash['review'] = school_reviews.number_of_5_star_ratings > 0 ? arr_of_reviews : arr_of_reviews.take(1)
     end
 
     hash
