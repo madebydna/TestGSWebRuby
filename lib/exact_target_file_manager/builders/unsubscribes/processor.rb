@@ -10,7 +10,7 @@ module ExactTargetFileManager
         end
 
         def download_file
-          ExactTargetFileManager::Helpers::SFTP.new.download("/Import/#{@file_name}")
+          ExactTargetFileManager::Helpers::SFTP.download("/Import/#{@file_name}")
         end
 
         def run
@@ -20,7 +20,7 @@ module ExactTargetFileManager
             next if i == 0
             et_id, date_unsubscribed, email, status = line.chomp.split(",")
             user = User.find_by(email: email)
-            UserSubscriptionManager.new(user).unsubscribe
+            UserSubscriptionManager.new(user).unsubscribe if user.present?
           end
         end
       end

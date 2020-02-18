@@ -8,11 +8,11 @@ module ExactTargetFileManager
     class EtProcessor
 
       def zip_file
-        ExactTargetFileManager::Helpers::EtZip.new.zip(self.class::FILE_PATH)
+        ExactTargetFileManager::Helpers::EtZip.zip(self.class::FILE_PATH)
       end
 
       def upload_file
-        ExactTargetFileManager::Helpers::SFTP.new.upload("#{self.class::FILE_PATH}.zip")
+        ExactTargetFileManager::Helpers::SFTP.upload("#{self.class::FILE_PATH}.zip")
       end
 
       def validate_file

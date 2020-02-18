@@ -5,7 +5,13 @@ class ExactTargetJobs
 
   def initialize(process_to_run)
     @process_to_run = process_to_run
+    if VALID_ET_PARAMETERS.exclude?(process_to_run)
+      puts "'#{process_to_run}' is not a valid ExactTargetFileManager parameter."
+      puts "The possible parameters are: #{ExactTargetFileManager::Config::Constants::VALID_ET_PARAMETERS.join(', ')}"
+      exit 1
+    end
   end
+
 
   def run
     ptr = @process_to_run.to_sym
@@ -34,7 +40,29 @@ class ExactTargetJobs
     rescue StandardError => e
       puts e.message          # Human readable error
       log.finish_logging_session(0, "ERROR: unsubscribes failed, error: #{e.message}") rescue nil
+      exit 1
     end
+  end
+
+  def validate_file(writer, log)
+    print "validating..."
+    validator = writer.validate_file
+    if validator.valid?
+      return true
+    else
+      # validator.errors
+      puts 'ERROR: Invalid file.'
+      puts validator.errors
+      log.finish_logging_session(0, "ERROR: did not complete uploading ET processing") rescue nil4
+      exit 1
+    end
+  end
+
+  def zip_and_upload(writer)
+    print "zipping..."
+    writer.zip_file
+    print "uploading..."
+    writer.upload_file
   end
 
   def write_to_file(key)
@@ -45,31 +73,17 @@ class ExactTargetJobs
       puts "Working on: #{MAPPING_CLASSES[key]}"
       print "...writing..."
       writer.write_file
-      print "validating..."
-      validator = writer.validate_file
-      if validator.valid?
-        print "zipping..."
-        writer.zip_file
-        print "uploading..."
-        writer.upload_file
+      if validate_file(writer, log)
+        zip_and_upload(writer)
         puts "success"
         log.finish_logging_session(1, "SUCCESS: completed uploading ET processing") rescue nil
-      else
-        # validator.errors
-        puts 'ERROR: Invalid file.'
-        puts validator.errors
-        log.finish_logging_session(0, "ERROR: did not complete uploading ET processing") rescue nil
       end
     rescue StandardError => e
       puts e.message          # Human readable error
       log.finish_logging_session(0, "ERROR: unsubscribes failed, key: #{key}, error: #{e.message}") rescue nil
+      exit 1
     end
   end
 end
 
-if ExactTargetFileManager::Config::Constants::VALID_ET_PARAMETERS.include?(process_to_run)
-  ExactTargetJobs.new(process_to_run).run
-else
-  puts "'#{process_to_run}' is not a valid ExactTargetFileManager parameter."
-  puts "The possible parameters are: #{ExactTargetFileManager::Config::Constants::VALID_ET_PARAMETERS.join(', ')}"
-end
+ExactTargetJobs.new(process_to_run).run

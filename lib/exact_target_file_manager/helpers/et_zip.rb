@@ -5,7 +5,7 @@ require 'zip'
 module ExactTargetFileManager
   module Helpers
     class EtZip
-      def zip(local_path)
+      def self.zip(local_path)
         file = File.new("#{local_path}.zip", "w")
         Zip::File.open(file.path, Zip::File::CREATE) do |zipfile|
           zipfile.add(File.basename(local_path), local_path)
