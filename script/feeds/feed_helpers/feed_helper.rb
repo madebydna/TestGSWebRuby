@@ -44,7 +44,7 @@ module Feeds
 
     def transpose_universal_id(state,entity = nil, entity_level)
       if entity_level == ENTITY_TYPE_DISTRICT
-        '1' + state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
+        '1' + state_fips[state.upcase] + entity.district_id.to_s.rjust(5, '0')
       elsif entity_level == ENTITY_TYPE_SCHOOL
         state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
       else

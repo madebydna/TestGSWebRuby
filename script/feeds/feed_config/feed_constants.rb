@@ -8,6 +8,8 @@ module Feeds
 
       DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_district_characteristics gsdata)
 
+      DIRECTORY_STATE_KEYS = %w(universal_id state_name state census_info)
+
       WITH_NO_BREAKDOWN = 'with_no_breakdown'
 
       WITH_ALL_BREAKDOWN = 'wth_all_breakdown'
@@ -36,7 +38,7 @@ module Feeds
           'parent_ratings_flat' => 'local-gs-parent-ratings-feed-flat'
       }
 
-      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description official_overall_rating official_overall_rating_description official_overall_rating_flat parent_reviews parent_reviews_flat parent_ratings_flat)
+      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description official_overall_rating official_overall_rating_description official_overall_rating_flat parent_reviews parent_reviews_flat parent_ratings_flat directory_feed)
 
       VALID_FEED_FORMATS = %w(xml csv txt)
 
