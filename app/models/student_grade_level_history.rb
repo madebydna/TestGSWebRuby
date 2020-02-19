@@ -13,6 +13,7 @@ class StudentGradeLevelHistory < ActiveRecord::Base
     student_grade_level_history.state = student.state
     student_grade_level_history.schoolId = student.schoolId
     student_grade_level_history.orderNum = student.orderNum
+    student_grade_level_history.language = student.language
     student_grade_level_history.student_id = student.id
     student_grade_level_history.student_updated = student.updated
     student_grade_level_history

@@ -12,6 +12,7 @@ class SubscriptionHistory < ActiveRecord::Base
     subscription_history.state = subscription.state
     subscription_history.school_id = subscription.school_id
     subscription_history.expires = subscription.expires
+    subscription_history.language = subscription.language
     subscription_history.list_active_id = subscription.id
     subscription_history.list_active_updated = subscription.updated
     subscription_history
