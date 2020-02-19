@@ -28,7 +28,8 @@ module SubscriptionConcerns
     SubscribeAction.for_multiple_schools(
       subscription_params.user,
       subscription_params.states,
-      subscription_params.school_ids
+      subscription_params.school_ids,
+      subscription_params.language
     )
   end
 
@@ -50,6 +51,10 @@ module SubscriptionConcerns
 
     def list
       params[:list]
+    end
+
+    def language
+      params[:language]
     end
 
     def has_list?
@@ -74,14 +79,14 @@ module SubscriptionConcerns
 
     def subscribe_actions
       # handles zero, one, or multiple schools
-      SubscribeAction.for_multiple_schools(user, states.presence, school_ids.presence)
+      SubscribeAction.for_multiple_schools(user, states.presence, school_ids.presence, language.presence)
     end
   end
 
   class SubscribeAction
-    attr_accessor :user, :state, :school_id
+    attr_accessor :user, :state, :school_id, :language
     # handles zero, one, or multiple states/school IDs
-    def self.for_multiple_schools(user, states = [], school_ids = [])
+    def self.for_multiple_schools(user, states = [], school_ids = [], language = 'en')
       # If there are no states or school IDs, still create one SubscribeAction
       states << nil if states.empty?
       school_ids << nil if school_ids.empty?
@@ -90,27 +95,28 @@ module SubscriptionConcerns
               "state and school_id mismatch school_ids count #{school_ids.count} with state count #{states.count}"
         )
       end
-      states.zip(school_ids).map { |state, school_id| new(user, state, school_id) }
+      states.zip(school_ids).map { |state, school_id| new(user, state, school_id, language) }
     end
 
-    def initialize(user, state = nil, school_id = nil)
+    def initialize(user, state = nil, school_id = nil, language = 'en')
       self.user = user
       self.state = state
       self.school_id = school_id
+      self.language = language
     end
 
     def subscribe_to_greatnews
-      user.safely_add_subscription!('greatnews', school)
+      user.safely_add_subscription!('greatnews', school, language)
     end
 
     def subscribe_to_mystat
       return unless school.present?
       list = school.private_school? ? 'mystat_private' : 'mystat'
-      user.safely_add_subscription!(list, school)
+      user.safely_add_subscription!(list, school, language)
     end
 
     def subscribe_to_list(list)
-      user.safely_add_subscription!(list, school)
+      user.safely_add_subscription!(list, school, language)
     end
 
     def school
