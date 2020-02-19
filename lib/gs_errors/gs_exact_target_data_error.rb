@@ -1,0 +1,2 @@
+class GsExactTargetDataError < StandardError
+end

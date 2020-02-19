@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <soap:Header>
+    <wsa:Action>DeleteResponse</wsa:Action>
+    <wsa:MessageID>urn:uuid:101e95e0-7bef-43d5-80b3-70dd2426ab30</wsa:MessageID>
+    <wsa:RelatesTo>urn:uuid:0ef2fd81-5bc2-49c2-a974-63c94d412f40</wsa:RelatesTo>
+    <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+    <wsse:Security>
+      <wsu:Timestamp wsu:Id="Timestamp-18315ce3-9ca6-4604-9584-50699d00225d">
+        <wsu:Created>2020-02-19T00:03:36Z</wsu:Created>
+        <wsu:Expires>2020-02-19T00:08:36Z</wsu:Expires>
+      </wsu:Timestamp>
+    </wsse:Security>
+  </soap:Header>
+  <soap:Body>
+    <DeleteResponse xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <Results xsi:type="DataExtensionDeleteResult">
+        <StatusCode>OK</StatusCode>
+        <StatusMessage>Deleted DataExtensionObject</StatusMessage>
+        <OrdinalID>0</OrdinalID>
+        <Object xsi:type="DataExtensionObject">
+          <PartnerKey xsi:nil="true"/>
+          <ObjectID xsi:nil="true"/>
+          <CustomerKey>860393D2-0BB1-412A-88D8-78A8373C1746</CustomerKey>
+          <Keys>
+            <Key>
+              <Name>id</Name>
+              <Value>7055685</Value>
+            </Key>
+          </Keys>
+        </Object>
+      </Results>
+      <RequestID>2d817f32-db9d-4e7c-af45-f438dd5fc8a7</RequestID>
+      <OverallStatus>OK</OverallStatus>
+    </DeleteResponse>
+  </soap:Body>
+</soap:Envelope>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <soap:Header>
+    <wsa:Action>DeleteResponse</wsa:Action>
+    <wsa:MessageID>urn:uuid:dd3b8cc6-76a1-48dd-89e2-cd5c77a88905</wsa:MessageID>
+    <wsa:RelatesTo>urn:uuid:49e1f87a-459b-4e17-9d88-e5320254d797</wsa:RelatesTo>
+    <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+    <wsse:Security>
+      <wsu:Timestamp wsu:Id="Timestamp-5bd3cc84-0085-42eb-8893-60794fd09102">
+        <wsu:Created>2020-02-19T17:51:19Z</wsu:Created>
+        <wsu:Expires>2020-02-19T17:56:19Z</wsu:Expires>
+      </wsu:Timestamp>
+    </wsse:Security>
+  </soap:Header>
+  <soap:Body>
+    <DeleteResponse xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <Results xsi:type="DataExtensionDeleteResult">
+        <StatusCode>Error</StatusCode>
+        <StatusMessage>Duplicate/Invalid field found.</StatusMessage>
+        <OrdinalID>0</OrdinalID>
+        <ErrorCode>70000</ErrorCode>
+        <Object xsi:type="DataExtensionObject">
+          <PartnerKey xsi:nil="true"/>
+          <ObjectID xsi:nil="true"/>
+          <CustomerKey>860393D2-0BB1-412A-88D8-78A8373C1746</CustomerKey>
+          <Keys>
+            <Key>
+              <Name>id</Name>
+              <Value>100000000000</Value>
+            </Key>
+          </Keys>
+        </Object>
+        <ErrorMessage>Duplicate/Invalid field found.</ErrorMessage>
+      </Results>
+      <RequestID>98d7b8f6-7d23-4ea3-9871-f1d3e795e0d9</RequestID>
+      <OverallStatus>Error</OverallStatus>
+    </DeleteResponse>
+  </soap:Body>
+</soap:Envelope>

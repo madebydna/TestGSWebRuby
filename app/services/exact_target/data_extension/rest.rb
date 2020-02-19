@@ -9,18 +9,24 @@ class ExactTarget
       # end
 
       def self.perform_call(method, object)
+        begin
+          perform_call_with_fallback do |access_token|
+            RestCalls.send(method, access_token, object)
+          end
+        rescue StandardError => e
+          vars = { method: method, object: object }
+          GSLogger.error(:misc, e, message: "Unable to make ExactTarget Rest Call", vars: vars)
+          raise e
+        end
+      end
+
+      def self.perform_call_with_fallback
         access_token = ExactTarget::AuthTokenManager.fetch_access_token
         begin
-          RestCalls.send(method, access_token, object)
+          yield access_token
         rescue GsExactTargetAuthorizationError
-          access_token = auth_token_manager.fetch_new_access_token
-          begin
-            RestCalls.send(method, access_token, object)
-          rescue StandardError => e
-            vars = { method: method, object: object }
-            GSLogger.error(:misc, e, message: "Unable to make ExactTarget Rest Call", vars: vars)
-            raise e
-          end
+          access_token = ExactTarget::AuthTokenManager.fetch_new_access_token
+          yield access_token
         end
       end
 

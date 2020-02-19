@@ -35,7 +35,7 @@ class ExactTarget
     def set_access_token_in_cache(exact_target_response)
       Rails.cache.write(EXACT_TARGET_ACCESS_KEY_CACHE,
         exact_target_response.access_token,
-        expires_in: exact_target_response.expiration_datetime)
+        expires_in: exact_target_response.expiration)
     end
 
     def exact_target_response
@@ -44,7 +44,6 @@ class ExactTarget
     end
 
     class ExactTargetResponse
-
       SECONDS_TO_SUBTRACT_FROM_EXACT_TARGET_EXPIRE_COUNT = 30
 
       attr_reader :access_token
@@ -54,10 +53,8 @@ class ExactTarget
         @expires_in = access_hash['expires_in']
       end
 
-      def expiration_datetime
-        d = Time.now
-        d += (@expires_in.to_i - SECONDS_TO_SUBTRACT_FROM_EXACT_TARGET_EXPIRE_COUNT).seconds
-        d.strftime('%Y-%m-%d %H:%M:%S')
+      def expiration
+        (@expires_in.to_i - SECONDS_TO_SUBTRACT_FROM_EXACT_TARGET_EXPIRE_COUNT).seconds
       end
     end
 

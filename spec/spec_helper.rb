@@ -82,6 +82,7 @@ RSpec.configure do |config|
   config.include CookieHelper
   config.include SigninHelper
   config.include InspectRequests, type: :feature
+  config.include ExactTargetHelper
 
   config.order = "random" # you can specify order with --seed flag
   config.infer_spec_type_from_file_location!
@@ -125,7 +126,7 @@ RSpec.configure do |config|
   end
   Capybara.javascript_driver = :selenium_chrome_headless
   Capybara.server = :webrick
-  
+
   port = ENV['CAPYBARA_PORT'] || 3001
   Capybara.app_host = ENV['CAPYBARA_HOST'] || "http://localhost:#{port}"
   Capybara.server_port = port
