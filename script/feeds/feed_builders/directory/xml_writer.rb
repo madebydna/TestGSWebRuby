@@ -91,6 +91,8 @@ module Feeds
           xml_builder.tag!('name', school.name)
           xml_builder.tag!('description', school_feed.data_value('description'))
           xml_builder.tag!('street', school.street)
+          xml_builder.tag!('city', school.city)
+          xml_builder.tag!('state', school.state.upcase)
           xml_builder.tag!('zipcode', school.zipcode)
           xml_builder.tag!('county', school.county)
           xml_builder.tag!('FIPScounty', school_feed.data_value('FIPScounty'))
