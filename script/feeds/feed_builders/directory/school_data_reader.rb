@@ -9,7 +9,11 @@ module Feeds
       include Feeds::FeedHelper
 
       DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_characteristics gsdata)
+
+      # array of methods used by the data reader to output data
       SCHOOL_ATTRIBUTES_METHODS = %w(universal_id state_id level universal_district_id web_site)
+
+      # array of cache keys used to retrieve data from the caches
       SCHOOL_ATTRIBUTES_CACHE_METHODS = %w(description FIPScounty level_code district_name url)
 
       attr_reader :state, :school

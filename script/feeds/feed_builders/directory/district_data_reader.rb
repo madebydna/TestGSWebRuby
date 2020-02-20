@@ -9,7 +9,11 @@ module Feeds
       include Feeds::FeedHelper
 
       DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_district_characteristics gsdata)
+
+      # array of methods used by the data reader to output data
       DISTRICT_ATTRIBUTES_METHODS = %w(universal_id state_id level web_site)
+
+      # array of cache keys used to retrieve data from the caches
       DISTRICT_ATTRIBUTES_CACHE_METHODS = %w(description FIPScounty level_code home_page_url url)
 
       attr_reader :state, :district
