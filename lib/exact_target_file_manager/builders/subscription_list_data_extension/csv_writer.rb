@@ -1,11 +1,10 @@
-
 module ExactTargetFileManager
   module Builders
-    module GradeByGradeDataExtension
-      class CsvProcessorComponent < ExactTargetFileManager::Builders::EtProcessor
+    module SubscriptionListDataExtension
+      class CsvWriter < ExactTargetFileManager::Builders::EtProcessor
 
-        FILE_PATH = "/tmp/et_grade_by_grade_signups.csv"
-        HEADERS = %w(id member_id grade language)
+        HEADERS = %w(id member_id list language)
+        FILE_PATH = "/tmp/et_list_signups.csv"
 
         def initialize
           @data_reader = DataReader.new
@@ -14,8 +13,8 @@ module ExactTargetFileManager
         def write_file
           CSV.open(FILE_PATH, 'w') do |csv|
             csv << HEADERS
-            @data_reader.gbg_sign_ups do |sign_up|
-              csv << get_info(sign_up) if sign_up&.member_id.present? && sign_up&.grade.present?
+            @data_reader.list_sign_ups do |sign_up|
+              csv << get_info(sign_up) if sign_up.present?
             end
           end
         end
@@ -24,9 +23,10 @@ module ExactTargetFileManager
           sign_up_info = []
           sign_up_info << sign_up['id']
           sign_up_info << sign_up['member_id']
-          sign_up_info << sign_up['grade']
+          sign_up_info << sign_up['list']
           sign_up_info << 'en'
         end
+
       end
     end
   end

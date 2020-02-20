@@ -3,7 +3,7 @@
 module ExactTargetFileManager
   module Builders
     module SchoolDataExtension
-      class CsvProcessorComponent < ExactTargetFileManager::Builders::EtProcessor
+      class CsvWriter < ExactTargetFileManager::Builders::EtProcessor
 
         FILE_PATH = '/tmp/et_schools.csv'
         HEADERS = %w(

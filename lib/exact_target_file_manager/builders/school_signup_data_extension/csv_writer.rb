@@ -1,7 +1,7 @@
 module ExactTargetFileManager
   module Builders
     module SchoolSignupDataExtension
-      class CsvProcessorComponent < ExactTargetFileManager::Builders::EtProcessor
+      class CsvWriter < ExactTargetFileManager::Builders::EtProcessor
 
         HEADERS = %w(id member_id state school_id language)
         FILE_PATH = "/tmp/et_school_signups.csv"

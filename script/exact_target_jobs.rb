@@ -7,11 +7,10 @@ class ExactTargetJobs
     @process_to_run = process_to_run
     if VALID_ET_PARAMETERS.exclude?(process_to_run)
       puts "'#{process_to_run}' is not a valid ExactTargetFileManager parameter."
-      puts "The possible parameters are: #{ExactTargetFileManager::Config::Constants::VALID_ET_PARAMETERS.join(', ')}"
+      puts "The possible parameters are: #{VALID_ET_PARAMETERS.join(', ')}"
       exit 1
     end
   end
-
 
   def run
     ptr = @process_to_run.to_sym
@@ -50,7 +49,6 @@ class ExactTargetJobs
     if validator.valid?
       return true
     else
-      # validator.errors
       puts 'ERROR: Invalid file.'
       puts validator.errors
       log.finish_logging_session(0, "ERROR: did not complete uploading ET processing") rescue nil4
@@ -68,7 +66,7 @@ class ExactTargetJobs
   def write_to_file(key)
     log = ScriptLogger.record_log_instance(et_process_to_run: key) rescue nil
     begin
-      writer_string = "ExactTargetFileManager::Builders::#{MAPPING_CLASSES[key]}::CsvProcessorComponent"
+      writer_string = "ExactTargetFileManager::Builders::#{MAPPING_CLASSES[key]}::CsvWriter"
       writer = writer_string.constantize.new
       puts "Working on: #{MAPPING_CLASSES[key]}"
       print "...writing..."
