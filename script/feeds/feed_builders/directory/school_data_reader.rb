@@ -9,6 +9,8 @@ module Feeds
       include Feeds::FeedHelper
 
       DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_characteristics gsdata)
+      SCHOOL_ATTRIBUTES_METHODS = %w(universal_id state_id level universal_district_id web_site)
+      SCHOOL_ATTRIBUTES_CACHE_METHODS = %w(description FIPScounty level_code district_name url)
 
       attr_reader :state, :school
 
@@ -19,7 +21,7 @@ module Feeds
 
       def universal_id
         @_universal_id ||= begin
-          transpose_universal_id(state, school, 'school').to_i.to_s
+          transpose_universal_id(state, school, 'school').to_s
         end
       end
 
@@ -27,6 +29,34 @@ module Feeds
         @_census_info ||= begin
           data_builder = CharacteristicsBuilder.new(school_cache, universal_id, 'school')
           data_builder.data_hashes
+        end
+      end
+
+      def data_values
+        @_data_values ||= begin
+          state_attributes_hash = DIRECTORY_SCHOOL_ATTRIBUTES.each_with_object({}) do |attribute, hash|
+            if SCHOOL_ATTRIBUTES_METHODS.include?(attribute)
+              hash[attribute.gsub('_','-')] = send(attribute.to_sym)
+            elsif SCHOOL_ATTRIBUTES_CACHE_METHODS.include?(attribute)
+              hash[attribute.gsub('_','-')] = data_value(attribute)
+            else
+              hash[attribute.gsub('_','-')] = school.send(attribute.to_sym)
+            end
+          end
+
+          census_data_hash = census_info.each_with_object({}) do |data_object, data_hash|
+            key = data_object.keys.first
+            value = data_object.values.first
+            data_hash[key] = value
+          end
+
+          state_attributes_hash.merge(census_data_hash)
+        end
+      end
+
+      def state_id
+        @_state_id ||=begin
+          transpose_universal_id(state, nil, 'state')
         end
       end
 
@@ -39,6 +69,12 @@ module Feeds
           level_value.slice! ' & Ungraded'
         end
         level_value
+      end
+
+      def web_site
+        @_web_site ||=begin
+          data_value('home_page_url')
+        end
       end
 
       def universal_district_id

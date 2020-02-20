@@ -18,7 +18,7 @@ module Feeds
       end
 
       def universal_id
-        @_universal_id ||= transpose_universal_id(@state, nil, 'state').to_i.to_s
+        @_universal_id ||= transpose_universal_id(@state, nil, 'state').to_s
       end
 
       def state_name
@@ -29,6 +29,22 @@ module Feeds
         @_census_info ||= begin
           data_builder = CharacteristicsBuilder.new(state_cache, universal_id, 'state')
           data_builder.data_hashes
+        end
+      end
+
+      def data_values
+        @_data_values ||= begin
+          state_attributes_hash = DIRECTORY_STATE_ATTRIBUTES.each_with_object({}) do |attribute, hash|
+            hash[attribute.gsub('_','-')] = send(attribute.to_sym)
+          end
+
+          census_data_hash = census_info.each_with_object({}) do |data_object, data_hash|
+            key = data_object.keys.first
+            value = data_object.values.first
+            data_hash[key] = value
+          end
+
+          state_attributes_hash.merge(census_data_hash)
         end
       end
 

@@ -28,12 +28,18 @@ module Feeds
 
       def write_state_feed
         state_feed = @data_reader.state_data_reader
+        state_attributes = state_feed.data_values
 
         within_tag('state-feed') do
-          xml_builder.tag!('universal-id', state_feed.universal_id)
-          xml_builder.tag!('state-name', state_feed.state_name)
-          xml_builder.tag!('state', state_feed.state)
+          write_state_attributes_feed(state_attributes)
           write_census_feed(state_feed)
+        end
+      end
+
+      def write_state_attributes_feed(data_hash)
+        DIRECTORY_STATE_ATTRIBUTES.each do |attribute|
+          feed_attribute = attribute.gsub('_','-')
+          xml_builder.tag!(feed_attribute, data_hash[feed_attribute])
         end
       end
 
@@ -46,29 +52,25 @@ module Feeds
 
       def write_district_feed(district)
         district_feed = data_reader.district_data_reader(district)
-        state_feed = data_reader.state_data_reader
+        district_attributes = district_feed.data_values
 
         within_tag('district') do
-          xml_builder.tag!('universal-id', district_feed.universal_id)
-          xml_builder.tag!('state-id', state_feed.universal_id)
-          xml_builder.tag!('nces-code', district.nces_code)
-          xml_builder.tag!('name', district.name)
-          xml_builder.tag!('description', district_feed.data_value('description'))
-          xml_builder.tag!('street', district.street)
-          xml_builder.tag!('city', district.city)
-          xml_builder.tag!('state', district.state.upcase)
-          xml_builder.tag!('zipcode', district.zipcode)
-          xml_builder.tag!('county', district.county)
-          xml_builder.tag!('FIPScounty', district_feed.data_value('FIPScounty'))
-          xml_builder.tag!('level', district_feed.level)
-          xml_builder.tag!('level-code', district_feed.data_value('level_code'))
-          xml_builder.tag!('lat', district.lat)
-          xml_builder.tag!('lon', district.lon)
-          xml_builder.tag!('phone', district.phone)
-          xml_builder.tag!('fax', district.fax)
-          xml_builder.tag!('web-site', district_feed.data_value('home_page_url'))
-          xml_builder.tag!('url', district_feed.data_value('home_page_url'), {type: 'District Overview', 'universal-id' => district_feed.universal_id})
+          write_district_attributes_feed(district_attributes)
           write_census_feed(district_feed)
+        end
+      end
+
+      def write_district_attributes_feed(data_hash)
+        DIRECTORY_DISTRICT_ATTRIBUTES.each do |attribute|
+          feed_attribute = attribute.gsub('_','-')
+          data = data_hash[feed_attribute]
+          next unless data_hash[feed_attribute].present?
+
+          if feed_attribute == 'url'
+            xml_builder.tag!(feed_attribute, data_hash[feed_attribute], {type: "District Overview", universal_id: data_hash["universal-id"]})
+          else
+            xml_builder.tag!(feed_attribute, data_hash[feed_attribute])
+          end
         end
       end
 
@@ -81,41 +83,30 @@ module Feeds
 
       def write_school_feed(school)
         school_feed = data_reader.school_data_reader(school)
-        state_feed = data_reader.state_data_reader
+        school_attributes = school_feed.data_values
 
         within_tag('school') do
-          xml_builder.tag!('universal-id', school_feed.universal_id)
-          xml_builder.tag!('id', school.id)
-          xml_builder.tag!('state-id', state_feed.universal_id)
-          xml_builder.tag!('nces-code', school.nces_code)
-          xml_builder.tag!('name', school.name)
-          xml_builder.tag!('description', school_feed.data_value('description'))
-          xml_builder.tag!('street', school.street)
-          xml_builder.tag!('city', school.city)
-          xml_builder.tag!('state', school.state.upcase)
-          xml_builder.tag!('zipcode', school.zipcode)
-          xml_builder.tag!('county', school.county)
-          xml_builder.tag!('FIPScounty', school_feed.data_value('FIPScounty'))
-          xml_builder.tag!('level', school_feed.level)
-          xml_builder.tag!('level-code', school_feed.data_value('level_code'))
-          xml_builder.tag!('district-id', school.district_id)
-          xml_builder.tag!('lat', school.lat)
-          xml_builder.tag!('lon', school.lon)
-          xml_builder.tag!('phone', school.phone)
-          xml_builder.tag!('fax', school.fax)
-          xml_builder.tag!('web-site', school_feed.data_value('home_page_url'))
-          xml_builder.tag!('subtype', school.subtype)
-          xml_builder.tag!('type', school.type)
-          xml_builder.tag!('district-name', school_feed.data_value('district_name'))
-          xml_builder.tag!('universal-district-id', school_feed.universal_district_id)
-          # xml_builder.tag!('district-spending', )
-          xml_builder.tag!('url', school_feed.data_value('url'), {type: 'School Overview', 'universal-id' => school_feed.universal_id})
-          xml_builder.tag!('url', school_feed.data_value('url'), {type: 'Ratings', 'universal-id' => school_feed.universal_id})
-          xml_builder.tag!('url', school_feed.data_value('url') + '#Students', {type: 'Student/Teacher', 'universal-id' => school_feed.universal_id})
-          xml_builder.tag!('url', school_feed.data_value('url') + '#Reviews', {type: 'Parent Reviews', 'universal-id' => school_feed.universal_id})
-          xml_builder.tag!('url', school_feed.data_value('url') + '#Test_scores', {type: 'Test Scores', 'universal-id' => school_feed.universal_id})
+          write_school_attributes_feed(school_attributes)
           write_census_feed(school_feed)
           xml_builder.tag!('school-summary', school_feed.data_value('school_summary'))
+        end
+      end
+
+      def write_school_attributes_feed(data_hash)
+        DIRECTORY_SCHOOL_ATTRIBUTES.each do |attribute|
+          feed_attribute = attribute.gsub('_','-')
+          data = data_hash[feed_attribute]
+          next unless data_hash[feed_attribute].present?
+
+          if feed_attribute == 'url'
+            xml_builder.tag!('url', data_hash[feed_attribute], {type: 'School Overview', 'universal-id' => data_hash["universal-id"]})
+            xml_builder.tag!('url', data_hash[feed_attribute], {type: 'Ratings', 'universal-id' => data_hash["universal-id"]})
+            xml_builder.tag!('url', data_hash[feed_attribute] + '#Students', {type: 'Student/Teacher', 'universal-id' => data_hash["universal-id"]})
+            xml_builder.tag!('url', data_hash[feed_attribute] + '#Reviews', {type: 'Parent Reviews', 'universal-id' => data_hash["universal-id"]})
+            xml_builder.tag!('url', data_hash[feed_attribute] + '#Test_scores', {type: 'Test Scores', 'universal-id' => data_hash["universal-id"]})
+          else
+            xml_builder.tag!(feed_attribute, data_hash[feed_attribute])
+          end
         end
       end
 
