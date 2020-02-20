@@ -6,7 +6,7 @@ describe SubscriptionConcerns do
 
   before(:all) do
     class FakeController
-      include SubscriptionConcerns 
+      include SubscriptionConcerns
     end
   end
 
@@ -24,7 +24,7 @@ describe SubscriptionConcerns do
 
   describe '#create_subscription' do
     let(:school) { FactoryBot.build(:school) }
-    before do 
+    before do
       allow(controller).to receive(:flash_notice)
       allow(controller).to receive(:flash_error)
       allow(School).to receive(:find_by_state_and_id).with('CA','1').and_return(school)
@@ -40,11 +40,12 @@ describe SubscriptionConcerns do
           {
             school_id: '1',
             state: 'CA',
+            language: 'es'
           }
         end
         it 'should suscribe user to one school' do
-          expect(current_user).to receive(:safely_add_subscription!).with('greatnews',school)
-          expect(current_user).to receive(:safely_add_subscription!).with('mystat',school)
+          expect(current_user).to receive(:safely_add_subscription!).with('greatnews', school, 'es')
+          expect(current_user).to receive(:safely_add_subscription!).with('mystat', school, 'es')
           subject.create_subscription(subscription_params)
         end
       end
@@ -55,6 +56,7 @@ describe SubscriptionConcerns do
             {
               school_id: '1,2,3',
               state: 'CA,CA,CA',
+              language: 'en'
             }
           end
           let(:school2) { FactoryBot.build(:bay_farm_elementary_school) }
@@ -68,12 +70,12 @@ describe SubscriptionConcerns do
           end
 
           it 'should subscribe user to three schools' do
-            expect(current_user).to receive(:safely_add_subscription!).with('greatnews',school)
-            expect(current_user).to receive(:safely_add_subscription!).with('mystat',school)
-            expect(current_user).to receive(:safely_add_subscription!).with('greatnews',school2)
-            expect(current_user).to receive(:safely_add_subscription!).with('mystat',school2)
-            expect(current_user).to receive(:safely_add_subscription!).with('greatnews',school3)
-            expect(current_user).to receive(:safely_add_subscription!).with('mystat',school3)
+            expect(current_user).to receive(:safely_add_subscription!).with('greatnews', school, 'en')
+            expect(current_user).to receive(:safely_add_subscription!).with('mystat', school, 'en')
+            expect(current_user).to receive(:safely_add_subscription!).with('greatnews', school2, 'en')
+            expect(current_user).to receive(:safely_add_subscription!).with('mystat', school2, 'en')
+            expect(current_user).to receive(:safely_add_subscription!).with('greatnews', school3, 'en')
+            expect(current_user).to receive(:safely_add_subscription!).with('mystat', school3, 'en')
             subject.create_subscription(subscription_params)
           end
         end
@@ -82,6 +84,7 @@ describe SubscriptionConcerns do
             {
               school_id: '1,2,3',
               state: 'CA,CA',
+              language: 'en'
             }
           end
           let(:school2) { FactoryBot.build(:bay_farm_elementary_school) }
@@ -102,42 +105,58 @@ describe SubscriptionConcerns do
         end
       end
     end
-    
+
     context 'with list parameters' do
       context 'with a school parameter' do
         let(:subscription_params) do
           {
             list: 'mystat',
             school_id: '1',
-              state: 'CA'
+            state: 'CA',
+            language: 'en'
           }
         end
         before do
           # allow(current_user).to receive(:has_subscription?).with('mystat',school).and_return(false)
         end
         it 'should subscribe user to list' do
-          expect(current_user).to receive(:safely_add_subscription!).with('greatnews',school)
-          expect(current_user).to receive(:safely_add_subscription!).with('mystat', school)
+          expect(current_user).to receive(:safely_add_subscription!).with('greatnews', school, 'en')
+          expect(current_user).to receive(:safely_add_subscription!).with('mystat', school, 'en')
           subject.create_subscription(subscription_params)
         end
       end
       context 'with no school parameters' do
-        let(:subscription_params) do 
+        let(:subscription_params) do
           {
-            list: 'sponsor'
+            list: 'sponsor',
+            language: 'en'
           }
         end
         before do
           # allow(current_user).to receive(:has_subscription?).with('sponsor', nil).and_return(false)
         end
         it 'should subscribe user to list' do
-          expect(current_user).to receive(:safely_add_subscription!).with('greatnews', nil)
-          expect(current_user).to receive(:safely_add_subscription!).with('sponsor', nil)
+          expect(current_user).to receive(:safely_add_subscription!).with('greatnews', nil, 'en')
+          expect(current_user).to receive(:safely_add_subscription!).with('sponsor', nil, 'en')
+          subject.create_subscription(subscription_params)
+        end
+      end
+      context 'with no language parameter' do
+        let(:subscription_params) do
+          {
+            list: 'mystat',
+            school_id: '1',
+            state: 'CA'
+          }
+        end
+        it 'should subscribe user to list' do
+          expect(current_user).to receive(:safely_add_subscription!).with('greatnews', school, nil)
+          expect(current_user).to receive(:safely_add_subscription!).with('mystat', school, nil)
           subject.create_subscription(subscription_params)
         end
       end
     end
-  end 
+  end
 
   describe '#set_flash_notice' do
     context 'flash is empty' do
