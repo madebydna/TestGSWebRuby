@@ -10,7 +10,7 @@ module Feeds
 
       DIRECTORY_STATE_KEYS = %w(universal_id state_name state census_info)
 
-      # attributes for directory feeds from model, cache, or method call. Does not include census data values
+      # attributes for directory feeds from model, cache, or method call. Does not include census info data values
       DIRECTORY_STATE_ATTRIBUTES = %w(universal_id state_name state)
       DIRECTORY_DISTRICT_ATTRIBUTES = %w(universal_id state_id nces_code name description street city state zipcode county FIPScounty level level_code lat lon phone fax web_site url)
       DIRECTORY_SCHOOL_ATTRIBUTES = %w(universal_id id state_id nces_code name description street city state zipcode county FIPScounty level level_code district_id lat lon phone fax web_site subtype type district_name universal_district_id url)
