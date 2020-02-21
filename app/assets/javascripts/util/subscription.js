@@ -18,7 +18,7 @@ GS.subscription = GS.subscription || (function() {
           list: 'sponsor',
           message: "You've signed up to receive sponsors updates"
         },
-        _.pick(options, 'email')
+        _.pick(options, ['email', 'language'])
       );
 
       return postSubscriptionViaAjax(subscriptionParams);
@@ -30,7 +30,7 @@ GS.subscription = GS.subscription || (function() {
         {
           list: 'greatnews'
         },
-        _.pick(options, 'email')
+        _.pick(options, ['email', 'language'])
       );
 
       return postSubscriptionViaAjax(subscriptionParams).always(showFlashMessages);
@@ -42,7 +42,7 @@ GS.subscription = GS.subscription || (function() {
         {
           list: 'greatkidsnews'
         },
-        _.pick(options, 'email')
+        _.pick(options, ['email', 'language'])
       );
 
       return postSubscriptionViaAjax(subscriptionParams).always(showFlashMessages);

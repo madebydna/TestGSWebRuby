@@ -122,11 +122,17 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
     }
   },
 
+  // TODO: Modify this once language support is actually added to newsletter signup form (WP)
+  getLanguage: function getLanguage() {
+    return this.$getJoinForm().find('input[name=language]').val();
+  },
+
   // returns data from this modal. Will be passed along when modal's promise is resolved/rejected
   getModalData: function getModalData() {
     return {
       email: this.getEmail(),
-      grades: this.getGrades()
+      grades: this.getGrades(),
+      language: this.getLanguage()
     };
   },
 
