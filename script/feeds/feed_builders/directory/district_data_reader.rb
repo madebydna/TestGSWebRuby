@@ -11,7 +11,7 @@ module Feeds
       DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_district_characteristics gsdata)
 
       # array of methods used by the data reader to output data
-      DISTRICT_ATTRIBUTES_METHODS = %w(universal_id level web_site state zip)
+      DISTRICT_ATTRIBUTES_DATA_READER_METHODS = %w(universal_id level web_site state zip)
 
       # array of cache keys used to retrieve data from the caches
       DISTRICT_ATTRIBUTES_CACHE_METHODS = %w(description FIPScounty level_code home_page_url url)
@@ -43,12 +43,13 @@ module Feeds
       def data_values
         @_data_values ||= begin
           district_attributes_hash = DIRECTORY_DISTRICT_ATTRIBUTES.each_with_object({}) do |attribute, hash|
-            if DISTRICT_ATTRIBUTES_METHODS.include?(attribute)
-              hash[attribute.gsub('_','-')] = send(attribute.to_sym)
+            cache_key = attribute.gsub('_','-')
+            if DISTRICT_ATTRIBUTES_DATA_READER_METHODS.include?(attribute)
+              hash[cache_key] = send(attribute.to_sym)
             elsif DISTRICT_ATTRIBUTES_CACHE_METHODS.include?(attribute)
-              hash[attribute.gsub('_','-')] = data_value(attribute)
+              hash[cache_key] = data_value(attribute)
             else
-              hash[attribute.gsub('_','-')] = district.send(attribute.to_sym)
+              hash[cache_key] = district.send(attribute.to_sym)
             end
           end
 
@@ -57,25 +58,25 @@ module Feeds
       end
 
       def web_site
-        @_web_site ||=begin
-          data_value('home_page_url')
-        end
+        @_web_site ||= data_value('home_page_url')
       end
 
       def level
-        level_value = data_value('level')
+        @_level ||=begin
+          level_value = data_value('level')
 
-        if level_value == 'Ungraded'
-          level_value =  'n/a'
-        elsif level_value.present?
-          level_value.slice! ' & Ungraded'
+          if level_value == 'Ungraded'
+            level_value =  'n/a'
+          elsif level_value.present?
+            level_value.slice! ' & Ungraded'
+          end
+          level_value
         end
-        level_value
       end
 
       def data_value(key)
         data_set = district_cache.fetch(key, nil)
-        raise StandardError("Missing Cache Key") unless data_set
+        raise StandardError("Missing Cache Key: District:#{district.id} State:#{state} Key:#{key}") unless data_set
         data_set.first["district_value"]
       end
 

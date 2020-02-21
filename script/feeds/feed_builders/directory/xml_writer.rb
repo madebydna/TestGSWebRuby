@@ -64,10 +64,12 @@ module Feeds
         DIRECTORY_DISTRICT_ATTRIBUTES.each do |attribute|
           feed_attribute = attribute.gsub('_','-')
           data = data_hash[feed_attribute]
-          next unless data_hash[feed_attribute].present?
+          next unless data_hash[feed_attribute].present? || DIRECTORY_DISTRICT_KEYS_REQUIRED.include?(attribute)
 
-          if feed_attribute == 'url'
-            xml_builder.tag!(feed_attribute.downcase, data_hash[feed_attribute], {type: "District Overview", universal_id: data_hash["universal-id"]})
+          if !data_hash[feed_attribute].present? && DIRECTORY_DISTRICT_KEYS_REQUIRED.include?(attribute)
+            xml_builder.tag!(feed_attribute.downcase, nil)
+          elsif feed_attribute == 'url'
+            xml_builder.tag!(feed_attribute.downcase, data_hash[feed_attribute], {type: "District Overview", "universal-id": data_hash["universal-id"]})
           else
             xml_builder.tag!(feed_attribute.downcase, data_hash[feed_attribute])
           end
@@ -96,9 +98,11 @@ module Feeds
         DIRECTORY_SCHOOL_ATTRIBUTES.each do |attribute|
           feed_attribute = attribute.gsub('_','-')
           data = data_hash[feed_attribute]
-          next unless data_hash[feed_attribute].present?
+          next unless data_hash[feed_attribute].present? || DIRECTORY_SCHOOL_KEYS_REQUIRED.include?(attribute)
 
-          if feed_attribute == 'url'
+          if !data_hash[feed_attribute].present? && DIRECTORY_SCHOOL_KEYS_REQUIRED.include?(attribute)
+            xml_builder.tag!(feed_attribute.downcase, nil)
+          elsif feed_attribute == 'url'
             xml_builder.tag!('url', data_hash[feed_attribute], {type: 'School Overview', 'universal-id' => data_hash["universal-id"]})
             xml_builder.tag!('url', data_hash[feed_attribute], {type: 'Ratings', 'universal-id' => data_hash["universal-id"]})
             xml_builder.tag!('url', data_hash[feed_attribute] + '#Students', {type: 'Student/Teacher', 'universal-id' => data_hash["universal-id"]})

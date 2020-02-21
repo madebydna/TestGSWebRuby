@@ -11,7 +11,7 @@ module Feeds
       DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_characteristics gsdata)
 
       # array of methods used by the data reader to output data
-      SCHOOL_ATTRIBUTES_METHODS = %w(universal_id level universal_district_id web_site zip)
+      SCHOOL_ATTRIBUTES_DATA_READER_METHODS = %w(universal_id level universal_district_id web_site zip)
 
       # array of cache keys used to retrieve data from the caches
       SCHOOL_ATTRIBUTES_CACHE_METHODS = %w(description FIPScounty level_code district_name url)
@@ -39,7 +39,7 @@ module Feeds
       def data_values
         @_data_values ||= begin
           state_attributes_hash = DIRECTORY_SCHOOL_ATTRIBUTES.each_with_object({}) do |attribute, hash|
-            if SCHOOL_ATTRIBUTES_METHODS.include?(attribute)
+            if SCHOOL_ATTRIBUTES_DATA_READER_METHODS.include?(attribute)
               hash[attribute.gsub('_','-')] = send(attribute.to_sym)
             elsif SCHOOL_ATTRIBUTES_CACHE_METHODS.include?(attribute)
               hash[attribute.gsub('_','-')] = data_value(attribute)
@@ -66,9 +66,7 @@ module Feeds
       end
 
       def web_site
-        @_web_site ||=begin
-          data_value('home_page_url')
-        end
+        @_web_site ||= data_value('home_page_url')
       end
 
       def zip
