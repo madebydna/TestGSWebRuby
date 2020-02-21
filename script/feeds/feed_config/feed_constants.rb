@@ -12,8 +12,8 @@ module Feeds
 
       # attributes for directory feeds from model, cache, or method call. Does not include census info data values
       DIRECTORY_STATE_ATTRIBUTES = %w(universal_id state_name state)
-      DIRECTORY_DISTRICT_ATTRIBUTES = %w(universal_id state_id nces_code name description street city state zipcode county FIPScounty level level_code lat lon phone fax web_site url)
-      DIRECTORY_SCHOOL_ATTRIBUTES = %w(universal_id id state_id nces_code name description street city state zipcode county FIPScounty level level_code district_id lat lon phone fax web_site subtype type district_name universal_district_id url)
+      DIRECTORY_DISTRICT_ATTRIBUTES = %w(universal_id state_id nces_code name description street city state zip county FIPScounty level level_code lat lon phone fax web_site url)
+      DIRECTORY_SCHOOL_ATTRIBUTES = %w(universal_id id state_id nces_code name description street city state zip county FIPScounty level level_code district_id lat lon phone fax web_site subtype type district_name universal_district_id url)
 
       WITH_NO_BREAKDOWN = 'with_no_breakdown'
 
@@ -323,6 +323,188 @@ module Feeds
           }
       ].freeze
 
+      CENSUS_CACHE_ACCESSORS =[
+        {
+          key: 'Ratio of students to full time teachers',
+          feed_name: 'student-teacher-ratio',
+          attributes: [:universal_id, :value, :year],
+          formatting: [:to_f, :round, 2]
+        },
+        {
+          key: 'Head official name',
+          feed_name: 'head-official-name',
+          attributes: [:universal_id, :value, :year]
+        },
+        {
+          key: 'Head official email address',
+          feed_name: 'head-official-email',
+          attributes: [:universal_id, :value, :year]
+        },
+        {
+          key: 'Enrollment',
+          feed_name: 'enrollment',
+          attributes: [:universal_id, :value, :year],
+          formatting: [:to_i]
+        },
+        {
+          key: 'Students participating in free or reduced-price lunch program',
+          feed_name: 'percent-free-and-reduced-price-lunch',
+          attributes: [:universal_id, :value, :year],
+          formatting: [:to_f, :round, 1]
+        },
+        {
+          key: 'Average years of teacher experience',
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'average teacher experience years'
+        },
+        {
+          key: 'Average years of teaching in district',
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'average years teaching in district',
+        },
+        {
+          key: 'Percent classes taught by highly qualified teachers',
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent classes taught by highly qualified teachers',
+        },
+        {
+          key: 'Percent classes taught by non-highly qualified teachers',
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent classes taught by non highly qualified teachers',
+        },
+        {
+          key: 'Percentage of teachers in their first year',
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent teachers in first year',
+        },
+        {
+          key: 'Teaching experience 0-3 years',
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent teachers with 3 years or less experience',
+        },
+        {
+          key: 'at least 5 years teaching experience',
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent teachers with at least 5 years experience',
+        },
+        {
+          key: "Bachelor's degree",
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent teachers with bachelors degree',
+        },
+        {
+          key: "Doctorate's degree",
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent teachers with doctorate degree',
+        },
+        {
+          key: "Master's degree",
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent teachers with masters degree',
+        },
+        {
+          key: "Master's degree or higher",
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent teachers with masters or higher',
+        },
+        {
+          key: 'Teachers with valid license',
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent teachers with valid license',
+        },
+        {
+          key: 'Teachers with no valid license',
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent teachers with no valid license',
+        },
+        {
+          key: 'Other degree',
+          feed_name: 'teacher-data',
+          attributes: [:universal_id, :value, :year, :data_type],
+          formatting: [:to_f, :round, 1],
+          data_type: 'percent teachers with other degree',
+        },
+        {
+          key: 'English learners',
+          feed_name: 'percent-students-with-limited-english-proficiency',
+          attributes: [:universal_id, :value, :year],
+          formatting: [:to_f, :round, 2]
+        },
+        {
+          key: 'Students who are economically disadvantaged',
+          feed_name: 'percent-economically-disadvantaged',
+          attributes: [:universal_id, :value, :year]
+        },
+        {
+          key: 'Ratio of teacher salary to total number of teachers',
+          feed_name: 'average-salary',
+          attributes: [:universal_id, :value, :year],
+          formatting: [:to_f, :round, 2]
+        },
+        {
+          key: 'Percentage of full time teachers who are certified',
+          feed_name: 'percentage-of-full-time-teachers-who-are-certified',
+          attributes: [:universal_id, :value, :year],
+          formatting: [:to_f, :round, 2]
+        },
+        {
+          key: 'Percentage of teachers with less than three years experience',
+          feed_name: 'percentage-of-teachers-with-3-or-more-years-experience',
+          attributes: [:universal_id, :value, :year],
+          formatting: [:to_f, :inverse_of_100, :round, 2]
+        },
+        {
+          key: 'Ratio of students to full time counselors',
+          feed_name: 'student-counselor-ratio',
+          attributes: [:universal_id, :value, :year],
+          formatting: [:to_f, :round, 2]
+        },
+        {
+          key: 'Female',
+          feed_name: 'percentage-female',
+          attributes: [:universal_id, :value, :year],
+          formatting: [:to_f, :round, 1]
+        },
+        {
+          key: 'Male',
+          feed_name: 'percentage-male',
+          attributes: [:universal_id, :value, :year],
+          formatting: [:to_f, :round, 1]
+        },
+        {
+          key: 'Ethnicity',
+          feed_name: 'ethnicity',
+          attributes: [:universal_id, :name, :value, :year],
+          formatting: [:to_f, :round, 1]
+        }
+      ].freeze
+
       def all_feeds
         %w(test_scores test_subgroup test_rating official_overall directory_feed city proficiency_band feed_test_scores_gsdata feed_test_scores_subgroup_gsdata)
       end
@@ -334,8 +516,6 @@ module Feeds
       def state_fips
         self.class.send(:state_fips)
       end
-
-
 
       def self.included(base)
         base.extend ClassMethods

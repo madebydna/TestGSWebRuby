@@ -11,7 +11,7 @@ module Feeds
       DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_district_characteristics gsdata)
 
       # array of methods used by the data reader to output data
-      DISTRICT_ATTRIBUTES_METHODS = %w(universal_id state_id level web_site)
+      DISTRICT_ATTRIBUTES_METHODS = %w(universal_id level web_site state zip)
 
       # array of cache keys used to retrieve data from the caches
       DISTRICT_ATTRIBUTES_CACHE_METHODS = %w(description FIPScounty level_code home_page_url url)
@@ -29,10 +29,8 @@ module Feeds
         end
       end
 
-      def state_id
-        @_state_id ||=begin
-          transpose_universal_id(state, nil, 'state')
-        end
+      def zip
+        @_zip ||= district.zipcode
       end
 
       def census_info
@@ -54,13 +52,7 @@ module Feeds
             end
           end
 
-          census_data_hash = census_info.each_with_object({}) do |data_object, data_hash|
-            key = data_object.keys.first
-            value = data_object.values.first
-            data_hash[key] = value
-          end
-
-          district_attributes_hash.merge(census_data_hash)
+          district_attributes_hash.merge(census_info)
         end
       end
 
@@ -91,10 +83,7 @@ module Feeds
         @_district_cache ||= begin
           district_caches = Array.wrap(DistrictCache.for_district(district).include_cache_keys(DIRECTORY_FEED_DISTRICT_CACHE_KEYS))
           district_caches.reduce({}) do |accum, district_cache|
-            json_district_cache = JSON.parse(district_cache&.value)
-            next accum unless json_district_cache
-            accum = accum.merge(json_district_cache)
-            accum
+            accum.merge(JSON.parse(district_cache.value))
           end
         end
       end

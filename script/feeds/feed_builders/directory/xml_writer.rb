@@ -67,9 +67,9 @@ module Feeds
           next unless data_hash[feed_attribute].present?
 
           if feed_attribute == 'url'
-            xml_builder.tag!(feed_attribute, data_hash[feed_attribute], {type: "District Overview", universal_id: data_hash["universal-id"]})
+            xml_builder.tag!(feed_attribute.downcase, data_hash[feed_attribute], {type: "District Overview", universal_id: data_hash["universal-id"]})
           else
-            xml_builder.tag!(feed_attribute, data_hash[feed_attribute])
+            xml_builder.tag!(feed_attribute.downcase, data_hash[feed_attribute])
           end
         end
       end
@@ -105,28 +105,24 @@ module Feeds
             xml_builder.tag!('url', data_hash[feed_attribute] + '#Reviews', {type: 'Parent Reviews', 'universal-id' => data_hash["universal-id"]})
             xml_builder.tag!('url', data_hash[feed_attribute] + '#Test_scores', {type: 'Test Scores', 'universal-id' => data_hash["universal-id"]})
           else
-            xml_builder.tag!(feed_attribute, data_hash[feed_attribute])
+            xml_builder.tag!(feed_attribute.downcase, data_hash[feed_attribute])
           end
         end
       end
 
       def write_census_feed(entity_data_reader)
+        census_data_hash = entity_data_reader.census_info
+        return if census_data_hash.empty?
+
         within_tag('census-info') do
-          entity_data_reader.census_info.each do |data_hash|
-            data_hash.each do |key, value|
-              if value.is_a? Array
-                value.each do |data_point|
-                  within_tag(key) do
-                    data_point.keys.each do |attribute|
-                      xml_builder.tag!(attribute.to_s.gsub("_","-"), data_point[attribute])
-                    end
-                  end
-                end
-              else
-                within_tag(key) do
-                  value.keys.each do |attribute|
-                    xml_builder.tag!(attribute.to_s.gsub("_","-"), value[attribute])
-                  end
+          CENSUS_CACHE_ACCESSORS.each do |accessor|
+            data_values = census_data_hash.fetch(accessor[:key], nil)
+            next unless data_values
+
+            data_values.each do |data_hash|
+              within_tag(accessor[:feed_name]) do
+                accessor[:attributes].each do |key|
+                  xml_builder.tag!(key.to_s.gsub("_","-"), data_hash[key])
                 end
               end
             end

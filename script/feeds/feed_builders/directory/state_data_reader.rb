@@ -18,7 +18,7 @@ module Feeds
       end
 
       def universal_id
-        @_universal_id ||= transpose_universal_id(@state, nil, 'state').to_s
+        @_universal_id ||= transpose_universal_id(@state, nil, 'state').to_i.to_s
       end
 
       def state_name
@@ -38,13 +38,7 @@ module Feeds
             hash[attribute.gsub('_','-')] = send(attribute.to_sym)
           end
 
-          census_data_hash = census_info.each_with_object({}) do |data_object, data_hash|
-            key = data_object.keys.first
-            value = data_object.values.first
-            data_hash[key] = value
-          end
-
-          state_attributes_hash.merge(census_data_hash)
+          state_attributes_hash.merge(census_info)
         end
       end
 
