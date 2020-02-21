@@ -11,14 +11,14 @@ module Subscriptions
     subscription
   end
 
-  def safely_add_subscription!(list, school = nil)
+  def safely_add_subscription!(list, school = nil, language = 'en')
     unless has_subscription?(list, school)
-      subscription = new_subscription(list, school)
+      subscription = new_subscription(list, school, language)
       subscription.save!
     end
   end
 
-  def new_subscription(list, school = nil)
+  def new_subscription(list, school = nil, language = 'en')
     now = Time.now
 
     if school && list == 'mystat'
@@ -37,6 +37,7 @@ module Subscriptions
       list: subscription_product.name,
       state: state,
       school_id: school_id,
+      language: language,
       updated: now.to_s,
       expires: expires
     )

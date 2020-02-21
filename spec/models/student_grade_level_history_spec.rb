@@ -10,6 +10,7 @@ describe StudentGradeLevelHistory do
     let(:student_grade_level) do
       FactoryBot.create(:student_grade_level,
                          member_id: 2,
+                         language: 'en',
                          updated: now
                         )
     end
@@ -23,6 +24,7 @@ describe StudentGradeLevelHistory do
       expected_values = {
         'grade' => 'KG',
         'member_id' => 2,
+        'language' => 'en',
         'student_updated' => student_grade_level.updated
       }
       expected_values.each_pair do |key, value|

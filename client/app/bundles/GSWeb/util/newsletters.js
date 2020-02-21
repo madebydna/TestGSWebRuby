@@ -28,15 +28,16 @@ export const signupAndGetNewsletter = function(modalOptions) {
 export const signUpForGreatNewsAndMss = function(
   modalOptions,
   state,
-  schoolId
+  schoolId,
+  language
 ) {
   if (isSignedIn()) {
     greatNewsSignUp();
-    addSubscription('mystat', state, schoolId);
+    addSubscription('mystat', state, schoolId, language);
   } else {
     modalManager.showModal('EmailJoinModal', modalOptions).done(() => {
       greatNewsSignUp();
-      addSubscription('mystat', state, schoolId);
+      addSubscription('mystat', state, schoolId, language);
     });
   }
 };
@@ -86,7 +87,7 @@ const savedSchoolsFindIndex = function(schoolState, schoolId) {
 const updateSavedSchoolsCookie = function(schoolState, schoolId) {
   const savedSchools = getSavedSchoolsFromCookie();
   const schoolKeyIdx = savedSchoolsFindIndex(schoolState, schoolId);
-  let removeSchool = schoolKeyIdx > -1 
+  let removeSchool = schoolKeyIdx > -1;
   schoolKeyIdx > -1
     ? savedSchools.splice(schoolKeyIdx, 1)
     : savedSchools.push({ state: schoolState, id: schoolId.toString() });
@@ -111,7 +112,7 @@ export const updateProfileHeart = (schoolState, schoolId) => {
   const saveText = document.getElementById('save-text');
 
   const savedSchools = getSavedSchoolsFromCookie();
-  const schoolKeyIdx = getSavedSchoolsFromCookie().findIndex(key => 
+  const schoolKeyIdx = getSavedSchoolsFromCookie().findIndex(key =>
     key.id.toString() === schoolId.toString() && key.state === schoolState);
 
   if (schoolKeyIdx > -1) {
@@ -139,7 +140,7 @@ export const sponsorsSignUp = function(options) {
       list: 'sponsor',
       message: "You've signed up to receive sponsors updates"
     },
-    pick(options, ['email'])
+    pick(options, ['email', 'language'])
   );
 
   return postSubscriptionViaAjax(subscriptionParams);
@@ -151,7 +152,7 @@ export const greatNewsSignUp = function(options) {
     {
       list: 'greatnews'
     },
-    pick(options, ['email'])
+    pick(options, ['email', 'language'])
   );
 
   return postSubscriptionViaAjax(subscriptionParams).always(showFlashMessages);
@@ -163,7 +164,7 @@ export const gradeByGradeSignUp = function(options) {
     {
       list: 'greatkidsnews'
     },
-    pick(options, ['email'])
+    pick(options, ['email', 'language'])
   );
 
   return postSubscriptionViaAjax(subscriptionParams).always(showFlashMessages);
