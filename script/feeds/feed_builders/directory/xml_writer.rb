@@ -64,14 +64,14 @@ module Feeds
         DIRECTORY_DISTRICT_ATTRIBUTES.each do |attribute|
           feed_attribute = attribute.gsub('_','-')
           data = data_hash[feed_attribute]
-          next unless data_hash[feed_attribute].present? || DIRECTORY_DISTRICT_KEYS_REQUIRED.include?(attribute)
+          next unless data.present? || required_field?('district', attribute)
 
-          if !data_hash[feed_attribute].present? && DIRECTORY_DISTRICT_KEYS_REQUIRED.include?(attribute)
+          if !data.present? && required_field?('district', attribute)
             xml_builder.tag!(feed_attribute.downcase, nil)
           elsif feed_attribute == 'url'
-            xml_builder.tag!(feed_attribute.downcase, data_hash[feed_attribute], {type: "District Overview", "universal-id": data_hash["universal-id"]})
+            xml_builder.tag!(feed_attribute.downcase, data, {type: "District Overview", "universal-id": data_hash["universal-id"]})
           else
-            xml_builder.tag!(feed_attribute.downcase, data_hash[feed_attribute])
+            xml_builder.tag!(feed_attribute.downcase, data)
           end
         end
       end
@@ -98,18 +98,18 @@ module Feeds
         DIRECTORY_SCHOOL_ATTRIBUTES.each do |attribute|
           feed_attribute = attribute.gsub('_','-')
           data = data_hash[feed_attribute]
-          next unless data_hash[feed_attribute].present? || DIRECTORY_SCHOOL_KEYS_REQUIRED.include?(attribute)
+          next unless data_hash[feed_attribute].present? || required_field?('school', attribute)
 
-          if !data_hash[feed_attribute].present? && DIRECTORY_SCHOOL_KEYS_REQUIRED.include?(attribute)
+          if !data.present? && required_field?('school', attribute)
             xml_builder.tag!(feed_attribute.downcase, nil)
           elsif feed_attribute == 'url'
-            xml_builder.tag!('url', data_hash[feed_attribute], {type: 'School Overview', 'universal-id' => data_hash["universal-id"]})
-            xml_builder.tag!('url', data_hash[feed_attribute], {type: 'Ratings', 'universal-id' => data_hash["universal-id"]})
-            xml_builder.tag!('url', data_hash[feed_attribute] + '#Students', {type: 'Student/Teacher', 'universal-id' => data_hash["universal-id"]})
-            xml_builder.tag!('url', data_hash[feed_attribute] + '#Reviews', {type: 'Parent Reviews', 'universal-id' => data_hash["universal-id"]})
-            xml_builder.tag!('url', data_hash[feed_attribute] + '#Test_scores', {type: 'Test Scores', 'universal-id' => data_hash["universal-id"]})
+            xml_builder.tag!('url', data, {type: 'School Overview', 'universal-id' => data_hash["universal-id"]})
+            xml_builder.tag!('url', data, {type: 'Ratings', 'universal-id' => data_hash["universal-id"]})
+            xml_builder.tag!('url', data + '#Students', {type: 'Student/Teacher', 'universal-id' => data_hash["universal-id"]})
+            xml_builder.tag!('url', data + '#Reviews', {type: 'Parent Reviews', 'universal-id' => data_hash["universal-id"]})
+            xml_builder.tag!('url', data + '#Test_scores', {type: 'Test Scores', 'universal-id' => data_hash["universal-id"]})
           else
-            xml_builder.tag!(feed_attribute.downcase, data_hash[feed_attribute])
+            xml_builder.tag!(feed_attribute.downcase, data)
           end
         end
       end
@@ -149,6 +149,16 @@ module Feeds
             :'xsi:noNamespaceSchemaLocation' => @schema
         ) do
           yield(xml_builder)
+        end
+      end
+
+      def required_field?(entity, attribute)
+        if entity == 'school'
+          DIRECTORY_SCHOOL_KEYS_REQUIRED.include?(attribute)
+        elsif entity == 'district'
+          DIRECTORY_DISTRICT_KEYS_REQUIRED.include?(attribute)
+        else
+          raise StandardError.new("Entity has not been whitelisted for xml")
         end
       end
 
