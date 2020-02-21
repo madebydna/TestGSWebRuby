@@ -43,7 +43,7 @@ describe SubscriptionConcerns do
             language: 'es'
           }
         end
-        it 'should suscribe user to one school' do
+        it 'should subscribe user to one school' do
           expect(current_user).to receive(:safely_add_subscription!).with('greatnews', school, 'es')
           expect(current_user).to receive(:safely_add_subscription!).with('mystat', school, 'es')
           subject.create_subscription(subscription_params)

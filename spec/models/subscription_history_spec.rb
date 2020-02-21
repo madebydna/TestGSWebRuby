@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Subscription do
+describe SubscriptionHistory do
 
   describe '.archive_subscription' do
     after do
