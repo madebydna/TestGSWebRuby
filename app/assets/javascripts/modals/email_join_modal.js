@@ -132,7 +132,7 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
     return {
       email: this.getEmail(),
       grades: this.getGrades(),
-      language: this.getLanguage()
+      language: this.getLanguage() || 'en'
     };
   },
 

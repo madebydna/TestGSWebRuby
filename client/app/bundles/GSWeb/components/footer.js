@@ -32,6 +32,7 @@ export function setupNewsletterLink() {
         stateAbbreviation,
         schoolId,
         successMessageMSS(),
+        'en'
       );
     }
     else {
