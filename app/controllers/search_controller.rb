@@ -13,6 +13,12 @@ class SearchController < ApplicationController
   before_filter :redirect_unless_valid_search_criteria # we need at least a 'q' param or state and city/district
   before_action :require_authorization, only: %i[suggest_school_by_name suggest_district_by_name suggest_city_by_name]
 
+  set_additional_js_translations(
+    {
+      top_schools: [:community, :top_schools]
+    }
+  )
+
   def search
     gon.search = {
       schools: serialized_schools,
@@ -95,10 +101,10 @@ class SearchController < ApplicationController
 
   def search_breadcrumbs
     if district_browse?
-      return district_breadcrumbs 
-    elsif city_browse? 
+      return district_breadcrumbs
+    elsif city_browse?
       return city_breadcrumbs
-    end 
+    end
     state_breadcrumbs
   end
 
