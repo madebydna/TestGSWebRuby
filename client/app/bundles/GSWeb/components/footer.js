@@ -13,7 +13,7 @@ export function setupNewsletterLink() {
   $(() => {
     validatingInputs.addFilteringEventListener('body');
     attachMultiSelectButtonGroupEventHandlers();
-  })
+  });
 
   $(newsletterLinkSelector).on('click', () => {
     let stateAbbreviation;
@@ -32,6 +32,7 @@ export function setupNewsletterLink() {
         stateAbbreviation,
         schoolId,
         successMessageMSS(),
+        'en'
       );
     }
     else {
@@ -64,7 +65,7 @@ export function setupNewsletterLink() {
       return {
         heading: 'Envíeme actualizaciones por correo electrónico sobre la escuela de mi hijo',
         subheading: "Lo sentimos, actualmente no ofrecemos correos electrónicos sobre tu escuela en español, pero lo haremos en un futuro cercano. Actualmente ofrecemos boletines disponibles en español basados en el grado de tu hijo para ayudarte a apoyar el aprendizaje en el hogar. Verás un enlace en la siguiente página para suscribirte."
-      }
+      };
     }
   }
 }
