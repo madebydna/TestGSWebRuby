@@ -18,8 +18,20 @@ module Feeds
         @districts = districts
       end
 
+      def school_data_readers
+        schools.map do |school|
+          school_data_reader(school)
+        end
+      end
+
       def school_data_reader(school)
         Feeds::Directory::SchoolDataReader.new(state, school)
+      end
+
+      def district_data_readers
+        districts.map do |district|
+          district_data_reader(district)
+        end
       end
 
       def district_data_reader(district)

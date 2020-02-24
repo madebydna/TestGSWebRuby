@@ -40,10 +40,12 @@ module Feeds
           'proficiency_band' => 'gs-proficiency-band',
           'parent_reviews' => 'local-gs-parent-review-feed',
           'parent_reviews_flat' => 'local-gs-parent-review-feed-flat',
-          'parent_ratings_flat' => 'local-gs-parent-ratings-feed-flat'
+          'parent_ratings_flat' => 'local-gs-parent-ratings-feed-flat',
+          'directory_feed_flat' => 'local-greatschools-feed-flat',
+          'directory_census_flat' => 'local-gs-census-feed-flat'
       }
 
-      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description official_overall_rating official_overall_rating_description official_overall_rating_flat parent_reviews parent_reviews_flat parent_ratings_flat directory_feed)
+      VALID_FEED_NAMES = %w(subrating old_test_gsdata old_test_subgroup_gsdata new_test_gsdata new_test_subgroup_gsdata subrating_description official_overall_rating official_overall_rating_description official_overall_rating_flat parent_reviews parent_reviews_flat parent_ratings_flat directory_feed directory_feed_flat directory_census_flat)
 
       VALID_FEED_FORMATS = %w(xml csv txt)
 
@@ -72,6 +74,8 @@ module Feeds
           'subrating' => 'https://www.greatschools.org/feeds/gs-subrating.xsd',
           'parent_reviews' => 'https://www.greatschools.org/feeds/local-gs-parent-review.xsd',
       }
+
+      # possible remove this since we will be official off of generate_feed_files
       FEED_TO_ROOT_ELEMENT_MAPPING = {
           'test_scores' => 'gs-test-feed',
           'test_subgroup' => 'gs-test-subgroup-feed',
@@ -454,7 +458,7 @@ module Feeds
           key: 'English learners',
           feed_name: 'percent-students-with-limited-english-proficiency',
           attributes: [:universal_id, :value, :year],
-          formatting: [:to_f, :round, 2]
+          formatting: [:to_f, :round, 3]
         },
         {
           key: 'Students who are economically disadvantaged',

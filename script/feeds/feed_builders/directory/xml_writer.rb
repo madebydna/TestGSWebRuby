@@ -62,16 +62,16 @@ module Feeds
 
       def write_district_attributes_feed(data_hash)
         DIRECTORY_DISTRICT_ATTRIBUTES.each do |attribute|
-          feed_attribute = attribute.gsub('_','-')
+          feed_attribute = attribute.gsub('_','-').downcase
           data = data_hash[feed_attribute]
           next unless data.present? || required_field?('district', attribute)
 
           if !data.present? && required_field?('district', attribute)
-            xml_builder.tag!(feed_attribute.downcase, nil)
+            xml_builder.tag!(feed_attribute, nil)
           elsif feed_attribute == 'url'
-            xml_builder.tag!(feed_attribute.downcase, data, {type: "District Overview", "universal-id": data_hash["universal-id"]})
+            xml_builder.tag!(feed_attribute, data, {type: "District Overview", "universal-id": data_hash["universal-id"]})
           else
-            xml_builder.tag!(feed_attribute.downcase, data)
+            xml_builder.tag!(feed_attribute, data)
           end
         end
       end
@@ -86,7 +86,6 @@ module Feeds
       def write_school_feed(school)
         school_feed = data_reader.school_data_reader(school)
         school_attributes = school_feed.data_values
-
         within_tag('school') do
           write_school_attributes_feed(school_attributes)
           write_census_feed(school_feed)
@@ -96,12 +95,12 @@ module Feeds
 
       def write_school_attributes_feed(data_hash)
         DIRECTORY_SCHOOL_ATTRIBUTES.each do |attribute|
-          feed_attribute = attribute.gsub('_','-')
+          feed_attribute = attribute.gsub('_','-').downcase
           data = data_hash[feed_attribute]
           next unless data_hash[feed_attribute].present? || required_field?('school', attribute)
 
           if !data.present? && required_field?('school', attribute)
-            xml_builder.tag!(feed_attribute.downcase, nil)
+            xml_builder.tag!(feed_attribute, nil)
           elsif feed_attribute == 'url'
             xml_builder.tag!('url', data, {type: 'School Overview', 'universal-id' => data_hash["universal-id"]})
             xml_builder.tag!('url', data, {type: 'Ratings', 'universal-id' => data_hash["universal-id"]})
@@ -109,7 +108,7 @@ module Feeds
             xml_builder.tag!('url', data + '#Reviews', {type: 'Parent Reviews', 'universal-id' => data_hash["universal-id"]})
             xml_builder.tag!('url', data + '#Test_scores', {type: 'Test Scores', 'universal-id' => data_hash["universal-id"]})
           else
-            xml_builder.tag!(feed_attribute.downcase, data)
+            xml_builder.tag!(feed_attribute, data)
           end
         end
       end

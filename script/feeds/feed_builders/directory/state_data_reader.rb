@@ -34,7 +34,7 @@ module Feeds
 
       def data_values
         @_data_values ||= begin
-          state_attributes_hash = DIRECTORY_STATE_ATTRIBUTES.each_with_object({}) do |attribute, hash|
+          state_attributes_hash = DIRECTORY_STATE_ATTRIBUTES.each_with_object({"entity" => "state"}) do |attribute, hash|
             hash[attribute.gsub('_','-')] = send(attribute.to_sym)
           end
 

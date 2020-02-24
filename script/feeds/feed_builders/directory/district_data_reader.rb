@@ -42,18 +42,16 @@ module Feeds
 
       def data_values
         @_data_values ||= begin
-          district_attributes_hash = DIRECTORY_DISTRICT_ATTRIBUTES.each_with_object({}) do |attribute, hash|
-            cache_key = attribute.gsub('_','-')
+          district_attributes_hash = DIRECTORY_DISTRICT_ATTRIBUTES.each_with_object({"entity" => "district", "gs-id" => district.district_id}) do |attribute, hash|
+            cache_key = attribute.gsub('_','-').downcase
             if DISTRICT_ATTRIBUTES_DATA_READER_METHODS.include?(attribute)
               hash[cache_key] = send(attribute.to_sym)
             elsif DISTRICT_ATTRIBUTES_CACHE_METHODS.include?(attribute)
               hash[cache_key] = data_value(attribute)
             else
-              hash[cache_key] = district.send(attribute.to_sym)
+              hash[cache_key] = district.send(attribute.to_sym).presence
             end
           end
-
-          district_attributes_hash.merge(census_info)
         end
       end
 

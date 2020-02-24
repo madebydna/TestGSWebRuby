@@ -47,12 +47,15 @@ module Feeds
         data_sets = data_sets.with_all_grades if data_accessor[:key] == 'Enrollment'
 
         data_sets.with_most_recent_year.map do |data_set|
-          data_accessor[:attributes].each_with_object({}) do |attribute, hash|
-            hash[attribute] = universal_id if attribute == :universal_id
-            hash[attribute] = ethnicity_mapping(data_set['original_breakdown'], data_set["breakdown"]) if attribute == :name
-            hash[attribute] = format_value(data_set["#{entity}_value"], *data_accessor[:formatting]) if attribute == :value
-            hash[attribute] = (data_set["year"] || Date.parse(data_set["source_date_valid"]).year) if attribute == :year
-            hash[attribute] = data_accessor[:data_type] if attribute == :data_type
+          {}.tap do |hash|
+            hash[:universal_id] = universal_id
+            hash[:name] = ethnicity_mapping(data_set['original_breakdown'], data_set["breakdown"])
+            hash[:value] = format_value(data_set["#{entity}_value"], *data_accessor[:formatting])
+            hash[:year] = (data_set["year"] || Date.parse(data_set["source_date_valid"]).year)
+            hash[:data_type] = data_accessor[:data_type]
+            # below are values for the census flat files
+            hash[:entity] = entity
+            hash[:feed_name] = data_accessor[:feed_name]
           end
         end
       end
@@ -62,7 +65,8 @@ module Feeds
 
         methods.each_with_index do |method, idx|
           next unless method.is_a? Symbol
-          if methods[idx+1].is_a? Integer
+
+          if methods[idx + 1].is_a? Integer
             value = value.send(method, methods[idx+1])
           elsif method == :inverse_of_100
             value = 100.00 - value

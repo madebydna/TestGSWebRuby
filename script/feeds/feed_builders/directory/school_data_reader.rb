@@ -14,7 +14,7 @@ module Feeds
       SCHOOL_ATTRIBUTES_DATA_READER_METHODS = %w(universal_id level universal_district_id web_site zip)
 
       # array of cache keys used to retrieve data from the caches
-      SCHOOL_ATTRIBUTES_CACHE_METHODS = %w(description FIPScounty level_code district_name url)
+      SCHOOL_ATTRIBUTES_CACHE_METHODS = %w(description FIPScounty level_code district_name url school_summary)
 
       attr_reader :state, :school
 
@@ -38,17 +38,17 @@ module Feeds
 
       def data_values
         @_data_values ||= begin
-          state_attributes_hash = DIRECTORY_SCHOOL_ATTRIBUTES.each_with_object({}) do |attribute, hash|
+          all_attributes = DIRECTORY_SCHOOL_ATTRIBUTES + (["school_summary"])
+          all_attributes.each_with_object({"entity" => "school", "gs-id" => school.id}) do |attribute, hash|
+            cache_key = attribute.gsub('_','-').downcase
             if SCHOOL_ATTRIBUTES_DATA_READER_METHODS.include?(attribute)
-              hash[attribute.gsub('_','-')] = send(attribute.to_sym)
+              hash[cache_key] = send(attribute.to_sym)
             elsif SCHOOL_ATTRIBUTES_CACHE_METHODS.include?(attribute)
-              hash[attribute.gsub('_','-')] = data_value(attribute)
+              hash[cache_key] = data_value(attribute)
             else
-              hash[attribute.gsub('_','-')] = school.send(attribute.to_sym)
+              hash[cache_key] = school.send(attribute.to_sym).presence
             end
           end
-
-          state_attributes_hash.merge(census_info)
         end
       end
 
