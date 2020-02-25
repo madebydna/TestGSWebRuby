@@ -31,6 +31,7 @@ module Subscriptions
 
     state = school.present? ? school.state : 'CA'
     school_id = school.present? ? school.id : 0
+    language = 'en' if language.blank?
     expires = subscription_product.duration.present? ? now + subscription_product.duration : nil
 
     subscriptions.build(
