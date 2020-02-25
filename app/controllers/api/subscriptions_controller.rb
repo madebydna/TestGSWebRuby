@@ -7,6 +7,7 @@ class Api::SubscriptionsController < ApplicationController
 
   def create
     unless Subscription.is_invalid?(list) || @current_user.has_signedup?(list, school)
+      language = 'en' if language.blank?
       @current_user.add_subscription!(list, school, language)
       subscription_id = @current_user.subscription_id(list)
     end

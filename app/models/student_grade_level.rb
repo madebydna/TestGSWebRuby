@@ -29,7 +29,8 @@ class StudentGradeLevel < ActiveRecord::Base
             if (state.present?)
               student.state = state
             end
-            if language.present? && SUPPORTED_LANGUAGES.include?(language)
+            language = 'en' if language.blank?
+            if SUPPORTED_LANGUAGES.include?(language)
               student.language = language
             end
             unless student.save!
