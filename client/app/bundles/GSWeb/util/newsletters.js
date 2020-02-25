@@ -208,7 +208,7 @@ const schools = function(states, schoolIds, options) {
         {
           'school_id': schoolIds,
           'state': states
-        }, pick(options, ['email'])
+        }, pick(options, ['email', 'language'])
       )
     };
     if (driver) {

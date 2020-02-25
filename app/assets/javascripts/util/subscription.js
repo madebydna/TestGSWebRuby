@@ -82,7 +82,7 @@ GS.subscription = GS.subscription || (function() {
             {
               'school_id': schoolIds,
               'state': states
-            }, _.pick(options, 'email')
+            }, _.pick(options, ['email', 'language'])
           )
         };
         if (driver) {
