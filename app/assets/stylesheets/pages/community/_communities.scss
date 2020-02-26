@@ -137,16 +137,16 @@ $line-height-community: 1.428571429;
 
       @include media-breakpoint-down(sm) {
         padding: 0;
-    
+
         .csa-state-blurb {
           display: block;
-    
+
           img {
             float: left;
             height: 60px;
             margin: 8px 12px 0 0;
           }
-    
+
           p {
             padding: 0;
             margin-left: 0;
@@ -270,7 +270,7 @@ $line-height-community: 1.428571429;
     }
   }
 
-  .toc.display-mobile { 
+  .toc.display-mobile {
     @include media-breakpoint-up(sm) {
       display: none;
     }
@@ -340,7 +340,7 @@ $line-height-community: 1.428571429;
       display: flex;
       margin: 0 20px;
       align-items: center;
-      
+
       p {
         margin-right: 10px;
       }
@@ -365,10 +365,10 @@ $line-height-community: 1.428571429;
       }
     }
   }
-  
+
   .profile-module {
     font-size: $font-size;
-    
+
     > h3 {
       padding: 10px 0 10px 20px;
       color: #333;
@@ -416,8 +416,8 @@ $line-height-community: 1.428571429;
       // Class to help render five star ratings
       .five-star-review{
         a { color: $school-color; }
-        span { 
-          display: inline-block; 
+        span {
+          display: inline-block;
           font-size: $font-size-base;
         }
         .five-star-rating{ margin-left: 15px; }
@@ -482,8 +482,8 @@ $line-height-community: 1.428571429;
   h3{
     padding: 10px 0 10px 15px;
     color: #333;
-    font-size: 16px;
-    font-family: 'opensans-semibold';
+    font-size: 20px;
+    font-family: 'opensans-bold';
   }
   .separator {
     padding: 0 15px;
@@ -512,7 +512,7 @@ $line-height-community: 1.428571429;
       }
       .blue-line.hide-line {
         display: block;
-        
+
         @include media-breakpoint-up(lg) {
           display: none;
         }
@@ -523,15 +523,15 @@ $line-height-community: 1.428571429;
         letter-spacing: -0.70px;
         margin-left: -8px;
       }
-      a { 
-        color: $school-color; 
+      a {
+        color: $school-color;
         margin-top: -3px;
       }
-      p { 
+      p {
         color: #999;
         display: inline-block;
         margin-top: 5px;
-        margin-bottom: 0; 
+        margin-bottom: 0;
       }
       .school-count{
         @include clearfix;
@@ -554,7 +554,7 @@ $line-height-community: 1.428571429;
     padding: 10px 0 10px 15px;
     color: #333;
     font-size: 20px;
-    font-family: 'opensans-semibold';
+    font-family: 'opensans-bold';
     margin-bottom: 30px; //remove when we add back the gradelevel filter buttons
   }
   .grade-filter {
@@ -568,7 +568,7 @@ $line-height-community: 1.428571429;
       }
     }
   }
-  
+
   .add-review-container{
     >a{
       display: block;
@@ -580,7 +580,7 @@ $line-height-community: 1.428571429;
     > a:hover{
       text-decoration: none
     }
-    > p { 
+    > p {
       text-align: center;
       margin-bottom: 15px;
     }
@@ -597,7 +597,7 @@ $line-height-community: 1.428571429;
       border: 1px solid $border-color;
       padding: 15px;
       margin: 5px 0;
-  
+
       h3 {
         margin-bottom: 3px;
       }
@@ -608,7 +608,7 @@ $line-height-community: 1.428571429;
     margin-bottom: 5px;
     border: solid 1px $border-color;
     padding: 5px;
-    >div{ 
+    >div{
       padding: 20px;
       // Add this back when TransitScreen has better coverage
       // @include flexbox;
@@ -638,7 +638,7 @@ $line-height-community: 1.428571429;
         .transportation-container{
           @include flexbox-align-items-center;
           p { margin-bottom: 0px; }
-          >img{ 
+          >img{
             margin-right: 10px;
             height: 25px;
           }
@@ -651,7 +651,7 @@ $line-height-community: 1.428571429;
           margin-bottom: 10px;
           >div, img, p{ margin-right: 10px;}
           img{ height: 20px; }
-          p { 
+          p {
             margin-bottom: 0px;
             color: $subtle-gray;
           }

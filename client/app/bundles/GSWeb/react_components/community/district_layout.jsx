@@ -84,14 +84,14 @@ class DistrictLayout extends React.Component {
   renderCalendar() {
     return (
       <div id="calendar" className="module-section">
-        <h2 className="modules-title">{t('district_calendar')}</h2>
+        <h3 className="modules-title">{t('district_calendar')}</h3>
         {this.props.calendar}
       </div>
     )
   }
 
   renderFinance() {
-    return (this.props.shouldDisplayDistrictReview && 
+    return (this.props.shouldDisplayDistrictReview &&
       <div id="finance" className="module-section">
         {this.props.finance}
       </div>
@@ -102,7 +102,7 @@ class DistrictLayout extends React.Component {
     return (
       <div id="mobility" className="module-section">
         <h2 className="modules-title">{`${t('mobility.title')} ${this.props.locality.name}`}</h2>
-        <XQSchoolBoardFinder 
+        <XQSchoolBoardFinder
           locality={this.props.locality}
         />
         {this.props.mobility}
@@ -199,7 +199,7 @@ class DistrictLayout extends React.Component {
   }
 
   renderStudentsModule(){
-    return (this.props.hasStudentDemographicData && 
+    return (this.props.hasStudentDemographicData &&
       <div id="students" className="module-section">
         {this.props.students}
       </div>
@@ -207,7 +207,7 @@ class DistrictLayout extends React.Component {
   }
 
   renderTeachersStaffModule(){
-    return ( this.props.teachersStaff && 
+    return ( this.props.teachersStaff &&
       <div id="teachers-staff" className="module-section">
         {this.props.teachersStaff}
       </div>

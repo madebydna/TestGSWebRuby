@@ -40,10 +40,10 @@ const Students = ({ ethnicityData, subgroupsData, genderData, translations, sour
           <span className="icon-users"/>
         </div>
         <div className="title-container">
-          <h2 className="modules-title"
+          <h3 className="modules-title"
             dangerouslySetInnerHTML={{ __html: translations.title }}
           />
-          <span dangerouslySetInnerHTML={{ __html: translations.subtitle }} />
+          <div dangerouslySetInnerHTML={{ __html: translations.subtitle }} />
         </div>
       </div>
       <section className="students-module">
