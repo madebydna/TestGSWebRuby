@@ -10,109 +10,63 @@ class MDTestProcessor2019PARCC < GS::ETL::TestProcessor
 
   key_map_bd = {
     'All Students' => 1,
-    'Hispanic/Latino' => 6,
-    'Hispanic/Latino of any race' => 6,
-    'American Ind/Alaskan' => 4,
-    'American Indian or Alaska Native' => 4,
-    'Black or African American' => 3,
-    'African American' => 3,
-    'Asian' => 2,    
-    'Nat Hawaiian/Other PI' => 112,
-    'Native Hawaiian or Other Pacific Islander' => 112,
-    'White' => 8,    
-    'Two or more races' => 21,
-    'Migrant' => 19,
-    'FARMS' => 9,
-    'Male' => 12,
-    'Female' => 11, 
-    'LEP' => 15,
-    'Limited English Proficient' => 15,
-    'Special Ed' => 13,
-    'Special Education' => 13
+    'Hispanic/Latino of any race' => 19,
+    'American Indian or Alaska Native' => 18,
+    'Black or African American' => 17,
+    'Asian' => 16,    
+    'Native Hawaiian or Other Pacific Islander' => 20,
+    'White' => 21,    
+    'Two or more races' => 22,
+    'Male' => 25,
+    'Female' => 26, 
+    'Limited English Proficient' => 32,
+    'Special Education' => 27
   }
 
   key_map_sub = {
-    'ela' => 4,
-    'math' => 5,
-    'Science' => 25,
-    'Algebra 1' => 7,
-    'Algebra 2' => 11,
-    'Geometry' => 9,
+    'English/Language Arts' => 4,
+    'Mathematics' => 5,
+    'Algebra 1' => 6,
+    'Algebra 2' => 10,
+    'Geometry' => 8,
+  }
+
+  key_map_prof = {
+    'prof_and_above' => 1
   }
   
-  source("PARCC_2019_cal.txt",[], col_sep: "\t") do |s|
-    s.transform("Fill missing default fields", Fill, {
-      test_data_type: 'parcc',
-      test_data_type_id: 309,
-      year: 2019
-  })
-  end
-  source("MSA_2019_cal.txt",[], col_sep: "\t") do |s|
-    s.transform("Fill missing default fields", Fill, {
-      test_data_type: 'msa',
-      test_data_type_id: 53
-  })
-  end
+  source("md_2017_2018_2019.txt",[], col_sep: "\t")
 
   shared do |s|
-    s.transform("Renaming fields",
-      MultiFieldRenamer,
-      {
-        subgroup: :breakdown,
-        number_scored: :number_tested,
-        level45_pct: :value_float,
-        null_pct: :value_float
-      })
-    .transform("Remove weird breakdowns", DeleteRows, :breakdown, 'Title I', 'Title1', 'ADA/504', 'Special Education - Exited','Redesignated Limited English Proficient', 'ADA')
-    .transform("Delete rows where number tested is less than 10 ",DeleteRows, :number_tested, '0','1','2','3','4','5','6','7','8','9')
-    .transform("Fill missing default fields", Fill, {
-      entity_type: 'public_charter',
-      proficiency_band: 'null',
-      proficiency_band_id: 'null',
-      level_code: 'e,m,h',
+    s.transform("Fill missing default fields", Fill, {
+      test_data_type_id: 216,
+      notes: 'DXT-3133: MD PARCC'
     })
     .transform("Adding column breakdown_id from breadown",
       HashLookup, :breakdown, key_map_bd, to: :breakdown_id)
     .transform("Adding column subject_id from subject",
       HashLookup, :subject, key_map_sub, to: :subject_id)
-    .transform("Creating StateID", WithBlock) do |row|
-      if row[:school_id] == 'A' 
-        if row[:district_id] == 'A' 
-          row[:entity_level]='state'
-        else
-          row[:entity_level]='district'
-          row[:state_id] = row[:district_id].rjust(2,'0')
+    .transform("Adding column prof_band_id from proficiency_band",
+      HashLookup, :proficiency_band, key_map_prof, to: :proficiency_band_id)
+    .transform('create date_valid and description',WithBlock,) do |row|
+        if row[:year] == '2017' 
+            row[:date_valid] = '2017-01-01 00:00:00'
+            row[:description] = "In school year 2016-17, the PARCC assessments in mathematics and English Arts(ELA)/Literacy were administered to students in Maryland. The PARCC assessments will measure the content and skills contained in the new standards. The English Language Arts and Literacy and Mathematics assessments are end-of-course exams. For students in grades 3 through 8, they are given toward the end of the school year. For students in high school, they are normally given after they complete most of their grade 9, grade 10 or grade 11 English course. Assessments in Algebra 1, Geometry, and Algebra 2 are also administered after a student has completed most of the required course."
+        elsif row[:year] == '2018'
+            row[:date_valid] = '2018-01-01 00:00:00'
+            row[:description] = "In school year 2017-18, the PARCC assessments in mathematics and English Arts(ELA)/Literacy were administered to students in Maryland. The PARCC assessments will measure the content and skills contained in the new standards. The English Language Arts and Literacy and Mathematics assessments are end-of-course exams. For students in grades 3 through 8, they are given toward the end of the school year. For students in high school, they are normally given after they complete most of their grade 9, grade 10 or grade 11 English course. Assessments in Algebra 1, Geometry, and Algebra 2 are also administered after a student has completed most of the required course."
+        elsif row[:year] == '2019'
+            row[:date_valid] = '2019-01-01 00:00:00'
+            row[:description] = "In school year 2018-19, the PARCC assessments in mathematics and English Arts(ELA)/Literacy were administered to students in Maryland. The PARCC assessments will measure the content and skills contained in the new standards. The English Language Arts and Literacy and Mathematics assessments are end-of-course exams. For students in grades 3 through 8, they are given toward the end of the school year. For students in high school, they are normally given after they complete most of their grade 9, grade 10 or grade 11 English course. Assessments in Algebra 1, Geometry, and Algebra 2 are also administered after a student has completed most of the required course."
         end
-      else
-        row[:entity_level]='school'
-        row[:district_id] = row[:district_id].rjust(2,'0')
-        row[:state_id] = row[:district_id].rjust(2,'0')+row[:school_id].rjust(4,'0')
-      end
-      row
-    end
-    .transform("Lowercase/capitalize column",WithBlock) do |row|
-       row[:subject].downcase!
-       row[:breakdown].downcase!
-       row[:grade].capitalize! 
-       row
-    end
-    .transform('Fill missing ids and names with entity_level', WithBlock) do |row|
-      [:state_id, :school_id, :district_id, :school_name, :district_name].each do |col|
-        row[col] ||= row[:entity_level]
-      end
-      row
+        row
     end
   end
 
   def config_hash
     {
-        source_id: 26,
-        state: 'md',
-        notes: 'DXT-2049: MD PARCC and MSA 2019 test load.',
-        url: 'http://reportcard.msde.maryland.gov',
-        file: 'md/2019/output/md.2019.1.public.charter.[level].txt',
-        level: nil,
-        school_type: 'public,charter'
+        source_id: 24,
+        state: 'md'
     }
   end
 end
