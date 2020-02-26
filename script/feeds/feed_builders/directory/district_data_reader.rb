@@ -74,7 +74,7 @@ module Feeds
 
       def data_value(key)
         data_set = district_cache.fetch(key, nil)
-        raise StandardError.new("Missing Cache Key: District:#{district.id} State:#{state} Key:#{key}") unless data_set
+        raise StandardError.new("Missing Cache Key: State:#{state} District:#{district.district_id} Key:#{key}") unless data_set
         data_set.first["district_value"]
       end
 
