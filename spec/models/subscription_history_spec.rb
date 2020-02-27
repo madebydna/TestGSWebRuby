@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Subscription do
+describe SubscriptionHistory do
 
   describe '.archive_subscription' do
     after do
@@ -14,6 +14,7 @@ describe Subscription do
                          member_id: 2,
                          school_id: 3,
                          state: 'CA',
+                         language: 'en',
                          updated: now,
                          expires: expires
                         )
@@ -30,6 +31,7 @@ describe Subscription do
         'member_id' => 2,
         'school_id' => 3,
         'state' => 'CA',
+        'language' => 'en',
         'list_active_updated' => subscription.updated,
         'expires' => subscription.expires
       }

@@ -2,7 +2,7 @@
   @include media-breakpoint-only(xs) {
     padding: 0 10px;
   }
-  min-height: 50px;
+  min-height: 55px;
 
   .circle-rating--medium, .circle-rating--equity-blue {
     float: left;
@@ -15,6 +15,7 @@
       display: inline-block;
       margin: 0;
       font-size: 20px;
+      font-family: "opensans-bold";
     }
   }
 

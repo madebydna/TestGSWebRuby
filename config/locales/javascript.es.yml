@@ -44,7 +44,7 @@ es:
       cities_browse_more_button: Ver todas las ciudades
       districts_browse_more_button: Vea todos los distritos
       see_award_winning_schools: Ver las escuelas que ganaron premios
-    community_resources: recursos de la comunidad 
+    community_resources: recursos de la comunidad
     county: condado
     data_not_provided_by_the_school: Datos no provistos por la escuela
     district_calendar: Calendario del distrito
@@ -90,7 +90,7 @@ es:
     Filter: Filtro
     Currently unrated: Actualmente sin calificación
     rating_description_html: >
-      <p style="text-align: left;">La Calificación General de GreatSchools es una reflexión de múltiples medidas sobre la calidad de una escuela. Las calificaciones siguen una escala del 1-10:
+      <p style="text-align: left;">La Calificación General de GreatSchools es una reflexión de múltiples medidas sobre la calidad de una escuela. Las calificaciones siguen una escala del 1-10, donde las escuelas mejor calificadas son un "10":
       <ul style="text-align: left;"><li>calificaciones de 1-4 señalan "por debajo del promedio”</li>
       <li>calificaciones de 5-6 indican “al promedio”</li>
       <li>calificaciones de 7-10 indican “por encima del promedio”</li></ul></p>
@@ -139,9 +139,9 @@ es:
       title: Recursos comunitarios en
       transportation_narration: Opciones de transporte cerca de las escuelas
       help: >
-        MobilityScore® le ayuda a comprender lo fácil que es viajar. Funciona en cualquier ubicación o dirección dentro 
-        de los EE. UU. y Canadá y le proporciona una calificación que va desde 0 (sin opciones de movilidad) hasta 100 
-        (excelentes opciones de movilidad). ¡MobilityScore tiene en cuenta todas tus opciones, desde el transporte público 
+        MobilityScore® le ayuda a comprender lo fácil que es viajar. Funciona en cualquier ubicación o dirección dentro
+        de los EE. UU. y Canadá y le proporciona una calificación que va desde 0 (sin opciones de movilidad) hasta 100
+        (excelentes opciones de movilidad). ¡MobilityScore tiene en cuenta todas tus opciones, desde el transporte público
         hasta el carsharing, el bikesharing, el ridesharing, las bicicletas e incluso los scooters!
       sources_html: >
         <div class="sources-text">
@@ -338,10 +338,10 @@ es:
     no_schools_found: No se encontraron escuelas
     CSA Page:
       summary: >
-        <span>En %{state}, %{total} escuelas públicas ganaron un College Success Award de %{year}, un premio basado en su 
-          éxito en preparar a los estudiantes para la universidad y, finalmente, la carrera. Los College Success Awards 
-          reconocen a las escuelas secundarias públicas que se sobresalen a lograr que los estudiantes se matriculen y permanezcan 
-          en la universidad. 
+        <span>En %{state}, %{total} escuelas públicas ganaron un College Success Award de %{year}, un premio basado en su
+          éxito en preparar a los estudiantes para la universidad y, finalmente, la carrera. Los College Success Awards
+          reconocen a las escuelas secundarias públicas que se sobresalen a lograr que los estudiantes se matriculen y permanezcan
+          en la universidad.
           <a href="/gk/csa-winners/">Obtén más información</a>.
         </span>
       summary_mobile: >

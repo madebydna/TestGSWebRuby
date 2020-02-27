@@ -18,7 +18,9 @@ class Api::StudentsController < ApplicationController
       return
     end
 
-    StudentGradeLevel.create_students(user.id, grades, state)
+    language = 'en' if language.blank?
+
+    StudentGradeLevel.create_students(user.id, grades, state, language)
     render json: { errors: [] }, status: 200
   end
 
@@ -40,4 +42,7 @@ class Api::StudentsController < ApplicationController
     params['state']
   end
 
+  def language
+    params['language']
+  end
 end

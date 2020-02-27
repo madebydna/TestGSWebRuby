@@ -14,23 +14,23 @@
     <div class="breadcrumbs-container">
       <%= render 'community/breadcrumbs', breadcrumbs: @breadcrumbs %>
     </div>
-    <%= render 'districts/hero', 
-          district: @locality[:name], 
-          address: @locality[:address], 
-          city: @locality[:city], 
-          state_short: @locality[:stateShort], 
-          zip_code: @locality[:zipCode], 
-          phone: @locality[:phone], 
-          district_url: @locality[:districtUrl], 
-          enrollment: @hero_data[:enrollment], 
-          grades: @hero_data[:grades], 
-          school_count: @hero_data[:schoolCount], 
-          narration: @hero_data[:narration] 
+    <%= render 'districts/hero',
+          district: @locality[:name],
+          address: @locality[:address],
+          city: @locality[:city],
+          state_short: @locality[:stateShort],
+          zip_code: @locality[:zipCode],
+          phone: @locality[:phone],
+          district_url: @locality[:districtUrl],
+          enrollment: @hero_data[:enrollment],
+          grades: @hero_data[:grades],
+          school_count: @hero_data[:schoolCount],
+          narration: @hero_data[:narration]
     %>
 
     <div class="below-hero">
       <%= render 'community/toc' %><div class="community-modules">
-      
+
         <%# First Ad %>
         <div class="display-mobile">
           <%= react_component("AdWrapper", props: {
@@ -176,7 +176,7 @@
 
         <%# Calendar %>
         <div id="calendar" class="module-section">
-          <h2 class="modules-title"><%= I18n.t('district_calendar', scope: 'community.district') %></h2>
+          <h3 class="modules-title"><%= I18n.t('district_calendar', scope: 'community.district') %></h3>
           <%= react_component("Calendar", props: {
               locality: @locality,
               pageType: 'District'
@@ -192,10 +192,10 @@
             }) %>
           </div>
         <% end %>
-        
+
         <%# Mobility %>
         <div id="mobility" class="module-section">
-          <h2 class="modules-title"><%= I18n.t('title', scope: 'community.mobility') %> <%= @locality[:name] %></h2>
+          <h3 class="modules-title"><%= I18n.t('title', scope: 'community.mobility') %> <%= @locality[:name] %></h3>
           <%= react_component("XQSchoolBoardFinder", props: {
               locality: @locality
           }) %>

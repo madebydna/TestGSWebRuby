@@ -5,8 +5,8 @@ require 'features/page_objects/account_page'
 
 describe 'User visits Home Page' do
   subject(:subject) { HomePage.new }
-  before { subject.load  }
-  
+  before { subject.load }
+
   context 'successfully' do
     it { is_expected.to have_header  }
   end
@@ -53,7 +53,7 @@ describe 'User visits Home Page' do
     after { clean_dbs(:gs_schooldb) }
 
     let(:account_page) { AccountPage.new }
-    
+
     context 'with some grades selected and no partner offers' do
       before do
         subject.footer.newsletter_link.click
@@ -76,7 +76,7 @@ describe 'User visits Home Page' do
       end
     end
 
-    context 'with parter email checkbox selected' do
+    context 'with partner email checkbox selected' do
       before do
         subject.footer.newsletter_link.click
         subject.email_newsletter_modal.sign_up(@email, [], true)

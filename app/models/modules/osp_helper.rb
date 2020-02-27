@@ -9,7 +9,7 @@ module OspHelper
       redirect: '/official-school-profile/dashboard/',
       s_cid: tracking_code
     )
-    verify_email_url(verification_link_params)
+    email_send_link_no_admin(verify_email_url(verification_link_params))
   end
 
   def send_email_to_osp(membership, status)

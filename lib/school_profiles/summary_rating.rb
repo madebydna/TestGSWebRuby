@@ -117,13 +117,15 @@ module SchoolProfiles
     def self.scale(rating)
       raise ArgumentError.new('Rating must be numeric') unless rating.is_a?(Numeric)
       scope = 'school_profiles.summary_rating'
-      key = 
+      key =
         if rating <= 4
           'Below average'
         elsif rating <= 6
           'Average'
-        elsif rating <= 10
+        elsif rating <= 9
           'Above average'
+        elsif rating == 10
+          'Top rated'
         end
       I18n.t(key, scope: scope)
     end

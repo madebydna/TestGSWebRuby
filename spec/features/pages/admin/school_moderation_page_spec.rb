@@ -55,8 +55,8 @@ describe 'School moderate page' do
 
             when_I :remove_school_held_status do
               it { is_expected.to_not be_on_hold }
-              it 'notes box should be blank' do
-                expect(subject.notes_box.value).to be_blank
+              it 'notes box should not be blank' do
+                expect(subject.notes_box.value).to_not be_blank
               end
             end
           end
