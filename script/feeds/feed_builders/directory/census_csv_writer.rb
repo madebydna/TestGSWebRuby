@@ -32,14 +32,20 @@ module Feeds
 
       def write_state_feed(csv)
         data_hash = @data_reader.state_data_reader.census_info
-        census_keys.each do |key|
+
+        CENSUS_CACHE_ACCESSORS.each do |config|
+          key = config[:key]
           data_values = data_hash[key]
           next unless data_values
 
           data_values.each do |data_value|
             csv << HEADERS.map do |attribute|
-              data_value_key = map_data_value(attribute).gsub('-','_').to_sym
-              format_feed_value(attribute, data_value[data_value_key])
+              if config[:feed_name] == 'teacher-data' && attribute == 'data-type'
+                format_feed_value(attribute, data_value[attribute.gsub('-','_').to_sym])
+              else
+                data_value_key = map_data_value(attribute).gsub('-','_').to_sym
+                format_feed_value(attribute, data_value[data_value_key])
+              end
             end
           end
         end
