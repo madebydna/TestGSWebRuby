@@ -291,10 +291,37 @@ $line-height-community: 1.428571429;
   text-align: left;
 }
 
-.districts-in-state-module {
-  padding: 0 10px;
+.districts-in-community-module {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid $border-color;
+
   .blue-line {
     margin-left: 0;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      padding: 5px 15px;
+
+      a {
+        font-size: 17px;
+        color: $school-color;
+      }
+
+      span, p {
+        margin: 0;
+        font-size: $font-size;
+        font-family: 'opensans-regular';
+      }
+    }
   }
 }
 
