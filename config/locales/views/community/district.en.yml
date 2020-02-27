@@ -2,8 +2,21 @@ en:
   community:
     district:
       website: Website
+      school: School
       schools: Schools
       students: Students
       grades: Grades
       find_schools_in: Find schools in
       district_calendar: District calendar
+      sources: Sources
+      xq:
+        school_board_finder: School board finder
+        learn_more_school_board_html: Learn more about this district's school board and <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">how you can get involved</a>.
+        sources: >
+          <div class="sourcing">
+            <h1>GreatSchools district data sources & information</h1>
+            <div>
+              <h4>School Board Finder</h4>
+              <p><span class="emphasis">Source&#58;</span> XQ</p>
+            </div>
+          </div>

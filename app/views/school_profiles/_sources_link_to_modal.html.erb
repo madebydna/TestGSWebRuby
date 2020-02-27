@@ -1,8 +1,11 @@
 <% content %>
+<% category = page_type.titleize || 'Profile' %>
+
 <div class="sources-link">
   <a data-remodal-target="modal_info_box"
      data-content-type="info_box"
      data-ga-click-element-type="sources"
+     data-ga-click-category="<%= category %>"
      data-content-html="<%= content %>"
      href="javascript:void(0)">
     <span class="source-link"><span class="icon-new-info"></span><%= t('lib.test_scores.sources') %></span>

@@ -18,7 +18,6 @@ import DistrictsInCity from 'react_components/community/districts_in_city';
 import Calendar from 'react_components/community/calendar';
 import Finance from 'react_components/community/finance';
 import Mobility from 'react_components/community/mobility';
-import XQSchoolBoardFinder from 'react_components/community/xq_school_board_finder';
 import Zillow from 'react_components/community/zillow';
 import RecentReviews from 'react_components/community/recent_reviews';
 import CityLinks from 'react_components/community/city_links';
@@ -60,7 +59,6 @@ ReactOnRails.register({
   Calendar,
   Finance,
   Mobility,
-  XQSchoolBoardFinder,
   Zillow,
   RecentReviews,
   CityLinksWrapper,
