@@ -109,7 +109,12 @@
 
         <%# City Browse Links (Cities) %>
         <div id="cities" class="module-section">
-          <%= render 'community/city_browse_links', cities: @cities, locality: @locality %>
+          <%= render 'community/city_browse_links',
+                header: 'cities',
+                cities: @cities,
+                locality: @locality,
+                pageType: 'state'
+          %>
         </div>
 
         <%# Districts %>

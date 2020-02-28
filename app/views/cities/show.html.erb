@@ -115,12 +115,12 @@
         <%# Neighboring Cities %>
         <% if @neighboring_cities.length > 0 %>
           <div id="neighboring-cities" class="module-section">
-            <section class="links-module">
-              <h3><%= I18n.t('neighboring_cities', scope: 'community.city') %></h3>
-              <%= react_component("CityLinksWrapper", props: {
-                  cities: @neighboring_cities
-              }) %>
-            </section>
+            <%= render 'community/city_browse_links',
+                  header: 'neighboring_cities',
+                  cities: @neighboring_cities,
+                  locality: @locality,
+                  pageType: 'city'
+            %>
           </div>
         <% end %>
 

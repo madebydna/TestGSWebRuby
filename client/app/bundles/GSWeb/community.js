@@ -18,7 +18,6 @@ import Finance from 'react_components/community/finance';
 import Mobility from 'react_components/community/mobility';
 import Zillow from 'react_components/community/zillow';
 import RecentReviews from 'react_components/community/recent_reviews';
-import CityLinks from 'react_components/community/city_links';
 import Ad from 'react_components/ad';
 import commonPageInit from './common';
 import { enableAutoAnchoring, initAnchorHashUpdater } from 'components/anchor_router';
@@ -32,7 +31,6 @@ const CsaTopSchoolsWrapper = withViewportSize({ propName: 'size' })(CsaTopSchool
 const SchoolBrowseLinksWrapper = withViewportSize({ propName: 'size' })(SchoolBrowseLinks);
 const AcademicsDataModuleWrapper = withViewportSize({ propName: 'size' })(AcademicsDataModule);
 const TeachersStaffWrapper = withViewportSize({ propName: 'size' })(TeachersStaff);
-const CityLinksWrapper = withViewportSize({ propName: 'size' })(CityLinks);
 const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
 
 
@@ -55,7 +53,6 @@ ReactOnRails.register({
   Mobility,
   Zillow,
   RecentReviews,
-  CityLinksWrapper,
   AdWrapper
 });
 

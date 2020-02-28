@@ -5,4 +5,3 @@ es:
       hero_narrative_no_county: '%{city} es una ciudad en %{state_long}'
       find_schools_in: Encuentra escuelas en
       districts_header: Distritos escolares en %{city}
-      neighboring_cities: Ciudades cercanas
