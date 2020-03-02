@@ -19,8 +19,7 @@ class AllFeedXmlElementDiff
       )
       entries_over_threshhold = new_file_report_generator.compare(
         XmlDiff::SaxParser.new(file: old_file, handler: XmlDiff::SaxHandler.new).parse
-      # ).select { |element, difference| difference > 0.1 }
-      ).select { |element, difference| difference > 0.0}
+      ).select { |element, difference| difference > 0.1 }
        .map { |e, d| "#{old_file} #{new_file} #{e} #{d}" }
        .sort
 
