@@ -1,0 +1,5 @@
+<div class="review-list">
+  <% reviews[offset...limit].map do |review| %>
+    <%= render 'community/review', review: review %>
+  <% end %>
+</div>
