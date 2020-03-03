@@ -416,8 +416,6 @@ LocalizedProfiles::Application.routes.draw do
     } do
     get "(:path)", to: "school_profiles#show"
 
-    # Old Profile Route
-    resources :reviews, only: [:create], controller: 'school_profile_reviews'
     # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
     resource :user, only: [:create], controller: 'school_user', action: 'create'
   end
@@ -471,22 +469,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/school/testScores.page', to: 'legacy_profile_redirect#show'
   get '/school/teachersStudents.page', to: 'legacy_profile_redirect#show'
   get '/school/research.page', to: 'legacy_profile_redirect#show'
-  get '/survey/form.page', to: 'legacy_profile_redirect#show'
-  get '/survey/results.page', to: 'legacy_profile_redirect#show'
-  get '/survey/start.page', to: 'legacy_profile_redirect#show'
-  get '/survey/startResults.page', to: 'legacy_profile_redirect#show'
 
-  # Handle legacy cities.page
-  get '/cities.page', to: redirect { |_, request|
-    state = (request && request.query_parameters.present? && request.query_parameters[:state].present?) ? States.state_path(request.query_parameters[:state].downcase) : nil
-    if state && request.query_parameters[:city].present?
-      "/#{state}/#{request.query_parameters[:city].downcase.gsub(' ', '-')}/"
-    elsif state
-      "/#{state}/"
-    else
-      '/'
-    end
-  }
 
   # Handle preschool URLs
   scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
@@ -497,9 +480,6 @@ LocalizedProfiles::Application.routes.draw do
       # http://guides.rubyonrails.org/routing.html#specifying-constraints
       city: /[^\/]+/,
   } do
-
-    resources :reviews, only: [:create], controller: 'school_profile_reviews'
-    resource :user, only: [:create], controller: 'school_user', action: 'create'
     get '', to: 'school_profiles#show'
   end
 
