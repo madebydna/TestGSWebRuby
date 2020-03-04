@@ -38,7 +38,7 @@ begin
       puts "......#{state}"
       if should_update
         School.active.where(canonical_url: nil).each do |school|
-          # done this way since ActiveRecord#update and ActiveRecord#update_attributes seems bugged
+          # done this way the attributes are white listed by attr_accessible
           link = "\"#{school_path(school, trailing_slash: true)}\""
           sql = "UPDATE _#{school.state.downcase}.school set canonical_url=#{link}, modified=modified where id=#{school.id};"
           School.connection.execute(sql)
