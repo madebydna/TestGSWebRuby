@@ -218,13 +218,7 @@
             <div class="rating-container reviews-module">
               <h3><%= I18n.t('title', scope: 'community.recent_reviews') %> <%= @locality[:name] %></h3>
 
-              <%= react_component("RecentReviews", props: {
-                  community: 'district',
-                  reviews: @reviews,
-                  locality: @locality
-              }) %>
-
-              <%#= render 'community/recent_reviews',
+              <%= render 'community/recent_reviews',
                     reviews: @reviews,
                     pageType: 'district'
               %>

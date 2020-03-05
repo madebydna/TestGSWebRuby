@@ -135,11 +135,10 @@
             <div class="rating-container reviews-module">
               <h3><%= I18n.t('title', scope: 'community.recent_reviews') %> <%= @state[:long].titleize %></h3>
 
-              <%= react_component("RecentReviews", props: {
-                  community: 'state',
-                  reviews: @reviews,
-                  locality: @locality
-              }) %>
+              <%= render 'community/recent_reviews',
+                    reviews: @reviews,
+                    pageType: 'state'
+              %>
             </div>
           </div>
         <% end %>
