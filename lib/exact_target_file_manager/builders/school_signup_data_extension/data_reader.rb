@@ -20,7 +20,7 @@ module ExactTargetFileManager
 
         def generate_sql(state)
           <<~SQL
-            Select id, school_id, state, member_id, 'en' as language from gs_schooldb.list_active
+            Select id, school_id, state, member_id, language from gs_schooldb.list_active
             where state = '#{state}' and list in (#{quoted_list_types});
           SQL
         end
