@@ -351,9 +351,9 @@ class SchoolRecord < ActiveRecord::Base
     end
 
     # TODO: Change to reduce/inject method
-    states_to_ids.each do |state, ids|
+    states_to_ids.each do |state, school_ids|
       # schools += self.on_db(state.downcase.to_sym).where(id: ids, active: true).to_a
-      schools += where(school_id: ids, active: true, state: state).to_a
+      schools += where(school_id: school_ids, active: true, state: state).to_a
     end
 
     # Sort schools the way they were passed in
