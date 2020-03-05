@@ -20,21 +20,13 @@ module Omni
       .where(gs_id: school.id, data_sets: { state: school.state })
     end
 
-    def self.for_district(id)
-      district_entity.where(gs_id: id)
+    def self.for_district(district)
+      district_entity.where(gs_id: district.id)
     end
 
-    def self.for_state(id)
-      # TODO: what does entity: state gs_id signify
-      state_entity.where(gs_id: id)
-    end
-
-    def label
-      data_set.data_type.name
-    end
-
-    def year
-      data_set.date_valid.year
+    # State represents an instance of Omni::State
+    def self.for_state(state)
+      state_entity.where(gs_id: state.id)
     end
 
   end

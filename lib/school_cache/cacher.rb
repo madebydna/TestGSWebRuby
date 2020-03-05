@@ -81,7 +81,7 @@ class Cacher
     {
         test_scores_gsdata:          TestScoresCaching::TestScoresCacherGsdata,
         characteristics:             CharacteristicsCaching::CharacteristicsCacher,
-        metrics:                     MetricsCaching::MetricsCacher,
+        metrics:                     MetricsCaching::SchoolMetricsCacher,
         esp_responses:               EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot:            ReviewsCaching::ReviewsSnapshotCacher,
         gsdata:                      GsdataCaching::GsdataCacher,
@@ -111,7 +111,7 @@ class Cacher
     @registered_cachers ||= [
       TestScoresCaching::TestScoresCacherGsdata,
       CharacteristicsCaching::CharacteristicsCacher,
-      MetricsCaching::MetricsCacher,
+      MetricsCaching::SchoolMetricsCacher,
       EspResponsesCaching::EspResponsesCacher,
       ReviewsCaching::ReviewsSnapshotCacher,
       TestScoresCaching::FeedTestScoresCacherGsdata,

@@ -1,31 +1,32 @@
 module MetricsCaching
   class MetricsSchoolQuery
-    attr_accessor :initial_scope, :school
+    attr_accessor :school
 
     def initialize(school)
       @school = school
-      @initial_scope = Omni::Metric.active.scoped
     end
 
-    def call
+    def call(initial_scope = Omni::Metric.active)
       scoped = filter_by_school(initial_scope)
       scoped = filter_by_data_types(scoped)
       scoped = include_district_average(scoped)
       scoped = include_state_average(scoped)
-      scoped.includes(:subject, :breakdown, {data_set: [:data_type, :source]})
+      scoped = include_needed_associations(scoped)
+      scoped
     end
 
     def filter_by_school(scoped)
-      scoped.by_school(schol)
+      scoped.for_school(school)
     end
 
     def filter_by_data_types(scoped)
       scoped.joins(data_set: :data_type)
-      .where(data_types: { id: MetricsCacher::DATA_TYPE_IDS_WHITELIST})
+      .where(data_types: { id: SchoolMetricsCacher::DATA_TYPE_IDS_WHITELIST})
     end
 
     def include_needed_associations(scoped)
-      scoped.includes(:subject, :breakdown, {data_set: [:data_type, :source]})
+      scoped.select("metrics.*").
+        includes(:subject, :breakdown, {data_set: [:data_type, :source]})
     end
 
     def include_district_average(scoped)
@@ -39,7 +40,7 @@ module MetricsCaching
     end
 
     def include_state_average(scoped)
-      scoped.select("m3.value as district_value").
+      scoped.select("m3.value as state_value").
         joins("LEFT JOIN metrics m3 ON m3.entity_type = 'state'
         AND m3.gs_id = #{state.id}
         AND metrics.data_set_id = m3.data_set_id
@@ -51,7 +52,7 @@ module MetricsCaching
     private
 
     def state
-      @state ||= Omni::State.find_by(abbreviation: school.state).first
+      @state ||= Omni::State.find_by(abbreviation: school.state)
     end
   end
 end
