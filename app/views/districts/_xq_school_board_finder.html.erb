@@ -1,3 +1,8 @@
+<% address = @locality[:address] %>
+<% city = @locality[:city] %>
+<% state_short = @locality[:stateShort] %>
+<% zip_code = @locality[:zipCode] %>
+
 <% address_string = "#{address}, #{city}, #{state_short} #{zip_code}" %>
 <% encoded_address = URI.escape(address_string, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")) %>
 <% sources = I18n.t('xq.sources', scope: 'community.district') %>
@@ -22,6 +27,6 @@
       </div>
 
       <div class="module-footer">
-        <%= render 'school_profiles/sources_link_to_modal', content: sources, page_type: 'district' %>
+        <%= render 'school_profiles/sources_link_to_modal', content: sources %>
       </div>
     </div>
