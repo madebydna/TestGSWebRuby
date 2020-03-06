@@ -2,8 +2,20 @@ es:
   community:
     district:
       website: Página web
+      school: Escuela
       schools: Escuelas
       students: Estudiantes
       grades: Grados
       find_schools_in: Encuentra escuelas en
       district_calendar: Calendario del distrito
+      xq:
+        school_board_finder: Encuentra tu junta escolar
+        learn_more_school_board_html: Obtén más información sobre la junta escolar de este distrito y sobre <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">cómo puedes participar</a> (enlace en inglés).
+        sources: >
+          <div class="sourcing">
+            <h1>Las fuentes de datos y información de los perfiles de distritos de GreatSchools</h1>
+            <div>
+              <h4>Encuentra tu junta escolar</h4>
+              <p><span class="emphasis">Fuente&#58;</span> XQ</p>
+            </div>
+          </div>

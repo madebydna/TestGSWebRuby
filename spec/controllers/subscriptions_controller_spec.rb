@@ -87,61 +87,6 @@ describe SubscriptionsController do
     end
   end
 
-  describe '#subscription_from_link' do
-    subject { post :subscription_from_link, list: 'greatnews' }
-    before do
-      allow(controller).to receive(:home_path).and_return('www.greatschools.org/')
-    end
-    context 'with params greatnews' do
-      let(:subscription_params){
-        {
-          'list' => 'greatnews',
-          'controller' => 'subscriptions',
-          'action' => 'subscription_from_link',
-          'message'=> 'You\'ve signed up to receive GreatSchools\'s newsletter'
-        }
-      }
-      context 'when logged in' do
-        before { allow(controller).to receive(:logged_in?).and_return(true) }
-        it 'should redirect to home_path' do
-          expect(subject).to redirect_to('www.greatschools.org/')
-        end
-        it 'should create subcription with params' do
-          expect(controller).to receive(:create_subscription).with(subscription_params)
-          subject
-        end
-      end
-
-      context 'when logged out' do
-        before do 
-          allow(controller).to receive(:logged_in?).and_return(false) 
-          allow(controller).to receive(:log_in_required_message).and_return('error')
-          allow(controller).to receive(:join_url).and_return('join_url')
-        end
-        it 'should flash error message' do
-          expect(controller).to receive(:flash_error).with('error')
-          subject
-        end
-        it 'should redirect to join_url' do
-          result = post :create, subscription: subscription_params
-          expect(result).to redirect_to('join_url')
-        end
-        it 'should saved_deferred action with create_subscription_deferred and subscription params' do
-          expect(controller).to receive(:save_deferred_action).
-            with(:create_subscription_deferred, subscription_params)
-          subject
-        end
-      end
-    end
-
-    context 'without params greatnews' do
-      subject { post :subscription_from_link }
-      it 'should redirect to home_path' do
-        expect(subject).to redirect_to('www.greatschools.org/')
-      end
-    end
-  end
-
   describe '#destroy' do
     let!(:current_user) { FactoryBot.create(:user,:with_subscriptions,:list=>'osp') }
 

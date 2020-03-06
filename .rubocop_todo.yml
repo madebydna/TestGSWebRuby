@@ -545,7 +545,6 @@ Lint/Debugger:
 # SupportedStylesAlignWith: start_of_line, def
 Lint/DefEndAlignment:
   Exclude:
-    - 'app/controllers/community_landing_controller.rb'
     - 'app/decorators/review_topic_decorator.rb'
     - 'app/models/school_user.rb'
     - 'app/models/schools/cached_characteristics_methods.rb'

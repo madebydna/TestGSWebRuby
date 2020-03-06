@@ -14,31 +14,6 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  # Route for adding subscriptions from a direct link for marketers 
-  # https://jira.greatschools.org/browse/PT-444
-  def subscription_from_link
-    if params[:list] == 'greatnews' || params[:list] == 'gsnewsletter'
-      params[:message] = 'You\'ve signed up to receive GreatSchools\'s newsletter'
-      if logged_in?
-        attempt_sign_up(params, home_path)
-      else
-        handle_not_logged_in(params)
-      end
-    else
-      redirect_to home_path
-    end
-  end
-
-  def create_subscription_from_account_page
-    list = params[:list]
-    unless @current_user.has_signedup?(list)
-      @current_user.add_subscription!(list)
-      subscription_id = @current_user.subscription_id(list)
-      result = "User profile failed to update subscription info  for user #{@current_user.email} "
-    end
-    render json: {'error_msg' => result, 'list' => list , 'subscription_id' =>subscription_id}
-  end
-
   def destroy
     success = false
     message = ''

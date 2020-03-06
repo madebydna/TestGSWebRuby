@@ -24,7 +24,7 @@ module ExactTargetFileManager
           sign_up_info << sign_up['id']
           sign_up_info << sign_up['member_id']
           sign_up_info << sign_up['list']
-          sign_up_info << 'en'
+          sign_up_info << sign_up['language']
         end
 
       end

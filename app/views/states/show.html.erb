@@ -19,7 +19,7 @@
 
     <div class="below-hero">
       <%= render 'community/toc' %><div class="community-modules">
-      
+
         <%# First Ad %>
         <div class="display-mobile">
           <%= react_component("AdWrapper", props: {
@@ -43,7 +43,7 @@
 
           <%# School Browse Links (Explore schools by type) %>
           <% if @school_levels %>
-            <h2 class="modules-title"><%= I18n.t('explore_by_type', scope: 'community.state') %></h2>
+            <h3 class="modules-title"><%= I18n.t('explore_by_type', scope: 'community.state') %></h3>
             <%= react_component("SchoolBrowseLinksWrapper", props: {
                 community: 'state',
                 locality: @locality,
@@ -109,17 +109,23 @@
 
         <%# City Browse Links (Cities) %>
         <div id="cities" class="module-section">
-          <%= render 'community/city_browse_links', cities: @cities, locality: @locality %>
+          <%= render 'community/city_browse_links',
+                header: 'cities',
+                cities: @cities,
+                locality: @locality,
+                pageType: 'state'
+          %>
         </div>
 
         <%# Districts %>
         <% if @districts.length > 0 %>
           <div id="districts" class="module-section">
             <h2 class="modules-title"><%= I18n.t('districts_header', scope: 'community.state', name_long: @state[:long].titleize) %></h2>
-            <%= react_component("DistrictsInStateWrapper", props: {
-                districts: @districts,
-                locality: @locality
-            }) %>
+            <%= render 'community/districts_in_community',
+                  districts: @districts,
+                  locality: @locality,
+                  pageType: 'state'
+            %>
           </div>
         <% end %>
 
@@ -129,11 +135,10 @@
             <div class="rating-container reviews-module">
               <h3><%= I18n.t('title', scope: 'community.recent_reviews') %> <%= @state[:long].titleize %></h3>
 
-              <%= react_component("RecentReviews", props: {
-                  community: 'state',
-                  reviews: @reviews,
-                  locality: @locality
-              }) %>
+              <%= render 'community/recent_reviews',
+                    reviews: @reviews,
+                    pageType: 'state'
+              %>
             </div>
           </div>
         <% end %>

@@ -1,14 +1,14 @@
 // State specific css on the hero header
 
-#hero{
+#hero {
   > div {
     max-width: 500px;
   }
-      
+
   div > div.state-hero-narrative {
     font-size: 16px;
   }
-  
+
   @include media-breakpoint-down(sm) {
     height: 100%;
     padding-top: 15px;
@@ -22,29 +22,35 @@
   }
 }
 
-.links-module{
+.links-module {
   ul {
     height: 150px;
     margin-bottom: 0;
+
     li {
-      width:49%;
+      width: 49%;
+
       @include media-breakpoint-up(lg) {
         margin-right: 20px;
       }
+
       @include media-breakpoint-down(md) {
         width: 90%;
       }
+
       @include media-breakpoint-down(xs) {
         width: 100%;
-        .school-count{
+
+        .school-count {
           margin-right: 10px;
         }
       }
-      
+
     }
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
       height: 175px;
     }
+
     @include media-breakpoint-down(md) {
       height: auto;
     }
@@ -62,34 +68,3 @@
     margin-bottom: 20px;
   }
 }
-
-//CSS rules for the districts in a state module
-.districts-in-state-module {
-  margin-bottom: 15px;
-  padding: 10px;
-  border: 1px solid $border-color;
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    li {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      padding: 5px 15px;
-      a {
-        font-size: 17px;
-        color: $school-color;
-      }
-      span, p {
-        margin: 0;
-        font-size: $font-size;
-        font-family: 'opensans-regular';
-      }
-    }
-  }
-}
-
-
-
-  

@@ -27,6 +27,11 @@ require_relative '../feed_builders/parent_reviews/xml_writer'
 require_relative '../feed_builders/parent_reviews/parent_rating_csv_writer'
 require_relative '../feed_builders/parent_reviews/parent_review_csv_writer'
 
+require_relative '../feed_builders/directory/data_reader'
+require_relative '../feed_builders/directory/xml_writer'
+require_relative '../feed_builders/directory/csv_writer'
+require_relative '../feed_builders/directory/census_csv_writer'
+
 module Feeds
   class GenerateFeed
     DATA_READERS = {
@@ -39,7 +44,10 @@ module Feeds
         official_overall_rating_description: Feeds::OfficialOverallRating::DataReader,
         parent_reviews: Feeds::ParentReview::DataReader,
         parent_reviews_flat: Feeds::ParentReview::DataReader,
-        parent_ratings_flat: Feeds::ParentReview::DataReader
+        parent_ratings_flat: Feeds::ParentReview::DataReader,
+        directory_feed: Feeds::Directory::DataReader,
+        directory_feed_flat: Feeds::Directory::DataReader,
+        directory_census_flat: Feeds::Directory::DataReader,
     }
 
     DATA_WRITERS = {
@@ -84,6 +92,17 @@ module Feeds
             txt: Feeds::ParentReview::ParentRatingCsvWriter,
             csv: Feeds::ParentReview::ParentRatingCsvWriter
         },
+        directory_feed: {
+            xml: Feeds::Directory::XmlWriter
+        },
+        directory_feed_flat:{
+          txt: Feeds::Directory::CsvWriter,
+          csv: Feeds::Directory::CsvWriter
+        },
+        directory_census_flat:{
+          txt: Feeds::Directory::CensusCsvWriter,
+          csv: Feeds::Directory::CensusCsvWriter
+        }
     }
 
     def initialize
@@ -121,7 +140,8 @@ module Feeds
       if district_ids.present?
         DistrictRecord.find_by_state_and_ids(state, district_ids)
       else
-        DistrictRecord.by_state(state.downcase).active.order(:district_id)
+        # DistrictRecord.by_state(state.downcase).active.order(:district_id)
+        DistrictRecord.where("unique_id like ?", "#{state.downcase}-%").active.order(:district_id)
       end
     end
 

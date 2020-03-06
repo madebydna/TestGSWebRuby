@@ -19,7 +19,7 @@
 
     <div class="below-hero">
       <%= render 'community/toc' %><div class="community-modules">
-      
+
         <%# First Ad %>
         <div class="display-mobile">
           <%= react_component("AdWrapper", props: {
@@ -73,15 +73,17 @@
         <% if @districts.length > 0 %>
           <div id="districts" class="module-section">
             <h2 class="modules-title"><%= I18n.t('districts_header', scope: 'community.city', city: @locality[:city]) %></h2>
-            <%= react_component("DistrictsInCityWrapper", props: {
-                districts: @districts
-            }) %>
+            <%= render 'community/districts_in_community',
+                  districts: @districts,
+                  locality: @locality,
+                  pageType: 'city'
+            %>
           </div>
         <% end %>
-        
+
         <%# Mobility %>
         <div id="mobility" class="module-section">
-          <h2 class="modules-title"><%= I18n.t('title', scope: 'community.mobility') %> <%= @locality[:city] %></h2>
+          <h3 class="modules-title"><%= I18n.t('title', scope: 'community.mobility') %> <%= @locality[:city] %></h3>
           <%= react_component("Mobility", props: {
               locality: @locality,
               pageType: 'City'
@@ -101,11 +103,10 @@
             <div class="rating-container reviews-module">
               <h3><%= I18n.t('title', scope: 'community.recent_reviews') %> <%= @locality[:city] %></h3>
 
-              <%= react_component("RecentReviews", props: {
-                  community: 'city',
-                  reviews: @reviews,
-                  locality: @locality
-              }) %>
+              <%= render 'community/recent_reviews',
+                    reviews: @reviews,
+                    pageType: 'city'
+              %>
             </div>
           </div>
         <% end %>
@@ -113,12 +114,12 @@
         <%# Neighboring Cities %>
         <% if @neighboring_cities.length > 0 %>
           <div id="neighboring-cities" class="module-section">
-            <section class="links-module">
-              <h3><%= I18n.t('neighboring_cities', scope: 'community.city') %></h3>
-              <%= react_component("CityLinksWrapper", props: {
-                  cities: @neighboring_cities
-              }) %>
-            </section>
+            <%= render 'community/city_browse_links',
+                  header: 'neighboring_cities',
+                  cities: @neighboring_cities,
+                  locality: @locality,
+                  pageType: 'city'
+            %>
           </div>
         <% end %>
 

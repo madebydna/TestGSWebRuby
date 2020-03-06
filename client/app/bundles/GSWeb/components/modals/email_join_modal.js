@@ -154,7 +154,7 @@ assign(EmailJoinModal.prototype, {
       email: this.getEmail(),
       grades: this.getGrades(),
       language: this.getLanguage() || 'en'
-    }
+    };
   },
 
   joinSubmitHandler: function joinSubmitHandler(event) {
@@ -164,7 +164,7 @@ assign(EmailJoinModal.prototype, {
         this.postJoinForm()
           .done(this.submitSuccessHandler.bind(this))
           .fail(this.submitFailHandler.bind(this));
-      })
+      });
     return false;
   },
 

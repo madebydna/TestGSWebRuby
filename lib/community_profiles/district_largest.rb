@@ -11,17 +11,16 @@ module CommunityProfiles
       @_largest_districts_in_state ||= begin
         @cache_data_reader.largest_districts.map do |district|
           {}.tap do |h|
-            h[:name] = district['name']
+            h[:districtName] = district['name']
             h[:enrollment] = district['enrollment']
             h[:city] = district['city']
             h[:state] = district['state']
             h[:grades] = district['levels']
             h[:numSchools] = district['school_count']
-            h[:url] = district_path(district_params(district['state'], district['city'], district['name']).merge(trailing_slash: true))
+            h[:url] = district_path_with_lang(district['state'], district['city'], district['name'])
           end
         end
       end
     end
-    
   end
 end

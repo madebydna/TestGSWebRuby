@@ -103,6 +103,12 @@ module UrlHelper
     }
   end
 
+  def district_path_with_lang(state, city, district)
+    params = district_params(state, city, district).merge({trailing_slash: true})
+    params[:lang] = I18n.locale if I18n.locale != I18n.default_locale
+    district_path(params)
+  end
+
   def district_params(state, city, district)
     {
       state: gs_legacy_url_encode(States.state_name state),

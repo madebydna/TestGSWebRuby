@@ -5,9 +5,9 @@ class OspController < ApplicationController
   #order of some of these callbacks matter
   before_action :set_login_redirect
   before_action :set_city_state
-  before_action :login_required_for_osp, except: [:approve_provisional_osp_user_data]
-  before_action :set_osp_school_instance_vars, except: [:approve_provisional_osp_user_data]
-  before_action :set_esp_membership_instance_vars, except: [:approve_provisional_osp_user_data]
+  before_action :login_required_for_osp
+  before_action :set_osp_school_instance_vars
+  before_action :set_esp_membership_instance_vars
   after_action :success_or_error_flash, only: [:submit]
 
   GON_PAGE_NAME = {'1' => 'GS:OSP:BasicInformation', '2' => 'GS:OSP:Academics', '3' => 'GS:OSP:Extracurriculars', '4' => 'GS:OSP:StaffFacilities'}
@@ -31,19 +31,6 @@ class OspController < ApplicationController
       save_response!(question_id, response_key, values, submit_time, @esp_membership_id, @is_approved_user)
     end
     redirect_to(:action => 'show', :state => params[:state], :schoolId => params[:schoolId], :page => params[:redirectPage])
-  end
-
-  #ToDo when Java is no longer the proxy, this should not be a route
-  def approve_provisional_osp_user_data
-    osp_form_responses = OspFormResponse.where(esp_membership_id: params[:membership_id])
-    osp_form_responses.each do |osp_form_response|
-      create_update_queue_row!(osp_form_response.response)
-    end
-    # only java is receiving this html, does not matter that it renders blank page
-    EspMembership.find_by(id: params[:membership_id], status: 'approved', active: true).tap do |em|
-      SchoolUser.make_from_esp_membership(em) if em
-    end
-    render text: ''
   end
 
   protected

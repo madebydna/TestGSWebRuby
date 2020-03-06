@@ -19,13 +19,12 @@ describe QueueDaemon do
 
     context "when there are #{num_of_high_priority_items} priority 2 and #{num_of_low_priority_items} priority 4 items in the update queue" do
       before do
-        clean_models UpdateQueue
         UpdateQueue.create(num_of_low_priority_items.times.map  { low_priority_item  })
         UpdateQueue.create(num_of_high_priority_items.times.map { high_priority_item })
         allow(subject).to receive(:update_limit).and_return(queue_daemon_updates_limit)
       end
 
-      after(:all) { clean_models UpdateQueue }
+      after { clean_models UpdateQueue }
       it "should respond to #get_updates results" do
         expect(subject).to respond_to(:get_updates)
       end

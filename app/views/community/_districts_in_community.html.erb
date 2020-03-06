@@ -1,0 +1,44 @@
+<section class="districts-in-community-module">
+      <ul>
+        <% districts.each_with_index do |district, idx| %>
+          <% enrollment_formatted = number_with_delimiter(district[:enrollment]) if district[:enrollment] %>
+          <% num_schools_formatted = number_with_delimiter(district[:numSchools]) if district[:numSchools] %>
+
+          <li key="<%= district[:districtName] %>">
+            <a href="<%= district[:url] %>"><%= district[:districtName] %></a>
+            <div>
+              <% if district[:enrollment] %>
+                <span>
+                  <%= enrollment_formatted %> <%= I18n.t('students', scope: 'community.district').downcase %>
+                  <span class="display-desktop"> | </span>
+                </span>
+              <% end %>
+              <span><%= district[:city] %>, <%= district[:state] %></span>
+              <br />
+              <span><%= I18n.t('grades', scope: 'community.district') %>: <%= district[:grades] %> | </span>
+              <span>
+                <%= num_schools_formatted %>
+                <% if district[:numSchools] == 1 %>
+                  <%= I18n.t('school', scope: 'community.district').downcase %>
+                <% else %>
+                  <%= I18n.t('schools', scope: 'community.district').downcase %>
+                <% end %>
+              </span>
+            </div>
+            <% if idx != districts.length - 1 %>
+              <div class="blue-line"></div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+
+      <% if pageType == 'state' %>
+        <div class="blue-line"></div>
+
+        <div class="more-school-btn">
+          <a href="<%= locality[:districtsBrowseUrl] %>">
+            <button><%= I18n.t('districts_browse_more_button', scope: 'community.state') %></button>
+          </a>
+        </div>
+      <% end %>
+    </section>
