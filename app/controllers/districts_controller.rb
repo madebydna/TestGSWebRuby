@@ -6,7 +6,6 @@ class DistrictsController < ApplicationController
 
   CACHE_KEYS_FOR_READER = %w(district_schools_summary district_characteristics gsdata)
 
-
   layout 'application'
   before_filter :redirect_unless_valid_district
   before_action :redirect_to_canonical_url
@@ -44,6 +43,7 @@ class DistrictsController < ApplicationController
     @growth_rating = growth_rating
     @summary_rating = summary_rating
     @summary_type = summary_rating_type
+    @page_type = 'district'
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     gon.dependencies = {
         highcharts: ActionController::Base.helpers.asset_path('highcharts.js')

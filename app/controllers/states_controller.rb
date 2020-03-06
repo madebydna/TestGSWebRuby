@@ -32,7 +32,7 @@ class StatesController < ApplicationController
     @csa_years = []
     @csa_module = csa_state_solr_query.present?
     @breadcrumbs = breadcrumbs
-    @locality = locality 
+    @locality = locality
     @cities = cities_data
     @top_schools = top_rated_schools
     @summary_type = summary_rating_type
@@ -79,19 +79,19 @@ class StatesController < ApplicationController
   end
 
   def csa_state_solr_query
-    @_csa_state_solr_query ||= begin 
+    @_csa_state_solr_query ||= begin
       csa_badge = ['*']
       query_type = Search::SolrSchoolQuery
       query_type.new(
           state: @state[:short].upcase,
           limit: 1,
           csa_years: csa_badge.presence
-      ).search 
+      ).search
     end
   end
 
   def reviews
-    @_reviews ||= 
+    @_reviews ||=
       Review
         .active
         .where(state: @state[:short])
@@ -104,33 +104,33 @@ class StatesController < ApplicationController
   end
 
   def reviews_formatted
-    @_reviews_formatted ||= begin 
+    @_reviews_formatted ||= begin
       reviews.map do |review|
         review_school = School.find_by_state_and_id(review.state, review.school_id)
 
         if review_school.present? && review_school.active?
           Hash.new.tap do |rp|
-            rp[:avatar] = UserReviews::USER_TYPE_AVATARS[review.user_type]
-            rp[:five_star_review] = five_star_review_hash(review)
-            rp[:id] = review.id 
-            rp[:most_recent_date] = I18n.l(review.created, format: "%B %d, %Y")
+            rp["avatar"] = UserReviews::USER_TYPE_AVATARS[review.user_type]
+            rp["five_star_review"] = five_star_review_hash(review)
+            rp["id"] = review.id
+            rp["most_recent_date"] = I18n.l(review.created, format: "%B %d, %Y")
             rp[:school_name] = review_school.name
             rp[:school_path] = school_path(review_school)
-            rp[:user_type_label] = t(review.user_type).gs_capitalize_first
-          end 
+            rp["user_type_label"] = t(review.user_type).gs_capitalize_first
+          end
         end
       end.compact
-    end 
-  end 
+    end
+  end
 
   def five_star_review_hash(review)
     Hash.new.tap do |rp|
-      rp[:answer] = review.answer 
-      rp[:comment] = review.comment 
+      rp[:answer] = review.answer
+      rp[:comment] = review.comment
       rp[:topic_label] = review.question.review_topic.label
     end
-  end 
-  
+  end
+
   def students
     @_students ||= CommunityProfiles::Students.new(cache_data_reader: state_cache_data_reader)
   end
@@ -170,7 +170,6 @@ class StatesController < ApplicationController
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
     if show_ads?
-      
       page_view_metadata.each do |key, value|
         ad_targeting_gon_hash[key] = value
       end
@@ -217,7 +216,7 @@ class StatesController < ApplicationController
     CommunityProfiles::Toc.new(csa_module: @csa_module, school_districts: @districts, academics: @academics, student_demographics: @students, reviews: @reviews)
   end
 
-  def locality 
+  def locality
     @_locality ||= begin
       Hash.new.tap do |cp|
         cp[:nameLong] = States.capitalize_any_state_names(@state[:long])
@@ -239,7 +238,7 @@ class StatesController < ApplicationController
         ) if @csa_module
       end
     end
-  end 
+  end
 
   def cities_data
     top_cities = browse_top_cities
@@ -247,18 +246,18 @@ class StatesController < ApplicationController
     @_cities_data ||= begin
       top_cities.map do |city|
         Hash.new.tap do |cp|
-          cp[:name] = city.name 
+          cp[:name] = city.name
           cp[:population] = city.population
-          cp[:state] = city.state 
+          cp[:state] = city.state
           cp[:url] = city_path(
             state: gs_legacy_url_encode(States.state_name(city.state)),
             city: gs_legacy_url_encode(city.name),
             trailing_slash: true
           )
         end
-      end 
+      end
     end
-  end 
+  end
 
   def default_extras
     %w(summary_rating enrollment review_summary)

@@ -1,0 +1,27 @@
+<div>
+  <a class="anchor-mobile-offset" name="Reviews"></a>
+  <div class="row">
+    <div class="col-xs-12 col-lg-12">
+      <%= render 'community/reviews_list',
+            reviews: @reviews,
+            limit: 3,
+            offset: 0
+      %>
+    </div>
+  </div>
+
+  <% if pageType != 'state' %>
+    <div class="blue-line"></div>
+    <div class="add-review-container">
+      <% if pageType == 'city' %>
+        <p><%= I18n.t('city_blurb', scope: 'community.recent_reviews') %></p>
+      <% elsif pageType == 'district' %>
+        <p><%= I18n.t('district_blurb', scope: 'community.recent_reviews') %></p>
+      <% end %>
+
+      <a href="<%= review_choose_school_path %>">
+        <button><%= I18n.t('add_a_review', scope: 'community.recent_reviews') %></button>
+      </a>
+    </div>
+  <% end %>
+</div>

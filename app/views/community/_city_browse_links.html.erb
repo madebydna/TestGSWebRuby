@@ -2,7 +2,7 @@
 <% locality %>
 
 <section class="links-module">
-  <h3><%= I18n.t('cities', scope: 'community.toc') %></h3>
+  <h3><%= I18n.t(header, scope: 'community.toc') %></h3>
   <ul>
     <% cities.each_with_index do |city, idx| %>
       <li>
@@ -17,12 +17,14 @@
       </li>
     <% end %>
   </ul>
-  <div class="separator">
-    <div class="blue-line"></div>
-  </div>
-  <div class="more-school-btn">
-    <a href="<%= locality[:citiesBrowseUrl] %>">
-      <button><%= I18n.t('cities_browse_more_button', scope: 'community.state') %></button>
-    </a>
-  </div>
+  <% if pageType == 'state' %>
+    <div class="separator">
+      <div class="blue-line"></div>
+    </div>
+    <div class="more-school-btn">
+      <a href="<%= locality[:citiesBrowseUrl] %>">
+        <button><%= I18n.t('cities_browse_more_button', scope: 'community.state') %></button>
+      </a>
+    </div>
+  <% end %>
 </section>

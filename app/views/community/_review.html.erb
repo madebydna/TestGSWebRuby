@@ -1,0 +1,48 @@
+<% review %>
+<% five_star_review = review["five_star_review"] %>
+<% user_type_label = review["user_type_label"] %>
+<% most_recent_date = review["most_recent_date"] %>
+<% avatar = review["avatar"] %>
+<% school_path_with_lang = I18n.locale == :es ? add_query_params_to_url(review[:school_path], false, { lang: :es }) : review[:school_path] %>
+
+<div class="user-reviews-container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-2 user-info-column">
+      <div class="avatar icon-avatar-<%= avatar %>"></div>
+      <div class="user-type"><%= user_type_label %></div>
+    </div>
+    <div class="col-xs-12 col-sm-10 review-list-column">
+      <% if five_star_review %>
+        <div class="five-star-review">
+          <div class="header">
+            <%= I18n.t(five_star_review[:topic_label], scope: 'community.recent_reviews') %>
+          </div>
+
+          <div class="answer">
+            <%= render 'school_profiles/five_stars', filled: five_star_review[:answer].to_i if five_star_review[:answer].to_i != 0 %>
+          </div>
+
+          <div class="comment">
+            <%= render 'school_profiles/shortened_text', text: five_star_review[:comment], length: 200 %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="type-and-date">
+        <% if review[:school_name] %>
+          <span>
+            <span><%= I18n.t('review_for', scope: 'community.recent_reviews') %></span>
+            <a href="<%= school_path_with_lang %>"><%= review[:school_name] %></a> <br />
+          </span>
+        <% end %>
+
+        <% if user_type_label %>
+          <%= I18n.t('submitted', scope: 'community.recent_reviews') %> <%= I18n.t('by_a', scope: 'community.recent_reviews') %> <%= user_type_label.downcase %> <%= ("\u00B7").encode('utf-8') %>
+        <% else %>
+          <%= I18n.t('submitted', scope: 'community.recent_reviews') %>
+        <% end %>
+        <%= most_recent_date %>
+      </div>
+    </div>
+  </div>
+</div>

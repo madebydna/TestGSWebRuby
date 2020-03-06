@@ -195,10 +195,10 @@
 
         <%# Mobility %>
         <div id="mobility" class="module-section">
-          <h3 class="modules-title"><%= I18n.t('title', scope: 'community.mobility') %> <%= @locality[:name] %></h3>
-          <%= react_component("XQSchoolBoardFinder", props: {
-              locality: @locality
-          }) %>
+          <h2 class="modules-title"><%= I18n.t('title', scope: 'community.mobility') %> <%= @locality[:name] %></h2>
+          <%= render 'districts/xq_school_board_finder',
+                locality: @locality
+          %>
           <%= react_component("Mobility", props: {
               locality: @locality,
               pageType: 'District'
@@ -218,11 +218,10 @@
             <div class="rating-container reviews-module">
               <h3><%= I18n.t('title', scope: 'community.recent_reviews') %> <%= @locality[:name] %></h3>
 
-              <%= react_component("RecentReviews", props: {
-                  community: 'district',
-                  reviews: @reviews,
-                  locality: @locality
-              }) %>
+              <%= render 'community/recent_reviews',
+                    reviews: @reviews,
+                    pageType: 'district'
+              %>
             </div>
           </div>
         <% end %>
