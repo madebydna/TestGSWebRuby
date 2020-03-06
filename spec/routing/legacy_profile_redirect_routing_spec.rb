@@ -11,10 +11,6 @@ describe 'Legacy school profile URL routing' do
     /school/testScores.page?id=1&state=ca
     /school/teachersStudents.page?id=1&state=ca
     /school/research.page?id=1&state=ca
-    /survey/form.page?id=1&state=ca
-    /survey/results.page?id=1&state=ca
-    /survey/start.page?id=1&state=ca
-    /survey/startResults.page?id=1&state=ca
   ).each do |test_url|
     describe "provided #{test_url}" do
       let (:test_url) { test_url }
