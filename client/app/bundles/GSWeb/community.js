@@ -17,7 +17,6 @@ import Calendar from 'react_components/community/calendar';
 import Finance from 'react_components/community/finance';
 import Mobility from 'react_components/community/mobility';
 import Zillow from 'react_components/community/zillow';
-import RecentReviews from 'react_components/community/recent_reviews';
 import Ad from 'react_components/ad';
 import commonPageInit from './common';
 import { enableAutoAnchoring, initAnchorHashUpdater } from 'components/anchor_router';
@@ -52,7 +51,6 @@ ReactOnRails.register({
   Finance,
   Mobility,
   Zillow,
-  RecentReviews,
   AdWrapper
 });
 
@@ -137,4 +135,15 @@ $(() => {
     'award-winning-schools': '#award-winning-schools',
     'CollegeSuccessAwardWinners': '.top-school-module .profile-module'
   });
+
+  $(function() {
+    $('.js-shortened-text').each(function() {
+      var $text = $(this);
+      var extraText = $text.data('shortened-text-rest');
+      $text.find('span').on('click', function() {
+        $(this).hide();
+        $text.html($text.html() + extraText);
+      });
+    });
+   });
 });
