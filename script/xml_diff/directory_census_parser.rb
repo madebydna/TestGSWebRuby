@@ -4,6 +4,7 @@
 
 require 'ox'
 require 'mysql2'
+require 'open3'
 
 # This class iterates over a select group of fields and compares them for discrepancies in the database.
 class DirectoryCensusParser < ::Ox::Sax
@@ -77,12 +78,23 @@ end
 states = States.abbreviations
 states.each do |state|
   zipped_path = "/home/feeds/feeds/greatschools/local-greatschools-feed-#{state.upcase}.zip"
-  xml_path = "/tmp/local-greatschools-feed-#{state.upcase}.xml"
-  puts "Working on #{state}"
-  system("rm #{xml_path} 2> /dev/null")
-  system("unzip #{zipped_path} -d /tmp/")
+  xml_path = "/tmp/directory_feed_content/local-greatschools-feed-#{state.upcase}.xml"
+  puts "+-- Working on #{state}"
+
+  stdout, stdin, status = Open3.capture3("mkdir -p /tmp/directory_feed_content")
+  puts "Output from mkdir -p /tmp/directory_feed_content"
+  p [stdout, stdin, status]
+
+  stdout, stdin, status = Open3.capture3("rm #{xml_path}")
+  puts "Output from rm #{xml_path}"
+  p [stdout, stdin, status]
+
+  stdout, stdin, status = Open3.capture3("unzip #{zipped_path} -d /tmp/directory_feed_content/")
+  puts "Output from rm #{xml_path}"
+  p [stdout, stdin, status]
+
   io = File.open("#{xml_path}")
   handler = DirectoryCensusParser.new(state)
   Ox.sax_parse(handler, io)
-  system("rm #{xml_path}")
+  # system("rm #{xml_path}")
 end
