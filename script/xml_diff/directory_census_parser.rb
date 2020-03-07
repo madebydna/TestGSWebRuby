@@ -75,22 +75,23 @@ class DirectoryCensusParser < ::Ox::Sax
 
 end
 
+puts "Creating tmp work directory"
+stdout, stdin, status = Open3.capture3("mkdir -p /tmp/directory_feed_content")
+puts "Output from mkdir -p /tmp/directory_feed_content"
+p [stdout, stdin, status]
+
 states = States.abbreviations
 states.each do |state|
   zipped_path = "/home/feeds/feeds/greatschools/local-greatschools-feed-#{state.upcase}.zip"
   xml_path = "/tmp/directory_feed_content/local-greatschools-feed-#{state.upcase}.xml"
   puts "+-- Working on #{state}"
 
-  stdout, stdin, status = Open3.capture3("mkdir -p /tmp/directory_feed_content")
-  puts "Output from mkdir -p /tmp/directory_feed_content"
-  p [stdout, stdin, status]
-
   stdout, stdin, status = Open3.capture3("rm #{xml_path}")
   puts "Output from rm #{xml_path}"
   p [stdout, stdin, status]
 
   stdout, stdin, status = Open3.capture3("unzip #{zipped_path} -d /tmp/directory_feed_content/")
-  puts "Output from rm #{xml_path}"
+  puts "Output from unzip #{zipped_path} -d /tmp/directory_feed_content/"
   p [stdout, stdin, status]
 
   io = File.open("#{xml_path}")
