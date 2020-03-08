@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { t, capitalize } from "util/i18n";
-import { findDistrictCalendarWithNCES as fetchDistrictCalendar, findDistrictOverviewData } from "../../api_clients/calendar";
+import { findCalendarWithNCES as fetchCalendar, findOverviewData as fetchOverview } from "../../api_clients/calendar";
 import InfoBox from "../school_profiles/info_box";
 import LoadingOverlay from "../search/loading_overlay";
 import Drawer from "../drawer";
@@ -58,7 +58,7 @@ class Calendar extends React.Component {
     return validEvents;
   };
 
-  // Removes time from date object so we can compare MM/DD/YY 
+  // Removes time from date object so we can compare MM/DD/YY
   formatDateObject(date) {
     return [date.getFullYear(), date.getMonth() + 1, date.getDate()];
   }
@@ -68,9 +68,9 @@ class Calendar extends React.Component {
   }
 
   eventIsFutureDate(today, eventDateArray) {
-    let [todayYear, todayMonth, todayDate] = today; 
+    let [todayYear, todayMonth, todayDate] = today;
     let [eventYear, eventMonth, eventDate] = eventDateArray;
-    
+
     if (eventYear > todayYear) {
       return true;
     } else if ((eventYear === todayYear) && (eventMonth > todayMonth)) {
@@ -84,7 +84,7 @@ class Calendar extends React.Component {
 
   formatShortDateString(dateArray) {
     let [eventYear, eventMonth, eventDate] = dateArray;
-    
+
     return `${eventMonth}/${eventDate}/${eventYear}`;
   }
 
@@ -92,15 +92,18 @@ class Calendar extends React.Component {
     for (let i=0; i < event.length; i++) {
       if (event[i][0] === valueName && event[i].length > 3) {
         return event[i][3];
-      } 
+      }
     }
     return null;
   }
 
   componentDidMount() {
-    fetchDistrictCalendar(this.props.locality.calendarURL, this.props.locality.nces_code)
+    const calendarEntity = this.props.pageType === 'District' ? 'district' : 'school';
+    const overviewEntity = this.props.pageType === 'District' ? 'districts' : 'school';
+
+    fetchCalendar(this.props.locality.calendarURL, this.props.locality.nces_code, calendarEntity)
       .done($jsonRes => {
-        findDistrictOverviewData(this.props.locality.calendarURL, this.props.locality.nces_code)
+        fetchOverview(this.props.locality.calendarURL, this.props.locality.nces_code, overviewEntity)
           .done($jsonRes2 =>{
             let verified;
             let lastUpdated;
@@ -115,7 +118,7 @@ class Calendar extends React.Component {
               data: this.parseEventsPayload($jsonRes)
             })
           })
-          .fail(error => this.setState({
+          .fail(error => console.log(error) ||  this.setState({
             isLoading: false,
             verified: false,
             data: this.parseEventsPayload($jsonRes)
@@ -124,7 +127,7 @@ class Calendar extends React.Component {
       .fail(error => this.setState({
         isLoading: false,
         didFail: true,
-        error: error 
+        error: error
       }))
     }
 
@@ -136,12 +139,12 @@ class Calendar extends React.Component {
           <div className="col-sm-1"></div>
           <div className="col-sm-9">
             {t('calendar.event')}
-            { this.state.verified && 
+            { this.state.verified &&
               <span className="verified">
                 <ModalTooltip content={t('calendar.verified')}>
                   <img src={claimedBadge}/>
                 </ModalTooltip>
-              </span> 
+              </span>
             }
           </div>
         </div>
@@ -161,13 +164,24 @@ class Calendar extends React.Component {
     )
   }
 
+  renderDistrictModuleFooter(){
+    const sources = t('calendar.sources_html');
+
+    return <div className="module-footer">
+      <div data-ga-click-label='Calendar'>
+        <InfoBox content={sources} element_type="sources" pageType={this.props.pageType}>{t('See notes')}</InfoBox>
+        <QualarooDistrictLink module='district_calendar' state={this.props.locality.stateShort} districtId={this.props.locality.district_id} />
+      </div>
+    </div>;
+  }
+
   render() {
     let calendarEvents = this.state.data;
     let calendarEventsInitial = calendarEvents.slice(0,5).map(event => this.renderCalendarEvent(event));
     let calendarEventsForDrawer = calendarEvents.slice(5).map(event => this.renderCalendarEvent(event));
-    
+
     let lastUpdated;
-    if(this.state.lastUpdated.length > 0){
+    if (this.state.lastUpdated && this.state.lastUpdated.length > 0){
       const [year, intMonth, day] = this.state.lastUpdated;
       const date = new Date(year, intMonth - 1, day);
       const month = date.toLocaleString('en-us', { month: 'long' })
@@ -192,18 +206,17 @@ class Calendar extends React.Component {
         </section>
       )
     } else {
-      const sources = t('calendar.sources_html');
         return (
           <React.Fragment>
             <section className="calendar-module">
               <div className="calendar-content">
                 { this.renderCalendarHeader() }
                 { calendarEventsInitial }
-                { calendarEventsForDrawer.length > 0 && 
+                { calendarEventsForDrawer.length > 0 &&
                   <div className="rating-container__more-items">
                     <Drawer
                       content={ calendarEventsForDrawer }
-                      trackingCategory={ `${this.props.pageType}` }
+                      trackingCategory={ this.props.pageType }
                       trackingAction={ "Show More" }
                       trackingLabel={ "Calendar" }
                     />
@@ -212,12 +225,7 @@ class Calendar extends React.Component {
               </div>
               {lastUpdated}
             </section>
-            <div className="module-footer">
-              <div data-ga-click-label='Calendar'>
-                <InfoBox content={sources} element_type="sources" pageType={this.props.pageType}>{ t('See notes') }</InfoBox>
-                <QualarooDistrictLink module='district_calendar' state={this.props.locality.stateShort} districtId={this.props.locality.district_id} />
-              </div>
-            </div>
+            {this.props.pageType === 'District' && this.renderDistrictModuleFooter()}
           </React.Fragment>
         )
     }

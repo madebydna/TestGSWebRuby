@@ -1,0 +1,75 @@
+$border-color: #dbe6eb;
+$font-size: 16px;
+
+.calendar-module {
+  border: solid 1px $border-color;
+  margin: 0;
+
+  @include media-breakpoint-down(xs) {
+    border-left: 0;
+    border-right: 0;
+    margin: 10px 0 5px;
+    padding: 10px;
+  }
+
+  .null-state {
+    display: block;
+    font-family: 'opensans-semibold';
+    margin: auto;
+    padding: 20px;
+
+    h3 {
+      text-align: center;
+    }
+
+    h4 {
+      font-size: $font-size;
+    }
+
+    .loading-overlay {
+      height: 100%;
+      position: relative;
+      width: 100%;
+      z-index: 1;
+
+      > .loader {
+        background-image: image-url('search/owl-loader.gif');
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 60px;
+        margin: auto;
+        width: 60px;
+      }
+    }
+  }
+
+  .calendar-content {
+    padding: 20px;
+  }
+
+  .calendar-header {
+    background-color: #edf2f5;
+    color: #71787e;
+    font-family: opensans-semibold;
+    font-size: 14px;
+  }
+
+  .verified{
+    width: 25px;
+    height: 25px;
+    float: right;
+    @include media-breakpoint-down(xs) {
+      margin-top: -10px;
+    }
+  }
+
+  .calendar-event-date {
+    font-family: opensans-semibold;
+  }
+
+  .last-updated{
+    font-family: 'opensans-italic';
+    text-align: right;
+    padding: 0 20px 10px 0;
+  }
+}

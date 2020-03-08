@@ -1,25 +1,27 @@
-export const findDistrictCalendarWithNCES = (url, nces) => (
-    $.ajax({
-        type: 'GET',
-        url,
-        data:{
-            type: 'calendar',
-            sub_type: 'district',
-            api_version: '2019-06-21',
-            event_type: 'yearly',
-            id: nces,
-            data_type: 'jcal'
-        },
-        timeout: 6000
-    })
-);
+export const findCalendarWithNCES = (url, nces, entity) => {
+  // entity is `school` or `district` per tandem api
+  return $.ajax({
+    type: 'GET',
+    url,
+    data:{
+      type: 'calendar',
+      sub_type: entity,
+      api_version: '2019-06-21',
+      event_type: 'yearly',
+      id: nces,
+      data_type: 'jcal'
+    },
+    timeout: 6000
+  });
+};
 
-export const findDistrictOverviewData = (url, nces) => (
+export const findOverviewData = (url, nces, entity) => (
+    //entity can be `school` or `districts`
     $.ajax({
         type: 'GET',
         url,
         data: {
-            type: 'districts',
+            type: entity,
             api_version: '2019-06-21',
             nces_id: nces,
             details: 't',
