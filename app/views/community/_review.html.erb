@@ -19,7 +19,9 @@
           </div>
 
           <div class="answer">
-            <%= render 'school_profiles/five_stars', filled: five_star_review[:answer].to_i if five_star_review[:answer].to_i != 0 %>
+            <% if five_star_review[:answer].to_i != 0 %>
+              <%= render 'school_profiles/five_stars', filled: five_star_review[:answer].to_i %>
+            <% end %>
           </div>
 
           <div class="comment">

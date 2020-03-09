@@ -4,7 +4,7 @@
           <% enrollment_formatted = number_with_delimiter(district[:enrollment]) if district[:enrollment] %>
           <% num_schools_formatted = number_with_delimiter(district[:numSchools]) if district[:numSchools] %>
 
-          <li key="<%= district[:districtName] %>">
+          <li>
             <a href="<%= district[:url] %>"><%= district[:districtName] %></a>
             <div>
               <% if district[:enrollment] %>
