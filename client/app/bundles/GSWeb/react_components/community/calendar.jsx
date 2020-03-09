@@ -12,12 +12,20 @@ import claimedBadge from 'school_profiles/claimed_badge.png';
 class Calendar extends React.Component {
   static propTypes = {
     locality: PropTypes.object,
-    pageType: PropTypes.string.isRequired
+    pageType: PropTypes.string.isRequired,
+    callback: PropTypes.func,
+    memoizeData: PropTypes.shape({
+      data: PropTypes.array,
+      lastUpdated: PropTypes.string,
+      verified: PropTypes.bool
+    })
   };
 
   static defaultProps = {
     locality: {},
-    pageType: ""
+    pageType: "",
+    callback: undefined,
+    memoizeData: undefined
   };
 
   constructor(props) {
@@ -101,35 +109,56 @@ class Calendar extends React.Component {
     const calendarEntity = this.props.pageType === 'District' ? 'district' : 'school';
     const overviewEntity = this.props.pageType === 'District' ? 'districts' : 'school';
 
-    fetchCalendar(this.props.locality.calendarURL, this.props.locality.nces_code, calendarEntity)
-      .done($jsonRes => {
-        fetchOverview(this.props.locality.calendarURL, this.props.locality.nces_code, overviewEntity)
-          .done($jsonRes2 =>{
-            let verified;
-            let lastUpdated;
-            if ($jsonRes2.district && $jsonRes2.district[0]){
-              verified = $jsonRes2.district[0].verified;
-              lastUpdated = this.parseDateString($jsonRes2.district[0].last_updated);
-            }
-            this.setState({
-              isLoading: false,
-              verified: verified,
-              lastUpdated: lastUpdated,
-              data: this.parseEventsPayload($jsonRes)
+    if(!this.props.memoizeData){
+      fetchCalendar(this.props.locality.calendarURL, this.props.locality.nces_code, calendarEntity)
+        .done($jsonRes => {
+          fetchOverview(this.props.locality.calendarURL, this.props.locality.nces_code, overviewEntity)
+            .done($jsonRes2 =>{
+              let verified;
+              let lastUpdated;
+              if ($jsonRes2.district && $jsonRes2.district[0]){
+                verified = $jsonRes2.district[0].verified;
+                lastUpdated = this.parseDateString($jsonRes2.district[0].last_updated);
+              }
+              const data = this.parseEventsPayload($jsonRes);
+              this.setState({
+                isLoading: false,
+                verified: verified,
+                lastUpdated: lastUpdated,
+                data
+              }, () => this.props.callback && this.props.callback({
+                data,
+                verified,
+                lastUpdated
+              }))
             })
-          })
-          .fail(error => console.log(error) ||  this.setState({
-            isLoading: false,
-            verified: false,
-            data: this.parseEventsPayload($jsonRes)
-          }))
-      })
-      .fail(error => this.setState({
+            .fail(error => this.setState({
+              isLoading: false,
+              verified: false,
+              data
+            }, () => this.props.callback && this.props.callback(data)))
+        })
+        .fail(error => this.setState({
+          isLoading: false,
+          didFail: true,
+          error: error
+        }, this.props.callback && this.props.callback({
+          // [] is a truthy value in javascript. Set the props to this on
+          // the re-render allowing a school with no calendar to not fire off
+          // its api call again even with no data
+          data: []
+        }))
+      )
+    }else{
+      const { data, verified, lastUpdated } = this.props.memoizeData;
+      this.setState({
         isLoading: false,
-        didFail: true,
-        error: error
-      }))
+        data,
+        verified,
+        lastUpdated
+      })
     }
+  }
 
   renderCalendarHeader() {
     return (

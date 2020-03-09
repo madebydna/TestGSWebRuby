@@ -41,8 +41,10 @@ export default class OspSchoolInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTabIndex: 0
+      activeTabIndex: 0,
+      calendarData: undefined
     };
+    this.setdataLoad = this.setdataLoad.bind(this);
   }
 
   handleTabClick(index) {
@@ -126,7 +128,22 @@ export default class OspSchoolInfo extends React.Component {
       stateShort: stateShort
     }
 
-    return <Calendar locality={locality} pageType={"SchoolProfiles"}/>
+    return <Calendar locality={locality}
+                     pageType={"SchoolProfiles"}
+                     callback={this.setdataLoad}
+                     memoizeData={this.state.calendarData}
+           />
+  }
+
+  setdataLoad(calendarData){
+    const { data, verified, lastUpdated } = calendarData;
+    this.setState({
+      calendarData: {
+        data,
+        verified,
+        lastUpdated
+      }
+    })
   }
 
   footer() {
@@ -210,21 +227,12 @@ export default class OspSchoolInfo extends React.Component {
   shouldShowData() {
     // this.props.has_non_osp_classes will always be undefined since
     // no props with that name is passed down
-    // need to figure out if this goes here
+    // need to figure out if this goes here or if we are missing it
     return (
       (this.props.is_claimed || this.props.has_non_osp_classes) &&
       this.props.config &&
       this.configsWithData().length > 0
     );
-  }
-
-  hasData() {
-    return this.configsWithData().length > 0;
-    // return (
-    //   (this.props.is_claimed || this.props.has_non_osp_classes) &&
-    //   this.props.config &&
-    //   this.configsWithData().length > 0
-    // );
   }
 
   r_t(key, replacements = {}) {
@@ -242,7 +250,7 @@ export default class OspSchoolInfo extends React.Component {
           {t('General Information')}
         </h3>
         &nbsp;
-        {this.hasData() && (
+        {this.shouldShowData() && (
           <QuestionMarkTooltip
             content={t('general_information_tooltip')}
             element_type="toptooltip"
@@ -275,10 +283,9 @@ export default class OspSchoolInfo extends React.Component {
           className="equity-container"
           icon={<GeneralInfoIcon />}
           title={titleElement}
-          no_data_cta={!this.hasData() && this.noDataCtaWithDescription()}
-          footer={this.hasData() && this.footer()}
-          body={this.hasData() && <div>{this.selectSectionContent()}</div>}
-          tabs={this.hasData() && tabs}
+          footer={this.footer()}
+          body={<div>{this.selectSectionContent()}</div>}
+          tabs={ tabs}
         />
       </div>
     );
