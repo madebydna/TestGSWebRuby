@@ -18,7 +18,7 @@ require_all.call 'validations'
 
 module GS
   module ETL
-    class TestProcessor
+    class MetricsProcessor
       include GS::ETL::Logging
       GS::ETL::Logging.one_row
 
@@ -27,37 +27,38 @@ module GS
 
       #FILE_LOCATION = '/tmp/'
       USER = `echo $(whoami)`.chomp!
-      FILE_LOCATION = "/Users/#{USER}/Documents/Test_Load/Test_Output/"
+      FILE_LOCATION = "/Users/#{USER}/Documents/Metrics_Load/Metrics_Output/"
       SCHOOL_TYPE_STRING = 'public.charter'
       ENTITIES = %w(school state district)
       COLUMN_ORDER = [ :year, :entity_type, :gs_id, :state_id,
                        :district_name, :school_name, :data_type, :data_type_id, :grade,
-                       :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band, :proficiency_band_id,
-                       :number_tested, :value]
+                       :subject, :subject_id, :breakdown, :breakdown_id,
+                       :cohort_count, :value]                       
+
       COLUMNS = %w[
         entity_type gs_id
         date_valid notes 
         description value state data_type_id 
-        number_tested grade 
-        proficiency_band_id source_id
+        cohort_count grade source_id
         breakdown_id
         subject_id
       ]
       REQUIRED_COLUMNS = %w[
         entity_type gs_id
         date_valid notes 
-        description value state data_type_id 
-        proficiency_band_id source_id
+        value state data_type_id 
+        grade source_id
         breakdown_id
         subject_id
       ]
+
       SUMMARY_OUTPUT_FIELDS = %i[entity_type field value count]
- 
+
       def initialize(input_dir, options = {})
         @input_dir = input_dir
         @options = options
         @runnable_steps = []
-        @load_type = 'test'
+        @load_type = 'metrics'
 
         instance_exec(&self.class.before) if self.class.before
       end
@@ -171,7 +172,6 @@ module GS
           source.run(context_for_sources)
         end
         @runnable_steps.each(&:run)
-        #zip_output_files
         GS::ETL::Logging.logger.finish if GS::ETL::Logging.logger
       end
 
@@ -235,6 +235,7 @@ module GS
               row[:entity_type] = 'source' 
               sources[source_key] = true
               row[:gs_id] = 0
+              row[:description] = 'NULL' 
             end      
           row
         end
@@ -262,8 +263,11 @@ module GS
           end
           row
         end     
-        node = node.transform 'Check n_tested"', WithBlock do |row|
-          row[:number_tested] = 'NULL' if row[:number_tested].nil?
+        node = node.transform 'Check cohort/breakdown_id/subject_id/grade', WithBlock do |row|
+          row[:cohort_count] = 'NULL' if row[:cohort_count].nil?
+          row[:breakdown_id] = 0 if row[:breakdown_id].nil?
+          row[:subject_id] = 0 if row[:subject_id].nil?
+          row[:grade] = 'NA' if row[:grade].nil?   
           row
         end
         node.destination 'Output state rows to CSV', CsvDestination, state_output_file, *COLUMN_ORDER
@@ -294,8 +298,11 @@ module GS
           end
           row
         end
-        node = node.transform 'Check n_tested"', WithBlock do |row|
-          row[:number_tested] = 'NULL' if row[:number_tested].nil?
+        node = node.transform 'Check cohort/breakdown_id/subject_id/grade', WithBlock do |row|
+          row[:cohort_count] = 'NULL' if row[:cohort_count].nil?
+          row[:breakdown_id] = 0 if row[:breakdown_id].nil?
+          row[:subject_id] = 0 if row[:subject_id].nil?
+          row[:grade] = 'NA' if row[:grade].nil? 
           row
         end
         node.destination 'Output district rows to CSV', CsvDestination, district_output_file, *COLUMN_ORDER
@@ -328,8 +335,11 @@ module GS
           end
           row
         end
-        node = node.transform 'Check n_tested"', WithBlock do |row|
-          row[:number_tested] = 'NULL' if row[:number_tested].nil?
+        node = node.transform 'Check cohort/breakdown_id/subject_id/grade', WithBlock do |row|
+          row[:cohort_count] = 'NULL' if row[:cohort_count].nil?
+          row[:breakdown_id] = 0 if row[:breakdown_id].nil?
+          row[:subject_id] = 0 if row[:subject_id].nil?
+          row[:grade] = 'NA' if row[:grade].nil?         
           row
         end
         node.destination 'Output school rows to CSV', CsvDestination, school_output_file, *COLUMN_ORDER
@@ -343,7 +353,7 @@ module GS
       end
 
       def data_file_prefix
-        [@ticket_n, state, 'test', @year].join('_') + '_'
+        [@ticket_n, state, 'metrics', @year].join('_') + '_'
       end
 
       def state

@@ -1,10 +1,11 @@
-require_relative "../test_processor"
+require_relative "../../test_processor"
 
 class WITestProcessor20172018Forward < GS::ETL::TestProcessor
 
   def initialize(*args)
     super
     @year = 2018
+    @ticket_n = 'DXT-3250'
   end
 
   breakdown_id_map = {
@@ -67,8 +68,8 @@ class WITestProcessor20172018Forward < GS::ETL::TestProcessor
       total_tested: :number_tested
     })
     .transform('Fill missing default fields', Fill, {
-      test_data_type: 'Forward',
-      test_data_type_id: 285,
+      data_type: 'Forward',
+      data_type_id: 285,
       notes: 'DXT-3250: WI Forward'
     })
     .transform("Remove rows with number tested <10",WithBlock) do |row|
