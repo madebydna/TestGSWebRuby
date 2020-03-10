@@ -6,18 +6,19 @@ require_relative './output_lib/test_score_queue_daemon_json_blob'
 
 class SqlDestination < GS::ETL::Step
 
-  def initialize(output_file, config_hash, fields, required_fields)
+  def initialize(output_file, config_hash, fields, required_fields, load_type)
     @output_file = output_file
     @sql = File.open(output_file, 'w')
     @fields = fields.empty? ? nil : fields.map(&:to_sym)
     @required_fields = (required_fields || []).map(&:to_sym)
     @source = config_hash 
+    @load_type = load_type
   end
 
   def write(row)
     validate_row_has_required_fields(row)
     unless has_error?(row)
-      @sql << InsertStatement.build(row, @source)
+      @sql << InsertStatement.build(row, @source, @load_type)
     end
     row
   end

@@ -1,19 +1,20 @@
-require 'features/contexts/shared_contexts_for_signed_in_users'
-require "features/contexts/school_profile_reviews_contexts"
+require "spec_helper"
 require "features/page_objects/school_profiles_page"
+require "features/contexts/school_profile_reviews_contexts"
 
-with_shared_context 'signed in verified user' do
-  with_shared_context 'with school and review questions set up', js: true do
+with_shared_context 'with school and review questions set up', js: true do
+  describe "A verified user who is not logged in" do
+    before(:all) do
+      @user = create(:verified_user)
+    end
+
     after(:each) do
-      clean_models(:gs_schooldb, Review, ReviewAnswer, SchoolUser)
+      clean_models(:gs_schooldb, SchoolUser, Review, ReviewAnswer)
     end
 
     after(:all) do
       do_clean_models(:gs_schooldb, User)
     end
-
-    its(:review_form) { is_expected.to have_five_star_question_cta }
-    its('review_form.five_star_question_cta') { is_expected.to have_text('How would you rate your experience at this school?')}
 
     context "when submitting a valid 5 star rating comment" do
       let(:new_review) { subject.review_list.user_reviews.first }
@@ -23,7 +24,7 @@ with_shared_context 'signed in verified user' do
         leave_review(comment: @custom_comment)
       end
 
-      it 'should display success message' do
+      it 'should display success message after user signs in' do
         expect(subject.review_list.message.text).to \
           eq(I18n.t('actions.review.activated'))
       end
@@ -40,15 +41,16 @@ with_shared_context 'signed in verified user' do
 
       it 'should display correct relationship to school' do
         visit school_path(@school) # need to reload page b/c first review
-        expect(new_review.user_type.text).to eq("Community member")
+        expect(new_review.user_type.text).to eq("Parent")
       end
 
       def leave_review(comment: subject.valid_comment)
         subject.hero_links.review_link.click
         subject.submit_a_valid_5_star_rating_comment(comment: comment)
-        subject.define_relationship_to_school(relationship: :community_member)
+        subject.wait_until_join_modal_visible
+        subject.join_modal.log_in_user(@user)
+        subject.define_relationship_to_school
       end
     end
-
   end
 end

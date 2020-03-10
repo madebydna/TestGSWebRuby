@@ -1,6 +1,7 @@
 require 'features/page_objects/modules/breadcrumbs'
 require 'features/page_objects/modules/join_modals'
 require 'features/page_objects/modules/top_nav_section'
+require 'features/page_objects/modules/reviews'
 require 'features/page_objects/osp_page'
 
 class SchoolProfilesPage < SitePrism::Page
@@ -8,6 +9,7 @@ class SchoolProfilesPage < SitePrism::Page
   include CookieHelper
   include EmailJoinModal
   include TopNavSection
+  include Reviews
 
   set_url '{/state}{/city}{/school_id_and_name}/'
 
@@ -39,47 +41,11 @@ class SchoolProfilesPage < SitePrism::Page
     end
   end
 
-  class FiveStars < SitePrism::Section
-    def filled
-      root_element.all('.filled-star').count
-    end
-  end
-
-  class ReviewSummary < SitePrism::Section
-    element :number_of_reviews, '.number-of-reviews .count'
-    element :number_of_reviews_label, '.number-of-reviews .label'
-    section :five_stars, FiveStars, '.five-stars'
-  end
-
-  class ReviewForm < SitePrism::Section
-    element :five_star_question_cta, ".five-star-question-cta"
-    elements :cta_stars, ".five-star-question-cta__star"
-    element :five_star_rating, :xpath, './div/div/div[2]/div[6]/div/div[1]'
-    element :completed_five_star_question, ".review-question > div > .five-star-rating"
-    elements :questions, ".review-question"
-    elements :text_areas, "textarea"
-    element :submit, ".button.cta"
-    element :rate_your_experience_textarea, ".question_1 textarea"
-    def submit_form
-      submit.click
-    end
-  end
-
   class Students < RatingContainer
     element :ethnicity_graph, "#ethnicity-graph"
     element :subgroup_container, '.subgroups'
     elements :subgroup_data, ".subgroup"
     element :gender_data, ".gender"
-  end
-
-  class ReviewList < SitePrism::Section
-    element :five_star_review_comment, ".five-star-review .comment"
-    element :five_star_review
-    section :five_stars, FiveStars, '.five-stars'
-
-    def has_five_star_comment?(comment)
-      five_star_review_comment.text == comment
-    end
   end
 
   class GeneralInfo < SitePrism::Section
@@ -127,9 +93,6 @@ class SchoolProfilesPage < SitePrism::Page
   section :students_with_disabilities, RatingContainer, '#Students_with_Disabilities'
   section :teachers_and_staff, RatingContainer, '#TeachersStaff'
   section :student_diversity, Students, '#Students,#Students-empty'
-  section :review_summary, ReviewSummary, '.rs-review-summary'
-  section :review_form, ReviewForm, '.review-form'
-  section :review_list, ReviewList, '.review-list'
   section :homes_and_rentals, '#homes-and-rentals' do
     element :title, '.title'
   end
@@ -143,33 +106,6 @@ class SchoolProfilesPage < SitePrism::Page
   section :nearby_schools, '.nearby-schools' do
     element :title, '.title'
     elements :schools, '.nearby-school'
-  end
-
-  element :five_star_review_comment, ".five-star-review .comment"
-
-  def choose_five_star_cta_response(star_select = 1)
-    index = star_select - 1
-    review_form.cta_stars[index].click
-  end
-
-  def fill_in_five_star_rating_comment(comment)
-    review_form.text_areas.last.set comment
-  end
-
-  def has_star_rating_of?(star_rating)
-    five_star_rating.find_css('.filled-star').size == star_rating
-  end
-
-  def five_star_rating_value
-    five_star_rating.find_css('.filled-star').size
-  end
-
-  def gs_rating_value
-    gs_rating.text.to_i
-  end
-
-  def has_all_review_questions?
-    review_form.questions.count == 3
   end
 
   def has_test_score_subject?(label:nil, score:nil, state_average: nil)
@@ -207,16 +143,6 @@ class SchoolProfilesPage < SitePrism::Page
 
   def general_information_props
     props_for_react_component('OspSchoolInfo')
-  end
-
-  def submit_a_valid_5_star_rating_comment
-    choose_five_star_cta_response(5)
-    fill_in_five_star_rating_comment(valid_comment)
-    review_form.submit_form
-  end
-
-  def valid_comment
-    'A valid and wonderful comment on a school yeah!'
   end
 
 end
