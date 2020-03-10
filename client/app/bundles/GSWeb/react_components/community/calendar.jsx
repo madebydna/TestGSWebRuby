@@ -116,9 +116,14 @@ class Calendar extends React.Component {
             .done($jsonRes2 =>{
               let verified;
               let lastUpdated;
-              if ($jsonRes2.district && $jsonRes2.district[0]){
-                verified = $jsonRes2.district[0].verified;
-                lastUpdated = this.parseDateString($jsonRes2.district[0].last_updated);
+              if (
+                $jsonRes2[`${calendarEntity}`] &&
+                $jsonRes2[`${calendarEntity}`][0]
+              ){
+                verified = $jsonRes2[`${calendarEntity}`][0].verified;
+                lastUpdated = this.parseDateString(
+                  $jsonRes2[`${calendarEntity}`][0].last_updated
+                );
               }
               const data = this.parseEventsPayload($jsonRes);
               this.setState({
