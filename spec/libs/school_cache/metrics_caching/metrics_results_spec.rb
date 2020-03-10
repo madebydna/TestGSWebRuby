@@ -66,7 +66,7 @@ describe MetricsCaching::MetricsResults do
     end
   end
 
-  describe '#sort_school_value_desc_by_date_type!' do
+  describe '#sort_school_value_desc_by_data_type!' do
     let(:results) do
       [
         instance_double(Omni::Metric, value: 100, data_set: double(data_type_id: 1, date_valid: Date.civil(2020, 1, 5))),
@@ -80,7 +80,7 @@ describe MetricsCaching::MetricsResults do
     subject { MetricsCaching::MetricsResults.new(results) }
 
     before do
-      subject.sort_school_value_desc_by_date_type!
+      subject.sort_school_value_desc_by_data_type!
     end
 
 

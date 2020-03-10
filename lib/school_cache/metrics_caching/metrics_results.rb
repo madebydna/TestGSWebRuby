@@ -27,10 +27,10 @@ module MetricsCaching
     end
 
     def max_year_per_data_type
-      data_types = results.group_by {|result| result.data_type_id }
+      data_type_to_results = results.group_by(&:data_type_id)
 
       max_years = {}
-      data_types.each do |k,v|
+      data_type_to_results.each do |k,v|
         # Throw out years where associated values are nil
         data_with_school_values = v.reject { |metric| metric.value.blank? }
 
@@ -42,16 +42,12 @@ module MetricsCaching
       max_years
     end
 
-    def sort_school_value_desc_by_date_type!
-      data_type_to_results = results.group_by {|result| result.data_type_id }
+    def sort_school_value_desc_by_data_type!
+      data_type_to_results = results.group_by(&:data_type_id)
 
-      # Default the sort order of rows within a data type to school_value
-      # descending School value might be nil, so sort using zero in that case
-      data_type_to_results.each do |k, values|
-        values.sort_by! do |metric|
-          metric.value.present? ? metric.value.to_f : 0
-        end
-        values.reverse!
+      data_type_to_results.each do |k, v|
+        v.sort_by! { |metric| metric.value.to_f }
+        v.reverse!
       end
 
       @results = data_type_to_results.values.inject([], &:+)

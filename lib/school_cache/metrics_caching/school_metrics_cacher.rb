@@ -28,7 +28,7 @@ module MetricsCaching
         hash = {}
         query_results.each do |result|
           hash[result.label] = [] unless hash.key? result.label
-          hash[result.label] << build_hash_for_metic(result)
+          hash[result.label] << build_hash_for_metric(result)
         end
         validate!(hash)
       end
@@ -36,7 +36,7 @@ module MetricsCaching
 
     # TODO: Handle data types that should not be converted to_f (e.g. txt, bool)
     # See gs_schooldb.census_data_type
-    def build_hash_for_metic(metric)
+    def build_hash_for_metric(metric)
       {}.tap do |hash|
         hash[:breakdown] = metric.breakdown_name
         hash[:school_value] = metric.value.to_f
