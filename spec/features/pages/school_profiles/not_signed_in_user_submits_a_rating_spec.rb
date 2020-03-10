@@ -19,27 +19,27 @@ with_shared_context 'with school and review questions set up', js: true do
     context "when submitting a valid 5 star rating comment" do
       let(:new_review) { subject.review_list.user_reviews.first }
 
+      before do
+        @custom_comment = "Testing a specific seven word comment here!"
+        leave_review(comment: @custom_comment)
+      end
+
       it 'should display success message after user signs in' do
-        leave_review
         expect(subject.review_list.message.text).to \
-          eq("All set! We have submitted your review. Thank you for helping other families by sharing your experiences.")
+          eq(I18n.t('actions.review.activated'))
       end
 
       it 'should display new comment right away' do
-        custom_comment = "Testing a specific seven word comment here!"
-        leave_review(comment: custom_comment)
         visit school_path(@school) # need to reload page b/c first review
-        expect(new_review.has_five_star_comment?(custom_comment)).to be true
+        expect(new_review.has_five_star_comment?(@custom_comment)).to be true
       end
 
       it 'should display chosen star rating' do
-        leave_review
         visit school_path(@school) # need to reload page b/c first review
         expect(new_review.five_stars.filled).to eq(5)
       end
 
       it 'should display correct relationship to school' do
-        leave_review
         visit school_path(@school) # need to reload page b/c first review
         expect(new_review.user_type.text).to eq("Parent")
       end
