@@ -10,7 +10,8 @@ class SchoolProfilesController < ApplicationController
   set_additional_js_translations(
     {
       osp_school_info: [:school_profiles, :osp_school_info],
-      school_profile_tour: [:school_profiles, :school_profile_tour]
+      school_profile_tour: [:school_profiles, :school_profile_tour],
+      calendar: [:lib, :calendar]
     }
   )
 

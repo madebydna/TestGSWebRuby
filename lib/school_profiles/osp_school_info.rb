@@ -124,17 +124,27 @@ module SchoolProfiles
     def tab_config
       @_tab_config ||= (
         tab_config = []
+        tab_config += [
+          {
+            key: :overview,
+            title: data_label(:overview),
+            data: osp_school_datas(*OVERVIEW_CACHE_KEYS),
+            source: data_label(SCHOOL_ADMIN)
+          },
+          {
+            key: :calendar,
+            title: data_label(:calendar),
+            data: true,
+            source: 'Tandem'
+          }
+        ]
         if claimed?
           tab_config += [
             {
-              key: :overview,
-              title: data_label(:overview),
-              data: osp_school_datas(*OVERVIEW_CACHE_KEYS)
-            },
-            {
               key: :enrollment,
               title: data_label(:Enrollment),
-              data: osp_school_datas(*ENROLLMENT_CACHE_KEYS)
+              data: osp_school_datas(*ENROLLMENT_CACHE_KEYS),
+              source: data_label(SCHOOL_ADMIN)
             }
           ]
         end
@@ -143,12 +153,14 @@ module SchoolProfiles
             tab_config << {
                 key: :classes,
                 title: data_label(:classes),
-                data: osp_school_datas(*CLASSES_CACHE_KEYS)
+                data: osp_school_datas(*CLASSES_CACHE_KEYS),
+                source: data_label(SCHOOL_ADMIN)
             }
             tab_config << {
                 key: :sports_and_clubs,
                 title: data_label(:sports_and_clubs),
-                data: osp_school_datas(*SPORTS_CLUBS_CACHE_KEYS)
+                data: osp_school_datas(*SPORTS_CLUBS_CACHE_KEYS),
+                source: data_label(SCHOOL_ADMIN)
             }
           end
         end
@@ -172,6 +184,14 @@ module SchoolProfiles
 
     def response_value_label_lookup_table
       @_response_value_label_lookup_table ||= ResponseValue.lookup_table
+    end
+
+    def locality
+      {}.tap do |hash|
+        hash[:calendarURL] = ENV_GLOBAL['calendar_service_url']
+        hash[:stateShort] =  school.state.upcase
+        hash[:nces_code] = school.nces_code
+      end
     end
 
     def data_label(str)
@@ -256,7 +276,7 @@ module SchoolProfiles
         source = {
             heading: h[:title]
         }
-        source[:names] = [data_label(SCHOOL_ADMIN)]
+        source[:names] = [h[:source]]
         source[:years] = [nil]
         source
       end
