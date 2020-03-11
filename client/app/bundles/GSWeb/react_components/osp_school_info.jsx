@@ -9,6 +9,7 @@ import { t } from '../util/i18n';
 import BasicDataModuleLayout from 'react_components/school_profiles/basic_data_module_layout';
 import { GeneralInfoIcon } from 'react_components/school_profiles/circle_icons';
 import QuestionMarkTooltip from 'react_components/school_profiles/question_mark_tooltip';
+import Calendar from 'react_components/community/calendar';
 import ModuleTab from 'react_components/school_profiles/module_tab';
 import Remodal from 'react_components/remodal';
 import InfoBox from 'react_components/school_profiles/info_box';
@@ -40,8 +41,10 @@ export default class OspSchoolInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTabIndex: 0
+      activeTabIndex: 0,
+      calendarData: undefined
     };
+    this.setdataLoad = this.setdataLoad.bind(this);
   }
 
   handleTabClick(index) {
@@ -57,15 +60,41 @@ export default class OspSchoolInfo extends React.Component {
       this.state.activeTabIndex
     ];
 
+    if (configForActiveTab.key == 'overview') {
+      return this.overviewPane();
+    }
+
     if (configForActiveTab.key == 'classes') {
       return this.classesPane();
     }
 
+    if (configForActiveTab.key == 'calendar') {
+      return this.calendarPane();
+    }
+
     return (
-      <div className="tabs-panel tabs-panel_selected">
+      this.shouldShowData() && <div className="tabs-panel tabs-panel_selected">
         <ResponseData input={configForActiveTab.data} />
       </div>
     );
+  }
+
+  overviewPane() {
+    const configForActiveTab = this.configsWithData()[
+      this.state.activeTabIndex
+    ];
+
+    if (!configForActiveTab.data || configForActiveTab.data.length < 1) {
+      return null;
+    }
+
+    if (this.shouldShowData()){
+      return <div className="tabs-panel tabs-panel_selected">
+        <ResponseData input={configForActiveTab.data} />
+      </div>;
+    }else{
+      return this.noDataCtaWithDescription();
+    }
   }
 
   classesPane() {
@@ -89,6 +118,32 @@ export default class OspSchoolInfo extends React.Component {
         )}
       </div>
     );
+  }
+
+  calendarPane(){
+    const {nces_code, calendarURL, stateShort } = this.props.locality;
+    const locality = {
+      nces_code: nces_code,
+      calendarURL: calendarURL,
+      stateShort: stateShort
+    }
+
+    return <Calendar locality={locality}
+                     pageType={"SchoolProfiles"}
+                     callback={this.setdataLoad}
+                     memoizeData={this.state.calendarData}
+           />
+  }
+
+  setdataLoad(calendarData){
+    const { data, verified, lastUpdated } = calendarData;
+    this.setState({
+      calendarData: {
+        data,
+        verified,
+        lastUpdated
+      }
+    })
   }
 
   footer() {
@@ -169,7 +224,10 @@ export default class OspSchoolInfo extends React.Component {
     );
   }
 
-  hasData() {
+  shouldShowData() {
+    // this.props.has_non_osp_classes will always be undefined since
+    // no props with that name is passed down
+    // need to figure out if this goes here or if we are missing it
     return (
       (this.props.is_claimed || this.props.has_non_osp_classes) &&
       this.props.config &&
@@ -192,7 +250,7 @@ export default class OspSchoolInfo extends React.Component {
           {t('General Information')}
         </h3>
         &nbsp;
-        {this.hasData() && (
+        {this.shouldShowData() && (
           <QuestionMarkTooltip
             content={t('general_information_tooltip')}
             element_type="toptooltip"
@@ -225,10 +283,9 @@ export default class OspSchoolInfo extends React.Component {
           className="equity-container"
           icon={<GeneralInfoIcon />}
           title={titleElement}
-          no_data_cta={!this.hasData() && this.noDataCtaWithDescription()}
-          footer={this.hasData() && this.footer()}
-          body={this.hasData() && <div>{this.selectSectionContent()}</div>}
-          tabs={this.hasData() && tabs}
+          footer={this.footer()}
+          body={<div>{this.selectSectionContent()}</div>}
+          tabs={ tabs}
         />
       </div>
     );
