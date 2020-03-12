@@ -17,6 +17,10 @@ module MetricsCaching
       488, 489, 486, 385, 386
     ]
 
+    def self.listens_to?(data_type)
+      data_type == :metrics
+    end
+
     def query_results
       results = MetricsResults.new(MetricsSchoolQuery.new(school).call.to_a)
       results.filter_to_max_year_per_data_type!
