@@ -11,6 +11,7 @@ class DistrictCacher
   # :feed_district_characteristics
   # :district_characteristics
   # :gsdata
+  # :metrics
 
   def initialize(district)
     @district = district
@@ -46,7 +47,8 @@ class DistrictCacher
         district_directory: DistrictDirectoryCacher,
         feed_district_characteristics: FeedDistrictCharacteristicsCacher,
         district_characteristics: DistrictCharacteristicsCacher,
-        gsdata: DistrictGsdataCacher
+        gsdata: DistrictGsdataCacher,
+        metrics: MetricsCaching::DistrictMetricsCacher
     }[key.to_s.to_sym]
   end
 
@@ -83,7 +85,8 @@ class DistrictCacher
         DistrictDirectoryCacher,
         FeedDistrictCharacteristicsCacher,
         DistrictCharacteristicsCacher,
-        DistrictGsdataCacher
+        DistrictGsdataCacher,
+        MetricsCaching::DistrictMetricsCacher
     ]
   end
 
