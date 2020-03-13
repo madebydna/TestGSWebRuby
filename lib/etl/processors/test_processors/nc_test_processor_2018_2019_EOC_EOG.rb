@@ -42,12 +42,12 @@ class NCTestProcessor20182019EOCEOG < GS::ETL::TestProcessor
     'lev3_pct' => 20, 
     'lev4_pct' => 21, 
     'lev5_pct' => 22, 
-    'prof_and_above' => 1,
-    'mnot_pct' => 161,
+    'glp_pct' => 1, #glp_pct
+    'mnot_pct' => 161, #special mappings for math subjects in 2019 (MA, M1, M3)
     'm_lev3_pct' => 162, 
     'm_lev4_pct' => 163, 
     'm_lev5_pct' => 164, 
-    'm_prof_and_above' => 1
+    'm_glp_pct' => 1 #glp_pct for math subjects in 2019
   }
 
   # map_math_prof = {
