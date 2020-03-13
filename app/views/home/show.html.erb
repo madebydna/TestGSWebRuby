@@ -32,6 +32,10 @@
           <%= render partial: 'home/state_select' %>
           <div class="parent-content uc">
             <div class="subtitle mbm"><%= t('home.hero.subheading_content') %></div>
+            <div>
+              <%= t('home.hero.new_coronavirus_html') %>
+              <%= link_to t('home.hero.coronavirus_html'), coronavirus_url, style: "font-family:opensans-semibold; color: white; font-size: 14px;" %>
+            </div>
             <%= link_to t('home.hero.raising_kids_html'), greatkids_home_url %>
             <span class="phs">|</span>
             <%= link_to t('home.hero.school_life_html'), school_life_url %>
@@ -44,7 +48,8 @@
             <%= link_to t('home.hero.emotional_smarts_html'), emotional_smarts_url(lang: nil) %>
             <%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url(lang: nil) %>
             <span class="phs">|</span>
-            <%= link_to t('home.hero.csa_html'), csa_winners_url(lang: nil) %>
+            <%# Remove CSA winners for now to display coronavirus label %>
+            <%#= link_to t('home.hero.csa_html'), csa_winners_url(lang: nil) %>
             <%= link_to t('home.hero.parent_power_html'), parent_power_url(lang: nil) %>
             <span class="phs">|</span>
             <%= link_to t('home.hero.school_ratings_html'), school_ratings_url(lang: nil) %>

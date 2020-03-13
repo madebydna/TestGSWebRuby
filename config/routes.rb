@@ -221,6 +221,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/ratings/',  as: :ratings
     get '/gk/como-clasificamos/',  as: :ratings_spanish
     get '/gk/csa-winners/', as: :csa_winners
+    get '/gk/coronavirus-school-closure-support/', as: :coronavirus
     get '/status/error404.page'
   end
 
@@ -313,7 +314,8 @@ LocalizedProfiles::Application.routes.draw do
 
     get '/duplicate-membership', to: 'osp_demigod#show'
     post '/duplicate-membership', to: 'osp_demigod#create'
-  end # end admin namespace
+  end
+  # end admin namespace
 
   # OSP moderation routes
   # controller, routes and views should move under admin namespace
@@ -446,7 +448,8 @@ LocalizedProfiles::Application.routes.draw do
       # http://guides.rubyonrails.org/routing.html#specifying-constraints
       district: /(?!preschools)[^\/]+/
     }
-  end # end routes for city page
+  end
+  # end routes for city page
 
   # NOTE: this must come after the city scope, because it will match anything after the city name
   # TODO: DRY this up. Or delete the above version and rename all city_district_* helpers to district_*

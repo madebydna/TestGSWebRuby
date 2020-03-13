@@ -2,6 +2,10 @@
 <li><a href="/gk/parent-power/"><%= t(yml_path + 'parent_power') %></a></li>
 <li class="hidden-sm"><a href="/gk/building-character/"><%= t(yml_path + 'building_character') %></a></li>
 <li><a href="/gk/11th-grade-college-prep/"><%= t(yml_path + 'college_prep') %></a></li>
-<li><a href="/gk/csa-winners/"><%= t(yml_path + 'csa') %></a></li>
+<% if false %>
+  <%# can remove fake conditional when removing coronavirus support %>
+  <li><a href="/gk/csa-winners/"><%= t(yml_path + 'csa') %></a></>
+<% end %>
+<li><a href="/gk/coronavirus-school-closure-support/"><%= t(yml_path + 'coronavirus') %></a></li>
 <li class="hidden-sm"><a href="/gk/worksheets/"><%= t(yml_path + 'worksheets') %></a></li>
 <li class="hidden-sm"><a href="/reviews/"><%= t(yml_path + 'school reviews') %></a></li>
