@@ -42,8 +42,21 @@ class NCTestProcessor20182019EOCEOG < GS::ETL::TestProcessor
     'lev3_pct' => 20, 
     'lev4_pct' => 21, 
     'lev5_pct' => 22, 
-    'prof_and_above' => 1
+    'prof_and_above' => 1,
+    'mnot_pct' => 161,
+    'm_lev3_pct' => 162, 
+    'm_lev4_pct' => 163, 
+    'm_lev5_pct' => 164, 
+    'm_prof_and_above' => 1
   }
+
+  # map_math_prof = {
+  #   'mnot_pct' => 161,
+  #   'm_lev3_pct' => 162, 
+  #   'm_lev4_pct' => 163, 
+  #   'm_lev5_pct' => 164, 
+  #   'm_prof_and_above' => 1
+  # }
 
  source('nc_2018_2019.txt',[],col_sep:"\t")
 
@@ -75,7 +88,7 @@ class NCTestProcessor20182019EOCEOG < GS::ETL::TestProcessor
    end
    .transform('mapping breakdowns', HashLookup, :breakdown, map_breakdown, to: :breakdown_id)
    .transform('mapping subjects', HashLookup, :subject, map_subject, to: :subject_id)
-   .transform('mapping proficiency bands', HashLookup, :proficiency_band, map_prof, to: :proficiency_band_id)
+   .transform('mapping profs', HashLookup, :proficiency_band, map_prof, to: :proficiency_band_id)
  end
 
 
