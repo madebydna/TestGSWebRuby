@@ -1,6 +1,7 @@
 <% greatnews = @current_preferences.include? :greatnews %>
 <% greatkidsnews = @current_preferences.include? :greatkidsnews %>
 <% sponsor = @current_preferences.include? :sponsor %>
+<% teacher_list = @current_preferences.include? :teacher_list %>
 
 <section class="row">
   <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-preferences-form-container phl">
@@ -61,6 +62,23 @@
             <% end %>
           </div>
         </div>
+      </div>
+
+      <div class="mtm">
+        <div class="fl prm mtm">
+          <div class="js-checkbox iconx16 js-icon <%= teacher_list ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+               data-toggle="button" readonly="">
+            <input name="subscriptions[]"
+                   disabled="true"
+                   type="hidden"
+                   value="teacher_list">
+          </div>
+        </div>
+        <div style="overflow:hidden">
+          <div class="strong subtitle-md"><%= t('.teacher_list_title') %></div>
+          <p><%= t('.teacher_list_subtitle') %></p>
+        </div>
+        <div class="clearfix"></div>
       </div>
 
       <div class="mtm">

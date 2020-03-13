@@ -1,5 +1,5 @@
 import BaseModal from './base_modal';
-import { sponsorsSignUp, gradeByGradeSignUp } from '../../util/newsletters';
+import {sponsorsSignUp, gradeByGradeSignUp, teacherSignUp} from '../../util/newsletters';
 import { create, assign, merge } from 'lodash';
 import { runValidations as runFormValidations } from 'components/validating_forms';
 import { addQueryParamToUrl } from 'util/uri';
@@ -71,11 +71,26 @@ assign(EmailJoinModal.prototype, {
     return this.$getJoinForm().find('#sponsors_list').prop('checked');
   },
 
+  shouldSignUpForTeacherList: function shouldSignUpForTeacherList() {
+    return this.$getJoinForm().find('#teacher_list').prop('checked');
+  },
+
   signUpForSponsorsList: function signUpForSponsorsList() {
     if (this.shouldSignUpForSponsor()) {
       return sponsorsSignUp(this.getModalData()).then(
         (data) => data.responseJSON || data,
         (data) => data.responseJSON || data
+      );
+    } else {
+      return $.when();
+    }
+  },
+
+  signUpForTeacherList: function signUpForTeachersList() {
+    if (this.shouldSignUpForTeacherList()) {
+      return teacherSignUp(this.getModalData()).then(
+          (data) => data.responseJSON || data,
+          (data) => data.responseJSON || data
       );
     } else {
       return $.when();
@@ -119,6 +134,7 @@ assign(EmailJoinModal.prototype, {
 
     $.when(
       this.signUpForSponsorsList(),
+        this.signUpForTeacherList(),
       this.createStudents(),
       this.signUpForGradeByGrade()
     ).done(function(data1, data2) {

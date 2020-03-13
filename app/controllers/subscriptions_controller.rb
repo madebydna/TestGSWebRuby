@@ -6,7 +6,6 @@ class SubscriptionsController < ApplicationController
   # and by the sign up for sponsors modal with the modal
   def create
     subscription_params = params['subscription']
-    set_omniture_cookies(subscription_params)
     if params.seek(:subscription,:email).present? || logged_in?
       attempt_sign_up(subscription_params)
     else
@@ -63,14 +62,6 @@ class SubscriptionsController < ApplicationController
   def log_in_required_message(list = :default)
     list ||= :default
     error_message =  t("actions.subscription.#{list}.login_required")
-  end
-
-  def set_omniture_cookies(subscription_params)
-    if subscription_params[:driver].present?
-      set_omniture_evars_in_cookie({'review_updates_mss_traffic_driver' => subscription_params[:driver]})
-    end
-    set_omniture_events_in_cookie(['review_updates_mss_start_event'])
-    set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'SignUpForUpdates'})
   end
 
   def ajax?

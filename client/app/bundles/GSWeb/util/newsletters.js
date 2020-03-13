@@ -146,6 +146,18 @@ export const sponsorsSignUp = function(options) {
   return postSubscriptionViaAjax(subscriptionParams);
 };
 
+export const teacherSignUp = function (options) {
+  var subscriptionParams = merge(
+      {
+        list: 'teacher_list',
+        message: "You've signed up to receive teacher and school official updates"
+      },
+      pick(options, ['email', 'language'])
+  );
+
+  return postSubscriptionViaAjax(subscriptionParams);
+};
+
 export const greatNewsSignUp = function(options) {
   options = options || {};
   var subscriptionParams = merge(
