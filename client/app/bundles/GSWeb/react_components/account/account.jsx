@@ -4,9 +4,7 @@ import withViewportSize from 'react_components/with_viewport_size';
 import OpenableCloseable from 'react_components/openable_closeable';
 import SearchBox from 'react_components/search_box';
 import { validSizes as validViewportSizes } from 'util/viewport';
-// import EmailSettings from './email_settings';
 import ChangePasswordForm from './change_password_form';
-// import GradeLevelCheckboxes from './grade_level_checkboxes';
 
 const ospDashboardUrl = '/official-school-profile/dashboard/';
 const mySchoolListUrl = '/my-school-list/';
@@ -16,9 +14,7 @@ const Account = ({
   size,
   email,
   firstName,
-  mightHaveOsps,
-  studentGradeLevels,
-  subscriptions
+                   mightHaveOsps
 }) => (
   <div
     style={{
@@ -102,15 +98,11 @@ Account.propTypes = {
   size: PropTypes.oneOf(validViewportSizes).isRequired,
   email: PropTypes.string.isRequired,
   firstName: PropTypes.string,
-  mightHaveOsps: PropTypes.bool.isRequired,
-  studentGradeLevels: PropTypes.arrayOf(PropTypes.string),
-  subscriptions: PropTypes.arrayOf(PropTypes.object)
+  mightHaveOsps: PropTypes.bool.isRequired
 };
 
 Account.defaultProps = {
-  firstName: null,
-  studentGradeLevels: [],
-  subscriptions: []
+  firstName: null
 };
 
 export default withViewportSize({ propName: 'size' })(Account);
