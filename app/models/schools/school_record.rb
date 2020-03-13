@@ -1,15 +1,18 @@
 class SchoolRecord < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
-
+  self.table_name= 'school_records'
   # need to review these modules
+  # this module looks okay as it allows school to know reviews of themselves
   include SchoolReviewConcerns
   include SchoolRouteConcerns
   include GradeLevelConcerns
 
   attr_accessor :assigned
-  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active, :new_profile_school
-  attr_writer :collections
-  has_many :school_metadatas
+  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active
+  # ! TODO: only java routing uses this column. Can remove
+  #:new_profile_school
+  # attr_writer :collections
+  # has_many :school_metadatas
 
   LEVEL_CODES = {
     primary: 'p',
@@ -22,11 +25,6 @@ class SchoolRecord < ActiveRecord::Base
     private: 'private',
     charter: 'charter'
   }
-
-  attr_accessor :assigned
-  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active, :new_profile_school
-  attr_writer :collections
-  has_many :school_metadatas
 
   scope :held, -> { joins("INNER JOIN #{SchoolRecord.gs_schooldb_name}.held_school ON held_school.school_id = school_records.school_id and held_school.state = school_records.state") }
 
@@ -55,18 +53,20 @@ class SchoolRecord < ActiveRecord::Base
   # this allows us to use it without ActiveRecord getting angry at us
   self.inheritance_column = nil
 
-  scope :find_by_state_and_id, lambda do |state, id|
-    find_by(school_id: id, state: state)
-  end
+  # ! TODO: rewrite this
+  # scope :find_by_state_and_id, lambda do |state, id|
+  #   find_by(school_id: id, state: state)
+  # end
 
   scope :find_by_state_and_ids, ->(state, ids) { where(school_id: ids, state: state) }
 
-  scope :ids_by_state, lambda do |state|
-    where(state: state).active
-                       .not_preschool_only
-                       .order(:school_id)
-                       .pluck(:school_id)
-  end
+  # ! TODO: rewrite this
+  # scope :ids_by_state, lambda do |state|
+  #   where(state: state).active
+  #                      .not_preschool_only
+  #                      .order(:school_id)
+  #                      .pluck(:school_id)
+  # end
 
   scope :within_city, ->(state, city) { where(city: city, state: state.downcase).active.order(:name) }
 
@@ -135,73 +135,71 @@ class SchoolRecord < ActiveRecord::Base
 
   # TODO Do we need these collections methods?
   # !-----------------------------------
-  def collections
-    @collections ||= (
-      Collection.for_school(state, id)
-    )
-  end
+  # def collections
+  #   @collections ||= (
+  #     Collection.for_school(state, id)
+  #   )
+  # end
 
-  def collection_ids
-    @_collection_ids ||= (
-      collections.map(&:id)
-    )
-  end
+  # def collection_ids
+  #   @_collection_ids ||= (
+  #     collections.map(&:id)
+  #   )
+  # end
 
-  # Returns first collection or nil if none
-  def collection
-    collections.first
-  end
+  # # Returns first collection or nil if none
+  # def collection
+  #   collections.first
+  # end
   # !-----------------------------------
 
   # TODO are we still using HubCityMapping
-  def hub_city
-    if collection
-      hub = HubCityMapping.find_by(collection_id: collection.id)
-      hub.city
-    else
-      city
-    end
-  end
+  # def hub_city
+  #   if collection
+  #     hub = HubCityMapping.find_by(collection_id: collection.id)
+  #     hub.city
+  #   else
+  #     city
+  #   end
+  # end
 
   # TODO need to verify
-  def self.preload_school_metadata!(schools)
-    return unless schools.present?
+  # def self.preload_school_metadata!(schools)
+  #   return unless schools.present?
 
-    if schools.map(&:state).uniq.size > 1
-      raise ArgumentError('Does not yet support multiple states')
-    end
+  #   if schools.map(&:state).uniq.size > 1
+  #     raise ArgumentError('Does not yet support multiple states')
+  #   end
 
-    school_to_id_map = schools.each_with_object({}) do |school, hash|
-      school.instance_variable_set(:@school_metadata, Hashie::Mash.new)
-      hash[school.id] = school
-    end
+  #   school_to_id_map = schools.each_with_object({}) do |school, hash|
+  #     school.instance_variable_set(:@school_metadata, Hashie::Mash.new)
+  #     hash[school.id] = school
+  #   end
 
-    # school_metadatas = SchoolMetadata.on_db(schools.first.shard).where(school_id: schools.map(&:id))
-    school_metadatas = SchoolMetadata.on_db("_#{schools.first.state.downcase}").where(school_id: schools.map(&:id))
-    school_metadatas.each do |metadata|
-      school = school_to_id_map[metadata.school_id]
-      metadata_hash = school.instance_variable_get(:@school_metadata)
-      metadata_hash[metadata.meta_key] = metadata.meta_value
-      school.instance_variable_set(:@school_metadata, metadata_hash)
-    end
-  end
+  #   # school_metadatas = SchoolMetadata.on_db(schools.first.shard).where(school_id: schools.map(&:id))
+  #   school_metadatas = SchoolMetadata.on_db("_#{schools.first.state.downcase}").where(school_id: schools.map(&:id))
+  #   school_metadatas.each do |metadata|
+  #     school = school_to_id_map[metadata.school_id]
+  #     metadata_hash = school.instance_variable_get(:@school_metadata)
+  #     metadata_hash[metadata.meta_key] = metadata.meta_value
+  #     school.instance_variable_set(:@school_metadata, metadata_hash)
+  #   end
+  # end
 
   # TODO - Verify we still use
   # get the schools metadata
-  def school_metadata
-    @school_metadata ||= (
-      metadata_hash = Hashie::Mash.new
-      school_metadatas = SchoolMetadata.by_school_id(shard,id)
-      school_metadatas.each do |metadata|
-        metadata_hash[metadata.meta_key] = metadata.meta_value
-      end
-      metadata_hash
-    )
-  end
-  alias_method :metadata, :school_metadata
+  # def school_metadata
+  #   @school_metadata ||= (
+  #     metadata_hash = Hashie::Mash.new
+  #     school_metadatas = SchoolMetadata.by_school_id(shard,id)
+  #     school_metadatas.each do |metadata|
+  #       metadata_hash[metadata.meta_key] = metadata.meta_value
+  #     end
+  #     metadata_hash
+  #   )
+  # end
+  # alias_method :metadata, :school_metadata
 
-  # TODO verify that we still use school media
-  # !-----------------------------------
   def school_media_first_hash
     @school_media_first_hash ||= (
       result = SchoolMedia.fetch_school_media self, 1
@@ -212,7 +210,6 @@ class SchoolRecord < ActiveRecord::Base
   def school_media
     SchoolMedia.fetch_school_media self, ''
   end
-  # !-----------------------------------
 
   # returns true or false - takes p,e,m,h as an array
   def includes_level_code?(arr_levels)
@@ -264,9 +261,9 @@ class SchoolRecord < ActiveRecord::Base
   end
 
   # TODO: Are we still using school_metadata
-  def great_schools_rating
-    school_metadata[:overallRating].presence
-  end
+  # def great_schools_rating
+  #   school_metadata[:overallRating].presence
+  # end
 
   def state_name
     States.state_name(state)
@@ -290,7 +287,7 @@ class SchoolRecord < ActiveRecord::Base
   end
 
   # TODO find out if it needs to be rewritten from migration?
-  # TODO Do we need to update from
+  # TODO appears unused
   def all_census_data
     @all_census_data ||= nil
     return @all_census_data if @all_census_data
