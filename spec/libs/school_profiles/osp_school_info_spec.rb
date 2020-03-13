@@ -32,22 +32,26 @@ describe SchoolProfiles::OspSchoolInfo do
         {
             key: :overview,
             title: 'Overview',
-            data: [:data]
+            data: [:data],
+            source: 'School administration'
         },
         {
             key: :enrollment,
             title: 'Enrollment',
-            data: [:data]
+            data: [:data],
+            source: 'School administration'
         },
         {
             key: :classes,
             title: 'Classes',
-            data: [:data]
+            data: [:data],
+            source: 'School administration'
         },
         {
             key: :sports_and_clubs,
             title: 'Sports and clubs',
-            data: [:data]
+            data: [:data],
+            source: 'School administration'
         }
     ]
   end
@@ -160,8 +164,8 @@ describe SchoolProfiles::OspSchoolInfo do
     with_shared_context 'with a claimed school' do
       with_shared_context 'K-12' do
         with_shared_context 'when displaying OSP classes' do
-          it 'should contain all four tabs' do
-            expect(subject.size).to eq(4)
+          it 'should contain all five tabs' do
+            expect(subject.size).to eq(5)
           end
 
           it 'should contain OSP class data' do
@@ -183,7 +187,7 @@ describe SchoolProfiles::OspSchoolInfo do
       with_shared_context 'Preschool' do
         with_shared_context 'when displaying OSP classes' do
           it 'should contain all four tabs' do
-            expect(subject.size).to eq(2)
+            expect(subject.size).to eq(3)
           end
         end
 
