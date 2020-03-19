@@ -61,9 +61,9 @@ class KYTestProcessor20182019KPREP < GS::ETL::TestProcessor
    .transform('mapping breakdowns', HashLookup, :breakdown, map_breakdown, to: :breakdown_id)
    .transform('mapping subjects', HashLookup, :subject, map_subject, to: :subject_id)
    .transform('mapping prof bands', HashLookup, :proficiency_band, map_proficiency_band, to: :proficiency_band_id)
-   .transform('Assign descriptions and date_valid', WithBlock,) do |row|
-        if [:year] == '2018'
-            row[:description] = 'In 2017-2018, Kentucky used the Kentucky Performance Rating for Educational Progress (K-PREP) tests to assess students in grades 3 through 8 in reading and mathematics, grades 4, 7, and 11 in science, grades 5 and 8 in social studies, and grades 5, 8, and 11 in writing. The K-PREP is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of Kentucky.'
+   .transform('Assign descriptions and date_valid',WithBlock,) do |row|
+        if row[:year] == '2018'
+            row[:description] = 'In 2017-2018, Kentucky used the Kentucky Performance Rating for Educational Progress (K-PREP) tests to assess students in grades 3 through 8, and 11 in reading and mathematics, grades 4, 7, and 11 in science, grades 5 and 8 in social studies, and grades 5, 8, and 11 in writing. The K-PREP is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of Kentucky.'
             row[:date_valid] = '2018-01-01 00:00:00'
         elsif row[:year] == '2019'
             row[:description] = 'In 2018-2019, Kentucky used the Kentucky Performance Rating for Educational Progress (K-PREP) tests to assess students in grades 3 through 8, and 11 in reading and mathematics, grades 4, 7, and 11 in science, grades 5 and 8 in social studies, and grades 5, 8, and 11 in writing. The K-PREP is a standards-based test, which means it measures how well students are mastering specific skills defined for each grade by the state of Kentucky.'
