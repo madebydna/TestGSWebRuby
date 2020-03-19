@@ -18,126 +18,126 @@ describe 'Account page', remote: true do
     end
   end
 
-  describe 'Profile grade levels' do
-    let(:content) { subject.grade_level_subscriptions.content }
-    
-    before do
-      sign_in_as_testuser
-      subject.load
-    end
+  # describe 'Profile grade levels' do
+  #   let(:content) { subject.grade_level_subscriptions.content }
+  #
+  #   before do
+  #     sign_in_as_testuser
+  #     subject.load
+  #   end
+  #
+  #   it 'should subscribe user to a single grade-level' do
+  #     confirm_unchecked_and_check("third_grade")
+  #     sleep(2) # wait for ajax requests
+  #     subject.load
+  #     confirm_checked_and_uncheck("third_grade")
+  #     sleep(2)
+  #   end
+  #
+  #   it 'should subscribe user to multiple grade-levels at once' do
+  #     ["pk", "first_grade", "twelfth_grade"].each do |grade|
+  #       confirm_unchecked_and_check(grade)
+  #     end
+  #     sleep(2)
+  #     subject.load
+  #     ["pk", "first_grade", "twelfth_grade"].each do |grade|
+  #       confirm_checked_and_uncheck(grade)
+  #     end
+  #     sleep(2)
+  #   end
+  #
+  #   it 'should unsubscribe user from a single grade-level' do
+  #     confirm_unchecked_and_check("fifth_grade")
+  #     sleep(2)
+  #     subject.load
+  #     # now user is subscribed
+  #     confirm_checked_and_uncheck("fifth_grade")
+  #     sleep(2)
+  #     subject.load
+  #     # now user is unsubscribed - confirm
+  #     cb = content.find_input("fifth_grade")
+  #     expect(cb).not_to be_checked
+  #   end
+  #
+  #   it 'should unsubscribe user from multiple grade-levels at once' do
+  #     %w(kg second_grade seventh_grade).each do |grade|
+  #       confirm_unchecked_and_check(grade)
+  #     end
+  #     sleep(2)
+  #     subject.load
+  #     %w(kg second_grade seventh_grade).each do |grade|
+  #       confirm_checked_and_uncheck(grade)
+  #     end
+  #     sleep(2)
+  #     subject.load
+  #     # now user is unsubscribed - confirm
+  #     %w(kg second_grade seventh_grade).each do |grade|
+  #       cb = content.find_input(grade)
+  #       expect(cb).not_to be_checked
+  #     end
+  #   end
+  #
+  #   def confirm_checked_and_uncheck(grade)
+  #     cb = content.find_input(grade)
+  #     expect(cb).to be_checked
+  #     content.check_or_uncheck_checkbox(grade)
+  #   end
+  #
+  #   def confirm_unchecked_and_check(grade)
+  #     cb = content.find_input(grade)
+  #     expect(cb).not_to be_checked
+  #     content.check_or_uncheck_checkbox(grade)
+  #   end
+  # end
 
-    it 'should subscribe user to a single grade-level' do
-      confirm_unchecked_and_check("third_grade")
-      sleep(2) # wait for ajax requests
-      subject.load
-      confirm_checked_and_uncheck("third_grade")
-      sleep(2)
-    end
-
-    it 'should subscribe user to multiple grade-levels at once' do
-      ["pk", "first_grade", "twelfth_grade"].each do |grade|
-        confirm_unchecked_and_check(grade)
-      end
-      sleep(2)
-      subject.load
-      ["pk", "first_grade", "twelfth_grade"].each do |grade|
-        confirm_checked_and_uncheck(grade)
-      end
-      sleep(2)
-    end
-      
-    it 'should unsubscribe user from a single grade-level' do
-      confirm_unchecked_and_check("fifth_grade")
-      sleep(2)
-      subject.load
-      # now user is subscribed
-      confirm_checked_and_uncheck("fifth_grade")
-      sleep(2)
-      subject.load
-      # now user is unsubscribed - confirm
-      cb = content.find_input("fifth_grade")
-      expect(cb).not_to be_checked
-    end
-
-    it 'should unsubscribe user from multiple grade-levels at once' do
-      %w(kg second_grade seventh_grade).each do |grade|
-        confirm_unchecked_and_check(grade)
-      end
-      sleep(2)
-      subject.load
-      %w(kg second_grade seventh_grade).each do |grade|
-        confirm_checked_and_uncheck(grade)
-      end
-      sleep(2)
-      subject.load
-      # now user is unsubscribed - confirm
-      %w(kg second_grade seventh_grade).each do |grade|
-        cb = content.find_input(grade)
-        expect(cb).not_to be_checked
-      end
-    end
-
-    def confirm_checked_and_uncheck(grade)
-      cb = content.find_input(grade)
-      expect(cb).to be_checked
-      content.check_or_uncheck_checkbox(grade)
-    end
-    
-    def confirm_unchecked_and_check(grade)
-      cb = content.find_input(grade)
-      expect(cb).not_to be_checked
-      content.check_or_uncheck_checkbox(grade) 
-    end
-  end
-
-  describe 'Email subscriptions' do
-    let(:content) { subject.email_subscriptions.content }
-
-    def load_page_and_open_email_section
-      subject.load
-      subject.email_subscriptions.closed_arrow.click
-      subject.email_subscriptions.wait_until_content_visible
-    end
-
-    before do
-      sign_in_as_testuser
-      load_page_and_open_email_section
-    end
-
-    it 'should subscribe user to greatnews newsletter' do
-      expect(content.greatnews_checkbox).not_to be_checked
-      content.greatnews_checkbox.check
-      load_page_and_open_email_section
-      expect(content.greatnews_checkbox).to be_checked
-      content.greatnews_checkbox.uncheck
-    end
-
-    it 'should unsubscribe user from greatnews newsletter' do
-      content.greatnews_checkbox.check
-      load_page_and_open_email_section
-      expect(content.greatnews_checkbox).to be_checked # user is subscribed
-      content.greatnews_checkbox.uncheck # now unsubscribe
-      load_page_and_open_email_section
-      expect(content.greatnews_checkbox).not_to be_checked # check that user is still unsubscribed
-    end
-
-    it 'should subscribe user to sponsor newsletter' do
-      expect(content.sponsor_checkbox).not_to be_checked
-      content.sponsor_checkbox.check
-      load_page_and_open_email_section
-      expect(content.sponsor_checkbox).to be_checked
-      content.sponsor_checkbox.uncheck
-    end
-
-    it 'should unsubscribe user from sponsor newsletter' do
-      content.sponsor_checkbox.check
-      load_page_and_open_email_section
-      expect(content.sponsor_checkbox).to be_checked # user is subscribed
-      content.sponsor_checkbox.uncheck # now unsubscribe
-      load_page_and_open_email_section
-      expect(content.sponsor_checkbox).not_to be_checked # check that user is still unsubscribed
-    end
-  end
+  # describe 'Email subscriptions' do
+  #   let(:content) { subject.email_subscriptions.content }
+  #
+  #   def load_page_and_open_email_section
+  #     subject.load
+  #     subject.email_subscriptions.closed_arrow.click
+  #     subject.email_subscriptions.wait_until_content_visible
+  #   end
+  #
+  #   before do
+  #     sign_in_as_testuser
+  #     load_page_and_open_email_section
+  #   end
+  #
+  #   it 'should subscribe user to greatnews newsletter' do
+  #     expect(content.greatnews_checkbox).not_to be_checked
+  #     content.greatnews_checkbox.check
+  #     load_page_and_open_email_section
+  #     expect(content.greatnews_checkbox).to be_checked
+  #     content.greatnews_checkbox.uncheck
+  #   end
+  #
+  #   it 'should unsubscribe user from greatnews newsletter' do
+  #     content.greatnews_checkbox.check
+  #     load_page_and_open_email_section
+  #     expect(content.greatnews_checkbox).to be_checked # user is subscribed
+  #     content.greatnews_checkbox.uncheck # now unsubscribe
+  #     load_page_and_open_email_section
+  #     expect(content.greatnews_checkbox).not_to be_checked # check that user is still unsubscribed
+  #   end
+  #
+  #   it 'should subscribe user to sponsor newsletter' do
+  #     expect(content.sponsor_checkbox).not_to be_checked
+  #     content.sponsor_checkbox.check
+  #     load_page_and_open_email_section
+  #     expect(content.sponsor_checkbox).to be_checked
+  #     content.sponsor_checkbox.uncheck
+  #   end
+  #
+  #   it 'should unsubscribe user from sponsor newsletter' do
+  #     content.sponsor_checkbox.check
+  #     load_page_and_open_email_section
+  #     expect(content.sponsor_checkbox).to be_checked # user is subscribed
+  #     content.sponsor_checkbox.uncheck # now unsubscribe
+  #     load_page_and_open_email_section
+  #     expect(content.sponsor_checkbox).not_to be_checked # check that user is still unsubscribed
+  #   end
+  # end
 
   describe 'Password change form' do
     let(:content) { subject.change_password.content }
