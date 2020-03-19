@@ -64,6 +64,18 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
     }
   },
 
+  shouldSignUpForTeacherList: function shouldSignUpForTeacherList() {
+    return this.$getJoinForm().find('#teacher_list').prop('checked');
+  },
+
+  signUpForTeacherList: function signUpForTeacherList() {
+    if (this.shouldSignUpForTeacherList()) {
+      return GS.subscription.teacherSignUp(this.getModalData());
+    } else {
+      return $.when();
+    }
+  },
+
   createStudents: function createStudents() {
     var grades = this.getGrades();
 
@@ -98,6 +110,7 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
 
     $.when(
       this.signUpForSponsorsList(),
+        this.signUpForTeacherList(),
       this.createStudents(),
       this.signUpForGradeByGrade()
     ).done(function(data1, data2) {
