@@ -1,8 +1,3 @@
-import {
-  merge,
-  pick
-} from "../../../../../../.bundle/ruby/2.4.0/gems/lodash-rails-2.4.1/vendor/assets/javascripts/lodash";
-
 var GS = GS || {};
 
 GS.subscription = GS.subscription || (function() {
