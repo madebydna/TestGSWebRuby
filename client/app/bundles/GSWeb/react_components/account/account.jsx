@@ -4,20 +4,17 @@ import withViewportSize from 'react_components/with_viewport_size';
 import OpenableCloseable from 'react_components/openable_closeable';
 import SearchBox from 'react_components/search_box';
 import { validSizes as validViewportSizes } from 'util/viewport';
-import EmailSettings from './email_settings';
 import ChangePasswordForm from './change_password_form';
-import GradeLevelCheckboxes from './grade_level_checkboxes';
 
 const ospDashboardUrl = '/official-school-profile/dashboard/';
 const mySchoolListUrl = '/my-school-list/';
+const myEmailPreferencesUrl = '/preferences/';
 
 const Account = ({
   size,
   email,
   firstName,
-  mightHaveOsps,
-  studentGradeLevels,
-  subscriptions
+                   mightHaveOsps
 }) => (
   <div
     style={{
@@ -36,7 +33,25 @@ const Account = ({
         </div>
       </div>
     </div>
-
+    <div>
+      <OpenableCloseable>
+        {(isOpen, {toggle}) => (
+            <React.Fragment>
+              <div className="drawer">
+                <div className="heading" onClick={toggle}>
+                  <span>Change Password</span>
+                  <span
+                      className={`icon i-32-${
+                          isOpen ? 'open' : 'close'
+                      }-arrow-head`}
+                  />
+                </div>
+                <div className="body">{isOpen && <ChangePasswordForm/>}</div>
+              </div>
+            </React.Fragment>
+        )}
+      </OpenableCloseable>
+    </div>
     {mightHaveOsps && (
       <div>
         <div className="drawer">
@@ -64,26 +79,10 @@ const Account = ({
       </div>
     )}
 
-    <div>
-      <div className="drawer">
-        <div className="heading">
-          <span>My Profile</span>
-          <span className="icon i-32-open-arrow-head" />
-        </div>
-        <div className="body">
-          Tell us a little more about yourself so we can send you updates about
-          your community. This information will not be displayed publicly on the
-          site.
-          <div className="grade-level-checkboxes">
-            <br />
-            <div className="open-sans_b">
-              What grade levels are you interested in?
-            </div>
-            <br />
-            <GradeLevelCheckboxes grades={studentGradeLevels} />
-          </div>
-        </div>
-      </div>
+    <div className="drawer">
+      <a href={myEmailPreferencesUrl} className="heading">
+        Email Preferences
+      </a>
     </div>
 
     <div className="drawer">
@@ -92,41 +91,6 @@ const Account = ({
       </a>
     </div>
 
-    <div>
-      <OpenableCloseable>
-        {(isOpen, { toggle }) => (
-          <div className="drawer">
-            <div className="heading" onClick={toggle}>
-              <span>Email Subscriptions</span>
-              <span
-                className={`icon i-32-${isOpen ? 'open' : 'close'}-arrow-head`}
-              />
-            </div>
-            {isOpen && <EmailSettings subscriptions={subscriptions} />}
-          </div>
-        )}
-      </OpenableCloseable>
-    </div>
-
-    <div>
-      <OpenableCloseable>
-        {(isOpen, { toggle }) => (
-          <React.Fragment>
-            <div className="drawer">
-              <div className="heading" onClick={toggle}>
-                <span>Change Password</span>
-                <span
-                  className={`icon i-32-${
-                    isOpen ? 'open' : 'close'
-                  }-arrow-head`}
-                />
-              </div>
-              <div className="body">{isOpen && <ChangePasswordForm />}</div>
-            </div>
-          </React.Fragment>
-        )}
-      </OpenableCloseable>
-    </div>
   </div>
 );
 
@@ -134,15 +98,11 @@ Account.propTypes = {
   size: PropTypes.oneOf(validViewportSizes).isRequired,
   email: PropTypes.string.isRequired,
   firstName: PropTypes.string,
-  mightHaveOsps: PropTypes.bool.isRequired,
-  studentGradeLevels: PropTypes.arrayOf(PropTypes.string),
-  subscriptions: PropTypes.arrayOf(PropTypes.object)
+  mightHaveOsps: PropTypes.bool.isRequired
 };
 
 Account.defaultProps = {
-  firstName: null,
-  studentGradeLevels: [],
-  subscriptions: []
+  firstName: null
 };
 
 export default withViewportSize({ propName: 'size' })(Account);

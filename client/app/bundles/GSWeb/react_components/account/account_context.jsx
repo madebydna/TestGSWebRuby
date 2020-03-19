@@ -21,9 +21,7 @@ class AccountContext extends React.Component {
         'email',
         'firstName',
         'schoolUsers',
-        'subscriptions',
         'mightHaveOsps',
-        'studentGradeLevels'
       ]
     }).done(currentUser => {
       this.setState({

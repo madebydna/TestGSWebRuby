@@ -1,0 +1,7 @@
+<fieldset>
+  <legend><span class="open-sans_b"><%= t('Are you an educator', scope: 'forms') %></span></legend>
+  <div class="checkbox-and-label">
+    <%= check_box_tag('teacher_list', 'true', false, class: 'checkbox') %>
+    <label><span class="open-sans_b"><%= t('teacher_list_signup', scope: 'forms') %></span></label>
+  </div>
+</fieldset>

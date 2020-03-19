@@ -6,7 +6,7 @@ module Feeds
       def initialize(data_reader, output_path)
         super
         @root_element = 'gs-test-subgroup-feed'
-        @schema = 'http://www.greatschools.org/feeds/gs-subgroup.xsd'
+        @schema = 'http://www.greatschools.org/feeds/gs-test-subgroups.xsd'
       end
 
       def write_test_result(h)
