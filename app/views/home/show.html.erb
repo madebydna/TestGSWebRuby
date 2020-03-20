@@ -34,17 +34,19 @@
             <div class="subtitle mbm"><%= t('home.hero.subheading_content') %></div>
             <span><%= t('home.hero.new_coronavirus_html') %></span>
             <%= link_to t('home.hero.coronavirus_html'), coronavirus_url %>
-            <span class="phs">|</span>
+            <br/>
             <%= link_to t('home.hero.raising_kids_html'), greatkids_home_url %>
             <span class="phs">|</span>
             <%= link_to t('home.hero.school_life_html'), school_life_url %>
             <span class="phs">|</span>
             <%= link_to t('home.hero.worksheets_html'), worksheets_and_activities_url %>
+            <span class="phs">|</span>
             <%= link_to t('home.hero.reading_html'), reading_url %>
             <span class="phs">|</span>
             <%= link_to t('home.hero.math_html'), math_url %>
             <span class="phs">|</span>
             <%= link_to t('home.hero.emotional_smarts_html'), emotional_smarts_url(lang: nil) %>
+            <span class="phs">|</span>
             <%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url(lang: nil) %>
             <span class="phs">|</span>
             <%# Remove CSA winners for now to display coronavirus label %>

@@ -20,5 +20,5 @@ en:
       innovative_schools_html: Innovative&nbsp;schools
       school_ratings_html: School&nbsp;ratings
       school_reviews_html: School&nbsp;reviews
-      coronavirus_html: "CORONAVIRUS SCHOOL CLOSURE RESOURCES"
+      coronavirus_html: "<span style='text-decoration: underline;color:red;text-transform:none;font-family:opensans-semibold;'>Coronavirus&nbsp;School&nbsp;Closure&nbsp;Resources</span>"
       new_coronavirus_html: "<span style='color:red;font-family:opensans-semibold;'>*NEW*</span>"
