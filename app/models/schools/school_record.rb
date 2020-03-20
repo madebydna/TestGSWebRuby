@@ -8,8 +8,8 @@ class SchoolRecord < ActiveRecord::Base
   include GradeLevelConcerns
 
   attr_accessor :assigned
-  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active
-  # ! TODO: only java routing uses this column. Can remove
+  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modified_by, :level, :type, :active
+  # ! TODO: only java routing uses this column. Can remove eventually from school_record
   #:new_profile_school
   # attr_writer :collections
   # has_many :school_metadatas
@@ -57,6 +57,7 @@ class SchoolRecord < ActiveRecord::Base
   # scope :find_by_state_and_id, lambda do |state, id|
   #   find_by(school_id: id, state: state)
   # end
+  scope :find_by_state_and_id, ->(state, id) { find_by(school_id: id, state: state) }
 
   scope :find_by_state_and_ids, ->(state, ids) { where(school_id: ids, state: state) }
 
@@ -452,6 +453,34 @@ class SchoolRecord < ActiveRecord::Base
     schools = School.load_all_from_associates(associates).map { |s| [[s.state, s.id], s] }.to_h
     associates.each do |associate|
       associate.school = schools[[associate.state, associate.school_id]]
+    end
+  end
+
+  def self.update_from_school(school, state, log: false)
+    school_record = find_by(unique_id: "#{state}-#{school.id}")
+    school_record ||= new(unique_id: "#{state}-#{school.id}", state: state.to_s, school_id: school.id)
+    school_record.assign_attributes(
+      school.attributes.symbolize_keys.except(
+        :id, #id is set as school_id
+        :modifiedBy # updated in school_record as modified_by
+      ).merge({
+        modified_by: school.modifiedBy #updates modified_by
+      })
+    )
+
+    # Note: this is required to see the actual attributes that failed validation because we
+    # overwrite Rails's default error message
+    begin
+      if log && school_record.changed?
+        puts "SchoolRecord #{school_record.unique_id} has changed"
+        p school_record.changes
+      end
+      school_record.save!
+    rescue ActiveRecord::RecordInvalid => error
+      message = school_record.errors.messages.sort_by {|attr,msg| attr.to_s }.map do |attr, msg|
+        "#{attr.capitalize} #{msg.first}"
+      end.join("; ")
+      raise "Validation failed: #{message}"
     end
   end
 
