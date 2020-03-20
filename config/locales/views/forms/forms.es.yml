@@ -20,6 +20,8 @@
       email_required_error: Por favor introduzca una dirección de correo eléctronico.
       signup_success: Gracias! Ahora estás registrado.
       sponsors_signup: Por favor, envíenme la crianza de información y promociones especiales de los socios cuidadosamente escogidos GreatSchools.
+      teacher_list_signup: Sign up for resources and insights for teachers and school leaders.
+      'Are you an educator': Are you an educator?
       terms_of_use_html: Al suscribirse, acepto los %{terms_of_use_link} y %{privacy_policy_link}.
       parsley_required_message: Por favor introduzca una dirección de correo eléctronico.
       parsley_remote_message_html: "Parece que ya tiene una cuenta. <a href='#login' data-toggle='tab'>Iniciar sesión</a>."

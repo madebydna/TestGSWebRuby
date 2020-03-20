@@ -59,29 +59,29 @@ describe 'Account management page', js: true do
       end
     end
 
-    context 'When user has subscriptions' do
-      let(:content) { subject.email_subscriptions.content }
-      before do
-        FactoryBot.create(:subscription, list: 'osp', member_id: user.id)
-        FactoryBot.create(:subscription, list: 'greatnews', member_id: user.id)
-        subject.load
-        subject.email_subscriptions.closed_arrow.click
-        subject.email_subscriptions.wait_until_content_visible
-      end
-
-      it 'should indicate subscriptions' do
-        expect(user.subscriptions.size).to eq(2)
-        expect(content.greatnews_checkbox).to be_checked
-        expect(content.osp_checkbox).to be_checked
-      end
-
-      it 'should allow user to unsubscribe ' do
-        expect do
-          content.greatnews_checkbox.uncheck
-          sleep(3)
-        end.to change(user.subscriptions, :count).by(-1)
-      end
-    end
+    # context 'When user has subscriptions' do
+    #   let(:content) { subject.email_subscriptions.content }
+    #   before do
+    #     FactoryBot.create(:subscription, list: 'osp', member_id: user.id)
+    #     FactoryBot.create(:subscription, list: 'greatnews', member_id: user.id)
+    #     subject.load
+    #     subject.email_subscriptions.closed_arrow.click
+    #     subject.email_subscriptions.wait_until_content_visible
+    #   end
+    #
+    #   it 'should indicate subscriptions' do
+    #     expect(user.subscriptions.size).to eq(2)
+    #     expect(content.greatnews_checkbox).to be_checked
+    #     expect(content.osp_checkbox).to be_checked
+    #   end
+    #
+    #   it 'should allow user to unsubscribe ' do
+    #     expect do
+    #       content.greatnews_checkbox.uncheck
+    #       sleep(3)
+    #     end.to change(user.subscriptions, :count).by(-1)
+    #   end
+    # end
 
     context 'with no user profile' do
       # TODO: Is this still meaningful? What is a user profile used for?

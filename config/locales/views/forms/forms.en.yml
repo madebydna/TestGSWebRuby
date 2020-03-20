@@ -20,6 +20,8 @@
       email_required_error: Please enter an email address.
       signup_success: Thanks! You're now signed up.
       sponsors_signup: Partner offers & updates (from our carefully chosen community partners)
+      teacher_list_signup: Sign up for resources and insights for teachers and school leaders.
+      'Are you an educator': Are you an educator?
       terms_of_use_html: By signing up, I agree to the %{terms_of_use_link} and %{privacy_policy_link}.
       parsley_required_message: "Please enter an email address."
       parsley_remote_message_html: "Looks like you already have an account. <a href='#login' data-toggle='tab'>Log in</a>."

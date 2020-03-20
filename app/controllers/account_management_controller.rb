@@ -9,7 +9,6 @@ class AccountManagementController < ApplicationController
       title: "My account | GreatSchools",
       robots: "noindex"
     )
-    render 'show'
   end
 
   private

@@ -3,6 +3,7 @@ FactoryBot.define do
     notes "Foo notes"
     state 'CA'
     source_id 1
+    association :data_type
 
     trait(:none) { configuration { Omni::DataSet::NONE } }
     trait(:web) { configuration { Omni::DataSet::WEB } }

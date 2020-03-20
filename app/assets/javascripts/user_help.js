@@ -17,6 +17,7 @@ $('.sendUserEmail').on('click', function() {
     async: true
   }).done(function (data) {
     if (data['email_sent']) {
+      $('#emailLink').html(data['email_link']);
       $('#emailSent').removeClass('dn');
     } else {
       $('#emailSendFailed').removeClass('dn');

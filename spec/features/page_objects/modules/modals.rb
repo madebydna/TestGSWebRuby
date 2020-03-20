@@ -24,8 +24,8 @@ module Modals
         page.find('.remodal span.close').click
       end
 
-      section :email_newsletter_modal, NewsletterModal, '.js-modal-container', 
-        visible: true, 
+      section :email_newsletter_modal, NewsletterModal, '.js-modal-container',
+        visible: true,
         text: 'Get our best articles, worksheets, and more delivered weekly to your inbox.'
 
       section :saved_school_modal, NewsletterModal, '.js-email-join-for-school-profile-modal',
@@ -39,7 +39,7 @@ module Modals
         element :student, 'div[data-school-user=student]'
         element :pricipal, 'div[data-school-user=pricipal]'
         element :teacher, 'div[data-school-user=teacher]'
-        element :community_member, 'div[data-school-user=community member]'
+        element :community_member, 'div[data-school-user="community member"]'
         element :submit_button, 'button.submit-button'
       end
 

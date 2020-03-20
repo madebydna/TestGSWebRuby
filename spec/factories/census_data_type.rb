@@ -5,5 +5,5 @@ FactoryBot.define do
     description 'a description'
     type 'num'
   end
-  
+
 end

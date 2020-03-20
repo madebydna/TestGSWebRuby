@@ -76,18 +76,20 @@ class Cacher
     raise NotImplementedError
   end
 
+  # TODO: prune this list to only currently used cachers
   def self.cacher_for(key)
     {
-        test_scores_gsdata:     TestScoresCaching::TestScoresCacherGsdata,
-        characteristics:  CharacteristicsCaching::CharacteristicsCacher,
-        esp_responses:    EspResponsesCaching::EspResponsesCacher,
-        reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
-        gsdata:           GsdataCaching::GsdataCacher,
-        ratings:         RatingsCaching::GsdataRatingsCacher,
-        directory:        DirectoryCaching::DirectoryCacher,
-        feed_test_scores_gsdata: TestScoresCaching::FeedTestScoresCacherGsdata,
+        test_scores_gsdata:          TestScoresCaching::TestScoresCacherGsdata,
+        characteristics:             CharacteristicsCaching::CharacteristicsCacher,
+        metrics:                     MetricsCaching::SchoolMetricsCacher,
+        esp_responses:               EspResponsesCaching::EspResponsesCacher,
+        reviews_snapshot:            ReviewsCaching::ReviewsSnapshotCacher,
+        gsdata:                      GsdataCaching::GsdataCacher,
+        ratings:                     RatingsCaching::GsdataRatingsCacher,
+        directory:                   DirectoryCaching::DirectoryCacher,
+        feed_test_scores_gsdata:     TestScoresCaching::FeedTestScoresCacherGsdata,
         feed_old_test_scores_gsdata: TestScoresCaching::FeedOldTestScoresCacherGsdata,
-        feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
+        feed_characteristics:        FeedCharacteristicsCaching::FeedCharacteristicsCacher
     }[key.to_s.to_sym]
   end
 
@@ -109,6 +111,7 @@ class Cacher
     @registered_cachers ||= [
       TestScoresCaching::TestScoresCacherGsdata,
       CharacteristicsCaching::CharacteristicsCacher,
+      MetricsCaching::SchoolMetricsCacher,
       EspResponsesCaching::EspResponsesCacher,
       ReviewsCaching::ReviewsSnapshotCacher,
       TestScoresCaching::FeedTestScoresCacherGsdata,

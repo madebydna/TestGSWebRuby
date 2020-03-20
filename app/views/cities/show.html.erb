@@ -42,13 +42,15 @@
           <% end %>
 
           <%# Top Schools %>
-          <%= react_component("TopSchoolsStatefulWrapper", props: {
-              community: 'city',
-              schoolsData: @top_schools[:schools],
-              locality: @locality,
-              schoolLevels: @top_schools[:counts],
-              summaryType: @summary_type
-          }) %>
+          <% if @top_schools[:counts][:all] > 0 %>
+            <%= react_component("TopSchoolsStatefulWrapper", props: {
+                community: 'city',
+                schoolsData: @top_schools[:schools],
+                locality: @locality,
+                schoolLevels: @top_schools[:counts],
+                summaryType: @summary_type
+            }) %>
+          <% end %>
         </div>
 
         <%# Second Ad %>

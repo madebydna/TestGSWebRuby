@@ -31,13 +31,13 @@ module GS
       SCHOOL_TYPE_STRING = 'public.charter'
       ENTITIES = %w(school state district)
       COLUMN_ORDER = [ :year, :entity_type, :gs_id, :state_id,
-                       :district_name, :school_name, :test_data_type, :test_data_type_id, :grade,
+                       :district_name, :school_name, :data_type, :data_type_id, :grade,
                        :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band, :proficiency_band_id,
                        :number_tested, :value]
       COLUMNS = %w[
         entity_type gs_id
         date_valid notes 
-        description value state test_data_type_id 
+        description value state data_type_id 
         number_tested grade 
         proficiency_band_id source_id
         breakdown_id
@@ -46,17 +46,18 @@ module GS
       REQUIRED_COLUMNS = %w[
         entity_type gs_id
         date_valid notes 
-        description value state test_data_type_id 
+        description value state data_type_id 
         proficiency_band_id source_id
         breakdown_id
         subject_id
       ]
       SUMMARY_OUTPUT_FIELDS = %i[entity_type field value count]
-
+ 
       def initialize(input_dir, options = {})
         @input_dir = input_dir
         @options = options
         @runnable_steps = []
+        @load_type = 'test'
 
         instance_exec(&self.class.before) if self.class.before
       end
@@ -89,7 +90,7 @@ module GS
         @summary_output_step ||= SummaryOutput.new(%i[
                                                        entity_type
                                                        year
-                                                       test_data_type_id
+                                                       data_type_id
                                                        grade
                                                        subject_id
                                                        breakdown_id
@@ -229,7 +230,7 @@ module GS
         node = output_files_root_step.add_step('Keep only state rows for source', KeepRows, :entity_type, 'state')
         sources = {}
         node = node.transform 'Find unique source', WithBlock do |row|
-            source_key = [row[:date_valid],row[:test_data_type_id],row[:notes],row[:description]]
+            source_key = [row[:date_valid],row[:data_type_id],row[:notes],row[:description]]
             unless sources[source_key]
               row[:entity_type] = 'source' 
               sources[source_key] = true
@@ -238,7 +239,7 @@ module GS
           row
         end
         node = node.transform('Keep rows for source', KeepRows, :entity_type, 'source')
-        node.sql_writer 'Output source rows to SQL file', SqlDestination, source_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS
+        node.sql_writer 'Output source rows to SQL file', SqlDestination, source_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS, @load_type
         node
       end
 
@@ -260,14 +261,13 @@ module GS
             row[:gs_id] = state_ids[config_hash[:state].upcase]
           end
           row
-          # puts "#{row[:year]},#{row[:grade]},#{row[:subject_id]},#{row[:breakdown_id]}"
         end     
         node = node.transform 'Check n_tested"', WithBlock do |row|
           row[:number_tested] = 'NULL' if row[:number_tested].nil?
           row
         end
         node.destination 'Output state rows to CSV', CsvDestination, state_output_file, *COLUMN_ORDER
-        node.sql_writer 'Output state rows to SQL file', SqlDestination, state_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS
+        node.sql_writer 'Output state rows to SQL file', SqlDestination, state_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS, @load_type
         node
       end
 
@@ -299,7 +299,7 @@ module GS
           row
         end
         node.destination 'Output district rows to CSV', CsvDestination, district_output_file, *COLUMN_ORDER
-        node.sql_writer 'Output district rows to SQL file', SqlDestination, district_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS
+        node.sql_writer 'Output district rows to SQL file', SqlDestination, district_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS, @load_type
         node
       end
 
@@ -333,7 +333,7 @@ module GS
           row
         end
         node.destination 'Output school rows to CSV', CsvDestination, school_output_file, *COLUMN_ORDER
-        node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS
+        node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS, @load_type
         node
       end
 
@@ -343,7 +343,7 @@ module GS
       end
 
       def data_file_prefix
-        [state, @year, 1, SCHOOL_TYPE_STRING].join('.') + '.'
+        [@ticket_n, state, 'test', @year].join('_') + '_'
       end
 
       def state

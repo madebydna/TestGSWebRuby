@@ -60,7 +60,7 @@ const browseLink = (link, levelCodes, community, size) => {
   if ((community === 'state') && (size > SM)) {
     searchLink = addQueryParamToUrl('view', 'table', link);
   }
-  return addQueryParamToUrl('gradeLevels', levelCodes, searchLink);
+  return addQueryParamToUrl("gradeLevels%5B%5D", levelCodes, searchLink);
 }
 
 const assignDisplayType = (schools, levelCodes, size) => {

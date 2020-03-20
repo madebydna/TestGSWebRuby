@@ -66,33 +66,39 @@ class UserController < ApplicationController
   def send_verify_email_admin
     email = params[:email]
     email_sent = false
+    email_verify = ''
     if email.present?
       user = User.where(email: email).first
       if user.present?
-        EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
+        email_verify = email_verification_url(user)
+        EmailVerificationEmail.deliver_to_user(user, email_verify)
         email_sent = true
       end
     end
     render json: {
-        'email_sent': email_sent
+        'email_sent': email_sent,
+        'email_link': email_verify
     }
   end
 
   def send_reset_password_email_admin
     email = params[:email]
     email_sent = false
+    reset_pass_url = ''
     if email.present?
       user = User.where(email: email).first
       if user.present?
+        reset_pass_url = create_reset_password_url(user)
         ResetPasswordEmail.deliver_to_user(
             user,
-            create_reset_password_url(user)
+            reset_pass_url
         )
         email_sent = true
       end
     end
     render json: {
-        'email_sent': email_sent
+        'email_sent': email_sent,
+        'email_link': reset_pass_url
     }
   end
 
