@@ -49,8 +49,6 @@ describe 'User visits Home Page' do
   end
 
   describe 'signup via newsletter link', js: true do
-    pending("Failing due to account page change")
-
     before { @email = random_email }
     after { clean_dbs(:gs_schooldb) }
 
@@ -58,6 +56,7 @@ describe 'User visits Home Page' do
 
     context 'with some grades selected and no partner offers' do
       before do
+        pending("Failing due to account page change")
         subject.footer.newsletter_link.click
         subject.email_newsletter_modal.sign_up(@email, [2,5], false)
         expect(subject).to have_newsletter_success_modal
@@ -80,6 +79,7 @@ describe 'User visits Home Page' do
 
     context 'with partner email checkbox selected' do
       before do
+        pending("Failing due to account page change")
         subject.footer.newsletter_link.click
         subject.email_newsletter_modal.sign_up(@email, [], true)
         expect(subject).to have_newsletter_success_modal
