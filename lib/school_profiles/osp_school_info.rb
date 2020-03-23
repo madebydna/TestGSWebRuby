@@ -219,7 +219,7 @@ module SchoolProfiles
       recipient_name = data.fetch('administrator_name', {}).keys.first
       # Check characteristics data if esp fails
       if recipient_email.blank? && recipient_name.blank?
-        data = @school_cache_data_reader.characteristics_data('Head official name','Head official email address')
+        data = @school_cache_data_reader.metrics_data('Head official name','Head official email address')
         recipient_email = data.fetch('Head official email address', [{}]).first['school_value']
         recipient_name = data.fetch('Head official name', [{}]).first['school_value']
       end

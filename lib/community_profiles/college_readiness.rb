@@ -53,7 +53,9 @@ module CommunityProfiles
     end
 
     def handle_ACT_SAT_to_display!(hash)
+      # Average ACT score, ACT participation, ACT percent college ready
       act_content = enforce_latest_year_school_value_for_data_types!(hash, ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY)
+      # Average SAT score, SAT percent participation, SAT percent college ready
       sat_content = enforce_latest_year_school_value_for_data_types!(hash, SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY)
 
       # JT-8787: Displayed ACT & SAT data must be within 2 years of one another, otherwise hide the older data type
@@ -204,7 +206,7 @@ module CommunityProfiles
       ).ethnicities_to_percentages
     end
 
-        # TODO: refactor / test
+    # TODO: refactor / test
     def value_to_s(value, precision=0)
       return nil if value.nil?
       return value.scan(/\d+/) if value.instance_of?(String) && value.present?

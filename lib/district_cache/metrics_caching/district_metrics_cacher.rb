@@ -14,6 +14,10 @@ module MetricsCaching
       482, 483, 484, 485, 486, 487, 488, 489
     ]
 
+    def self.listens_to?(data_type)
+      data_type == :metrics
+    end
+
     def query_results
       @_query_results ||= begin
         results = MetricsResults.new(MetricsDistrictQuery.new(district).call.to_a)

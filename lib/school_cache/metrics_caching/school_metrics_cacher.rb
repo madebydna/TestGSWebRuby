@@ -24,7 +24,7 @@ module MetricsCaching
     def query_results
       results = MetricsResults.new(MetricsSchoolQuery.new(school).call.to_a)
       results.filter_to_max_year_per_data_type!
-      results.sort_school_value_desc_by_date_type!
+      results.sort_school_value_desc_by_data_type!
     end
 
     def build_hash_for_cache

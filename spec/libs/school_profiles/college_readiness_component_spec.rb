@@ -123,7 +123,7 @@ describe 'CollegeReadinessComponent' do
       end
 
       before do
-        expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
+        expect(school_cache_data_reader).to receive(:metrics_data).and_return(sample_data)
         allow(school_cache_data_reader).to receive(:decorated_gsdata_datas).and_return(gsdata_sample_data)
         allow(subject).to receive(:new_sat?).and_return(false)
       end
@@ -197,7 +197,7 @@ describe 'CollegeReadinessComponent' do
       end
 
       before do
-        expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
+        expect(school_cache_data_reader).to receive(:metrics_data).and_return(sample_data)
         allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
       end
 
@@ -205,11 +205,11 @@ describe 'CollegeReadinessComponent' do
         data_points = subject.data_values.find {|item| item.label == 'Average SAT score' }
         expect(data_points).to_not be_present
       end
-      
+
     end
 
     it 'should return empty array if no data' do
-      expect(school_cache_data_reader).to receive(:characteristics_data).and_return({})
+      expect(school_cache_data_reader).to receive(:metrics_data).and_return({})
       allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
       expect(subject.data_values).to be_empty
     end
@@ -232,7 +232,7 @@ describe 'CollegeReadinessComponent' do
       end
 
       before do
-        expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
+        expect(school_cache_data_reader).to receive(:metrics_data).and_return(sample_data)
         allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
       end
 
@@ -387,7 +387,7 @@ describe 'CollegeSuccessComponent' do
     allow(school_cache_data_reader).to receive(:school).and_return(school)
     allow(school).to receive(:state).and_return(:ca)
     allow(school).to receive(:id).and_return(1)
-    allow(school_cache_data_reader).to receive(:characteristics_data).and_return(remediation_sample_data)
+    allow(school_cache_data_reader).to receive(:metrics_data).and_return(remediation_sample_data)
     allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
     allow(school_cache_data_reader).to receive(:decorated_gsdata_datas).and_return({})
     allow(school_cache_data_reader).to receive(:college_readiness_rating).and_return(cr_rating)
@@ -397,7 +397,7 @@ describe 'CollegeSuccessComponent' do
   describe 'With remediation data' do
     it 'should return RatingScoreItems for each remediation data point' do
       expect(data_points).to be_present
-      expect(data_points.all?{|dp| dp.is_a?(SchoolProfiles::RatingScoreItem)}).to be_truthy
+      expect(data_points.all? {|dp| dp.is_a?(SchoolProfiles::RatingScoreItem)}).to be_truthy
     end
 
     it 'should include info text' do

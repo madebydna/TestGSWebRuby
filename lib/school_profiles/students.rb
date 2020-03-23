@@ -77,7 +77,7 @@ module SchoolProfiles
     end
 
     def gender_data
-      @school_cache_data_reader.characteristics_data(*GENDER_KEYS)
+      @school_cache_data_reader.metrics_data(*GENDER_KEYS)
     end
 
     def gender_data_source
@@ -94,7 +94,7 @@ module SchoolProfiles
     # TODO: ethnicity_data translates the keys, but this method does not. We should translate
     #       here so that we don't have to duplicate the translations in JavaScript
     def subgroups_data
-      @school_cache_data_reader.characteristics_data(*OTHER_BREAKDOWN_KEYS)
+      @school_cache_data_reader.metrics_data(*OTHER_BREAKDOWN_KEYS)
     end
 
     def subgroups_data_sources

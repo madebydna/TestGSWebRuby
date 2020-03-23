@@ -37,7 +37,7 @@ module CommunityProfiles
 
     def data_values
       return {} if ratings_narration.total_counts.zero?
-      
+
       {}.tap do |h|
         h['key'] = 'summary_rating'
         h['title'] = I18n.t('title', scope: "lib.summary_rating.district_scope")

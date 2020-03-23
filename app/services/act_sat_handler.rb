@@ -3,7 +3,7 @@ class ActSatHandler
   include SchoolProfiles::CollegeReadinessConfig
 
   attr_reader :hash
-  
+
   ACT_ONLY = [ACT_SCORE, ACT_PARTICIPATION, ACT_PERCENT_COLLEGE_READY]
   SAT_ONLY = [SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY]
   ACT_SAT_COMBINED_PARTICIPATION = [ACT_SAT_PARTICIPATION, ACT_SAT_PARTICIPATION_9_12]
@@ -79,7 +79,7 @@ class ActSatHandler
   private
 
   def select_by_data_types(*data_types, &block)
-    hash.slice(*data_types).values.flatten.select{|item| block.call(item) }.flatten
+    hash.slice(*data_types).values.flatten.select {|item| block.call(item) }.flatten
   end
 
   def set_school_value_to_nil(array)

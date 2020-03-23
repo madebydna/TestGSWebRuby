@@ -68,18 +68,18 @@ class School < ActiveRecord::Base
     associates = associates.select { |o| o.state.present? && o.school_id.present? }
 
     # need a map so we can effeciently maintain order
-    associate_state_school_ids_hash = 
+    associate_state_school_ids_hash =
       associates.each_with_object({}) do |obj, hash|
         hash[[obj.state.downcase, obj.school_id.to_i]] = nil
       end
 
-    state_to_id_map = 
+    state_to_id_map =
       associates
         .each_with_object({}) do |obj, hash|
           hash[obj.state] ||= []
           hash[obj.state] << obj.school_id
       end
-    schools = 
+    schools =
       state_to_id_map.flat_map do |(state, ids)|
         if block_given?
           yield(find_by_state_and_ids(state, ids)).to_a
@@ -343,7 +343,7 @@ class School < ActiveRecord::Base
     level_code == 'h'
   end
 
-  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses test_scores nearby_schools ratings)
+  SCHOOL_CACHE_KEYS = %w(metrics esp_responses test_scores nearby_schools ratings)
 
   def cache_results
 
@@ -393,7 +393,7 @@ class School < ActiveRecord::Base
   end
 
   def claimed?
-    @_claimed ||= 
+    @_claimed ||=
       EspMembership.where(
           active: 1,
           state: state,

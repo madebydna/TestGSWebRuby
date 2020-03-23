@@ -12,6 +12,10 @@ module MetricsCaching
       489
     ]
 
+    def self.listens_to?(data_type)
+      data_type == :metrics
+    end
+
     def query_results
       @_query_results ||= begin
         results = MetricsResults.new(MetricsStateQuery.new(state).call.to_a)
@@ -31,7 +35,7 @@ module MetricsCaching
       validate!(@_hash_for_cache)
     end
 
-    def build_hash_for_metric
+    def build_hash_for_metric(metric)
       {}.tap do |hash|
         hash[:breakdown] = metric.breakdown_name
         hash[:state_value] = metric.value.to_f

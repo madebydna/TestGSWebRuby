@@ -70,8 +70,10 @@ class SchoolCacheResults
     case cache_key
       when 'ratings'
         CachedRatingsMethods
-      when 'characteristics'
-        CachedCharacteristicsMethods
+      when 'metrics'
+        CachedMetricsMethods
+      # when 'characteristics'
+      #   CachedCharacteristicsMethods
       when 'reviews_snapshot'
         CachedReviewsSnapshotMethods
       when 'esp_responses'

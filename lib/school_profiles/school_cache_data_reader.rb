@@ -4,7 +4,7 @@ module SchoolProfiles
     # characteristics - for enrollment
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
-    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores_gsdata nearby_schools performance gsdata esp_responses)
+    SCHOOL_CACHE_KEYS = %w(ratings metrics reviews_snapshot test_scores_gsdata nearby_schools performance gsdata esp_responses)
     DISCIPLINE_FLAG = 'Discipline Flag'
     ABSENCE_FLAG = 'Absence Flag'
     EQUITY_ADJUSTMENT_FACTOR = 'Equity Adjustment Factor'
@@ -41,7 +41,7 @@ module SchoolProfiles
       @_state_attributes ||= StateCache.for_state('state_attributes', school.state)&.cache_data || {}
     end
 
-    # Data growth type. Either a Data Growth Type (Student Progress Rating) 
+    # Data growth type. Either a Data Growth Type (Student Progress Rating)
     # or Data Growth Proxy Type (Academic Progress Rating)
     def growth_type
       state_attributes.fetch('growth_type',nil)
@@ -166,12 +166,19 @@ module SchoolProfiles
       decorated_school.free_or_reduced_price_lunch_data
     end
 
-    def characteristics_data(*keys)
-      decorated_school.characteristics.slice(*keys).each_with_object({}) do |(k,array_of_hashes), hash|
+    def metrics_data(*keys)
+      decorated_school.metrics.slice(*keys).each_with_object({}) do |(k,array_of_hashes), hash|
         array_of_hashes = array_of_hashes.select { |h| h.has_key?('source') }
         hash[k] = array_of_hashes if array_of_hashes.present?
       end
     end
+
+    # def characteristics_data(*keys)
+    #   decorated_school.characteristics.slice(*keys).each_with_object({}) do |(k,array_of_hashes), hash|
+    #     array_of_hashes = array_of_hashes.select { |h| h.has_key?('source') }
+    #     hash[k] = array_of_hashes if array_of_hashes.present?
+    #   end
+    # end
 
     def nearby_schools
       decorated_school.nearby_schools
@@ -219,12 +226,16 @@ module SchoolProfiles
     end
 
     def graduation_rate_data
-      decorated_school.characteristics['4-year high school graduation rate']
+      decorated_school.metrics['4-year high school graduation rate']
     end
 
-    def characteristics
-      decorated_school.characteristics
+    def metrics
+      decorated_school.metrics
     end
+
+    # def characteristics
+    #   decorated_school.characteristics
+    # end
 
     def gsdata_data(*keys)
       gs_data(decorated_school.gsdata, *keys)
@@ -255,7 +266,7 @@ module SchoolProfiles
 
     def decorated_gsdata_datas(*keys)
       decorated_school.gsdata.slice(*keys).each_with_object({}) do |(data_type, array), accum|
-        accum[data_type] = 
+        accum[data_type] =
           array.map do |h|
             GsdataCaching::GsDataValue.from_hash(h).tap { |dv| dv.data_type = data_type }
           end
@@ -415,7 +426,7 @@ module SchoolProfiles
     end
 
     def decorate_school(school)
-      query_results = school_cache_query.query
+      query_results = school_cache_query.query_and_use_cache_keys
       school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
       school_cache_results.decorate_school(school)
     end

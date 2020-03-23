@@ -72,8 +72,10 @@ class DistrictCacheResults
       DistrictCachedDistrictSchoolsSummaryMethods
     when 'feed_district_characteristics'
       FeedDistrictCachedCharacteristicsMethods
-    when 'district_characteristics'
-      DistrictCachedCharacteristicsMethods
+    # when 'district_characteristics'
+    #   DistrictCachedCharacteristicsMethods
+    when 'metrics'
+      DistrictCachedMetricsMethods
     when 'test_scores_gsdata'
       DistrictCachedTestScoresMethods
     when 'gsdata'

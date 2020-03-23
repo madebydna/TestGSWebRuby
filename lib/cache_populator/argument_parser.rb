@@ -6,7 +6,7 @@ module CachePopulator
     def initialize
       @parsed_options = {commands: []}
     end
-    
+
     def parse(args)
       begin
         OptionParser.new do |opts|
@@ -27,10 +27,10 @@ module CachePopulator
             parsed_options[:commands] <<  handle_args('state', args)
           end
           opts.on("-e", "--examples", "Show basic usage examples") {puts usage; exit}
-          opts.on_tail("-h", "--help", "Show this message") { puts "Hello!"; puts opts; exit }
+          opts.on_tail("-h", "--help", "Show this message") { puts opts; exit }
         end.parse!(args)
 
-        
+
         parse_file_to_commands if parsed_options[:file].present?
 
         parsed_options[:commands]

@@ -4,19 +4,23 @@ module SchoolProfiles
       @school_cache_data_reader = school_cache_data_reader
     end
 
-    def characteristics
-      @school_cache_data_reader.characteristics
+    # def metrics
+    #   @school_cache_data_reader.metrics
+    # end
+
+    def metrics
+      @school_cache_data_reader.metrics
     end
 
     def auto_narrative_calculate_and_add
-      characteristics_low_income_narrative('4-year high school graduation rate')
-      characteristics_low_income_narrative('Percent of students who meet UC/CSU entrance requirements')
+      metrics_low_income_narrative('4-year high school graduation rate')
+      metrics_low_income_narrative('Percent of students who meet UC/CSU entrance requirements')
     end
 
-    def characteristics_low_income_narrative(data_type_name)
-      if characteristics.present? && characteristics[data_type_name].present?
-        li_hash = characteristics[data_type_name].find { |d| d['breakdown'] == 'Economically disadvantaged' }
-        all_hash = characteristics[data_type_name].find { |d| d['breakdown'] == 'All students' }
+    def metrics_low_income_narrative(data_type_name)
+      if metrics.present? && metrics[data_type_name].present?
+        li_hash = metrics[data_type_name].find { |d| d['breakdown'] == 'Economically disadvantaged' }
+        all_hash = metrics[data_type_name].find { |d| d['breakdown'] == 'All students' }
         if li_hash.present?
           key_value = narration_calculation(li_hash, all_hash)
           key_value = '0' if key_value.blank?
@@ -25,10 +29,10 @@ module SchoolProfiles
       end
     end
 
-    def get_characteristics_low_income_narrative(data_type_name)
-      if characteristics.present? && characteristics[data_type_name].present?
-        li_hash = characteristics[data_type_name].find { |d| d['breakdown'] == 'Economically disadvantaged' }
-        all_hash = characteristics[data_type_name].find { |d| d['breakdown'] == 'All students' }
+    def get_metrics_low_income_narrative(data_type_name)
+      if metrics.present? && metrics[data_type_name].present?
+        li_hash = metrics[data_type_name].find { |d| d['breakdown'] == 'Economically disadvantaged' }
+        all_hash = metrics[data_type_name].find { |d| d['breakdown'] == 'All students' }
         if li_hash.present?
           key_value = narration_calculation(data_type_name, li_hash, all_hash)
           key_value = '0' if key_value.blank?

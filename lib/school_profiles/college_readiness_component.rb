@@ -55,7 +55,7 @@ module SchoolProfiles
       end
 
       def all_subjects?
-        subject == 'All subjects'
+        subject == 'All subjects' || subject == 'Composite Subject'
       end
 
       def all_subjects_and_students?
@@ -111,8 +111,24 @@ module SchoolProfiles
       end
     end
 
-    def characteristics_data
-      array_of_hashes = @school_cache_data_reader.characteristics_data(*included_data_types(:characteristics))
+    # def characteristics_data
+    #   array_of_hashes = @school_cache_data_reader.characteristics_data(*included_data_types(:characteristics))
+    #   array_of_hashes.each_with_object({}) do |(data_type, array), accum|
+    #     accum[data_type] =
+    #       array.map do |h|
+    #         klass = if data_type == GRADUATES_REMEDIATION
+    #                   GradutesRemediationValue
+    #                 else
+    #                   CharacteristicsValue
+    #                 end
+    #         klass.from_hash(h.merge('data_type' => data_type))
+    #       end
+    #         .extend(CharacteristicsValue::CollectionMethods)
+    #   end
+    # end
+
+    def metrics_data
+      array_of_hashes = @school_cache_data_reader.metrics_data(*included_data_types(:characteristics))
       array_of_hashes.each_with_object({}) do |(data_type, array), accum|
         accum[data_type] =
           array.map do |h|
@@ -129,12 +145,11 @@ module SchoolProfiles
 
     def data_type_hashes
       @_data_type_hashes ||= begin
-        hashes = characteristics_data
+        hashes = metrics_data # characteristics_data
         hashes.merge!(@school_cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata)))
         return [] if hashes.blank?
 
         ActSatHandler.new(hashes).handle_ACT_SAT_to_display!
-
         hashes = hashes.map do |key, array|
           array = array.for_all_students.having_school_value.having_most_recent_date
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StateCacheDataReader
-  STATE_CACHE_KEYS = %w(state_characteristics district_largest test_scores_gsdata school_levels state_attributes ratings)
+  STATE_CACHE_KEYS = %w(metrics district_largest test_scores_gsdata school_levels state_attributes ratings)
 
   attr_reader :state, :state_cache_keys
 
@@ -85,12 +85,19 @@ class StateCacheDataReader
       .for_all_students
   end
 
-  def characteristics_data(*keys)
-    decorated_state.state_characteristics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
+  def metrics_data(*keys)
+    decorated_state.metrics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
       array_of_hashes = array_of_hashes.select {|h| h.has_key?('source')}
       hash[k] = array_of_hashes if array_of_hashes.present?
     end
   end
+
+  # def characteristics_data(*keys)
+  #   decorated_state.state_characteristics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
+  #     array_of_hashes = array_of_hashes.select {|h| h.has_key?('source')}
+  #     hash[k] = array_of_hashes if array_of_hashes.present?
+  #   end
+  # end
 
   def state_cache_query
     StateCacheQuery.for_state(state).tap do |query|
