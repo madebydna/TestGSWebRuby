@@ -3,10 +3,9 @@
 require 'states'
 
 class FeedConfig
-  def initialize(release_id:, previous_release_id:, archive_directory:)
+  def initialize(release_id:, previous_release_id:)
     @release_id = release_id
     @previous_release_id = previous_release_id
-    @archive_directory = archive_directory
     @state_abbreviations = States.abbreviations.map(&:upcase)
   end
 
@@ -17,11 +16,11 @@ class FeedConfig
   end
 
   def previous_archive_directory
-    File.join(@archive_directory, @release_id)
+    File.join("/tmp/previous/", @previous_release_id)
   end
 
   def current_archive_directory
-    File.join(@archive_directory, @previous_release_id)
+    File.join("/home/feeds/staging", @release_id)
   end
 
   # XML files
