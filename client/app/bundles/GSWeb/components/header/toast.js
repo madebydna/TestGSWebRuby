@@ -1,4 +1,5 @@
 import { readCookie } from './utils';
+import { t } from 'util/i18n';
 
 const init = () => {
   const declineToast = readCookie('declineToast');
@@ -13,8 +14,7 @@ const init = () => {
     const toast = document.createElement('div');
     toast.classList.add('toast')
     toast.style.top = `${height || '65'}px`;
-    toast.innerHTML =
-      "<div class='opensans-semibold'>We’re here for you. <a href='/gk/coronavirus-school-closure-support/'>Find our latest COVID-19 school closure resources here.</a><span class='toast-cancel'>X</span></div>";
+    toast.innerHTML = t('toast.coronavirus_html')
     body.append(toast);
     activateListeners();
   }
@@ -23,12 +23,30 @@ const init = () => {
 const activateListeners = () => {
   document.querySelector('.toast-cancel').addEventListener('click', (e) => {
     document.cookie = "declineToast=true;expires=0;path=/";
-    closeToast(e.target.parentElement)
+    closeToast(e.target.parentElement);
   })
+
+  document.querySelector('.toast-anchorlink').addEventListener('click', ()=> {
+    fireoffAnalytics(window.location.pathname);
+  })
+  // window.addEventListener('scroll')
 }
 
 const closeToast = (node) =>{
   node.classList.add('dn');
+}
+
+const fireoffAnalytics = (pathName) => {
+  analyticsEvent(
+    'interaction',
+    'Clicked Promo Banner',
+    pathName
+  )
+}
+
+
+const readjustToastHeight = () => {
+
 }
 
 
