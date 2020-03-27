@@ -366,7 +366,7 @@ es:
           </div>
         </div>
     toast:
-      coronoavirus_html:
+      coronavirus_html:
         <div class='opensans-semibold'>
           Estamos aqui para ti.
           <a class="toast-anchorlink"
