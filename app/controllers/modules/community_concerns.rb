@@ -106,7 +106,7 @@ module CommunityConcerns
   end
 
   def add_enrollment(schools)
-    cache_keys << 'characteristics'
+    cache_keys << 'metrics'
     schools
   end
 

@@ -13,67 +13,50 @@ class ActSatHandler
   end
 
   def handle_ACT_SAT_to_display!
-    # returns max_year if we have at least one ACT data type to display, else: nil
-    act_max_year = enforce_latest_year_school_value_for_data_types!(*ACT_ONLY)
-    # returns max_year if we have at least one SAT data type to display, else: nil
-    sat_max_year = enforce_latest_year_school_value_for_data_types!(*SAT_ONLY)
+    act_data = select_by_data_types(*ACT_ONLY, &:all_subjects_and_students?)
+    act_max_year = act_data.any? ? get_max_year(act_data) : nil
+    enforce_latest_year_gsdata!(act_data, act_max_year) if act_max_year
 
-    remove_crdc_for_unfresh_data(act_max_year, sat_max_year)
+    sat_data = select_by_data_types(*SAT_ONLY, &:all_subjects_and_students?)
+    sat_max_year = sat_data.any? ? get_max_year(sat_data) : nil
+    enforce_latest_year_gsdata!(sat_data, sat_max_year) if sat_max_year
+
+    remove_older_sat_or_act_data(act_max_year, sat_max_year)
 
     if act_max_year || sat_max_year
-      remove_crdc_breakdown!(*ACT_SAT_COMBINED_PARTICIPATION)
+      remove_by_data_types!(*ACT_SAT_COMBINED_PARTICIPATION)
     else
       # if no ACT/SAT content, we check ACT/SAT participation data and set school_values of records older than max_year data to nil
-      enforce_latest_year_gsdata!(*ACT_SAT_COMBINED_PARTICIPATION)
-      # Select 9-12 data for all students
-      part912 = select_by_data_types(ACT_SAT_PARTICIPATION_9_12, &:all_students?)
-      # Prioritize 9-12 data over non-9-12 data
-      remove_crdc_breakdown!(ACT_SAT_PARTICIPATION) if part912.present?
+      combined_participation_data = select_by_data_types(*ACT_SAT_COMBINED_PARTICIPATION, &:all_subjects_and_students?)
+      enforce_latest_year_gsdata!(combined_participation_data)
     end
   end
 
   # JT-8787: If ACT & SAT data are not within 2 years of one another, remove the older data
-  def remove_crdc_for_unfresh_data(act_max_year, sat_max_year)
+  def remove_older_sat_or_act_data(act_max_year, sat_max_year)
     return unless act_max_year && sat_max_year
     return unless ((act_max_year - sat_max_year).abs > 2)
     if act_max_year > sat_max_year
-      return remove_crdc_breakdown!(*SAT_ONLY)
+      return remove_by_data_types!(*SAT_ONLY)
     end
-    remove_crdc_breakdown!(*ACT_ONLY)
+    remove_by_data_types!(*ACT_ONLY)
   end
 
-  def enforce_latest_year_gsdata!(*data_types)
-    records = select_by_data_types(*data_types, &:all_students?)
-    max_year = get_max_year(records)
+  def enforce_latest_year_gsdata!(records, max_year=nil)
+    #records = select_by_data_types(*data_types, &:all_students?)
+    max_year ||= get_max_year(records)
     older_records = records.select {|v| v.year < max_year}
     set_school_value_to_nil(older_records)
   end
 
   # remove school value for all students for selected data types
-  def remove_crdc_breakdown!(*data_types)
+  def remove_by_data_types!(*data_types)
     records = select_by_data_types(*data_types, &:all_students?)
     set_school_value_to_nil(records)
   end
 
-  def enforce_latest_year_school_value_for_data_types!(*data_types)
-    records = select_by_data_types(*data_types, &:all_subjects_and_students?)
-    max_year = get_max_year(records)
-    check_school_value_max(records, max_year)
-  end
-
   def get_max_year(records)
     records.map { |dts| dts.year }.max
-  end
-
-  def check_school_value_max(records, max_year)
-    max_year_records, older_records = records.partition { |h| school_value_present?(h["school_value_#{max_year}"]) }
-    set_school_value_to_nil(older_records)
-
-    max_year_records.any? ? max_year : nil
-  end
-
-  def school_value_present?(value)
-    value.present? && !value.zero?
   end
 
   private
