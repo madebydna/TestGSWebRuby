@@ -9,13 +9,24 @@ $(function() {
           .toggleClass('i-16-blue-check-box i-grey-unchecked-box');
       });
 
+      $('#tab-news-en').click(function() {
+        $("#news-en").addClass("active");
+        $("#news-es").removeClass("active");
+      });
+
+      $('#tab-news-es').click(function() {
+        $("#news-es").addClass("active");
+        $("#news-en").removeClass("active");
+      });
+
+
       $formContainer.find('form').on('submit', function() {
         var $form = $(this);
 
         $form.find('.js-inverted-checkbox').each(function() {
           $(this).toggleClass('active');
         });
-        
+
         $form.find('div.active input').each(function() {
           $(this).prop('disabled', false);
         });
