@@ -1,5 +1,14 @@
 import { readCookie } from './utils';
-import { t } from 'util/i18n';
+import { translateWithDictionary } from 'util/i18n';
+
+export const t = translateWithDictionary({
+  en:{
+    coronavirus_html: "<div class='opensans-semibold'>We’re here for you. <a class= 'toast-anchorlink' href='/gk/coronavirus-school-closure-support/'>Find our latest COVID- 19 school closure resources here.</a><span class='toast-cancel'>X</span></div>"
+  },
+  es: {
+    coronavirus_html: "<div class='opensans-semibold'> Estamos aqui para ti. <a class='toast-anchorlink' href='/gk/coronavirus-school-closure-support/?lang=es'> Aquí encontrarás nuestros últimos recursos para el cierre de escuelas por COVID-19. </a> <span class='toast-cancel'>X</span></div>"
+  }
+})
 
 const init = () => {
   const declineToast = readCookie('declineToast');
@@ -14,7 +23,7 @@ const init = () => {
     const toast = document.createElement('div');
     toast.classList.add('toast')
     toast.style.top = `${height || '65'}px`;
-    toast.innerHTML = t('toast.coronavirus_html')
+    toast.innerHTML = t('coronavirus_html')
     body.append(toast);
     activateListeners();
   }

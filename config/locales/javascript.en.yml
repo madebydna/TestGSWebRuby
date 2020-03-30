@@ -365,13 +365,3 @@ en:
             <p><span class="emphasis">Source&#58;</span> XQ</p>
           </div>
         </div>
-    toast:
-      coronavirus_html: >
-        <div class='opensans-semibold'>
-          We’re here for you.
-          <a class="toast-anchorlink"
-            href='/gk/coronavirus-school-closure-support/'>
-            Find our latest COVID-19 school closure resources here.
-          </a>
-          <span class='toast-cancel'>X</span>
-        </div>
