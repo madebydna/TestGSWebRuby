@@ -65,47 +65,47 @@ class FeedConfig
   # Flat Feed Files
 
   def parent_reviews_flat_feed_files
-    @state_abbreviations.map { |state| "local-gs-parent-review-feed-flat-#{state}.txt" }
+    @state_abbreviations.map { |state| "txt/local-gs-parent-review-feed-flat-#{state}.txt" }
   end
 
   def parent_ratings_flat_feed_files
-    @state_abbreviations.map { |state| "local-gs-parent-ratings-feed-flat-#{state}.txt" }
+    @state_abbreviations.map { |state| "txt/local-gs-parent-ratings-feed-flat-#{state}.txt" }
   end
 
   def local_new_test_flat_feed_files
-    @state_abbreviations.map { |state| "local-gs-new-test-feed-#{state}.txt" }
+    @state_abbreviations.map { |state| "txt/local-gs-new-test-feed-#{state}.txt" }
   end
 
   def new_test_result_flat_feeds_files
-    @state_abbreviations.map { |state| "local-gs-new-test-result-feed-#{state}.txt" }
+    @state_abbreviations.map { |state| "txt/local-gs-new-test-result-feed-#{state}.txt" }
   end
 
   def local_gs_new_test_subgroup_flat_feed_files
-    @state_abbreviations.map { |state| "local-gs-new-test-subgroup-feed-#{state}.txt" }
+    @state_abbreviations.map { |state| "txt/local-gs-new-test-subgroup-feed-#{state}.txt" }
   end
 
   def subrating_description_flat_feed_files
-    @state_abbreviations.map { |state| "local-gs-subrating-description-feed-#{state}.txt" }
+    @state_abbreviations.map { |state| "txt/local-gs-subrating-description-feed-#{state}.txt" }
   end
 
   def subrating_flat_feed_files
-    @state_abbreviations.map { |state| "local-gs-subrating-feed-#{state}.txt" }
+    @state_abbreviations.map { |state| "txt/local-gs-subrating-feed-#{state}.txt" }
   end
 
   def official_overall_rating_flat_feed_files
-    @state_abbreviations.map { |state| "local-gs-official-overall-rating-feed-flat-#{state}.txt" }
+    @state_abbreviations.map { |state| "txt/local-gs-official-overall-rating-feed-flat-#{state}.txt" }
   end
 
   def official_overall_rating_result_flat_feed_files
-    @state_abbreviations.map { |state| "local-gs-official-overall-rating-result-feed-flat-#{state}.txt" }
+    @state_abbreviations.map { |state| "txt/local-gs-official-overall-rating-result-feed-flat-#{state}.txt" }
   end
 
   def local_greatschools_feed_flat_files
-    @state_abbreviations.map {|state| "local-greatschools-feed-flat-#{state}.txt"}
+    @state_abbreviations.map {|state| "txt/local-greatschools-feed-flat-#{state}.txt"}
   end
 
   def local_greatschools_census_feed_flat_files
-    @state_abbreviations.map {|state| "local-gs-census-feed-flat-#{state}.txt"}
+    @state_abbreviations.map {|state| "txt/local-gs-census-feed-flat-#{state}.txt"}
   end
 
   def all_flat_feed_files
