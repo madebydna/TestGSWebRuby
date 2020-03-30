@@ -79,7 +79,7 @@ class ORTestProcessor20182019SBACOAKS < GS::ETL::TestProcessor
 
   def config_hash
     {
-        gsdata_source_id: 42,
+        source_id: 42,
         state: 'or'
     }
   end
