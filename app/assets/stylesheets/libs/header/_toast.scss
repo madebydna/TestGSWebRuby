@@ -36,4 +36,9 @@
       cursor: pointer;
     }
   }
+
+  // added here since qk doesnt import the icon stylesheets
+  .icon-close:before {
+    content: "\e92f";
+  }
 }
