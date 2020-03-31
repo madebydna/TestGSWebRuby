@@ -1,12 +1,13 @@
 import { readCookie } from './utils';
 import { translateWithDictionary } from 'util/i18n';
+import { throttle } from 'lodash';
 
 export const t = translateWithDictionary({
   en:{
-    coronavirus_html: "<div class='opensans-semibold'>We’re here for you. <a class= 'toast-anchorlink' href='/gk/coronavirus-school-closure-support/'>Find our latest COVID- 19 school closure resources here.</a><span class='toast-cancel'>X</span></div>"
+    coronavirus_html: "<div class='opensans-semibold'>We’re here for you. <a class= 'toast-anchorlink' href='/gk/coronavirus-school-closure-support/'>Find our latest COVID- 19 school closure resources here.</a><span class='toast-cancel icon-close'/></div>"
   },
   es: {
-    coronavirus_html: "<div class='opensans-semibold'> Estamos aqui para ti. <a class='toast-anchorlink' href='/gk/coronavirus-school-closure-support/?lang=es'> Aquí encontrarás nuestros últimos recursos para el cierre de escuelas por COVID-19. </a> <span class='toast-cancel'>X</span></div>"
+    coronavirus_html: "<div class='opensans-semibold'> Estamos aqui para ti. <a class='toast-anchorlink' href='/gk/coronavirus-school-closure-support/?lang=es'> Aquí encontrarás nuestros últimos recursos para el cierre de escuelas por COVID-19. </a> <span class='toast-cancel icon-close'/></div>"
   }
 })
 
@@ -38,10 +39,11 @@ const activateListeners = () => {
   document.querySelector('.toast-anchorlink').addEventListener('click', ()=> {
     fireoffAnalytics(window.location.pathname);
   })
-  // window.addEventListener('scroll')
+  window.addEventListener('scroll', readjustToastHeight)
 }
 
 const closeToast = (node) =>{
+  window.removeEventListener('scroll', readjustToastHeight);
   node.classList.add('dn');
 }
 
@@ -54,9 +56,19 @@ const fireoffAnalytics = (pathName) => {
 }
 
 
-const readjustToastHeight = () => {
+const readjustToastHeight = throttle(() => {
+  const ele = document.querySelector('.header_un');
+  const toast = document.querySelector('.toast');
 
-}
+  if(toast){
+    const headerBoundingBox = ele.getBoundingClientRect();
+    if (headerBoundingBox.bottom > 0){
+      toast.style.top = `${headerBoundingBox.bottom}px`;
+    }else{
+      toast.style.top = 0;
+    }
+  }
+}, 100);
 
 
 export { init };
