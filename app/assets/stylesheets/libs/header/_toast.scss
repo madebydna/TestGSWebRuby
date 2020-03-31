@@ -29,16 +29,11 @@
 
     .toast-cancel{
       position: absolute;
-      font-size: 11px;
+      width: 1em;
       padding: 2px;
       right: 10px;
       top: 0;
       cursor: pointer;
     }
-  }
-
-  // added here since qk doesnt import the icon stylesheets
-  .icon-close:before {
-    content: "\e92f";
   }
 }
