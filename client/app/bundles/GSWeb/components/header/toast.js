@@ -1,13 +1,16 @@
 import { readCookie } from './utils';
 import { translateWithDictionary } from 'util/i18n';
 import { throttle } from 'lodash';
+import iconClose from 'icons/times-solid.svg';
+
+// const iconClose = "<svg class='toast-cancel' aria-hidden='true' focusable='false' data-prefix='fas' data-icon='times' class='svg-inline--fa fa-times fa-w-11' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 352 512'><path fill='#313639' fill-opacity='0.90' d='M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z'></path></svg>"
 
 export const t = translateWithDictionary({
   en:{
-    coronavirus_html: "<div class='opensans-semibold'>We’re here for you. <a class= 'toast-anchorlink' href='/gk/coronavirus-school-closure-support/'>Find our latest COVID- 19 school closure resources here.</a><span class='toast-cancel icon-close'/></div>"
+    coronavirus_html: String.raw`<div class='opensans-semibold'>We’re here for you. <a class= 'toast-anchorlink' href='/gk/coronavirus-school-closure-support/'>Find our latest COVID- 19 school closure resources here.</a><img src='${iconClose}' class='toast-cancel'/></div>`
   },
   es: {
-    coronavirus_html: "<div class='opensans-semibold'> Estamos aqui para ti. <a class='toast-anchorlink' href='/gk/coronavirus-school-closure-support/?lang=es'> Aquí encontrarás nuestros últimos recursos para el cierre de escuelas por COVID-19. </a> <span class='toast-cancel icon-close'/></div>"
+    coronavirus_html: String.raw`<div class='opensans-semibold'> Estamos aqui para ti. <a class='toast-anchorlink' href='/gk/coronavirus-school-closure-support/?lang=es'> Aquí encontrarás nuestros últimos recursos para el cierre de escuelas por COVID-19. </a><img src='${iconClose}' class='toast-cancel'/></div>`
   }
 })
 
@@ -43,6 +46,7 @@ const activateListeners = () => {
 }
 
 const closeToast = (node) =>{
+  debugger
   window.removeEventListener('scroll', readjustToastHeight);
   node.classList.add('dn');
 }
