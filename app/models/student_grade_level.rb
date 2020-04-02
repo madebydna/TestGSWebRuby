@@ -14,7 +14,7 @@ class StudentGradeLevel < ActiveRecord::Base
 
   SUPPORTED_LANGUAGES = ['en', 'es']
 
-  def self.create_students(user_id, grades, state, language)
+  def self.create_students(user_id, grades, state, language, district_id = nil, district_state = nil)
     # add grades to this user in student table
     if grades.present?
       # remove duplicates
@@ -33,13 +33,19 @@ class StudentGradeLevel < ActiveRecord::Base
             if SUPPORTED_LANGUAGES.include?(language)
               student.language = language
             end
+            if district_id.present? && district_state.present?
+              student.district_id = district_id
+              student.district_state = district_state
+            end
             unless student.save!
               GSLogger.error(
                 :gk_action, nil, message: 'Student failed to save', vars: {
                   user_id: user_id,
                   grade: grade,
                   state: state,
-                  language: language
+                  language: language,
+                  district_id: district_id,
+                  district_state: district_state
                 })
             end
           end
