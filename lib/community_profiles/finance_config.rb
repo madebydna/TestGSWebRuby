@@ -1,8 +1,8 @@
 module CommunityProfiles::FinanceConfig
   TOTAL_REVENUE = 'Total Revenue'
   TOTAL_EXPENDITURES = 'Total Expenditures'
-  PER_PUPAL_REVENUE = 'Per Pupil Revenue'
-  PER_PUPAL_EXPENDITURES = 'Per Pupil Expenditures'
+  PER_PUPIL_REVENUE = 'Per Pupil Revenue'
+  PER_PUPIL_EXPENDITURES = 'Per Pupil Expenditures'
   FEDERAL_REVENUE= "Percent Federal Revenue"
   STATE_REVENUE= "Percent State Revenue"
   LOCAL_REVENUE= "Percent Local Revenue"
@@ -10,7 +10,7 @@ module CommunityProfiles::FinanceConfig
   SUPPORT_EXPENDITURES= "Percent Support Services Expenditures"
   OTHER_EXPENDITURES= "Percent Other Expenditures"
   UNCATEGORIZED_EXPENDITURES= "Percent Uncategorized Expenditures"
-  
+
   REVENUE_SOURCES = [
     FEDERAL_REVENUE,
     STATE_REVENUE,
@@ -19,7 +19,7 @@ module CommunityProfiles::FinanceConfig
 
   REVENUE = [
     TOTAL_REVENUE,
-    PER_PUPAL_REVENUE
+    PER_PUPIL_REVENUE
   ]
 
   ALL_REVENUE_DATA_TYPES = REVENUE + REVENUE_SOURCES
@@ -33,14 +33,14 @@ module CommunityProfiles::FinanceConfig
 
   EXPENDITURES = [
     TOTAL_EXPENDITURES,
-    PER_PUPAL_EXPENDITURES
+    PER_PUPIL_EXPENDITURES
   ]
 
   SOURCES_OF_REVENUE = {
     key: 'RevenueSources',
-    data_keys: REVENUE_SOURCES  
+    data_keys: REVENUE_SOURCES
   }
-  
+
   SOURCES_OF_EXPENDITURES = {
     key: 'ExpenditureSources',
     data_keys: EXPENDITURES_SOURCES
@@ -57,7 +57,7 @@ module CommunityProfiles::FinanceConfig
       type: 'large_dollar_amt'
     },
     {
-      key: PER_PUPAL_REVENUE,
+      key: PER_PUPIL_REVENUE,
       formatting: [:to_f, :round, :dollars],
       type: 'dollar_ratio'
     },
@@ -85,7 +85,7 @@ module CommunityProfiles::FinanceConfig
       type: 'large_dollar_amt'
     },
     {
-      key: PER_PUPAL_EXPENDITURES,
+      key: PER_PUPIL_EXPENDITURES,
       formatting: [:to_f, :round, :dollars],
       type: 'dollar_ratio'
     },
