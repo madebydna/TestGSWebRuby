@@ -21,7 +21,7 @@ class StudentGradeLevel < ActiveRecord::Base
       grades_uniq = grades.uniq
       grades_uniq.each do |grade|
         if grade.present? && SUPPORTED_GRADES.include?(grade)
-          student = where("member_id = ? AND grade = ?", user_id, grade)
+          student = where("member_id = ? AND grade = ? AND language = ? AND district_id = ? AND district_state = ?", user_id, grade, language, district_id, district_state)
           if (student.blank?)
             student = self.new
             student.member_id = user_id
