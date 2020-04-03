@@ -25,4 +25,19 @@
       terms_of_use_html: Al suscribirse, acepto los %{terms_of_use_link} y %{privacy_policy_link}.
       parsley_required_message: Por favor introduzca una dirección de correo eléctronico.
       parsley_remote_message_html: "Parece que ya tiene una cuenta. <a href='#login' data-toggle='tab'>Iniciar sesión</a>."
-      choose_grade: "Choose your child's grade to receive related emails:"
+      choose_grade: "Selecciona los grados de tu hijo a continuación:"
+      grade_fieldset:
+        preK: PreK
+        K: Kinder
+        1st: 1.°
+        2nd: 2.°
+        3rd: 3.°
+        4th: 4.°
+        5th: 5.°
+        6th: 6.°
+        7th: 7.°
+        8th: 8.°
+        9th: 9.°
+        10th: 10.°
+        11th: 11.°
+        12th: 12.°

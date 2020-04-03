@@ -39,6 +39,7 @@ const config = {
     'college-success-award': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/college_success_award'],
     'search-box': [
       'polyfills',
+      './app/bundles/GSWeb/toast_wp',
       './app/bundles/GSWeb/react_components/search_box_wrapper'
     ],
     community: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/community'],
@@ -142,7 +143,7 @@ const config = {
               assets[chunkGroup.name] = files;
             }
           }
-        
+
           if (!process.env.ANALYZE) {
             fs.writeFile(
               path.resolve(

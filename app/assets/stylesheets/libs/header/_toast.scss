@@ -1,0 +1,39 @@
+.toast{
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+  font-family: 'opensans-semibold';
+  opacity: .95;
+
+  div{
+    position: relative;
+    margin: 0 auto;
+    background-color: #ffd966ff;
+    max-width: 100%;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,.1);
+    backdrop-filter: blur(10px);
+    border-radius: .25rem;
+    // Media Responsive Styles
+    @media only screen and (min-width: 992px) {
+      max-width: 800px;
+    }
+    @media only screen and (max-width: 728px) {
+      padding: 1em;
+    }
+    a{
+      cursor: pointer;
+      font-family: 'opensans-semibold';
+    }
+
+    .toast-cancel{
+      position: absolute;
+      width: 1em;
+      padding: 2px;
+      right: 10px;
+      top: 0;
+      cursor: pointer;
+    }
+  }
+}

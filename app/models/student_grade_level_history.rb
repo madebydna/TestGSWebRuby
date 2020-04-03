@@ -16,6 +16,8 @@ class StudentGradeLevelHistory < ActiveRecord::Base
     student_grade_level_history.language = student.language
     student_grade_level_history.student_id = student.id
     student_grade_level_history.student_updated = student.updated
+    student_grade_level_history.district_id = student.district_id
+    student_grade_level_history.district_state = student.district_state
     student_grade_level_history
   end
 
