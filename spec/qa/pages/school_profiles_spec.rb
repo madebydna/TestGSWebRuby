@@ -23,7 +23,7 @@ describe 'School profiles page', remote: true do
 
   describe 'follow a school while registering', type: :feature do
     let(:account_page) { AccountPage.new }
-    
+
     it 'when I save the school the right newsletters are saved and it is added to my school list' do
       skip "Due to intermittent failures"
       visit('/california/alameda/1-Alameda-High-School/')
@@ -32,7 +32,7 @@ describe 'School profiles page', remote: true do
       sleep 2
       expect(page).to have_text('All set! You are signed up for our newsletter and updates on Alameda High School')
       sleep 10
-      
+
       confirm_school_signup
     end
 
@@ -40,7 +40,7 @@ describe 'School profiles page', remote: true do
     it 'when I click the newsletter link in the footer the right newsletters are saved and it is added to my school list' do
       skip "Can't seem to get this test to work"
       visit('/california/alameda/1-Alameda-High-School/')
-      within('footer') do 
+      within('footer') do
         click_link 'Newsletter'
       end
       sleep 10
@@ -62,16 +62,16 @@ describe 'School profiles page', remote: true do
 
   describe 'Advanced courses' do
     let(:page_object) { SchoolProfilesPage.new }
-    
+
     before do
       page_object.load(state: 'california', city: 'alameda', school_id_and_name: '1-Alameda-High-School')
       page_object.wait_until_advanced_stem_courses_visible
     end
 
-    subject do 
+    subject do
       page_object.advanced_stem_courses
     end
-    
+
     its('title') { is_expected.to have_text('Advanced & STEM courses') }
     its('score_items.length') { is_expected.to eq(3) }
     its('source_link') { is_expected.to be_present }
@@ -85,7 +85,7 @@ describe 'School profiles page', remote: true do
 
   describe 'General information' do
     let(:page_object) { SchoolProfilesPage.new }
-    
+
     before do
       page_object.load(state: 'california', city: 'alameda', school_id_and_name: '1-Alameda-High-School')
       page_object.wait_until_general_information_visible
@@ -107,7 +107,7 @@ describe 'School profiles page', remote: true do
 
   describe 'Alameda High School' do
     let(:page_object) { SchoolProfilesPage.new }
-    
+
     before do
       page_object.load(state: 'california', city: 'alameda', school_id_and_name: '1-Alameda-High-School')
       page_object.wait_until_neighborhood_visible
@@ -168,7 +168,7 @@ describe 'School profiles page', remote: true do
     end
 
     with_subject :homes_and_rentals do
-      its('title_bar') do 
+      its('title_bar') do
         pending("Can't seem to find homes_and_rentals section")
         is_expected.to have_text('Homes for sale near Alameda High School')
       end
@@ -187,7 +187,7 @@ describe 'School profiles page', remote: true do
 
   describe 'Bay Farm - a claimed school' do
     let(:page_object) { SchoolProfilesPage.new }
-    
+
     before do
       page_object.load(state: 'california', city: 'alameda', school_id_and_name: '2-Bay-Farm')
       page_object.wait_until_neighborhood_visible
@@ -210,9 +210,10 @@ describe 'School profiles page', remote: true do
 
     with_subject :general_information do
       it { is_expected.to have_text('General information') }
-      its('tabs.length') { is_expected.to eq(4) }
+      its('tabs.length') { is_expected.to eq(5) }
       it 'should have correct tab names' do
         expect(subject.tab_names).to include('Overview')
+        expect(subject.tab_names).to include('Calendar')
         expect(subject.tab_names).to include('Enrollment')
         expect(subject.tab_names).to include('Classes')
         expect(subject.tab_names).to include('Sports & clubs')
@@ -324,7 +325,7 @@ describe 'School profiles page', remote: true do
 
     with_subject :general_information do
       it { is_expected.to have_text('General information') }
-    end 
+    end
 
     with_subject :student_diversity do
       it { is_expected.to have_text('Student demographics') }

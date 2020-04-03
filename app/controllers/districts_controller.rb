@@ -357,7 +357,7 @@ class DistrictsController < ApplicationController
       Review
         .active
           .where(school_id:
-            School.on_db(district_record.state.downcase) { School.active.where(district_id: district_record.id).ids },
+            School.on_db(district_record.state.downcase) { School.active.where(district_id: district_record.district_id).ids },
             state: district_record.state.downcase)
             .where(review_question_id: 1)
               .where.not(comment: nil)

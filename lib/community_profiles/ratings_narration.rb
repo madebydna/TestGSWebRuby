@@ -49,14 +49,14 @@ module CommunityProfiles
         RATING_RUBRIC_HASH.values.uniq.each_with_object({}) {|key, hash| hash[key] = ((result_set[key].to_f / total_counts) * 100).round }
       end
     end
-    
+
     # logic dictating what should be displayed for the ratings narration
     # It is as follows:
     # 1) If there is only one max value, return that rating
     # 2) If the largest value and second largest value is equal, return equal distribution
     # 3) if the range between the max value and min value is less than 4, return equal distribution
     def narration_logic
-      sorted_flat_arrays = 
+      sorted_flat_arrays =
         ratings_percentage_hash.sort_by(&:last)
                                .reverse
                                .first(2)

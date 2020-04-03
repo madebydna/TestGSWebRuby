@@ -1,3 +1,5 @@
+require 'qa/spec_helper_qa'
+
 describe 'Newsletters', remote: true do
   context 'on the home page' do
     before { visit '/' }
@@ -27,6 +29,7 @@ describe 'Newsletters', remote: true do
         end
       end
       it 'I can sign up and see school on my account page' do
+        pending("Account page has been updated - this needs to be re-written")
         register_in_modal
         sleep 10 # need to wait long enough for modal ajax call to complete and save database records
         visit '/account/'

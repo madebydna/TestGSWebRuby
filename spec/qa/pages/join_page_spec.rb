@@ -21,6 +21,7 @@ describe 'User Registration Flows', remote: true do
        within_window facebok_window do
         submit_facebook_adam
        end
+       sleep(5)
        expect(page).to have_text('Adam')
        expect(page.current_path).to eq('/account/')
      end
