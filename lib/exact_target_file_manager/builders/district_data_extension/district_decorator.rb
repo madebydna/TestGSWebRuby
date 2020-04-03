@@ -43,7 +43,7 @@ module ExactTargetFileManager
           hash
         end
 
-        # private
+        private
 
         def cache_values
           @cache_values ||= begin
