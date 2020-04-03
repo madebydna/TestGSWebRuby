@@ -22,6 +22,17 @@ class StudentGradeLevel < ActiveRecord::Base
       grades_uniq.each do |grade|
         if grade.present? && SUPPORTED_GRADES.include?(grade)
           student = where("member_id = ? AND grade = ? AND language = ? AND district_id = ? AND district_state = ?", user_id, grade, language, district_id, district_state)
+          # Log request if another record is found with these three variables since we remove unique constraint on this table
+          if student.length > 1
+            GSLogger.error(
+              :gk_action, nil, message: 'More than one record found for this member/grade', vars: {
+                user_id: user_id,
+                grade: grade,
+                state: state,
+                language: language
+              }
+            )
+          end
           if (student.blank?)
             student = self.new
             student.member_id = user_id
@@ -29,10 +40,7 @@ class StudentGradeLevel < ActiveRecord::Base
             if (state.present?)
               student.state = state
             end
-            language = 'en' if language.blank?
-            if SUPPORTED_LANGUAGES.include?(language)
-              student.language = language
-            end
+            student.language = (Array.wrap(language) & SUPPORTED_LANGUAGES).first || 'en'
             if district_id.present? && district_state.present?
               student.district_id = district_id
               student.district_state = district_state
