@@ -21,30 +21,31 @@ class StudentGradeLevel < ActiveRecord::Base
       grades_uniq = grades.uniq
       grades_uniq.each do |grade|
         if grade.present? && SUPPORTED_GRADES.include?(grade)
-          student = where("member_id = ? AND grade = ? AND language = ? AND district_id = ? AND district_state = ?", user_id, grade, language, district_id, district_state)
+          d_id = district_id.present? ? "district_id = #{district_id.to_s}" : 'district_id is NULL'
+          d_state = district_state.present? ? "district_state = '#{district_state}'" : 'district_state is NULL'
+          where_string = "member_id = #{user_id} AND grade = '#{grade}' AND language = '#{language}' AND #{d_id} AND #{d_state}"
+          student = where(where_string)
           # Log request if another record is found with these three variables since we remove unique constraint on this table
           if student.length > 1
             GSLogger.error(
-              :gk_action, nil, message: 'More than one record found for this member/grade', vars: {
+                :gk_action, nil, message: 'More than one record found for this member/grade', vars: {
                 user_id: user_id,
                 grade: grade,
                 state: state,
-                language: language
-              }
+                language: language,
+                district_id: district_id,
+                district_state: district_state
+            }
             )
           end
           if (student.blank?)
             student = self.new
             student.member_id = user_id
             student.grade = grade
-            if (state.present?)
-              student.state = state
-            end
+            student.state = state if state.present?
             student.language = (Array.wrap(language) & SUPPORTED_LANGUAGES).first || 'en'
-            if district_id.present? && district_state.present?
-              student.district_id = district_id
-              student.district_state = district_state
-            end
+            student.district_id = district_id
+            student.district_state = district_state
             unless student.save!
               GSLogger.error(
                 :gk_action, nil, message: 'Student failed to save', vars: {
