@@ -26,3 +26,18 @@
       parsley_required_message: "Please enter an email address."
       parsley_remote_message_html: "Looks like you already have an account. <a href='#login' data-toggle='tab'>Log in</a>."
       choose_grade: "Choose your child's grade to receive related emails:"
+      grade_fieldset:
+        preK: preK
+        K: K
+        1st: 1st
+        2nd: 2nd
+        3rd: 3rd
+        4th: 4th
+        5th: 5th
+        6th: 6th
+        7th: 7th
+        8th: 8th
+        9th: 9th
+        10th: 10th
+        11th: 11th
+        12th: 12th
