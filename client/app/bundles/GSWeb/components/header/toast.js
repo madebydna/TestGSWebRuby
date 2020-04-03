@@ -5,7 +5,7 @@ import iconClose from 'icons/times-solid.svg';
 
 export const t = translateWithDictionary({
   en:{
-    coronavirus_html: String.raw`<div class='opensans-semibold'>We’re here for you. <a class= 'toast-anchorlink' href='/gk/coronavirus-school-closure-support/'>Find our latest COVID- 19 school closure resources here.</a><img src='${iconClose}' class='toast-cancel'/></div>`
+    coronavirus_html: String.raw`<div class='opensans-semibold'>We’re here for you. <a class= 'toast-anchorlink' href='/gk/coronavirus-school-closure-support/'>Find our latest COVID-19 school closure resources here.</a><img src='${iconClose}' class='toast-cancel'/></div>`
   },
   es: {
     coronavirus_html: String.raw`<div class='opensans-semibold'> Estamos aqui para ti. <a class='toast-anchorlink' href='/gk/coronavirus-school-closure-support/?lang=es'> Aquí encontrarás nuestros últimos recursos para el cierre de escuelas por COVID-19. </a><img src='${iconClose}' class='toast-cancel'/></div>`
@@ -14,8 +14,9 @@ export const t = translateWithDictionary({
 
 const init = () => {
   const declineToast = readCookie('declineToast');
+  const suppressToast = window.location.pathname.includes('/gk/coronavirus-school-closure-support/') || window.location.pathname.includes('/gk/recursos-durante-coronavirus/');
 
-  if (!declineToast){
+  if (!declineToast && !suppressToast){
     const body = document.querySelector('body');
     const header = document.querySelector('.header_un');
     let height;
