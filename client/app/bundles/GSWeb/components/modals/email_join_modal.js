@@ -142,7 +142,7 @@ assign(EmailJoinModal.prototype, {
     }).fail(function(data1, data2) {
       _this.getDeferred().reject(merge({}, data, data1, data2, _this.getModalData()));
     });
-    debugger
+
     this.allowInteractions();
   },
 
