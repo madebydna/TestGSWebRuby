@@ -14,6 +14,12 @@ class StudentGradeLevel < ActiveRecord::Base
 
   SUPPORTED_LANGUAGES = ['en', 'es']
 
+  def self.student_query_string(user_id, grade, language, district_id, district_state)
+    d_id = district_id.present? ? "district_id = #{district_id.to_s}" : 'district_id is NULL'
+    d_state = district_state.present? ? "district_state = '#{district_state}'" : 'district_state is NULL'
+    "member_id = #{user_id} AND grade = '#{grade}' AND language = '#{language}' AND #{d_id} AND #{d_state}"
+  end
+
   def self.create_students(user_id, grades, state, language, district_id = nil, district_state = nil)
     # add grades to this user in student table
     if grades.present?
@@ -21,10 +27,7 @@ class StudentGradeLevel < ActiveRecord::Base
       grades_uniq = grades.uniq
       grades_uniq.each do |grade|
         if grade.present? && SUPPORTED_GRADES.include?(grade)
-          d_id = district_id.present? ? "district_id = #{district_id.to_s}" : 'district_id is NULL'
-          d_state = district_state.present? ? "district_state = '#{district_state}'" : 'district_state is NULL'
-          where_string = "member_id = #{user_id} AND grade = '#{grade}' AND language = '#{language}' AND #{d_id} AND #{d_state}"
-          student = where(where_string)
+          student = where(student_query_string(user_id, grade, language, district_id, district_state))
           # Log request if another record is found with these three variables since we remove unique constraint on this table
           if student.length > 1
             GSLogger.error(
