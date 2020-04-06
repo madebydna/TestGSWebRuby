@@ -1,318 +1,215 @@
-<% greatnews = @current_preferences.include? :greatnews %>
-<% greatkidsnews = @current_preferences.include? :greatkidsnews %>
-<% sponsor = @current_preferences.include? :sponsor %>
-<% teacher_list = @current_preferences.include? :teacher_list %>
+<% greatnews_en = @current_preferences_en.include?("greatnews") %>
+<% greatkidsnews_en = @current_preferences_en.include?("greatkidsnews") %>
+<% sponsor_en = @current_preferences_en.include?("sponsor") %>
+<% teacher_list_en = @current_preferences_en.include?("teacher_list") %>
+
+<% greatnews_es = @current_preferences_en.include?("greatnews") %>
+<% greatkidsnews_es = @current_preferences_en.include?("greatkidsnews") %>
 
 <section class="row">
   <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-preferences-form-container phl">
     <%= form_tag(user_preferences_update_path, method: :post, class:"rs-preferences-form") do |f| %>
-      <h1 class="tac font-size-large">
-        <%= t('.heading') %>
-        <%= t('.newsletter_preferences') %></h1>
       <h2 class="tac open-sans font-size-large"><strong><%= t('.subheading_pt_1') %> </strong> <%= t('.subheading_pt_2') %></h2>
 
       <p class="tac"><strong> <%= t('.email_heading') %>: </strong><%= @current_user.email if logged_in? %></p>
 
-      <%# Common Submit Button (submits both English & Spanish forms) %>
-      <div class="tac">
-        <%= content_tag('button', type: 'submit', class: 'mtm mbm btn btn-lg btn-primary rs-submit') do %>
-          <span class="font-size-xl"><%= t('.submit_label') %></span>
-        <% end %>
-      </div>
-
-      <div class="ep-tabs">
-        <a id="tab-news-en" href="javascript:void(0)">English</a>
-        <a id="tab-news-es" href="javascript:void(0)">Spanish</a>
-      </div>
-
-      <%# English Newsletters %>
-      <div id="news-en" class="tabcontent active">
-        <h3><%= t('.newsletters_heading') %> (English)</h3>
-        <div style="height: 6px"></div>
-        <h4>GreatSchools Updates</h4>
-        <p><em>Updates straight from the source. (Blurb about this category of updates.)</em></p>
-        <div>
-          <div class="fl prm mtm">
-            <div class="js-checkbox iconx16 js-icon <%= greatnews ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-                data-toggle="button" readonly="">
-              <input name="subscriptions[]"
-                disabled="true"
-                type="hidden"
-                value="greatnews">
-            </div>
-          </div>
-          <div style="overflow:hidden">
-            <div class="strong subtitle-md"><%= t('.greatnews_title') %></div>
-            <p><%= t('.greatnews_subtitle') %></p>
+      <div class="newsletter-module">
+        <div class="tab-buttons ep-tabs">
+          <div class="tab-container">
+            <a id="tab-news-en" class="tab-title tab-selected" href="javascript:void(0)"><%= t('.en_tab') %></a>
+            <span class="divider"></span>
+            <a id="tab-news-es" class="tab-title" href="javascript:void(0)"><%= t('.es_tab') %></a>
           </div>
         </div>
 
-
-        <div class="mtm">
-          <div class="fl prm mtm">
-            <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-                data-toggle="button" readonly="">
-              <input name="subscriptions[]"
-                disabled="true"
-                type="hidden"
-                value="greatkidsnews">
-            </div>
-          </div>
-          <div style="overflow:hidden">
-            <div class="strong subtitle-md"><%= t('.greatkidsnews_title') %></div>
-            <p><%= t('.greatkidsnews_subtitle') %></p>
-            <div class="ma">
-              <p><%= t('.grades_label') %></p>
-              <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
-                <div>
-                <% grade_group.compact.each do |grade, label| %>
-                  <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if @current_grades.include?(grade) %>"
-                      style="min-width:30px"
-                      data-checkbox-button-key="grade[]"
-                      data-checkbox-button-value="<%= grade %>"
-                      data-toggle="button">
-                      <input name="grades[]" disabled="true" type="hidden" value="<%= grade %>"><%= label %>
-                  </div>
-                <% end %>
-                </div>
-                <div class="clearfix"></div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-
-        <div class="mtm">
-          <div class="fl prm mtm">
-            <div class="js-checkbox iconx16 js-icon <%= teacher_list ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-                data-toggle="button" readonly="">
-              <input name="subscriptions[]"
+        <div class="panel">
+          <%# English Newsletters %>
+          <div id="news-en" class="tabcontent active">
+            <h3><%= t('.en_news.newsletters_heading') %></h3>
+            <div>
+              <div class="fl prm mtm">
+                <div class="js-checkbox iconx16 js-icon <%= greatnews_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+                    data-toggle="button" readonly="">
+                  <input name="subscriptions_en[]"
                     disabled="true"
                     type="hidden"
-                    value="teacher_list">
-            </div>
-          </div>
-          <div style="overflow:hidden">
-            <div class="strong subtitle-md"><%= t('.teacher_list_title') %></div>
-            <p><%= t('.teacher_list_subtitle') %></p>
-          </div>
-          <div class="clearfix"></div>
-        </div>
-
-        <br />
-        <h4>Districts</h4>
-        <p><em>Our weekly grade-based newsletters with district updates. (Blurb about this category of updates.)</em></p>
-
-        <div class="mtm">
-          <div class="fl prm mtm">
-            <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-                data-toggle="button" readonly="">
-              <input name="subscriptions[]"
-                disabled="true"
-                type="hidden"
-                value="greatkidsnews">
-            </div>
-          </div>
-          <div style="overflow:hidden">
-            <div class="strong subtitle-md"><%= t('.greatkidsnews_title') %></div>
-            <div>for <strong>Castro Valley Unified School District</strong></div>
-            <p><%= t('.greatkidsnews_subtitle') %></p>
-            <div class="ma">
-              <p><%= t('.grades_label') %></p>
-              <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
-                <div>
-                <% grade_group.compact.each do |grade, label| %>
-                  <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if @current_grades.include?(grade) %>"
-                      style="min-width:30px"
-                      data-checkbox-button-key="grade[]"
-                      data-checkbox-button-value="<%= grade %>"
-                      data-toggle="button">
-                      <input name="grades[]" disabled="true" type="hidden" value="<%= grade %>"><%= label %>
-                  </div>
-                <% end %>
+                    value="greatnews">
                 </div>
-                <div class="clearfix"></div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-
-        <div class="mtm">
-          <div class="fl prm mtm">
-            <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-                data-toggle="button" readonly="">
-              <input name="subscriptions[]"
-                disabled="true"
-                type="hidden"
-                value="greatkidsnews">
-            </div>
-          </div>
-          <div style="overflow:hidden">
-            <div class="strong subtitle-md"><%= t('.greatkidsnews_title') %></div>
-            <div>for <strong>Mountain View-Los Altos Unified School District</strong></div>
-            <p><%= t('.greatkidsnews_subtitle') %></p>
-            <div class="ma">
-              <p><%= t('.grades_label') %></p>
-              <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
-                <div>
-                <% grade_group.compact.each do |grade, label| %>
-                  <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if @current_grades.include?(grade) %>"
-                      style="min-width:30px"
-                      data-checkbox-button-key="grade[]"
-                      data-checkbox-button-value="<%= grade %>"
-                      data-toggle="button">
-                      <input name="grades[]" disabled="true" type="hidden" value="<%= grade %>"><%= label %>
-                  </div>
-                <% end %>
-                </div>
-                <div class="clearfix"></div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-
-        <br />
-        <h4>Schools</h4>
-        <p><em>Updates about school reviews, etc. (Blurb about this category of updates.)</em></p>
-
-        <div class="mtm">
-          <% @mss_subscriptions.each do |subscription| %>
-            <div class="fl prm mts">
-              <div class="js-checkbox js-inverted-checkbox iconx16 js-icon i-16-blue-check-box active" data-toggle="button" readonly="">
-                <input name="subscription_ids_to_remove[]" disabled="true" type="hidden" value="<%= subscription.id %>">
+              </div>
+              <div style="overflow:hidden">
+                <div class="strong subtitle-md"><%= t('.en_news.greatnews_title') %></div>
+                <p><%= t('.en_news.greatnews_subtitle') %></p>
               </div>
             </div>
-            <div style="overflow:hidden">
-              <%#= t('.school_updates') %> <%= subscription.school.name %>, <%= subscription.school.city %>, <%= subscription.school.state %>
-            </div>
-            <div class="clearfix"></div>
-          <% end %>
-        </div>
-
-        <br />
-        <h4>Partners</h4>
-        <p><em>Offers and updates from our partners. (Blurb about this category of updates.)</em></p>
-
-        <div class="mtm">
-          <div class="fl prm mtm">
-            <div class="js-checkbox iconx16 js-icon <%= sponsor ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-                data-toggle="button" readonly="">
-              <input name="subscriptions[]"
-                disabled="true"
-                type="hidden"
-                value="sponsor">
-            </div>
-          </div>
-          <div style="overflow:hidden">
-            <div class="strong subtitle-md"><%= t('.sponsor_title') %></div>
-            <p><%= t('.sponsor_subtitle') %></p>
-          </div>
-          <div class="clearfix"></div>
-        </div>
-      </div>
-
-      <%# Spanish Newsletters %>
-      <div id="news-es" class="tabcontent">
-        <h3><%= t('.newsletters_heading') %> (Spanish)</h3>
-        <div>
-          <div class="fl prm mtm">
-            <div class="js-checkbox iconx16 js-icon <%= greatnews ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-                data-toggle="button" readonly="">
-              <input name="subscriptions[]"
-                disabled="true"
-                type="hidden"
-                value="greatnews">
-            </div>
-          </div>
-          <div style="overflow:hidden">
-            <div class="strong subtitle-md"><%= t('.greatnews_title') %></div>
-            <p><%= t('.greatnews_subtitle') %></p>
-          </div>
-        </div>
 
 
-        <div class="mtm">
-          <div class="fl prm mtm">
-            <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-                data-toggle="button" readonly="">
-              <input name="subscriptions[]"
-                disabled="true"
-                type="hidden"
-                value="greatkidsnews">
-            </div>
-          </div>
-          <div style="overflow:hidden">
-            <div class="strong subtitle-md"><%= t('.greatkidsnews_title') %></div>
-            <p><%= t('.greatkidsnews_subtitle') %></p>
-            <div class="ma">
-              <p><%= t('.grades_label') %></p>
-              <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
-                <div>
-                <% grade_group.compact.each do |grade, label| %>
-                  <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if @current_grades.include?(grade) %>"
-                      style="min-width:30px"
-                      data-checkbox-button-key="grade[]"
-                      data-checkbox-button-value="<%= grade %>"
-                      data-toggle="button">
-                      <input name="grades[]" disabled="true" type="hidden" value="<%= grade %>"><%= label %>
+              <div class="mtm">
+                <div class="fl prm mtm">
+                  <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+                      data-toggle="button" readonly="">
+                    <input name="subscriptions_en[]"
+                      disabled="true"
+                      type="hidden"
+                      value="greatkidsnews">
                   </div>
-                <% end %>
+                </div>
+                <div style="overflow:hidden">
+                  <div class="strong subtitle-md"><%= t('.en_news.greatkidsnews_title') %></div>
+                  <p><%= t('.en_news.greatkidsnews_subtitle') %></p>
+                  <div class="ma">
+                    <p><%= t('.en_news.grades_label') %></p>
+                    <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
+                      <div>
+                      <% grade_group.compact.each do |grade, label| %>
+                        <% current_grades_default_en = @current_grades_en.select { |el| el[:district_state] == "" && el[:district_id] == "" }.map { |r| r[:grade] } %>
+                        <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if current_grades_default_en.include?(grade) %>"
+                            style="min-width:30px"
+                            data-checkbox-button-key="grade[]"
+                            data-checkbox-button-value="<%= grade %>"
+                            data-toggle="button">
+                            <input name="grades[][grade]" disabled="true" type="hidden" value="<%= grade %>"><%= label %>
+                            <input name="grades[][district_state]" disabled="true" type="hidden" value="">
+                            <input name="grades[][district_id]" disabled="true" type="hidden" value="">
+                            <input name="grades[][language]" disabled="true" type="hidden" value="en">
+                        </div>
+                      <% end %>
+                      </div>
+                      <div class="clearfix"></div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+
+
+            <div class="mtm">
+              <div class="fl prm mtm">
+                <div class="js-checkbox iconx16 js-icon <%= teacher_list_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+                    data-toggle="button" readonly="">
+                  <input name="subscriptions_en[]"
+                        disabled="true"
+                        type="hidden"
+                        value="teacher_list">
+                </div>
+              </div>
+              <div style="overflow:hidden">
+                <div class="strong subtitle-md"><%= t('.en_news.teacher_list_title') %></div>
+                <p><%= t('.en_news.teacher_list_subtitle') %></p>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+
+            <div class="mtm">
+              <% @mss_subscriptions_en.each do |subscription| %>
+                <div class="fl prm mts">
+                  <div class="js-checkbox js-inverted-checkbox iconx16 js-icon i-16-blue-check-box active" data-toggle="button" readonly="">
+                    <input name="subscription_ids_to_remove_en[]" disabled="true" type="hidden" value="<%= subscription.id %>">
+                  </div>
+                </div>
+                <div style="overflow:hidden">
+                  <%= t('.en_news.school_updates') %>: <%= subscription.school.name %>, <%= subscription.school.city %>, <%= subscription.school.state %>
                 </div>
                 <div class="clearfix"></div>
               <% end %>
             </div>
-          </div>
-        </div>
 
-        <div class="mtm">
-          <div class="fl prm mtm">
-            <div class="js-checkbox iconx16 js-icon <%= teacher_list ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-                data-toggle="button" readonly="">
-              <input name="subscriptions[]"
+
+            <div class="mtm">
+              <div class="fl prm mtm">
+                <div class="js-checkbox iconx16 js-icon <%= sponsor_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+                    data-toggle="button" readonly="">
+                  <input name="subscriptions_en[]"
                     disabled="true"
                     type="hidden"
-                    value="teacher_list">
+                    value="sponsor">
+                </div>
+              </div>
+              <div style="overflow:hidden">
+                <div class="strong subtitle-md"><%= t('.en_news.sponsor_title') %></div>
+                <p><%= t('.en_news.sponsor_subtitle') %></p>
+              </div>
+              <div class="clearfix"></div>
             </div>
           </div>
-          <div style="overflow:hidden">
-            <div class="strong subtitle-md"><%= t('.teacher_list_title') %></div>
-            <p><%= t('.teacher_list_subtitle') %></p>
-          </div>
-          <div class="clearfix"></div>
-        </div>
 
-        <!--
-        <div class="mtm">
-          <% @mss_subscriptions.each do |subscription| %>
-            <div class="fl prm mts">
-              <div class="js-checkbox js-inverted-checkbox iconx16 js-icon i-16-blue-check-box active" data-toggle="button" readonly="">
-                <input name="subscription_ids_to_remove[]" disabled="true" type="hidden" value="<%= subscription.id %>">
+          <%# Spanish Newsletters %>
+          <div id="news-es" class="tabcontent">
+            <h3><%= t('.es_news.newsletters_heading') %></h3>
+            <div>
+              <div class="fl prm mtm">
+                <div class="js-checkbox iconx16 js-icon <%= greatnews_es ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+                    data-toggle="button" readonly="">
+                  <input name="subscriptions_es[]"
+                    disabled="true"
+                    type="hidden"
+                    value="greatnews">
+                </div>
+              </div>
+              <div style="overflow:hidden">
+                <div class="strong subtitle-md"><%= t('.es_news.greatnews_title') %></div>
+                <p><%= t('.es_news.greatnews_subtitle') %></p>
               </div>
             </div>
-            <div style="overflow:hidden">
-              <%= t('.school_updates') %> <%= subscription.school.name %>, <%= subscription.school.city %>, <%= subscription.school.state %>
-            </div>
-            <div class="clearfix"></div>
-          <% end %>
-        </div>
-        -->
 
-        <div class="mtm">
-          <div class="fl prm mtm">
-            <div class="js-checkbox iconx16 js-icon <%= sponsor ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-                data-toggle="button" readonly="">
-              <input name="subscriptions[]"
-                disabled="true"
-                type="hidden"
-                value="sponsor">
+
+
+              <div class="mtm">
+                <div class="fl prm mtm">
+                  <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+                      data-toggle="button" readonly="">
+                    <input name="subscriptions_en[]"
+                      disabled="true"
+                      type="hidden"
+                      value="greatkidsnews">
+                  </div>
+                </div>
+                <div style="overflow:hidden">
+                  <div class="strong subtitle-md"><%= t('.en_news.greatkidsnews_title') %></div>
+                  <p><%= t('.en_news.greatkidsnews_subtitle') %></p>
+                  <div class="ma">
+                    <p><%= t('.en_news.grades_label') %></p>
+                    <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
+                      <div>
+                      <% grade_group.compact.each do |grade, label| %>
+                        <% current_grades_default_es = @current_grades_es.select { |el| el[:district_state] == nil }.map { |r| r[:grade] } %>
+                        <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if current_grades_default_es.include?(grade) %>"
+                            style="min-width:30px"
+                            data-checkbox-button-key="grade[]"
+                            data-checkbox-button-value="<%= grade %>"
+                            data-toggle="button">
+                            <input name="grades[][grade]" disabled="true" type="hidden" value="<%= grade %>"><%= label %>
+                            <input name="grades[][district_state]" disabled="true" type="hidden" value="">
+                            <input name="grades[][district_id]" disabled="true" type="hidden" value="">
+                            <input name="grades[][language]" disabled="true" type="hidden" value="en">
+                        </div>
+                      <% end %>
+                      </div>
+                      <div class="clearfix"></div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+
+            <div class="mtm">
+              <% @mss_subscriptions_es.each do |subscription| %>
+                <div class="fl prm mts">
+                  <div class="js-checkbox js-inverted-checkbox iconx16 js-icon i-16-blue-check-box active" data-toggle="button" readonly="">
+                    <input name="subscription_ids_to_remove_es[]" disabled="true" type="hidden" value="<%= subscription.id %>">
+                  </div>
+                </div>
+                <div style="overflow:hidden">
+                  <%= t('.es_news.school_updates') %>: <%= subscription.school.name %>, <%= subscription.school.city %>, <%= subscription.school.state %>
+                </div>
+                <div class="clearfix"></div>
+              <% end %>
             </div>
-          </div>
-          <div style="overflow:hidden">
-            <div class="strong subtitle-md"><%= t('.sponsor_title') %></div>
-            <p><%= t('.sponsor_subtitle') %></p>
-          </div>
-          <div class="clearfix"></div>
+
         </div>
       </div>
+
+
 
       <%# Common Submit Button (submits both English & Spanish forms) %>
       <div class="tac">
