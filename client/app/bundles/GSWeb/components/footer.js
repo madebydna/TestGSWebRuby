@@ -36,7 +36,13 @@ export function setupNewsletterLink() {
       );
     }
     else {
-      signupAndGetNewsletter();
+      if (currentLocale() == 'es'){
+        let win = window.open("https://pub.s1.exacttarget.com/bkt2mldejgh", '_blank');
+        win.focus();
+      }
+      else{
+        signupAndGetNewsletter();
+      }
     }
   });
 
