@@ -27,6 +27,7 @@ class StudentGradeLevel < ActiveRecord::Base
       grades_uniq = grades.uniq
       grades_uniq.each do |grade|
         if grade.present? && SUPPORTED_GRADES.include?(grade)
+          language = (Array.wrap(language) & SUPPORTED_LANGUAGES).first || 'en'
           student = where(student_query_string(user_id, grade, language, district_id, district_state))
           # Log request if another record is found with these three variables since we remove unique constraint on this table
           if student.length > 1
@@ -46,7 +47,7 @@ class StudentGradeLevel < ActiveRecord::Base
             student.member_id = user_id
             student.grade = grade
             student.state = state if state.present?
-            student.language = (Array.wrap(language) & SUPPORTED_LANGUAGES).first || 'en'
+            student.language = language
             student.district_id = district_id
             student.district_state = district_state
             unless student.save!
