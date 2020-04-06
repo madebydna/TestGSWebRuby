@@ -14,12 +14,21 @@ class UserEmailPreferencesController < ApplicationController
   def show
     @page_name = 'User Email Preferences' # This is also hardcoded in email_preferences.js
     gon.pagename = @page_name
-    @current_preferences = UserSubscriptions.new(@current_user).get
+    @current_preferences_en = UserSubscriptions.new(@current_user).get.select { |sub| sub[:language] == 'en' }.map(&:list)
+    @current_preferences_es = UserSubscriptions.new(@current_user).get.select { |sub| sub[:language] == 'es' }.map(&:list)
     account_meta_tags('My email preferences')
-    @current_grades = @current_user.student_grade_levels.map(&:grade)
+    @current_grades = current_district_grades
+    @current_grades_en = current_district_grades.select { |el| el[:language] == 'en' }
+    @current_grades_es = current_district_grades.select { |el| el[:language] == 'es' }
     @available_grades = available_grades
     @mss_subscriptions = current_user
       .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified])
+      .extend(SchoolAssociationPreloading).preload_associated_schools!
+    @mss_subscriptions_en = current_user
+      .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified], "en")
+      .extend(SchoolAssociationPreloading).preload_associated_schools!
+    @mss_subscriptions_es = current_user
+      .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified], "es")
       .extend(SchoolAssociationPreloading).preload_associated_schools!
     set_tracking_info
   end
@@ -27,7 +36,8 @@ class UserEmailPreferencesController < ApplicationController
   def update
     UserSubscriptionManager.new(@current_user).update(param_subscriptions)
     UserGradeManager.new(@current_user).update(param_grades)
-    Subscription.where(id: subscription_ids_to_remove, member_id: current_user.id).destroy_all if subscription_ids_to_remove
+    Subscription.where(id: school_subscription_ids_to_remove_en, member_id: current_user.id).destroy_all if school_subscription_ids_to_remove_en
+    Subscription.where(id: school_subscription_ids_to_remove_es, member_id: current_user.id).destroy_all if school_subscription_ids_to_remove_es
     flash_notice t('controllers.user_email_preferences_controller.success')
     redirect_to user_preferences_path
   end
@@ -37,12 +47,59 @@ class UserEmailPreferencesController < ApplicationController
     #['1','2','3','4']
   end
 
-  def param_subscriptions
-    params['subscriptions'] || []
+  # TODO: Filter by en
+  def param_grades_en
+    params['grades'] || []
+    #['1','2','3','4']
   end
 
-  def subscription_ids_to_remove
-    params['subscription_ids_to_remove']
+  # TODO: Filter by es
+  def param_grades_es
+    params['grades_es'] || []
+    #['1','2','3','4']
+  end
+
+  # TODO: Remove this
+  def param_subscriptions
+    {
+      'en' => param_subscriptions_en,
+      'es' => param_subscriptions_es
+    }
+  end
+
+  def param_subscriptions_en
+    params['subscriptions_en'] || []
+  end
+
+  def param_subscriptions_es
+    params['subscriptions_es'] || []
+  end
+
+  # TODO: Remove this
+  def school_subscription_ids_to_remove
+    params['subscription_ids_to_remove_en']
+  end
+
+  def school_subscription_ids_to_remove_en
+    params['subscription_ids_to_remove_en']
+  end
+
+  def school_subscription_ids_to_remove_es
+    params['subscription_ids_to_remove_es']
+  end
+
+  def current_district_grades
+    records = @current_user.student_grade_levels
+    records.map do |record|
+      {
+        :grade => record.grade,
+        :district_state => record.district_state,
+        :district_id => record.district_id,
+        :language => record.language,
+        :district_state_and_id => "#{record.district_state}-#{record.district_id}",
+        :district_name => DistrictRecord.find_by(state: record.district_state, district_id: record.district_id)&.name
+      }
+    end
   end
 
   private
