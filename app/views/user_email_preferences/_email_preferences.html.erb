@@ -65,15 +65,16 @@
                       <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
                         <div>
                         <% grade_group.compact.each do |grade, label| %>
-                          <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if checked_grades.include?(grade) %>"
+                          <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton js-gradeCheckbox <%= 'active' if checked_grades.include?(grade) %>"
                               style="min-width:30px"
                               data-checkbox-button-key="grade[]"
                               data-checkbox-button-value="<%= grade %>"
-                              data-toggle="button">
-                              <input name="grades[][grade]" disabled="true" type="hidden" value="<%= grade %>"><%= label %>
-                              <input name="grades[][district_state]" disabled="true" type="hidden" value="<%= record.first[:district_state] %>">
-                              <input name="grades[][district_id]" disabled="true" type="hidden" value="<%= record.first[:district_id] %>">
-                              <input name="grades[][language]" disabled="true" type="hidden" value="en">
+                              data-toggle="button"
+                              data-district-state="<%= record.first[:district_state] %>"
+                              data-district-id="<%= record.first[:district_id] %>"
+                              data-language="en"
+                              >
+                              <input name="grades" type="hidden" value="">
                           </div>
                         <% end %>
                         </div>

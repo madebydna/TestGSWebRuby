@@ -50,5 +50,9 @@ $(function() {
           $greatkidsnewsCheckbox.trigger('click');
         }
       });
+
+      $formContainer.find('.js-gradeCheckbox.active').each(function() {
+
+      });
     }
 });
