@@ -58,7 +58,7 @@ module ExactTargetFileManager
 
         def state_cache_data
           @state_cache_data ||= begin
-            StateCache.for_state('state_attributes', 'ca').try(:cache_data) || {}
+            StateCache.for_state('state_attributes', self.state).try(:cache_data) || {}
           end
         end
 
