@@ -34,6 +34,7 @@ class UserEmailPreferencesController < ApplicationController
   end
 
   def update
+    # require 'pry'; binding.pry;
     UserSubscriptionManager.new(@current_user).update(param_subscriptions)
     UserGradeManager.new(@current_user).update(param_grades)
     Subscription.where(id: school_subscription_ids_to_remove_en, member_id: current_user.id).destroy_all if school_subscription_ids_to_remove_en

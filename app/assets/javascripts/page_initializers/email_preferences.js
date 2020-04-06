@@ -26,7 +26,19 @@ $(function() {
 
       $formContainer.find('form').on('submit', function() {
         var $form = $(this);
+        var grades = [];
+        console.log("form");
+        $form.find('.js-gradeCheckbox.active').each(function () {
+          // console.log("loop");
+          // console.log($(this).data('districtState'));
+          // console.log($(this).data('districtId'));
+          grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
+        });
+        console.log("grades:" + JSON.stringify(grades));
 
+        grades_value = $('.js-gradeSubmitValue');
+        grades_value.val(JSON.stringify(grades));
+        console.log(grades_value.val());
         $form.find('.js-inverted-checkbox').each(function() {
           $(this).toggleClass('active');
         });
@@ -51,8 +63,6 @@ $(function() {
         }
       });
 
-      $formContainer.find('.js-gradeCheckbox.active').each(function() {
 
-      });
     }
 });

@@ -9,6 +9,7 @@
 <section class="row">
   <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-preferences-form-container phl">
     <%= form_tag(user_preferences_update_path, method: :post, class:"rs-preferences-form") do |f| %>
+      <input class="js-gradeSubmitValue" name="grades" type="hidden" value="">
       <h2 class="tac open-sans font-size-large"><strong><%= t('.subheading_pt_1') %> </strong> <%= t('.subheading_pt_2') %></h2>
 
       <p class="tac"><strong> <%= t('.email_heading') %>: </strong><%= @current_user.email if logged_in? %></p>
@@ -74,7 +75,7 @@
                               data-district-id="<%= record.first[:district_id] %>"
                               data-language="en"
                               >
-                              <input name="grades" type="hidden" value="">
+
                           </div>
                         <% end %>
                         </div>
@@ -104,16 +105,15 @@
                       <div>
                       <% grade_group.compact.each do |grade, label| %>
                         <% current_grades_default_en = @current_grades_en.select { |el| el[:district_state] == "" && el[:district_id] == "" }.map { |r| r[:grade] } %>
-                        <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if current_grades_default_en.include?(grade) %>"
-                            style="min-width:30px"
-                            data-checkbox-button-key="grade[]"
-                            data-checkbox-button-value="<%= grade %>"
-                            data-toggle="button">
-                            <input name="grades[][grade]" disabled="true" type="hidden" value="<%= grade %>"><%= label %>
-                            <input name="grades[][district_state]" disabled="true" type="hidden" value="">
-                            <input name="grades[][district_id]" disabled="true" type="hidden" value="">
-                            <input name="grades[][language]" disabled="true" type="hidden" value="en">
-                        </div>
+                          <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton js-gradeCheckbox <%= 'active' if current_grades_default_en.include?(grade) %>"
+                               style="min-width:30px"
+                               data-grade="<%= grade %>"
+                               data-toggle="button"
+                               data-language="en"
+                               data-district-id=''
+                               data-district-state=''
+                          ><%= label %>
+                          </div>
                       <% end %>
                       </div>
                       <div class="clearfix"></div>
