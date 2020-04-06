@@ -9,21 +9,42 @@ en:
       greatkidsnews_title: GreatSchools by grade (K-12)
       greatkidsnews_subtitle: Weekly essentials about your child's grade.
       greatschools_terms_of_use: GreatSchools Terms of Use.
-      greatnews_title: GreatSchools weekly (preK-12)
-      greatnews_subtitle: A weekly roundup of our best articles, videos, and more.
       heading: "Manage your:"
       newsletter_preferences: Newsletter preferences
       email_updates: School email updates
-      newsletters_heading: Newsletters
       teacher_list_title: GreatSchools for Educators
       teacher_list_subtitle: Resources and insights for teachers and school leaders.
       sponsor_title: From our partners
       sponsor_subtitle: Special offers and info from GreatSchools' carefully chosen partners.
       subheading_pt_1: Welcome!
-      subheading_pt_2: Help us send you the most relevant information by updating your preferences below.
+      subheading_pt_2: Help us send you the right newsletter by updating your subscriptions below. To manage your Spanish newsletter subscriptions, click the link "Boletines en español."
       submit_label: Save changes
       keep_following_same_grade: 'No, I want to keep following the same grade next year.'
       terms_of_use_html: By signing up, I agree to the %{terms_of_use_link}
       privacy_policy: Privacy Policy.
-
-
+      en_tab: English newsletters
+      es_tab: Boletines en español
+      en_news:
+        newsletters_heading: English Newsletters
+        greatnews_title: The Weekly
+        greatnews_subtitle: A weekly roundup of our best articles, videos, and more.
+        greatkidsnews_title: Grade by Grade
+        greatkidsnews_subtitle: Essentials to help your child throughout the school year.
+        grades_label: Select your children’s grades below.
+        school_updates: School Updates
+        teacher_list_title: GreatEducators
+        teacher_list_subtitle: Resources and insights designed for teachers and school leaders.
+        sponsor_title: Partner Updates
+        sponsor_subtitle: News and offers from our partners.
+      es_news:
+        newsletters_heading: Boletines en español
+        greatnews_title: El semanal
+        greatnews_subtitle: Un resumen semanal de nuestros mejores artículos, vídeos y más. (Sólo disponible en inglés)
+        greatkidsnews_title: Grado por grado
+        greatkidsnews_subtitle: Recursos esenciales para ayudar a tu hijo durante todo el año escolar.
+        grades_label: Selecciona los grados de tu hijo a continuación.
+        school_updates: Actualizaciones de tu escuela
+        teacher_list_title: GreatEducators
+        teacher_list_subtitle: Resources and insights designed for teachers and school leaders.
+        sponsor_title: Partner Updates
+        sponsor_subtitle: News and offers from our partners.
