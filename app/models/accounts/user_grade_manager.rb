@@ -5,10 +5,14 @@ class UserGradeManager
   end
 
   def update(new_grades)
-    del_grades = grades_to_delete(new_grades, get_grades)
-    add_grades = grades_to_add(new_grades, get_grades)
-    delete_grades(del_grades)
-    save_grades(add_grades)
+    del_grades_en = grades_to_delete(new_grades['en'], get_grades['en'])
+    add_grades_en = grades_to_add(new_grades['en'], get_grades['en'])
+    delete_grades(del_grades_en)
+    save_grades(add_grades_en)
+    del_grades_es = grades_to_delete(new_grades['es'], get_grades['es'])
+    add_grades_es = grades_to_add(new_grades['es'], get_grades['es'])
+    delete_grades(del_grades_es)
+    save_grades(add_grades_es)
   end
 
   def save_grades(grades_to_add)
@@ -38,7 +42,11 @@ class UserGradeManager
   end
 
   def get_grades
-    @user.student_grade_levels.map(&:grade)
+    current_grades = @user.student_grade_levels
+    {
+      'en' => current_grades.select { |sub| sub[:language] == 'en' }.map(&:grade),
+      'es' => current_grades.select { |sub| sub[:language] == 'es' }.map(&:grade)
+    }
   end
 
   def grades_to_add(a, b)
