@@ -1,11 +1,3 @@
-<% greatnews_en = @current_preferences_en.include?("greatnews") %>
-<% greatkidsnews_en = @current_preferences_en.include?("greatkidsnews") %>
-<% sponsor_en = @current_preferences_en.include?("sponsor") %>
-<% teacher_list_en = @current_preferences_en.include?("teacher_list") %>
-
-<% greatnews_es = @current_preferences_en.include?("greatnews") %>
-<% greatkidsnews_es = @current_preferences_en.include?("greatkidsnews") %>
-
 <section class="row">
   <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-preferences-form-container phl">
     <%= form_tag(user_preferences_update_path, method: :post, class:"rs-preferences-form") do |f| %>
@@ -24,32 +16,30 @@
         </div>
 
         <div class="panel">
-          <%= render 'emglish_email_preferences' %>
+          <%= render 'english_email_preferences' %>
           <%= render 'spanish_email_preferences' %>
         </div>
 
+        <%# Common Submit Button (submits both English & Spanish forms) %>
+        <div class="tac">
+          <%= content_tag('button', type: 'submit', class: 'mtm mbm btn btn-lg btn-primary rs-submit') do %>
+            <span class="font-size-xl"><%= t('.submit_label') %></span>
+          <% end %>
+        </div>
+        <div class="tac"><%= link_to('Unsubscribe', unsubscribe_path) %></div>
 
-
-      <%# Common Submit Button (submits both English & Spanish forms) %>
-      <div class="tac">
-        <%= content_tag('button', type: 'submit', class: 'mtm mbm btn btn-lg btn-primary rs-submit') do %>
-          <span class="font-size-xl"><%= t('.submit_label') %></span>
-        <% end %>
-      </div>
-      <div class="tac"><%= link_to('Unsubscribe', unsubscribe_path) %></div>
-
-      <%# <div> %>
+        <%# <div> %>
         <%# link_to t('.privacy_policy'), privacy_url %>&nbsp;
         <%# t('.terms_of_use_html',
-              terms_of_use_link: link_to(
-                      t('.greatschools_terms_of_use'),
-                      terms_of_use_url)
-            )
+                terms_of_use_link: link_to(
+                        t('.greatschools_terms_of_use'),
+                        terms_of_use_url)
+              )
         %>
-      <%# </div> %>
+        <%# </div> %>
 
     <% end %>
-  </div>
+    </div>
   </div>
 </section>
 

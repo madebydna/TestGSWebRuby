@@ -1,6 +1,12 @@
+<% greatnews_en = @current_preferences_en.include?("greatnews") %>
+<% greatkidsnews_en = @current_preferences_en.include?("greatkidsnews") %>
+<% sponsor_en = @current_preferences_en.include?("sponsor") %>
+<% teacher_list_en = @current_preferences_en.include?("teacher_list") %>
+<% path_to_yml = "user_email_preferences.email_preferences.en_news." %>
+
 <%# English Newsletters %>
 <div id="news-en" class="tabcontent active">
-  <h3><%= t('.en_news.newsletters_heading') %></h3>
+  <h3><%= t(path_to_yml + 'newsletters_heading') %></h3>
   <div>
     <div class="fl prm mtm">
       <div class="js-checkbox iconx16 js-icon <%= greatnews_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
@@ -12,8 +18,8 @@
       </div>
     </div>
     <div style="overflow:hidden">
-      <div class="strong subtitle-md"><%= t('.en_news.greatnews_title') %></div>
-      <p><%= t('.en_news.greatnews_subtitle') %></p>
+      <div class="strong subtitle-md"><%= t(path_to_yml + 'greatnews_title') %></div>
+      <p><%= t(path_to_yml + 'greatnews_subtitle') %></p>
     </div>
   </div>
 
@@ -33,11 +39,11 @@
           </div>
         </div>
         <div style="overflow:hidden">
-          <div class="strong subtitle-md"><%= t('.en_news.greatkidsnews_title') %>
+          <div class="strong subtitle-md"><%= t(path_to_yml + 'greatkidsnews_title') %>
             : <%= record.first[:district_name] %></div>
-          <p><%= t('.en_news.greatkidsnews_subtitle') %></p>
+          <p><%= t(path_to_yml + 'greatkidsnews_subtitle') %></p>
           <div class="ma">
-            <p><%= t('.en_news.grades_label') %></p>
+            <p><%= t(path_to_yml + 'grades_label') %></p>
             <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
               <div>
                 <% grade_group.compact.each do |grade, label| %>
@@ -72,10 +78,10 @@
         </div>
       </div>
       <div style="overflow:hidden">
-        <div class="strong subtitle-md"><%= t('.en_news.greatkidsnews_title') %></div>
-        <p><%= t('.en_news.greatkidsnews_subtitle') %></p>
+        <div class="strong subtitle-md"><%= t(path_to_yml + 'greatkidsnews_title') %></div>
+        <p><%= t(path_to_yml + 'greatkidsnews_subtitle') %></p>
         <div class="ma">
-          <p><%= t('.en_news.grades_label') %></p>
+          <p><%= t(path_to_yml + 'grades_label') %></p>
           <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
             <div>
               <% grade_group.compact.each do |grade, label| %>
@@ -111,8 +117,8 @@
       </div>
     </div>
     <div style="overflow:hidden">
-      <div class="strong subtitle-md"><%= t('.en_news.teacher_list_title') %></div>
-      <p><%= t('.en_news.teacher_list_subtitle') %></p>
+      <div class="strong subtitle-md"><%= t(path_to_yml + 'teacher_list_title') %></div>
+      <p><%= t(path_to_yml + 'teacher_list_subtitle') %></p>
     </div>
     <div class="clearfix"></div>
   </div>
@@ -126,7 +132,7 @@
         </div>
       </div>
       <div style="overflow:hidden">
-        <%= t('.en_news.school_updates') %>: <%= subscription.school.name %>, <%= subscription.school.city %>
+        <%= t(path_to_yml + 'school_updates') %>: <%= subscription.school.name %>, <%= subscription.school.city %>
         , <%= subscription.school.state %>
       </div>
       <div class="clearfix"></div>
@@ -145,8 +151,8 @@
       </div>
     </div>
     <div style="overflow:hidden">
-      <div class="strong subtitle-md"><%= t('.en_news.sponsor_title') %></div>
-      <p><%= t('.en_news.sponsor_subtitle') %></p>
+      <div class="strong subtitle-md"><%= t(path_to_yml + 'sponsor_title') %></div>
+      <p><%= t(path_to_yml + 'sponsor_subtitle') %></p>
     </div>
     <div class="clearfix"></div>
   </div>

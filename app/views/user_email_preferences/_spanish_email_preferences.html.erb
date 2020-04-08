@@ -1,6 +1,12 @@
+<% greatnews_es = @current_preferences_en.include?("greatnews") %>
+<% greatkidsnews_es = @current_preferences_en.include?("greatkidsnews") %>
+
+<% path_to_yml = "user_email_preferences.email_preferences.es_news." %>
+
+
 <%# Spanish Newsletters %>
 <div id="news-es" class="tabcontent">
-  <h3><%= t('.es_news.newsletters_heading') %></h3>
+  <h3><%= t(path_to_yml + 'newsletters_heading') %></h3>
   <div>
     <div class="fl prm mtm">
       <div class="js-checkbox iconx16 js-icon <%= greatnews_es ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
@@ -12,8 +18,8 @@
       </div>
     </div>
     <div style="overflow:hidden">
-      <div class="strong subtitle-md"><%= t('.es_news.greatnews_title') %></div>
-      <p><%= t('.es_news.greatnews_subtitle') %></p>
+      <div class="strong subtitle-md"><%= t(path_to_yml + 'greatnews_title') %></div>
+      <p><%= t(path_to_yml + 'greatnews_subtitle') %></p>
     </div>
   </div>
 
@@ -35,11 +41,11 @@
           </div>
         </div>
         <div style="overflow:hidden">
-          <div class="strong subtitle-md"><%= t('.es_news.greatkidsnews_title') %>
+          <div class="strong subtitle-md"><%= t(path_to_yml + 'greatkidsnews_title') %>
             : <%= record.first[:district_name] %></div>
-          <p><%= t('.es_news.greatkidsnews_subtitle') %></p>
+          <p><%= t(path_to_yml + 'greatkidsnews_subtitle') %></p>
           <div class="ma">
-            <p><%= t('.es_news.grades_label') %></p>
+            <p><%= t(path_to_yml + 'grades_label') %></p>
             <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
               <div>
                 <% grade_group.compact.each do |grade, label| %>
@@ -64,7 +70,7 @@
   <% else %>
     <div class="mtm">
       <div class="fl prm mtm">
-        <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+        <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews_es ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
              data-toggle="button" readonly="">
           <input name="subscriptions_es[]"
                  disabled="true"
@@ -73,10 +79,10 @@
         </div>
       </div>
       <div style="overflow:hidden">
-        <div class="strong subtitle-md"><%= t('.en_news.greatkidsnews_title') %></div>
-        <p><%= t('.en_news.greatkidsnews_subtitle') %></p>
+        <div class="strong subtitle-md"><%= t(path_to_yml + 'greatkidsnews_title') %></div>
+        <p><%= t(path_to_yml + 'greatkidsnews_subtitle') %></p>
         <div class="ma">
-          <p><%= t('.en_news.grades_label') %></p>
+          <p><%= t(path_to_yml + 'grades_label') %></p>
           <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
             <div>
               <% grade_group.compact.each do |grade, label| %>
@@ -109,7 +115,7 @@
         </div>
       </div>
       <div style="overflow:hidden">
-        <%= t('.es_news.school_updates') %>: <%= subscription.school.name %>, <%= subscription.school.city %>
+        <%= t(path_to_yml + 'school_updates') %>: <%= subscription.school.name %>, <%= subscription.school.city %>
         , <%= subscription.school.state %>
       </div>
       <div class="clearfix"></div>
