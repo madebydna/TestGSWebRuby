@@ -10,7 +10,7 @@ export const t = translateWithDictionary({
   es: {
     coronavirus_html: String.raw`<div class='toast-body opensans-semibold'> Estamos aqui para ti. <a class='toast-anchorlink' href='/gk/coronavirus-school-closure-support/?lang=es'> Aquí encontrarás nuestros últimos recursos para el cierre de escuelas por COVID-19. </a><img src='${iconClose}' class='toast-cancel'/></div>`
   }
-})
+});
 
 const init = () => {
   const declineToast = readCookie('declineToast');
@@ -24,7 +24,7 @@ const init = () => {
       height = header.offsetHeight;
     }
     const toast = document.createElement('div');
-    toast.classList.add('toast')
+    toast.classList.add('toast');
     toast.style.top = `${height || '65'}px`;
     toast.innerHTML = t('coronavirus_html');
 
@@ -40,32 +40,32 @@ const init = () => {
     body.append(toast);
     activateListeners();
   }
-}
+};
 
 const activateListeners = () => {
   document.querySelector('.toast-cancel').addEventListener('click', (e) => {
     document.cookie = "declineToast=true;expires=0;path=/";
     closeToast(e.target.parentElement);
-  })
+  });
 
   document.querySelector('.toast-anchorlink').addEventListener('click', ()=> {
     fireoffAnalytics(window.location.pathname);
-  })
-  window.addEventListener('scroll', readjustToastHeight)
-}
+  });
+  window.addEventListener('scroll', readjustToastHeight);
+};
 
 const closeToast = (node) =>{
   window.removeEventListener('scroll', readjustToastHeight);
   node.classList.add('dn');
-}
+};
 
 const fireoffAnalytics = (pathName) => {
   analyticsEvent(
     'interaction',
     'Clicked Promo Banner',
     pathName
-  )
-}
+  );
+};
 
 
 const readjustToastHeight = throttle(() => {
