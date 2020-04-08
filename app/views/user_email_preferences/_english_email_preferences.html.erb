@@ -77,30 +77,8 @@
                  value="greatkidsnews">
         </div>
       </div>
-      <div style="overflow:hidden">
-        <div class="strong subtitle-md"><%= t(path_to_yml + 'greatkidsnews_title') %></div>
-        <p><%= t(path_to_yml + 'greatkidsnews_subtitle') %></p>
-        <div class="ma">
-          <p><%= t(path_to_yml + 'grades_label') %></p>
-          <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
-            <div>
-              <% grade_group.compact.each do |grade, label| %>
-                <% current_grades_default_en = @current_grades_en.select { |el| el[:district_state] == "" && el[:district_id] == "" }.map { |r| r[:grade] } %>
-                <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton js-gradeCheckbox <%= 'active' if current_grades_default_en.include?(grade) %>"
-                     style="min-width:30px"
-                     data-grade="<%= grade %>"
-                     data-toggle="button"
-                     data-language="en"
-                     data-district-id=''
-                     data-district-state=''
-                ><%= label %>
-                </div>
-              <% end %>
-            </div>
-            <div class="clearfix"></div>
-          <% end %>
-        </div>
-      </div>
+      <%= render :partial => 'grades_display', :locals => {:content => @overall_en} %>
+      <%= render 'grades_display' %>
     </div>
   <% end %>
 

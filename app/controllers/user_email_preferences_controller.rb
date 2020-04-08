@@ -21,6 +21,8 @@ class UserEmailPreferencesController < ApplicationController
     @current_grades_en = current_district_grades.select { |el| el[:language] == 'en' }
     @current_grades_es = current_district_grades.select { |el| el[:language] == 'es' }
     @available_grades = available_grades
+    @available_grades_spanish = available_grades_spanish
+    @grades_hashes = create_grades
     @mss_subscriptions = current_user
       .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified])
       .extend(SchoolAssociationPreloading).preload_associated_schools!
@@ -32,6 +34,7 @@ class UserEmailPreferencesController < ApplicationController
       .extend(SchoolAssociationPreloading).preload_associated_schools!
     set_tracking_info
   end
+
 
   def update
     # require 'pry'; binding.pry;
