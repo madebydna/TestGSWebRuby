@@ -74,22 +74,6 @@ module UrlHelper
     return hash
   end
 
-  def hub_params
-    if @school.present?
-      {
-          state: gs_legacy_url_encode(@school.state_name),
-          city: gs_legacy_url_encode(@school.hub_city)
-      }
-    elsif cookies[:ishubUser] == 'y' && cookies[:hubState].present? && cookies[:hubCity].present?
-      {
-          state: gs_legacy_url_encode(States.state_name cookies[:hubState]),
-          city: gs_legacy_url_encode(cookies[:hubCity])
-      }
-    else
-      {}
-    end
-  end
-
   def city_params(state, city)
     {
         state: gs_legacy_url_encode(States.state_name state),

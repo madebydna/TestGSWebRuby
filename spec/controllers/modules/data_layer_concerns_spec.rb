@@ -9,7 +9,6 @@ describe DataLayerConcerns do
   end
   after(:each) do
     clean_models User
-    clean_models HubCityMapping
     clean_models EspMembership
   end
   before(:all) do
@@ -65,48 +64,6 @@ describe DataLayerConcerns do
 
       it 'should not add User ID to gon' do
         expect(subject['User ID']).to be_nil
-      end
-    end
-  end
-
-  describe '#add_collection_id_to_gtm_data_layer' do
-    let(:hub) { HubCityMapping.create(collection_id: 1, state: 'KM') }
-    subject { controller.gon.data_layer_hash }
-
-    context 'with a hub set' do
-      before do
-        controller.instance_variable_set(:@hub, hub)
-        controller.send(:add_collection_id_to_gtm_data_layer)
-      end
-
-      it 'should add collection_ids to gon' do
-        expect(subject['collection_ids']).to eq(hub.collection_id)
-      end
-    end
-
-    context 'without a hub set' do
-      before do
-        controller.instance_variable_set(:@hub, nil)
-        controller.send(:add_collection_id_to_gtm_data_layer)
-      end
-
-      it 'should not add collection_ids to gon' do
-        expect(subject['collection_ids']).to be_nil
-      end
-    end
-
-    context 'with a school set' do
-      it 'should call collection_ids on school' do
-        school = FactoryBot.build(:school)
-        controller.instance_variable_set(:@school, school)
-        expect(school).to receive(:collection_ids)
-        controller.send(:add_collection_id_to_gtm_data_layer)
-      end
-      it 'should set collection_ids to the data layer hash' do
-        school = FactoryBot.build(:school)
-        controller.instance_variable_set(:@school, school)
-        controller.send(:add_collection_id_to_gtm_data_layer)
-        expect(subject['collection_ids']).to be_an_instance_of Array
       end
     end
   end

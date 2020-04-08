@@ -134,36 +134,6 @@ class SchoolRecord < ActiveRecord::Base
     CensusDataSchoolValue.on_db(state.downcase.to_sym).where(school_id: id)
   end
 
-  # TODO Do we need these collections methods?
-  # !-----------------------------------
-  # def collections
-  #   @collections ||= (
-  #     Collection.for_school(state, id)
-  #   )
-  # end
-
-  # def collection_ids
-  #   @_collection_ids ||= (
-  #     collections.map(&:id)
-  #   )
-  # end
-
-  # # Returns first collection or nil if none
-  # def collection
-  #   collections.first
-  # end
-  # !-----------------------------------
-
-  # TODO are we still using HubCityMapping
-  # def hub_city
-  #   if collection
-  #     hub = HubCityMapping.find_by(collection_id: collection.id)
-  #     hub.city
-  #   else
-  #     city
-  #   end
-  # end
-
   # TODO need to verify
   # def self.preload_school_metadata!(schools)
   #   return unless schools.present?

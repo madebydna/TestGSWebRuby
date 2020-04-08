@@ -4,14 +4,11 @@ class StatesController < ApplicationController
   include SearchHelper
   include SchoolHelper
   include StatesMetaTagsConcerns
-  # include HubConcerns
   include CommunityTabConcerns
   include PopularCitiesConcerns
   include CommunityConcerns
 
   before_action :set_city_state
-  # before_action :set_hub
-  # before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
   layout 'application'
 

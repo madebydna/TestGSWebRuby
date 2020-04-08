@@ -32,14 +32,6 @@ module DataLayerConcerns
     end
   end
 
-  def add_collection_id_to_gtm_data_layer
-    if @school
-      data_layer_gon_hash[COLLECTION_ID] = @school.collection_ids
-    elsif @hub
-      data_layer_gon_hash[COLLECTION_ID] = @hub.collection_id
-    end
-  end
-
   def add_language_to_gtm_data_layer
      data_layer_gon_hash['language'] = I18n.locale
   end

@@ -6,7 +6,6 @@ describe DistrictsController, type: :controller do
   before { skip }
   describe '#ad_setTargeting_through_gon' do
     before do
-      FactoryBot.create(:hub_city_mapping)
       FactoryBot.create(:district)
       # Currently there a (presumably unused) route in the routes file that will match, and always cause
       # the canonical redirect code to execute. Prevent that
@@ -17,7 +16,7 @@ describe DistrictsController, type: :controller do
       controller.gon.get_variable('ad_set_targeting')
     end
     after do
-      clean_models HubCityMapping, City, District
+      clean_models City, District
     end
 
     with_shared_context('when ads are enabled') do

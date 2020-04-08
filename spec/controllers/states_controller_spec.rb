@@ -5,7 +5,6 @@ require 'controllers/examples/ad_shared_examples'
 describe StatesController do
   before(:each) do
     stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {})
-    FactoryBot.create(:hub_city_mapping, city: nil, state: 'IN')
   end
 
   after(:each) { clean_dbs :gs_schooldb }

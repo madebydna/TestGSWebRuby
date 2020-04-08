@@ -193,7 +193,7 @@ class SigninController < ApplicationController
   protected
 
   # rather than invoke different controller actions for login / join, determine intent by presence of certain params
-  def joining? 
+  def joining?
     is_registration = params[:password].nil? && params[:confirm_password].nil?
 
     return is_registration
@@ -222,14 +222,9 @@ class SigninController < ApplicationController
       email: params[:email]
     })
 
-    hub_city_cookie = read_cookie_value(:hubCity)
-    hub_state_cookie = read_cookie_value(:hubState)
     if session[:state_locale].present?
       state_locale = session[:state_locale]
       city_locale  =  session[:city_locale]
-    elsif !session[:state_locale].present? && hub_state_cookie.present?
-      state_locale = hub_state_cookie
-      city_locale = hub_city_cookie
     end
     if user && error.nil?
       if user.user_profile.present?
@@ -287,6 +282,6 @@ class SigninController < ApplicationController
 
   def set_verify_email_google_event(user)
     event_label = user.provisional_or_approved_osp_user? ? 'osp' : 'regular'
-    insert_into_ga_event_cookie('registration', 'verified email', event_label, nil, true) 
+    insert_into_ga_event_cookie('registration', 'verified email', event_label, nil, true)
   end
 end

@@ -13,7 +13,6 @@ FactoryBot.define do
       name 'Alameda High School'
       city 'Alameda'
       state 'CA'
-      collections { FactoryBot.build_list :collection, 1 }
       created { Time.now.to_s }
       lat 37.801239
       lon -122.258301
@@ -168,16 +167,6 @@ FactoryBot.define do
         end
       end
 
-      trait :with_hub_city_mapping do
-        transient do
-          collection_id 1
-        end
-
-        after(:create) do |school, evaluator|
-          FactoryBot.create_list(:hub_city_mapping,1,collection_id: evaluator.collection_id,city: 'san francisco', state:'ca')
-        end
-      end
-
       trait :with_district do
         transient do
           district_name ''
@@ -188,38 +177,6 @@ FactoryBot.define do
             name: evaluator.district_name
           )
           school.district_id = district.id
-        end
-      end
-
-      trait :with_collection do
-        after(:create) do |school, evaluator|
-          FactoryBot.create(
-            :school_metadata,
-            school_id: school.id,
-            meta_key: 'collection_id',
-            meta_value: evaluator.collection_id
-          )
-        end
-
-        after(:build) do |school, evaluator|
-          collection = evaluator.collection ||  FactoryBot.build(
-                                                  :collection,
-                                                  city: school.city,
-                                                  state: school.state
-                                                )
-          school.instance_variable_set(
-            :@collections,
-            [collection]
-          )
-        end
-
-        after(:stub) do |school, evaluator|
-          collection = evaluator.collection ||  FactoryBot.build_stubbed(
-                                                  :collection,
-                                                  city: school.city,
-                                                  state: school.state
-                                                )
-          school.stub(:collections) { [collection] }
         end
       end
 

@@ -16,14 +16,13 @@ class School < ActiveRecord::Base
     charter: 'charter'
   }
 
-  METADATA_COLLECTION_ID_KEY = "collection_id"
   include ActionView::Helpers
   self.table_name='school'
   include StateSharding
 
   attr_accessor :assigned
-  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active, :new_profile_school
-  attr_writer :collections
+  attr_accessible :name, :state, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active, :new_profile_school
+
   has_many :school_metadatas
 
   scope :held, -> { joins("INNER JOIN #{School.gs_schooldb_name}.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
@@ -68,18 +67,18 @@ class School < ActiveRecord::Base
     associates = associates.select { |o| o.state.present? && o.school_id.present? }
 
     # need a map so we can effeciently maintain order
-    associate_state_school_ids_hash = 
+    associate_state_school_ids_hash =
       associates.each_with_object({}) do |obj, hash|
         hash[[obj.state.downcase, obj.school_id.to_i]] = nil
       end
 
-    state_to_id_map = 
+    state_to_id_map =
       associates
         .each_with_object({}) do |obj, hash|
           hash[obj.state] ||= []
           hash[obj.state] << obj.school_id
       end
-    schools = 
+    schools =
       state_to_id_map.flat_map do |(state, ids)|
         if block_given?
           yield(find_by_state_and_ids(state, ids)).to_a
@@ -114,32 +113,6 @@ class School < ActiveRecord::Base
 
   def census_data_school_values
     CensusDataSchoolValue.on_db(state.downcase.to_sym).where(school_id: id)
-  end
-
-  def collections
-    @collections ||= (
-      Collection.for_school(state, id)
-    )
-  end
-
-  def collection_ids
-    @_collection_ids ||= (
-      collections.map(&:id)
-    )
-  end
-
-  # Returns first collection or nil if none
-  def collection
-    collections.first
-  end
-
-  def hub_city
-    if collection
-      hub = HubCityMapping.find_by(collection_id: collection.id)
-      hub.city
-    else
-      city
-    end
   end
 
   def self.preload_school_metadata!(schools)
@@ -211,7 +184,6 @@ class School < ActiveRecord::Base
   def includes_public?
     ['public'].include?(type.downcase)
   end
-
 
   def preschool?
     level_code == 'p'
@@ -285,14 +257,6 @@ class School < ActiveRecord::Base
     School.on_db(shard).joins("inner join #{prefix}.nearby on school.id = nearby.neighbor and nearby.school = #{id}")
   end
 
-  def self.for_collection(collection_id)
-    gs_schooldb = 'gs_schooldb'
-    gs_schooldb << '_test' if Rails.env.test?
-    joins("INNER JOIN #{gs_schooldb}.school_collections sc ON school_id = school.id
-           and sc.state = school.state")
-      .where('collection_id = ?', collection_id)
-  end
-
   def self.for_states_and_ids(states, ids)
     raise ArgumentError, 'States and school IDs provided must be provided' unless states.present? && ids.present?
     raise ArgumentError, 'Number of states and school IDs provided must be equal' unless states.size == ids.size
@@ -363,13 +327,6 @@ class School < ActiveRecord::Base
     end
   end
 
-  # TODO: appears unused
-  def self.for_collection_ordered_by_name(state,collection_id)
-    raise ArgumentError, 'state and collection_id provided must be provided' unless state.present? && collection_id.present?
-    collection = Collection.find(collection_id)
-    collection.schools
-  end
-
   def facebook_url
     cache_results.values_for(EspKeys::FACEBOOK_URL).first || metadata.facebook_url
   end
@@ -393,7 +350,7 @@ class School < ActiveRecord::Base
   end
 
   def claimed?
-    @_claimed ||= 
+    @_claimed ||=
       EspMembership.where(
           active: 1,
           state: state,

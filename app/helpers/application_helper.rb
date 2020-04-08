@@ -5,13 +5,6 @@ module ApplicationHelper
   include GsI18n
   include HandlebarsHelper
 
-  # Hack: Remove /assets/ prefix since it is set that way in hub_config
-  # And needs to remain until hubs are off of Java
-  def image_tag(path, *args, &blk)
-    path = path.gsub('/assets/', '') if path.match(/hubs/i)
-    super(path, *args, &blk)
-  end
-
   def webpack_image_path(name, **options)
     asset_path(WebpackAssets.lookup_image(name), **options)
   end
@@ -93,10 +86,6 @@ module ApplicationHelper
 
   def div_tag(*args, &block)
     content_tag_with_sizing :div, *args, &block
-  end
-
-  def topnav(school, hub = nil)
-    TopNav.new(school, cookies, hub)
   end
 
   def db_t(key, *args)

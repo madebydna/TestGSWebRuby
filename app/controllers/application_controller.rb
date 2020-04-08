@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   include SessionConcerns
   include UrlHelper
   include OmnitureConcerns
-  include HubConcerns
   include AdvertisingConcerns
   include DataLayerConcerns
   include JavascriptI18nConcerns
