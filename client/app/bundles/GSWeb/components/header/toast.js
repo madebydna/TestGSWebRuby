@@ -31,9 +31,9 @@ const init = () => {
     // target only the toast on profile page due to weird z-indexing from other modules
     if(gon && gon.ad_set_targeting && gon.ad_set_targeting.page_name === "GS:SchoolP"){
       const toastBody = toast.querySelector('.toast-body');
-      if (window.innerWidth > 991 && window.innerWidth < 1200) {
+      if (window.innerWidth > 991 && window.innerWidth < 1100) {
         toastBody.style.maxWidth = '400px';
-      } else if (window.innerWidth >= 1200) {
+      } else if (window.innerWidth >= 1100) {
         toastBody.style.maxWidth = '575px';
       }
     }
