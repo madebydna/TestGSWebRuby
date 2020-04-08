@@ -5,10 +5,10 @@ import iconClose from 'icons/times-solid.svg';
 
 export const t = translateWithDictionary({
   en:{
-    coronavirus_html: String.raw`<div class='opensans-semibold'>We’re here for you. <a class= 'toast-anchorlink' href='/gk/coronavirus-school-closure-support/'>Find our latest COVID-19 school closure resources here.</a><img src='${iconClose}' class='toast-cancel'/></div>`
+    coronavirus_html: String.raw`<div class='toast-body opensans-semibold'>We’re here for you. <a class= 'toast-anchorlink' href='/gk/coronavirus-school-closure-support/'>Find our latest COVID-19 school closure resources here.</a><img src='${iconClose}' class='toast-cancel'/></div>`
   },
   es: {
-    coronavirus_html: String.raw`<div class='opensans-semibold'> Estamos aqui para ti. <a class='toast-anchorlink' href='/gk/coronavirus-school-closure-support/?lang=es'> Aquí encontrarás nuestros últimos recursos para el cierre de escuelas por COVID-19. </a><img src='${iconClose}' class='toast-cancel'/></div>`
+    coronavirus_html: String.raw`<div class='toast-body opensans-semibold'> Estamos aqui para ti. <a class='toast-anchorlink' href='/gk/coronavirus-school-closure-support/?lang=es'> Aquí encontrarás nuestros últimos recursos para el cierre de escuelas por COVID-19. </a><img src='${iconClose}' class='toast-cancel'/></div>`
   }
 })
 
@@ -26,7 +26,17 @@ const init = () => {
     const toast = document.createElement('div');
     toast.classList.add('toast')
     toast.style.top = `${height || '65'}px`;
-    toast.innerHTML = t('coronavirus_html')
+    toast.innerHTML = t('coronavirus_html');
+
+    // target only the toast on profile page due to weird z-indexing from other modules
+    if(gon && gon.ad_set_targeting && gon.ad_set_targeting.page_name === "GS:SchoolP"){
+      const toastBody = toast.querySelector('.toast-body');
+      if (window.innerWidth > 991 && window.innerWidth < 1200) {
+        toastBody.style.maxWidth = '400px';
+      } else if (window.innerWidth >= 1200) {
+        toastBody.style.maxWidth = '575px';
+      }
+    }
     body.append(toast);
     activateListeners();
   }
