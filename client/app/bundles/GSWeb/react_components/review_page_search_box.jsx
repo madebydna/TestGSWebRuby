@@ -113,7 +113,7 @@ class ReviewPageSearchBox extends SearchBox {
         {this.displayDoNotSeeSchoolLink()}
         <div className="search-bar-osp js-autocompleteFieldContainer ma picker-border">
           <div className="full-width">
-          {this.searchBoxElement(false)}
+            {this.searchBoxElement(false)}
           </div>
         </div>
       </React.Fragment>

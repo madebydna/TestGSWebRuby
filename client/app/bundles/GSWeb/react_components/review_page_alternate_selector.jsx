@@ -79,8 +79,9 @@ export default class ReviewPageAlternateSelector extends React.Component  {
       height: '1em'
     };
 
-    let paddingBottom = {
-      paddingBottom: '1em'
+    let selectStyles = {
+      paddingBottom: '1em',
+      textAlign: 'center'
     };
 
     let stateOptionList = Object.keys(statesToDisplay()).sort().map(state =>
@@ -99,21 +100,21 @@ export default class ReviewPageAlternateSelector extends React.Component  {
       <div className="review-alternate-school-picker">
         <div className="subtitle-sm tac" style={subtitleHeight}></div>
         <div className="form-control ma" style={maxWidth}>
-          <div style={paddingBottom}>
+          <div style={selectStyles}>
             <select value={this.state.stateValue} onChange={this.handleStateSelect} className="notranslate form-control mtm">
               <option value="">Select state</option>
               {stateOptionList}
             </select>
           </div>
           {this.state.stateValue &&
-            <div style={paddingBottom}>
+            <div style={selectStyles}>
               <select className="form-control notranslate" value={this.state.cityValue} onChange={this.handleCitySelect} >
                 <option value=''>Select City</option>
                 {cityOptionList}
               </select>
             </div>}
           {(this.state.stateValue && this.state.cityValue) &&
-            <div style={paddingBottom}>
+            <div style={selectStyles}>
               <select className="form-control notranslate" onChange={this.handleSchoolSelect} >
                 <option value=''>Select School</option>
                 {schoolOptionList}
