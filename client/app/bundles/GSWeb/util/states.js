@@ -1,5 +1,5 @@
 // TODO: Import lodash functions
-import { invert, values, isString, keys } from 'lodash';
+import { invert, values, isString, keys, clone } from 'lodash';
 import { titleize } from 'util/i18n';
 
 const statesHash = {
@@ -57,6 +57,12 @@ const statesHash = {
   wyoming: 'wy'
 };
 
+const statesToDisplay = () => {
+  const duplicateHash = clone(statesHash);
+  delete duplicateHash['district of columbia'];
+  return duplicateHash;
+};
+
 const abbreviationHash = invert(statesHash);
 
 const stateAbbreviations = values(statesHash);
@@ -107,7 +113,7 @@ const titleizedName = str => {
     return;
   }
   return titleize(name(str)).replace(/dc$/i, s => s.toUpperCase());
-}
+};
 
 
-export { anyStateNameRegex, anyStateNamePartialRegex, isStateName, abbreviation, name, titleizedName, stateAbbreviations };
+export { anyStateNameRegex, anyStateNamePartialRegex, isStateName, abbreviation, name, titleizedName, stateAbbreviations, statesToDisplay };

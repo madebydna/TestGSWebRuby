@@ -1,5 +1,5 @@
 import React from 'react';
-import { stateAbbreviations } from '../util/states';
+import { titleizedName, statesToDisplay } from '../util/states';
 import PropTypes from "prop-types";
 
 export default class ReviewPageAlternateSelector extends React.Component  {
@@ -76,15 +76,15 @@ export default class ReviewPageAlternateSelector extends React.Component  {
     };
 
     let subtitleHeight = {
-      height: '35px'
+      height: '1em'
     };
 
     let paddingBottom = {
-      paddingBottom: '20px'
+      paddingBottom: '1em'
     };
 
-    let stateOptionList = stateAbbreviations.map((state) =>
-        <option value={state}>{state.toUpperCase()}</option>
+    let stateOptionList = Object.keys(statesToDisplay()).sort().map(state =>
+      <option value={statesToDisplay()[state]}>{titleizedName(state)}</option>
     );
 
     let cityOptionList = this.state.cityOptions.map((city) =>
@@ -96,11 +96,11 @@ export default class ReviewPageAlternateSelector extends React.Component  {
     );
 
     return (
-      <React.Fragment>
+      <div className="review-alternate-school-picker">
         <div className="subtitle-sm tac" style={subtitleHeight}></div>
         <div className="form-control ma" style={maxWidth}>
           <div style={paddingBottom}>
-            <select value={this.state.stateValue} onChange={this.handleStateSelect} className="notranslate form-control mtm ">
+            <select value={this.state.stateValue} onChange={this.handleStateSelect} className="notranslate form-control mtm">
               <option value="">Select state</option>
               {stateOptionList}
             </select>
@@ -120,7 +120,7 @@ export default class ReviewPageAlternateSelector extends React.Component  {
               </select>
             </div>}
         </div>
-      </React.Fragment>
+      </div>
     )
   };
 }
