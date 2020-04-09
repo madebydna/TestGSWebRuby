@@ -193,7 +193,7 @@ module CommunityConcerns
   end
 
   def district_enrollment_cache(district_id)
-    dc = DistrictCache.where(name: 'district_characteristics', district_id: district_id, state: state)
+    dc = DistrictCache.where(name: 'metrics', district_id: district_id, state: state)
     dc_hash = JSON.parse(dc.first.value) if dc.present? && dc.first
     all_students_no_grade = dc_hash['Enrollment'].find { |h| !h.has_key? 'grade' } if dc_hash && dc_hash['Enrollment']
     all_students_no_grade['district_value'].to_i if all_students_no_grade

@@ -59,6 +59,10 @@ module CommunityProfiles
         ['All subjects', 'Not Applicable', 'Composite Subject'].include?(subject)
       end
 
+      def all_subjects_and_students?
+        all_subjects? && all_students?
+      end
+
       (2000..2022).to_a.each do |year|
         attr_accessor "district_value_#{year}"
         attr_accessor "state_average_#{year}"
@@ -163,7 +167,8 @@ module CommunityProfiles
         hashes = metrics_data # characteristics_data
         hashes.merge!(gsdata_data) if entity_type == 'district'
         return [] if hashes.blank?
-        handle_ACT_SAT_to_display!(hashes)
+        ActSatHandler.new(hashes, "#{entity_type}_value").handle_ACT_SAT_to_display!
+        # handle_ACT_SAT_to_display!(hashes)
         hashes = hashes.map do |key, array|
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
             # This is for characteristics

@@ -13,7 +13,7 @@ module StateCachedMetricsMethods
   end
 
   def with_state_value
-    ->(hash) { hash['state_value']  if hash}
+    ->(hash) { hash['state_value'] if hash}
   end
 
 end

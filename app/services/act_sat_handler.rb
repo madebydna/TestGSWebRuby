@@ -8,8 +8,9 @@ class ActSatHandler
   SAT_ONLY = [SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY]
   ACT_SAT_COMBINED_PARTICIPATION = [ACT_SAT_PARTICIPATION, ACT_SAT_PARTICIPATION_9_12]
 
-  def initialize(hash)
+  def initialize(hash, value_type = "school_value")
     @hash = hash
+    @value_type = value_type
   end
 
   def handle_ACT_SAT_to_display!
@@ -46,13 +47,13 @@ class ActSatHandler
     #records = select_by_data_types(*data_types, &:all_students?)
     max_year ||= get_max_year(records)
     older_records = records.select {|v| v.year < max_year}
-    set_school_value_to_nil(older_records)
+    set_value_to_nil(older_records)
   end
 
   # remove school value for all students for selected data types
   def remove_by_data_types!(*data_types)
     records = select_by_data_types(*data_types, &:all_students?)
-    set_school_value_to_nil(records)
+    set_value_to_nil(records)
   end
 
   def get_max_year(records)
@@ -65,9 +66,9 @@ class ActSatHandler
     hash.slice(*data_types).values.flatten.select {|item| block.call(item) }.flatten
   end
 
-  def set_school_value_to_nil(array)
+  def set_value_to_nil(array)
     array.each do |h|
-      h.school_value = nil
+      h.send("#{@value_type}=".to_sym, nil)
     end
   end
 end

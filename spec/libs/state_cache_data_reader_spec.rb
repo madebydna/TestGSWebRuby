@@ -41,14 +41,14 @@ describe 'StateCacheDataReader' do
       end
     end
 
-    describe '#characteristics_data' do
+    describe '#metrics_data' do
       let(:reader) { new_reader(state) }
-      subject { reader.characteristics_data(:foo, :bar) }
+      subject { reader.metrics_data(:foo, :bar) }
       context 'with missing sources' do
         before do
           allow(reader).to receive(:decorated_state).and_return(
             OpenStruct.new(
-              state_characteristics: {
+              metrics: {
                 foo: [
                   {
                     'source' => 'abc',
