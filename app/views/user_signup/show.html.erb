@@ -1,0 +1,63 @@
+<div class="heading">
+  Get our best articles, worksheets, and more delivered weekly to your inbox.
+</div>
+<div class="subheading"></div>
+<div class="body">
+
+  <form id="signup-school-form" action="/gsr/session/register_email/" accept-charset="UTF-8" method="post">
+    <input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="0+DRrJ7SdffFw2Optw59HpdPGqIGN98O8vBYe877HnImE0APzW30Fsf8AspLc7ZPCTkPSZ4wNmnu9XvtbdI48A==">
+    <input type="hidden" name="authenticity_token" value="ycdP6Tm2rDg4sVwLDiIoSBk/OfeFC1ZbdZ7ryRTFVSM8NN5Kagkt2TqOPWjyX+MZh0ksHB0Mvzxpm8hft+xzoQ==">
+    <fieldset>
+      <input type="email" name="email" id="join-email" placeholder="Email address" class="js-join-email js-validating-input" data-parsley-required="true" data-parsley-type="email" data-parsley-trigger="change" data-parsley-required-message="Please enter an email address." data-parsley-error-container=".js-join-email-errors" data-async-validations="emailRequired,emailFormat">
+      <div class="js-join-email-errors"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Choose your child's grade to receive related emails:</legend>
+      <input type="hidden" name="grades">
+      <span class="multi-select-button-group">
+    <button data-value="PK" type="button">preK</button><!-- spaces are rendered between
+    --><button data-value="KG" type="button">K</button><!-- inline elements. Comments allow
+    --><button data-value="1" type="button">1st</button><!-- nice source code formatting
+    --><button data-value="2" type="button">2nd</button><!-- w/o spaces between these buttons
+    --><button data-value="3" type="button">3rd</button>
+  </span><span class="multi-select-button-group">
+    <button data-value="4" type="button">4th</button><!--
+    --><button data-value="5" type="button">5th</button><!--
+    --><button data-value="6" type="button">6th</button><!--
+    --><button data-value="7" type="button">7th</button><!--
+    --><button data-value="8" type="button">8th</button>
+  </span><span class="multi-select-button-group">
+    <button data-value="9" type="button">9th</button><!--
+    --><button data-value="10" type="button">10th</button><!--
+    --><button data-value="11" type="button">11th</button><!--
+    --><button data-value="12" type="button">12th</button>
+  </span>
+    </fieldset>
+
+    <fieldset>
+      <legend>Are you an educator?</legend>
+      <div class="checkbox-and-label">
+        <input type="checkbox" name="teacher_list" id="teacher_list" value="true" class="checkbox">
+        <label>Sign up for resources and insights for teachers and school leaders.</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Other newsletters we recommend</legend>
+      <div class="checkbox-and-label">
+        <input type="checkbox" name="sponsors_list" id="sponsors_list" value="true" class="checkbox" checked="checked">
+        <label>Partner offers &amp; updates (from our carefully chosen community partners)</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <button type="submit" class="submit js-join-login-submit-button">Sign up</button>
+      <p class="tou">
+        By signing up, I agree to the <a href="https://www.greatschools.org/gk/terms/">GreatSchools Terms of Use</a> and
+        <a href="https://www.greatschools.org/gk/privacy/">Privacy Policy</a>.
+      </p>
+    </fieldset>
+
+  </form>
+</div>
