@@ -13,7 +13,7 @@ describe DistrictCacher do
     end
 
     {
-        district_characteristics: [DistrictCharacteristicsCacher],
+        metrics: [DistrictMetricsCacher],
         census: [DistrictCharacteristicsCacher],
         directory: [DistrictDirectoryCacher],
     }.each do |data_type, expected_cacher_list|

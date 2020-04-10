@@ -225,10 +225,6 @@ module SchoolProfiles
         .for_all_students
     end
 
-    def graduation_rate_data
-      decorated_school.metrics['4-year high school graduation rate']
-    end
-
     def metrics
       decorated_school.metrics
     end
