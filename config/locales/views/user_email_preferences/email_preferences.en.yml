@@ -19,6 +19,7 @@ en:
       subheading_pt_1: Welcome!
       subheading_pt_2: Help us send you the right newsletter by updating your subscriptions below. To manage your Spanish newsletter subscriptions, click the link "Boletines en español."
       submit_label: Save changes
+
       keep_following_same_grade: 'No, I want to keep following the same grade next year.'
       terms_of_use_html: By signing up, I agree to the %{terms_of_use_link}
       privacy_policy: Privacy Policy.
@@ -30,7 +31,7 @@ en:
         greatnews_subtitle: A weekly roundup of our best articles, videos, and more.
         greatkidsnews_title: Grade by Grade
         greatkidsnews_subtitle: Essentials to help your child throughout the school year.
-        grades_label: Select your children’s grades below.
+        select_grades: Select your children’s grades below.
         school_updates: School Updates
         teacher_list_title: GreatEducators
         teacher_list_subtitle: Resources and insights designed for teachers and school leaders.
@@ -42,7 +43,7 @@ en:
         greatnews_subtitle: Un resumen semanal de nuestros mejores artículos, vídeos y más. (Sólo disponible en inglés)
         greatkidsnews_title: Grado por grado
         greatkidsnews_subtitle: Recursos esenciales para ayudar a tu hijo durante todo el año escolar.
-        grades_label: Selecciona los grados de tu hijo a continuación.
+        select_grades: Selecciona los grados de tu hijo a continuación.
         school_updates: Actualizaciones de tu escuela
         teacher_list_title: GreatEducators
         teacher_list_subtitle: Resources and insights designed for teachers and school leaders.

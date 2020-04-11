@@ -23,65 +23,13 @@
     </div>
   </div>
 
-  <% if @current_grades.any? { |el| el[:district_id].present? } %>
-    <% districts = @current_grades_en.group_by { |h| h[:district_state_and_id] }.except("-") %>
-    <% districts.each do |district, record| %>
-      <% checked_grades = record.map { |el| el[:grade] } %>
-      <div class="mtm">
-        <div class="fl prm mtm">
-          <%# TODO: Fix JS for this checkbox classlogic below: "%= greatkidsnews ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box'" %>
-          <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon i-16-blue-check-box active"
-               data-toggle="button" readonly="">
-            <input name="subscriptions_en[]"
-                   disabled="true"
-                   type="hidden"
-                   value="greatkidsnews">
-          </div>
-        </div>
-        <div style="overflow:hidden">
-          <div class="strong subtitle-md"><%= t(path_to_yml + 'greatkidsnews_title') %>
-            : <%= record.first[:district_name] %></div>
-          <p><%= t(path_to_yml + 'greatkidsnews_subtitle') %></p>
-          <div class="ma">
-            <p><%= t(path_to_yml + 'grades_label') %></p>
-            <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
-              <div>
-                <% grade_group.compact.each do |grade, label| %>
-                  <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton js-gradeCheckbox <%= 'active' if checked_grades.include?(grade) %>"
-                       style="min-width:30px"
-                       data-checkbox-button-key="grade[]"
-                       data-checkbox-button-value="<%= grade %>"
-                       data-toggle="button"
-                       data-district-state="<%= record.first[:district_state] %>"
-                       data-district-id="<%= record.first[:district_id] %>"
-                       data-language="en"
-                  >
 
-                  </div>
-                <% end %>
-              </div>
-              <div class="clearfix"></div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  <% else %>
-    <div class="mtm">
-      <div class="fl prm mtm">
-        <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-             data-toggle="button" readonly="">
-          <input name="subscriptions_en[]"
-                 disabled="true"
-                 type="hidden"
-                 value="greatkidsnews">
-        </div>
-      </div>
-      <%= render :partial => 'grades_display', :locals => {:content => @overall_en} %>
-      <%= render 'grades_display' %>
-    </div>
+
+  <%= render :partial => 'grades_display', :locals => {newsletter_grades: @grades_hashes[:en][:overall]} %>
+
+  <% @grades_hashes[:en][:districts].each do |k, v| %>
+    <%= render :partial => 'grades_display', :locals => {newsletter_grades: v} %>
   <% end %>
-
 
 
   <div class="mtm">
