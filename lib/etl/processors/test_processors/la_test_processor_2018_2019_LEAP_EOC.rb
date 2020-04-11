@@ -105,27 +105,20 @@ class LATestProcessor2019LEAPEOC < GS::ETL::TestProcessor
     .transform("Adding column breakdown_id from breadown", HashLookup, :breakdown, map_bd, to: :breakdown_id)
     .transform("Adding column subject_id from subject", HashLookup, :subject, map_sub, to: :subject_id)
     .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, map_prof, to: :proficiency_band_id)
-      .transform("Rename columns", MultiFieldRenamer,
-      {
-      district_state_id: :district_id,
-      schoolsystemname: :district_name,
-      school_state_id: :school_id,
-      schoolname: :school_name
-      })
-      .transform("state id", WithBlock) do |row|
-	     if row[:entity_type] == 'district'
-                row [:state_id] = "%03s" % (row[:district_id])
-       elsif row[:entity_type] == 'school' 
-	        if (row[:school_id].length) == 6
-		      row[:state_id] = row[:school_id]
-	        elsif (row[:school_id].length) == 3	     
-		      row [:state_id] = "%03s%03s" % [row[:district_id], row[:school_id]]
-		      end
-	     elsif row[:entity_type] == 'state'
-	        row[:state_id] = 'state'
-	     end
-	     row
-      end
+      # .transform("state id", WithBlock) do |row|
+	     # if row[:entity_type] == 'district'
+      #           row [:state_id] = "%03s" % (row[:district_id])
+      #  elsif row[:entity_type] == 'school' 
+	     #    if (row[:school_id].length) == 6
+		    #   row[:state_id] = row[:school_id]
+	     #    elsif (row[:school_id].length) == 3	     
+		    #   row [:state_id] = "%03s%03s" % [row[:district_id], row[:school_id]]
+		    #   end
+	     # elsif row[:entity_type] == 'state'
+	     #    row[:state_id] = 'state'
+	     # end
+	     # row
+      # end
   end
 
   def config_hash
