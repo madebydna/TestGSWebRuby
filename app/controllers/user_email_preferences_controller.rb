@@ -19,7 +19,9 @@ class UserEmailPreferencesController < ApplicationController
     account_meta_tags('My email preferences')
     # @available_grades = available_grades
     # @available_grades_spanish = available_grades_spanish
-    @grades_hashes = create_grades
+
+    @grades_hashes = create_grades_new
+
     @mss_subscriptions = current_user
       .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified])
       .extend(SchoolAssociationPreloading).preload_associated_schools!
@@ -32,6 +34,60 @@ class UserEmailPreferencesController < ApplicationController
     set_tracking_info
   end
 
+  def create_grades_new
+    grades = @current_user.student_grade_levels
+    create_grade_structure(grades)
+  end
+
+  def create_grade_structure(grades)
+    districts = grades.map { |g| "#{g.district_state}#{g.district_id}" }.uniq.compact.select { |element| element&.size.to_i > 0 }
+    {
+        :en => {
+            :overall => create_overall_new(grades, 'en'),
+            :districts => districts.map { |district| create_district_new(district, grades, 'en') }
+        },
+        :es => {
+            :overall => create_overall_new(grades, 'es'),
+            :districts => districts.map { |district| create_district_new(district, grades, 'es') }
+        }
+    }
+  end
+
+  def grades_select(grades, language, district_id = nil, district_state = nil)
+    grades.select do |grade|
+      grade[:district_id]&.to_s == district_id and grade[:district_state] == district_state and grade[:language] == language
+    end.map { |g| g[:grade] }
+  end
+
+  def create_overall_new(grades, language)
+    grade_array = grades_select(grades, language)
+    title = language == 'es' ? 'Grado por grado' : 'Grade by Grade'
+    create_hash_new(grade_array, language, title)
+  end
+
+  def create_district_new(district, grades, language)
+    district_id = district[2, 6]
+    district_state = district[0..1]
+    district_name = DistrictRecord.find_by(state: district_state, district_id: district_id)&.name
+    title = language == 'es' ? "Grado por grado en #{district_name}" : "Grade by Grade at #{district_name}"
+    grade_array = grades_select(grades, language, district_id, district_state)
+    create_hash_new(grade_array, language, title, district_id, district_state)
+  end
+
+  def create_hash_new(grades, language, title, district_id = '', district_state = '')
+    path_to_yml = "user_email_preferences.email_preferences.en_news."
+    grades_labels = language == 'es' ? available_grades_spanish : available_grades
+    {
+        :active_grades => grades,
+        :district_state => district_state,
+        :district_id => district_id,
+        :language => language,
+        :title => title,
+        :subtitle => path_to_yml + "greatkidsnews_subtitle",
+        :label => path_to_yml + "select_grades",
+        :available_grades => grades_labels
+    }
+  end
 
   def update
     # require 'pry'; binding.pry;
@@ -98,7 +154,7 @@ class UserEmailPreferencesController < ApplicationController
 
     districts_en, districts_es = create_districts(district_grades_en, district_grades_es)
 
-    {
+    a = {
       :en => {
               :overall => create_hash(overall_en, 'en'),
               :districts => districts_en
