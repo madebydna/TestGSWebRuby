@@ -185,8 +185,26 @@ class SearchController < ApplicationController
       hash[PageAnalytics::SEARCH_TERM] = q if q
       hash[PageAnalytics::SEARCH_TYPE] = search_type
       hash[PageAnalytics::SEARCH_HAS_RESULTS] = page_of_results.any?
-      hash[PageAnalytics::PAGE_NAME] = (state_browse? ? 'GS:Search:State' : 'GS:SchoolSearchResults')
+      hash[PageAnalytics::PAGE_NAME] = page_name_analytics
       hash[PageAnalytics::STATE] = state if state_browse?
+    end
+  end
+
+  # For page analytics Page Name variable
+  # Order matters. Mirrors our MetaTagImplementation
+  def page_name_analytics
+    if district_browse?
+      'GS:SchoolSearchBrowse'
+    elsif city_browse? && city_record.present?
+      'GS:SchoolSearchBrowse'
+    elsif zip_code_search?
+      'GS:SchoolSearchResults'
+    elsif street_address?
+      'GS:SchoolSearchResults'
+    elsif state_browse?
+      'GS:Search:State'
+    else
+      'GS:SchoolSearchResults'
     end
   end
 
