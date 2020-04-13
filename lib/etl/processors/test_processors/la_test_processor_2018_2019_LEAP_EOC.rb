@@ -42,11 +42,10 @@ class LATestProcessor2019LEAPEOC < GS::ETL::TestProcessor
       'Total Population_NA' => 1,
 
       #2019 breakdowns
-      'Economically Disadvantaged' => 24,
+      'Not Economically Disadvantaged' => 24,
       'Economically Disadvantaged' => 23,
       'Regular Education' => 30,
       'Students with Disability' => 27,
-      'English Learner' => 33,
       'English Learner' => 32,
       'Asian' => 16,
       'American Indian or Alaska Native' => 18,
@@ -102,9 +101,9 @@ class LATestProcessor2019LEAPEOC < GS::ETL::TestProcessor
         end
         row
       end 
-    .transform("Adding column breakdown_id from breadown", HashLookup, :breakdown, map_bd, to: :breakdown_id)
-    .transform("Adding column subject_id from subject", HashLookup, :subject, map_sub, to: :subject_id)
-    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, map_prof, to: :proficiency_band_id)
+    .transform("Adding column breakdown_id from breadown", HashLookup, :breakdown, map_breakdown_id, to: :breakdown_id)
+    .transform("Adding column subject_id from subject", HashLookup, :subject, map_subject_id, to: :subject_id)
+    .transform("Adding column_id from proficiency band", HashLookup, :proficiency_band, map_prof_band_id, to: :proficiency_band_id)
       # .transform("state id", WithBlock) do |row|
 	     # if row[:entity_type] == 'district'
       #           row [:state_id] = "%03s" % (row[:district_id])
