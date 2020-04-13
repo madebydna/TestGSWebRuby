@@ -42,25 +42,27 @@ describe SchoolProfiles::CollegeReadiness do
         }
       end
 
-      it 'sets school value to nil for all students for ACT_SAT combined participation data types' do
-        expect { handler.handle_ACT_SAT_to_display! }.to change { handler.hash[act_sat_participation_dt].first.school_value }.from(123).to(nil)
+      it 'removes ACT_SAT combined participation data types' do
+        handler.handle_ACT_SAT_to_display!
+        expect(handler.hash).to_not include(act_sat_participation_dt)
       end
 
       it 'enforces latest year for ACT data type records' do
         hash[act_score_dt] << cv3
-
-        expect { handler.handle_ACT_SAT_to_display! }.to change { handler.hash[act_score_dt].last.school_value }.from(444).to(nil)
+        expect(handler.hash[act_score_dt]).to include(cv3)
+        handler.handle_ACT_SAT_to_display!
+        expect(hash[act_score_dt]).to_not include(cv3)
       end
 
       it "ignores records for other subjects" do
         cv4 = FactoryBot.build(:school_metrics_value,
                 subject: 'Mathematics',
                 school_value: 123,
-                year: 2018)
+                year: 2015)
 
         hash[act_score_dt] << cv4
-
-        expect { handler.handle_ACT_SAT_to_display! }.not_to change { handler.hash[act_score_dt].last.school_value }
+        handler.handle_ACT_SAT_to_display!
+        expect(hash[act_score_dt]).to include(cv4)
       end
 
       it "ignores records for other CRDC breakdowns" do
@@ -70,8 +72,8 @@ describe SchoolProfiles::CollegeReadiness do
           year: 2018)
 
         hash[act_score_dt] << cv4
-
-        expect { handler.handle_ACT_SAT_to_display! }.not_to change { handler.hash[act_score_dt].last.school_value }
+        handler.handle_ACT_SAT_to_display!
+        expect(hash[act_score_dt]).to include(cv4)
       end
     end
 
@@ -84,36 +86,38 @@ describe SchoolProfiles::CollegeReadiness do
         }
       end
 
-      it 'sets school value to nil for all students for ACT_SAT combined participation data types' do
-        expect { handler.handle_ACT_SAT_to_display! }.to change { handler.hash[act_sat_participation_dt].first.school_value }.from(123).to(nil)
+      it 'removes ACT_SAT combined participation data types' do
+        handler.handle_ACT_SAT_to_display!
+        expect(handler.hash).to_not include(act_sat_participation_dt)
       end
 
       it 'enforces latest year for ACT data type records' do
         hash[sat_participation_dt] << cv3
-
-        expect { handler.handle_ACT_SAT_to_display! }.to change { handler.hash[sat_participation_dt].last.school_value }.from(444).to(nil)
+        expect(handler.hash[sat_participation_dt]).to include(cv3)
+        handler.handle_ACT_SAT_to_display!
+        expect(handler.hash[sat_participation_dt]).to_not include(cv3)
       end
 
       it "ignores records for other subjects" do
         cv4 = FactoryBot.build(:school_metrics_value,
                 subject: 'Mathematics',
                 school_value: 123,
-                year: 2018)
+                year: 2015)
 
         hash[sat_participation_dt] << cv4
-
-        expect { handler.handle_ACT_SAT_to_display! }.not_to change { handler.hash[sat_participation_dt].last.school_value }
+        handler.handle_ACT_SAT_to_display!
+        expect(handler.hash[sat_participation_dt]).to include(cv4)
       end
 
       it "ignores records for other CRDC breakdowns" do
         cv4 = FactoryBot.build(:school_metrics_value,
           breakdown: 'Hispanic',
           school_value: 123,
-          year: 2018)
+          year: 2016)
 
         hash[sat_participation_dt] << cv4
-
-        expect { handler.handle_ACT_SAT_to_display! }.not_to change { handler.hash[sat_participation_dt].last.school_value }
+        handler.handle_ACT_SAT_to_display!
+        expect(handler.hash[sat_participation_dt]).to include(cv4)
       end
     end
 
@@ -135,27 +139,29 @@ describe SchoolProfiles::CollegeReadiness do
           end
 
           it 'does not modify ACT or SAT content' do
-            expect { handler.handle_ACT_SAT_to_display! }.not_to change { handler.hash[act_participation_dt].last.school_value }
-            expect { handler.handle_ACT_SAT_to_display! }.not_to change { handler.hash[sat_score_dt].last.school_value }
+            handler.handle_ACT_SAT_to_display!
+            expect(handler.hash).to include(act_participation_dt)
+            expect(handler.hash).to include(sat_score_dt)
           end
         end
 
-        context 'when ACT & SAT data is > 2 years apart' do
-          let(:cv4) do
-            FactoryBot.build(:school_metrics_value,
-              school_value: 555,
-              year: 2014)
-            end
+      context 'when ACT & SAT data is > 2 years apart' do
+        let(:cv4) do
+          FactoryBot.build(:school_metrics_value,
+            school_value: 555,
+            year: 2014)
+        end
 
-            it 'rejects SAT data if ACT data is fresher' do
-              expect { handler.handle_ACT_SAT_to_display! }.to change { handler.hash[sat_score_dt].first.school_value }.from(555).to(nil)
-            end
+        it 'rejects SAT data if ACT data is fresher' do
+          handler.handle_ACT_SAT_to_display!
+          expect(handler.hash).to_not include(sat_score_dt)
+        end
 
         it 'rejects ACT data if SAT data is fresher' do
           hash[act_participation_dt] = [cv4]
           hash[sat_score_dt] = [cv2]
-
-          expect { handler.handle_ACT_SAT_to_display! }.to change { handler.hash[act_participation_dt].first.school_value }.from(555).to(nil)
+          handler.handle_ACT_SAT_to_display!
+          expect(handler.hash).to_not include(act_participation_dt)
         end
       end
     end
@@ -171,9 +177,9 @@ describe SchoolProfiles::CollegeReadiness do
       end
 
       it 'retains only most recent ACT/SAT participation data' do
-        expect { handler.handle_ACT_SAT_to_display! }.to change { handler.hash[act_sat_912_participation_dt].last.school_value }.from(444).to(nil)
+        handler.handle_ACT_SAT_to_display!
+        expect(handler.hash[act_sat_912_participation_dt]).to be_empty
       end
-
     end
   end
 
@@ -198,10 +204,11 @@ describe SchoolProfiles::CollegeReadiness do
       }
     end
 
-    subject(:handler) { ActSatHandler.new(hash, "state_value") }
+    subject(:handler) { ActSatHandler.new(hash) }
 
-    it 'sets state value to nil for all students for ACT_SAT combined participation data types' do
-      expect { handler.handle_ACT_SAT_to_display! }.to change { handler.hash[act_sat_participation_dt].first.state_value }.from(123).to(nil)
+    it 'removes ACT_SAT combined participation data types' do
+      handler.handle_ACT_SAT_to_display!
+      expect(handler.hash).to_not include(act_sat_participation_dt)
     end
   end
 end

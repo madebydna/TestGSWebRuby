@@ -7,10 +7,6 @@ class DistrictCacheResults
     build_district_data_hash
   end
 
-  def district_data_hash
-    @district_data
-  end
-
   def data_hash
     @district_data
   end

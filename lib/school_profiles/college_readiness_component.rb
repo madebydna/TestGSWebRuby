@@ -138,14 +138,13 @@ module SchoolProfiles
                       CharacteristicsValue
                     end
             klass.from_hash(h.merge('data_type' => data_type))
-          end
-            .extend(CharacteristicsValue::CollectionMethods)
+          end.extend(CharacteristicsValue::CollectionMethods)
       end
     end
 
     def data_type_hashes
       @_data_type_hashes ||= begin
-        hashes = metrics_data # characteristics_data
+        hashes = metrics_data
         hashes.merge!(@school_cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata)))
         return [] if hashes.blank?
         ActSatHandler.new(hashes).handle_ACT_SAT_to_display!

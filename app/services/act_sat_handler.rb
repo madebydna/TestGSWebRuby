@@ -8,19 +8,16 @@ class ActSatHandler
   SAT_ONLY = [SAT_SCORE, SAT_PARTICIPATION, SAT_PERCENT_COLLEGE_READY]
   ACT_SAT_COMBINED_PARTICIPATION = [ACT_SAT_PARTICIPATION, ACT_SAT_PARTICIPATION_9_12]
 
-  def initialize(hash, value_type = "school_value")
+  def initialize(hash)
     @hash = hash
-    @value_type = value_type
   end
 
   def handle_ACT_SAT_to_display!
-    act_data = select_by_data_types(*ACT_ONLY, &:all_subjects_and_students?)
-    act_max_year = act_data.any? ? get_max_year(act_data) : nil
-    enforce_latest_year_gsdata!(act_data, act_max_year) if act_max_year
+    act_max_year = get_max_year_by_data_types(*ACT_ONLY)
+    remove_earlier_than_max_year_by_data_types!(*ACT_ONLY, act_max_year)
 
-    sat_data = select_by_data_types(*SAT_ONLY, &:all_subjects_and_students?)
-    sat_max_year = sat_data.any? ? get_max_year(sat_data) : nil
-    enforce_latest_year_gsdata!(sat_data, sat_max_year) if sat_max_year
+    sat_max_year = get_max_year_by_data_types(*SAT_ONLY)
+    remove_earlier_than_max_year_by_data_types!(*SAT_ONLY, sat_max_year)
 
     remove_older_sat_or_act_data(act_max_year, sat_max_year)
 
@@ -28,8 +25,8 @@ class ActSatHandler
       remove_by_data_types!(*ACT_SAT_COMBINED_PARTICIPATION)
     else
       # if no ACT/SAT content, we check ACT/SAT participation data and set school_values of records older than max_year data to nil
-      combined_participation_data = select_by_data_types(*ACT_SAT_COMBINED_PARTICIPATION, &:all_subjects_and_students?)
-      enforce_latest_year_gsdata!(combined_participation_data)
+      combined_max_year = get_max_year_by_data_types(*ACT_SAT_COMBINED_PARTICIPATION)
+      remove_earlier_than_max_year_by_data_types!(*ACT_SAT_COMBINED_PARTICIPATION, combined_max_year)
     end
   end
 
@@ -43,32 +40,28 @@ class ActSatHandler
     remove_by_data_types!(*ACT_ONLY)
   end
 
-  def enforce_latest_year_gsdata!(records, max_year=nil)
-    #records = select_by_data_types(*data_types, &:all_students?)
-    max_year ||= get_max_year(records)
-    older_records = records.select {|v| v.year < max_year}
-    set_value_to_nil(older_records)
-  end
-
-  # remove school value for all students for selected data types
   def remove_by_data_types!(*data_types)
-    records = select_by_data_types(*data_types, &:all_students?)
-    set_value_to_nil(records)
+    hash.except!(*data_types)
   end
 
   def get_max_year(records)
     records.map { |dts| dts.year }.max
   end
 
+  def get_max_year_by_data_types(*data_types)
+    selected = select_by_data_types(*data_types, &:all_subjects_and_students?)
+    selected.any? ? get_max_year(selected) : nil
+  end
+
+  def remove_earlier_than_max_year_by_data_types!(*data_types, max_year)
+    hash.slice(*data_types).each do |k, values|
+      values.reject! {|val| val.all_subjects_and_students? && val.year < max_year}
+    end
+  end
+
   private
 
   def select_by_data_types(*data_types, &block)
     hash.slice(*data_types).values.flatten.select {|item| block.call(item) }.flatten
-  end
-
-  def set_value_to_nil(array)
-    array.each do |h|
-      h.send("#{@value_type}=".to_sym, nil)
-    end
   end
 end

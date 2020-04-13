@@ -128,22 +128,6 @@ module CommunityProfiles
       end
     end
 
-    # def characteristics_data
-    #   array_of_hashes = @cache_data_reader.characteristics_data(*included_data_types(:characteristics))
-    #   array_of_hashes.each_with_object({}) do |(data_type, array), accum|
-    #     accum[data_type] =
-    #       array.map do |h|
-    #         klass = if data_type == GRADUATES_REMEDIATION
-    #                   GradutesRemediationValue
-    #                 else
-    #                   CharacteristicsValue
-    #                 end
-    #         klass.from_hash(h.merge('data_type' => data_type))
-    #       end
-    #         .extend(CharacteristicsValue::CollectionMethods)
-    #   end
-    # end
-
     def gsdata_data
       @cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata))
     end
@@ -167,8 +151,7 @@ module CommunityProfiles
         hashes = metrics_data # characteristics_data
         hashes.merge!(gsdata_data) if entity_type == 'district'
         return [] if hashes.blank?
-        ActSatHandler.new(hashes, "#{entity_type}_value").handle_ACT_SAT_to_display!
-        # handle_ACT_SAT_to_display!(hashes)
+        ActSatHandler.new(hashes).handle_ACT_SAT_to_display!
         hashes = hashes.map do |key, array|
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
             # This is for characteristics
@@ -179,7 +162,7 @@ module CommunityProfiles
         data_values = hashes.flatten.compact
         data_values.select! { |dv| included_data_types.include?(dv['data_type']) }
         data_values.select! do |dv|
-          if multiple_breakdowns_in_one_data_type.include?(dv['data_type']) && !dv.all_subjects? # dv.subject != 'All subjects'
+          if multiple_breakdowns_in_one_data_type.include?(dv['data_type']) && !dv.all_subjects?
             false
           else
             true
