@@ -1,16 +1,15 @@
-<% title %>
-<% subtitle %>
-<% label %>
-<% available_grades %>
-<% active_grades %>
-<% language %>
-<% district_id %>
-<% district_state %>
-<% district_name %>
+<% title = grades[:title] %>
+<% subtitle = grades[:subtitle] %>
+<% label = grades[:label] %>
+<% available_grades = grades[:available_grades] %>
+<% active_grades = grades[:active_grades] %>
+<% language = grades[:language] %>
+<% district_id = grades[:district_id] %>
+<% district_state = grades[:district_state] %>
 
 <div class="mtm">
     <div class="fl prm mtm">
-      <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+      <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= active_grades ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
             data-toggle="button" readonly="">
         <input name="subscriptions_en[]"
                 disabled="true"
@@ -19,21 +18,16 @@
       </div>
     </div>
 
-  <% if district_id.present? && district_state.present? %>
-    <% title = t(path_to_yml + 'greatkidsnews_district_title', name: district_name) %>
-  <% else %>
-    <% title = t(path_to_yml + 'greatkidsnews_title') %>
-  <% end %>
 
   <div style="overflow:hidden">
     <div class="strong subtitle-md"><%= title %></div>
-    <p><%= t(path_to_yml + 'greatkidsnews_subtitle') %></p>
+    <p><%= t(subtitle) %></p>
     <div class="ma">
-      <p><%= t(path_to_yml + 'grades_label') %></p>
-      <% @available_grades.to_a.in_groups_of(7).each do |grade_group| %>
+      <p><%= t(label) %></p>
+      <% available_grades.to_a.in_groups_of(7).each do |grade_group| %>
         <div>
           <% grade_group.compact.each do |grade, label| %>
-            <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton js-gradeCheckbox <%= 'active' if grades.include?(grade) %>"
+            <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton js-gradeCheckbox <%= 'active' if active_grades.include?(grade) %>"
                 style="min-width:30px"
                 data-grade="<%= grade %>"
                 data-toggle="button"

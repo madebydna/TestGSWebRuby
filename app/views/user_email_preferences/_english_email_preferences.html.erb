@@ -25,10 +25,10 @@
 
 
 
-  <%= render :partial => 'grades_display', :locals => {newsletter_grades: @grades_hashes[:en][:overall]} %>
+  <%= render :partial => 'grades_display', :locals => { grades: @grades_hashes[:en][:overall] } %>
 
-  <% @grades_hashes[:en][:districts].each do |k, v| %>
-    <%= render :partial => 'grades_display', :locals => {newsletter_grades: v} %>
+  <% @grades_hashes[:en][:districts].each do |k| %>
+    <%= render :partial => 'grades_display', :locals => { grades: k } %>
   <% end %>
 
 
