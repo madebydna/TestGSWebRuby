@@ -94,13 +94,13 @@ class UserEmailPreferencesController < ApplicationController
   end
 
   def update
-    UserSubscriptionManager.new(@current_user).update(param_subscriptions)
+    # UserSubscriptionManager.new(@current_user).update(param_subscriptions)
     # UserGradeManager.new(@current_user).update(param_grades)
     # require 'pry'; binding.pry;
     UserEmailGradeManager.new(@current_user).update(process_grades(param_grades))
 
-    Subscription.where(id: school_subscription_ids_to_remove_en, member_id: current_user.id).destroy_all if school_subscription_ids_to_remove_en
-    Subscription.where(id: school_subscription_ids_to_remove_es, member_id: current_user.id).destroy_all if school_subscription_ids_to_remove_es
+    # Subscription.where(id: school_subscription_ids_to_remove_en, member_id: current_user.id).destroy_all if school_subscription_ids_to_remove_en
+    # Subscription.where(id: school_subscription_ids_to_remove_es, member_id: current_user.id).destroy_all if school_subscription_ids_to_remove_es
     flash_notice t('controllers.user_email_preferences_controller.success')
     redirect_to user_preferences_path
   end
