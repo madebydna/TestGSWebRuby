@@ -13,19 +13,19 @@ module CachedMetricsMethods
     "Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation", #458
     "Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation", # 459
     "Percent enrolled in any in-state postsecondary institution within 12 months after graduation", # 453
-                                  ]
+  ]
 
   def metrics
     cache_data['metrics'] || {}
   end
 
   def students_enrolled(opts = {})
-    opts.reverse_merge!(grade: nil, number_value: true)
+    opts.reverse_merge!(grade: 'All', number_value: true)
     metrics_value_by_name('Enrollment', opts)
   end
 
   def numeric_enrollment
-    metrics_value_by_name('Enrollment')
+    metrics_value_by_name('Enrollment', grade: 'All')
   end
 
   def metrics_value_by_name(name, options={})
@@ -74,37 +74,24 @@ module CachedMetricsMethods
   end
 
   def school_leader
-    census_value('Head official name')
+    census_value('Head official name', grade: 'NA')
   end
 
   def school_leader_email
-    census_value('Head official email address')
+    census_value('Head official email address', grade: 'NA')
   end
 
   def ethnicity_data
     metrics['Ethnicity'] || []
   end
 
-  def school_ethnicity(breakdown)
-    ethnicity_obj = ethnicity_data.find { |ethnicity| ethnicity['breakdown'] == breakdown  }
-    if ethnicity_obj && ethnicity_obj['school_value']
-      ethnicity_obj['school_value'].round.to_s + '%'
-    else
-      NO_ETHNICITY_SYMBOL
-    end
-  end
-
-  def college_readiness(display_and_key_type)
-    @_college_readiness ||= (
-      display_and_key_type.map do | hash |
-        {:display_type => hash[:display_type], :data => metrics[hash[:data_key]]}
-      end
-    )
-  end
-
-  def graduates_high_school
-    style_school_value_as_percent('Graduation rate')
-  end
+  # def college_readiness(display_and_key_type)
+  #   @_college_readiness ||= (
+  #     display_and_key_type.map do | hash |
+  #       {:display_type => hash[:display_type], :data => metrics[hash[:data_key]]}
+  #     end
+  #   )
+  # end
 
   def enroll_in_college
     # find max year for data types with all

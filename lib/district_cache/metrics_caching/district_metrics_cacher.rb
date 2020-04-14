@@ -42,9 +42,9 @@ module MetricsCaching
     def build_hash_for_metric(metric)
       {}.tap do |hash|
         hash[:breakdown] = metric.breakdown_name
-        hash[:district_value] = metric.value.to_f
+        hash[:district_value] = Float(metric.value) rescue metric.value
         if metric.state_value
-          hash[:state_average] = metric.state_value.to_f
+          hash[:state_average] = Float(metric.state_value) rescue metric.state_value
         end
         hash[:grade] = metric.grade
         hash[:source] = metric.source_name

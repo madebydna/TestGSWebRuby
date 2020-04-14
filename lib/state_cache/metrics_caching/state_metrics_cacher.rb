@@ -38,7 +38,7 @@ module MetricsCaching
     def build_hash_for_metric(metric)
       {}.tap do |hash|
         hash[:breakdown] = metric.breakdown_name
-        hash[:state_value] = metric.value.to_f
+        hash[:state_value] = Float(metric.state_value) rescue metric.state_value
         hash[:grade] = metric.grade
         hash[:source] = metric.source_name
         hash[:subject] = metric.subject_name
