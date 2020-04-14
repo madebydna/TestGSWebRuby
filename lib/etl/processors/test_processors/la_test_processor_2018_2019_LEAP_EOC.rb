@@ -11,14 +11,21 @@ class LATestProcessor2019LEAPEOC < GS::ETL::TestProcessor
   map_subject_id = {
       'Science' => 19,
       'Social Studies' => 18,
-      'ELA' => 4,
-      'Math' => 5,
+      'ELA' => 4, #2017
+      'English Langauge Arts' => 4,
+      'Math' => 5, #2017
+      'Mathematics' => 5,
       'Algebra I' => 6,
       'Biology' => 22,
+      'Biology (EOC)' =>22,
+      'English I' => 17,
       'English II' => 21,
       'English III' => 49,
+      'English III (EOC)' =>49, 
       'Geometry' => 8,
       'U.S. History' => 23,
+      'U.S. History (EOC)' => 23,
+      'U.S. History (LEAP 2025)' => 23,
   }
 
   map_breakdown_id = {
@@ -45,14 +52,14 @@ class LATestProcessor2019LEAPEOC < GS::ETL::TestProcessor
       'Not Economically Disadvantaged' => 24,
       'Economically Disadvantaged' => 23,
       'Regular Education' => 30,
-      'Students with Disability' => 27,
+      'Students with Disabilities' => 27,
       'English Learner' => 32,
       'Asian' => 16,
       'American Indian or Alaska Native' => 18,
       'Black or African American' => 17,
       'Hispanic/Latino' => 19,
       'Native Hawaiian or Other Pacific Islander' => 20,
-      'Two or More Races' => 22,
+      'Two or more Races' => 22,
       'White' => 21,
       'Female' => 26,
       'Male' => 25, 
@@ -61,15 +68,15 @@ class LATestProcessor2019LEAPEOC < GS::ETL::TestProcessor
   }
 
   map_prof_band_id = {
-      "advanced" => 17,
-      "mastery" => 16,
-      "basic" => 15,
-      "approaching_basic" => 14,
-      "unsatisfactory" => 13,
-      "excellent" => 8,
-      "good" => 7,
-      "fair" => 6,
-      "needs_improvement" => 5,
+      # "advanced" => 17,
+      # "mastery" => 16,
+      # "basic" => 15,
+      # "approaching_basic" => 14,
+      # "unsatisfactory" => 13,
+      # "excellent" => 8,
+      # "good" => 7,
+      # "fair" => 6,
+      # "needs_improvement" => 5, #only prof and above this year
       "prof_and_above" => 1
   }
 
