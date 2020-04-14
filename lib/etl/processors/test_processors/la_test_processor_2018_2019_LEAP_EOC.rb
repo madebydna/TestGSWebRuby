@@ -12,7 +12,7 @@ class LATestProcessor2019LEAPEOC < GS::ETL::TestProcessor
       'Science' => 19,
       'Social Studies' => 18,
       'ELA' => 4, #2017
-      'English Langauge Arts' => 4,
+      'English Language Arts' => 4,
       'Math' => 5, #2017
       'Mathematics' => 5,
       'Algebra I' => 6,
@@ -59,7 +59,7 @@ class LATestProcessor2019LEAPEOC < GS::ETL::TestProcessor
       'Black or African American' => 17,
       'Hispanic/Latino' => 19,
       'Native Hawaiian or Other Pacific Islander' => 20,
-      'Two or more Races' => 22,
+      'Two or more races' => 22,
       'White' => 21,
       'Female' => 26,
       'Male' => 25, 
