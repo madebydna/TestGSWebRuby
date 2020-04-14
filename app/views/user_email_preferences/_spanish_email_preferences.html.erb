@@ -5,7 +5,7 @@
 
 
 <%# Spanish Newsletters %>
-<div id="news-es" class="tabcontent">
+<div id="news-es" class="tabcontent <%=I18n.locale == :es ? 'active' : '' %>">
   <h3><%= t(path_to_yml + 'newsletters_heading') %></h3>
   <div>
     <div class="fl prm mtm">

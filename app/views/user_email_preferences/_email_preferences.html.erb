@@ -10,9 +10,9 @@
       <div class="newsletter-module">
         <div class="tab-buttons ep-tabs">
           <div class="tab-container">
-            <a id="tab-news-en" class="tab-title tab-selected" href="javascript:void(0)"><%= t('.en_tab') %></a>
+            <a id="tab-news-en" class="tab-title <%=I18n.locale == :en ? 'tab-selected' : '' %>" href="javascript:void(0)"><%= t('.en_tab') %></a>
             <span class="divider"></span>
-            <a id="tab-news-es" class="tab-title" href="javascript:void(0)"><%= t('.es_tab') %></a>
+            <a id="tab-news-es" class="tab-title <%=I18n.locale == :es ? 'tab-selected' : '' %>" href="javascript:void(0)"><%= t('.es_tab') %></a>
           </div>
         </div>
 

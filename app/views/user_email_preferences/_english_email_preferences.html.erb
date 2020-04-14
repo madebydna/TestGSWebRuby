@@ -5,7 +5,7 @@
 <% path_to_yml = "user_email_preferences.email_preferences.en_news." %>
 
 <%# English Newsletters %>
-<div id="news-en" class="tabcontent active">
+<div id="news-en" class="tabcontent <%=I18n.locale == :en ? 'active' : '' %>">
   <h3><%= t(path_to_yml + 'newsletters_heading') %></h3>
   <div>
     <div class="fl prm mtm">
