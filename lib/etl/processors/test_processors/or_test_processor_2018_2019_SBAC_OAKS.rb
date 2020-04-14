@@ -16,7 +16,7 @@ class ORTestProcessor20182019SBACOAKS < GS::ETL::TestProcessor
     'Female' => 26,
     'Hispanic/Latino' => 19,
     'English Learners' => 32,
-    'LEP' => 32,
+    'LEP' => 32, #both map to 32
     'Male' => 25,
     'Multi-Racial' => 22,
     'Pacific Islander'=> 37,
