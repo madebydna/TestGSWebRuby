@@ -44,6 +44,7 @@ class UserEmailGradeManager
           district_id = subscription[2].blank? ? nil : subscription[2]
           district_state = subscription[3].blank? ? nil : subscription[3]
           user_grades << @user.student_grade_levels.where(grade: grade, language: language, district_id: district_id, district_state: district_state)
+        end
       end
       user_grades.each { |g| StudentGradeLevelHistory.archive_student_grade_level(g) }
       user_grades.destroy_all
@@ -55,7 +56,7 @@ class UserEmailGradeManager
   end
 
   def get_grades
-    current_grades = @current_user.student_grade_levels
+    current_grades = @user.student_grade_levels
 
     current_grades.map { |r| [r[:grade], r[:language], convert_nil_to_string(r[:district_id]), r[:state].to_s] }
   end
