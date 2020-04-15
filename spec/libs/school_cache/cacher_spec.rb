@@ -67,7 +67,7 @@ describe Cacher do
     {
       esp_response: [EspResponsesCaching::EspResponsesCacher],
       school_reviews: [ReviewsCaching::ReviewsSnapshotCacher],
-      census: [CharacteristicsCaching::CharacteristicsCacher],
+      metrics: [MetricsCaching::SchoolMetricsCacher],
       test_scores: [TestScoresCaching::TestScoresCacherGsdata, TestScoresCaching::Feed::FeedTestScoresCacherGsdata, TestScoresCaching::Feed::FeedOldTestScoresCacherGsdata],
       gsdata: [GsdataCaching::GsdataCacher],
     }.each do |data_type, cacher_list|
@@ -85,7 +85,7 @@ describe Cacher do
       expect(EspResponsesCaching::EspResponsesCacher).to receive(:new).and_return esp_cacher
       expect(esp_cacher).to receive(:cache)
       expect(ReviewsCaching::ReviewsSnapshotCacher).to_not receive(:new)
-      expect(CharacteristicsCaching::CharacteristicsCacher).to_not receive(:new)
+      expect(MetricsCaching::SchoolMetricsCacher).to_not receive(:new)
       Cacher.create_caches_for_data_type(school, :esp_response)
     end
     it 'handles exception in one cacher without affecting others' do

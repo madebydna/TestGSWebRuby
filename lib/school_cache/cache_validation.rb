@@ -46,7 +46,7 @@ module CacheValidation
     end
     if total_value < min_allowed || total_value > max_allowed
       @cache.except!('Ethnicity')
-      log_data_rejection(@school.state,@school.id,'Ethnicity',"Percent only added to #{total_value}")
+      log_data_rejection(@school.state, @school.id, 'Ethnicity', "Percent only added to #{total_value}")
     end
   end
 

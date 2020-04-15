@@ -8,7 +8,7 @@ describe MetricDecorator do
     source = create(:source, name: "CRDC")
     data_set = create(:data_set, data_type: @data_type, date_valid: Date.civil(2020,3,4), source: source)
     subject = create(:subject, id: 0, name: "Not Applicable")
-    breakdown = create(:breakdown, name: "African American")
+    breakdown = create(:breakdown, name: "African American", id: 2)
     @metric = create(:metric, data_set: data_set, subject: subject, breakdown: breakdown)
   end
 

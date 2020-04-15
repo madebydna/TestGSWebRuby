@@ -5,7 +5,7 @@ module Feeds
 
     DIRECTORY_STATE_KEYS = %w(universal_id state_name state census_info)
 
-    CACHE_KEY_CHARACTERISTICS = 'state_characteristics'
+    CACHE_KEY_CHARACTERISTICS = 'metrics'
     CACHE_KEY_GSDATA = 'gsdata'
 
     def self.build_data(state)

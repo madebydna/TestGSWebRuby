@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './characteristics_caching/characteristics_builder'
+require_relative './metrics_caching/metrics_builder'
 
 module Feeds
   module Directory
@@ -9,7 +9,7 @@ module Feeds
       include Feeds::FeedHelper
 
       CACHE_KEY_GSDATA = 'gsdata'
-      CACHE_KEY_CHARACTERISTICS = 'state_characteristics'
+      CACHE_KEY_CHARACTERISTICS = 'metrics'
 
       attr_reader :state
 
@@ -27,7 +27,7 @@ module Feeds
 
       def census_info
         @_census_info ||= begin
-          data_builder = CharacteristicsBuilder.new(state_cache, universal_id, 'state')
+          data_builder = MetricsBuilder.new(state_cache, universal_id, 'state')
           data_builder.data_hashes
         end
       end

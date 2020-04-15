@@ -35,7 +35,7 @@ describe 'District home page requests' do
   end
 
   describe 'In New Jersey' do
-    before do    
+    before do
       nj_district = FactoryBot.create(:district_record, name: 'Jersey City Unified', city: 'Jersey City', state: 'nj')
       get test_url
     end

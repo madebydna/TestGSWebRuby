@@ -4,9 +4,9 @@ module Feeds
   module FeedConstants
       FEED_CACHE_KEYS = %w(feed_test_scores ratings)
 
-      DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_characteristics gsdata)
+      DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_metrics gsdata)
 
-      DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_district_characteristics gsdata)
+      DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_metrics gsdata)
 
       DIRECTORY_STATE_KEYS = %w(universal_id state_name state census_info)
 

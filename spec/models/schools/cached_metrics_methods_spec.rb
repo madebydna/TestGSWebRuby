@@ -100,6 +100,12 @@ describe CachedMetricsMethods do
     it '#school_leader_email returns head official email' do
       expect(subject.school_leader_email).to eq("rithurburn@alameda.k12.ca.us")
     end
+
+    it 'returns nil if data is not available' do
+      subject.cache_data = { "metrics" => {} }
+      expect(subject.school_leader).to be_nil
+      expect(subject.school_leader_email).to be_nil
+    end
   end
 
   describe '#enroll_in_college' do

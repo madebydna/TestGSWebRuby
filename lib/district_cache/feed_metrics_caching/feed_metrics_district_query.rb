@@ -1,5 +1,5 @@
-module MetricsCaching
-  class MetricsDistrictQuery
+module FeedMetricsCaching
+  class FeedMetricsDistrictQuery
     attr_accessor :district
 
     def initialize(district)
@@ -8,8 +8,7 @@ module MetricsCaching
 
     def call(initial_scope = Omni::Metric.active)
       scoped = initial_scope.for_district(district)
-      scoped = scoped.filter_by_data_types(DistrictMetricsCacher::DATA_TYPE_IDS_WHITELIST)
-      scoped = scoped.include_entity_average(type: 'state', id: state.id, table_alias: 'm2')
+      scoped = scoped.filter_by_data_types(DistrictFeedMetricsCacher::DATA_TYPE_IDS_WHITELIST)
       scoped = include_needed_associations(scoped)
       scoped
     end
@@ -19,10 +18,5 @@ module MetricsCaching
         includes(:subject, :breakdown, {data_set: [:data_type, :source]})
     end
 
-    private
-
-    def state
-      @state ||= Omni::State.find_by(abbreviation: district.state)
-    end
   end
 end

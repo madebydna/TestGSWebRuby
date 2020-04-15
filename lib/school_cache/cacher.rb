@@ -10,7 +10,7 @@ class Cacher
   # :esp_response
   # :gsdata
   # :directory
-  # :feed_characteristics
+  # :feed_metrics
   # :test_scores_gsdata
   # :feed_test_scores_gsdata
   # :feed_old_test_scores_gsdata
@@ -88,7 +88,7 @@ class Cacher
         directory:                   DirectoryCaching::DirectoryCacher,
         feed_test_scores_gsdata:     TestScoresCaching::FeedTestScoresCacherGsdata,
         feed_old_test_scores_gsdata: TestScoresCaching::FeedOldTestScoresCacherGsdata,
-        feed_characteristics:        FeedCharacteristicsCaching::FeedCharacteristicsCacher
+        feed_metrics:                FeedMetricsCaching::SchoolFeedMetricsCacher
     }[key.to_s.to_sym]
   end
 
@@ -117,7 +117,7 @@ class Cacher
       GsdataCaching::GsdataCacher,
       RatingsCaching::GsdataRatingsCacher,
       DirectoryCaching::DirectoryCacher,
-      FeedCharacteristicsCaching::FeedCharacteristicsCacher
+      FeedMetricsCaching::SchoolFeedMetricsCacher
     ]
   end
 

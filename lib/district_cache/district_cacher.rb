@@ -8,7 +8,7 @@ class DistrictCacher
   # :ratings - old not used
   # :district_schools_summary
   # :district_directory
-  # :feed_district_characteristics
+  # :feed_metrics
   # :gsdata
   # :metrics
 
@@ -44,7 +44,7 @@ class DistrictCacher
         # ratings: DistrictRatingsCacher,
         district_schools_summary: DistrictSchoolsSummary::DistrictSchoolsSummaryCacher,
         district_directory: DistrictDirectoryCacher,
-        feed_district_characteristics: FeedDistrictCharacteristicsCacher,
+        feed_metrics: FeedMetricsCaching::DistrictFeedMetricsCacher,
         gsdata: DistrictGsdataCacher,
         metrics: MetricsCaching::DistrictMetricsCacher
     }[key.to_s.to_sym]

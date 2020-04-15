@@ -8,7 +8,7 @@ module DistrictCachedMetricsMethods
   def enrollment
     enrollment_data = metrics.fetch('Enrollment', [{}])
     all_students_and_grades = enrollment_data.detect {|hash| hash['breakdown'] == 'All students' &&  hash['grade'] == 'All'}
-    all_students_and_grades['district_value']
+    all_students_and_grades.try(:[], 'district_value')
   end
 
   def ethnicity_data

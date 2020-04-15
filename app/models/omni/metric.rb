@@ -36,20 +36,10 @@ module Omni
       .where(data_types: { id: data_type_ids })
     end
 
-    def self.include_district_average(district_id, table_alias: 'm2')
-      select("#{table_alias}.value as district_value").
-        joins("LEFT JOIN metrics #{table_alias} ON #{table_alias}.entity_type = 'district'
-        AND #{table_alias}.gs_id = #{district_id}
-        AND metrics.data_set_id = #{table_alias}.data_set_id
-        AND metrics.breakdown_id = #{table_alias}.breakdown_id
-        AND metrics.subject_id = #{table_alias}.subject_id
-        AND metrics.grade = #{table_alias}.grade")
-    end
-
-    def self.include_state_average(state_id, table_alias: 'm2')
-      select("#{table_alias}.value as state_value").
-        joins("LEFT JOIN metrics #{table_alias} ON #{table_alias}.entity_type = 'state'
-        AND #{table_alias}.gs_id = #{state_id}
+    def self.include_entity_average(type:, id:, table_alias: 'm2')
+      select("#{table_alias}.value as #{type}_value").
+        joins("LEFT JOIN metrics #{table_alias} ON #{table_alias}.entity_type = '#{type}'
+        AND #{table_alias}.gs_id = #{id}
         AND metrics.data_set_id = #{table_alias}.data_set_id
         AND metrics.breakdown_id = #{table_alias}.breakdown_id
         AND metrics.subject_id = #{table_alias}.subject_id

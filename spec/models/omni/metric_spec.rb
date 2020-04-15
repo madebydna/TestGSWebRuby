@@ -79,7 +79,7 @@ describe Omni::Metric do
       expect(scope).to include(metric3)
     end
 
-    it '.include_district_average should add a district_value field to results' do
+    it '.include_entity_average with a district should add a district_value field to results' do
       district = create(:district, state: 'CA')
       school = create(:school, state: 'CA', district_id: district.id)
       school_metric = create(:metric, data_set: data_set, entity_type: Omni::Metric::SCHOOL_ENTITY, gs_id: school.id)
@@ -93,12 +93,12 @@ describe Omni::Metric do
         grade: school_metric.grade
       )
 
-      scope = Omni::Metric.for_school(school).include_district_average(district.id)
+      scope = Omni::Metric.for_school(school).include_entity_average(type: 'district', id: district.id)
       expect(scope.first).to respond_to(:district_value)
       expect(scope.first.district_value).to eq('123')
     end
 
-    it '.include_state_average should add a state_value field to results' do
+    it '.include_entity_average with a state should add a state_value field to results' do
       state = create(:state, state: 'Califronia', abbreviation: 'CA')
       school = create(:school, state: 'CA')
       school_metric = create(:metric, data_set: data_set, entity_type: Omni::Metric::SCHOOL_ENTITY, gs_id: school.id)
@@ -112,7 +112,7 @@ describe Omni::Metric do
         grade: school_metric.grade
       )
 
-      scope = Omni::Metric.for_school(school).include_state_average(state.id)
+      scope = Omni::Metric.for_school(school).include_entity_average(type: 'state', id: state.id)
       expect(scope.first).to respond_to(:state_value)
       expect(scope.first.state_value).to eq('123')
     end

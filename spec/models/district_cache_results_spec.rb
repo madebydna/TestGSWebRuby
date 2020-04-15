@@ -37,13 +37,13 @@ describe DistrictCacheResults do
     let(:hash) { subject.data_hash }
 
     it "builds a by-state-and-district hash based on query results" do
-      expect(hash).to include(["ca", 1], ["ca", 2], ["mi", 1])
+      expect(hash).to include(["CA", 1], ["CA", 2], ["MI", 1])
     end
 
     it "builds a by-cache-key hash for each district" do
-      expect(hash[["ca", 1]]).to include("metrics")
-      expect(hash[["ca", 2]]).to include("ratings")
-      expect(hash[["mi", 1]]).to include("ratings")
+      expect(hash[["CA", 1]]).to include("metrics")
+      expect(hash[["CA", 2]]).to include("ratings")
+      expect(hash[["MI", 1]]).to include("ratings")
     end
   end
 

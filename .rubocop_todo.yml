@@ -825,6 +825,8 @@ Metrics/MethodLength:
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
   Max: 413
+  Exclude:
+    - 'script/feeds/feed_config/feed_constants.rb'
 
 # Offense count: 16
 # Configuration parameters: CountKeywordArgs.

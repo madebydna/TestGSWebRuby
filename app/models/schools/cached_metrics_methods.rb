@@ -48,25 +48,6 @@ module CachedMetricsMethods
     NO_DATA_SYMBOL unless options[:allow_nil]
   end
 
-  def census_value(name, options={})
-    if valid_metric_cache(metrics[name])
-      metrics[name].each do |metric|
-        if options.present?
-          if options.key? :grade
-            next unless metric['grade'] == options[:grade]
-          end
-          if options[:number_value]
-            return number_with_delimiter(metric['school_value'].to_i, delimiter: ',')
-          else
-            return metric['school_value']
-          end
-        else
-          return metric['school_value']
-        end
-      end
-    end
-  end
-
   def created_time(name)
     if valid_metric_cache(metrics[name]) && metrics[name].present? && metrics[name].first['created'].present?
       Time.parse(metrics[name].first['created'])
@@ -74,11 +55,11 @@ module CachedMetricsMethods
   end
 
   def school_leader
-    census_value('Head official name', grade: 'NA')
+    metrics_value_by_name('Head official name', grade: 'NA', allow_nil: true)
   end
 
   def school_leader_email
-    census_value('Head official email address', grade: 'NA')
+    metrics_value_by_name('Head official email address', grade: 'NA', allow_nil: true)
   end
 
   def ethnicity_data
