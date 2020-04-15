@@ -36,7 +36,7 @@ class UserEmailPreferencesController < ApplicationController
   def update
     # require 'pry'; binding.pry;
     # UserSubscriptionManager.new(@current_user).update(param_subscriptions)
-    UserEmailSubscriptionManager.new(@current_user).update(param_subscriptions)
+    UserEmailSubscriptionManager.new(@current_user).update(process_subscriptions(param_subscriptions))
     # UserGradeManager.new(@current_user).update(param_grades)
     UserEmailGradeManager.new(@current_user).update(process_grades(param_grades))
 
@@ -51,7 +51,6 @@ class UserEmailPreferencesController < ApplicationController
     #['1','2','3','4']
   end
 
-  # TODO: Remove this
   def param_subscriptions
     params['subscriptions'] || []
   end
@@ -127,6 +126,10 @@ class UserEmailPreferencesController < ApplicationController
   def process_grades(param_grades)
     parsed_grades = JSON.parse(param_grades)
     parsed_grades.map { |r| [r[0].to_s, r[1], r[2], r[3]] }
+  end
+
+  def process_subscriptions(param_subscriptions)
+    JSON.parse(param_subscriptions)
   end
 
   private
