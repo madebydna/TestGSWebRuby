@@ -9,15 +9,12 @@
 
 <div class="mtm">
     <div class="fl prm mtm">
-      <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= active_grades ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-            data-toggle="button" readonly="">
-        <input name="subscriptions_en[]"
-                disabled="true"
-                type="hidden"
-                value="greatkidsnews">
+      <div class="js-checkbox iconx16 js-icon js-subscriptionCheckbox <%= active_grades ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+           data-toggle="button"
+           data-list="greatkidsnews"
+           data-language="<%= language %>">
       </div>
     </div>
-
 
   <div style="overflow:hidden">
     <div class="strong subtitle-md"><%= title %></div>
