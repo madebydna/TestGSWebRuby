@@ -25,20 +25,23 @@ $(function() {
 
 
       $formContainer.find('form').on('submit', function() {
-        var $form = $(this);
-        var grades = [];
-        console.log("form");
+        let $form = $(this);
+        let grades = [];
+        let subscriptions = [];
         $form.find('.js-gradeCheckbox.active').each(function () {
-          // console.log("loop");
-          // console.log($(this).data('districtState'));
-          // console.log($(this).data('districtId'));
           grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
         });
-        console.log("grades:" + JSON.stringify(grades));
+        $('.js-gradeSubmitValue').val(JSON.stringify(grades));
 
-        grades_value = $('.js-gradeSubmitValue');
-        grades_value.val(JSON.stringify(grades));
-        console.log(grades_value.val());
+        console.log("form");
+        $form.find('.js-subscriptionCheckbox.active').each(function () {
+          subscriptions.push([$(this).data('list'), $(this).data('language')]);
+        });
+        $('.js-subscriptionSubmitValue').val(JSON.stringify(subscriptions));
+
+        console.log("form: " + $('.js-subscriptionSubmitValue').val());
+
+
         $form.find('.js-inverted-checkbox').each(function() {
           $(this).toggleClass('active');
         });

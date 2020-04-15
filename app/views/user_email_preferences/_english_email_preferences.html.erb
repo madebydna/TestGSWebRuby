@@ -1,27 +1,15 @@
-<% greatnews_en = @current_preferences_en.include?("greatnews") %>
-<% greatkidsnews_en = @current_preferences_en.include?("greatkidsnews") %>
-<% sponsor_en = @current_preferences_en.include?("sponsor") %>
-<% teacher_list_en = @current_preferences_en.include?("teacher_list") %>
 <% path_to_yml = "user_email_preferences.email_preferences.en_news." %>
 
 <%# English Newsletters %>
 <div id="news-en" class="tabcontent <%=I18n.locale == :en ? 'active' : '' %>">
   <h3><%= t(path_to_yml + 'newsletters_heading') %></h3>
-  <div>
-    <div class="fl prm mtm">
-      <div class="js-checkbox iconx16 js-icon js-subscriptionCheckbox <%= greatnews_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-           data-toggle="button"
-           data-list="greatnews"
-           data-language="en">
-      </div>
-    </div>
-    <div style="overflow:hidden">
-      <div class="strong subtitle-md"><%= t(path_to_yml + 'greatnews_title') %></div>
-      <p><%= t(path_to_yml + 'greatnews_subtitle') %></p>
-    </div>
-  </div>
 
-
+  <%= render partial: 'subscription', :locals => {
+      list: 'greatnews',
+      language: 'en',
+      active: @current_preferences_en.include?("greatnews"),
+      title: path_to_yml + 'greatnews_title',
+      subtitle: path_to_yml + 'greatnews_subtitle'} %>
 
   <%= render :partial => 'grades_display', :locals => { grades: @grades_hashes[:en][:overall] } %>
 
@@ -29,25 +17,17 @@
     <%= render :partial => 'grades_display', :locals => { grades: k } %>
   <% end %>
 
-
   <div class="mtm">
-    <div class="fl prm mtm">
-      <div class="js-checkbox iconx16 js-icon js-subscriptionCheckbox <%= teacher_list_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-           data-toggle="button"
-           data-list="teacher_list"
-           data-language="en">
-      </div>
-    </div>
-    <div style="overflow:hidden">
-      <div class="strong subtitle-md"><%= t(path_to_yml + 'teacher_list_title') %></div>
-      <p><%= t(path_to_yml + 'teacher_list_subtitle') %></p>
-    </div>
-    <div class="clearfix"></div>
+    <%= render partial: 'subscription', :locals => {
+        list: 'teacher_list',
+        language: 'en',
+        active: @current_preferences_en.include?("teacher_list"),
+        title: path_to_yml + 'teacher_list_title',
+        subtitle: path_to_yml + 'teacher_list_subtitle'} %>
   </div>
 
-
   <div class="mtm">
-    <% @mss_subscriptions_en.each do |subscription| %>
+    <% @mss_subscriptions_en&.each do |subscription| %>
       <div class="fl prm mts">
         <div class="js-checkbox js-inverted-checkbox iconx16 js-icon js-subscriptionCheckbox i-16-blue-check-box active" data-toggle="button" readonly="">
           <input name="subscription_ids_to_remove_en[]" disabled="true" type="hidden" value="<%= subscription.id %>">
@@ -61,19 +41,12 @@
     <% end %>
   </div>
 
-
   <div class="mtm">
-    <div class="fl prm mtm">
-      <div class="js-checkbox iconx16 js-icon js-subscriptionCheckbox <%= sponsor_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-           data-toggle="button"
-           data-list="sponsor"
-           data-language="en">
-      </div>
-    </div>
-    <div style="overflow:hidden">
-      <div class="strong subtitle-md"><%= t(path_to_yml + 'sponsor_title') %></div>
-      <p><%= t(path_to_yml + 'sponsor_subtitle') %></p>
-    </div>
-    <div class="clearfix"></div>
+    <%= render partial: 'subscription', :locals => {
+        list: 'sponsor',
+        language: 'en',
+        active: @current_preferences_en.include?("sponsor"),
+        title: path_to_yml + 'sponsor_title',
+        subtitle: path_to_yml + 'sponsor_subtitle'} %>
   </div>
 </div>

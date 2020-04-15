@@ -1,5 +1,5 @@
-<% greatnews_es = @current_preferences_en.include?("greatnews") %>
-<% greatkidsnews_es = @current_preferences_en.include?("greatkidsnews") %>
+<% greatnews_es = @current_preferences_es.include?("greatnews") %>
+<% greatkidsnews_es = @current_preferences_es.include?("greatkidsnews") %>
 
 <% path_to_yml = "user_email_preferences.email_preferences.es_news." %>
 
@@ -7,22 +7,13 @@
 <%# Spanish Newsletters %>
 <div id="news-es" class="tabcontent <%=I18n.locale == :es ? 'active' : '' %>">
   <h3><%= t(path_to_yml + 'newsletters_heading') %></h3>
-  <div>
-    <div class="fl prm mtm">
-      <div class="js-checkbox iconx16 js-icon <%= greatnews_es ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-           data-toggle="button" readonly="">
-        <input name="subscriptions_es[]"
-               disabled="true"
-               type="hidden"
-               value="greatnews">
-      </div>
-    </div>
-    <div style="overflow:hidden">
-      <div class="strong subtitle-md"><%= t(path_to_yml + 'greatnews_title') %></div>
-      <p><%= t(path_to_yml + 'greatnews_subtitle') %></p>
-    </div>
-  </div>
 
+  <%= render partial: 'subscription', :locals => {
+      list: 'greatnews',
+      language: 'es',
+      active: @current_preferences_es.include?("greatnews"),
+      title: path_to_yml + 'greatnews_title',
+      subtitle: path_to_yml + 'greatnews_subtitle'} %>
 
   <%= render :partial => 'grades_display', :locals => { grades: @grades_hashes[:es][:overall] } %>
 
@@ -30,9 +21,8 @@
     <%= render :partial => 'grades_display', :locals => { grades: k } %>
   <% end %>
 
-
   <div class="mtm">
-    <% @mss_subscriptions_es.each do |subscription| %>
+    <% @mss_subscriptions_es&.each do |subscription| %>
       <div class="fl prm mts">
         <div class="js-checkbox js-inverted-checkbox iconx16 js-icon i-16-blue-check-box active" data-toggle="button" readonly="">
           <input name="subscription_ids_to_remove_es[]" disabled="true" type="hidden" value="<%= subscription.id %>">
