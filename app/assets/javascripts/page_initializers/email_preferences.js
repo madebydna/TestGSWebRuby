@@ -28,6 +28,8 @@ $(function() {
         let $form = $(this);
         let grades = [];
         let subscriptions = [];
+        let schools = [];
+
         $form.find('.js-gradeCheckbox.active').each(function () {
           grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
         });
@@ -40,6 +42,13 @@ $(function() {
         $('.js-subscriptionSubmitValue').val(JSON.stringify(subscriptions));
 
         console.log("form: " + $('.js-subscriptionSubmitValue').val());
+
+        $form.find('.js-schoolCheckbox.active').each(function () {
+          schools.push([$(this).data('list'), $(this).data('language'), $(this).data('state'), $(this).data('schoolId')]);
+        });
+        $('.js-schoolSubmitValue').val(JSON.stringify(schools));
+
+        console.log("schools: " + $('.js-schoolSubmitValue').val());
 
 
         $form.find('.js-inverted-checkbox').each(function() {

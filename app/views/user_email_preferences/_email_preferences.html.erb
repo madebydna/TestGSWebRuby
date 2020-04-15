@@ -3,6 +3,7 @@
     <%= form_tag(user_preferences_update_path, method: :post, class:"rs-preferences-form") do |f| %>
       <input class="js-gradeSubmitValue" name="grades" type="hidden" value="">
       <input class="js-subscriptionSubmitValue" name="subscriptions" type="hidden" value="">
+      <input class="js-schoolSubmitValue" name="schools" type="hidden" value="">
       <h2 class="tac open-sans font-size-large"><strong><%= t('.subheading_pt_1') %> </strong> <%= t('.subheading_pt_2') %></h2>
 
       <p class="tac"><strong> <%= t('.email_heading') %>: </strong><%= @current_user.email if logged_in? %></p>

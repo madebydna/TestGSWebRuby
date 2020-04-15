@@ -22,6 +22,7 @@ class UserEmailPreferencesController < ApplicationController
     @mss_subscriptions = current_user
       .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified])
       .extend(SchoolAssociationPreloading).preload_associated_schools!
+      # require 'pry'; binding.pry;
     # @mss_subscriptions_en = current_user
     #   .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified], "en")
     #   .extend(SchoolAssociationPreloading).preload_associated_schools!
@@ -31,13 +32,8 @@ class UserEmailPreferencesController < ApplicationController
     set_tracking_info
   end
 
-
-
   def update
-    # require 'pry'; binding.pry;
-    # UserSubscriptionManager.new(@current_user).update(param_subscriptions)
     UserEmailSubscriptionManager.new(@current_user).update(process_subscriptions(param_subscriptions))
-    # UserGradeManager.new(@current_user).update(param_grades)
     UserEmailGradeManager.new(@current_user).update(process_grades(param_grades))
 
     # Subscription.where(id: school_subscription_ids_to_remove_en, member_id: current_user.id).destroy_all if school_subscription_ids_to_remove_en
@@ -55,6 +51,10 @@ class UserEmailPreferencesController < ApplicationController
     params['subscriptions'] || []
   end
 
+  def param_schools
+    params['schools'] || []
+  end
+
   # TODO: Remove this
   def school_subscription_ids_to_remove
     params['subscription_ids_to_remove_en']
@@ -67,6 +67,16 @@ class UserEmailPreferencesController < ApplicationController
   def school_subscription_ids_to_remove_es
     params['subscription_ids_to_remove_es']
   end
+
+  def create_schools
+    schools = current_user
+    .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified])
+    .extend(SchoolAssociationPreloading).preload_associated_schools!
+
+    # WIP
+
+  end
+
 
   def create_grades
     grades = @current_user.student_grade_levels
@@ -130,6 +140,10 @@ class UserEmailPreferencesController < ApplicationController
 
   def process_subscriptions(param_subscriptions)
     JSON.parse(param_subscriptions)
+  end
+
+  def process_schools(param_schools)
+    JSON.parse(param_schools)
   end
 
   private

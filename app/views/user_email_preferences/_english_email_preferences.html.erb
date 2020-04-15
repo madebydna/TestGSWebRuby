@@ -27,15 +27,18 @@
   </div>
 
   <div class="mtm">
-    <% @mss_subscriptions_en&.each do |subscription| %>
+    <div class="strong subtitle-md" style="padding-left: 26px"><%= t(path_to_yml + 'school_updates') %></div>
+    <% @mss_subscriptions&.each do |subscription| %>
       <div class="fl prm mts">
-        <div class="js-checkbox js-inverted-checkbox iconx16 js-icon js-subscriptionCheckbox i-16-blue-check-box active" data-toggle="button" readonly="">
-          <input name="subscription_ids_to_remove_en[]" disabled="true" type="hidden" value="<%= subscription.id %>">
+        <div class="js-checkbox js-inverted-checkbox iconx16 js-icon js-schoolCheckbox i-16-blue-check-box active" data-toggle="button"
+        data-list="<%= subscription[:list] %>"
+        data-language="<%= subscription[:language] %>"
+        data-state="<%= subscription[:state] %>"
+        data-school-id="<%= subscription[:school_id] %>">
         </div>
       </div>
       <div style="overflow:hidden">
-        <%= t(path_to_yml + 'school_updates') %>: <%= subscription.school.name %>, <%= subscription.school.city %>
-        , <%= subscription.school.state %>
+        <%= subscription.school.name %>, <%= subscription.school.city %>, <%= subscription.school.state %>
       </div>
       <div class="clearfix"></div>
     <% end %>
