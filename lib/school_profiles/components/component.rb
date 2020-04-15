@@ -75,7 +75,7 @@ module SchoolProfiles
           display_percentages: true # TODO: true
         }
       end
-      
+
       def gs_data_value_to_value_hash(dv)
         {
           breakdown: t(h[:breakdown]),

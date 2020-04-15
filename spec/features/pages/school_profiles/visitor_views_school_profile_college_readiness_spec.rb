@@ -16,7 +16,7 @@ describe 'Visitor' do
   context 'with one college readiness score' do
     before do
       create(
-          :custom_characteristics_all_students_cache,
+          :custom_metrics_all_students_cache,
           school_id: school.id,
           data_type: '4-year high school graduation rate',
           school_value: 50.6,

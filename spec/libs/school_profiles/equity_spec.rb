@@ -10,7 +10,7 @@ describe SchoolProfiles::Equity do
     )
   end
   before do
-    allow(school_cache_data_reader).to receive(:characteristics).and_return([])
+    allow(school_cache_data_reader).to receive(:metrics).and_return([])
     allow(school_cache_data_reader).to receive(:test_scores).and_return({values: []})
     allow(school_cache_data_reader).to receive(:discipline_flag?).and_return(false)
     allow(school_cache_data_reader).to receive(:attendance_flag?).and_return(false)

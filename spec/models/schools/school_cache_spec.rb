@@ -11,7 +11,7 @@ describe SchoolCache do
     clean_models TestDataType, SchoolCache, TestDataBreakdown, TestDataSubject
   end
 
-  %i(characteristics esp_responses ratings test_scores_gsdata).each do |key|
+  %i(metrics esp_responses ratings test_scores_gsdata).each do |key|
     describe "#cached_#{key}_data" do
       context 'with no cache row for this key' do
         it 'should return {}' do

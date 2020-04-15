@@ -83,7 +83,7 @@ module CachePopulator
         \trails runner script/populate_cache_tables.rb -c al:school_levels :all:8,9
         \trails runner script/populate_cache_tables.rb -c :all:8,9
         \e[1mSTATE\e[22m
-        \trails runner script/populate_cache_tables.rb -t fl:state_characteristics
+        \trails runner script/populate_cache_tables.rb -t fl:metrics
         \trails runner script/populate_cache_tables.rb -t all
 
       USAGE

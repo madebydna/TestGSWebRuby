@@ -85,14 +85,6 @@ module CachedMetricsMethods
     metrics['Ethnicity'] || []
   end
 
-  # def college_readiness(display_and_key_type)
-  #   @_college_readiness ||= (
-  #     display_and_key_type.map do | hash |
-  #       {:display_type => hash[:display_type], :data => metrics[hash[:data_key]]}
-  #     end
-  #   )
-  # end
-
   def enroll_in_college
     # find max year for data types with all
     max_year = 0
@@ -143,7 +135,7 @@ module CachedMetricsMethods
 
   def style_school_value_as_percent(data_name)
     if valid_metric_cache(metrics[data_name])
-      value = metrics[data_name].first['school_value'].to_i
+      value = metrics[data_name].first['school_value'].to_f
       if value
         return "#{value.round(0)}%"
       end
@@ -157,18 +149,6 @@ module CachedMetricsMethods
 
   def free_or_reduced_price_lunch_data
     metrics['Students participating in free or reduced-price lunch program'] || []
-  end
-
-  def formatted_ethnicity_data
-    formatted_eth_data = {}
-    ethnicity_data.each do |eth|
-      formatted_eth_data[eth['breakdown']] =  if eth['school_value']
-                                                eth['school_value'].round.to_s + '%'
-                                              else
-                                                NO_ETHNICITY_SYMBOL
-                                              end
-    end
-    formatted_eth_data
   end
 
   protected

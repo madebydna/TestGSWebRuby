@@ -9,7 +9,6 @@ class DistrictCacher
   # :district_schools_summary
   # :district_directory
   # :feed_district_characteristics
-  # :district_characteristics
   # :gsdata
   # :metrics
 
@@ -46,7 +45,6 @@ class DistrictCacher
         district_schools_summary: DistrictSchoolsSummary::DistrictSchoolsSummaryCacher,
         district_directory: DistrictDirectoryCacher,
         feed_district_characteristics: FeedDistrictCharacteristicsCacher,
-        district_characteristics: DistrictCharacteristicsCacher,
         gsdata: DistrictGsdataCacher,
         metrics: MetricsCaching::DistrictMetricsCacher
     }[key.to_s.to_sym]
@@ -84,7 +82,6 @@ class DistrictCacher
         DistrictRatingsCacher,
         DistrictDirectoryCacher,
         FeedDistrictCharacteristicsCacher,
-        DistrictCharacteristicsCacher,
         DistrictGsdataCacher,
         MetricsCaching::DistrictMetricsCacher
     ]

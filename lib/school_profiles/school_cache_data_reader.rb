@@ -1,7 +1,7 @@
 module SchoolProfiles
   class SchoolCacheDataReader
     # ratings - for gs rating
-    # characteristics - for enrollment
+    # metrics - for enrollment
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
     SCHOOL_CACHE_KEYS = %w(ratings metrics reviews_snapshot test_scores_gsdata nearby_schools performance gsdata esp_responses)
@@ -173,13 +173,6 @@ module SchoolProfiles
       end
     end
 
-    # def characteristics_data(*keys)
-    #   decorated_school.characteristics.slice(*keys).each_with_object({}) do |(k,array_of_hashes), hash|
-    #     array_of_hashes = array_of_hashes.select { |h| h.has_key?('source') }
-    #     hash[k] = array_of_hashes if array_of_hashes.present?
-    #   end
-    # end
-
     def nearby_schools
       decorated_school.nearby_schools
     end
@@ -228,10 +221,6 @@ module SchoolProfiles
     def metrics
       decorated_school.metrics
     end
-
-    # def characteristics
-    #   decorated_school.characteristics
-    # end
 
     def gsdata_data(*keys)
       gs_data(decorated_school.gsdata, *keys)

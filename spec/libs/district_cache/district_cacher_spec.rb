@@ -14,7 +14,6 @@ describe DistrictCacher do
 
     {
         metrics: [DistrictMetricsCacher],
-        census: [DistrictCharacteristicsCacher],
         directory: [DistrictDirectoryCacher],
     }.each do |data_type, expected_cacher_list|
       context "with data type '#{data_type}'" do

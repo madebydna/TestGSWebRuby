@@ -80,7 +80,6 @@ class Cacher
   def self.cacher_for(key)
     {
         test_scores_gsdata:          TestScoresCaching::TestScoresCacherGsdata,
-        characteristics:             CharacteristicsCaching::CharacteristicsCacher,
         metrics:                     MetricsCaching::SchoolMetricsCacher,
         esp_responses:               EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot:            ReviewsCaching::ReviewsSnapshotCacher,
@@ -110,7 +109,6 @@ class Cacher
   def self.registered_cachers
     @registered_cachers ||= [
       TestScoresCaching::TestScoresCacherGsdata,
-      CharacteristicsCaching::CharacteristicsCacher,
       MetricsCaching::SchoolMetricsCacher,
       EspResponsesCaching::EspResponsesCacher,
       ReviewsCaching::ReviewsSnapshotCacher,

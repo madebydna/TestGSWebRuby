@@ -143,13 +143,14 @@ FactoryBot.define do
   end
 
   factory :cached_enrollment, class: SchoolCache do
-    name 'characteristics'
+    name 'metrics'
     sequence(:school_id) { |n| n }
     state 'ca'
     value ({
       'Enrollment' => [
         "year" => 2012,
         "source" => "NCES",
+        "grade" => "All",
         "school_value" => 1200.0,
         "district_average" => 3803.0,
         "created" => "2014-05-02T08:42:51-07:00"
@@ -236,7 +237,7 @@ FactoryBot.define do
               "e,m,h" => {
                 "English Language Arts" => {
                   "2014" => {
-                      "number_students_tested" => 114, 
+                      "number_students_tested" => 114,
                       "score" => 14.3,
                       "state_average" => 28.6
                   },
@@ -313,7 +314,7 @@ FactoryBot.define do
   end
 
   factory :graduation_rate, class: SchoolCache do
-    name 'characteristics'
+    name 'metrics'
     sequence(:school_id) { |n| n }
     state 'ca'
     value (
@@ -330,7 +331,7 @@ FactoryBot.define do
     updated Time.now
   end
 
-  factory :custom_characteristics_all_students_cache, class: SchoolCache do
+  factory :custom_metrics_all_students_cache, class: SchoolCache do
     transient do
       data_type 'data type'
       school_value 0.0
@@ -350,7 +351,7 @@ FactoryBot.define do
         ]
       }.to_json)
     end
-    name 'characteristics'
+    name 'metrics'
     sequence(:school_id) { |n| n }
     state 'ca'
   end
@@ -448,8 +449,8 @@ FactoryBot.define do
   end
 
 
-  factory :school_characteristic_responses, class: SchoolCache do
-    name 'characteristics'
+  factory :school_metrics_responses, class: SchoolCache do
+    name 'metrics'
     sequence(:school_id) { |n| n }
     state 'CA'
     value ({
@@ -492,29 +493,19 @@ FactoryBot.define do
           "year" => 2014,
           "source" => "CA Dept. of Education",
           "breakdown" => "Hispanic",
-          "original_breakdown" => "Hispanic",
           "school_value" => 72.3404,
           "state_average" => 70.8682,
           "created" => "2015-09-04T14:43:16-07:00",
-          "performance_level" => "above_average",
-          "school_value_2013" => 71.3592,
-          "state_average_2013" => 67.7065,
-          "school_value_2014" => 72.3404,
-          "state_average_2014" => 70.8682
+          "performance_level" => "above_average"
         },
         {
           "year" => 2014,
           "source" => "CA Dept. of Education",
           "breakdown" => "White",
-          "original_breakdown" => "White",
           "school_value" => 62.8319,
           "state_average" => 48.6964,
           "created" => "2015-09-04T14:43:16-07:00",
-          "performance_level" => "above_average",
-          "school_value_2014" => 62.8319,
-          "state_average_2014" => 48.6964,
-          "school_value_2013" => 62.1622,
-          "state_average_2013" => 47.1071
+          "performance_level" => "above_average"
         },
       ],
       '4-year high school graduation rate' => [
@@ -522,150 +513,38 @@ FactoryBot.define do
           "year" => 2013,
           "source" => "CA Dept. of Education",
           "breakdown" => "Pacific Islander",
-          "original_breakdown" => "Pacific Islander",
           "school_value" => 100.0,
           "state_average" => 78.35,
           "created" => "2014-11-13T12:51:44-08:00",
-          "performance_level" => "above_average",
-          "school_value_2012" => 100.0,
-          "state_average_2012" => 76.97,
-          "school_value_2011" => 100.0,
-          "state_average_2011" => 74.89,
-          "school_value_2013" => 100.0,
-          "state_average_2013" => 78.35
+          "performance_level" => "above_average"
         },
         {
           "year" => 2013,
           "source" => "CA Dept. of Education",
           "breakdown" => "Hispanic",
-          "original_breakdown" => "Hispanic",
           "school_value" => 100.0,
           "state_average" => 84.47,
           "created" => "2014-11-13T12:51:44-08:00",
-          "performance_level" => "above_average",
-          "school_value_2012" => 100.0,
-          "state_average_2012" => 83.96,
-          "school_value_2011" => 100.0,
-          "state_average_2011" => 81.85,
-          "school_value_2013" => 100.0,
-          "state_average_2013" => 84.47
+          "performance_level" => "above_average"
         },
       ],
-    }.to_json)
-    updated Time.now
-  end
-
-  factory :school_characteristics_act_sat, class: SchoolCache do
-    name 'characteristics'
-    sequence(:school_id) { |n| n }
-    state 'CA'
-    value ({
-      # Most recent school data is from 2013
-      'ACT participation' => [
-        {
-          "breakdown" => "All students",
-          "original_breakdown" => "All students",
-          "created" => "2014-08-08T10:05:40-07:00",
-          "grade" => "9",
-          "school_value" => 100.0,
-          "source" => "CA Dept. of Education",
-          "subject" => "All subjects",
-          "year" => 2013,
-          "school_value_2013" => 100.0
-        }
-      ],
-      # Most recent school data is from 2014
-      'Average ACT score' => [
-        {
-          "breakdown" => "All students",
-          "original_breakdown" => "All students",
-          "created" => "2015-02-05T13:47:47-08:00",
-          "district_average" => 20.8,
-          "school_value" => 24.9,
-          "source" => "CA Dept. of Education",
-          "state_average" => 20.4,
-          "subject" => "Science",
-          "year" => 2014,
-          "state_average_2006" => 19.2,
-          "state_average_2007" => 19.1,
-          "state_average_2008" => 19.6,
-          "school_value_2013" => 23.3,
-          "state_average_2013" => 20.1,
-          "school_value_2014" => 24.9,
-          "state_average_2014" => 20.4,
-          "state_average_2012" => 20.1,
-          "state_average_2011" => 20.2008,
-          "state_average_2015" => 20.5,
-          "state_average_2016" => 20.6
-        },
-        {
-          "breakdown" => "All students",
-          "original_breakdown" => "All students",
-          "created" => "2015-02-05T13:47:47-08:00",
-          "district_average" => 19.6,
-          "school_value" => 24.4,
-          "source" => "CA Dept. of Education",
-          "state_average" => 20.1,
-          "subject" => "Math",
-          "year" => 2014,
-          "state_average_2006" => 18.6,
-          "state_average_2007" => 18.9,
-          "state_average_2008" => 19.3,
-          "school_value_2013" => 22.8,
-          "state_average_2013" => 20.1,
-          "school_value_2014" => 24.4,
-          "state_average_2014" => 20.1,
-          "state_average_2012" => 20.1,
-          "state_average_2011" => 20.0117,
-          "state_average_2015" => 20.0,
-          "state_average_2016" => 20.0
-        },
-        {
-          "breakdown" => "All students",
-          "original_breakdown" => "All students",
-          "created" => "2015-02-05T13:47:47-08:00",
-          "district_average" => 20.4,
-          "school_value" => 24.1,
-          "source" => "CA Dept. of Education",
-          "state_average" => 20.3,
-          "subject" => "All subjects",
-          "year" => 2014,
-          "state_average_2006" => 19.0,
-          "state_average_2007" => 19.0,
-          "state_average_2008" => 19.4,
-          "school_value_2013" => 22.8,
-          "state_average_2013" => 20.1,
-          "school_value_2014" => 24.1,
-          "state_average_2014" => 20.3,
-          "state_average_2012" => 20.0,
-          "state_average_2011" => 19.9235,
-          "state_average_2015" => 20.1,
-          "state_average_2016" => 20.4
-        }
-      ],
-      # TODO: Add SAT examples
     }.to_json)
     updated Time.now
   end
 
   factory :cached_ethnicity_data, class: SchoolCache do
-    name 'characteristics'
+    name 'metrics'
     sequence(:school_id) { |n| n }
     state 'CA'
     value ({
       'Ethnicity' => [{
         "breakdown" => "White",
-        "original_breakdown" => "White",
         "created" => "2014-05-02T09:55:10-07:00",
         "district_average" => 78.0,
         "school_value" => 81.3688,
         "source" => "NCES",
         "state_average" => 65.0,
-        "year" => 2012,
-        "school_value_2011" => 83.6502,
-        "state_average_2011" => 66.2707,
-        "school_value_2012" => 81.3688,
-        "state_average_2012" => 65.0
+        "year" => 2012
       }]
     }.to_json)
     updated Time.now

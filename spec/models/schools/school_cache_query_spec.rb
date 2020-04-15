@@ -8,7 +8,7 @@ describe SchoolCacheQuery do
 
     context 'when asking for 2 out of 3 cache keys' do
       before do
-        FactoryBot.create(:school_characteristic_responses, state: 'CA', school_id: 1)
+        FactoryBot.create(:school_metrics_responses, state: 'CA', school_id: 1)
         FactoryBot.create(:cached_ratings, state: 'CA', school_id: 1)
         FactoryBot.create(:school_cache_esp_responses, state: 'CA', school_id: 1)
       end

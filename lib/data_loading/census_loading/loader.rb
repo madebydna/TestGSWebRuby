@@ -1,6 +1,6 @@
 class CensusLoading::Loader < CensusLoading::Base
 
-  CACHE_KEY = 'characteristics'
+  CACHE_KEY = 'metrics'
   DATA_TYPE = :census
 
   # Best ordering: first create data sets, then gs_schooldb.census_* rows, then value row
@@ -29,7 +29,7 @@ class CensusLoading::Loader < CensusLoading::Base
         elsif census_update.action == ACTION_BUILD_CACHE
           # do nothing
         else
-          # No more writes to census tables!
+          puts "No more writes to census tables!"
           # insert_into!(census_update, entity)
           # CharacteristicsCaching::Base.clear_rails_caches
         end

@@ -399,13 +399,6 @@ module SchoolProfiles
       visible
     end
 
-    # def characteristics
-    #   @school_cache_data_reader.characteristics.slice(
-    #     '4-year high school graduation rate',
-    #     'Percent of students who meet UC/CSU entrance requirements'
-    #   )
-    # end
-
     def metrics
       @school_cache_data_reader.metrics.slice(
         '4-year high school graduation rate',

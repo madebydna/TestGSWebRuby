@@ -4,9 +4,9 @@ class OspData
 
   attr_accessor :cachified_school, :osp_form_responses
 
-  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses)
+  SCHOOL_CACHE_KEYS = %w(metrics esp_responses)
 
-  ESP_KEY_TO_CENSUS_KEY = {'pk_capacity' => 'capacity','student_enrollment' => 'Enrollment' , 'administrator_name' => 'Head official name' , 'administrator_email' => 'Head official email address'}
+  ESP_KEY_TO_CENSUS_KEY = {'pk_capacity' => 'capacity', 'student_enrollment' => 'Enrollment', 'administrator_name' => 'Head official name', 'administrator_email' => 'Head official email address'}
 
   ESP_KEY_TO_SCHOOL_KEY = {'address' => 'street' , 'grade_levels' => 'level' , 'school_url' => 'home_page_url' ,'school_phone' => 'phone' ,'school_fax' => 'fax'}
 
@@ -24,7 +24,7 @@ class OspData
       school_key = ESP_KEY_TO_SCHOOL_KEY[key]
       osp_response_values = most_recent_osp_form_response(key, question_id)
       if census_key.present?
-        school_cache_values_from_census_data  = cachified_school.census_value(census_key, grade: nil, number_value: false).to_s.split(',')
+        school_cache_values_from_census_data  = cachified_school.census_value(census_key, grade: 'All', number_value: false).to_s.split(',')
         value = school_cache_values_from_census_data
         if osp_response_values.present? && school_cache_values_from_census_data.present? && cachified_school.created_time(census_key).present?
           value = cachified_school.created_time(census_key) > osp_response_values[:created_at] ? school_cache_values_from_census_data : osp_response_values[:values]

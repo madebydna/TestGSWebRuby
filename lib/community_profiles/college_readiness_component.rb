@@ -26,7 +26,7 @@ module CommunityProfiles
             GSLogger.error(
               :misc,
               nil,
-              message: "Expected to find unique characteristics value: #{message}",
+              message: "Expected to find unique metrics value: #{message}",
               vars: other_helpful_vars
             )
           end
@@ -144,11 +144,11 @@ module CommunityProfiles
       POST_SECONDARY + REMEDIATION_SUBGROUPS + SECOND_YEAR
     end
 
-    # Filters characteristics data from DB
+    # Filters metrics data from DB
     # these have been converted to instances of either CharacteristicsValue or GradutesRemediationValue
     def data_type_hashes
       @_data_type_hashes ||= begin
-        hashes = metrics_data # characteristics_data
+        hashes = metrics_data
         hashes.merge!(gsdata_data) if entity_type == 'district'
         return [] if hashes.blank?
         ActSatHandler.new(hashes).handle_ACT_SAT_to_display!

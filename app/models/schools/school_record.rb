@@ -387,7 +387,7 @@ class SchoolRecord < ActiveRecord::Base
     level_code == 'h'
   end
 
-  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses test_scores nearby_schools ratings)
+  SCHOOL_CACHE_KEYS = %w(metrics esp_responses test_scores nearby_schools ratings)
 
   # TODO: Check if these are still used. Cache access should be sent to the data readers service objects
   def cache_results

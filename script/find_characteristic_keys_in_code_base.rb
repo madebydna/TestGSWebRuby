@@ -10,11 +10,11 @@
 # run by:
 # bundle exec rails runner script/find_characteristic_keys_in_code_base.rb
 
-filename = '/tmp/district_characteristic_keys.txt'
+filename = '/tmp/district_metrics_keys.txt'
 
-# school_characteristic_keys.txt
-# state_characteristic_keys.txt
-# district_characteristic_keys.txt
+# school_metrics_keys.txt
+# state_metrics_keys.txt
+# district_metrics_keys.txt
 
 results = {}
 
@@ -53,6 +53,6 @@ m = results.delete_if { |k, v| v.nil? || v == '' }.keys.uniq.join("\n")
 puts m
 
 # write results to file
-f = File.open('/tmp/district_characteristic_keys_used.txt', "w")
+f = File.open('/tmp/district_metrics_keys_used.txt', "w")
 f.puts m
 f.close

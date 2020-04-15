@@ -72,8 +72,6 @@ class SchoolCacheResults
         CachedRatingsMethods
       when 'metrics'
         CachedMetricsMethods
-      # when 'characteristics'
-      #   CachedCharacteristicsMethods
       when 'reviews_snapshot'
         CachedReviewsSnapshotMethods
       when 'esp_responses'

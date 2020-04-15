@@ -4,7 +4,7 @@ module HeaderCaching
   class CityHeaderCacher < CityCacher
 
     CACHE_KEY = 'header'
-    SCHOOL_CACHE_KEYS = ['characteristics']
+    SCHOOL_CACHE_KEYS = ['metrics']
 
     def self.listens_to?(data_type)
       data_type == :header

@@ -111,22 +111,6 @@ module SchoolProfiles
       end
     end
 
-    # def characteristics_data
-    #   array_of_hashes = @school_cache_data_reader.characteristics_data(*included_data_types(:characteristics))
-    #   array_of_hashes.each_with_object({}) do |(data_type, array), accum|
-    #     accum[data_type] =
-    #       array.map do |h|
-    #         klass = if data_type == GRADUATES_REMEDIATION
-    #                   GradutesRemediationValue
-    #                 else
-    #                   CharacteristicsValue
-    #                 end
-    #         klass.from_hash(h.merge('data_type' => data_type))
-    #       end
-    #         .extend(CharacteristicsValue::CollectionMethods)
-    #   end
-    # end
-
     def metrics_data
       array_of_hashes = @school_cache_data_reader.metrics_data(*included_data_types(:characteristics))
       array_of_hashes.each_with_object({}) do |(data_type, array), accum|
@@ -151,7 +135,7 @@ module SchoolProfiles
         hashes = hashes.map do |key, array|
           array = array.for_all_students.having_school_value.having_most_recent_date
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
-            # This is for characteristics
+            # This is for metrics
             array = array.no_subject_or_all_subjects_or_graduates_remediation
           end
           array

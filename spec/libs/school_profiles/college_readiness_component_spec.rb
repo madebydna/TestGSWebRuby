@@ -138,7 +138,7 @@ describe 'CollegeReadinessComponent' do
         expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::OLD_SAT_RANGE)
       end
 
-      it 'should pull from the "All students" breakdown for characteristics' do
+      it 'should pull from the "All students" breakdown for metrics' do
         data_points = subject.data_values.find {|item| item.label == '4-year high school graduation rate' }
         expect(data_points).to be_present
         expect(data_points.score).to eq(50)
@@ -178,7 +178,6 @@ describe 'CollegeReadinessComponent' do
               'breakdown' => 'All students',
               'subject' => 'All subjects',
               'school_value' => 1600,
-              'school_value_2015' => 1600,
               'year' => 2015,
               'state_average' => 1400
             }
@@ -188,7 +187,6 @@ describe 'CollegeReadinessComponent' do
               'breakdown' => 'All students',
               'subject' => 'All subjects',
               'school_value' => 1600,
-              'school_value_2016' => 1600,
               'year' => 2016,
               'state_average' => 1400
             }
@@ -222,8 +220,6 @@ describe 'CollegeReadinessComponent' do
                     'breakdown' => 'All students',
                     'subject' => 'All subjects',
                     'school_value' => 1400,
-                    'school_value_2016' => 1400,
-                    'school_value_2015' => 1800,
                     'year' => 2016,
                     'state_average' => 1200
                 }
@@ -338,46 +334,34 @@ describe 'CollegeSuccessComponent' do
       "Percent Needing Remediation for College" => [
         {
           "breakdown"=>"All students",
-          "original_breakdown"=>"All students",
           "created"=>"2017-04-19T23:20:49-07:00",
           "school_value"=>16.0,
           "source"=>"Oklahoma State Regents for Higher Education",
           "state_average"=>35.7,
           "subject"=>"Math",
-          "year"=>2015,
-          "school_value_2015"=>16.0,
-          "state_average_2015"=>35.7
+          "year"=>2015
         }, {
           "breakdown"=>"All students",
-          "original_breakdown"=>"All students",
           "created"=>"2017-04-19T23:20:49-07:00",
           "school_value"=>5.3,
           "source"=>"Oklahoma State Regents for Higher Education",
           "state_average"=>8.3,
           "subject"=>"Reading",
-          "year"=>2015,
-          "school_value_2015"=>5.3,
-          "state_average_2015"=>8.3
+          "year"=>2015
         }, {"breakdown"=>"All students",
-            "original_breakdown"=>"All students",
             "created"=>"2017-04-19T23:20:49-07:00",
             "school_value"=>1.8,
             "source"=>"Oklahoma State Regents for Higher Education",
             "state_average"=>15.7,
             "subject"=>"English",
-            "year"=>2015,
-            "school_value_2015"=>1.8,
-            "state_average_2015"=>15.7
+            "year"=>2015
         }, {"breakdown"=>"All students",
-            "original_breakdown"=>"All students",
             "created"=>"2017-04-19T23:20:48-07:00",
             "school_value"=>0.0,
             "source"=>"Oklahoma State Regents for Higher Education",
             "state_average"=>1.1,
             "subject"=>"Science",
-            "year"=>2014,
-            "school_value_2015"=>0.0,
-            "state_average_2015"=>1.1
+            "year"=>2014
         }
       ]
     }

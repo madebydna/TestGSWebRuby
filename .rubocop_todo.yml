@@ -118,7 +118,6 @@ Layout/EmptyLinesAroundAccessModifier:
     - 'app/controllers/modules/advertising_concerns.rb'
     - 'app/controllers/modules/deferred_action_concerns.rb'
     - 'app/controllers/signin_controller.rb'
-    - 'app/models/schools/cached_characteristics_methods.rb'
     - 'lib/cache_populator/argument_parser.rb'
     - 'lib/cache_populator/base.rb'
     - 'lib/etl/gs_ids_fetcher.rb'
@@ -547,7 +546,6 @@ Lint/DefEndAlignment:
   Exclude:
     - 'app/decorators/review_topic_decorator.rb'
     - 'app/models/school_user.rb'
-    - 'app/models/schools/cached_characteristics_methods.rb'
     - 'db/migrate/20130820233707_create_rails_admin_histories_table.rb'
     - 'lib/community_profiles/academics.rb'
     - 'lib/gsdata_caching/gs_data_value.rb'
@@ -701,7 +699,6 @@ Lint/ShadowingOuterLocalVariable:
   Exclude:
     - 'app/models/external_content/construct_from_hash.rb'
     - 'app/models/review_vote.rb'
-    - 'app/models/schools/cached_characteristics_methods.rb'
     - 'app/models/schools/school.rb'
     - 'lib/cache_populator/argument_parser.rb'
     - 'lib/data_loading/census_loading/breakdowns.rb'
@@ -876,7 +873,6 @@ Naming/MethodName:
     - 'app/controllers/modules/search_request_params.rb'
     - 'app/controllers/osp_controller.rb'
     - 'app/controllers/states_controller.rb'
-    - 'app/models/schools/cached_characteristics_methods.rb'
     - 'app/services/act_sat_handler.rb'
     - 'lib/community_profiles/college_readiness.rb'
     - 'spec/support/rspec_extensions.rb'
@@ -1139,7 +1135,6 @@ Style/CommentedKeyword:
     - 'lib/school_cache/display_range.rb'
     - 'lib/school_cache/feed_characteristics_caching/feed_characteristics_cacher.rb'
     - 'lib/search/solr_autosuggest_query.rb'
-    - 'lib/state_cache/characteristics_caching/state_characteristics_cacher.rb'
 
 # Offense count: 319
 # Cop supports --auto-correct.
@@ -1318,7 +1313,6 @@ Style/IdenticalConditionalBranches:
   Exclude:
     - 'app/controllers/modules/session_concerns.rb'
     - 'app/models/osp/osp_data.rb'
-    - 'app/models/schools/cached_characteristics_methods.rb'
     - 'config/initializers/extensions/hash.rb'
     - 'config/initializers/extensions/i18n.rb'
     - 'lib/etl/test_processors/az_test_processor_2016_AIMS_AZMERIT.rb'
@@ -1520,7 +1514,6 @@ Style/Next:
 # Cop supports --auto-correct.
 Style/NilComparison:
   Exclude:
-    - 'app/models/schools/cached_characteristics_methods.rb'
     - 'lib/etl/step.rb'
     - 'lib/etl/transforms/trim_leading_zeros.rb'
     - 'lib/etl/transforms/unique_values.rb'
@@ -1736,7 +1729,6 @@ Style/StringLiteralsInInterpolation:
     - 'app/controllers/modules/search/search_table_concerns.rb'
     - 'app/controllers/modules/url_helper.rb'
     - 'app/models/admin/data_load_schedule.rb'
-    - 'app/models/schools/cached_characteristics_methods.rb'
     - 'app/models/schools/cached_ratings_methods.rb'
     - 'lib/etl/logging.rb'
     - 'lib/school_profiles/college_success.rb'
@@ -1846,7 +1838,6 @@ Style/YodaCondition:
     - 'lib/district_cache/feed_district_characteristics_caching/feed_district_characteristics_cacher.rb'
     - 'lib/district_cache/ratings_caching/district_ratings_cacher.rb'
     - 'lib/district_cache/test_scores_caching/district_base.rb'
-    - 'lib/school_cache/characteristics_caching/base.rb'
     - 'lib/school_cache/directory_caching/directory_cacher.rb'
     - 'lib/school_cache/esp_responses_caching/esp_responses_cacher.rb'
     - 'lib/school_cache/feed_characteristics_caching/feed_characteristics_cacher.rb'
@@ -1854,7 +1845,6 @@ Style/YodaCondition:
     - 'lib/school_cache/ratings_caching/gsdata_ratings_cacher.rb'
     - 'lib/school_cache/reviews_caching/reviews_snapshot_cacher.rb'
     - 'lib/school_cache/test_scores_caching/base.rb'
-    - 'lib/state_cache/characteristics_caching/state_characteristics_cacher.rb'
     - 'spec/models/modules/fit_score_concerns_spec.rb'
 
 # Offense count: 19
