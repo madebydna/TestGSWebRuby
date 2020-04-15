@@ -9,12 +9,10 @@
   <h3><%= t(path_to_yml + 'newsletters_heading') %></h3>
   <div>
     <div class="fl prm mtm">
-      <div class="js-checkbox iconx16 js-icon <%= greatnews_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-           data-toggle="button" readonly="">
-        <input name="subscriptions_en[]"
-               disabled="true"
-               type="hidden"
-               value="greatnews">
+      <div class="js-checkbox iconx16 js-icon js-subscriptionCheckbox <%= greatnews_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+           data-toggle="button"
+           data-list="greatnews"
+           data-language="en">
       </div>
     </div>
     <div style="overflow:hidden">
@@ -34,12 +32,10 @@
 
   <div class="mtm">
     <div class="fl prm mtm">
-      <div class="js-checkbox iconx16 js-icon <%= teacher_list_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-           data-toggle="button" readonly="">
-        <input name="subscriptions_en[]"
-               disabled="true"
-               type="hidden"
-               value="teacher_list">
+      <div class="js-checkbox iconx16 js-icon js-subscriptionCheckbox <%= teacher_list_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+           data-toggle="button"
+           data-list="teacher_list"
+           data-language="en">
       </div>
     </div>
     <div style="overflow:hidden">
@@ -53,7 +49,7 @@
   <div class="mtm">
     <% @mss_subscriptions_en.each do |subscription| %>
       <div class="fl prm mts">
-        <div class="js-checkbox js-inverted-checkbox iconx16 js-icon i-16-blue-check-box active" data-toggle="button" readonly="">
+        <div class="js-checkbox js-inverted-checkbox iconx16 js-icon js-subscriptionCheckbox i-16-blue-check-box active" data-toggle="button" readonly="">
           <input name="subscription_ids_to_remove_en[]" disabled="true" type="hidden" value="<%= subscription.id %>">
         </div>
       </div>
@@ -68,12 +64,10 @@
 
   <div class="mtm">
     <div class="fl prm mtm">
-      <div class="js-checkbox iconx16 js-icon <%= sponsor_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-           data-toggle="button" readonly="">
-        <input name="subscriptions_en[]"
-               disabled="true"
-               type="hidden"
-               value="sponsor">
+      <div class="js-checkbox iconx16 js-icon js-subscriptionCheckbox <%= sponsor_en ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+           data-toggle="button"
+           data-list="sponsor"
+           data-language="en">
       </div>
     </div>
     <div style="overflow:hidden">
