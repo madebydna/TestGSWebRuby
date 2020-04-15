@@ -77,8 +77,8 @@ module Subscriptions
     end
   end
 
-  def subscriptions_matching_lists(lists, language = 'en')
-    subscriptions.where({ list: lists, language: language })
+  def subscriptions_matching_lists(lists)
+    subscriptions.where(list: lists)
   end
 
 end
