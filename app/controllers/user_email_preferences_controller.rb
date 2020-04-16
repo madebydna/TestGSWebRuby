@@ -68,8 +68,11 @@ class UserEmailPreferencesController < ApplicationController
 
   def mss_subscriptions(all_user_subscriptions)
     sub_whitelist = %w(mystat mystat_private mystat_unverified)
-    filtered_subs = all_user_subscriptions.select { |subscription| sub_whitelist.include? subscription[:list] }
-                        .extend(SchoolAssociationPreloading).preload_associated_schools!
+    filtered_subs = all_user_subscriptions.select do |subscription|
+      sub_whitelist.include? subscription[:list] and
+          subscription[:school_id].present? and
+          subscription[:state].present?
+    end.extend(SchoolAssociationPreloading).preload_associated_schools!
     create_mss_structure(filtered_subs)
   end
 
