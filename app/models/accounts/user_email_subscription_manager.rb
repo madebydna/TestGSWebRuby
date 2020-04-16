@@ -57,9 +57,13 @@ class UserEmailSubscriptionManager
       subs_to_delete.each do |subscription|
         list = subscription[0]
         language = subscription[1]
-        state = list[2]
-        school_id = list[3]
-        subscriptions += @user.subscriptions.where(list: list, language: language, school_id: school_id, state: state)
+        if subscription[2].present? && subscription[3].present?
+          state = subscription[2]
+          school_id = subscription[3]
+          subscriptions += @user.subscriptions.where(list: list, language: language, school_id: school_id, state: state)
+        else
+          subscriptions += @user.subscriptions.where(list: list, language: language)
+        end
       end
       subscriptions.each { |s| SubscriptionHistory.archive_subscription(s) }
       subscriptions.each(&:destroy)
