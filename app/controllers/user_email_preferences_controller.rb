@@ -18,7 +18,6 @@ class UserEmailPreferencesController < ApplicationController
     @subscriptions = subscriptions(all_user_subscriptions)
     @mss_subscriptions = mss_subscriptions(all_user_subscriptions)
     @grades_hashes = create_grades
-
     account_meta_tags('My email preferences')
     set_tracking_info
   end
@@ -26,10 +25,8 @@ class UserEmailPreferencesController < ApplicationController
 
   def update
     UserEmailSubscriptionManager.new(@current_user).update(process_subscriptions(param_subscriptions))
+    UserEmailSubscriptionManager.new(@current_user).update_mss(process_schools(param_schools))
     UserEmailGradeManager.new(@current_user).update(process_grades(param_grades))
-
-    # Subscription.where(id: school_subscription_ids_to_remove_en, member_id: current_user.id).destroy_all if school_subscription_ids_to_remove_en
-    # Subscription.where(id: school_subscription_ids_to_remove_es, member_id: current_user.id).destroy_all if school_subscription_ids_to_remove_es
     flash_notice t('controllers.user_email_preferences_controller.success')
     redirect_to user_preferences_path
   end
@@ -61,7 +58,7 @@ class UserEmailPreferencesController < ApplicationController
   end
 
   def subscriptions(all_user_subscriptions)
-    sub_whitelist = %w(sponsor teacher_list greatnews greatnewskids)
+    sub_whitelist = %w(sponsor teacher_list greatnews greatkidsnews)
     subs = all_user_subscriptions.select { |subscription| sub_whitelist.include? subscription[:list] }
     subs.map { |s| {list: s[:list], language: s[:language]} }
   end
