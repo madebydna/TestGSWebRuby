@@ -27,21 +27,7 @@
   </div>
 
   <div class="mtm">
-    <div class="strong subtitle-md" style="padding-left: 26px"><%= t(path_to_yml + 'school_updates') %></div>
-    <% @mss_subscriptions[:en][:schools]&.each do |subscription| %>
-      <div class="fl prm mts">
-        <div class="js-checkbox js-inverted-checkbox iconx16 js-icon js-subscriptionCheckbox<%= subscription[:active] == true ? ' i-16-blue-check-box active' : ' i-grey-unchecked-box' %>" data-toggle="button"
-             data-list="<%= subscription[:list] %>"
-             data-language="<%= subscription[:language] %>"
-             data-state="<%= subscription[:state] %>"
-             data-school-id="<%= subscription[:school_id] %>">
-        </div>
-      </div>
-      <div style="overflow:hidden">
-        <%= subscription[:school_name] %>, <%= subscription[:school_city] %>, <%= subscription[:school_state] %>
-      </div>
-      <div class="clearfix"></div>
-    <% end %>
+    <%= render :partial => 'school_mss_list', :locals => {path_to_yml: path_to_yml, language: :en} %>
   </div>
 
   <div class="mtm">

@@ -1,0 +1,19 @@
+<% if @mss_subscriptions.present? &&
+    @mss_subscriptions[language].present? &&
+    @mss_subscriptions[language][:schools].present? %>
+  <div class="strong subtitle-md" style="padding-left: 26px"><%= t(path_to_yml + 'school_updates') %></div>
+  <% @mss_subscriptions[language][:schools]&.each do |subscription| %>
+    <div class="fl prm mts">
+      <div class="js-checkbox js-inverted-checkbox iconx16 js-icon js-mssSubscriptionCheckbox<%= subscription[:active] == true ? ' i-16-blue-check-box active' : ' i-grey-unchecked-box' %>" data-toggle="button"
+           data-list="<%= subscription[:list] %>"
+           data-language="<%= subscription[:language] %>"
+           data-state="<%= subscription[:state] %>"
+           data-school-id="<%= subscription[:school_id] %>">
+      </div>
+    </div>
+    <div style="overflow:hidden">
+      <%= subscription[:school_name] %>, <%= subscription[:school_city] %>, <%= subscription[:school_state] %>
+    </div>
+    <div class="clearfix"></div>
+  <% end %>
+<% end %>

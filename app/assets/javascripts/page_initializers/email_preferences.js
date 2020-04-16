@@ -35,7 +35,6 @@ $(function() {
         });
         $('.js-gradeSubmitValue').val(JSON.stringify(grades));
 
-        console.log("form");
         $form.find('.js-subscriptionCheckbox.active').each(function () {
           subscriptions.push([$(this).data('list'), $(this).data('language')]);
         });
@@ -43,7 +42,7 @@ $(function() {
 
         console.log("form: " + $('.js-subscriptionSubmitValue').val());
 
-        $form.find('.js-schoolCheckbox.active').each(function () {
+        $form.find('.js-mssSubscriptionCheckbox.active').each(function () {
           schools.push([$(this).data('list'), $(this).data('language'), $(this).data('state'), $(this).data('schoolId')]);
         });
         $('.js-schoolSubmitValue').val(JSON.stringify(schools));
