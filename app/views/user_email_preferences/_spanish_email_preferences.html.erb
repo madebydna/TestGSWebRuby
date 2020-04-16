@@ -1,6 +1,3 @@
-<% greatnews_es = @current_preferences_es.include?("greatnews") %>
-<% greatkidsnews_es = @current_preferences_es.include?("greatkidsnews") %>
-
 <% path_to_yml = "user_email_preferences.email_preferences.es_news." %>
 
 
@@ -11,7 +8,7 @@
   <%= render partial: 'subscription', :locals => {
       list: 'greatnews',
       language: 'es',
-      active: @current_preferences_es.include?("greatnews"),
+      active: @subscriptions.select { |sub| sub[:list] == "greatnews" and sub[:language] == "es" }.present?,
       title: path_to_yml + 'greatnews_title',
       subtitle: path_to_yml + 'greatnews_subtitle'} %>
 
@@ -22,18 +19,20 @@
   <% end %>
 
   <div class="mtm">
-    <% @mss_subscriptions_es&.each do |subscription| %>
+    <div class="strong subtitle-md" style="padding-left: 26px"><%= t(path_to_yml + 'school_updates') %></div>
+    <% @mss_subscriptions[:es][:schools]&.each do |subscription| %>
       <div class="fl prm mts">
-        <div class="js-checkbox js-inverted-checkbox iconx16 js-icon i-16-blue-check-box active" data-toggle="button" readonly="">
-          <input name="subscription_ids_to_remove_es[]" disabled="true" type="hidden" value="<%= subscription.id %>">
+        <div class="js-checkbox js-inverted-checkbox iconx16 js-icon js-schoolCheckbox<%= subscription[:active] ? ' i-16-blue-check-box active' : ' i-grey-unchecked-box' %>" data-toggle="button"
+             data-list="<%= subscription[:list] %>"
+             data-language="<%= subscription[:language] %>"
+             data-state="<%= subscription[:state] %>"
+             data-school-id="<%= subscription[:school_id] %>">
         </div>
       </div>
       <div style="overflow:hidden">
-        <%= t(path_to_yml + 'school_updates') %>: <%= subscription.school.name %>, <%= subscription.school.city %>
-        , <%= subscription.school.state %>
+        <%= subscription[:school_name] %>, <%= subscription[:school_city] %>, <%= subscription[:school_state] %>
       </div>
       <div class="clearfix"></div>
     <% end %>
   </div>
-
 </div>

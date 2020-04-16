@@ -14,23 +14,15 @@ class UserEmailPreferencesController < ApplicationController
   def show
     @page_name = 'User Email Preferences' # This is also hardcoded in email_preferences.js
     gon.pagename = @page_name
-    @current_preferences_en = UserSubscriptions.new(@current_user).get.select { |sub| sub[:language] == 'en' }.map(&:list)
-    @current_preferences_es = UserSubscriptions.new(@current_user).get.select { |sub| sub[:language] == 'es' }.map(&:list)
-    account_meta_tags('My email preferences')
-
+    all_user_subscriptions = @current_user.subscriptions
+    @subscriptions = subscriptions(all_user_subscriptions)
+    @mss_subscriptions = mss_subscriptions(all_user_subscriptions)
     @grades_hashes = create_grades
-    @mss_subscriptions = current_user
-      .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified])
-      .extend(SchoolAssociationPreloading).preload_associated_schools!
-      # require 'pry'; binding.pry;
-    # @mss_subscriptions_en = current_user
-    #   .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified], "en")
-    #   .extend(SchoolAssociationPreloading).preload_associated_schools!
-    # @mss_subscriptions_es = current_user
-    #   .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified], "es")
-    #   .extend(SchoolAssociationPreloading).preload_associated_schools!
+
+    account_meta_tags('My email preferences')
     set_tracking_info
   end
+
 
   def update
     UserEmailSubscriptionManager.new(@current_user).update(process_subscriptions(param_subscriptions))
@@ -68,13 +60,56 @@ class UserEmailPreferencesController < ApplicationController
     params['subscription_ids_to_remove_es']
   end
 
-  def create_schools
-    schools = current_user
-    .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified])
-    .extend(SchoolAssociationPreloading).preload_associated_schools!
+  def subscriptions(all_user_subscriptions)
+    sub_whitelist = %w(sponsor teacher_list greatnews greatnewskids)
+    subs = all_user_subscriptions.select { |subscription| sub_whitelist.include? subscription[:list] }
+    subs.map { |s| {list: s[:list], language: s[:language]} }
+  end
 
-    # WIP
+  def mss_subscriptions(all_user_subscriptions)
+    sub_whitelist = %w(mystat mystat_private mystat_unverified)
+    filtered_subs = all_user_subscriptions.select { |subscription| sub_whitelist.include? subscription[:list] }
+                        .extend(SchoolAssociationPreloading).preload_associated_schools!
+    create_mss_structure(filtered_subs)
+  end
 
+  def create_mss_hash(subs, language, school_id, school_state, active)
+    s = subs.select { |sub| sub.school_id&.to_s == school_id and sub.school_state == school_state }.first
+    {
+        list: s[:list],
+        language: language,
+        school_id: s[:school_id],
+        active: active,
+        state: s[:state],
+        school_name: s.school.name,
+        school_city: s.school.city,
+        school_state: s.school.state
+    }
+  end
+
+  def create_mss_structure(subs)
+    schools = subs.map { |g| "#{g.state}#{g.school_id}" }.uniq.compact.select { |element| element&.size.to_i > 0 }
+    {
+        :en => {
+            :schools => schools.map { |school| create_school(school, subs, 'en') }
+        },
+        :es => {
+            :schools => schools.map { |school| create_school(school, subs, 'es') }
+        }
+    }
+  end
+
+  def mss_subscription_active?(subs, language, school_id, school_state)
+    subs.select do |sub|
+      sub[:school_id]&.to_s == school_id and sub[:state] == school_state and sub[:language] == language
+    end.present?
+  end
+
+  def create_school(school, subs, language)
+    school_id = school[2, 6]
+    school_state = school[0..1]
+    active = mss_subscription_active?(subs, language, school_id, school_state)
+    create_mss_hash(subs, language, school_id, school_state, active)
   end
 
 

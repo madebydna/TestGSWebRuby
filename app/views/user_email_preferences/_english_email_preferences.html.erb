@@ -7,7 +7,7 @@
   <%= render partial: 'subscription', :locals => {
       list: 'greatnews',
       language: 'en',
-      active: @current_preferences_en.include?("greatnews"),
+      active: @subscriptions.select { |sub| sub[:list] == "greatnews" and sub[:language] == "en" }.present?,
       title: path_to_yml + 'greatnews_title',
       subtitle: path_to_yml + 'greatnews_subtitle'} %>
 
@@ -21,24 +21,24 @@
     <%= render partial: 'subscription', :locals => {
         list: 'teacher_list',
         language: 'en',
-        active: @current_preferences_en.include?("teacher_list"),
+        active: @subscriptions.select { |sub| sub[:list] == "teacher_list" and sub[:language] == "en" }.present?,
         title: path_to_yml + 'teacher_list_title',
         subtitle: path_to_yml + 'teacher_list_subtitle'} %>
   </div>
 
   <div class="mtm">
     <div class="strong subtitle-md" style="padding-left: 26px"><%= t(path_to_yml + 'school_updates') %></div>
-    <% @mss_subscriptions&.each do |subscription| %>
+    <% @mss_subscriptions[:en][:schools]&.each do |subscription| %>
       <div class="fl prm mts">
-        <div class="js-checkbox js-inverted-checkbox iconx16 js-icon js-schoolCheckbox i-16-blue-check-box active" data-toggle="button"
-        data-list="<%= subscription[:list] %>"
-        data-language="<%= subscription[:language] %>"
-        data-state="<%= subscription[:state] %>"
-        data-school-id="<%= subscription[:school_id] %>">
+        <div class="js-checkbox js-inverted-checkbox iconx16 js-icon js-schoolCheckbox<%= subscription[:active] ? ' i-16-blue-check-box active' : ' i-grey-unchecked-box' %>" data-toggle="button"
+             data-list="<%= subscription[:list] %>"
+             data-language="<%= subscription[:language] %>"
+             data-state="<%= subscription[:state] %>"
+             data-school-id="<%= subscription[:school_id] %>">
         </div>
       </div>
       <div style="overflow:hidden">
-        <%= subscription.school.name %>, <%= subscription.school.city %>, <%= subscription.school.state %>
+        <%= subscription[:school_name] %>, <%= subscription[:school_city] %>, <%= subscription[:school_state] %>
       </div>
       <div class="clearfix"></div>
     <% end %>
@@ -48,7 +48,7 @@
     <%= render partial: 'subscription', :locals => {
         list: 'sponsor',
         language: 'en',
-        active: @current_preferences_en.include?("sponsor"),
+        active: @subscriptions.select { |sub| sub[:list] == "sponsor" and sub[:language] == "en" }.present?,
         title: path_to_yml + 'sponsor_title',
         subtitle: path_to_yml + 'sponsor_subtitle'} %>
   </div>
