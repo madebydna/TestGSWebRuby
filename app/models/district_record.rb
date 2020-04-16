@@ -3,7 +3,7 @@ class DistrictRecord < ActiveRecord::Base
 
   attr_accessible :state, :district_id, :state_id, :city, :county, :FIPScounty, :fax, :home_page_url, :lat, :lon,
   :name, :nces_code, :num_schools, :phone, :street, :zipcode, :level_code, :level, :mail_street,
-  :mail_city, :mail_zipcode, :zipcentroid, :type_detail, :active, :street_line_2,
+  :mail_city, :mail_zipcode, :zipcentroid, :type_detail, :street_line_2,
   :charter_only, :created, :modified
 
   # unique_id is composite of state and district_id, e.g. ca-1
@@ -17,7 +17,6 @@ class DistrictRecord < ActiveRecord::Base
   validates :district_id, uniqueness: { scope: :state }, on: :create
 
   scope :by_state, ->(state) { where(state: state) }
-  scope :active, -> { where(active: true) }
 
   def unique_id
     self[:unique_id] ||= "#{self.state}-#{self.district_id}"
@@ -28,8 +27,7 @@ class DistrictRecord < ActiveRecord::Base
   end
 
   def self.find_by_state_and_ids(state, ids = [])
-    by_state(state.downcase).
-      where(district_id: ids).active
+    by_state(state.downcase).where(district_id: ids)
   end
 
   def self.query_distance_function(lat, lon)

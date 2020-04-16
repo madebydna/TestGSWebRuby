@@ -4,7 +4,7 @@ module ExactTargetFileManager
       class DataReader
 
         def each_district
-          DistrictRecord.active.find_each do |district|
+          DistrictRecord.find_each do |district|
             yield DistrictDecorator.new(district)
           end
         end
