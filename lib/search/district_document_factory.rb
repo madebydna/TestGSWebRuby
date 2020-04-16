@@ -22,7 +22,7 @@ module Search
     private
 
     def ids_for_state(state)
-      DistrictRecord.by_state(state.downcase).active.where(charter_only: 0).pluck(:district_id)
+      DistrictRecord.by_state(state.downcase).where(charter_only: 0).pluck(:district_id)
     end
   end
 end

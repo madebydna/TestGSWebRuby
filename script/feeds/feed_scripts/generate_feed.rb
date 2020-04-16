@@ -140,8 +140,7 @@ module Feeds
       if district_ids.present?
         DistrictRecord.find_by_state_and_ids(state, district_ids)
       else
-        # DistrictRecord.by_state(state.downcase).active.order(:district_id)
-        DistrictRecord.where("unique_id like ?", "#{state.downcase}-%").active.order(:district_id)
+        DistrictRecord.where("unique_id like ?", "#{state.downcase}-%").order(:district_id)
       end
     end
 
