@@ -1,0 +1,41 @@
+<% path_to_yml = "user_email_preferences.email_preferences.en_news." %>
+
+<%# English Newsletters %>
+<div class="news-en tabcontent <%=I18n.locale == :en ? 'active' : '' %>">
+  <h3><%= t(path_to_yml + 'newsletters_heading') %></h3>
+
+  <%= render partial: 'subscription', :locals => {
+      list: 'greatnews',
+      language: 'en',
+      active: @subscriptions.select { |sub| sub[:list] == "greatnews" and sub[:language] == "en" }.present?,
+      title: path_to_yml + 'greatnews_title',
+      subtitle: path_to_yml + 'greatnews_subtitle'} %>
+
+  <%= render :partial => 'grades_display', :locals => { grades: @grades_hashes[:en][:overall] } %>
+
+  <% @grades_hashes[:en][:districts].each do |k| %>
+    <%= render :partial => 'grades_display', :locals => { grades: k } %>
+  <% end %>
+
+  <div class="mtm">
+    <%= render partial: 'subscription', :locals => {
+        list: 'teacher_list',
+        language: 'en',
+        active: @subscriptions.select { |sub| sub[:list] == "teacher_list" and sub[:language] == "en" }.present?,
+        title: path_to_yml + 'teacher_list_title',
+        subtitle: path_to_yml + 'teacher_list_subtitle'} %>
+  </div>
+
+  <div class="mtm">
+    <%= render :partial => 'school_mss_list', :locals => {path_to_yml: path_to_yml, language: :en} %>
+  </div>
+
+  <div class="mtm">
+    <%= render partial: 'subscription', :locals => {
+        list: 'sponsor',
+        language: 'en',
+        active: @subscriptions.select { |sub| sub[:list] == "sponsor" and sub[:language] == "en" }.present?,
+        title: path_to_yml + 'sponsor_title',
+        subtitle: path_to_yml + 'sponsor_subtitle'} %>
+  </div>
+</div>

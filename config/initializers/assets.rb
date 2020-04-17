@@ -1,4 +1,5 @@
 Rails.application.config.assets.precompile += [
+    'user_email_preferences.css',
     'user_help.js',
     'widget_map.js',
     'district-boundaries.css',

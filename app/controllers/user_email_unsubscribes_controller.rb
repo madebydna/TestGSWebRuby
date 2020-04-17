@@ -17,7 +17,7 @@ class UserEmailUnsubscribesController < ApplicationController
   end
 
   def create
-    UserSubscriptionManager.new(current_user).unsubscribe
+    UserEmailSubscriptionManager.new(current_user).unsubscribe
     flash_notice t('controllers.user_email_unsubscribes_controller.success')
     redirect_to user_preferences_path
   end

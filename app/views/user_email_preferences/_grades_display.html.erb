@@ -1,0 +1,43 @@
+<% title = grades[:title] %>
+<% subtitle = grades[:subtitle] %>
+<% label = grades[:label] %>
+<% available_grades = grades[:available_grades] %>
+<% active_grades = grades[:active_grades] %>
+<% language = grades[:language] %>
+<% district_id = grades[:district_id] %>
+<% district_state = grades[:district_state] %>
+
+<div class="mtm">
+  <div class="fl prm mtm">
+    <div class="js-checkbox iconx16 js-icon js-greatkidsnewsCheckbox js-subscriptionCheckbox <%= active_grades.present? ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+         data-toggle="button"
+         data-list="greatkidsnews"
+         data-language="<%= language %>">
+    </div>
+  </div>
+
+  <div style="overflow:hidden">
+    <div class="strong subtitle-md"><%= title %></div>
+    <p><%= t(subtitle) %></p>
+    <div class="ma">
+      <p><%= t(label) %></p>
+      <% available_grades.to_a.in_groups_of(7).each do |grade_group| %>
+        <div>
+          <% grade_group.compact.each do |grade, label| %>
+            <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton js-gradeCheckbox <%= 'active' if active_grades.include?(grade) %>"
+                style="min-width:30px"
+                data-grade="<%= grade %>"
+                data-toggle="button"
+                data-language="<%= language %>"
+                data-district-id="<%= district_id %>"
+                data-district-state="<%= district_state %>"
+            ><%= label %>
+            </div>
+          <% end %>
+        </div>
+        <div class="clearfix"></div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

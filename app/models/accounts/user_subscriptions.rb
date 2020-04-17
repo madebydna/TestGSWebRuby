@@ -6,7 +6,7 @@ class UserSubscriptions
 
   def get
     # Subscription#have_available? checks against a whitelist of subscription list values
-    @user.subscriptions.map { |sub| sub.list.to_sym if sub.list }.compact.select { |list| Subscription.have_available?(list) }
+    @user.subscriptions.select { |list| Subscription.have_available?(list[:list]) }
   end
 end
 
