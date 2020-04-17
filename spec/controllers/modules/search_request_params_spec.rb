@@ -43,7 +43,6 @@ describe SearchRequestParams do
         district = double
         expect(DistrictRecord).to receive(:by_state).with('ca').and_return(ar_stub)
         expect(ar_stub).to receive(:where).with(district_id: 1).and_return(ar_stub)
-        expect(ar_stub).to receive(:active).and_return(ar_stub)
         expect(ar_stub).to receive(:first).and_return(district)
         expect(subject).to be(district)
       end
@@ -61,7 +60,6 @@ describe SearchRequestParams do
         district = double
         expect(DistrictRecord).to receive(:by_state).with('ca').and_return(ar_stub)
         expect(ar_stub).to receive(:where).with(name: 'Oakland Unified').and_return(ar_stub)
-        expect(ar_stub).to receive(:active).and_return(ar_stub)
         expect(ar_stub).to receive(:first).and_return(district)
         expect(subject).to be(district)
       end
