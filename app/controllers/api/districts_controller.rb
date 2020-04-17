@@ -77,7 +77,6 @@ class Api::DistrictsController < ApplicationController
     @_get_districts ||= (
       districts = DistrictRecord.where(state: state.to_s.downcase).
         where(criteria).
-        active.
         limit(limit).
         offset(offset)
 

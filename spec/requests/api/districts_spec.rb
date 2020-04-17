@@ -47,14 +47,6 @@ describe "Districts API" do
       expect(errors).to be_present
     end
 
-    it 'does not return inactive district' do
-      s = create(:alameda_city_unified_district_record, active: false)
-      get "/gsr/api/districts/#{s.district_id}?state=#{s.state}", format: :json
-      expect(status).to eq(200)
-      expect(errors).to be_blank
-      expect(json).to be_blank
-    end
-
     it 'Returns a successful (empty) response if ID not found' do
       get "/gsr/api/districts/1?state=ca"
       expect(status).to eq(200)
@@ -120,14 +112,6 @@ describe "Districts API" do
       expect(status).to eq(200)
       expect(errors).to be_blank
       expect(districts.length).to eq(2)
-    end
-
-    it 'does not find inactive district' do
-      create(:alameda_city_unified_district_record, active: false)
-      get '/gsr/api/districts/?state=ca', format: :json
-      expect(status).to eq(200)
-      expect(errors).to be_blank
-      expect(districts).to be_blank
     end
 
     it 'Obeys limit param' do

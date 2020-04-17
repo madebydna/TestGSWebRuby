@@ -19,7 +19,7 @@ module CommunityParams
   end
 
   def district_record
-    @_district_record ||= DistrictRecord.find_by(state: States.abbreviation(state), name: district, active: 1)
+    @_district_record ||= DistrictRecord.find_by(state: States.abbreviation(state), name: district)
   end
 
   def state
