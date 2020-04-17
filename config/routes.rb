@@ -34,8 +34,8 @@ LocalizedProfiles::Application.routes.draw do
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
       to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}/#{params[:level]}", '/schools/')}?gradeLevels=#{params[:level][0]}&st=#{params[:type].split('-').last}" }
   get ':state/:city/:district_name/schools/', constraints: { state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/ }, as: :search_district_browse, to: 'search#search'
-    # This city regex allows for all characters except /
-    # http://guides.rubyonrails.org/routing.html#specifying-constraints
+  # This city regex allows for all characters except /
+  # http://guides.rubyonrails.org/routing.html#specifying-constraints
   get ':state/:city/:district_name/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/,
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
@@ -74,9 +74,9 @@ LocalizedProfiles::Application.routes.draw do
   get '/unsubscribe/' => 'user_email_unsubscribes#new', as: 'unsubscribe'
 
 
-  get '/newsletter/' => 'user_signup#show', as: 'user_signup'
-  get '/espanol/' => 'user_signup#show_spanish', as: 'user_signup_spanish'
-  post '/signup/' => 'user_signup#create', as: 'signup'
+  # get '/newsletter/' => 'user_signup#show', as: 'user_signup'
+  # get '/espanol/' => 'user_signup#show_spanish', as: 'user_signup_spanish'
+  # post '/signup/' => 'user_signup#create', as: 'signup'
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
