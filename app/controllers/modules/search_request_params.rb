@@ -206,14 +206,6 @@ module SearchRequestParams
     state && district
   end
 
-  def view
-    params['view']
-  end
-
-  def tableView
-    params['tableView']
-  end
-
   def city_browse?
     state.present? && city.present? && district.blank?
   end
@@ -260,14 +252,6 @@ module SearchRequestParams
 
   def extras_param
     params[:extras]&.split(',') || []
-  end
-
-  def view_param_name
-    'view'
-  end
-
-  def table_view_param_name
-    'tableView'
   end
 
   def view
