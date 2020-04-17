@@ -462,7 +462,8 @@ class SchoolRecord < ActiveRecord::Base
     school_record.assign_attributes(
       school.attributes.symbolize_keys.except(
         :id, #id is set as school_id
-        :modifiedBy # updated in school_record as modified_by
+        :modifiedBy, # updated in school_record as modified_by
+        :active
       ).merge({
         modified_by: school.modifiedBy #updates modified_by
       })

@@ -1,0 +1,8 @@
+.review-alternate-school-picker{
+
+  select{
+    @include select;
+    background-color: white;
+    min-width: 300px;
+  }
+}

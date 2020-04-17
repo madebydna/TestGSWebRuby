@@ -172,9 +172,9 @@ module SearchRequestParams
 
     @_district_record ||= begin
       if district_id
-        DistrictRecord.by_state(state.to_s).where(district_id: district_id).active.first
+        DistrictRecord.by_state(state.to_s).where(district_id: district_id).first
       elsif district
-        DistrictRecord.by_state(state.to_s).where(name: district).active.first
+        DistrictRecord.by_state(state.to_s).where(name: district).first
       end
     end
   end
@@ -204,14 +204,6 @@ module SearchRequestParams
 
   def district_browse?
     state && district
-  end
-
-  def view
-    params['view']
-  end
-
-  def tableView
-    params['tableView']
   end
 
   def city_browse?
@@ -260,14 +252,6 @@ module SearchRequestParams
 
   def extras_param
     params[:extras]&.split(',') || []
-  end
-
-  def view_param_name
-    'view'
-  end
-
-  def table_view_param_name
-    'tableView'
   end
 
   def view

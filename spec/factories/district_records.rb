@@ -33,7 +33,6 @@ FactoryBot.define do
     mail_zipcode "94501"
     zipcentroid 1
     type_detail 0
-    active 1
     created "2013-11-14 18:34:53"
     modified "2013-11-14 18:34:53"
     street_line_2 nil

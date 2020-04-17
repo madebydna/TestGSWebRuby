@@ -97,7 +97,7 @@ class ReviewPageSearchBox extends SearchBox {
     if (this.state.searchTerm.length >= 3){
       return(
         <div className="subtitle-sm tac" style={subtitleHeight}>
-          <a className="pointer" onClick={this.props.showStateSelector}>
+          <a style={{cursor: 'pointer'}} onClick={this.props.showStateSelector}>
             {t('school_picker.do_not_see_school_text')}
           </a>
         </div>
@@ -113,7 +113,7 @@ class ReviewPageSearchBox extends SearchBox {
         {this.displayDoNotSeeSchoolLink()}
         <div className="search-bar-osp js-autocompleteFieldContainer ma picker-border">
           <div className="full-width">
-          {this.searchBoxElement(false)}
+            {this.searchBoxElement(false)}
           </div>
         </div>
       </React.Fragment>

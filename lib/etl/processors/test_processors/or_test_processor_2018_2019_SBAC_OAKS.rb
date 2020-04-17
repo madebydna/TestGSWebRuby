@@ -16,7 +16,7 @@ class ORTestProcessor20182019SBACOAKS < GS::ETL::TestProcessor
     'Female' => 26,
     'Hispanic/Latino' => 19,
     'English Learners' => 32,
-    'LEP' => 32,
+    'LEP' => 32, #both map to 32
     'Male' => 25,
     'Multi-Racial' => 22,
     'Pacific Islander'=> 37,
@@ -67,7 +67,7 @@ class ORTestProcessor20182019SBACOAKS < GS::ETL::TestProcessor
               row[:description] = 'In 2017-18, Oregon administered state assessments to students. Oregon\'s Statewide Assessment System (OSAS) currently includes summative assessments administered annually by subject matter and grade. Pursuant to federal and state accountability requirements, Oregon public schools test students in English language arts and math in grades 3 through 8 & 11.'    
             elsif row[:year] == '2019'
               row[:date_valid] ='2019-01-01 00:00:00'
-              row[:description] = 'In 2018-2019, Tennessee used the Gateway/End-of-Course (EOC) exams to test high school students in language arts, math, science, and social studies upon completion of relevant courses. The Gateway/EOC exams are standards-based tests that measure how well students are mastering specific skills defined by the state of Tennessee. The goal is for all students to score at or above the proficient level.'
+              row[:description] = 'In 2018-19, Oregon administered state assessments to students. Oregon\'s Statewide Assessment System (OSAS) currently includes summative assessments administered annually by subject matter and grade. Pursuant to federal and state accountability requirements, Oregon public schools test students in English language arts and math in grades 3 through 8 & 11.'
             end
         end
         row

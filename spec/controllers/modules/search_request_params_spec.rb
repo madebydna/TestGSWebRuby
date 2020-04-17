@@ -38,12 +38,11 @@ describe SearchRequestParams do
         allow(search_module).to receive(:district).and_return(nil)
       end
 
-      it 'should query for active district by id' do
+      it 'should query for district by id' do
         ar_stub = double
         district = double
         expect(DistrictRecord).to receive(:by_state).with('ca').and_return(ar_stub)
         expect(ar_stub).to receive(:where).with(district_id: 1).and_return(ar_stub)
-        expect(ar_stub).to receive(:active).and_return(ar_stub)
         expect(ar_stub).to receive(:first).and_return(district)
         expect(subject).to be(district)
       end
@@ -56,12 +55,11 @@ describe SearchRequestParams do
         allow(search_module).to receive(:district).and_return('Oakland Unified')
       end
 
-      it 'should query for active district by name' do
+      it 'should query for district by name' do
         ar_stub = double
         district = double
         expect(DistrictRecord).to receive(:by_state).with('ca').and_return(ar_stub)
         expect(ar_stub).to receive(:where).with(name: 'Oakland Unified').and_return(ar_stub)
-        expect(ar_stub).to receive(:active).and_return(ar_stub)
         expect(ar_stub).to receive(:first).and_return(district)
         expect(subject).to be(district)
       end

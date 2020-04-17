@@ -28,6 +28,7 @@ class StudentGradeLevel < ActiveRecord::Base
       grades_uniq.each do |grade|
         if grade.present? && SUPPORTED_GRADES.include?(grade)
           language = (Array.wrap(language) & SUPPORTED_LANGUAGES).first || 'en'
+          # query for duplicate entries
           student = where(student_query_string(user_id, grade, language, district_id, district_state))
           # Log request if another record is found with these three variables since we remove unique constraint on this table
           if student.length > 1

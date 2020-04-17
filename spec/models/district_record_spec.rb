@@ -28,7 +28,7 @@ describe DistrictRecord do
   describe 'class methods' do
     before do
       @ca_1 = FactoryBot.create(:alameda_city_unified_district_record)
-      @ca_2 = FactoryBot.create(:oakland_unified_district_record, active: false)
+      @ca_2 = FactoryBot.create(:oakland_unified_district_record)
       @al_1 = FactoryBot.create(:shelby_school_district_record, state: "al")
     end
 
@@ -39,15 +39,6 @@ describe DistrictRecord do
         expect(ca_districts).to include(@ca_1.name)
         expect(ca_districts).to include(@ca_2.name)
         expect(ca_districts).not_to include(@al_1.name)
-      end
-    end
-
-    describe '.active' do
-      it 'filters for active districts' do
-        active_districts = DistrictRecord.active.map(&:name)
-        expect(active_districts).to include(@ca_1.name)
-        expect(active_districts).to include(@al_1.name)
-        expect(active_districts).not_to include(@ca_2.name)
       end
     end
 

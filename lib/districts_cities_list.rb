@@ -15,7 +15,6 @@ class DistrictsCitiesList
   def districts_cities_counties
     @_districts_cities_counties ||= (
       DistrictRecord.by_state(state.downcase)
-        .active
         .order(:name)
         .select(:unique_id, :name, :district_id, :state, :city, :county)
         .map(&:serializable_hash)
