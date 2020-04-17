@@ -23,12 +23,23 @@ $(function() {
         $("#tab-news-en").removeClass("tab-selected");
       });
 
-      $formContainer.find('.js-greatkidsnewsCheckbox').click(function(e) {
-        if ($(e.target).hasClass('i-grey-unchecked-box')) {
-          let assocGrades = $(this).parent().siblings().children().find('.js-gradeCheckbox');
-          assocGrades.removeClass('active');
+      $formContainer.on('click', '.js-greatkidsnewsCheckbox', function() {
+        if (!$(this).hasClass('active')) {
+          $(this).parent().siblings().find('.js-gradeCheckbox').each(function() {
+            $(this).removeClass('active');
+          })
         }
       });
+
+      // $formContainer.find('.js-gradeCheckbox').each(function() {
+      //   if (!$(this).hasClass('active')) {
+      //     let siblings = $(this).siblings().find('.js-gradeCheckbox.active');
+      //     if (siblings.length < 1) {
+      //       let parentCheckbox = $(this).parent().siblings().find('.js-greatkidsnewsCheckbox');
+      //       parentCheckbox.removeClass('active');
+      //     }
+      //   }
+      // });
 
       $formContainer.find('form').on('submit', function() {
         let $form = $(this);
