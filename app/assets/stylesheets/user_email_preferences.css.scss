@@ -2,11 +2,11 @@
 
 .user-email-preferences {
 
-  #news-en, #news-es {
+  .news-en, .news-es {
     display: none;
   }
 
-  #news-en.active, #news-es.active {
+  .news-en.active, .news-es.active {
     display: block;
   }
 
