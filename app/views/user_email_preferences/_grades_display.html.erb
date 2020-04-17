@@ -9,10 +9,10 @@
 
 <div class="mtm">
   <div class="fl prm mtm">
-    <div class="js-checkbox iconx16 js-icon js-greatkidsnewsCheckbox js-subscriptionCheckbox <%= active_grades ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
-          data-toggle="button"
-          data-list="greatkidsnews"
-          data-language="<%= language %>">
+    <div class="js-checkbox iconx16 js-icon js-greatkidsnewsCheckbox js-subscriptionCheckbox <%= active_grades.present? ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>"
+         data-toggle="button"
+         data-list="greatkidsnews"
+         data-language="<%= language %>">
     </div>
   </div>
 
