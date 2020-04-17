@@ -9,18 +9,18 @@ $(function() {
           .toggleClass('i-16-blue-check-box i-grey-unchecked-box');
       });
 
-      $('#tab-news-en').click(function() {
-        $("#news-en").addClass("active");
+      $('.tab-news-en').click(function() {
+        $(".news-en").addClass("active");
         $(this).addClass("tab-selected");
-        $("#news-es").removeClass("active");
-        $("#tab-news-es").removeClass("tab-selected");
+        $(".news-es").removeClass("active");
+        $(".tab-news-es").removeClass("tab-selected");
       });
 
-      $('#tab-news-es').click(function() {
-        $("#news-es").addClass("active");
+      $('.tab-news-es').click(function() {
+        $(".news-es").addClass("active");
         $(this).addClass("tab-selected");
-        $("#news-en").removeClass("active");
-        $("#tab-news-en").removeClass("tab-selected");
+        $(".news-en").removeClass("active");
+        $(".tab-news-en").removeClass("tab-selected");
       });
 
       $formContainer.on('click', '.js-greatkidsnewsCheckbox', function() {
