@@ -44,9 +44,9 @@ $(function() {
       }
 
       $formContainer.on('click', '.js-gradeCheckbox', function () {
-        let activeGbyG = $(this).parent().parent().find('.active');
-        let overallCheckboxParent = $(this).parent().parent().parent().siblings();
-        let overallCheckbox = overallCheckboxParent.find('.js-greatkidsnewsCheckbox');
+        var activeGbyG = $(this).parent().parent().find('.active');
+        var overallCheckboxParent = $(this).parent().parent().parent().siblings();
+        var overallCheckbox = overallCheckboxParent.find('.js-greatkidsnewsCheckbox');
         if (activeGbyG.length == 1) {
           if ($(this).hasClass('active')) {
             changeGbyGState(overallCheckbox, false)
@@ -58,10 +58,10 @@ $(function() {
       });
 
       $formContainer.find('form').on('submit', function() {
-        let $form = $(this);
-        let grades = [];
-        let subscriptions = [];
-        let schools = [];
+        var $form = $(this);
+        var grades = [];
+        var subscriptions = [];
+        var schools = [];
 
         $form.find('.js-gradeCheckbox.active').each(function () {
           grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
