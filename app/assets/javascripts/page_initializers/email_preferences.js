@@ -87,21 +87,5 @@ $(function() {
         });
       });
 
-      $formContainer.on('click', '.js-greatkidsnewsCheckbox:not(.active)', function () {
-        var $greatkidsnewsCheckbox = $('.js-greatkidsnews-checkbox');
-        if (!($greatkidsnewsCheckbox.hasClass('active'))) {
-          $greatkidsnewsCheckbox.trigger('click');
-        }
-      });
-
-      $formContainer.on('click', '.js-greatkidsnewsCheckbox.active', function () {
-        var $greatkidsnewsCheckbox = $('.js-greatkidsnews-checkbox');
-        var activeItems = $('.js-greatkidsnews-grades-checkbox.active');
-        if (activeItems.length < 2 && $greatkidsnewsCheckbox.hasClass('active')) {
-          $greatkidsnewsCheckbox.trigger('click');
-        }
-      });
-
-
     }
 });
