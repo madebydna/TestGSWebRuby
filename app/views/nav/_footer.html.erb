@@ -22,11 +22,7 @@
           <div class="col-xs-12 col-md-4">
             <div class="heading"><%= t('.link_list_2')[:heading] %></div>
             <ul>
-              <% if I18n.locale == :en  %>
-                <li><a href="javascript:void(0)" class="js-send-me-updates-button-footer"><%= t('.newsletter') %></a></li>
-              <% else %>
-                <li><a href="https://pub.s1.exacttarget.com/bkt2mldejgh" target="_blank"><%= t('.newsletter') %></a></li>
-              <% end %>
+              <li><a href="javascript:void(0)" class="js-send-me-updates-button-footer"><%= t('.newsletter') %></a></li>
               <% t('.link_list_2')[:links].each do |link| %>
                 <li>
                   <%= link_to(link[:text], link[:url] || send(link[:route] + '_path', lang: nil)) %>

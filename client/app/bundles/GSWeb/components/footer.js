@@ -34,15 +34,8 @@ export function setupNewsletterLink() {
         successMessageMSS(),
         'en'
       );
-    }
-    else {
-      if (currentLocale() == 'es'){
-        let win = window.open("https://pub.s1.exacttarget.com/bkt2mldejgh", '_blank');
-        win.focus();
-      }
-      else{
+    } else {
         signupAndGetNewsletter();
-      }
     }
   });
 
