@@ -1,8 +1,8 @@
 import ReactOnRails from 'react-on-rails';
 import SearchBox from 'react_components/search_box';
 import withViewportSize from 'react_components/with_viewport_size';
-import commonPageInit from './common';
-import {indexOf} from 'lodash';
+import commonPageInit from '../common';
+// import {indexOf} from 'lodash';
 
 const SearchBoxWrapper = withViewportSize({propName: 'size'})(SearchBox);
 ReactOnRails.register({
