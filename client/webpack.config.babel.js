@@ -49,7 +49,7 @@ const config = {
     'signin-page': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/signin_page'],
     'default-page-just-layout': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/default_page_just_layout'],
     'moderation-tools': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/moderation_tools'],
-    'user-email-preferences': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/pages/user_email_preferences'],
+    'user-email-preferences': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/user_email_preferences'],
   },
 
   optimization: {
