@@ -87,7 +87,7 @@ module Search
       type = solr_result['document_type']&.downcase
       school_id = solr_result['id'].split('-')&.last
 
-      url = 
+      url =
         if type == 'city'
           search_city_browse_path(
             state: gs_legacy_url_encode(States.state_name(state)),
@@ -95,13 +95,7 @@ module Search
             trailing_slash: true
           )
         elsif type == 'district'
-          search_district_browse_path(
-            state: gs_legacy_url_encode(States.state_name(state)),
-            city: gs_legacy_url_encode(city),
-            district_name: gs_legacy_url_encode(district),
-            trailing_slash: true,
-            st: ['public_charter', 'public', 'charter']
-          )
+          district_path_with_lang(States.state_name(state), city, district)
         elsif type == 'school'
           school_path(nil,
             state_name: States.state_name(state),
