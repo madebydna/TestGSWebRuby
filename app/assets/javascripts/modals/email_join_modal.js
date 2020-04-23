@@ -117,7 +117,7 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
       _this.getDeferred().resolve(_.merge({}, jqXHR, data1, data2, _this.getModalData()));
     }).fail(function(data1, data2) {
       _this.getDeferred().reject(_.merge({}, jqXHR, data1, data2, _this.getModalData()));
-    }).then(function(){ this.allowInteractions(); } , function(){ this.allowInteractions();})
+    }).then(() => this.allowInteractions(), () => this.allowInteractions());
   },
 
   getEmail: function getEmail() {
