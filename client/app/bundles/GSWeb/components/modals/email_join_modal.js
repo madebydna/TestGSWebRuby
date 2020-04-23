@@ -141,9 +141,7 @@ assign(EmailJoinModal.prototype, {
       _this.getDeferred().resolve(merge({}, data, data1, data2, _this.getModalData()));
     }).fail(function(data1, data2) {
       _this.getDeferred().reject(merge({}, data, data1, data2, _this.getModalData()));
-    });
-
-    this.allowInteractions();
+    }).then(() => this.allowInteractions(), () => this.allowInteractions());
   },
 
   getEmail: function getEmail() {

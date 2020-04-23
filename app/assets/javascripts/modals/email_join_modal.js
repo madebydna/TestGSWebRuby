@@ -110,16 +110,14 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
 
     $.when(
       this.signUpForSponsorsList(),
-        this.signUpForTeacherList(),
+      this.signUpForTeacherList(),
       this.createStudents(),
       this.signUpForGradeByGrade()
     ).done(function(data1, data2) {
       _this.getDeferred().resolve(_.merge({}, jqXHR, data1, data2, _this.getModalData()));
     }).fail(function(data1, data2) {
       _this.getDeferred().reject(_.merge({}, jqXHR, data1, data2, _this.getModalData()));
-    });
-
-    this.allowInteractions();
+    }).then(() => this.allowInteractions(), () => this.allowInteractions());
   },
 
   getEmail: function getEmail() {
