@@ -8,11 +8,13 @@ class SchoolRecord < ActiveRecord::Base
   include GradeLevelConcerns
 
   attr_accessor :assigned
-  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modified_by, :level, :type, :active
   # ! TODO: only java routing uses this column. Can remove eventually from school_record
   #:new_profile_school
   # attr_writer :collections
   # has_many :school_metadatas
+
+ # invokes the unique_id getter
+  before_validation :unique_id, on: :create
 
   LEVEL_CODES = {
     primary: 'p',
@@ -84,6 +86,10 @@ class SchoolRecord < ActiveRecord::Base
   # def self.ids_by_state(state)
   #   where(state: state).active.not_preschool_only.order(:school_id).pluck(:school_id)
   # end
+
+  def unique_id
+    self[:unique_id] ||= "#{self.state}-#{self.school_id}"
+  end
 
   # Given objects that have state and id, load school for each one
   # Used for Solr School Documents which doesn't have school_id
@@ -458,7 +464,7 @@ class SchoolRecord < ActiveRecord::Base
 
   def self.update_from_school(school, state, log: false)
     school_record = find_by(unique_id: "#{state}-#{school.id}")
-    school_record ||= new(unique_id: "#{state}-#{school.id}", state: state.to_s, school_id: school.id)
+    school_record ||= new(unique_id: "#{state}-#{school.id}", state: state.to_s, school_id: school.id, geo_state: school.state)
     school_record.assign_attributes(
       school.attributes.symbolize_keys.except(
         :id, #id is set as school_id

@@ -17,7 +17,12 @@ class DirectoryLoading::Loader < Loader
         DistrictRecord.update_from_district(district, directory_update.shard)
       elsif entity.is_a?(School)
         school = School.on_db(directory_update.shard).find(directory_update.entity_id)
-        SchoolRecord.update_from_school(school, directory_update.shard)
+
+        if school.active
+          SchoolRecord.update_from_school(school, directory_update.shard)
+        else
+          SchoolRecord.find_by_unique_id("#{directory_update.shard}-#{school.id}")&.destroy
+        end
         # Used to build the cache for directory feeds. May not be needed anymore
         # leaving it in for now
         Cacher.create_caches_for_data_type(entity, DATA_TYPE)
