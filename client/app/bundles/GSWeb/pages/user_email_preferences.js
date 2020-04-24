@@ -1,6 +1,20 @@
+import ReactOnRails from 'react-on-rails';
+import SearchBox from 'react_components/search_box';
+import withViewportSize from 'react_components/with_viewport_size';
+import commonPageInit from '../common';
+// import {indexOf} from 'lodash';
+
+const SearchBoxWrapper = withViewportSize({propName: 'size'})(SearchBox);
+ReactOnRails.register({
+  SearchBoxWrapper,
+});
+
+$(commonPageInit);
+
 $(function () {
+
   if (gon.pagename == "User Email Preferences") {
-    var $formContainer = $('.js-user-preferences-form-container');
+    let $formContainer = $('.js-user-preferences-form-container');
 
     $formContainer.find('.js-checkbox').on('click', function () {
       $(this)
@@ -43,9 +57,9 @@ $(function () {
     }
 
     $formContainer.on('click', '.js-gradeCheckbox', function () {
-      var activeGbyG = $(this).parent().parent().find('.active');
-      var overallCheckboxParent = $(this).parent().parent().parent().siblings();
-      var overallCheckbox = overallCheckboxParent.find('.js-greatkidsnewsCheckbox');
+      let activeGbyG = $(this).parent().parent().find('.active');
+      let overallCheckboxParent = $(this).parent().parent().parent().siblings();
+      let overallCheckbox = overallCheckboxParent.find('.js-greatkidsnewsCheckbox');
       if (activeGbyG.length == 1) {
         if ($(this).hasClass('active')) {
           changeGbyGState(overallCheckbox, false)
@@ -57,10 +71,10 @@ $(function () {
     });
 
     $formContainer.find('form').on('submit', function () {
-      var $form = $(this);
-      var grades = [];
-      var subscriptions = [];
-      var schools = [];
+      let $form = $(this);
+      let grades = [];
+      let subscriptions = [];
+      let schools = [];
 
       $form.find('.js-gradeCheckbox.active').each(function () {
         grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
