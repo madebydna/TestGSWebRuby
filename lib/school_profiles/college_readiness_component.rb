@@ -112,7 +112,7 @@ module SchoolProfiles
     end
 
     def metrics_data
-      array_of_hashes = @school_cache_data_reader.metrics_data(*included_data_types(:characteristics))
+      array_of_hashes = @school_cache_data_reader.metrics_data(*included_data_types(:metrics))
       array_of_hashes.each_with_object({}) do |(data_type, array), accum|
         accum[data_type] =
           array.map do |h|

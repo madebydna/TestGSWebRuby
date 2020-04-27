@@ -9,7 +9,7 @@ module SchoolProfiles
       @test_source_data = test_source_data
 
       SchoolProfiles::NarrativeLowIncomeGradRateAndEntranceReq.new(
-          school_cache_data_reader: school_cache_data_reader
+        school_cache_data_reader.metrics
       ).auto_narrative_calculate_and_add
 
       @graduation_rate = ::Components::ComponentGroups::GraduationRateComponentGroup.new(cache_data_reader: school_cache_data_reader)

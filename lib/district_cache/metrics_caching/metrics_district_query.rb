@@ -10,8 +10,7 @@ module MetricsCaching
       scoped = initial_scope.for_district(district)
       scoped = scoped.filter_by_data_types(DistrictMetricsCacher::DATA_TYPE_IDS_WHITELIST)
       scoped = scoped.include_entity_average(type: 'state', id: state.id, table_alias: 'm2')
-      scoped = include_needed_associations(scoped)
-      scoped
+      include_needed_associations(scoped)
     end
 
     def include_needed_associations(scoped)

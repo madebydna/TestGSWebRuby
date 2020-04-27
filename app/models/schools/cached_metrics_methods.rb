@@ -115,13 +115,10 @@ module CachedMetricsMethods
   end
 
   def style_school_value_as_percent(data_name)
-    if valid_metric_cache(metrics[data_name])
-      value = metrics[data_name].first['school_value'].to_f
-      if value
-        return "#{value.round(0)}%"
-      end
-    end
-    NO_DATA_SYMBOL
+    return NO_DATA_SYMBOL unless valid_metric_cache(metrics[data_name])
+    value = metrics[data_name].first['school_value'].to_f
+    return nil unless value
+    "#{value.round(0)}%"
   end
 
   def free_and_reduced_lunch

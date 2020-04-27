@@ -9,8 +9,7 @@ module MetricsCaching
     def call(initial_scope = Omni::Metric.active)
       scoped = initial_scope.for_state(state)
       scoped = scoped.filter_by_data_types(StateMetricsCacher::DATA_TYPE_IDS_WHITELIST)
-      scoped = include_needed_associations(scoped)
-      scoped
+      include_needed_associations(scoped)
     end
 
     def include_needed_associations(scoped)

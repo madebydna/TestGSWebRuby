@@ -1,15 +1,9 @@
 module SchoolProfiles
   class NarrativeLowIncomeGradRateAndEntranceReq
-    def initialize(school_cache_data_reader:)
-      @school_cache_data_reader = school_cache_data_reader
-    end
 
-    # def metrics
-    #   @school_cache_data_reader.metrics
-    # end
-
-    def metrics
-      @school_cache_data_reader.metrics
+    attr_accessor :metrics
+    def initialize(metrics)
+      @metrics = metrics
     end
 
     def auto_narrative_calculate_and_add
@@ -25,18 +19,6 @@ module SchoolProfiles
           key_value = narration_calculation(li_hash, all_hash)
           key_value = '0' if key_value.blank?
           li_hash['narrative'] = low_income_narration(key_value, data_type_name)
-        end
-      end
-    end
-
-    def get_metrics_low_income_narrative(data_type_name)
-      if metrics.present? && metrics[data_type_name].present?
-        li_hash = metrics[data_type_name].find { |d| d['breakdown'] == 'Economically disadvantaged' }
-        all_hash = metrics[data_type_name].find { |d| d['breakdown'] == 'All students' }
-        if li_hash.present?
-          key_value = narration_calculation(data_type_name, li_hash, all_hash)
-          key_value = '0' if key_value.blank?
-          return low_income_narration(key_value, data_type_name)
         end
       end
     end

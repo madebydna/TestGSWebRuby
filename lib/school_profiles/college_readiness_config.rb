@@ -64,13 +64,13 @@ module SchoolProfiles::CollegeReadinessConfig
   POST_SECONDARY_GROUP_MAX_YEAR_FILTER = POST_SECONDARY
 
   FORMATTING_ROUND_LESS_THAN_ONE_PERCENT = %i(round_unless_less_than_1 percent)
-  
+
 # characteristics cache accessors for college success pane
 # at the end of this constant we add on the remediation subgroups, which are currently set to be displayed as person_gray
   CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS =
     POST_SECONDARY.map do |data_key|
       {
-          :cache => :characteristics,
+          :cache => :metrics,
           :data_key => data_key,
           :visualization => 'person',
           :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
@@ -78,7 +78,7 @@ module SchoolProfiles::CollegeReadinessConfig
     end.concat(
       REMEDIATION_SUBGROUPS.map do |data_key|
         {
-          :cache => :characteristics,
+          :cache => :metrics,
           :data_key => data_key,
           :visualization => 'person_gray',
           :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
@@ -87,7 +87,7 @@ module SchoolProfiles::CollegeReadinessConfig
     ).concat(
       SECOND_YEAR.map do |data_key|
         {
-            :cache => :characteristics,
+            :cache => :metrics,
             :data_key => data_key,
             :visualization => 'person',
             :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
@@ -98,51 +98,51 @@ module SchoolProfiles::CollegeReadinessConfig
 # characteristics cache accessors for college readiness pane
   CHAR_CACHE_ACCESSORS = [
     {
-      :cache => :characteristics,
+      :cache => :metrics,
       :data_key => FOUR_YEAR_GRADE_RATE,
       :visualization => 'person',
       :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
-      :cache => :characteristics,
+      :cache => :metrics,
       :data_key => UC_CSU_ENTRANCE,
       :visualization => 'person',
       :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
-      :cache => :characteristics,
+      :cache => :metrics,
       :data_key => SAT_SCORE,
       :visualization => 'bar',
       :formatting => [:round],
       :range => (600..2400)
     },
     {
-      :cache => :characteristics,
+      :cache => :metrics,
       :data_key => SAT_PARTICIPATION,
       :visualization => 'person',
       :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
-      :cache => :characteristics,
+      :cache => :metrics,
       :data_key => SAT_PERCENT_COLLEGE_READY,
       :visualization => 'bar',
       :formatting => %i(round_unless_less_than_1 percent)
     },
     {
-      :cache => :characteristics,
+      :cache => :metrics,
       :data_key => ACT_SCORE,
       :visualization => 'bar',
       :formatting => [:round],
       :range => (1..36)
     },
     {
-      :cache => :characteristics,
+      :cache => :metrics,
       :data_key => ACT_PARTICIPATION,
       :visualization => 'person',
       :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
-      :cache => :characteristics,
+      :cache => :metrics,
       :data_key => ACT_PERCENT_COLLEGE_READY,
       :visualization => 'bar',
       :formatting => %i(round_unless_less_than_1 percent)
