@@ -227,17 +227,17 @@ module GS
       end
 
       def source_steps
-        node = output_files_root_step.add_step('Keep only state rows for source', KeepRows, :entity_type, 'state')
         sources = {}
+        node = output_files_root_step.add_step('Keep only state rows for source', KeepRows, :entity_type, 'school','district','state')
         node = node.transform 'Find unique source', WithBlock do |row|
             source_key = [row[:date_valid],row[:data_type_id],row[:notes],row[:description]]
-            unless sources[source_key]
-              row[:entity_type] = 'source' 
-              sources[source_key] = true
-              row[:gs_id] = 0
-              row[:description] = 'NULL' 
-            end      
-          row
+              unless sources[source_key]
+                row[:entity_type] = 'source' 
+                sources[source_key] = true
+                row[:gs_id] = 0
+                row[:description] = 'NULL' 
+              end      
+            row
         end
         node = node.transform('Keep rows for source', KeepRows, :entity_type, 'source')
         node.sql_writer 'Output source rows to SQL file', SqlDestination, source_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS, @load_type

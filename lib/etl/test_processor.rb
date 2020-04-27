@@ -227,7 +227,7 @@ module GS
       end
 
       def source_steps
-        node = output_files_root_step.add_step('Keep only state rows for source', KeepRows, :entity_type, 'state')
+        node = output_files_root_step.add_step('Keep only state rows for source', KeepRows, :entity_type, 'school','district','state')
         sources = {}
         node = node.transform 'Find unique source', WithBlock do |row|
             source_key = [row[:date_valid],row[:data_type_id],row[:notes],row[:description]]
