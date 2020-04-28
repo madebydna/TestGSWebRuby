@@ -3,13 +3,13 @@ class Cacher
   attr_accessor :school
 
   # Known data types:
-  # :census
   # :ratings
   # :school_reviews
   # :school_media
   # :esp_response
   # :gsdata
   # :directory
+  # :metrics
   # :feed_metrics
   # :test_scores_gsdata
   # :feed_test_scores_gsdata

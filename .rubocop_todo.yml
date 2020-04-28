@@ -201,7 +201,6 @@ Layout/IndentArray:
 # Configuration parameters: IndentationWidth.
 Layout/IndentAssignment:
   Exclude:
-    - 'lib/data_loading/census_loading/update.rb'
     - 'lib/data_loading/esp_response_loading/update.rb'
     - 'lib/data_loading/review_loading/update.rb'
     - 'lib/database_tasks_helper.rb'
@@ -596,7 +595,6 @@ Lint/EndAlignment:
     - 'lib/etl/test_processors/try.rb'
     - 'lib/etl/test_processors/vt_test_processor_2017_SBAC_NECAP.rb'
     - 'lib/etl/test_processors/wy_test_processor_2017_PAWS_2018_2019_TOPP.rb'
-    - 'script/xml_diff/census_parser.rb'
 
 # Offense count: 34
 Lint/HandleExceptions:
@@ -690,7 +688,6 @@ Lint/ScriptPermission:
     - 'script/feeds/feed_scripts/qa/build_feed_cache_qa.rb'
     - 'script/prepare_test_db.rb'
     - 'script/reviews_moderation_migration.rb'
-    - 'script/xml_diff/census_parser.rb'
     - 'script/xml_diff/directory_census_parser.rb'
     - 'spec/factories/collection_config.rb'
 
@@ -701,7 +698,6 @@ Lint/ShadowingOuterLocalVariable:
     - 'app/models/review_vote.rb'
     - 'app/models/schools/school.rb'
     - 'lib/cache_populator/argument_parser.rb'
-    - 'lib/data_loading/census_loading/breakdowns.rb'
     - 'lib/database_configuration_loader.rb'
     - 'lib/etl/test_processors/nv_test_processor_2015_CRT_HSPE.rb'
     - 'lib/etl/transforms/sum_values.rb'
@@ -956,7 +952,6 @@ Performance/RedundantMatch:
     - 'app/controllers/modules/authentication_concerns.rb'
     - 'app/helpers/application_helper.rb'
     - 'app/models/collection_config.rb'
-    - 'app/models/schools/census/census_data_type.rb'
     - 'features/step_definitions/localized_profiles/localized_profile_reviews_steps.rb'
     - 'features/step_definitions/web_steps.rb'
     - 'lib/etl/nc_subroutines.rb'
@@ -976,7 +971,6 @@ Performance/RedundantMerge:
     - 'app/models/modules/behavior_for_models_with_school_association.rb'
     - 'app/models/schools/response_value.rb'
     - 'app/models/search/filter.rb'
-    - 'lib/data_loading/census_loading/loader.rb'
     - 'lib/etl/test_processors/nv_test_processor_2015_CRT_HSPE.rb'
     - 'spec/controllers/signin_controller_spec.rb'
     - 'spec/controllers/wordpress_interface_controller_spec.rb'
@@ -1060,7 +1054,6 @@ Style/BarePercentLiterals:
 Style/BlockComments:
   Exclude:
     - 'app/models/modules/state_sharding.rb'
-    - 'db/migrate/20130916205012_create_census_data_sets.rb'
     - 'features/step_definitions/web_steps.rb'
     - 'spec/features/examples/footer_examples.rb'
 
@@ -1108,7 +1101,6 @@ Style/ClassVars:
     - 'app/models/schools/grade.rb'
     - 'app/models/utils/session_cache_cookie.rb'
     - 'features/pages/gs_site_prism.rb'
-    - 'lib/data_loading/census_loading/base.rb'
     - 'lib/database_tasks_helper.rb'
     - 'lib/district_cache/ratings_caching/district_ratings_cacher.rb'
     - 'lib/district_cache/test_scores_caching/district_base.rb'
@@ -1133,9 +1125,7 @@ Style/CommentedKeyword:
     - 'features/step_definitions/web_steps.rb'
     - 'lib/components/ratings/low_income_test_scores_ratings_component.rb'
     - 'lib/district_cache/district_display_range.rb'
-    - 'lib/district_cache/feed_district_characteristics_caching/feed_district_characteristics_cacher.rb'
     - 'lib/school_cache/display_range.rb'
-    - 'lib/school_cache/feed_characteristics_caching/feed_characteristics_cacher.rb'
     - 'lib/search/solr_autosuggest_query.rb'
 
 # Offense count: 319
@@ -1180,7 +1170,6 @@ Style/EachWithObject:
   Exclude:
     - 'app/controllers/admin/data_load_schedules_controller.rb'
     - 'app/models/review_vote.rb'
-    - 'app/models/schools/census/census_data_type.rb'
     - 'app/models/schools/testscores/test_data_type.rb'
     - 'app/models/table_data.rb'
     - 'config/initializers/extensions/hash.rb'
@@ -1237,7 +1226,6 @@ Style/EmptyMethod:
     - 'app/controllers/admin/osp_demigod_controller.rb'
     - 'app/controllers/error_controller.rb'
     - 'app/controllers/widget_controller.rb'
-    - 'db/migrate/20130916205012_create_census_data_sets.rb'
     - 'lib/solr/query.rb'
     - 'spec/models/external_content/construct_from_hash_spec.rb'
     - 'spec/support/failures_html_formatter.rb'
@@ -1248,7 +1236,6 @@ Style/EmptyMethod:
 Style/Encoding:
   Exclude:
     - 'app/models/collection_config.rb'
-    - 'app/models/data_readers/census_data_reader.rb'
     - 'db/schema.rb'
     - 'lib/etl/test_processors/nv_test_processor_2015_CRT_HSPE.rb'
     - 'lib/gs_i18n.rb'
@@ -1357,8 +1344,6 @@ Style/Lambda:
     - 'app/models/collection_config.rb'
     - 'app/models/customer_like.rb'
     - 'app/models/review.rb'
-    - 'app/models/schools/census/census_data_school_value.rb'
-    - 'app/models/schools/census/census_data_set.rb'
     - 'app/models/schools/testscores/test_data_set.rb'
     - 'lib/community_profiles/students.rb'
     - 'lib/etl/test_processor.rb'
@@ -1447,7 +1432,6 @@ Style/MultilineIfModifier:
     - 'lib/components/component.rb'
     - 'lib/school_profiles/components/component.rb'
     - 'lib/school_profiles/equity_overview.rb'
-    - 'script/feeds/feed_builders/directory/characteristics_data_builder.rb'
     - 'script/feeds/feed_builders/google/google_characteristics_data_builder.rb'
 
 # Offense count: 138
@@ -1837,12 +1821,10 @@ Style/WordArray:
 # SupportedStyles: all_comparison_operators, equality_operators_only
 Style/YodaCondition:
   Exclude:
-    - 'lib/district_cache/feed_district_characteristics_caching/feed_district_characteristics_cacher.rb'
     - 'lib/district_cache/ratings_caching/district_ratings_cacher.rb'
     - 'lib/district_cache/test_scores_caching/district_base.rb'
     - 'lib/school_cache/directory_caching/directory_cacher.rb'
     - 'lib/school_cache/esp_responses_caching/esp_responses_cacher.rb'
-    - 'lib/school_cache/feed_characteristics_caching/feed_characteristics_cacher.rb'
     - 'lib/school_cache/gsdata_caching/gsdata_cacher.rb'
     - 'lib/school_cache/ratings_caching/gsdata_ratings_cacher.rb'
     - 'lib/school_cache/reviews_caching/reviews_snapshot_cacher.rb'

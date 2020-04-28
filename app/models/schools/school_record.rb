@@ -132,13 +132,6 @@ class SchoolRecord < ActiveRecord::Base
   #   SchoolRecord.active.where(state: state_abbreviation.downcase).order(:name)
   # end
 
-  def census_data_for_data_types(data_types = [])
-    CensusDataSet.on_db(state.downcase.to_sym).by_data_types(state, data_types)
-  end
-
-  def census_data_school_values
-    CensusDataSchoolValue.on_db(state.downcase.to_sym).where(school_id: id)
-  end
 
   # TODO Do we need these collections methods?
   # !-----------------------------------
@@ -291,18 +284,6 @@ class SchoolRecord < ActiveRecord::Base
       @held = HeldSchool.active_hold?(self)
     end
     @held
-  end
-
-  # TODO find out if it needs to be rewritten from migration?
-  # TODO appears unused
-  def all_census_data
-    @all_census_data ||= nil
-    return @all_census_data if @all_census_data
-
-    all_configured_data_types = page.all_configured_keys 'census_data'
-
-    # Get data for all data types
-    @all_census_data = CensusDataForSchoolQuery.new(self).latest_data_for_school all_configured_data_types
   end
 
   def held_school

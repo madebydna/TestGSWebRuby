@@ -64,7 +64,7 @@ module CommunityProfiles::CollegeReadinessConfig
 
 # Order matters - items display in configured order
 
-# characteristics cache accessors for college success pane
+# metrics cache accessors for college success pane
 # at the end of this constant we add on the remediation subgroups, which are currently set to be displayed as person_gray
   CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS =
     POST_SECONDARY.map do |data_key|
@@ -94,7 +94,7 @@ module CommunityProfiles::CollegeReadinessConfig
     end
   )
 
-# characteristics cache accessors for college readiness pane
+# metrics cache accessors for college readiness pane
   CHAR_CACHE_ACCESSORS = [
     {
       :cache => :metrics,

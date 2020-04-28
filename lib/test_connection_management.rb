@@ -8,14 +8,9 @@ class TestConnectionManagement
     run_a_query_in_new_thread(School, :dc)
     run_a_query_in_new_thread(School, :me)
     # run_a_query_in_new_thread(ResponseValue, :profile_config)
-    # run_a_query_in_new_thread(CensusDataSchoolValue, :ca)
-    # run_a_query_in_new_thread(CensusDataSchoolValue, :ca)
-    # run_a_query_in_new_thread(CensusDataSchoolValue, :dc)
-    # run_a_query_in_new_thread(CensusDataSchoolValue, :me)
 
     ActiveRecord::Base.verify_active_connections!
     School.verify_active_connections!
-    # CensusDataSchoolValue.verify_active_connections!
     # CategoryPlacement.verify_active_connections!
   end
 

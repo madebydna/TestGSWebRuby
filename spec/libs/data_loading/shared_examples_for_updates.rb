@@ -36,14 +36,6 @@ shared_examples 'an update' do |update_class, required_update_keys|
         end
       end
     end
-
-    if update_class == CensusLoading::Update
-      it 'should not raise an error if doing census and the value is present but blank' do
-        blank_value_update = valid_update.clone
-        blank_value_update[:value] = ''
-        expect { update_class.new(nil, blank_value_update) }.to_not raise_error
-      end
-    end
   end
 
 end
