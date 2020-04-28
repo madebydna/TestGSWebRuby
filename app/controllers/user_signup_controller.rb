@@ -5,6 +5,8 @@ class UserSignupController < ApplicationController
   layout 'application'
 
   def show
+    @grades_hashes = grades_hashes
+
     set_meta_tags(
         title: "Sign up for an account | GreatSchools",
         robots: "noindex"
@@ -14,11 +16,17 @@ class UserSignupController < ApplicationController
   end
 
   def show_spanish
-    I18n.locale = 'es'
+    I18n.locale = :es
     show
   end
 
   def create
+    # TODO: Verify that account does not exist, then create account and add subscriptions below
+
+    user = nil
+
+    UserEmailSubscriptionManager.new(user).update(process_subscriptions(param_subscriptions))
+    UserEmailGradeManager.new(user).update(process_grades(param_grades))
     render 'thankyou'
   end
 
@@ -42,6 +50,43 @@ class UserSignupController < ApplicationController
 
   def param_subscriptions
     params['subscriptions'] || []
+  end
+
+  def grades_hashes
+    {
+      :en => {
+        :overall => create_overall_grades('en')
+      },
+      :es => {
+        :overall => create_overall_grades('es')
+      }
+    }
+  end
+
+  def create_overall_grades(language)
+    title = language == 'es' ? 'Grado por grado' : 'Grade by Grade'
+    grades_labels = language == 'es' ? available_grades_spanish : available_grades
+    path_to_yml = 'lib.user_signup.'
+
+    {
+      :active_grades => [],
+      :district_state => '',
+      :district_id => '',
+      :language => language,
+      :title => title,
+      :subtitle => path_to_yml + "greatkidsnews_subtitle",
+      :label => path_to_yml + "select_grades",
+      :available_grades => grades_labels
+    }
+  end
+
+  def process_grades(param_grades)
+    parsed_grades = JSON.parse(param_grades)
+    parsed_grades.map { |r| [r[0].to_s, r[1], r[2], r[3]] }
+  end
+
+  def process_subscriptions(param_subscriptions)
+    JSON.parse(param_subscriptions)
   end
 
   private
