@@ -74,9 +74,9 @@ LocalizedProfiles::Application.routes.draw do
   get '/unsubscribe/' => 'user_email_unsubscribes#new', as: 'unsubscribe'
 
 
-  # get '/newsletter/' => 'user_signup#show', as: 'user_signup'
-  # get '/espanol/' => 'user_signup#show_spanish', as: 'user_signup_spanish'
-  # post '/signup/' => 'user_signup#create', as: 'signup'
+  get '/newsletter/' => 'user_signup#show', as: 'user_signup'
+  get '/espanol/' => 'user_signup#show_spanish', as: 'user_signup_spanish'
+  post '/signup/' => 'user_signup#create', as: 'signup'
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
