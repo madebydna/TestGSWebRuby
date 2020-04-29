@@ -28,7 +28,7 @@ describe DirectoryLoading::Loader do
     subject { loader.load! }
 
     it 'should receive a School and District cache build request' do
-      pending("Needs to reflect new SchoolRecord - @Andy")
+      expect(SchoolRecord).to receive(:update_from_school).with(@school, :ca)
       expect(Cacher).to receive(:create_caches_for_data_type).with(@school, :directory)
       expect(DistrictRecord).to receive(:update_from_district).with(@district, :ca)
       subject
