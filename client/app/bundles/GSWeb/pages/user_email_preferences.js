@@ -1,19 +1,8 @@
-import ReactOnRails from 'react-on-rails';
-import SearchBox from 'react_components/search_box';
-import withViewportSize from 'react_components/with_viewport_size';
-import commonPageInit from '../common';
-// import {indexOf} from 'lodash';
-
-const SearchBoxWrapper = withViewportSize({propName: 'size'})(SearchBox);
-ReactOnRails.register({
-  SearchBoxWrapper,
-});
-
-$(commonPageInit);
-
 $(function () {
 
   if (gon.pagename == "User Email Preferences") {
+    $("#TESTERTESTTEST").append("   HEOOLLasdfsdfasdfasfdasdfLOOO23");
+    console.log("TEST");
     let $formContainer = $('.js-user-preferences-form-container');
 
     $formContainer.find('.js-checkbox').on('click', function () {
