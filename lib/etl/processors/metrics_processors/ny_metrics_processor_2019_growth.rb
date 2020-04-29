@@ -40,15 +40,14 @@ class NYMetricsProcessor2019Growth < GS::ETL::MetricsProcessor
 	    end
 		.transform('rename columns',MultiFieldRenamer,{
 			entity_cd: :state_id,
-			entity_name: :name,
 			subgroup_name: :breakdown,
-			sgp_student: :cohort_count,
+			sgp_students: :cohort_count,
 			index: :value
 		})
 		.transform('delete suppressed value rows',DeleteRows,:value, 's')
 		.transform('skip cohort count value 0 through 10',WithBlock) do |row|
-			if 0 <= row[:value.to_i] <= 10
-				row[:value] = nil
+			if row[:cohort_count].to_i.between?(0,10)
+				row[:cohort_count] = nil
 			end
 			row
 		end
@@ -57,10 +56,12 @@ class NYMetricsProcessor2019Growth < GS::ETL::MetricsProcessor
 			if row[:state_id] == '111111111111'
 				row[:entity_type] = 'state'
 				row[:state_id] = 'state'
-			elsif row[:state_id].match(/0{4}$/)
+			elsif row[:state_id].to_s[-4,4] == '0000'
 				row[:entity_type] = 'district'
+				row[:district_name] = row[:entity_name]
 			else 
 				row[:entity_type] = 'school'
+				row[:school_name] = row[:entity_name]
 			end
 			row
 		end
