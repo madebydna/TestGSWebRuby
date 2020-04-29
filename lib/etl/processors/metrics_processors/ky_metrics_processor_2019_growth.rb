@@ -40,16 +40,23 @@ class KYMetricsProcessor2019Growth < GS::ETL::MetricsProcessor
 	    })
 	end
 
+	source('GROWTH_2019.txt',[],col_sep:"\t") do |s|
+	    s.transform('Fill missing default fields', Fill, {
+	      year: 2019,
+	      date_valid: '2019-01-01 00:00:00'
+	    })
+	end
+
 	shared do |s|
 		s.transform('rename columns',MultiFieldRenamer,{
 			demographic: :breakdown,
 			sch_number: :school_id,
 			sch_name: :school_name,
 			dist_number: :district_id,
-			dist_name: :district_name,
-			count: :cohort_count
+			dist_name: :district_name
 		})
 		.transform('delete COOP value rows',DeleteRows,:district_id, '901','902','903','904','904','905','906','907','908','909')
+		.transform('delete COOP value rows',DeleteRows,:school_name,'---COOP Total---')
 		.transform('delete unwanted breakdown rows',DeleteRows,:breakdown,'CSG','HOM','MIG','ELM','ELN')
 		.transform('transpose subject columns',Transposer,:subject,:value,:growth_rate,:rd_rate,:ma_rate)
 		.transform('prepare to delete suppressed rows, rename subjects',WithBlock) do |row|
@@ -74,7 +81,6 @@ class KYMetricsProcessor2019Growth < GS::ETL::MetricsProcessor
 		.transform('delete suppressed rows',DeleteRows,:row_suppressed,'skip')
 		.transform('fill other columns',Fill,{
 			data_type: 'growth',
-			data_type_id: 447,
 			notes: 'DXT-3464: KY Growth',
 			grade: 'All'
 		})
@@ -89,6 +95,22 @@ class KYMetricsProcessor2019Growth < GS::ETL::MetricsProcessor
 				row[:state_id] = row[:cntyno] + row[:district_id] + '000'
 			else row[:entity_type] = 'school'
 				row[:state_id] = row[:cntyno] + row[:district_id] + row[:school_id]
+			end
+			row
+		end
+		.transform('loading cohort count',WithBlock) do |row|
+			if row[:year] == 2018
+				row[:cohort_count] = row[:count]
+			elsif row[:year] = 2019
+				row[:cohort_count] = row[:rd_cnt]
+			end
+			row
+		end
+		.transform('assigning either elementary or middle school growth data types',WithBlock) do |row|
+			if row[:level] == 'ES'
+				row[:data_type_id] = 493
+			elsif row[:level] == 'MS'
+				row[:data_type_id] = 494
 			end
 			row
 		end
