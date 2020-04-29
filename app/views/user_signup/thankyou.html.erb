@@ -1,0 +1,25 @@
+<% content_for :page_stylesheets do %>
+  <%= stylesheet_link_tag "post_load", async: true %>
+  <%= stylesheet_link_tag "user_signup", async: true %>
+<% end %>
+
+<% path_to_yml = 'lib.user_signup.thank_you.'%>
+
+<section class="row">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-preferences-form-container phl">
+    <div id="user-signup-confirmation-page">
+      <%= react_component('SearchBoxWrapper') %>
+
+      <div class="heading"><%= t(path_to_yml + 'heading') %></div>
+
+      <div class="subheading"><%= t(path_to_yml + 'subheading') %></div>
+
+      <%#= image_tag('user_signup/owl_wave.png', alt: '') %>
+
+      <a href="<%= home_url %>">
+        <button class="done-button"><%= t(path_to_yml + 'done') %></button>
+      </a>
+
+    </div>
+  </div>
+</section>

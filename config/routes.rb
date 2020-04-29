@@ -77,6 +77,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/newsletter/' => 'user_signup#show', as: 'user_signup'
   get '/espanol/' => 'user_signup#show_spanish', as: 'user_signup_spanish'
   post '/signup/' => 'user_signup#create', as: 'signup'
+  get '/thankyou/' => 'user_signup#thankyou', as: 'signup_confirmation'
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 

@@ -1,4 +1,7 @@
-<%= webpack_javascript_include_tag 'user-signup', defer: true %>
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag 'signup', defer: true %>
+<% end %>
+
 <% content_for :page_stylesheets do %>
   <%= stylesheet_link_tag "post_load", async: true %>
   <%= stylesheet_link_tag "user_signup", async: true %>
