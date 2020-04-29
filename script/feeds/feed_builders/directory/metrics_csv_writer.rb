@@ -4,7 +4,7 @@ require 'csv'
 
 module Feeds
   module Directory
-    class CensusCsvWriter
+    class MetricsCsvWriter
       include Feeds::FeedConstants
       include Feeds::FeedHelper
 
@@ -31,9 +31,9 @@ module Feeds
       end
 
       def write_state_feed(csv)
-        data_hash = @data_reader.state_data_reader.census_info
+        data_hash = @data_reader.state_data_reader.metrics_info
 
-        CENSUS_CACHE_ACCESSORS.each do |config|
+        METRICS_CACHE_ACCESSORS.each do |config|
           key = config[:key]
           data_values = data_hash[key]
           next unless data_values
@@ -54,9 +54,9 @@ module Feeds
 
       def write_district_feed(csv)
         @data_reader.district_data_readers.each do |district|
-          data_hash = district.census_info
+          data_hash = district.metrics_info
 
-          CENSUS_CACHE_ACCESSORS.each do |config|
+          METRICS_CACHE_ACCESSORS.each do |config|
             key = config[:key]
             data_values = data_hash[key]
             next unless data_values
@@ -78,9 +78,9 @@ module Feeds
 
       def write_school_feed(csv)
         @data_reader.school_data_readers.each do |school|
-          data_hash = school.census_info
+          data_hash = school.metrics_info
 
-          CENSUS_CACHE_ACCESSORS.each do |config|
+          METRICS_CACHE_ACCESSORS.each do |config|
             key = config[:key]
             data_values = data_hash[key]
             next unless data_values
@@ -117,8 +117,8 @@ module Feeds
         end
       end
 
-      def census_keys
-        @_census_keys ||= CENSUS_CACHE_ACCESSORS.map {|config| config[:key]}
+      def metrics_leys
+        @_metrics_leys ||= METRICS_CACHE_ACCESSORS.map {|config| config[:key]}
       end
 
       def map_data_value(attribute)

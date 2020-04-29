@@ -33,7 +33,7 @@ module Feeds
       end
 
       def data_hashes
-        CENSUS_CACHE_ACCESSORS.each_with_object({}) do |data_accessor, result|
+        METRICS_CACHE_ACCESSORS.each_with_object({}) do |data_accessor, result|
           data_sets = cache_data.fetch(data_accessor[:key], nil)
           next unless data_sets
 

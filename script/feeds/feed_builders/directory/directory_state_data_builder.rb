@@ -3,9 +3,9 @@ module Feeds
     include Feeds::FeedConstants
     include States
 
-    DIRECTORY_STATE_KEYS = %w(universal_id state_name state census_info)
+    DIRECTORY_STATE_KEYS = %w(universal_id state_name state metrics_info)
 
-    CACHE_KEY_CHARACTERISTICS = 'metrics'
+    CACHE_KEY_METRICS = 'metrics'
     CACHE_KEY_GSDATA = 'gsdata'
 
     def self.build_data(state)
@@ -32,9 +32,9 @@ module Feeds
       single_data_object('state',@state)
     end
 
-    def self.census_info
-      characteristics_hash = state_data # need to build a pretty hash to feed into the monster
-      char_data = CharacteristicsDataBuilder.characteristics_format(characteristics_hash, @universal_id, 'state')
+    def self.metrics_info
+      metrics_hash = state_data # need to build a pretty hash to feed into the monster
+      char_data = MetricsDataBuilder.metrics_format(metrics_hash, @universal_id, 'state')
       single_data_object('census-info', char_data) if char_data.try(:compact).present?
     end
 
@@ -44,17 +44,17 @@ module Feeds
 
     def self.state_data
       state_gsdata = gsdata || {}
-      state_characteristics_data = characteristics_data || {}
+      state_metrics_data = metrics_data || {}
       if state_gsdata
-        state_gsdata.merge(state_characteristics_data)
+        state_gsdata.merge(state_metrics_data)
       else
-        state_characteristics_data
+        state_metrics_data
       end
     end
 
-    def self.characteristics_data
-      state_characteristics_data = StateCache.for_state(CACHE_KEY_CHARACTERISTICS, @state)
-      state_characteristics_data&.cache_data
+    def self.metrics_data
+      state_metrics_data = StateCache.for_state(CACHE_KEY_METRICS, @state)
+      state_metrics_data&.cache_data
     end
 
     def self.gsdata

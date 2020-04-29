@@ -1,12 +1,12 @@
 #encapsulates 'osp' data about a school that can be modified on the osp form page
-#represents data from osp_form_responses and school_cache tables, but may include census tables in the future
+#represents data from osp_form_responses and school_cache tables
 class OspData
 
   attr_accessor :cachified_school, :osp_form_responses
 
   SCHOOL_CACHE_KEYS = %w(metrics esp_responses)
 
-  ESP_KEY_TO_CENSUS_KEY = {'pk_capacity' => 'capacity', 'student_enrollment' => 'Enrollment', 'administrator_name' => 'Head official name', 'administrator_email' => 'Head official email address'}
+  ESP_KEY_TO_METRICS_KEY = {'pk_capacity' => 'capacity', 'student_enrollment' => 'Enrollment', 'administrator_name' => 'Head official name', 'administrator_email' => 'Head official email address'}
 
   ESP_KEY_TO_SCHOOL_KEY = {'address' => 'street' , 'grade_levels' => 'level' , 'school_url' => 'home_page_url' ,'school_phone' => 'phone' ,'school_fax' => 'fax'}
 
@@ -20,16 +20,16 @@ class OspData
   def values_for(key, question_id)
     begin
       key = key.to_s
-      census_key = ESP_KEY_TO_CENSUS_KEY[key]
+      metrics_key = ESP_KEY_TO_METRICS_KEY[key]
       school_key = ESP_KEY_TO_SCHOOL_KEY[key]
       osp_response_values = most_recent_osp_form_response(key, question_id)
-      if census_key.present?
-        school_cache_values_from_census_data  = cachified_school.metrics_value_by_name(census_key, grade: 'All', number_value: false).to_s.split(',')
-        value = school_cache_values_from_census_data
-        if osp_response_values.present? && school_cache_values_from_census_data.present? && cachified_school.created_time(census_key).present?
-          value = cachified_school.created_time(census_key) > osp_response_values[:created_at] ? school_cache_values_from_census_data : osp_response_values[:values]
+      if metrics_key.present?
+        school_cache_values_from_metrics_data  = cachified_school.metrics_value_by_name(metrics_key, grade: 'All', number_value: false).to_s.split(',')
+        value = school_cache_values_from_metrics_data
+        if osp_response_values.present? && school_cache_values_from_metrics_data.present? && cachified_school.created_time(metrics_key).present?
+          value = cachified_school.created_time(metrics_key) > osp_response_values[:created_at] ? school_cache_values_from_metrics_data : osp_response_values[:values]
         else
-          value = osp_response_values.present? ? osp_response_values[:values] : school_cache_values_from_census_data
+          value = osp_response_values.present? ? osp_response_values[:values] : school_cache_values_from_metrics_data
         end
          return value
       elsif school_key.present?

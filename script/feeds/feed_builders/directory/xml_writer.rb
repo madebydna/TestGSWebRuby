@@ -32,7 +32,7 @@ module Feeds
 
         within_tag('state-feed') do
           write_state_attributes_feed(state_attributes)
-          write_census_feed(state_feed)
+          write_metrics_feed(state_feed)
         end
       end
 
@@ -56,7 +56,7 @@ module Feeds
 
         within_tag('district') do
           write_district_attributes_feed(district_attributes)
-          write_census_feed(district_feed)
+          write_metrics_feed(district_feed)
         end
       end
 
@@ -88,7 +88,7 @@ module Feeds
         school_attributes = school_feed.data_values
         within_tag('school') do
           write_school_attributes_feed(school_attributes)
-          write_census_feed(school_feed)
+          write_metrics_feed(school_feed)
           xml_builder.tag!('school-summary', school_feed.data_value('school_summary'))
         end
       end
@@ -113,13 +113,13 @@ module Feeds
         end
       end
 
-      def write_census_feed(entity_data_reader)
-        census_data_hash = entity_data_reader.census_info
-        return if census_data_hash.empty?
+      def write_metrics_feed(entity_data_reader)
+        metrics_data_hash = entity_data_reader.metrics_info
+        return if metrics_data_hash.empty?
 
         within_tag('census-info') do
-          CENSUS_CACHE_ACCESSORS.each do |accessor|
-            data_values = census_data_hash.fetch(accessor[:key], nil)
+          METRICS_CACHE_ACCESSORS.each do |accessor|
+            data_values = metrics_data_hash.fetch(accessor[:key], nil)
             next unless data_values
 
             data_values.each do |data_hash|

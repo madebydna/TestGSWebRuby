@@ -65,7 +65,7 @@ module SchoolProfiles::CollegeReadinessConfig
 
   FORMATTING_ROUND_LESS_THAN_ONE_PERCENT = %i(round_unless_less_than_1 percent)
 
-# characteristics cache accessors for college success pane
+# metrics cache accessors for college success pane
 # at the end of this constant we add on the remediation subgroups, which are currently set to be displayed as person_gray
   CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS =
     POST_SECONDARY.map do |data_key|
@@ -95,7 +95,7 @@ module SchoolProfiles::CollegeReadinessConfig
       end
     )
 
-# characteristics cache accessors for college readiness pane
+# metrics cache accessors for college readiness pane
   CHAR_CACHE_ACCESSORS = [
     {
       :cache => :metrics,

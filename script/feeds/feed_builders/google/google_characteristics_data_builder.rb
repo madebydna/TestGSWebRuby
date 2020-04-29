@@ -4,7 +4,7 @@ module Feeds
 
     def self.characteristics_format(characteristics_data_set, universal_id, model)
       @model = model
-      CHARACTERISTICS_MAPPING.map do | cm |
+      METRICS_MAPPING.map do | cm |
         build_data(cm, characteristics_data_set, universal_id)
       end.flatten if characteristics_data_set
     end

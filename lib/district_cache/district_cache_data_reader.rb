@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DistrictCacheDataReader
-  DISTRICT_CACHE_KEYS = %w(feed_test_scores_gsdata test_scores_gsdata feed_test_scores ratings district_schools_summary district_directory metrics feed_district_characteristics gsdata)
+  DISTRICT_CACHE_KEYS = %w(feed_test_scores_gsdata test_scores_gsdata feed_test_scores ratings district_schools_summary district_directory metrics feed_metrics gsdata)
 
   attr_reader :district, :district_cache_keys
 

@@ -81,7 +81,7 @@ class DistrictCacher
         TestScoresCaching::DistrictTestScoresCacherGsdata,
         DistrictRatingsCacher,
         DistrictDirectoryCacher,
-        FeedDistrictCharacteristicsCacher,
+        FeedMetricsCaching::DistrictFeedMetricsCacher,
         DistrictGsdataCacher,
         MetricsCaching::DistrictMetricsCacher
     ]

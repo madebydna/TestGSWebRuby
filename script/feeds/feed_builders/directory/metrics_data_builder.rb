@@ -1,17 +1,17 @@
 module Feeds
-  class CharacteristicsDataBuilder
+  class MetricsDataBuilder
     include Feeds::FeedConstants
 
-    def self.characteristics_format(characteristics_data_set, universal_id, model)
+    def self.metrics_format(metrics_data_set, universal_id, model)
       @model = model
-      CHARACTERISTICS_MAPPING.map do | cm |
-        build_data(cm, characteristics_data_set, universal_id)
-      end.flatten if characteristics_data_set
+      METRICS_MAPPING.map do | cm |
+        build_data(cm, metrics_data_set, universal_id)
+      end.flatten if metrics_data_set
     end
 
-    def self.build_data(characteristics_map, characteristics_data_set, universal_id)
-      char_data_set = characteristics_data_set.find{ |cds| characteristics_map[:key] == cds.first }
-      send(characteristics_map[:method], char_data_set.second, universal_id, characteristics_map[:data_type] ) if char_data_set
+    def self.build_data(metrics_map, metrics_data_set, universal_id)
+      char_data_set = metrics_data_set.find{ |cds| metrics_map[:key] == cds.first }
+      send(metrics_map[:method], char_data_set.second, universal_id, metrics_map[:data_type] ) if char_data_set
     end
 
     def self.students_with_limited_english_proficiency(data, universal_id, data_type=nil)

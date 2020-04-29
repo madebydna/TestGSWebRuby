@@ -33,8 +33,8 @@ module Feeds
         @_zip ||= district.zipcode
       end
 
-      def census_info
-        @_census_info ||= begin
+      def metrics_info
+        @_metrics_info ||= begin
           data_builder = MetricsBuilder.new(district_cache, universal_id, 'district')
           data_builder.data_hashes
         end
