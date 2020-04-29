@@ -19,3 +19,7 @@ es:
       terms_and_privacy_html: Al suscribirme, acepto los %{terms_of_use_link} y la %{privacy_policy_link} de GreatSchools.
       terms_of_use: Terms of Use
       privacy_policy: Privacy Policy
+      thank_you:
+        heading: ¡Éxito!
+        subheading: Te has registrado para recibir actualizaciones.
+        done: Todo listo
