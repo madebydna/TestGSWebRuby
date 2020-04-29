@@ -44,7 +44,7 @@ class UserEmailGradeManager
       district_id = subscription[2].blank? ? nil : subscription[2]
       district_state = subscription[3].blank? ? nil : subscription[3]
       @user.student_grade_levels.where(grade: grade, language: language, district_id: district_id, district_state: district_state)
-    end
+    end.flatten
   end
 
   def delete_grades_by_language(language)

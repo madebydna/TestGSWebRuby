@@ -6,7 +6,7 @@ class UserEmailSubscriptionManager
 
   def update(new_subscriptions)
     del_subs = subscriptions_to_delete(new_subscriptions, get_subscriptions)
-    add_subs = subscriptions_to_add(new_subscriptions, get_subscriptions)
+    add_subs = subscriptions_to_add(new_subscriptions, get_subscriptions).uniq
     delete_subscriptions(del_subs)
     save_subscriptions(add_subs)
   end
@@ -61,7 +61,6 @@ class UserEmailSubscriptionManager
             list: list,
             language: language
         })
-
       end
     end
   end
@@ -77,7 +76,7 @@ class UserEmailSubscriptionManager
       else
         @user.subscriptions.where(list: list, language: language)
       end
-    end
+    end.flatten
   end
 
   def delete_subscriptions_by_language(language)
