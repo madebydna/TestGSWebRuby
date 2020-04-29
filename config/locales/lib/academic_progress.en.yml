@@ -25,7 +25,7 @@ en:
           <p>Students at this school are making <span class="emphasis">far less</span> academic progress from one grade to the next
            compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
           <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
         2_low_html: >
           <p class="side-bar"><span class="emphasis">Low progress with low test scores</span> means students are
@@ -38,7 +38,7 @@ en:
           <p>Students at this school are making <span class="emphasis">less</span> academic progress from one grade to the next
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
           <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
         3_low_html: >
           <p class="side-bar"><span class="emphasis">Average progress with low test scores</span> means students are
@@ -51,7 +51,7 @@ en:
           <p>Students at this school are making <span class="emphasis">average</span> academic progress from one grade to the next
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
           <p class="footnote">Ask the school how it interprets this rating and how it might use this information to help students
           grow and reach their full potential.</p>
         4_low_html: >
@@ -65,7 +65,7 @@ en:
           <p>Students at this school are making <span class="emphasis">more</span> academic progress from one grade to the next
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
           <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s continued success.</p>
         5_low_html: >
           <p class="side-bar"><span class="emphasis">Very strong progress with low test scores</span> means students are
@@ -78,7 +78,7 @@ en:
           <p>Students at this school are making <span class="emphasis">far more</span> academic progress from one grade to the next
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
           <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s success.</p>
       javascript:
         toc_item: 'Academic progress'
@@ -91,7 +91,7 @@ en:
           <p>How much do schools help students grow each year?</p>
           <p>Many states publish student growth data to reflect how much progress students are making year-over-year. This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student progress by comparing year-over-year test scores by grade and subject at each school compared to all schools in the state that started with similar proficiency levels. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Academic Progress Ratings.</p>
           <a href='/gk/ratings/#academicprogressrating'>Learn more about this rating.</a>
-        graphic_header: How does this district compare with the rest of the state? 
+        graphic_header: How does this district compare with the rest of the state?
         graphic_header_tooltip: This pie chart shows the percentage of schools in this district with Academic Progress Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
         narrative:
           below_average_html: >
@@ -106,4 +106,3 @@ en:
           even_distribution_html: >
             <span class="emphasis" style="color:#AB8F0E;">Worth a deeper look:</span>
             <p>This district has <span class="emphasis">a mixed record</span> of helping students improve over time. Look below to see what percentage of schools in this district are making <span class="emphasis">more, less, or about the same</span> progress as other schools in the state.</p>
-      

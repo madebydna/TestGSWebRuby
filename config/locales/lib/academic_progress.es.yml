@@ -28,7 +28,7 @@ es:
           <p>Los estudiantes de esta escuela están progresando <span class="emphasis">mucho menos</span>
           académicamente en comparación a otros estudiantes en el estado.</p>
           %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
           para padres:</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
           información para mejorar sus programas.</p>
@@ -45,7 +45,7 @@ es:
           <p>Los estudiantes de esta escuela están progresando <span class="emphasis">menos</span> académicamente de un
           grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
           para padres:</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
           información para ayudar a los estudiantes a crecer y alcanzar su máximo potencial.</p>
@@ -62,7 +62,7 @@ es:
           <p>Los estudiantes de esta escuela están <span class="emphasis">en promedio</span> logrando un progreso
           académico de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
           para padres:</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
           información para ayudar a los estudiantes a crecer y alcanzar su máximo potencial.</p>
@@ -79,7 +79,7 @@ es:
           <p>Los estudiantes de esta escuela están haciendo <span class="emphasis">más</span> progreso académico de un
           grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
           para padres:</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para
           apoyar el éxito continuo de la escuela.</p>
@@ -97,7 +97,7 @@ es:
           <p>Los estudiantes de esta escuela están haciendo <span class="emphasis">mucho</span> más progreso académico
           de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
           para padres:</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para apoyar
           el éxito continuo de la escuela.</p>
