@@ -41,7 +41,7 @@ class NMTestProcessor2019SBAPARCC < GS::ETL::TestProcessor
       "Proficient & Above %" => 1
   }
 
- source("nm_2018_2019",[], col_sep: "\t") 
+ source("nm_2018_2019.txt",[], col_sep: "\t") 
 
 
   shared do |s|
@@ -83,7 +83,7 @@ class NMTestProcessor2019SBAPARCC < GS::ETL::TestProcessor
 
   def config_hash
     {
-        gsdata_source_id: 35,
+        source_id: 35,
         state: 'nm'
     }
   end
