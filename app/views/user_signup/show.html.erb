@@ -11,10 +11,11 @@
 <% path_to_yml = 'lib.user_signup.'%>
 
 
-<section class="row">
-  <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-preferences-form-container phl">
-    <div id="user-signup-page">
-      <%= react_component('SearchBoxWrapper') %>
+
+<div id="user-signup-page">
+  <section class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-signup-form-container phl">
+        <%#= react_component('SearchBoxWrapper') %>
 
       <div class="heading">
         <%= t('lib.user_signup.heading') %>
@@ -28,63 +29,67 @@
       </div>
 
       <div class="body">
-        <form id="signup-school-form" action="/gsr/session/register_email/" accept-charset="UTF-8" method="post">
-          <input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="0+DRrJ7SdffFw2Optw59HpdPGqIGN98O8vBYe877HnImE0APzW30Fsf8AspLc7ZPCTkPSZ4wNmnu9XvtbdI48A==">
-          <input type="hidden" name="authenticity_token" value="ycdP6Tm2rDg4sVwLDiIoSBk/OfeFC1ZbdZ7ryRTFVSM8NN5Kagkt2TqOPWjyX+MZh0ksHB0Mvzxpm8hft+xzoQ==">
+
+      <%= form_tag(signup_path, method: :post, class:"user-signup-form-container") do |f| %>
+        <input class="js-gradeSubmitValue" name="grades" type="hidden" value="">
+        <input class="js-subscriptionSubmitValue" name="subscriptions" type="hidden" value="">
+
+        <%= render 'forms/join_email_fieldset' %>
+
+        <%= render partial: 'user_email_preferences/subscription', :locals => {
+          list: 'greatnews',
+          language: language,
+          active: false,
+          title: path_to_yml + 'greatnews_title',
+          subtitle: path_to_yml + 'greatnews_subtitle'} %>
+
+        <%= render :partial => 'user_email_preferences/grades_display', :locals => { grades: @grades_hashes[language.to_sym][:overall] } %>
+
+        <% if language == 'en' %>
+          <div class="mtm">
+            <%= render partial: 'user_email_preferences/subscription', :locals => {
+                list: 'teacher_list',
+                language: language,
+                active: false,
+                title: path_to_yml + 'teacher_list_title',
+                subtitle: path_to_yml + 'teacher_list_subtitle'} %>
+          </div>
+        <% end %>
+
+        <% if language == 'en' %>
+          <div class="mtm">
+            <%= render partial: 'user_email_preferences/subscription', :locals => {
+                list: 'sponsor',
+                language: language,
+                active: false,
+                title: path_to_yml + 'sponsor_title',
+                subtitle: path_to_yml + 'sponsor_subtitle'} %>
+          </div>
+        <% end %>
+
+        <fieldset>
+          <button type="submit" class="submit js-join-login-submit-button"><%= t('lib.user_signup.sign_up') %></button>
+          <p class="tou">
+            <%= t('lib.user_signup.terms_and_privacy_html',
+                  terms_of_use_link: link_to(
+                    t('lib.user_signup.terms_of_use'),
+                    terms_of_use_url),
+                  privacy_policy_link: link_to(
+                    t('lib.user_signup.privacy_policy'),
+                    privacy_url)
+            ) %>
+          </p>
+        </fieldset>
+      <% end %>
+        <!-- form id="user-signup-form" action="<%= signup_url %>" accept-charset="UTF-8" method="post" -->
           <!-- fieldset>
             <input type="email" name="email" id="join-email" placeholder="Email address" class="js-join-email js-validating-input" data-parsley-required="true" data-parsley-type="email" data-parsley-trigger="change" data-parsley-required-message="Please enter an email address." data-parsley-error-container=".js-join-email-errors" data-async-validations="emailRequired,emailFormat">
             <div class="js-join-email-errors"></div>
           </fieldset -->
 
-          <%= render 'forms/join_email_fieldset' %>
-
-          <%= render partial: 'user_email_preferences/subscription', :locals => {
-            list: 'greatnews',
-            language: language,
-            active: false,
-            title: path_to_yml + 'greatnews_title',
-            subtitle: path_to_yml + 'greatnews_subtitle'} %>
-
-          <%= render :partial => 'user_email_preferences/grades_display', :locals => { grades: @grades_hashes[language.to_sym][:overall] } %>
-
-          <% if language == 'en' %>
-            <div class="mtm">
-              <%= render partial: 'user_email_preferences/subscription', :locals => {
-                  list: 'teacher_list',
-                  language: language,
-                  active: false,
-                  title: path_to_yml + 'teacher_list_title',
-                  subtitle: path_to_yml + 'teacher_list_subtitle'} %>
-            </div>
-          <% end %>
-
-          <% if language == 'en' %>
-            <div class="mtm">
-              <%= render partial: 'user_email_preferences/subscription', :locals => {
-                  list: 'sponsor',
-                  language: language,
-                  active: false,
-                  title: path_to_yml + 'sponsor_title',
-                  subtitle: path_to_yml + 'sponsor_subtitle'} %>
-            </div>
-          <% end %>
-
-          <fieldset>
-            <button type="submit" class="submit js-join-login-submit-button"><%= t('lib.user_signup.sign_up') %></button>
-            <p class="tou">
-              <%= t('lib.user_signup.terms_and_privacy_html',
-                    terms_of_use_link: link_to(
-                      t('lib.user_signup.terms_of_use'),
-                      terms_of_use_url),
-                    privacy_policy_link: link_to(
-                      t('lib.user_signup.privacy_policy'),
-                      privacy_url)
-              ) %>
-            </p>
-          </fieldset>
 
         </form>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
