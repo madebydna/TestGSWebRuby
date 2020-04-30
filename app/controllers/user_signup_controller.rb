@@ -5,19 +5,21 @@ class UserSignupController < ApplicationController
   layout 'application'
 
   def show
+    @page_name = 'User Signup'
+    gon.pagename = @page_name
     @grades_hashes = grades_hashes
 
-    set_meta_tags(
-        title: "Sign up for an account | GreatSchools",
-        robots: "noindex"
-    )
+    account_meta_tags('Sign up for an account')
     set_tracking_info
-    render 'show'
   end
 
   def show_spanish
     I18n.locale = :es
     show
+  end
+
+  def thankyou
+    account_meta_tags('Thank you')
   end
 
   def create

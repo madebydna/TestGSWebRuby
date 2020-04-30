@@ -14,11 +14,14 @@
 
       <div class="subheading"><%= t(path_to_yml + 'subheading') %></div>
 
+      <%# TODO: Run image through ImageOptim first %>
       <%#= image_tag('user_signup/owl_wave.png', alt: '') %>
 
-      <a href="<%= home_url %>">
-        <button class="done-button"><%= t(path_to_yml + 'done') %></button>
-      </a>
+      <div class="done-button">
+        <a href="<%= home_url %>">
+          <button><%= t(path_to_yml + 'done') %></button>
+        </a>
+      </div>
 
     </div>
   </div>
