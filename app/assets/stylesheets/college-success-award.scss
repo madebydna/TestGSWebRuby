@@ -1,18 +1,15 @@
 // bootstrap
 @import 'resources/bootstrap/smaller_bootstrap';   //REVIEW
 @import 'variables/variables';
-@import "school_profiles/sharing_modal";
+@import 'school_profiles/sharing_modal';
 @import 'mixins/*';
 @import 'gs/mixins'; // deprecated   //REVIEW
 
 #search-page .search-body {
-  .icon-fax{
-    padding-right: 5px;
-  }
   @include media-breakpoint-down(sm) {
-    position: relative;
     margin: auto;
-    padding: 60px 0 0 0;
+    padding: 60px 0 0;
+    position: relative;
 
     @include media-breakpoint-down(xs) {
       padding:0;
@@ -21,6 +18,11 @@
       }
     }
   }
+
+  .icon-fax {
+    padding-right: 5px;
+  }
+
 }
 
 .list-column {
