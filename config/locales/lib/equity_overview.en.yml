@@ -32,7 +32,7 @@ en:
         <p>Disadvantaged students at this school may be falling far behind other students in the state,
         and this school may have large achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
         <p class="footnote">Look at the %{sections} below to see how different student groups are doing at this school.
         Are there big gaps?%{more}<a href="/gk/equity-toolkit/">These 5 things</a> will help
         you start a conversation at your school about helping <span class='open-sans_i'>all</span>
@@ -42,7 +42,7 @@ en:
         <p>Disadvantaged students at this school may be falling behind other students in the state, and this school
         may have significant achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
         <p class="footnote">Look at the %{sections} below to see how different student groups are doing at this school.
         Are there big gaps?%{more}<a href="/gk/equity-toolkit/">These 5 things</a> will help
         you start a conversation at your school about helping <span class='open-sans_i'>all</span>
@@ -52,7 +52,7 @@ en:
         <p>Disadvantaged students at this school are performing about as well as other students in the state, but this
         school may still have achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
         <p class="footnote">Look at the %{sections} below to see how different student groups are doing at this school.
         Are there big gaps?%{more}<a href="/gk/equity-toolkit/">These 5 things</a> will help
         you start a conversation at your school about helping <span class='open-sans_i'>all</span>
@@ -62,7 +62,7 @@ en:
         <p>Disadvantaged students at this school are performing better than other students in the state,
         though this school may still have achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
         <p class="footnote">Schools that close the gap between different student groups are doing something right!
         Explore the %{sections} below to learn more.%{more}<a href="/gk/equity-toolkit/">These 5 things</a> will help
         you start a conversation at your school about helping <span class='open-sans_i'>all</span>
@@ -72,7 +72,7 @@ en:
         <p>Disadvantaged students at this school are performing far better than other students in the state, and this
         school is successfully closing the achievement gap.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
         <p class="footnote">Schools that close the gap between different student groups are doing something right!
         Explore the %{sections} below to learn more.%{more}<a href="/gk/equity-toolkit/">These 5 things</a> will help
         you start a conversation at your school about helping <span class='open-sans_i'>all</span>

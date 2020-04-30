@@ -33,7 +33,7 @@ import { scrollToElement } from '../util/scrolling';
 import { enableAutoAnchoring, initAnchorHashUpdater, scrollToAnchor } from '../components/anchor_router';
 import { assign } from 'lodash';
 import * as validatingInputs from 'components/validating_inputs';
-import owlPng from 'school_profiles/owl.png';
+import owlSvg from 'school_profiles/brown-owl.svg';
 import { minimizeNudges as minimizeQualarooNudges } from 'util/qualaroo';
 import { init as initAdvertising, enableAdCloseButtons, applyStylingToIFrameAd } from 'util/advertising';
 import {
@@ -82,7 +82,7 @@ $(function() {
 
   // has to go above tooltips.initialize();
   $('.tour-teaser').addClass('gs-tipso');
-  $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
+  $('.tour-teaser').attr('data-remodal-target', 'modal_info_box');
 
   registerInterrupt('interstitial', (nextInterrupt) => {
     if(shouldShowInterstitial()) {
@@ -125,7 +125,7 @@ $(function() {
     if($(this).data("siteparams") !== undefined) {
       url +=  $(this).data("siteparams");
     }
-    popupCenter(url, $(this).data("type"), 700, 300)
+    popupCenter(url, $(this).data("type"), 700, 300);
     return false;
   });
 
@@ -158,9 +158,9 @@ $(function() {
   }
 
   function touchDevice(){
-    return (('ontouchstart' in window)
-    || (navigator.maxTouchPoints > 0)
-    || (navigator.msMaxTouchPoints > 0));
+    return (('ontouchstart' in window) ||
+    (navigator.maxTouchPoints > 0) ||
+    (navigator.msMaxTouchPoints > 0));
   }
 
   $('body').on('click', '.js-permaLink', function () {
@@ -224,7 +224,7 @@ $(function() {
   refreshAdOnScroll('Profiles_SecondSticky_Ad', '.static-container', 1200);
 
   function setCookieExpiration() {
-    var half_year = 182*24*60*60*1000
+    var half_year = 182*24*60*60*1000;
     var date = new Date();
     date.setTime(date.getTime() + half_year);
     var expires = "; expires=" + date.toUTCString();
@@ -240,8 +240,8 @@ $(function() {
   // sure the modal isn't displayed again.
   $('body').on('click', '#close-school-tour', function() {
     $('.school-profile-tour-modal').remove();
-    $('.tour-teaser').tipso({content: '<div><div><h3><img src="' + owlPng + '"/> Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
-    $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
+    $('.tour-teaser').tipso({content: '<div><div><h3><img alt="" src="' + owlSvg + '"/> Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
+    $('.tour-teaser').attr('data-remodal-target', 'modal_info_box');
   });
 
   let $body = $('body');
@@ -265,12 +265,12 @@ $(function() {
     const grades = gradesContainer.find('.grades');
     grades.slideUp();
 
-    const caretSpans = gradesContainer.find('span.icon-caret-down')
+    const caretSpans = gradesContainer.find('span.icon-caret-down');
     caretSpans.each((idx)=>{
       if(!caretSpans[idx].classList.contains('rotate-text-270')){
         caretSpans[idx].classList.add('rotate-text-270');
       }
-    })
+    });
   });
 
   // for summary rating tooltip
@@ -305,7 +305,7 @@ $(function() {
 
   try {
     $('.neighborhood-module img[data-src]').unveil(300, function() {
-      $(this).width('100%')
+      $(this).width('100%');
     });
   } catch (e) {}
   try {
@@ -385,8 +385,8 @@ $(window).on('load', function() {
     threshold: 50
   });
 
-  registerPredefinedInterrupts(['mobileOverlayAd', 'qualaroo'])
-  runInterrupts(['interstitial', 'profileTour', 'mobileOverlayAd', 'qualaroo'])
+  registerPredefinedInterrupts(['mobileOverlayAd', 'qualaroo']);
+  runInterrupts(['interstitial', 'profileTour', 'mobileOverlayAd', 'qualaroo']);
 
 
   $('#toc').on('click', 'a', function(e) {
@@ -403,7 +403,7 @@ $(window).on('load', function() {
   });
 });
 
-document.addEventListener('DOMContentLoaded', () => {updateProfileHeart(gon.school.state, gon.school.id)});
+document.addEventListener('DOMContentLoaded', () => updateProfileHeart(gon.school.state, gon.school.id));
 
 //specify style targeting on second ad found in SchoolProfiles#Show
-applyStylingToIFrameAd('.js-Profiles_Second_Ad-wrapper', [300,250], 'margin-left:150px')
+applyStylingToIFrameAd('.js-Profiles_Second_Ad-wrapper', [300,250], 'margin-left:150px');

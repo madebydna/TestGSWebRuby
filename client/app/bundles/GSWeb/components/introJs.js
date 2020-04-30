@@ -1,7 +1,7 @@
 import { introJs } from 'intro.js';
 import { t } from '../util/i18n';
 import { withCurrentSchool } from 'store/appStore';
-import owlPng from 'school_profiles/owl.png';
+import owlSvg from 'school_profiles/brown-owl.svg';
 import {
   minimizeNudges as minimizeQualarooNudges,
   maximizeNudges as maximizeQualarooNudges
@@ -75,7 +75,7 @@ const firstTutorial = [
         'school_profile_tour.tour1.step8_title_html'
       )}<div class="info-circle"><span class="icon-question"></span></div>` +
       `<br><br>${t('school_profile_tour.tour1.step8_p1')}<br><br>` +
-      `<p class="parent-tip"><img src="${owlPng}"><span class="speech-bubble left">${t(
+      `<p class="parent-tip"><img src="${owlSvg}" alt=""><span class="speech-bubble left">${t(
         'school_profile_tour.tour1.step8_parent_tips'
       )}</span></p>${t('school_profile_tour.tour1.step8_p2')}<br><br>` +
       `<div style="font-size: 18px; color: blue;">${t(

@@ -35,7 +35,7 @@ es:
           <p>El número de cursos avanzados tomadas por estudiantes de esta escuela está <span class="emphasis">muy por debajo</span> del promedio estatal.</p>
           <p>Los oficiales de admisiones universitarias miran las calificaciones de los estudiantes y el nivel de cursos tomados. Tomando cursos avanzados ayuda a demostrar que el estudiante está dispuesto a desafiarse a sí mismo. Además, algunos cursos avanzados, como AP, puede calificar para crédito universitario y elevar el GPA del estudiante.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que están haciendo para asegurar que los estudiantes tengan acceso a -- y participen en cursos avanzados.</p>
           <hr />
         _2_html: >
@@ -43,7 +43,7 @@ es:
           <p>El número de cursos avanzados tomadas por estudiantes de esta escuela está <span class="emphasis">por debajo</span> del promedio estatal.</p>
           <p>Los oficiales de admisiones universitarias miran las calificaciones de los estudiantes y el nivel de cursos tomados. Tomando cursos avanzados ayuda a demostrar la firmeza del carácter del estudiante y que está dispuesto a desafiarse a sí mismo. Además, algunos cursos avanzados, como AP, puede calificar para crédito universitario y elevar el GPA del estudiante.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que están haciendo para asegurar que los estudiantes tengan acceso a -- y participen en cursos avanzados.</p>
           <hr />
         _3_html: >
@@ -53,7 +53,7 @@ es:
           Tomando cursos avanzados ayuda a demostrar la firmeza del carácter del estudiante y que está dispuesto a desafiarse a sí mismo.
           Además, algunos cursos avanzados, como AP, puede calificar para crédito universitario y elevar el GPA del estudiante.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que están haciendo para asegurar que los estudiantes tengan acceso a -- y participen en cursos avanzados.</p>
           <hr />
         _4_html: >
@@ -61,7 +61,7 @@ es:
           <p>El número de cursos avanzados tomadas por estudiantes de esta escuela está <span class="emphasis">más alto</span> que el promedio estatal.</p>
           <p>Los oficiales de admisiones universitarias miran las calificaciones de los estudiantes y el nivel de cursos tomados. Tomando cursos avanzados ayuda a demostrar la firmeza del carácter del estudiante y que está dispuesto a desafiarse a sí mismo. Además, algunos cursos avanzados, como AP, puede calificar para crédito universitario y elevar el GPA del estudiante.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Anime a su estudiante a tomar cursos avanzados en áreas donde ellos sobresalen.</p>
           <hr />
         _5_html: >
@@ -73,6 +73,6 @@ es:
           está dispuesto a desafiarse a sí mismo. Además, algunos cursos avanzados, como AP, puede calificar para
           crédito universitario y elevar el GPA del estudiante.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Anime a su estudiante a tomar cursos avanzados en áreas donde ellos sobresalen.</p>
           <hr />

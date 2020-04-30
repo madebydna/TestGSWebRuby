@@ -1,12 +1,12 @@
 <div style="text-align: right; margin-bottom: 25px;">
-  <%=	 image_tag 'school_profiles/owl.png' %> &nbsp;
+  <%= image_tag 'school_profiles/brown-owl.svg', alt: '' %>&nbsp;
   <% (0...@pagination_link_count).each do |page_num| %>
-      <% if page_num == (params[:start].to_i)/100 %>
-          <%= link_to page_num + 1, "/admin/gsr/api_accounts?start=#{page_num*100}", {style: 'font-size: 20px; margin-right: 4px; color: red;'}%>
-      <% else %>
-          <%= link_to page_num + 1, "/admin/gsr/api_accounts?start=#{page_num*100}", {style: 'font-size: 20px; margin-right: 4px;'}%>
-      <% end %>
+    <% if page_num == (params[:start].to_i)/100 %>
+      <%= link_to page_num + 1, "/admin/gsr/api_accounts?start=#{page_num*100}", {style: 'font-size: 20px; margin-right: 4px; color: red;'}%>
+    <% else %>
+      <%= link_to page_num + 1, "/admin/gsr/api_accounts?start=#{page_num*100}", {style: 'font-size: 20px; margin-right: 4px;'}%>
+    <% end %>
   <% end %>
   &nbsp;
-  <%=	 image_tag 'school_profiles/owl.png' %>
+  <%= image_tag 'school_profiles/brown-owl.svg', alt: '' %>
 </div>

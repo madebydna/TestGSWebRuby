@@ -13,7 +13,7 @@ import {
 import DistrictBoundariesLegend from './district_boundaries_legend';
 import SpinnyWheel from '../spinny_wheel';
 import { getHomesForSaleHref } from '../../util/school';
-import unratedSchoolIcon from 'school_profiles/owl.png';
+import unratedSchoolIcon from 'school_profiles/brown-owl.svg';
 
 class SchoolList extends React.Component {
   static defaultProps = {
@@ -51,7 +51,7 @@ class SchoolList extends React.Component {
   renderRating(rating) {
     if (!rating) {
       return (
-        <img alt="Owl icon for unrated school" src={unratedSchoolIcon} />
+        <img alt="" src={unratedSchoolIcon} />
       );
     }
     const className = `circle-rating--small circle-rating--${  rating}`;
@@ -83,8 +83,8 @@ class SchoolList extends React.Component {
           </a>
           <br />
           <div className="district-boundary-school-links">
-            <a 
-              href="javascript:void(0);" 
+            <a
+              href="javascript:void(0);"
               onClick={this.onClickMap(school)}
               className="view-school-in-map-link"
             >
@@ -122,14 +122,14 @@ class SchoolList extends React.Component {
           </SpinnyWheel>
         </section>
       );
-    } 
+    }
       return (
         <section className={`school-list ${  this.props.className}`}>
           <h3>{t('schools_in_district')}</h3>
           {this.renderSchools()}
         </section>
       );
-    
+
   }
 }
 

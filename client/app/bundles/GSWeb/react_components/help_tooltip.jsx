@@ -67,7 +67,7 @@ const HelpTooltip = () => (
         <img
           src={ollie}
           className="owly_size"
-          alt="owl_icon"
+          alt=""
           onClick={handleToggle}
         />
         <div onClick={closeModal} className= {isOpen ? "help-overlay" : null}>
