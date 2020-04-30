@@ -11,8 +11,8 @@ class UserSignupController < ApplicationController
   def show_all
     @page_name = 'User Signup'
     gon.pagename = @page_name
+    @grades = param_grades.present? ? formatted_grades_array(param_grades) : param_grades
     @grades_hashes = grades_hashes
-
     account_meta_tags('Sign up for an account')
     set_tracking_info
     render 'show'
@@ -33,7 +33,7 @@ class UserSignupController < ApplicationController
     user = nil
     if invalid.present?
       set_variables_repopulate_form
-      show_all
+      param_language == 'es' ? show_spanish : show_all
     else
       UserEmailSubscriptionManager.new(user).update(process_subscriptions(param_subscriptions))
       UserEmailGradeManager.new(user).update(process_grades(param_grades))
@@ -48,6 +48,10 @@ class UserSignupController < ApplicationController
     @greatkidsnews = subs.include?('greatkidsnews')
     @sponsor = subs.include?('sponsor')
     @email = params['email']
+  end
+
+  def formatted_grades_array(pg)
+    JSON.parse(pg).flatten.select { |g| grade_array_pk_to_12.include?(g.to_s) }.map(&:to_s)
   end
 
   # def update
@@ -93,7 +97,7 @@ class UserSignupController < ApplicationController
     path_to_yml = 'lib.user_signup.'
 
     {
-        :active_grades => param_grades,
+        :active_grades => @grades,
         :district_state => '',
         :district_id => '',
         :language => language,

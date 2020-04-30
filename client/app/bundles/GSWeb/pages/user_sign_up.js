@@ -1,11 +1,16 @@
 const userSignupPageInit = () => {
   $(function () {
-    console.log("yes?");
     if (gon.pagename == "User Signup") {
-      console.log("maybe??");
       let $formContainer = $('.js-user-signup-form-container');
 
-      $formContainer.find('.js-checkbox').on('click', function () {
+      function gbygCheckbox(obj) {
+        console.log("hello");
+        $(obj)
+            .toggleClass('active')
+            .toggleClass('i-16-blue-check-box i-grey-unchecked-box');
+      };
+
+      $formContainer.on('click', '.js-checkbox', function () {
         $(this)
             .toggleClass('active')
             .toggleClass('i-16-blue-check-box i-grey-unchecked-box');
@@ -32,9 +37,12 @@ const userSignupPageInit = () => {
       }
 
       $formContainer.on('click', '.js-gradeCheckbox', function () {
+        gbygCheckbox(this);
+
         let activeGbyG = $(this).parent().parent().find('.active');
         let overallCheckboxParent = $(this).parent().parent().parent().siblings();
         let overallCheckbox = overallCheckboxParent.find('.js-greatkidsnewsCheckbox');
+        console.log()
         if (activeGbyG.length == 1) {
           if ($(this).hasClass('active')) {
             changeGbyGState(overallCheckbox, false)
