@@ -37,7 +37,7 @@ module CommunityProfiles
 
     def data_values
       return {} if ratings_narration.total_counts.zero?
-      
+
       {}.tap do |h|
         h['key'] = 'summary_rating'
         h['title'] = I18n.t('title', scope: "lib.summary_rating.district_scope")
@@ -55,7 +55,7 @@ module CommunityProfiles
     def data_points
       colors = {
         'above_average' => '#367A1E',
-        'average' => '#AB8F0E',
+        'average' => '#8a720a',
         'below_average' => '#CB5C35'
       }
 

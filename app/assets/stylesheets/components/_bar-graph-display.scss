@@ -31,7 +31,7 @@
   .details {
     line-height: 1em;
     float: right;
-    color: #00b3ee;
+    color: $midnight-blue;
     cursor: pointer
   }
   .state-average {
@@ -79,7 +79,7 @@
     vertical-align: middle;
   }
   .subject-subtext{
-    color: #999999;
+    color: $gray-mute;
     font-size: $font-size-s2;
   }
 
