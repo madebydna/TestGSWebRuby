@@ -28,7 +28,7 @@ class UserSignupController < ApplicationController
   end
 
   def create
-    # TODO: Verify that account does not exist, then create account and add subscriptions below
+    # TODO: Verify that account does not exist and is valid structure, then create account and add subscriptions below
     invalid = nil
     user = nil
     if invalid.present?
@@ -57,6 +57,10 @@ class UserSignupController < ApplicationController
   #   flash_notice t('controllers.user_email_preferences_controller.success')
   #   redirect_to user_preferences_path
   # end
+
+  def param_email
+    params['email'] || ''
+  end
 
   def param_grades
     params['grades'] || []
@@ -107,6 +111,10 @@ class UserSignupController < ApplicationController
 
   def process_subscriptions(param_subscriptions)
     JSON.parse(param_subscriptions)
+  end
+
+  def is_invalid?(email)
+    (email =~ URI::MailTo::EMAIL_REGEXP) != 0
   end
 
   private
