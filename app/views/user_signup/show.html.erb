@@ -1,4 +1,5 @@
 <% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
   <%= webpack_javascript_include_tag 'signup', defer: true %>
 <% end %>
 
@@ -10,12 +11,9 @@
 <% language = I18n.locale == :es ? 'es' : 'en' %>
 <% path_to_yml = 'lib.user_signup.'%>
 
-
-
 <div id="user-signup-page">
   <section class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-signup-form-container phl">
-        <%#= react_component('SearchBoxWrapper') %>
 
       <div class="heading">
         <%= t('lib.user_signup.heading') %>
@@ -37,11 +35,11 @@
         <%= render 'forms/join_email_fieldset' %>
 
         <%= render partial: 'user_email_preferences/subscription', :locals => {
-          list: 'greatnews',
-          language: language,
-          active: false,
-          title: path_to_yml + 'greatnews_title',
-          subtitle: path_to_yml + 'greatnews_subtitle'} %>
+            list: 'greatnews',
+            language: language,
+            active: @greatnews,
+            title: path_to_yml + 'greatnews_title',
+            subtitle: path_to_yml + 'greatnews_subtitle'} %>
 
         <%= render :partial => 'user_email_preferences/grades_display', :locals => { grades: @grades_hashes[language.to_sym][:overall] } %>
 
@@ -50,7 +48,7 @@
             <%= render partial: 'user_email_preferences/subscription', :locals => {
                 list: 'teacher_list',
                 language: language,
-                active: false,
+                active: @teacher_list,
                 title: path_to_yml + 'teacher_list_title',
                 subtitle: path_to_yml + 'teacher_list_subtitle'} %>
           </div>
@@ -61,7 +59,7 @@
             <%= render partial: 'user_email_preferences/subscription', :locals => {
                 list: 'sponsor',
                 language: language,
-                active: false,
+                active: @sponsor,
                 title: path_to_yml + 'sponsor_title',
                 subtitle: path_to_yml + 'sponsor_subtitle'} %>
           </div>

@@ -4,4 +4,4 @@ import commonPageInit from "./common";
 import preferencePageInit from './pages/user_email_preferences';
 
 $(commonPageInit());
-$(preferencePageInit())
+$(preferencePageInit());
