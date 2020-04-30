@@ -1,4 +1,5 @@
 <% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
   <%= webpack_javascript_include_tag 'email', defer: true %>
 <% end %>
 
@@ -8,5 +9,6 @@
 <% end %>
 <!-- div id="TESTERTESTTEST" style="margin: 30px"></div -->
 <div class="user-email-preferences">
+  <%= react_component('SearchBoxWrapper') %>
   <%= render 'email_preferences' %>
 </div>
