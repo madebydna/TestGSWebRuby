@@ -12,7 +12,8 @@
     position: relative;
 
     @include media-breakpoint-down(xs) {
-      padding:0;
+      padding: 0;
+
       .menu-bar.mobile-filters {
         display: none;
       }

@@ -22,7 +22,7 @@
 .rating-score-item__state-average {
   text-align: right;
   font-size: $font-size-s1;
-  color: #71787e;
+  color: $gray-text-color;
   @include media-breakpoint-up(md) {
     padding-right: 7px;
     display: table-cell;
