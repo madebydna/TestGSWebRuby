@@ -64,8 +64,7 @@ const resultTypes = {
     additionalInfo: () => null
   },
   Districts: {
-    title: ({ district }) =>
-      t('Schools in', { parameters: { location: district } }),
+    title: ({ district }) => district,
     additionalInfo: ({ city, state }) => `${city}, ${state}`
   },
   Zipcodes: {
@@ -99,7 +98,7 @@ const SearchResultsList = ({
     </li>
   );
 
-  const groupListItems = (group, listItems, order) => 
+  const groupListItems = (group, listItems, order) =>
     listItems.map(listItem => {
       order.counter += 1;
       const title = resultTypes[group].title(listItem);

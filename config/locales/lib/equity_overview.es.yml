@@ -30,7 +30,7 @@ es:
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
         comparación a otros estudiantes en el estado, y esta escuela puede tener grandes diferencias en logro académico.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
         escuela. ¿Hay diferencias grandes?%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
@@ -41,7 +41,7 @@ es:
         comparación a otros estudiantes en el estado, y esta escuela puede tener diferencias significativas en
         logro académico.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
         escuela. ¿Hay diferencias grandes?%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
@@ -51,7 +51,7 @@ es:
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando tan bien como
         otros estudiantes en el estado, pero esta escuela todavía puede tener diferencias en logro académico.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
         escuela. ¿Hay diferencias grandes?%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
@@ -61,7 +61,7 @@ es:
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mejor que otros
          estudiantes en el estado, aunque esta escuela todavía puede tener diferencias en logro académico.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">¡Las escuelas que eliminan las diferencias entre distintos grupos de estudiantes están
         haciendo algo bien! Explore %{sections} para informarse más.%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
@@ -71,7 +71,7 @@ es:
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mucho mejor que
         otros estudiantes en el estado, y esta escuela está eliminando con éxito las diferencias en logro académico.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">¡Las escuelas que eliminan las diferencias entre distintos grupos de estudiantes están
         haciendo algo bien! Explore %{sections} para informarse más.%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a

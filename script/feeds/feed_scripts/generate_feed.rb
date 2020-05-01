@@ -30,7 +30,7 @@ require_relative '../feed_builders/parent_reviews/parent_review_csv_writer'
 require_relative '../feed_builders/directory/data_reader'
 require_relative '../feed_builders/directory/xml_writer'
 require_relative '../feed_builders/directory/csv_writer'
-require_relative '../feed_builders/directory/census_csv_writer'
+require_relative '../feed_builders/directory/metrics_csv_writer'
 
 module Feeds
   class GenerateFeed
@@ -100,8 +100,8 @@ module Feeds
           csv: Feeds::Directory::CsvWriter
         },
         directory_census_flat:{
-          txt: Feeds::Directory::CensusCsvWriter,
-          csv: Feeds::Directory::CensusCsvWriter
+          txt: Feeds::Directory::MetricsCsvWriter,
+          csv: Feeds::Directory::MetricsCsvWriter
         }
     }
 

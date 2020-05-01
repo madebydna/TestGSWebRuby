@@ -14,7 +14,7 @@ module Feeds
       data_keys_required  = FeedConstants.const_get("DIRECTORY_#{model.upcase}_KEYS_REQUIRED")
 
       @directory_hash = hash[cache_keys[0]]
-      @characteristics_hash = characteristics_hash_build(hash, cache_keys)
+      @metrics_hash = metrics_hash_build(hash, cache_keys)
       id = cache_value(@directory_hash, 'id')
       @universal_id = UniversalId.calculate_universal_id(state, FeedConstants.const_get("ENTITY_TYPE_#{model.upcase}"), id)
 
@@ -36,13 +36,13 @@ module Feeds
       arr.flatten
     end
 
-    def self.characteristics_hash_build(hash, cache_keys)
+    def self.metrics_hash_build(hash, cache_keys)
       state_gsdata = hash[cache_keys[2]] || {}
-      state_characteristics_data = hash[cache_keys[1]] || {}
-      if state_gsdata && state_characteristics_data
-        state_gsdata.merge(state_characteristics_data)
+      state_metrics_data = hash[cache_keys[1]] || {}
+      if state_gsdata && state_metrics_data
+        state_gsdata.merge(state_metrics_data)
       else
-        state_characteristics_data
+        state_metrics_data
       end
     end
 
@@ -99,8 +99,8 @@ module Feeds
       single_data_object('universal-district-id',uni_district_id) if district_id && uni_district_id && @model == 'School'
     end
 
-    def self.census_info
-      char_data = CharacteristicsDataBuilder.characteristics_format(@characteristics_hash, @universal_id, @model) if @characteristics_hash.present?
+    def self.metrics_info
+      char_data = MetricsDataBuilder.metrics_format(@metrics_hash, @universal_id, @model) if @metrics_hash.present?
       single_data_object('census-info', char_data) if char_data && char_data.compact.present?
     end
 

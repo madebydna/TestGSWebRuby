@@ -1,7 +1,14 @@
-<%= stylesheet_link_tag "user_email_preferences", async: true %>
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'email', defer: true %>
+<% end %>
 
-<% # render partial: 'account_management/nav' %>
+<% content_for :page_stylesheets do %>
+  <%= stylesheet_link_tag "post_load", async: true %>
+  <%= stylesheet_link_tag "user_email_preferences", async: true %>
+<% end %>
 
 <div class="user-email-preferences">
+  <%= react_component('SearchBoxWrapper') %>
   <%= render 'email_preferences' %>
 </div>

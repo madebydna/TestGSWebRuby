@@ -4,7 +4,7 @@ class DistrictsController < ApplicationController
   include PageAnalytics
   include CommunityConcerns
 
-  CACHE_KEYS_FOR_READER = %w(district_schools_summary district_characteristics gsdata)
+  CACHE_KEYS_FOR_READER = %w(district_schools_summary metrics gsdata)
 
   layout 'application'
   before_filter :redirect_unless_valid_district
@@ -46,7 +46,7 @@ class DistrictsController < ApplicationController
     @page_type = 'district'
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     gon.dependencies = {
-        highcharts: ActionController::Base.helpers.asset_path('highcharts.js')
+      highcharts: ActionController::Base.helpers.asset_path('highcharts.js')
     }
     set_ad_targeting_props
     set_page_analytics_data
@@ -60,14 +60,14 @@ class DistrictsController < ApplicationController
   def solr_query
     query_type = Search::SolrSchoolQuery
     query_type.new(
-          state: state,
-          district_id: district_record&.district_id,
-          level_codes: @level_code.compact,
-          limit: default_top_schools_limit,
-          sort_name: 'rating',
-          ratings: (1..10).to_a,
-          csa_years: @csa_years.presence
-        )
+      state: state,
+      district_id: district_record&.district_id,
+      level_codes: @level_code.compact,
+      limit: default_top_schools_limit,
+      sort_name: 'rating',
+      ratings: (1..10).to_a,
+      csa_years: @csa_years.presence
+    )
   end
 
   def csa_state_solr_query

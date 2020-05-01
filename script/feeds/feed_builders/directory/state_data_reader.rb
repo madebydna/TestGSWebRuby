@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './characteristics_caching/characteristics_builder'
+require_relative './metrics_caching/metrics_builder'
 
 module Feeds
   module Directory
@@ -9,7 +9,7 @@ module Feeds
       include Feeds::FeedHelper
 
       CACHE_KEY_GSDATA = 'gsdata'
-      CACHE_KEY_CHARACTERISTICS = 'state_characteristics'
+      CACHE_KEY_METRICS = 'metrics'
 
       attr_reader :state
 
@@ -25,9 +25,9 @@ module Feeds
         @_state_name ||= States.labels_hash[@state.downcase]
       end
 
-      def census_info
-        @_census_info ||= begin
-          data_builder = CharacteristicsBuilder.new(state_cache, universal_id, 'state')
+      def metrics_info
+        @_metrics_info ||= begin
+          data_builder = MetricsBuilder.new(state_cache, universal_id, 'state')
           data_builder.data_hashes
         end
       end
@@ -38,18 +38,18 @@ module Feeds
             hash[attribute.gsub('_','-')] = send(attribute.to_sym)
           end
 
-          state_attributes_hash.merge(census_info)
+          state_attributes_hash.merge(metrics_info)
         end
       end
 
       def state_cache
         @_state_cache ||= begin
-          state_characteristics_cache.merge(state_gsdata_cache)
+          state_metrics_cache.merge(state_gsdata_cache)
         end
       end
 
-      def state_characteristics_cache
-        @_state_characteristics_cache ||= StateCache.for_state(CACHE_KEY_CHARACTERISTICS, @state)&.cache_data || {}
+      def state_metrics_cache
+        @_state_metrics_cache ||= StateCache.for_state(CACHE_KEY_METRICS, @state)&.cache_data || {}
       end
 
       def state_gsdata_cache

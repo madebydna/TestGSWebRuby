@@ -26,7 +26,7 @@ module CommunityProfiles
             GSLogger.error(
               :misc,
               nil,
-              message: "Expected to find unique characteristics value: #{message}",
+              message: "Expected to find unique metrics value: #{message}",
               vars: other_helpful_vars
             )
           end
@@ -52,11 +52,15 @@ module CommunityProfiles
       end
 
       def all_students?
-        breakdown == 'All students'
+        breakdown == "All students"
       end
 
       def all_subjects?
-        subject == 'All subjects'
+        ['All subjects', 'Not Applicable', 'Composite Subject'].include?(subject)
+      end
+
+      def all_subjects_and_students?
+        all_subjects? && all_students?
       end
 
       (2000..2022).to_a.each do |year|
@@ -108,8 +112,8 @@ module CommunityProfiles
       end
     end
 
-    def characteristics_data
-      array_of_hashes = @cache_data_reader.characteristics_data(*included_data_types(:characteristics))
+    def metrics_data
+      array_of_hashes = @cache_data_reader.metrics_data(*included_data_types(:metrics))
       array_of_hashes.each_with_object({}) do |(data_type, array), accum|
         accum[data_type] =
           array.map do |h|
@@ -133,21 +137,21 @@ module CommunityProfiles
     end
 
     def data_types_in_the_overview
-      [FOUR_YEAR_GRADE_RATE, SAT_PERCENT_COLLEGE_READY, ACT_PERCENT_COLLEGE_READY, SAT_PARTICIPATION, ACT_PARTICIPATION, ACT_SCORE, SAT_SCORE, AP_ENROLLED, AP_EXAMS_PASSED, SAT_PERCENT_COLLEGE_READY, DUAL_ENROLLMENT_PARTICIPATION, IB_PROGRAM_PARTICIPATION]
+      [FOUR_YEAR_GRADE_RATE, SAT_PERCENT_COLLEGE_READY, ACT_PERCENT_COLLEGE_READY, SAT_PARTICIPATION, ACT_PARTICIPATION, ACT_SCORE, SAT_SCORE, AP_ENROLLED, AP_EXAMS_PASSED, DUAL_ENROLLMENT_PARTICIPATION, IB_PROGRAM_PARTICIPATION]
     end
 
     def college_success_datatypes
       POST_SECONDARY + REMEDIATION_SUBGROUPS + SECOND_YEAR
     end
 
-    # Filters characteristics data from DB
-    # these have been converted to instances of either CharacteristicsValue or GradutesRemediationValue 
+    # Filters metrics data from DB
+    # these have been converted to instances of either CharacteristicsValue or GradutesRemediationValue
     def data_type_hashes
       @_data_type_hashes ||= begin
-        hashes = characteristics_data
+        hashes = metrics_data
         hashes.merge!(gsdata_data) if entity_type == 'district'
         return [] if hashes.blank?
-        handle_ACT_SAT_to_display!(hashes)
+        ActSatHandler.new(hashes).handle_ACT_SAT_to_display!
         hashes = hashes.map do |key, array|
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
             # This is for characteristics
@@ -158,15 +162,15 @@ module CommunityProfiles
         data_values = hashes.flatten.compact
         data_values.select! { |dv| included_data_types.include?(dv['data_type']) }
         data_values.select! do |dv|
-          if multiple_breakdowns_in_one_data_type.include?(dv['data_type']) && dv.subject != 'All subjects'
+          if multiple_breakdowns_in_one_data_type.include?(dv['data_type']) && !dv.all_subjects?
             false
           else
             true
           end
         end
         if @tab == "college_success"
-          data_values.reject! {|dv| dv['year'].to_i < DATA_CUTOFF_YEAR} 
-          data_values = select_post_secondary_max_year(data_values) 
+          data_values.reject! {|dv| dv['year'].to_i < DATA_CUTOFF_YEAR}
+          data_values = select_post_secondary_max_year(data_values)
         end
         data_values.sort_by {|o| included_data_types.index(o['data_type'])}
       end
@@ -176,7 +180,7 @@ module CommunityProfiles
       post_secondary_data = data_values.select { | dv | POST_SECONDARY.include?(dv['data_type']) }
       max_year = post_secondary_data.map(&:year).compact.max
       data_values.select do | dv |
-        !POST_SECONDARY.include?(dv['data_type']) || dv['year'] == max_year 
+        !POST_SECONDARY.include?(dv['data_type']) || dv['year'] == max_year
       end
     end
 
@@ -219,7 +223,7 @@ module CommunityProfiles
         {label: score_item.score.format.to_s.chomp('%'),
          score: score_item.score.value.to_i,
          breakdown: score_item.label,
-         data_type: score_item.data_type,
+         data_type: score_item.data_type, # <== same as breakdown but renamed??
          subgroup: score_item.subgroup,
          state_average: score_item.state_average&.value.present? ? score_item.state_average.value.to_i : nil,
          state_average_label: score_item.state_average&.value.present? ? score_item.state_average.value.to_f.round.to_s : nil,
@@ -306,7 +310,7 @@ module CommunityProfiles
     def college_success_narration
       return default_college_success_narration unless data_type_hashes.all? {|c| c.state_average.present?}
 
-      narratives = data_type_hashes.select{ |dh| dh["breakdown"] == 'All students'}.map(&narration_for_value).compact
+      narratives = data_type_hashes.select {|dh| dh["breakdown"] == 'All students'}.map(&narration_for_value).compact
 
       return default_college_success_narration unless narratives.present?
 

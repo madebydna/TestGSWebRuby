@@ -15,10 +15,6 @@ class Loader
     @source = source
   end
 
-  def self.census_data_type?(datatype)
-    CensusLoading::Base.census_data_types.keys.any? { |cdt| datatype.casecmp(cdt) == 0 } || datatype.to_s.downcase == 'census'
-  end
-
   def self.esp_data_type?(datatype)
     datatype.to_s.downcase == 'osp'
   end
@@ -33,9 +29,7 @@ class Loader
 
   def self.determine_loading_class(source, data_type)
     if source == 'osp_form'
-      if census_data_type?(data_type)
-        CensusLoading::Loader
-      elsif school_data_type?(data_type)
+      if school_data_type?(data_type)
         SchoolLoading::Loader
       else
         EspResponseLoading::Loader
@@ -43,8 +37,6 @@ class Loader
     elsif source != 'osp_form'
       if data_type == 'directory'
         DirectoryLoading::Loader
-      elsif data_type == 'census' || census_data_type?(data_type)
-        CensusLoading::Loader
       elsif data_type == 'newsletter'
         # ... just an example of how to extend
       elsif data_type == 'school_reviews'

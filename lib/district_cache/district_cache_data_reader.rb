@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DistrictCacheDataReader
-  DISTRICT_CACHE_KEYS = %w(feed_test_scores_gsdata test_scores_gsdata feed_test_scores ratings district_districts_summary district_directory feed_district_characteristics district_characteristics gsdata)
+  DISTRICT_CACHE_KEYS = %w(feed_test_scores_gsdata test_scores_gsdata feed_test_scores ratings district_schools_summary district_directory metrics feed_metrics gsdata)
 
   attr_reader :district, :district_cache_keys
 
@@ -18,8 +18,8 @@ class DistrictCacheDataReader
     decorated_district.ethnicity_data
   end
 
-  def characteristics_data(*keys)
-    decorated_district.district_characteristics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
+  def metrics_data(*keys)
+    decorated_district.metrics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
       array_of_hashes = array_of_hashes.select {|h| h.has_key?('source')}
       hash[k] = array_of_hashes if array_of_hashes.present?
     end
@@ -72,12 +72,8 @@ class DistrictCacheDataReader
       .for_all_students
   end
 
-  def graduation_rate_data
-    decorated_district.characteristics['4-year high district graduation rate']
-  end
-
-  def characteristics
-    decorated_district.characteristics
+  def metrics
+    decorated_district.metrics
   end
 
   def gsdata_data(*keys)

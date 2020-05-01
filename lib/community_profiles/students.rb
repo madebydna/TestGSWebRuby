@@ -74,7 +74,7 @@ module CommunityProfiles
     end
 
     def cache_gender_data
-      @_cache_gender_data ||= @cache_data_reader.characteristics_data(*GENDER_KEYS)
+      @_cache_gender_data ||= @cache_data_reader.metrics_data(*GENDER_KEYS)
     end
 
     def gender_data
@@ -124,7 +124,7 @@ module CommunityProfiles
     #       here so that we don't have to duplicate the translations in JavaScript
     def subgroups_data
       @_subgroups_data ||= (
-        @cache_data_reader.characteristics_data(*OTHER_BREAKDOWN_KEYS).each_with_object({}) do |(key, value), hash|
+        @cache_data_reader.metrics_data(*OTHER_BREAKDOWN_KEYS).each_with_object({}) do |(key, value), hash|
           data_hash = value.first
           if data_hash["#{community_type}_value"] > 0
             hash[key] = [{}.tap do |h|
@@ -171,6 +171,6 @@ module CommunityProfiles
     def with_valid_values
       lambda {|e| e["#{community_type}_value"] > 0 }
     end
-    
+
   end
 end

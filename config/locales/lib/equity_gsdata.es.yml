@@ -34,7 +34,7 @@ es:
           <p class="narrative-content">Los resultados de los exámenes de los estudiantes de bajos ingresos en esta
           escuela están <span class="emphasis">muy por debajo</span> del promedio estatal para todos los estudiantes.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Los estudiantes de bajos ingresos realmente están siendo dejados atrás en esta escuela.
           Pero algunas escuelas están haciendo un excelente trabajo de servir a todos los estudiantes.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
@@ -51,7 +51,7 @@ es:
           <p class="narrative-content">Los resultados de los exámenes de los estudiantes de bajos ingresos en esta
           escuela están <span class="emphasis">por debajo</span> del promedio estatal para todos los estudiantes.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Los estudiantes de bajos ingresos realmente están siendo dejados atrás en esta escuela.
           Pero algunas escuelas están haciendo un excelente trabajo de servir a todos los estudiantes.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
@@ -69,7 +69,7 @@ es:
           <span class="emphasis">son comparables</span> con el promedio estatal para todos los estudiantes, aunque
           todavía están por debajo de los resultados de estudiantes en escuelas de alto rendimiento en el estado.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">La mayoría de las escuelas tienen dificultades para apoyar a los estudiantes de bajos ingresos.
           Pero algunas escuelas están teniendo éxito.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}<ul>
@@ -85,7 +85,7 @@ es:
           <p class="narrative-content">Los resultados de los exámenes de los estudiantes de bajos ingresos en esta
           escuela están <span class="emphasis">por encima</span> del promedio estatal para todos los estudiantes.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Esta escuela está mejor que la mayoría de las escuelas cuando se trata de apoyar a los
           estudiantes de bajos ingresos. Pero algunas escuelas están haciendo un excelente trabajo sirviendo a todos los estudiantes.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
@@ -102,7 +102,7 @@ es:
           <p class="narrative-content">Los resultados de los exámenes de los estudiantes de bajos ingresos en esta
           escuela están <span class="emphasis">muy por encima</span> del promedio estatal para todos los estudiantes.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Esta escuela está haciendo un trabajo mucho mejor que la mayoría de las escuelas cuando
           se trata de apoyar a los estudiantes de bajos ingresos.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a abogar por todos los niños.%{more}
@@ -167,12 +167,12 @@ es:
             'Percentage of students chronically absent (15+ days)': >
               <p class="narrative-content">Esto muestra el porcentaje de alumnos ausentes 15 días o más a través de diferentes razas y etnias en esta escuela, en comparación con el promedio estatal. Altos índices de absentismo y suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
               <hr />
-              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+              <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
               <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
             'Percentage of students suspended out of school': >
               <p class="narrative-content">Esto demuestra los índices de suspensiones fuera de la escuela entre diferentes razas/etnias en esta escuela, en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
               <hr />
-              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+              <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
               <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
           disparity:
             'Percentage of students chronically absent (15+ days)': >
@@ -184,7 +184,7 @@ es:
                 escuela por qué existe esta desigualdad y lo que está haciendo para asegurar que las políticas de
                 asistencia sean justas.</p>
                 <hr />
-                <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+                <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
                 <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
               </div>
             'Percentage of students suspended out of school': >
@@ -195,19 +195,19 @@ es:
                 por qué suspende desproporcionadamente a algunos grupos de estudiantes y lo que está haciendo para
                 asegurar que las políticas de disciplina sean justas.</p>
                 <hr />
-                <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+                <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
                 <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
               </div>
         SD:
           'Percentage of students chronically absent (15+ days)': >
             <p class="narrative-content">Esto muestra el porcentaje de estudiantes con discapacidades ausentes 15 días o más en esta escuela en comparación con el promedio estatal. Altos índices de absentismo significa menos tiempo para la enseñanza y el aprendizaje.</p>
             <hr />
-            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+            <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote"><a href='/gk/articles/disciplina-escolar-los-derechos-de-los-estudiantes-con-iep-o-un-plan-504/?lang=es'>Entérate de los derechos de tu hijo</a> cuando se trata de la disciplina escolar.</p>
           'Percentage of students suspended out of school': >
             <p class="narrative-content">Este índice muestra la suspensión de los estudiantes con discapacidades en esta escuela en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
             <hr />
-            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+            <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote"><a href='/gk/articles/disciplina-escolar-los-derechos-de-los-estudiantes-con-iep-o-un-plan-504/?lang=es'>Entérate de los derechos de tu hijo</a> cuando se trata de la disciplina escolar.</p>
           'Test scores':
             # one - subject begins with a vowel e.g. de English
@@ -215,10 +215,10 @@ es:
             one: >
               <p class="narrative-content">Esto muestra los resultados para los estudiantes con discapacidades en un examen de %{subject} dado a los estudiantes una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.</p>
               <hr />
-              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+              <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
               <p class="footnote">Pregúntale a la escuela de tu hijo <a href='/gk/articles/adaptaciones-que-son-y-como-funcionan/?lang=es'>sobre adaptaciones que pueden eliminar barreras para el aprendizaje.</a></p>
             other: >
               <p class="narrative-content">Esto muestra los resultados para los estudiantes con discapacidades en un examen de %{subject} dado a los estudiantes una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.</p>
               <hr />
-              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+              <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
               <p class="footnote">Pregúntale a la escuela de tu hijo <a href='/gk/articles/adaptaciones-que-son-y-como-funcionan/?lang=es'>sobre adaptaciones que pueden eliminar barreras para el aprendizaje.</a></p>

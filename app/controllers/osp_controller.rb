@@ -124,7 +124,7 @@ class OspController < ApplicationController
 
   def create_nonOSP_response!(question_id, response_values, submit_time, esp_membership_id, is_approved_user, question_key)
     begin
-      data_type = OspData::ESP_KEY_TO_CENSUS_KEY[question_key] || OspData::ESP_KEY_TO_SCHOOL_KEY[question_key]
+      data_type = OspData::ESP_KEY_TO_METRICS_KEY[question_key] || OspData::ESP_KEY_TO_SCHOOL_KEY[question_key]
       if data_type.present?
         response_blob = make_nonOSP_response_blob(data_type, response_values, submit_time, esp_membership_id)
         create_osp_form_response!(question_id, esp_membership_id, response_blob, submit_time)

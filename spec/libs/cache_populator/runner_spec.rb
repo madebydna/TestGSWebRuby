@@ -4,7 +4,7 @@ describe CachePopulator::Runner do
 
   let(:rows) do
     [
-      {"type" => "state", "values" => "ca,hi", "cache_keys" => "state_characteristics"},
+      {"type" => "state", "values" => "ca,hi", "cache_keys" => "metrics"},
       {"type" => "city", "values" => "ca,hi:1,2,3", "cache_keys" => "school_levels"},
       {"type" => "school", "values" => "ca:1,2,3", "cache_keys" => "ratings"}
     ]
@@ -17,25 +17,25 @@ describe CachePopulator::Runner do
     it "returns a StateCachePopulator if type = state" do
       cacher = subject.setup_cacher(row)
       expect(cacher).to be_a(CachePopulator::StateCachePopulator)
-    end 
+    end
 
     it "returns a CityCachePopulator if type = city" do
       row['type'] = 'city'
       cacher = subject.setup_cacher(row)
       expect(cacher).to be_a(CachePopulator::CityCachePopulator)
-    end 
+    end
 
     it "returns a DistrictCachePopulator if type = district" do
       row['type'] = 'district'
       cacher = subject.setup_cacher(row)
       expect(cacher).to be_a(CachePopulator::DistrictCachePopulator)
-    end 
+    end
 
     it "returns a SchoolCachePopulator if type = school" do
       row['type'] = 'school'
       cacher = subject.setup_cacher(row)
       expect(cacher).to be_a(CachePopulator::SchoolCachePopulator)
-    end 
+    end
 
     it "returns nil for unrecognized cacher types" do
       row['type'] = 'foo'
@@ -48,7 +48,7 @@ describe CachePopulator::Runner do
       state_populator = instance_double(CachePopulator::StateCachePopulator, run: 0, valid?: true)
       city_populator = instance_double(CachePopulator::CityCachePopulator, run: 0, valid?: true)
       school_populator = instance_double(CachePopulator::SchoolCachePopulator, run: 0, valid?: true)
-      expect(CachePopulator::StateCachePopulator).to receive(:new).with(values: "ca,hi", cache_keys: "state_characteristics").and_return(state_populator)
+      expect(CachePopulator::StateCachePopulator).to receive(:new).with(values: "ca,hi", cache_keys: "metrics").and_return(state_populator)
       expect(CachePopulator::CityCachePopulator).to receive(:new).with(values: "ca,hi:1,2,3", cache_keys: "school_levels").and_return(city_populator)
       expect(CachePopulator::SchoolCachePopulator).to receive(:new).with(values: "ca:1,2,3", cache_keys: "ratings").and_return(school_populator)
       subject.run
@@ -58,14 +58,14 @@ describe CachePopulator::Runner do
   describe "#run with errors" do
     let(:rows_with_errors) do
       [
-        {"type" => "state", "values" => "ca,hi", "cache_keys" => "state_characteristics"},
+        {"type" => "state", "values" => "ca,hi", "cache_keys" => "metrics"},
         {"type" => "city", "values" => "ca,hi:1,2,3", "cache_keys" => "school_levels"},
         {"type" => "foo", "values" => ":1,2,3", "cache_keys" => "ratings"}
       ]
     end
 
     it "fails fast" do
-      runner = CachePopulator::Runner.new(rows_with_errors) 
+      runner = CachePopulator::Runner.new(rows_with_errors)
       expect { runner.run }.to raise_error(CachePopulator::PopulatorError, /Error on row 3: Cacher type not recognized/m)
     end
   end
@@ -80,5 +80,5 @@ describe CachePopulator::Runner do
     end
   end
 
-    
+
 end

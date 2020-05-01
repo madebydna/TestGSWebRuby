@@ -14,31 +14,33 @@ class ExactTargetJobs
 
   def run
     ptr = @process_to_run.to_sym
-    map_class = MAPPING_CLASSES[ptr]
+    upload_class = MAPPING_CLASSES_UPLOADS[ptr]
+    download_class = MAPPING_CLASSES_DOWNLOADS_ALL[ptr]
     if ptr == :all
-      unsubscribe_run
-      MAPPING_CLASSES.each {| key, _ | write_to_file(key)}
-    elsif map_class
-      write_to_file(ptr)
-    elsif ptr == :unsubscribes
-      unsubscribe_run
+      MAPPING_CLASSES_DOWNLOADS.each { |key, _| download_import(key) }
+      MAPPING_CLASSES_UPLOADS.each { |key, _| build_zip_upload(key) }
+    elsif upload_class
+      build_zip_upload(ptr)
+    elsif download_class
+      download_import(ptr)
     end
   end
 
-  def unsubscribe_run
+  def download_import(key)
     begin
-      log = ScriptLogger.record_log_instance(et_process_to_run: 'unsubscribe') rescue nil
-      processor = ExactTargetFileManager::Builders::Unsubscribes::Processor.new
-      puts "Working on: Unsubscribes"
+      log = ScriptLogger.record_log_instance(et_process_to_run: key) rescue nil
+      processor_string = "ExactTargetFileManager::Builders::#{MAPPING_CLASSES_DOWNLOADS_ALL[key]}"
+      processor = processor_string.constantize.new
+      puts "Working on: #{key}"
       print "...downloading..."
       processor.download_file
       print "...running..."
       processor.run
       puts "success"
-      log.finish_logging_session(1, "Success: completed downloading Unsubscribes and updating") rescue nil
+      log.finish_logging_session(1, "SUCCESS: completed uploading ET processing key: #{key}") rescue nil
     rescue StandardError => e
       puts e.message          # Human readable error
-      log.finish_logging_session(0, "ERROR: unsubscribes failed, error: #{e.message}") rescue nil
+      log.finish_logging_session(0, "ERROR: download import process failed, key: #{key}, error: #{e.message}") rescue nil
       exit 1
     end
   end
@@ -63,22 +65,22 @@ class ExactTargetJobs
     writer.upload_file
   end
 
-  def write_to_file(key)
+  def build_zip_upload(key)
     log = ScriptLogger.record_log_instance(et_process_to_run: key) rescue nil
     begin
-      writer_string = "ExactTargetFileManager::Builders::#{MAPPING_CLASSES[key]}::CsvWriter"
+      writer_string = "ExactTargetFileManager::Builders::#{MAPPING_CLASSES_UPLOADS[key]}::CsvWriter"
       writer = writer_string.constantize.new
-      puts "Working on: #{MAPPING_CLASSES[key]}"
+      puts "Working on: #{MAPPING_CLASSES_UPLOADS[key]}"
       print "...writing..."
       writer.write_file
       if validate_file(writer, log)
         zip_and_upload(writer)
         puts "success"
-        log.finish_logging_session(1, "SUCCESS: completed uploading ET processing") rescue nil
+        log.finish_logging_session(1, "SUCCESS: completed uploading ET processing key: #{key}") rescue nil
       end
     rescue StandardError => e
       puts e.message          # Human readable error
-      log.finish_logging_session(0, "ERROR: unsubscribes failed, key: #{key}, error: #{e.message}") rescue nil
+      log.finish_logging_session(0, "ERROR: build upload process failed, key: #{key}, error: #{e.message}") rescue nil
       exit 1
     end
   end

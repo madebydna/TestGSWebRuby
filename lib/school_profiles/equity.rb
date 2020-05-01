@@ -9,7 +9,7 @@ module SchoolProfiles
       @test_source_data = test_source_data
 
       SchoolProfiles::NarrativeLowIncomeGradRateAndEntranceReq.new(
-          school_cache_data_reader: school_cache_data_reader
+        school_cache_data_reader.metrics
       ).auto_narrative_calculate_and_add
 
       @graduation_rate = ::Components::ComponentGroups::GraduationRateComponentGroup.new(cache_data_reader: school_cache_data_reader)
@@ -21,7 +21,6 @@ module SchoolProfiles
 
       @students_with_disabilities_test_scores_component_group = ::Components::ComponentGroups::StudentsWithDisabilitiesTestScoresComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @students_with_disabilities_discipline_and_attendance_group= ::Components::ComponentGroups::StudentsWithDisabilitiesDisciplineAndAttendanceComponentGroup.new(cache_data_reader: school_cache_data_reader)
-
     end
 
     def qualaroo_module_link(module_sym)
@@ -178,8 +177,8 @@ module SchoolProfiles
       return enrollment_string.gsub(',','').to_i if enrollment_string
     end
 
-    def characteristics_sources_ethnicity
-      data = @school_cache_data_reader.characteristics_data(*(characteristics.keys))
+    def metrics_sources_ethnicity
+      data = @school_cache_data_reader.metrics_data(*(metrics.keys))
       data.each_with_object({}) do |(label, bd_hashes), output|
         bd_hashes.each do |bd_hash|
           if bd_hash['breakdown'] == 'White' || bd_hash['breakdown'] == 'Hispanic' || bd_hash['breakdown'] == 'African American'
@@ -194,8 +193,8 @@ module SchoolProfiles
       end
     end
 
-    def characteristics_sources_low_income
-      data = @school_cache_data_reader.characteristics_data(*(characteristics.keys))
+    def metrics_sources_low_income
+      data = @school_cache_data_reader.metrics_data(*(metrics.keys))
       data.each_with_object({}) do |(label, bd_hashes), output|
         bd_hashes.each do |bd_hash|
           if bd_hash['breakdown'] == 'Economically disadvantaged'
@@ -211,7 +210,7 @@ module SchoolProfiles
     end
 
     def low_income_rating_year
-      low_income_results = 
+      low_income_results =
         @school_cache_data_reader
         .test_scores_all_rating_hash.select do |bd|
           bd['breakdown'] == 'Economically disadvantaged'
@@ -293,15 +292,15 @@ module SchoolProfiles
 
       content << discipline_attendance_flag_sources if discipline_attendance_flag?
 
-      if characteristics_low_income_visible?
+      if metrics_low_income_visible?
         content << '<div class="sourcing">'
-        content << characteristics_sources_low_income.reduce('') do |string, (key, hash)|
+        content << metrics_sources_low_income.reduce('') do |string, (key, hash)|
           string << sources_text(hash)
         end
         content << '</div>'
-      elsif characteristics_ethnicity_visible?
+      elsif metrics_ethnicity_visible?
         content << '<div class="sourcing">'
-        content << characteristics_sources_ethnicity.reduce('') do |string, (key, hash)|
+        content << metrics_sources_ethnicity.reduce('') do |string, (key, hash)|
           string << sources_text(hash)
         end
         content << '</div>'
@@ -385,10 +384,10 @@ module SchoolProfiles
       I18n.t(key.to_sym, scope: 'lib.equity.data_point_info_texts')
     end
 
-    def characteristics_ethnicity_visible?
+    def metrics_ethnicity_visible?
       visible = false
-      if characteristics.present?
-        characteristics.each do |data_type, data_hashes|
+      if metrics.present?
+        metrics.each do |data_type, data_hashes|
           data_hashes.each do |data|
             if data['breakdown'] == 'White' || data['breakdown'] == 'Hispanic' || data['breakdown'] == 'African American'
               visible = true
@@ -400,17 +399,17 @@ module SchoolProfiles
       visible
     end
 
-    def characteristics
-      @school_cache_data_reader.characteristics.slice(
+    def metrics
+      @school_cache_data_reader.metrics.slice(
         '4-year high school graduation rate',
         'Percent of students who meet UC/CSU entrance requirements'
       )
     end
 
-    def characteristics_low_income_visible?
+    def metrics_low_income_visible?
       visible = false
-      if characteristics.present?
-        characteristics.each do |data_type, data_hashes|
+      if metrics.present?
+        metrics.each do |data_type, data_hashes|
           data_hashes.each do |data|
             if data['breakdown'] == 'Economically disadvantaged'
               visible = true

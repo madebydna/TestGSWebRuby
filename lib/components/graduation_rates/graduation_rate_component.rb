@@ -6,7 +6,7 @@ module Components
 
       def normalized_values
         cache_data_reader
-        .characteristics_data(data_type)
+        .metrics_data(data_type)
         .values
         .flatten
         .map { |h| cache_hash_to_standard_hash(h) }

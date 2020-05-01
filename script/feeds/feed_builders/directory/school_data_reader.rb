@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './characteristics_caching/characteristics_builder'
+require_relative './metrics_caching/metrics_builder'
 
 module Feeds
   module Directory
@@ -8,7 +8,7 @@ module Feeds
       include Feeds::FeedConstants
       include Feeds::FeedHelper
 
-      DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_characteristics gsdata)
+      DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_metrics gsdata)
 
       # array of methods used by the data reader to output data
       SCHOOL_ATTRIBUTES_DATA_READER_METHODS = %w(universal_id level universal_district_id web_site zip)
@@ -29,9 +29,9 @@ module Feeds
         end
       end
 
-      def census_info
-        @_census_info ||= begin
-          data_builder = CharacteristicsBuilder.new(school_cache, universal_id, 'school')
+      def metrics_info
+        @_metrics_info ||= begin
+          data_builder = MetricsBuilder.new(school_cache, universal_id, 'school')
           data_builder.data_hashes
         end
       end

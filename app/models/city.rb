@@ -3,8 +3,6 @@ class City < ActiveRecord::Base
 
   db_magic :connection => :us_geo
 
-  SCHOOL_CACHE_KEYS = %w(characteristics)
-
   attr_accessible :id, :population, :bp_census_id, :name, :state
   attr_reader :rating
 

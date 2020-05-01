@@ -70,8 +70,8 @@ class SchoolCacheResults
     case cache_key
       when 'ratings'
         CachedRatingsMethods
-      when 'characteristics'
-        CachedCharacteristicsMethods
+      when 'metrics'
+        CachedMetricsMethods
       when 'reviews_snapshot'
         CachedReviewsSnapshotMethods
       when 'esp_responses'
@@ -86,8 +86,6 @@ class SchoolCacheResults
         CachedPerformanceMethods
       when 'gsdata'
         CachedGsdataMethods
-      when 'feed_characteristics'
-        CachedFeedCharacteristicsMethods
       when 'directory'
         CachedDirectoryMethods
       when 'courses'

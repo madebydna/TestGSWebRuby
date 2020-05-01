@@ -6,8 +6,13 @@ class UserEmailSubscriptionManager
 
   def update(new_subscriptions)
     del_subs = subscriptions_to_delete(new_subscriptions, get_subscriptions)
-    add_subs = subscriptions_to_add(new_subscriptions, get_subscriptions)
+    add_subs = subscriptions_to_add(new_subscriptions, get_subscriptions).uniq
     delete_subscriptions(del_subs)
+    save_subscriptions(add_subs)
+  end
+
+  def add_no_duplicates(new_subscriptions)
+    add_subs = subscriptions_to_add(new_subscriptions, get_subscriptions)
     save_subscriptions(add_subs)
   end
 
@@ -20,11 +25,21 @@ class UserEmailSubscriptionManager
 
   def unsubscribe
     begin
-      delete_subscriptions(get_subscriptions)
-      delete_subscriptions(get_mss_subscriptions)
+      delete_all_subscriptions
       delete_grade_levels
     rescue
       GSLogger.error(:unsubscribe, nil, message: 'User unsubscribe failed', vars: {
+          member_id: @user.id
+      })
+    end
+  end
+
+  def unsubscribe_spanish_only
+    begin
+      delete_subscriptions_by_language('es')
+      UserEmailGradeManager.new(@user).delete_grades_by_language(language)
+    rescue
+      GSLogger.error(:unsubscribe_spanish_only, nil, message: 'User unsubscribe failed spanish', vars: {
           member_id: @user.id
       })
     end
@@ -46,25 +61,41 @@ class UserEmailSubscriptionManager
             list: list,
             language: language
         })
-
       end
     end
   end
 
-  def delete_subscriptions(subs_to_delete)
-    begin
-      subscriptions = []
-      subs_to_delete.each do |subscription|
-        list = subscription[0]
-        language = subscription[1]
-        if subscription[2].present? && subscription[3].present?
-          state = subscription[2]
-          school_id = subscription[3]
-          subscriptions += @user.subscriptions.where(list: list, language: language, school_id: school_id, state: state)
-        else
-          subscriptions += @user.subscriptions.where(list: list, language: language)
-        end
+  def get_subscriptions_by_list(subs_to_delete)
+    subs_to_delete.map do |subscription|
+      list = subscription[0]
+      language = subscription[1]
+      if subscription[2].present? && subscription[3].present?
+        state = subscription[2]
+        school_id = subscription[3]
+        @user.subscriptions.where(list: list, language: language, school_id: school_id, state: state)
+      else
+        @user.subscriptions.where(list: list, language: language)
       end
+    end.flatten
+  end
+
+  def delete_subscriptions_by_language(language)
+    subscriptions = @user.subscriptions.where(language: language)
+    do_delete_subscriptions(subscriptions)
+  end
+
+  def delete_all_subscriptions
+    subscriptions = @user.subscriptions
+    do_delete_subscriptions(subscriptions)
+  end
+
+  def delete_subscriptions(subs_to_delete)
+    subscriptions = get_subscriptions_by_list(subs_to_delete)
+    do_delete_subscriptions(subscriptions)
+  end
+
+  def do_delete_subscriptions(subscriptions)
+    begin
       subscriptions.each { |s| SubscriptionHistory.archive_subscription(s) }
       subscriptions.each(&:destroy)
     rescue
@@ -75,7 +106,7 @@ class UserEmailSubscriptionManager
   end
 
   def delete_grade_levels
-    UserEmailGradeManager.new(@user).delete_grades
+    UserEmailGradeManager.new(@user).delete_all_grades
   end
 
   def get_subscriptions

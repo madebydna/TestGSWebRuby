@@ -6,7 +6,7 @@ module CachePopulator
     def initialize
       @parsed_options = {commands: []}
     end
-    
+
     def parse(args)
       begin
         OptionParser.new do |opts|
@@ -27,10 +27,10 @@ module CachePopulator
             parsed_options[:commands] <<  handle_args('state', args)
           end
           opts.on("-e", "--examples", "Show basic usage examples") {puts usage; exit}
-          opts.on_tail("-h", "--help", "Show this message") { puts "Hello!"; puts opts; exit }
+          opts.on_tail("-h", "--help", "Show this message") { puts opts; exit }
         end.parse!(args)
 
-        
+
         parse_file_to_commands if parsed_options[:file].present?
 
         parsed_options[:commands]
@@ -83,7 +83,7 @@ module CachePopulator
         \trails runner script/populate_cache_tables.rb -c al:school_levels :all:8,9
         \trails runner script/populate_cache_tables.rb -c :all:8,9
         \e[1mSTATE\e[22m
-        \trails runner script/populate_cache_tables.rb -t fl:state_characteristics
+        \trails runner script/populate_cache_tables.rb -t fl:metrics
         \trails runner script/populate_cache_tables.rb -t all
 
       USAGE

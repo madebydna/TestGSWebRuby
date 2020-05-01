@@ -27,7 +27,7 @@ en:
           academic progress given where they were last year, compared to similar students in the state.</p>
           %{test_score_dependent_content}
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
         2_low_html: >
           <p><span class="emphasis">Low progress with low test scores</span> means... that students are starting at a
@@ -41,7 +41,7 @@ en:
           academic progress given where they were last year, compared to similar students in the state.</p>
           %{test_score_dependent_content}
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
         3_low_html: >
           <p><span class="emphasis">Average progress with low test scores</span> means... that students are starting at
@@ -55,7 +55,7 @@ en:
           academic progress given where they were last year, compared to similar students in the state.</p>
           %{test_score_dependent_content}
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school how it interprets this rating and how it might use this information to help
           students grow and reach their full potential.</p>
         4_low_html: >
@@ -70,7 +70,7 @@ en:
           academic progress given where they were last year, compared to similar students in the state.</p>
           %{test_score_dependent_content}
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school's continued success.</p>
         5_low_html: >
           <p><span class="emphasis">High progress with low test scores</span> means... that students are starting at a
@@ -84,7 +84,7 @@ en:
           academic progress given where they were last year, compared to similar students in the state.</p>
           %{test_score_dependent_content}
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school's success.</p>
       javascript:
         toc_item: Student progress
@@ -99,7 +99,7 @@ en:
           <p>Student progress (also known as “student growth”) is a way of understanding how well schools are helping individual students grow academically year-over-year, and whether these students are on track to meet their full potential, compared to students with similar proficiency levels at other schools in the state.</p>
           <p>The GreatSchools Student Progress Rating compares the academic progress over time for each school to all schools in the state, using student growth data provided by the state Department of Education. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Student Progress Ratings.</p>
           <a href='/gk/ratings/#studentprogressrating'>Learn more about this rating.</a>
-        graphic_header: How does this district compare with the rest of the state? 
+        graphic_header: How does this district compare with the rest of the state?
         graphic_header_tooltip: This pie chart shows the percentage of schools in this district with Student Progress Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
         narrative:
           below_average_html: >

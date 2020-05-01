@@ -4,7 +4,7 @@ require "features/page_objects/school_profiles_page"
 describe "Visitor" do
   let(:page_object) { SchoolProfilesPage.new }
   let(:school) { create(:school_with_new_profile) }
-  
+
   after do
     clean_dbs(:gs_schooldb)
     clean_models(:ca, School)
@@ -35,7 +35,7 @@ describe "Visitor" do
   scenario "sees ethnicity data" do
     # school = create(:school_with_new_profile)
     # create(
-    #   :custom_characteristics_all_students_cache,
+    #   :custom_metrics_all_students_cache,
     #   school_id: school.id,
     #   data_type: '4-year high school graduation rate',
     #   school_value: 50.6,
@@ -51,7 +51,7 @@ describe "Visitor" do
     fail
     school = create(:school_with_new_profile)
     create(
-      :custom_characteristics_all_students_cache,
+      :custom_metrics_all_students_cache,
       school_id: school.id,
       data_type: 'English learners',
       school_value: 50.6,
@@ -68,7 +68,7 @@ describe "Visitor" do
     pending("work on getting to pass with charts")
     fail
     create(
-      :custom_characteristics_all_students_cache,
+      :custom_metrics_all_students_cache,
       school_id: school.id,
       data_type: 'Male',
       school_value: 50.6,
@@ -76,7 +76,7 @@ describe "Visitor" do
     )
 
     visit school_path(school)
-    
+
     expect(page_object.student_diversity).to have_gender_data
     expect(page_object.student_diversity.gender_data).to have_text("50.6")
   end

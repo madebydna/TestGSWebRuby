@@ -371,7 +371,7 @@ class GsdataCaching::GsDataValue
     end
 
     def school_cohort_count_exists?
-      reduce(0){|sum, hash| sum + hash.school_cohort_count.to_i} > 0
+      reduce(0) {|sum, hash| sum + hash.school_cohort_count.to_i} > 0
     end
 
     def total_state_cohort_count
@@ -457,7 +457,7 @@ class GsdataCaching::GsDataValue
     end
 
     def sort_by_test_label_using_cohort_count
-      group_by(&:data_type).sort_by{|k,v| (-v.extend(CollectionMethods).having_grade_all.total_school_cohort_count || 0) }.flatten.reject{|y| y.is_a?(String)}.extend(CollectionMethods)
+      group_by(&:data_type).sort_by {|k,v| (-v.extend(CollectionMethods).having_grade_all.total_school_cohort_count || 0) }.flatten.reject {|y| y.is_a?(String)}.extend(CollectionMethods)
     end
 
     def sort_by_test_label_and_subject_name
@@ -677,6 +677,18 @@ class GsdataCaching::GsDataValue
 
   def all_students?
     breakdowns.blank? || breakdowns.include?('All students')
+  end
+
+  # These two methods are required to create temporary parity with
+  # SchoolProfiles::CollegeReadinessComponent::CharacteristicsValue and
+  # CommunityProfiles::CollegeReadinessComponent::CharacteristicsValue
+  # TODO: REMOVE & REFACTOR when working on gsdata => omni.metrics cache!!!
+  def all_subjects?
+    true
+  end
+
+  def all_subjects_and_students?
+    all_subjects? && all_students?
   end
 
   def academic

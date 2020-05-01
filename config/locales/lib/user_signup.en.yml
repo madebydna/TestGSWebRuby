@@ -1,0 +1,25 @@
+en:
+  lib:
+    user_signup:
+      heading: Sign up to receive newsleters to help your child thrive.
+      subheading_html: Para boletines en español, %{subscribe_here_link}.
+      subscribe_here_alt_lang: suscríbete aquí
+      email_input_placeholder: Your email here
+      email_input_error: Please enter a valid email address.
+      greatnews_title: The Weekly
+      greatnews_subtitle: A weekly roundup of our best articles, videos, and more.
+      greatkidsnews_title: Grade by Grade
+      greatkidsnews_subtitle: Essentials to help your child throughout the school year.
+      select_grades: Select your children’s grades below.
+      teacher_list_title: GreatEducators
+      teacher_list_subtitle: Resources and insights designed for teachers and school leaders.
+      sponsor_title: Partner Updates
+      sponsor_subtitle: News and offers from our partners.
+      sign_up: Sign up
+      terms_and_privacy_html: By signing up, I agree to the %{terms_of_use_link} and %{privacy_policy_link}.
+      terms_of_use: GreatSchools Terms of Use
+      privacy_policy: Privacy Policy
+      thank_you:
+        heading: Success!
+        subheading: You're signed up to receive updates.
+        done: Done

@@ -40,12 +40,12 @@ class MIMetricsProcessor2019Growth < GS::ETL::MetricsProcessor
 	      date_valid: '2019-01-01 00:00:00'
 	    })
 	end
-	source('MI_1718_growth.txt',[],col_sep:"\t") do |s|
-	    s.transform('Fill missing default fields', Fill, {
-	      year: 2018,
-	      date_valid: '2018-01-01 00:00:00'
-	    })
-	end
+	# source('MI_1718_growth.txt',[],col_sep:"\t") do |s|
+	#     s.transform('Fill missing default fields', Fill, {
+	#       year: 2018,
+	#       date_valid: '2018-01-01 00:00:00'
+	#     })
+	# end
 
 	shared do |s|
 		s.transform('rename columns',MultiFieldRenamer,{

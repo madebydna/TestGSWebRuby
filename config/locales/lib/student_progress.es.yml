@@ -30,7 +30,7 @@ es:
           académicamente en comparación al año anterior, y a otros estudiantes similares en el estado.</p>
           %{test_score_dependent_content}
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
           para padres</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación para iniciar una conversación
           sobre cómo ayudar a los estudiantes a progresar sin importar de dónde empiecen.</p>
@@ -47,7 +47,7 @@ es:
           académicamente en comparación al año anterior, y a otros estudiantes similares en el estado.</p>
           %{test_score_dependent_content}
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
           para padres</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación para iniciar una conversación
           sobre cómo ayudar a los estudiantes a progresar sin importar de dónde empiecen.</p>
@@ -64,7 +64,7 @@ es:
           logrando un progreso académico en comparación al año anterior, y a otros estudiantes similares en el estado.</p>
           %{test_score_dependent_content}
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
           para padres</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación para iniciar una conversación
           sobre cómo ayudar a todos los niños a alcanzar su máximo potencial.</p>
@@ -82,7 +82,7 @@ es:
           progreso académico en comparación al año anterior, y a otros estudiantes similares en el estado.</p>
           %{test_score_dependent_content}
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
           para padres</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para
           apoyar el éxito continuo de la escuela.</p>
@@ -100,12 +100,12 @@ es:
           progreso académico en comparación al año anterior, y a otros estudiantes similares en el estado.</p>
           %{test_score_dependent_content}
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
           para padres</span></p>
           <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para
           apoyar el éxito continuo de la escuela.</p>
       javascript:
-        toc_item: Progreso estudiantil    
+        toc_item: Progreso estudiantil
       district_scope:
         title: 'Progreso estudiantil del distrito'
         source_title: Las fuentes de datos y informacion de los perfiles de distritos de GreatSchools

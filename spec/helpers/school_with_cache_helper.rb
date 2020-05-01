@@ -1,7 +1,7 @@
 require 'spec_helper'
 def all_cache_keys
   # TODO Grab this from populate school cache? Need to refactor that file to just be the script runner
-  ['ratings','characteristics', 'esp_responses', 'reviews_snapshot']
+  ['ratings','metrics', 'esp_responses', 'reviews_snapshot']
 end
 
 def init_school_with_cache

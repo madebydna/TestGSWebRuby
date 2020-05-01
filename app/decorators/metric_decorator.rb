@@ -23,10 +23,15 @@ class MetricDecorator < SimpleDelegator
     subject&.name
   end
 
+  # In Omni:
+  # 0: Not Applicable
+  # 1: All Students (capitalized)
   def breakdown_name
-    if breakdown_id > 0
+    if breakdown_id > 1
       breakdown.name
     else
+      # forcing lowercase version for now
+      # as it is used everywhere for string comparison
       'All students'
     end
   end

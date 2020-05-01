@@ -159,7 +159,7 @@ en:
           <p>This school is <span class="emphasis">far below</span> the state average in key measures of college and career readiness.</p>
           <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
           <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
           </div>
@@ -169,7 +169,7 @@ en:
           <p>This school is <span class="emphasis">below</span> the state average in key measures of college and career readiness.</p>
           <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
           <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
           </div>
@@ -181,7 +181,7 @@ en:
           <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating
           without the coursework and test scores they need to succeed.)</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
           <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
           </div>
@@ -192,7 +192,7 @@ en:
           <p>Even at schools with strong college and career readiness, there may be students who are not getting
           the opportunities they need to succeed.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
           <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
           </div>
@@ -203,7 +203,7 @@ en:
           <p>Even at schools with strong college and career readiness, there may be students who are not getting
           the opportunities they need to succeed.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
           <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
           </div>
@@ -211,12 +211,12 @@ en:
           <div class="auto-narration">
           <p>Are graduates from this school prepared to succeed in college? This section looks at important signs of college readiness.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Students who are unprepared for college-level work may find themselves in <a href="/gk/articles/high-achiever-remedial-college/">costly remedial classes</a>
           and are more likely to <a href="/gk/articles/dropping-out-of-college-record-numbers/">drop out of college</a>.
           Use this data to start a conversation with someone in your community about how essential it is that high schools prepare students for success after graduation.</p>
           </div>
         _parent_tip_html: >
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
           <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>

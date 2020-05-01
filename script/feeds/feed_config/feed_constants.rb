@@ -4,11 +4,11 @@ module Feeds
   module FeedConstants
       FEED_CACHE_KEYS = %w(feed_test_scores ratings)
 
-      DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_characteristics gsdata)
+      DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_metrics gsdata)
 
-      DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_district_characteristics gsdata)
+      DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_metrics gsdata)
 
-      DIRECTORY_STATE_KEYS = %w(universal_id state_name state census_info)
+      DIRECTORY_STATE_KEYS = %w(universal_id state_name state metrics_info)
 
       # attributes for directory feeds from model, cache, or method call. Does not include census info data values
       DIRECTORY_STATE_ATTRIBUTES = %w(universal_id state_name state)
@@ -102,19 +102,19 @@ module Feeds
       DEFAULT_BATCH_SIZE = 1
 
       # this is the required order for school and district content
-      DIRECTORY_SCHOOL_KEY_ORDER = %w(universal_id id state_id nces_code name description street city state zipcode county FIPScounty level level_code district_id lat lon phone fax home_page_url subtype type district_name universal_district_id district_spending url census_info school_summary)
-      DIRECTORY_DISTRICT_KEY_ORDER = %w(universal_id state_id nces_code name description street city state zipcode county FIPScounty level level_code lat lon phone fax home_page_url url census_info)
+      DIRECTORY_SCHOOL_KEY_ORDER = %w(universal_id id state_id nces_code name description street city state zipcode county FIPScounty level level_code district_id lat lon phone fax home_page_url subtype type district_name universal_district_id district_spending url metrics_info school_summary)
+      DIRECTORY_DISTRICT_KEY_ORDER = %w(universal_id state_id nces_code name description street city state zipcode county FIPScounty level level_code lat lon phone fax home_page_url url metrics_info)
 
       # this is a white list of keys we are looking for
       DIRECTORY_SCHOOL_KEYS_REQUIRED = %w(id name description street city state county level level_code district_id lat lon subtype type web_site)
       DIRECTORY_DISTRICT_KEYS_REQUIRED = %w(name description street city state county level level_code web_site)
 
       #  REQUIRED - universal_id zipcode home_page_url url
-      DIRECTORY_SCHOOL_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url universal_district_id census_info level)
-      DIRECTORY_DISTRICT_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url census_info level)
+      DIRECTORY_SCHOOL_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url universal_district_id metrics_info level)
+      DIRECTORY_DISTRICT_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url metrics_info level)
 
       # this is a white list of keys we are looking for - executes a method to handle type of data
-      CHARACTERISTICS_MAPPING = [
+      METRICS_MAPPING = [
           # comes from gsdata now
           # {
           #     key: 'Student teacher ratio',
@@ -327,7 +327,7 @@ module Feeds
           }
       ].freeze
 
-      CENSUS_CACHE_ACCESSORS =[
+      METRICS_CACHE_ACCESSORS =[
         {
           key: 'Ratio of students to full time teachers',
           feed_name: 'student-teacher-ratio',

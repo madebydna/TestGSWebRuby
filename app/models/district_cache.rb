@@ -2,7 +2,6 @@ class DistrictCache < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'district_cache'
   attr_accessible :name, :district_id, :state, :value, :updated
-  KEYS = [:test_scores, :directory_census, :district_directory, :feed_district_characteristics]
 
   def self.for_district(district)
     for_state_and_id(district.state, district.district_id)

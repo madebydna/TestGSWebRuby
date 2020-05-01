@@ -3,7 +3,7 @@ class StateCacher
   attr_accessor :state
 
   # Known data types:
-  # :state_characteristics, :test_scores_gsdata, :feed_test_scores_gsdata, :feed_test_description_gsdata, :gsdata, 
+  # :test_scores_gsdata, :feed_test_scores_gsdata, :feed_test_description_gsdata, :gsdata,
   # :ratings :district_largest, :school_levels, :state_attributes, :feed_ratings
 
 
@@ -33,7 +33,6 @@ class StateCacher
 
   def self.cacher_for(key)
     {
-        state_characteristics: StateCharacteristicsCacher,
         test_scores_gsdata: TestScoresCaching::StateTestScoresCacherGsdata,
         feed_test_scores_gsdata: TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata,
         feed_test_description_gsdata: TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata,
@@ -42,7 +41,8 @@ class StateCacher
         ratings: StateRatingCacher,
         district_largest: StateDistrictLargestCacher,
         school_levels: LevelCaching::StateLevelCacher,
-        state_attributes: AttributeCaching::StateAttributesCacher
+        state_attributes: AttributeCaching::StateAttributesCacher,
+        metrics: MetricsCaching::StateMetricsCacher
     }[key.to_s.to_sym]
   end
 
@@ -63,7 +63,6 @@ class StateCacher
 
   def self.registered_cachers
     @registered_cachers ||= [
-       StateCharacteristicsCacher,
        TestScoresCaching::TestScoresCacherGsdata,
        TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata,
        TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata,
@@ -72,7 +71,8 @@ class StateCacher
        StateFeedRatingCacher,
        StateDistrictLargestCacher,
        LevelCaching::StateLevelCacher,
-       AttributeCaching::StateAttributesCacher
+       AttributeCaching::StateAttributesCacher,
+       MetricsCaching::StateMetricsCacher
     ]
   end
 

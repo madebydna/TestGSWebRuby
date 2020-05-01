@@ -13,8 +13,7 @@ describe DistrictCacher do
     end
 
     {
-        district_characteristics: [DistrictCharacteristicsCacher],
-        census: [DistrictCharacteristicsCacher],
+        metrics: [MetricsCaching::DistrictMetricsCacher],
         directory: [DistrictDirectoryCacher],
     }.each do |data_type, expected_cacher_list|
       context "with data type '#{data_type}'" do

@@ -68,18 +68,18 @@ class School < ActiveRecord::Base
     associates = associates.select { |o| o.state.present? && o.school_id.present? }
 
     # need a map so we can effeciently maintain order
-    associate_state_school_ids_hash = 
+    associate_state_school_ids_hash =
       associates.each_with_object({}) do |obj, hash|
         hash[[obj.state.downcase, obj.school_id.to_i]] = nil
       end
 
-    state_to_id_map = 
+    state_to_id_map =
       associates
         .each_with_object({}) do |obj, hash|
           hash[obj.state] ||= []
           hash[obj.state] << obj.school_id
       end
-    schools = 
+    schools =
       state_to_id_map.flat_map do |(state, ids)|
         if block_given?
           yield(find_by_state_and_ids(state, ids)).to_a
@@ -106,14 +106,6 @@ class School < ActiveRecord::Base
 
   def self.within_state(state_abbreviation)
     on_db(state_abbreviation.downcase.to_sym).active.order(:name)
-  end
-
-  def census_data_for_data_types(data_types = [])
-    CensusDataSet.on_db(state.downcase.to_sym).by_data_types(state, data_types)
-  end
-
-  def census_data_school_values
-    CensusDataSchoolValue.on_db(state.downcase.to_sym).where(school_id: id)
   end
 
   def collections
@@ -261,16 +253,6 @@ class School < ActiveRecord::Base
     @held
   end
 
-  def all_census_data
-    @all_census_data ||= nil
-    return @all_census_data if @all_census_data
-
-    all_configured_data_types = page.all_configured_keys 'census_data'
-
-    # Get data for all data types
-    @all_census_data = CensusDataForSchoolQuery.new(self).latest_data_for_school all_configured_data_types
-  end
-
   def held_school
     HeldSchool.where(state: state, school_id: id).first
   end
@@ -343,7 +325,7 @@ class School < ActiveRecord::Base
     level_code == 'h'
   end
 
-  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses test_scores nearby_schools ratings)
+  SCHOOL_CACHE_KEYS = %w(metrics esp_responses test_scores nearby_schools ratings)
 
   def cache_results
 
@@ -393,7 +375,7 @@ class School < ActiveRecord::Base
   end
 
   def claimed?
-    @_claimed ||= 
+    @_claimed ||=
       EspMembership.where(
           active: 1,
           state: state,

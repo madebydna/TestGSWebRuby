@@ -2,19 +2,18 @@ require "spec_helper"
 
 describe CommunityProfiles::CollegeReadinessComponent do
     let!(:district) { create(:district_record) }
-    let(:cache_reader) { 
-        DistrictCacheDataReader.new(district, district_cache_keys: ['district_characteristics']) 
+    let(:cache_reader) {
+        DistrictCacheDataReader.new(district, district_cache_keys: ['metrics'])
     }
     before do
         create(:district_cache, district_id: district.district_id, state: district.state.upcase,
-            name: "district_characteristics", value: {
+            name: "metrics", value: {
             "Students participating in free or reduced-price lunch program" => [
                 # Entry is not included in included_data_types
                 {
                     "breakdown" => "All students",
-                    "district_created" => "2014-05-02T11=>59=>22-07=>00",
+                    "district_created" => "2014-05-02T11:59:22-07:00",
                     "district_value" => 33,
-                    "original_breakdown" => "All students",
                     "source" => "NCES",
                     "state_average" => 61,
                     "year" => 2018
@@ -24,9 +23,8 @@ describe CommunityProfiles::CollegeReadinessComponent do
                 # Entry is before the DATA_CUTOFF_YEAR
                 {
                     "breakdown" => "All students",
-                    "district_created" => "2019-02-13T11=>53=>58-08=>00",
+                    "district_created" => "2019-02-13T11:53:58-08:00",
                     "district_value" => 38.110000,
-                    "original_breakdown" => "All students",
                     "source" => "AR Dept. of Education",
                     "state_average" => 61.800000,
                     "year" => 2014
@@ -36,27 +34,24 @@ describe CommunityProfiles::CollegeReadinessComponent do
                 # This will get rejected because it's from 2016 and we have 2017 college success data
                 {
                     "breakdown" => "All students",
-                    "district_created" => "2017-06-28T22=>08=>22-07=>00",
+                    "district_created" => "2017-06-28T22:08:22-07:00",
                     "district_value" => 65.920000,
-                    "original_breakdown" => "All students",
                     "source" => "AR Dept. of Education",
                     "state_average" => 50.460000,
                     "year" => 2016
                 },
                 {
                     "breakdown" => "Hispanic",
-                    "district_created" => "2017-06-28T22=>08=>23-07=>00",
+                    "district_created" => "2017-06-28T22:08:23-07:00",
                     "district_value" => 46.150000,
-                    "original_breakdown" => "Hispanic",
                     "source" => "AR Dept. of Education",
                     "state_average" => 38.910000,
                     "year" => 2016
                 },
                 {
                     "breakdown" => "White",
-                    "district_created" => "2017-06-28T22=>08=>20-07=>00",
+                    "district_created" => "2017-06-28T22:08:20-07:00",
                     "district_value" => 67.810000,
-                    "original_breakdown" => "White",
                     "source" => "AR Dept. of Education",
                     "state_average" => 53.650000,
                     "year" => 2016
@@ -65,9 +60,8 @@ describe CommunityProfiles::CollegeReadinessComponent do
             "Percent Needing Remediation for College" => [
                 {
                     "breakdown" => "All students",
-                    "district_created" => "2019-02-13T11=>53=>58-08=>00",
+                    "district_created" => "2019-02-13T11:53:58-08:00",
                     "district_value" => 38.110000,
-                    "original_breakdown" => "All students",
                     "source" => "AR Dept. of Education",
                     "state_average" => 61.800000,
                     "year" => 2017
@@ -76,26 +70,23 @@ describe CommunityProfiles::CollegeReadinessComponent do
             "Percent enrolled in any in-state postsecondary institution within 12 months after graduation" => [
                 {
                     "breakdown" => "Students with disabilities",
-                    "district_created" => "2019-02-13T11=>53=>59-08=>00",
+                    "district_created" => "2019-02-13T11:53:59-08:00",
                     "district_value" => 33.330000,
-                    "original_breakdown" => "Students with disabilities",
                     "source" => "AR Dept. of Education",
                     "year" => 2017
                 },
                 {
                     "breakdown" => "Hispanic",
-                    "district_created" => "2019-02-13T11=>53=>59-08=>00",
+                    "district_created" => "2019-02-13T11:53:59-08:00",
                     "district_value" => 68.750000,
-                    "original_breakdown" => "Hispanic",
                     "source" => "AR Dept. of Education",
                     "state_average" => 39.500000,
                     "year" => 2017
                 },
                 {
                     "breakdown" => "All students",
-                    "district_created" => "2019-02-13T11=>53=>59-08=>00",
+                    "district_created" => "2019-02-13T11:53:59-08:00",
                     "district_value" => 61.540000,
-                    "original_breakdown" => "All students",
                     "source" => "AR Dept. of Education",
                     "state_average" => 48.200000,
                     "year" => 2017
@@ -111,7 +102,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
 
     context "#college_data_array" do
         let :college_success_element do
-            subject.college_data_array.detect do |item| 
+            subject.college_data_array.detect do |item|
                 item[:narration] =~ /Are graduates from this district prepared to succeed in college?/
             end
         end
@@ -123,7 +114,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
         end
 
         it "includes only college success entries for the 'all students' breakdown" do
-            mapped_by_subgroup = college_success_element[:values].map{|h| h[:subgroup]}
+            mapped_by_subgroup = college_success_element[:values].map {|h| h[:subgroup]}
             expect(mapped_by_subgroup.uniq).to eq(["All students"])
         end
     end
@@ -131,10 +122,10 @@ describe CommunityProfiles::CollegeReadinessComponent do
 
     context "#data_type_hashes" do
         let(:mapped_data_types) { subject.data_type_hashes.map(&:data_type) }
-        
+
         # This is where most of the filtering happens
         it "rejects values earlier than DATA_CUTOFF_YEAR" do
-            # DATA_CUTOFF_YEAR is 2015 
+            # DATA_CUTOFF_YEAR is 2015
             expect(mapped_data_types).not_to include("Percent of students who will attend in-state colleges")
         end
         it "only accepts values from POST_SECONDARY group that match max year within the group" do

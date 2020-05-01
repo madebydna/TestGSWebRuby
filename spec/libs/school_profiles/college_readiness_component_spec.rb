@@ -123,7 +123,7 @@ describe 'CollegeReadinessComponent' do
       end
 
       before do
-        expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
+        expect(school_cache_data_reader).to receive(:metrics_data).and_return(sample_data)
         allow(school_cache_data_reader).to receive(:decorated_gsdata_datas).and_return(gsdata_sample_data)
         allow(subject).to receive(:new_sat?).and_return(false)
       end
@@ -138,7 +138,7 @@ describe 'CollegeReadinessComponent' do
         expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::OLD_SAT_RANGE)
       end
 
-      it 'should pull from the "All students" breakdown for characteristics' do
+      it 'should pull from the "All students" breakdown for metrics' do
         data_points = subject.data_values.find {|item| item.label == '4-year high school graduation rate' }
         expect(data_points).to be_present
         expect(data_points.score).to eq(50)
@@ -178,7 +178,6 @@ describe 'CollegeReadinessComponent' do
               'breakdown' => 'All students',
               'subject' => 'All subjects',
               'school_value' => 1600,
-              'school_value_2015' => 1600,
               'year' => 2015,
               'state_average' => 1400
             }
@@ -188,7 +187,6 @@ describe 'CollegeReadinessComponent' do
               'breakdown' => 'All students',
               'subject' => 'All subjects',
               'school_value' => 1600,
-              'school_value_2016' => 1600,
               'year' => 2016,
               'state_average' => 1400
             }
@@ -197,7 +195,7 @@ describe 'CollegeReadinessComponent' do
       end
 
       before do
-        expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
+        expect(school_cache_data_reader).to receive(:metrics_data).and_return(sample_data)
         allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
       end
 
@@ -205,11 +203,11 @@ describe 'CollegeReadinessComponent' do
         data_points = subject.data_values.find {|item| item.label == 'Average SAT score' }
         expect(data_points).to_not be_present
       end
-      
+
     end
 
     it 'should return empty array if no data' do
-      expect(school_cache_data_reader).to receive(:characteristics_data).and_return({})
+      expect(school_cache_data_reader).to receive(:metrics_data).and_return({})
       allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
       expect(subject.data_values).to be_empty
     end
@@ -222,8 +220,6 @@ describe 'CollegeReadinessComponent' do
                     'breakdown' => 'All students',
                     'subject' => 'All subjects',
                     'school_value' => 1400,
-                    'school_value_2016' => 1400,
-                    'school_value_2015' => 1800,
                     'year' => 2016,
                     'state_average' => 1200
                 }
@@ -232,7 +228,7 @@ describe 'CollegeReadinessComponent' do
       end
 
       before do
-        expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
+        expect(school_cache_data_reader).to receive(:metrics_data).and_return(sample_data)
         allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
       end
 
@@ -338,46 +334,34 @@ describe 'CollegeSuccessComponent' do
       "Percent Needing Remediation for College" => [
         {
           "breakdown"=>"All students",
-          "original_breakdown"=>"All students",
           "created"=>"2017-04-19T23:20:49-07:00",
           "school_value"=>16.0,
           "source"=>"Oklahoma State Regents for Higher Education",
           "state_average"=>35.7,
           "subject"=>"Math",
-          "year"=>2015,
-          "school_value_2015"=>16.0,
-          "state_average_2015"=>35.7
+          "year"=>2015
         }, {
           "breakdown"=>"All students",
-          "original_breakdown"=>"All students",
           "created"=>"2017-04-19T23:20:49-07:00",
           "school_value"=>5.3,
           "source"=>"Oklahoma State Regents for Higher Education",
           "state_average"=>8.3,
           "subject"=>"Reading",
-          "year"=>2015,
-          "school_value_2015"=>5.3,
-          "state_average_2015"=>8.3
+          "year"=>2015
         }, {"breakdown"=>"All students",
-            "original_breakdown"=>"All students",
             "created"=>"2017-04-19T23:20:49-07:00",
             "school_value"=>1.8,
             "source"=>"Oklahoma State Regents for Higher Education",
             "state_average"=>15.7,
             "subject"=>"English",
-            "year"=>2015,
-            "school_value_2015"=>1.8,
-            "state_average_2015"=>15.7
+            "year"=>2015
         }, {"breakdown"=>"All students",
-            "original_breakdown"=>"All students",
             "created"=>"2017-04-19T23:20:48-07:00",
             "school_value"=>0.0,
             "source"=>"Oklahoma State Regents for Higher Education",
             "state_average"=>1.1,
             "subject"=>"Science",
-            "year"=>2014,
-            "school_value_2015"=>0.0,
-            "state_average_2015"=>1.1
+            "year"=>2014
         }
       ]
     }
@@ -387,7 +371,7 @@ describe 'CollegeSuccessComponent' do
     allow(school_cache_data_reader).to receive(:school).and_return(school)
     allow(school).to receive(:state).and_return(:ca)
     allow(school).to receive(:id).and_return(1)
-    allow(school_cache_data_reader).to receive(:characteristics_data).and_return(remediation_sample_data)
+    allow(school_cache_data_reader).to receive(:metrics_data).and_return(remediation_sample_data)
     allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
     allow(school_cache_data_reader).to receive(:decorated_gsdata_datas).and_return({})
     allow(school_cache_data_reader).to receive(:college_readiness_rating).and_return(cr_rating)
@@ -397,7 +381,7 @@ describe 'CollegeSuccessComponent' do
   describe 'With remediation data' do
     it 'should return RatingScoreItems for each remediation data point' do
       expect(data_points).to be_present
-      expect(data_points.all?{|dp| dp.is_a?(SchoolProfiles::RatingScoreItem)}).to be_truthy
+      expect(data_points.all? {|dp| dp.is_a?(SchoolProfiles::RatingScoreItem)}).to be_truthy
     end
 
     it 'should include info text' do

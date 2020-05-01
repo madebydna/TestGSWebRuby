@@ -8,11 +8,13 @@ class SchoolRecord < ActiveRecord::Base
   include GradeLevelConcerns
 
   attr_accessor :assigned
-  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modified_by, :level, :type, :active
   # ! TODO: only java routing uses this column. Can remove eventually from school_record
   #:new_profile_school
   # attr_writer :collections
   # has_many :school_metadatas
+
+ # invokes the unique_id getter
+  before_validation :unique_id, on: :create
 
   LEVEL_CODES = {
     primary: 'p',
@@ -85,6 +87,10 @@ class SchoolRecord < ActiveRecord::Base
   #   where(state: state).active.not_preschool_only.order(:school_id).pluck(:school_id)
   # end
 
+  def unique_id
+    self[:unique_id] ||= "#{self.state}-#{self.school_id}"
+  end
+
   # Given objects that have state and id, load school for each one
   # Used for Solr School Documents which doesn't have school_id
   def self.load_all_from_associates(associates)
@@ -126,13 +132,6 @@ class SchoolRecord < ActiveRecord::Base
   #   SchoolRecord.active.where(state: state_abbreviation.downcase).order(:name)
   # end
 
-  def census_data_for_data_types(data_types = [])
-    CensusDataSet.on_db(state.downcase.to_sym).by_data_types(state, data_types)
-  end
-
-  def census_data_school_values
-    CensusDataSchoolValue.on_db(state.downcase.to_sym).where(school_id: id)
-  end
 
   # TODO Do we need these collections methods?
   # !-----------------------------------
@@ -287,18 +286,6 @@ class SchoolRecord < ActiveRecord::Base
     @held
   end
 
-  # TODO find out if it needs to be rewritten from migration?
-  # TODO appears unused
-  def all_census_data
-    @all_census_data ||= nil
-    return @all_census_data if @all_census_data
-
-    all_configured_data_types = page.all_configured_keys 'census_data'
-
-    # Get data for all data types
-    @all_census_data = CensusDataForSchoolQuery.new(self).latest_data_for_school all_configured_data_types
-  end
-
   def held_school
     HeldSchool.where(state: state, school_id: school_id).first
   end
@@ -381,7 +368,7 @@ class SchoolRecord < ActiveRecord::Base
     level_code == 'h'
   end
 
-  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses test_scores nearby_schools ratings)
+  SCHOOL_CACHE_KEYS = %w(metrics esp_responses test_scores nearby_schools ratings)
 
   # TODO: Check if these are still used. Cache access should be sent to the data readers service objects
   def cache_results
@@ -458,7 +445,7 @@ class SchoolRecord < ActiveRecord::Base
 
   def self.update_from_school(school, state, log: false)
     school_record = find_by(unique_id: "#{state}-#{school.id}")
-    school_record ||= new(unique_id: "#{state}-#{school.id}", state: state.to_s, school_id: school.id)
+    school_record ||= new(unique_id: "#{state}-#{school.id}", state: state.to_s, school_id: school.id, geo_state: school.state)
     school_record.assign_attributes(
       school.attributes.symbolize_keys.except(
         :id, #id is set as school_id

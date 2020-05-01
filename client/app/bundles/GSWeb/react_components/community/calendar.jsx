@@ -188,7 +188,7 @@ class Calendar extends React.Component {
 
   renderCalendarEvent(event) {
     return (
-      <div className="row bar-graph-display">
+      <div className="row bar-graph-display" key={`${event.startDate}-${event.name}`}>
         <div className="test-score-container clearfix">
           <div className="col-sm-2 calendar-event-date">{ event.startDate }</div>
           <div className="col-sm-1"></div>

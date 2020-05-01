@@ -2,7 +2,6 @@ class StateCache < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'state_cache'
   attr_accessible :name, :state, :value, :updated
-  KEYS = [:state_characteristics]
 
   def self.for_state(name, state)
     StateCache.where(name: name, state: state).first

@@ -3,14 +3,14 @@ class Cacher
   attr_accessor :school
 
   # Known data types:
-  # :census
   # :ratings
   # :school_reviews
   # :school_media
   # :esp_response
   # :gsdata
   # :directory
-  # :feed_characteristics
+  # :metrics
+  # :feed_metrics
   # :test_scores_gsdata
   # :feed_test_scores_gsdata
   # :feed_old_test_scores_gsdata
@@ -80,7 +80,6 @@ class Cacher
   def self.cacher_for(key)
     {
         test_scores_gsdata:          TestScoresCaching::TestScoresCacherGsdata,
-        characteristics:             CharacteristicsCaching::CharacteristicsCacher,
         metrics:                     MetricsCaching::SchoolMetricsCacher,
         esp_responses:               EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot:            ReviewsCaching::ReviewsSnapshotCacher,
@@ -89,7 +88,7 @@ class Cacher
         directory:                   DirectoryCaching::DirectoryCacher,
         feed_test_scores_gsdata:     TestScoresCaching::FeedTestScoresCacherGsdata,
         feed_old_test_scores_gsdata: TestScoresCaching::FeedOldTestScoresCacherGsdata,
-        feed_characteristics:        FeedCharacteristicsCaching::FeedCharacteristicsCacher
+        feed_metrics:                FeedMetricsCaching::SchoolFeedMetricsCacher
     }[key.to_s.to_sym]
   end
 
@@ -110,7 +109,6 @@ class Cacher
   def self.registered_cachers
     @registered_cachers ||= [
       TestScoresCaching::TestScoresCacherGsdata,
-      CharacteristicsCaching::CharacteristicsCacher,
       MetricsCaching::SchoolMetricsCacher,
       EspResponsesCaching::EspResponsesCacher,
       ReviewsCaching::ReviewsSnapshotCacher,
@@ -119,7 +117,7 @@ class Cacher
       GsdataCaching::GsdataCacher,
       RatingsCaching::GsdataRatingsCacher,
       DirectoryCaching::DirectoryCacher,
-      FeedCharacteristicsCaching::FeedCharacteristicsCacher
+      FeedMetricsCaching::SchoolFeedMetricsCacher
     ]
   end
 

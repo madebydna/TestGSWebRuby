@@ -7,10 +7,6 @@ class DistrictCacheResults
     build_district_data_hash
   end
 
-  def district_data_hash
-    @district_data
-  end
-
   def data_hash
     @district_data
   end
@@ -25,23 +21,6 @@ class DistrictCacheResults
       end
       decorated
     end
-  end
-
-  module HashWithDistrictCacheData
-    def cache_data
-      self
-    end
-  end
-
-  def get_cache_object_for_district(state, district_id)
-    hash = @district_data[[state, district_id]]
-    if hash
-      hash.send(:extend, HashWithDistrictCacheData)
-      hash.keys.each do |key|
-        hash.send(:extend, (module_for_key(key)))
-      end
-    end
-    hash
   end
 
   def decorate_district(district)
@@ -70,10 +49,8 @@ class DistrictCacheResults
       DistrictCachedRatingsMethods
     when 'district_schools_summary'
       DistrictCachedDistrictSchoolsSummaryMethods
-    when 'feed_district_characteristics'
-      FeedDistrictCachedCharacteristicsMethods
-    when 'district_characteristics'
-      DistrictCachedCharacteristicsMethods
+    when 'metrics'
+      DistrictCachedMetricsMethods
     when 'test_scores_gsdata'
       DistrictCachedTestScoresMethods
     when 'gsdata'

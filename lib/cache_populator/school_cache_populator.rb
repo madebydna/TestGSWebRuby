@@ -1,7 +1,7 @@
 module CachePopulator
   class SchoolCachePopulator < Base
     CACHE_KEYS = %w(
-      ratings characteristics metrics esp_responses reviews_snapshot gsdata feed_characteristics directory courses test_scores_gsdata feed_test_scores_gsdata feed_old_test_scores_gsdata
+      ratings metrics esp_responses reviews_snapshot gsdata feed_metrics directory courses test_scores_gsdata feed_test_scores_gsdata feed_old_test_scores_gsdata
     )
 
     def run

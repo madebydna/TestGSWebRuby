@@ -181,7 +181,7 @@ module SearchControllerConcerns
   end
 
   def add_enrollment(schools)
-    cache_keys << 'characteristics'
+    cache_keys << 'metrics'
     schools
   end
 
@@ -203,7 +203,7 @@ module SearchControllerConcerns
 
     schools.each do |school|
       if school.lat && school.lon && !school.singleton_class.method_defined?(:distance)
-        distance = 
+        distance =
           Geo::Coordinate.new(school.lat, school.lon).distance_to(
             Geo::Coordinate.new(lat.to_f, lon.to_f)
           )

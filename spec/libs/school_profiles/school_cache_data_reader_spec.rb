@@ -57,14 +57,14 @@ describe SchoolProfiles::SchoolCacheDataReader do
       end
     end
 
-    describe '#characteristics_data' do
+    describe '#metrics_data' do
       let(:reader) { new_reader(school) }
-      subject { reader.characteristics_data(:foo, :bar) }
+      subject { reader.metrics_data(:foo, :bar) }
       context 'with missing sources' do
         before do
           allow(reader).to receive(:decorated_school).and_return(
             OpenStruct.new(
-              characteristics: {
+              metrics: {
                 foo: [
                   {
                     'source' => 'abc',
@@ -121,7 +121,7 @@ describe SchoolProfiles::SchoolCacheDataReader do
   end
 
   context 'when not given a school' do
-    describe '.new' do 
+    describe '.new' do
       subject { SchoolProfiles::SchoolCacheDataReader }
       it 'should raise an error' do
         expect { subject.new(nil) }.to raise_error(ArgumentError)

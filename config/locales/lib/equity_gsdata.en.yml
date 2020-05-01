@@ -29,7 +29,7 @@ en:
           <p class="narrative-content">Test scores for low income students at this school fall <span class="emphasis">far below</span>
           the state average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
           <div class="footnote">Low-income kids are really being left behind at this school. But some schools are doing an excellent job of serving all students.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
           <ul>
@@ -45,7 +45,7 @@ en:
           <p class="narrative-content">Test scores for low income students at this school fall <span class="emphasis">below</span> the state
           average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
           <div class="footnote">Low-income kids are being left behind at this school. But some schools are doing an excellent job of serving all students.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<ul>
             <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
@@ -60,7 +60,7 @@ en:
           <p class="narrative-content">Test scores for low income students at this school are <span class="emphasis">about the same as</span> the
           state average, though still below the scores for all students at top-performing schools in the state.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
           <div class="footnote">Most schools struggle to support low-income students.  But some schools are succeeding.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
           <span><ul>
@@ -76,7 +76,7 @@ en:
           <p class="narrative-content">Test scores for low income students at this school are <span class="emphasis">above</span> the state
           average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
           <div class="footnote">This school is doing better than most schools when it comes to supporting low-income
           students. But some schools are doing an excellent job at serving all students.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<span><ul>
@@ -92,7 +92,7 @@ en:
           <p class="narrative-content">Test scores for low income students at this school <span class="emphasis">are far above</span> the state
           average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
           <div class="footnote">This school is doing a much better job than most schools when it comes to supporting low-income students.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you advocate for all kids.%{more}<span><ul>
             <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
@@ -155,12 +155,12 @@ en:
             'Percentage of students chronically absent (15+ days)': >
               <p class="narrative-content">This shows the percentage of students absent 15 or more days across different races/ethnicities at this school compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
               <hr />
-              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+              <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
               <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
             'Percentage of students suspended out of school': >
               <p class="narrative-content">This shows the out-of-school suspension rates across different races/ethnicities at this school compared to the state average. High suspension rates mean less time for teaching and learning.</p>
               <hr />
-              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+              <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
               <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
           disparity:
             'Percentage of students chronically absent (15+ days)': >
@@ -171,7 +171,7 @@ en:
                 this disparity exists and
                 what it's doing to make sure that attendance policies are fair.</p>
                 <hr />
-                <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+                <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
                 <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
               </div>
             'Percentage of students suspended out of school': >
@@ -181,19 +181,19 @@ en:
                 aren't in school, they don't learn as much. Ask the school why it disproportionately suspends some
                 groups of students and what it's doing to make sure that discipline policies are fair.</p>
                 <hr />
-                <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+                <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
                 <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
               </div>
         SD:
           'Percentage of students chronically absent (15+ days)': >
             <p class="narrative-content">This shows the percentage of students with disabilities absent for 15 or more days compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
             <hr />
-            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+            <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote"><a href="/gk/articles/school-discipline-the-rights-of-students-with-ieps-and-504-plans/">Learn about your child’s rights</a> when it comes to school discipline.</p>
           'Percentage of students suspended out of school': >
             <p class="narrative-content">This shows the suspension rates for students with disabilities at this school compared to the state average. High suspension rates mean less time for  teaching and learning.</p>
             <hr />
-            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+            <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote"><a href="/gk/articles/school-discipline-the-rights-of-students-with-ieps-and-504-plans/">Learn about your child’s rights</a> when it comes to school discipline.</p>
           'Test scores':
             # one - subject begins with a vowel e.g. an English
@@ -201,10 +201,10 @@ en:
             one: >
               <p class="narrative-content">This shows results for students with disabilities on an %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
               <hr />
-              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+              <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
               <p class="footnote">Ask your child’s school about <a href="/gk/articles/accommodations-what-they-are-and-how-they-work/">accommodations that can remove barriers to learning.</a></p>
             other: >
               <p class="narrative-content">This shows results for students with disabilities on a %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
               <hr />
-              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+              <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
               <p class="footnote">Ask your child’s school about <a href="/gk/articles/accommodations-what-they-are-and-how-they-work/">accommodations that can remove barriers to learning.</a></p>

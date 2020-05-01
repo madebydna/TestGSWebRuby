@@ -4,7 +4,7 @@ require_relative '../../feed_helpers/universal_id'
 require_relative 'entity_directory_feed'
 require_relative '../single_data_object'
 require_relative 'directory_xml_builder'
-require_relative 'characteristics_data_builder'
+require_relative 'metrics_data_builder'
 require_relative 'directory_data_builder'
 require_relative 'directory_state_data_builder'
 
