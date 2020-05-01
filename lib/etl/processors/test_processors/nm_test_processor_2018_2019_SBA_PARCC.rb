@@ -55,7 +55,7 @@ class NMTestProcessor2019SBAPARCC < GS::ETL::TestProcessor
     HashLookup, :proficiency_band, map_prof_band_id, to: :proficiency_band_id)
     .transform("Filling in description", WithBlock) do |row|
      if row[:data_type_id] == 245
-      row[:notes] = 'DXT-28441: NM NM PARCC'
+      row[:notes] = 'DXT-3441: NM NM PARCC'
           if row[:year] == '2018'
             row[:date_valid] = '2018-01-01 00:00:00'
             row[:description] = 'In 2017-2018, New Mexico used the PARCC assessment to test students in grades 3-12 in Math and grades 3-11 in Reading.'
@@ -65,7 +65,7 @@ class NMTestProcessor2019SBAPARCC < GS::ETL::TestProcessor
             row[:description] = 'In 2018-2019, New Mexico used the PARCC assessment to test students in grades 3-12 in Math and grades 3-11 in Reading.'
           end
      elsif row[:data_type_id] == 244
-      row[:notes] = 'DXT-2878: NM NMSBA'
+      row[:notes] = 'DXT-3441: NM NMSBA'
           if row[:year] == '2018'
             row[:date_valid] = '2018-01-01 00:00:00'
             row[:description] = 'In 2017-2018, New Mexico used the New Mexico Standards-Based Assessment (NMSBA) to test students in grades 4, 7 and 11 in Science.'
