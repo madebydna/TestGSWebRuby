@@ -13,6 +13,8 @@ class UserSignupController < ApplicationController
     gon.pagename = @page_name
     @grades = param_grades.present? ? formatted_grades_array(param_grades) : param_grades
     @grades_hashes = grades_hashes
+    @submit_path = submit_path
+    @original_url = original_url
     account_meta_tags('Sign up for an account')
     set_tracking_info
     render 'show'
@@ -67,13 +69,9 @@ class UserSignupController < ApplicationController
     JSON.parse(pg).flatten.select { |g| grade_array_pk_to_12.include?(g.to_s) }.map(&:to_s)
   end
 
-  # def update
-  #   UserSubscriptionManager.new(@current_user).update(param_subscriptions)
-  #   UserGradeManager.new(@current_user).update(param_grades)
-  #   Subscription.where(id: subscription_ids_to_remove, member_id: current_user.id).destroy_all if subscription_ids_to_remove
-  #   flash_notice t('controllers.user_email_preferences_controller.success')
-  #   redirect_to user_preferences_path
-  # end
+  def submit_path
+    I18n.locale == :es ? user_signup_submit_spanish_path : user_signup_submit_path
+  end
 
   def param_email
     params['email'] || ''
