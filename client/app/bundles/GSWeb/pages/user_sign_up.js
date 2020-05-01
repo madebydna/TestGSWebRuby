@@ -4,10 +4,8 @@ const userSignupPageInit = () => {
       let $formContainer = $('.js-user-signup-form-container');
 
       function gbygCheckbox(obj) {
-        console.log("hello");
         $(obj)
-            .toggleClass('active')
-            .toggleClass('i-16-blue-check-box i-grey-unchecked-box');
+            .toggleClass('active');
       };
 
       $formContainer.on('click', '.js-checkbox', function () {
@@ -42,14 +40,12 @@ const userSignupPageInit = () => {
         let activeGbyG = $(this).parent().parent().find('.active');
         let overallCheckboxParent = $(this).parent().parent().parent().siblings();
         let overallCheckbox = overallCheckboxParent.find('.js-greatkidsnewsCheckbox');
-        console.log()
-        if (activeGbyG.length == 1) {
-          if ($(this).hasClass('active')) {
-            changeGbyGState(overallCheckbox, false)
+        if (activeGbyG.length < 1) {
+          if (overallCheckbox.hasClass('active')) {
+            changeGbyGState(overallCheckbox, false);
           }
-        }
-        if (activeGbyG.length == 0) {
-          changeGbyGState(overallCheckbox, true)
+        } else {
+          changeGbyGState(overallCheckbox, true);
         }
       });
 

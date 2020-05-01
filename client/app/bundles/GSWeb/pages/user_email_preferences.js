@@ -1,10 +1,7 @@
 const preferencePageInit = () => {
-  console.log("TESTb");
   $(function () {
 
     if (gon.pagename == "User Email Preferences") {
-      $("#TESTERTESTTEST").append("   HEOOLLasdfsdfasdfasfdasdfLOOO23");
-      console.log("TESTc");
       let $formContainer = $('.js-user-preferences-form-container');
 
       $formContainer.find('.js-checkbox').on('click', function () {
@@ -48,16 +45,16 @@ const preferencePageInit = () => {
       }
 
       $formContainer.on('click', '.js-gradeCheckbox', function () {
+        $(this).toggleClass('active');
         let activeGbyG = $(this).parent().parent().find('.active');
         let overallCheckboxParent = $(this).parent().parent().parent().siblings();
         let overallCheckbox = overallCheckboxParent.find('.js-greatkidsnewsCheckbox');
-        if (activeGbyG.length == 1) {
-          if ($(this).hasClass('active')) {
-            changeGbyGState(overallCheckbox, false)
+        if (activeGbyG.length < 1) {
+          if (overallCheckbox.hasClass('active')) {
+            changeGbyGState(overallCheckbox, false);
           }
-        }
-        if (activeGbyG.length == 0) {
-          changeGbyGState(overallCheckbox, true)
+        } else {
+          changeGbyGState(overallCheckbox, true);
         }
       });
 
