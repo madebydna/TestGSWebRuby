@@ -1,7 +1,7 @@
 # require 'spec_helper'
 require 'features/page_objects/home_page'
 require 'features/page_objects/search_page'
-require 'features/page_objects/account_page'
+require 'features/page_objects/email_preferences_page'
 
 describe 'User visits Home Page' do
   subject(:subject) { HomePage.new }
@@ -52,45 +52,57 @@ describe 'User visits Home Page' do
     before { @email = random_email }
     after { clean_dbs(:gs_schooldb) }
 
-    let(:account_page) { AccountPage.new }
+    let(:preferences_page) { EmailPreferencesPage.new }
 
     context 'with some grades selected and no partner offers' do
       before do
-        pending("Failing due to account page change")
         subject.footer.newsletter_link.click
         subject.email_newsletter_modal.sign_up(@email, [2,5], false)
         expect(subject).to have_newsletter_success_modal
-        account_page.load
+        preferences_page.load
       end
 
-      it 'should subscribe user to selected grades' do
-        second_grade = account_page.grade_level_subscriptions.content.find_input('second_grade')
-        fifth_grade = account_page.grade_level_subscriptions.content.find_input('fifth_grade')
-        expect(second_grade).to be_checked
-        expect(fifth_grade).to be_checked
+      it 'should subscribe user to English weekly newsletter' do
+        weekly = preferences_page.english.weekly
+        expect(preferences_page.subscribed?(weekly)).to be true
       end
 
-      it 'should not subscribe user to partner offers' do
-        account_page.email_subscriptions.closed_arrow.click
-        account_page.email_subscriptions.wait_until_content_visible
-        expect(account_page.email_subscriptions.content.sponsor_checkbox).not_to be_checked
+      it 'should have the English Grade by Grade checkbox checked' do
+        grade_by_grade = preferences_page.english.grade_by_grade
+        expect(preferences_page.subscribed?(grade_by_grade)).to be true
+      end
+
+      it 'should subscribe user to selected grades in English' do
+        second_grade = preferences_page.english.grades.second_grade
+        fifth_grade = preferences_page.english.grades.fifth_grade
+        tenth_grade = preferences_page.english.grades.tenth_grade
+        expect(preferences_page.subscribed?(second_grade)).to be true
+        expect(preferences_page.subscribed?(fifth_grade)).to be true
+        expect(preferences_page.subscribed?(tenth_grade)).to be false
+      end
+
+      it 'should not subscribe user to English partner offers' do
+        sponsor = preferences_page.english.sponsor
+        expect(preferences_page.subscribed?(sponsor)).to be false
       end
     end
 
     context 'with partner email checkbox selected' do
       before do
-        pending("Failing due to account page change")
         subject.footer.newsletter_link.click
         subject.email_newsletter_modal.sign_up(@email, [], true)
         expect(subject).to have_newsletter_success_modal
-        account_page.load
+        preferences_page.load
       end
 
-      it 'should not subscribe user to partner offers mail' do
-        account_page.email_subscriptions.closed_arrow.click
-        account_page.email_subscriptions.wait_until_content_visible
-        expect(account_page.email_subscriptions.content.sponsor_checkbox).to be_checked
+      it 'should subscribe user to partner offers mail' do
+        sponsor = preferences_page.english.sponsor
+        expect(preferences_page.subscribed?(sponsor)).to be true
       end
+    end
+
+    context 'with teacher email checkbox selected' do
+
     end
   end
 end

@@ -11,7 +11,7 @@ class AccountPage < SitePrism::Page
     element :osp_checkbox , 'input[name="osp"]'
     element :osp_parter_promos_checkbox, 'input[name="osp_partner_promos"]'
   end
-  
+
   class EmailSubscriptions < SitePrism::Section
     element :closed_arrow, '.i-32-close-arrow-head'
     element :open_arrow, '.i-32-open-arrow-head'
@@ -37,7 +37,7 @@ class AccountPage < SitePrism::Page
     def check_or_uncheck_checkbox(type)
       self.send("#{type}_checkbox").find('label').click
     end
-    
+
     def find_input(type)
       self.send("#{type}_checkbox").find('input[type="checkbox"]', visible: false)
     end
@@ -55,7 +55,7 @@ class AccountPage < SitePrism::Page
     element :submit_btn, 'button', text: 'Submit'
     element :confirmation, 'div.modal-body', text: 'Your password has been updated.'
   end
-  
+
   class ChangePassword < SitePrism::Section
     element :closed_arrow, '.i-32-close-arrow-head'
     element :open_arrow, '.i-32-open-arrow-head'
