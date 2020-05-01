@@ -17,7 +17,6 @@
     <%= token_tag form_authenticity_token %>
     <%= render 'forms/email_fieldset' %>
     <%= render 'forms/grades_fieldset' %>
-    <%#= render 'forms/language_fieldset' %>
     <%= render 'forms/teacher_fieldset' if I18n.locale == :en %>
     <%= render 'forms/sponsors_fieldset' if I18n.locale == :en %>
     <%= render 'forms/join_button_and_tou_fieldset' %>
