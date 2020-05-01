@@ -29,16 +29,29 @@ class UserSignupController < ApplicationController
 
   def create
     # TODO: Verify that account does not exist and is valid structure, then create account and add subscriptions below
-    invalid = nil
-    user = nil
-    if invalid.present?
+    user = User.find_by(email: param_email)
+
+    if user || param_email.blank? || is_invalid?(param_email)
       set_variables_repopulate_form
       param_language == 'es' ? show_spanish : show_all
     else
+      user = register_user(param_email)
       UserEmailSubscriptionManager.new(user).update(process_subscriptions(param_subscriptions))
       UserEmailGradeManager.new(user).update(process_grades(param_grades))
       render 'thankyou'
     end
+  end
+
+  def register_user(email)
+    user = User.new
+    user.email = email
+    user.password = Password.generate_password
+    unless user.save!
+      GSLogger.error(:signup, nil, message: 'New user failed to save', vars: {
+          email: email
+      })
+    end
+    user
   end
 
   def set_variables_repopulate_form
