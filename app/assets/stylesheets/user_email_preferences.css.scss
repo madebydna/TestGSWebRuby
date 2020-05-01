@@ -1,6 +1,81 @@
-@import 'mixins/*';
+// @import 'mixins/*';
 
 .user-email-preferences {
+
+  .font-size-large {
+    font-size: 18px;
+  }
+
+  strong {
+    font-family: "opensans-bold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: bold;
+  }
+
+  h3 {
+    font-size: 22px;
+  }
+
+  .iconx16 {
+    display: inline-block;
+    background-image: asset_data_url("icons/icons_16x16.png");
+    width: 16px;
+    height: 16px;
+  }
+
+  .i-16-blue-check-box {
+    background-position: -176px 0px;
+  }
+
+  .i-grey-unchecked-box {
+    width: 16px;
+    height: 16px;
+    background: #e6e6e6;
+  }
+
+  .subtitle-md {
+    font-size: 20px;
+  }
+
+  .btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid #CCCCCC;
+    white-space: nowrap;
+    padding: 8px 20px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .btn-checkbox {
+    float: left;
+    color: #4788be;
+    background-color: white;
+    border-color: #4788be;
+    border-bottom-width: 3px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-right: 10px;
+  }
+
+  .active.btn-checkbox {
+    background-color: #35485d;
+    color: white;
+    border-color: #35485d;
+  }
+
+  .pas {
+    padding: 5px;
+  }
 
   .news-en, .news-es {
     display: none;
@@ -21,6 +96,27 @@
     //   border-left: none;
     //   border-right: none;
     // }
+  }
+
+  .font-size-xl {
+    font-size: 24px;
+  }
+
+  .btn-primary {
+    color: white;
+    background-color: #26abe2;
+    border-color: #2880b9;
+    border-bottom-width: 3px;
+    border-top: #2880b9;
+    border-right: #2880b9;
+    border-left: #2880b9;
+}
+
+  .btn-lg {
+    padding: 10px 30px;
+    font-size: 18px;
+    line-height: 1.33333;
+    border-radius: 4px;
   }
 
   .tab-buttons {

@@ -1,27 +1,17 @@
-const preferencePageInit = () => {
+const userSignupPageInit = () => {
   $(function () {
+    if (gon.pagename == "User Signup") {
+      let $formContainer = $('.js-user-signup-form-container');
 
-    if (gon.pagename == "User Email Preferences") {
-      let $formContainer = $('.js-user-preferences-form-container');
+      function gbygCheckbox(obj) {
+        $(obj)
+            .toggleClass('active');
+      };
 
-      $formContainer.find('.js-checkbox').on('click', function () {
+      $formContainer.on('click', '.js-checkbox', function () {
         $(this)
             .toggleClass('active')
             .toggleClass('i-16-blue-check-box i-grey-unchecked-box');
-      });
-
-      $('.tab-news-en').click(function () {
-        $(".news-en").addClass("active");
-        $(this).addClass("tab-selected");
-        $(".news-es").removeClass("active");
-        $(".tab-news-es").removeClass("tab-selected");
-      });
-
-      $('.tab-news-es').click(function () {
-        $(".news-es").addClass("active");
-        $(this).addClass("tab-selected");
-        $(".news-en").removeClass("active");
-        $(".tab-news-en").removeClass("tab-selected");
       });
 
       $formContainer.on('click', '.js-greatkidsnewsCheckbox', function () {
@@ -45,7 +35,8 @@ const preferencePageInit = () => {
       }
 
       $formContainer.on('click', '.js-gradeCheckbox', function () {
-        $(this).toggleClass('active');
+        gbygCheckbox(this);
+
         let activeGbyG = $(this).parent().parent().find('.active');
         let overallCheckboxParent = $(this).parent().parent().parent().siblings();
         let overallCheckbox = overallCheckboxParent.find('.js-greatkidsnewsCheckbox');
@@ -62,7 +53,6 @@ const preferencePageInit = () => {
         let $form = $(this);
         let grades = [];
         let subscriptions = [];
-        let schools = [];
 
         $form.find('.js-gradeCheckbox.active').each(function () {
           grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
@@ -73,11 +63,6 @@ const preferencePageInit = () => {
           subscriptions.push([$(this).data('list'), $(this).data('language')]);
         });
         $('.js-subscriptionSubmitValue').val(JSON.stringify(subscriptions));
-
-        $form.find('.js-mssSubscriptionCheckbox.active').each(function () {
-          schools.push([$(this).data('list'), $(this).data('language'), $(this).data('state'), $(this).data('schoolId')]);
-        });
-        $('.js-schoolSubmitValue').val(JSON.stringify(schools));
 
         $form.find('.js-inverted-checkbox').each(function () {
           $(this).toggleClass('active');
@@ -90,6 +75,5 @@ const preferencePageInit = () => {
 
     }
   });
-
 };
-export default preferencePageInit;
+export default userSignupPageInit;

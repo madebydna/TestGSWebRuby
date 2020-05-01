@@ -9,7 +9,7 @@ class UserEmailPreferencesController < ApplicationController
   end
   before_action :login_required, only: [:show, :update]
 
-  layout 'deprecated_application'
+  layout 'application'
 
   def show
     @page_name = 'User Email Preferences' # This is also hardcoded in email_preferences.js
@@ -42,19 +42,6 @@ class UserEmailPreferencesController < ApplicationController
 
   def param_schools
     params['schools'] || []
-  end
-
-  # TODO: Remove this
-  def school_subscription_ids_to_remove
-    params['subscription_ids_to_remove_en']
-  end
-
-  def school_subscription_ids_to_remove_en
-    params['subscription_ids_to_remove_en']
-  end
-
-  def school_subscription_ids_to_remove_es
-    params['subscription_ids_to_remove_es']
   end
 
   def subscriptions(all_user_subscriptions)
