@@ -50,7 +50,7 @@ const config = {
     'default-page-just-layout': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/default_page_just_layout'],
     'moderation-tools': ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/moderation_tools'],
     email: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/user_email_preferences'],
-    signup: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/user_signup']
+    signup: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/user_signup'],
   },
 
   optimization: {
