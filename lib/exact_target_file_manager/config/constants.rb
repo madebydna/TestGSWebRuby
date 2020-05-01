@@ -3,10 +3,14 @@ module ExactTargetFileManager
     module Constants
       VALID_ET_PARAMETERS = %w(all grade_by_grade school_list district_list member_list member_list_de list_signups unsubscribes school_signups spanish_unsubscribes spanish_signups)
 
-      MAPPING_CLASSES_DOWNLOADS = {
+      MAPPING_CLASSES_DOWNLOADS_ALL = {
           spanish_signups: 'EtSpanishGbyg::SpanishSubscriptionProcessor',
           unsubscribes: 'Unsubscribes::Processor',
           spanish_unsubscribes: 'EtSpanishGbyg::SpanishUnsubscribeProcessor',
+      }
+
+      MAPPING_CLASSES_DOWNLOADS = {
+          unsubscribes: 'Unsubscribes::Processor',
       }
 
       MAPPING_CLASSES_UPLOADS = {

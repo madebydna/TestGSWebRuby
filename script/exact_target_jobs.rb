@@ -15,7 +15,7 @@ class ExactTargetJobs
   def run
     ptr = @process_to_run.to_sym
     upload_class = MAPPING_CLASSES_UPLOADS[ptr]
-    download_class = MAPPING_CLASSES_DOWNLOADS[ptr]
+    download_class = MAPPING_CLASSES_DOWNLOADS_ALL[ptr]
     if ptr == :all
       MAPPING_CLASSES_DOWNLOADS.each { |key, _| download_import(key) }
       MAPPING_CLASSES_UPLOADS.each { |key, _| build_zip_upload(key) }
@@ -29,7 +29,7 @@ class ExactTargetJobs
   def download_import(key)
     begin
       log = ScriptLogger.record_log_instance(et_process_to_run: key) rescue nil
-      processor_string = "ExactTargetFileManager::Builders::#{MAPPING_CLASSES_DOWNLOADS[key]}"
+      processor_string = "ExactTargetFileManager::Builders::#{MAPPING_CLASSES_DOWNLOADS_ALL[key]}"
       processor = processor_string.constantize.new
       puts "Working on: #{key}"
       print "...downloading..."
