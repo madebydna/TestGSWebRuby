@@ -8,7 +8,7 @@
   <%= stylesheet_link_tag "user_signup", async: true %>
 <% end %>
 
-<% language = I18n.locale == :es ? 'es' : 'en' %>
+<% language = request.path.gsub(/\//, '') == user_signup_path.gsub(/\//, '') ? 'en' : 'es' %>
 <% path_to_yml = 'lib.user_signup.'%>
 
 <div id="user-signup-page">
