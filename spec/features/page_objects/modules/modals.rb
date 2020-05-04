@@ -4,13 +4,15 @@ module Modals
     element :email_field, 'input[name=email]'
     elements :grade_buttons, 'span.multi-select-button-group button'
     element :partner_offers_and_updates_checkbox, 'input[name=sponsors_list]'
+    element :teacher_checkbox, 'input[name=teacher_list]'
     element :submit_button, 'button[type=submit]'
 
-    def sign_up(email, grades=[2,3], offers=true)
+    def sign_up(email, grades=[2,3], offers: false, teacher: false)
       email_field.set(email)
       grade_buttons_to_click = grade_buttons.select {|btn| grades.include?(btn['data-value'].to_i) }
       grade_buttons_to_click.each {|btn| btn.click }
       partner_offers_and_updates_checkbox.set(offers)
+      teacher_checkbox.set(teacher)
       submit_button.click
     end
   end

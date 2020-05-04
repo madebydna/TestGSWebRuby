@@ -49,15 +49,18 @@ describe 'User visits Home Page' do
   end
 
   describe 'signup via newsletter link', js: true do
-    before { @email = random_email }
+    before do
+      @email = random_email
+      subject.footer.newsletter_link.click
+    end
+
     after { clean_dbs(:gs_schooldb) }
 
     let(:preferences_page) { EmailPreferencesPage.new }
 
     context 'with some grades selected and no partner offers' do
       before do
-        subject.footer.newsletter_link.click
-        subject.email_newsletter_modal.sign_up(@email, [2,5], false)
+        subject.email_newsletter_modal.sign_up(@email, [2,5])
         expect(subject).to have_newsletter_success_modal
         preferences_page.load
       end
@@ -89,20 +92,28 @@ describe 'User visits Home Page' do
 
     context 'with partner email checkbox selected' do
       before do
-        subject.footer.newsletter_link.click
-        subject.email_newsletter_modal.sign_up(@email, [], true)
+        subject.email_newsletter_modal.sign_up(@email, [], offers: true)
         expect(subject).to have_newsletter_success_modal
         preferences_page.load
       end
 
-      it 'should subscribe user to partner offers mail' do
+      it 'should subscribe user to English partner offers mail' do
         sponsor = preferences_page.english.sponsor
         expect(preferences_page.subscribed?(sponsor)).to be true
       end
     end
 
     context 'with teacher email checkbox selected' do
+      before do
+        subject.email_newsletter_modal.sign_up(@email, [], teacher: true)
+        expect(subject).to have_newsletter_success_modal
+        preferences_page.load
+      end
 
+      it 'should subscribe user to English teacher mail' do
+        teacher = preferences_page.english.educators
+        expect(preferences_page.subscribed?(teacher)).to be true
+      end
     end
   end
 end
