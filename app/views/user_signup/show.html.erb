@@ -11,6 +11,11 @@
 <% path_to_yml = 'lib.user_signup.'%>
 <% language = I18n.locale == :es ? 'es' : 'en' %>
 
+<% sign_up_url = '/newsletter' %>
+<% if language == 'en' %>
+  <% sign_up_url = '/espanol' %>
+<% end %>
+
 <div id="user-signup-page">
   <%= react_component('SearchBoxWrapper') %>
   <section class="row">
@@ -22,8 +27,8 @@
       <div class="subheading">
         <%= t('lib.user_signup.subheading_html',
               subscribe_here_link: link_to(
-                t('lib.user_signup.subscribe_here_alt_lang'),
-                user_signup_spanish_url)
+                  t('lib.user_signup.subscribe_here_alt_lang'),
+                  sign_up_url)
         ) %>
       </div>
 
