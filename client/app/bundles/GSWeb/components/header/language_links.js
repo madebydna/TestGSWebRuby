@@ -1,7 +1,21 @@
 import { getQueryParam, updateUrlParameter } from './query_param_utils';
 
 const isSpanish = function() {
-  return getQueryParam('lang') === 'es';
+  let pathname = window.location.pathname;
+  return getQueryParam('lang') === 'es' || pathname.includes("espanol");
+};
+
+const signupPageSpecialCase = function () {
+  let pathname = window.location.pathname;
+  if (pathname.includes("newsletter")) {
+    window.location.pathname = "espanol";
+    return true;
+  }
+  if (pathname.includes("espanol")) {
+    window.location.pathname = "newsletter";
+    return true;
+  }
+  return false;
 };
 
 const initLanguageLinkListener = function() {
@@ -18,6 +32,9 @@ const initLanguageLinkListener = function() {
   }
 
   changeLanguageLink.onclick = function(e) {
+    if (signupPageSpecialCase()) {
+      return true;
+    }
     locationLanguageLink = window.location.href;
     if(isSpanish()) {
       changeLanguageLink.href = updateUrlParameter(locationLanguageLink, 'lang', '');
