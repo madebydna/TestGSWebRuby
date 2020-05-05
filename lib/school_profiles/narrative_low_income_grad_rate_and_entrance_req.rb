@@ -15,7 +15,7 @@ module SchoolProfiles
       if metrics.present? && metrics[data_type_name].present?
         li_hash = metrics[data_type_name].find { |d| d['breakdown'] == 'Economically disadvantaged' }
         all_hash = metrics[data_type_name].find { |d| d['breakdown'] == 'All students' }
-        if li_hash.present?
+        if li_hash.present? && all_hash.present?
           key_value = narration_calculation(li_hash, all_hash)
           key_value = '0' if key_value.blank?
           li_hash['narrative'] = low_income_narration(key_value, data_type_name)
