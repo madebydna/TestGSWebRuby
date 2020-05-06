@@ -55,6 +55,8 @@ class DistrictCacheResults
       DistrictCachedTestScoresMethods
     when 'gsdata'
       DistrictCachedGsdataMethods
+    when 'crpe'
+      DistrictCachedDistanceLearningMethods
     end
   end
 

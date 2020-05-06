@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DistrictCacheDataReader
-  DISTRICT_CACHE_KEYS = %w(feed_test_scores_gsdata test_scores_gsdata feed_test_scores ratings district_schools_summary district_directory metrics feed_metrics gsdata)
+  DISTRICT_CACHE_KEYS = %w(feed_test_scores_gsdata test_scores_gsdata feed_test_scores ratings district_schools_summary district_directory metrics feed_metrics gsdata crpe)
 
   attr_reader :district, :district_cache_keys
 
@@ -74,6 +74,10 @@ class DistrictCacheDataReader
 
   def metrics
     decorated_district.metrics
+  end
+
+  def distance_learning
+    decorated_district.distance_learning
   end
 
   def gsdata_data(*keys)
@@ -189,7 +193,8 @@ class DistrictCacheDataReader
   end
 
   def decorate_district
-    district_cache_results = DistrictCacheResults.new(DISTRICT_CACHE_KEYS, district_cache_query)
+    # district_cache_results = DistrictCacheResults.new(DISTRICT_CACHE_KEYS, district_cache_query)
+    district_cache_results = DistrictCacheResults.new(district_cache_keys, district_cache_query)
     district_cache_results.decorate_district(district)
   end
 

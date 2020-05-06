@@ -11,6 +11,7 @@ class DistrictCacher
   # :feed_metrics
   # :gsdata
   # :metrics
+  # :crpe
 
   def initialize(district)
     @district = district
@@ -46,7 +47,8 @@ class DistrictCacher
         district_directory: DistrictDirectoryCacher,
         feed_metrics: FeedMetricsCaching::DistrictFeedMetricsCacher,
         gsdata: DistrictGsdataCacher,
-        metrics: MetricsCaching::DistrictMetricsCacher
+        metrics: MetricsCaching::DistrictMetricsCacher,
+        crpe: DistanceLearningCacher
     }[key.to_s.to_sym]
   end
 
@@ -83,14 +85,16 @@ class DistrictCacher
         DistrictDirectoryCacher,
         FeedMetricsCaching::DistrictFeedMetricsCacher,
         DistrictGsdataCacher,
-        MetricsCaching::DistrictMetricsCacher
+        MetricsCaching::DistrictMetricsCacher,
+        DistanceLearningCacher
     ]
   end
 
   def self.create_cache(district, cache_key)
     begin
       cacher_class = cacher_for(cache_key)
-        return unless cacher_class.active?
+      return unless cacher_class.active?
+
       cacher = cacher_class.new(district)
       cacher.cache
     rescue => error
