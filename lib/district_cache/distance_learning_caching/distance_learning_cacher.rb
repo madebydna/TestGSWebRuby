@@ -3,7 +3,7 @@ class DistanceLearningCacher < DistrictCacher
   CACHE_KEY = 'crpe'
 
   def build_hash_for_cache
-    responses = DistanceLearning.by_district(district).active
+    responses = CRPEData.by_district(district).active
     return unless responses.present?
 
     responses.each_with_object({}) do |response, result|

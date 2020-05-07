@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DistanceLearning < ActiveRecord::Base
+class CRPEData < ActiveRecord::Base
   db_magic :connection => :omni
   self.table_name = 'covid_responses'
 
