@@ -47,13 +47,13 @@ module Feeds
         # write top of xml for all in one
         out_file.puts file_header
         states.each do |state|
-          out_file.puts '<gs-official-overall-rating-feed >'
+          out_file.puts '<gs-official-overall-rating-feed>'
           File.foreach(input_file(state)) do |line|
             # guard clause for beginning and end of file
             next if reject_line?(line)
             out_file.puts line
           end
-          out_file.puts '</gs-official-overall-rating-feed >'
+          out_file.puts '</gs-official-overall-rating-feed>'
         end
         # write bottom of xml for all in one
         out_file.puts file_footer
