@@ -25,6 +25,15 @@
                data-ga-click-label="Summary Auto-narrative">... <%= more %></a>
             <span class="js-moreReveal  more-reveal">
              <%= arr[2..arr.length].join(' ').html_safe %>
+             <% if @school_profile.distance_learning %>
+              <% distance_learning = @school_profile.distance_learning %>
+              <br/>
+              <%= image_tag "/assets/school_profiles/take-a-quick-tour-owl.svg",  alt: "" %>
+              <span class="speech-bubble left">
+                <%= distance_learning.description %>
+                <%= link_to 'LINK HERE', district_path(distance_learning.state, distance_learning.city, distance_learning.district) %>
+              </span>
+             <% end %>
               <% if I18n.locale == :es %>
                 <br/><br/>
                 <%= image_tag "/assets/school_profiles/brown-owl.svg",  alt: "" %>
