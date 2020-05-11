@@ -1,6 +1,6 @@
 require_relative "../../test_processor"
 
-class SCTestProcessor201820182019READYPASSEOCEP < GS::ETL::TestProcessor
+class SCTestProcessor201720182019READYPASSEOCEP < GS::ETL::TestProcessor
 
 	def initialize(*args)
 		super
