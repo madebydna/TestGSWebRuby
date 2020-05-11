@@ -5,6 +5,7 @@ class SCTestProcessor201720182019READYPASSEOCEP < GS::ETL::TestProcessor
 	def initialize(*args)
 		super
 		@year = 2019
+		@ticket_n = 'DXT-3445'
 	end
 
 	map_prof_band = {
@@ -36,12 +37,12 @@ class SCTestProcessor201720182019READYPASSEOCEP < GS::ETL::TestProcessor
 	'10M' => 22,
 	'11SWD' => 27,#disabilities
 	'12NSWD' => 30,#no disabilities
-	'13MIG' => 19,#migrant --skip
-	'14NMIG' => 28,#not migrant --skip
 	'15LEP' => 32,#lep 
 	'16NLEP' => 33,#not lep
 	'17SIP' => 23,#econ dis
 	'18NSIP' => 24,#not econ dis
+	'17PIP' => 23, #2019 econ dis
+	'18NPIP' => 24, #2019 non econ dis
 	'1' => 1,#all
 	'2' => 25,#male
 	'3' => 26,#female
@@ -75,7 +76,7 @@ class SCTestProcessor201720182019READYPASSEOCEP < GS::ETL::TestProcessor
         			row[:description] = 'In 2017-2018, students took The South Carolina Palmetto Assessment of State Standards (SCPASS). SCPASS is a statewide assessment administered to students in science in the 4th, 6th and 8th grade and in social studies in the 5th and 7th grade. All students in these grade levels are required to take the SCPASS except those who qualify for the South Carolina Alternate Assessment (SC-Alt). SCPASS includes tests in two subjects: science and social studies.'
       			elsif row[:year] == '2019'
         			row[:date_valid] = '2019-01-01 00:00:00'
-        			row[:description] = 'In 2018-201, students took The South Carolina Palmetto Assessment of State Standards (SCPASS). SCPASS is a statewide assessment administered to students in science in the 4th, 6th and 8th grade and in social studies in the 5th and 7th grade. All students in these grade levels are required to take the SCPASS except those who qualify for the South Carolina Alternate Assessment (SC-Alt). SCPASS includes tests in two subjects: science and social studies.'
+        			row[:description] = 'In 2018-2019, students took The South Carolina Palmetto Assessment of State Standards (SCPASS). SCPASS is a statewide assessment administered to students in science in the 4th, 6th and 8th grade and in social studies in the 5th and 7th grade. All students in these grade levels are required to take the SCPASS except those who qualify for the South Carolina Alternate Assessment (SC-Alt). SCPASS includes tests in two subjects: science and social studies.'
       			end
      		row
     	end
