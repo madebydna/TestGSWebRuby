@@ -193,7 +193,7 @@ options         = OpenStruct.new
 options.command = :report
 OptionParser.new do |opts|
 
-  opts.banner = "Usage: missing_crpe_translation_checker.rb"
+  opts.banner = "Usage: missing_crpe_translation_checker.rb\nRun without arguments to see a list of missing translations"
 
   opts.on('-tTABLE', '--translate=TABLE', 'Google translate missing strings from covid_responses') do |table|
     options.command = :translate
@@ -202,7 +202,7 @@ OptionParser.new do |opts|
 
   # Cannot use -h and --help since that will be interpreted by rails runner and spit out rails runner usage
   opts.on_tail('-?', '--usage', 'Show this message') do
-    puts args
+    puts opts
     exit
   end
   options
