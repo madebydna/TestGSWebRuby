@@ -10,7 +10,7 @@ module SchoolProfiles
     end
 
     def distance_learning_district?
-      district_cache_data_reader.distance_learning.present?
+      district_cache_data_reader&.distance_learning.present?
     end
 
     def data_values

@@ -154,7 +154,11 @@ class SchoolProfilesController < ApplicationController
   end
 
   def district_cache_data_reader
-    @_district_cache_data_reader ||= DistrictCacheDataReader.new(school.district, district_cache_keys: Array.wrap('crpe'))
+    @_district_cache_data_reader ||=begin
+      return nil unless school.district.present?
+
+      DistrictCacheDataReader.new(school.district, district_cache_keys: Array.wrap('crpe'))
+    end
   end
 
   def distance_learning
