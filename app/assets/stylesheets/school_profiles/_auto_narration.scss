@@ -50,6 +50,11 @@
       display: block;
       padding: 15px 0 0;
     }
+
+    .distance-learning{
+      padding: 35px;
+    }
+
     @include media-breakpoint-up(sm) {
       .more-reveal {
         display: inline;

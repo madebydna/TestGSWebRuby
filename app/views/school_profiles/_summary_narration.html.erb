@@ -28,11 +28,13 @@
              <% if @school_profile.distance_learning %>
               <% distance_learning = @school_profile.distance_learning %>
               <br/>
-              <%= image_tag "/assets/school_profiles/take-a-quick-tour-owl.svg",  alt: "" %>
-              <span class="speech-bubble left">
-                <%= distance_learning.description %>
-                <%= link_to 'LINK HERE', district_path(distance_learning.state, distance_learning.city, distance_learning.district) %>
-              </span>
+              <div class="distance-learning">
+                <%= image_tag "/assets/school_profiles/take-a-quick-tour-owl.svg",  alt: "" %>
+                <span class="speech-bubble left">
+                  <%= distance_learning.description %>
+                  <%= link_to 'LINK HERE', district_path(distance_learning.state, distance_learning.city, distance_learning.district) %>
+                </span>
+              </div>
              <% end %>
               <% if I18n.locale == :es %>
                 <br/><br/>
