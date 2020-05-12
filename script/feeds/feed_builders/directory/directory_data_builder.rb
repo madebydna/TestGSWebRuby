@@ -100,8 +100,8 @@ module Feeds
     end
 
     def self.metrics_info
-      metrics_data = MetricsDataBuilder.metrics_format(@metrics_hash, @universal_id, @model) if @metrics_hash.present?
-      single_data_object('census-info', metrics_data) if metrics_data && metrics_data.compact.present?
+      char_data = MetricsDataBuilder.metrics_format(@metrics_hash, @universal_id, @model) if @metrics_hash.present?
+      single_data_object('census-info', char_data) if char_data && char_data.compact.present?
     end
 
     # //////////////////////////////  DIRECTORY_KEYS_SPECIAL -- END NOT REQUIRED ///////////////////////////////////////////////////////////////

@@ -26,29 +26,6 @@ module Feeds
 
       attr_reader :universal_id, :entity, :cache_data
 
-      #old order
-      # OLD_ORDER = %w('Native American or Native Alaskan'
-      #   'Native Hawaiian or Other Pacific Islander'
-      #   White
-      #   Asian
-      #   Hispanic
-      #   Black
-      #   Multiracial)
-
-      # ETHNICITY_NAME_MAPPING = {'Native American' => 'Native American or Native Alaskan',
-      #                           'Two or more races' => 'Multiracial'}
-
-      #new order
-      NEW_ORDER = %w( 'Native American'
-                      'Native American or Native Alaskan'
-                      'Native Hawaiian or Other Pacific Islander'
-                      White
-                      Asian
-                      Hispanic
-                      Black
-                      'Two or more races'
-                      Multiracial)
-
       def initialize(cache_data, universal_id, entity)
         @cache_data = cache_data
         @universal_id = universal_id
@@ -81,7 +58,6 @@ module Feeds
             hash[:feed_name] = data_accessor[:feed_name]
           end
         end
-        order_ethnicity(data_sets)
       end
 
       def format_value(value, *methods)
@@ -102,38 +78,9 @@ module Feeds
         value
       end
 
-      def order_ethnicity(data_sets)
-        data_sets.sort { |a, b| NEW_ORDER.index(a[:name]) <=> NEW_ORDER.index(b[:name]) }
-      end
-
-      #   #old order
-      #   OLD_ORDER = %w('Native American or Native Alaskan'
-      #   'Native Hawaiian or Other Pacific Islander'
-      #   White
-      #   Asian
-      #   Hispanic
-      #   Black
-      #   Multiracial)
-      #
-      #   ethnicity_name_mapping = {'Native American' => 'Native American or Native Alaskan',
-      #   'Two or more races' => 'Multiracial'}
-      #
-      #   #new order
-      #   NEW_ORDER = %w(White
-      #   Hispanic
-      #   'Native American'
-      #   'Two or more races'
-      #   Black
-      #   'Native Hawaiian or Other Pacific Islander'
-      #   Asian)
-      # end
-
-
       def ethnicity_mapping(breakdown1, breakdown2)
         ethnicity = breakdown1 || breakdown2
         ethnicity == 'African American' ? 'Black' : ethnicity
-        ethnicity == 'Native American' ? 'Native American or Native Alaskan' : ethnicity
-        ethnicity == 'Two or more races' ? 'Multiracial' : ethnicity
       end
     end
   end
