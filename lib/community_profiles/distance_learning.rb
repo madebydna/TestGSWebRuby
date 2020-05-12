@@ -29,7 +29,7 @@ module CommunityProfiles
     end
 
     def data_module
-      return [] if crpe_data.empty?
+      return {} if crpe_data.empty?
 
       {}.tap do |h|
         h[:url] = general_data(URL)

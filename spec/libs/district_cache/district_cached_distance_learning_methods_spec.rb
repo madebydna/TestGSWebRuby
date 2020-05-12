@@ -32,9 +32,6 @@ describe DistrictCachedDistanceLearningMethods do
   }}
 
   describe '#distance_learning' do
-    before(:each) do
-      allow(subject).to receive(:cache_data).and_return(cache)
-    end
 
     it 'returns the correct slice of data' do
       allow(subject).to receive(:cache_data).and_return(cache)
