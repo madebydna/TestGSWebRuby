@@ -32,15 +32,11 @@ module Feeds
     end
 
     def reject_line?(line)
-      if line.nil? ||
+      line.nil? ||
           line.strip == "" ||
           line.include?("<?xml version=") ||
           line.include?("<gs-local-feed xmlns:xsi=") ||
           line.include?("</gs-local-feed>")
-        true
-      else
-        false
-      end
     end
 
     def generate
