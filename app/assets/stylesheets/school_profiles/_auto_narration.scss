@@ -1,25 +1,27 @@
 .auto-narration {
-  $color_gray_text: #71787e;
-  $color_negative: #cb5c35;
-  $color_neutral: #ab8f0e;
-  $color_positive: #367a1e;
-  $color_gray_bar: #edf2f5;
+  $color-gray-text: #71787e;
+  $color-negative: #cb5c35;
+  $color-neutral: #ab8f0e;
+  $color-positive: #367a1e;
+  $color-gray_bar: #edf2f5;
 
   font-size: 16px;
 
   h3 {
-    margin-top: 0;
     font-size: 18px;
     font-weight: bold;
+    margin-top: 0;
 
     &.positive {
-      color: $color_positive;
+      color: $color-positive;
     }
+
     &.neutral {
-      color: $color_neutral;
+      color: $color-neutral;
     }
+
     &.negative {
-      color: $color_negative;
+      color: $color-negative;
     }
   }
 
@@ -28,30 +30,31 @@
   }
 
   .parent-tip {
-    color: $color_gray_text;
+    color: $color-gray-text;
     font-family: opensans-semibold, sans-serif;
     margin-top: 5px;
   }
 
   .footnote {
-    color: $color_gray_text;
+    color: $color-gray-text;
     margin-bottom: 0;
   }
 
   .side-bar {
-    border-left: 5px $color_gray_bar solid;
+    border-left: 5px $color-gray_bar solid;
     padding-left: 20px;
   }
 
   &.summary-narration {
     font-size: 14px;
+
     .module_feedback {
-      float:none;
       display: block;
+      float: none;
       padding: 15px 0 0;
     }
 
-    .distance-learning{
+    .distance-learning {
       padding: 35px;
     }
 
