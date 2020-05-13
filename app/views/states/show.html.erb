@@ -22,9 +22,10 @@
 
         <%# First Ad %>
         <div class="display-mobile">
+          <%#= render 'shared/new_ad', slotId: 'greatschools_statepagemobile_first', css_class: 'js-ad-hook' %>
+
           <%= react_component("AdWrapper", props: {
-              slot: "statepagemobile_first",
-              sizeName: "thin_banner_mobile"
+              slot: "greatschools_statepagemobile_first"
           }) %>
         </div>
 
@@ -87,9 +88,9 @@
 
         <%# Second Ad %>
         <div id="second-ad">
+          <%#= render 'shared/new_ad', slotId: 'greatschools_statepage_second', css_class: 'js-ad-hook' %>
           <%= react_component("AdWrapper", props: {
-              slot: "statepage_second",
-              sizeName: "box"
+              slot: "greatschools_statepage_second"
           }) %>
         </div>
 
@@ -142,7 +143,7 @@
             </div>
           </div>
         <% end %>
-      </div><%= render 'community/sticky_right_rail', ad_slot_name: "statepage_first" %>
+      </div><%= render 'community/sticky_right_rail', ad_slot_name: "greatschools_statepage_first" %>
     </div>
   </div>
 </div>

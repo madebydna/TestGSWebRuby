@@ -18,11 +18,11 @@ import Finance from './finance';
 import Students from "./students";
 import StemCourses from "../school_profiles/stem_courses";
 import TeachersStaff from "./teachers_staff";
-import { init as initAdvertising } from "util/advertising";
+import { init as initAdvertising } from "util/new_advertising";
 import { XS, validSizes as validViewportSizes } from "util/viewport";
 import Toc from "./toc";
-import { schoolsTocItem, academicsTocItem, ACADEMICS, advancedCoursesTocItem, STUDENTS, 
-  studentsTocItem, calendarTocItem, communityResourcesTocItem, 
+import { schoolsTocItem, academicsTocItem, ACADEMICS, advancedCoursesTocItem, STUDENTS,
+  studentsTocItem, calendarTocItem, communityResourcesTocItem,
   nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS,
   teachersStaffTocItem, TEACHERS_STAFF, financeTocItem, FINANCE, academicProgressTocItem, ACADEMIC_PROGRESS,
   studentProgressTocItem, STUDENT_PROGRESS, ADVANCED_COURSES
@@ -214,7 +214,7 @@ class District extends React.Component {
         }
         shouldDisplayCsaInfo={this.props.schools_data.schools.csa.length === 0 && this.props.csa_module}
         csaInfo={
-          <CsaInfo 
+          <CsaInfo
             community={this.pageType}
             locality={this.props.locality}
           />
@@ -268,11 +268,11 @@ class District extends React.Component {
         students={<Students {...studentProps} />}
         teachersStaff={this.hasTeachersStaffData() && <TeachersStaff size={this.props.viewportSize} data={this.props.teachers_staff} />}
         calendar={
-          <Calendar 
+          <Calendar
             locality={this.props.locality}
             pageType="District"
           />
-        } 
+        }
         finance={
           <Finance
             dataValues={this.props.finance}
@@ -289,7 +289,7 @@ class District extends React.Component {
           />
         }
         recentReviews={
-          <RecentReviews 
+          <RecentReviews
             community={this.pageType}
             reviews={this.props.reviews}
             locality={this.props.locality}
@@ -307,7 +307,7 @@ class District extends React.Component {
         }
         shouldDisplaySummaryRating={Object.keys(this.props.summaryRatingData).length > 0}
         summaryRating={
-          <SummaryRating 
+          <SummaryRating
             summaryRatingData={this.props.summaryRatingData}
             district={
               { districtId: this.props.locality.district_id, state: this.props.locality.stateShort }

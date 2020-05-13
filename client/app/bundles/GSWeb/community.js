@@ -18,12 +18,12 @@ import DistanceLearning from 'react_components/community/distance_learning';
 import Finance from 'react_components/community/finance';
 import Mobility from 'react_components/community/mobility';
 import Zillow from 'react_components/community/zillow';
-import Ad from 'react_components/ad';
+import NewAd from 'react_components/new_ad';
 import commonPageInit from './common';
 import { enableAutoAnchoring, initAnchorHashUpdater } from 'components/anchor_router';
 import { scrollToElement } from 'util/scrolling';
 import { keepInViewport, isScrolledInViewport } from 'util/viewport';
-import { init as initAdvertising } from 'util/advertising';
+import { init as initAdvertising } from 'util/new_advertising';
 import { throttle } from 'lodash';
 
 const TopSchoolsStatefulWrapper = withViewportSize({ propName: 'size' })(TopSchoolsStateful);
@@ -31,8 +31,7 @@ const CsaTopSchoolsWrapper = withViewportSize({ propName: 'size' })(CsaTopSchool
 const SchoolBrowseLinksWrapper = withViewportSize({ propName: 'size' })(SchoolBrowseLinks);
 const AcademicsDataModuleWrapper = withViewportSize({ propName: 'size' })(AcademicsDataModule);
 const TeachersStaffWrapper = withViewportSize({ propName: 'size' })(TeachersStaff);
-const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
-
+const AdWrapper = withViewportSize({ propName: 'size' })(NewAd);
 
 ReactOnRails.register({
   District,
@@ -58,6 +57,7 @@ ReactOnRails.register({
 
 $(() => {
   commonPageInit();
+
   // Todo animations like slidedown are tough to implement in vanilla javascript so leaving here
   //  until we figure out what to do with these
   $('body').on('click', '.js-test-score-details', function () {
@@ -114,6 +114,7 @@ $(() => {
   window.onscroll = throttle(function () {
     tocSelect();
   }, 100);
+
   initAdvertising();
 
   initAnchorHashUpdater();

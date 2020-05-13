@@ -23,8 +23,7 @@
         <%# First Ad %>
         <div class="display-mobile">
           <%= react_component("AdWrapper", props: {
-              slot: "citypagemobile_first",
-              sizeName: "thin_banner_mobile"
+              slot: "greatschools_citypagemobile_first"
           }) %>
         </div>
 
@@ -56,8 +55,7 @@
         <%# Second Ad %>
         <div id="second-ad">
           <%= react_component("AdWrapper", props: {
-              slot: "citypage_second",
-              sizeName: "box"
+              slot: "greatschools_citypage_second"
           }) %>
         </div>
 
@@ -125,7 +123,7 @@
           </div>
         <% end %>
 
-      </div><%= render 'community/sticky_right_rail', ad_slot_name: "citypage_first" %>
+      </div><%= render 'community/sticky_right_rail', ad_slot_name: "greatschools_citypage_first" %>
     </div>
   </div>
 </div>
