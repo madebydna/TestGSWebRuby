@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { find as findSchools, addSchool, deleteSchool, logSchool } from 'api_clients/schools';
 import { legacyUrlEncode } from 'util/uri';
-import { showAdByName as refreshAd } from 'util/advertising';
+import { showAd as refreshAd } from 'util/new_advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray } from 'lodash';
 import { compose, curry } from 'lodash/fp';
@@ -241,7 +241,7 @@ class SearchProvider extends React.Component {
   updateSavedSchoolsCookie(schoolKey) {
     const savedSchools = getSavedSchoolsFromCookie();
     const schoolKeyIdx = this.savedSchoolsFindIndex(schoolKey);
-    let removeSchool = schoolKeyIdx > -1; 
+    let removeSchool = schoolKeyIdx > -1;
     removeSchool ? savedSchools.splice(schoolKeyIdx, 1) : savedSchools.push(schoolKey);
     let locationKey = `${this.props.layout}-${this.props.view}`
     logSchool(schoolKey, (removeSchool ? 'remove' : 'add'), locationKey)
@@ -321,7 +321,7 @@ class SearchProvider extends React.Component {
         {
           adRefreshed: true
         },
-        () => refreshAd('Search_160x600')
+        () => refreshAd('greatschools_Search_160x600', 1)
       );
     }
   }

@@ -7,13 +7,13 @@
   <% id_counter ||= '' # If multiple ads with the same slot name appear on a page %>
 
   <% unless defined?(show_ad_text) %>
-      <% show_ad_text = true %>
+    <% show_ad_text = true %>
   <% end %>
   <% unless defined?(close_button) %>
-      <% close_button = false %>
+    <% close_button = false %>
   <% end %>
   <% unless defined?(defer) %>
-      <% defer = false %>
+    <% defer = false %>
   <% end %>
 
   <% slot_name = slot.to_s.gs_capitalize_words.gsub(' ', '_').to_sym %>

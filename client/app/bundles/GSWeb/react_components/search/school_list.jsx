@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Ad from "react_components/ad";
+import NewAd from "react_components/new_ad";
 import School from "./school";
 import LoadingOverlay from "./loading_overlay";
 import { SM } from "util/viewport";
 import { t, capitalize } from '../../util/i18n';
 import ModalTooltip from "../modal_tooltip";
-import { links } from 'components/links'; 
-import { checkSponsorSearchResult } from '../../util/advertising';
+import { links } from 'components/links';
+import { checkSponsorSearchResult } from '../../util/new_advertising';
 
-const content = 
+const content =
   <span>
     <span>{t('sponsored_tooltip_blurb')}</span>
     <span> <a href={links.sponsoredSchools} target='_blank'>{t('top_schools.learn_more')}</a></span>
@@ -25,7 +25,7 @@ const renderSponsorSearchResultAd = () =>(
         </ModalTooltip>
       </span>
     </div>
-    <Ad slot="search_sponsoredlisting" sizeName="search_result_item" />
+    <NewAd slot="greatschools_Search_sponsoredlisting" />
   </li>
 );
 
@@ -54,16 +54,15 @@ const SchoolList = ({
       <ol className={isLoading ? "loading" : ""}>
         {schools.map((s, index) => {
           if (s.assigned === null) { indexOfNonAssignedSchools++; }
-          const shouldRenderSponsorSchoolAdOnMobileWithAssignedSchools = hasAssignedSchools && indexOfNonAssignedSchools === 1 && size <= SM && schools.length >= 8; 
-          const shouldRenderSponsorSchoolAdOnMobile = !hasAssignedSchools && indexOfNonAssignedSchools === 2 && size <= SM && schools.length >= 8; 
+          const shouldRenderSponsorSchoolAdOnMobileWithAssignedSchools = hasAssignedSchools && indexOfNonAssignedSchools === 1 && size <= SM && schools.length >= 8;
+          const shouldRenderSponsorSchoolAdOnMobile = !hasAssignedSchools && indexOfNonAssignedSchools === 2 && size <= SM && schools.length >= 8;
           const shouldRenderSponsorSchoolAdOnDesktop = indexOfNonAssignedSchools === 3 && size > SM && schools.length >= 8;
           return(
             <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
               {!shouldRemoveAds && index > 0 &&
                 index % 4 === 0 && (
-                  <Ad
-                    slot={`Search_After${index}_300x250`}
-                    sizeName="box"
+                  <NewAd
+                    slot={`greatschools_Search_after${index}_300x250`}
                     slotOccurrenceNumber={index / 4}
                     key={`ad-${index}`}
                     container={<li className="ad" />}
@@ -98,9 +97,8 @@ const SchoolList = ({
         }
         )}
         {!shouldRemoveAds && (schools.length < 5 && schools.length > 0) && (
-          <Ad
-            slot={`Search_After4_300x250`}
-            sizeName="box"
+          <NewAd
+            slot={`greatschools_Search_after4_300x250`}
             slotOccurrenceNumber={1}
             key={`ad-${schools.length + 1}`}
             container={<li className="ad" />}

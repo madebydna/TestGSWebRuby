@@ -1,4 +1,4 @@
-import { showAd, enableAdCloseButtons } from 'util/advertising';
+import { showAd, enableAdCloseButtons } from 'util/new_advertising';
 import { onScroll } from 'util/scrolling';
 
 const adDomId = 'Mobile_overlay_Ad';

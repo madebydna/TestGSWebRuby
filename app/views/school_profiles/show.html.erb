@@ -27,7 +27,8 @@
         <div>
           <div id="js-ctaShow"></div>
         </div>
-        <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
+        <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_First', id_counter: 2 %>
+        <%#= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
                    width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
 
         <a class="anchor-mobile-offset" name="Academics"></a>
@@ -39,7 +40,8 @@
                 <%= t('school_profiles.toc.ACADEMICS') %>
               </h2>
               <div class="left-rail-jumpy-ad" style="position: fixed; width: 175px; height: 205px; padding-bottom: 30px">
-                <%= render 'shared/ad', slot: 'Profiles_175x175', width: 175, height: 175, css_class: 'hidden-xs visible-lg', id_counter: 1, show_ad_text: false %>
+                <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_175x175', css_class: 'hidden-xs visible-lg', show_ad_text: false %>
+                <%#= render 'shared/ad', slot: 'Profiles_175x175', width: 175, height: 175, css_class: 'hidden-xs visible-lg', id_counter: 1, show_ad_text: false %>
               </div>
             </div>
             <div class="col-xs-12 col-lg-9">
@@ -60,10 +62,10 @@
               </div>
 
               <%# NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
-                If a school is in a SP state and is a elementary(E) or middle (M) school, it will display the StudentProgress module 
+                If a school is in a SP state and is a elementary(E) or middle (M) school, it will display the StudentProgress module
                 If a school is in a SP state and is a high(H) school, it will check to see if any other H schools have this rating to display
                 the module or not
-                If a school is in a AP state and is a elementary(E) or middle (M) school, it will display the AcademicProgress module 
+                If a school is in a AP state and is a elementary(E) or middle (M) school, it will display the AcademicProgress module
                 If a school is in a AP state and is a high(H) school, it will check to see if any other H schools have this rating to display
                 the module or not
                 If a school is in a state with NEITHER AP or SP it will display NOTHING
@@ -92,7 +94,8 @@
           </div>
         </div>
 
-        <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'wide_or_box',
+        <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Second', css_class: 'mbl' %>
+        <%#= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'wide_or_box',
                    width: 320, height: 50, css_class: 'mbl' %>
         <div>
           <%= render 'equity', equity: @school_profile.equity, equity_overview: @school_profile.equity_overview %>
@@ -126,7 +129,8 @@
           </div>
         </div>
 
-        <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
+        <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Third', css_class: 'mbl' %>
+        <%#= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
                    width: 320, height: 50, css_class: 'mbl' %>
 
         <div class="profile-section">
@@ -144,7 +148,8 @@
     </div>
 
     <div class="profile-section">
-      <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
+      <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Fourth', css_class: 'mbl' %>
+      <%#= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
                width: 320, height: 50, css_class: 'mbl' %>
     </div>
     <a name="Neighborhood" id="Neighborhood"></a>
@@ -162,8 +167,8 @@
       <%= render 'nearby_schools', nearby_schools: @school_profile.nearby_schools %>
     </div>
 
-    <%= render 'shared/bottom_mobile_ad' %>
+    <%#= render 'shared/bottom_mobile_ad' %>
 </div>
 
-<%= react_component('ProfileInterstitialAd') %>
+<%#= react_component('ProfileInterstitialAd') %>
 <%= react_component('SearchBoxWrapper') %>

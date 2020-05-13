@@ -11,11 +11,11 @@ import CsaInfo from './csa_info';
 import DistrictsInCity from "./districts_in_city";
 import RecentReviews from "./recent_reviews";
 import Mobility from "./mobility";
-import { init as initAdvertising } from 'util/advertising';
+import { init as initAdvertising } from 'util/new_advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import Toc from './toc';
-import { schoolsTocItem, schoolDistrictsTocItem, 
-  SCHOOL_DISTRICTS, communityResourcesTocItem, 
+import { schoolsTocItem, schoolDistrictsTocItem,
+  SCHOOL_DISTRICTS, communityResourcesTocItem,
   nearbyHomesForSaleTocItem, reviewsTocItem, REVIEWS,
   neighboringCitiesTocItem, NEIGHBORING_CITIES } from './toc_config';
 import withViewportSize from 'react_components/with_viewport_size';
@@ -32,7 +32,7 @@ class City extends React.Component {
     breadcrumbs: [],
     districts: [],
     reviews: [],
-    csa_module: false, 
+    csa_module: false,
     neighboring_cities: []
   };
 
@@ -141,7 +141,7 @@ class City extends React.Component {
         }
         shouldDisplayCsaInfo={this.props.schools_data.schools.csa.length === 0 && this.props.csa_module}
         csaInfo={
-          <CsaInfo 
+          <CsaInfo
             community={this.pageType}
             locality={this.props.locality}
           />

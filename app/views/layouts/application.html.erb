@@ -15,18 +15,36 @@
   <% end %>
   <%= display_meta_tags %>
 
+  <!-- DNS prefetches -->
   <%= render 'layouts/common_prefetches' %>
 
   <%= yield :page_stylesheets %>
 
+  <!-- Font assets -->
   <%= render 'layouts/preloads' %>
 
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <!-- Stylesheets -->
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "print",       media: "print" %>
 
-  <%= stylesheet_link_tag    "print",       media: "print" %>
-
+  <!-- Javascripts -->
   <% # must come before commons-blocking %>
   <%= include_gon %>
+
+  <script type="text/javascript">
+    var freestar = freestar || {};
+    freestar.hitTime = Date.now();
+    freestar.queue = freestar.queue || [];
+    freestar.config = freestar.config || {};
+    freestar.debug = window.location.search.indexOf('fsdebug') === -1 ? false : true;
+    freestar.config.enabled_slots = [];
+    if (gon.advertising_enabled) {
+      !function(a,b){var c=b.getElementsByTagName("script")[0],d=b.createElement("script"),e="https://a.pub.network/greatschools-org";e+=freestar.debug?"/qa/pubfig.min.js":"/pubfig.min.js",d.async=!0,d.src=e,c.parentNode.insertBefore(d,c)}(window,document);
+    }
+    freestar.initCallback = () => {
+      (freestar.config.enabled_slots.length === 0) ? freestar.initCallbackCalled = false : freestar.newAdSlots(freestar.config.enabled_slots);
+    }
+  </script>
 
   <%= webpack_javascript_include_tag("commons-blocking", "data-turbolinks-track" => true) %>
   <%= webpack_javascript_include_tag("commons-blocking-loader", "data-turbolinks-track" => true) %>

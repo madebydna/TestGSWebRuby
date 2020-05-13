@@ -1,0 +1,182 @@
+import { capitalize } from 'util/i18n';
+
+const $ = window.jQuery;
+const advertising_enabled = gon.advertising_enabled;
+
+window.GS = window.GS || {};
+GS.ad = GS.ad || {};
+GS.ad.slot = GS.ad.slot || {};
+GS.ad.slotsShownCounts = GS.ad.slotsShownCounts || {};
+const slotCallbacks = GS.ad.slot;
+const slotsShownCounts = GS.ad.slotsShownCounts;
+const slotTimers = {};
+
+let initialized = false;
+const onInitializeFuncs = [];
+
+const init = function() {
+  if (advertising_enabled) {
+    console.log('NEW AD ... freestar defined', freestar);
+    _setPageLevelTargeting();
+
+    const dfp_slots = $('.gs_ad_slot').filter(':visible,[data-ad-defer-render]');
+    $(dfp_slots).each(function() {
+      _defineSlot($(this));
+    });
+    console.log("Num enabled slots", freestar.config.enabled_slots.length);
+
+    // custom initialization functions
+    while (onInitializeFuncs.length > 0) {
+      onInitializeFuncs.shift()();
+    }
+
+    console.log('NEW AD ... enabled slots after custom init functions', freestar.config.enabled_slots.length);
+
+    freestar.initCallback();
+    console.log('SLOT-ID ... calling init function')
+    // loop through slots and call callback
+    $.each(freestar.config.enabled_slots, (_, slot) => {
+      if (slotCallbacks[slot.placementName]) slotCallbacks[slot.placementName]();
+      slotsShownCounts[slot.placementName] = 1;
+      slotTimers[slot.placementName] = new Date().getTime();
+    });
+
+    initialized = true;
+  }
+}
+
+const onInitialize = func =>
+  initialized ? func() : onInitializeFuncs.push(func);
+
+const _defineSlot = function($adSlot) {
+  freestar.config.enabled_slots.push({ placementName: $adSlot.data('slotid'), slotId: $adSlot.attr('id') });
+};
+
+const defineAdOnce = function(slot, slotOccurrenceNumber, onRenderEnded) {
+  // let visible = $(`#${slotId}`).filter(':visible').length;
+  // console.log('NEW AD ... slot is visible: ', slotId, visible);
+  // if (visible != 0) {
+  //   console.log('NEW AD ... adding slot to enabled slots ', slotId);
+  //   freestar.config.enabled_slots.push({ placementName: slotId, slotId });
+  //   slot[slotId] = callback;
+  // }
+  freestar.config.enabled_slots.push({ placementName: slot, slotId: slotIdFromName(slot, slotOccurrenceNumber) });
+  slotCallbacks[slot] = onRenderEnded;
+};
+
+const adsInitialized = function() {
+  return initialized;
+}
+
+const _setPageLevelTargeting = function() {
+  // being set in localized_profile_controller - ad_setTargeting_through_gon
+  // sets all targeting based on what is set in the controller
+  if ($.isEmptyObject(gon.ad_set_targeting)) {
+    if ($.isEmptyObject(GS.ad.adSetTargeting)) {
+      console.log('gon setTargeting and GS.ad.adSetTargeting are empty for advertising');
+    } else {
+      // This is for WordPress which uses GS.ad.adSetTargeting (not having access to gon)
+      $.each(GS.ad.adSetTargeting, (key, value) => {
+        freestar.queue.push(function() {
+          googletag.pubads().setTargeting(key, value);
+        });
+      });
+    }
+  } else {
+    $.each(gon.ad_set_targeting, (key, value) => {
+      freestar.queue.push(function() {
+        googletag.pubads().setTargeting(key, value);
+      });
+    });
+  }
+};
+
+const slotIdFromName = (slot, slotOccurrenceNumber = 1) => {
+  // console.log('SLOT-ID', slot, slotOccurrenceNumber, slotsShownCounts[slot]);
+  return `${slot}_${slotOccurrenceNumber}_${slotsShownCounts[slot] || 1}`;
+};
+
+function checkSponsorSearchResult() {
+  setTimeout(()=>{
+    const searchResult = document.querySelector('.sponsored-school-result-ad')
+    let adLoaded = true;
+    if (searchResult){
+      searchResult.querySelectorAll('div').forEach(node => {
+        if (node.classList.contains('dn')){
+          adLoaded = false;
+        }
+      })
+      if (adLoaded){
+        searchResult.classList.remove('dn');
+      }
+    }
+  }, 2000)
+}
+
+const showAdByName = function(name, slotOccurrenceNumber) {
+  slotsShownCounts[name] = slotsShownCounts[name] + 1;
+  showAd(name, slotIdFromName(name, slotOccurrenceNumber));
+};
+
+const showAd = function(slot, slotOccurrenceNumber) {
+  const lastRefreshedTime = slotTimers[slot];
+  console.log("NEW AD ... last refreshed time", slot, lastRefreshedTime);
+  if (
+    lastRefreshedTime === undefined ||
+    new Date().getTime() - lastRefreshedTime >= 1000
+  ) {
+    slotsShownCounts[slot] = slotsShownCounts[slot] + 1;
+    let divId = slotIdFromName(slot, slotOccurrenceNumber);
+    console.log("NEW AD ... refreshing ad", slot, divId);
+    slotTimers[slot] = new Date().getTime();
+    freestar.newAdSlots([{
+      placementName: slot,
+      slotId: divId
+    }]);
+    if (slotCallbacks[slot]) slotCallbacks[slot]();
+  } else {
+    console.log("NEW AD ... NOT refreshing not enough time passed", slot);
+  }
+};
+
+const destroyAdByName = function(name) {
+  destroyAd(name);
+};
+
+const destroyAd = (slot) => {
+  console.log("NEW AD ... destroying ad", slot);
+  freestar.deleteAdSlots(slot);
+};
+
+// --- BELOW NOT USED BUT RETAINED TO AVOID BREAKING CODE DURING TRANSITION
+
+function enableAdCloseButtons() {
+  $('.js-closable-ad').on('click', '.close', function(element) {
+    $(this)
+      .closest('.js-closable-ad')
+      .remove();
+  });
+}
+
+const addCompfilterToGlobalAdTargetingGon = function() {
+  const randomCompFilterValue = (Math.floor(Math.random() * 4) + 1).toString();
+  if (!gon.ad_set_targeting) {
+    gon.ad_set_targeting = {};
+  }
+  gon.ad_set_targeting.compfilter = randomCompFilterValue;
+};
+
+GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
+
+export {
+  init,
+  onInitialize,
+  showAdByName,
+  destroyAdByName,
+  slotIdFromName,
+  defineAdOnce,
+  enableAdCloseButtons,
+  showAd,
+  checkSponsorSearchResult,
+  adsInitialized
+};

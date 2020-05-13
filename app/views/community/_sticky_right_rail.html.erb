@@ -1,6 +1,7 @@
 <div class="ad-bar sticky display-desktop">
+  <%#= render 'shared/new_ad', slotId: ad_slot_name, css_class: 'js-ad-hook' %>
+
   <%= react_component("AdWrapper", props: {
-      slot: ad_slot_name,
-      sizeName: "box_or_tall"
+      slot: ad_slot_name
   }) %>
 </div>
