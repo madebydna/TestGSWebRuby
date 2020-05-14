@@ -31,9 +31,9 @@ const init = function() {
     console.log('NEW AD ... enabled slots after custom init functions', freestar.config.enabled_slots.length);
 
     freestar.initCallback();
-    console.log('SLOT-ID ... calling init function')
     // loop through slots and call callback
     $.each(freestar.config.enabled_slots, (_, slot) => {
+      console.log('NEW AD ... showing', slot.placementName, 'for the first time');
       if (slotCallbacks[slot.placementName]) slotCallbacks[slot.placementName]();
       slotsShownCounts[slot.placementName] = 1;
       slotTimers[slot.placementName] = new Date().getTime();
@@ -133,6 +133,32 @@ const destroyAd = (slot) => {
   freestar.deleteAdSlots(slot);
 };
 
+// function to add targeted styles to an ad. Will attempt for ten seconds, otherwise it will cease running
+// selector is a STRING with sthe selector you are using to target
+// dimension is an array of the dimensions you are targeting e.g. [WIDTH, HEIGHT]
+// styling is an string of key-values pairs delimited by `;`
+const applyStylingToIFrameAd = (selector, dimension, styling, counter = 0 ) => {
+  if (window.innerWidth < 1200 || counter > MAX_COUNTER){ return; }
+  const adElement = document.querySelector(selector);
+  let adElementIframe;
+  if (adElement) {
+    adElementIframe = adElement.querySelector('iframe');
+  }
+
+  if (adElement && adElementIframe) {
+    if (adElementIframe.dataset.loadComplete === "true") {
+      const width = String(dimension[0]);
+      const height = String(dimension[1]);
+      if (adElementIframe.width === width && adElementIframe.height === height) {
+        adElement.style.cssText = styling;
+        return;
+        }
+      }
+    }
+
+  setTimeout(() => applyStylingToIFrameAd(selector, dimension, styling, counter++), DELAY_IN_MS)
+}
+
 // --- BELOW NOT USED BUT RETAINED TO AVOID BREAKING CODE DURING TRANSITION
 
 function enableAdCloseButtons() {
@@ -152,6 +178,7 @@ const addCompfilterToGlobalAdTargetingGon = function() {
 };
 
 GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
+GS.ad.showAd = showAd;
 
 export {
   init,
@@ -162,5 +189,6 @@ export {
   enableAdCloseButtons,
   showAd,
   checkSponsorSearchResult,
-  adsInitialized
+  adsInitialized,
+  applyStylingToIFrameAd
 };
