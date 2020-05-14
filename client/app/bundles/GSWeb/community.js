@@ -1,6 +1,4 @@
 import ReactOnRails from "react-on-rails";
-import District from "./react_components/community/district";
-import City from "./react_components/community/city";
 import SearchBoxWrapper from 'react_components/search_box_wrapper';
 import withViewportSize from 'react_components/with_viewport_size';
 import TopSchoolsStateful from 'react_components/community/top_schools_stateful';
@@ -34,8 +32,6 @@ const TeachersStaffWrapper = withViewportSize({ propName: 'size' })(TeachersStaf
 const AdWrapper = withViewportSize({ propName: 'size' })(NewAd);
 
 ReactOnRails.register({
-  District,
-  City,
   SearchBoxWrapper,
   TopSchoolsStatefulWrapper,
   CsaTopSchoolsWrapper,
