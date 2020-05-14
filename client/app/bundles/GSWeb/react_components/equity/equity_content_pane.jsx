@@ -19,6 +19,7 @@ export default class EquityContentPane extends React.Component {
 
   // Column header labels (i.e. 'Students', '% Proficient') will be added to every pane unless included in this
   // blacklist, which references anchor props.
+  // 'main' tab is used as a dummy subtab for modules in which some tabs have subtabs and some do not
   hasColumnHeader() {
     return [
         'Overview',
@@ -32,6 +33,9 @@ export default class EquityContentPane extends React.Component {
         'Percentage of students chronically absent (15+ days)',
         'Percentage of students enrolled in Dual Enrollment classes grade 9-12',
         'Percentage of students enrolled in IB grades 9-12',
+        'Learning',
+        'Planning',
+        'main',
         undefined
     ].indexOf(this.props.anchor) === -1;
   }

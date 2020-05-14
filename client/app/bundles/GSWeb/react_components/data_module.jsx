@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import BarGraphBase from 'react_components/equity/graphs/bar_graph_base';
 import TestScores from 'react_components/equity/graphs/test_scores';
 import PersonBar from 'react_components/visualizations/person_bar';
+import Circle from 'react_components/visualizations/circle';
 import BasicDataModuleRow from 'react_components/school_profiles/basic_data_module_row';
 import PlainNumber from 'react_components/equity/graphs/plain_number';
 import RatingWithBar from 'react_components/equity/graphs/rating_with_bar';
@@ -30,7 +31,6 @@ export default class DataModule extends React.Component {
     anchor: PropTypes.string,
     subtitle:  PropTypes.string,
     info_text: PropTypes.string,
-    icon_classes: PropTypes.string,
     sources: PropTypes.string,
     share_content: PropTypes.string,
     rating: PropTypes.number,
@@ -173,11 +173,18 @@ export default class DataModule extends React.Component {
             }
           </div>
         } else if (display_type == 'person_gray') {
-
           component = <div>
             {values.map((value, index) =>
               <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                 <PersonBar {...value} use_gray={true}/>
+              </BasicDataModuleRow>)
+            }
+          </div>
+        } else if (display_type == 'circle') {
+          component = <div>
+            {values.map((value, index) =>
+              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                <Circle {...value}/>
               </BasicDataModuleRow>)
             }
           </div>
@@ -250,9 +257,13 @@ export default class DataModule extends React.Component {
       let circleClassName = 'circle-rating--medium circle-rating--'+rating;
       rating_html = <div className={circleClassName}>{rating}<span className="rating-circle-small">/10</span></div>;
     }
-    else{
-      let circleClassName = 'circle-rating--equity-blue';
-      rating_html = <div className={circleClassName}><span className={this.props.icon_classes}></span></div>;
+    else {
+      if (typeof this.props.icon_classes === 'string') {
+        let circleClassName = 'circle-rating--equity-blue';
+        rating_html = <div className={circleClassName}><span className={this.props.icon_classes}></span></div>;
+      } else {
+        rating_html = this.props.icon_classes;
+      }
     }
     return rating_html
   }
@@ -272,8 +283,13 @@ export default class DataModule extends React.Component {
 
     // if `item.title` is undefined, then the pane buttons will not appear
     let subTabs = dataForActiveTab.data.map((item, index) => {
+      let additionalClasses = '';
+      if (item.title === null) {
+        additionalClasses = 'dn';
+      }
+
       let anchorLink = formatAndJoinAnchors(this.props.anchor, dataForActiveTab.anchor, item.anchor)
-      return <ModuleSubTab {...item} key={index} anchorLink={anchorLink} pageType={this.props.pageType} />
+      return <ModuleSubTab {...item} key={index} anchorLink={anchorLink} pageType={this.props.pageType} additionalClasses={additionalClasses} />
     });
 
     let subNav = <SectionSubNavigation key={this.state.active}>
@@ -301,7 +317,7 @@ export default class DataModule extends React.Component {
             panes={subPanes}
           />
         </div>
-        <InfoTextAndCircle {...this.props.faq} />
+        {this.props.faq && <InfoTextAndCircle {...this.props.faq} />}
       </div>
     )
   }

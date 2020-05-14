@@ -35,70 +35,117 @@ module CommunityProfiles::DistanceLearningConfig
     TECHNOLOGY
   ]
 
+  # Tabs
+  TEACHING = "Teaching"
+  RESOURCES = "Resources"
+  POLICIES = "Policies"
+
+  # Policy Subtabs
+  LEARNING = "Learning"
+  PLANNING = "Planning"
+
+  ALL_TABS = [
+    TEACHING,
+    RESOURCES,
+    POLICIES
+  ]
+
   DATA_TYPES_CONFIGS = [
     {
       data_type: URL,
-      category: GENERAL
+      category: GENERAL,
+      tab: GENERAL,
+      subtab: 'main'
     },
     {
       data_type: OVERVIEW,
-      category: GENERAL
-    },
-    {
-      data_type: RESOURCES_PROVIDED_BY_THE_DISTRICT,
-      category: CURRICULUM
-    },
-    {
-      data_type: RESOURCE_COVERAGE,
-      category: CURRICULUM
+      category: GENERAL,
+      tab: GENERAL,
+      subtab: 'main'
     },
     {
       data_type: INSTRUCTION_FROM_TEACHERS,
-      category: INSTRUCTION
+      category: INSTRUCTION,
+      tab: TEACHING,
+      subtab: 'main'
     },
     {
       data_type: SYNCHRONOUS_TEACHING_FLAG,
-      category: INSTRUCTION
-    },
-    {
-      data_type: SYNCHRONOUS_STUDENT_ENGAGEMENT_FLAG,
-      category: INSTRUCTION
-    },
-    {
-      data_type: RESOURCES_FOR_STUDENTS_WITH_DISABILITIES,
-      category: INSTRUCTION
+      category: INSTRUCTION,
+      tab: TEACHING,
+      subtab: 'main'
     },
     {
       data_type: FEEDBACK_ON_STUDENT_WORK,
-      category: PROGRESS_MONITORING
-    },
-    {
-      data_type: FORMAL_GRADING_FLAG,
-      category: PROGRESS_MONITORING
+      category: PROGRESS_MONITORING,
+      tab: TEACHING,
+      subtab: 'main'
     },
     {
       data_type: TEACHER_CHECK_INS,
-      category: PROGRESS_MONITORING
+      category: PROGRESS_MONITORING,
+      tab: TEACHING,
+      subtab: 'main'
     },
     {
-      data_type: DISTRICT_DELEGATES_LEARNING,
-      category: CENTRALIZATION
-    },
-    {
-      data_type: ATTENDANCE_TRACKING,
-      category: LEARNING_TIME
-    },
-    {
-      data_type: INSTRUCTIONAL_MINUTES_RECOMMENDED,
-      category: LEARNING_TIME
+      data_type: SYNCHRONOUS_STUDENT_ENGAGEMENT_FLAG,
+      category: INSTRUCTION,
+      tab: TEACHING,
+      subtab: 'main'
     },
     {
       data_type: DEVICE_DISTRIBUTION,
-      category: TECHNOLOGY
+      category: TECHNOLOGY,
+      tab: RESOURCES,
+      subtab: 'main'
     },
     {
       data_type: HOTSPOT_ACCESS,
-      category: TECHNOLOGY
+      category: TECHNOLOGY,
+      tab: RESOURCES,
+      subtab: 'main'
+    },
+    {
+      data_type: RESOURCES_FOR_STUDENTS_WITH_DISABILITIES,
+      category: INSTRUCTION,
+      tab: RESOURCES,
+      subtab: 'main'
+    },
+    {
+      data_type: RESOURCES_PROVIDED_BY_THE_DISTRICT,
+      category: CURRICULUM,
+      tab: POLICIES,
+      subtab: LEARNING
+    },
+    {
+      data_type: RESOURCE_COVERAGE,
+      category: CURRICULUM,
+      tab: POLICIES,
+      subtab: LEARNING
+    },
+    {
+      data_type: INSTRUCTIONAL_MINUTES_RECOMMENDED,
+      category: LEARNING_TIME,
+      tab: POLICIES,
+      subtab: LEARNING
+    },
+    {
+      data_type: FORMAL_GRADING_FLAG,
+      category: PROGRESS_MONITORING,
+      tab: POLICIES,
+      subtab: LEARNING
+    },
+    {
+      data_type: ATTENDANCE_TRACKING,
+      category: LEARNING_TIME,
+      tab: POLICIES,
+      subtab: LEARNING
+    },
+    {
+      data_type: DISTRICT_DELEGATES_LEARNING,
+      category: CENTRALIZATION,
+      tab: POLICIES,
+      subtab: LEARNING
     },
   ]
 end

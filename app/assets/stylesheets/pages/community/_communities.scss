@@ -700,6 +700,16 @@ $line-height-community: 1.428571429;
   }
 }
 
+#distance-learning {
+  margin-bottom: 20px;
+  .profile-module {border: none}
+
+  .module-icon {
+    float: left;
+    display: inline-block;
+  }
+}
+
 #advanced_courses {
   .profile-module {border: none}
 }
