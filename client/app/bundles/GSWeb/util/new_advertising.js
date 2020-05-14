@@ -1,5 +1,3 @@
-import { capitalize } from 'util/i18n';
-
 const $ = window.jQuery;
 const advertising_enabled = gon.advertising_enabled;
 
@@ -53,13 +51,6 @@ const _defineSlot = function($adSlot) {
 };
 
 const defineAdOnce = function(slot, slotOccurrenceNumber, onRenderEnded) {
-  // let visible = $(`#${slotId}`).filter(':visible').length;
-  // console.log('NEW AD ... slot is visible: ', slotId, visible);
-  // if (visible != 0) {
-  //   console.log('NEW AD ... adding slot to enabled slots ', slotId);
-  //   freestar.config.enabled_slots.push({ placementName: slotId, slotId });
-  //   slot[slotId] = callback;
-  // }
   freestar.config.enabled_slots.push({ placementName: slot, slotId: slotIdFromName(slot, slotOccurrenceNumber) });
   slotCallbacks[slot] = onRenderEnded;
 };
@@ -92,7 +83,6 @@ const _setPageLevelTargeting = function() {
 };
 
 const slotIdFromName = (slot, slotOccurrenceNumber = 1) => {
-  // console.log('SLOT-ID', slot, slotOccurrenceNumber, slotsShownCounts[slot]);
   return `${slot}_${slotOccurrenceNumber}_${slotsShownCounts[slot] || 1}`;
 };
 
@@ -113,12 +103,7 @@ function checkSponsorSearchResult() {
   }, 2000)
 }
 
-const showAdByName = function(name, slotOccurrenceNumber) {
-  slotsShownCounts[name] = slotsShownCounts[name] + 1;
-  showAd(name, slotIdFromName(name, slotOccurrenceNumber));
-};
-
-const showAd = function(slot, slotOccurrenceNumber) {
+const showAd = function(slot, slotOccurrenceNumber, onRenderEnded = null) {
   const lastRefreshedTime = slotTimers[slot];
   console.log("NEW AD ... last refreshed time", slot, lastRefreshedTime);
   if (
@@ -133,7 +118,7 @@ const showAd = function(slot, slotOccurrenceNumber) {
       placementName: slot,
       slotId: divId
     }]);
-    if (slotCallbacks[slot]) slotCallbacks[slot]();
+    if (onRenderEnded) onRenderEnded();
   } else {
     console.log("NEW AD ... NOT refreshing not enough time passed", slot);
   }
@@ -171,7 +156,6 @@ GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
 export {
   init,
   onInitialize,
-  showAdByName,
   destroyAdByName,
   slotIdFromName,
   defineAdOnce,

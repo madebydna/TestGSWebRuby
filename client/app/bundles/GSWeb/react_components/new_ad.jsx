@@ -9,13 +9,7 @@ import {
   slotIdFromName,
   showAd
 } from 'util/new_advertising.js';
-// import {
-//   defineAdOnce,
-//   showAdByName as showAd,
-//   destroyAdByName as destroyAd,
-//   onInitialize as onAdvertisingInitialize,
-//   slotIdFromName
-// } from 'util/advertising.js';
+
 import { CSSTransition } from 'react-transition-group';
 
 class NewAd extends React.Component {
@@ -38,26 +32,23 @@ class NewAd extends React.Component {
     transitionDuration: 1000
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      adRenderEnded: false,
-      adFilled: false
-    };
-    this.onAdRenderEnded = this.onAdRenderEnded.bind(this);
+  state = {
+    adRenderEnded: false,
+    adFilled: false
   }
 
   componentDidMount() {
+    this.onAdRenderEnded = this.onAdRenderEnded.bind(this);
     const {
       slot,
       defer,
       slotOccurrenceNumber
     } = this.props;
-    console.log('NEW AD ... ad component', slot, 'did mount');
+    console.log('NEW AD ... ad component', slot, 'did mount', this._isMounted);
 
     if (adsInitialized()) {
       console.log('NEW AD ... showing existing ad', slot);
-      showAd(slot, slotOccurrenceNumber);
+      showAd(slot, slotOccurrenceNumber, this.onAdRenderEnded);
     } else {
       console.log('NEW AD ... initializing', slot);
       onAdvertisingInitialize(() => {
@@ -72,7 +63,7 @@ class NewAd extends React.Component {
   }
 
   onAdRenderEnded() {
-    console.log('SLOT-ID ... onRenderEnded', this.props.slot);
+    console.log('NEW AD ... onRenderEnded', this.props.slot);
     this.setState(
       {
         adRenderEnded: true,
@@ -87,7 +78,6 @@ class NewAd extends React.Component {
   }
 
   shouldShowContainer = () => this.state.adRenderEnded && this.state.adFilled;
-
   render() {
     const { container, slot, slotOccurrenceNumber } = this.props;
     const givenContainerClassName = container.props.className;
