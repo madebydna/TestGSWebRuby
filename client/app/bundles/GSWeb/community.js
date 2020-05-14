@@ -14,6 +14,7 @@ import AcademicsDataModule from 'react_components/community/academics_data_modul
 import Students from 'react_components/community/students';
 import TeachersStaff from 'react_components/community/teachers_staff';
 import Calendar from 'react_components/community/calendar';
+import DistanceLearning from 'react_components/community/distance_learning';
 import Finance from 'react_components/community/finance';
 import Mobility from 'react_components/community/mobility';
 import Zillow from 'react_components/community/zillow';
@@ -51,7 +52,8 @@ ReactOnRails.register({
   Finance,
   Mobility,
   Zillow,
-  AdWrapper
+  AdWrapper,
+  DistanceLearning
 });
 
 $(() => {
@@ -110,7 +112,7 @@ $(() => {
   }
 
   window.onscroll = throttle(function () {
-    tocSelect()
+    tocSelect();
   }, 100);
   initAdvertising();
 

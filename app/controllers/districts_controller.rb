@@ -4,7 +4,7 @@ class DistrictsController < ApplicationController
   include PageAnalytics
   include CommunityConcerns
 
-  CACHE_KEYS_FOR_READER = %w(district_schools_summary metrics gsdata)
+  CACHE_KEYS_FOR_READER = %w(district_schools_summary metrics gsdata test_scores_gsdata crpe)
 
   layout 'application'
   before_filter :redirect_unless_valid_district
@@ -17,7 +17,8 @@ class DistrictsController < ApplicationController
       academic_progress: [:lib, :academic_progress, :javascript],
       student_progress: [:lib, :student_progress, :javascript],
       calendar: [:lib, :calendar],
-      top_schools: [:community, :top_schools]
+      top_schools: [:community, :top_schools],
+      distance_learning: [:community, :distance_learning]
     }
   )
 
@@ -43,6 +44,7 @@ class DistrictsController < ApplicationController
     @growth_rating = growth_rating
     @summary_rating = summary_rating
     @summary_type = summary_rating_type
+    @distance_learning = distance_learning
     @page_type = 'district'
     gon.homes_and_rentals_service_url = ENV_GLOBAL['homes_and_rentals_service_url']
     gon.dependencies = {
@@ -119,7 +121,7 @@ class DistrictsController < ApplicationController
   end
 
   def district_cache_data_reader
-    @_district_cache_data_reader ||= DistrictCacheDataReader.new(district_record, district_cache_keys: CACHE_KEYS_FOR_READER + ['test_scores_gsdata', 'gsdata'])
+    @_district_cache_data_reader ||= DistrictCacheDataReader.new(district_record, district_cache_keys: CACHE_KEYS_FOR_READER)
   end
 
   def state_cache_data_reader
@@ -144,6 +146,10 @@ class DistrictsController < ApplicationController
 
   def teachers_staff_data
     @_teachers_staff_data ||= CommunityProfiles::TeachersStaff.new(district_cache_data_reader).data_values
+  end
+
+  def distance_learning
+    @_distance_learning ||= CommunityProfiles::DistanceLearning.new(district_cache_data_reader).data_module
   end
 
   def finance

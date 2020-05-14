@@ -1,0 +1,104 @@
+module CommunityProfiles::DistanceLearningConfig
+  # Data Types
+  URL = 'URL'
+  OVERVIEW = "OVERVIEW"
+  RESOURCES_PROVIDED_BY_THE_DISTRICT = "RESOURCES PROVIDED BY THE DISTRICT"
+  RESOURCE_COVERAGE = "RESOURCE COVERAGE"
+  INSTRUCTION_FROM_TEACHERS = "INSTRUCTION FROM TEACHERS"
+  SYNCHRONOUS_TEACHING_FLAG = "SYNCHRONOUS TEACHING FLAG"
+  SYNCHRONOUS_STUDENT_ENGAGEMENT_FLAG = "SYNCHRONOUS STUDENT ENGAGEMENT FLAG"
+  RESOURCES_FOR_STUDENTS_WITH_DISABILITIES = "RESOURCES FOR STUDENTS WITH DISABILITIES"
+  FEEDBACK_ON_STUDENT_WORK = "FEEDBACK ON STUDENT WORK"
+  FORMAL_GRADING_FLAG = "FORMAL GRADING FLAG"
+  TEACHER_CHECK_INS = "TEACHER CHECK-INS"
+  ATTENDANCE_TRACKING = "ATTENDANCE TRACKING"
+  INSTRUCTIONAL_MINUTES_RECOMMENDED = "INSTRUCTIONAL MINUTES RECOMMENDED"
+  DEVICE_DISTRIBUTION = "DEVICE DISTRIBUTION"
+  HOTSPOT_ACCESS = "HOTSPOT ACCESS"
+  DISTRICT_DELEGATES_LEARNING = "DISTRICT DELEGATES DISTANCE LEARNING PLAN DECISION-MAKING"
+
+  # Categories
+  GENERAL = 'General' # used for general information
+  CURRICULUM = "Curriculum"
+  INSTRUCTION = "Instruction"
+  PROGRESS_MONITORING = "Progress Monitoring"
+  CENTRALIZATION = "Centralization"
+  LEARNING_TIME = "Learning Time"
+  TECHNOLOGY = "Technology"
+
+  ALL_CATEGORIES = [
+    CURRICULUM,
+    INSTRUCTION,
+    PROGRESS_MONITORING,
+    CENTRALIZATION,
+    LEARNING_TIME,
+    TECHNOLOGY
+  ]
+
+  DATA_TYPES_CONFIGS = [
+    {
+      data_type: URL,
+      category: GENERAL
+    },
+    {
+      data_type: OVERVIEW,
+      category: GENERAL
+    },
+    {
+      data_type: RESOURCES_PROVIDED_BY_THE_DISTRICT,
+      category: CURRICULUM
+    },
+    {
+      data_type: RESOURCE_COVERAGE,
+      category: CURRICULUM
+    },
+    {
+      data_type: INSTRUCTION_FROM_TEACHERS,
+      category: INSTRUCTION
+    },
+    {
+      data_type: SYNCHRONOUS_TEACHING_FLAG,
+      category: INSTRUCTION
+    },
+    {
+      data_type: SYNCHRONOUS_STUDENT_ENGAGEMENT_FLAG,
+      category: INSTRUCTION
+    },
+    {
+      data_type: RESOURCES_FOR_STUDENTS_WITH_DISABILITIES,
+      category: INSTRUCTION
+    },
+    {
+      data_type: FEEDBACK_ON_STUDENT_WORK,
+      category: PROGRESS_MONITORING
+    },
+    {
+      data_type: FORMAL_GRADING_FLAG,
+      category: PROGRESS_MONITORING
+    },
+    {
+      data_type: TEACHER_CHECK_INS,
+      category: PROGRESS_MONITORING
+    },
+    {
+      data_type: DISTRICT_DELEGATES_LEARNING,
+      category: CENTRALIZATION
+    },
+    {
+      data_type: ATTENDANCE_TRACKING,
+      category: LEARNING_TIME
+    },
+    {
+      data_type: INSTRUCTIONAL_MINUTES_RECOMMENDED,
+      category: LEARNING_TIME
+    },
+    {
+      data_type: DEVICE_DISTRIBUTION,
+      category: TECHNOLOGY
+    },
+    {
+      data_type: HOTSPOT_ACCESS,
+      category: TECHNOLOGY
+    },
+  ]
+end
