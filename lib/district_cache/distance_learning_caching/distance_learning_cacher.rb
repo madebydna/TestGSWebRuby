@@ -2,6 +2,10 @@
 class DistanceLearningCacher < DistrictCacher
   CACHE_KEY = 'crpe'
 
+  def self.listens_to?(data_type)
+    data_type == :crpe
+  end
+
   def build_hash_for_cache
     responses = CRPEData.by_district(district).active
     return unless responses.present?

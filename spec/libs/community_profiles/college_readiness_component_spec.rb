@@ -3,7 +3,7 @@ require "spec_helper"
 describe CommunityProfiles::CollegeReadinessComponent do
     let!(:district) { create(:district_record) }
     let(:cache_reader) {
-        DistrictCacheDataReader.new(district, district_cache_keys: ['metrics'])
+        DistrictCacheDataReader.new(district, district_cache_keys: ['metrics', 'gsdata'])
     }
     before do
         create(:district_cache, district_id: district.district_id, state: district.state.upcase,
