@@ -16,7 +16,7 @@ export function renderAd() {
   $(containerSelector).css('display', 'block');
   enableAdCloseButtons();
   if($('#' + adDomId).is(":visible")) {
-    showAd(adDomId);
+    showAd(adDomId, 1);
   } else {
     onAdNotFilled();
   }
