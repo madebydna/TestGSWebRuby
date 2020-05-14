@@ -9,7 +9,8 @@ const ModuleSubTab = ({
   highlight,
   anchorLink,
   onClick,
-  pageType
+  pageType,
+  additionalClasses
 }) => {
   let addJSHashUpdate = '';
   if (anchorLink.length > 0) {
@@ -31,7 +32,7 @@ const ModuleSubTab = ({
       onClick={onClick}
       className={`sub-nav-item js-gaClick${addJSHashUpdate}${
         highlight ? ' sub-tab-selected' : ''
-      }`}
+      } ${additionalClasses}`}
       data-ga-click-category={gaCategory}
       data-ga-click-action={gaAction}
       data-ga-click-label={title}
@@ -43,7 +44,7 @@ const ModuleSubTab = ({
 };
 
 ModuleSubTab.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   google_tracking: PropTypes.string,
   flagged: PropTypes.bool,
   anchorLink: PropTypes.string,
