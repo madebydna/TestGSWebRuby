@@ -18,7 +18,7 @@ describe CRPEData do
     end
   end
 
-  context '#by_district' do
+  describe '#by_district' do
     it 'should return the correct data set' do
       expect(CRPEData.by_district(district)).to eq([crpe_data])
     end
@@ -28,8 +28,8 @@ describe CRPEData do
     end
   end
 
-  context '#active' do
-    it 'should return the correct data set' do
+  describe '#active' do
+    it 'return active data set' do
       expect(CRPEData.active).to include(crpe_data, state_crpe_data)
     end
 
