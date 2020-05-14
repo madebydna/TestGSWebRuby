@@ -60,7 +60,7 @@ const SchoolList = ({
           return(
             <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
               {!shouldRemoveAds && index > 0 &&
-                index % 4 === 0 && (
+                index % 4 === 0 && index < 24 && (
                   <NewAd
                     slot={`greatschools_Search_after${index}_300x250`}
                     slotOccurrenceNumber={index / 4}
