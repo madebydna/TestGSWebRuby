@@ -64,18 +64,6 @@ module CommunityProfiles::DistanceLearningConfig
       subtab: 'main'
     },
     {
-      data_type: RESOURCES_PROVIDED_BY_THE_DISTRICT,
-      category: CURRICULUM,
-      tab: POLICIES,
-      subtab: LEARNING
-    },
-    {
-      data_type: RESOURCE_COVERAGE,
-      category: CURRICULUM,
-      tab: POLICIES,
-      subtab: LEARNING
-    },
-    {
       data_type: INSTRUCTION_FROM_TEACHERS,
       category: INSTRUCTION,
       tab: TEACHING,
@@ -88,28 +76,10 @@ module CommunityProfiles::DistanceLearningConfig
       subtab: 'main'
     },
     {
-      data_type: SYNCHRONOUS_STUDENT_ENGAGEMENT_FLAG,
-      category: INSTRUCTION,
-      tab: TEACHING,
-      subtab: 'main'
-    },
-    {
-      data_type: RESOURCES_FOR_STUDENTS_WITH_DISABILITIES,
-      category: INSTRUCTION,
-      tab: RESOURCES,
-      subtab: 'main'
-    },
-    {
       data_type: FEEDBACK_ON_STUDENT_WORK,
       category: PROGRESS_MONITORING,
       tab: TEACHING,
       subtab: 'main'
-    },
-    {
-      data_type: FORMAL_GRADING_FLAG,
-      category: PROGRESS_MONITORING,
-      tab: POLICIES,
-      subtab: LEARNING
     },
     {
       data_type: TEACHER_CHECK_INS,
@@ -118,22 +88,10 @@ module CommunityProfiles::DistanceLearningConfig
       subtab: 'main'
     },
     {
-      data_type: DISTRICT_DELEGATES_LEARNING,
-      category: CENTRALIZATION,
-      tab: POLICIES,
-      subtab: LEARNING
-    },
-    {
-      data_type: ATTENDANCE_TRACKING,
-      category: LEARNING_TIME,
-      tab: POLICIES,
-      subtab: LEARNING
-    },
-    {
-      data_type: INSTRUCTIONAL_MINUTES_RECOMMENDED,
-      category: LEARNING_TIME,
-      tab: POLICIES,
-      subtab: LEARNING
+      data_type: SYNCHRONOUS_STUDENT_ENGAGEMENT_FLAG,
+      category: INSTRUCTION,
+      tab: TEACHING,
+      subtab: 'main'
     },
     {
       data_type: DEVICE_DISTRIBUTION,
@@ -146,6 +104,48 @@ module CommunityProfiles::DistanceLearningConfig
       category: TECHNOLOGY,
       tab: RESOURCES,
       subtab: 'main'
+    },
+    {
+      data_type: RESOURCES_FOR_STUDENTS_WITH_DISABILITIES,
+      category: INSTRUCTION,
+      tab: RESOURCES,
+      subtab: 'main'
+    },
+    {
+      data_type: RESOURCES_PROVIDED_BY_THE_DISTRICT,
+      category: CURRICULUM,
+      tab: POLICIES,
+      subtab: LEARNING
+    },
+    {
+      data_type: RESOURCE_COVERAGE,
+      category: CURRICULUM,
+      tab: POLICIES,
+      subtab: LEARNING
+    },
+    {
+      data_type: INSTRUCTIONAL_MINUTES_RECOMMENDED,
+      category: LEARNING_TIME,
+      tab: POLICIES,
+      subtab: LEARNING
+    },
+    {
+      data_type: FORMAL_GRADING_FLAG,
+      category: PROGRESS_MONITORING,
+      tab: POLICIES,
+      subtab: LEARNING
+    },
+    {
+      data_type: ATTENDANCE_TRACKING,
+      category: LEARNING_TIME,
+      tab: POLICIES,
+      subtab: LEARNING
+    },
+    {
+      data_type: DISTRICT_DELEGATES_LEARNING,
+      category: CENTRALIZATION,
+      tab: POLICIES,
+      subtab: LEARNING
     },
   ]
 end
