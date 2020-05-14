@@ -4,13 +4,14 @@ const advertising_enabled = gon.advertising_enabled;
 window.GS = window.GS || {};
 GS.ad = GS.ad || {};
 GS.ad.slot = GS.ad.slot || {};
-GS.ad.slotsShownCounts = GS.ad.slotsShownCounts || {};
 const slotCallbacks = GS.ad.slot;
-const slotsShownCounts = GS.ad.slotsShownCounts;
 const slotTimers = {};
 
 let initialized = false;
 const onInitializeFuncs = [];
+
+const MAX_COUNTER = 10;
+const DELAY_IN_MS = 1000;
 
 const init = function() {
   if (advertising_enabled) {
@@ -30,18 +31,27 @@ const init = function() {
 
     console.log('NEW AD ... enabled slots after custom init functions', freestar.config.enabled_slots.length);
 
-    freestar.initCallback();
+    if (!freestarLoaded()) {
+      // check for loaded with the interval of 0.5 seconds
+      let checkLoaded = setInterval(() => typeof(freestar.newAdSlots) === typeof(Function), 500);
+      // after 5 seconds stop
+      setTimeout(() => { clearInterval(checkLoaded); freestar.initCallback();}, 5000);
+    } else {
+      freestar.initCallback();
+    }
     // loop through slots and call callback
     $.each(freestar.config.enabled_slots, (_, slot) => {
       console.log('NEW AD ... showing', slot.placementName, 'for the first time');
       if (slotCallbacks[slot.placementName]) slotCallbacks[slot.placementName]();
-      slotsShownCounts[slot.placementName] = 1;
       slotTimers[slot.placementName] = new Date().getTime();
     });
 
     initialized = true;
   }
 }
+
+const freestarLoaded = () =>
+  typeof(freestar.newAdSlots) === typeof(Function)
 
 const onInitialize = func =>
   initialized ? func() : onInitializeFuncs.push(func);
@@ -83,7 +93,7 @@ const _setPageLevelTargeting = function() {
 };
 
 const slotIdFromName = (slot, slotOccurrenceNumber = 1) => {
-  return `${slot}_${slotOccurrenceNumber}_${slotsShownCounts[slot] || 1}`;
+  return `${slot}_${slotOccurrenceNumber}`;
 };
 
 function checkSponsorSearchResult() {
@@ -110,7 +120,6 @@ const showAd = function(slot, slotOccurrenceNumber, onRenderEnded = null) {
     lastRefreshedTime === undefined ||
     new Date().getTime() - lastRefreshedTime >= 1000
   ) {
-    slotsShownCounts[slot] = slotsShownCounts[slot] + 1;
     let divId = slotIdFromName(slot, slotOccurrenceNumber);
     console.log("NEW AD ... refreshing ad", slot, divId);
     slotTimers[slot] = new Date().getTime();
@@ -122,10 +131,6 @@ const showAd = function(slot, slotOccurrenceNumber, onRenderEnded = null) {
   } else {
     console.log("NEW AD ... NOT refreshing not enough time passed", slot);
   }
-};
-
-const destroyAdByName = function(name) {
-  destroyAd(name);
 };
 
 const destroyAd = (slot) => {
@@ -159,8 +164,6 @@ const applyStylingToIFrameAd = (selector, dimension, styling, counter = 0 ) => {
   setTimeout(() => applyStylingToIFrameAd(selector, dimension, styling, counter++), DELAY_IN_MS)
 }
 
-// --- BELOW NOT USED BUT RETAINED TO AVOID BREAKING CODE DURING TRANSITION
-
 function enableAdCloseButtons() {
   $('.js-closable-ad').on('click', '.close', function(element) {
     $(this)
@@ -183,7 +186,7 @@ GS.ad.showAd = showAd;
 export {
   init,
   onInitialize,
-  destroyAdByName,
+  destroyAd,
   slotIdFromName,
   defineAdOnce,
   enableAdCloseButtons,

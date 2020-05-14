@@ -4,7 +4,7 @@ import { t } from 'util/i18n';
 import {
   defineAdOnce,
   onInitialize as onAdvertisingInitialize,
-  destroyAdByName as destroyAd,
+  destroyAd,
   adsInitialized,
   slotIdFromName,
   showAd
