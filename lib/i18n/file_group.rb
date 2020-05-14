@@ -35,7 +35,18 @@ module GsI18n
 
     def translate(lang, value)
       return value if lang == :en
-      EasyTranslate.translate(value, to: lang, key: 'AIzaSyDhj9L6M-R-GiFUDk5-OnWG8oI8GYJMSho')
+      begin
+        EasyTranslate.translate(value, to: lang, key: 'AIzaSyDhj9L6M-R-GiFUDk5-OnWG8oI8GYJMSho')
+      rescue EasyTranslate::EasyTranslateException => e
+        # From https://stackoverflow.com/questions/33889673/translate-api-user-rate-limit-exceeded-403-without-reason
+        if e.message == 'User Rate Limit Exceeded'
+          puts "Rate limit exceeded. Trying again in 100 seconds..."
+          sleep(100)
+          retry
+        else
+          raise
+        end
+      end
     end
 
     def find_translation(key)
