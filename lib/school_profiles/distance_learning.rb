@@ -23,7 +23,7 @@ module SchoolProfiles
           dv.district = district_params[:district]
           dv.state = district_params[:state]
           dv.city = district_params[:city]
-          dv.description = "PLACEHOLDER - THIS SCHOOL IS PART OF A DISTRICT THAT HAS REMOTE LEARNING STUFF"
+          dv.description = I18n.t("description", scope: 'school_profiles.distance_learning')
         end
       end
     end

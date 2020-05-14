@@ -30,9 +30,9 @@
               <br/>
               <div class="distance-learning">
                 <%= image_tag "/assets/school_profiles/take-a-quick-tour-owl.svg",  alt: "" %>
-                <span class="speech-bubble left">
+                <span class="speech-bubble left semibold">
                   <%= distance_learning.description %>
-                  <%= link_to 'LINK HERE', district_path(distance_learning.state, distance_learning.city, distance_learning.district) %>
+                  <%= link_to I18n.t("link_here", scope: 'school_profiles.distance_learning'), district_path(distance_learning.state, distance_learning.city, distance_learning.district, anchor: "distance-learning") %>
                 </span>
               </div>
              <% end %>

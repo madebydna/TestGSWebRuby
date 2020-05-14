@@ -135,7 +135,8 @@ $(() => {
     'cities': '#cities .links-module',
     'neighboring-cities': '#neighboring-cities',
     'award-winning-schools': '#award-winning-schools',
-    'CollegeSuccessAwardWinners': '.top-school-module .profile-module'
+    'CollegeSuccessAwardWinners': '.top-school-module .profile-module',
+    'distance-learning': '#DistanceLearning'
   });
 
   $(function() {
