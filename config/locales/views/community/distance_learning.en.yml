@@ -5,7 +5,7 @@ en:
       tooltip: This shows how the district is supporting student needs during school closure due to COVID-19. If you work for this district and have distance learning updates to share, please email crpedatabase@uw.edu.
       district_overview: District overview
       see_more: See more
-      sources: Information shown in this module was compiled by the Center on Reinventing Public Education (CRPE) who sourced data primarily from publicly posted plans on school district websites. If you work for this district and have distance learning updates to share, please email crpedatabase@uw.edu.
+      sources_html: <div class="sourcing"><h1>District distance learning data sources & information</h1> <div>Information in this module was compiled by the Center on Reinventing Public Education (CRPE), which sourced data primarily from publicly posted plans on school district websites. If you work for this district and have distance learning updates to share, please email crpedatabase@uw.edu.</div></div>
       tab:
         teaching: Teaching
         resources: Resources
