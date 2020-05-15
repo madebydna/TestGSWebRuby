@@ -46,10 +46,10 @@ class NewAd extends React.Component {
     } = this.props;
     console.log('NEW AD ... ad component', slot, 'did mount', this._isMounted);
 
-    if (adsInitialized()) {
+    if (adsInitialized() && !defer) {
       console.log('NEW AD ... showing existing ad', slot);
       showAd(slot, slotOccurrenceNumber, this.onAdRenderEnded);
-    } else {
+    } else if (!defer) {
       console.log('NEW AD ... initializing', slot);
       onAdvertisingInitialize(() => {
         defineAdOnce(slot, slotOccurrenceNumber, this.onAdRenderEnded);
