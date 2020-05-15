@@ -29,7 +29,8 @@ export default class DataModule extends React.Component {
   static propTypes = {
     title: PropTypes.string,
     anchor: PropTypes.string,
-    subtitle:  PropTypes.string,
+    subtitle: PropTypes.string,
+    moduleOverview: PropTypes.object,
     info_text: PropTypes.string,
     sources: PropTypes.string,
     share_content: PropTypes.string,
@@ -283,18 +284,16 @@ export default class DataModule extends React.Component {
 
     // if `item.title` is undefined, then the pane buttons will not appear
     let subTabs = dataForActiveTab.data.map((item, index) => {
-      let additionalClasses = '';
-      if (item.title === null) {
-        additionalClasses = 'dn';
-      }
-
       let anchorLink = formatAndJoinAnchors(this.props.anchor, dataForActiveTab.anchor, item.anchor)
-      return <ModuleSubTab {...item} key={index} anchorLink={anchorLink} pageType={this.props.pageType} additionalClasses={additionalClasses} />
+      return <ModuleSubTab {...item} key={index} anchorLink={anchorLink} pageType={this.props.pageType} />
     });
 
-    let subNav = <SectionSubNavigation key={this.state.active}>
-      {subTabs}
-    </SectionSubNavigation>
+    let subNav;
+    if (subTabs.length > 1) {
+      subNav = <SectionSubNavigation key={this.state.active}>
+        {subTabs}
+      </SectionSubNavigation>
+    }
 
     let subPanes = dataForActiveTab.data.map(({anchor, type, values, narration} = {}) => {
       let explanation = <div dangerouslySetInnerHTML={{__html: narration}} />
@@ -375,6 +374,7 @@ export default class DataModule extends React.Component {
         icon={ this.icon() }
         title={ this.title() }
         subtitle={ this.props.subtitle }
+        moduleOverview={ this.props.moduleOverview }
         no_data_cta={ !this.hasData() && this.noDataCta() }
         footer={ this.hasData() && (this.props.footer || this.defaultFooter()) }
         body={ this.hasData() && this.activePane() }

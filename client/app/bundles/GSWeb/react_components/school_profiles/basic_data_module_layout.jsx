@@ -7,6 +7,7 @@ const BasicDataModuleLayout = ({
   icon,
   title,
   subtitle,
+  moduleOverview,
   body,
   feedback,
   footer,
@@ -34,6 +35,9 @@ const BasicDataModuleLayout = ({
                 <span className="title">{title}</span>
                 <div dangerouslySetInnerHTML={{ __html: subtitle }} />
                 {no_data_cta}
+              </div>
+              <div className="module-overview">
+                { moduleOverview }
               </div>
             </div>
             {sharing_modal && (
@@ -64,6 +68,7 @@ BasicDataModuleLayout.propTypes = {
   title: PropTypes.object.isRequired,
   titleTooltip: PropTypes.object,
   subtitle: PropTypes.string,
+  moduleOverview: PropTypes.object,
   body: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   feedback: PropTypes.object,
   footer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

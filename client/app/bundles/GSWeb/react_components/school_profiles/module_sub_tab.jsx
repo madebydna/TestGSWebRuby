@@ -9,8 +9,7 @@ const ModuleSubTab = ({
   highlight,
   anchorLink,
   onClick,
-  pageType,
-  additionalClasses
+  pageType
 }) => {
   let addJSHashUpdate = '';
   if (anchorLink.length > 0) {
@@ -32,7 +31,7 @@ const ModuleSubTab = ({
       onClick={onClick}
       className={`sub-nav-item js-gaClick${addJSHashUpdate}${
         highlight ? ' sub-tab-selected' : ''
-      } ${additionalClasses}`}
+      }`}
       data-ga-click-category={gaCategory}
       data-ga-click-action={gaAction}
       data-ga-click-label={title}
