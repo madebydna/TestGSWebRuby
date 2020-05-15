@@ -37,11 +37,12 @@ module CommunityProfiles
       # TODO: Change html_safe?
       {}.tap do |h|
         h[:url] = general_data(URL)
-        h[:overview] = format_overview.html_safe
+        # h[:overview] = format_overview.html_safe
+        h[:overview] = format_overview
         h[:data_values] = data_values
         h[:tooltip] = I18n.t('tooltip', scope: 'community.distance_learning')
         h[:anchor] = 'distance-learning'
-        h[:sources] = I18n.t('sources', scope: 'community.distance_learning')
+        h[:sources] = I18n.t('sources_html', scope: 'community.distance_learning')
         h[:share_content] = nil
         h[:no_data_summary] = nil
         h[:qualaroo_module_link] = 'https://s.qualaroo.com/45194/3300a6cb-a737-450c-a14c-ea3c7019b590'
@@ -96,11 +97,12 @@ module CommunityProfiles
     def format_overview
       paragraphs = general_data(OVERVIEW).split("\\n")
       description = paragraphs.first.strip
-      district_overview = I18n.t('district_overview', scope: 'community.distance_learning')
-      see_more = I18n.t('see_more', scope: 'community.distance_learning')
-      url = general_data(URL)
+      # district_overview = I18n.t('district_overview', scope: 'community.distance_learning')
+      # see_more = I18n.t('see_more', scope: 'community.distance_learning')
+      # url = general_data(URL)
 
-      "<div style='font-family: opensans-semibold; font-size: 16px'>#{district_overview}:</div>" + description + " <a href='#{url}' target='_blank'>#{see_more} &rsaquo;</a>"
+      I18n.db_t(description, default: description)
+      # "<div style='font-family: opensans-semibold; font-size: 16px; '>#{district_overview}:</div>" + description + " <a href='#{url}' target='_blank'>#{see_more} &rsaquo;</a>"
     end
   end
 end
