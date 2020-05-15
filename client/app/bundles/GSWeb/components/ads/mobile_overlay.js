@@ -1,7 +1,7 @@
 import { showAd, enableAdCloseButtons } from 'util/new_advertising';
 import { onScroll } from 'util/scrolling';
 
-const adDomId = 'Mobile_overlay_Ad';
+const adSlotId = 'greatschools_Mobile_overlay';
 const containerSelector = '.mobile-ad-sticky-bottom';
 let deferred;
 let $ = window.jQuery;
@@ -15,8 +15,8 @@ export function renderAd() {
    */
   $(containerSelector).css('display', 'block');
   enableAdCloseButtons();
-  if($('#' + adDomId).is(":visible")) {
-    showAd(adDomId, 1);
+  if($('#' + adSlotId + '_1').is(":visible")) {
+    showAd(adSlotId, 1);
   } else {
     onAdNotFilled();
   }

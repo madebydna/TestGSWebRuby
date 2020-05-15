@@ -33,9 +33,14 @@ const init = function() {
 
     if (!freestarLoaded()) {
       // check for loaded with the interval of 0.5 seconds
-      let checkLoaded = setInterval(() => typeof(freestar.newAdSlots) === typeof(Function), 500);
+      const checkLoaded = setInterval(() => {
+        if (freestarLoaded()) {
+          freestar.initCallback();
+          clearInterval(checkLoaded);
+        };
+      }, 500);
       // after 5 seconds stop
-      setTimeout(() => { clearInterval(checkLoaded); freestar.initCallback();}, 5000);
+      setTimeout(() => { clearInterval(checkLoaded); }, 5000);
     } else {
       freestar.initCallback();
     }
@@ -57,6 +62,8 @@ const onInitialize = func =>
   initialized ? func() : onInitializeFuncs.push(func);
 
 const _defineSlot = function($adSlot) {
+  let deferRender = $adSlot.data('ad-defer-render') != undefined
+  if (deferRender) return;
   freestar.config.enabled_slots.push({ placementName: $adSlot.data('slotid'), slotId: $adSlot.attr('id') });
 };
 

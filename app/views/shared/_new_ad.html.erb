@@ -1,6 +1,6 @@
 <% if AdsSwitch.ads_enabled_for_current_request? %>
   <% css_class ||= '' # CSS class to apply to container %>
-  <% id_counter ||= ''# For multiple ads with the same slotId/placementName %>
+  <% id_counter ||= 1 # For multiple ads with the same slotId/placementName %>
 
   <% unless defined?(show_ad_text) %>
     <% show_ad_text = true %>
@@ -16,7 +16,7 @@
     <% css_class << ' js-closable-ad' %>
   <% end %>
 
-  <% divId = slotId + id_counter.to_s %>
+  <% divId = "#{slotId}_#{id_counter}" %>
 
   <div class="hidden-print <%= css_class %>">
     <% if close_button %>
