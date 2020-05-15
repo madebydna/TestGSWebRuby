@@ -16,7 +16,8 @@ module GsI18n
   end
 
   def self.clean_key(key)
-    cleansed_key = key.to_s.gsub('.', '').strip
+    # Internal I18n seems to strip endlines when converting to a key, so we better do that here too
+    cleansed_key = key.to_s.gsub('.', '').gsub('\n', '').strip
     cleansed_key = cleansed_key.to_sym if key.is_a?(Symbol)
     cleansed_key
   end
