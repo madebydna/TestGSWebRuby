@@ -95,13 +95,14 @@ module CommunityProfiles
     end
 
     def format_overview
-      paragraphs = general_data(OVERVIEW).split("\\n")
+      translated = I18n.db_t(general_data(OVERVIEW), default: general_data(OVERVIEW))
+      paragraphs = translated.split("\\n")
       description = paragraphs.first.strip
       # district_overview = I18n.t('district_overview', scope: 'community.distance_learning')
       # see_more = I18n.t('see_more', scope: 'community.distance_learning')
       # url = general_data(URL)
 
-      I18n.db_t(description, default: description)
+      description
       # "<div style='font-family: opensans-semibold; font-size: 16px; '>#{district_overview}:</div>" + description + " <a href='#{url}' target='_blank'>#{see_more} &rsaquo;</a>"
     end
   end
