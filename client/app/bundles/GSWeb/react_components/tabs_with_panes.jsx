@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'; // importing from react is deprecated
 
 export default class TabsWithPanes extends React.Component {
   static propTypes = {
-    tabsContainer: PropTypes.element.isRequired,
+    tabsContainer: PropTypes.element,
     panes: PropTypes.arrayOf(PropTypes.element).isRequired,
     active: PropTypes.number,
     anchor: PropTypes.string,
@@ -28,10 +28,12 @@ export default class TabsWithPanes extends React.Component {
   }
 
   tabsContainer() {
-    return React.cloneElement(this.props.tabsContainer, {
-      onTabClick: this.handleTabClick,
-      active: this.state.active
-    })
+    if (this.props.tabsContainer) {
+      return React.cloneElement(this.props.tabsContainer, {
+        onTabClick: this.handleTabClick,
+        active: this.state.active
+      })
+    }
   }
 
   activePane() {
