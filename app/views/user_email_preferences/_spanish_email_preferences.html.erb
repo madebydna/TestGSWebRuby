@@ -12,11 +12,15 @@
       title: path_to_yml + 'greatnews_title',
       subtitle: path_to_yml + 'greatnews_subtitle'} %>
 
-  <%= render :partial => 'grades_display', :locals => { grades: @grades_hashes[:es][:overall] } %>
+  <div class="overall_grades">
+    <%= render :partial => 'grades_display', :locals => { grades: @grades_hashes[:es][:overall] } %>
+  </div>
 
-  <% @grades_hashes[:es][:districts].each do |k| %>
-    <%= render :partial => 'grades_display', :locals => { grades: k } %>
-  <% end %>
+  <div class="district_grades">
+    <% @grades_hashes[:es][:districts].each do |k| %>
+      <%= render :partial => 'grades_display', :locals => { grades: k } %>
+    <% end %>
+  </div>
 
   <div class="mtm">
     <%= render :partial => 'school_mss_list', :locals => {path_to_yml: path_to_yml, language: :es} %>

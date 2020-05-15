@@ -102,6 +102,7 @@ class SchoolProfilesController < ApplicationController
         sp.stem_courses = stem_courses
         sp.academic_progress = academic_progress
         sp.reviews_on_demand = reviews_on_demand?
+        sp.distance_learning = distance_learning.data_values
       end
     )
   end
@@ -150,6 +151,18 @@ class SchoolProfilesController < ApplicationController
   def school_cache_data_reader
     @_school_cache_data_reader ||=
       SchoolProfiles::SchoolCacheDataReader.new(school)
+  end
+
+  def district_cache_data_reader
+    @_district_cache_data_reader ||=begin
+      return nil unless school.district.present?
+
+      DistrictCacheDataReader.new(school.district, district_cache_keys: Array.wrap('crpe'))
+    end
+  end
+
+  def distance_learning
+    @_distance_learning ||= SchoolProfiles::DistanceLearning.new(school, district_cache_data_reader: district_cache_data_reader)
   end
 
   def hero

@@ -43,7 +43,7 @@ const ModuleSubTab = ({
 };
 
 ModuleSubTab.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   google_tracking: PropTypes.string,
   flagged: PropTypes.bool,
   anchorLink: PropTypes.string,

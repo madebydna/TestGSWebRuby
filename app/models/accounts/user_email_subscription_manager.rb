@@ -37,7 +37,6 @@ class UserEmailSubscriptionManager
   def unsubscribe_spanish_only
     begin
       delete_subscriptions_by_language('es')
-      UserEmailGradeManager.new(@user).delete_grades_by_language(language)
     rescue
       GSLogger.error(:unsubscribe_spanish_only, nil, message: 'User unsubscribe failed spanish', vars: {
           member_id: @user.id

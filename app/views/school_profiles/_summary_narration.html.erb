@@ -25,11 +25,17 @@
                data-ga-click-label="Summary Auto-narrative">... <%= more %></a>
             <span class="js-moreReveal  more-reveal">
              <%= arr[2..arr.length].join(' ').html_safe %>
-              <% if I18n.locale == :es %>
-                <br/><br/>
-                <%= image_tag "/assets/school_profiles/brown-owl.svg",  alt: "" %>
-                <span class="speech-bubble left">Este al día sobre que esperar este año escolar. <a href="https://pub.s1.exacttarget.com/bkt2mldejgh" rel="nofollow" target="_blank">Aprendes más >></a></span>
-              <% end %>
+             <% if @school_profile.distance_learning %>
+              <% distance_learning = @school_profile.distance_learning %>
+              <br/>
+              <div class="distance-learning">
+                <%= image_tag "/assets/school_profiles/take-a-quick-tour-owl.svg",  alt: "" %>
+                <span class="speech-bubble left semibold">
+                  <%= distance_learning.description %>
+                  <%= link_to I18n.t("link_here", scope: 'school_profiles.distance_learning'), district_path(distance_learning.state, distance_learning.city, distance_learning.district, anchor: "distance-learning") %>
+                </span>
+              </div>
+             <% end %>
             </span>
         <% else %>
             <%= arr.join(' ').html_safe %>

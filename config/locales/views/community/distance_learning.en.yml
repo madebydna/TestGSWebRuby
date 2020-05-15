@@ -1,0 +1,61 @@
+en:
+  community:
+    distance_learning:
+      title: Distance learning
+      tooltip: This shows how the district is supporting student needs during school closure due to COVID-19. If you work for this district and have distance learning updates to share, please email crpedatabase@uw.edu.
+      district_overview: District overview
+      see_more: See more
+      sources_html: <div class="sourcing"><h1>District distance learning data sources & information</h1> <div>Information in this module was compiled by the Center on Reinventing Public Education (CRPE), which sourced data primarily from publicly posted plans on school district websites. If you work for this district and have distance learning updates to share, please email crpedatabase@uw.edu.</div></div>
+      tab:
+        teaching: Teaching
+        resources: Resources
+        policies: Policies
+        learning: Learning
+        planning: Planning
+      data_types:
+        RESOURCES PROVIDED BY THE DISTRICT:
+          specific:
+            label: District/schools provide grade-level curriculum
+          general:
+            label: District provides links to general learning resources
+        RESOURCE COVERAGE:
+          specific:
+            label: District/schools provide grade-level curriculum
+          general:
+            label: District provides links to general learning resources
+        INSTRUCTION FROM TEACHERS:
+          label: Teachers provide regular lessons and assignments
+        SYNCHRONOUS TEACHING FLAG:
+          label: Teaching is done in real-time (e.g. live video)
+        SYNCHRONOUS STUDENT ENGAGEMENT FLAG:
+          label: Classmates interact in real-time
+        RESOURCES FOR STUDENTS WITH DISABILITIES:
+          label: Support provided for students with disabilities
+        FEEDBACK ON STUDENT WORK:
+          label: Teachers provide feedback on student work
+        FORMAL GRADING FLAG:
+          label: Students receive grades (letter or pass/fail)
+        TEACHER CHECK-INS:
+          label: Teachers connect with students individually outside of class
+        ATTENDANCE TRACKING:
+          label: Schools track attendance
+        INSTRUCTIONAL MINUTES RECOMMENDED:
+          label: Districts offer learning guidelines to parents
+        DEVICE DISTRIBUTION:
+          label: Computers/devices provided to students who need them
+        HOTSPOT ACCESS:
+          label: Wi-fi hotspots provided
+        DISTRICT DELEGATES DISTANCE LEARNING PLAN DECISION-MAKING:
+          label: District has delegated distance/remote learning to schools
+          tooltip_html: In districts that have delegated distance learning, schools are responsible for designing their own plans, which means approaches could vary across schools within the district.
+      teaching:
+        main:
+          narration: How is this district providing instruction to students?
+      resources:
+        main:
+          narration: What support does this district offer students and families?
+      policies:
+        learning:
+          narration: What are this district’s distance learning policies?
+        planning:
+          narration: What are the district’s plans for supporting student learning?

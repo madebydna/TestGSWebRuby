@@ -59,6 +59,15 @@
             }) %>
           <% end %>
 
+          <%# Distance Learning %>
+          <% if @distance_learning.present? %>
+            <div id="distance-learning">
+              <%= react_component('DistanceLearning', props: {
+                distance_learning: @distance_learning
+              }) %>
+            </div>
+          <% end %>
+
           <%# Summary Rating %>
           <% if @summary_rating.length > 0 %>
             <div id="summary-rating">

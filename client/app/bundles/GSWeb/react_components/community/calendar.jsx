@@ -54,7 +54,6 @@ class Calendar extends React.Component {
           let event = jsonEvents[i][1];
           let name = this.getValueFromEventArray(event, 'summary');
           let startDate = this.parseDateString(this.getValueFromEventArray(event, 'dtstart'));
-
           if (name && startDate && this.eventIsFutureDate(currentDate, startDate)) {
             let startDateFormatted = this.formatShortDateString(startDate);
             let eventData = { startDate: startDateFormatted, name: name };
@@ -121,9 +120,14 @@ class Calendar extends React.Component {
                 $jsonRes2[`${calendarEntity}`][0]
               ){
                 verified = $jsonRes2[`${calendarEntity}`][0].verified;
-                lastUpdated = this.parseDateString(
-                  $jsonRes2[`${calendarEntity}`][0].last_updated
-                );
+                lastUpdated = $jsonRes2[`${calendarEntity}`][0].last_updated
+                if (lastUpdated){
+                  lastUpdated = this.parseDateString(
+                    $jsonRes2[`${calendarEntity}`][0].last_updated
+                  );
+                }else{
+                  lastUpdated = undefined;
+                }
               }
               const data = this.parseEventsPayload($jsonRes);
               this.setState({

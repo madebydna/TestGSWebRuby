@@ -19,8 +19,9 @@ describe 'Join page', js: true do
   include_examples 'should have a footer'
 
   when_I :click_forgot_password_link, js: true do
+    let(:page_object) { ForgotPasswordPage.new }
     it 'should display the forgot password page' do
-      expect(ForgotPasswordPage.new).to be_displayed
+      expect(page_object).to be_displayed
     end
   end
 

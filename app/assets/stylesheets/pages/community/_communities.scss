@@ -700,6 +700,40 @@ $line-height-community: 1.428571429;
   }
 }
 
+#distance-learning {
+  margin-top: 30px;
+  margin-bottom: 20px;
+
+  .profile-module {
+    border: none;
+
+    .top-content {
+      font-size: 16px;
+    }
+  }
+
+  .module-overview-header {
+    font-family: 'opensans-semibold';
+    font-size: 16px;
+    padding-bottom: 10px;
+  }
+
+  .module-overview {
+    display: inline-block;
+    padding-left: 30px;
+    padding-top: 10px;
+  }
+
+  .sourcing p {
+    padding: 0 40px 10px;
+  }
+
+  .module-icon {
+    float: left;
+    display: inline-block;
+  }
+}
+
 #advanced_courses {
   .profile-module {border: none}
 }

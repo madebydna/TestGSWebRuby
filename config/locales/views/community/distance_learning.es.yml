@@ -1,0 +1,61 @@
+es:
+  community:
+    distance_learning:
+      title: Aprendizaje a distancia
+      tooltip: Esto muestra como el distrito está apoyando las necesidades de los estudiantes durante el cierre de escuelas debido a COVID-19. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a crpedatabase@uw.edu.
+      district_overview: Resumen del distrito
+      see_more: Ver más
+      sources_html: <div class="sourcing"><h1>Información y fuentes de aprendizaje a distancia del distrito</h1> <div>La información que se presenta en este módulo fue compilada por el Center on Reinventing Public Education (CRPE por sus siglas) quienes obtuvieron datos principalmente de planes públicos en sitios de web de distritos escolares. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a crpedatabase@uw.edu.</div></div>
+      tab:
+        teaching: La enseñanza
+        resources: Recursos
+        policies: Principios del distrito
+        learning: La enseñanza
+        planning: Planificación
+      data_types:
+        RESOURCES PROVIDED BY THE DISTRICT:
+          specific:
+            label: Distritos/escuelas proporcionan currículo a nivel de grado
+          general:
+            label: Distritos proporcionan enlaces a recursos generales de aprendizaje
+        RESOURCE COVERAGE:
+          specific:
+            label: Distritos/escuelas proporcionan currículo a nivel de grado
+          general:
+            label: Distritos proporcionan enlaces a recursos generales de aprendizaje
+        INSTRUCTION FROM TEACHERS:
+          label: Los maestros proporcionan lecciones y tarea regularmente
+        SYNCHRONOUS TEACHING FLAG:
+          label: La enseñanza se realiza en tiempo real (por ejemplo, en vivo por video)
+        SYNCHRONOUS STUDENT ENGAGEMENT FLAG:
+          label: Los estudiantes interactúan en tiempo real
+        RESOURCES FOR STUDENTS WITH DISABILITIES:
+          label: Apoyo proporcionado para estudiantes con discapacidades
+        FEEDBACK ON STUDENT WORK:
+          label: Los maestros proporcionan indicaciones en el trabajo de los estudiantes
+        FORMAL GRADING FLAG:
+          label: Los estudiantes reciben calificaciones (calificación de letra o pase/fallo)
+        TEACHER CHECK-INS:
+          label: Los maestros se conectan con los estudiantes individualmente fuera de clases
+        ATTENDANCE TRACKING:
+          label: Las escuelas siguen la asistencia de los estudiantes
+        INSTRUCTIONAL MINUTES RECOMMENDED:
+          label: Distritos ofrecen directrices de aprendizaje para los padres
+        DEVICE DISTRIBUTION:
+          label: Computadoras/apartos proporcionados a los estudiantes que los necesitan
+        HOTSPOT ACCESS:
+          label: Puntos de acceso a Wi-Fi proporcionados
+        DISTRICT DELEGATES DISTANCE LEARNING PLAN DECISION-MAKING:
+          label: El distrito ha delegado el aprendizaje a distancia a las escuelas
+          tooltip_html: En los distritos que han delegado el aprendizaje a distancia, las escuelas son responsables de diseñar sus propios planes. Esto lo que significa es que los enfoques pueden variar entres las escuelas del distrito.
+      teaching:
+        main:
+          narration: ¿Cómo proporciona este distrito instrucciones de aprendizaje a los estudiantes?
+      resources:
+        main:
+          narration: ¿Qué apoyo ofrece el distrito a los estudiantes y a las familias?
+      policies:
+        learning:
+          narration: ¿Cuales son los principios de aprendizaje a distancia de este distrito?
+        planning:
+          narration: ¿Cuales son los planes del distrito para apoyar el aprendizaje de los estudiantes?
