@@ -30,7 +30,12 @@ export default class Circle extends React.Component {
     if (this.props.value === 'All') {
       return <CircleCheck key={this.renderKey()} />;
     } else if (this.props.value === 'Partial') {
-      return <CircleDash key={this.renderKey()} />;
+      return (
+        <div>
+          <CircleDash key={this.renderKey()} />
+          <div>Some grades</div>
+        </div>
+      );
     } else {
       return <CircleX key={this.renderKey()} />;
     }
