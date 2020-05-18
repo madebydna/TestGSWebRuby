@@ -160,7 +160,7 @@ class MissingCrpeTranslationChecker
       result.to_a.map do |row|
         value = row.first
         next unless value
-        value.gsub('\n', '').strip.presence
+        value.split("\\n").first.strip
       end.compact
     end
 
