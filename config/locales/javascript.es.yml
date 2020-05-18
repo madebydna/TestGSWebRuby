@@ -135,9 +135,6 @@ es:
     edit: Editar
     close: Cerrar
     learn_more_html: Aprender Mas &raquo;
-    distance_learning:
-      district_overview: Resumen del distrito
-    district_overview_tooltip_html: Para más información, <a href="%{url}" target="_blank">visite el sitio web del distrito</a>.
     mobility:
       title: Recursos comunitarios en
       transportation_narration: Opciones de transporte cerca de las escuelas

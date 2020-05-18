@@ -35,9 +35,9 @@ const BasicDataModuleLayout = ({
                 <span className="title">{title}</span>
                 <div dangerouslySetInnerHTML={{ __html: subtitle }} />
                 {no_data_cta}
-              </div>
-              <div className="module-overview">
-                { moduleOverview }
+                <div className="module-overview">
+                  { moduleOverview }
+                </div>
               </div>
             </div>
             {sharing_modal && (

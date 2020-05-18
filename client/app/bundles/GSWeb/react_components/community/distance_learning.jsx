@@ -14,7 +14,7 @@ export default class DistanceLearning extends DataModule {
   }
 
   renderOverview() {
-    let content = t('district_overview_tooltip_html', { parameters: { url: this.props.distance_learning.url } });
+    let content = t('distance_learning.district_overview_tooltip_html', { parameters: { url: this.props.distance_learning.url } });
 
     return (
       <div>
@@ -24,7 +24,7 @@ export default class DistanceLearning extends DataModule {
             <div className="tooltip"><QuestionMarkTooltip content={content} element_type='toptooltip' /></div>
           </div>
         </div>
-        <p><ShortenText text={ this.props.distance_learning.overview } length={200} /></p>
+        <p><ShortenText text={this.props.distance_learning.overview} length={200} /></p>
       </div>
     );
   }
