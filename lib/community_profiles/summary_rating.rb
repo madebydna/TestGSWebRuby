@@ -55,7 +55,7 @@ module CommunityProfiles
     def data_points
       colors = {
         'above_average' => '#367A1E',
-        'average' => '#AB8F0E',
+        'average' => '#8a720a',
         'below_average' => '#CB5C35'
       }
 

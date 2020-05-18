@@ -31,13 +31,13 @@
   .details {
     line-height: 1em;
     float: right;
-    color: #00b3ee;
+    color: $midnight-blue;
     cursor: pointer
   }
   .state-average {
     display: inline-block;
     font-size: $font-size-s1;
-    color: #71787e;
+    color: $gray-mute;
     font-family: 'opensans-regular';
     line-height: 18px;
     padding-top: 10px;
@@ -83,7 +83,7 @@
     vertical-align: middle;
   }
   .subject-subtext{
-    color: #999999;
+    color: $gray-mute;
     font-size: $font-size-s2;
   }
 

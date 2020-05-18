@@ -29,7 +29,7 @@
   }
   .user-type {
     text-align: center;
-    color: $gray-text-color;
+    color: $gray-mute;
     margin-top: 5px;
     @include media-breakpoint-up(sm) {
       margin-top: 10px;
@@ -38,7 +38,7 @@
 
   .type-and-date {
     margin-top: 10px;
-    color: $gray-text-color;
+    color: $gray-mute;
     font-size: $font-size-s1;
     span {
       a { font-size: 12px; }

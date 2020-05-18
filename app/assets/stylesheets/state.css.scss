@@ -12,6 +12,9 @@
 @import 'base/spacing';
 @import 'base/typography';
 
+// global styles
+@import 'base/global_components';
+
 @import 'components/five-star-rating';
 @import 'components/gs-rating-with-label';
 @import 'components/circle-rating';

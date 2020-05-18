@@ -28,7 +28,7 @@ const BasicDataModuleRow = ({
     if(display_percentages){
       if(percentage == '200' || breakdown == 'All students' || breakdown == 'Todos los estudiantes'){
         if(number_students_tested > 0) {
-          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({number_students_tested} {t('students')})</span>
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({number_students_tested.toLocaleString()} {t('students')})</span>
         }
       }
       else {
