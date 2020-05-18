@@ -32,7 +32,15 @@
                 <%= image_tag "/assets/school_profiles/take-a-quick-tour-owl.svg",  alt: "" %>
                 <span class="speech-bubble left semibold">
                   <%= distance_learning.description %>
-                  <%= link_to I18n.t("link_here", scope: 'school_profiles.distance_learning'), district_path(distance_learning.state, distance_learning.city, distance_learning.district, anchor: "distance-learning") %>
+                  <%= link_to I18n.t("link_here", scope: 'school_profiles.distance_learning'),
+                        district_path(distance_learning.state, distance_learning.city, distance_learning.district, anchor: "distance-learning"),
+                        class: "js-gaClick",
+                        data: {
+                          ga_click_category: 'Profile',
+                          ga_click_action: 'Internal Link',
+                          ga_click_label: 'Find out'
+                        }
+                  %>
                 </span>
               </div>
              <% end %>
