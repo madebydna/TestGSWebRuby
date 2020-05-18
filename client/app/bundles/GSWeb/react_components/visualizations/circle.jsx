@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { t } from '../../util/i18n';
+import QuestionMarkTooltip from '../school_profiles/question_mark_tooltip';
 import CircleCheck from '../icons/circle_check';
 import CircleDash from '../icons/circle_dash';
 import CircleX from '../icons/circle_x';
@@ -8,16 +9,6 @@ import CircleX from '../icons/circle_x';
 export default class Circle extends React.Component {
   static propTypes = {
     value: PropTypes.string.isRequired
-    // breakdown: PropTypes.string.isRequired,
-    // score: PropTypes.number.isRequired,
-    // label: PropTypes.string.isRequired,
-    // percentage: PropTypes.string,
-    // display_percentages: PropTypes.bool,
-    // number_students_tested: PropTypes.string,
-    // state_average: PropTypes.number,
-    // state_average_label: PropTypes.string,
-    // invertedRatings:  PropTypes.bool,
-    // use_gray: PropTypes.bool
   };
 
   constructor(props) {
@@ -28,29 +19,46 @@ export default class Circle extends React.Component {
 
   renderCircle() {
     if (this.props.value === 'All') {
-      return <CircleCheck key={this.renderKey()} />;
+      return (
+        <div className="circle-viz">
+          <CircleCheck key={this.renderKey()} />
+        </div>
+      );
     } else if (this.props.value === 'Partial') {
       return (
-        <div>
+        <div className="circle-viz">
           <CircleDash key={this.renderKey()} />
-          <div>Some grades</div>
+          <div className="state-average">{ t('distance_learning.ratings.not_all_grades') }</div>
         </div>
       );
     } else {
-      return <CircleX key={this.renderKey()} />;
+      return (
+        <div className="circle-viz">
+          <CircleX key={this.renderKey()} />
+        </div>
+      );
     }
   }
 
 
 
   renderKey() {
-    return this.props.breakdown + Math.random();
+    return this.props.breakdown;
   }
 
   render() {
+    let { breakdown, tooltip_html } = this.props;
     return (
-      <div className="circle-container">
-        {this.renderCircle()}
+      <div className="row bar-graph-display">
+        <div className="test-score-container clearfix">
+          <div className="col-xs-8 col-sm-5 subject">
+            {breakdown}&nbsp;{ tooltip_html && <QuestionMarkTooltip content={tooltip_html} className="tooltip" element_type="datatooltip" /> }
+          </div>
+          <div className="col-xs-1 col-sm-1" />
+          <div className="col-xs-3 col-sm-6">
+            {this.renderCircle()}
+          </div>
+        </div>
       </div>
     );
   }

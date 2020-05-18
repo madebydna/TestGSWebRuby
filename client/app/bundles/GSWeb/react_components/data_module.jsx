@@ -184,9 +184,7 @@ export default class DataModule extends React.Component {
         } else if (display_type == 'circle') {
           component = <div>
             {values.map((value, index) =>
-              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-                <Circle {...value}/>
-              </BasicDataModuleRow>)
+              <Circle {...value} key={index.toString() + this.state.active} />)
             }
           </div>
         } else if (display_type == 'mixed_variety'){

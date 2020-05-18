@@ -45,6 +45,10 @@
   .person-bar-viz > .state-average{
     display: block;
   }
+  .circle-viz .state-average {
+    display: block;
+    padding: 0;
+  }
   .score {
     font-size: 18px;
     font-family: opensans-semibold;
