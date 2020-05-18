@@ -4,6 +4,7 @@ en:
       title: Distance learning
       tooltip: This shows how the district is supporting student needs during school closure due to COVID-19. If you work for this district and have distance learning updates to share, please email crpedatabase@uw.edu.
       district_overview: District overview
+      district_overview_tooltip_html: For more information, <a href="%{url}" target="_blank">visit the district's website</a>.
       see_more: See more
       sources_html: <div class="sourcing"><h1>District distance learning data sources & information</h1> <div>Information in this module was compiled by the Center on Reinventing Public Education (CRPE), which sourced data primarily from publicly posted plans on school district websites. If you work for this district and have distance learning updates to share, please email crpedatabase@uw.edu.</div></div>
       tab:
@@ -59,3 +60,8 @@ en:
           narration: What are this district’s distance learning policies?
         planning:
           narration: What are the district’s plans for supporting student learning?
+      ratings:
+        all_students: all students
+        some_students: some students
+        no_students: no students
+        not_all_grades: not all grades
