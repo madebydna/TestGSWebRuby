@@ -9,8 +9,14 @@ import { t } from '../../util/i18n';
 export default class DistanceLearning extends DataModule {
   constructor(props) {
     super(props);
-    this.renderIcon = this.renderIcon.bind(this);
-    this.renderOverview = this.renderOverview.bind(this);
+  }
+
+  renderQualarooDistrictLink() {
+    let url = this.props.distance_learning.qualaroo_module_link;
+    let state = this.props.locality.stateShort;
+    let districtId = this.props.locality.district_id;
+
+    return `${url}?state=${state}&districtId=${districtId}`;
   }
 
   renderOverview() {
@@ -52,7 +58,7 @@ export default class DistanceLearning extends DataModule {
         data={this.props.distance_learning.data_values}
         faq={this.props.distance_learning.faq}
         no_data_summary={this.props.distance_learning.no_data_summary}
-        qualaroo_module_link={this.props.distance_learning.qualaroo_module_link}
+        qualaroo_module_link={this.renderQualarooDistrictLink()}
       />
     )
   }
