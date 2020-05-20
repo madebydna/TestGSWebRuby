@@ -13,6 +13,7 @@ export function renderAd() {
    * But the container needs to be visible (yet still offscreen) when
    * we ask the ad server to fill.
    */
+  console.log('in Mobile overlay renderAd()');
   $(containerSelector).css('display', 'block');
   enableAdCloseButtons();
   if($('#' + adSlotId + '_1').is(":visible")) {
@@ -25,6 +26,7 @@ export function renderAd() {
 let mobileOverlayShown = false
 
 export function renderAdOnScrollHalfway() {
+  console.log('in Mobile overlay renderAdOnScrollHalfway');
   onScroll('mobileOverlay', ({ ratioScrolledDown } = {}) => {
     if(mobileOverlayShown) {
       return false;
@@ -62,6 +64,7 @@ export function onAdFilled() {
 window.GS_onMobileOverlayAdFilled = onAdFilled;
 
 export function onAdNotFilled() {
+  console.log('in Mobile overlay on ad not filled', deferred);
   if(deferred) {
     deferred.reject();
   }
