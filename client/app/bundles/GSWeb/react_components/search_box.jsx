@@ -202,7 +202,7 @@ export default class SearchBox extends React.Component {
     return item => {
       analyticsEvent('autosuggest', `select ${item.category}`, item.title);
       close();
-      if (item.type === 'zip' || item.type === 'address') {
+      if (item.type === 'address') {
         this.setState({ searchTerm: item.value }, this.geocodeAndSubmit);
       } else {
         this.setState({ searchTerm: item.value }, this.submit);
@@ -368,9 +368,9 @@ export default class SearchBox extends React.Component {
   }
 
   resetSearchTerm() {
-    const newResults = cloneDeep(this.state.autoSuggestResults); 
+    const newResults = cloneDeep(this.state.autoSuggestResults);
     newResults.Addresses = []
-    this.setState({ 
+    this.setState({
       searchTerm: '',
       autoSuggestResults: newResults
     });

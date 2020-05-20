@@ -2,7 +2,7 @@
 
 module Search
   # SchoolQuery is an abstract class that needs all the properties neccessary
-  # to be able to find schools by city, lat/lon, etc. But it doesn't specify 
+  # to be able to find schools by city, lat/lon, etc. But it doesn't specify
   # how we'll retreive the data
   #
   # SolrSchoolQuery is a specific implementation of SchoolQuery. It will use
@@ -79,6 +79,7 @@ module Search
         array << self.in(:level_codes, level_codes.map(&:downcase)) if level_codes.present?
         array << self.in(:entity_type, entity_types.map(&:downcase)) if entity_types.present?
         array << self.in(:summary_rating, ratings) if ratings.present?
+        array << self.in(:zipcode, zipcode) if zipcode.present?
 
         test_scores_rating_field = Solr::SchoolDocument.rating_subgroup_field_name('test_scores_rating', rating_subgroup)
         array << self.in(test_scores_rating_field, test_scores_rating) if test_scores_rating.present?

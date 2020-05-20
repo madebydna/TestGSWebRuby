@@ -55,6 +55,8 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'search#search'
   end
 
+  get 'search/search.zipcode', as: :zipcode_browse, to: 'search#search'
+
   get '/find-schools/', as: :default_search, to: redirect('/')
 
   # Add/remove school routes
