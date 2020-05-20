@@ -1,6 +1,27 @@
 const $ = window.jQuery;
 const advertising_enabled = gon.advertising_enabled;
 
+window.freestar = window.freestar || {};
+freestar.hitTime = Date.now();
+freestar.queue = freestar.queue || [];
+freestar.config = freestar.config || {};
+freestar.debug = window.location.search.indexOf('fsdebug') === -1 ? false : true;
+freestar.config.enabled_slots = [];
+if (gon.advertising_enabled) {
+  !function(a,b){
+    var c=b.getElementsByTagName("script")[0]
+    var d=b.createElement("script")
+    var e="https://a.pub.network/greatschools-org";
+    e+=freestar.debug?"/qa/pubfig.min.js":"/pubfig.min.js",
+    d.async=!0
+    d.src=e
+    c.parentNode.insertBefore(d,c)
+  }(window,document);
+}
+freestar.initCallback = () => {
+  (freestar.config.enabled_slots.length === 0) ? freestar.initCallbackCalled = false : freestar.newAdSlots(freestar.config.enabled_slots);
+}
+
 window.GS = window.GS || {};
 GS.ad = GS.ad || {};
 GS.ad.slot = GS.ad.slot || {};
@@ -15,7 +36,6 @@ const DELAY_IN_MS = 1000;
 
 const init = function() {
   if (advertising_enabled) {
-    console.log('NEW AD ... freestar defined', freestar);
     _setPageLevelTargeting();
 
     const dfp_slots = $('.gs_ad_slot').filter(':visible,[data-ad-defer-render]');
@@ -62,9 +82,9 @@ const onInitialize = func =>
   initialized ? func() : onInitializeFuncs.push(func);
 
 const _defineSlot = function($adSlot) {
-  let deferRender = $adSlot.data('ad-defer-render') != undefined
+  let deferRender = $adSlot.data('ad-defer-render') !== undefined
   if (deferRender) return;
-  freestar.config.enabled_slots.push({ placementName: $adSlot.data('slotid'), slotId: $adSlot.attr('id') });
+  freestar.config.enabled_slots.push({ placementName: $adSlot.data('dfp'), slotId: $adSlot.attr('id') });
 };
 
 const defineAdOnce = function(slot, slotOccurrenceNumber, onRenderEnded) {
@@ -189,6 +209,7 @@ const addCompfilterToGlobalAdTargetingGon = function() {
 
 GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
 GS.ad.showAd = showAd;
+GS.ad.init = init; // used by WP, for instance
 
 export {
   init,

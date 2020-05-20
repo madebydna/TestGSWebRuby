@@ -31,21 +31,6 @@
   <% # must come before commons-blocking %>
   <%= include_gon %>
 
-  <script data-cfasync="false" type="text/javascript">
-    var freestar = freestar || {};
-    freestar.hitTime = Date.now();
-    freestar.queue = freestar.queue || [];
-    freestar.config = freestar.config || {};
-    freestar.debug = window.location.search.indexOf('fsdebug') === -1 ? false : true;
-    freestar.config.enabled_slots = [];
-    if (gon.advertising_enabled) {
-      !function(a,b){var c=b.getElementsByTagName("script")[0],d=b.createElement("script"),e="https://a.pub.network/greatschools-org";e+=freestar.debug?"/qa/pubfig.min.js":"/pubfig.min.js",d.async=!0,d.src=e,c.parentNode.insertBefore(d,c)}(window,document);
-    }
-    freestar.initCallback = () => {
-      (freestar.config.enabled_slots.length === 0) ? freestar.initCallbackCalled = false : freestar.newAdSlots(freestar.config.enabled_slots);
-    }
-  </script>
-
   <%= webpack_javascript_include_tag("commons-blocking", "data-turbolinks-track" => true) %>
   <%= webpack_javascript_include_tag("commons-blocking-loader", "data-turbolinks-track" => true) %>
 
