@@ -23,7 +23,9 @@ class SearchController < ApplicationController
     gon.search = {
       schools: serialized_schools,
     }.tap do |props|
-      props['state'] = state
+      if state
+        props['state'] = state
+      end
       if lat && lon
         props['lat'] = lat
         props['lon'] = lon
@@ -79,7 +81,7 @@ class SearchController < ApplicationController
       MetaTag::DistrictBrowseMetaTags
     elsif city_browse? && city_record.present?
       MetaTag::CityBrowseMetaTags
-    elsif zip_code_search?
+    elsif zipcode_browse?
       MetaTag::ZipMetaTags
     elsif street_address?
       MetaTag::AddressMetaTags
@@ -194,7 +196,7 @@ class SearchController < ApplicationController
   end
 
   def redirect_unless_valid_search_criteria
-    if q.present? || (lat.present? && lon.present?)
+    if q.present? || (lat.present? && lon.present?) || zipcode.present?
       return
     elsif state && district
       unless district_record

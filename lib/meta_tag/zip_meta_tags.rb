@@ -3,11 +3,11 @@
 module MetaTag
   class ZipMetaTags < MetaTag::MetaTags
     def title
-      "#{entity_type_long}#{level_code_long}#{schools_or_preschools} near #{location_label}#{title_pagination_text} - #{state.upcase}"
+      "#{entity_type_long}#{level_code_long}#{schools_or_preschools} in #{zipcode}#{title_pagination_text}"
     end
 
     def description
-      "Ratings and parent reviews for all elementary, middle and high schools in #{zip_code}, #{state.upcase}"
+      "Ratings and parent reviews for all elementary, middle and high schools in the #{zipcode}."
     end
 
     def canonical_url

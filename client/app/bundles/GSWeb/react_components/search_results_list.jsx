@@ -69,7 +69,7 @@ const resultTypes = {
   },
   Zipcodes: {
     title: ({ value }) =>
-      t('Schools near', { parameters: { location: value } }),
+      t('Schools in', { parameters: { location: value } }),
     additionalInfo: () => null
   },
   Addresses: {
