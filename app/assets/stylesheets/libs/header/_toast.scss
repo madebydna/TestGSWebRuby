@@ -1,22 +1,22 @@
-.toast{
-  position: fixed;
-  width: 100%;
-  z-index: 3;
+.toast {
   font-family: 'opensans-semibold';
   opacity: .95;
   pointer-events: none;
+  position: fixed;
+  width: 100%;
+  z-index: 3;
 
-  div{
-    pointer-events: all;
-    position: relative;
-    margin: 0 auto;
+  div {
+    backdrop-filter: blur(10px);
     background-color: #ffd966ff;
+    border-radius: .25rem;
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .1);
+    margin: 0 auto;
     max-width: 100%;
     padding: 10px;
+    pointer-events: all;
+    position: relative;
     text-align: center;
-    box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,.1);
-    backdrop-filter: blur(10px);
-    border-radius: .25rem;
     // Media Responsive Styles
     @media only screen and (min-width: 992px) {
       max-width: 800px;
@@ -24,18 +24,19 @@
     @media only screen and (max-width: 728px) {
       padding: 1em;
     }
-    a{
+
+    a {
       cursor: pointer;
       font-family: 'opensans-semibold';
     }
 
-    .toast-cancel{
-      position: absolute;
-      width: 1em;
+    .toast-cancel {
+      cursor: pointer;
       padding: 2px;
+      position: absolute;
       right: 10px;
       top: 0;
-      cursor: pointer;
+      width: 1em;
     }
   }
 }
