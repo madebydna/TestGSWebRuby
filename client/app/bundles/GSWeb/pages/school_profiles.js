@@ -218,8 +218,8 @@ $(function() {
     $(this).siblings('.js-moreReveal').removeClass('more-reveal');
   });
 
-  refreshAdOnScroll('greatschools_Profiles_First_Ad', '.static-container', 1200);
-  refreshAdOnScroll('greatschools_Profiles_SecondSticky_Ad', '.static-container', 1200);
+  refreshAdOnScroll('greatschools_Profiles_First', '.static-container', 1200);
+  refreshAdOnScroll('greatschools_Profiles_SecondSticky', '.static-container', 1200);
 
   function setCookieExpiration() {
     var half_year = 182*24*60*60*1000;
