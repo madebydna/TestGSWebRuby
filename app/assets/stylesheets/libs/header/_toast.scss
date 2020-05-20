@@ -4,8 +4,10 @@
   z-index: 3;
   font-family: 'opensans-semibold';
   opacity: .95;
+  pointer-events: none;
 
   div{
+    pointer-events: all;
     position: relative;
     margin: 0 auto;
     background-color: #ffd966ff;
