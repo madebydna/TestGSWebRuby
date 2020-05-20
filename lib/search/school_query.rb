@@ -104,7 +104,8 @@ module Search
         district_url: district_url,
         search_term: Rails::Html::FullSanitizer.new.sanitize(@q.presence),
         level_code_long: level_code_long(results.total),
-        location: location
+        location: location,
+        zipcode: zipcode
       }
       if lat && lon && radius
         t('distance', **params)
@@ -114,6 +115,8 @@ module Search
         t('city_browse', **params)
       elsif @q.present?
         t('search_term', **params)
+      elsif zipcode.present?
+        t('zip_browse', **params)
       elsif state
         t('state_browse', **params)
       else
@@ -144,7 +147,6 @@ module Search
     private
 
     attr_reader :client
-
 
     def t(key, **args)
       I18n.t(key, scope: 'search.number_schools_found', **args)
