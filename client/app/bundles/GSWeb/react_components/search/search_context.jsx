@@ -241,7 +241,7 @@ class SearchProvider extends React.Component {
   updateSavedSchoolsCookie(schoolKey) {
     const savedSchools = getSavedSchoolsFromCookie();
     const schoolKeyIdx = this.savedSchoolsFindIndex(schoolKey);
-    let removeSchool = schoolKeyIdx > -1; 
+    let removeSchool = schoolKeyIdx > -1;
     removeSchool ? savedSchools.splice(schoolKeyIdx, 1) : savedSchools.push(schoolKey);
     let locationKey = `${this.props.layout}-${this.props.view}`
     logSchool(schoolKey, (removeSchool ? 'remove' : 'add'), locationKey)
@@ -307,7 +307,8 @@ class SearchProvider extends React.Component {
       stateSelect: this.state.stateSelect,
       extras: ['students_per_teacher', 'review_summary', 'saved_schools'],
       locationLabel: props.locationLabel,
-      csaYears: csaYear
+      csaYears: csaYear,
+      zip: props.zipcode
     };
   }
 
