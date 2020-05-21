@@ -169,10 +169,6 @@ export function queryStringWithNewDistance(distance) {
   });
 }
 
-export function queryStringWithZipcode(zipcode) {
-
-}
-
 export function getValueForKey(key) {
   return parse(currentQueryString())[key];
 }
