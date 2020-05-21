@@ -10,6 +10,8 @@ module ExactTargetFileManager
         DEFAULT_DISTRICT_ID = nil
         DEFAULT_DISTRICT_STATE = nil
 
+        OLD_DATE = Date.new(2008)
+
         LIST_MEMBER_MAPPING = {
             email: :email_address,
             how: :How,
@@ -48,11 +50,15 @@ module ExactTargetFileManager
         def member_id(row)
           email = row[LIST_MEMBER_MAPPING[:email]]
           how = row[LIST_MEMBER_MAPPING[:how]]
-          time_added = row[LIST_MEMBER_MAPPING[:time_added]]
+          time_added = time_date_set(row[LIST_MEMBER_MAPPING[:time_added]])
           return nil if email.blank? || is_invalid?(email)
           user = User.find_by(email: email)
           return user if user.present?
           new_member(email, how, time_added)
+        end
+
+        def time_date_set(date)
+          date || Time.now
         end
 
         def new_member(email, how, time_added)
