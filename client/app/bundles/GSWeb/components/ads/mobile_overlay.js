@@ -1,4 +1,4 @@
-import { showAd, enableAdCloseButtons } from 'util/new_advertising';
+import { checkForFreeStarLoaded, showAd, enableAdCloseButtons } from 'util/new_advertising';
 import { onScroll } from 'util/scrolling';
 
 const adSlotId = 'greatschools_Mobile_overlay';
@@ -17,9 +17,15 @@ export function renderAd() {
   $(containerSelector).css('display', 'block');
   enableAdCloseButtons();
   if($('#' + adSlotId + '_1').is(":visible")) {
-    showAd(adSlotId, 1);
+    checkForFreeStarLoaded(showAdAfterLoad(adSlotId, 1));
   } else {
     onAdNotFilled();
+  }
+}
+
+function showAdAfterLoad(adSlotId, num) {
+  return function() {
+    showAd(adSlotId, num);
   }
 }
 

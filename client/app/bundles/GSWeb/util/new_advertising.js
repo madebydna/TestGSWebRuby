@@ -1,6 +1,11 @@
 const $ = window.jQuery;
 const advertising_enabled = gon.advertising_enabled;
 
+import {
+  onAdFilled as onMobileOverlayAdFilled,
+  onAdNotFilled as onMobileOverlayAdNotFilled
+} from 'components/ads/mobile_overlay';
+
 window.freestar = window.freestar || {};
 freestar.hitTime = Date.now();
 freestar.queue = freestar.queue || [];
@@ -50,29 +55,39 @@ const init = function() {
     }
 
     console.log('NEW AD ... enabled slots after custom init functions', freestar.config.enabled_slots.length);
-
-    if (!freestarLoaded()) {
-      // check for loaded with the interval of 0.5 seconds
-      const checkLoaded = setInterval(() => {
-        if (freestarLoaded()) {
-          freestar.initCallback();
-          clearInterval(checkLoaded);
-        };
-      }, 500);
-      // after 5 seconds stop
-      setTimeout(() => { clearInterval(checkLoaded); }, 5000);
-    } else {
-      freestar.initCallback();
-    }
-    // loop through slots and call callback
-    $.each(freestar.config.enabled_slots, (_, slot) => {
-      console.log('NEW AD ... showing', slot.placementName, 'for the first time');
-      if (slotCallbacks[slot.placementName]) slotCallbacks[slot.placementName]();
-      slotTimers[slot.placementName] = new Date().getTime();
-    });
-
-    initialized = true;
+    checkForFreeStarLoaded(postFreestarLoaded);
   }
+}
+
+const checkForFreeStarLoaded = (callback) => {
+  if (!freestarLoaded()) {
+    console.log('!--- freestar not yet loaded');
+    // check for loaded with the interval of 0.5 seconds
+    const checkLoaded = setInterval(() => {
+      console.log('+-- checking for freestar loaded', freestarLoaded());
+      if (freestarLoaded()) {
+        callback();
+        clearInterval(checkLoaded);
+      };
+    }, 500);
+    // after 5 seconds stop
+    setTimeout(() => { clearInterval(checkLoaded); }, 5000);
+  } else {
+    callback();
+  }
+}
+
+const postFreestarLoaded = () => {
+  freestar.initCallback();
+
+  // loop through slots and call callback
+  $.each(freestar.config.enabled_slots, (_, slot) => {
+    console.log('NEW AD ... showing', slot.placementName, 'for the first time');
+    if (slotCallbacks[slot.placementName]) slotCallbacks[slot.placementName]();
+    slotTimers[slot.placementName] = new Date().getTime();
+  });
+
+  initialized = true;
 }
 
 const freestarLoaded = () =>
@@ -81,10 +96,35 @@ const freestarLoaded = () =>
 const onInitialize = func =>
   initialized ? func() : onInitializeFuncs.push(func);
 
+
+const slotRenderedHandler = function(slot, slotId) {
+  return function() {
+    // this assumes ad was actually rendered
+    console.log("SlotRenderedHandler for slot", slot, " was called");
+    const $wrapper = $(`.js-${slotId}-wrapper`);
+    if ($wrapper.hasClass('mobile-ad-sticky-bottom')) {
+      onMobileOverlayAdFilled();
+    }
+    if ($wrapper.hasClass('dn')) {
+      $wrapper.removeClass('dn');
+    }
+    // Show the ghost text as an ad is rendered
+    const $ghostText = $(`.js-${slotId}-ghostText`); // wordpress
+    if ($ghostText.length > 0) {
+      $ghostText.appendTo($ghostText.parent());
+      $ghostText.show();
+    }
+    $(`.js-${slotId}-wrapper .advertisement-text`)
+      .removeClass('dn')
+      .show();
+  }
+}
+
 const _defineSlot = function($adSlot) {
   let deferRender = $adSlot.data('ad-defer-render') !== undefined
   if (deferRender) return;
   freestar.config.enabled_slots.push({ placementName: $adSlot.data('dfp'), slotId: $adSlot.attr('id') });
+  slotCallbacks[$adSlot.data('dfp')] = slotRenderedHandler($adSlot.data('dfp'), $adSlot.attr('id'));
 };
 
 const defineAdOnce = function(slot, slotOccurrenceNumber, onRenderEnded) {
@@ -221,5 +261,6 @@ export {
   showAd,
   checkSponsorSearchResult,
   adsInitialized,
-  applyStylingToIFrameAd
+  applyStylingToIFrameAd,
+  checkForFreeStarLoaded
 };

@@ -18,7 +18,7 @@
 
   <% divId = "#{slotId}_#{id_counter}" %>
 
-  <div class="hidden-print <%= css_class %>">
+  <div class="js-<%= divId %>-wrapper hidden-print <%= css_class %>">
     <% if close_button %>
       <span class="close">×</span>
     <% end %>
