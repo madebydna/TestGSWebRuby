@@ -215,7 +215,7 @@ module SearchRequestParams
   end
 
   def zipcode_browse?
-    zipcode.present?
+    zipcode.present? || params[:locationType]&.downcase == 'zip'
   end
 
   def zipcode

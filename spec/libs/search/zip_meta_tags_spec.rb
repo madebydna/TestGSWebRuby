@@ -53,7 +53,7 @@ describe MetaTag::ZipMetaTags do
         let(:first_result) { 1 }
         let(:last_result) { 25 }
         let(:zipcode) { zipcode }
-        let(:expected_title) { "Ratings and parent reviews for all elementary, middle and high schools in the #{zipcode}." }
+        let(:expected_title) { "Ratings and parent reviews for all elementary, middle and high schools in #{zipcode}." }
 
         it {is_expected.to eq(expected_title)}
       end
