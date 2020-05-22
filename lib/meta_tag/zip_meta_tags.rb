@@ -7,7 +7,7 @@ module MetaTag
     end
 
     def description
-      "Ratings and parent reviews for all elementary, middle and high schools in the #{zipcode}."
+      "Ratings and parent reviews for all elementary, middle and high schools in #{zipcode}."
     end
 
     def canonical_url
