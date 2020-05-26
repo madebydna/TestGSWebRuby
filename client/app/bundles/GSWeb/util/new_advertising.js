@@ -8,7 +8,11 @@ import {
 
 window.freestar = window.freestar || {};
 freestar.hitTime = Date.now();
+let freestarInitialized = false;
 freestar.queue = freestar.queue || [];
+freestar.queue.push(function() {
+  freestarInitialized = true;
+});
 freestar.config = freestar.config || {};
 freestar.debug = window.location.search.indexOf('fsdebug') === -1 ? false : true;
 freestar.config.enabled_slots = [];
@@ -80,19 +84,26 @@ const checkForFreeStarLoaded = (callback) => {
 
 const postFreestarLoaded = () => {
   // freestar.initCallback();
+  console.log('in postFreestarLoaded', slotCallbacks);
 
   // loop through slots and call callback
-  $.each(freestar.config.enabled_slots, (_, slot) => {
-    console.log('NEW AD ... showing', slot.placementName, 'for the first time');
-    if (slotCallbacks[slot.placementName]) slotCallbacks[slot.placementName]();
-    slotTimers[slot.placementName] = new Date().getTime();
+  // $.each(freestar.config.enabled_slots, (_, slot) => {
+  //   console.log('NEW AD ... showing', slot.placementName, 'for the first time');
+  //   if (slotCallbacks[slot.placementName]) slotCallbacks[slot.placementName]();
+  //   slotTimers[slot.placementName] = new Date().getTime();
+  // });
+
+  $.each(slotCallbacks, (slot, slotCallback) => {
+    console.log('NEW AD ... showing', slot, 'for the first time');
+    slotCallback();
+    slotTimers[slot] = new Date().getTime();
   });
 
   initialized = true;
 }
 
-const freestarLoaded = () =>
-  typeof(freestar.newAdSlots) === typeof(Function)
+const freestarLoaded = () => freestarInitialized;
+  // typeof(freestar.newAdSlots) === typeof(Function)
 
 const onInitialize = func =>
   initialized ? func() : onInitializeFuncs.push(func);
@@ -122,18 +133,41 @@ const slotRenderedHandler = function(slot, slotId) {
 }
 
 const _defineSlot = function($adSlot) {
+  console.log('in _defineSlot...');
   let deferRender = $adSlot.data('ad-defer-render') !== undefined
   if (deferRender) return;
-  freestar.config.enabled_slots.push({ placementName: $adSlot.data('dfp'), slotId: $adSlot.attr('id') });
-  slotCallbacks[$adSlot.data('dfp')] = slotRenderedHandler($adSlot.data('dfp'), $adSlot.attr('id'));
+  const args = { placementName: $adSlot.data('dfp'), slotId: $adSlot.attr('id') };
+  if (freestarInitialized) {
+    console.log('in _defineSlot (non-react) freestarInitialized is TRUE');
+    slotCallbacks[$adSlot.data('dfp')] = slotRenderedHandler($adSlot.data('dfp'), $adSlot.attr('id'));
+    freestar.queue.push(function(){
+      freestar.newAdSlots([args]);
+     });
+  } else {
+    console.log('in _defineSlot (non-react) freestarInitialized is FALSE');
+    freestar.config.enabled_slots.push(args);
+    slotCallbacks[$adSlot.data('dfp')] = slotRenderedHandler($adSlot.data('dfp'), $adSlot.attr('id'));
+  }
 };
 
 const defineAdOnce = function(slot, slotOccurrenceNumber, onRenderEnded) {
   console.log("Defining slot", slot, "initially");
-  freestar.config.enabled_slots.push({ placementName: slot, slotId: slotIdFromName(slot, slotOccurrenceNumber) });
-  slotCallbacks[slot] = onRenderEnded;
+  const args = { placementName: slot, slotId: slotIdFromName(slot, slotOccurrenceNumber) }
+  if (freestarInitialized) {
+    console.log('in defineAdOnce (react) freestarInitialized is TRUE');
+    slotCallbacks[slot] = onRenderEnded;
+    freestar.queue.push(function(){
+      freestar.newAdSlots([args])
+     });
+  } else {
+    console.log('in defineAdOnce (react) freestarInitialized is FALSE');
+    freestar.config.enabled_slots.push(args);
+    slotCallbacks[slot] = onRenderEnded;
+  }
 };
 
+// This checks if the window load event finished
+// which includes a check for freestar's library loaded
 const adsInitialized = function() {
   return initialized;
 }
@@ -264,5 +298,6 @@ export {
   checkSponsorSearchResult,
   adsInitialized,
   applyStylingToIFrameAd,
-  checkForFreeStarLoaded
+  checkForFreeStarLoaded,
+  freestarLoaded
 };
