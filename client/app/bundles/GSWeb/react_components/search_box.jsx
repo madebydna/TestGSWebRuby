@@ -49,6 +49,9 @@ const matchesAddress = string =>
 const matchesAddressOrZip = string =>
   matchesAddress(string) || matchesZip(string);
 
+const matchesZipOnly = string =>
+  matchesFiveDigits(string) || matchesFiveDigitsPlusFourDigits(string);
+
 export const t = translateWithDictionary({
   // entries not needed if text matches key
   en: {},
@@ -85,6 +88,10 @@ const newSearchResultsPageUrl = newParams => {
   };
   return `/search/search.page?${stringify(params)}`;
 };
+
+const zipcodeBrowsePageUrl = params => {
+  return `/search/search.zipcode?${stringify(params)}`;
+}
 
 // city should be a not-yet-encoded string
 const newCityBrowsePageUrl = (stateAbbreviation, city, newParams) => {
@@ -219,6 +226,13 @@ export default class SearchBox extends React.Component {
     } else if (type === 'schools') {
       if (!matchesAddressOrZip(searchTerm)) {
         this.submit();
+        return;
+      }
+      if (matchesZipOnly(searchTerm)){
+        window.location.href = zipcodeBrowsePageUrl({
+          zip: searchTerm,
+          sort: 'rating'
+        })
         return;
       }
       if (this.state.googleMapsInitialized) {
