@@ -73,12 +73,13 @@ const checkForFreeStarLoaded = (callback) => {
     // after 5 seconds stop
     setTimeout(() => { clearInterval(checkLoaded); }, 5000);
   } else {
+    console.log('!--- freestar already loaded');
     callback();
   }
 }
 
 const postFreestarLoaded = () => {
-  freestar.initCallback();
+  // freestar.initCallback();
 
   // loop through slots and call callback
   $.each(freestar.config.enabled_slots, (_, slot) => {
@@ -128,6 +129,7 @@ const _defineSlot = function($adSlot) {
 };
 
 const defineAdOnce = function(slot, slotOccurrenceNumber, onRenderEnded) {
+  console.log("Defining slot", slot, "initially");
   freestar.config.enabled_slots.push({ placementName: slot, slotId: slotIdFromName(slot, slotOccurrenceNumber) });
   slotCallbacks[slot] = onRenderEnded;
 };
