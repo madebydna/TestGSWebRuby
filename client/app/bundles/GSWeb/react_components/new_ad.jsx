@@ -7,7 +7,8 @@ import {
   destroyAd,
   adsInitialized,
   slotIdFromName,
-  showAd
+  showAd,
+  checkForFreeStarLoaded
 } from 'util/new_advertising.js';
 
 import { CSSTransition } from 'react-transition-group';
@@ -44,16 +45,24 @@ class NewAd extends React.Component {
       defer,
       slotOccurrenceNumber
     } = this.props;
-    console.log('NEW AD ... ad component', slot, 'did mount', this._isMounted);
+    console.log('NEW AD ... ad component', slot, 'did mount');
 
-    if (adsInitialized() && !defer) {
-      console.log('NEW AD ... showing existing ad', slot);
-      showAd(slot, slotOccurrenceNumber, this.onAdRenderEnded);
-    } else if (!defer) {
-      console.log('NEW AD ... initializing', slot);
-      onAdvertisingInitialize(() => {
-        defineAdOnce(slot, slotOccurrenceNumber, this.onAdRenderEnded);
-      });
+    checkForFreeStarLoaded(this.doRenderAds(slot, slotOccurrenceNumber, this.onAdRenderEnded));
+
+    // if (adsInitialized() && !defer) {
+    //   console.log('NEW AD ... showing existing ad', slot);
+    //   showAd(slot, slotOccurrenceNumber, this.onAdRenderEnded);
+    // } else if (!defer) {
+    //   console.log('NEW AD ... initializing', slot);
+    //   onAdvertisingInitialize(() => {
+    //     defineAdOnce(slot, slotOccurrenceNumber, this.onAdRenderEnded);
+    //   });
+    // }
+  }
+
+  doRenderAds(slot, slotOccurrenceNumber, callback) {
+    return () => {
+      showAd(slot, slotOccurrenceNumber, callback);
     }
   }
 
