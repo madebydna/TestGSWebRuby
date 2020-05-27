@@ -28,11 +28,11 @@ module SchoolProfiles
         dlc['district_id'] = school.district.present? ? school.district.district_id.to_s : ""
         dlc['template'] = SCHOOL_PROFILE_TEMPLATE
         dlc['number_of_reviews_with_comments'] = school_reviews_count
+        dlc[PageAnalytics::GS_BADGE] = 'CSAWinner' if csa_badge
+        dlc[PageAnalytics::GS_TAGS] = 'DistanceLearningData' if distance_learning.present?
         # untruncated values
         dlc['city_long'] = SchoolProfiles::PageViewMetadata.sanitize_for_dfp(school.city)
         dlc['address'] = SchoolProfiles::PageViewMetadata.sanitize_for_dfp(school.street)
-        dlc[PageAnalytics::GS_BADGE] = 'CSAWinner' if csa_badge
-        dlc[PageAnalytics::GS_TAGS] = 'DistanceLearningData' if distance_learning.present?
       end
     end
 
