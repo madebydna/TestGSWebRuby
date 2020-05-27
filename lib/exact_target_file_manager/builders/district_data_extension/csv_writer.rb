@@ -2,6 +2,8 @@ module ExactTargetFileManager
   module Builders
     module DistrictDataExtension
       class CsvWriter < ExactTargetFileManager::Builders::EtProcessor
+        include UrlHelper
+
         FILE_PATH = '/tmp/et_districts.csv'
 
         # District data extension addition. district_id, district_state, district_name - there are more possible fields
@@ -35,6 +37,7 @@ module ExactTargetFileManager
           state_average_revenue_per_student
           district_average_spending_per_student
           state_average_spending_per_student
+          canonical_url
         )
 
         def initialize
@@ -59,7 +62,12 @@ module ExactTargetFileManager
           district_info += add_summary_rating_info(district.summary_rating_info)
           district_info += add_progress_rating_info(district.growth_rating_info)
           district_info += add_finance_info(district.finance_info)
+          district_info << district_path(district_params(district.state, district.city, district.name).merge(trailing_slash: true))
           district_info
+        end
+
+        def district_path(params)
+          "/#{params[:state]}/#{params[:city]}/#{params[:district]}/"
         end
 
         def add_summary_rating_info(data)
