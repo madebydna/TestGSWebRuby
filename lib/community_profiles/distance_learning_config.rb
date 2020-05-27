@@ -74,6 +74,11 @@ module CommunityProfiles::DistanceLearningConfig
       subtab: 'main'
     },
     {
+      data_type: SUMMER_FALL_PLANNING,
+      tab: GENERAL,
+      subtab: 'main'
+    },
+    {
       data_type: INSTRUCTION_FROM_TEACHERS,
       tab: TEACHING,
       subtab: 'main'
@@ -163,11 +168,6 @@ module CommunityProfiles::DistanceLearningConfig
       tab: POLICIES,
       subtab: PLANNING
     },
-    # {
-    #   data_type: SUMMER_FALL_PLANNING,
-    #   tab: POLICIES,
-    #   subtab: PLANNING
-    # },
     # {
     #   data_type: DISTRICT_DELEGATES_DISTANCE_LEARNING_DECISION_MAKING,
     #   tab: POLICIES,
