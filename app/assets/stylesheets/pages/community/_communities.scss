@@ -783,6 +783,12 @@ $line-height-community: 1.428571429;
   .bar-graph-display:last-child {
     border: none;
   }
+
+  .circle-viz-row-container:last-child {
+    display: flex;
+    align-items: center;
+    padding-bottom: 0;
+  }
 }
 
 #advanced_courses {
