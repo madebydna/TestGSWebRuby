@@ -25,7 +25,7 @@ const renderSponsorSearchResultAd = () =>(
         </ModalTooltip>
       </span>
     </div>
-    <NewAd slot="greatschools_Search_sponsoredlisting" />
+    <NewAd slot="greatschools_search_sponsoredlisting" />
   </li>
 );
 
