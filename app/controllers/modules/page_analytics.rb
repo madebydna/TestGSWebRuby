@@ -13,6 +13,7 @@ module PageAnalytics
   COMPFILTER = 'compfilter'
   SCHOOL_ID = 'school_id'
   GS_BADGE = 'gs_badge'
+  GS_TAGS = 'gs_tags'
 
   def set_page_analytics_data
     hash = page_analytics_data

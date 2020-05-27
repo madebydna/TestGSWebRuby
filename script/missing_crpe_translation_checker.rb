@@ -27,7 +27,7 @@ class MissingCrpeTranslationChecker
         table:  :'omni.covid_responses',
         column: :value,
         key_column: :data_type,
-        key_value: 'Summary'
+        key_value: 'SUMMARY'
       }
     ]
     @missing_translation_messages = []

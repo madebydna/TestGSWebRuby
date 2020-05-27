@@ -16,15 +16,18 @@ module CommunityProfiles
       crpe_data.fetch(data_type, {})&.fetch('value', nil)
     end
 
+    def fetch_date(data_type)
+      crpe_data.fetch(data_type, {})&.fetch('date_valid', nil)
+    end
+
     def data_module
       return {} if crpe_data.empty?
 
-      # TODO: Change html_safe?
       {}.tap do |h|
         h[:url] = fetch_value(URL)
         h[:overview] = format_overview
         h[:data_values] = data_values
-        h[:tooltip] = I18n.t('tooltip', scope: 'community.distance_learning')
+        h[:tooltip] = I18n.t('tooltip_html', scope: 'community.distance_learning', date_valid: date_valid)
         h[:anchor] = 'distance-learning'
         h[:sources] = I18n.t('sources_html', scope: 'community.distance_learning')
         h[:share_content] = nil
@@ -95,6 +98,12 @@ module CommunityProfiles
     def format_overview
       first_paragraph = fetch_value(SUMMER_FALL_PLANNING).strip
       I18n.db_t(first_paragraph, default: first_paragraph)
+    end
+
+    def date_valid
+      return 'N/A' unless fetch_date(URL)
+
+      fetch_date(URL).split("-").reverse.join("/")
     end
   end
 end

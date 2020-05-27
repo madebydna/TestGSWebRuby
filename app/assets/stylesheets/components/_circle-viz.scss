@@ -1,6 +1,11 @@
+.circle-viz-row-container {
+  display: flex;
+  align-items: center;
+}
+
 .circle-viz {
-  display: table;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
   height: 100%;
-  width: 100%;
-  text-align: right;
 }

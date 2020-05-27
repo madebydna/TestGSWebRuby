@@ -20,7 +20,7 @@ const Circle = (props) => {
       return (
         <div className="circle-viz">
           <CircleDash key={breakdown} />
-          <div className="state-average">{t('distance_learning.ratings.not_all_grades')}</div>
+          <div className="state-average tar">{t('distance_learning.ratings.not_all_grades')}</div>
         </div>
       );
     } else {
@@ -33,12 +33,12 @@ const Circle = (props) => {
   };
 
   return <div className="row bar-graph-display">
-    <div className="test-score-container clearfix">
-      <div className="col-xs-8 col-sm-5 subject">
+    <div className="test-score-container clearfix circle-viz-row-container">
+      <div className="col-xs-9 col-sm-6 subject">
         {breakdown}&nbsp;{tooltip_html && <QuestionMarkTooltip content={tooltip_html} className="tooltip" element_type="datatooltip" />}
       </div>
       <div className="col-xs-1 col-sm-1" />
-      <div className="col-xs-3 col-sm-6">
+      <div className="col-xs-2 col-sm-5">
         {renderCircle()}
       </div>
     </div>
