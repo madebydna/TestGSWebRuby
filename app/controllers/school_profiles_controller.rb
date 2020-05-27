@@ -66,7 +66,8 @@ class SchoolProfilesController < ApplicationController
                                            PAGE_NAME,
                                            school_gs_rating,
                                            number_of_reviews_with_comments,
-                                           csa_badge)
+                                           csa_badge,
+                                           distance_learning)
           .hash
     end
   end
