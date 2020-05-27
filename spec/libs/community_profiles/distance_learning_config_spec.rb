@@ -1,67 +1,114 @@
 require "spec_helper"
 
 describe CommunityProfiles::DistanceLearningConfig do
-  context 'ALL_CATEGORIES' do
+  context 'TAB_ACCESSORS' do
     it 'is an array' do
-      expect(CommunityProfiles::DistanceLearningConfig::ALL_CATEGORIES).to be_an(Array)
+      expect(CommunityProfiles::DistanceLearningConfig::TAB_ACCESSORS).to be_an(Array)
     end
 
-    it 'contains a list of defined string' do
-      expect(CommunityProfiles::DistanceLearningConfig::ALL_CATEGORIES).to match_array([
-        'Curriculum',
-        'Instruction',
-        'Progress Monitoring',
-        'Centralization',
-        'Learning Time',
-        'Technology'
+    it 'contains a list of defined asscessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::TAB_ACCESSORS.map {|asscessor| asscessor[:tab]}).to match_array([
+        'Teaching',
+        'Resources',
+        'Policies',
       ])
     end
   end
 
-  context 'DATA_TYPES_CONFIGS' do
-    it 'is and array' do
-      expect(CommunityProfiles::DistanceLearningConfig::DATA_TYPES_CONFIGS).to be_a(Array)
+  context 'TEACHING_TAB_ACCESSORS' do
+    it 'is an array' do
+      expect(CommunityProfiles::DistanceLearningConfig::TEACHING_TAB_ACCESSORS).to be_an(Array)
     end
 
-    it 'contains an array of hashes with data_types that are defined' do
-      expect(CommunityProfiles::DistanceLearningConfig::DATA_TYPES_CONFIGS.map {|config| config[:data_type]}).to match_array([
-        'URL',
-        "OVERVIEW",
-        "RESOURCES PROVIDED BY THE DISTRICT",
-        "RESOURCE COVERAGE",
-        "INSTRUCTION FROM TEACHERS",
-        "SYNCHRONOUS TEACHING FLAG",
-        "SYNCHRONOUS STUDENT ENGAGEMENT FLAG",
-        "RESOURCES FOR STUDENTS WITH DISABILITIES",
-        "FEEDBACK ON STUDENT WORK",
-        "FORMAL GRADING FLAG",
-        "TEACHER CHECK-INS",
-        "ATTENDANCE TRACKING",
-        "INSTRUCTIONAL MINUTES RECOMMENDED",
-        "DEVICE DISTRIBUTION",
-        "HOTSPOT ACCESS",
-        "DISTRICT DELEGATES DISTANCE LEARNING PLAN DECISION-MAKING"
+    it 'contains a list of defined subtab asscessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::TEACHING_TAB_ACCESSORS.map {|asscessor| asscessor[:subtab]}).to match_array([
+        'main'
       ])
     end
+  end
 
-    it 'contains an array of hashes with categories that are defined' do
-      expect(CommunityProfiles::DistanceLearningConfig::DATA_TYPES_CONFIGS.map {|config| config[:category]}).to match_array([
-        'General',
-        'General',
-        'Curriculum',
-        'Curriculum',
-        'Instruction',
-        'Instruction',
-        'Instruction',
-        'Instruction',
-        'Progress Monitoring',
-        'Progress Monitoring',
-        'Progress Monitoring',
-        'Centralization',
-        'Learning Time',
-        'Learning Time',
-        'Technology',
-        'Technology'
+  context 'RESOURCES_TAB_ACCESSORS' do
+    it 'is an array' do
+      expect(CommunityProfiles::DistanceLearningConfig::RESOURCES_TAB_ACCESSORS).to be_an(Array)
+    end
+
+    it 'contains a list of defined subtab asscessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::RESOURCES_TAB_ACCESSORS.map {|asscessor| asscessor[:subtab]}).to match_array([
+        'main'
+      ])
+    end
+  end
+
+  context 'POLICIES_TAB_ACCESSORS' do
+    it 'is an array' do
+      expect(CommunityProfiles::DistanceLearningConfig::POLICIES_TAB_ACCESSORS).to be_an(Array)
+    end
+
+    it 'contains a list of defined subtab asscessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::POLICIES_TAB_ACCESSORS.map {|asscessor| asscessor[:subtab]}).to match_array([
+        'Learning',
+        'Planning'
+      ])
+    end
+  end
+
+  context 'TEACHING_MAIN_SUBTAB_ACCESSORS' do
+    it 'is an array' do
+      expect(CommunityProfiles::DistanceLearningConfig::TEACHING_MAIN_SUBTAB_ACCESSORS).to be_an(Array)
+    end
+
+    it 'contains a list of defined subtab asscessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::TEACHING_MAIN_SUBTAB_ACCESSORS).to match_array([
+        "INSTRUCTION FROM TEACHERS",
+        "SYNCHRONOUS TEACHING FLAG",
+        "FEEDBACK ON STUDENT WORK",
+        "TEACHER CHECK-INS",
+        "SYNCHRONOUS STUDENT ENGAGEMENT FLAG",
+      ])
+    end
+  end
+
+  context 'RESOURCES_MAIN_SUBTAB_ACCESSORS' do
+    it 'is an array' do
+      expect(CommunityProfiles::DistanceLearningConfig::RESOURCES_MAIN_SUBTAB_ACCESSORS).to be_an(Array)
+    end
+
+    it 'contains a list of defined subtab asscessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::RESOURCES_MAIN_SUBTAB_ACCESSORS).to match_array([
+        "DEVICE DISTRIBUTION",
+        "HOTSPOT ACCESS",
+        "RESOURCES FOR STUDENTS WITH DISABILITIES",
+      ])
+    end
+  end
+
+  context 'POLICIES_LEARNING_SUBTAB_ACCESSORS' do
+    it 'is an array' do
+      expect(CommunityProfiles::DistanceLearningConfig::POLICIES_LEARNING_SUBTAB_ACCESSORS).to be_an(Array)
+    end
+
+    it 'contains a list of defined subtab asscessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::POLICIES_LEARNING_SUBTAB_ACCESSORS).to match_array([
+        "RESOURCE COVERAGE",
+        "INSTRUCTIONAL MINUTES RECOMMENDED",
+        "FORMAL GRADING FLAG",
+        "ATTENDANCE TRACKING",
+        "DISTRICT DELEGATES DISTANCE LEARNING PLAN DECISION-MAKING",
+      ])
+    end
+  end
+
+  context 'POLICIES_PLANNING_SUBTAB_ACCESSORS' do
+    it 'is an array' do
+      expect(CommunityProfiles::DistanceLearningConfig::POLICIES_PLANNING_SUBTAB_ACCESSORS).to be_an(Array)
+    end
+
+    it 'contains a list of defined subtab asscessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::POLICIES_PLANNING_SUBTAB_ACCESSORS).to match_array([
+        "20-21 CONTINGENCY PLAN",
+        "LEARNING LOSS PLAN",
+        "SUMMER LEARNING PLAN",
+        "LEARNING LOSS DIAGNOSTIC IDENTIFIED",
       ])
     end
   end
