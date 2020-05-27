@@ -3,6 +3,33 @@ module MetricsCaching
     include CacheValidation
     CACHE_KEY = 'metrics'
 
+    # 23: Percentage algebra 1 enrolled grades 7-8
+    # 27: Percentage passing algebra 1 grades 7-8
+    # 35: Percentage of students suspended out of school
+    # 51: Percentage of students enrolled in IB grades 9-12
+    # 55: Percentage AP enrolled grades 9-12
+    # 59: Percentage AP math enrolled grades 9-12
+    # 63: Percentage AP science enrolled grades 9-12
+    # 67: Percentage AP other courses enrolled grades 9-12
+    # 71: Percentage SAT/ACT participation grades 11-12
+    # 83: Percentage of students passing 1 or more AP exams grades 9-12
+    # 91: Percentage of students chronically absent (15+ days)
+    # 95: Ratio of students to full time teachers
+    # 99: Percentage of full time teachers who are certified
+    # 119: Ratio of students to full time counselors
+    # 133: Ratio of teacher salary to total number of teachers
+    # 149: Percentage of teachers with less than three years experience
+    # 152: Number of Advanced Courses Taken per Student
+    # 154: Percentage of Students Enrolled
+    # 318: Percent of Students who Participated in the SAT/ACT in grades 9-12
+    # 320: Percentage of students enrolled in Dual Enrollment classes grade 9-12
+    # 321: Percent of students enrolled in Algebra 1
+    # 322: Percent of students passing Algebra 1
+    # 330: Law Enforcement Officer indicator
+    # 331: Security Guard indicator
+    # 332: Nurse indicator
+    # 333: Psychologist indicator
+    # 334: Social Worker indicator
     # 365: Percentage of teachers in their first year
     # 366: Bachelor's degree
     # 367: Master's degree
@@ -132,17 +159,19 @@ module MetricsCaching
     # 494: Student Growth - Middle Level
 
     DATA_TYPE_IDS_WHITELIST = [
-      365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376,
-      377, 378, 379, 380, 381, 382, 383, 384, 387, 388, 389, 390,
-      391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402,
-      403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414,
-      415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426,
-      427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438,
-      439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 450,
-      451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462,
-      463, 464, 465, 466, 467, 468, 469, 470, 471, 472, 473, 474,
-      475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 487,
-      488, 489, 486, 385, 386, 493, 494
+      23,  27,  35,  51,  55,  59,  63,  67,  71,  83,  91,  95,
+      99,  119, 133, 149, 152, 154, 318, 320, 321, 322, 330, 331,
+      332, 333, 334, 365, 366, 367, 368, 369, 370, 371, 372, 373,
+      374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 387,
+      388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399,
+      400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411,
+      412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422, 423,
+      424, 425, 426, 427, 428, 429, 430, 431, 432, 433, 434, 435,
+      436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447,
+      448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459,
+      460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471,
+      472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483,
+      484, 485, 487, 488, 489, 486, 385, 386, 493, 494
     ]
 
     def self.listens_to?(data_type)
@@ -170,6 +199,7 @@ module MetricsCaching
     def build_hash_for_metric(metric)
       {}.tap do |hash|
         hash[:breakdown] = metric.breakdown_name
+        hash[:breakdown_tags] = metric.breakdown_tags
         hash[:school_value] = Float(metric.value) rescue metric.value
         if metric.district_value
           hash[:district_average] = Float(metric.district_value) rescue metric.district_value
@@ -181,6 +211,7 @@ module MetricsCaching
         hash[:source] = metric.source_name
         hash[:subject] = metric.subject_name
         hash[:year] = metric.year
+        hash[:source_date_valid] = metric.source_date_valid
         hash[:created] = metric.created
       end
     end
