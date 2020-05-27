@@ -26,7 +26,7 @@ describe CommunityProfiles::DistanceLearningConfig do
     it 'contains an array of hashes with data_types that are defined' do
       expect(CommunityProfiles::DistanceLearningConfig::DATA_TYPES_CONFIGS.map {|config| config[:data_type]}).to match_array([
         'URL',
-        "OVERVIEW",
+        "SUMMARY",
         "RESOURCES PROVIDED BY THE DISTRICT",
         "RESOURCE COVERAGE",
         "INSTRUCTION FROM TEACHERS",
