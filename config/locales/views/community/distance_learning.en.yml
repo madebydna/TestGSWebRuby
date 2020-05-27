@@ -49,6 +49,18 @@ en:
         DISTRICT DELEGATES DISTANCE LEARNING PLAN DECISION-MAKING:
           label: District has delegated distance/remote learning to schools
           tooltip_html: In districts that have delegated distance learning, schools are responsible for designing their own plans, which means approaches could vary across schools within the district.
+        20-21 CONTINGENCY PLAN:
+          label: Flexible plans for 2020-21 school year to offer remote and/or in-person learning
+          tooltip_html: The district has plans to address different learning scenarios for the new school year, including remote or in-person learning, or a combination of both.
+        LEARNING LOSS PLAN:
+          label: Plans to remedy student learning loss during the summer or fall
+          tooltip_html: District will offer credit recovery, remedial instruction,  and/or extra support for students with high absenteeism or low grades.
+        SUMMER LEARNING PLAN:
+          label: Plans to offer summer school options
+          tooltip_html: District will offer summer school directly or through an outside partner
+        LEARNING LOSS DIAGNOSTIC IDENTIFIED:
+          label: Tools to measure student learning loss in the fall of 2020.
+          tooltip_html: District will evaluate each student for learning loss to guide decisions about grade level and credits.
       teaching:
         main:
           narration: How is this district providing instruction to students?

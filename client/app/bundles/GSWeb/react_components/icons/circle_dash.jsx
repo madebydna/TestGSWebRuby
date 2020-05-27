@@ -1,14 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { t } from '../../util/i18n';
 
-const CircleDash = (props) => {
-  return (
-    <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="9.14378" cy="8.99991" rx="8.94118" ry="9" fill="#AB8F0E"/>
-      <line x1="3.5" y1="9" x2="14.5" y2="9" stroke="white" strokeWidth="2"/>
-    </svg>
-  );
-}
+const CircleDash = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={props.width || "19"}
+    height={props.height || "18"}
+    fill="none"
+    viewBox={props.viewBox || "0 0 19 18"}
+  >
+    <ellipse cx="9.144" cy="9" fill={props.color} rx="8.941" ry="9"></ellipse>
+    <path stroke="#fff" d="M3.5 9L14.5 9"></path>
+  </svg>
+);
+
+CircleDash.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.string,
+  viewBox: PropTypes.string,
+  color: PropTypes.string
+};
+
+CircleDash.defaultProps = {
+  width: "19",
+  height: "18",
+  viewBox: "0 0 19 18",
+  color: "#AB8F0E"
+};
+
 
 export default CircleDash;

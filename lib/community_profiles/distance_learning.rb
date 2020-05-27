@@ -95,7 +95,7 @@ module CommunityProfiles
     end
 
     def format_overview
-      first_paragraph = general_data(OVERVIEW).split("\\n").first.strip
+      first_paragraph = general_data(SUMMARY).strip
       I18n.db_t(first_paragraph, default: first_paragraph)
     end
   end

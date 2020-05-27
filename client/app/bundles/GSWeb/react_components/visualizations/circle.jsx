@@ -6,60 +6,49 @@ import CircleCheck from '../icons/circle_check';
 import CircleDash from '../icons/circle_dash';
 import CircleX from '../icons/circle_x';
 
-export default class Circle extends React.Component {
-  static propTypes = {
-    value: PropTypes.string.isRequired
-  };
+const Circle = (props) => {
+  const { breakdown, tooltip_html, value } = props;
 
-  constructor(props) {
-    super(props);
-    this.renderCircle = this.renderCircle.bind(this);
-    this.renderKey = this.renderKey.bind(this);
-  }
-
-  renderCircle() {
-    if (this.props.value === 'All') {
+  const renderCircle = () => {
+    if (value === 'All' || value === 'Yes') {
       return (
         <div className="circle-viz">
-          <CircleCheck key={this.renderKey()} />
+          <CircleCheck key={breakdown} />
         </div>
       );
-    } else if (this.props.value === 'Partial') {
+    } else if (value === 'Partial' || value === 'Partner') {
       return (
         <div className="circle-viz">
-          <CircleDash key={this.renderKey()} />
-          <div className="state-average">{ t('distance_learning.ratings.not_all_grades') }</div>
+          <CircleDash key={breakdown} />
+          <div className="state-average">{t('distance_learning.ratings.not_all_grades')}</div>
         </div>
       );
     } else {
       return (
         <div className="circle-viz">
-          <CircleX key={this.renderKey()} />
+          <CircleX key={breakdown} />
         </div>
       );
     }
-  }
+  };
 
-
-
-  renderKey() {
-    return this.props.breakdown;
-  }
-
-  render() {
-    let { breakdown, tooltip_html } = this.props;
-    return (
-      <div className="row bar-graph-display">
-        <div className="test-score-container clearfix">
-          <div className="col-xs-8 col-sm-5 subject">
-            {breakdown}&nbsp;{ tooltip_html && <QuestionMarkTooltip content={tooltip_html} className="tooltip" element_type="datatooltip" /> }
-          </div>
-          <div className="col-xs-1 col-sm-1" />
-          <div className="col-xs-3 col-sm-6">
-            {this.renderCircle()}
-          </div>
-        </div>
+  return <div className="row bar-graph-display">
+    <div className="test-score-container clearfix">
+      <div className="col-xs-8 col-sm-5 subject">
+        {breakdown}&nbsp;{tooltip_html && <QuestionMarkTooltip content={tooltip_html} className="tooltip" element_type="datatooltip" />}
       </div>
-    );
-  }
+      <div className="col-xs-1 col-sm-1" />
+      <div className="col-xs-3 col-sm-6">
+        {renderCircle()}
+      </div>
+    </div>
+  </div>
 }
+
+Circle.propTypes = {
+  breakdown: PropTypes.string.isRequired,
+  tooltip_html: PropTypes.string,
+  value: PropTypes.string.isRequired
+};
+
+export default Circle;
