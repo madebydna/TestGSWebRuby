@@ -28,7 +28,7 @@ export default class Circle extends React.Component {
       return (
         <div className="circle-viz">
           <CircleDash key={this.renderKey()} />
-          <div className="state-average">{ t('distance_learning.ratings.not_all_grades') }</div>
+          <div className="state-average tar">{ t('distance_learning.ratings.not_all_grades') }</div>
         </div>
       );
     } else {
