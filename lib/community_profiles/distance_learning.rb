@@ -96,7 +96,7 @@ module CommunityProfiles
     end
 
     def format_overview
-      first_paragraph = fetch_value(SUMMER_FALL_PLANNING).strip
+      first_paragraph = fetch_value(SUMMARY).strip
       I18n.db_t(first_paragraph, default: first_paragraph)
     end
 
