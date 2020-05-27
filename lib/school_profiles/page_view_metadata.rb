@@ -32,7 +32,7 @@ module SchoolProfiles
         dlc['city_long'] = SchoolProfiles::PageViewMetadata.sanitize_for_dfp(school.city)
         dlc['address'] = SchoolProfiles::PageViewMetadata.sanitize_for_dfp(school.street)
         dlc[PageAnalytics::GS_BADGE] = 'CSAWinner' if csa_badge
-        dlc[PageAnalytics::GS_TAGS] = 'DistanceLearningData' if @distance_learning.present?
+        dlc[PageAnalytics::GS_TAGS] = 'DistanceLearningData' if distance_learning.present?
       end
     end
 

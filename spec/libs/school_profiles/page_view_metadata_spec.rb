@@ -7,14 +7,16 @@ describe SchoolProfiles::PageViewMetadata do
     let(:school_reviews_count) { 6 }
     let(:gs_rating) { '5' }
     let(:page_name) { 'test' }
-    let(:expected_hash) { meta_data_hash(school, page_name, gs_rating, school_reviews_count, csa_badge) }
+    let(:distance_learning) { ' ' }
+    let(:expected_hash) { meta_data_hash(school, page_name, gs_rating, school_reviews_count, csa_badge, distance_learning) }
 
     subject do
       SchoolProfiles::PageViewMetadata.new(school,
                                            page_name,
                                            gs_rating,
                                            school_reviews_count,
-                                           csa_badge).hash
+                                           csa_badge,
+                                           distance_learning).hash
     end
 
     context 'without CSA badge' do
@@ -30,7 +32,7 @@ describe SchoolProfiles::PageViewMetadata do
     end
   end
 
-  def meta_data_hash(school, page_name, gs_rating, school_reviews_count, csa_badge)
+  def meta_data_hash(school, page_name, gs_rating, school_reviews_count, csa_badge, distance_learning)
     {
       'page_name'   => page_name,
       'City'        => school.city,
@@ -48,6 +50,7 @@ describe SchoolProfiles::PageViewMetadata do
       'address' => '15 OHara St'
     }.tap do |h|
       h['gs_badge'] = 'CSAWinner' if csa_badge
+      h['gs_tags'] = 'DistanceLearningData' if distance_learning.present?
     end
   end
 
