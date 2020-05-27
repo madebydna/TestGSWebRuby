@@ -702,11 +702,12 @@ $line-height-community: 1.428571429;
 }
 
 #distance-learning {
-  margin-top: 30px;
-  margin-bottom: 20px;
+  margin: 20px 0;
 
   .profile-module {
     border: none;
+    background: #f6f9fa;
+    padding: 10px;
 
     .top-content {
       font-size: 16px;
@@ -732,6 +733,30 @@ $line-height-community: 1.428571429;
     padding-top: 10px;
   }
 
+  .module-footer-left {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 220px);
+    padding-top: 5px;
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+  }
+
+  .module-footer-right {
+    float: right;
+
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+  }
+
+  .forward-arrow {
+    height: 12px;
+    vertical-align: baseline;
+  }
+
   .sourcing p {
     padding: 0 40px 10px;
   }
@@ -739,6 +764,30 @@ $line-height-community: 1.428571429;
   .module-icon {
     float: left;
     display: inline-block;
+  }
+
+  .top-content {
+    > div {
+      padding-bottom: 15px;
+    }
+
+    hr {
+      margin: 0;
+    }
+  }
+
+  .bar-graph-display .test-score-container {
+    padding: 15px 10px;
+  }
+
+  .bar-graph-display:last-child {
+    border: none;
+  }
+
+  .circle-viz-row-container:last-child {
+    display: flex;
+    align-items: center;
+    padding-bottom: 0;
   }
 }
 
@@ -803,3 +852,8 @@ $line-height-community: 1.428571429;
   }
 }
 
+.see-more-arrow {
+  height: 12px;
+  vertical-align: middle;
+  transform: rotate(90deg);
+}
