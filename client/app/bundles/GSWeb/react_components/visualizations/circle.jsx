@@ -10,13 +10,13 @@ const Circle = (props) => {
   const { breakdown, tooltip_html, value } = props;
 
   const renderCircle = () => {
-    if (value === 'All' || value === 'Yes') {
+    if (value === 'All' || value === 'Yes' || value === 'Partner') {
       return (
         <div className="circle-viz">
           <CircleCheck key={breakdown} />
         </div>
       );
-    } else if (value === 'Partial' || value === 'Partner') {
+    } else if (value === 'Partial') {
       return (
         <div className="circle-viz">
           <CircleDash key={breakdown} />
