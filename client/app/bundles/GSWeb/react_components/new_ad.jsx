@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import { t } from 'util/i18n';
 import {
   defineAdOnce,
-  onInitialize as onAdvertisingInitialize,
   destroyAd,
   adsInitialized,
   slotIdFromName,
-  showAd,
-  // checkForFreeStarLoaded,
-  // freestarLoaded
+  showAd
 } from 'util/new_advertising.js';
 
 import { CSSTransition } from 'react-transition-group';
@@ -48,25 +45,14 @@ class NewAd extends React.Component {
     } = this.props;
     console.log('NEW AD ... ad component', slot, 'did mount');
 
-    // checkForFreeStarLoaded(this.doRenderAds(slot, slotOccurrenceNumber, this.onAdRenderEnded));
-
     if (adsInitialized() && !defer) {
       console.log('NEW AD ... showing existing ad', slot);
       showAd(slot, slotOccurrenceNumber, this.onAdRenderEnded);
     } else if (!defer) {
       console.log('NEW AD ... initializing react ad', slot);
       defineAdOnce(slot, slotOccurrenceNumber, this.onAdRenderEnded);
-      // onAdvertisingInitialize(() => {
-      //   defineAdOnce(slot, slotOccurrenceNumber, this.onAdRenderEnded);
-      // });
     }
   }
-
-  // doRenderAds(slot, slotOccurrenceNumber, callback) {
-  //   return () => {
-  //     showAd(slot, slotOccurrenceNumber, callback);
-  //   }
-  // }
 
   componentWillUnmount() {
     console.log('NEW AD ... ad component', this.props.slot, 'will unmount');
