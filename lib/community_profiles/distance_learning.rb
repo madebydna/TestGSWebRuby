@@ -14,13 +14,11 @@ module CommunityProfiles
 
     def formatted_data
       @_formatted_data ||=begin
-        # default_values_array_hash = Hash.new { |h,k| h[k] = [] }
         default_values_hash_of_hashes = Hash.new { |h,k| h[k] = {} }
 
         DATA_TYPES_CONFIGS.each_with_object(default_values_hash_of_hashes) do |config, hash|
           next unless crpe_data.fetch(config[:data_type], nil)
 
-          # hash[config[:category]] << crpe_data.fetch(config[:data_type])
           hash[config[:tab]][config[:subtab]] = [] unless hash[config[:tab]][config[:subtab]]
           hash[config[:tab]][config[:subtab]] << crpe_data.fetch(config[:data_type])
         end
@@ -34,13 +32,11 @@ module CommunityProfiles
     def data_module
       return {} if crpe_data.empty?
 
-      # TODO: Change html_safe?
       {}.tap do |h|
         h[:url] = general_data(URL)
-        # h[:overview] = format_overview.html_safe
         h[:overview] = format_overview
         h[:data_values] = data_values
-        h[:tooltip] = I18n.t('tooltip', scope: 'community.distance_learning')
+        h[:tooltip] = I18n.t('tooltip_html', scope: 'community.distance_learning', date_valid: date_valid)
         h[:anchor] = 'distance-learning'
         h[:sources] = I18n.t('sources_html', scope: 'community.distance_learning')
         h[:share_content] = nil
@@ -97,6 +93,11 @@ module CommunityProfiles
     def format_overview
       first_paragraph = general_data(OVERVIEW).split("\\n").first.strip
       I18n.db_t(first_paragraph, default: first_paragraph)
+    end
+
+    def date_valid
+      date = formatted_data.fetch(GENERAL, {}).fetch('main', {}).find {|data| data["data_type"] == URL}.fetch('date_valid', nil)
+      date.split("-").reverse.join("/")
     end
   end
 end
