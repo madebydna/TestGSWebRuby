@@ -51,10 +51,10 @@ module CommunityProfiles
     end
 
     def data_values_by_subtab(accessors)
-      accessors.map do |asscessor|
-        subtab = asscessor[:subtab]
-        tab = asscessor[:tab]
-        data_types = asscessor[:data_types]
+      accessors.map do |accessor|
+        subtab = accessor[:subtab]
+        tab = accessor[:tab]
+        data_types = accessor[:data_types]
 
         {}.tap do |h|
           h[:anchor] = subtab
