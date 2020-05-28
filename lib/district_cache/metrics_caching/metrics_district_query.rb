@@ -15,7 +15,7 @@ module MetricsCaching
 
     def include_needed_associations(scoped)
       scoped.select("metrics.*").
-        includes(:subject, :breakdown, {data_set: [:data_type, :source]})
+        includes(:subject, {breakdown: :breakdown_tags}, {data_set: [:data_type, :source]})
     end
 
     private
