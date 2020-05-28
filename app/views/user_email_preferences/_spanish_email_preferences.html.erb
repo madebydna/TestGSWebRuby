@@ -2,7 +2,7 @@
 
 
 <%# Spanish Newsletters %>
-<div class="news-es tabcontent <%=I18n.locale == :es ? 'active' : '' %>">
+<div class="news-es tabcontent <%=current_tab == :es ? 'active' : '' %>">
   <h3><%= t(path_to_yml + 'newsletters_heading') %></h3>
 
   <%= render partial: 'subscription', :locals => {

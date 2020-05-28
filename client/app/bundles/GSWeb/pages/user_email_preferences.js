@@ -15,6 +15,7 @@ const preferencePageInit = () => {
         $(this).addClass("tab-selected");
         $(".news-es").removeClass("active");
         $(".tab-news-es").removeClass("tab-selected");
+        $("#tab").val('en')
       });
 
       $('.tab-news-es').click(function () {
@@ -22,6 +23,7 @@ const preferencePageInit = () => {
         $(this).addClass("tab-selected");
         $(".news-en").removeClass("active");
         $(".tab-news-en").removeClass("tab-selected");
+        $("#tab").val('es')
       });
 
       $formContainer.on('click', '.js-greatkidsnewsCheckbox', function () {
