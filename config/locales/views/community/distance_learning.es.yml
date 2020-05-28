@@ -4,7 +4,7 @@ es:
       title: Aprendizaje a distancia
       tooltip_html: <div>Esto muestra como el distrito está apoyando las necesidades de los estudiantes durante el cierre de escuelas debido a COVID-19. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Última actualización %{date_valid}</div></div>
       district_overview: Resumen del distrito
-      district_website_cta_html: <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">Visite el sitio web del distrito</a>
+      district_website_cta_html: <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">Visita la página de COVID-19 de tu distrito</a>
       see_more: Ver más
       sources_html: <div class="sourcing"><h1>Información y fuentes de aprendizaje a distancia del distrito</h1> <div>La información que se presenta en este módulo fue compilada por el <a href="https://www.crpe.org/" target="_blank">Center on Reinventing Public Education (CRPE por sus siglas)</a> quienes obtuvieron datos principalmente de planes públicos en sitios de web de distritos escolares. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a></div></div>
       tab:
