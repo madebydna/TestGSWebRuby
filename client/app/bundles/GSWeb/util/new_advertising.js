@@ -268,6 +268,43 @@ const addCompfilterToGlobalAdTargetingGon = function() {
   gon.ad_set_targeting.compfilter = randomCompFilterValue;
 };
 
+const checkMessageOrigin = function(origin) {
+  return (
+    typeof origin === 'string' &&
+    (origin.match(/greatschools\.org$/) ||
+      origin.match(/googlesyndication\.com$/) ||
+      origin.match(/doubleclick\.net$/))
+  );
+};
+
+const handleGhostTextMessages = function(event) {
+  if (
+    typeof event !== 'undefined' &&
+    checkMessageOrigin(event.origin) &&
+    typeof event.data !== 'undefined' &&
+    typeof event.data.ghostText === 'string'
+  ) {
+    jQuery('iframe').each(function() {
+      if (
+        this.getAttribute('name') &&
+        window.frames[this.getAttribute('name')] === event.source
+      ) {
+        const $adSlotDiv = jQuery(this).parents('.js-ad-hook');
+        let $adTextDiv = $adSlotDiv
+            .siblings()
+            .find('.advertisement-text');
+        if ($adTextDiv.length === 0) {
+          // Probably under /gk/
+          $adTextDiv = $adSlotDiv.siblings('.advertisement-text');
+        }
+        $adTextDiv.text(event.data.ghostText);
+      }
+    });
+  }
+};
+
+window.addEventListener('message', handleGhostTextMessages, false);
+
 GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
 GS.ad.showAd = showAd;
 GS.ad.init = init; // used by WP, for instance
