@@ -22,7 +22,7 @@
 
 
   & a {
-    color: $link-text-color;
+    color: $midnight-blue;
   }
 
   & span {
@@ -40,13 +40,13 @@
       padding: 5px 10px;
       margin-top: 10px;
       color: white;
-      background-color: $link-text-color;
+      background-color: $midnight-blue;
       font-size: 12px;
       text-align: center;
       font-family: "opensans-regular";
       &.nearby-homes{
         background-color: #FFFFFF;
-        color: $link-text-color;
+        color: $midnight-blue;
       }
     }
 

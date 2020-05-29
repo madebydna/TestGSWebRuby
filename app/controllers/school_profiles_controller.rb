@@ -62,11 +62,13 @@ class SchoolProfilesController < ApplicationController
       school_gs_rating = school_cache_data_reader.gs_rating.to_s
       number_of_reviews_with_comments = school.reviews.having_comments.count
       csa_badge = school_cache_data_reader.csa_badge?
+      dl = distance_learning.distance_learning_district?
       SchoolProfiles::PageViewMetadata.new(school,
                                            PAGE_NAME,
                                            school_gs_rating,
                                            number_of_reviews_with_comments,
-                                           csa_badge)
+                                           csa_badge,
+                                           dl)
           .hash
     end
   end

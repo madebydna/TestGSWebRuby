@@ -2,11 +2,11 @@ en:
   community:
     distance_learning:
       title: Distance learning
-      tooltip: This shows how the district is supporting student needs during school closure due to COVID-19. If you work for this district and have distance learning updates to share, please email crpedatabase@uw.edu.
+      tooltip_html: <div>This shows how the district is supporting student needs during school closure due to COVID-19. If you work for this district and have distance learning updates to share, please email <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Last updated %{date_valid}</div></div>
       district_overview: District overview
-      district_overview_tooltip_html: For more information, <a href="%{url}" target="_blank">visit the district's website</a>.
+      district_website_cta_html: <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">Visit district's COVID-19 page</a>
       see_more: See more
-      sources_html: <div class="sourcing"><h1>District distance learning data sources & information</h1> <div>Information in this module was compiled by the Center on Reinventing Public Education (CRPE), which sourced data primarily from publicly posted plans on school district websites. If you work for this district and have distance learning updates to share, please email crpedatabase@uw.edu.</div></div>
+      sources_html: <div class="sourcing"><h1>District distance learning data sources & information</h1> <div>Information in this module was compiled by the <a href="https://www.crpe.org/" target="_blank">Center on Reinventing Public Education (CRPE)</a>, which sourced data primarily from publicly posted plans on school district websites. If you work for this district and have distance learning updates to share, please email <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a></div></div>
       tab:
         teaching: Teaching
         resources: Resources
@@ -49,6 +49,18 @@ en:
         DISTRICT DELEGATES DISTANCE LEARNING PLAN DECISION-MAKING:
           label: District has delegated distance/remote learning to schools
           tooltip_html: In districts that have delegated distance learning, schools are responsible for designing their own plans, which means approaches could vary across schools within the district.
+        20-21 CONTINGENCY PLAN:
+          label: Flexible plans for 2020-21 school year to offer remote and/or in-person learning
+          tooltip_html: The district has plans to address different learning scenarios for the new school year, including remote or in-person learning, or a combination of both.
+        LEARNING LOSS PLAN:
+          label: Plans to remedy student learning loss during the summer or fall
+          tooltip_html: District will offer credit recovery, remedial instruction,  and/or extra support for students with high absenteeism or low grades.
+        SUMMER LEARNING PLAN:
+          label: Plans to offer summer school options
+          tooltip_html: District will offer summer school directly or through an outside partner
+        LEARNING LOSS DIAGNOSTIC IDENTIFIED:
+          label: Tools to measure student learning loss in the fall of 2020.
+          tooltip_html: District will evaluate each student for learning loss to guide decisions about grade level and credits.
       teaching:
         main:
           narration: How is this district providing instruction to students?

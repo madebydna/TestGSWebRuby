@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { t } from '../util/i18n';
+import ForwardArrowBlue from 'icons/forward_arrow_blue.png';
 
 export default class ShortenText extends React.Component {
 
   static propTypes = {
     text: PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired
+    length: PropTypes.number.isRequired,
+    label: PropTypes.string,
+    renderDownArrow: PropTypes.bool
   };
 
   constructor(props) {
@@ -21,11 +24,23 @@ export default class ShortenText extends React.Component {
     this.setState({ showFullText: true });
   }
 
+  renderLabel () {
+    return this.props.label || t('More');
+  }
+
+  renderDownArrow() {
+    if (this.props.renderDownArrow) {
+      return (
+        <img src={ForwardArrowBlue} className="see-more-arrow" />
+      );
+    }
+  }
+
   renderShortenedText() {
     return(
       <span>
         { this.shortenText(this.props.text, this.props.length) }
-        <span onClick={this.showFullText}>... <a href="javascript:void(0);">{t('More')}</a></span>
+        <span onClick={this.showFullText}>... <a href="javascript:void(0);">{this.renderLabel()}&nbsp;{this.renderDownArrow()}</a></span>
       </span>
     )
   }

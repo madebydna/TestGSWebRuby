@@ -1,7 +1,7 @@
 <% path_to_yml = "user_email_preferences.email_preferences.en_news." %>
 
 <%# English Newsletters %>
-<div class="news-en tabcontent <%=I18n.locale == :en ? 'active' : '' %>">
+<div class="news-en tabcontent <%=current_tab == :en ? 'active' : '' %>">
   <h3><%= t(path_to_yml + 'newsletters_heading') %></h3>
 
   <%= render partial: 'subscription', :locals => {

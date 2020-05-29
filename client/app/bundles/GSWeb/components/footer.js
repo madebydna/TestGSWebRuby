@@ -4,10 +4,21 @@ import {
 } from '../util/newsletters';
 import * as validatingInputs from 'components/validating_inputs';
 import { attachJQueryEventHandlers as attachMultiSelectButtonGroupEventHandlers } from 'util/multi_select_button_group';
+import { isSignedIn } from '../util/session';
 
 import { currentLocale } from 'util/i18n';
 
 const newsletterLinkSelector = '.js-send-me-updates-button-footer';
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (isSignedIn()){
+    if (currentLocale() === 'en'){
+      document.querySelector(newsletterLinkSelector).innerText = "Email Preferences"
+    }else if(currentLocale() === 'es'){
+      document.querySelector(newsletterLinkSelector).innerText = "Preferencias de correo electrónico"
+    }
+  }
+})
 
 export function setupNewsletterLink() {
   $(() => {

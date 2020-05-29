@@ -1,12 +1,12 @@
 .subgroups {
- $gray-border-color: #e0e4e8; 
- $state-avg-color: #71787e;
+ $gray-border-color: #e0e4e8;
+ $state-avg-color: #6F777B;
   margin-top: 30px;
 
   div.row > div:first-child {
     border-left: none;
   }
-// Style the third subgroup chart to have no left border when stacked 
+// Style the third subgroup chart to have no left border when stacked
 // third subgroup will have a right border when stacked b/c there is no fourth
 // subgroup chart yet
   div.row > div:nth-child(3) {

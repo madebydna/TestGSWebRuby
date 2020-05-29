@@ -100,7 +100,7 @@ class StateCacheDataReader
 
   def decorate_state(state)
     query_results = state_cache_query.query
-    state_cache_results = StateCacheResults.new(STATE_CACHE_KEYS, query_results)
+    state_cache_results = StateCacheResults.new(state_cache_keys, query_results)
     state_cache_results.decorate_state(state)
   end
 

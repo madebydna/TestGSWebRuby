@@ -119,11 +119,11 @@ es:
             <span class="emphasis" style="color:#CB5C35;">Un signo preocupante:</span>
             <p>Los estudiantes de esta escuela están progresando <span class="emphasis">menos</span> académicamente en comparación al año anterior, y a otros estudiantes similares en el estado. Un mayor número de escuelas en este distrito tiene estudiantes que están haciendo <span class="emphasis">menos</span> progreso académico que el promedio estatal.</p>
           average_html: >
-            <span class="emphasis" style="color:#AB8F0E;">Vale la pena una mirada más profunda:</span>
+            <span class="emphasis" style="color:#8a720a;">Vale la pena una mirada más profunda:</span>
             <p>Los estudiantes de esta escuela están <span class="emphasis">en promedio</span> logrando un progreso académico en comparación al año anterior, y a otros estudiantes similares en el estado. Los estudiantes en la mayoría de las escuelas en este distrito están haciendo un progreso académico <span class="emphasis">promedio</span> en comparación con otras escuelas en el estado.</p>
           above_average_html: >
             <span class="emphasis" style="color:#367A1E;">Un signo prometedor:</span>
             <p>Los estudiantes de esta escuela están haciendo <span class="emphasis">más</span> progreso académico en comparación al año anterior, y a otros estudiantes similares en el estado. Un mayor número de escuelas en este distrito tiene estudiantes que están progresando <span class="emphasis">más</span> académicamente que el promedio estatal.</p>
           even_distribution_html: >
-            <span class="emphasis" style="color:#AB8F0E;">Vale la pena una mirada más profunda:</span>
+            <span class="emphasis" style="color:#8a720a;">Vale la pena una mirada más profunda:</span>
             <p>Este distrito tiene un historial mixto de ayudar a los estudiantes a mejorar con el tiempo. Mira por abajo para ver qué porcentaje de escuelas en este distrito están haciendo <span class="emphasis">más, menos o aproximadamente el mismo</span> progreso que.</p>

@@ -123,6 +123,7 @@ let initialized = false;
 const onInitializeFuncs = [];
 
 const init = function() {
+  console.log("+!-------- WE SHOULD NOT SEE THIS !!!!!!");
   loadGpt();
 
   if (gon.advertising_enabled) {

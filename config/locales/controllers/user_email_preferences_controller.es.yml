@@ -1,4 +1,4 @@
 es:
   controllers:
     user_email_preferences_controller:
-      success: Thanks for updating your preferences for GreatSchools newsletters.
+      success: Gracias por actualizar tus preferencias para los boletines de GreatSchools.

@@ -17,7 +17,8 @@ import { addSubscription } from '../api_clients/subscriptions';
 // Triggers a join modal if not signed in.
 export const signupAndGetNewsletter = function(modalOptions) {
   if (isSignedIn()) {
-    greatNewsSignUp();
+    const url = preserveLanguageParam('/preferences/')
+    window.location.href = url
   } else {
     modalManager
       .showModal('EmailJoinModal', modalOptions)
@@ -32,8 +33,9 @@ export const signUpForGreatNewsAndMss = function(
   language
 ) {
   if (isSignedIn()) {
-    greatNewsSignUp();
     addSubscription('mystat', state, schoolId, language);
+    const url = preserveLanguageParam('/preferences/')
+    window.location.href = url
   } else {
     modalManager.showModal('EmailJoinModal', modalOptions).done(() => {
       greatNewsSignUp();

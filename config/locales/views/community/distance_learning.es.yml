@@ -2,11 +2,11 @@ es:
   community:
     distance_learning:
       title: Aprendizaje a distancia
-      tooltip: Esto muestra como el distrito está apoyando las necesidades de los estudiantes durante el cierre de escuelas debido a COVID-19. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a crpedatabase@uw.edu.
+      tooltip_html: <div>Esto muestra como el distrito está apoyando las necesidades de los estudiantes durante el cierre de escuelas debido a COVID-19. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Última actualización %{date_valid}</div></div>
       district_overview: Resumen del distrito
-      district_overview_tooltip_html: Para más información, <a href="%{url}" target="_blank">visite el sitio web del distrito</a>.
+      district_website_cta_html: <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">Visita la página de COVID-19 de tu distrito</a>
       see_more: Ver más
-      sources_html: <div class="sourcing"><h1>Información y fuentes de aprendizaje a distancia del distrito</h1> <div>La información que se presenta en este módulo fue compilada por el Center on Reinventing Public Education (CRPE por sus siglas) quienes obtuvieron datos principalmente de planes públicos en sitios de web de distritos escolares. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a crpedatabase@uw.edu.</div></div>
+      sources_html: <div class="sourcing"><h1>Información y fuentes de aprendizaje a distancia del distrito</h1> <div>La información que se presenta en este módulo fue compilada por el <a href="https://www.crpe.org/" target="_blank">Center on Reinventing Public Education (CRPE por sus siglas)</a> quienes obtuvieron datos principalmente de planes públicos en sitios de web de distritos escolares. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a></div></div>
       tab:
         teaching: La enseñanza
         resources: Recursos
@@ -49,6 +49,18 @@ es:
         DISTRICT DELEGATES DISTANCE LEARNING PLAN DECISION-MAKING:
           label: El distrito ha delegado el aprendizaje a distancia a las escuelas
           tooltip_html: En los distritos que han delegado el aprendizaje a distancia, las escuelas son responsables de diseñar sus propios planes. Esto lo que significa es que los enfoques pueden variar entres las escuelas del distrito.
+        20-21 CONTINGENCY PLAN:
+          label: Planes flexibles para ofrecer aprendizaje a distancia y/o en persona para el año escolar 2020-21
+          tooltip_html: El distrito tiene planes para abordar diferentes escenarios de aprendizaje para el nuevo año escolar, incluyendo aprendizaje a distancia o en persona, o una combinación de ambas estrategias.
+        LEARNING LOSS PLAN:
+          label: Planes para remediar la perdida de aprendizaje de los estudiantes durante el verano o otoño
+          tooltip_html: Distritos ofrecerán recuperacion de credito, instrucción correctiva y/o apoyo adicional para estudiantes con alto ausentismo o calificaciones bajas.
+        SUMMER LEARNING PLAN:
+          label: Planes para ofrecer opciones de escuela de verano
+          tooltip_html: El distrito ofrecerá la escuela de verano directamente o a través de una compañía externo
+        LEARNING LOSS DIAGNOSTIC IDENTIFIED:
+          label: Herramientas para medir la perdida de aprendizaje de los estudiantes en el otoño del 2020
+          tooltip_html: El distrito evaluará a cada estudiante para la pérdida de aprendizaje para guiar las decisiones sobre el nivel de grado y los créditos.
       teaching:
         main:
           narration: ¿Cómo proporciona este distrito instrucciones de aprendizaje a los estudiantes?

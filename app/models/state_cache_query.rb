@@ -23,7 +23,7 @@ class StateCacheQuery
   end
 
   def query
-    StateCache.where(state: @state).where(name: @cache_keys)
+    StateCache.where(state: @state, name: @cache_keys)
   end
 
   def query_all

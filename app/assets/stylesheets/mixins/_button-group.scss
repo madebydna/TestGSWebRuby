@@ -1,6 +1,6 @@
 @mixin button-group(
   $height: $form-field-medium-height,
-  $active-background-color: #647981,
+  $active-background-color: $midnight-blue,
   $active-color: #fff
 ) {
   display: inline-table; // inline-block also works but requires no space characters between adjacent buttons

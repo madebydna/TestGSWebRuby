@@ -28,7 +28,7 @@ class UserEmailPreferencesController < ApplicationController
     UserEmailSubscriptionManager.new(@current_user).update_mss(process_schools(param_schools))
     UserEmailGradeManager.new(@current_user).update(process_grades(param_grades))
     flash_notice t('controllers.user_email_preferences_controller.success')
-    redirect_to user_preferences_path
+    redirect_to user_preferences_path(lang: params["lang"], tab: params["tab"])
   end
 
   def param_grades

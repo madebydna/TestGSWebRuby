@@ -114,7 +114,7 @@ describe 'User Registration Flows', remote: true do
         it 'saves school and signs up user' do
           hero_links.save_school_link.click
           expect(school_page).to have_saved_school_modal
-          school_page.saved_school_modal.sign_up(@email, [], false)
+          school_page.saved_school_modal.sign_up(@email, [], offers: false)
           expect(school_page).to have_saved_school_success_modal
           school_page.close_all_modals
           expect(menu.saved_schools_link).to have_text(/\(1\)/)
@@ -133,7 +133,7 @@ describe 'User Registration Flows', remote: true do
       end
 
       it 'creates user account' do
-        home_page.email_newsletter_modal.sign_up(@email, [], false)
+        home_page.email_newsletter_modal.sign_up(@email, [], offers: false)
         expect(home_page).to have_newsletter_success_modal
         account_page.load
         expect(account_page).to be_loaded

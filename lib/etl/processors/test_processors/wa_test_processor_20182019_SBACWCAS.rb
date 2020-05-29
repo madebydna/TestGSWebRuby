@@ -1,10 +1,11 @@
-require_relative "../test_processor"
+require_relative "../../test_processor"
 
 class WATestProcessor20182019SBACWCAS < GS::ETL::TestProcessor
 
   def initialize(*args)
     super
     @year = 2019
+    @ticket_n = 'DXT-3412'
   end
 
 
@@ -65,12 +66,12 @@ class WATestProcessor20182019SBACWCAS < GS::ETL::TestProcessor
     end 
     .transform('Add test subject and data_type', WithBlock) do |row|
       if row[:subject] == 'Science'
-        row[:test_data_type] = 'WCAS'
-        row[:test_data_type_id] = 492
+        row[:data_type] = 'WCAS'
+        row[:data_type_id] = 492
         row[:notes] = 'DXT-3412: WA WCAS'
       elsif row[:subject] == 'English Language Arts' || row[:subject] == 'Math'
-        row[:test_data_type] = 'SBAC'
-        row[:test_data_type_id] = 311     
+        row[:data_type] = 'SBAC'
+        row[:data_type_id] = 311     
         row[:notes] = 'DXT-3412: WA SBAC'
       end
       row

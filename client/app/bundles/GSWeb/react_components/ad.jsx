@@ -7,7 +7,7 @@ import {
   destroyAdByName as destroyAd,
   onInitialize as onAdvertisingInitialize,
   slotIdFromName
-} from 'util/advertising.js';
+} from 'util/new_advertising.js';
 import { CSSTransition } from 'react-transition-group';
 
 class Ad extends React.Component {
