@@ -59,12 +59,12 @@ class NewAd extends React.Component {
     destroyAd(this.props.slot);
   }
 
-  onAdRenderEnded() {
-    console.log('NEW AD ... onRenderEnded', this.props.slot);
+  onAdRenderEnded(event) {
+    console.log('NEW AD ... SlotRenderedHandler', event.isEmpty);
     this.setState(
       {
         adRenderEnded: true,
-        adFilled: true
+        adFilled: !event.isEmpty
       },
       () => {
         if (this.state.adFilled && this.props.onFill) {

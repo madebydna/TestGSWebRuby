@@ -13,6 +13,11 @@ freestar.queue = freestar.queue || [];
 freestar.queue.push(function() {
   freestarInitialized = true;
 });
+freestar.queue.push(function() {
+  googletag
+    .pubads()
+    .addEventListener('slotRenderEnded', slotRenderedHandler);
+});
 freestar.config = freestar.config || {};
 freestar.debug = window.location.search.indexOf('fsdebug') === -1 ? false : true;
 freestar.config.enabled_slots = [];
@@ -86,12 +91,6 @@ const postFreestarLoaded = () => {
   // freestar.initCallback();
   console.log('in postFreestarLoaded', slotCallbacks);
 
-  $.each(slotCallbacks, (slot, slotCallback) => {
-    console.log('NEW AD ... showing', slot, 'for the first time');
-    slotCallback();
-    slotTimers[slot] = new Date().getTime();
-  });
-
   initialized = true;
 }
 
@@ -99,11 +98,20 @@ const onInitialize = func =>
   initialized ? func() : onInitializeFuncs.push(func);
 
 
-const slotRenderedHandler = function(slot, slotId) {
-  return function() {
-    // this assumes ad was actually rendered
-    console.log("SlotRenderedHandler for slot", slot, " was called");
-    const $wrapper = $(`.js-${slotId}-wrapper`);
+const slotRenderedHandler = function(event) {
+  // console.log('SlotRenderedHandler event', event.slot.lineItemId, event.slot.getAttributeKeys());
+  const slotId = event.slot.getSlotElementId();
+  const slot = slotId.substr(0, slotId.length - 2);
+  console.log('SlotRenderedHandler', slot, slotId, 'is empty', event.isEmpty, event);
+
+  const $wrapper = $(`.js-${slotId}-wrapper`);
+
+  if (slotCallbacks[slot]) slotCallbacks[slot](event);
+
+  if (event.isEmpty) {
+    $wrapper.hide();
+  } else {
+    slotTimers[slot] = new Date().getTime();
     if ($wrapper.hasClass('mobile-ad-sticky-bottom')) {
       onMobileOverlayAdFilled();
     }
@@ -136,7 +144,7 @@ const _defineSlot = function($adSlot) {
     console.log('in _defineSlot (non-react) freestarInitialized is FALSE');
     freestar.config.enabled_slots.push(args);
   }
-  slotCallbacks[$adSlot.data('dfp')] = slotRenderedHandler($adSlot.data('dfp'), $adSlot.attr('id'));
+  // slotCallbacks[$adSlot.data('dfp')] = slotRenderedHandler($adSlot.data('dfp'), $adSlot.attr('id'));
 };
 
 const defineAdOnce = function(slot, slotOccurrenceNumber, onRenderEnded) {
@@ -215,7 +223,7 @@ const showAd = function(slot, slotOccurrenceNumber, onRenderEnded = null) {
       placementName: slot,
       slotId: divId
     }]);
-    if (onRenderEnded) onRenderEnded();
+    if (onRenderEnded) slotCallbacks[slot] = onRenderEnded;
   } else {
     console.log("NEW AD ... NOT refreshing not enough time passed", slot);
   }

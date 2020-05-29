@@ -11,8 +11,7 @@ const MobileOverlayAd = ({ loaded }) =>
           container={
             <div className={`mobile-ad-sticky-bottom ${isOpen ? '' : 'dn'}`} />
           }
-          slot="Mobile_overlay"
-          sizeName="mobile_overlay"
+          slot="greatschools_Mobile_overlay"
           transitionDuration={1000}
           onFill={() => openForDuration(15000, 1000)}
         >
