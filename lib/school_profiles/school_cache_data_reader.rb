@@ -17,6 +17,10 @@ module SchoolProfiles
       @school_cache_keys = school_cache_keys
     end
 
+    def school_state
+      school.state
+    end
+
     def decorated_school
       @_decorated_school ||= decorate_school(school)
     end
