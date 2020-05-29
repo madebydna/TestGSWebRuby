@@ -1,0 +1,108 @@
+
+<% state_select_options = { 'State (required)' => nil }.merge(States.labels_hash.invert) %>
+
+<% industry_select_options = [['What best describes your business? (required)', nil],
+                              ['Real Estate', 'real estate'],
+                              ['Journalism & Media', 'journalism & media'],
+                              ['Government & Policy', 'government & policy'],
+                              ['Education', 'education'],
+                              ['Finance', 'finance'], ['Other', 'other']] %>
+
+<% role_select_options = [['What best describes your role?', nil],
+                          ['Management', 'management'], ['Developer', 'developer'],
+                          ['Data Scientist', 'data scientist'],
+                          ['Business Development', 'business development'],
+                          ['Academic', 'academic'], ['Student', 'student'],
+                          ['Other', 'other']] %>
+
+<% intended_use_select_options = [['How will this data be used?', nil],
+                                  ['Public website display', 'public website display'],
+                                  ['Software as a service', 'software as a service'],
+                                  ['Marketing & outreach', 'marketing & outreach'],
+                                  ['Commercial research & analysis', 'commercial research & analysis'],
+                                  ['Academic research', 'academic research'],
+                                  ['Personal school search', 'personal school search'],
+                                  ['Other', 'other']] %>
+
+<div class="new-api-account-form">
+  <h3 class="api-form-header">Registration</h3>
+
+  <%= form_for @api_account, url: post_request_api_key_new_path, method: :post do |f| %>
+    <%= render 'error_messages' %>
+    <div class="col-xs-12 col-md-6">
+      <%= f.text_field :first_name, class: "api-registration-field", required: true, placeholder: "First name (required)" %>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <%= f.text_field :last_name, class: "api-registration-field", required: true, placeholder: "Last name (required)" %>
+    </div>
+
+    <div class="col-xs-12">
+      <%#= f.label :organization %>
+      <%= f.text_field :organization, class: "api-registration-field", required: true, placeholder: "Business name (required)" %>
+    </div>
+
+    <div class="col-xs-12">
+      <%#= f.label :website, 'Company website' %>
+      <%= f.text_field :website, class: "api-registration-field", required: true, placeholder: "Website (required)" %>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <%#= f.label :email %>
+      <%= f.text_field :email, class: "api-registration-field", required: true, placeholder: "Email address (required)" %>
+    </div>
+
+    <%# TODO: Is phone number required? %>
+    <div class="col-xs-12 col-md-6">
+      <%#= f.label :phone %>
+      <%= f.text_field :phone, class: "api-registration-field", required: true, placeholder: "Phone number XXX-XXX-XXXX" %>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <%= f.text_field :city, class: "api-registration-field", required: true, placeholder: "City (required)" %>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <div class="api-registration-select-container">
+        <%= f.select :state, options_for_select(state_select_options, selected: @api_account.state), required: true, class: "api-registration-select" %>
+      </div>
+    </div>
+
+    <div class="col-xs-12">
+      <%#= f.label :industry %>
+      <div class="api-registration-select-container">
+        <%= f.select :organization_description, options_for_select(industry_select_options, selected: @api_account.organization_description), required: true, class: "api-registration-select" %>
+      </div>
+    </div>
+
+    <div class="col-xs-12">
+      <div class="api-registration-select-container">
+        <%= f.select :role, options_for_select(role_select_options, selected: @api_account.role), required: true, class: "api-registration-select" %>
+      </div>
+    </div>
+
+    <div class="col-xs-12">
+      <div class="api-registration-select-container">
+        <%= f.select :intended_use, options_for_select(intended_use_select_options, selected: @api_account.intended_use), required: true, class: "api-registration-select" %>
+      </div>
+    </div>
+
+    <div class="col-xs-12">
+      <%#= f.text_area :application, class: "api-registration-field", placeholder: "Please describe how you will apply the API..." %>
+    </div>
+
+    <%= f.hidden_field :registration, value: true %>
+    <br>
+    <div class="col-xs-12">
+      <label><input type="checkbox" class="api-registration-checkbox" id="tou" class="api_tou">I agree to the GreatSchools <a href="<%= api_terms_of_use_path %>">Terms of Use</a></label>
+
+      <label><input type="checkbox" id="payment" class="api_tou">I agree to pay for all overage fees that range between $0.08/call to $0.01/call once I exceed the 3,000 daily call limit.</label>
+    </div>
+    <div class="api-registration-submit col-xs-12">
+      <%= f.submit "Submit", class: "api-registration-button" %>
+    </div>
+  <% end %>
+</div>
+
+
+
