@@ -89,7 +89,7 @@ const checkForFreeStarLoaded = (callback) => {
 
 const postFreestarLoaded = () => {
   // freestar.initCallback();
-  console.log('in postFreestarLoaded', slotCallbacks);
+  console.log('in postFreestarLoaded');
 
   initialized = true;
 }
@@ -102,7 +102,7 @@ const slotRenderedHandler = function(event) {
   // console.log('SlotRenderedHandler event', event.slot.lineItemId, event.slot.getAttributeKeys());
   const slotId = event.slot.getSlotElementId();
   const slot = slotId.substr(0, slotId.length - 2);
-  console.log('SlotRenderedHandler', slot, slotId, 'is empty', event.isEmpty, event);
+  console.log('SlotRenderedHandler', slot, slotId, 'is empty', event.isEmpty);
 
   const $wrapper = $(`.js-${slotId}-wrapper`);
 
