@@ -83,7 +83,7 @@ class MSMetricsProcessor2019Growth < GS::ETL::MetricsProcessor
 
 	shared do |s|
 		s.transform('Fill missing default fields', Fill, {
-			notes: 'DXT-3526: DC Growth and Percentage of students meeting growth target',
+			notes: 'DXT-3526: MS Growth',
 			grade: 'All',
 			data_type: 'growth',
 			data_type_id: 447,
