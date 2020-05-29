@@ -5,7 +5,6 @@ import $ from 'jquery';
 import { XS, SM, LG, MD, validSizes } from 'util/viewport';
 import OpenableCloseable from 'react_components/openable_closeable';
 import Button from 'react_components/button';
-import Ad from 'react_components/ad';
 import { t, capitalize } from 'util/i18n';
 
 function keepInViewport(

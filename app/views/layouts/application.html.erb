@@ -15,16 +15,19 @@
   <% end %>
   <%= display_meta_tags %>
 
+  <!-- DNS prefetches -->
   <%= render 'layouts/common_prefetches' %>
 
   <%= yield :page_stylesheets %>
 
+  <!-- Font assets -->
   <%= render 'layouts/preloads' %>
 
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <!-- Stylesheets -->
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "print",       media: "print" %>
 
-  <%= stylesheet_link_tag    "print",       media: "print" %>
-
+  <!-- Javascripts -->
   <% # must come before commons-blocking %>
   <%= include_gon %>
 

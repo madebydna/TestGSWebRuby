@@ -35,7 +35,7 @@ import { assign } from 'lodash';
 import * as validatingInputs from 'components/validating_inputs';
 import owlSvg from 'school_profiles/brown-owl.svg';
 import { minimizeNudges as minimizeQualarooNudges } from 'util/qualaroo';
-import { init as initAdvertising, enableAdCloseButtons, applyStylingToIFrameAd } from 'util/advertising';
+import { init as initAdvertising, applyStylingToIFrameAd } from 'util/new_advertising';
 import {
   registerInterrupt,
   registerPredefinedInterrupts,
@@ -213,15 +213,13 @@ $(function() {
     hideIfNoSpace: true
   });
 
-
-
   $('body').on('click', '.js-moreRevealLink', function () {
     $(this).hide();
     $(this).siblings('.js-moreReveal').removeClass('more-reveal');
   });
 
-  refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
-  refreshAdOnScroll('Profiles_SecondSticky_Ad', '.static-container', 1200);
+  refreshAdOnScroll('greatschools_Profiles_First', '.static-container', 1200);
+  refreshAdOnScroll('greatschools_Profiles_SecondSticky', '.static-container', 1200);
 
   function setCookieExpiration() {
     var half_year = 182*24*60*60*1000;
@@ -405,5 +403,5 @@ $(window).on('load', function() {
 
 document.addEventListener('DOMContentLoaded', () => updateProfileHeart(gon.school.state, gon.school.id));
 
-//specify style targeting on second ad found in SchoolProfiles#Show
+// specify style targeting on second ad found in SchoolProfiles#Show
 applyStylingToIFrameAd('.js-Profiles_Second_Ad-wrapper', [300,250], 'margin-left:150px');

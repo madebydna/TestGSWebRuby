@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translateWithDictionary } from 'util/i18n';
 import noResultsOwlPng from 'search/no-results-owl.png';
-import Ad from 'react_components/ad';
 
 const t = translateWithDictionary({
   en: {
