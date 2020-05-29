@@ -49,11 +49,11 @@ export default class DistanceLearning extends React.Component {
     return (
       <div data-ga-click-label={"Distance Learning"}>
         <div className="module-footer-left">
+          <InfoBox content={this.props.distance_learning.sources} element_type="sources" pageType={this.props.pageType}>{ t('See notes') }</InfoBox>
           <div>
             <span dangerouslySetInnerHTML={{ __html: content }} />&nbsp;
             <img className="forward-arrow" src={ForwardArrowBlue} />
           </div>
-          <InfoBox content={this.props.distance_learning.sources} element_type="sources" pageType={this.props.pageType}>{ t('See notes') }</InfoBox>
         </div>
         <div className="module-footer-right">
           {this.renderQualarooDistrictLink() && <GiveUsFeedback content={this.renderQualarooDistrictLink()} />}
