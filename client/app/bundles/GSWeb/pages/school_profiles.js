@@ -207,7 +207,7 @@ $(function() {
       titleToPutAdBelow = titleToPutAdBelow || firstInViewport(titles);
       return titleToPutAdBelow || [];
     },
-    elementsBelowFunc: () => [].slice.call(window.document.querySelectorAll('.js-Profiles_Third_Ad-wrapper')),
+    elementsBelowFunc: () => [].slice.call(window.document.querySelectorAll('.js-greatschools_Profiles_Third_1-wrapper')),
     setTop: true,
     setBottom: true,
     hideIfNoSpace: true
