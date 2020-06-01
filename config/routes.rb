@@ -238,9 +238,9 @@ LocalizedProfiles::Application.routes.draw do
   get '/api/request-api-key/success/', to: 'admin/api_accounts#success', as: :request_api_key_success
   post '/api/request-api-key/', to: 'admin/api_accounts#create_api_account', as: :post_request_api_key
 
-  get '/api/request-api-key-new/', to: 'admin/api_users#register', as: :request_api_key_new
-  get '/api/request-api-key-new/success/', to: 'admin/api_users#success', as: :request_api_key_success_new
-  post '/api/request-api-key-new/', to: 'admin/api_users#create_api_account', as: :post_request_api_key_new
+  # New API routes
+  get '/api/register/', to: 'admin/api/users#new', as: :api_register
+  post '/api/request-api-key-new/', to: 'admin/api/users#create', as: :post_request_api_key_new
 
 
   namespace :api, controller: 'api', path:'/gsr/api' do
