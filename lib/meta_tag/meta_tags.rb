@@ -57,7 +57,7 @@ module MetaTag
     end
 
     def canonical_url
-      raise NotImplementedError.new("#{self.class.name}#description must be implemented even if it should return nil")
+      raise NotImplementedError.new("#{self.class.name}#canonical_url must be implemented even if it should return nil")
     end
 
     def description
@@ -85,7 +85,7 @@ module MetaTag
         'private' => 'Private '
       }[entity_type]
     end
-  
+
     def level_code_long
       {
         'e' => 'Elementary ',
@@ -94,7 +94,7 @@ module MetaTag
         'p' => nil
       }[level_code]
     end
-  
+
     def schools_or_preschools
       school_preschool_map = Hash.new('Schools').merge('p' => 'Preschools')
       school_preschool_map[level_code]

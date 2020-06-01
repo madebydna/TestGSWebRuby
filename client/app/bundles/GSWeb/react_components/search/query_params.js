@@ -131,6 +131,11 @@ export function getCsaYears() {
   return csaYears ? castArray(csaYears) : undefined
 }
 
+export function getZipcode() {
+  const { zip } = parse(currentQueryString());
+  return zip || undefined;
+}
+
 export function queryStringWithNewView(view) {
   return getQueryStringWithUpdatedParams({ view });
 }

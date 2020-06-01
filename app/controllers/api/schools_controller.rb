@@ -19,13 +19,13 @@ class Api::SchoolsController < ApplicationController
         next: self.next_offset_url(page_of_results),
       },
       items: serialized_schools,
-      tableHeaders: breakdown.present? ? compare_schools_table_headers : nil 
+      tableHeaders: breakdown.present? ? compare_schools_table_headers : nil
     }.merge(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
     .merge(Api::PaginationSerializer.new(page_of_results).to_hash)
   end
 
   def require_valid_params
-    unless q || point_given? || area_given? || school_keys.present?
+    unless q || point_given? || area_given? || school_keys.present? || zipcode.present?
       return require_state
     end
   end

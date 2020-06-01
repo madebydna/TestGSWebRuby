@@ -211,16 +211,15 @@ module SearchRequestParams
   end
 
   def state_browse?
-    state.present? && city.blank? && district.blank? && !zip_code_search?
+    state.present? && city.blank? && district.blank? && zipcode.blank?
   end
 
-  def zip_code_search?
-    params[:locationType]&.downcase == 'zip'
+  def zipcode_browse?
+    zipcode.present? || params[:locationType]&.downcase == 'zip'
   end
 
-  def zip_code
-    # Stopgap until we pass the zip explicitly
-    params[:locationLabel].match(/[0-9]+/)
+  def zipcode
+    params[:zip]&.match(/[0-9]+/)
   end
 
   def search_type
@@ -228,7 +227,7 @@ module SearchRequestParams
       :district_browse
     elsif city_browse?
       :city_browse
-    elsif zip_code_search?
+    elsif zipcode_browse?
       :zip_code
     elsif street_address?
       :address

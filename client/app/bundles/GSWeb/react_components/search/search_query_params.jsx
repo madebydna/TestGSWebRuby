@@ -40,6 +40,7 @@ export default class SearchQueryParams extends React.Component {
       view: queryParams.getView(),
       tableView: queryParams.getTableView(),
       csaYears: queryParams.getCsaYears(),
+      zipcode: queryParams.getZipcode(),
       updateLevelCodes: codes => {
         pushQueryString(queryParams.queryStringWithNewGradeLevels(codes));
       },

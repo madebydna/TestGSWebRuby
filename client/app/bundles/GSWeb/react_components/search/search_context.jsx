@@ -307,7 +307,8 @@ class SearchProvider extends React.Component {
       stateSelect: this.state.stateSelect,
       extras: ['students_per_teacher', 'review_summary', 'saved_schools'],
       locationLabel: props.locationLabel,
-      csaYears: csaYear
+      csaYears: csaYear,
+      zip: props.zipcode
     };
   }
 

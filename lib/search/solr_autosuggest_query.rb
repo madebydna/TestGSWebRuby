@@ -34,7 +34,7 @@ module Search
         .select do |zip|
           zip.present? && possible_zip.present? && zip.start_with?(possible_zip)
         end # can have empty string
-        .map { |zip| {value: zip, type: 'zip'}}
+        .map { |zip| {value: zip, type: 'zip', url: zipcode_browse_path(zip: zip, sort: 'rating')}}
     end
 
     def q_downcased

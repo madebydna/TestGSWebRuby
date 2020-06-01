@@ -8,7 +8,7 @@ module Search
     include UrlHelper
 
     attr_accessor :q, :district_id, :district_name, :location_label, :city, :level_codes, :entity_types, :id, :lat,
-                  :lon, :radius, :ratings, :school_keys, :test_scores_rating, :rating_subgroup, :csa_years
+                  :lon, :radius, :ratings, :school_keys, :test_scores_rating, :rating_subgroup, :csa_years, :zipcode
     attr_reader :state
 
     def initialize(
@@ -32,7 +32,8 @@ module Search
       rating_subgroup: nil,
       offset: 0,
       limit: 25,
-      csa_years: []
+      csa_years: [],
+      zipcode: nil
     )
       self.id = id
       self.city = city
@@ -55,6 +56,7 @@ module Search
       self.test_scores_rating = test_scores_rating
       self.rating_subgroup = rating_subgroup
       self.csa_years = csa_years
+      self.zipcode = zipcode
     end
 
     def search
@@ -75,14 +77,14 @@ module Search
 
       if level_codes.length > 1 && result_count == 1
         return t('school')
-      elsif level_codes.empty? || level_codes.length > 1 
+      elsif level_codes.empty? || level_codes.length > 1
         return t('schools')
       elsif result_count == 1
         return t("#{level_code_options[level_codes.first]}.one")
       end
 
       t("#{level_code_options[level_codes.first]}.other")
-    end 
+    end
 
     def result_summary(results)
       district_url = district_path(district_params(state_name, city, district_name).merge({trailing_slash: true})) if state && city && district_name
@@ -102,7 +104,8 @@ module Search
         district_url: district_url,
         search_term: Rails::Html::FullSanitizer.new.sanitize(@q.presence),
         level_code_long: level_code_long(results.total),
-        location: location
+        location: location,
+        zipcode: zipcode
       }
       if lat && lon && radius
         t('distance', **params)
@@ -112,7 +115,9 @@ module Search
         t('city_browse', **params)
       elsif @q.present?
         t('search_term', **params)
-      elsif state 
+      elsif zipcode.present?
+        t('zip_browse', **params)
+      elsif state
         t('state_browse', **params)
       else
         t('showing_number_of_schools', **params)
@@ -142,7 +147,6 @@ module Search
     private
 
     attr_reader :client
-
 
     def t(key, **args)
       I18n.t(key, scope: 'search.number_schools_found', **args)

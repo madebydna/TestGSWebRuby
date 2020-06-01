@@ -14,6 +14,10 @@ en:
         zero: Your search did not return any %{level_code_long} in <a href='%{state_url}'>%{state_long}</a>.
         one: Showing one %{level_code_long} found in <a href='%{state_url}'>%{state_long}</a>
         other: Showing %{first} to %{last} of %{count_delimited} %{level_code_long} found in <a href='%{state_url}'>%{state_long}</a>
+      zip_browse:
+        zero: Your search did not return any schools in %{zipcode}
+        one: Showing one school found in %{zipcode}
+        other: Showing %{first} to %{last} of %{count_delimited} %{level_code_long} found in %{zipcode}
       distance:
         zero: Your search did not return any schools near %{location}
         one: Showing one school found near %{location}

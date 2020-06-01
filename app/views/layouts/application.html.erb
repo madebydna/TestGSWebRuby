@@ -51,6 +51,8 @@
 
   <%= render 'nav/topnav_universal_html' if universal_nav %>
 
+  <%= render :partial => 'layouts/top_notification_bar' %>
+
   <%= content_for?(:content) ? yield(:content) : yield %>
 
   <%= render 'omniture/quantcast' %>
