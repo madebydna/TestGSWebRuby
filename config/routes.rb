@@ -239,8 +239,7 @@ LocalizedProfiles::Application.routes.draw do
   post '/api/request-api-key/', to: 'admin/api_accounts#create_api_account', as: :post_request_api_key
 
   # New API routes
-  get '/api/register/', to: 'admin/api/users#register', as: :api_register
-  get '/api/new/success/', to: 'admin/api/users#success', as: :api_success
+  get '/api/register/', to: 'admin/api/users#new', as: :api_register
   post '/api/request-api-key-new/', to: 'admin/api/users#create', as: :post_request_api_key_new
 
 
