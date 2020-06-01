@@ -1,5 +1,6 @@
 class Admin::Api::UsersController < ApplicationController
   OFFSET = 100
+  layout 'admin'
 
   def index
     @users = Api::User.all
