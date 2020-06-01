@@ -1,4 +1,5 @@
 class Admin::ApiUsersController < ApplicationController
+  layout 'admin'
   OFFSET = 100
 
   def index
@@ -11,6 +12,10 @@ class Admin::ApiUsersController < ApplicationController
 
   def create
 
+  end
+
+  def register
+    @api_account = Api::User.new
   end
 
   # def create_api_account
