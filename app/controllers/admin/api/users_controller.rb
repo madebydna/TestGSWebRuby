@@ -5,16 +5,16 @@ class Admin::Api::UsersController < ApplicationController
     @users = Api::User.all
   end
 
-  def new
-    @user = Api::User.new
+  def register
+    @user = ::Api::User.new
   end
 
   def create
     @user = Api::User.new(user_params)
     if @user.save
       ApiRequestReceivedEmail.deliver_to_api_key_requester(@user)
-      ApiRequestToModerateEmail.deliver_to_admin(@user)
-      redirect_to request_api_key_success_path
+      # ApiRequestToModerateEmail.deliver_to_admin(@user)
+      redirect_to :success
     else
       render 'new'
     end
