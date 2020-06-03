@@ -207,13 +207,13 @@ class WidgetController < ApplicationController
   end
 
   # SearchRequestParams
-  # def state
-  #   return super if super.present?
-  #   phrases = q.split(',')
-  #   if phrases.length == 2
-  #     return States.abbreviation(phrases.last)
-  #   end
-  # end
+  def state
+    return super if super.present?
+    phrases = q.split(',')
+    if phrases.length == 2
+      return States.abbreviation(phrases.last)
+    end
+  end
 
   # SearchRequestParams
   def city_record
