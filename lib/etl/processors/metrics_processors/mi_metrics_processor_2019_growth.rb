@@ -34,12 +34,7 @@ class MIMetricsProcessor2019Growth < GS::ETL::MetricsProcessor
 		'Science' => 19
 	}
 
-	source('MI_1819_growth.txt',[],col_sep:"\t") do |s|
-	    s.transform('Fill missing default fields', Fill, {
-	      year: 2019,
-	      date_valid: '2019-01-01 00:00:00'
-	    })
-	end
+	source('MI_1819_growth.txt',[],col_sep:"\t") 
 	# source('MI_1718_growth.txt',[],col_sep:"\t") do |s|
 	#     s.transform('Fill missing default fields', Fill, {
 	#       year: 2018,
@@ -68,11 +63,14 @@ class MIMetricsProcessor2019Growth < GS::ETL::MetricsProcessor
 		.transform('fill other columns',Fill,{
 			data_type: 'growth',
 			data_type_id: 447,
-			notes: 'DXT-3355: MI Growth'
+			notes: 'DXT-3355: MI Growth',
+			year: 2019,
+	      	date_valid: '2019-01-01 00:00:00'
 		})
 		.transform('map subject ids',HashLookup,:subject, map_subject_id,to: :subject_id)
 		.transform('map breakdown ids',HashLookup,:breakdown, map_breakdown_id, to: :breakdown_id)
 	    .transform('update grade all',WithBlock) do |row|
+
 	    	if row[:grade] == 'All Grades'
 	    		row[:grade] = 'All'
 	    	end

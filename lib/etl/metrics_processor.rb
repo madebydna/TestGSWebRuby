@@ -172,6 +172,7 @@ module GS
           source.run(context_for_sources)
         end
         @runnable_steps.each(&:run)
+        #zip_output_files
         GS::ETL::Logging.logger.finish if GS::ETL::Logging.logger
       end
 
@@ -206,7 +207,7 @@ module GS
 
       def zip_output_files
         ENTITIES.each do |entity|
-          `while lsof "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql" >/dev/null; do sleep 1; done; gzip -f "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql"`
+          `gzip -f "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql"`
         end
       end
 
@@ -267,7 +268,11 @@ module GS
           row[:cohort_count] = 'NULL' if row[:cohort_count].nil?
           row[:breakdown_id] = 0 if row[:breakdown_id].nil?
           row[:subject_id] = 0 if row[:subject_id].nil?
-          row[:grade] = 'NA' if row[:grade].nil?   
+          if row[:grade].nil?
+            row[:grade] = 'NA' 
+          else
+            row[:grade] = row[:grade].gsub(/^0/, '')
+          end
           row
         end
         node.destination 'Output state rows to CSV', CsvDestination, state_output_file, *COLUMN_ORDER
@@ -287,6 +292,7 @@ module GS
           school_name: 'district'
         queue_hash = {}
         node = node.transform 'Match district gs_id', WithBlock do |row|
+          print row[:state_id]
           if district_ids[row[:state_id]].nil? and !queue_hash.key?(row[:state_id])
             queue_hash[row[:state_id]] = true
             @queue_file.write_queue(row)
@@ -302,7 +308,11 @@ module GS
           row[:cohort_count] = 'NULL' if row[:cohort_count].nil?
           row[:breakdown_id] = 0 if row[:breakdown_id].nil?
           row[:subject_id] = 0 if row[:subject_id].nil?
-          row[:grade] = 'NA' if row[:grade].nil? 
+          if row[:grade].nil?
+            row[:grade] = 'NA' 
+          else
+            row[:grade] = row[:grade].gsub(/^0/, '')
+          end
           row
         end
         node.destination 'Output district rows to CSV', CsvDestination, district_output_file, *COLUMN_ORDER
@@ -339,7 +349,11 @@ module GS
           row[:cohort_count] = 'NULL' if row[:cohort_count].nil?
           row[:breakdown_id] = 0 if row[:breakdown_id].nil?
           row[:subject_id] = 0 if row[:subject_id].nil?
-          row[:grade] = 'NA' if row[:grade].nil?         
+          if row[:grade].nil?
+            row[:grade] = 'NA' 
+          else
+            row[:grade] = row[:grade].gsub(/^0/, '')
+          end        
           row
         end
         node.destination 'Output school rows to CSV', CsvDestination, school_output_file, *COLUMN_ORDER
@@ -353,6 +367,8 @@ module GS
       end
 
       def data_file_prefix
+        raise ArgumentError, 'Missing ticket number' if @ticket_n.nil? 
+        raise ArgumentError, 'Missing year' if @year.nil? 
         [@ticket_n, state, 'metrics', @year].join('_') + '_'
       end
 
