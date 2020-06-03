@@ -47,7 +47,8 @@ class CitiesListController < ApplicationController
 
   def set_seo_meta_tags
     set_meta_tags title: meta_title,
-                  canonical: remove_query_params_from_url(cities_list_url(state_name: dcl.state_names[:routing], state_abbr: state), [:lang])
+                  canonical: remove_query_params_from_url(cities_list_url(state_name: dcl.state_names[:routing], state_abbr: state), [:lang]),
+                  robots: 'noindex'
   end
 
 end
