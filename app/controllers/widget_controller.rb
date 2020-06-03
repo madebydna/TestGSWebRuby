@@ -166,7 +166,7 @@ class WidgetController < ApplicationController
     query_type = Search::SolrSchoolQuery
     query_type.new(
       # city: city,
-      # state: state,
+      state: state,
       location_label: location_label_param,
       level_codes: level_codes,
       entity_types: entity_types,
@@ -207,13 +207,13 @@ class WidgetController < ApplicationController
   end
 
   # SearchRequestParams
-  def state
-    return super if super.present?
-    phrases = q.split(',')
-    if phrases.length == 2
-      return States.abbreviation(phrases.last)
-    end
-  end
+  # def state
+  #   return super if super.present?
+  #   phrases = q.split(',')
+  #   if phrases.length == 2
+  #     return States.abbreviation(phrases.last)
+  #   end
+  # end
 
   # SearchRequestParams
   def city_record
