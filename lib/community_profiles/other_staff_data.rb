@@ -19,7 +19,7 @@ module CommunityProfiles
         full_time_district_value: to_value(full_time_value.district_value),
         full_time_state_value:  to_value(full_time_value.state_value),
         year: Date.parse(full_time_value.source_date_valid).year,
-        source: full_time_value.source_name
+        source: full_time_value.source
       } : {}
     end
 

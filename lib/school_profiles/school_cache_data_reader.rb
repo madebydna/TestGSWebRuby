@@ -4,7 +4,7 @@ module SchoolProfiles
     # metrics - for enrollment
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
-    SCHOOL_CACHE_KEYS = %w(ratings metrics reviews_snapshot test_scores_gsdata nearby_schools performance gsdata esp_responses)
+    SCHOOL_CACHE_KEYS = %w(ratings metrics reviews_snapshot test_scores_gsdata nearby_schools performance esp_responses)
     DISCIPLINE_FLAG = 'Discipline Flag'
     ABSENCE_FLAG = 'Absence Flag'
     EQUITY_ADJUSTMENT_FACTOR = 'Equity Adjustment Factor'

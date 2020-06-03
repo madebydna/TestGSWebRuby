@@ -47,7 +47,7 @@ module CommunityProfiles
 
     def stem_data
       @_stem_data ||= begin
-        all_data = @cache_data_reader.decorated_gsdata_datas(*data_types)
+        all_data = @cache_data_reader.decorated_metrics_datas(*data_types)
 
         prioritize_freshest_algebra_data!(all_data)
       end
@@ -76,7 +76,7 @@ module CommunityProfiles
           accum << {
             data_type: I18n.t(data_type, scope: 'lib.stem_courses', default:{})[:label],
             source_year: data_value.source_year,
-            source_name: I18n.db_t(data_value.source_name)
+            source_name: I18n.db_t(data_value.source)
           }
         end
       end.uniq

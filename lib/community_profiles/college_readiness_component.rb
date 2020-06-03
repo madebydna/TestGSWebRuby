@@ -113,23 +113,28 @@ module CommunityProfiles
     end
 
     def metrics_data
-      array_of_hashes = @cache_data_reader.metrics_data(*included_data_types(:metrics))
-      array_of_hashes.each_with_object({}) do |(data_type, array), accum|
-        accum[data_type] =
-          array.map do |h|
-            klass = if data_type == GRADUATES_REMEDIATION
-                      GradutesRemediationValue
-                    else
-                      CharacteristicsValue
-                    end
-            klass.from_hash(h.merge('data_type' => data_type))
-          end
-            .extend(CharacteristicsValue::CollectionMethods)
+      hash = @cache_data_reader.decorated_metrics_datas(*included_data_types(:metrics))
+      hash.each do |data_type, array|
+        if data_type == GRADUATES_REMEDIATION
+          array.each { |dv| dv.extend(GradutesRemediationValue) }
+        end
       end
+      # array_of_hashes.each_with_object({}) do |(data_type, array), accum|
+      #   accum[data_type] =
+      #     array.map do |h|
+      #       klass = if data_type == GRADUATES_REMEDIATION
+      #                 GradutesRemediationValue
+      #               else
+      #                 CharacteristicsValue
+      #               end
+      #       klass.from_hash(h.merge('data_type' => data_type))
+      #     end
+      #       .extend(CharacteristicsValue::CollectionMethods)
+      # end
     end
 
     def gsdata_data
-      @cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata))
+      @cache_data_reader.decorated_metrics_datas(*included_data_types(:gsdata))
     end
 
     def multiple_breakdowns_in_one_data_type
