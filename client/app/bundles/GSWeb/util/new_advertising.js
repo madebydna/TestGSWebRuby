@@ -198,13 +198,16 @@ const slotIdFromName = (slot, slotOccurrenceNumber = 1) => {
 function checkSponsorSearchResult() {
   setTimeout(()=>{
     const searchResult = document.querySelector('.sponsored-school-result-ad')
-    let adLoaded = false;
+    let adLoaded = true;
     if (searchResult){
-      let adContainer = searchResult.querySelector('div.js-ad-hook');
-      if (adContainer && adContainer.childElementCount > 0) {
-        adLoaded = true;
+      searchResult.querySelectorAll('div').forEach(node => {
+        if (node.classList.contains('dn')){
+          adLoaded = false;
+        }
+      })
+      if (adLoaded){
+        searchResult.classList.remove('dn');
       }
-      if (adLoaded) { searchResult.classList.remove('dn'); }
     }
   }, 2000)
 }
