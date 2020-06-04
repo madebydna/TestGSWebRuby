@@ -85,9 +85,6 @@ describe SitemapStateGenerator do
         generator.send(:schools_to_no_index)
       end
     end
-    # it 'fetches all schools in state' do
-    #   expect(School).to receive_message_chain(:joins, :active, :order)
-    # end
   end
 
   describe '#districts' do
