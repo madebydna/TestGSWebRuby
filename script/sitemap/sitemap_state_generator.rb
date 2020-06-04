@@ -56,7 +56,16 @@ class SitemapStateGenerator < SitemapXmlWriter
   end
 
   def schools
-    School.on_db(@state.to_sym).active.order(:id)
+    schools = School.on_db(@state.to_sym).active.order(:id)
+    schools_to_no_index = School.on_db(@state.to_sym).active.joins("JOIN gs_schooldb.reviews r ON r.school_id=school.id AND r.state = '#{@state}'")
+          .select("school.*, count(*) AS num_reviews")
+          .where("r.active=1")
+          .where(level_code: ['p'])
+          .where(type: 'private')
+          .where("school.manual_edit_date < ?", Time.now - 4.years)
+          .group(:id)
+          .having("num_reviews < 3")
+    schools - schools_to_no_index
   end
 
   def districts
