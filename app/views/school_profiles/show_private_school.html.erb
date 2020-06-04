@@ -18,13 +18,11 @@
           mailto: @private_school_profile.mailto,
           claimed: @private_school_profile.claimed %>
       </div>
-        <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'wide_or_box',
-                 width: 320, height: 50, css_class: 'hidden-xs hidden-sm', id_counter: 1 %>
+        <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Second', css_class: 'hidden-xs hidden-sm' %>
       <div>
         <div id="js-ctaShow"></div>
       </div>
-      <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
-                 width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
+      <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_First', css_class: 'visible-xs visible-sm', id_counter: 2 %>
       <div class="profile-section">
         <div class="row">
           <div class="col-xs-12 col-lg-3">
@@ -32,7 +30,7 @@
               <%= I18n.t('overview', scope:'school_profiles.show_profile') %>
             </div>
             <div class="left-rail-jumpy-ad" style="position: fixed; width: 175px; height: 205px; padding-bottom: 30px">
-              <%= render 'shared/ad', slot: 'Profiles_175x175', width: 175, height: 175, css_class: 'hidden-xs visible-lg', id_counter: 1, show_ad_text: false %>
+              <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_175x175', css_class: 'hidden-xs visible-lg', show_ad_text: false %>
             </div>
           </div>
 
@@ -44,8 +42,7 @@
           </div>
         </div>
       </div>
-      <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'wide_or_box',
-                   width: 320, height: 50, css_class: 'hidden-md hidden-lg', id_counter: 2 %>
+      <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Second', css_class: 'hidden-md hidden-lg', id_counter: 2 %>
       <div class="profile-section">
         <div class="row">
           <div class="col-xs-12 col-lg-3">
@@ -60,8 +57,7 @@
           </div>
         </div>
       </div>
-      <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
-                 width: 320, height: 50, css_class: 'mbl' %>
+      <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Third', css_class: 'mbl' %>
       <div>
         <%= render 'review_summary', reviews: @private_school_profile.reviews %>
       </div>
@@ -78,8 +74,7 @@
   </div>
 
   <div class="profile-section">
-    <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
-             width: 320, height: 50, css_class: 'mbl' %>
+    <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Fourth', css_class: 'mbl' %>
   </div>
   <a name="Neighborhood" id="Neighborhood"></a>
   <div class="profile-section">
