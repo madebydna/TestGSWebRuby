@@ -56,7 +56,7 @@ class NewAd extends React.Component {
 
   componentWillUnmount() {
     console.log('NEW AD ... ad component', this.props.slot, 'will unmount');
-    destroyAd(this.props.slot);
+    if (adsInitialized()) destroyAd(this.props.slot);
   }
 
   onAdRenderEnded(event) {

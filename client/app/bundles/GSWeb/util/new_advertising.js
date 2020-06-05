@@ -8,7 +8,7 @@ import {
 
 window.freestar = window.freestar || {};
 freestar.hitTime = Date.now();
-let freestarInitialized = false;
+window.freestarInitialized = false;
 freestar.queue = freestar.queue || [];
 freestar.queue.push(function() {
   freestarInitialized = true;
@@ -69,7 +69,7 @@ const init = function() {
 }
 
 const checkForFreeStarLoaded = (callback) => {
-  if (freestarInitialized) {
+  if (!freestarInitialized) {
     console.log('!--- freestar not yet loaded');
     // check for loaded with the interval of 0.5 seconds
     const checkLoaded = setInterval(() => {
@@ -213,6 +213,7 @@ function checkSponsorSearchResult() {
 }
 
 const showAd = function(slot, slotOccurrenceNumber, onRenderEnded = null) {
+  if (!freestarInitialized) return;
   const lastRefreshedTime = slotTimers[slot];
   console.log("NEW AD ... last refreshed time", slot, lastRefreshedTime);
   if (
@@ -233,6 +234,7 @@ const showAd = function(slot, slotOccurrenceNumber, onRenderEnded = null) {
 };
 
 const destroyAd = (slot) => {
+  if (!freestarInitialized) return;
   console.log("NEW AD ... destroying ad", slot);
   freestar.deleteAdSlots(slot);
 };
