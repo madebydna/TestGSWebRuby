@@ -46,7 +46,7 @@ module Feeds
       def format_data_sets(data_accessor, data_sets)
         data_sets = data_sets.with_all_grades if data_accessor[:key] == 'Enrollment'
         data_sets = [data_sets.first].extend(CacheValue::CollectionMethods) if data_accessor[:key] == 'Percent classes taught by highly qualified teachers'
-        data_sets = [data_sets.first].extend(CacheValue::CollectionMethods) if data_accessor[:key] == 'Head official name'
+        data_sets = [data_sets.first].extend(CacheValue::CollectionMethods) if data_accessor[:key] == 'Head official name' || data_accessor[:key] == 'Head official email address'
         data_sets.with_most_recent_year.map do |data_set|
           {}.tap do |hash|
             hash[:universal_id] = universal_id
