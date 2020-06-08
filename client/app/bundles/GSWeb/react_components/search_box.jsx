@@ -25,12 +25,17 @@ import cancelCircle from 'icons/cancel-circle.svg';
 // but it may not be worth maintain a list of those schools to prevent matches
 const matchesFiveDigits = string => /(\D|^)\d{5}(\D*$|$)/.test(string);
 
+const matchesFiveDigitsOnly = string => /^\d{5}$/.test(string);
+
 //Matches three digits minimum
 const matchesThreeDigits = string => /(\D|^)\d{3}(\D*$|$)/.test(string);
 
 // Matches 5 digits + dash or space or no space + 4 digits.
 const matchesFiveDigitsPlusFourDigits = string =>
   /(\D|^)\d{5}(-|\s*)\d{4}(\D|$)/.test(string);
+
+const matchesFiveDigitsPlusFourDigitsOnly = string =>
+  /^\d{5}(-|\s*)\d{4}$/.test(string);
 
 const matchesZip = string =>
   matchesFiveDigits(string) || matchesFiveDigitsPlusFourDigits(string) || matchesThreeDigits(string);
@@ -50,7 +55,7 @@ const matchesAddressOrZip = string =>
   matchesAddress(string) || matchesZip(string);
 
 const matchesZipOnly = string =>
-  matchesFiveDigits(string) || matchesFiveDigitsPlusFourDigits(string);
+  matchesFiveDigitsOnly(string) || matchesFiveDigitsPlusFourDigitsOnly(string);
 
 export const t = translateWithDictionary({
   // entries not needed if text matches key
