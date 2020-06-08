@@ -704,6 +704,15 @@ $line-height-community: 1.428571429;
 #distance-learning {
   margin: 20px 0;
 
+  .speech-bubble, .speech-bubble.left {
+    background: #747C83;
+    color: #ffffff;
+  }
+
+  .speech-bubble.left:after {
+    border-color: transparent #747C83;
+  }
+
   .profile-module {
     border: none;
     background: #f6f9fa;
@@ -730,7 +739,7 @@ $line-height-community: 1.428571429;
 
   .module-overview {
     display: inline-block;
-    padding-top: 10px;
+    padding: 15px 0 0 10px;
   }
 
   .module-footer-left {
