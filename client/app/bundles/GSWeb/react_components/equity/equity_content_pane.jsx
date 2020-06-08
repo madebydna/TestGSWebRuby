@@ -35,6 +35,7 @@ export default class EquityContentPane extends React.Component {
         'Percentage of students enrolled in IB grades 9-12',
         'Learning',
         'Planning',
+        'Teaching',
         'main',
         undefined
     ].indexOf(this.props.anchor) === -1;

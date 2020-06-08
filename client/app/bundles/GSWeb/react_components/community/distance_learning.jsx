@@ -4,6 +4,7 @@ import DataModule from 'react_components/data_module';
 import InfoBox from 'react_components/school_profiles/info_box';
 import GiveUsFeedback from 'react_components/school_profiles/give_us_feedback';
 import ShortenText from '../shorten_text';
+import ParentTip from 'react_components/school_profiles/parent_tip';
 import ComputerScreen from '../icons/computer_screen';
 import ForwardArrowBlue from 'icons/forward_arrow_blue.png';
 import { t } from '../../util/i18n';
@@ -22,16 +23,21 @@ export default class DistanceLearning extends React.Component {
   }
 
   renderOverview() {
-    let label = t('distance_learning.see_more');
+    // let label = t('distance_learning.see_more');
+    // return (
+    //   <div>
+    //     <div>
+    //       <div className="module-overview-header">
+    //         {t('distance_learning.district_overview') }:
+    //       </div>
+    //     </div>
+    //     <p><ShortenText text={this.props.distance_learning.overview} length={200} label={label} renderDownArrow={true} /></p>
+    //   </div>
+    // );
     return (
-      <div>
-        <div>
-          <div className="module-overview-header">
-            {t('distance_learning.district_overview') }:
-          </div>
-        </div>
-        <p><ShortenText text={this.props.distance_learning.overview} length={200} label={label} renderDownArrow={true} /></p>
-      </div>
+      <ParentTip>
+        <span dangerouslySetInnerHTML={{__html: t('distance_learning.parent_tip')}}/>
+      </ParentTip>
     );
   }
 
@@ -65,10 +71,10 @@ export default class DistanceLearning extends React.Component {
   render() {
     return (
       <DataModule
-        title="Distance Learning"
+        title={t('distance_learning.title')}
         anchor={this.props.distance_learning.anchor}
         analytics_id={this.props.distance_learning.analytics_id}
-        subtitle=""
+        subtitle={t('distance_learning.subtitle')}
         moduleOverview={this.renderOverview()}
         info_text={this.props.distance_learning.tooltip}
         icon_classes={this.renderIcon()}

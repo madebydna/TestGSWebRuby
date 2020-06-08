@@ -1,18 +1,21 @@
 es:
   community:
     distance_learning:
-      title: Aprendizaje a distancia
+      title: Respuesta de COVID-19
+      subtitle: ¿Cómo ha apoyado este distrito el aprendizaje a distancia y otras necesidades de los estudiantes?
+      parent_tip: Los cierres de escuelas tienen impactos negativos en el aprendizaje de los niños, pero los principios del distrito pueden ayudar a reducir la pérdida de aprendizaje. Utiliza esta información para entender cómo este distrito planea ayudar a los estudiantes a recuperar el terreno perdido.
       tooltip_html: <div>Esto muestra como el distrito está apoyando las necesidades de los estudiantes durante el cierre de escuelas debido a COVID-19. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Última actualización %{date_valid}</div></div>
       district_overview: Resumen del distrito
       district_website_cta_html: <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">Visita la página de COVID-19 de tu distrito</a>
       see_more: Ver más
       sources_html: <div class="sourcing"><h1>Información y fuentes de aprendizaje a distancia del distrito</h1> <div>La información que se presenta en este módulo fue compilada por el <a href="https://www.crpe.org/" target="_blank">Center on Reinventing Public Education (CRPE por sus siglas)</a> quienes obtuvieron datos principalmente de planes públicos en sitios de web de distritos escolares. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a></div></div>
       tab:
+        overview: Resumen
         teaching: La enseñanza
         resources: Recursos
         policies: Principios del distrito
         learning: La enseñanza
-        planning: Planificación
+        planning: El regreso a clases
       data_types:
         RESOURCES PROVIDED BY THE DISTRICT:
           specific:
@@ -61,9 +64,6 @@ es:
         LEARNING LOSS DIAGNOSTIC IDENTIFIED:
           label: Herramientas para medir la perdida de aprendizaje de los estudiantes en el otoño del 2020
           tooltip_html: El distrito evaluará a cada estudiante para la pérdida de aprendizaje para guiar las decisiones sobre el nivel de grado y los créditos.
-      teaching:
-        main:
-          narration: ¿Cómo proporciona este distrito instrucciones de aprendizaje a los estudiantes?
       resources:
         main:
           narration: ¿Qué apoyo ofrece el distrito a los estudiantes y a las familias?
@@ -72,6 +72,8 @@ es:
           narration: ¿Cuales son los principios de aprendizaje a distancia de este distrito?
         planning:
           narration: ¿Cuales son los planes del distrito para apoyar el aprendizaje de los estudiantes?
+        teaching:
+          narration: ¿Cómo proporciona este distrito instrucciones de aprendizaje a los estudiantes?
       ratings:
         all_students: todos los estudiantes
         some_students: algunos de los estudiantes
