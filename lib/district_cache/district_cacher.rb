@@ -22,7 +22,7 @@ class DistrictCacher
     district_cache = DistrictCache.find_or_initialize_by(
         district_id: district.id,
         # state: district.state,
-        state: district.shard_state,
+        state: district.shard_state&.upcase,
         name:self.class::CACHE_KEY
     )
     if final_hash.present?
