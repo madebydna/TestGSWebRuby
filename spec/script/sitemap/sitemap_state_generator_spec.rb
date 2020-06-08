@@ -81,7 +81,7 @@ describe SitemapStateGenerator do
     end
     describe '#schools_to_no_index' do
       it 'fetches all no index schools in state' do
-        expect(School).to receive_message_chain(:active, :joins, :select, :where, :where, :where, :where, :group, :having)
+        expect(School).to receive_message_chain(:active, :joins, :select, :where, :where, :where, :group, :having)
         generator.send(:schools_to_no_index)
       end
     end
