@@ -292,7 +292,6 @@ module GS
           school_name: 'district'
         queue_hash = {}
         node = node.transform 'Match district gs_id', WithBlock do |row|
-          print row[:state_id]
           if district_ids[row[:state_id]].nil? and !queue_hash.key?(row[:state_id])
             queue_hash[row[:state_id]] = true
             @queue_file.write_queue(row)
