@@ -14,10 +14,6 @@ class Admin::ApiUsersController < ApplicationController
 
   end
 
-  def register
-    @api_account = Api::User.new
-  end
-
   # def create_api_account
   #   @api_account = ApiAccount.new(api_account_params.merge(api_key: nil))
   #   if @api_account.save
