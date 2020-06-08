@@ -24,11 +24,17 @@ module CommunityProfiles::DistanceLearningConfig
   LEARNING_LOSS_DIAGNOSTIC_IDENTIFIED = "LEARNING LOSS DIAGNOSTIC IDENTIFIED"
 
   # Tabs
-  TEACHING = "Teaching"
+  OVERVIEW = "Overview"
+  SUMMER_LEARNING = "Summer Learning"
   RESOURCES = "Resources"
   POLICIES = "Policies"
 
+  # Summer Learning Subtabs
+  K8 = "K-8"
+  HIGH_SCHOOL = "High School"
+
   # Policy Subtabs
+  TEACHING = "Teaching"
   LEARNING = "Learning"
   PLANNING = "Planning"
   MAIN = 'main' #dummy subtab to indicate there isn't a formal one
@@ -65,12 +71,7 @@ module CommunityProfiles::DistanceLearningConfig
   ]
 
   # Tab accessors
-  TEACHING_TAB_ACCESSORS = [
-    {
-      tab: TEACHING,
-      subtab: MAIN,
-      data_types: TEACHING_MAIN_SUBTAB_ACCESSORS
-    }
+  OVERVIEW_TAB_ACCESSORS = [
   ]
 
   RESOURCES_TAB_ACCESSORS = [
@@ -84,22 +85,27 @@ module CommunityProfiles::DistanceLearningConfig
   POLICIES_TAB_ACCESSORS = [
     {
       tab: POLICIES,
+      subtab: PLANNING,
+      data_types: POLICIES_PLANNING_SUBTAB_ACCESSORS,
+    },
+    {
+      tab: POLICIES,
       subtab: LEARNING,
       data_types: POLICIES_LEARNING_SUBTAB_ACCESSORS,
     },
     {
       tab: POLICIES,
-      subtab: PLANNING,
-      data_types: POLICIES_PLANNING_SUBTAB_ACCESSORS,
+      subtab: TEACHING,
+      data_types: TEACHING_MAIN_SUBTAB_ACCESSORS
     }
   ]
 
   # All tab accessors
   TAB_ACCESSORS = [
-    {
-      tab: TEACHING,
-      accessors: TEACHING_TAB_ACCESSORS
-    },
+    # {
+    #   tab: TEACHING,
+    #   accessors: TEACHING_TAB_ACCESSORS
+    # },
     {
       tab: RESOURCES,
       accessors: RESOURCES_TAB_ACCESSORS
