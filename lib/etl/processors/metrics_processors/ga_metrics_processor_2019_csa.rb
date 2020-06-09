@@ -30,6 +30,7 @@ class GAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 		'Male' => 25,
 		'male' => 25,
 		'Multi-Racial' => 22,
+		'Multi' => 22,
 		'two' => 22,
 		'Not Economically Disadvantaged' => 24,
 		'Students With Disability' => 27,
@@ -49,7 +50,7 @@ class GAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 		'Composite' => 1,
 		'Not Applicable' => 0,
 		'Combined Test Score' => 1,
-		'Evidence Based Reading and Writing' => 2,
+		'Evidence Based Reading and Writing - New' => 2,
 		'Math Section Score - New' => 5
 	}
 
@@ -154,8 +155,12 @@ class GAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 			instn_num_tested_cnt: :cohort_count,
 			instn_avg_score_val: :value
 		})
-		.transform('delete unwanted subject rows',DeleteRows,:subject, 'Essay Analysis Score - New','Essay Reading Score - New','Essay Total','Essay Writing Score - New','Reading Test Score - New','WritLang Test Score - New')
+		.transform('delete unwanted subject rows',DeleteRows,:subject, 'Essay Analysis Score - New','Essay Reading Score - New','Essay Total','Essay Writing Score - New','Reading Test  Score - New','WritLang Test  Score - New')
 		.transform('delete blank values',DeleteRows,:value,nil)
+		.transform('round cohort values to integers',WithBlock) do |row|
+			row[:cohort_count] = row[:cohort_count].to_f.round.to_s
+			row
+		end
 		.transform('map breakdown ids',HashLookup,:breakdown, map_breakdown_id,to: :breakdown_id)
 		.transform('map subject ids',HashLookup,:subject, map_subject_id,to: :subject_id)
 		.transform('create state_ids',WithBlock) do |row|
@@ -182,8 +187,12 @@ class GAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 			dstrct_num_tested_cnt: :cohort_count,
 			dstrct_avg_score_val: :value
 		})
-		.transform('delete unwanted subject rows',DeleteRows,:subject, 'Essay Analysis Score - New','Essay Reading Score - New','Essay Total','Essay Writing Score - New','Reading Test Score - New','WritLang Test Score - New')
+		.transform('delete unwanted subject rows',DeleteRows,:subject, 'Essay Analysis Score - New','Essay Reading Score - New','Essay Total','Essay Writing Score - New','Reading Test  Score - New','WritLang Test  Score - New')
 		.transform('delete blank values',DeleteRows,:value,nil)
+		.transform('round cohort values to integers',WithBlock) do |row|
+			row[:cohort_count] = row[:cohort_count].to_f.round.to_s
+			row
+		end
 		.transform('map breakdown ids',HashLookup,:breakdown, map_breakdown_id,to: :breakdown_id)
 		.transform('map breakdown ids',HashLookup,:subject, map_subject_id,to: :subject_id)
 		.transform('create state_ids',WithBlock) do |row|
@@ -211,8 +220,12 @@ class GAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 			state_num_tested_cnt: :cohort_count,
 			state_avg_score_val: :value
 		})
-		.transform('delete unwanted subject rows',DeleteRows,:subject, 'Essay Analysis Score - New','Essay Reading Score - New','Essay Total','Essay Writing Score - New','Reading Test Score - New','WritLang Test Score - New')
+		.transform('delete unwanted subject rows',DeleteRows,:subject, 'Essay Analysis Score - New','Essay Reading Score - New','Essay Total','Essay Writing Score - New','Reading Test  Score - New','WritLang Test  Score - New')
 		.transform('delete blank values',DeleteRows,:value,nil)
+		.transform('round cohort values to integers',WithBlock) do |row|
+			row[:cohort_count] = row[:cohort_count].to_f.round.to_s
+			row
+		end
 		.transform('map breakdown ids',HashLookup,:breakdown, map_breakdown_id,to: :breakdown_id)
 		.transform('map breakdown ids',HashLookup,:subject, map_subject_id,to: :subject_id)
 	end
@@ -224,7 +237,7 @@ class GAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 			data_type: 'grad rate',
 			data_type_id: 443,
 			notes: 'DXT-3386: GA CSA',
-			grade: 'All',
+			grade: 'NA',
 			subject: 'Not Applicable'
 	    })
 	    .transform('rename columns',MultiFieldRenamer,{
@@ -320,6 +333,75 @@ class GAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 				row[:cohort_count] = row[:total_high_school_graduates__white]
 			elsif row[:breakdown] == 'pacific_islander'
 				row[:cohort_count] = row[:total_high_school_graduates__pacific_islander]
+			end
+			row
+		end
+		.transform('map breakdown ids',HashLookup,:breakdown, map_breakdown_id,to: :breakdown_id)
+		.transform('map subject ids',HashLookup,:subject, map_subject_id,to: :subject_id)
+	end
+
+	source('persist.txt',[],col_sep:"\t") do |s|
+	    s.transform('Fill missing default fields', Fill, {
+	    	year: 2019,
+	    	date_valid: '2019-01-01 00:00:00',
+			data_type: 'persistence',
+			data_type_id: 409,
+			notes: 'DXT-3386: GA CSA',
+			grade: 'NA',
+			subject: 'Not Applicable'
+	    })
+	    .transform('rename columns',MultiFieldRenamer,{
+			school_code: :school_id,
+			school_name: :school_name,
+			school_district_code: :district_id,
+			school_district_name: :district_name
+		})
+		.transform('setting entity and state_id',WithBlock) do |row|
+			if row[:district_name] == 'All Systems'
+				row[:entity_type] = 'state'
+				row[:state_id] = 'state'
+			elsif row[:district_name] != 'All Systems' and row[:school_id] == 'ALL'
+				row[:entity_type] = 'district'
+				row[:state_id] = row[:district_id]
+			elsif row[:school_id] != 'ALL'
+				row[:entity_type] = 'school'
+				row[:state_id] = row[:district_id] + row[:school_id].rjust(4,'0')
+			end
+			row
+		end
+		.transform('transpose breakdowns',Transposer,:breakdown,:value,:percent__all,:percent__male,:percent__female,:percent__free_reduced_lunch,:percent__lep,:percent__disability,:percent__hispanic,:percent__two,:percent__american_indian_or_alaskan_native,:percent__asian,:percent__black,:percent__white,:percent__pacific_islander)
+		.transform('create breakdown',WithBlock) do |row|
+			row[:breakdown] = row[:breakdown].to_s.split('__')[1]
+			row
+		end
+		.transform('delete blank values',DeleteRows,:value,nil)
+		.transform('matching cohort count',WithBlock) do |row|
+			if row[:breakdown] == 'all'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__total_all]
+			elsif row[:breakdown] == 'male'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__male]
+			elsif row[:breakdown] == 'female'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__female]
+			elsif row[:breakdown] == 'free_reduced_lunch'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__free_reduced_lunch]
+			elsif row[:breakdown] == 'lep'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__lep]
+			elsif row[:breakdown] == 'disability'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__disability]
+			elsif row[:breakdown] == 'hispanic'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__hispanic]
+			elsif row[:breakdown] == 'two'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__two]
+			elsif row[:breakdown] == 'american_indian_or_alaskan_native'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__american_indian_or_alaskan_native]
+			elsif row[:breakdown] == 'asian'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__asian]
+			elsif row[:breakdown] == 'black'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__black]
+			elsif row[:breakdown] == 'white'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__white]
+			elsif row[:breakdown] == 'pacific_islander'
+				row[:cohort_count] = row[:number_of_high_school_graduates_enrolled_in_postsecondary_institution__pacific_islander]
 			end
 			row
 		end
