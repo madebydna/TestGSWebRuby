@@ -394,8 +394,8 @@ class SchoolProfilesController < ApplicationController
   end
 
   def robots
-    return 'noindex' if school&.demo_school?
-    if school.type == 'private' && Time.now - 4.years > school.manual_edit_date && school.reviews.count < 3
+    return 'noindex' if school.demo_school?
+    if school.private_school? && (Time.now - 4.years) > school.manual_edit_date && school.reviews.length < 3
       return 'noindex'
     end
 

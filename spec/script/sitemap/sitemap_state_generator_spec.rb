@@ -6,6 +6,9 @@ require 'sitemap/sitemap_state_generator'
 describe SitemapStateGenerator do
   subject(:generator) { SitemapStateGenerator.new('.', state) }
   let(:state) { 'nj' }
+  after do
+    clean_dbs :_ca
+  end
 
   describe '#write_state_url' do
     it 'writes out state homepage' do
@@ -73,17 +76,31 @@ describe SitemapStateGenerator do
   end
 
   describe '#schools' do
+    let(:school) { create(:school) }
+    let(:same_school_with_different_attributes) do
+      new_school = school.clone
+      new_school.assign_attributes(district_id: 15, city: 'Andyville', state: 'CA')
+      new_school
+    end
+
     describe '#active_schools' do
       it 'fetches all schools in state' do
         expect(School).to receive_message_chain(:on_db, :active, :order)
         generator.send(:active_schools)
       end
     end
+
     describe '#schools_to_no_index' do
       it 'fetches all no index schools in state' do
         expect(School).to receive_message_chain(:active, :joins, :select, :where, :where, :where, :group, :having)
         generator.send(:schools_to_no_index)
       end
+    end
+
+    it 'returns the expect active record collection' do
+      allow(generator).to receive(:schools_to_no_index).and_return([same_school_with_different_attributes])
+      allow(generator).to receive(:active_schools).and_return([school])
+      expect(generator.send(:schools)).to eq([])
     end
   end
 
