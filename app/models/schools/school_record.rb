@@ -32,8 +32,6 @@ class SchoolRecord < ActiveRecord::Base
 
   scope :not_preschool_only, -> { where.not(level_code: 'p') }
 
-  scope :active, -> { where(active: true) }
-
   scope :include_district_name, lambda {
     select("school_records.*, dr.name as district_name")
       .joins("LEFT JOIN #{School.gs_schooldb_name}.district_records as dr on school_records.district_id = dr.district_id and dr.state = school_records.state")
@@ -43,6 +41,7 @@ class SchoolRecord < ActiveRecord::Base
     Rails.env.test? ? "gs_schooldb_test" : "gs_schooldb"
   end
 
+  scope :by_state, ->(state) { where(state: state) }
   scope :preschool_schools, -> { where('level_code like ?', "%#{LEVEL_CODES[:preschool]}%") }
   scope :elementary_schools, -> { where('level_code like ?', "%#{LEVEL_CODES[:elementary]}%") }
   scope :middle_schools, -> { where('level_code like ?', "%#{LEVEL_CODES[:middle]}%") }
