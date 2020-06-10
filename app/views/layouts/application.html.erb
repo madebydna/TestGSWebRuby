@@ -25,6 +25,7 @@
 
   <!-- Stylesheets -->
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag('post_load', async: true) unless content_for?(:page_stylesheets) %>
   <%= stylesheet_link_tag "print",       media: "print" %>
 
   <!-- Javascripts -->
@@ -60,8 +61,6 @@
   <%= render 'nav/footer' if footer %>
 
   <div class="visible-xs js-disableInterstitial"></div>
-
-  <%= stylesheet_link_tag('post_load', async: true) unless content_for?(:page_stylesheets) %>
 
   <%= webpack_javascript_include_tag 'commons', defer: true %>
 
