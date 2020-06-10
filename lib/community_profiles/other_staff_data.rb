@@ -17,7 +17,7 @@ module CommunityProfiles
     def full_time_hash
       full_time_value.present? ? {
         full_time_district_value: to_value(full_time_value.district_value),
-        full_time_state_value:  to_value(full_time_value.state_value),
+        full_time_state_value:  to_value(full_time_value.state_average),
         year: Date.parse(full_time_value.source_date_valid).year,
         source: full_time_value.source
       } : {}
@@ -26,7 +26,7 @@ module CommunityProfiles
     def part_time_hash
       part_time_value.present? ? {
         part_time_district_value: to_value(part_time_value.district_value),
-        part_time_state_value: to_value(part_time_value.state_value)
+        part_time_state_value: to_value(part_time_value.state_average)
       } : {}
     end
 

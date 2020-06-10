@@ -170,11 +170,20 @@ module SchoolProfiles
       decorated_school.free_or_reduced_price_lunch_data
     end
 
-    def metrics_data(*keys)
-      decorated_school.metrics.slice(*keys).each_with_object({}) do |(k,array_of_hashes), hash|
-        array_of_hashes = array_of_hashes.select { |h| h.has_key?('source') }
-        hash[k] = array_of_hashes if array_of_hashes.present?
+    def decorated_metrics_datas(*keys)
+      decorated_school.metrics.slice(*keys).each_with_object({}) do |(data_type, array), accum|
+        accum[data_type] =
+          array.map do |h|
+            MetricsCaching::Value.from_hash(h).tap {|dv| dv.data_type = data_type}
+          end.extend(MetricsCaching::Value::CollectionMethods)
       end
+    end
+
+    def decorated_metrics_data(key)
+      Array.wrap(decorated_school.metrics.slice(key)[key])
+        .map do |h|
+        MetricsCaching::Value.from_hash(h).tap {|dv| dv.data_type = key }
+      end.extend(MetricsCaching::Value::CollectionMethods)
     end
 
     def nearby_schools
@@ -251,25 +260,6 @@ module SchoolProfiles
         end
         h
       end
-    end
-
-    def decorated_gsdata_datas(*keys)
-      decorated_school.gsdata.slice(*keys).each_with_object({}) do |(data_type, array), accum|
-        accum[data_type] =
-          array.map do |h|
-            GsdataCaching::GsDataValue.from_hash(h).tap { |dv| dv.data_type = data_type }
-          end
-          .extend(GsdataCaching::GsDataValue::CollectionMethods)
-      end
-    end
-
-
-    def decorated_gsdata_data(key)
-      Array.wrap(decorated_school.gsdata.slice(key)[key])
-        .map do |h|
-          GsdataCaching::GsDataValue.from_hash(h).tap { |dv| dv.data_type = key }
-        end
-        .extend(GsdataCaching::GsDataValue::CollectionMethods)
     end
 
     def rating_weights
@@ -357,7 +347,7 @@ module SchoolProfiles
     # }
     def percentage_of_students(breakdown)
       percentages = (
-        decorated_school.gsdata.slice('Percentage of Students Enrolled') || {}
+        decorated_school.metrics.slice('Percentage of Students Enrolled') || {}
       ).fetch('Percentage of Students Enrolled', [])
       percentages.find { |h| h['breakdowns'] == breakdown }
     end

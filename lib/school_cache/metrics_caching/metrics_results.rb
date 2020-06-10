@@ -17,7 +17,27 @@ module MetricsCaching
     attr_reader :results
 
     def initialize(results)
-      @results = results.map {|metric| MetricDecorator.new(metric) }
+      combine_entity_averages!(results)
+    end
+
+    def combine_entity_averages!(raw_results)
+      @results = []
+      raw_results.group_by {|r| r.id }.each do |id, group|
+        if group.length == 1
+          @results << MetricDecorator.new(group.first)
+          next
+        end
+        final_metric = group.first
+        group.each do |m|
+          if m.respond_to?(:state_value) && m.state_value.present?
+            final_metric.state_value = m.state_value
+          end
+          if  m.respond_to?(:district_value) && m.district_value.present?
+            final_metric.district_value = m.district_value
+          end
+        end
+        @results << MetricDecorator.new(final_metric)
+      end
     end
 
     def filter_to_max_year_per_data_type!

@@ -71,9 +71,9 @@ module CommunityProfiles
       end
     end
 
-    class GradutesRemediationValue < CharacteristicsValue
+    module GradutesRemediationValue
       def data_type
-        if subject
+        if !all_subjects?
           'Graduates needing ' + subject.capitalize + ' remediation in college'
         else
           @data_type
@@ -113,24 +113,15 @@ module CommunityProfiles
     end
 
     def metrics_data
-      hash = @cache_data_reader.decorated_metrics_datas(*included_data_types(:metrics))
-      hash.each do |data_type, array|
-        if data_type == GRADUATES_REMEDIATION
-          array.each { |dv| dv.extend(GradutesRemediationValue) }
-        end
+      array_of_hashes = @cache_data_reader.decorated_metrics_datas(*included_data_types(:metrics))
+      array_of_hashes.each_with_object({}) do |(data_type, array), accum|
+        accum[data_type] =
+          if data_type == GRADUATES_REMEDIATION
+            array.each { |dv| dv.extend(GradutesRemediationValue) }
+          else
+            array
+          end
       end
-      # array_of_hashes.each_with_object({}) do |(data_type, array), accum|
-      #   accum[data_type] =
-      #     array.map do |h|
-      #       klass = if data_type == GRADUATES_REMEDIATION
-      #                 GradutesRemediationValue
-      #               else
-      #                 CharacteristicsValue
-      #               end
-      #       klass.from_hash(h.merge('data_type' => data_type))
-      #     end
-      #       .extend(CharacteristicsValue::CollectionMethods)
-      # end
     end
 
     def gsdata_data

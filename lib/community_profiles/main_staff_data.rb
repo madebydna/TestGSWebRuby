@@ -10,7 +10,7 @@ module CommunityProfiles
     def to_h
       {
         district_value: to_value(info.district_value),
-        state_value: to_value(info.state_value),
+        state_value: to_value(info.state_average),
         year: Date.parse(info.source_date_valid).year,
         source: info.source
       }

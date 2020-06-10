@@ -2,9 +2,9 @@ module MetricsCaching
   class Value
     include FromHashMethod
 
-    GRADE_ALL = 'All'
+    GRADE_ALL = ['All', 'NA']
     ALL_STUDENTS = 'All students'
-    ALL_SUBJECTS = ['All subjects', 'Not Applicable', 'Composite Subject']
+    ALL_SUBJECTS = ['Not Applicable', 'Composite Subject']
 
     STUDENTS_WITH_DISABILITIES = 'Students with disabilities'
     STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES = 'Students with IDEA catagory disabilities'
@@ -22,16 +22,21 @@ module MetricsCaching
       end
 
       def having_district_value
-        reject { |dv| dv.district_value.blank?}.extend(CollectionMethods)
+        reject { |dv| dv.district_value.blank? }.extend(CollectionMethods)
       end
 
+      def having_school_value
+        reject { |dv| dv.school_value.blank? }.extend(CollectionMethods)
+      end
+
+      def having_non_zero_school_value
+        reject { |dv| dv.school_value_as_int.zero? }.extend(CollectionMethods)
+      end
+
+      # TODO: this assumes exact same date rather than just same year
       def having_most_recent_date
         max_source_date_valid = map(&:source_date_valid).max
         select { |dv| dv.source_date_valid == max_source_date_valid }.extend(CollectionMethods)
-      end
-
-      def having_no_breakdown
-        select { |dv| dv.breakdown.blank? }.extend(CollectionMethods)
       end
 
       def for_all_students
@@ -55,7 +60,18 @@ module MetricsCaching
 
       def no_subject_or_all_subjects_or_graduates_remediation
         select do |h|
-          h.subject.nil? || h.all_subjects? || h.is_a?(GradutesRemediationValue)
+          h.subject.nil? || h.all_subjects? || CommunityProfiles::CollegeReadinessConfig::REMEDIATION_SUBGROUPS.include?(h.data_type)
+        end.extend(CollectionMethods)
+      end
+
+      def no_subject_or_all_subjects
+        select {|h| h.subject.blank? || h.all_subjects?}.extend(CollectionMethods)
+      end
+
+      def having_all_students_or_breakdown_in(breakdowns)
+        breakdowns = Array.wrap(breakdowns)
+        select do |dv|
+          dv.all_students? || breakdowns.include?(dv.breakdown)
         end.extend(CollectionMethods)
       end
 
@@ -66,6 +82,13 @@ module MetricsCaching
         end.extend(CollectionMethods)
       end
       alias_method :having_breakdown, :having_breakdown_in
+
+      def having_exact_breakdown_tags(breakdown_tags)
+        breakdown_tags = Array.wrap(breakdown_tags)
+        select do |dv|
+          breakdown_tags.include?(dv.breakdown_tags)
+        end.extend(CollectionMethods)
+      end
 
       def any_subgroups?
         any? { |dv| !dv.all_students? }
@@ -120,18 +143,12 @@ module MetricsCaching
       def recent_ethnicity_school_values
         self.having_most_recent_date
           .having_school_value
-          .select(&:has_ethnicity_tag?)
+          .having_ethnicity_breakdown
           .extend(CollectionMethods)
       end
 
       def +(other)
         super(other).extend(CollectionMethods)
-      end
-
-      def group_by(*args, &block)
-        super(*args, &block).each_with_object({}) do |(k,v), hash|
-          hash[k] = v.extend(CollectionMethods)
-        end
       end
 
     end
@@ -142,14 +159,13 @@ module MetricsCaching
     :school_value,
     :state_value,
     :district_value,
+    :state_average,
+    :district_average,
     :source_date_valid,
     :year,
     :source,
     :data_type,
-    :grade,
-    :label
-
-    attr_writer :flags
+    :grade
 
     def [](key)
       send(key) if respond_to?(key)
@@ -159,18 +175,9 @@ module MetricsCaching
       send("#{key}=", val)
     end
 
-    def self.from_array_of_hashes(array)
-      array ||= []
-      array.map { |h| GsdataCaching::GsDataValue.from_hash(h) }
-        .extend(GsdataCaching::GsDataValue::CollectionMethods)
-    end
-
     def source_year
-      return @source_year unless source_date_valid
-      return source_date_valid.year.to_s if source_date_valid.class == Time
-      source_date_valid[0..3]
+      @year.presence || Date.parse(source_date_valid).year
     end
-
     alias_method :year, :source_year
 
     def school_value_as_int
@@ -193,7 +200,7 @@ module MetricsCaching
     end
 
     def grade_all?
-      grade == GRADE_ALL
+      GRADE_ALL.include?(grade)
     end
 
     def all_students?
@@ -219,13 +226,14 @@ module MetricsCaching
         school_value: school_value,
         state_value: state_value,
         district_value: district_value,
+        state_average: state_average,
+        district_average: district_average,
         source_year: source_year,
         source_date_valid: source_date_valid,
         source_name: source,
         data_type: data_type,
         grade: grade,
-        subject: subject,
-        label: label,
+        subject: subject
       }
     end
 

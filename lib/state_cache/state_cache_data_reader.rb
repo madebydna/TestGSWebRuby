@@ -85,12 +85,21 @@ class StateCacheDataReader
       .for_all_students
   end
 
-  def metrics_data(*keys)
-    decorated_state.metrics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
-      array_of_hashes = array_of_hashes.select {|h| h.has_key?('source')}
-      hash[k] = array_of_hashes if array_of_hashes.present?
+  def decorated_metrics_datas(*keys)
+    decorated_state.metrics.slice(*keys).each_with_object({}) do |(data_type, array), accum|
+      accum[data_type] =
+        array.map do |h|
+          MetricsCaching::Value.from_hash(h).tap {|dv| dv.data_type = data_type}
+        end.extend(MetricsCaching::Value::CollectionMethods)
     end
   end
+
+  # def metrics_data(*keys)
+  #   decorated_state.metrics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
+  #     array_of_hashes = array_of_hashes.select {|h| h.has_key?('source')}
+  #     hash[k] = array_of_hashes if array_of_hashes.present?
+  #   end
+  # end
 
   def state_cache_query
     StateCacheQuery.for_state(state).tap do |query|

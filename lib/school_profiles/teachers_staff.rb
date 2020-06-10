@@ -120,33 +120,32 @@ module SchoolProfiles
     def data_label_info_text(key)
       I18n.t(key.to_sym, scope: 'lib.teachers_staff.data_point_info_texts', default: '')
     end
-    
+
     def data_score_type(obj, formatting)
       if formatting.include?(:employment_level)
-        return employment_level(obj.school_value.to_f, obj.breakdowns)
+        return employment_level(obj.school_value.to_f, obj.breakdown)
       end
       SchoolProfiles::DataPoint.new(obj.school_value.to_f).apply_formatting(*formatting)
     end
 
-    def employment_level(value, breakdowns)
+    def employment_level(value, breakdown)
       presence = {
         0.0 => 'not_present',
         1.0 => 'present'
       }
       t_presence = presence[value]
-      t_key = breakdowns.first
+      t_key = breakdown == "All students" ? nil : breakdown
 
       I18n.t("lib.teachers_staff.employment_level.#{t_presence}.#{t_key}")
     end
 
     def data_values_by_data_type
-      hashes = school_cache_data_reader.gsdata_data(
-          *included_data_types
+      hashes = school_cache_data_reader.decorated_metrics_datas(
+         *included_data_types
       )
       return [] if hashes.blank?
       objs = hashes.map do |key, array|
-        values = GsdataCaching::GsDataValue.from_array_of_hashes(array.map { |h| h.merge(data_type: key) })
-        values.having_most_recent_date.first
+        array.having_most_recent_date.first
       end
       objs.sort_by { |o| included_data_types.index(o.data_type) }
     end
@@ -182,7 +181,7 @@ module SchoolProfiles
       str = '<div>'
       str << '<h4>' + data_label(data_value.data_type) + '</h4>'
       str << "<p>#{data_label_info_text(data_value.data_type)}</p>"
-      str << '<p><span class="emphasis">' + static_label('source')+ '</span>: ' + data_label(data_value.source_name) + ', ' + data_value.source_year.to_s + '</p>'
+      str << '<p><span class="emphasis">' + static_label('source')+ '</span>: ' + data_label(data_value.source) + ', ' + data_value.source_year.to_s + '</p>'
       str << '</div>'
       str
     end

@@ -61,7 +61,7 @@ module CommunityProfiles
               breakdown: I18n.t(data_type, scope: 'lib.stem_courses', default:{})[:label],
               score: val,
               label: val < 1 ? '<1' : "#{val}",
-              state_average: data_value.state_value.to_f.round,
+              state_average: data_value.state_average.to_f.round,
               visualization: data_types_and_visualizations[data_type],
               tooltip_html: I18n.t(data_type, scope: 'lib.stem_courses', default:{})[:tooltip_html]
           }

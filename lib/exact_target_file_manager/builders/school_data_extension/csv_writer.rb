@@ -52,7 +52,7 @@ module ExactTargetFileManager
 
         def get_info(school)
           school_cache_data_reader = @data_reader.school_cache_data_reader(school)
-          gsdata_info = school_cache_data_reader.decorated_gsdata_datas(*GSDATA_CONTENT)
+          gsdata_info = school_cache_data_reader.decorated_metrics_datas(*GSDATA_CONTENT)
           test_scores = @data_reader.test_scores(school, school_cache_data_reader)
           school_info = []
           school_info << school['state'] + "-" + school['id'].to_s

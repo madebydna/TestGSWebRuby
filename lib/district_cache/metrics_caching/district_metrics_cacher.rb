@@ -133,6 +133,7 @@ module MetricsCaching
         hash[:subject] = metric.subject_name
         hash[:year] = metric.year
         hash[:source_date_valid] = metric.source_date_valid
+        #TODO: double check if this is used
         hash[:district_created] = metric.created
       end
     end
