@@ -7,6 +7,7 @@ en:
       tooltip_html: <div>This shows how the district is supporting student needs during school closure due to COVID-19. If you work for this district and have distance learning updates to share, please email <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Last updated %{date_valid}</div></div>
       district_overview: District overview
       district_website_cta_html: <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">Visit district's COVID-19 page</a>
+      see_district_summer_page_html: See <a href="%{url}" style="font-family:'opensans-semibold';font-size:16px;" target="_blank">district summer program page</a> for details.
       see_more: See more
       sources_html: <div class="sourcing"><h1>District distance learning data sources & information</h1> <div>Information in this module was compiled by the <a href="https://www.crpe.org/" target="_blank">Center on Reinventing Public Education (CRPE)</a>, which sourced data primarily from publicly posted plans on school district websites. If you work for this district and have distance learning updates to share, please email <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a></div></div>
       tab:
@@ -16,6 +17,9 @@ en:
         policies: Policies
         learning: Learning
         planning: Back to school
+        summer learning: Summer learning
+        k-8: K-8
+        high school: High school
       data_types:
         RESOURCES PROVIDED BY THE DISTRICT:
           specific:
@@ -57,13 +61,48 @@ en:
           tooltip_html: The district has plans to address different learning scenarios for the new school year, including remote or in-person learning, or a combination of both.
         LEARNING LOSS PLAN:
           label: Plans to remedy student learning loss during the summer or fall
-          tooltip_html: District will offer credit recovery, remedial instruction,  and/or extra support for students with high absenteeism or low grades.
+          tooltip_html: District will offer credit recovery, remedial instruction, and/or extra support for students with high absenteeism or low grades.
         SUMMER LEARNING PLAN:
           label: Plans to offer summer school options
-          tooltip_html: District will offer summer school directly or through an outside partner
+          tooltip_html: District will offer summer school directly or through an outside partner.
         LEARNING LOSS DIAGNOSTIC IDENTIFIED:
-          label: Tools to measure student learning loss in the fall of 2020.
+          label: Tools to measure student learning loss in the fall of 2020
           tooltip_html: District will evaluate each student for learning loss to guide decisions about grade level and credits.
+        ES MS SUMMER PROGRAM:
+          label: Summer program offered
+          tooltip_html: District offers at least one summer program taught by district teachers. See <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">district site</a> for details.
+        "ES MS CONTENT: MAKE-UP":
+          label: Learning loss program offered
+          tooltip_html: District is offering a summer program to help students catch up on material they may have missed due to school closure.
+        "ES MS CONTENT: REVIEW":
+          label: Learning loss program offered
+          tooltip_html: District is offering a summer program to help students catch up on material they may have missed due to school closure.
+        "ES MS CONTENT: ENRICHMENT":
+          label: Enrichment program offered
+          tooltip_html: Program focus is on material not typically covered during the school year. These programs are not intended to help catch up students who are behind.
+        HS SUMMER PROGRAM:
+          label: Summer program offered
+          tooltip_html: District offers at least one summer program taught by district teachers. See <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">district site</a> for details.
+        "HS CONTENT: LEARNING LOSS":
+          label: Learning loss program offered
+          tooltip_html: Program addresses learning loss due to school closure but does not offer course credit.
+        "HS CONTENT: CREDIT RECOVERY":
+          label: Credit recovery offered
+          tooltip_html: Program helps high school students retake failed classes or make up missing credits.
+        "HS CONTENT: CREDIT ACCELERATION":
+          label: Credit acceleration offered
+          tooltip_html: Program allows students who wish to get ahead to take courses for credit during summer.
+        "HS CONTENT: ENRICHMENT":
+          label: Enrichment program offered
+          tooltip_html: Program offers enrichment activities like test prep or college/career planning.
+        SUMMER MEAL PLAN:
+          label: Free student meals available
+          tooltip_html: Meals are available to any student, regardless of enrollment in summer school.
+      summer learning:
+        k-8:
+          narration: How is this district addressing learning loss over summer for elementary/middle school students?
+        high school:
+          narration: How is this district addressing learning loss over summer for high school students?
       resources:
         main:
           narration: What support does this district offer students and families?
