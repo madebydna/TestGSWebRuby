@@ -3,7 +3,10 @@ require_relative '../config/environment'
 require 'optparse'
 require_relative '../lib/i18n/manager.rb'
 
-# bundle exec rails runner script/missing_crpe_translation_checker.rb -tomni.covid_responses
+# Update/add new translations: bundle exec rails runner script/missing_crpe_translation_checker.rb -tomni.covid_responses
+# (NOTE: Translation files cannot be generated without at least one existing dummy key.)
+
+# Run in check mode: bundle exec rails runner script/missing_crpe_translation_checker.rb
 
 class MissingCrpeTranslationChecker
   def self.report
