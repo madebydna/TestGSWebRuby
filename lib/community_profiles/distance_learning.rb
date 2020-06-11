@@ -106,7 +106,7 @@ module CommunityProfiles
     def format_overview
       first_paragraph = fetch_value(SUMMER_SUMMARY).strip
       translated = I18n.db_t(first_paragraph, default: first_paragraph)
-      cta_link = I18n.t('see_district_summer_page_html', scope: 'community.distance_learning', url: fetch_value(SUMMER_URL))
+      cta_link = fetch_value(SUMMER_URL) ? I18n.t('see_district_summer_page_html', scope: 'community.distance_learning', url: fetch_value(SUMMER_URL)) : ""
 
       "#{translated} #{cta_link}"
     end
