@@ -1,8 +1,22 @@
 // TODO: import ad addCompfilterToGlobalAdTargetingGon
-
-import { getStore } from '../store/appStore';
-
+/* global gon, $, ReactOnRails, GS, analyticsEvent */
 import 'js-cookie';
+import { assign } from 'lodash';
+import owlSvg from 'school_profiles/brown-owl.svg';
+import { init as initAdvertising, applyStylingToIFrameAd } from 'util/advertising';
+import {
+  registerInterrupt,
+  registerPredefinedInterrupts,
+  runInterrupts
+} from 'util/interrupts';
+import SearchBox from 'react_components/search_box';
+import withViewportSize from 'react_components/with_viewport_size';
+import { viewport, relativeToViewport, firstInViewport, keepInViewport } from 'util/viewport';
+import ProfileInterstitialAd, { shouldShowInterstitial, profileInterstitialLoader } from 'react_components/school_profiles/profile_interstitial_ad';
+import "jquery-unveil";
+import * as validatingInputs from '../components/validating_inputs';
+import commonPageInit from '../common';
+import { getStore } from '../store/appStore';
 import '../vendor/fastclick';
 import DataModule from '../react_components/data_module';
 import StudentsWithDisabilities from '../react_components/equity/students_with_disabilities';
@@ -17,7 +31,6 @@ import { generateSubgroupPieCharts } from '../components/subgroup_charts';
 import * as stickyRightRail from '../components/sticky_right_rail';
 import * as schoolProfileStickyCTA from '../components/school_profile_sticky_cta';
 import * as schoolProfileStickyCTAMobile from '../components/school_profile_sticky_cta_mobile';
-import { viewport } from '../util/viewport';
 import OspSchoolInfo from '../react_components/osp_school_info';
 import TopicalReviewSummary from '../react_components/topical_review_summary';
 import Toggle from '../components/toggle';
@@ -31,23 +44,6 @@ import refreshAdOnScroll from '../util/refresh_ad_on_scroll';
 import * as introJs from '../components/introJs';
 import { scrollToElement } from '../util/scrolling';
 import { enableAutoAnchoring, initAnchorHashUpdater, scrollToAnchor } from '../components/anchor_router';
-import { assign } from 'lodash';
-import * as validatingInputs from 'components/validating_inputs';
-import owlSvg from 'school_profiles/brown-owl.svg';
-import { minimizeNudges as minimizeQualarooNudges } from 'util/qualaroo';
-import { init as initAdvertising, applyStylingToIFrameAd } from 'util/new_advertising';
-import {
-  registerInterrupt,
-  registerPredefinedInterrupts,
-  runInterrupts
-} from 'util/interrupts';
-import SearchBox from 'react_components/search_box';
-import withViewportSize from 'react_components/with_viewport_size';
-import ProfileInterstitialAd, { shouldShowInterstitial, profileInterstitialLoader } from 'react_components/school_profiles/profile_interstitial_ad';
-import "jquery-unveil";
-import commonPageInit from '../common';
-import { throttle, debounce } from 'lodash';
-import { boxInDoc, relativeToViewport, relativeToViewportTop, firstInViewport, keepInViewport } from 'util/viewport';
 
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 
@@ -68,11 +64,11 @@ ReactOnRails.register({
   ProfileInterstitialAd
 });
 
-$(function() {
+$(() => {
   commonPageInit();
 
-  (function() {
-    var toggle = assign(new Toggle($('#hero').find('.school-contact')));
+  (() => {
+    const toggle = assign(new Toggle($('#hero').find('.school-contact')));
     toggle.effect = "slideToggle";
     toggle.addCallback(
         toggle.updateButtonTextCallback(t('show_less'), t('see_more_contact'))
@@ -116,40 +112,33 @@ $(function() {
   schoolProfileStickyCTAMobile.init();
   backToTop.init();
 
-  $('.js-followThisSchool').on('click', function () {
-    signupAndFollowSchool(gon.school.state, gon.school.id);
-  });
-
-  $('body').on('click', '.js-sharingLinks', function () {
-    var url = $(this).data("link") + encodeURIComponent($(this).data("url"));
-    if($(this).data("siteparams") !== undefined) {
-      url +=  $(this).data("siteparams");
-    }
-    popupCenter(url, $(this).data("type"), 700, 300);
-    return false;
-  });
-
-  $('body').on('click', '.js-slTracking', function () {
-    var cat = $(this).data("module") +"::"+ $(this).data("type");
-    analyticsEvent('Profile', 'Share', cat);
-    return false;
-  });
-
-  $('body').on('click', '.js-subtopicAnswerButton', function () {
-    analyticsEvent('Profile', 'Answer', '11');
-  });
-
   function popupCenter(url, title, w, h) {
     // Fixes dual-screen position                         Most browsers      Firefox
-    var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
-    var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+    const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left;
+    const dualScreenTop = window.screenTop !== undefined ? window.screenTop : screen.top;
 
-    var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-    var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+    let width;
+    let height;
 
-    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
-    var top = ((height / 2) - (h / 2)) + dualScreenTop;
-    var newWindow = window.open(url, title, 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=' + w + ',height=' + h + ',top=' + top + ',left=' + left);
+    if (window.innerWidth) {
+      width = window.innerWidth;
+    } else if (document.documentElement.clientWidth) {
+      width = document.documentElement.clientWidth
+    } else {
+      width = screen.width;
+    }
+
+    if (window.innerHeigh) {
+      height = window.innerHeight;
+    } else if (document.documentElement.clientHeight) {
+      height = document.documentElement.clientHeight;
+    } else {
+      height = screen.height;
+    }
+
+    const left = ((width / 2) - (w / 2)) + dualScreenLeft;
+    const top = ((height / 2) - (h / 2)) + dualScreenTop;
+    const newWindow = window.open(url, title, `menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=${w},height=${h},top=${top},left=${left}`);
 
     // Puts focus on the newWindow
     if (window.focus) {
@@ -157,13 +146,36 @@ $(function() {
     }
   }
 
+  $('.js-followThisSchool').on('click', () => {
+    signupAndFollowSchool(gon.school.state, gon.school.id);
+  });
+
+  $('body').on('click', '.js-sharingLinks', () => {
+    let url = $(this).data("link") + encodeURIComponent($(this).data("url"));
+    if($(this).data("siteparams") !== undefined) {
+      url +=  $(this).data("siteparams");
+    }
+    popupCenter(url, $(this).data("type"), 700, 300);
+    return false;
+  });
+
+  $('body').on('click', '.js-slTracking', () => {
+    const cat = `${$(this).data("module")}::${$(this).data("type")}`;
+    analyticsEvent('Profile', 'Share', cat);
+    return false;
+  });
+
+  $('body').on('click', '.js-subtopicAnswerButton', () => {
+    analyticsEvent('Profile', 'Answer', '11');
+  });
+
   function touchDevice(){
     return (('ontouchstart' in window) ||
     (navigator.maxTouchPoints > 0) ||
     (navigator.msMaxTouchPoints > 0));
   }
 
-  $('body').on('click', '.js-permaLink', function () {
+  $('body').on('click', '.js-permaLink', () => {
     if(!touchDevice()) {
       $(this).focus();
       $(this).select();
@@ -173,34 +185,27 @@ $(function() {
     return false;
   });
 
-  $('body').on('click', '.js-emailSharingLinks', function () {
+  $('body').on('click', '.js-emailSharingLinks', () => {
     window.location.href = ($(this).data("link"));
     return false;
   });
 
-  $('.profile-section .section-title').each(function() {
-    var $elem = $(this);
-    var minWidth = 1200;
+  $('.profile-section .section-title').each(() => {
+    const minWidth = 1200;
 
     fixToTopWhenBelowY(
-      $elem,
-      function($elem){
-        return $elem.parent().offset().top - 20;
-      },
-      function($elem){
-        return $elem.parent().offset().top + $elem.parent().parent().parent().height() - 50 - $elem.height();
-      },
-      function() {
-        return viewport().width >= minWidth;
-      }
+      $(this),
+      ($elem) => $elem.parent().offset().top - 20,
+      ($elem) => $elem.parent().offset().top + $elem.parent().parent().parent().height() - 50 - $elem.height(),
+      () => viewport().width >= minWidth
     );
   });
 
   keepInViewport('.left-rail-jumpy-ad', {
     elementsAboveFunc: () => {
       // get list of titles in reverse order. reverse() mutates the array
-      let titles = [].slice.call(window.document.querySelectorAll('.section-title'));
-      let titlesReversed = [].slice.call(window.document.querySelectorAll('.section-title')).reverse();
+      const titles = [].slice.call(window.document.querySelectorAll('.section-title'));
+      const titlesReversed = [].slice.call(window.document.querySelectorAll('.section-title')).reverse();
       // we want the ad below the section title that's farthest down the document, but
       // one that's within 480px of the top of the viewport
       let titleToPutAdBelow = titlesReversed.find(el => relativeToViewport(el).top < 480);
@@ -213,7 +218,7 @@ $(function() {
     hideIfNoSpace: true
   });
 
-  $('body').on('click', '.js-moreRevealLink', function () {
+  $('body').on('click', '.js-moreRevealLink', () => {
     $(this).hide();
     $(this).siblings('.js-moreReveal').removeClass('more-reveal');
   });
@@ -221,33 +226,21 @@ $(function() {
   refreshAdOnScroll('greatschools_Profiles_First', '.static-container', 1200);
   refreshAdOnScroll('greatschools_Profiles_SecondSticky', '.static-container', 1200);
 
-  function setCookieExpiration() {
-    var half_year = 182*24*60*60*1000;
-    var date = new Date();
-    date.setTime(date.getTime() + half_year);
-    var expires = "; expires=" + date.toUTCString();
-    return expires;
-  }
-
-  function setCookie(name, value) {
-    document.cookie = name + '=' + value + setCookieExpiration() + "; path=/";
-  }
-
   // The tour modal will appear by default unless the user clicks 'Not right now'
   // When clicked we update the cookie to reflect the user's preference and make
   // sure the modal isn't displayed again.
-  $('body').on('click', '#close-school-tour', function() {
+  $('body').on('click', '#close-school-tour', () => {
     $('.school-profile-tour-modal').remove();
-    $('.tour-teaser').tipso({content: '<div><div><h3><img alt="" src="' + owlSvg + '"/> Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
+    $('.tour-teaser').tipso({content: `<div><div><h3><img alt="" src=${owlSvg}/> Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>`, width: 300, tooltipHover: true});
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box');
   });
 
-  let $body = $('body');
+  const $body = $('body');
 
   // used by test scores in school profiles
-  $body.on('click', '.js-test-score-details', function () {
-    var grades = $(this).closest('.bar-graph-display').parent().find('.grades');
-    if(grades.css('display') == 'none') {
+  $body.on('click', '.js-test-score-details', () => {
+    const grades = $(this).closest('.bar-graph-display').parent().find('.grades');
+    if(grades.css('display') === 'none') {
       grades.slideDown();
       $(this).find('span').removeClass('rotate-text-270');
     }
@@ -258,7 +251,7 @@ $(function() {
   });
 
   // closes drawers when a new subject is selected for test scores in school profiles
-  $body.on('click','.js-updateLocationHash',function(){
+  $body.on('click','.js-updateLocationHash', () => {
     const gradesContainer = $(this).parents('.panel');
     const grades = gradesContainer.find('.grades');
     grades.slideUp();
@@ -272,9 +265,9 @@ $(function() {
   });
 
   // for summary rating tooltip
-  $body.on('click', '.js-rating-details', function () {
-    var ratingDescription = $(this).closest('.rating-table-row').find('.rating-table-description');
-    if(ratingDescription.css('display') == 'none') {
+  $body.on('click', '.js-rating-details', () => {
+    const ratingDescription = $(this).closest('.rating-table-row').find('.rating-table-description');
+    if(ratingDescription.css('display') === 'none') {
       ratingDescription.slideDown();
       $(this).find('span').removeClass('rotate-text-270');
     }
@@ -286,15 +279,15 @@ $(function() {
 
 
   // for historical ratings
-  $body.on('click', '.js-historical-button', function () {
-    var historical_data = $(this).closest('.js-historical-module').find('.js-historical-target');
-    if(historical_data.css('display') == 'none') {
-      historical_data.slideDown();
+  $body.on('click', '.js-historical-button', () => {
+    const historicalData = $(this).closest('.js-historical-module').find('.js-historical-target');
+    if(historicalData.css('display') === 'none') {
+      historicalData.slideDown();
       $(this).find('div').html(t('Hide past ratings'));
       analyticsEvent('Profile', 'Historical Ratings', null, null, true);
     }
     else{
-      historical_data.slideUp();
+      historicalData.slideUp();
       $(this).find('div').html(t('Past ratings'));
     }
   });
@@ -302,18 +295,22 @@ $(function() {
   GS.ad.addCompfilterToGlobalAdTargetingGon();
 
   try {
-    $('.neighborhood-module img[data-src]').unveil(300, function() {
+    $('.neighborhood-module img[data-src]').unveil(300, () => {
       $(this).width('100%');
     });
-  } catch (e) {}
+  } catch (e) {
+    // Do nothing
+  }
   try {
     $('.innovate-logo').unveil(300);
-  } catch (e) {}
+  } catch (e) {
+    // Do nothing
+  }
 
-  $body.on('click', '.js-start-tour', function() {
-    let remodal = $('.js-start-tour').closest('.remodal');
+  $body.on('click', '.js-start-tour', () => {
+    const remodal = $('.js-start-tour').closest('.remodal');
     // This is the modal that appears unless the user clicks 'Not right now'
-    let schoolTourModal = $('.js-school-profile-tour-modal');
+    const schoolTourModal = $('.js-school-profile-tour-modal');
     if(remodal.length > 0) {
       remodal.remodal().close();
     }
@@ -326,22 +323,22 @@ $(function() {
     return false;
   }).show();
 
-  $body.on('click', '#school-tour-feedback', function(){
-    let surveyUrl = 'https://s.qualaroo.com/45194/9da69ac2-e50b-4c8d-84c1-9df4e8671481?state=' + gon.school.state + '&school=' + gon.school.id;
+  $body.on('click', '#school-tour-feedback', () => {
+    const surveyUrl = `https://s.qualaroo.com/45194/9da69ac2-e50b-4c8d-84c1-9df4e8671481?state=${gon.school.state}&school=${gon.school.id}`;
     window.open(surveyUrl);
   });
 
-  $body.on('click', '.js-swd-modal', function(){
+  $body.on('click', '.js-swd-modal', () => {
     scrollToElement('#Reviews');
     $('.remodal').remodal().close();
   });
 
-  $body.on('click', '.js-start-second-tour', function(){
+  $body.on('click', '.js-start-second-tour', () => {
       introJs.startSecondTutorial();
       return false;
   }).show();
 
-  $body.on('click', '.js-close-school-tour', function() {
+  $body.on('click', '.js-close-school-tour', () => {
     introJs.exit();
   });
 
@@ -349,10 +346,10 @@ $(function() {
 
 });
 
-$(window).on('load', function() {
+$(window).on('load', () => {
   initAdvertising();
 
-  var moduleIds = [
+  const moduleIds = [
     '#CollegeReadiness',
     '#TestScores',
     '#StemCourses',
@@ -372,11 +369,11 @@ $(window).on('load', function() {
     '#Neighborhood',
     '#NearbySchools'
   ];
-  var elementIds = [];
-  for (var x=0; x < moduleIds.length; x ++) {
-    var theId = moduleIds[x];
+  const elementIds = [];
+  for (let x=0; x < moduleIds.length; x+=1) {
+    const theId = moduleIds[x];
     elementIds.push(theId);
-    elementIds.push(theId + '-empty');
+    elementIds.push(`${theId}-empty`);
   }
   impressionTracker({
     elements: elementIds,
@@ -387,12 +384,11 @@ $(window).on('load', function() {
   runInterrupts(['interstitial', 'profileTour', 'mobileOverlayAd', 'qualaroo']);
 
 
-  $('#toc').on('click', 'a', function(e) {
-    const ANCHOR_REGEX = /^#[^ ]+$/;
-    let elem = e.currentTarget;
+  $('#toc').on('click', 'a', (e) => {
+    const elem = e.currentTarget;
     if(elem.nodeName === 'A') {
-      let href = elem.getAttribute('href');
-      if(href != window.location.hash) {
+      const href = elem.getAttribute('href');
+      if(href !== window.location.hash) {
         window.location.hash = href;
       } else {
         scrollToAnchor(href.slice(1));

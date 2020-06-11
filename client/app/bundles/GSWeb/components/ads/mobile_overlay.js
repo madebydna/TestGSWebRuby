@@ -1,10 +1,24 @@
-import { checkForFreeStarLoaded, showAd, enableAdCloseButtons } from 'util/new_advertising';
+/* global $ */
+import { checkForFreeStarLoaded, showAd, enableAdCloseButtons } from 'util/advertising';
 import { onScroll } from 'util/scrolling';
 
 const adSlotId = 'greatschools_Mobile_overlay';
 const containerSelector = '.mobile-ad-sticky-bottom';
 let deferred;
-let $ = window.jQuery;
+
+function showAdAfterLoad(slotId, num) {
+  return () => {
+    showAd(slotId, num);
+  };
+}
+
+export function onAdNotFilled() {
+  if(deferred) {
+    deferred.reject();
+  }
+}
+window.GS_onMobileOverlayAdNotFilled = onAdNotFilled;
+
 
 export function renderAd() {
   /*
@@ -13,35 +27,28 @@ export function renderAd() {
    * But the container needs to be visible (yet still offscreen) when
    * we ask the ad server to fill.
    */
-  console.log('in Mobile overlay renderAd()');
   $(containerSelector).css('display', 'block');
   enableAdCloseButtons();
-  if($('#' + adSlotId + '_1').is(":visible")) {
+  if($(`#${adSlotId}_1`).is(":visible")) {
     checkForFreeStarLoaded(showAdAfterLoad(adSlotId, 1));
   } else {
     onAdNotFilled();
   }
 }
 
-function showAdAfterLoad(adSlotId, num) {
-  return function() {
-    showAd(adSlotId, num);
-  }
-}
-
 let mobileOverlayShown = false
 
 export function renderAdOnScrollHalfway() {
-  console.log('in Mobile overlay renderAdOnScrollHalfway');
   onScroll('mobileOverlay', ({ ratioScrolledDown } = {}) => {
     if(mobileOverlayShown) {
       return false;
     }
-    if(ratioScrolledDown > .5) {
+    if(ratioScrolledDown > 0.5) {
       mobileOverlayShown = true;
-      renderAd()
+      renderAd();
     }
-  })
+    return;
+  });
 }
 
 window.GS_renderMobileOverlayAd = renderAd; // TODO: remove after other pages use webpack
@@ -53,13 +60,13 @@ export function revealContainer() {
 }
 
 export function startAutoCloseTimer(duration = 1000 * 30) {
-  setTimeout(function() {
+  setTimeout(() => {
     $(containerSelector).remove();
   }, duration);
 }
 
 export function onAdFilled() {
-  setTimeout(function() {
+  setTimeout(() => {
     revealContainer();
     startAutoCloseTimer();
     if(deferred) {
@@ -68,14 +75,6 @@ export function onAdFilled() {
   }, 1000 * 2);
 }
 window.GS_onMobileOverlayAdFilled = onAdFilled;
-
-export function onAdNotFilled() {
-  console.log('in Mobile overlay on ad not filled', deferred);
-  if(deferred) {
-    deferred.reject();
-  }
-}
-window.GS_onMobileOverlayAdNotFilled = onAdNotFilled;
 
 export function setDeferred(_deferred) {
   deferred = _deferred;

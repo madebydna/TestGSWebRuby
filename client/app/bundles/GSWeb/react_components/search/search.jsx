@@ -19,8 +19,8 @@ import ChooseTableButtons from './choose_table_buttons';
 import StateSelectDropdown from './state_select_dropdown';
 import DistanceFilter from './distance_filter';
 import DistanceContext from './distance_context';
-import NewAd from 'react_components/new_ad';
-import { init as initAdvertising } from 'util/new_advertising';
+import Ad from 'react_components/ad';
+import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import SearchBox from '../search_box';
 import NoResults from './no_results';
@@ -166,7 +166,7 @@ class Search extends React.Component {
             }
             tallAd={
               <div className="ad-bar">
-                <NewAd
+                <Ad
                   key={`greatschools_Search_160x600${this.props.page}`}
                   slot="greatschools_Search_160x600"
                   dimensions={[160, 600]}

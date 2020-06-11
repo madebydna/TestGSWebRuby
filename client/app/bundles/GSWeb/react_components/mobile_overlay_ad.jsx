@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import NewAd from 'react_components/new_ad';
+import Ad from 'react_components/ad';
 import OpenableCloseable from 'react_components/openable_closeable';
 
 const MobileOverlayAd = ({ loaded }) =>
   loaded ? (
     <OpenableCloseable openByDefault={false}>
       {(isOpen, { openForDuration, close }) => (
-        <NewAd
+        <Ad
           container={
             <div className={`mobile-ad-sticky-bottom ${isOpen ? '' : 'dn'}`} />
           }
@@ -23,7 +23,7 @@ const MobileOverlayAd = ({ loaded }) =>
               {adElement}
             </React.Fragment>
           )}
-        </NewAd>
+        </Ad>
       )}
     </OpenableCloseable>
   ) : null;

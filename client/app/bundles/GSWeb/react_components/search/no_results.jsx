@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { t } from 'util/i18n';
 import noResultsOwlPng from 'search/no-results-owl.png';
-import NewAd from 'react_components/new_ad';
+import Ad from 'react_components/ad';
 
 const NoResults = ({ resultSummary }) => (
   <div className="no-results">
-    <NewAd sizeName="thin_banner" slot="Search_NoResults_Top" />
+    <Ad sizeName="thin_banner" slot="Search_NoResults_Top" />
     <div className="body">
       <img src={noResultsOwlPng} />
       <div>
@@ -21,7 +21,7 @@ const NoResults = ({ resultSummary }) => (
         </ul>
       </div>
     </div>
-    <NewAd sizeName="thin_banner" slot="Search_NoResults_Bottom" />
+    <Ad sizeName="thin_banner" slot="Search_NoResults_Bottom" />
   </div>
 );
 
