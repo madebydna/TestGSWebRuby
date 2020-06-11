@@ -38,7 +38,7 @@ module CommunityProfiles
 
     def tabs_with_data(tabs)
       tabs.reject! { |h| h[:anchor] == OVERVIEW} unless fetch_value(SUMMER_SUMMARY)
-      tabs.each do |tab|
+      tabs.select { |h| h[:anchor] != OVERVIEW}.each do |tab|
         if tab[:data].all? { |h| h[:values] == [] }
           tabs.reject! { |h| h[:anchor] == tab[:anchor] }
         end
