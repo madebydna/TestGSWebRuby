@@ -17,7 +17,7 @@ module CommunityProfiles
 
         def no_subject_or_all_subjects_or_graduates_remediation
           select do |h|
-            h.subject.nil? || h.all_subjects? || h.is_a?(GradutesRemediationValue)
+            h.subject.nil? || h.all_subjects? || h.is_a?(GraduatesRemediationValue)
           end.extend(CollectionMethods)
         end
 
@@ -71,7 +71,7 @@ module CommunityProfiles
       end
     end
 
-    module GradutesRemediationValue
+    module GraduatesRemediationValue
       def data_type
         if !all_subjects?
           'Graduates needing ' + subject.capitalize + ' remediation in college'
@@ -117,7 +117,7 @@ module CommunityProfiles
       array_of_hashes.each_with_object({}) do |(data_type, array), accum|
         accum[data_type] =
           if data_type == GRADUATES_REMEDIATION
-            array.each { |dv| dv.extend(GradutesRemediationValue) }
+            array.each { |dv| dv.extend(GraduatesRemediationValue) }
           else
             array
           end
@@ -141,7 +141,7 @@ module CommunityProfiles
     end
 
     # Filters metrics data from DB
-    # these have been converted to instances of either CharacteristicsValue or GradutesRemediationValue
+    # these have been converted to instances of either CharacteristicsValue or GraduatesRemediationValue
     def data_type_hashes
       @_data_type_hashes ||= begin
         hashes = metrics_data

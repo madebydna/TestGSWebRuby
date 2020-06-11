@@ -94,12 +94,12 @@ class StateCacheDataReader
     end
   end
 
-  # def metrics_data(*keys)
-  #   decorated_state.metrics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
-  #     array_of_hashes = array_of_hashes.select {|h| h.has_key?('source')}
-  #     hash[k] = array_of_hashes if array_of_hashes.present?
-  #   end
-  # end
+  def decorated_metrics_data(key)
+    Array.wrap(decorated_district.metrics.slice(key)[key])
+      .map do |h|
+      MetricsCaching::Value.from_hash(h).tap {|dv| dv.data_type = key }
+    end.extend(MetricsCaching::Value::CollectionMethods)
+  end
 
   def state_cache_query
     StateCacheQuery.for_state(state).tap do |query|
