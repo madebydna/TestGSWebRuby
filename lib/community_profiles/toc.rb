@@ -48,7 +48,7 @@ module CommunityProfiles
     end
 
     def district_toc
-      toc_items = [:schools, :distance_learning, :academics, :academic_progress, :student_progress, :advanced_courses, :student_demographics, :teachers_staff, :calendar, :finance, :community_resources, :nearby_homes_for_sale, :reviews]
+      toc_items = [:distance_learning, :schools, :academics, :academic_progress, :student_progress, :advanced_courses, :student_demographics, :teachers_staff, :calendar, :finance, :community_resources, :nearby_homes_for_sale, :reviews]
 
       generate_toc(toc_items)
     end

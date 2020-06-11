@@ -38,6 +38,17 @@
           }) %>
         </div>
 
+        <%# Distance Learning %>
+          <% if @distance_learning.present? %>
+            <div id="distance-learning" class="module-section">
+              <%= react_component('DistanceLearning', props: {
+                distance_learning: @distance_learning,
+                locality: @locality,
+                pageType: 'district'
+              }) %>
+            </div>
+          <% end %>
+
         <%# Schools %>
         <div id="schools" class="module-section">
           <h2 class="modules-title"><%= I18n.t('find_schools_in', scope: 'community.district') %> <%= @locality[:name] %></h2>
@@ -56,17 +67,6 @@
                 locality: @locality,
                 schoolLevels: @school_levels
             }) %>
-          <% end %>
-
-          <%# Distance Learning %>
-          <% if @distance_learning.present? %>
-            <div id="distance-learning">
-              <%= react_component('DistanceLearning', props: {
-                distance_learning: @distance_learning,
-                locality: @locality,
-                pageType: 'district'
-              }) %>
-            </div>
           <% end %>
 
           <%# Summary Rating %>
