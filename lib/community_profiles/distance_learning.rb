@@ -36,8 +36,18 @@ module CommunityProfiles
       end
     end
 
+    def tabs_with_data(tabs)
+      tabs.reject! { |h| h[:anchor] == OVERVIEW} unless fetch_value(SUMMER_SUMMARY)
+      tabs.each do |tab|
+        if tab[:data].all? { |h| h[:values] == [] }
+          tabs.reject! { |h| h[:anchor] == tab[:anchor] }
+        end
+      end
+      tabs
+    end
+
     def data_values
-      TAB_ACCESSORS.map do |tab_config|
+      tabs = TAB_ACCESSORS.map do |tab_config|
         tab = tab_config[:tab]
         accessors = tab_config[:accessors]
 
@@ -47,6 +57,7 @@ module CommunityProfiles
           h[:data] = data_values_by_subtab(accessors)
         end
       end
+      tabs_with_data(tabs)
     end
 
     def data_values_by_subtab(accessors)
@@ -104,11 +115,13 @@ module CommunityProfiles
     end
 
     def format_overview
-      first_paragraph = fetch_value(SUMMER_SUMMARY).strip
-      translated = I18n.db_t(first_paragraph, default: first_paragraph)
-      cta_link = fetch_value(SUMMER_URL) ? I18n.t('see_district_summer_page_html', scope: 'community.distance_learning', url: fetch_value(SUMMER_URL)) : ""
+      first_paragraph = fetch_value(SUMMER_SUMMARY)&.strip
+      if first_paragraph
+        translated = I18n.db_t(first_paragraph, default: first_paragraph)
+        cta_link = fetch_value(SUMMER_URL) ? I18n.t('see_district_summer_page_html', scope: 'community.distance_learning', url: fetch_value(SUMMER_URL)) : ""
 
-      "#{translated} #{cta_link}"
+        "#{translated} #{cta_link}"
+      end
     end
 
     def date_valid
