@@ -123,7 +123,7 @@ $(() => {
     if (window.innerWidth) {
       width = window.innerWidth;
     } else if (document.documentElement.clientWidth) {
-      width = document.documentElement.clientWidth
+      width = document.documentElement.clientWidth;
     } else {
       width = screen.width;
     }

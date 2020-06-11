@@ -36,7 +36,7 @@ export function renderAd() {
   }
 }
 
-let mobileOverlayShown = false
+let mobileOverlayShown = false;
 
 export function renderAdOnScrollHalfway() {
   onScroll('mobileOverlay', ({ ratioScrolledDown } = {}) => {
