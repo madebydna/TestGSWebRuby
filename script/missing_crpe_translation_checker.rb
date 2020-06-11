@@ -3,6 +3,8 @@ require_relative '../config/environment'
 require 'optparse'
 require_relative '../lib/i18n/manager.rb'
 
+# bundle exec rails runner script/missing_crpe_translation_checker.rb -tomni.covid_responses
+
 class MissingCrpeTranslationChecker
   def self.report
     MissingCrpeTranslationChecker.new.run
