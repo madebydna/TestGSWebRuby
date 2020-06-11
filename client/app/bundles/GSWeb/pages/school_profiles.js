@@ -190,13 +190,13 @@ $(() => {
     return false;
   });
 
-  $('.profile-section .section-title').each(() => {
+  $('.profile-section .section-title').each(function(){
     const minWidth = 1200;
-
+    const $elem = $(this);
     fixToTopWhenBelowY(
-      $(this),
-      ($elem) => $elem.parent().offset().top - 20,
-      ($elem) => $elem.parent().offset().top + $elem.parent().parent().parent().height() - 50 - $elem.height(),
+      $elem,
+      (el) => el.parent().offset().top - 20,
+      (el) => el.parent().offset().top + el.parent().parent().parent().height() - 50 - el.height(),
       () => viewport().width >= minWidth
     );
   });
