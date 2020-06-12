@@ -1,2 +1,2 @@
 //= require ./header
-//= require admin/admin
+//= require ./admin/admin
