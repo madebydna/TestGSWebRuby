@@ -3,6 +3,11 @@ require_relative '../config/environment'
 require 'optparse'
 require_relative '../lib/i18n/manager.rb'
 
+# Update/add new translations: bundle exec rails runner script/missing_crpe_translation_checker.rb -tomni.covid_responses
+# (NOTE: Translation files cannot be generated without at least one existing dummy key.)
+
+# Run in check mode: bundle exec rails runner script/missing_crpe_translation_checker.rb
+
 class MissingCrpeTranslationChecker
   def self.report
     MissingCrpeTranslationChecker.new.run
@@ -27,7 +32,7 @@ class MissingCrpeTranslationChecker
         table:  :'omni.covid_responses',
         column: :value,
         key_column: :data_type,
-        key_value: 'SUMMARY'
+        key_value: 'SUMMER SUMMARY'
       }
     ]
     @missing_translation_messages = []

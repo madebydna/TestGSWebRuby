@@ -2,9 +2,9 @@
   <ul>
     <% @toc.each_with_index do |item, idx| %>
       <% if idx == 0 %>
-        <li anchor="<%= item[:anchor] %>" class="selected"><div><%= I18n.t("community.toc.#{item[:label]}").capitalize %></div></li>
+        <li anchor="<%= item[:anchor] %>" class="selected"><div><%= I18n.t("community.toc.#{item[:label]}") %></div></li>
       <% else %>
-        <li anchor="<%= item[:anchor] %>"><div><%= I18n.t("community.toc.#{item[:label]}").capitalize %></div></li>
+        <li anchor="<%= item[:anchor] %>"><div><%= I18n.t("community.toc.#{item[:label]}") %></div></li>
       <% end %>
     <% end %>
   </ul>

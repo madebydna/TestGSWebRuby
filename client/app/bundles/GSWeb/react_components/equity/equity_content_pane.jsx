@@ -35,6 +35,9 @@ export default class EquityContentPane extends React.Component {
         'Percentage of students enrolled in IB grades 9-12',
         'Learning',
         'Planning',
+        'Teaching',
+        'K-8',
+        'High School',
         'main',
         undefined
     ].indexOf(this.props.anchor) === -1;
@@ -51,7 +54,7 @@ export default class EquityContentPane extends React.Component {
     return(
       <div className={'tabs-panel tabs-panel_selected'}>
         <div className="row">
-          <div className="top-content">{this.get_narrative()}<hr  /></div>
+    <div className="top-content">{this.get_narrative()}{this.props.graph && <hr  />}</div>
           {this.getColumnHeader()}
           <div>{this.props.graph}</div>
         </div>
