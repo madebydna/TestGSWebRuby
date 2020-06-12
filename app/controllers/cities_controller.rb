@@ -22,7 +22,7 @@ class CitiesController < ApplicationController
     @summary_type = summary_rating_type
     @breadcrumbs = breadcrumbs
     @school_levels = school_levels
-    @districts = district_content(decorated_city)
+    @districts = district_content(decorated_city)&.sort_by {|district| district[:numSchools]}&.reverse
     @reviews = reviews_formatted.reviews_list
     @locality = locality
     @csa_module = csa_state_solr_query.present?
@@ -58,7 +58,7 @@ class CitiesController < ApplicationController
   def cities_description
     state_text = state.downcase == 'dc' ? "#{state.upcase}" : "#{state_name.gs_capitalize_words}"
 
-    t('controllers.cities_controller.meta_description', city_name: city_record.name.gs_capitalize_words, state_text: state_text, state_abbrev: state.upcase)   
+    t('controllers.cities_controller.meta_description', city_name: city_record.name.gs_capitalize_words, state_text: state_text, state_abbrev: state.upcase)
   end
 
   def cities_state_text
@@ -80,8 +80,8 @@ class CitiesController < ApplicationController
     )
   end
 
-  def csa_state_solr_query 
-    @_csa_state_solr_query ||= begin 
+  def csa_state_solr_query
+    @_csa_state_solr_query ||= begin
       csa_badge = ['*']
       query_type = Search::SolrSchoolQuery
       query_type.new(
@@ -90,7 +90,7 @@ class CitiesController < ApplicationController
           csa_years: csa_badge.presence
       ).search
     end
-  end 
+  end
 
   def reviews
     @_reviews ||=
@@ -209,9 +209,9 @@ class CitiesController < ApplicationController
             trailing_slash: true
           )
         end
-      end 
+      end
     end
-  end 
+  end
 
   # StructuredMarkup
   def prepare_json_ld

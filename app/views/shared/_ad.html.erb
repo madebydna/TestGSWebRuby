@@ -1,10 +1,6 @@
 <% if AdsSwitch.ads_enabled_for_current_request? %>
-  <% slot %>
-  <% width ||= 300 %>
-  <% height ||= 250 %>
-  <% size_mapping ||= '' # Size mapping key. See GS.ad.getSizeMappings in advertising.js %>
   <% css_class ||= '' # CSS class to apply to container %>
-  <% id_counter ||= '' # If multiple ads with the same slot name appear on a page %>
+  <% id_counter ||= 1 # For multiple ads with the same slotId/placementName %>
 
   <% unless defined?(show_ad_text) %>
     <% show_ad_text = true %>
@@ -16,29 +12,25 @@
     <% defer = false %>
   <% end %>
 
-  <% slot_name = slot.to_s.gs_capitalize_words.gsub(' ', '_').to_sym %>
-  <% dimensions = [width, height] %>
-
-  <% iddef = "#{slot_name}#{id_counter}_Ad" %>
-
   <% if close_button %>
     <% css_class << ' js-closable-ad' %>
   <% end %>
-  <div class="js-<%= iddef %>-wrapper hidden-print <%= css_class %>">
+
+  <% divId = "#{slotId}_#{id_counter}" %>
+
+  <div class="js-<%= divId %>-wrapper hidden-print <%= css_class %>">
     <% if close_button %>
       <span class="close">×</span>
     <% end %>
     <%
       custom_data_attrs = {
-        'ad-size' => dimensions,
-        'dfp' => slot,
-        'ad-setting' => size_mapping
+        'dfp' => slotId
       }
       custom_data_attrs['ad-defer-render'] = true if defer
     %>
-    <%= content_tag('div', '', class: "js-ad-hook gs_ad_slot ad-slot tac", id: iddef, data: custom_data_attrs) %>
+    <%= content_tag('div', '', class: "gs_ad_slot ad-slot", id: divId, data: custom_data_attrs) %>
     <% if show_ad_text %>
-        <%= render partial: '/shared/advertising_word' %>
+      <%= render partial: '/shared/advertising_word' %>
     <% end %>
   </div>
 <% end %>

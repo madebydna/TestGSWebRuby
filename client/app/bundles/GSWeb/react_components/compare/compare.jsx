@@ -9,7 +9,7 @@ import SearchBox from 'react_components/search_box'
 import NoCompareSchoolListResult from './no_compare_school_list_result';
 import NoResults from 'react_components/search/no_results';
 import Ad from 'react_components/ad';
-import { init as initAdvertising } from 'util/new_advertising';
+import { init as initAdvertising } from 'util/advertising';
 import { XS, validSizes as validViewportSizes } from 'util/viewport';
 import withViewportSize from 'react_components/with_viewport_size';
 import SortSelect from 'react_components/search/sort_select';

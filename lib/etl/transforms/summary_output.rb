@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 class SummaryOutput < GS::ETL::Source
 
   attr_accessor :summary_output_fields

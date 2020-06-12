@@ -171,8 +171,8 @@ module GS
           source.run(context_for_sources)
         end
         @runnable_steps.each(&:run)
-        #zip_output_files
         GS::ETL::Logging.logger.finish if GS::ETL::Logging.logger
+       #zip_output_files      
       end
 
       private
@@ -206,7 +206,8 @@ module GS
 
       def zip_output_files
         ENTITIES.each do |entity|
-          `while lsof "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql" >/dev/null; do sleep 1; done; gzip -f "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql"`
+          #{}`while lsof "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql" >/dev/null; do sleep 1; done; gzip -c "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql" > "#{FILE_LOCATION}#{data_file_prefix}#{entity}.gz"`
+          `gzip -c "#{FILE_LOCATION}#{data_file_prefix}#{entity}.sql" > "#{FILE_LOCATION}#{data_file_prefix}#{entity}.gz" `
         end
       end
 
@@ -250,7 +251,7 @@ module GS
       def state_steps
         output_files_root_step.add(summary_output_step)
         state_ids = state_id_hash
-        node = output_files_root_step.add_step('Keep only state rows', KeepRows, :entity_type, 'state')
+        node = output_files_root_step.add_step('Keep only state rows', KeepRows, :entity_type, 'state')        
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           row[:state_id] = 'state'
           row[:school_name] = 'state'
@@ -263,9 +264,15 @@ module GS
           row
         end     
         node = node.transform 'Check n_tested"', WithBlock do |row|
-          row[:number_tested] = 'NULL' if row[:number_tested].nil?
+          if row[:number_tested].nil?
+            row[:number_tested] = 'NULL' 
+          else
+            row[:number_tested] = row[:number_tested].to_i
+          end
+          row[:grade] = row[:grade].gsub(/^0/, '')
           row
         end
+        node = node.transform("Skip number_tested < 10", DeleteRows,:number_tested,1,2,3,4,5,6,7,8,9)
         node.destination 'Output state rows to CSV', CsvDestination, state_output_file, *COLUMN_ORDER
         node.sql_writer 'Output state rows to SQL file', SqlDestination, state_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS, @load_type
         node
@@ -294,10 +301,16 @@ module GS
           end
           row
         end
-        node = node.transform 'Check n_tested"', WithBlock do |row|
-          row[:number_tested] = 'NULL' if row[:number_tested].nil?
+        node = node.transform 'Check n_tested/grade', WithBlock do |row|
+          if row[:number_tested].nil?
+            row[:number_tested] = 'NULL' 
+          else
+            row[:number_tested] = row[:number_tested].to_i
+          end
+          row[:grade] = row[:grade].gsub(/^0/, '')
           row
         end
+        node = node.transform("Skip number_tested < 10", DeleteRows,:number_tested,1,2,3,4,5,6,7,8,9)
         node.destination 'Output district rows to CSV', CsvDestination, district_output_file, *COLUMN_ORDER
         node.sql_writer 'Output district rows to SQL file', SqlDestination, district_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS, @load_type
         node
@@ -314,7 +327,6 @@ module GS
         school_ids = school_id_hash
         district_ids = district_id_hash
         node = output_files_root_step.add_step('Keep only school rows', KeepRows, :entity_type, 'school')
-        
         queue_hash = {}
         node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           if school_ids[row[:state_id]].nil? and !queue_hash.key?(row[:state_id])
@@ -329,9 +341,15 @@ module GS
           row
         end
         node = node.transform 'Check n_tested"', WithBlock do |row|
-          row[:number_tested] = 'NULL' if row[:number_tested].nil?
+          if row[:number_tested].nil?
+            row[:number_tested] = 'NULL' 
+          else
+            row[:number_tested] = row[:number_tested].to_i
+          end
+          row[:grade] = row[:grade].gsub(/^0/, '')
           row
         end
+        node = node.transform("Skip number_tested < 10", DeleteRows,:number_tested,1,2,3,4,5,6,7,8,9)
         node.destination 'Output school rows to CSV', CsvDestination, school_output_file, *COLUMN_ORDER
         node.sql_writer 'Output school rows to SQL file', SqlDestination, school_output_sql_file, config_hash, COLUMNS, REQUIRED_COLUMNS, @load_type
         node
@@ -343,6 +361,8 @@ module GS
       end
 
       def data_file_prefix
+        raise ArgumentError, 'Missing ticket number' if @ticket_n.nil? 
+        raise ArgumentError, 'Missing year' if @year.nil? 
         [@ticket_n, state, 'test', @year].join('_') + '_'
       end
 

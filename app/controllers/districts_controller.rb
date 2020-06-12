@@ -318,7 +318,7 @@ class DistrictsController < ApplicationController
   end
 
   def toc
-    CommunityProfiles::Toc.new(advanced_courses: @stem_courses, reviews: @reviews, academics: @academics_props, student_demographics: @students, teachers_staff: @teachers_staff, finance: @finance, growth_rating: @growth_rating)
+    CommunityProfiles::Toc.new(advanced_courses: @stem_courses, reviews: @reviews, academics: @academics_props, student_demographics: @students, teachers_staff: @teachers_staff, finance: @finance, growth_rating: @growth_rating, distance_learning: @distance_learning)
   end
 
   def school_count(key)

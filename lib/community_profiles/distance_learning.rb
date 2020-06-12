@@ -25,7 +25,6 @@ module CommunityProfiles
 
       {}.tap do |h|
         h[:url] = fetch_value(URL)
-        h[:overview] = format_overview
         h[:data_values] = data_values
         h[:tooltip] = I18n.t('tooltip_html', scope: 'community.distance_learning', date_valid: date_valid)
         h[:anchor] = 'distance-learning'
@@ -37,8 +36,18 @@ module CommunityProfiles
       end
     end
 
+    def tabs_with_data(tabs)
+      # tabs.reject! { |h| h[:anchor] == OVERVIEW} unless fetch_value(SUMMER_SUMMARY)
+      tabs.select { |h| h[:anchor] != OVERVIEW}.each do |tab|
+        if tab[:data].all? { |h| h[:values] == [] }
+          tabs.reject! { |h| h[:anchor] == tab[:anchor] }
+        end
+      end
+      tabs
+    end
+
     def data_values
-      TAB_ACCESSORS.map do |tab_config|
+      tabs = TAB_ACCESSORS.map do |tab_config|
         tab = tab_config[:tab]
         accessors = tab_config[:accessors]
 
@@ -48,6 +57,7 @@ module CommunityProfiles
           h[:data] = data_values_by_subtab(accessors)
         end
       end
+      tabs_with_data(tabs)
     end
 
     def data_values_by_subtab(accessors)
@@ -56,9 +66,11 @@ module CommunityProfiles
         tab = accessor[:tab]
         data_types = accessor[:data_types]
 
+        narration = tab == OVERVIEW ? format_overview : I18n.t("narration", scope: "community.distance_learning.#{tab.downcase}.#{subtab.downcase}")
+
         {}.tap do |h|
           h[:anchor] = subtab
-          h[:narration] = I18n.t("narration", scope: "community.distance_learning.#{tab.downcase}.#{subtab.downcase}")
+          h[:narration] = narration
           h[:title] = I18n.t(subtab.downcase, scope: 'community.distance_learning.tab', default: nil)
           h[:type] = 'circle'
           h[:values] = data_value(data_types)
@@ -70,16 +82,34 @@ module CommunityProfiles
       data_types.map do |data_type|
         next unless crpe_data.fetch(data_type, nil)
         datum = crpe_data.fetch(data_type)
+        # JT-10443: If *either* ES_MS_CONTENT_MAKE_UP or ES_MS_CONTENT_REVIEW has a value of "Yes", set value of ES_MS_CONTENT_MAKE_UP to "Yes"
+        if datum["data_type"] == ES_MS_CONTENT_MAKE_UP && datum["value"] == "No"
+          value = crpe_data.fetch(ES_MS_CONTENT_REVIEW)["value"]
+        else
+          value = datum["value"]
+        end
 
         {}.tap do |h|
           h[:breakdown] = label(data_type)
-          h[:tooltip_html] = I18n.t("#{datum['data_type']}.tooltip_html", scope: 'community.distance_learning.data_types', default: nil)
+          h[:tooltip_html] = tooltip(data_type)
           h[:data_type] = datum["data_type"]
-          h[:value] = datum["value"]
+          h[:value] = value
           h[:date_valid] = datum["date_valid"]
           h[:source] = datum["source"]
         end
       end.compact
+    end
+
+    def tooltip(data_type)
+      datum = crpe_data.fetch(data_type)
+      summer_url = fetch_value(SUMMER_URL)
+
+      if summer_url
+        tip = I18n.t("#{datum['data_type']}.tooltip_html", scope: 'community.distance_learning.data_types', url: summer_url, default: nil)
+      else
+        tip = I18n.t("#{datum['data_type']}.tooltip_no_link_html", scope: 'community.distance_learning.data_types', default: nil)
+      end
+      tip
     end
 
     def label(data_type)
@@ -96,8 +126,14 @@ module CommunityProfiles
     end
 
     def format_overview
-      first_paragraph = fetch_value(SUMMARY).strip
-      I18n.db_t(first_paragraph, default: first_paragraph)
+      # JT-10443: If no SUMMER_SUMMARY, fall back to SUMMARY
+      first_paragraph = fetch_value(SUMMER_SUMMARY)&.strip || fetch_value(SUMMARY)&.strip
+      if first_paragraph
+        translated = I18n.db_t(first_paragraph, default: first_paragraph)
+        cta_link = fetch_value(SUMMER_URL) ? I18n.t('see_district_summer_page_html', scope: 'community.distance_learning', url: fetch_value(SUMMER_URL)) : ""
+
+        "#{translated} #{cta_link}"
+      end
     end
 
     def date_valid

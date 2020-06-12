@@ -5,6 +5,7 @@
   <%= render 'layouts/common_prefetches' %>
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "deprecated_application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "deprecated_post_load", :async => true %>
   <%= stylesheet_link_tag    "deprecated_print",       media: "print" %>
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
@@ -68,7 +69,6 @@
 <%= render 'nav/footer' %>
 
 <div class="visible-xs js-disableInterstitial"></div>
-<%= stylesheet_link_tag "deprecated_post_load", :async => true %>
 <%= webpack_javascript_include_tag "mobile-overlay-ad", defer: true %>
 <%= javascript_include_tag "deprecated_post_load", defer: true %>
 <script type="text/javascript">

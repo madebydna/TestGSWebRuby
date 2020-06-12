@@ -88,14 +88,14 @@ export default class Widget extends React.Component {
     });
     geocode(e.target.value)
       .then(json => json[0])
-      .done(({lat, lon, normalizedAddress} = {}) => {
+      .done(({lat, lon, normalizedAddress, state, city} = {}) => {
         if (lat && lon && normalizedAddress) {
           this.setState({
             lat: lat,
             lon: lon,
             normalizedAddress: normalizedAddress,
-            cityName: undefined,
-            state: undefined,
+            cityName: city,
+            state: state,
             geocoding: false
           });
         }
@@ -207,7 +207,7 @@ export default class Widget extends React.Component {
         </div>
         <br/><button onClick={this.getCode} disabled={!this.getCodeButtonEnabled()}>Get Widget Code</button>
 
-        { this.state.showIFrameCode && 
+        { this.state.showIFrameCode &&
           <div>
             <br/>
             <p>Cut and paste this code into your site:</p>

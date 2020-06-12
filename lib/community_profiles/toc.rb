@@ -9,6 +9,7 @@ module CommunityProfiles
       calendar: { label: 'calendar', anchor: 'calendar' },
       cities: { label: 'cities', anchor: 'cities' },
       community_resources: { label: 'community_resources', anchor: 'mobility' },
+      distance_learning: { label: 'distance_learning', anchor: 'distance-learning' },
       finance: { label: 'district_finances', anchor: 'finance' },
       nearby_homes_for_sale: { label: 'nearby_homes_for_sale_and_rent', anchor: 'homes-and-rentals' },
       neighboring_cities: { label: 'neighboring_cities', anchor: 'neighboring-cities' },
@@ -20,7 +21,7 @@ module CommunityProfiles
       teachers_staff: { label: 'teachers_staff', anchor: 'teachers-staff' }
     }
 
-    def initialize(csa_module: nil, school_districts: nil, academics: nil, advanced_courses: nil, student_demographics: nil, reviews: nil, neighboring_cities: nil, teachers_staff: nil, finance: nil, growth_rating: nil)
+    def initialize(csa_module: nil, school_districts: nil, academics: nil, advanced_courses: nil, student_demographics: nil, reviews: nil, neighboring_cities: nil, teachers_staff: nil, finance: nil, growth_rating: nil, distance_learning: nil)
       @csa_module = csa_module
       @school_districts = school_districts
       @academics = academics
@@ -31,6 +32,7 @@ module CommunityProfiles
       @teachers_staff = teachers_staff
       @finance = finance
       @growth_rating = growth_rating
+      @distance_learning = distance_learning
     end
 
     def state_toc
@@ -46,7 +48,7 @@ module CommunityProfiles
     end
 
     def district_toc
-      toc_items = [:schools, :academics, :academic_progress, :student_progress, :advanced_courses, :student_demographics, :teachers_staff, :calendar, :finance, :community_resources, :nearby_homes_for_sale, :reviews]
+      toc_items = [:distance_learning, :schools, :academics, :academic_progress, :student_progress, :advanced_courses, :student_demographics, :teachers_staff, :calendar, :finance, :community_resources, :nearby_homes_for_sale, :reviews]
 
       generate_toc(toc_items)
     end
@@ -55,6 +57,7 @@ module CommunityProfiles
       toc_items.delete(:award_winning_schools) unless @csa_module
       toc_items.delete(:school_districts) if @school_districts&.empty?
       toc_items.delete(:academics) unless @academics && @academics[:data].present?
+      toc_items.delete(:distance_learning) unless @distance_learning.present?
       toc_items.delete(:student_demographics) unless @student_demographics&.students_demographics.present?
       toc_items.delete(:reviews) if @reviews&.empty?
       toc_items.delete(:neighboring_cities) if @neighboring_cities&.empty?

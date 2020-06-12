@@ -6,23 +6,37 @@ describe CommunityProfiles::DistanceLearningConfig do
       expect(CommunityProfiles::DistanceLearningConfig::TAB_ACCESSORS).to be_an(Array)
     end
 
-    it 'contains a list of defined asscessors' do
-      expect(CommunityProfiles::DistanceLearningConfig::TAB_ACCESSORS.map {|asscessor| asscessor[:tab]}).to match_array([
-        'Teaching',
+    it 'contains a list of defined accessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::TAB_ACCESSORS.map {|accessor| accessor[:tab]}).to match_array([
+        'Overview',
+        'Summer Learning',
         'Resources',
         'Policies',
       ])
     end
   end
 
-  context 'TEACHING_TAB_ACCESSORS' do
+  context 'OVERVIEW_TAB_ACCESSORS' do
     it 'is an array' do
-      expect(CommunityProfiles::DistanceLearningConfig::TEACHING_TAB_ACCESSORS).to be_an(Array)
+      expect(CommunityProfiles::DistanceLearningConfig::OVERVIEW_TAB_ACCESSORS).to be_an(Array)
     end
 
-    it 'contains a list of defined subtab asscessors' do
-      expect(CommunityProfiles::DistanceLearningConfig::TEACHING_TAB_ACCESSORS.map {|asscessor| asscessor[:subtab]}).to match_array([
+    it 'contains a list of defined subtab accessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::OVERVIEW_TAB_ACCESSORS.map {|accessor| accessor[:subtab]}).to match_array([
         'main'
+      ])
+    end
+  end
+
+  context 'SUMMER_LEARNING_TAB_ACCESSORS' do
+    it 'is an array' do
+      expect(CommunityProfiles::DistanceLearningConfig::SUMMER_LEARNING_TAB_ACCESSORS).to be_an(Array)
+    end
+
+    it 'contains a list of defined subtab accessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::SUMMER_LEARNING_TAB_ACCESSORS.map {|accessor| accessor[:subtab]}).to match_array([
+        'K-8',
+        'High School'
       ])
     end
   end
@@ -32,8 +46,8 @@ describe CommunityProfiles::DistanceLearningConfig do
       expect(CommunityProfiles::DistanceLearningConfig::RESOURCES_TAB_ACCESSORS).to be_an(Array)
     end
 
-    it 'contains a list of defined subtab asscessors' do
-      expect(CommunityProfiles::DistanceLearningConfig::RESOURCES_TAB_ACCESSORS.map {|asscessor| asscessor[:subtab]}).to match_array([
+    it 'contains a list of defined subtab accessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::RESOURCES_TAB_ACCESSORS.map {|accessor| accessor[:subtab]}).to match_array([
         'main'
       ])
     end
@@ -44,26 +58,47 @@ describe CommunityProfiles::DistanceLearningConfig do
       expect(CommunityProfiles::DistanceLearningConfig::POLICIES_TAB_ACCESSORS).to be_an(Array)
     end
 
-    it 'contains a list of defined subtab asscessors' do
-      expect(CommunityProfiles::DistanceLearningConfig::POLICIES_TAB_ACCESSORS.map {|asscessor| asscessor[:subtab]}).to match_array([
+    it 'contains a list of defined subtab accessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::POLICIES_TAB_ACCESSORS.map {|accessor| accessor[:subtab]}).to match_array([
+        'Planning',
         'Learning',
-        'Planning'
+        'Teaching'
       ])
     end
   end
 
-  context 'TEACHING_MAIN_SUBTAB_ACCESSORS' do
+  context 'OVERVIEW_MAIN_SUBTAB_ACCESSORS' do
     it 'is an array' do
-      expect(CommunityProfiles::DistanceLearningConfig::TEACHING_MAIN_SUBTAB_ACCESSORS).to be_an(Array)
+      expect(CommunityProfiles::DistanceLearningConfig::OVERVIEW_MAIN_SUBTAB_ACCESSORS).to be_an(Array)
+    end
+  end
+
+  context 'SUMMER_LEARNING_K8_SUBTAB_ACCESSORS' do
+    it 'is an array' do
+      expect(CommunityProfiles::DistanceLearningConfig::SUMMER_LEARNING_K8_SUBTAB_ACCESSORS).to be_an(Array)
     end
 
-    it 'contains a list of defined subtab asscessors' do
-      expect(CommunityProfiles::DistanceLearningConfig::TEACHING_MAIN_SUBTAB_ACCESSORS).to match_array([
-        "INSTRUCTION FROM TEACHERS",
-        "SYNCHRONOUS TEACHING FLAG",
-        "FEEDBACK ON STUDENT WORK",
-        "TEACHER CHECK-INS",
-        "SYNCHRONOUS STUDENT ENGAGEMENT FLAG",
+    it 'contains a list of defined subtab accessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::SUMMER_LEARNING_K8_SUBTAB_ACCESSORS).to match_array([
+        "ES MS SUMMER PROGRAM",
+        "ES MS CONTENT: MAKE-UP",
+        "ES MS CONTENT: ENRICHMENT"
+      ])
+    end
+  end
+
+  context 'SUMMER_LEARNING_HIGH_SCHOOL_SUBTAB_ACCESSORS' do
+    it 'is an array' do
+      expect(CommunityProfiles::DistanceLearningConfig::SUMMER_LEARNING_HIGH_SCHOOL_SUBTAB_ACCESSORS).to be_an(Array)
+    end
+
+    it 'contains a list of defined subtab accessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::SUMMER_LEARNING_HIGH_SCHOOL_SUBTAB_ACCESSORS).to match_array([
+        "HS SUMMER PROGRAM",
+        "HS CONTENT: LEARNING LOSS",
+        "HS CONTENT: CREDIT RECOVERY",
+        "HS CONTENT: CREDIT ACCELERATION",
+        "HS CONTENT: ENRICHMENT"
       ])
     end
   end
@@ -73,10 +108,11 @@ describe CommunityProfiles::DistanceLearningConfig do
       expect(CommunityProfiles::DistanceLearningConfig::RESOURCES_MAIN_SUBTAB_ACCESSORS).to be_an(Array)
     end
 
-    it 'contains a list of defined subtab asscessors' do
+    it 'contains a list of defined subtab accessors' do
       expect(CommunityProfiles::DistanceLearningConfig::RESOURCES_MAIN_SUBTAB_ACCESSORS).to match_array([
         "DEVICE DISTRIBUTION",
         "HOTSPOT ACCESS",
+        "SUMMER MEAL PLAN",
         "RESOURCES FOR STUDENTS WITH DISABILITIES",
       ])
     end
@@ -87,7 +123,7 @@ describe CommunityProfiles::DistanceLearningConfig do
       expect(CommunityProfiles::DistanceLearningConfig::POLICIES_LEARNING_SUBTAB_ACCESSORS).to be_an(Array)
     end
 
-    it 'contains a list of defined subtab asscessors' do
+    it 'contains a list of defined subtab accessors' do
       expect(CommunityProfiles::DistanceLearningConfig::POLICIES_LEARNING_SUBTAB_ACCESSORS).to match_array([
         "RESOURCE COVERAGE",
         "INSTRUCTIONAL MINUTES RECOMMENDED",
@@ -103,12 +139,27 @@ describe CommunityProfiles::DistanceLearningConfig do
       expect(CommunityProfiles::DistanceLearningConfig::POLICIES_PLANNING_SUBTAB_ACCESSORS).to be_an(Array)
     end
 
-    it 'contains a list of defined subtab asscessors' do
+    it 'contains a list of defined subtab accessors' do
       expect(CommunityProfiles::DistanceLearningConfig::POLICIES_PLANNING_SUBTAB_ACCESSORS).to match_array([
         "20-21 CONTINGENCY PLAN",
         "LEARNING LOSS PLAN",
-        "SUMMER LEARNING PLAN",
         "LEARNING LOSS DIAGNOSTIC IDENTIFIED",
+      ])
+    end
+  end
+
+  context 'POLICIES_TEACHING_SUBTAB_ACCESSORS' do
+    it 'is an array' do
+      expect(CommunityProfiles::DistanceLearningConfig::POLICIES_TEACHING_SUBTAB_ACCESSORS).to be_an(Array)
+    end
+
+    it 'contains a list of defined subtab accessors' do
+      expect(CommunityProfiles::DistanceLearningConfig::POLICIES_TEACHING_SUBTAB_ACCESSORS).to match_array([
+        "INSTRUCTION FROM TEACHERS",
+        "SYNCHRONOUS TEACHING FLAG",
+        "FEEDBACK ON STUDENT WORK",
+        "TEACHER CHECK-INS",
+        "SYNCHRONOUS STUDENT ENGAGEMENT FLAG",
       ])
     end
   end

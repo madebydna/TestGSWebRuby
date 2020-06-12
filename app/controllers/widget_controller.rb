@@ -166,7 +166,7 @@ class WidgetController < ApplicationController
     query_type = Search::SolrSchoolQuery
     query_type.new(
       # city: city,
-      # state: state,
+      state: state,
       location_label: location_label_param,
       level_codes: level_codes,
       entity_types: entity_types,

@@ -393,13 +393,22 @@ class SchoolProfilesController < ApplicationController
     end
   end
 
+  def robots
+    return 'noindex' if school.demo_school?
+    if school.private_school? && (Time.now - 4.years) > school.manual_edit_date && school.reviews.length < 3
+      return 'noindex'
+    end
+
+    'index'
+  end
+
   def set_seo_meta_tags
     meta_tags = SchoolProfileMetaTags.new(school)
     description = meta_tags.description
     canonical_url = school_url(school)
-    robots_tag = school&.demo_school? ? "noindex" : "index"
+
     set_meta_tags title: meta_tags.title,
-                  robots: robots_tag,
+                  robots: robots,
                   description: description,
                   canonical: canonical_url,
                   alternate: {

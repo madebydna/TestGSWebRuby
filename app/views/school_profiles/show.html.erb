@@ -27,7 +27,7 @@
         <div>
           <div id="js-ctaShow"></div>
         </div>
-        <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_First', id_counter: 2, css_class: 'visible-xs visible-sm'  %>
+        <%= render 'shared/ad', slotId: 'greatschools_Profiles_First', id_counter: 2, css_class: 'visible-xs visible-sm'  %>
 
         <a class="anchor-mobile-offset" name="Academics"></a>
         <div class="profile-section">
@@ -38,7 +38,7 @@
                 <%= t('school_profiles.toc.ACADEMICS') %>
               </h2>
               <div class="left-rail-jumpy-ad" style="position: fixed; width: 175px; height: 205px; padding-bottom: 30px">
-                <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_175x175', css_class: 'hidden-xs visible-lg', show_ad_text: false %>
+                <%= render 'shared/ad', slotId: 'greatschools_Profiles_175x175', css_class: 'hidden-xs visible-lg', show_ad_text: false %>
               </div>
             </div>
             <div class="col-xs-12 col-lg-9">
@@ -91,7 +91,7 @@
           </div>
         </div>
 
-        <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Second', css_class: 'mbl' %>
+        <%= render 'shared/ad', slotId: 'greatschools_Profiles_Second', css_class: 'mbl' %>
         <div>
           <%= render 'equity', equity: @school_profile.equity, equity_overview: @school_profile.equity_overview %>
         </div>
@@ -124,7 +124,7 @@
           </div>
         </div>
 
-        <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Third', css_class: 'mbl' %>
+        <%= render 'shared/ad', slotId: 'greatschools_Profiles_Third', css_class: 'mbl' %>
 
         <div class="profile-section">
           <%= render 'review_summary', reviews: @school_profile.reviews %>
@@ -141,7 +141,7 @@
     </div>
 
     <div class="profile-section">
-      <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Fourth', css_class: 'mbl' %>
+      <%= render 'shared/ad', slotId: 'greatschools_Profiles_Fourth', css_class: 'mbl' %>
     </div>
     <a name="Neighborhood" id="Neighborhood"></a>
     <div class="profile-section">
