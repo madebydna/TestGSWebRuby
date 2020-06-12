@@ -15,9 +15,10 @@ class Admin::Api::UsersController < ApplicationController
     if @user.save
       # ApiRequestReceivedEmail.deliver_to_api_key_requester(@user)
       # ApiRequestToModerateEmail.deliver_to_admin(@user)
-      redirect_to :success
+      # redirect_to :success
+      render json: {status: 'success'}
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -25,7 +26,7 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:id,
+    params.require(:api_user).permit(:id,
                                  :first_name,
                                  :last_name,
                                  :organization,
@@ -37,7 +38,10 @@ class Admin::Api::UsersController < ApplicationController
                                  :intended_use,
                                  :type,
                                  :account_updated,
-                                 :email_confirmation)
+                                 :email_confirmation,
+                                 :organization_description,
+                                 :role
+                                )
   end
 
 end
