@@ -71,6 +71,7 @@ es:
         ES MS SUMMER PROGRAM:
           label: Ofreciendo un programa de verano
           tooltip_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito. Consulta <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">el sitio del distrito</a> para obtener más información.
+          tooltip_no_link_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito.
         "ES MS CONTENT: MAKE-UP":
           label: Ofreciendo un programa para la pérdida de aprendizaje
           tooltip_html: El Distrito está ofreciendo un programa de verano para ayudar a los estudiantes a ponerse al día con el material que pueden haber perdido debido al cierre de las escuelas.
@@ -83,6 +84,7 @@ es:
         HS SUMMER PROGRAM:
           label: Ofreciendo un programa de verano
           tooltip_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito. Consulta <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">el sitio del distrito</a> para obtener más información.
+          tooltip_no_link_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito.
         "HS CONTENT: LEARNING LOSS":
           label: Ofreciendo un programa para la pérdida de aprendizaje
           tooltip_html: El programa aborda la pérdida de aprendizaje debido al cierre de las escuelas, pero no ofrece crédito para el curso.

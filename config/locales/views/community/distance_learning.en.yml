@@ -71,6 +71,7 @@ en:
         ES MS SUMMER PROGRAM:
           label: Summer program offered
           tooltip_html: District offers at least one summer program taught by district teachers. See <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">district site</a> for details.
+          tooltip_no_link_html: District offers at least one summer program taught by district teachers.
         "ES MS CONTENT: MAKE-UP":
           label: Learning loss program offered
           tooltip_html: District is offering a summer program to help students catch up on material they may have missed due to school closure.
@@ -83,6 +84,7 @@ en:
         HS SUMMER PROGRAM:
           label: Summer program offered
           tooltip_html: District offers at least one summer program taught by district teachers. See <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">district site</a> for details.
+          tooltip_no_link_html: District offers at least one summer program taught by district teachers.
         "HS CONTENT: LEARNING LOSS":
           label: Learning loss program offered
           tooltip_html: Program addresses learning loss due to school closure but does not offer course credit.

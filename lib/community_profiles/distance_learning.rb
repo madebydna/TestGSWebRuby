@@ -91,13 +91,25 @@ module CommunityProfiles
 
         {}.tap do |h|
           h[:breakdown] = label(data_type)
-          h[:tooltip_html] = I18n.t("#{datum['data_type']}.tooltip_html", scope: 'community.distance_learning.data_types', url: fetch_value(SUMMER_URL), default: nil)
+          h[:tooltip_html] = tooltip(data_type)
           h[:data_type] = datum["data_type"]
           h[:value] = value
           h[:date_valid] = datum["date_valid"]
           h[:source] = datum["source"]
         end
       end.compact
+    end
+
+    def tooltip(data_type)
+      datum = crpe_data.fetch(data_type)
+      summer_url = fetch_value(SUMMER_URL)
+
+      if summer_url
+        tip = I18n.t("#{datum['data_type']}.tooltip_html", scope: 'community.distance_learning.data_types', url: summer_url, default: nil)
+      else
+        tip = I18n.t("#{datum['data_type']}.tooltip_no_link_html", scope: 'community.distance_learning.data_types', default: nil)
+      end
+      tip
     end
 
     def label(data_type)
