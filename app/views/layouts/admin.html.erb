@@ -13,6 +13,10 @@
     <%= yield :head %>
     <%= stylesheet_link_tag 'admin_tools'%>
     <%= stylesheet_link_tag "footer", :async => true %>
+    <%= webpack_javascript_include_tag("commons-blocking", "data-turbolinks-track" => true) %>
+    <%= webpack_javascript_include_tag("commons-blocking-loader", "data-turbolinks-track" => true) %>
+    <%= webpack_javascript_include_tag 'admin-tools', defer: true %>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body class="open-sans">
@@ -30,9 +34,6 @@
       </div>
     </div>
     <%= render 'nav/footer' if footer %>
-    <%= webpack_javascript_include_tag 'commons-blocking' %>
-    <%= webpack_javascript_include_tag 'commons-blocking-loader' %>
-    <%= webpack_javascript_include_tag 'admin-tools' %>
-    <%= javascript_include_tag 'admin_postload', defer: true %>
+    <%= yield :page_javascripts %>
   </body>
 </html>

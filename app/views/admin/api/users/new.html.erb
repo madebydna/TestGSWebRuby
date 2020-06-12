@@ -3,6 +3,10 @@
   <meta name="description" content="Sign up for the GreatSchools public API developer account and get access to over 200,000 public, charter, and private K-12 school information profiles">
 <% end %>
 
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag 'admin-tools', defer: true %>
+<% end %>
+
 <div class="col-md-2">
   <!-- h3 class="api-title">API Resources</h3 -->
   <%#= render 'api_resources' %>

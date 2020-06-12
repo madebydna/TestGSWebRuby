@@ -10,20 +10,22 @@ const showInputBox = (value, selectorId) => {
 
   } else {
     input.disabled = true;
-    input.classList.add('dn')
+    input.classList.add('dn');
   }
 }
 
-document.addEventListener('DOMContentLoaded', ()=> {
+$(function(){
+  document.addEventListener('DOMContentLoaded', ()=> {
 
-  const specialSelectSelectors = ['#organizations', '#roles', '#intended-use']
+    const specialSelectSelectors = ['#organizations', '#roles', '#intended-use']
 
-  specialSelectSelectors.forEach(selector => {
-    const element = document.querySelector(selector);
+    specialSelectSelectors.forEach(selector => {
+      const element = document.querySelector(selector);
 
-    element.querySelector('select').addEventListener('change', (e) => {
-      const container = e.currentTarget.parentElement.parentElement;
-      showInputBox(e.target.value, container.id);
+      element.querySelector('select').addEventListener('change', (e) => {
+        const container = e.currentTarget.parentElement.parentElement;
+        showInputBox(e.target.value, container.id);
+      })
     })
   })
 })
