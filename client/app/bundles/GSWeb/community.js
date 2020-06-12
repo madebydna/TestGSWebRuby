@@ -16,20 +16,21 @@ import DistanceLearning from 'react_components/community/distance_learning';
 import Finance from 'react_components/community/finance';
 import Mobility from 'react_components/community/mobility';
 import Zillow from 'react_components/community/zillow';
-import NewAd from 'react_components/new_ad';
-import commonPageInit from './common';
-import { enableAutoAnchoring, initAnchorHashUpdater } from 'components/anchor_router';
+import Ad from 'react_components/ad';
 import { scrollToElement } from 'util/scrolling';
 import { keepInViewport, isScrolledInViewport } from 'util/viewport';
-import { init as initAdvertising } from 'util/new_advertising';
+import { init as initAdvertising } from 'util/advertising';
 import { throttle } from 'lodash';
+import { enableAutoAnchoring, initAnchorHashUpdater } from './components/anchor_router';
+import commonPageInit from './common';
 
 const TopSchoolsStatefulWrapper = withViewportSize({ propName: 'size' })(TopSchoolsStateful);
 const CsaTopSchoolsWrapper = withViewportSize({ propName: 'size' })(CsaTopSchools);
 const SchoolBrowseLinksWrapper = withViewportSize({ propName: 'size' })(SchoolBrowseLinks);
 const AcademicsDataModuleWrapper = withViewportSize({ propName: 'size' })(AcademicsDataModule);
 const TeachersStaffWrapper = withViewportSize({ propName: 'size' })(TeachersStaff);
-const AdWrapper = withViewportSize({ propName: 'size' })(NewAd);
+const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
+const $ = window.jQuery;
 
 ReactOnRails.register({
   SearchBoxWrapper,
@@ -56,7 +57,7 @@ $(() => {
 
   // Todo animations like slidedown are tough to implement in vanilla javascript so leaving here
   //  until we figure out what to do with these
-  $('body').on('click', '.js-test-score-details', function () {
+  $('body').on('click', '.js-test-score-details', () => {
     const grades = $(this).closest('.bar-graph-display').parent().find('.grades');
     if(grades.css('display') === 'none') {
       grades.slideDown();
@@ -107,9 +108,7 @@ $(() => {
     });
   }
 
-  window.onscroll = throttle(function () {
-    tocSelect();
-  }, 100);
+  window.onscroll = throttle(() => { tocSelect(); }, 100);
 
   initAdvertising();
 
@@ -136,11 +135,11 @@ $(() => {
     'distance-learning': '#DistanceLearning'
   });
 
-  $(function() {
-    $('.js-shortened-text').each(function() {
-      var $text = $(this);
-      var extraText = $text.data('shortened-text-rest');
-      $text.find('span').on('click', function() {
+  $(() => {
+    $('.js-shortened-text').each(() => {
+      const $text = $(this);
+      const extraText = $text.data('shortened-text-rest');
+      $text.find('span').on('click', () => {
         $(this).hide();
         $text.html($text.html() + extraText);
       });

@@ -22,7 +22,7 @@
 
         <%# First Ad %>
         <div class="display-mobile">
-          <%#= render 'shared/new_ad', slotId: 'greatschools_statepagemobile_first', css_class: 'js-ad-hook' %>
+          <%#= render 'shared/ad', slotId: 'greatschools_statepagemobile_first', css_class: 'js-ad-hook' %>
 
           <%= react_component("AdWrapper", props: {
               slot: "greatschools_statepagemobile_first"
@@ -88,7 +88,6 @@
 
         <%# Second Ad %>
         <div id="second-ad">
-          <%#= render 'shared/new_ad', slotId: 'greatschools_statepage_second', css_class: 'js-ad-hook' %>
           <%= react_component("AdWrapper", props: {
               slot: "greatschools_statepage_second"
           }) %>
