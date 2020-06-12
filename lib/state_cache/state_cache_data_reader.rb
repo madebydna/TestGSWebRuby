@@ -95,7 +95,7 @@ class StateCacheDataReader
   end
 
   def decorated_metrics_data(key)
-    Array.wrap(decorated_district.metrics.slice(key)[key])
+    Array.wrap(decorated_state.metrics.slice(key)[key])
       .map do |h|
       MetricsCaching::Value.from_hash(h).tap {|dv| dv.data_type = key }
     end.extend(MetricsCaching::Value::CollectionMethods)
