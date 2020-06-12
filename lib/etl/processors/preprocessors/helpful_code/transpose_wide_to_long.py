@@ -2,6 +2,10 @@
 
 import pandas as pd
 
+# using pandas read_csv, melt, and to_csv functions
+# read_csv takes: name of file (mine was in same directory), separator (tabs in this case), type of data for each column that you want (strings in this case)
+# melt takes: variable representing the file, list of columns that don't need to be transposed, then list of columns that do need to be transposed
+# to_csv takes: name you want new file to have, index=None will drop the index as it's not needed, and separator (tabs in this case)
 
 # dealing with cohort1819.txt file
 cohort1819_df = pd.read_csv("cohort1819.txt",
