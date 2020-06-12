@@ -37,7 +37,7 @@ module CommunityProfiles
     end
 
     def tabs_with_data(tabs)
-      tabs.reject! { |h| h[:anchor] == OVERVIEW} unless fetch_value(SUMMER_SUMMARY)
+      # tabs.reject! { |h| h[:anchor] == OVERVIEW} unless fetch_value(SUMMER_SUMMARY)
       tabs.select { |h| h[:anchor] != OVERVIEW}.each do |tab|
         if tab[:data].all? { |h| h[:values] == [] }
           tabs.reject! { |h| h[:anchor] == tab[:anchor] }
@@ -82,7 +82,6 @@ module CommunityProfiles
       data_types.map do |data_type|
         next unless crpe_data.fetch(data_type, nil)
         datum = crpe_data.fetch(data_type)
-
         # JT-10443: If *either* ES_MS_CONTENT_MAKE_UP or ES_MS_CONTENT_REVIEW has a value of "Yes", set value of ES_MS_CONTENT_MAKE_UP to "Yes"
         if datum["data_type"] == ES_MS_CONTENT_MAKE_UP && datum["value"] == "No"
           value = crpe_data.fetch(ES_MS_CONTENT_REVIEW)["value"]
@@ -115,7 +114,8 @@ module CommunityProfiles
     end
 
     def format_overview
-      first_paragraph = fetch_value(SUMMER_SUMMARY)&.strip
+      # JT-10443: If no SUMMER_SUMMARY, fall back to SUMMARY
+      first_paragraph = fetch_value(SUMMER_SUMMARY)&.strip || fetch_value(SUMMARY)&.strip
       if first_paragraph
         translated = I18n.db_t(first_paragraph, default: first_paragraph)
         cta_link = fetch_value(SUMMER_URL) ? I18n.t('see_district_summer_page_html', scope: 'community.distance_learning', url: fetch_value(SUMMER_URL)) : ""
