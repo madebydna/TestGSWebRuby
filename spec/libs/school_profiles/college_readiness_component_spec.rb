@@ -38,7 +38,7 @@ describe 'CollegeReadinessComponent' do
       allow(school_cache_data_reader).to receive(:school).and_return(school)
       allow(school).to receive(:state).and_return(:ca)
       allow(school).to receive(:id).and_return(1)
-      allow(school_cache_data_reader).to receive(:decorated_gsdata_datas).and_return({})
+      allow(school_cache_data_reader).to receive(:decorated_metrics_datas).and_return({})
     end
 
     describe 'With sample data' do
@@ -124,7 +124,7 @@ describe 'CollegeReadinessComponent' do
 
       before do
         expect(school_cache_data_reader).to receive(:metrics_data).and_return(sample_data)
-        allow(school_cache_data_reader).to receive(:decorated_gsdata_datas).and_return(gsdata_sample_data)
+        allow(school_cache_data_reader).to receive(:decorated_metrics_datas).and_return(gsdata_sample_data)
         allow(subject).to receive(:new_sat?).and_return(false)
       end
 
@@ -373,7 +373,7 @@ describe 'CollegeSuccessComponent' do
     allow(school).to receive(:id).and_return(1)
     allow(school_cache_data_reader).to receive(:metrics_data).and_return(remediation_sample_data)
     allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
-    allow(school_cache_data_reader).to receive(:decorated_gsdata_datas).and_return({})
+    allow(school_cache_data_reader).to receive(:decorated_metrics_datas).and_return({})
     allow(school_cache_data_reader).to receive(:college_readiness_rating).and_return(cr_rating)
   end
 

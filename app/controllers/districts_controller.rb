@@ -4,7 +4,7 @@ class DistrictsController < ApplicationController
   include PageAnalytics
   include CommunityConcerns
 
-  CACHE_KEYS_FOR_READER = %w(district_schools_summary metrics gsdata test_scores_gsdata crpe)
+  CACHE_KEYS_FOR_READER = %w(district_schools_summary metrics test_scores_gsdata crpe)
 
   layout 'application'
   before_filter :redirect_unless_valid_district

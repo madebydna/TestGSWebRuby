@@ -4,6 +4,22 @@ module MetricsCaching
 
     CACHE_KEY = 'metrics'
 
+    # 23: Percentage algebra 1 enrolled grades 7-8
+    # 27: Percentage passing algebra 1 grades 7-8
+    # 35: Percentage of students suspended out of school
+    # 55: Percentage AP enrolled grades 9-12
+    # 59: Percentage AP math enrolled grades 9-12
+    # 63: Percentage AP science enrolled grades 9-12
+    # 71: Percentage SAT/ACT participation grades 11-12
+    # 83: Percentage of students passing 1 or more AP exams grades 9-12
+    # 91: Percentage of students chronically absent (15+ days)
+    # 95: Ratio of students to full time teachers
+    # 99: Percentage of full time teachers who are certified
+    # 119: Ratio of students to full time counselors
+    # 133: Ratio of teacher salary to total number of teachers
+    # 149: Percentage of teachers with less than three years experience
+    # 152: Number of Advanced Courses Taken per Student
+    # 154: Percentage of Students Enrolled
     # 365: Percentage of teachers in their first year
     # 366: Bachelor's degree
     # 367: Master's degree
@@ -55,11 +71,12 @@ module MetricsCaching
     # 489: Percent Enrolled in a public 2 year college and Returned for a Second Year
 
     DATA_TYPE_IDS_WHITELIST = [
-      365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 376, 378,
-      380, 381, 382, 383, 385, 386, 396, 397, 398, 399, 401, 402,
-      404, 413, 442, 443, 448, 454, 462, 464, 473, 474, 476, 475,
-      477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488,
-      489
+      23,  27,  35,  55,  59,  63,  71,  83,  91,  95,  99,  119,
+      133, 149, 152, 154, 365, 366, 367, 368, 369, 370, 371, 372,
+      373, 374, 376, 378, 380, 381, 382, 383, 385, 386, 396, 397,
+      398, 399, 401, 402, 404, 413, 442, 443, 448, 454, 462, 464,
+      473, 474, 476, 475, 477, 478, 479, 480, 481, 482, 483, 484,
+      485, 486, 487, 488, 489
     ]
 
     def self.listens_to?(data_type)
@@ -88,9 +105,11 @@ module MetricsCaching
     def build_hash_for_metric(metric)
       {}.tap do |hash|
         hash[:breakdown] = metric.breakdown_name
+        hash[:breakdown_tags] = metric.breakdown_tags
         hash[:state_value] = Float(metric.value) rescue metric.value
         hash[:grade] = metric.grade
         hash[:source] = metric.source_name
+        hash[:source_date_valid] = metric.source_date_valid
         hash[:subject] = metric.subject_name
         hash[:year] = metric.year
       end

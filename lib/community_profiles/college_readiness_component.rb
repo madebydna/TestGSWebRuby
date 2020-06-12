@@ -17,7 +17,7 @@ module CommunityProfiles
 
         def no_subject_or_all_subjects_or_graduates_remediation
           select do |h|
-            h.subject.nil? || h.all_subjects? || h.is_a?(GradutesRemediationValue)
+            h.subject.nil? || h.all_subjects? || h.is_a?(GraduatesRemediationValue)
           end.extend(CollectionMethods)
         end
 
@@ -71,9 +71,9 @@ module CommunityProfiles
       end
     end
 
-    class GradutesRemediationValue < CharacteristicsValue
+    module GraduatesRemediationValue
       def data_type
-        if subject
+        if !all_subjects?
           'Graduates needing ' + subject.capitalize + ' remediation in college'
         else
           @data_type
@@ -113,23 +113,19 @@ module CommunityProfiles
     end
 
     def metrics_data
-      array_of_hashes = @cache_data_reader.metrics_data(*included_data_types(:metrics))
+      array_of_hashes = @cache_data_reader.decorated_metrics_datas(*included_data_types(:metrics))
       array_of_hashes.each_with_object({}) do |(data_type, array), accum|
         accum[data_type] =
-          array.map do |h|
-            klass = if data_type == GRADUATES_REMEDIATION
-                      GradutesRemediationValue
-                    else
-                      CharacteristicsValue
-                    end
-            klass.from_hash(h.merge('data_type' => data_type))
+          if data_type == GRADUATES_REMEDIATION
+            array.each { |dv| dv.extend(GraduatesRemediationValue) }
+          else
+            array
           end
-            .extend(CharacteristicsValue::CollectionMethods)
       end
     end
 
     def gsdata_data
-      @cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata))
+      @cache_data_reader.decorated_metrics_datas(*included_data_types(:gsdata))
     end
 
     def multiple_breakdowns_in_one_data_type
@@ -145,7 +141,7 @@ module CommunityProfiles
     end
 
     # Filters metrics data from DB
-    # these have been converted to instances of either CharacteristicsValue or GradutesRemediationValue
+    # these have been converted to instances of either CharacteristicsValue or GraduatesRemediationValue
     def data_type_hashes
       @_data_type_hashes ||= begin
         hashes = metrics_data

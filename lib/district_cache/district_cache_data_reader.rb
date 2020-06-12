@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DistrictCacheDataReader
-  DISTRICT_CACHE_KEYS = %w(feed_test_scores_gsdata test_scores_gsdata feed_test_scores ratings district_schools_summary district_directory metrics feed_metrics gsdata crpe)
+  DISTRICT_CACHE_KEYS = %w(feed_test_scores_gsdata test_scores_gsdata feed_test_scores ratings district_schools_summary district_directory metrics feed_metrics crpe)
 
   attr_reader :district, :district_cache_keys
 
@@ -18,11 +18,20 @@ class DistrictCacheDataReader
     decorated_district.ethnicity_data
   end
 
-  def metrics_data(*keys)
-    decorated_district.metrics.slice(*keys).each_with_object({}) do |(k, array_of_hashes), hash|
-      array_of_hashes = array_of_hashes.select {|h| h.has_key?('source')}
-      hash[k] = array_of_hashes if array_of_hashes.present?
+  def decorated_metrics_datas(*keys)
+    decorated_district.metrics.slice(*keys).each_with_object({}) do |(data_type, array), accum|
+      accum[data_type] =
+        array.map do |h|
+          MetricsCaching::Value.from_hash(h).tap {|dv| dv.data_type = data_type}
+        end.extend(MetricsCaching::Value::CollectionMethods)
     end
+  end
+
+  def decorated_metrics_data(key)
+    Array.wrap(decorated_district.metrics.slice(key)[key])
+      .map do |h|
+      MetricsCaching::Value.from_hash(h).tap {|dv| dv.data_type = key }
+    end.extend(MetricsCaching::Value::CollectionMethods)
   end
 
   def test_scores
@@ -81,7 +90,7 @@ class DistrictCacheDataReader
   end
 
   def gsdata_data(*keys)
-    gs_data(decorated_district.gsdata, *keys)
+    gs_data(decorated_district.metrics, *keys)
   end
 
   def ratings_data(*keys)
@@ -111,23 +120,7 @@ class DistrictCacheDataReader
     end
   end
 
-  def decorated_gsdata_datas(*keys)
-    decorated_district.gsdata.slice(*keys).each_with_object({}) do |(data_type, array), accum|
-      accum[data_type] =
-        array.map do |h|
-          GsdataCaching::GsDataValue.from_hash(h).tap {|dv| dv.data_type = data_type}
-        end
-          .extend(GsdataCaching::GsDataValue::CollectionMethods)
-    end
-  end
 
-  def decorated_gsdata_data(key)
-    Array.wrap(decorated_district.gsdata.slice(key)[key])
-      .map do |h|
-      GsdataCaching::GsDataValue.from_hash(h).tap {|dv| dv.data_type = key}
-    end
-      .extend(GsdataCaching::GsDataValue::CollectionMethods)
-  end
 
   def decorated_courses_data(key)
     Array.wrap(decorated_district.courses.slice(key)[key])
@@ -147,9 +140,9 @@ class DistrictCacheDataReader
   # }
   def percentage_of_students(breakdown)
     percentages = (
-    decorated_district.gsdata.slice('Percentage of Students Enrolled') || {}
+    decorated_district.metrics.slice('Percentage of Students Enrolled') || {}
     ).fetch('Percentage of Students Enrolled', [])
-    percentages.find {|h| h['breakdowns'] == breakdown}
+    percentages.find {|h| h['breakdown'] == breakdown}
   end
 
   def subject_scores_by_latest_year(breakdown: 'All', grades: 'All', level_codes: nil, subjects: nil)
