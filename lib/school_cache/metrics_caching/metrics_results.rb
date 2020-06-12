@@ -16,27 +16,26 @@ module MetricsCaching
 
     attr_reader :results
 
-    def initialize(results)
-      combine_entity_averages!(results)
+    def initialize(raw_results)
+      @results = combine_entity_averages!(raw_results)
     end
 
     def combine_entity_averages!(raw_results)
-      @results = []
-      raw_results.group_by {|r| r.id }.each do |id, group|
+      raw_results.group_by {|r| r.id }.map do |id, group|
         if group.length == 1
-          @results << MetricDecorator.new(group.first)
-          next
-        end
-        final_metric = group.first
-        group.each do |m|
-          if m.respond_to?(:state_value) && m.state_value.present?
-            final_metric.state_value = m.state_value
+          MetricDecorator.new(group.first)
+        else
+          final_metric = group.first
+          group.each do |m|
+            if m.respond_to?(:state_value) && m.state_value.present?
+              final_metric.state_value = m.state_value
+            end
+            if  m.respond_to?(:district_value) && m.district_value.present?
+              final_metric.district_value = m.district_value
+            end
           end
-          if  m.respond_to?(:district_value) && m.district_value.present?
-            final_metric.district_value = m.district_value
-          end
+          MetricDecorator.new(final_metric)
         end
-        @results << MetricDecorator.new(final_metric)
       end
     end
 
