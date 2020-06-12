@@ -128,7 +128,7 @@ $(() => {
       width = screen.width;
     }
 
-    if (window.innerHeigh) {
+    if (window.innerHeight) {
       height = window.innerHeight;
     } else if (document.documentElement.clientHeight) {
       height = document.documentElement.clientHeight;
