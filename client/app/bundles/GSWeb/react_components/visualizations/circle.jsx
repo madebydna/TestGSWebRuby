@@ -23,6 +23,12 @@ const Circle = (props) => {
           <div className="state-average tar">{t('distance_learning.ratings.not_all_grades')}</div>
         </div>
       );
+    } else if (value === "N/A") {
+      return (
+        <div className="circle-viz">
+          <div className="tar">N/A</div>
+        </div>
+      );
     } else {
       return (
         <div className="circle-viz">
