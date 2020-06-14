@@ -17,6 +17,7 @@ class Admin::Api::UsersController < ApplicationController
       # ApiRequestToModerateEmail.deliver_to_admin(@user)
       render json: { status: 'success' }
     else
+      byebug
       render :new
     end
   end
