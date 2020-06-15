@@ -197,7 +197,7 @@ class SearchController < ApplicationController
       'GS:SchoolSearchBrowse'
     elsif city_browse? && city_record.present?
       'GS:SchoolSearchBrowse'
-    elsif zip_code_search?
+    elsif zipcode_browse?
       'GS:SchoolSearchResults'
     elsif street_address?
       'GS:SchoolSearchResults'
