@@ -179,9 +179,14 @@ module CommunityProfiles
     end
 
     def date_valid
-      return 'N/A' unless fetch_date(URL)
-
-      fetch_date(URL).split("-").reverse.join("/")
+      date = fetch_date(URL) || fetch_date(SUMMER_SUMMARY)
+      if date
+        date_array = date.split("-")
+        formatted_date = "#{date_array[1]}/#{date_array[2]}/#{date_array[0]}"
+      else
+        formatted_date = 'N/A'
+      end
+      formatted_date
     end
   end
 end
