@@ -139,7 +139,7 @@ $(() => {
     $('.js-shortened-text').each(function() {
       const $text = $(this);
       const extraText = $text.data('shortened-text-rest');
-      $text.find('span').on('click', () => {
+      $text.find('span').on('click', function() {
         $(this).hide();
         $text.html($text.html() + extraText);
       });
