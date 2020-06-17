@@ -1,3 +1,7 @@
+# Will not work
+# Need to reformat to new feeds builder format
+# Instead of using the old one
+
 module Feeds
   class GoogleCharacteristicsDataBuilder
     include Feeds::FeedConstants
