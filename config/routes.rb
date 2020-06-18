@@ -87,11 +87,18 @@ LocalizedProfiles::Application.routes.draw do
 
   # OSP routes
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
-  get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
-  match '/official-school-profile/register.page', to: 'osp_registration#new', as: :osp_registration, via: [:get]
-  match '/official-school-profile/register.page', to: 'osp_registration#submit',as: :osp_registration_submit, via: [:post]
-  get '/official-school-profile/dashboard/', to: 'osp_landing#dashboard', as: :osp_dashboard
-  get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
+  ## Deprecated OSP routes.
+  ## TODO: Plans to remove from config files
+  get '/official-school-profile/', to: redirect('/school-accounts/')
+  get '/official-school-profile/register.page', to: redirect('/school-accounts/register.page')
+  get '/official-school-profile/dashboard/', to: redirect('/school-accounts/dashboard/')
+  get '/official-school-profile/registration-confirmation', to: redirect('/school-accounts/registration-confirmation')
+  ## New OSP routes
+  get '/school-accounts/', to: 'osp_landing#show',as: :osp_landing
+  match '/school-accounts/register.page', to: 'osp_registration#new', as: :osp_registration, via: [:get]
+  match '/school-accounts/register.page', to: 'osp_registration#submit', as: :osp_registration_submit, via: [:post]
+  get '/school-accounts/dashboard/', to: 'osp_landing#dashboard', as: :osp_dashboard
+  get '/school-accounts/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
   post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
 
   # Search autocomplete suggestion routes
