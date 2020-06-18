@@ -66,21 +66,18 @@ module CommunityProfiles::FinanceConfig
       formatting: [:to_f, :round],
       type: 'pie_slice',
       color: '#184A7D',
-      value_label: I18n.t("district_scope", scope: "lib.finance")
     },
     {
       key: STATE_REVENUE,
       formatting: [:to_f, :round],
       type: 'pie_slice',
       color: '#43BED9',
-      value_label: I18n.t("district_scope", scope: "lib.finance")
     },
     {
       key: LOCAL_REVENUE,
       formatting: [:to_f, :round],
       type: 'pie_slice',
       color: '#2BDC99',
-      value_label: I18n.t("district_scope", scope: "lib.finance")
     },
     {
       key: TOTAL_EXPENDITURES,
