@@ -6,7 +6,7 @@ import SearchBox from 'react_components/search_box';
 import { validSizes as validViewportSizes } from 'util/viewport';
 import ChangePasswordForm from './change_password_form';
 
-const ospDashboardUrl = '/official-school-profile/dashboard/';
+const ospDashboardUrl = '/school-accounts/dashboard/';
 const mySchoolListUrl = '/my-school-list/';
 const myEmailPreferencesUrl = '/preferences/';
 
