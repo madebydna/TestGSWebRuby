@@ -7,7 +7,7 @@ module SchoolProfiles
 
     THREE_YEARS_EXPERIENCE ='Percentage of teachers with less than three years experience'
 
-    GSDATA_CACHE_ACCESSORS = [
+    METRICS_CACHE_ACCESSORS = [
         {
             :data_key => 'Ratio of students to full time teachers',
             :visualization => :ratio_viz,
@@ -74,12 +74,12 @@ module SchoolProfiles
 
     def included_data_types
       @_included_data_types ||=
-        GSDATA_CACHE_ACCESSORS.map { |mapping| mapping[:data_key] }
+        METRICS_CACHE_ACCESSORS.map { |mapping| mapping[:data_key] }
     end
 
     def data_type_formatting_map
       @_data_type_to_value_type_map ||= (
-      GSDATA_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
+      METRICS_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
         hash[mapping[:data_key]] = mapping[:formatting]
       end
       )
@@ -87,7 +87,7 @@ module SchoolProfiles
 
     def data_type_visualization_map
       @_data_type_visualization_map ||= (
-      GSDATA_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
+      METRICS_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
         hash[mapping[:data_key]] = mapping[:visualization]
       end
       )
@@ -95,7 +95,7 @@ module SchoolProfiles
 
     def data_type_range_map
       @_data_type_range_map ||= (
-      GSDATA_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
+      METRICS_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
         hash[mapping[:data_key]] = mapping[:range] || (0..100)
       end
       )
@@ -160,7 +160,7 @@ module SchoolProfiles
           item.label = data_label(data_type)
           item.info_text = data_label_info_text(data_type)
           item.score = data_score_type(obj, formatting)
-          item.state_average = SchoolProfiles::DataPoint.new(obj.state_value).
+          item.state_average = SchoolProfiles::DataPoint.new(obj.state_average).
               apply_formatting(*formatting)
           item.visualization = visualization
           item.range = range

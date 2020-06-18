@@ -1,74 +1,5 @@
 module SchoolProfiles
   class CollegeReadinessComponent < CollegeReadiness
-    class CharacteristicsValue
-      include FromHashMethod
-      module CollectionMethods
-        def for_all_students
-          select {|dv| dv.all_students?}.extend(CollectionMethods)
-        end
-
-        def having_school_value
-          select {|dv| dv.school_value.present?}.extend(CollectionMethods)
-        end
-
-        def no_subject_or_all_subjects
-          select {|h| h['subject'].nil? || h.all_subjects?}.extend(CollectionMethods)
-        end
-
-        def no_subject_or_all_subjects_or_graduates_remediation
-          select do |h|
-            h.subject.nil? || h.all_subjects? || h.is_a?(GraduatesRemediationValue)
-          end.extend(CollectionMethods)
-        end
-
-        def expect_only_one(message, other_helpful_vars = {})
-          if size > 1
-            GSLogger.error(
-              :misc,
-              nil,
-              message: "Expected to find unique characteristics value: #{message}",
-              vars: other_helpful_vars
-            )
-          end
-          return first
-        end
-
-        def having_most_recent_date
-          max_year = map(&:year).compact.max
-          select {|dv| dv.year == max_year}.extend(CollectionMethods)
-        end
-      end
-      attr_accessor :breakdown, :original_breakdown, :school_value,
-                    :district_average, :state_average, :year, :subject, :data_type,
-                    :performance_level, :source, :created, :narrative, :grade
-
-      def [](key)
-        send(key) if respond_to?(key)
-      end
-
-      def []=(key, val)
-        send("#{key}=", val)
-      end
-
-      def all_students?
-        breakdown == 'All students'
-      end
-
-      def all_subjects?
-        ['All subjects', 'Composite Subject', 'Not Applicable'].include?(subject)
-      end
-
-      def all_subjects_and_students?
-        all_subjects? && all_students?
-      end
-
-      (2000..2030).to_a.each do |year|
-        attr_accessor "school_value_#{year}"
-        attr_accessor "state_average_#{year}"
-        attr_accessor "district_average_#{year}"
-        attr_accessor "performance_level_#{year}"
-      end
-    end
 
     module GraduatesRemediationValue
       def data_type
@@ -130,6 +61,7 @@ module SchoolProfiles
         return [] if hashes.blank?
         ActSatHandler.new(hashes).handle_ACT_SAT_to_display!
         hashes = hashes.map do |key, array|
+          return nil if array.empty?
           array = array.for_all_students.having_school_value.having_most_recent_date
           if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
             # This is for metrics
@@ -283,8 +215,5 @@ module SchoolProfiles
       @_scope ||= 'school_profiles.' + @tab
     end
 
-    def with_school_values
-      ->(h) {h['school_value'].present?}
-    end
   end
 end

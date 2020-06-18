@@ -9,7 +9,7 @@ module MetricsCaching
     def call(initial_scope = Omni::Metric.active)
       scoped = initial_scope.for_district(district)
       scoped = scoped.filter_by_data_types(DistrictMetricsCacher::DATA_TYPE_IDS_WHITELIST)
-      scoped = scoped.include_entity_average(type: 'state', id: state.id, table_alias_num: 2)
+      scoped = scoped.include_entity_average(type: 'state', id: state.id)
       include_needed_associations(scoped)
     end
 

@@ -53,8 +53,6 @@ class DistrictCacheResults
       DistrictCachedMetricsMethods
     when 'test_scores_gsdata'
       DistrictCachedTestScoresMethods
-    when 'gsdata'
-      DistrictCachedGsdataMethods
     when 'crpe'
       DistrictCachedDistanceLearningMethods
     end

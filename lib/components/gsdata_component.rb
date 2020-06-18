@@ -5,7 +5,6 @@ module Components
     def normalized_values
       @_normalized_values ||= begin
         values = cache_data_reader.decorated_metrics_data(data_type).having_school_value
-
         if valid_breakdowns.present?
           values = values.having_all_students_or_breakdown_in(valid_breakdowns)
         end

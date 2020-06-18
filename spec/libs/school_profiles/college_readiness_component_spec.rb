@@ -41,91 +41,97 @@ describe 'CollegeReadinessComponent' do
       allow(school_cache_data_reader).to receive(:decorated_metrics_datas).and_return({})
     end
 
-    describe 'With sample data' do
+    context 'With sample data' do
       let (:sample_data) do
         {
-            'Average SAT score' => [
-                {
-                    'breakdown' => 'All students',
-                    'school_value' => 1600,
-                    'state_average' => 1400,
-                    'year' => 2016
-                }
-            ],
-            '4-year high school graduation rate' => [
-                {
-                    'breakdown' => 'Asian',
-                    'school_value' => 60,
-                    'state_average' => 61,
-                    'year' => 2016
-                },
-                {
-                    'breakdown' => 'All students',
-                    'school_value' => 50,
-                    'state_average' => 51,
-                    'year' => 2016
-                },
-                {
-                    'breakdown' => 'White',
-                    'school_value' => 40,
-                    'state_average' => 41,
-                    'year' => 2016
-                }
-            ],
-            'Average ACT score' => [
-                {
-                    'breakdown' => 'All students',
-                    'school_value' => 20,
-                    'school_value_2016' => 20,
-                    'state_average' => 19,
-                    'year' => 2016,
-                    'subject' => 'Reading'
-                },
-                {
-                    'breakdown' => 'All students',
-                    'school_value' => 25,
-                    'school_value_2016' => 25,
-                    'state_average' => 24,
-                    'year' => 2016,
-                    'subject' => 'All subjects'
-                },
-                {
-                    'breakdown' => 'All students',
-                    'school_value' => 30,
-                    'state_average' => 29,
-                    'subject' => 'Math'
-                }
-            ]
+          'Average SAT score' => [
+            MetricsCaching::Value.from_hash({
+              'breakdown' => 'All students',
+              'school_value' => 1600,
+              'state_average' => 1400,
+              'year' => 2016,
+              'data_type' => 'Average SAT score'
+            })
+          ].extend(MetricsCaching::Value::CollectionMethods),
+          '4-year high school graduation rate' => [
+            MetricsCaching::Value.from_hash({
+              'breakdown' => 'Asian',
+              'school_value' => 60,
+              'state_average' => 61,
+              'year' => 2016,
+              'data_type' => '4-year high school graduation rate'
+            }),
+            MetricsCaching::Value.from_hash({
+              'breakdown' => 'All students',
+              'school_value' => 50,
+              'state_average' => 51,
+              'year' => 2016,
+              'data_type' => '4-year high school graduation rate'
+            }),
+            MetricsCaching::Value.from_hash({
+              'breakdown' => 'White',
+              'school_value' => 40,
+              'state_average' => 41,
+              'year' => 2016,
+              'data_type' => '4-year high school graduation rate'
+            })
+          ].extend(MetricsCaching::Value::CollectionMethods),
+          'Average ACT score' => [
+            MetricsCaching::Value.from_hash({
+              'breakdown' => 'All students',
+              'school_value' => 20,
+              'state_average' => 19,
+              'year' => 2016,
+              'subject' => 'Reading',
+              'data_type' => 'Average ACT score'
+            }),
+            MetricsCaching::Value.from_hash({
+              'breakdown' => 'All students',
+              'school_value' => 25,
+              'state_average' => 24,
+              'year' => 2016,
+              'subject' => 'Composite Subject',
+              'data_type' => 'Average ACT score'
+            }),
+            MetricsCaching::Value.from_hash({
+              'breakdown' => 'All students',
+              'school_value' => 30,
+              'state_average' => 29,
+              'subject' => 'Math',
+              'data_type' => 'Average ACT score'
+            })
+          ].extend(MetricsCaching::Value::CollectionMethods)
         }
       end
 
       let (:gsdata_sample_data) do
         {
-          'Percentage of students passing 1 or more AP exams grades 9-12' => GsdataCaching::GsDataValue.from_array_of_hashes([
-                {
-                    'data_type' => 'Percentage of students passing 1 or more AP exams grades 9-12',
-                    'breakdowns' => 'Hispanic,Male',
-                    'district_value' => '47.62',
-                    'school_value' => '58',
-                    'source_name' => 'Civil Rights Data Collection',
-                    'source_year' => 2014,
-                    'state_value' => '49.78'
-                }, {
-                    'data_type' => 'Percentage of students passing 1 or more AP exams grades 9-12',
-                    'district_value' => '58.47',
-                    'school_value' => '61',
-                    'source_name' => 'Civil Rights Data Collection',
-                    'source_year' => 2014,
-                    'state_value' => '60.32'
-                }
-            ])
+          'Percentage of students passing 1 or more AP exams grades 9-12' => [
+            MetricsCaching::Value.from_hash({
+              'data_type' => 'Percentage of students passing 1 or more AP exams grades 9-12',
+              'breakdown' => 'Hispanic',
+              'district_average' => '47.62',
+              'school_value' => '58',
+              'source' => 'Civil Rights Data Collection',
+              'year' => 2014,
+              'state_average' => '49.78'
+            }),
+            MetricsCaching::Value.from_hash({
+              'data_type' => 'Percentage of students passing 1 or more AP exams grades 9-12',
+              'district_average' => '58.47',
+              'breakdown' => 'All students',
+              'school_value' => '61',
+              'source' => 'Civil Rights Data Collection',
+              'year' => 2014,
+              'state_average' => '60.32'
+            })
+          ].extend(MetricsCaching::Value::CollectionMethods)
         }
       end
 
       before do
-        expect(school_cache_data_reader).to receive(:metrics_data).and_return(sample_data)
-        allow(school_cache_data_reader).to receive(:decorated_metrics_datas).and_return(gsdata_sample_data)
-        allow(subject).to receive(:new_sat?).and_return(false)
+        allow(school_cache_data_reader).to receive(:decorated_metrics_datas).with("4-year high school graduation rate", any_args).and_return(sample_data)
+        allow(school_cache_data_reader).to receive(:decorated_metrics_datas).with("Percentage AP enrolled grades 9-12", any_args).and_return(gsdata_sample_data)
       end
 
       it 'should return chosen data types if data present' do
@@ -135,7 +141,7 @@ describe 'CollegeReadinessComponent' do
         expect(data_points).to be_present
         expect(data_points.score).to eq(1600)
         expect(data_points.state_average).to eq(1400)
-        expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::OLD_SAT_RANGE)
+        expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::NEW_SAT_RANGE)
       end
 
       it 'should pull from the "All students" breakdown for metrics' do
@@ -145,14 +151,14 @@ describe 'CollegeReadinessComponent' do
         expect(data_points.state_average).to eq(51)
       end
 
-      it 'should pull from the null breakdown for gsdata' do
+      it 'should pull from the "All students" breakdown for gsdata' do
         data_points = subject.data_values.find {|item| item.label == 'Percentage of students passing 1 or more AP exams grades 9-12' }
         expect(data_points).to be_present
         expect(data_points.score).to eq('61')
         expect(data_points.state_average).to eq('60.32')
       end
 
-      it 'should pull from the "All subjects" subject' do
+      it 'should pull from the "Composite Subject" subject' do
         data_points = subject.data_values.find {|item| item.label == 'Average ACT score' }
         expect(data_points).to be_present
         expect(data_points.score).to eq(25)
@@ -170,36 +176,40 @@ describe 'CollegeReadinessComponent' do
       end
     end
 
-    describe 'With mismatching average SAT score / SAT percent participation' do
+    context 'With mismatching average SAT score / SAT percent participation' do
       let (:sample_data) do
         {
           'Average SAT score' => [
-            {
+            MetricsCaching::Value.from_hash({
               'breakdown' => 'All students',
-              'subject' => 'All subjects',
+              'subject' => 'Composite Subject',
               'school_value' => 1600,
               'year' => 2015,
-              'state_average' => 1400
-            }
-          ],
+              'source_date_valid' => "2015-01-01T00:00:00",
+              'state_average' => 1400,
+              'data_type' => 'Average SAT score'
+            })
+          ].extend(MetricsCaching::Value::CollectionMethods),
           'SAT percent participation' => [
-            {
+            MetricsCaching::Value.from_hash({
               'breakdown' => 'All students',
-              'subject' => 'All subjects',
+              'subject' => 'Composite Subject',
               'school_value' => 1600,
               'year' => 2016,
-              'state_average' => 1400
-            }
-          ]
+              'source_date_valid' => "2016-01-01T00:00:00",
+              'state_average' => 1400,
+              'data_type' => 'SAT percent participation'
+            })
+          ].extend(MetricsCaching::Value::CollectionMethods)
         }
       end
 
       before do
-        expect(school_cache_data_reader).to receive(:metrics_data).and_return(sample_data)
-        allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+        expect(school_cache_data_reader).to receive(:decorated_metrics_datas).with("4-year high school graduation rate", any_args).and_return(sample_data)
+        allow(school_cache_data_reader).to receive(:decorated_metrics_datas).with("Percentage AP enrolled grades 9-12", any_args).and_return({})
       end
 
-      it 'should set school SAT score to nil' do
+      it 'should remove older data set' do
         data_points = subject.data_values.find {|item| item.label == 'Average SAT score' }
         expect(data_points).to_not be_present
       end
@@ -207,29 +217,30 @@ describe 'CollegeReadinessComponent' do
     end
 
     it 'should return empty array if no data' do
-      expect(school_cache_data_reader).to receive(:metrics_data).and_return({})
-      allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+      expect(school_cache_data_reader).to receive(:decorated_metrics_datas).and_return({})
       expect(subject.data_values).to be_empty
     end
 
     describe 'SAT ranges' do
       let (:sample_data) do
         {
-            'Average SAT score' => [
-                {
-                    'breakdown' => 'All students',
-                    'subject' => 'All subjects',
-                    'school_value' => 1400,
-                    'year' => 2016,
-                    'state_average' => 1200
-                }
-            ]
+          'Average SAT score' => [
+            MetricsCaching::Value.from_hash({
+              'breakdown' => 'All students',
+              'subject' => 'Composite Subject',
+              'school_value' => 1400,
+              'year' => 2016,
+              'source_date_valid' => "2016-01-01T00:00:00",
+              'state_average' => 1200,
+              'data_type' => 'Average SAT score'
+            })
+          ].extend(MetricsCaching::Value::CollectionMethods)
         }
       end
 
       before do
-        expect(school_cache_data_reader).to receive(:metrics_data).and_return(sample_data)
-        allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+        expect(school_cache_data_reader).to receive(:decorated_metrics_datas).with("4-year high school graduation rate", any_args).and_return(sample_data)
+        allow(school_cache_data_reader).to receive(:decorated_metrics_datas).with("Percentage AP enrolled grades 9-12", any_args).and_return({})
       end
 
       describe 'In states with new ranges' do
@@ -332,7 +343,8 @@ describe 'CollegeSuccessComponent' do
   let (:remediation_sample_data) do
     {
       "Percent Needing Remediation for College" => [
-        {
+        MetricsCaching::Value.from_hash({
+          "data_type" => "Percent Needing Remediation for College",
           "breakdown"=>"All students",
           "created"=>"2017-04-19T23:20:49-07:00",
           "school_value"=>16.0,
@@ -340,7 +352,9 @@ describe 'CollegeSuccessComponent' do
           "state_average"=>35.7,
           "subject"=>"Math",
           "year"=>2015
-        }, {
+        }),
+        MetricsCaching::Value.from_hash({
+          "data_type" => "Percent Needing Remediation for College",
           "breakdown"=>"All students",
           "created"=>"2017-04-19T23:20:49-07:00",
           "school_value"=>5.3,
@@ -348,22 +362,28 @@ describe 'CollegeSuccessComponent' do
           "state_average"=>8.3,
           "subject"=>"Reading",
           "year"=>2015
-        }, {"breakdown"=>"All students",
-            "created"=>"2017-04-19T23:20:49-07:00",
-            "school_value"=>1.8,
-            "source"=>"Oklahoma State Regents for Higher Education",
-            "state_average"=>15.7,
-            "subject"=>"English",
-            "year"=>2015
-        }, {"breakdown"=>"All students",
-            "created"=>"2017-04-19T23:20:48-07:00",
-            "school_value"=>0.0,
-            "source"=>"Oklahoma State Regents for Higher Education",
-            "state_average"=>1.1,
-            "subject"=>"Science",
-            "year"=>2014
-        }
-      ]
+        }),
+        MetricsCaching::Value.from_hash({
+          "data_type" => "Percent Needing Remediation for College",
+          "breakdown"=>"All students",
+          "created"=>"2017-04-19T23:20:49-07:00",
+          "school_value"=>1.8,
+          "source"=>"Oklahoma State Regents for Higher Education",
+          "state_average"=>15.7,
+          "subject"=>"English",
+          "year"=>2015
+        }),
+        MetricsCaching::Value.from_hash({
+          "data_type" => "Percent Needing Remediation for College",
+          "breakdown"=>"All students",
+          "created"=>"2017-04-19T23:20:48-07:00",
+          "school_value"=>0.0,
+          "source"=>"Oklahoma State Regents for Higher Education",
+          "state_average"=>1.1,
+          "subject"=>"Science",
+          "year"=>2014
+        })
+      ].extend(MetricsCaching::Value::CollectionMethods)
     }
   end
 
@@ -371,13 +391,12 @@ describe 'CollegeSuccessComponent' do
     allow(school_cache_data_reader).to receive(:school).and_return(school)
     allow(school).to receive(:state).and_return(:ca)
     allow(school).to receive(:id).and_return(1)
-    allow(school_cache_data_reader).to receive(:metrics_data).and_return(remediation_sample_data)
-    allow(school_cache_data_reader).to receive(:gsdata_data).and_return({})
-    allow(school_cache_data_reader).to receive(:decorated_metrics_datas).and_return({})
+    allow(school_cache_data_reader).to receive(:decorated_metrics_datas).with("Graduating seniors pursuing other college", any_args).and_return(remediation_sample_data)
+    allow(school_cache_data_reader).to receive(:decorated_metrics_datas).with(no_args).and_return({})
     allow(school_cache_data_reader).to receive(:college_readiness_rating).and_return(cr_rating)
   end
 
-  let(:data_points) {subject.data_values}
+  let(:data_points) { subject.data_values }
   describe 'With remediation data' do
     it 'should return RatingScoreItems for each remediation data point' do
       expect(data_points).to be_present
@@ -427,7 +446,7 @@ describe 'CollegeSuccessComponent' do
 
     context 'when missing a state average in any value' do
       before do
-        remediation_sample_data['Percent Needing Remediation for College'].first.delete('state_average')
+        remediation_sample_data['Percent Needing Remediation for College'].first['state_average'] = nil
       end
 
       it 'returns the default narration' do

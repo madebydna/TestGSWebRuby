@@ -170,7 +170,7 @@ module CommunityProfiles
 
     def select_latest_breakdown_value(array, breakdown)
       return nil unless array.present?
-      all_values = array.select {|v| v.breakdown.include?(breakdown) }
+      all_values = array.select {|v| v.breakdown == breakdown }
       get_max_year(all_values)
     end
 

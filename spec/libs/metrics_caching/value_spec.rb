@@ -126,6 +126,26 @@ describe MetricsCaching::Value do
     end
   end
 
+  describe "#all_subjects_and_students?" do
+    it 'should return true if both all subjects and students is true' do
+      subject.subject = "Composite Subject"
+      subject.breakdown = "All students"
+      expect(subject.all_subjects_and_students?).to be true
+    end
+
+    it 'should return false if subject is Math and breakdown is All students' do
+      subject.subject = "Math"
+      subject.breakdown = "All students"
+      expect(subject.all_subjects_and_students?).to be false
+    end
+
+    it 'should return false for Composite Subject and breakdown African American' do
+      subject.subject = "Composite Subject"
+      subject.breakdown = "African American"
+      expect(subject.all_subjects_and_students?).to be false
+    end
+  end
+
   it "#has_ethnicity_tag? returns true for ethnicity breakdown_tags" do
     subject.breakdown_tags = 'ethnicity'
     expect(subject.has_ethnicity_tag?).to be true
@@ -166,6 +186,42 @@ describe MetricsCaching::Value do
       expect(result.having_district_value).to contain_exactly(result[0], result[2])
     end
 
+    it "#having_school_value should filter for records with a school_value" do
+      data = [
+        hash.merge({"school_value" => "123.45"}),
+        hash.except("school_value"),
+        hash.merge({"school_value" => "16.4"})
+      ]
+
+      result = create_collection(data)
+      expect(result.having_school_value).to contain_exactly(result[0], result[2])
+    end
+
+    it "#having_non_zero_school_value should filter for records with a non zero school_value" do
+      data = [
+        hash.merge({"school_value" => "123.45"}),
+        hash.except("school_value"),
+        hash.merge({"school_value" => nil}),
+        hash.merge({"school_value" => "0"}),
+        hash.merge({"school_value" => "0.234"}),
+        hash.merge({"school_value" => "1.045"}),
+      ]
+
+      result = create_collection(data)
+      expect(result.having_non_zero_school_value).to contain_exactly(result[0], result[4], result[5])
+    end
+
+    it "#most_recent should select the record with the most recent date stamp" do
+      data = [
+        hash.merge({"source_date_valid" => "2017-01-01T00:00:00-08:00"}),
+        hash.merge({"source_date_valid" => "2016-01-01T00:00:00-08:00"}),
+        hash.merge({"source_date_valid" => "2017-07-01T00:00:00-08:00"}),
+        hash.merge({"source_date_valid" => "2015-01-01T00:00:00-08:00"})
+      ]
+      result = create_collection(data)
+      expect(result.most_recent).to eq(result[2])
+    end
+
     it "#having_most_recent_date should remove older records" do
       data = [
         hash.merge({"source_date_valid" => "2017-01-01T00:00:00-08:00"}),
@@ -175,6 +231,17 @@ describe MetricsCaching::Value do
       ]
       result = create_collection(data)
       expect(result.having_most_recent_date).to contain_exactly(result[0], result[2])
+    end
+
+    it "#most_recent_source_year returns most recent year" do
+      data = [
+        hash.merge({"source_date_valid" => "2017-01-01T00:00:00-08:00"}),
+        hash.merge({"source_date_valid" => "2016-01-01T00:00:00-08:00"}),
+        hash.merge({"source_date_valid" => "2017-01-01T00:00:00-08:00"}),
+        hash.merge({"source_date_valid" => "2015-01-01T00:00:00-08:00"})
+      ]
+      result = create_collection(data)
+      expect(result.most_recent_source_year).to eq(2017)
     end
 
 
@@ -204,15 +271,27 @@ describe MetricsCaching::Value do
     end
 
     it "#no_subject_or_all_subjects_or_graduates_remediation select all-subject records or those with remediation data type" do
-      #'Percent Needing Remediation for College'
       data = [
         hash.merge({"subject" => "Composite Subject", "data_type" => "Enrollment"}),
         hash.merge({"subject" => "Composite Subject", "data_type" => "Percent Needing Remediation for College"}),
-        hash.merge({"subject" => "Math", "data_type" => "Percent Needing Remediation for College"})
+        hash.merge({"subject" => "Math", "data_type" => "Graduates needing Writing remediation in college"}),
+        hash.merge({"subject" => "Math", "data_type" => "Enrollment"})
       ]
 
       result = create_collection(data)
-      expect(result.no_subject_or_all_subjects_or_graduates_remediation).to contain_exactly(result[1], result[2])
+      expect(result.no_subject_or_all_subjects_or_graduates_remediation).to contain_exactly(result[0], result[1], result[2])
+    end
+
+    it "#having_ethnicity_breakdown filters for records with an ethnicity breakdown_tag" do
+      data = [
+        hash.merge({"breakdown_tags" => "ethnicity", "breakdown" => "White"}),
+        hash.merge({"breakdown_tags" => "ethnicity", "breakdown" => "African American"}),
+        hash.merge({"breakdown_tags" => "gender", "breakdown" => "Male"}),
+        hash.merge({"breakdown_tags" => "ethnicity", "breakdown" => "Asian"})
+      ]
+
+      result = create_collection(data)
+      expect(result.having_ethnicity_breakdown).to contain_exactly(result[0], result[1], result[3])
     end
 
     it "#having_breakdown_in filters by an array of breakdowns" do
@@ -227,15 +306,28 @@ describe MetricsCaching::Value do
       expect(result.having_breakdown_in(%w(Asian White))).to contain_exactly(result[1], result[3])
     end
 
+    it "#having_all_students_or_breakdown_in should select records for all students or matching one of a list of breakdowns" do
+      data = [
+        hash.merge({"breakdown" => "All students"}),
+        hash.merge({"breakdown" => "White"}),
+        hash.merge({"breakdown" => "African American"}),
+        hash.merge({"breakdown" => "Asian"}),
+        hash.merge({"breakdown" => "Asian"})
+      ]
+
+      result = create_collection(data)
+      expect(result.having_all_students_or_breakdown_in(%w(Asian))).to contain_exactly(result[0], result[3], result[4])
+    end
+
     it "#recent_data_threshold filters collection to records greater or equal to a given year" do
       data = [
-        hash.merge({"source_date_valid" => "2017-01-01T00:00:00-08:00"}),
-        hash.merge({"source_date_valid" => "2016-01-01T00:00:00-08:00"}),
-        hash.merge({"source_date_valid" => "2017-01-01T00:00:00-08:00"}),
-        hash.merge({"source_date_valid" => "2015-01-01T00:00:00-08:00"})
+        hash.merge({"year" => "2017"}),
+        hash.merge({"year" => "2016"}),
+        hash.merge({"year" => "2017"}),
+        hash.merge({"year" => "2015"})
       ]
       result = create_collection(data)
-      expect(result.recent_data_threshold).to contain_exactly(result[0], result[2])
+      expect(result.recent_data_threshold(2017)).to contain_exactly(result[0], result[2])
     end
 
 

@@ -30,12 +30,17 @@ module MetricsCaching
       end
 
       def having_non_zero_school_value
-        reject { |dv| dv.school_value_as_int.zero? }.extend(CollectionMethods)
+        reject { |dv| dv.school_value.blank? || dv.school_value_as_float.zero? }.extend(CollectionMethods)
       end
 
-      # TODO: this assumes exact same date rather than just same year
+      def having_most_recent_year
+        max_year = most_recent_source_year
+        select { |dv| dv.year == max_year }.extend(CollectionMethods)
+      end
+
       def having_most_recent_date
-        max_source_date_valid = map(&:source_date_valid).max
+        return [].extend(CollectionMethods) if self.empty?
+        max_source_date_valid = most_recent.try(:source_date_valid)
         select { |dv| dv.source_date_valid == max_source_date_valid }.extend(CollectionMethods)
       end
 
@@ -60,7 +65,7 @@ module MetricsCaching
 
       def no_subject_or_all_subjects_or_graduates_remediation
         select do |h|
-          h.subject.nil? || h.all_subjects? || CommunityProfiles::CollegeReadinessConfig::REMEDIATION_SUBGROUPS.include?(h.data_type)
+          h.subject.nil? || h.all_subjects? || CollegeReadinessConfig::REMEDIATION_SUBGROUPS.include?(h.data_type)
         end.extend(CollectionMethods)
       end
 
@@ -98,24 +103,6 @@ module MetricsCaching
         select do |dv|
           dv.year.to_i >= year
         end.extend(CollectionMethods)
-      end
-
-      def expect_only_one(message, other_helpful_vars = nil)
-        if size > 1
-          other_helpful_vars ||= {
-            data_types: map(&:data_type),
-            breakdowns: map(&:breakdown),
-            subjects: map(&:subject),
-            grades: map(&:grade)
-          }
-          GSLogger.error(
-            :misc,
-            nil,
-            message: "Expected to find unique gsdata value: #{message}",
-            vars: other_helpful_vars
-          )
-        end
-        return first
       end
 
       def group_by(*args, &block)

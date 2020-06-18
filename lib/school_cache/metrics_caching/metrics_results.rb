@@ -20,6 +20,9 @@ module MetricsCaching
       @results = combine_entity_averages!(raw_results)
     end
 
+    # State and district values can sometimes be linked to different
+    # data sets, which would cause the query to return duplicate metrics
+    # records in raw_results. This method combines them back into one
     def combine_entity_averages!(raw_results)
       raw_results.group_by {|r| r.id }.map do |id, group|
         if group.length == 1

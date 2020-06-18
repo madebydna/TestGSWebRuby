@@ -6,7 +6,7 @@ module CommunityProfiles
     include Qualaroo
     include SharingTooltipModal
     include RatingSourceConcerns
-    include CollegeReadinessConfig
+    include MetricsCaching::CollegeReadinessConfig
 
     def initialize(cache_data_reader:)
       @cache_data_reader = cache_data_reader

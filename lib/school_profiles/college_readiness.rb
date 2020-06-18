@@ -4,7 +4,7 @@ module SchoolProfiles
     include Qualaroo
     include SharingTooltipModal
     include RatingSourceConcerns
-    include CollegeReadinessConfig
+    include MetricsCaching::CollegeReadinessConfig
 
     TABS = {'college_readiness' => CHAR_CACHE_ACCESSORS, 'college_success' => CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS}
 
