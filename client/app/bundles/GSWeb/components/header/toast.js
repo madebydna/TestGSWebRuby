@@ -14,7 +14,7 @@ export const t = translateWithDictionary({
 
 const init = () => {
   const declineToast = readCookie('declineToast');
-  const suppressToast = window.location.pathname.includes('/gk/coronavirus-school-closure-support/') || window.location.pathname.includes('/gk/recursos-durante-coronavirus/');
+  const suppressToast =window.location.pathname === '/' || window.location.pathname.includes('/gk/coronavirus-school-closure-support/') || window.location.pathname.includes('/gk/recursos-durante-coronavirus/');
 
   if (!declineToast && !suppressToast){
     const body = document.querySelector('body');
