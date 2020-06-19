@@ -11,7 +11,7 @@ export const init = () => {
 
     banner.id = 'home-page-banner';
 
-    banner.innerHTML = `<span class="title">We stand in solidarity with</span>\
+    banner.innerHTML = `<span class="title col-sm-offset-2 col-md-offset-3 col-lg-offset-2">We stand in solidarity with</span>\
       Black Lives Matter. <a class="link" href = "#">Here's what we\'re doing.\
       </a><img src="${iconClose}" class="banner-cancel"/>`;
 

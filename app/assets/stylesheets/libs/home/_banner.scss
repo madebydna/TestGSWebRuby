@@ -2,9 +2,9 @@
 #home-page-banner {
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
-  text-align: center;
   position: relative;
-  padding: 1em;
+  font-family: "opensans-regular";
+  padding: 1.2em;
 
   @media (max-width: 768px) {
     text-align: left;
@@ -21,6 +21,7 @@
 
   .title {
     @media (max-width: 768px) {
+      margin-left: 0;
       display: block;
     }
   }
