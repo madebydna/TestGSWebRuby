@@ -12,7 +12,7 @@ export const init = () => {
     banner.id = 'home-page-banner';
 
     banner.innerHTML = `<span class="title col-sm-offset-2 col-md-offset-3 col-lg-offset-2">We stand in solidarity with</span>\
-      Black Lives Matter. <a class="link" href = "#">Here's what we\'re doing.\
+      Black Lives Matter. <a class="banner-link" href = "https://blog.greatschools.org/2020/06/05/1220/">Here's what we\'re doing.\
       </a><img src="${iconClose}" class="banner-cancel"/>`;
 
     header.parentNode.insertBefore(banner, header.nextSibling);
@@ -24,16 +24,20 @@ export const init = () => {
       activateRemoveMarginListener(hero);
     }
 
-    activateBannerCloseListener();
+    activateListeners();
   }
 }
 
-const activateBannerCloseListener = () => {
+const activateListeners = () => {
   document.querySelector('.banner-cancel').addEventListener('click', () => {
     const banner = document.querySelector('#home-page-banner');
     document.cookie = "declineBanner=true;expires=0;path=/";
     banner.classList.add('dn');
   })
+
+  document.querySelector('.banner-link').addEventListener('click', () => {
+    fireoffAnalytics(window.location.pathname);
+  });
 }
 
 const activateRemoveMarginListener = (hero) => {
@@ -41,3 +45,11 @@ const activateRemoveMarginListener = (hero) => {
     hero.style.marginTop = "0px";
   })
 }
+
+const fireoffAnalytics = (pathName) => {
+  analyticsEvent(
+    'interaction',
+    'Clicked Homepage Promo Banner',
+    pathName
+  );
+};
