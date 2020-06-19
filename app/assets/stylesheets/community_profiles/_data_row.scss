@@ -21,8 +21,18 @@
 
   .title{
     font-size: 12px;
-    flex-grow: 2;
-    max-width: 50%;
+    min-width: 35%;
+    width: 35%;
+    align-self: center;
+
+    @include media-breakpoint-down(sm) {
+      width: auto;
+      min-width: auto;
+      max-width: 35%;
+    }
+  }
+
+  .tooltip {
     align-self: center;
   }
 

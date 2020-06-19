@@ -188,7 +188,7 @@ class OspRegistrationController < ApplicationController
     verification_link_params.merge!(
         id: hash,
         date: date,
-        redirect: '/official-school-profile/dashboard/',
+        redirect: osp_dashboard_path,
         s_cid: tracking_code
     )
     email_send_link_no_admin(verify_email_url(verification_link_params))

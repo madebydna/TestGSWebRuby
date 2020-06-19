@@ -16,6 +16,7 @@ module CommunityProfiles
           hash['name'] = I18n.t(data_hash[:data_type], scope: 'lib.finance.data_types')
           hash['district_value'] = SchoolProfiles::DataPoint.new(data_hash[:district_value]).apply_formatting(*accessor[:formatting]).format
           hash['state_value'] =  SchoolProfiles::DataPoint.new(data_hash[:state_average]).apply_formatting(*accessor[:formatting]).format
+          hash['value_label'] = I18n.t("district_scope", scope: "lib.finance")
           hash['year'] = Date.parse(data_hash[:source_date_valid]).year
           hash['source'] = {
             name: I18n.t(data_hash[:data_type], scope: 'lib.finance.data_types'),

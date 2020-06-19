@@ -146,11 +146,11 @@ $(() => {
     }
   }
 
-  $('.js-followThisSchool').on('click', () => {
+  $('.js-followThisSchool').on('click', function() {
     signupAndFollowSchool(gon.school.state, gon.school.id);
   });
 
-  $('body').on('click', '.js-sharingLinks', () => {
+  $('body').on('click', '.js-sharingLinks', function()  {
     let url = $(this).data("link") + encodeURIComponent($(this).data("url"));
     if($(this).data("siteparams") !== undefined) {
       url +=  $(this).data("siteparams");
@@ -159,13 +159,13 @@ $(() => {
     return false;
   });
 
-  $('body').on('click', '.js-slTracking', () => {
+  $('body').on('click', '.js-slTracking', function() {
     const cat = `${$(this).data("module")}::${$(this).data("type")}`;
     analyticsEvent('Profile', 'Share', cat);
     return false;
   });
 
-  $('body').on('click', '.js-subtopicAnswerButton', () => {
+  $('body').on('click', '.js-subtopicAnswerButton', function() {
     analyticsEvent('Profile', 'Answer', '11');
   });
 
@@ -175,7 +175,7 @@ $(() => {
     (navigator.msMaxTouchPoints > 0));
   }
 
-  $('body').on('click', '.js-permaLink', () => {
+  $('body').on('click', '.js-permaLink', function() {
     if(!touchDevice()) {
       $(this).focus();
       $(this).select();
@@ -185,7 +185,7 @@ $(() => {
     return false;
   });
 
-  $('body').on('click', '.js-emailSharingLinks', () => {
+  $('body').on('click', '.js-emailSharingLinks', function() {
     window.location.href = ($(this).data("link"));
     return false;
   });
@@ -218,7 +218,7 @@ $(() => {
     hideIfNoSpace: true
   });
 
-  $('body').on('click', '.js-moreRevealLink', () => {
+  $('body').on('click', '.js-moreRevealLink', function() {
     $(this).hide();
     $(this).siblings('.js-moreReveal').removeClass('more-reveal');
   });
@@ -229,7 +229,7 @@ $(() => {
   // The tour modal will appear by default unless the user clicks 'Not right now'
   // When clicked we update the cookie to reflect the user's preference and make
   // sure the modal isn't displayed again.
-  $('body').on('click', '#close-school-tour', () => {
+  $('body').on('click', '#close-school-tour', function() {
     $('.school-profile-tour-modal').remove();
     $('.tour-teaser').tipso({content: `<div><div><h3><img alt="" src=${owlSvg}/> Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>`, width: 300, tooltipHover: true});
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box');
@@ -238,7 +238,7 @@ $(() => {
   const $body = $('body');
 
   // used by test scores in school profiles
-  $body.on('click', '.js-test-score-details', () => {
+  $body.on('click', '.js-test-score-details', function() {
     const grades = $(this).closest('.bar-graph-display').parent().find('.grades');
     if(grades.css('display') === 'none') {
       grades.slideDown();
@@ -251,7 +251,7 @@ $(() => {
   });
 
   // closes drawers when a new subject is selected for test scores in school profiles
-  $body.on('click','.js-updateLocationHash', () => {
+  $body.on('click','.js-updateLocationHash', function() {
     const gradesContainer = $(this).parents('.panel');
     const grades = gradesContainer.find('.grades');
     grades.slideUp();
@@ -265,7 +265,7 @@ $(() => {
   });
 
   // for summary rating tooltip
-  $body.on('click', '.js-rating-details', () => {
+  $body.on('click', '.js-rating-details', function() {
     const ratingDescription = $(this).closest('.rating-table-row').find('.rating-table-description');
     if(ratingDescription.css('display') === 'none') {
       ratingDescription.slideDown();
@@ -279,7 +279,7 @@ $(() => {
 
 
   // for historical ratings
-  $body.on('click', '.js-historical-button', () => {
+  $body.on('click', '.js-historical-button', function() {
     const historicalData = $(this).closest('.js-historical-module').find('.js-historical-target');
     if(historicalData.css('display') === 'none') {
       historicalData.slideDown();
@@ -295,7 +295,7 @@ $(() => {
   GS.ad.addCompfilterToGlobalAdTargetingGon();
 
   try {
-    $('.neighborhood-module img[data-src]').unveil(300, () => {
+    $('.neighborhood-module img[data-src]').unveil(300, function() {
       $(this).width('100%');
     });
   } catch (e) {
@@ -307,7 +307,7 @@ $(() => {
     // Do nothing
   }
 
-  $body.on('click', '.js-start-tour', () => {
+  $body.on('click', '.js-start-tour', function() {
     const remodal = $('.js-start-tour').closest('.remodal');
     // This is the modal that appears unless the user clicks 'Not right now'
     const schoolTourModal = $('.js-school-profile-tour-modal');
@@ -323,22 +323,22 @@ $(() => {
     return false;
   }).show();
 
-  $body.on('click', '#school-tour-feedback', () => {
+  $body.on('click', '#school-tour-feedback', function() {
     const surveyUrl = `https://s.qualaroo.com/45194/9da69ac2-e50b-4c8d-84c1-9df4e8671481?state=${gon.school.state}&school=${gon.school.id}`;
     window.open(surveyUrl);
   });
 
-  $body.on('click', '.js-swd-modal', () => {
+  $body.on('click', '.js-swd-modal', function() {
     scrollToElement('#Reviews');
     $('.remodal').remodal().close();
   });
 
-  $body.on('click', '.js-start-second-tour', () => {
+  $body.on('click', '.js-start-second-tour', function() {
       introJs.startSecondTutorial();
       return false;
   }).show();
 
-  $body.on('click', '.js-close-school-tour', () => {
+  $body.on('click', '.js-close-school-tour', function() {
     introJs.exit();
   });
 
