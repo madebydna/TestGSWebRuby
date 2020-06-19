@@ -38,10 +38,6 @@ describe MetricsCaching::CollegeReadinessConfig do
         it "contains a list of unique strings" do
             expect(MetricsCaching::CollegeReadinessConfig::POST_SECONDARY.uniq.length).to eq(MetricsCaching::CollegeReadinessConfig::POST_SECONDARY.length)
         end
-
-        it "matches the array defined in SchoolProfiles" do
-            expect(MetricsCaching::CollegeReadinessConfig::POST_SECONDARY).to match_array(SchoolProfiles::CollegeReadinessConfig::POST_SECONDARY)
-        end
     end
 
     context "REMEDIATION_SUBGROUPS" do
@@ -58,10 +54,6 @@ describe MetricsCaching::CollegeReadinessConfig do
                 'Graduates needing Science remediation in college',
                 'Graduates needing Math remediation in college'])
         end
-
-        it "matches the array defined in SchoolProfiles" do
-            expect(MetricsCaching::CollegeReadinessConfig::REMEDIATION_SUBGROUPS).to match_array(MetricsCaching::CollegeReadinessConfig::REMEDIATION_SUBGROUPS)
-        end
     end
 
     context "SECOND_YEAR" do
@@ -74,10 +66,6 @@ describe MetricsCaching::CollegeReadinessConfig do
                 'Percent Enrolled in College and Returned for a Second Year',
                 'Percent Enrolled in a public 4 year college and Returned for a Second Year',
                 'Percent Enrolled in a public 2 year college and Returned for a Second Year'])
-        end
-
-        it "matches the array defined in SchoolProfiles" do
-            expect(MetricsCaching::CollegeReadinessConfig::SECOND_YEAR).to match_array(MetricsCaching::CollegeReadinessConfig::SECOND_YEAR)
         end
     end
 

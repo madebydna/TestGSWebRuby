@@ -8,7 +8,7 @@ describe CommunityProfiles::TeachersStaff do
   }
 
   before do
-    @current_cache = create_gsdata_cache(build(:teacher_staff_cache))
+    @current_cache = create_metrics_cache(build(:teacher_staff_cache))
   end
 
   subject(:ts) { CommunityProfiles::TeachersStaff.new(cache_reader) }
@@ -210,7 +210,7 @@ describe CommunityProfiles::TeachersStaff do
     end
   end
 
-  def create_gsdata_cache(value)
+  def create_metrics_cache(value)
     create(:district_cache, district_id: district.district_id, state: district.state.upcase,
       name: "metrics", value: value.to_json)
   end

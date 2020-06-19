@@ -235,10 +235,6 @@ module SchoolProfiles
       decorated_school.metrics
     end
 
-    def gsdata_data(*keys)
-      gs_data(decorated_school.gsdata, *keys)
-    end
-
     def ratings_data(*keys)
       gs_data(decorated_school.ratings, *keys)
     end

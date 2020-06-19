@@ -187,7 +187,7 @@ module SearchControllerConcerns
   end
 
   def add_students_per_teacher(schools)
-    cache_keys << 'gsdata'
+    cache_keys << 'metrics'
     schools
   end
 

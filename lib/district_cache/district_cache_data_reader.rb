@@ -89,10 +89,6 @@ class DistrictCacheDataReader
     decorated_district.distance_learning
   end
 
-  def gsdata_data(*keys)
-    gs_data(decorated_district.metrics, *keys)
-  end
-
   def ratings_data(*keys)
     gs_data(decorated_district.ratings, *keys)
   end

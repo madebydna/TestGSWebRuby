@@ -7,7 +7,6 @@ class Cacher
   # :school_reviews
   # :school_media
   # :esp_response
-  # :gsdata
   # :directory
   # :metrics
   # :feed_metrics

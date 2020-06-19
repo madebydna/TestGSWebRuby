@@ -9,7 +9,6 @@ class DistrictCacher
   # :district_schools_summary
   # :district_directory
   # :feed_metrics
-  # :gsdata
   # :metrics
   # :crpe
 
