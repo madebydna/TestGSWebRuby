@@ -11,8 +11,8 @@ export const init = () => {
 
     banner.id = 'home-page-banner';
 
-    banner.innerHTML = `<span class="title">Black Lives Matter.&nbsp;</span>\
-      Changes comes from within. <a class="link" href = "#">What we\'re doing\
+    banner.innerHTML = `<span class="title">We stand in solidarity with</span>\
+      Black Lives Matter. <a class="link" href = "#">Here's what we\'re doing.\
       </a><img src="${iconClose}" class="banner-cancel"/>`;
 
     header.parentNode.insertBefore(banner, header.nextSibling);
