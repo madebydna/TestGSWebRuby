@@ -134,7 +134,9 @@ module SchoolProfiles
         1.0 => 'present'
       }
       t_presence = presence[value]
-      t_key = breakdown == "All students" ? nil : breakdown
+      # Data team will be changing breakdown from Not Applicable,
+      # which we currently lump into All students, to "no staff"
+      t_key = ['All students', 'no staff'].include?(breakdown) ? nil : breakdown
 
       I18n.t("lib.teachers_staff.employment_level.#{t_presence}.#{t_key}")
     end
