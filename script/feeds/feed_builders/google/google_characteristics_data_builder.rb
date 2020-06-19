@@ -1,3 +1,7 @@
+# Will not work
+# Need to reformat to new feeds builder format
+# Instead of using the old one
+
 module Feeds
   class GoogleCharacteristicsDataBuilder
     include Feeds::FeedConstants
@@ -10,7 +14,7 @@ module Feeds
     end
 
     def self.build_data(characteristics_map, characteristics_data_set, universal_id)
-      char_data_set = characteristics_data_set.find{ |cds| characteristics_map[:key] == cds.first }
+      char_data_set = characteristics_data_set.find { |cds| characteristics_map[:key] == cds.first }
       send(characteristics_map[:method], char_data_set.second, universal_id, characteristics_map[:data_type] ) if char_data_set
     end
 
