@@ -18,6 +18,14 @@ module Feeds
         def with_all_grades
           select {|ds| ds["grade"].nil? || %w(All NA).include?(ds["grade"]) }.extend(CollectionMethods)
         end
+
+        def exclude_unlicensed_data
+          reject {|ds| ds['source'] == 'MDR' }.extend(CollectionMethods)
+        end
+
+        def select_single_entry
+          select.with_index {|ds, idx| idx == 0}.extend(CollectionMethods)
+        end
       end
     end
 
@@ -44,9 +52,16 @@ module Feeds
       private
 
       def format_data_sets(data_accessor, data_sets)
-        data_sets = data_sets.with_all_grades if data_accessor[:key] == 'Enrollment'
-        data_sets = [data_sets.first].extend(CacheValue::CollectionMethods) if data_accessor[:key] == 'Percent classes taught by highly qualified teachers'
-        data_sets = [data_sets.first].extend(CacheValue::CollectionMethods) if data_accessor[:key] == 'Head official name' || data_accessor[:key] == 'Head official email address'
+        data_sets =
+          case data_accessor[:key]
+          when 'Enrollment'
+            data_sets.exclude_unlicensed_data.with_all_grades
+          when 'Percent classes taught by highly qualified teachers', 'Head official name', 'Head official email address'
+            data_sets.exclude_unlicensed_data.select_single_entry
+          else
+            data_sets.exclude_unlicensed_data
+          end
+
         data_sets.with_most_recent_year.map do |data_set|
           {}.tap do |hash|
             hash[:universal_id] = universal_id

@@ -5,12 +5,12 @@ en:
       environment: ENVIRONMENT
       false_header:
         first_bullet: Are you an administrator at this school?
-        second_bullet_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Claim school" data-ga-click-label="Private" href="/official-school-profile/">Claim your school’s profile</a> to edit general information and share what makes your school unique. <a href="/gk/schools/">Learn more.</a>
+        second_bullet_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Claim school" data-ga-click-label="Private" href="/school-accounts/">Claim your school’s profile</a> to edit general information and share what makes your school unique. <a href="/gk/schools/">Learn more.</a>
         third_bullet: Are you a parent or student at this school?
         fourth_bullet: Encourage your school administrators to claim this school’s profile.
       true_header:
         first_bullet: Are you an administrator at this school?
-        second_bullet_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Update school info" data-ga-click-label="Private" href="/official-school-profile/dashboard/">Keep your school’s information up-to-date.</a>
+        second_bullet_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Update school info" data-ga-click-label="Private" href="/school-accounts/dashboard/">Keep your school’s information up-to-date.</a>
         third_bullet: Are you a parent or student at this school?
         fourth_bullet: Encourage school administrators to update your school’s profile.
       toc:

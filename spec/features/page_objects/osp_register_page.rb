@@ -2,7 +2,7 @@ require 'features/page_objects/modules/footer'
 class OspRegisterPage < SitePrism::Page
   include Footer
 
-  set_url 'official-school-profile/register.page{?query*}'
+  set_url 'school-accounts/register.page{?query*}'
 
   section :osp_header, ".osp-header-module" do
     element :main_title, "h1"

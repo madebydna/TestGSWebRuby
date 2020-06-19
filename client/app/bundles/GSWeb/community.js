@@ -1,3 +1,4 @@
+/* global $, ReactOnRails */
 import ReactOnRails from "react-on-rails";
 import SearchBoxWrapper from 'react_components/search_box_wrapper';
 import withViewportSize from 'react_components/with_viewport_size';
@@ -30,7 +31,6 @@ const SchoolBrowseLinksWrapper = withViewportSize({ propName: 'size' })(SchoolBr
 const AcademicsDataModuleWrapper = withViewportSize({ propName: 'size' })(AcademicsDataModule);
 const TeachersStaffWrapper = withViewportSize({ propName: 'size' })(TeachersStaff);
 const AdWrapper = withViewportSize({ propName: 'size' })(Ad);
-const $ = window.jQuery;
 
 ReactOnRails.register({
   SearchBoxWrapper,
@@ -57,7 +57,7 @@ $(() => {
 
   // Todo animations like slidedown are tough to implement in vanilla javascript so leaving here
   //  until we figure out what to do with these
-  $('body').on('click', '.js-test-score-details', () => {
+  $('body').on('click', '.js-test-score-details', function() {
     const grades = $(this).closest('.bar-graph-display').parent().find('.grades');
     if(grades.css('display') === 'none') {
       grades.slideDown();
@@ -136,10 +136,10 @@ $(() => {
   });
 
   $(() => {
-    $('.js-shortened-text').each(() => {
+    $('.js-shortened-text').each(function() {
       const $text = $(this);
       const extraText = $text.data('shortened-text-rest');
-      $text.find('span').on('click', () => {
+      $text.find('span').on('click', function() {
         $(this).hide();
         $text.html($text.html() + extraText);
       });

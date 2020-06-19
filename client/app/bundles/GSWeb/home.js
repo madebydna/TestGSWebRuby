@@ -12,6 +12,7 @@ import "jquery-unveil";
 import SearchBox from 'react_components/search_box';
 import withViewportSize from 'react_components/with_viewport_size';
 import { t } from 'util/i18n';
+import { init as bannerInit } from 'components/header/home_banner';
 
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
 ReactOnRails.register({
@@ -22,13 +23,13 @@ $(function() {
   $('#home_state_select_wrapper .state-btn').on('click', function () {
     $('.dropdown-container ul').toggleClass('hide-state-list')
   });
-  
+
 
   $('#show-more-for-footer').on('click', 'a', function(e) {
     e.preventDefault();
     var extraLinks = $('#home-city-footer').find('.extra');
     extraLinks.toggleClass('js-showing');
-    
+
     if ($(this).text() == t('show_more')) {
       $(this).text(t('show_less'));
     } else {
@@ -53,6 +54,8 @@ $(function() {
       classes: 'scaling'
     }
   );
+
+  bannerInit();
 
   backToTop.init();
 });

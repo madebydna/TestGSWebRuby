@@ -64,6 +64,7 @@ class SitemapStateGenerator < SitemapXmlWriter
               .select("school.*, count(*) AS num_reviews")
               .where("r.active=1")
               .where(type: 'private')
+              .where("r.review_question_id=1")
               .where("school.manual_edit_date < ?", Time.now - 4.years)
               .group(:id)
               .having("num_reviews < 3")
