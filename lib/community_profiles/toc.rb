@@ -58,7 +58,7 @@ module CommunityProfiles
       toc_items.delete(:school_districts) if @school_districts&.empty?
       toc_items.delete(:academics) unless @academics && @academics[:data].present?
       toc_items.delete(:distance_learning) unless @distance_learning.present?
-      toc_items.delete(:student_demographics) unless @student_demographics.has_data?
+      toc_items.delete(:student_demographics) unless @student_demographics&.has_data?
       toc_items.delete(:reviews) if @reviews&.empty?
       toc_items.delete(:neighboring_cities) if @neighboring_cities&.empty?
       toc_items.delete(:advanced_courses) if @advanced_courses && @advanced_courses[:courses].empty?
