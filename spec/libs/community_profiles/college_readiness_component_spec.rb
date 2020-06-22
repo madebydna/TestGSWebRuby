@@ -12,7 +12,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
         # Entry is not included in included_data_types
         {
           "breakdown" => "All students",
-          "district_created" => "2014-05-02T11:59:22-07:00",
+          "created" => "2014-05-02T11:59:22-07:00",
           "district_value" => 33,
           "source" => "NCES",
           "state_average" => 61,
@@ -25,7 +25,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
         # Entry is before the DATA_CUTOFF_YEAR
         {
           "breakdown" => "All students",
-          "district_created" => "2019-02-13T11:53:58-08:00",
+          "created" => "2019-02-13T11:53:58-08:00",
           "district_value" => 38.110000,
           "source" => "AR Dept. of Education",
           "state_average" => 61.800000,
@@ -38,7 +38,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
           # This will get rejected because it's from 2016 and we have 2017 college success data
           {
             "breakdown" => "All students",
-            "district_created" => "2017-06-28T22:08:22-07:00",
+            "created" => "2017-06-28T22:08:22-07:00",
             "district_value" => 65.920000,
             "source" => "AR Dept. of Education",
             "state_average" => 50.460000,
@@ -48,7 +48,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
           },
           {
             "breakdown" => "Hispanic",
-            "district_created" => "2017-06-28T22:08:23-07:00",
+            "created" => "2017-06-28T22:08:23-07:00",
             "district_value" => 46.150000,
             "source" => "AR Dept. of Education",
             "state_average" => 38.910000,
@@ -58,7 +58,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
           },
           {
             "breakdown" => "White",
-            "district_created" => "2017-06-28T22:08:20-07:00",
+            "created" => "2017-06-28T22:08:20-07:00",
             "district_value" => 67.810000,
             "source" => "AR Dept. of Education",
             "state_average" => 53.650000,
@@ -70,7 +70,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
       "Percent Needing Remediation for College" => [
         {
           "breakdown" => "All students",
-          "district_created" => "2019-02-13T11:53:58-08:00",
+          "created" => "2019-02-13T11:53:58-08:00",
           "district_value" => 38.110000,
           "source" => "AR Dept. of Education",
           "state_average" => 61.800000,
@@ -80,7 +80,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
         },
         {
           "breakdown" => "All students",
-          "district_created" => "2019-02-13T11:53:58-08:00",
+          "created" => "2019-02-13T11:53:58-08:00",
           "district_value" => 42.110000,
           "source" => "AR Dept. of Education",
           "state_average" => 70.800000,
@@ -92,7 +92,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
       "Percent enrolled in any in-state postsecondary institution within 12 months after graduation" => [
         {
           "breakdown" => "Students with disabilities",
-          "district_created" => "2019-02-13T11:53:59-08:00",
+          "created" => "2019-02-13T11:53:59-08:00",
           "district_value" => 33.330000,
           "source" => "AR Dept. of Education",
           "year" => 2017,
@@ -101,7 +101,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
         },
         {
           "breakdown" => "Hispanic",
-          "district_created" => "2019-02-13T11:53:59-08:00",
+          "created" => "2019-02-13T11:53:59-08:00",
           "district_value" => 68.750000,
           "source" => "AR Dept. of Education",
           "state_average" => 39.500000,
@@ -111,7 +111,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
         },
         {
           "breakdown" => "All students",
-          "district_created" => "2019-02-13T11:53:59-08:00",
+          "created" => "2019-02-13T11:53:59-08:00",
           "district_value" => 61.540000,
           "source" => "AR Dept. of Education",
           "state_average" => 48.200000,

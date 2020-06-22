@@ -61,13 +61,16 @@ module SchoolProfiles
         return [] if hashes.blank?
         ActSatHandler.new(hashes).handle_ACT_SAT_to_display!
         hashes = hashes.map do |key, array|
-          return nil if array.empty?
-          array = array.for_all_students.having_school_value.having_most_recent_date
-          if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
-            # This is for metrics
-            array = array.no_subject_or_all_subjects_or_graduates_remediation
+          if array.empty?
+            nil
+          else
+            array = array.for_all_students.having_school_value.having_most_recent_date
+            if array.respond_to?(:no_subject_or_all_subjects_or_graduates_remediation)
+              # This is for metrics
+              array = array.no_subject_or_all_subjects_or_graduates_remediation
+            end
+            array
           end
-          array
         end
 
         data_values = hashes.flatten.compact

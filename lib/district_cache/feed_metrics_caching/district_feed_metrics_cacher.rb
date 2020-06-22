@@ -67,7 +67,7 @@ module FeedMetricsCaching
     def build_hash_for_metric(metric)
       {}.tap do |hash|
         hash[:breakdown] = metric.breakdown_name
-        hash[:district_created] = metric.created
+        hash[:created] = metric.created
         hash[:grade] = metric.grade
         hash[:district_value] = Float(metric.value) rescue metric.value
         hash[:source] = metric.source_name

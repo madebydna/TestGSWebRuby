@@ -134,7 +134,7 @@ module MetricsCaching
         hash[:year] = metric.year
         hash[:source_date_valid] = metric.source_date_valid
         #TODO: double check if this is used
-        hash[:district_created] = metric.created
+        hash[:created] = metric.created
       end
     end
 

@@ -77,7 +77,7 @@ describe MetricsCaching::DistrictMetricsCacher do
         subject: 'Not Applicable',
         year: 2018,
         source_date_valid: 'Mon, 01 Jan 2018 00:00:00 PST -08:00',
-        district_created: 'Tue, 11 Feb 2020 16:57:16 PST -08:00'
+        created: 'Tue, 11 Feb 2020 16:57:16 PST -08:00'
       })
     end
 

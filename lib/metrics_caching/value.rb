@@ -152,7 +152,8 @@ module MetricsCaching
     :year,
     :source,
     :data_type,
-    :grade
+    :grade,
+    :created
 
     def [](key)
       send(key) if respond_to?(key)

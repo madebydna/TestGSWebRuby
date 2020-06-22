@@ -66,7 +66,7 @@ describe FeedMetricsCaching::DistrictFeedMetricsCacher do
         grade: '7',
         source: 'California Department of Education',
         year: 2019,
-        district_created: '2018-12-05T19:49:52-08:00'
+        created: '2018-12-05T19:49:52-08:00'
       })
     end
 
