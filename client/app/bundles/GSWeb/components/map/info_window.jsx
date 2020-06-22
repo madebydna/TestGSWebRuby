@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { capitalize, t } from 'util/i18n';
-import unratedSchoolIcon from 'school_profiles/brown-owl.svg';
+import BrownOwl from '../../react_components/icons/brown_owl';
 import {
   getHomesForSaleHref,
   studentsPhrase,
@@ -50,7 +50,7 @@ export default function createInfoWindow(entity, campaignCode) {
     } else {
       return (
         <div className="rating-container">
-          <img src={unratedSchoolIcon} alt="" />
+          <BrownOwl />
           <div className="rating-scale">{t('Currently unrated')}</div>
           {entity.savedSchoolCallback && <div
             data-state={entity.state}

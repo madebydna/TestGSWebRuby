@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { t } from '../../util/i18n';
-import owlPng from 'school_profiles/brown-owl.svg';
+import BrownOwl from '../icons/brown_owl';
 
 const ParentTip = ({children}) => {
   return (
     <div>
       <p className="parent-tip">
-        <img src={owlPng} alt="" />
+        <BrownOwl />
         <span className="speech-bubble left">{t('Parent tip')}</span>
       </p>
       <p className="footnote">
