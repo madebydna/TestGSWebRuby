@@ -3,8 +3,7 @@ class ExactTarget
 
     NOT_AUTHORIZED_MESSAGE = "Not Authorized"
     NOT_AUTHORIZED_ERROR_CODE = 0
-    INVALID_CREDENTIALS_MESSAGE = "Unauthorized"
-    INVALID_CREDENTIALS_CODE = 1
+    INVALID_CLIENT_ERROR = "invalid_client"
 
     attr_reader :result
 
@@ -17,7 +16,7 @@ class ExactTarget
     end
 
     def self.authorize_token(result)
-      new(result).authorize
+      new(result).authorize_token
     end
 
     def authorize
@@ -25,6 +24,8 @@ class ExactTarget
         raise GsExactTargetAuthorizationError, 'invalid or expired auth token'
       elsif invalid_credentials_error?
         raise GsExactTargetAuthorizationError, 'invalid credentials'
+      elsif other_error?
+        raise GsExactTargetDataError, result
       end
       result
     end
@@ -34,16 +35,20 @@ class ExactTarget
       authorize
     end
 
+    def other_error?
+      result["error"].present? || result["errorcode"].present? || result["error_description"]
+    end
+
     def invalid_authorization_token_error?
       (result["errorcode"] == NOT_AUTHORIZED_ERROR_CODE  && result["message"] == NOT_AUTHORIZED_MESSAGE)
     end
 
     def invalid_authorization_token?
-      ! ( result.has_key?("accessToken") && result.has_key?("expiresIn") )
+      ! ( result.has_key?("access_token") && result.has_key?("expires_in") )
     end
 
     def invalid_credentials_error?
-      result["errorcode"] == INVALID_CREDENTIALS_CODE && result["message"] == INVALID_CREDENTIALS_MESSAGE
+      result["error"] == INVALID_CLIENT_ERROR
     end
 
   end

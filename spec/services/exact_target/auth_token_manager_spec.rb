@@ -2,30 +2,25 @@ require 'spec_helper'
 require 'exact_target'
 
 describe ExactTarget::AuthTokenManager do
+  let(:memory_store) { ActiveSupport::Cache.lookup_store(:memory_store) }
+
   before do
-    pending('TODO: add new shared cache table to database')
-    fail
-  end
-  after do
-    clean_dbs(:gs_schooldb, :shared_cache)
+    allow(Rails).to receive(:cache).and_return(memory_store)
+    Rails.cache.clear
   end
 
   describe '#fetch_access_token' do
     subject { ExactTarget::AuthTokenManager.fetch_access_token }
-    context 'with access token in database' do
+    context 'with access token in Rails cache' do
       it 'should return access token from database' do
-        stub_shared_cache_with_token_in_database
+        stub_cache_with_token
         expect(subject).to eq('stuff')
       end
     end
 
-    context 'with access token not in database' do
+    context 'with access token not in Rails cache' do
       before do
-        stub_shared_cache_with_no_token_in_database
-        Timecop.freeze(Time.local(1990))
-      end
-      after do
-         Timecop.return
+        stub_cache_with_no_token
       end
 
       context 'with valid access token response from exact target' do
@@ -35,9 +30,9 @@ describe ExactTarget::AuthTokenManager do
         it 'should return access token from exact target access hash' do
           expect(subject).to eq('token')
         end
-        it 'should save access token in shared cache with correct expiration time' do
-          expect(SharedCache).to receive(:set_cache_value).
-            with('et_rest_access_token', 'token', time_expires_result)
+        it 'should save access token in cache with correct expiration time' do
+          expect(memory_store).to receive(:write).
+            with('et_rest_access_token', 'token', expires_in: time_expires_result)
           subject
         end
       end
@@ -54,11 +49,7 @@ describe ExactTarget::AuthTokenManager do
   describe '#fetch_new_access_token' do
     subject { ExactTarget::AuthTokenManager.fetch_new_access_token }
     before do
-      stub_shared_cache_with_no_token_in_database
-      Timecop.freeze(Time.local(1990))
-    end
-    after do
-      Timecop.return
+      stub_cache_with_no_token
     end
 
     context 'with valid access token response from exact target' do
@@ -68,9 +59,9 @@ describe ExactTarget::AuthTokenManager do
       it 'should return access token from exact target access hash' do
         expect(subject).to eq('token')
       end
-      it 'should save access token in shared cache with correct expiration time' do
-        expect(SharedCache).to receive(:set_cache_value).
-          with('et_rest_access_token', 'token', time_expires_result)
+      it 'should save access token in cache with correct expiration time' do
+        expect(memory_store).to receive(:write).
+          with('et_rest_access_token', 'token', hash_including(expires_in: time_expires_result))
         subject
       end
     end
@@ -84,9 +75,7 @@ describe ExactTarget::AuthTokenManager do
   end
 
   def time_expires_result
-    d =  Time.now
-    d += (3600 - 30).seconds
-    d.strftime('%Y-%m-%d %H:%M:%S')
+    (3600 - 30).seconds
   end
 
   def stub_exact_target_api_interface_to_return_invalid_token
@@ -98,8 +87,8 @@ describe ExactTarget::AuthTokenManager do
 
   def stub_exact_target_api_interface_to_return_valid_token
     valid_token_response = {
-      'accessToken' => 'token',
-      'expiresIn' => '3600' 
+      'access_token' => 'token',
+      'expires_in' => '3600'
     }
     exact_target_api = double
     allow(ExactTarget::ApiInterface).to receive(:new).and_return(exact_target_api)
@@ -108,13 +97,13 @@ describe ExactTarget::AuthTokenManager do
   end
 
 
-  def stub_shared_cache_with_token_in_database
-    db_access_token = 'stuff' 
-    allow(SharedCache).to receive(:get_cache_value).and_return(db_access_token)
+  def stub_cache_with_token
+    db_access_token = 'stuff'
+    allow(memory_store).to receive(:read).and_return(db_access_token)
   end
 
-  def stub_shared_cache_with_no_token_in_database
-    allow(SharedCache).to receive(:get_cache_value).and_return(nil)
+  def stub_cache_with_no_token
+    allow(memory_store).to receive(:read).and_return(nil)
   end
 
 end

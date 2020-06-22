@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'net/http'
 require 'rubygems'
 require 'json'
@@ -8,16 +6,29 @@ class ExactTarget
   class ApiInterface
 
     def full_path_uri(uri)
-      URI('https://www.exacttargetapis.com'+uri)
+      URI(ENV_GLOBAL['exacttarget_v2_api_rest_uri']+uri)
     end
 
     def post_json_with_auth(uri, send_hash, access_token)
       uri = full_path_uri(uri)
       req = Net::HTTP::Post.new(
           uri.request_uri,
-          initheader = {
-              'Content-Type' => 'application/json',
-              'Authorization' => 'Bearer ' + access_token
+          {
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' + access_token
+          }
+      )
+      result = post_json(uri, send_hash, req)
+      authenticate(result)
+    end
+
+    def put_json_with_auth(uri, send_hash, access_token)
+      uri = full_path_uri(uri)
+      req = Net::HTTP::Put.new(
+          uri.request_uri,
+          {
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' + access_token
           }
       )
       result = post_json(uri, send_hash, req)
@@ -28,7 +39,7 @@ class ExactTarget
       uri = full_path_uri(uri)
       req = Net::HTTP::Patch.new(
         uri.request_uri,
-        initheader = {
+        {
           'Content-Type' => 'application/json',
           'Authorization' => 'Bearer ' + access_token
         }
@@ -41,8 +52,8 @@ class ExactTarget
     def post_auth_token_request
       uri = access_token_uri
       req = Net::HTTP::Post.new(
-          uri.request_uri,
-          initheader = {'Content-Type' => 'application/json'}
+        uri.request_uri,
+        {'Content-Type' => 'application/json'}
       )
       result = post_json(uri, credentials_rest, req)
       authenticate_token(result)
@@ -60,13 +71,14 @@ class ExactTarget
 
     def credentials_rest
       {
-        'clientId' => ENV_GLOBAL['exacttarget_v2_api_key'],
-        'clientSecret' => ENV_GLOBAL['exacttarget_v2_api_secret']
+        'grant_type' => "client_credentials",
+        'client_id' => ENV_GLOBAL['exacttarget_v2_client_id'],
+        'client_secret' => ENV_GLOBAL['exacttarget_v2_client_secret']
       }
     end
 
     def access_token_uri
-      URI("#{ENV_GLOBAL['exacttarget_v2_api_auth_uri']}/v1/requestToken")
+      URI("#{ENV_GLOBAL['exacttarget_v2_api_auth_uri']}v2/token")
     end
 
     def post_json(uri, send_hash, request)
