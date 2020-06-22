@@ -161,7 +161,7 @@
         <% end %>
 
         <%# Student Demographics %>
-        <% if @students.has_data? %>
+        <% if @students&.has_data? %>
           <div id="students" class="module-section">
             <%= react_component("Students", props: {
                 ethnicityData: @students.students_demographics['ethnicityData'],
