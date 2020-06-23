@@ -1,5 +1,5 @@
 class ExactTarget
-  class ExactTargetAuthorizationChecker
+  class AuthorizationChecker
 
     NOT_AUTHORIZED_MESSAGE = "Not Authorized"
     NOT_AUTHORIZED_ERROR_CODE = 0

@@ -39,7 +39,7 @@ class ExactTarget
     end
 
     def exact_target_response
-      exact_target_auth_token_response = ExactTarget::ApiInterface.new.post_auth_token_request
+      exact_target_auth_token_response = ExactTarget::ApiInterface.post_auth_token_request
       ExactTargetResponse.new(exact_target_auth_token_response)
     end
 

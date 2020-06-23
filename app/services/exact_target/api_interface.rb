@@ -5,88 +5,104 @@ require 'json'
 class ExactTarget
   class ApiInterface
 
-    def full_path_uri(uri)
+    def self.full_path_uri(uri)
       URI(ENV_GLOBAL['exacttarget_v2_api_rest_uri']+uri)
     end
 
-    def post_json_with_auth(uri, send_hash, access_token)
+    def self.post_json(uri, send_hash)
       uri = full_path_uri(uri)
-      req = Net::HTTP::Post.new(
+      obtain_access_token_with_retry do |access_token|
+        req = Net::HTTP::Post.new(
+            uri.request_uri,
+            {
+              'Content-Type' => 'application/json',
+              'Authorization' => 'Bearer ' + access_token
+            }
+        )
+        result = do_post_json(uri, send_hash, req)
+        authenticate(result)
+      end
+    end
+
+    def self.put_json(uri, send_hash)
+      uri = full_path_uri(uri)
+      obtain_access_token_with_retry do |access_token|
+        req = Net::HTTP::Put.new(
+            uri.request_uri,
+            {
+              'Content-Type' => 'application/json',
+              'Authorization' => 'Bearer ' + access_token
+            }
+        )
+        result = do_post_json(uri, send_hash, req)
+        authenticate(result)
+      end
+    end
+
+    def self.patch_json(uri, send_hash)
+      uri = full_path_uri(uri)
+      obtain_access_token_with_retry do |access_token|
+        req = Net::HTTP::Patch.new(
           uri.request_uri,
           {
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' + access_token
           }
-      )
-      result = post_json(uri, send_hash, req)
-      authenticate(result)
-    end
-
-    def put_json_with_auth(uri, send_hash, access_token)
-      uri = full_path_uri(uri)
-      req = Net::HTTP::Put.new(
-          uri.request_uri,
-          {
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' + access_token
-          }
-      )
-      result = post_json(uri, send_hash, req)
-      authenticate(result)
-    end
-
-    def patch_json_with_auth(uri, send_hash, access_token)
-      uri = full_path_uri(uri)
-      req = Net::HTTP::Patch.new(
-        uri.request_uri,
-        {
-          'Content-Type' => 'application/json',
-          'Authorization' => 'Bearer ' + access_token
-        }
-      )
-      result = post_json(uri, send_hash, req)
-      authenticate(result)
+        )
+        result = do_post_json(uri, send_hash, req)
+        authenticate(result)
+      end
     end
 
 
-    def post_auth_token_request
+    def self.post_auth_token_request
       uri = access_token_uri
       req = Net::HTTP::Post.new(
         uri.request_uri,
         {'Content-Type' => 'application/json'}
       )
-      result = post_json(uri, credentials_rest, req)
+      result = do_post_json(uri, credentials_rest, req)
       authenticate_token(result)
     end
 
-    private
+    class << self
+      private
 
-    def authenticate(result)
-      ExactTargetAuthorizationChecker.authorize(result)
-    end
+      def obtain_access_token_with_retry
+        begin
+          yield ExactTarget::AuthTokenManager.fetch_access_token
+        rescue GsExactTargetAuthorizationError
+          yield ExactTarget::AuthTokenManager.fetch_new_access_token
+        end
+      end
 
-    def authenticate_token(result)
-      ExactTargetAuthorizationChecker.authorize_token(result)
-    end
+      def authenticate(result)
+        ExactTarget::AuthorizationChecker.authorize(result)
+      end
 
-    def credentials_rest
-      {
-        'grant_type' => "client_credentials",
-        'client_id' => ENV_GLOBAL['exacttarget_v2_client_id'],
-        'client_secret' => ENV_GLOBAL['exacttarget_v2_client_secret']
-      }
-    end
+      def authenticate_token(result)
+        ExactTarget::AuthorizationChecker.authorize_token(result)
+      end
 
-    def access_token_uri
-      URI("#{ENV_GLOBAL['exacttarget_v2_api_auth_uri']}v2/token")
-    end
+      def credentials_rest
+        {
+          'grant_type' => "client_credentials",
+          'client_id' => ENV_GLOBAL['exacttarget_v2_client_id'],
+          'client_secret' => ENV_GLOBAL['exacttarget_v2_client_secret']
+        }
+      end
 
-    def post_json(uri, send_hash, request)
-      request.body = send_hash.to_json
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      response = http.request(request)
-      JSON.parse(response.body)
+      def access_token_uri
+        URI("#{ENV_GLOBAL['exacttarget_v2_api_auth_uri']}v2/token")
+      end
+
+      def do_post_json(uri, send_hash, request)
+        request.body = send_hash.to_json
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = true
+        response = http.request(request)
+        JSON.parse(response.body)
+      end
     end
   end
 end

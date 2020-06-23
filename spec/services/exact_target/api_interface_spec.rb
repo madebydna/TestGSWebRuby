@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ExactTarget::ApiInterface do
 
-  subject { ExactTarget::ApiInterface.new }
+  subject { ExactTarget::ApiInterface }
 
   describe '#full_path_uri' do
     let(:uri) { subject.full_path_uri('/test') }
@@ -45,30 +45,52 @@ describe ExactTarget::ApiInterface do
   end
 
   describe 'REST calls' do
-    let(:headers) do
-      { 'Authorization'=>'Bearer test', 'Content-Type'=>'application/json' }
-    end
+    let(:example_uri) { "/hub/v1/dataevents/key:123/rowset" }
 
-    {post_json_with_auth: :post, put_json_with_auth: :put, patch_json_with_auth: :patch}. each do |method, http_verb|
+    {post_json: :post, put_json: :put, patch_json: :patch}. each do |method, http_verb|
       before do
-        stub_request(http_verb, subject.full_path_uri('/hub/v1/dataevents/key:123/rowset').to_s).
+        stub_request(http_verb, subject.full_path_uri(example_uri).to_s).
           with(headers: headers, body: "{}").to_return(:body => body, :status => status)
       end
 
       context "#{method} with valid token" do
+        before do
+          expect(ExactTarget::AuthTokenManager).to receive(:fetch_access_token)\
+          .and_return("123456ABC")
+        end
+
         let(:status) { 200 }
         let(:body) { valid_auth_token_body }
+        let(:headers) do
+          { 'Authorization'=>'Bearer 123456ABC', 'Content-Type'=>'application/json' }
+        end
         it 'should return JSON parsed response body' do
-          expect(subject.send(method, '/hub/v1/dataevents/key:123/rowset', {}, 'test')).to eq(JSON.parse(body))
+          expect(subject.send(method, example_uri, {})).to eq(JSON.parse(body))
         end
       end
 
       context "#{method} with invalid auth token" do
+        before do
+          expect(ExactTarget::AuthTokenManager).to receive(:fetch_access_token)\
+          .and_return("invalidtoken")
+        end
+
         let(:status) { 401 }
         let(:body) { invalid_auth_token_response_body }
-        it 'should raise ExactTargetAuthorization error for invalid token' do
-          expect { subject.send(method, '/hub/v1/dataevents/key:123/rowset', {}, 'test') }.to \
-            raise_error(GsExactTargetAuthorizationError, "invalid or expired auth token")
+        let(:headers) do
+          { 'Authorization'=>'Bearer invalidtoken', 'Content-Type'=>'application/json' }
+        end
+
+        it 'should retry fetching access token' do
+          expect(ExactTarget::AuthTokenManager).to receive(:fetch_new_access_token)\
+            .and_return("123456ABC")
+
+          # 2nd request with valid token
+          stub_request(http_verb, subject.full_path_uri(example_uri).to_s)\
+            .with(headers: { 'Authorization'=>'Bearer 123456ABC', 'Content-Type'=>'application/json' }, body: "{}")\
+            .to_return(:body => valid_auth_token_body, :status => 200)
+
+          expect(subject.send(method, example_uri, {})).to eq(JSON.parse(valid_auth_token_body))
         end
       end
     end

@@ -79,9 +79,7 @@ describe ExactTarget::AuthTokenManager do
   end
 
   def stub_exact_target_api_interface_to_return_invalid_token
-    exact_target_api = double
-    allow(ExactTarget::ApiInterface).to receive(:new).and_return(exact_target_api)
-    allow(exact_target_api).to receive(:post_auth_token_request).
+    allow(ExactTarget::ApiInterface).to receive(:post_auth_token_request).
       and_return({})
   end
 
@@ -90,9 +88,7 @@ describe ExactTarget::AuthTokenManager do
       'access_token' => 'token',
       'expires_in' => '3600'
     }
-    exact_target_api = double
-    allow(ExactTarget::ApiInterface).to receive(:new).and_return(exact_target_api)
-    allow(exact_target_api).to receive(:post_auth_token_request).
+    allow(ExactTarget::ApiInterface).to receive(:post_auth_token_request).
       and_return(valid_token_response)
   end
 

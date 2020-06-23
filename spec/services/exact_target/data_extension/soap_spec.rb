@@ -64,7 +64,7 @@ describe ExactTarget::DataExtension::Soap do
         }.not_to raise_error
       end
 
-      it "should return value from REST call" do
+      it "should return value from SOAP call" do
         savon_response = ExactTarget::DataExtension::Soap.perform_call(:delete, key, object)
         expect(savon_response.http.body).to eq(fixture_success)
       end
