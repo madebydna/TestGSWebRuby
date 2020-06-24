@@ -200,6 +200,7 @@ class CAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 		.transform('delete unwanted breakdown rows',DeleteRows,:breakdown,'SM','SF','SH','RD')
 		.transform('delete unwanted Charter School rows',DeleteRows,:charterschool,'Yes','No ')
 		.transform('delete unwanted Alternative School Accountability Status rows',DeleteRows,:alternativeschoolaccountabilitystatus,'Yes','No ')
+		.transform('delete unwanted Completer Type rows',DeleteRows,:completertype,'AGY','AGN','NGC')
 		.transform('delete unwanted school rows',DeleteRows,:school_name,'Nonpublic, Nonsectarian Schools')
 		.transform('map breakdown ids',HashLookup,:breakdown, map_breakdown_id,to: :breakdown_id)
 		.transform('setting entity type and state_id',WithBlock) do |row|
