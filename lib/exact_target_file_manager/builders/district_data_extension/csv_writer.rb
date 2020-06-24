@@ -37,7 +37,7 @@ module ExactTargetFileManager
           state_average_revenue_per_student
           district_average_spending_per_student
           state_average_spending_per_student
-          canonical_url
+          dis_canonical_url
         )
 
         def initialize
