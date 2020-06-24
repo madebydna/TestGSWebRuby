@@ -1,6 +1,6 @@
 require_relative '../../metrics_processor'
 
-class CAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
+class CAMetricsProcessor2019CR < GS::ETL::MetricsProcessor
 
 	def initialize(*args)
 		super
@@ -230,4 +230,4 @@ class CAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 	end
 end
 
-CAMetricsProcessor2019CSA.new(ARGV[0],max:nil).run
+CAMetricsProcessor2019CR.new(ARGV[0],max:nil).run
