@@ -19,6 +19,8 @@ class ExactTargetJobs
     if ptr == :all
       MAPPING_CLASSES_DOWNLOADS.each { |key, _| download_import(key) }
       MAPPING_CLASSES_UPLOADS.each { |key, _| build_zip_upload(key) }
+    elsif ptr == :java_upload
+      ExactTargetFileManager::JavaUploader.upload
     elsif upload_class
       build_zip_upload(ptr)
     elsif download_class

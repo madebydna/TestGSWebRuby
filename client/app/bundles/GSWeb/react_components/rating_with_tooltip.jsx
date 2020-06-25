@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
-import unratedSchoolIcon from 'school_profiles/brown-owl.svg';
+import BrownOwl from './icons/brown_owl';
 
 const RatingWithTooltip = ({rating, ratingScale}) => {
   const className = `circle-rating--small circle-rating--${rating || 'gray'}`;
@@ -22,7 +22,7 @@ const RatingWithTooltip = ({rating, ratingScale}) => {
               <div className={className}>
                 {rating}
                 {rating && <span className="rating-circle-small">/10</span>}
-              </div> : <img alt="" src={unratedSchoolIcon} />}
+              </div> : <BrownOwl />}
           <div className="scale">
             {ratingScale || t('Currently unrated')}
             <span className="info-circle icon-info" />

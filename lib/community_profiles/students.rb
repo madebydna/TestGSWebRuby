@@ -24,6 +24,10 @@ module CommunityProfiles
       end
     end
 
+    def has_data?
+      ethnicity_student_demo_data.present? || gender_student_demo_data.present? || subgroups_student_demo_data.present?
+    end
+
     def cache_ethnicity_data
       @_cache_ethnicity_data ||= @cache_data_reader.ethnicity_data.select(&with_valid_values)
     end

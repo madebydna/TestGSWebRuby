@@ -19,10 +19,6 @@ module Feeds
           select {|ds| ds["grade"].nil? || %w(All NA).include?(ds["grade"]) }.extend(CollectionMethods)
         end
 
-        def exclude_unlicensed_data
-          reject {|ds| ds['source'] == 'MDR' }.extend(CollectionMethods)
-        end
-
         def select_single_entry
           select.with_index {|ds, idx| idx == 0}.extend(CollectionMethods)
         end
@@ -55,11 +51,11 @@ module Feeds
         data_sets =
           case data_accessor[:key]
           when 'Enrollment'
-            data_sets.exclude_unlicensed_data.with_all_grades
+            data_sets.with_all_grades
           when 'Percent classes taught by highly qualified teachers', 'Head official name', 'Head official email address'
-            data_sets.exclude_unlicensed_data.select_single_entry
+            data_sets.select_single_entry
           else
-            data_sets.exclude_unlicensed_data
+            data_sets
           end
 
         data_sets.with_most_recent_year.map do |data_set|
