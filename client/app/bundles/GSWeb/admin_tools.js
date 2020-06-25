@@ -22,12 +22,19 @@ document.addEventListener("DOMContentLoaded", () => {
     "#intended-use",
   ];
 
+  const apiFormBody = document.querySelector(".new-api-account-form");
+
   specialSelectSelectors.forEach((selector) => {
     const element = document.querySelector(selector);
 
     element.querySelector("select").addEventListener("change", (e) => {
       const container = e.currentTarget.parentElement.parentElement;
+      e.currentTarget.style.color = 'black';
       toggleFreeFormInput(e.target.value, container.id);
     });
+  });
+
+  apiFormBody.querySelectorAll('select').forEach(select => {
+    select.addEventListener('change', (e) => e.currentTarget.style.color = 'black')
   });
 });

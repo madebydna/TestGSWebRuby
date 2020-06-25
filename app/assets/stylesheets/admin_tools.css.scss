@@ -1,6 +1,8 @@
 @import 'resources/bootstrap/bootstrap';
 @import 'variables/colors';
 @import 'fonts/fonts-opensans-regular';
+@import 'pages/nav/developer_nav';
+@import 'fonts/fonts-opensans-semibold';
 @import 'fonts/fonts-robotoslab-bold';
 
 .admin_header {
@@ -103,6 +105,7 @@
 
       select {
         padding: 13px;
+        color: gray;
         width: 100%;
         border: 1px solid #c1d2d9;
         border-radius: 4px;
