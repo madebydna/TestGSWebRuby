@@ -51,7 +51,7 @@ class ExactTarget
         payload = {
           values: {
             email: member.email,
-            member_id: member.id,
+            id: member.id,
             updated: member.updated,
             time_added: member.time_added,
             Hash_token: UserVerificationToken.token(member.id),
