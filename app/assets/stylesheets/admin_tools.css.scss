@@ -75,12 +75,33 @@
       border-radius: 4px;
     }
 
+    .field_with_errors {
+      position: relative;
+
+      .api-registration-field{
+        border: 1px solid red;
+      }
+
+      select {
+        border: 1px solid red !important;
+      }
+    }
+
+    .error-message {
+      position: absolute;
+      bottom: -8px;
+      font-size: 12px;
+      margin-left: 15px;
+      color: red;
+      font-weight: 1000;
+    }
+
     .api-registration-select-container {
       margin: 12px;
       position: relative;
       width: calc(100% - 24px);
 
-      > select {
+      select {
         padding: 13px;
         width: 100%;
         border: 1px solid #c1d2d9;

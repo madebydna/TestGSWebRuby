@@ -4,14 +4,13 @@
 <% end %>
 
 <% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag "commons", defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
   <%= webpack_javascript_include_tag 'admin-tools', defer: true %>
 <% end %>
 
-<div class="col-md-2">
-  <!-- h3 class="api-title">API Resources</h3 -->
-  <%#= render 'api_resources' %>
-</div>
-<div class="col-md-9">
+
+<div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
   <!-- h3 class="api-title">GreatSchools API</h3 -->
   <!-- div class="content">
     <h4>Feature GreatSchools data on your site.</h4>
@@ -33,3 +32,5 @@
   </div -->
   <%= render 'new_registration_form' %>
 </div>
+
+<%= react_component('SearchBoxWrapper') %>
