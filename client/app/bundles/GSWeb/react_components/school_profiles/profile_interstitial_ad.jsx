@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react_components/modal';
-import NewAd from 'react_components/new_ad';
+import Ad from 'react_components/ad';
 import { get as getCookie, set as setCookie } from 'js-cookie';
 import { translateWithDictionary } from 'util/i18n';
 
@@ -111,7 +111,7 @@ const ProfileInterstitialAd = ({ loaded }) =>
   shouldShowInterstitial() && loaded ? (
     <Modal closeOnOutsideClick={false} className="interstitial-modal">
       {({ openForDuration, close, remainingTime }) => (
-        <NewAd
+        <Ad
           slot="greatschools_Prestitial"
           container={<React.Fragment />}
           onFill={() =>
@@ -136,7 +136,7 @@ const ProfileInterstitialAd = ({ loaded }) =>
               </div>
             </React.Fragment>
           )}
-        </NewAd>
+        </Ad>
       )}
     </Modal>
   ) : (

@@ -83,7 +83,7 @@ en:
       javascript:
         toc_item: 'Academic progress'
       district_scope:
-        title: 'District academic progress'
+        title: 'Academic progress'
         source_title: GreatSchools district data sources & information
         subtext: 'How much are students learning in this district compared to the rest of the state?'
         data_point_label: 'District'

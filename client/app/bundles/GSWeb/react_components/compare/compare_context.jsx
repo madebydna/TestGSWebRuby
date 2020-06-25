@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { find as findSchools, addSchool, deleteSchool } from 'api_clients/schools';
-import { showAd as refreshAd } from 'util/new_advertising';
+import { showAd as refreshAd } from 'util/advertising';
 import { analyticsEvent } from 'util/page_analytics';
 import { isEqual, throttle, debounce, difference, castArray, uniqBy } from 'lodash';
 import { compose, curry } from 'lodash/fp';

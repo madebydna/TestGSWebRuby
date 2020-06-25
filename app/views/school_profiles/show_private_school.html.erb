@@ -18,11 +18,11 @@
           mailto: @private_school_profile.mailto,
           claimed: @private_school_profile.claimed %>
       </div>
-        <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Second', css_class: 'hidden-xs hidden-sm' %>
+        <%= render 'shared/ad', slotId: 'greatschools_Profiles_Second', css_class: 'hidden-xs hidden-sm' %>
       <div>
         <div id="js-ctaShow"></div>
       </div>
-      <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_First', css_class: 'visible-xs visible-sm', id_counter: 2 %>
+      <%= render 'shared/ad', slotId: 'greatschools_Profiles_First', css_class: 'visible-xs visible-sm', id_counter: 2 %>
       <div class="profile-section">
         <div class="row">
           <div class="col-xs-12 col-lg-3">
@@ -30,7 +30,7 @@
               <%= I18n.t('overview', scope:'school_profiles.show_profile') %>
             </div>
             <div class="left-rail-jumpy-ad" style="position: fixed; width: 175px; height: 205px; padding-bottom: 30px">
-              <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_175x175', css_class: 'hidden-xs visible-lg', show_ad_text: false %>
+              <%= render 'shared/ad', slotId: 'greatschools_Profiles_175x175', css_class: 'hidden-xs visible-lg', show_ad_text: false %>
             </div>
           </div>
 
@@ -42,7 +42,7 @@
           </div>
         </div>
       </div>
-      <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Second', css_class: 'hidden-md hidden-lg', id_counter: 2 %>
+      <%= render 'shared/ad', slotId: 'greatschools_Profiles_Second', css_class: 'hidden-md hidden-lg', id_counter: 2 %>
       <div class="profile-section">
         <div class="row">
           <div class="col-xs-12 col-lg-3">
@@ -57,7 +57,7 @@
           </div>
         </div>
       </div>
-      <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Third', css_class: 'mbl' %>
+      <%= render 'shared/ad', slotId: 'greatschools_Profiles_Third', css_class: 'mbl' %>
       <div>
         <%= render 'review_summary', reviews: @private_school_profile.reviews %>
       </div>
@@ -74,7 +74,7 @@
   </div>
 
   <div class="profile-section">
-    <%= render 'shared/new_ad', slotId: 'greatschools_Profiles_Fourth', css_class: 'mbl' %>
+    <%= render 'shared/ad', slotId: 'greatschools_Profiles_Fourth', css_class: 'mbl' %>
   </div>
   <a name="Neighborhood" id="Neighborhood"></a>
   <div class="profile-section">

@@ -17,8 +17,8 @@ module ExactTargetFileManager
         HEADERS = %w(
           id
           district_id
-          state
-          name
+          district_state
+          district_name
           official_email
           official_name
           district_summary_below_average
@@ -37,7 +37,7 @@ module ExactTargetFileManager
           state_average_revenue_per_student
           district_average_spending_per_student
           state_average_spending_per_student
-          canonical_url
+          district_canonical_url
         )
 
         def initialize

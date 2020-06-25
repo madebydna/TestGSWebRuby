@@ -42,9 +42,12 @@ section.school-list {
       > span:first-of-type {
         text-align: center;
         width: 55px;
-        img {
+        img, svg {
           width: 55%;
           padding-top: 2px;
+          height: 55%;
+          vertical-align: middle;
+          border: 0;
         }
       }
       > span:nth-of-type(2) {

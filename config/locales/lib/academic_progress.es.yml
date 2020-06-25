@@ -104,7 +104,7 @@ es:
       javascript:
         toc_item: 'Progreso académico'
       district_scope:
-        title: 'Progreso académico del distrito'
+        title: 'Progreso académico'
         source_title: Las fuentes de datos y informacion de los perfiles de distritos de GreatSchools
         subtext: '¿Cuánto aprenden los estudiantes en este distrito en comparación con el resto del estado?'
         data_point_label: "Distrito"

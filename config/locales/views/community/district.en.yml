@@ -6,8 +6,8 @@ en:
       schools: Schools
       students: Students
       grades: Grades
-      find_schools_in: Find schools in
-      district_calendar: District calendar
+      find_schools_in: Schools in
+      district_calendar: Calendar
       sources: Sources
       xq:
         school_board_finder: School board finder

@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import NewAd from "react_components/new_ad";
+import Ad from "react_components/ad";
 import School from "./school";
 import LoadingOverlay from "./loading_overlay";
 import { SM } from "util/viewport";
 import { t, capitalize } from '../../util/i18n';
 import ModalTooltip from "../modal_tooltip";
 import { links } from 'components/links';
-import { checkSponsorSearchResult } from '../../util/new_advertising';
+import { checkSponsorSearchResult } from '../../util/advertising';
 
 const content =
   <span>
@@ -25,7 +25,7 @@ const renderSponsorSearchResultAd = () =>(
         </ModalTooltip>
       </span>
     </div>
-    <NewAd slot="greatschools_Search_sponsoredlisting" />
+    <Ad slot="greatschools_Search_sponsoredlisting" />
   </li>
 );
 
@@ -61,7 +61,7 @@ const SchoolList = ({
             <React.Fragment key={s.state + s.id + (s.assigned ? 'assigned' : '')}>
               {!shouldRemoveAds && index > 0 &&
                 index % 4 === 0 && index < 24 && (
-                  <NewAd
+                  <Ad
                     slot={`greatschools_Search_after${index}_300x250`}
                     slotOccurrenceNumber={index / 4}
                     key={`ad-${index}`}
@@ -97,7 +97,7 @@ const SchoolList = ({
         }
         )}
         {!shouldRemoveAds && (schools.length < 5 && schools.length > 0) && (
-          <NewAd
+          <Ad
             slot={`greatschools_Search_after4_300x250`}
             slotOccurrenceNumber={1}
             key={`ad-${schools.length + 1}`}

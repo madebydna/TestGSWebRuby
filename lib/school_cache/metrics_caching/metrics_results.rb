@@ -20,6 +20,11 @@ module MetricsCaching
       @results = results.map {|metric| MetricDecorator.new(metric) }
     end
 
+    def filter_unlicensed_data!
+      select! { |result| result.source_name != 'MDR' }
+      self
+    end
+
     def filter_to_max_year_per_data_type!
       max_years = max_year_per_data_type
       select! { |result| max_years[result.data_type_id] == result.year }

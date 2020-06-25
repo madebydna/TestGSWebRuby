@@ -1,6 +1,6 @@
 import React from 'react';
 import { t } from "util/i18n";
-import spending from 'icons/spending.svg';
+import Spending from '../icons/spending';
 import ParentTip from '../school_profiles/parent_tip';
 import BasicDataModuleLayout from '../school_profiles/basic_data_module_layout';
 import InfoBox from 'react_components/school_profiles/info_box';
@@ -16,7 +16,7 @@ const Finance = ({dataValues, district}) => {
   </div>
 
   const icon = <div className="circle-rating--equity-blue">
-      <img height='50px' src={spending} />
+      <Spending height='50' width='50' />
     </div>;
 
   const body = <div>
@@ -51,7 +51,7 @@ const Finance = ({dataValues, district}) => {
     <QualarooDistrictLink module='district_finance'
       districtId={district.districtId} state={district.state} type='yes_no' />
   </div>
-  
+
   return (
     <BasicDataModuleLayout
       id="finance"

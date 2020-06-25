@@ -1,18 +1,25 @@
 es:
   community:
     distance_learning:
-      title: Aprendizaje a distancia
+      title: Respuesta de COVID-19
+      subtitle: ¿Cómo ha apoyado este distrito el aprendizaje a distancia y otras necesidades de los estudiantes?
+      parent_tip: Los cierres de escuelas tienen impactos negativos en el aprendizaje de los niños, pero los principios del distrito pueden ayudar a reducir la pérdida de aprendizaje. Utiliza esta información para entender cómo este distrito planea ayudar a los estudiantes a recuperar el terreno perdido.
       tooltip_html: <div>Esto muestra como el distrito está apoyando las necesidades de los estudiantes durante el cierre de escuelas debido a COVID-19. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Última actualización %{date_valid}</div></div>
       district_overview: Resumen del distrito
       district_website_cta_html: <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">Visita la página de COVID-19 de tu distrito</a>
+      see_district_summer_page_html: Ve <a href="%{url}" style="font-family:'opensans-semibold';font-size:16px;" target="_blank">la página del programa de verano del distrito</a> para más detalles.
       see_more: Ver más
       sources_html: <div class="sourcing"><h1>Información y fuentes de aprendizaje a distancia del distrito</h1> <div>La información que se presenta en este módulo fue compilada por el <a href="https://www.crpe.org/" target="_blank">Center on Reinventing Public Education (CRPE por sus siglas)</a> quienes obtuvieron datos principalmente de planes públicos en sitios de web de distritos escolares. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a></div></div>
       tab:
+        overview: Resumen
         teaching: La enseñanza
         resources: Recursos
         policies: Principios del distrito
         learning: La enseñanza
-        planning: Planificación
+        planning: El regreso a clases
+        summer learning: Aprendizaje de verano
+        k-8: K-8
+        high school: Escuela secundaria
       data_types:
         RESOURCES PROVIDED BY THE DISTRICT:
           specific:
@@ -57,13 +64,47 @@ es:
           tooltip_html: Distritos ofrecerán recuperacion de credito, instrucción correctiva y/o apoyo adicional para estudiantes con alto ausentismo o calificaciones bajas.
         SUMMER LEARNING PLAN:
           label: Planes para ofrecer opciones de escuela de verano
-          tooltip_html: El distrito ofrecerá la escuela de verano directamente o a través de una compañía externo
+          tooltip_html: El distrito ofrecerá la escuela de verano directamente o a través de una compañía externo.
         LEARNING LOSS DIAGNOSTIC IDENTIFIED:
           label: Herramientas para medir la perdida de aprendizaje de los estudiantes en el otoño del 2020
           tooltip_html: El distrito evaluará a cada estudiante para la pérdida de aprendizaje para guiar las decisiones sobre el nivel de grado y los créditos.
-      teaching:
-        main:
-          narration: ¿Cómo proporciona este distrito instrucciones de aprendizaje a los estudiantes?
+        ES MS SUMMER PROGRAM:
+          label: Ofreciendo un programa de verano
+          tooltip_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito. Consulta <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">el sitio del distrito</a> para obtener más información.
+          tooltip_no_link_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito.
+        "ES MS CONTENT: MAKE-UP":
+          label: Ofreciendo un programa para la pérdida de aprendizaje
+          tooltip_html: El Distrito está ofreciendo un programa de verano para ayudar a los estudiantes a ponerse al día con el material que pueden haber perdido debido al cierre de las escuelas.
+        "ES MS CONTENT: REVIEW":
+          label: Ofreciendo un programa para la pérdida de aprendizaje
+          tooltip_html: El Distrito está ofreciendo un programa de verano para ayudar a los estudiantes a ponerse al día con el material que pueden haber perdido debido al cierre de las escuelas.
+        "ES MS CONTENT: ENRICHMENT":
+          label: Ofreciendo un programa de enriquecimiento
+          tooltip_html: El programa se centra en material que normalmente no se cubre durante el año escolar. Estos programas no están destinados a ayudar a poner al día los estudiantes que están detrás.
+        HS SUMMER PROGRAM:
+          label: Ofreciendo un programa de verano
+          tooltip_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito. Consulta <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">el sitio del distrito</a> para obtener más información.
+          tooltip_no_link_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito.
+        "HS CONTENT: LEARNING LOSS":
+          label: Ofreciendo un programa para la pérdida de aprendizaje
+          tooltip_html: El programa aborda la pérdida de aprendizaje debido al cierre de las escuelas, pero no ofrece crédito para el curso.
+        "HS CONTENT: CREDIT RECOVERY":
+          label: Ofreciendo recuperación de crédito o classes fallidas
+          tooltip_html: El programa ayuda a los estudiantes de secundaria a retomar las clases fallidas o a compensar los créditos que les faltan.
+        "HS CONTENT: CREDIT ACCELERATION":
+          label: Ofreciendo aceleración de crédito
+          tooltip_html: El programa permite a los estudiantes que desean salir adelante a tomar cursos de crédito durante el verano.
+        "HS CONTENT: ENRICHMENT":
+          label: Ofreciendo programa de enriquecimiento
+          tooltip_html: El programa ofrece actividades de enriquecimiento como preparación para SAT/ACT o planificación universitaria/carrera.
+        SUMMER MEAL PLAN:
+          label: Comida gratuita para estudiantes
+          tooltip_html: Comida está disponible para cualquier estudiante, independientemente de la inscripción en la escuela de verano.
+      summer learning:
+        k-8:
+          narration: ¿Cómo aborda este distrito la pérdida de aprendizaje durante el verano para los estudiantes de primaria y intermedia?
+        high school:
+          narration: ¿Cómo aborda este distrito la pérdida de aprendizaje durante el verano para los estudiantes de secundaria?
       resources:
         main:
           narration: ¿Qué apoyo ofrece el distrito a los estudiantes y a las familias?
@@ -72,6 +113,8 @@ es:
           narration: ¿Cuales son los principios de aprendizaje a distancia de este distrito?
         planning:
           narration: ¿Cuales son los planes del distrito para apoyar el aprendizaje de los estudiantes?
+        teaching:
+          narration: ¿Cómo proporciona este distrito instrucciones de aprendizaje a los estudiantes?
       ratings:
         all_students: todos los estudiantes
         some_students: algunos de los estudiantes
