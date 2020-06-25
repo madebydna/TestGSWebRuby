@@ -15,17 +15,8 @@ describe ExactTarget::DataExtension::Rest do
     end
 
     context 'with no error from REST call' do
-      before do
-        expect(ExactTarget::ApiInterface).to receive(:put_json).with(example_uri, example_payload).and_return(example_response)
-      end
-
-      it "should not raise error" do
-        expect {
-          ExactTarget::DataExtension::Rest.perform_call(:upsert_gbg, object)
-        }.not_to raise_error
-      end
-
       it "should return value from REST call" do
+        expect(ExactTarget::ApiInterface).to receive(:put_json).with(example_uri, example_payload).and_return(example_response)
         expect(ExactTarget::DataExtension::Rest.perform_call(:upsert_gbg, object)).to eq(example_response)
       end
     end
