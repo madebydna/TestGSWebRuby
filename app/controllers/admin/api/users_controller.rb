@@ -14,6 +14,7 @@ class Admin::Api::UsersController < ApplicationController
     if @user.save
       # ApiRequestReceivedEmail.deliver_to_api_key_requester(@user)
       # ApiRequestToModerateEmail.deliver_to_admin(@user)
+      Api::StripeCustomerCreator.create(user)
       redirect_to :success
     else
       render 'new'
