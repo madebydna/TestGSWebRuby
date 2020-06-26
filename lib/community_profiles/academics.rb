@@ -44,6 +44,8 @@ module CommunityProfiles
     end
 
     def data_props_for_state_academics_module
+      return [] unless state_test_scores.present?
+
       [
         {
           title: I18n.t('Test scores', scope: 'lib.equity_gsdata'),
