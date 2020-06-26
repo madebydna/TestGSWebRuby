@@ -2,7 +2,7 @@ module ExactTargetFileManager
   module Builders
     module DistrictDataExtension
       class DistrictDecorator < SimpleDelegator
-        CACHE_KEYS = %w(metrics gsdata)
+        CACHE_KEYS = %w(metrics)
 
         def head_official_name
           cache_values['Head official name']&.first.try(:[], "district_value")

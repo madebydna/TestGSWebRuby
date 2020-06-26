@@ -16,8 +16,35 @@ module MetricsCaching
 
     attr_reader :results
 
-    def initialize(results)
-      @results = results.map {|metric| MetricDecorator.new(metric) }
+    def initialize(raw_results)
+      @results = combine_entity_averages!(raw_results)
+    end
+
+    # State and district values can sometimes be linked to different
+    # data sets, which would cause the query to return duplicate metrics
+    # records in raw_results. This method combines them back into one
+    def combine_entity_averages!(raw_results)
+      raw_results.group_by {|r| r.id }.map do |id, group|
+        if group.length == 1
+          MetricDecorator.new(group.first)
+        else
+          final_metric = group.first
+          group.each do |m|
+            if m.respond_to?(:state_value) && m.state_value.present?
+              final_metric.state_value = m.state_value
+            end
+            if  m.respond_to?(:district_value) && m.district_value.present?
+              final_metric.district_value = m.district_value
+            end
+          end
+          MetricDecorator.new(final_metric)
+        end
+      end
+    end
+
+    def filter_unlicensed_data!
+      select! { |result| result.source_name != 'MDR' }
+      self
     end
 
     def filter_to_max_year_per_data_type!

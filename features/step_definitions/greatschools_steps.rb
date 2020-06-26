@@ -8,7 +8,7 @@ URLS = {
   "Arlington Elementary School Profile Page" => "/florida/jacksonville/946-Arlington-Elementary-School/",
   "Find a School" => "/find-schools/",
   "MSL" => "/mySchoolList.page",
-  "OSP" => "/official-school-profile/register.page",
+  "OSP" => "/school-accounts/register.page",
   'Search Alameda By Location' => '/search/search.page?lat=37.7652065&lon=-122.24163550000003&state=CA&normalizedAddress=Alameda,%20CA&locationSearchString=Alameda,%20ca&city=Alameda&sortBy=DISTANCE',
   'Search Alameda By Name' => '/search/search.page?q=Alameda&state=CA',
   'Search Oakland By Name' => '/search/search.page?q=Oakland&state=CA',

@@ -28,10 +28,8 @@ module Components
       # See https://jira.greatschools.org/browse/JT-10347
       def all_students_from_state_cache
         state_cache_data_reader = StateCacheDataReader.new(cache_data_reader.school_state.downcase, state_cache_keys: ['metrics'])
-        all_students = state_cache_data_reader.metrics_data(data_type).values.flatten.find do |h|
-          h['breakdown'] == 'All students'
-        end
-        all_students.present? ? { state_average: all_students['state_value'] } : {}
+        all_students = state_cache_data_reader.decorated_metrics_data(data_type).for_all_students.try(:first)
+        all_students.present? ? { state_average: all_students.state_value } : {}
       end
     end
   end

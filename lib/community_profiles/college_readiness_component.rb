@@ -1,79 +1,9 @@
 module CommunityProfiles
   class CollegeReadinessComponent < CollegeReadiness
-    class CharacteristicsValue
-      include FromHashMethod
-      module CollectionMethods
-        def for_all_students
-          select {|dv| dv.all_students?}.extend(CollectionMethods)
-        end
 
-        def having_district_value
-          select {|dv| dv.district_value.present?}.extend(CollectionMethods)
-        end
-
-        def no_subject_or_all_subjects
-          select {|h| h['subject'].nil? || h.all_subjects?}.extend(CollectionMethods)
-        end
-
-        def no_subject_or_all_subjects_or_graduates_remediation
-          select do |h|
-            h.subject.nil? || h.all_subjects? || h.is_a?(GradutesRemediationValue)
-          end.extend(CollectionMethods)
-        end
-
-        def expect_only_one(message, other_helpful_vars = {})
-          if size > 1
-            GSLogger.error(
-              :misc,
-              nil,
-              message: "Expected to find unique metrics value: #{message}",
-              vars: other_helpful_vars
-            )
-          end
-          return first
-        end
-
-        def having_most_recent_date
-          max_year = map(&:year).compact.max
-          select {|dv| dv.year == max_year}.extend(CollectionMethods)
-        end
-      end
-      attr_accessor :breakdown, :original_breakdown, :district_value,
-                    :year, :subject, :data_type, :source, :district_created, :subject_id, :subject,
-                    :performance_level,  :narrative, :grade, :district_average, :state_average,
-                    :state_value
-
-      def [](key)
-        send(key) if respond_to?(key)
-      end
-
-      def []=(key, val)
-        send("#{key}=", val)
-      end
-
-      def all_students?
-        breakdown == "All students"
-      end
-
-      def all_subjects?
-        ['All subjects', 'Not Applicable', 'Composite Subject'].include?(subject)
-      end
-
-      def all_subjects_and_students?
-        all_subjects? && all_students?
-      end
-
-      (2000..2022).to_a.each do |year|
-        attr_accessor "district_value_#{year}"
-        attr_accessor "state_average_#{year}"
-        attr_accessor "district_average_#{year}"
-        attr_accessor "performance_level_#{year}"
-      end
-    end
-
-    class GradutesRemediationValue < CharacteristicsValue
+    module GraduatesRemediationValue
       def data_type
-        if subject
+        if !all_subjects?
           'Graduates needing ' + subject.capitalize + ' remediation in college'
         else
           @data_type
@@ -113,23 +43,19 @@ module CommunityProfiles
     end
 
     def metrics_data
-      array_of_hashes = @cache_data_reader.metrics_data(*included_data_types(:metrics))
+      array_of_hashes = @cache_data_reader.decorated_metrics_datas(*included_data_types(:metrics))
       array_of_hashes.each_with_object({}) do |(data_type, array), accum|
         accum[data_type] =
-          array.map do |h|
-            klass = if data_type == GRADUATES_REMEDIATION
-                      GradutesRemediationValue
-                    else
-                      CharacteristicsValue
-                    end
-            klass.from_hash(h.merge('data_type' => data_type))
+          if data_type == GRADUATES_REMEDIATION
+            array.each { |dv| dv.extend(GraduatesRemediationValue) }
+          else
+            array
           end
-            .extend(CharacteristicsValue::CollectionMethods)
       end
     end
 
     def gsdata_data
-      @cache_data_reader.decorated_gsdata_datas(*included_data_types(:gsdata))
+      @cache_data_reader.decorated_metrics_datas(*included_data_types(:gsdata))
     end
 
     def multiple_breakdowns_in_one_data_type
@@ -137,15 +63,13 @@ module CommunityProfiles
     end
 
     def data_types_in_the_overview
-      [FOUR_YEAR_GRADE_RATE, SAT_PERCENT_COLLEGE_READY, ACT_PERCENT_COLLEGE_READY, SAT_PARTICIPATION, ACT_PARTICIPATION, ACT_SCORE, SAT_SCORE, AP_ENROLLED, AP_EXAMS_PASSED, DUAL_ENROLLMENT_PARTICIPATION, IB_PROGRAM_PARTICIPATION]
+      [FOUR_YEAR_GRADE_RATE, SAT_PERCENT_COLLEGE_READY, ACT_PERCENT_COLLEGE_READY, SAT_PARTICIPATION, ACT_PARTICIPATION, ACT_SCORE, SAT_SCORE, AP_ENROLLED, AP_EXAMS_PASSED, DUAL_ENROLLMENT, IB_ENROLLMENT]
     end
 
     def college_success_datatypes
       POST_SECONDARY + REMEDIATION_SUBGROUPS + SECOND_YEAR
     end
 
-    # Filters metrics data from DB
-    # these have been converted to instances of either CharacteristicsValue or GradutesRemediationValue
     def data_type_hashes
       @_data_type_hashes ||= begin
         hashes = metrics_data
@@ -357,10 +281,6 @@ module CommunityProfiles
 
     def scope
       @_scope ||= 'school_profiles.' + @tab
-    end
-
-    def with_district_values
-      ->(h) {h['district_value'].present?}
     end
 
     def breakdown_percentage(dv)

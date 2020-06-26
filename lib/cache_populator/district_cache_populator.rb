@@ -1,7 +1,7 @@
 module CachePopulator
   class DistrictCachePopulator < Base
 
-    CACHE_KEYS = %w(district_schools_summary district_directory feed_metrics metrics test_scores_gsdata feed_test_scores_gsdata gsdata crpe)
+    CACHE_KEYS = %w(district_schools_summary district_directory feed_metrics metrics test_scores_gsdata feed_test_scores_gsdata crpe)
 
     def run
       run_with_validation do |state, cache_key|

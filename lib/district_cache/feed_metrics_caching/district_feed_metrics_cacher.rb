@@ -4,6 +4,11 @@ module FeedMetricsCaching
 
     CACHE_KEY = 'feed_metrics'
 
+    # 95: Ratio of students to full time teachers
+    # 99: Percentage of full time teachers who are certified
+    # 119: Ratio of students to full time counselors
+    # 133: Ratio of teacher salary to total number of teachers
+    # 149: Percentage of teachers with less than three years experience
     # 365: Percentage of teachers in their first year
     # 366: Bachelor's degree
     # 367: Master's degree
@@ -30,9 +35,10 @@ module FeedMetricsCaching
     # 404: Teachers with valid license
 
     DATA_TYPE_IDS_WHITELIST = [
-      365, 366, 367, 368, 369, 370, 371, 372, 373,
-      374, 376, 378, 380, 381, 382, 383, 385, 386,
-      397, 398, 399, 401, 402, 404
+      95,  99,  119, 133, 149, 365, 366, 367, 368,
+      369, 370, 371, 372, 373, 374, 376, 378, 380,
+      381, 382, 383, 385, 386, 397, 398, 399, 401,
+      402, 404
     ]
 
     def self.listens_to?(data_type)
@@ -61,7 +67,7 @@ module FeedMetricsCaching
     def build_hash_for_metric(metric)
       {}.tap do |hash|
         hash[:breakdown] = metric.breakdown_name
-        hash[:district_created] = metric.created
+        hash[:created] = metric.created
         hash[:grade] = metric.grade
         hash[:district_value] = Float(metric.value) rescue metric.value
         hash[:source] = metric.source_name

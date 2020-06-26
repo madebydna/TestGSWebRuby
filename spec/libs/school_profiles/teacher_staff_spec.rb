@@ -16,29 +16,32 @@ describe SchoolProfiles::TeachersStaff do
 
     let (:sample_data) do
       {
-          'Ratio of teacher salary to total number of teachers' => [
-              {
-                  'school_value' => 1600,
-                  'state_value' => 2000
-              }
-          ],
-          'Percentage of full time teachers who are certified' => [
-              {
-                  'school_value' => 60,
-                  'state_value' => 80,
-              }
-          ],
-          'Percentage of teachers with less than three years experience' => [
-              {
-                  'school_value' => 60,
-                  'state_value' => 80,
-              }
-          ]
+        'Ratio of teacher salary to total number of teachers' => [
+          MetricsCaching::Value.from_hash({
+            'data_type' => 'Ratio of teacher salary to total number of teachers',
+            'school_value' => 1600,
+            'state_average' => 2000
+          })
+        ].extend(MetricsCaching::Value::CollectionMethods),
+        'Percentage of full time teachers who are certified' => [
+          MetricsCaching::Value.from_hash({
+            'data_type' => 'Percentage of full time teachers who are certified',
+            'school_value' => 60,
+            'state_average' => 80,
+          })
+        ].extend(MetricsCaching::Value::CollectionMethods),
+        'Percentage of teachers with less than three years experience' => [
+          MetricsCaching::Value.from_hash({
+            'data_type' => 'Percentage of teachers with less than three years experience',
+            'school_value' => 60,
+            'state_average' => 80,
+          })
+        ].extend(MetricsCaching::Value::CollectionMethods)
       }
     end
 
     it 'should return chosen data types if data present' do
-      expect(school_cache_data_reader).to receive(:gsdata_data) do
+      expect(school_cache_data_reader).to receive(:decorated_metrics_datas) do
         sample_data
       end.at_least(:once)
       sample_data.keys.each do |data_type|
@@ -52,7 +55,7 @@ describe SchoolProfiles::TeachersStaff do
     end
 
     it 'should return chosen data types in configured order' do
-      expect(school_cache_data_reader).to receive(:gsdata_data) do
+      expect(school_cache_data_reader).to receive(:decorated_metrics_datas) do
         sample_data
       end.exactly(1).times
       sample_data.keys.each do |data_type|
@@ -64,7 +67,7 @@ describe SchoolProfiles::TeachersStaff do
     end
 
     it 'should return empty array if no data' do
-      expect(school_cache_data_reader).to receive(:gsdata_data).once
+      expect(school_cache_data_reader).to receive(:decorated_metrics_datas).once
       expect(subject.data_values_by_data_type).to be_empty
     end
   end
@@ -72,9 +75,9 @@ describe SchoolProfiles::TeachersStaff do
   describe '#included_data_types' do
     it 'should return configured data types in correct order' do
       config = [
-          { :data_key => 'a' }, { :data_key => 'b' }, { :data_key => 'c' }
+        { :data_key => 'a' }, { :data_key => 'b' }, { :data_key => 'c' }
       ].shuffle
-      stub_const('SchoolProfiles::TeachersStaff::GSDATA_CACHE_ACCESSORS', config)
+      stub_const('SchoolProfiles::TeachersStaff::METRICS_CACHE_ACCESSORS', config)
       expect(subject.included_data_types).to eq(config.map { |o| o[:data_key] } )
     end
   end

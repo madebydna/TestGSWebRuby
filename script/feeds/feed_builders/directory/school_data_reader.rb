@@ -8,7 +8,7 @@ module Feeds
       include Feeds::FeedConstants
       include Feeds::FeedHelper
 
-      DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_metrics gsdata)
+      DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_metrics)
 
       # array of methods used by the data reader to output data
       SCHOOL_ATTRIBUTES_DATA_READER_METHODS = %w(universal_id level universal_district_id web_site zip)

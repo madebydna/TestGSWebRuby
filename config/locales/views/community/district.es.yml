@@ -6,8 +6,8 @@ es:
       schools: Escuelas
       students: Estudiantes
       grades: Grados
-      find_schools_in: Encuentra escuelas en
-      district_calendar: Calendario del distrito
+      find_schools_in: Escuelas en
+      district_calendar: Calendario
       xq:
         school_board_finder: Encuentra tu junta escolar
         learn_more_school_board_html: Obtén más información sobre la junta escolar de este distrito y sobre <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">cómo puedes participar</a> (enlace en inglés).

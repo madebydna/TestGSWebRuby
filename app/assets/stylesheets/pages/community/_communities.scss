@@ -14,6 +14,11 @@ $line-height-community: 1.428571429;
   display: none; // TODO: dont put this here
 }
 
+svg {
+  vertical-align: middle;
+  border: 0;
+}
+
 // Set up the community breadcrumbs
 .community-page {
   position: relative;

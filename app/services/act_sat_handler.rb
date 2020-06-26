@@ -1,6 +1,6 @@
 # This class handles the filtering of SAT/ACT data to only the most recent data
 class ActSatHandler
-  include SchoolProfiles::CollegeReadinessConfig
+  include MetricsCaching::CollegeReadinessConfig
 
   attr_reader :hash
 

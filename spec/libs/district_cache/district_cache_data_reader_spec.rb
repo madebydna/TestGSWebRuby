@@ -44,7 +44,20 @@ describe 'DistrictCacheDataReader' do
           },
           {
             "breakdown" => "Hispanic",
-            "district_value" => 64
+            "district_value" => 64,
+            "source" => "CA Department of Education"
+          }
+        ],
+        "Percentage of students enrolled in IB grades 9-12" => [
+          {
+            "breakdown" => "Native American",
+            "district_value" => 19.047619,
+            "source" => "Civil Rights Data Collection",
+          },
+          {
+            "breakdown" => "Asian",
+            "district_value" => 22.434368,
+            "source" => "Civil Rights Data Collection",
           }
         ]
       }
@@ -68,22 +81,21 @@ describe 'DistrictCacheDataReader' do
       allow(subject).to receive(:decorated_district).and_return(decorated_district)
     end
 
-    it "#metrics_data selects decorated district's metrics data points with a source" do
+    it "#decorated_metrics_data selects decorated district's metrics data for given single key" do
       expect(decorated_district).to receive(:metrics)
-      expect(subject.metrics_data('4-year high school district graduation rate')).to eq(
-        { "4-year high school district graduation rate" =>
-          [ {
-            "breakdown" => "All students",
-            "district_value" => 68,
-            "source" => "CA Department of Education"
-            } ]
-        }
-      )
+      results = subject.decorated_metrics_data('4-year high school district graduation rate')
+      expect(results.length).to eq(2)
+      expect(results[0].breakdown).to eq("All students")
+      expect(results[1].breakdown).to eq("Hispanic")
     end
 
-    it '#metrics and returns entire metrics hash via decorated districs' do
+    it "#decorated_metrics_datas selects decorated district's metrics data for multiple keys" do
       expect(decorated_district).to receive(:metrics)
-      expect(subject.metrics).to eq(metrics_data)
+      results = subject.decorated_metrics_datas('4-year high school district graduation rate', 'Percentage of students enrolled in IB grades 9-12')
+      expect(results).to have_key('4-year high school district graduation rate')
+      expect(results).to have_key('Percentage of students enrolled in IB grades 9-12')
+      expect(results['4-year high school district graduation rate'].length).to eq(2)
+      expect(results['Percentage of students enrolled in IB grades 9-12'].length).to eq(2)
     end
 
     it '#ethnicity_data invokes equally named method on decorated district' do

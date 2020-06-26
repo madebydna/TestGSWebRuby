@@ -8,21 +8,21 @@ describe TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata do
     @state_test_ca = create(:data_type, :with_tags, name: "CA State Test 1", short_name: "CAST1", tag: "state_test")
     @data_set_ca_1_newer = create(:data_set, :feeds, state: "CA", description: "Some description here", data_type_id: @state_test_ca.id, date_valid: Date.new(2018, 8, 31))
     @data_set_ca_1_older = create(:data_set, :feeds, state: "CA", data_type_id: @state_test_ca.id, date_valid: Date.new(2017, 7, 31))
-    
+
     state_test_ca_2 = create(:data_type, :with_tags, name: "CA State Test 2", short_name: "CAST2", tag: "state_test")
-    @data_set_ca_2 = create(:data_set, :feeds, state: "CA", description: "Some description here", data_type_id: state_test_ca_2.id) 
-    
+    @data_set_ca_2 = create(:data_set, :feeds, state: "CA", description: "Some description here", data_type_id: state_test_ca_2.id)
+
     data_type_other = create(:data_type, :with_tags, name: "CA Other", short_name: "CAOT", tag: "indicator")
-    @data_set_ca_other = create(:data_set, :feeds, state: "CA", data_type_id: data_type_other.id) 
-    
+    @data_set_ca_other = create(:data_set, :feeds, state: "CA", data_type_id: data_type_other.id)
+
     state_test_mi = create(:data_type, :with_tags, name: "MI State Test 1", short_name: "MAST2", tag: "state_test")
-    @data_set_mi = create(:data_set, :feeds, state: "MI", data_type_id: state_test_mi.id) 
+    @data_set_mi = create(:data_set, :feeds, state: "MI", data_type_id: state_test_mi.id)
   end
 
   subject(:cacher) { TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata.new('CA') }
 
   describe '#query_results' do
-  
+
     it 'selects latest data sets for state tests in given state' do
       expect(cacher.query_results).to include(@data_set_ca_1_newer, @data_set_ca_2)
     end
@@ -30,7 +30,7 @@ describe TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata do
     it 'does not select older instances of particular state test' do
       expect(cacher.query_results).not_to include(@data_set_ca_1_older)
     end
-    
+
     it 'does not select state tests for other state' do
       expect(cacher.query_results).not_to include(@data_set_mi)
     end
@@ -70,12 +70,12 @@ describe TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata do
     end
 
     context 'with proficiency band data' do
-      after(:each) { do_clean_models(:omni, ProficiencyBand)}
+      after(:each) { do_clean_models(:omni, Omni::ProficiencyBand)}
       before(:each) do
         @pb1 = create(:proficiency_band, id: 2, name: 'below average', group_id: 1, composite_of_pro_null: 1, group_order: 1)
         @pb2 = create(:proficiency_band, id: 3, name: 'average', group_id: 1, composite_of_pro_null: 1, group_order: 2)
         @pb3 = create(:proficiency_band, id: 4, name: 'above average', group_id: 1, composite_of_pro_null: 1, group_order: 3)
-        
+
         @pb4 = create(:proficiency_band, id: 5, name: 'meeting', group_id: 2, composite_of_pro_null: 1, group_order: 1)
         @pb5 = create(:proficiency_band, id: 6, name: 'exceeding', group_id: 2, composite_of_pro_null: 1, group_order: 2)
 

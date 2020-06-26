@@ -5,10 +5,10 @@ import iconClose from 'icons/times-solid.svg';
 
 export const t = translateWithDictionary({
   en:{
-    coronavirus_html: String.raw`<div class='toast-body opensans-semibold'>We’re here for you. <a class= 'toast-anchorlink' href='/gk/coronavirus-school-closure-support/'>Find our latest COVID-19 school closure resources here.</a><img src='${iconClose}' class='toast-cancel'/></div>`
+    coronavirus_html: String.raw`<div class='toast-body opensans-semibold'>We’re here for you. <a class= 'toast-anchorlink' href='/gk/coronavirus-school-closure-support/'>Find COVID-19 at-home learning resources here.</a><img src='${iconClose}' class='toast-cancel'/></div>`
   },
   es: {
-    coronavirus_html: String.raw`<div class='toast-body opensans-semibold'> Estamos aqui para ti. <a class='toast-anchorlink' href='/gk/coronavirus-school-closure-support/?lang=es'> Aquí encontrarás nuestros últimos recursos para el cierre de escuelas por COVID-19. </a><img src='${iconClose}' class='toast-cancel'/></div>`
+    coronavirus_html: String.raw`<div class='toast-body opensans-semibold'> Estamos aqui para ti. <a class='toast-anchorlink' href='/gk/coronavirus-school-closure-support/?lang=es'> Encuentra los recursos de aprendizaje en el hogar durante COVID-19 aquí. </a><img src='${iconClose}' class='toast-cancel'/></div>`
   }
 });
 
