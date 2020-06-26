@@ -57,14 +57,6 @@ exacttarget_api_client_id_SMS: afievwrm4tz2tidnbg0458x0
 exacttarget_api_client_secret_SMS: zC8g7eGqud0oyTdbMl0IqwtH
 exacttarget_api_app_id_SMS: c1d444f8-087d-4921-927e-790a7bad1119
 
-#exacttarget_v2_api_key: 12f1dx5e916tjkij5sajei5e
-#exacttarget_v2_api_secret: Qrrgd4ITVtssAgiSZNqCwVyn
-#exacttarget_v2_api_app_id: 33a5f73d-b3d3-4724-a50c-a21c1277a041
-
-# exacttarget_v2_api_key: afievwrm4tz2tidnbg0458x0
-# exacttarget_v2_api_secret: zC8g7eGqud0oyTdbMl0IqwtH
-# exacttarget_v2_api_mss_app_id: mss_subs
-
 exacttarget_v2_client_id: lx2a3zk8mmwmijeh4p69qcdc
 exacttarget_v2_client_secret: 2WTM45VKeJuLDXaBffgM6lRR
 exacttarget_v2_api_auth_uri: https://mcr9k09nfkqn191-y87ldgv7zqt4.auth.marketingcloudapis.com/

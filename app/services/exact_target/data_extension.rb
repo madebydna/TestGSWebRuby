@@ -4,7 +4,8 @@ class ExactTarget
       'gbg_subscriptions' => '860393D2-0BB1-412A-88D8-78A8373C1746',
       'gs_school' => '1181AE14-B381-4714-8E9B-AC813E485C11',
       'school_sign_up' => '59BDA5B9-A70F-42F7-BA9E-45E2963237F6',
-      'subscription_list' => 'F74023BB-90B7-4BE6-A506-58ED8F3516B6'
+      'subscription_list' => 'F74023BB-90B7-4BE6-A506-58ED8F3516B6',
+      'members' => '8D205751-75CD-4907-A256-E23093EFA130'
     }
 
     def self.upsert(object)
@@ -27,6 +28,8 @@ class ExactTarget
         :upsert_school_signup
       when Subscription
         :upsert_subscription
+      when User
+        :upsert_member
       else
         raise ArgumentError, "#{object.class} does not have a matching ExactTarget DataExtension"
       end
@@ -42,6 +45,8 @@ class ExactTarget
         EXTENSIONS_TO_KEYS['school_sign_up']
       when Subscription
         EXTENSIONS_TO_KEYS['subscription_list']
+      when User
+        EXTENSIONS_TO_KEYS['members']
       else
         raise ArgumentError, "#{object.class} does not have a matching ExactTarget DataExtension"
       end

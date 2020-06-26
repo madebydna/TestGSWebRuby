@@ -2,71 +2,64 @@ class ExactTarget
   class DataExtension
     class RestCalls
 
-      def self.upsert_gbg(access_token, subscription)
+      def self.upsert_gbg(subscription)
         uri = "/hub/v1/dataevents/key:#{EXTENSIONS_TO_KEYS['gbg_subscriptions']}/rows/id:#{subscription.id}"
         payload = {
           values: {
             member_id: subscription.member_id,
             grade: subscription.grade,
-            language: 'en'
+            language: subscription.language,
+            district_id: subscription.district_id,
+            district_state: subscription.district_state
           }
         }
-        ApiInterface.new.put_json_with_auth(uri, payload, access_token)
+        [uri, payload]
       end
 
-      def self.upsert_school(access_token, school)
+      def self.upsert_school(school)
         uri = "/hub/v1/dataevents/key:#{EXTENSIONS_TO_KEYS['gs_school']}/rows/id:#{school.id}"
         # TODO: we're not sure if we'll need real-time school upserts
       end
 
-      def self.upsert_school_signup(access_token, subscription)
+      def self.upsert_school_signup(subscription)
         uri = "/hub/v1/dataevents/key:#{EXTENSIONS_TO_KEYS['school_sign_up']}/rows/id:#{subscription.id}"
         payload = {
           values: {
             member_id: subscription.member_id,
             state: subscription.state,
             school_id: subscription.school_id,
-            language: 'en'
+            language: subscription.language
           }
         }
-        ApiInterface.new.put_json_with_auth(uri, payload, access_token)
+        [uri, payload]
       end
 
-      def self.upsert_subscription(access_token, subscription)
+      def self.upsert_subscription(subscription)
         uri = "/hub/v1/dataevents/key:#{EXTENSIONS_TO_KEYS['subscription_list']}/rows/id:#{subscription.id}"
         payload = {
           values: {
             member_id: subscription.member_id,
             list: subscription.list,
-            language: 'en'
+            language: subscription.language
           }
         }
-        ApiInterface.new.put_json_with_auth(uri, payload, access_token)
+        [uri, payload]
       end
 
-
-      # def contact_subscriptions(access_token, phone_numbers)
-      #   uri = '/sms/v1/contacts/subscriptions'
-      #   # /data/v1/async/dataextensions/{id}/rows
-      #   # /data/v1/async/dataextensions/key:{key}/rows
-      #   # can take an array of numbers
-      #   mobile_contact = {"mobileNumber" => phone_numbers}
-      #   ExactTarget::ApiInterface.new.post_json_with_auth(uri, mobile_contact, access_token)
-      # end
-
-      # def create_mobile_contact(access_token, phone_number, attributes = nil)
-      #   # /data/v1/async/dataextensions/{id}/rows
-      #   # /data/v1/async/dataextensions/key:{key}/rows
-      #   uri = '/contacts/v1/contacts'
-      #   mobile_contacts_hash = ExactTarget::MobileContactsHashService.create(phone_number, attributes)
-      #   ExactTarget::ApiInterface.new.post_json_with_auth(uri, mobile_contacts_hash, access_token)
-      # end
-
-      # def update_mobile_contact(access_token, phone_number, attributes)
-      #   uri = '/contacts/v1/contacts'
-      #   mobile_contacts_hash = ExactTarget::MobileContactsHashService.create(phone_number, attributes)
-      #   ExactTarget::ApiInterface.new.patch_json_with_auth(uri, mobile_contacts_hash, access_token)
-      # end
+      def self.upsert_member(member)
+        uri = "/hub/v1/dataevents/key:#{EXTENSIONS_TO_KEYS['members']}/rows/id:#{member.id}"
+        payload = {
+          values: {
+            email: member.email,
+            id: member.id,
+            updated: member.updated,
+            time_added: member.time_added,
+            Hash_token: UserVerificationToken.token(member.id),
+            how: member.how
+          }
+        }
+        [uri, payload]
+      end
     end
   end
 end
