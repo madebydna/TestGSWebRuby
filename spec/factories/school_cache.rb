@@ -324,7 +324,9 @@ FactoryBot.define do
           "breakdown" => "All students",
           "school_value" => 80.6,
           "state_average" => 42,
-          'source' => 'CA Dept. of Education'
+          "source_date_valid" => (Time.now - 1.year).to_s(:db),
+          "year" => (Time.now - 1.year).year,
+          "source" => 'CA Dept. of Education'
         }
       ]
     }.to_json)
@@ -346,7 +348,9 @@ FactoryBot.define do
             "breakdown" => "All students",
             "school_value" => evaluator.school_value,
             "state_average" => evaluator.state_average,
-            'source' => evaluator.source
+            "source_date_valid" => (Time.now - 1.year).to_s(:db),
+            "year" => (Time.now - 1.year).year,
+            "source" => evaluator.source
           }
         ]
       }.to_json)

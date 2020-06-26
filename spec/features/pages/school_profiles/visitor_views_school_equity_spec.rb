@@ -29,9 +29,9 @@ describe "Visitor" do
 
   context 'with graduation rate' do
     let(:school) { create(:school_with_new_profile) }
-    
+
     scenario "sees equity section" do
-      create( :graduation_rate, school_id: school.id)
+      create(:graduation_rate, school_id: school.id)
       visit school_path(school)
       expect(page_object).to have_equity
     end
