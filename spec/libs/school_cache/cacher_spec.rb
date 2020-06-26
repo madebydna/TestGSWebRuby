@@ -68,8 +68,7 @@ describe Cacher do
       esp_response: [EspResponsesCaching::EspResponsesCacher],
       school_reviews: [ReviewsCaching::ReviewsSnapshotCacher],
       metrics: [MetricsCaching::SchoolMetricsCacher],
-      test_scores: [TestScoresCaching::TestScoresCacherGsdata, TestScoresCaching::Feed::FeedTestScoresCacherGsdata, TestScoresCaching::Feed::FeedOldTestScoresCacherGsdata],
-      gsdata: [GsdataCaching::GsdataCacher],
+      test_scores: [TestScoresCaching::TestScoresCacherGsdata, TestScoresCaching::Feed::FeedTestScoresCacherGsdata, TestScoresCaching::Feed::FeedOldTestScoresCacherGsdata]
     }.each do |data_type, cacher_list|
       it "handles the data type #{data_type}" do
         rval = Cacher.cachers_for_data_type data_type

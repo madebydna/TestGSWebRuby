@@ -7,7 +7,7 @@ module SchoolProfiles
 
     THREE_YEARS_EXPERIENCE ='Percentage of teachers with less than three years experience'
 
-    GSDATA_CACHE_ACCESSORS = [
+    METRICS_CACHE_ACCESSORS = [
         {
             :data_key => 'Ratio of students to full time teachers',
             :visualization => :ratio_viz,
@@ -74,12 +74,12 @@ module SchoolProfiles
 
     def included_data_types
       @_included_data_types ||=
-        GSDATA_CACHE_ACCESSORS.map { |mapping| mapping[:data_key] }
+        METRICS_CACHE_ACCESSORS.map { |mapping| mapping[:data_key] }
     end
 
     def data_type_formatting_map
       @_data_type_to_value_type_map ||= (
-      GSDATA_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
+      METRICS_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
         hash[mapping[:data_key]] = mapping[:formatting]
       end
       )
@@ -87,7 +87,7 @@ module SchoolProfiles
 
     def data_type_visualization_map
       @_data_type_visualization_map ||= (
-      GSDATA_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
+      METRICS_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
         hash[mapping[:data_key]] = mapping[:visualization]
       end
       )
@@ -95,7 +95,7 @@ module SchoolProfiles
 
     def data_type_range_map
       @_data_type_range_map ||= (
-      GSDATA_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
+      METRICS_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
         hash[mapping[:data_key]] = mapping[:range] || (0..100)
       end
       )
@@ -120,33 +120,34 @@ module SchoolProfiles
     def data_label_info_text(key)
       I18n.t(key.to_sym, scope: 'lib.teachers_staff.data_point_info_texts', default: '')
     end
-    
+
     def data_score_type(obj, formatting)
       if formatting.include?(:employment_level)
-        return employment_level(obj.school_value.to_f, obj.breakdowns)
+        return employment_level(obj.school_value.to_f, obj.breakdown)
       end
       SchoolProfiles::DataPoint.new(obj.school_value.to_f).apply_formatting(*formatting)
     end
 
-    def employment_level(value, breakdowns)
+    def employment_level(value, breakdown)
       presence = {
         0.0 => 'not_present',
         1.0 => 'present'
       }
       t_presence = presence[value]
-      t_key = breakdowns.first
+      # Data team will be changing breakdown from Not Applicable,
+      # which we currently lump into All students, to "no staff"
+      t_key = ['All students', 'no staff'].include?(breakdown) ? nil : breakdown
 
       I18n.t("lib.teachers_staff.employment_level.#{t_presence}.#{t_key}")
     end
 
     def data_values_by_data_type
-      hashes = school_cache_data_reader.gsdata_data(
-          *included_data_types
+      hashes = school_cache_data_reader.decorated_metrics_datas(
+         *included_data_types
       )
       return [] if hashes.blank?
       objs = hashes.map do |key, array|
-        values = GsdataCaching::GsDataValue.from_array_of_hashes(array.map { |h| h.merge(data_type: key) })
-        values.having_most_recent_date.first
+        array.having_most_recent_date.first
       end
       objs.sort_by { |o| included_data_types.index(o.data_type) }
     end
@@ -161,7 +162,7 @@ module SchoolProfiles
           item.label = data_label(data_type)
           item.info_text = data_label_info_text(data_type)
           item.score = data_score_type(obj, formatting)
-          item.state_average = SchoolProfiles::DataPoint.new(obj.state_value).
+          item.state_average = SchoolProfiles::DataPoint.new(obj.state_average).
               apply_formatting(*formatting)
           item.visualization = visualization
           item.range = range
@@ -182,7 +183,7 @@ module SchoolProfiles
       str = '<div>'
       str << '<h4>' + data_label(data_value.data_type) + '</h4>'
       str << "<p>#{data_label_info_text(data_value.data_type)}</p>"
-      str << '<p><span class="emphasis">' + static_label('source')+ '</span>: ' + data_label(data_value.source_name) + ', ' + data_value.source_year.to_s + '</p>'
+      str << '<p><span class="emphasis">' + static_label('source')+ '</span>: ' + data_label(data_value.source) + ', ' + data_value.source_year.to_s + '</p>'
       str << '</div>'
       str
     end

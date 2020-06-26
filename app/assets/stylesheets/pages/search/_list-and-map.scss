@@ -13,8 +13,11 @@
   }
 
   .school-list, .school-table {
-    img {
+    img, svg {
       width: 55%;
+      height: 55%;
+      vertical-align: middle;
+      border: 0;
     }
     .sponsored-school-result-ad{
       height: 107px;

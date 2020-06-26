@@ -28,6 +28,10 @@ module CachedMetricsMethods
     metrics_value_by_name('Enrollment', grade: 'All')
   end
 
+  def ratio_of_students_to_full_time_teachers
+    metrics['Ratio of students to full time teachers']&.first&.fetch('school_value', nil)&.to_f&.round
+  end
+
   def metrics_value_by_name(name, options={})
     if valid_metric_cache(metrics[name])
       metrics[name].each do |metric|

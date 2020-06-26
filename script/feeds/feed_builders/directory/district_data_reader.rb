@@ -8,7 +8,7 @@ module Feeds
       include Feeds::FeedConstants
       include Feeds::FeedHelper
 
-      DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_metrics gsdata)
+      DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_metrics)
 
       # array of methods used by the data reader to output data
       DISTRICT_ATTRIBUTES_DATA_READER_METHODS = %w(universal_id level web_site state zip)

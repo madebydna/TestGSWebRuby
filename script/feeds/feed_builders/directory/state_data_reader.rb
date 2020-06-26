@@ -8,7 +8,6 @@ module Feeds
       include Feeds::FeedConstants
       include Feeds::FeedHelper
 
-      CACHE_KEY_GSDATA = 'gsdata'
       CACHE_KEY_METRICS = 'metrics'
 
       attr_reader :state
@@ -50,10 +49,6 @@ module Feeds
 
       def state_metrics_cache
         @_state_metrics_cache ||= StateCache.for_state(CACHE_KEY_METRICS, @state)&.cache_data || {}
-      end
-
-      def state_gsdata_cache
-        @_state_gsdata_cache ||= StateCache.for_state(CACHE_KEY_GSDATA, @state)&.cache_data || {}
       end
     end
   end

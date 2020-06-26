@@ -24,6 +24,10 @@ module CommunityProfiles
       end
     end
 
+    def has_data?
+      ethnicity_student_demo_data.present? || gender_student_demo_data.present? || subgroups_student_demo_data.present?
+    end
+
     def cache_ethnicity_data
       @_cache_ethnicity_data ||= @cache_data_reader.ethnicity_data.select(&with_valid_values)
     end
@@ -74,7 +78,7 @@ module CommunityProfiles
     end
 
     def cache_gender_data
-      @_cache_gender_data ||= @cache_data_reader.metrics_data(*GENDER_KEYS)
+      @_cache_gender_data ||= @cache_data_reader.decorated_metrics_datas(*GENDER_KEYS)
     end
 
     def gender_data
@@ -124,7 +128,7 @@ module CommunityProfiles
     #       here so that we don't have to duplicate the translations in JavaScript
     def subgroups_data
       @_subgroups_data ||= (
-        @cache_data_reader.metrics_data(*OTHER_BREAKDOWN_KEYS).each_with_object({}) do |(key, value), hash|
+        @cache_data_reader.decorated_metrics_datas(*OTHER_BREAKDOWN_KEYS).each_with_object({}) do |(key, value), hash|
           data_hash = value.first
           if data_hash["#{community_type}_value"] > 0
             hash[key] = [{}.tap do |h|

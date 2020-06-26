@@ -1,28 +1,28 @@
 es:
   school_profiles:
     stem_courses:
-      title: Cursos avanzados de STEM
+      title: Cursos avanzados
       title_tooltip_text_html: >
         El acrónimo STEM representa las iniciales de&colon; ciencia, tecnología, ingeniería y matemáticas. <a href="/gk/articles/stem-in-the-classroom/">Averigue más</a> por qué cursos de STEM son tan importantes para los estudiantes de hoy.
       m:
-        title: Cursos avanzados de STEM
+        title: Cursos avanzados
         subtitle_html: Cursos avanzados de STEM en la escuela intermedia puede ayudar a su estudiante a tener éxito en la escuela secundaria. <a href="/gk/articles/stem-in-the-classroom/">Averigue más</a>.
         parent_tip_html: ¿Cuando va tomar su hijo álgebra? <a href="/gk/articles/algebra-middle-school-math-track/">Esto es lo que usted necesita entender</a> acerca la ruta de matemáticas.
         faq_content_html: >
           <p><a href="/gk/articles/why-algebra/">Álgebra 1</a> normalmente es ofrecido como un curso de matemáticas
           avanzado para estudiantes en escuela intermedia (es una clase estándar de matemáticas en la escuela secundaria).
-          Cuando la participación se muestra como 0% o falta otra información en nuestro perfil, 
-          probablemente es porque esta escuela no ofreció Álgebra 1 a los estudiantes de 8.° grado. 
-          También puede ser que los datos que faltan no fueron incluidos en la recopilación de datos federales 
-          de los Derechos Civiles (CRDC) (Ve "Fuentes" para más información.) Nota&colon; Mientras que 
-          las escuelas pueden ofrecer Álgebra 1 en 7.° y 8.° grado, solo mostramos información sobre 
-          el índice de aprobación y participación de Álgebra 1 de 8.° grado, porque la recopilación de datos CRDC 
+          Cuando la participación se muestra como 0% o falta otra información en nuestro perfil,
+          probablemente es porque esta escuela no ofreció Álgebra 1 a los estudiantes de 8.° grado.
+          También puede ser que los datos que faltan no fueron incluidos en la recopilación de datos federales
+          de los Derechos Civiles (CRDC) (Ve "Fuentes" para más información.) Nota&colon; Mientras que
+          las escuelas pueden ofrecer Álgebra 1 en 7.° y 8.° grado, solo mostramos información sobre
+          el índice de aprobación y participación de Álgebra 1 de 8.° grado, porque la recopilación de datos CRDC
           no incluía información de indices de aprobación para estudiantes de 7.° grado.</p>
           <p>¿Ha encontrado la información de cursos avanzados de STEM útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/08c5c785-4c16-4a7a-9faf-434b253029bc" target="_blank">Comparte tus comentarios.</a></p>
           <p>¿Todavía tienes preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
       h:
-        title: Cursos avanzados y de STEM
-        subtitle_html: Un riguroso curso de STEM puede ayudar a su estudiante a prepararse y entrar a la universidad. <a href="/gk/articles/stem-in-the-classroom/">Averigue más</a> acerca de por qué cursos de STEM son tan importantes para los estudiantes de hoy.
+        title: Cursos avanzados
+        subtitle_html: Los cursos riguroso pueden ayudar a los estudiantes a prepararse y entrar a la universidad, incluyendo cursos en materias de STEM. <a href="/gk/articles/stem-in-the-classroom/">Averigua más.</a>
         parent_tip_html: Muchos estudiantes exitosos terminan en cursos correctivas de matemáticas en la universidad. <a href="/gk/articles/ready-for-college-math/">¿Su estudiante está preparado</a> para matemáticas a nivel universitario? Pregúntele a esta escuela cómo garantizan que los estudiantes están bien preparados.
         faq_content_html: >
           <div class="emphasis">¿Qué son las clases de AP?</div>
@@ -39,7 +39,7 @@ es:
           <p>¿Ha encontrado la información de cursos avanzados de STEM útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/08c5c785-4c16-4a7a-9faf-434b253029bc" target="_blank">Comparte tus comentarios.</a></p>
           <p>¿Todavía tienes preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
       mixed:
-        title: Cursos avanzados y de STEM
+        title: Cursos avanzados
         subtitle_html: >
           El acrónimo STEM representa las iniciales de&colon; ciencia, tecnología, ingeniería y matemáticas. <a href="/gk/articles/stem-in-the-classroom/">Averigue más</a> por qué cursos de STEM son tan importantes para los estudiantes de hoy.
         parent_tip_html: Muchos estudiantes exitosos terminan en cursos correctivas de matemáticas en la universidad. <a href="/gk/articles/ready-for-college-math/">¿Su estudiante está preparado</a> para matemáticas a nivel universitario? Pregúntele a esta escuela cómo garantizan que los estudiantes están bien preparados.

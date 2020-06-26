@@ -46,6 +46,13 @@
     }
   }
 
+  .rating-container {
+    svg {
+      vertical-align: middle;
+      border: 0;
+    }
+  }
+
   button {
     border: 1px solid #c1d2d9;
     background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
