@@ -6,7 +6,7 @@ module ExactTargetFileManager
       class CsvWriter < ExactTargetFileManager::Builders::EtProcessor
 
         FILE_PATH = '/tmp/et_members_de.csv'
-        HEADERS = ['member_id','email','updated','time_added','Hash_token','how']
+        HEADERS = %w(id email updated time_added Hash_token how)
 
         def initialize
           @data_reader = DataReader.new
