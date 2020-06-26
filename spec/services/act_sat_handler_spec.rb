@@ -1,15 +1,15 @@
 require "spec_helper"
 
-include SchoolProfiles::CollegeReadinessConfig
+include MetricsCaching::CollegeReadinessConfig
 describe SchoolProfiles::CollegeReadiness do
-  let(:act_score_dt) { SchoolProfiles::CollegeReadinessConfig::ACT_SCORE }
-  let(:act_participation_dt) { SchoolProfiles::CollegeReadinessConfig::ACT_PARTICIPATION }
+  let(:act_score_dt) { ACT_SCORE }
+  let(:act_participation_dt) { ACT_PARTICIPATION }
 
-  let(:sat_score_dt) { SchoolProfiles::CollegeReadinessConfig::SAT_SCORE }
-  let(:sat_participation_dt) { SchoolProfiles::CollegeReadinessConfig::SAT_PARTICIPATION }
+  let(:sat_score_dt) { SAT_SCORE }
+  let(:sat_participation_dt) { SAT_PARTICIPATION }
 
-  let(:act_sat_912_participation_dt) { SchoolProfiles::CollegeReadinessConfig::ACT_SAT_PARTICIPATION_9_12 }
-  let(:act_sat_participation_dt) { SchoolProfiles::CollegeReadinessConfig::ACT_SAT_PARTICIPATION }
+  let(:act_sat_912_participation_dt) { ACT_SAT_PARTICIPATION_9_12 }
+  let(:act_sat_participation_dt) { ACT_SAT_PARTICIPATION }
 
   describe "#handle_ACT_SAT_to_display!" do
 

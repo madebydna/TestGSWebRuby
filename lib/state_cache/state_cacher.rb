@@ -3,7 +3,7 @@ class StateCacher
   attr_accessor :state
 
   # Known data types:
-  # :test_scores_gsdata, :feed_test_scores_gsdata, :feed_test_description_gsdata, :gsdata,
+  # :test_scores_gsdata, :feed_test_scores_gsdata, :feed_test_description_gsdata,
   # :ratings :district_largest, :school_levels, :state_attributes, :feed_ratings
 
 
@@ -36,7 +36,6 @@ class StateCacher
         test_scores_gsdata: TestScoresCaching::StateTestScoresCacherGsdata,
         feed_test_scores_gsdata: TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata,
         feed_test_description_gsdata: TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata,
-        gsdata: StateGsdataCacher,
         feed_ratings: StateFeedRatingCacher,
         ratings: StateRatingCacher,
         district_largest: StateDistrictLargestCacher,
@@ -66,7 +65,6 @@ class StateCacher
        TestScoresCaching::TestScoresCacherGsdata,
        TestScoresCaching::Feed::FeedStateTestScoresCacherGsdata,
        TestScoresCaching::Feed::FeedStateTestDescriptionCacherGsdata,
-       StateGsdataCacher,
        StateRatingCacher,
        StateFeedRatingCacher,
        StateDistrictLargestCacher,

@@ -34,7 +34,7 @@ module ExactTargetFileManager
                     English_Test_Score
                     Math_Test_Score
                   )
-        GSDATA_CONTENT =   ['Ratio of students to full time teachers',
+        METRICS_CONTENT =   ['Ratio of students to full time teachers',
                             'Ratio of students to full time counselors',
                             'Percentage of teachers with less than three years experience',
                             'Percentage of full time teachers who are certified']
@@ -52,7 +52,7 @@ module ExactTargetFileManager
 
         def get_info(school)
           school_cache_data_reader = @data_reader.school_cache_data_reader(school)
-          gsdata_info = school_cache_data_reader.decorated_gsdata_datas(*GSDATA_CONTENT)
+          metrics_info = school_cache_data_reader.decorated_metrics_datas(*METRICS_CONTENT)
           test_scores = @data_reader.test_scores(school, school_cache_data_reader)
           school_info = []
           school_info << school['state'] + "-" + school['id'].to_s
@@ -73,25 +73,25 @@ module ExactTargetFileManager
           school_info << school_cache_data_reader.equity_overview_rating ? school_cache_data_reader.equity_overview_rating : ''
           school_info << school_cache_data_reader.academic_progress_rating ? school_cache_data_reader.academic_progress_rating : ''
           school_info << csa_awards_years(school_cache_data_reader)
-          school_info << gsdata_value(gsdata_info, GSDATA_CONTENT[0])
-          school_info << gsdata_value(gsdata_info, GSDATA_CONTENT[1])
-          school_info << gsdata_value_percentage_invert(gsdata_info, GSDATA_CONTENT[2])
-          school_info << gsdata_value(gsdata_info, GSDATA_CONTENT[3])
+          school_info << metrics_value(metrics_info, METRICS_CONTENT[0])
+          school_info << metrics_value(metrics_info, METRICS_CONTENT[1])
+          school_info << metrics_value_percentage_invert(metrics_info, METRICS_CONTENT[2])
+          school_info << metrics_value(metrics_info, METRICS_CONTENT[3])
           school_info << school_cache_data_reader.discipline_flag?
           school_info << school_cache_data_reader.attendance_flag?
           school_info << test_score(test_scores, 'English')
           school_info << test_score(test_scores, 'Math')
         end
 
-        def gsdata_value(gsdata_info, key)
-          if gsdata_info && gsdata_info[key].present?
-            gsdata_info[key].having_most_recent_date.first.school_value_as_int
+        def metrics_value(metrics_info, key)
+          if metrics_info && metrics_info[key].present?
+            metrics_info[key].having_most_recent_date.first.school_value_as_int
           end
         end
 
-        def gsdata_value_percentage_invert(gsdata_info, key)
-          if gsdata_info && gsdata_info[key].present?
-            100 - gsdata_info[key].having_most_recent_date.first.school_value_as_int
+        def metrics_value_percentage_invert(metrics_info, key)
+          if metrics_info && metrics_info[key].present?
+            100 - metrics_info[key].having_most_recent_date.first.school_value_as_int
           end
         end
 

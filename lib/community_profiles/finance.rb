@@ -7,7 +7,7 @@ module CommunityProfiles
     end
 
     def finance_hash
-      @_finance_hash ||= @cache_data_reader.decorated_gsdata_datas(*FINANCE_DATA_TYPES)
+      @_finance_hash ||= @cache_data_reader.decorated_metrics_datas(*FINANCE_DATA_TYPES)
     end
 
     #array of data values sent to the frontend

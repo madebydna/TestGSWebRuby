@@ -134,6 +134,7 @@ class GsdataCaching::GsDataValue
       self
     end
 
+    # Test scores only
     # sort and group by breakdowns,
     # and then return the array of subgroups
     def sorted_subgroups
@@ -207,6 +208,7 @@ class GsdataCaching::GsDataValue
       end
     end
 
+    # Used for test scores only
     def group_by_data_type
       group_by(&:data_type).each_with_object({}) do |(data_type, values), hash|
         hash[data_type] = values.extend(CollectionMethods)
@@ -229,6 +231,7 @@ class GsdataCaching::GsDataValue
       select { |dv| dv.academics.present? }.extend(CollectionMethods)
     end
 
+    # TODO: remove, appears to be unused
     def group_by_academics
       group_by do |dv|
         if dv.academics.present? && dv.academics.include?(',')
@@ -250,6 +253,7 @@ class GsdataCaching::GsDataValue
       end
     end
 
+    # Used only for test scores
     def apply_to_each_group(*attributes)
       group_by { |dv| attributes.map { |attr| dv.send(attr) } }
         .values
@@ -265,18 +269,22 @@ class GsdataCaching::GsDataValue
         .extend(CollectionMethods)
     end
 
+    # Used only for test scores
     def apply_to_each_data_type_academic_group(&block)
       apply_to_each_group(:data_type, :academics, &block)
     end
 
+    # Used only for test scores
     def apply_to_each_data_type_academic_breakdown_group(&block)
       apply_to_each_group(:data_type, :academics, :breakdown, &block)
     end
 
+    # TODO: remove, appears to be unused
     def having_academic_tag_matching(regex)
       select { |dv| dv.academic_tags =~ regex }.extend(CollectionMethods)
     end
 
+    # TODO: remove, appears to be unused
     def expand_on_academic_tags
       reduce([]) do |array, dv|
         array.concat(
@@ -287,6 +295,7 @@ class GsdataCaching::GsDataValue
       end.extend(CollectionMethods)
     end
 
+    # TODO: remove, appears to be unused
     def group_by_academic_tag
       group_by do |dv|
         if dv.academic_tags.include?(',')
@@ -302,11 +311,13 @@ class GsdataCaching::GsDataValue
       end
     end
 
+    # TODO: remove, appears to be unused
     def remove_504_category_breakdown_from_each!
       each(&:remove_504_category_breakdown!)
         .tap { |a| a.extend(CollectionMethods) }
     end
 
+    # Transferred
     def expect_only_one(message, other_helpful_vars = nil)
       if size > 1
         other_helpful_vars ||= {
@@ -343,15 +354,18 @@ class GsdataCaching::GsDataValue
       any?(&:grade_all?)
     end
 
+    # Test scores only
     def sort_by_grade
       sort_by {|dv| dv.grade.to_i}
     end
 
+    # Test scores only
     def keep_if_any_grade_all
       return [].extend(CollectionMethods) unless any_grade_all?
       self
     end
 
+    # Test scores only
     # assumes all values are for same test/year/subject, and no subgroups
     # therefore should only have one grade all value
     def separate_single_grade_all_from_other
@@ -362,40 +376,48 @@ class GsdataCaching::GsDataValue
       ]
     end
 
+    # Test scores only
     def total_school_cohort_count
       select { |h| h.school_cohort_count.present? }.sum(&:school_cohort_count)
       end
 
+    # Test scores only
     def total_district_cohort_count
       select { |h| h.district_cohort_count.present? }.sum(&:district_cohort_count)
     end
 
+    # Test scores only
     def school_cohort_count_exists?
       reduce(0) {|sum, hash| sum + hash.school_cohort_count.to_i} > 0
     end
 
+    # Test scores only
     def total_state_cohort_count
       sum(&:state_cohort_count)
     end
 
+    # Used in test scores caching
     def average_school_value(precision: nil)
       return nil if empty?
       avg = average(&:school_value_as_float)
       precision ? avg.round(precision) : avg
     end
 
+    # Used in test scores caching
     def average_district_value(precision: nil)
       return nil if empty?
       avg = average(&:district_value_as_float)
       precision ? avg.round(precision) : avg
     end
 
+    # Used in test scores caching
     def average_state_value(precision: nil)
       return nil if empty?
       avg = average(&:state_value_as_float)
       precision ? avg.round(precision) : avg
     end
 
+    # Used in test scores caching
     def weighted_average_district_value(precision: nil)
       return nil if empty?
       avg = weighted_average(total_district_cohort_count) do |dv|
@@ -404,6 +426,7 @@ class GsdataCaching::GsDataValue
       precision ? avg.round(precision) : avg
     end
 
+    # Used in test scores caching
     def weighted_average_school_value(precision: nil)
       return nil if empty?
       avg = weighted_average(total_school_cohort_count) do |dv|
@@ -412,6 +435,7 @@ class GsdataCaching::GsDataValue
       precision ? avg.round(precision) : avg
     end
 
+    # Used in test scores caching
     def weighted_average_state_value(precision: nil)
       return nil if empty?
       avg = weighted_average(total_state_cohort_count) do |dv|
@@ -420,50 +444,61 @@ class GsdataCaching::GsDataValue
       precision ? avg.round(precision) : avg
     end
 
+    # TODO: remove, appears to be unused
     def all_school_values_are_numeric?
       map(&:school_value).all?(&:numeric?)
     end
 
+    # Used in test scores caching
     def all_district_values_can_be_numeric?
       map(&:district_value).all? do |v|
         v.is_a?(Numeric) || v.try(:scan, /[0-9.]+/)&.first&.to_f
       end
     end
 
+    # Used in test scores caching
     def all_school_values_can_be_numeric?
       map(&:school_value).all? do |v|
         v.is_a?(Numeric) || v.try(:scan, /[0-9.]+/)&.first&.to_f
       end
     end
 
+    # Used in test scores caching
     def all_state_values_are_numeric?
       map(&:state_value).all?(&:numeric?)
     end
 
+    # Used in test scores caching?
     def all_have_district_cohort_count?
       all?(&:has_district_cohort_count?)
     end
 
+    # Used in test scores caching
     def all_have_school_cohort_count?
       all?(&:has_school_cohort_count?)
     end
 
+    # Used in test scores caching
     def all_have_state_cohort_count?
       all?(&:has_state_cohort_count?)
     end
 
+    # Test scores only
     def group_by_test_label_and_sort_by_cohort_count
       sort { |a,b| [b.data_type, (b.school_cohort_count || 0)] <=> [a.data_type, (a.school_cohort_count || 0)]}.extend(CollectionMethods)
     end
 
+    # Test scores only
     def sort_by_test_label_using_cohort_count
       group_by(&:data_type).sort_by {|k,v| (-v.extend(CollectionMethods).having_grade_all.total_school_cohort_count || 0) }.flatten.reject {|y| y.is_a?(String)}.extend(CollectionMethods)
     end
 
+    # Test scores only
     def sort_by_test_label_and_subject_name
       sort { |a,b| [a.data_type, (SUBJECT_ORDER.index(a.academics) || SUBJECT_ORDER.length+1)] <=> [b.data_type, (SUBJECT_ORDER.index(b.academics) || SUBJECT_ORDER.length+1)] }.extend(CollectionMethods)
     end
 
+    # Test scores only
     def sort_by_cohort_count
       sort { |a,b| (b.school_cohort_count || 0) <=> (a.school_cohort_count || 0) }.extend(CollectionMethods)
     end
@@ -477,6 +512,7 @@ class GsdataCaching::GsDataValue
       map(&:flags).reduce(&:|)
     end
 
+    # TODO: figure out what this is about
     %i[year data_type description source_name].each do |method|
       define_method(method) do
         uniqued_list = map(&method.to_proc).uniq
@@ -502,6 +538,7 @@ class GsdataCaching::GsDataValue
       reduce([]) { |accum, dv| accum.concat(dv.academics.split(',')) }.uniq
     end
 
+    # Transferred
     def recent_students_with_disabilities_school_values
       students_with_disabilities_breakdowns = [
         STUDENTS_WITH_DISABILITIES,
@@ -513,6 +550,7 @@ class GsdataCaching::GsDataValue
         .having_breakdown_in(students_with_disabilities_breakdowns)
     end
 
+    # Transferred
     def recent_ethnicity_school_values
       self.having_most_recent_date
         .having_school_value
@@ -520,6 +558,7 @@ class GsdataCaching::GsDataValue
         .extend(CollectionMethods)
     end
 
+    # Transferred
     def +(other)
       super(other).extend(CollectionMethods)
     end

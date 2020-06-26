@@ -8,7 +8,7 @@ describe CachePopulator::Base do
       CACHE_KEYS = %w(foo bar baz)
     end
   end
-  
+
   context "initialization" do
     it "requires a values and cache_keys named arguments" do
       expect { subject }.not_to raise_error
@@ -49,7 +49,7 @@ describe CachePopulator::Base do
       populator = CachePopulator::Base.new(values: 'al,ak', cache_keys: 'all')
       expect(populator.valid?).to be true
     end
-    
+
     it "allows for 'all' value for states" do
       populator = CachePopulator::FooPopulator.new(values: 'all', cache_keys: 'foo,bar')
       expect(populator.states).to eq(['all'])
@@ -57,7 +57,7 @@ describe CachePopulator::Base do
     end
 
     it "validates correct states" do
-      populator = CachePopulator::StateCachePopulator.new(values: 'ca,foo', cache_keys: 'gsdata,ratings')
+      populator = CachePopulator::StateCachePopulator.new(values: 'ca,foo', cache_keys: 'metrics,ratings')
       expect(populator).not_to be_valid
       expect(populator.errors[:states]).to include("must have the value 'all' or be a list of valid states")
     end
@@ -80,7 +80,7 @@ describe CachePopulator::Base do
       populator = CachePopulator::FooPopulator.new(values: 'al,ca', cache_keys: 'all')
       expect(populator.keys_to_cache).to eq(['foo', 'bar', 'baz'])
     end
-    
+
     it "should return defined list of cache keys" do
       populator = CachePopulator::FooPopulator.new(values: 'al,ca', cache_keys: 'foo')
       expect(populator.keys_to_cache).to eq(['foo'])

@@ -57,9 +57,9 @@ describe SchoolProfiles::SchoolCacheDataReader do
       end
     end
 
-    describe '#metrics_data' do
+    describe '#decorated_metrics_datas' do
       let(:reader) { new_reader(school) }
-      subject { reader.metrics_data(:foo, :bar) }
+      subject { reader.decorated_metrics_datas(:foo, :bar) }
       context 'with missing sources' do
         before do
           allow(reader).to receive(:decorated_school).and_return(
@@ -87,9 +87,9 @@ describe SchoolProfiles::SchoolCacheDataReader do
             )
           )
         end
-        it 'should reject the hashes that have missing source' do
-          expect(subject.values.flatten.select { |h| !h.has_key?('source') }).to be_empty
-          expect(subject.values.flatten.select { |h| h.has_key?('source') }.size).to eq(2)
+        it 'should return an array that responds to MetricsCaching::Value::CollectionMethods' do
+          expect(subject[:foo]).to respond_to(:for_all_students)
+          expect(subject[:bar]).to respond_to(:having_school_value)
         end
       end
     end

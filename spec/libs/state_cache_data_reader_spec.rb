@@ -43,7 +43,7 @@ describe 'StateCacheDataReader' do
 
     describe '#metrics_data' do
       let(:reader) { new_reader(state) }
-      subject { reader.metrics_data(:foo, :bar) }
+      subject { reader.decorated_metrics_datas(:foo, :bar) }
       context 'with missing sources' do
         before do
           allow(reader).to receive(:decorated_state).and_return(
@@ -71,9 +71,9 @@ describe 'StateCacheDataReader' do
             )
           )
         end
-        it 'should reject the hashes that have missing source' do
-          expect(subject.values.flatten.select { |h| !h.has_key?('source') }).to be_empty
-          expect(subject.values.flatten.select { |h| h.has_key?('source') }.size).to eq(2)
+        it 'should extend values with MetricsCaching::Value::CollectionMethod' do
+          expect(subject[:foo]).to respond_to(:for_all_students)
+          expect(subject[:bar]).to respond_to(:having_most_recent_date)
         end
       end
     end

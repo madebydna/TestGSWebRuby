@@ -1,6 +1,6 @@
 module CachePopulator
   class StateCachePopulator < Base
-    CACHE_KEYS = %w(metrics test_scores_gsdata feed_test_scores_gsdata feed_test_description_gsdata gsdata ratings district_largest school_levels state_attributes feed_ratings)
+    CACHE_KEYS = %w(metrics test_scores_gsdata feed_test_scores_gsdata feed_test_description_gsdata ratings district_largest school_levels state_attributes feed_ratings)
 
     def run
       run_with_validation do |state, cache_key|

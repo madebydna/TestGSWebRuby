@@ -27,12 +27,12 @@ module SchoolProfiles
     # Students with IDEA catagory disabilities
     def students_with_disabilities_hash
       @school_cache_data_reader
-        .decorated_gsdata_datas(*DISCIPLINE_DATA_TYPES.keys)
-        .each_with_object({}) do |(data_type_name, array_of_gsdata_values), hash|
+        .decorated_metrics_datas(*DISCIPLINE_DATA_TYPES.keys)
+        .each_with_object({}) do |(data_type_name, array_of_metrics_values), hash|
           hash.merge!(
             sources_hash(
               data_type_name,
-              array_of_gsdata_values.recent_students_with_disabilities_school_values
+              array_of_metrics_values.recent_students_with_disabilities_school_values
             )
           )
         end
@@ -40,12 +40,12 @@ module SchoolProfiles
 
     def generate_hash(data_types)
       @school_cache_data_reader
-        .decorated_gsdata_datas(*data_types.keys)
-        .each_with_object({}) do |(data_type_name, array_of_gsdata_values), hash|
+        .decorated_metrics_datas(*data_types.keys)
+        .each_with_object({}) do |(data_type_name, array_of_metrics_values), hash|
           hash.merge!(
             sources_hash(
               data_type_name,
-              array_of_gsdata_values.recent_ethnicity_school_values
+              array_of_metrics_values.recent_ethnicity_school_values
             )
           )
       end
@@ -60,7 +60,7 @@ module SchoolProfiles
       {
         subject_name(data_type_name) => {
           info_text: I18n.t(data_type_name, scope: 'lib.equity_gsdata.data_point_info_texts', default: ''),
-          sources: value_hashes.map { |dv| {name: dv.source_name, year: dv.source_year }}.uniq
+          sources: value_hashes.map { |dv| {name: dv.source, year: dv.source_year }}.uniq
         }
       }
     end

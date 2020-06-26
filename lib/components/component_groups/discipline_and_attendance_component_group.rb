@@ -27,7 +27,6 @@ module Components
             component.title = 'Percentage of students chronically absent (15+ days)'
             component.type = 'person_gray'
             component.narration = t("narration.ER.#{attendance_scope}.Percentage of students chronically absent (15+ days)")
-            component.flagged = cache_data_reader.attendance_flag?
             component.exact_breakdown_tags = ['ethnicity']
             component.valid_breakdowns = []
           end

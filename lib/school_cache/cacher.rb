@@ -7,7 +7,6 @@ class Cacher
   # :school_reviews
   # :school_media
   # :esp_response
-  # :gsdata
   # :directory
   # :metrics
   # :feed_metrics
@@ -83,7 +82,6 @@ class Cacher
         metrics:                     MetricsCaching::SchoolMetricsCacher,
         esp_responses:               EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot:            ReviewsCaching::ReviewsSnapshotCacher,
-        gsdata:                      GsdataCaching::GsdataCacher,
         ratings:                     RatingsCaching::GsdataRatingsCacher,
         directory:                   DirectoryCaching::DirectoryCacher,
         feed_test_scores_gsdata:     TestScoresCaching::FeedTestScoresCacherGsdata,
@@ -114,7 +112,6 @@ class Cacher
       ReviewsCaching::ReviewsSnapshotCacher,
       TestScoresCaching::FeedTestScoresCacherGsdata,
       TestScoresCaching::FeedOldTestScoresCacherGsdata,
-      GsdataCaching::GsdataCacher,
       RatingsCaching::GsdataRatingsCacher,
       DirectoryCaching::DirectoryCacher,
       FeedMetricsCaching::SchoolFeedMetricsCacher
