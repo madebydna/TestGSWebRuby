@@ -1,0 +1,48 @@
+<script src="https://js.stripe.com/v3/"></script>
+
+<input id="cardholder-name" type="text">
+<!-- placeholder for Elements -->
+<form id="setup-form">
+  <div id="card-element"></div>
+  <button id="card-button" data-secret="<%= @intent.client_secret %>">
+    Save Card
+  </button>
+
+</form>
+
+<script>
+  var stripe = Stripe('pk_test_51GsZt5Ka3u1U9cuSHtx1JYDpiiN7iN1JDgDFff1a9pH52r2y76PhLJNOrRP1B3xkGR6CoQ2sivviWRouImLaQe6S00r3S2nNJa');
+
+  var elements = stripe.elements();
+  var cardElement = elements.create('card');
+  cardElement.mount('#card-element');
+
+  window.onload = function() {
+    var cardholderName = document.getElementById('cardholder-name');
+    var cardButton = document.getElementById('card-button');
+    var clientSecret = cardButton.dataset.secret;
+
+    cardButton.addEventListener('click', function (ev) {
+
+      stripe.confirmCardSetup(
+        clientSecret,
+        {
+          payment_method: {
+            card: cardElement,
+            billing_details: {
+              name: cardholderName.value,
+            },
+          },
+        }
+      ).then(function (result) {
+        if (result.error) {
+          // Display error.message in your UI.
+          console.log("ERROR");
+        } else {
+          console.log("success");
+          // The setup has succeeded. Display a success message.
+        }
+      });
+    });
+  }
+</script>

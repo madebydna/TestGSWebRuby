@@ -12,13 +12,18 @@ class Admin::Api::UsersController < ApplicationController
     @user = ::Api::User.new
   end
 
+  def billing
+    user    = ::Api::User.last
+    @intent = Stripe::SetupIntent.create_customer({ customer: user.stripe_customer_id })
+  end
+
   def create
     @user = ::Api::User.new(user_params)
     if @user.save
       # ApiRequestReceivedEmail.deliver_to_api_key_requester(@user)
       # ApiRequestToModerateEmail.deliver_to_admin(@user)
-      Api::StripeCustomerCreator.create(user)
-      render json: { status: 'success' }
+      stripe_customer_id = Api::StripeInteractor.create(@user)
+      render :billing
     else
       render :new
     end
