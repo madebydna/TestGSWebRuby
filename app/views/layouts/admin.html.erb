@@ -5,22 +5,25 @@
     <%= include_gon %>
     <%= yield :head %>
     <%= stylesheet_link_tag 'admin_tools'%>
-    <%= webpack_javascript_include_tag 'commons-blocking' %>
-    <%= webpack_javascript_include_tag 'commons-blocking-loader' %>
-    <%= webpack_javascript_include_tag 'admin-tools' %>
+    <%= stylesheet_link_tag "footer", :async => true %>
+    <%= webpack_javascript_include_tag("commons-blocking", "data-turbolinks-track" => true) %>
+    <%= webpack_javascript_include_tag("commons-blocking-loader", "data-turbolinks-track" => true) %>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body class="open-sans">
   <div class="js-modal-container"></div>
+
   <%= render 'google_tag_manager/install' %>
     <div class="container">
-      <div class="admin_header">
-        <%= link_to image_tag('nav/gs_logo.png', size:'119x50', alt:'GreatSchools.org'), root_path%>
-      </div>
+      <%# <div class="admin_header"> %>
+        <%#= link_to image_tag('nav/gs_logo.png', size:'119x50', alt:'GreatSchools.org'), root_path%>
+      <%# </div> %>
 
       <div class="admin_body">
         <%= yield %>
       </div>
     </div>
+    <%= yield :page_javascripts %>
   </body>
 </html>
