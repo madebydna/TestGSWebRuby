@@ -1,10 +1,3 @@
-<% unless defined?(universal_nav) %>
-  <% universal_nav = true %>
-<% end %>
-<% unless defined?(footer) %>
-  <% footer = true %>
-<% end %>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,14 +8,12 @@
     <%= stylesheet_link_tag "footer", :async => true %>
     <%= webpack_javascript_include_tag("commons-blocking", "data-turbolinks-track" => true) %>
     <%= webpack_javascript_include_tag("commons-blocking-loader", "data-turbolinks-track" => true) %>
-    <%= webpack_javascript_include_tag 'admin-tools', defer: true %>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body class="open-sans">
   <div class="js-modal-container"></div>
 
-  <%= render 'nav/topnav_universal' if universal_nav %>
   <%= render 'google_tag_manager/install' %>
     <div class="container">
       <%# <div class="admin_header"> %>
@@ -33,7 +24,6 @@
         <%= yield %>
       </div>
     </div>
-    <%= render 'nav/footer' if footer %>
     <%= yield :page_javascripts %>
   </body>
 </html>

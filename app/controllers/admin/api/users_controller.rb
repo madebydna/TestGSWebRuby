@@ -1,4 +1,6 @@
 class Admin::Api::UsersController < ApplicationController
+  include Api::ErrorHelper
+
   OFFSET = 100
   layout 'admin'
 
@@ -18,7 +20,7 @@ class Admin::Api::UsersController < ApplicationController
       Api::StripeCustomerCreator.create(user)
       render json: { status: 'success' }
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -40,7 +42,8 @@ class Admin::Api::UsersController < ApplicationController
                                      :account_updated,
                                      :email_confirmation,
                                      :organization_description,
-                                     :role
+                                     :role,
+                                     :intended_use_details
     )
   end
 

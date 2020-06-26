@@ -32,7 +32,7 @@ const config = {
     home: ['polyfills','./app/bundles/GSWeb/common', './app/bundles/GSWeb/home'],
     'commons-blocking-loader': ['./app/bundles/GSWeb/misc_all_page_blocking'],
     'jquery-loader': ['jquery'],
-    'admin-tools': ['./app/bundles/GSWeb/common','./app/bundles/GSWeb/admin_tools'],
+    'admin-tools': ['./app/bundles/GSWeb/admin_tools'],
     'add-schools': ['./app/bundles/GSWeb/pages/add_schools'],
     compare: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/compare'],
     search: ['polyfills', './app/bundles/GSWeb/common', './app/bundles/GSWeb/search'],

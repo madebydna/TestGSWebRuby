@@ -1,0 +1,27 @@
+.developer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+
+  .developer-nav-links-container {
+    display: flex;
+    width: 25%;
+    justify-content: space-between;
+
+    .developer-nav-links {
+      font-family: 'opensans-semibold';
+      font-size: 16px;
+      line-height: 106.69%;
+      text-transform: uppercase;
+      color: #333333;
+      text-decoration: none;
+      letter-spacing: 0.005em;
+      padding: 5px;
+
+      &:hover {
+        color: #6f777b;
+      }
+    }
+  }
+}
