@@ -49,6 +49,10 @@ section.school-list {
           vertical-align: middle;
           border: 0;
         }
+
+        .widget-icon{
+          height: 38px;
+        }
       }
       > span:nth-of-type(2) {
         width: calc(100% - 95px);
