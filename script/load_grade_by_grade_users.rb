@@ -42,26 +42,31 @@ class LoadGradeByGradeUsers < ActiveRecord::Base
     @_new_grades ||= []
   end
 
+  def unsubscribed_users
+    @_unsubscribed_users ||= []
+  end
+
   def errors
     @_errors ||= []
   end
 
   def load
     CSV.foreach(@file, headers: true) do |row|
-      selected_grades = row[4..-1].each_with_index.map {|grade, idx| id_to_grade(idx).to_s if grade.present?}.compact
+      selected_grades = row[3..-2].each_with_index.map {|grade, idx| id_to_grade(idx).to_s if grade.present?}.compact
       user_and_grades = {email: row[0], first_name: row[1], last_name: row[2], grades: selected_grades}
       gbg_load_obj = GbgLoadObject.for(user_and_grades)
       gbg_load_obj&.load_subscriptions
       add_new_records(gbg_load_obj)
       add_errors(gbg_load_obj)
     end
+    print_stats
     write_rollback_sql_to_file
     write_errors_to_file
   end
 
   def add_new_records(gbg_load_obj)
     return unless gbg_load_obj
-    %i(new_users new_subscriptions new_grades).each {|sym| send(sym).concat(gbg_load_obj.new_records_hash[sym])}
+    %i(new_users new_subscriptions new_grades unsubscribed_users).each {|sym| send(sym).concat(gbg_load_obj.new_records_hash[sym])}
   end
 
   def add_errors(gbg_load_obj)
@@ -70,7 +75,7 @@ class LoadGradeByGradeUsers < ActiveRecord::Base
   end
 
   def write_rollback_sql_to_file
-    File.open('/tmp/ausd_gbg_load_output_file_10_2018.sql', 'w+') do |f|
+    File.open('/tmp/ausd_gbg_load_output_file_10_2019.sql', 'w+') do |f|
       f.puts "# This file includes records added to list_member, list_active, and student. It can be executed to roll-back these additions."
       f.puts sql_for('list_member', new_users)
       f.puts sql_for('list_active', new_subscriptions)
@@ -79,7 +84,7 @@ class LoadGradeByGradeUsers < ActiveRecord::Base
   end
 
   def write_errors_to_file
-    File.open('/tmp/ausd_gbg_load_10_2018_errors.rb', 'w+') do |f|
+    File.open('/tmp/ausd_gbg_load_10_2019_errors.rb', 'w+') do |f|
       f.print errors
     end
   end
@@ -90,6 +95,12 @@ class LoadGradeByGradeUsers < ActiveRecord::Base
       DELETE FROM #{table}
       WHERE id IN(#{id_array.join(",")});
     }
+  end
+
+  def print_stats
+    puts "Number of new users: #{new_users.count}"
+    puts "Number of new subscriptions: #{new_subscriptions.count}"
+    puts "Number of existing users who had previously unsubscribed: #{unsubscribed_users.count}"
   end
 
 end
@@ -131,7 +142,8 @@ class GbgLoadObject < ActiveRecord::Base
     {
       new_users: new_users,
       new_subscriptions: new_subscriptions,
-      new_grades: new_grades
+      new_grades: new_grades,
+      unsubscribed_users: unsubscribed_users
     }
   end
 
@@ -144,9 +156,15 @@ class GbgLoadObject < ActiveRecord::Base
   attr_reader :user, :grades, :new_user
 
   def handle_existing_user_subscriptions
+    if has_unsubscribed?
+      unsubscribed_users << user.id
+    end
+    user.how = HOW_ACQUIRED_AUSD
+    user.updated = Time.current
+    user.save
+    add_grades
     return if has_unsubscribed?
     add_greatkidsnews unless user.has_subscription?('greatkidsnews')
-    add_grades
   end
 
   def handle_new_user_subscriptions
@@ -186,6 +204,9 @@ class GbgLoadObject < ActiveRecord::Base
     @_new_grades ||= []
   end
 
+  def unsubscribed_users
+    @_unsubscribed_users ||= []
+  end
 end
 
 def read_command_line_input
@@ -201,16 +222,16 @@ end
 # rubocop:disable Layout/IndentHeredoc
 def print_gs
   <<-'DH'
-         _              _        
-        /\ \           / /\      
-       /  \ \         / /  \     
-      / /\ \_\       / / /\ \__  
-     / / /\/_/      / / /\ \___\ 
-    / / / ______    \ \ \ \/___/ 
-   / / / /\_____\    \ \ \       
-  / / /  \/____ /_    \ \ \      
- / / /_____/ / //_/\__/ / /      
-/ / /______\/ / \ \/___/ /       
+         _              _
+        /\ \           / /\
+       /  \ \         / /  \
+      / /\ \_\       / / /\ \__
+     / / /\/_/      / / /\ \___\
+    / / / ______    \ \ \ \/___/
+   / / / /\_____\    \ \ \
+  / / /  \/____ /_    \ \ \
+ / / /_____/ / //_/\__/ / /
+/ / /______\/ / \ \/___/ /
 \/___________/   \_____\/    (another GS! script)
 
   DH
