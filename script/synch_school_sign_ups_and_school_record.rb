@@ -29,7 +29,7 @@ class SynchSchoolSignUpsAndSchoolRecord
   end
 
   def delete_from_list(id)
-    Subscription.delete(id)
+    Subscription.on_db(:gs_schooldb_rw).delete(id)
   end
 
   def run
