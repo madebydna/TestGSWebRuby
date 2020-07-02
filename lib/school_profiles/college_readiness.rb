@@ -68,6 +68,10 @@ module SchoolProfiles
       new_sat?(state, year) ? "#{SAT_SCORE}_new" : SAT_SCORE
     end
 
+    def sat_percent_college_ready_text_key(grade)
+      grade == 'All' ? SAT_PERCENT_COLLEGE_READY : MetricsCaching::CollegeReadinessConfig.const_get("SAT_PERCENT_COLLEGE_READY_#{grade}")
+    end
+
     def new_sat?(state, year)
       NEW_SAT_STATES.include?(state.to_s.downcase) && year.to_i >= NEW_SAT_YEAR
     end

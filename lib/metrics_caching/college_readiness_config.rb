@@ -7,6 +7,8 @@ module MetricsCaching::CollegeReadinessConfig
   SAT_SCORE = 'Average SAT score'
   SAT_PARTICIPATION = 'SAT percent participation'
   SAT_PERCENT_COLLEGE_READY = 'SAT percent college ready'
+  SAT_PERCENT_COLLEGE_READY_11 = "SAT percent college ready(11th Grade)"
+  SAT_PERCENT_COLLEGE_READY_12 = "SAT percent college ready(12th Grade)"
   ACT_SCORE = 'Average ACT score'
   ACT_PARTICIPATION = 'ACT participation'
   ACT_PERCENT_COLLEGE_READY = 'ACT percent college ready'
@@ -53,11 +55,11 @@ module MetricsCaching::CollegeReadinessConfig
   ]
 
   REMEDIATION_SUBGROUPS = [ GRADUATES_REMEDIATION,
-                           'Graduates needing Reading remediation in college',
-                           'Graduates needing Writing remediation in college',
-                           'Graduates needing English remediation in college',
-                           'Graduates needing Science remediation in college',
-                           'Graduates needing Math remediation in college']
+                            'Graduates needing Reading remediation in college',
+                            'Graduates needing Writing remediation in college',
+                            'Graduates needing English remediation in college',
+                            'Graduates needing Science remediation in college',
+                            'Graduates needing Math remediation in college']
   SECOND_YEAR = [ GRADUATES_PERSISTENCE,
                  'Percent Enrolled in a public 4 year college and Returned for a Second Year',
                  'Percent Enrolled in a public 2 year college and Returned for a Second Year']
