@@ -4,9 +4,6 @@ require 'ostruct'
 class Hash
   def to_openstruct
     JSON.parse to_json, object_class: OpenStruct
-      # mapped = {}
-      # each{ |key,value| mapped[key] = value.to_openstruct }
-      # OpenStruct.new(mapped)
   end
 end
 
@@ -15,9 +12,6 @@ class SynchSchoolSignUpsAndSchoolRecord
   LIST_TYPES = %w(mystat mystat_private)
   HEADERS = %w(id member_id state school_id list language)
   FILE_PATH = "/tmp/mss_to_dead_schools.csv"
-  # Currently (01/20) 12Mil+ records!
-  # index on list + state, 2.5min runtime
-  # using "select_all", 1m13s
 
   def quoted_list_types
     LIST_TYPES.map { |list| "'#{list}'" }.join(",")
