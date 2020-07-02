@@ -61,8 +61,8 @@ module MetricsCaching::CollegeReadinessConfig
                             'Graduates needing Science remediation in college',
                             'Graduates needing Math remediation in college']
   SECOND_YEAR = [ GRADUATES_PERSISTENCE,
-                 'Percent Enrolled in a public 4 year college and Returned for a Second Year',
-                 'Percent Enrolled in a public 2 year college and Returned for a Second Year']
+                  'Percent Enrolled in a public 4 year college and Returned for a Second Year',
+                  'Percent Enrolled in a public 2 year college and Returned for a Second Year']
 
 
 
