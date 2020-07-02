@@ -1,4 +1,14 @@
 require 'csv'
+require 'ostruct'
+
+class Hash
+  def to_openstruct
+    JSON.parse to_json, object_class: OpenStruct
+      # mapped = {}
+      # each{ |key,value| mapped[key] = value.to_openstruct }
+      # OpenStruct.new(mapped)
+  end
+end
 
 class SynchSchoolSignUpsAndSchoolRecord
 
@@ -15,29 +25,28 @@ class SynchSchoolSignUpsAndSchoolRecord
 
   def generate_sql(state)
     <<~SQL
-      Select id, school_id, state, list, member_id, language from gs_schooldb.list_active
+      Select * from gs_schooldb.list_active
       where state = '#{state}' and list in (#{quoted_list_types});
     SQL
   end
 
+  def insert_into_history(hash)
+    SubscriptionHistory.archive_subscription(hash.to_openstruct)
+  end
+
+  def delete_from_list(id)
+    Subscription.delete(id)
+  end
+
   def run
-    CSV.open(FILE_PATH, 'w') do |csv|
-      csv << HEADERS
-    end
     States::STATE_HASH.values.uniq.each do |state|
-      puts("state = #{state}")
-      count = 0
       Subscription.connection.select_all(generate_sql(state).squish).each do |sign_up|
         results = School.on_db(state.downcase.to_sym).find_by_id(sign_up['school_id'])&.active
         if (results != 1)
-          count += 1
-          CSV.open(FILE_PATH, 'a') do |csv|
-            csv << HEADERS.map { |header| sign_up[header] }
-          end
-          # puts "member_id = #{sign_up['member_id']} - state = #{sign_up['state']} - school_id = #{sign_up['school_id']} - id = #{sign_up['id']} - list = #{sign_up['list']}"
+          insert_into_history(sign_up)
+          delete_from_list(sign_up['id'])
         end
       end
-      puts("count = #{count}")
     end
   end
 end
