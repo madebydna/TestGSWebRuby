@@ -1,12 +1,18 @@
 @import 'resources/bootstrap/bootstrap';
 @import 'variables/colors';
 @import 'fonts/fonts-opensans-regular';
+@import 'pages/nav/developer_nav';
+@import 'fonts/fonts-opensans-semibold';
 @import 'fonts/fonts-robotoslab-bold';
 
 .admin_header {
   text-align: right;
   margin: 2% 0;
   //padding: 1%;
+}
+
+.dn {
+  display: none;
 }
 
 .admin_body {
@@ -71,13 +77,35 @@
       border-radius: 4px;
     }
 
+    .field_with_errors {
+      position: relative;
+
+      .api-registration-field{
+        border: 1px solid red;
+      }
+
+      select {
+        border: 1px solid red !important;
+      }
+    }
+
+    .error-message {
+      position: absolute;
+      bottom: -8px;
+      font-size: 12px;
+      margin-left: 15px;
+      color: red;
+      font-weight: 1000;
+    }
+
     .api-registration-select-container {
       margin: 12px;
       position: relative;
       width: calc(100% - 24px);
 
-      > select {
+      select {
         padding: 13px;
+        color: gray;
         width: 100%;
         border: 1px solid #c1d2d9;
         border-radius: 4px;
@@ -109,6 +137,21 @@
       background-color: #2ba3dc;
       color: #ffffff;
       border-radius: 4px;
+      border: none;
+    }
+
+    .api-registration-hidden-input-field{
+      margin: 0 12px 12px 12px;
+      padding: 0 13px 13px 13px;
+      font-size: 14px;
+      font-family: 'opensans-regular';
+      width: calc(100% - 24px);
+      border: none;
+      border-bottom: 1px solid #c1d2d9;
+
+      &:focus{
+        outline: none;
+      }
     }
 
   }
