@@ -1,14 +1,14 @@
 require "spec_helper"
 
-describe CommunityProfiles::CollegeReadinessConfig do 
+describe MetricsCaching::CollegeReadinessConfig do
 
     context "POST_SECONDARY" do
         it "is an array" do
-            expect(CommunityProfiles::CollegeReadinessConfig::POST_SECONDARY).to be_a(Array)
+            expect(MetricsCaching::CollegeReadinessConfig::POST_SECONDARY).to be_a(Array)
         end
 
         it "contains a list of defined strings" do
-            expect(CommunityProfiles::CollegeReadinessConfig::POST_SECONDARY).to match_array([
+            expect(MetricsCaching::CollegeReadinessConfig::POST_SECONDARY).to match_array([
                 'Graduating seniors pursuing other college',
                 'Graduating seniors pursuing 4 year college/university',
                 'Graduating seniors pursuing 2 year college/university',
@@ -36,21 +36,17 @@ describe CommunityProfiles::CollegeReadinessConfig do
         end
 
         it "contains a list of unique strings" do
-            expect(CommunityProfiles::CollegeReadinessConfig::POST_SECONDARY.uniq.length).to eq(CommunityProfiles::CollegeReadinessConfig::POST_SECONDARY.length)
-        end
-
-        it "matches the array defined in SchoolProfiles" do
-            expect(CommunityProfiles::CollegeReadinessConfig::POST_SECONDARY).to match_array(SchoolProfiles::CollegeReadinessConfig::POST_SECONDARY)
+            expect(MetricsCaching::CollegeReadinessConfig::POST_SECONDARY.uniq.length).to eq(MetricsCaching::CollegeReadinessConfig::POST_SECONDARY.length)
         end
     end
 
     context "REMEDIATION_SUBGROUPS" do
         it "is an array" do
-            expect(CommunityProfiles::CollegeReadinessConfig::REMEDIATION_SUBGROUPS).to be_a(Array)
+            expect(MetricsCaching::CollegeReadinessConfig::REMEDIATION_SUBGROUPS).to be_a(Array)
         end
 
         it "contains a list of defined strings" do
-            expect(CommunityProfiles::CollegeReadinessConfig::REMEDIATION_SUBGROUPS).to match_array([
+            expect(MetricsCaching::CollegeReadinessConfig::REMEDIATION_SUBGROUPS).to match_array([
                 'Percent Needing Remediation for College',
                 'Graduates needing Reading remediation in college',
                 'Graduates needing Writing remediation in college',
@@ -58,26 +54,18 @@ describe CommunityProfiles::CollegeReadinessConfig do
                 'Graduates needing Science remediation in college',
                 'Graduates needing Math remediation in college'])
         end
-
-        it "matches the array defined in SchoolProfiles" do
-            expect(CommunityProfiles::CollegeReadinessConfig::REMEDIATION_SUBGROUPS).to match_array(SchoolProfiles::CollegeReadinessConfig::REMEDIATION_SUBGROUPS)
-        end
     end
 
     context "SECOND_YEAR" do
         it "is an array" do
-            expect(CommunityProfiles::CollegeReadinessConfig::SECOND_YEAR).to be_a(Array)
+            expect(MetricsCaching::CollegeReadinessConfig::SECOND_YEAR).to be_a(Array)
         end
 
         it "contains a list of defined strings" do
-            expect(CommunityProfiles::CollegeReadinessConfig::SECOND_YEAR).to match_array([ 
+            expect(MetricsCaching::CollegeReadinessConfig::SECOND_YEAR).to match_array([
                 'Percent Enrolled in College and Returned for a Second Year',
                 'Percent Enrolled in a public 4 year college and Returned for a Second Year',
                 'Percent Enrolled in a public 2 year college and Returned for a Second Year'])
-        end
-
-        it "matches the array defined in SchoolProfiles" do
-            expect(CommunityProfiles::CollegeReadinessConfig::SECOND_YEAR).to match_array(SchoolProfiles::CollegeReadinessConfig::SECOND_YEAR)
         end
     end
 

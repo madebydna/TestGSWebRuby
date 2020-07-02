@@ -72,7 +72,7 @@ describe 'School profiles page', remote: true do
       page_object.advanced_stem_courses
     end
 
-    its('title') { is_expected.to have_text('Advanced & STEM courses') }
+    its('title') { is_expected.to have_text('Advanced courses') }
     its('score_items.length') { is_expected.to eq(3) }
     its('source_link') { is_expected.to be_present }
     it 'should list sources when clicking source link' do
@@ -128,7 +128,7 @@ describe 'School profiles page', remote: true do
     end
 
     with_subject :advanced_stem_courses do
-      it { is_expected.to have_text('Advanced & STEM courses') }
+      it { is_expected.to have_text('Advanced courses') }
     end
 
     with_subject :equity_overview do
@@ -306,7 +306,7 @@ describe 'School profiles page', remote: true do
     it { is_expected.to have_no_advanced_courses }
 
     with_subject :advanced_stem_courses do
-      it { is_expected.to have_text('Advanced & STEM courses') }
+      it { is_expected.to have_text('Advanced courses') }
     end
 
     it { is_expected.to_not have_equity_overview }

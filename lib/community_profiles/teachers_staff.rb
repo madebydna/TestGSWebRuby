@@ -98,7 +98,7 @@ module CommunityProfiles
     end
 
     def main_staff_hash
-      @main_staff_hash ||= data_reader.decorated_gsdata_datas(*main_staff_data_types)
+      @main_staff_hash ||= data_reader.decorated_metrics_datas(*main_staff_data_types)
     end
 
     def main_staff_data
@@ -114,7 +114,7 @@ module CommunityProfiles
     end
 
     def other_staff_hash
-      @other_staff_hash ||= data_reader.decorated_gsdata_datas(*other_staff_data_types)
+      @other_staff_hash ||= data_reader.decorated_metrics_datas(*other_staff_data_types)
     end
 
     def other_staff_data
@@ -170,7 +170,7 @@ module CommunityProfiles
 
     def select_latest_breakdown_value(array, breakdown)
       return nil unless array.present?
-      all_values = array.select {|v| v.breakdowns.include?(breakdown) }
+      all_values = array.select {|v| v.breakdown == breakdown }
       get_max_year(all_values)
     end
 

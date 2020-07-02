@@ -6,16 +6,13 @@ module Components
 
       def normalized_values
         cache_data_reader
-        .metrics_data(data_type)
-        .values
-        .flatten
+        .decorated_metrics_data(data_type)
         .map { |h| cache_hash_to_standard_hash(h) }
       end
 
       # TODO: move somewhere more sensible, where it can be reused
       def cache_hash_to_standard_hash(hash)
-        breakdown = hash['original_breakdown'] || hash['breakdown']
-        breakdown = 'All students' if breakdown == 'All'
+        breakdown = hash['breakdown']
         {
           breakdown: breakdown,
           score: hash['school_value'],

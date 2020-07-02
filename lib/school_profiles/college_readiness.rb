@@ -4,7 +4,7 @@ module SchoolProfiles
     include Qualaroo
     include SharingTooltipModal
     include RatingSourceConcerns
-    include CollegeReadinessConfig
+    include MetricsCaching::CollegeReadinessConfig
 
     TABS = {'college_readiness' => CHAR_CACHE_ACCESSORS, 'college_success' => CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS}
 
@@ -66,6 +66,10 @@ module SchoolProfiles
 
     def sat_score_info_text_key(state, year)
       new_sat?(state, year) ? "#{SAT_SCORE}_new" : SAT_SCORE
+    end
+
+    def sat_percent_college_ready_text_key(grade)
+      grade == 'All' ? SAT_PERCENT_COLLEGE_READY : MetricsCaching::CollegeReadinessConfig.const_get("SAT_PERCENT_COLLEGE_READY_#{grade}")
     end
 
     def new_sat?(state, year)

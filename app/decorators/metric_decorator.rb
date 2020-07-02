@@ -11,6 +11,10 @@ class MetricDecorator < SimpleDelegator
     data_set.date_valid.year
   end
 
+  def source_date_valid
+    data_set.date_valid
+  end
+
   def label
     data_set.data_type.name
   end
@@ -34,5 +38,12 @@ class MetricDecorator < SimpleDelegator
       # as it is used everywhere for string comparison
       'All students'
     end
+  end
+
+  # Even though breakdown has many breakdown_tags
+  # in practice there is no breakdown
+  # that has more than one breakdown_tag
+  def breakdown_tags
+    breakdown.breakdown_tags.first.try(:tag)
   end
 end

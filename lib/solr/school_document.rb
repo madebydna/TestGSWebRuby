@@ -60,15 +60,15 @@ module Solr
     def self.rating_subgroup_fields
       @_rating_subgroup_fields ||= (
         [].tap do |array|
-          Breakdown.unique_ethnicity_names.each do |breakdown|
+          Omni::Breakdown.unique_ethnicity_names.each do |breakdown|
             field_name = "test_scores_rating_#{breakdown.downcase.gsub(" ", "_")}".to_sym
             array << new_field(field_name, type: FieldTypes::INTEGER) { school.test_score_ratings_by_breakdown.dig(breakdown) }
           end
           array << new_field(
-            "#{Breakdown.economically_disadvantaged_name.gsub(" ", "_")}".to_sym,
+            "#{Omni::Breakdown.economically_disadvantaged_name.gsub(" ", "_")}".to_sym,
             type: FieldTypes::INTEGER
           ) do
-            school.test_score_ratings_by_breakdown[Breakdown.economically_disadvantaged_name]
+            school.test_score_ratings_by_breakdown[Omni::Breakdown.economically_disadvantaged_name]
           end
         end
       )
@@ -87,7 +87,7 @@ module Solr
     def self.breakdown_to_rating_field_name
       @_breakdown_to_rating_field_name ||= (
         equity_hash = { "Low-income" => "Economically_disadvantaged" }
-        Breakdown.unique_ethnicity_names.each do |breakdown|
+        Omni::Breakdown.unique_ethnicity_names.each do |breakdown|
           equity_hash[breakdown] = "test_scores_rating_#{breakdown.downcase.gsub(" ", "_")}"
         end
         equity_hash

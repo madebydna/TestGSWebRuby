@@ -1,4 +1,4 @@
-module SchoolProfiles::CollegeReadinessConfig
+module MetricsCaching::CollegeReadinessConfig
 
   DATA_CUTOFF_YEAR = 2015
 # Constants for college readiness pane
@@ -7,6 +7,8 @@ module SchoolProfiles::CollegeReadinessConfig
   SAT_SCORE = 'Average SAT score'
   SAT_PARTICIPATION = 'SAT percent participation'
   SAT_PERCENT_COLLEGE_READY = 'SAT percent college ready'
+  SAT_PERCENT_COLLEGE_READY_11 = "SAT percent college ready(11th Grade)"
+  SAT_PERCENT_COLLEGE_READY_12 = "SAT percent college ready(12th Grade)"
   ACT_SCORE = 'Average ACT score'
   ACT_PARTICIPATION = 'ACT participation'
   ACT_PERCENT_COLLEGE_READY = 'ACT percent college ready'
@@ -25,39 +27,42 @@ module SchoolProfiles::CollegeReadinessConfig
 
 # Constants for college success pane
 # Order matters - items display in configured order
-  POST_SECONDARY = ['Graduating seniors pursuing other college',
-                    'Graduating seniors pursuing 4 year college/university',
-                    'Graduating seniors pursuing 2 year college/university',
-                    'Percent of students who will attend out-of-state colleges',
-                    'Percent of students who will attend in-state colleges',
-                    'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation',
-                    'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation',
-                    'Percent Enrolled in College Immediately Following High School',
-                    'Percent enrolled in any institution of higher learning in the last 0-16 months',
-                    'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months',
-                    'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months',
-                    'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation',
-                    'Percent enrolled in any postsecondary institution within 12 months after graduation',
-                    'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation',
-                    'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation',
-                    'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation',
-                    'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation',
-                    'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation',
-                    'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation',
-                    'Percent enrolled in any in-state postsecondary institution within 12 months after graduation',
-                    'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation',
-                    'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation',
-                    'Percent enrolled in any postsecondary institution within 24 months after graduation',
-                    'Percent enrolled in any postsecondary institution within 6 months after graduation']
-  REMEDIATION_SUBGROUPS = ['Percent Needing Remediation for College',
-                           'Graduates needing Reading remediation in college',
-                           'Graduates needing Writing remediation in college',
-                           'Graduates needing English remediation in college',
-                           'Graduates needing Science remediation in college',
-                           'Graduates needing Math remediation in college']
-  SECOND_YEAR = ['Percent Enrolled in College and Returned for a Second Year',
-                 'Percent Enrolled in a public 4 year college and Returned for a Second Year',
-                 'Percent Enrolled in a public 2 year college and Returned for a Second Year']
+  POST_SECONDARY = [
+    'Graduating seniors pursuing other college',
+    'Graduating seniors pursuing 4 year college/university',
+    'Graduating seniors pursuing 2 year college/university',
+    'Percent of students who will attend out-of-state colleges',
+    'Percent of students who will attend in-state colleges',
+    'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation',
+    'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation',
+    'Percent Enrolled in College Immediately Following High School',
+    'Percent enrolled in any institution of higher learning in the last 0-16 months',
+    'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months',
+    'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months',
+    'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation',
+    'Percent enrolled in any postsecondary institution within 12 months after graduation',
+    'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation',
+    'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation',
+    'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation',
+    'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation',
+    'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation',
+    'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation',
+    'Percent enrolled in any in-state postsecondary institution within 12 months after graduation',
+    'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation',
+    'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation',
+    'Percent enrolled in any postsecondary institution within 24 months after graduation',
+    'Percent enrolled in any postsecondary institution within 6 months after graduation'
+  ]
+
+  REMEDIATION_SUBGROUPS = [ GRADUATES_REMEDIATION,
+                            'Graduates needing Reading remediation in college',
+                            'Graduates needing Writing remediation in college',
+                            'Graduates needing English remediation in college',
+                            'Graduates needing Science remediation in college',
+                            'Graduates needing Math remediation in college']
+  SECOND_YEAR = [ GRADUATES_PERSISTENCE,
+                  'Percent Enrolled in a public 4 year college and Returned for a Second Year',
+                  'Percent Enrolled in a public 2 year college and Returned for a Second Year']
 
 
 
@@ -114,7 +119,7 @@ module SchoolProfiles::CollegeReadinessConfig
       :data_key => SAT_SCORE,
       :visualization => 'bar',
       :formatting => [:round],
-      :range => (600..2400)
+      :range => OLD_SAT_RANGE
     },
     {
       :cache => :metrics,
@@ -126,7 +131,7 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :metrics,
       :data_key => SAT_PERCENT_COLLEGE_READY,
       :visualization => 'bar',
-      :formatting => %i(round_unless_less_than_1 percent)
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :metrics,
@@ -145,7 +150,7 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :metrics,
       :data_key => ACT_PERCENT_COLLEGE_READY,
       :visualization => 'bar',
-      :formatting => %i(round_unless_less_than_1 percent)
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     },
     {
       :cache => :gsdata,
@@ -181,7 +186,7 @@ module SchoolProfiles::CollegeReadinessConfig
       :cache => :gsdata,
       :data_key => ACT_SAT_PARTICIPATION_9_12,
       :visualization => 'person',
-      :formatting => %i(round_unless_less_than_1 percent)
+      :formatting => FORMATTING_ROUND_LESS_THAN_ONE_PERCENT
     }
   ].freeze
 end

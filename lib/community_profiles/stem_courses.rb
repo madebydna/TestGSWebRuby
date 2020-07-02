@@ -47,7 +47,7 @@ module CommunityProfiles
 
     def stem_data
       @_stem_data ||= begin
-        all_data = @cache_data_reader.decorated_gsdata_datas(*data_types)
+        all_data = @cache_data_reader.decorated_metrics_datas(*data_types)
 
         prioritize_freshest_algebra_data!(all_data)
       end
@@ -61,7 +61,7 @@ module CommunityProfiles
               breakdown: I18n.t(data_type, scope: 'lib.stem_courses', default:{})[:label],
               score: val,
               label: val < 1 ? '<1' : "#{val}",
-              state_average: data_value.state_value.to_f.round,
+              state_average: data_value.state_average.to_f.round,
               visualization: data_types_and_visualizations[data_type],
               tooltip_html: I18n.t(data_type, scope: 'lib.stem_courses', default:{})[:tooltip_html]
           }
@@ -76,7 +76,7 @@ module CommunityProfiles
           accum << {
             data_type: I18n.t(data_type, scope: 'lib.stem_courses', default:{})[:label],
             source_year: data_value.source_year,
-            source_name: I18n.db_t(data_value.source_name)
+            source_name: I18n.db_t(data_value.source)
           }
         end
       end.uniq

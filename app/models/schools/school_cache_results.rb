@@ -84,8 +84,6 @@ class SchoolCacheResults
         CachedNearbySchoolsMethods
       when 'performance'
         CachedPerformanceMethods
-      when 'gsdata'
-        CachedGsdataMethods
       when 'directory'
         CachedDirectoryMethods
       when 'courses'

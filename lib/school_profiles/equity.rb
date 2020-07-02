@@ -174,7 +174,7 @@ module SchoolProfiles
     end
 
     def metrics_sources_ethnicity
-      data = @school_cache_data_reader.metrics_data(*(metrics.keys))
+      data = @school_cache_data_reader.decorated_metrics_datas(*(metrics.keys))
       data.each_with_object({}) do |(label, bd_hashes), output|
         bd_hashes.each do |bd_hash|
           if bd_hash['breakdown'] == 'White' || bd_hash['breakdown'] == 'Hispanic' || bd_hash['breakdown'] == 'African American'
@@ -190,7 +190,7 @@ module SchoolProfiles
     end
 
     def metrics_sources_low_income
-      data = @school_cache_data_reader.metrics_data(*(metrics.keys))
+      data = @school_cache_data_reader.decorated_metrics_datas(*(metrics.keys))
       data.each_with_object({}) do |(label, bd_hashes), output|
         bd_hashes.each do |bd_hash|
           if bd_hash['breakdown'] == 'Economically disadvantaged'

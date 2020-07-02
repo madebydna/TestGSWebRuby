@@ -36,6 +36,8 @@ es:
       Average ACT score: Calificación media de ACT
       ACT participation: 'Participación ACT'
       SAT percent college ready: 'Clasificación para la preparación universitaria SAT Subject Test'
+      SAT percent college ready(11th Grade): 'Clasificación para la preparación universitaria SAT Subject Test 11.°grado'
+      SAT percent college ready(12th Grade): 'Clasificación para la preparación universitaria SAT Subject Test 12.°grado'
       ACT percent college ready: 'Clasificación para la preparación universitaria ACT'
       Percentage AP enrolled grades 9-12: 'Participación en cursos AP'
       Percentage of students passing 1 or more AP exams grades 9-12: 'El porcentaje de estudiantes que pasaron uno o más exámenes AP grados 9°-12°'
@@ -102,6 +104,8 @@ es:
         Average ACT score: 'El ACT es un examen de admisión universitaria, cuyo puntaje más alto es de 36 puntos. Esta calificación refleja el puntaje promedio de las calificaciones en el ACT entre los estudiantes de esta escuela.'
         ACT participation: 'El índice de participación en el ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el ACT.'
         SAT percent college ready: 'La clasificación para la preparación universitaria SAT refleja el puntaje mínimo en un SAT subject test necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
+        SAT percent college ready(11th Grade): 'La clasificación para la preparación universitaria SAT para estudiantes de 11.° o 12.°  grado refleja el puntaje mínimo en un examen SAT necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
+        SAT percent college ready(12th Grade): 'La clasificación para la preparación universitaria SAT para estudiantes de 11.° o 12.°  grado refleja el puntaje mínimo en un examen SAT necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
         ACT percent college ready: 'La clasificación para la preparación universitaria ACT refleja el puntaje mínimo de las pruebas de materia temáticas de ACT necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
         Percentage AP enrolled grades 9-12: 'Los cursos de AP (cursos avanzados) son clases de nivel universitario que los estudiantes pueden tomar en la escuela secundaria. El porcentaje de estudiantes que toman cursos AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
         AP Course Participation: 'Los cursos de AP (cursos avanzados) son clases de nivel universitario que los estudiantes pueden tomar en la escuela secundaria. El porcentaje de estudiantes que toman cursos AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
