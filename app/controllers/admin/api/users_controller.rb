@@ -14,7 +14,7 @@ class Admin::Api::UsersController < ApplicationController
 
   def billing
     user    = ::Api::User.last
-    @intent = Stripe::SetupIntent.create_customer({ customer: user.stripe_customer_id })
+    @intent = Api::StripeInteractor.create_intent(user)
   end
 
   def create
@@ -22,7 +22,7 @@ class Admin::Api::UsersController < ApplicationController
     if @user.save
       # ApiRequestReceivedEmail.deliver_to_api_key_requester(@user)
       # ApiRequestToModerateEmail.deliver_to_admin(@user)
-      stripe_customer_id = Api::StripeInteractor.create(@user)
+      stripe_customer_id = Api::StripeInteractor.create_customer(@user)
       render :billing
     else
       render :new
