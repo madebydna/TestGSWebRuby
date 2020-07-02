@@ -459,6 +459,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     stackprof (0.2.10)
+    stripe (5.22.0)
     systemu (2.6.4)
     teaspoon (0.9.1)
       railties (>= 3.2.5, < 5)
@@ -584,6 +585,7 @@ DEPENDENCIES
   sourcify
   spring-commands-rspec
   stackprof
+  stripe
   teaspoon
   thin
   timecop

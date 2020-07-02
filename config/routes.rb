@@ -249,6 +249,7 @@ LocalizedProfiles::Application.routes.draw do
 
   # New API routes
   get '/api/register/', to: 'admin/api/users#new', as: :api_register
+  get '/api/billing/', to: 'admin/api/users#billing', as: :api_billing
   post '/api/request-api-key-new/', to: 'admin/api/users#create', as: :post_request_api_key_new
 
 

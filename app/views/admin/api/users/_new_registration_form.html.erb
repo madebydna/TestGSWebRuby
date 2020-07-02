@@ -39,7 +39,7 @@
 
     <div class="col-xs-12 col-md-6">
       <div class="api-registration-select-container">
-        <%= f.select :state, options_for_select(States.labels_hash.invert.to_a, @user.state), { class: "api-registration-select", prompt: 'Select a State'} , required: true %>
+        <%= f.select :state, options_for_select(States.labels_hash.invert.to_a, @user.state), { :include_blank => 'Select a state' }, required: true, class: "api-registration-select" %>
       </div>
       <%= error_messages(:state, f.object.errors[:state])%>
     </div>
