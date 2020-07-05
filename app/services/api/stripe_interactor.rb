@@ -3,10 +3,8 @@ module Api
   class StripeInteractor
 
     # https://stripe.com/docs/api/customers/create
-    def self.create_customer(user)
-      customer = Stripe::Customer.create(email: user.email)
-      user.update(stripe_customer_id: customer.id)
-      customer.id
+    def self.create_customer(email)
+      Stripe::Customer.create(email: email)
     end
 
     # https://stripe.com/docs/api/setup_intents

@@ -12,21 +12,32 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def create
-    user    = Api::User.new(user_params)
-      creator = Api::UserCreator.new(user, params[:plan_id])
-    @user   = creator.create
-    if @user
-      redirect_to action: 'billing', intent: creator.intent
+    @user = Api::User.new(user_params)
+    if @user.save
+      Api::SubscriptionCreator.new(@user, 1).call
+      stripe_customer_id = Api::StripeCustomerCreator.new(@user).call
+      intent             = Api::StripeInteractor.create_intent(stripe_customer_id)
+      redirect_to action: 'billing', client_secret: intent.client_secret
     else
       render :new
     end
   end
 
   def billing
+    @client_secret = params[:client_secret]
+  end
+
+  def notify_user
+    # ApiRequestReceivedEmail.deliver_to_api_key_requester(@user)
+  end
+
+  def notify_admin
+    # ApiRequestToModerateEmail.deliver_to_admin(@user)
   end
 
   def confirmation
-    #
+    notify_user
+    notify_admin
   end
 
   def approval(user, price_id)

@@ -4,14 +4,13 @@
 <!-- placeholder for Elements -->
 <form id="setup-form">
   <div id="card-element"></div>
-  <button id="card-button" data-secret="<%= @intent.client_secret %>">
+  <button id="card-button" data-secret="<%= @client_secret %>">
     Save Card
   </button>
 </form>
 
 <script>
-  var stripe = Stripe('pk_test_51GsZt5Ka3u1U9cuSHtx1JYDpiiN7iN1JDgDFff1a9pH52r2y76PhLJNOrRP1B3xkGR6CoQ2sivviWRouImLaQe6S00r3S2nNJa');
-
+  var stripe = Stripe('pk_test_51H0VJqC0DFRCPjlNW8vkvuYb3M3cH0YuxdkFUcM8OytmtolVlgs2Y95DFKh9vkcbAyuge8bk25oyYRBmIZs6qsan00JxM8dNrG');
   var elements = stripe.elements();
   var cardElement = elements.create('card');
   cardElement.mount('#card-element');
