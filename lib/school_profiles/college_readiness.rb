@@ -69,7 +69,13 @@ module SchoolProfiles
     end
 
     def sat_percent_college_ready_text_key(grade)
-      grade == 'All' ? SAT_PERCENT_COLLEGE_READY : MetricsCaching::CollegeReadinessConfig.const_get("SAT_PERCENT_COLLEGE_READY_#{grade}")
+      begin
+        grade == 'All' ? SAT_PERCENT_COLLEGE_READY : MetricsCaching::CollegeReadinessConfig.const_get("SAT_PERCENT_COLLEGE_READY_#{grade}")
+      rescue => e
+        school = @school_cache_data_reader.school
+        GSLogger.error(:school_profiles, e, vars: "School: #{school.state}-#{school.id}, Grade: #{grade}", message: 'Incorrect SAT Percentage College Readiness label')
+        nil
+      end
     end
 
     def new_sat?(state, year)
