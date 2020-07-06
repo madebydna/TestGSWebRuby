@@ -2,11 +2,6 @@ module Api
   # This class encapsulates the logic for interacting with stripe
   class StripeInteractor
 
-    # https://stripe.com/docs/api/customers/create
-    def self.create_customer(email)
-      Stripe::Customer.create(email: email)
-    end
-
     # https://stripe.com/docs/api/setup_intents
     def self.create_intent(stripe_customer_id)
       Stripe::SetupIntent.create({ customer: stripe_customer_id })
