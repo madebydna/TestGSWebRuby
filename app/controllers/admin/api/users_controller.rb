@@ -14,17 +14,23 @@ class Admin::Api::UsersController < ApplicationController
   def create
     @user = Api::User.new(user_params)
     if @user.save
+      Api::StripeCustomerCreator.new(@user).call
       Api::SubscriptionCreator.new(@user, 1).call
-      stripe_customer_id = Api::StripeCustomerCreator.new(@user).call
-      intent             = Api::StripeInteractor.create_intent(stripe_customer_id)
-      redirect_to action: 'billing', client_secret: intent.client_secret
+      redirect_to action: 'billing', user_id: @user.id
     else
       render :new
     end
   end
 
   def billing
-    @client_secret = params[:client_secret]
+    user = Api::User.find(params['user_id'])
+    @intent = Api::StripeInteractor.create_intent(user.stripe_customer_id)
+  end
+
+  def confirmation
+    @subscription = Api::Subscription.find('subscription_id').update(status: 'payment_added')
+    notify_user
+    notify_admin
   end
 
   def notify_user
@@ -35,13 +41,8 @@ class Admin::Api::UsersController < ApplicationController
     # ApiRequestToModerateEmail.deliver_to_admin(@user)
   end
 
-  def confirmation
-    notify_user
-    notify_admin
-  end
-
-  def approval(user, price_id)
-    Api::StripeInteractor.create_subscription(user, price_id)
+  def complete
+    # SubscriptionUpdaterJob.perform_later(subscription_id: subscription_id, status: 'awaiting_bizdev_approval')
   end
 
   def user_params
