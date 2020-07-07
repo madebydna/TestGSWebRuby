@@ -245,7 +245,8 @@ module SchoolProfiles
     end
 
     def race_ethnicity_sources
-      sources_html((test_source_data.source_rating_text + test_source_data.sources_without_rating_text)) + sources
+      sources_html((test_source_data.source_rating_text + test_source_data.source_college_readiness_rating_text +
+        test_source_data.sources_without_rating_text)) + sources
     end
 
     def students_with_disabilities_sources
@@ -285,7 +286,6 @@ module SchoolProfiles
 
     def sources
       content = ''
-
       content << discipline_attendance_flag_sources if discipline_attendance_flag?
 
       if metrics_low_income_visible?
