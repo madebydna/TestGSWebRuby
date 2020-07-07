@@ -26,7 +26,7 @@ module Feeds
 
       def metrics_info
         @_metrics_info ||= begin
-          data_builder = MetricsBuilder.new(state_cache, universal_id, 'state')
+          data_builder = MetricsBuilder.new(state_metrics_cache, universal_id, 'state')
           data_builder.data_hashes
         end
       end
@@ -38,12 +38,6 @@ module Feeds
           end
 
           state_attributes_hash.merge(metrics_info)
-        end
-      end
-
-      def state_cache
-        @_state_cache ||= begin
-          state_metrics_cache.merge(state_gsdata_cache)
         end
       end
 
