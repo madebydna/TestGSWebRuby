@@ -138,25 +138,22 @@ module SchoolProfiles
     end
 
     def source_rating_text
-      if rating.present? && rating != 'NR'
-        rating_source(year: rating_year, label: data_label('GreatSchools Rating'),
-                      description: rating_description, methodology: rating_methodology,
-                      more_anchor: 'testscorerating')
-      else
-        ''
-      end
+      return '' if rating.present? && rating != 'NR'
+      rating_source(year: rating_year,
+          label: data_label('GreatSchools Rating'),
+          description: rating_description, methodology: rating_methodology,
+          more_anchor: 'testscorerating'
+      )
     end
 
     def source_college_readiness_rating_text
-      if college_readiness_rating.present? && college_readiness_rating != 'NR'
-        rating_source(year: college_readiness_rating_year, label: data_label('GreatSchools Rating', scope: 'lib.college_readiness'),
-            description: college_readiness_rating_hash.try(:[], 'description'),
-            methodology: college_readiness_rating_hash.try(:[], 'methodology'),
-            more_anchor: 'collegereadinessrating'
-          )
-      else
-        ''
-      end
+      return '' if college_readiness_rating.present? && college_readiness_rating != 'NR'
+      rating_source(year: college_readiness_rating_year,
+          label: data_label('GreatSchools Rating', scope: 'lib.college_readiness'),
+          description: college_readiness_rating_hash.try(:[], 'description'),
+          methodology: college_readiness_rating_hash.try(:[], 'methodology'),
+          more_anchor: 'collegereadinessrating'
+      )
     end
 
     def sources_without_rating_text
