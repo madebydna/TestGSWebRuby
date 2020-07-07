@@ -138,7 +138,7 @@ module SchoolProfiles
     end
 
     def source_rating_text
-      return '' if rating.present? && rating != 'NR'
+      return '' unless rating.present? && rating != 'NR'
       rating_source(year: rating_year,
           label: data_label('GreatSchools Rating'),
           description: rating_description, methodology: rating_methodology,
@@ -147,7 +147,7 @@ module SchoolProfiles
     end
 
     def source_college_readiness_rating_text
-      return '' if college_readiness_rating.present? && college_readiness_rating != 'NR'
+      return '' unless college_readiness_rating.present? && college_readiness_rating != 'NR'
       rating_source(year: college_readiness_rating_year,
           label: data_label('GreatSchools Rating', scope: 'lib.college_readiness'),
           description: college_readiness_rating_hash.try(:[], 'description'),
