@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <soap:Header>
+    <wsa:Action>DeleteResponse</wsa:Action>
+    <wsa:MessageID>urn:uuid:51c9ed85-b797-4e0e-b886-e56685866e4d</wsa:MessageID>
+    <wsa:RelatesTo>urn:uuid:270a5de5-a0bb-4dc2-837c-255cd8e99305</wsa:RelatesTo>
+    <wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To>
+    <wsse:Security>
+      <wsu:Timestamp wsu:Id="Timestamp-076268d2-4a9c-4cd3-8ff4-95c61855a62f">
+        <wsu:Created>2020-07-06T23:19:09Z</wsu:Created>
+        <wsu:Expires>2020-07-06T23:24:09Z</wsu:Expires>
+      </wsu:Timestamp>
+    </wsse:Security>
+  </soap:Header>
+  <soap:Body>
+    <DeleteResponse xmlns="http://exacttarget.com/wsdl/partnerAPI">
+      <Results xsi:type="DataExtensionDeleteResult">
+        <StatusCode>Error</StatusCode>
+        <StatusMessage>Errors Occurred</StatusMessage>
+        <OrdinalID>0</OrdinalID>
+        <ErrorCode>2</ErrorCode>
+        <Object xsi:type="DataExtensionObject">
+          <PartnerKey xsi:nil="true"/>
+          <ObjectID xsi:nil="true"/>
+          <CustomerKey>860393D2-0BB1-412A-88D8-78A8373C1746</CustomerKey>
+          <Keys>
+            <Key>
+              <Name>id</Name>
+              <Value>7263336</Value>
+            </Key>
+          </Keys>
+        </Object>
+        <ErrorMessage>Concurrency violation: the DeleteCommand affected 0 of the expected 1 records.</ErrorMessage>
+      </Results>
+      <Results xsi:type="DataExtensionDeleteResult">
+        <StatusCode>Error</StatusCode>
+        <StatusMessage>Errors Occurred</StatusMessage>
+        <OrdinalID>1</OrdinalID>
+        <ErrorCode>2</ErrorCode>
+        <Object xsi:type="DataExtensionObject">
+          <PartnerKey xsi:nil="true"/>
+          <ObjectID xsi:nil="true"/>
+          <CustomerKey>860393D2-0BB1-412A-88D8-78A8373C1746</CustomerKey>
+          <Keys>
+            <Key>
+              <Name>id</Name>
+              <Value>7263337</Value>
+            </Key>
+          </Keys>
+        </Object>
+        <ErrorMessage>Concurrency violation: the DeleteCommand affected 0 of the expected 1 records.</ErrorMessage>
+      </Results>
+      <RequestID>2c892499-9744-41b1-881f-94cab49b7206</RequestID>
+      <OverallStatus>Error</OverallStatus>
+    </DeleteResponse>
+  </soap:Body>
+</soap:Envelope>

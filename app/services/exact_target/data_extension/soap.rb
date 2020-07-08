@@ -3,13 +3,13 @@ class ExactTarget
     class Soap
       WSDL = Rails.env.test? ? nil : "#{ENV_GLOBAL['exacttarget_v2_api_soap_uri']}etframework.wsdl"
 
-      def self.perform_call(method, key, object)
+      def self.perform_call(method, key, *args)
         begin
           perform_call_with_fallback do |client|
-            response = SoapCalls.send(method, key, object, client)
+            response = SoapCalls.send(method, key, client, *args)
           end
         rescue StandardError => e
-          vars = { method: method, object: object }
+          vars = { method: method, object: args }
           GSLogger.error(:misc, e, message: "Unable to make ExactTarget Soap Call", vars: vars)
           raise e
         end

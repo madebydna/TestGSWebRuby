@@ -15,7 +15,20 @@ class ExactTarget
 
     def self.delete(object)
       key = get_key_from_object(object)
-      Soap.perform_call(:delete, key, object)
+      Soap.perform_call(:delete, key, [object.id])
+    end
+
+    def self.delete_all_for_user(klass, user_id)
+      check_for_valid_class_with_user_id(klass)
+      key = get_key_from_object(klass.new)
+      ids = klass.where(member_id: user_id).pluck(:id)
+      return nil if ids.empty?
+      Soap.perform_call(:delete, key, ids)
+    end
+
+    def self.retrieve(klass, filter, properties)
+      de = get_data_extension_from_klass(klass)
+      Soap.perform_call(:retrieve, de, filter, properties)
     end
 
     def self.get_method_from_object(object)
@@ -49,6 +62,30 @@ class ExactTarget
         EXTENSIONS_TO_KEYS['members']
       else
         raise ArgumentError, "#{object.class} does not have a matching ExactTarget DataExtension"
+      end
+    end
+
+    def self.get_data_extension_from_klass(klass)
+      case klass.to_s
+      when 'School'
+        'gs_school'
+      when 'StudentGradeLevel'
+        'gbg_subscriptions'
+      when 'SchoolUser'
+        'school_sign_up'
+      when 'Subscription'
+        'subscription_list'
+      when 'User'
+        'members'
+      else
+        raise ArgumentError, "#{klass} does not have a matching ExactTarget DataExtension"
+      end
+    end
+
+
+    def self.check_for_valid_class_with_user_id(klass)
+      unless %w(StudentGradeLevel SchoolUser Subscription).include?(klass.to_s)
+        raise ArgumentError, "#{klass} does not have matching ExactTarget DataExtension with user id"
       end
     end
   end
