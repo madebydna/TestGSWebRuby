@@ -4,7 +4,7 @@ class StateCacher
 
   # Known data types:
   # :test_scores_gsdata, :feed_test_scores_gsdata, :feed_test_description_gsdata,
-  # :ratings :district_largest, :school_levels, :state_attributes, :feed_ratings
+  # :ratings :district_largest, :school_levels, :state_attributes, :feed_ratings, :metrics
 
 
   def initialize(state)
