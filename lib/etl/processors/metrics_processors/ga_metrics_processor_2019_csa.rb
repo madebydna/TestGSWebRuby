@@ -45,7 +45,7 @@ class GAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 		'Mathematics' => 5,
 		:ls_math_pct => 5,
 		'English' => 17,
-		:ls_eng_pct => 4,
+		:ls_eng_pct => 17,
 		'Science' => 19,
 		'Composite' => 1,
 		'Not Applicable' => 0,
