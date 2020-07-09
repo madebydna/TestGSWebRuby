@@ -3,6 +3,8 @@ class Admin::Api::UsersController < ApplicationController
 
   layout 'admin'
 
+  before_action :require_user, only: [:billing, :update]
+
   def index
     @users = Api::User.all
   end
@@ -22,8 +24,17 @@ class Admin::Api::UsersController < ApplicationController
     end
   end
 
+  def update
+    @results = params['result']
+
+    respond_to do |format|
+      format.js do
+        puts "Hello1"
+      end
+    end
+  end
+
   def billing
-    user = Api::User.find(params['user_id'])
     @intent = Api::StripeInteractor.create_intent(user.stripe_customer_id)
   end
 
@@ -63,6 +74,16 @@ class Admin::Api::UsersController < ApplicationController
                                      :role,
                                      :intended_use_details
     )
+  end
+
+  private
+
+  def user
+    @user ||= Api::User.find_by_id(params['user_id'])
+  end
+
+  def require_user
+    redirect_to root_url unless user
   end
 
 end

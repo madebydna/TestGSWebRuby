@@ -67,7 +67,7 @@
       <%= f.text_field :intended_use, class: "api-registration-hidden-input-field dn", placeholder: "What is the intended use for this?", disabled: true, required: true %>
     </div>
     <div class="col-xs-12">
-      <%= f.text_area :intended_use_details, class: "api-registration-field", required: true, placeholder: "Anything else you would like us to know?", rows: "5" %>
+      <%= f.text_area :intended_use_details, class: "api-registration-field", placeholder: "Anything else you would like us to know?", rows: "5" %>
       <%= error_messages(:intended_use_details, f.object.errors[:intended_use_details])%>
     </div>
     <br>
