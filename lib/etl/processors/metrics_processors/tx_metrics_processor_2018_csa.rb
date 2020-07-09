@@ -594,6 +594,12 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 			year: '2018',
 			notes: 'DXT-3467: TX CSA'
 		})
+		.transform('fix cohort counts with commas', WithBlock) do |row|
+			if row[:cohort_count] != nil
+				row[:cohort_count] = row[:cohort_count].to_s.gsub(',', '')
+			end
+			row
+		end
 	end
 
 	def config_hash
