@@ -1,0 +1,8 @@
+es:
+  lib:
+    account:
+      account_title: Mi cuenta
+      change_password: Cambiar contraseña
+      edit_school_profile: Edit School Profile
+      email_preferences: Preferencias de correo electrónico
+      my_school_list: Mi lista de escuelas

@@ -4,6 +4,12 @@ class AccountManagementController < ApplicationController
   before_action :login_required
   layout 'application'
 
+  set_additional_js_translations(
+    {
+      account: [:lib, :account]
+    }
+  )
+
   def show
     set_meta_tags(
       title: "My account | GreatSchools",
