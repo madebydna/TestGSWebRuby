@@ -10,7 +10,7 @@ class ExactTarget
           end
         rescue StandardError => e
           vars = { method: method, object: args }
-          GSLogger.error(:misc, e, message: "Unable to make ExactTarget Soap Call", vars: vars)
+          GSLogger.error(:misc, e, message: "Unable to make ExactTarget SOAP Call", vars: vars)
           raise e
         end
       end
@@ -35,6 +35,9 @@ class ExactTarget
           wsdl: WSDL,
           soap_header: {
             fueloauth: token
+          },
+          namespaces: {
+            "xmlns" => "http://exacttarget.com/wsdl/partnerAPI"
           },
           pretty_print_xml: true,
           logger: Rails.logger,

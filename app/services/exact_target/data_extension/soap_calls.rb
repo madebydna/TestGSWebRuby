@@ -41,8 +41,24 @@ class ExactTarget
             'Properties' => requested_properties
           }
         }
-        client.namespaces["xmlns"] = "http://exacttarget.com/wsdl/partnerAPI"
-        client.call(:retrieve, message: message)
+        response = client.call(:retrieve, message: message).body
+        if response[:retrieve_response_msg][:overall_status] != "OK"
+          raise GsExactTargetDataError, response[:retrieve_response_msg][:overall_status]
+        elsif response[:retrieve_response_msg][:overall_status] == "OK"
+          extract_retrieve_results(response)
+        else
+          raise GsExactTargetDataError, response
+        end
+      end
+
+      def self.extract_retrieve_results(response)
+        Array.wrap(response[:retrieve_response_msg][:results]).map do |result|
+          hash = {}
+          Array.wrap(result[:properties][:property]).map do |property|
+            hash[property[:name]] = property[:value]
+          end
+          hash
+        end
       end
 
 

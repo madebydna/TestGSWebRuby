@@ -1,5 +1,13 @@
 class ExactTarget
   class DataExtension
+    TYPES_TO_EXTENSIONS = {
+      'subscription' => 'subscription_list',
+      'school' => 'gs_school',
+      'school_subscription' => 'school_sign_up',
+      'grade-by-grade' => 'gbg_subscriptions',
+      'member' => 'members'
+    }
+
     EXTENSIONS_TO_KEYS = {
       'gbg_subscriptions' => '860393D2-0BB1-412A-88D8-78A8373C1746',
       'gs_school' => '1181AE14-B381-4714-8E9B-AC813E485C11',
@@ -8,44 +16,48 @@ class ExactTarget
       'members' => '8D205751-75CD-4907-A256-E23093EFA130'
     }
 
-    def self.upsert(object)
-      method = get_method_from_object(object)
+    def self.upsert(type, object)
+      method = get_method_from_type(type)
       Rest.perform_call(method, object)
     end
 
-    def self.delete(object)
-      key = get_key_from_object(object)
-      Soap.perform_call(:delete, key, [object.id])
+    def self.delete(type, id)
+      key = get_key_from_type(type)
+      Soap.perform_call(:delete, key, [id])
     end
 
-    def self.delete_all_for_user(klass, user_id)
-      check_for_valid_class_with_user_id(klass)
-      key = get_key_from_object(klass.new)
-      ids = klass.where(member_id: user_id).pluck(:id)
-      return nil if ids.empty?
+    def self.delete_multiple(type, ids)
+      key = get_key_from_type(type)
       Soap.perform_call(:delete, key, ids)
     end
 
-    def self.retrieve(klass, filter, properties)
-      de = get_data_extension_from_klass(klass)
+    def self.retrieve(type, filter, properties)
+      de = TYPES_TO_EXTENSIONS[type]
+      raise ArgumentError, "#{type} does not have a matching ExactTarget DataExtension" unless de
       Soap.perform_call(:retrieve, de, filter, properties)
     end
 
-    def self.get_method_from_object(object)
-      case object
-      when School
+    def self.get_method_from_type(type)
+      case type
+      when 'school'
         :upsert_school
-      when StudentGradeLevel
+      when 'grade-by-grade'
         :upsert_gbg
-      when SchoolUser
+      when 'school_subscription'
         :upsert_school_signup
-      when Subscription
+      when 'subscription'
         :upsert_subscription
-      when User
+      when 'member'
         :upsert_member
       else
-        raise ArgumentError, "#{object.class} does not have a matching ExactTarget DataExtension"
+        raise ArgumentError, "#{tyep} does not have a matching ExactTarget DataExtension"
       end
+    end
+
+    def self.get_key_from_type(type)
+      extension = TYPES_TO_EXTENSIONS[type]
+      raise ArgumentError, "#{type} does not have a matching ExactTarget DataExtension" unless extension
+      EXTENSIONS_TO_KEYS[extension]
     end
 
     def self.get_key_from_object(object)
@@ -82,11 +94,5 @@ class ExactTarget
       end
     end
 
-
-    def self.check_for_valid_class_with_user_id(klass)
-      unless %w(StudentGradeLevel SchoolUser Subscription).include?(klass.to_s)
-        raise ArgumentError, "#{klass} does not have matching ExactTarget DataExtension with user id"
-      end
-    end
   end
 end

@@ -149,6 +149,9 @@ gem 'stackprof'
 # A fast XML parser and object serializer. (http://www.ohler.com/ox)
 gem 'ox'
 
+# Simple, efficient background processing for Ruby. (https://github.com/mperham/sidekiq)
+gem 'sidekiq'
+
 group :development do
   # A debugging tool for your Ruby on Rails applications. (https://github.com/rails/web-console)
   gem 'web-console' # Add repl to error pages on localhost, replaces better_errors
