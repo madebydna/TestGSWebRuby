@@ -11,6 +11,8 @@ module SchoolProfiles
     N_TESTED_AND_STRAIGHT_AVG = 'n_tested_and_straight_avg'
     STATES_WITHOUT_HS_STANDARDIZED_TESTS = %w(ct il mt)
 
+    delegate :college_readiness_rating, :college_readiness_rating_year, :college_readiness_rating_hash, to: :@school_cache_data_reader
+
     def initialize(school, school_cache_data_reader:)
       @school = school
       @school_cache_data_reader = school_cache_data_reader
@@ -62,8 +64,8 @@ module SchoolProfiles
       I18n.t('lib.test_scores.info_text')
     end
 
-    def data_label(key)
-      I18n.t(key, scope: 'lib.test_scores', default: I18n.db_t(key, default: key))
+    def data_label(key, scope: 'lib.test_scores')
+      I18n.t(key, scope: scope, default: I18n.db_t(key, default: key))
     end
 
     def subject_scores
@@ -136,13 +138,22 @@ module SchoolProfiles
     end
 
     def source_rating_text
-      if rating.present? && rating != 'NR'
-        rating_source(year: rating_year, label: data_label('GreatSchools Rating'),
-                      description: rating_description, methodology: rating_methodology,
-                      more_anchor: 'testscorerating')
-      else
-        ''
-      end
+      return '' unless rating.present? && rating != 'NR'
+      rating_source(year: rating_year,
+          label: data_label('GreatSchools Rating'),
+          description: rating_description, methodology: rating_methodology,
+          more_anchor: 'testscorerating'
+      )
+    end
+
+    def source_college_readiness_rating_text
+      return '' unless college_readiness_rating.present? && college_readiness_rating != 'NR'
+      rating_source(year: college_readiness_rating_year,
+          label: data_label('GreatSchools Rating', scope: 'lib.college_readiness'),
+          description: college_readiness_rating_hash.try(:[], 'description'),
+          methodology: college_readiness_rating_hash.try(:[], 'methodology'),
+          more_anchor: 'collegereadinessrating'
+      )
     end
 
     def sources_without_rating_text

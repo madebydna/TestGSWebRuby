@@ -98,11 +98,18 @@ module SchoolProfiles
         range = data_type_range_map[data_type]
         state = @school_cache_data_reader.school.state
         RatingScoreItem.new.tap do |item|
-          item.label = data_label(data_type)
+          if data_type == SAT_PERCENT_COLLEGE_READY
+            item.label = data_label(sat_percent_college_ready_text_key(hash.grade))
+          else
+            item.label = data_label(data_type)
+          end
           item.year = hash['year'] || ((hash['source_date_valid'] || '')[0..3]).presence || hash['source_year']
           if data_type == SAT_SCORE
             item.info_text = data_label_info_text(sat_score_info_text_key(state, item.year))
             item.range = sat_score_range(state, item.year)
+          elsif data_type == SAT_PERCENT_COLLEGE_READY
+            item.info_text = data_label_info_text(sat_percent_college_ready_text_key(hash.grade))
+            item.range = range
           else
             item.info_text = data_label_info_text(data_type)
             item.range = range

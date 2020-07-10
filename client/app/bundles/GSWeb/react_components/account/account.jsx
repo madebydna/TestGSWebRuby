@@ -5,6 +5,7 @@ import OpenableCloseable from 'react_components/openable_closeable';
 import SearchBox from 'react_components/search_box';
 import { validSizes as validViewportSizes } from 'util/viewport';
 import ChangePasswordForm from './change_password_form';
+import { t } from "util/i18n";
 
 const ospDashboardUrl = '/school-accounts/dashboard/';
 const mySchoolListUrl = '/my-school-list/';
@@ -39,7 +40,7 @@ const Account = ({
             <React.Fragment>
               <div className="drawer">
                 <div className="heading" onClick={toggle}>
-                  <span>Change Password</span>
+                  <span>{t('account.change_password')}</span>
                   <span
                       className={`icon i-32-${
                           isOpen ? 'open' : 'close'
@@ -56,7 +57,7 @@ const Account = ({
       <div>
         <div className="drawer">
           <div className="heading">
-            <span>Edit School Profile</span>
+            <span>{t('account.edit_school_profile')}</span>
             <span className="icon i-32-open-arrow-head" />
           </div>
           <div className="body">
@@ -71,7 +72,7 @@ const Account = ({
             </div>
             <div className="tac">
               <a href={ospDashboardUrl} className="ptm">
-                <button className="btn btn-primary">Edit School Profile</button>
+                <button className="btn btn-primary">{t('account.edit_school_profile')}</button>
               </a>
             </div>
           </div>
@@ -81,13 +82,13 @@ const Account = ({
 
     <div className="drawer">
       <a href={myEmailPreferencesUrl} className="heading">
-        Email Preferences
+      {t('account.email_preferences')}
       </a>
     </div>
 
     <div className="drawer">
       <a href={mySchoolListUrl} className="heading">
-        My School List
+      {t('account.my_school_list')}
       </a>
     </div>
 
