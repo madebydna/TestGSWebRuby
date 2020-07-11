@@ -79,8 +79,8 @@ GEM
     capybara-screenshot (1.0.23)
       capybara (>= 1.0, < 4)
       launchy
-    childprocess (0.5.3)
-      ffi (~> 1.0, >= 1.0.11)
+    childprocess (1.0.1)
+      rake (< 13.0)
     code_analyzer (0.4.5)
       sexp_processor
     coderay (1.1.2)
@@ -161,7 +161,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.18)
+    ffi (1.13.1)
     file-tail (1.1.0)
       tins (~> 1.0)
     formatador (0.2.5)
@@ -215,6 +215,7 @@ GEM
       i18n
       term-ansicolor
       terminal-table (>= 1.5.1)
+    iniparse (1.5.0)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -285,8 +286,9 @@ GEM
     ntlm-http (0.1.1)
     oj (3.3.9)
     open_uri_redirections (0.2.1)
-    overcommit (0.23.0)
-      childprocess (~> 0.5.0)
+    overcommit (0.54.0)
+      childprocess (>= 0.6.3, < 5)
+      iniparse (~> 1.4)
     ox (2.8.2)
     parallel (1.12.0)
     parser (2.4.0.2)
