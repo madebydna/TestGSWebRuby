@@ -16,11 +16,20 @@ PreCommit:
     branch_patterns: ['master', 'nextrel']
     on_warn: fail
     quiet: false
-PostCheckout:
-  ShouldBundleInstall:
-    enabled: true
-    quiet: false
 PostMerge:
   ShouldBundleInstall:
     enabled: true
     quiet: false
+
+PrepareCommitMsg:
+  ALL:
+    requires_files: false
+    required: false
+    quiet: false
+  ReplaceBranch:
+    enabled: true
+    description: 'Prepends the commit message with text based on the branch name'
+    branch_pattern: '\A(.*\w+[-_]\d+).*\z'
+    replacement_text: '\1'
+    skipped_commit_types: ['message', 'template', 'merge', 'squash']
+    on_fail: warn
