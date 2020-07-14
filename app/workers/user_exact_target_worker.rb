@@ -18,19 +18,16 @@ class UserExactTargetWorker
 
     ids_to_delete = current_et_ids - current_db_ids
     if ids_to_delete.any?
-      puts "Deleting #{type} ids #{ids_to_delete}"
-      ExactTarget::DataExtension.delete_multiple(type, ids_to_delete)
+      ExactTarget::DataExtension.delete(type, ids_to_delete)
     end
 
     ids_to_create = current_db_ids - current_et_ids
     if ids_to_create.any?
-      puts "Upserting #{type} ids #{ids_to_create}"
       yield ids_to_create
     end
   end
 
   def handle_subscriptions(user)
-    puts "In handle subscriptions"
     current_ids = user.subscriptions.where(list: SUBSCRIPTION_LISTS).pluck(:id)
     handle_update(user, 'subscription', current_ids) do |ids_to_create|
       Subscription.where(id: ids_to_create).each do |sub|
@@ -40,17 +37,15 @@ class UserExactTargetWorker
   end
 
   def handle_gbg_subscriptions(user)
-    puts "In handle gbg subscriptions"
     current_ids = user.student_grade_levels.pluck(:id)
-    handle_update(user, 'grade-by-grade', current_ids) do |ids_to_create|
+    handle_update(user, 'grade_by_grade', current_ids) do |ids_to_create|
       StudentGradeLevel.where(id: ids_to_create).each do |sub|
-        ExactTarget::DataExtension.upsert('grade-by-grade', sub)
+        ExactTarget::DataExtension.upsert('grade_by_grade', sub)
       end
     end
   end
 
   def handle_school_subscriptions(user)
-    puts "In handle school subscriptions"
     current_ids = user.subscriptions.where(list: SCHOOL_LISTS).pluck(:id)
     handle_update(user, 'school_subscription', current_ids) do |ids_to_create|
       Subscription.where(id: ids_to_create).each do |sub|

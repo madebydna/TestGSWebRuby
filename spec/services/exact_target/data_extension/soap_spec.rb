@@ -7,13 +7,18 @@ describe ExactTarget::DataExtension::Soap do
   before(:all) { savon.mock! }
   after(:all) { savon.unmock! }
   let(:key) { '123' }
-  let(:object) { double(id: 1) }
   let(:fixture_success) { File.read("spec/fixtures/soap_delete_de_success.xml") }
   let(:fixture_error) { File.read("spec/fixtures/soap_fault_security.xml") }
   let(:message) {
-    {"Objects"=>{"@xsi:type"=>"tns:DataExtensionObject",
-      "CustomerKey"=>key, "Keys"=>[{"Key"=>[{"Name"=>"id", "Value"=>object.id}]}]},
-      :attributes=>{"xsi:type"=>"DataExtensionObject"}}
+    { "Objects"=> [
+        {
+          "@xsi:type"=>"tns:DataExtensionObject",
+          "CustomerKey"=>key,
+          "Keys"=>[{"Key"=>[{"Name" => "id", "Value" => 1}]}]
+        }
+      ],
+      :attributes => { "xsi:type"=>"DataExtensionObject" }
+    }
   }
 
   describe '.perform_call' do
@@ -30,7 +35,7 @@ describe ExactTarget::DataExtension::Soap do
       expect(ExactTarget::DataExtension::Soap).to receive(:build_client).with(no_args).and_call_original
       expect(ExactTarget::DataExtension::Soap).to receive(:build_client).with(token: "123456ABC").and_call_original
 
-      ExactTarget::DataExtension::Soap.perform_call(:delete, key, object)
+      ExactTarget::DataExtension::Soap.perform_call(:delete, key, [1])
     end
 
     context 'with error from SOAP call' do
@@ -44,9 +49,9 @@ describe ExactTarget::DataExtension::Soap do
       it 'should log and re-raise error' do
         expect(GSLogger).to receive(:error).with(:misc, \
           instance_of(GsExactTargetDataError), message: "Unable to make ExactTarget Soap Call", \
-          vars: { method: :delete, object: object})
+          vars: { method: :delete, object: [1]})
         expect {
-          ExactTarget::DataExtension::Soap.perform_call(:delete, key, object)
+          ExactTarget::DataExtension::Soap.perform_call(:delete, key, [1])
         }.to raise_error(GsExactTargetDataError, "Duplicate/Invalid field found.")
       end
     end
@@ -60,12 +65,12 @@ describe ExactTarget::DataExtension::Soap do
 
       it "should not raise error" do
         expect {
-          ExactTarget::DataExtension::Soap.perform_call(:delete, key, object)
+          ExactTarget::DataExtension::Soap.perform_call(:delete, key, [1])
         }.not_to raise_error
       end
 
       it "should return value from SOAP call" do
-        savon_response = ExactTarget::DataExtension::Soap.perform_call(:delete, key, object)
+        savon_response = ExactTarget::DataExtension::Soap.perform_call(:delete, key, [1])
         expect(savon_response.http.body).to eq(fixture_success)
       end
     end

@@ -64,7 +64,7 @@ describe ExactTarget::DataExtension::RestCalls do
       expected_uri = /id:1$/
       expected_payload = {values: {
         email: 'foo@bar.com',
-        member_id: 1,
+        id: 1,
         updated: '2020-06-22T03:12:34',
         time_added: '2020-06-21T03:12:34',
         Hash_token: '1234',

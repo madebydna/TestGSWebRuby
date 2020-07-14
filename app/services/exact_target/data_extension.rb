@@ -4,7 +4,7 @@ class ExactTarget
       'subscription' => 'subscription_list',
       'school' => 'gs_school',
       'school_subscription' => 'school_sign_up',
-      'grade-by-grade' => 'gbg_subscriptions',
+      'grade_by_grade' => 'gbg_subscriptions',
       'member' => 'members'
     }
 
@@ -21,13 +21,9 @@ class ExactTarget
       Rest.perform_call(method, object)
     end
 
-    def self.delete(type, id)
+    def self.delete(type, id_or_ids)
       key = get_key_from_type(type)
-      Soap.perform_call(:delete, key, [id])
-    end
-
-    def self.delete_multiple(type, ids)
-      key = get_key_from_type(type)
+      ids = Array.wrap(id_or_ids)
       Soap.perform_call(:delete, key, ids)
     end
 
@@ -41,7 +37,7 @@ class ExactTarget
       case type
       when 'school'
         :upsert_school
-      when 'grade-by-grade'
+      when 'grade_by_grade'
         :upsert_gbg
       when 'school_subscription'
         :upsert_school_signup
@@ -50,7 +46,7 @@ class ExactTarget
       when 'member'
         :upsert_member
       else
-        raise ArgumentError, "#{tyep} does not have a matching ExactTarget DataExtension"
+        raise ArgumentError, "#{type} does not have a matching ExactTarget DataExtension"
       end
     end
 
@@ -74,23 +70,6 @@ class ExactTarget
         EXTENSIONS_TO_KEYS['members']
       else
         raise ArgumentError, "#{object.class} does not have a matching ExactTarget DataExtension"
-      end
-    end
-
-    def self.get_data_extension_from_klass(klass)
-      case klass.to_s
-      when 'School'
-        'gs_school'
-      when 'StudentGradeLevel'
-        'gbg_subscriptions'
-      when 'SchoolUser'
-        'school_sign_up'
-      when 'Subscription'
-        'subscription_list'
-      when 'User'
-        'members'
-      else
-        raise ArgumentError, "#{klass} does not have a matching ExactTarget DataExtension"
       end
     end
 
