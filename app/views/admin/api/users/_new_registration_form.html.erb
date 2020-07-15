@@ -1,0 +1,84 @@
+<div class="new-api-account-form">
+  <h3 class="api-form-header">Registration</h3>
+
+  <%= form_for @user, url: api_signup_path, method: :post do |f| %>
+    <div class="col-xs-12 col-md-6">
+      <%= f.text_field :first_name, class: "api-registration-field", required: true, placeholder: "First name" %>
+      <%= error_messages(:first_name, f.object.errors[:first_name])%>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <%= f.text_field :last_name, class: "api-registration-field", required: true, placeholder: "Last name" %>
+      <%= error_messages(:last_name, f.object.errors[:last_name])%>
+    </div>
+
+    <div class="col-xs-12">
+      <%= f.text_field :organization, class: "api-registration-field", required: true, placeholder: "Business name" %>
+      <%= error_messages(:organization, f.object.errors[:organization])%>
+    </div>
+
+    <div class="col-xs-12">
+      <%= f.text_field :website, class: "api-registration-field", required: true, placeholder: "Website" %>
+      <%= error_messages(:website, f.object.errors[:website])%>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <%= f.email_field :email, class: "api-registration-field", required: true, placeholder: "Email address" %>
+      <%= error_messages(:email, f.object.errors[:email])%>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <%= f.telephone_field :phone, class: "api-registration-field", required: true, placeholder: "Phone number XXX-XXX-XXXX" %>
+      <%= error_messages(:phone, f.object.errors[:phone])%>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <%= f.text_field :city, class: "api-registration-field", required: true, placeholder: "City" %>
+      <%= error_messages(:city, f.object.errors[:city])%>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <div class="api-registration-select-container">
+        <%= f.select :state, options_for_select(States.labels_hash.invert.to_a, @user.state), { :include_blank => 'Select a state' }, required: true, class: "api-registration-select" %>
+      </div>
+      <%= error_messages(:state, f.object.errors[:state])%>
+    </div>
+
+    <div id="organizations" class="col-xs-12">
+      <div class="api-registration-select-container">
+        <%= f.select :organization_description, options_for_select(Api::User::INDUSTRIES.map {|i| [i, i.downcase]}, selected: @user.organization_description), {class: "api-registration-select", prompt: "What best describes your business?"}, required: true %>
+      </div>
+        <%= f.text_field :organization_description, class: "api-registration-hidden-input-field dn", placeholder: "What best describes your business?", disabled: true, required: true %>
+        <%= error_messages(:organization_description, f.object.errors[:organization_description])%>
+    </div>
+
+    <div id="roles" class="col-xs-12">
+      <div class="api-registration-select-container">
+        <%= f.select :role, options_for_select(Api::User::ROLES.map {|i| [i, i.downcase]}, selected: @user.role), {class: "api-registration-select", prompt: "Select a role"}, required: true  %>
+      </div>
+      <%= f.text_field :role, class: "api-registration-hidden-input-field dn", placeholder: "What is your role?", disabled: true, required: true %>
+      <%= error_messages(:role, f.object.errors[:role])%>
+    </div>
+
+    <div id="intended-use" class="col-xs-12">
+      <div class="api-registration-select-container">
+        <%= f.select :intended_use, options_for_select(Api::User::INTENDED_USE.map {|i| [i, i.downcase]}, selected: @user.intended_use), {class: "api-registration-select", prompt: "How will the API be used?"}, required: true %>
+      </div>
+      <%= f.text_field :intended_use, class: "api-registration-hidden-input-field dn", placeholder: "What is the intended use for this?", disabled: true, required: true %>
+    </div>
+    <div class="col-xs-12">
+      <%= f.text_area :intended_use_details, class: "api-registration-field", placeholder: "Anything else you would like us to know?", rows: "5" %>
+      <%= error_messages(:intended_use_details, f.object.errors[:intended_use_details])%>
+    </div>
+    <br>
+    <div class="col-xs-12">
+      <label>
+        <%= check_box_tag nil, 0, false, class: "api-registration-checkbox tou api_tou", required: true %>
+        <span>I agree to the GreatSchools <a href="<%= api_terms_of_use_path %>">Terms of Use</a></span>
+      </label>
+    </div>
+    <div class="api-registration-submit col-xs-12">
+      <%= f.submit "Submit", class: "api-registration-button" %>
+    </div>
+  <% end %>
+</div>

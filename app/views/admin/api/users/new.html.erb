@@ -1,0 +1,36 @@
+<% content_for :head do %>
+  <title>GreatSchools.org Public API Registration & Developer Hub</title>
+  <meta name="description" content="Sign up for the GreatSchools public API developer account and get access to over 200,000 public, charter, and private K-12 school information profiles">
+  <script src="https://js.stripe.com/v3/"></script>
+<% end %>
+
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag "commons", defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'admin-tools', defer: true %>
+<% end %>
+
+<%= render 'admin/admin/developer_nav' %>
+
+<div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+  <!-- h3 class="api-title">GreatSchools API</h3 -->
+  <!-- div class="content">
+    <h4>Feature GreatSchools data on your site.</h4>
+    <p>GreatSchools has profiles of 200,000 public, public charter and private preK-12 schools. With more
+    than one million school ratings and reviews by parents, teachers and students, we provide the most
+    comprehensive information about schools in the United States.</p>
+    <p>The GreatSchools API allows you to add valuable information to your
+    application, including:</p>
+    <ul>
+      <li>Schools in a city</li>
+      <li>Schools near an address</li>
+      <li>Data about specific schools, including school directory
+    information, grade levels, enrollment, test scores, ratings
+    and reviews and more.</li>
+    </ul>
+    <p>
+      <a href="https://www.greatschools.org/api/docs/main.page">Read our documentation</a> to learn more about what you can do.
+    </p>
+  </div -->
+  <%= render 'new_registration_form' %>
+</div>

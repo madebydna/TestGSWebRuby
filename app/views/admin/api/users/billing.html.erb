@@ -1,0 +1,72 @@
+<% content_for :head do %>
+  <script src="https://js.stripe.com/v3/"></script>
+<% end %>
+
+<%= render 'admin/admin/developer_nav' %>
+
+<div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+  <%= render 'new_billing_form', user: @user, intent: @intent %>
+</div>
+
+<script>
+  const stripe = Stripe('pk_test_51H0VJqC0DFRCPjlNW8vkvuYb3M3cH0YuxdkFUcM8OytmtolVlgs2Y95DFKh9vkcbAyuge8bk25oyYRBmIZs6qsan00JxM8dNrG');
+  const elements = stripe.elements();
+  const cardElement = elements.create('card');
+  cardElement.mount('#card-element');
+
+  window.onload = function () {
+    const cardholderName = document.getElementById('cardholder-name');
+    const cardButton = document.getElementById('card-button');
+    const clientSecret = cardButton.dataset.secret;
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const name = formData.get('billing[name]');
+      const address1 = formData.get('billing[address_line_1]');
+      const address2 = formData.get('billing[address_line_2]');
+      const city = formData.get('billing[city]');
+      const state = formData.get('billing[state]');
+      const postalCode = formData.get('billing[postal_code]');
+
+      stripe.confirmCardSetup(
+        clientSecret,
+        {
+          payment_method: {
+            card: cardElement,
+            billing_details: {
+              name: name,
+              address: {
+                city: city,
+                line1: address1,
+                line2: address2,
+                postal_code: postalCode,
+                state: state
+              }
+            },
+          },
+        }
+      ).then(function (result) {
+        if (result.error) {
+          // Display error.message in your UI.
+          const errorElement = document.getElementById('card-errors');
+          errorElement.style.display='block';
+          errorElement.textContent = result.error.message;
+        } else {
+          console.log("Card successfully added. Redirecting to confirmation");
+          // send card id back to controller to be rendered into confirmation page
+          $.ajax({
+            type: 'PATCH',
+            url: "<%= api_billing_update_path(@user) %>",
+            data: {
+              result,
+              user_id: "<%= @user.id %>"
+            },
+            dataType: 'script'
+          })
+        }
+      });
+    });
+  }
+</script>

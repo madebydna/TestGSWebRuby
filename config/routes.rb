@@ -247,6 +247,12 @@ LocalizedProfiles::Application.routes.draw do
   get '/api/request-api-key/success/', to: 'admin/api_accounts#success', as: :request_api_key_success
   post '/api/request-api-key/', to: 'admin/api_accounts#create_api_account', as: :post_request_api_key
 
+  # New API routes
+  get '/api/signup/', to: 'admin/api/users#new', as: :api_signup
+  post '/api/signup/', to: 'admin/api/users#create'
+  patch '/api/billing/:id', to: 'admin/api/users#update', as: :api_billing_update
+  get '/api/billing/', to: 'admin/api/users#billing', as: :api_billing
+
 
   namespace :api, controller: 'api', path:'/gsr/api' do
     resource :session

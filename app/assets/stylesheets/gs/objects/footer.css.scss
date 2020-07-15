@@ -3,6 +3,7 @@
   padding-top: 40px;
   background-color: #15314E;
   color: $white;
+  padding-bottom: 10px;
   a, p {
     font-size: $font-size-small;
   }
@@ -42,5 +43,9 @@
 
   .i-16-adChoice {
     background-position: -128px 0px;
+  }
+
+  .tac.mtl{
+    text-align: center;
   }
 }
