@@ -122,7 +122,7 @@ module CachedMetricsMethods
     value = value.to_s.scan(/[0-9.]+/).first.to_f
     return nil unless value
 
-    "#{value.round(0)}%"
+    value.round(0)
   end
 
   def style_school_value_as_percent(data_name)
