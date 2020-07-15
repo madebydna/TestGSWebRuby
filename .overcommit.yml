@@ -16,7 +16,7 @@ PreCommit:
     branch_patterns: ['master', 'nextrel']
     on_warn: fail
     quiet: false
-PostCheckout:
+PostMerge:
   ShouldBundleInstall:
     enabled: true
     quiet: false
