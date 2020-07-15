@@ -1,0 +1,49 @@
+<div class="new-api-account-form">
+  <h3 class="api-form-header">Billing</h3>
+  <h4 class="api-form-subtitle">Billing Address</h4>
+  <%= form_tag(url: api_billing_update_path(@user), method: 'PATCH') do %>
+    <div class="col-xs-12">
+      <%= text_field :billing, :name, class: "api-registration-field", id: "cardholder-name", required: true, placeholder: "Name" %>
+    </div>
+
+    <div class="col-xs-12">
+      <%= text_field :billing, :address_line_1, class: "api-registration-field", required: true, placeholder: "Address Line 1" %>
+    </div>
+    <div class="col-xs-12">
+      <%= text_field :billing, :address_line_2, class: "api-registration-field", placeholder: "Address Line 2" %>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <%= text_field :billing, :city, class: "api-registration-field", required: true, placeholder: "City" %>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <div class="api-registration-select-container">
+        <%= select :billing, :state, options_for_select(States.labels_hash.invert.to_a, nil), { :include_blank => 'Select a state' }, required: true, class: "api-registration-select" %>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <%= text_field :billing, :postal_code, class: "api-registration-field", required: true, placeholder: "Postal Code" %>
+    </div>
+    <div class="col-xs-12">
+      <h4 class="api-form-subtitle">Credit/Debit Card</h4>
+      <div class="col-xs-12">
+        <div class="col-xs-12 col-md-6">
+          <div class="api-registration-field" id="card-element"></div>
+          <div id='card-errors' role="alert"></div>
+          <small style="margin:12px;">A hold will be placed on your card for upon approval</small>
+          <div class="card-container">
+            <span>We Accept</span>
+            <%= image_tag 'icons/credit-card-1.svg' %>
+            <%= image_tag 'icons/credit-card-2.svg' %>
+            <%= image_tag 'icons/credit-card-3.svg' %>
+          </div>
+        </div>
+          <div class="api-registration-submit col-xs-12">
+            <button type="button" class="api-registration-back-button mr-3" onclick="window.location.href='/api/signup'">Go Back</button>
+            <%= button_tag "Continue", class: "api-registration-button", data: { secret: intent.client_secret }, id: "card-button" %>
+          </div>
+      </div>
+    </div>
+  <% end %>
+</div>

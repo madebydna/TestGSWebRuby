@@ -67,6 +67,14 @@
       margin: 12px;
     }
 
+    .api-form-subtitle{
+      font-family: 'RobotoSlab-Bold';
+      font-size: 20px;
+      margin: 12px;
+      padding-top: 20px;
+      text-transform: uppercase;
+    }
+
     .api-registration-field {
       margin: 12px;
       padding: 13px;
@@ -140,6 +148,15 @@
       border: none;
     }
 
+    .api-registration-back-button {
+      padding: 15px 40px;
+      margin-right: 10px;
+      background-color: white;
+      color: #71787E;
+      border-radius: 4px;
+      border: 1px solid #C1D2D9;
+    }
+
     .api-registration-hidden-input-field{
       margin: 0 12px 12px 12px;
       padding: 0 13px 13px 13px;
@@ -151,6 +168,22 @@
 
       &:focus{
         outline: none;
+      }
+    }
+
+    #card-errors {
+      display: none;
+      color: red;
+      margin: 12px;
+      font-size: 12px;
+      font-family: 'opensans-semibold';
+    }
+
+    .card-container {
+      display: flex;
+      margin: 12px;
+      img, span {
+        margin-right: 5px;
       }
     }
 
