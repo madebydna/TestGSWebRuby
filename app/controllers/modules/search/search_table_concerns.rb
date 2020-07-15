@@ -41,7 +41,7 @@ module SearchTableConcerns
     cache_data['growth_type'] == ACADEMIC_PROGRESS_RATING
   end
 
-  def equity_header_hash(schools)
+  def equity_header_hash
     h = populated_test_score_fields
       .map do |field|
         name = Solr::SchoolDocument.rating_field_name_to_breakdown[field]
@@ -192,7 +192,7 @@ module SearchTableConcerns
 
     {
       'Overview' => overview_header_hash,
-      'Equity' => equity_header_hash(serialized_schools),
+      'Equity' => equity_header_hash,
       'Academic' => academic_header_hash
     }
   end

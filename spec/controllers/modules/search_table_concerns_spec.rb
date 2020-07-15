@@ -187,9 +187,9 @@ describe SearchTableConcerns do
 
     it 'return search table headers' do
       allow(dummy_controller).to receive(:breakdown).and_return(nil)
-      allow(dummy_controller).to receive(:serialized_schools).and_return(["Schools", "Too", "Cool"])
+      allow(dummy_controller).to receive(:serialized_schools)
       expect(dummy_controller).to receive(:overview_header_hash)
-      expect(dummy_controller).to receive(:equity_header_hash).with(["Schools", "Too", "Cool"])
+      expect(dummy_controller).to receive(:equity_header_hash)
       expect(dummy_controller).to receive(:academic_header_hash)
       dummy_controller.table_headers
     end
