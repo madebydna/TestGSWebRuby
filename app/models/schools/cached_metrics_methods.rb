@@ -112,8 +112,8 @@ module CachedMetricsMethods
         else
           hash["subject"] = "All subjects"
         end
-        hash["school_value"] = "#{datum['school_value'].round(0)}%"
-        hash["state_average"] = "#{datum['state_average'].round(0)}%" if datum["state_average"]
+        hash["school_value"] = "#{datum['school_value'].to_f.round(0)}%"
+        hash["state_average"] = "#{datum['state_average'].to_f.round(0)}%" if datum["state_average"]
       end
     end
   end
