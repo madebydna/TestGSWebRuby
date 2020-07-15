@@ -112,10 +112,17 @@ module CachedMetricsMethods
         else
           hash["subject"] = "All subjects"
         end
-        hash["school_value"] = "#{datum['school_value'].to_f.round(0)}%"
-        hash["state_average"] = "#{datum['state_average'].to_f.round(0)}%" if datum["state_average"]
+        hash["school_value"] = "#{style_school_value(datum['school_value'])}%"
+        hash["state_average"] = "#{style_school_value(datum['state_average'])}%" if datum["state_average"]
       end
     end
+  end
+
+  def style_school_value(value)
+    value = value.to_f
+    return nil unless value
+
+    "#{value.round(0)}%"
   end
 
   def style_school_value_as_percent(data_name)
