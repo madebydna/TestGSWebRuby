@@ -1,7 +1,6 @@
 class Admin::Api::UsersController < ApplicationController
   include Api::ErrorHelper
 
-  OFFSET = 100
   layout 'admin'
 
   def index
@@ -12,24 +11,38 @@ class Admin::Api::UsersController < ApplicationController
     @user = ::Api::User.new
   end
 
-  def billing
-    user    = ::Api::User.last
-    @intent = Api::StripeInteractor.create_intent(user)
-  end
-
   def create
-    @user = ::Api::User.new(user_params)
+    @user = Api::User.new(user_params)
     if @user.save
-      # ApiRequestReceivedEmail.deliver_to_api_key_requester(@user)
-      # ApiRequestToModerateEmail.deliver_to_admin(@user)
-      stripe_customer_id = Api::StripeInteractor.create_customer(@user)
-      render :billing
+      Api::StripeCustomerCreator.new(@user).call
+      Api::SubscriptionCreator.new(@user, 1).call
+      redirect_to action: 'billing', user_id: @user.id
     else
       render :new
     end
   end
 
-  def success
+  def billing
+    user = Api::User.find(params['user_id'])
+    @intent = Api::StripeInteractor.create_intent(user.stripe_customer_id)
+  end
+
+  def confirmation
+    @subscription = Api::Subscription.find('subscription_id').update(status: 'payment_added')
+    notify_user
+    notify_admin
+  end
+
+  def notify_user
+    # ApiRequestReceivedEmail.deliver_to_api_key_requester(@user)
+  end
+
+  def notify_admin
+    # ApiRequestToModerateEmail.deliver_to_admin(@user)
+  end
+
+  def complete
+    # SubscriptionUpdaterJob.perform_later(subscription_id: subscription_id, status: 'awaiting_bizdev_approval')
   end
 
   def user_params
