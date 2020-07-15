@@ -119,7 +119,7 @@ module CachedMetricsMethods
   end
 
   def style_school_value(value)
-    value = value.to_f
+    value = value.to_s.scan(/[0-9.]+/).first.to_f
     return nil unless value
 
     "#{value.round(0)}%"
