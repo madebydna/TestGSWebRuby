@@ -14,6 +14,7 @@ module SearchTableConcerns
   def academic_header_hash
     academic_header_names.map do |title|
       tooltip = title.gsub('Rating', 'Description')
+      puts title
       {
           key: title,
           title: t(title, scope:'lib.search'),
@@ -185,5 +186,15 @@ module SearchTableConcerns
           tooltip: nil
       }
     ].flatten.compact
+  end
+
+  def table_headers
+    return compare_schools_table_headers if breakdown.present?
+
+    {
+      'Overview' => overview_header_hash,
+      'Equity' => equity_header_hash(serialized_schools),
+      'Academic' => academic_header_hash
+    }
   end
 end

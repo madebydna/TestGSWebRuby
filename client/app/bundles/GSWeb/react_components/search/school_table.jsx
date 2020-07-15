@@ -78,7 +78,7 @@ const SchoolTable = ({
       ) {
         tableView = typeof(searchTableViewHeaders) === Array ? searchTableViewHeaders[0] : Object.keys(searchTableViewHeaders)[0]
       }
-      
+
       return (
         <section className="school-table">
           {
