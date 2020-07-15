@@ -14,7 +14,6 @@ module SearchTableConcerns
   def academic_header_hash
     academic_header_names.map do |title|
       tooltip = title.gsub('Rating', 'Description')
-      puts title
       {
           key: title,
           title: t(title, scope:'lib.search'),
