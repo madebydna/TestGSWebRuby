@@ -9,6 +9,10 @@ def reportRubocopOffenses() {
 }
 
 def runCommonSteps() {
+  sh 'sudo /sbin/route add default gw 192.168.111.81'
+  sh 'sudo /sbin/route add -net 172.16.0.0 netmask 255.240.0.0 gw 192.168.111.187'
+  sh 'sudo /sbin/route add -net 192.168.121.0 netmask 255.255.255.0  gw 192.168.111.187'
+  checkout scm
   sh 'script/ci/build_env.sh'
   sh 'mkdir -p vendor/cache'
   unstash 'bundle'
@@ -71,6 +75,9 @@ pipeline {
           agent {
             label 'jenkins-slave-ondemand'
           }
+          options {
+            skipDefaultCheckout true
+          }
           steps {
             runUnitSpecs(1)
           }
@@ -78,6 +85,9 @@ pipeline {
         stage('Unit tests #2') {
           agent {
             label 'jenkins-slave-ondemand'
+          }
+          options {
+            skipDefaultCheckout true
           }
           steps {
             runUnitSpecs(2)
@@ -87,6 +97,9 @@ pipeline {
           agent {
             label 'jenkins-slave-ondemand'
           }
+          options {
+            skipDefaultCheckout true
+          }
           steps {
             runFeatureSpecs(1)
           }
@@ -94,6 +107,9 @@ pipeline {
         stage('Feature tests #2') {
           agent {
             label 'jenkins-slave-ondemand'
+          }
+          options {
+            skipDefaultCheckout true
           }
           steps {
             runFeatureSpecs(2)
