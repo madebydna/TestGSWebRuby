@@ -179,7 +179,7 @@ describe SearchTableConcerns do
   end
 
   describe '#table_headers' do
-    it 'return compare table headers if proper params are detected' do
+    it 'return compare table headers if breakdown is detected' do
       allow(dummy_controller).to receive(:breakdown).and_return('Dummy')
       expect(dummy_controller).to receive(:compare_schools_table_headers)
       dummy_controller.table_headers
