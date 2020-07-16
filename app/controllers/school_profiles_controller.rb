@@ -393,15 +393,16 @@ class SchoolProfilesController < ApplicationController
     end
   end
 
+  def modified_recently?(school)
+    return true if school.manual_edit_date.nil? && school.modified.nil?
+    (school.manual_edit_date && school.manual_edit_date > (Time.now - 4.years)) ||
+        (school.modified && school.modified > (Time.now - 4.years))
+  end
+
   def robots
     return 'noindex' if school.demo_school?
-    if school.manual_edit_date && school.private_school? && (Time.now - 4.years) > school.manual_edit_date && school.reviews.length < 3
-      return 'noindex'
-    end
 
-    if school.modified && school.private_school? && (Time.now - 4.years) > school.modified && school.reviews.length < 3
-      return 'noindex'
-    end
+    return 'noindex' if show_private_school_template? && !modified_recently?(school) && school.reviews.length < 3
 
     'index'
   end
