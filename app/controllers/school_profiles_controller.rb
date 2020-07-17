@@ -1,4 +1,7 @@
 class SchoolProfilesController < ApplicationController
+  include Rails.application.routes.url_helpers
+  include UrlHelper
+
   protect_from_forgery
   before_filter :require_school
   before_action :redirect_to_canonical_url
@@ -409,7 +412,7 @@ class SchoolProfilesController < ApplicationController
   def set_seo_meta_tags
     meta_tags = SchoolProfileMetaTags.new(school)
     description = meta_tags.description
-    canonical_url = school_url(school)
+    canonical_url = school_url(school, lang: I18n.current_non_en_locale)
 
     set_meta_tags title: meta_tags.title,
                   robots: robots,
