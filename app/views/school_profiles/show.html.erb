@@ -54,9 +54,11 @@
                 <% end %>
               <% end %>
 
-              <div class="profile-section-slot">
-                <%= render 'test_scores', test_scores: @school_profile.test_scores %>
-              </div>
+              <% if @school_profile.test_scores.visible? %>
+                <div class="profile-section-slot">
+                  <%= render 'test_scores', test_scores: @school_profile.test_scores %>
+                </div>
+              <% end %>
 
               <%# NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
                 If a school is in a SP state and is a elementary(E) or middle (M) school, it will display the StudentProgress module

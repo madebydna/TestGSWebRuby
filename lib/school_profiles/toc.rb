@@ -30,7 +30,9 @@ module SchoolProfiles
         arr << {column: 'Academics', label: 'college_success', present: true, anchor: 'College_success', badge: @college_success.school_csa_badge?} if @college_success.visible?
       end
 
-      arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
+      if @test_scores.visible?
+        arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
+      end
 
       # NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
       # If a school is in a SP state and is a elementary(E) or middle (M) school, it will display the StudentProgress module 
