@@ -19,7 +19,7 @@ class Api::SchoolsController < ApplicationController
         next: self.next_offset_url(page_of_results),
       },
       items: serialized_schools,
-      tableHeaders: table_headers
+      tableHeaders: require_solr? ? table_headers : nil
     }.merge(Api::PaginationSummarySerializer.new(page_of_results).to_hash)
     .merge(Api::PaginationSerializer.new(page_of_results).to_hash)
   end
@@ -48,6 +48,10 @@ class Api::SchoolsController < ApplicationController
 
   def school_keys
     return saved_school_keys if my_school_list?
+  end
+
+  def require_solr?
+    query.class.name != "Search::ActiveRecordSchoolQuery"
   end
 
 end
