@@ -16,11 +16,11 @@ export function fetchHomesAndRentals(forSaleOrForRent, city, state, zip, numberO
   if(forSaleOrForRent != 'forSale' && forSaleOrForRent != 'forRent') {
     throw 'Invalid argument forSaleOrForRent, must be forRent or forSale';
   }
-  if(!city || !state || !zip) {
-    throw 'City, state, and zip are all required.';
+  if(!zip || !(city && state)) {
+    throw 'Zip, or a combination city and state, are required.';
   }
 
-  let region = city + ', ' + state + ' ' + zip;
+  let region = zip ? zip : city + ', ' + state;
 
   let options = {
     output: 'json',
