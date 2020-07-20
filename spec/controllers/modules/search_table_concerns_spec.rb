@@ -177,4 +177,21 @@ describe SearchTableConcerns do
       it { is_expected.to eq('cat')}
     end
   end
+
+  describe '#table_headers' do
+    it 'return compare table headers if breakdown is detected' do
+      allow(dummy_controller).to receive(:breakdown).and_return('Dummy')
+      expect(dummy_controller).to receive(:compare_schools_table_headers)
+      dummy_controller.table_headers
+    end
+
+    it 'return search table headers' do
+      allow(dummy_controller).to receive(:breakdown).and_return(nil)
+      allow(dummy_controller).to receive(:serialized_schools)
+      expect(dummy_controller).to receive(:overview_header_hash)
+      expect(dummy_controller).to receive(:equity_header_hash)
+      expect(dummy_controller).to receive(:academic_header_hash)
+      dummy_controller.table_headers
+    end
+  end
 end

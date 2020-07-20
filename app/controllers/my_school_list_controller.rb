@@ -24,7 +24,7 @@ class MySchoolListController < ApplicationController
       # props.merge!()
       props[:searchTableViewHeaders] = {
         'Overview' => overview_header_hash,
-        'Equity' => equity_header_hash(schools),
+        'Equity' => equity_header_hash,
         'Academic' => academic_header_hash
       }
     end
