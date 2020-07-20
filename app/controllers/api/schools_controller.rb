@@ -50,8 +50,4 @@ class Api::SchoolsController < ApplicationController
     return saved_school_keys if my_school_list?
   end
 
-  def require_solr?
-    query.class.name != "Search::ActiveRecordSchoolQuery"
-  end
-
 end
