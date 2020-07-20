@@ -203,12 +203,12 @@ module SchoolProfiles
       (hash.present? ? hash['year'] : nil).to_s
     end
 
-    def no_state_standarized_testing?
+    def suppress_module?
       STATES_WITHOUT_HS_STANDARDIZED_TESTS.include?(@school.state.downcase) && @school.high_school?
     end
 
     def visible?
-      subject_scores.present? && !no_state_standarized_testing?
+      !suppress_module?
     end
 
     def rating_description
