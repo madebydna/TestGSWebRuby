@@ -16,10 +16,12 @@ PreCommit:
     branch_patterns: ['master', 'nextrel']
     on_warn: fail
     quiet: false
+
 PostMerge:
-  ShouldBundleInstall:
+  BundleInstall:
     enabled: true
     quiet: false
+    required_executable: 'bundle'
 
 PrepareCommitMsg:
   ALL:
