@@ -1,33 +1,33 @@
 <% if school.includes_highschool? %>
   <% if school.includes_level_code?(%w[m h]) %>
     <div class="profile-section-slot">
-      <% if school_profile.stem_courses.visible? %>
+      <% if stem_courses.visible? %>
         <%= render(
           'stem_courses',
-          stem_courses: school_profile.stem_courses
+          stem_courses: stem_courses
         ) %>
       <% end %>
     </div>
   <% end %>
 
-  <% if school_profile.test_scores.visible? %>
+  <% if test_scores.visible? %>
     <div class="profile-section-slot">
-      <%= render 'test_scores', test_scores: school_profile.test_scores %>
+      <%= render 'test_scores', test_scores: test_scores %>
     </div>
   <% end %>
 <% else %>
-  <% if school_profile.test_scores.visible? %>
+  <% if test_scores.visible? %>
     <div class="profile-section-slot">
-      <%= render 'test_scores', test_scores: school_profile.test_scores %>
+      <%= render 'test_scores', test_scores: test_scores %>
     </div>
   <% end %>
 
   <% if @school.includes_level_code?(%w[m h]) %>
     <div class="profile-section-slot">
-      <% if school_profile.stem_courses.visible? %>
+      <% if stem_courses.visible? %>
         <%= render(
           'stem_courses',
-          stem_courses: school_profile.stem_courses
+          stem_courses: stem_courses
         ) %>
       <% end %>
     </div>

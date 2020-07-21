@@ -73,7 +73,7 @@
                 <% end %>
               <% end %>
 
-              <%= render 'test_scores_and_advanced_courses', school: @school, school_profile: @school_profile %>
+              <%= render 'test_scores_and_advanced_courses', school: @school, test_scores: @school_profile.test_scores, stem_courses: @school_profile.stem_courses %>
             </div>
           </div>
         </div>
