@@ -25,15 +25,6 @@ module SchoolProfiles
     def academics
       hash = {}
       arr = []
-      if @school.level_code =~ /h/
-        arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
-        arr << {column: 'Academics', label: 'college_success', present: true, anchor: 'College_success', badge: @college_success.school_csa_badge?} if @college_success.visible?
-      end
-
-      if @test_scores.visible?
-        arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
-      end
-
       # NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
       # If a school is in a SP state and is a elementary(E) or middle (M) school, it will display the StudentProgress module 
       # If a school is in a SP state and is a high(H) school, it will check to see if any other H schools have this rating to display
@@ -48,9 +39,29 @@ module SchoolProfiles
         arr << {column: 'Academics', label: 'academic_progress', present: true, rating: @academic_progress.academic_progress_rating, anchor: 'Academic_progress'}
       end
 
-      if @school.includes_level_code?(%w[m h]) || @stem_courses.visible?
-        arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: '', anchor: 'Advanced_courses'}
+      if @school.level_code =~ /h/
+        arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
+        arr << {column: 'Academics', label: 'college_success', present: true, anchor: 'College_success', badge: @college_success.school_csa_badge?} if @college_success.visible?
       end
+
+      if @school.includes_highschool?
+        if @school.includes_level_code?(%w[m h]) || @stem_courses.visible?
+          arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: '', anchor: 'Advanced_courses'}
+        end
+
+        if @test_scores.visible?
+          arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
+        end
+      else
+        if @test_scores.visible?
+          arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
+        end
+
+        if @school.includes_level_code?(%w[m h]) || @stem_courses.visible?
+          arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: '', anchor: 'Advanced_courses'}
+        end
+      end
+
       hash[:academics] = arr
       hash.delete_if{|key, value| value.blank?}
     end

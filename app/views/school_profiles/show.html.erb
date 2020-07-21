@@ -42,24 +42,6 @@
               </div>
             </div>
             <div class="col-xs-12 col-lg-9">
-              <% if @school_profile.show_high_school_data %>
-                <div class="profile-section-slot">
-                  <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
-                </div>
-
-                <% if @school_profile.college_success.visible? %>
-                    <div class="profile-section-slot">
-                      <%= render 'college_success', college_success: @school_profile.college_success %>
-                    </div>
-                <% end %>
-              <% end %>
-
-              <% if @school_profile.test_scores.visible? %>
-                <div class="profile-section-slot">
-                  <%= render 'test_scores', test_scores: @school_profile.test_scores %>
-                </div>
-              <% end %>
-
               <%# NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
                 If a school is in a SP state and is a elementary(E) or middle (M) school, it will display the StudentProgress module
                 If a school is in a SP state and is a high(H) school, it will check to see if any other H schools have this rating to display
@@ -79,16 +61,19 @@
                 </div>
               <% end %>
 
-              <% if @school.includes_level_code?(%w[m h]) %>
+              <% if @school_profile.show_high_school_data %>
                 <div class="profile-section-slot">
-                  <% if @school_profile.stem_courses.visible? %>
-                    <%= render(
-                      'stem_courses',
-                      stem_courses: @school_profile.stem_courses
-                    ) %>
-                  <% end %>
+                  <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
                 </div>
+
+                <% if @school_profile.college_success.visible? %>
+                    <div class="profile-section-slot">
+                      <%= render 'college_success', college_success: @school_profile.college_success %>
+                    </div>
+                <% end %>
               <% end %>
+
+              <%= render 'test_scores_and_advanced_courses', school: @school %>
             </div>
           </div>
         </div>
