@@ -14,6 +14,7 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 		'Asian' => 16,
 		'Pacific Islander' => 37,
 		'All Students' => 1,
+		'All' => 1,
 		'African American' => 17,
 		'Economically Disadvantaged' => 23,
 		'Female' => 26,
@@ -33,7 +34,8 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 	map_subject_id = {
 		'Composite' => 1,
 		'Science' => 19,
-		'ELA' => 4,
+		'Reading' => 2,
+		'ELA (Reading)' => 2,
 		'English' => 17,
 		'Math' => 5,
 		'Not applicable' => 0,
@@ -78,10 +80,8 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 		.transform('assign subject',WithBlock) do |row|
 			if row[:variable][/^.....A/]
 				row[:subject] = "Composite"
-			elsif row[:variable][/^.....C/]
-				row[:subject] = "Science"
 			elsif row[:variable][/^.....E/]
-				row[:subject] = "ELA"
+				row[:subject] = "ELA (Reading)"
 			elsif row[:variable][/^.....M/]
 				row[:subject] = "Math"
 			else
@@ -104,15 +104,15 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 	end
 
 	source('transposed_ACTDistrictFile.txt',[],col_sep:"\t") do |s|
-		s.transform('delete unwanted breakdowns',DeleteRows,:breakdown,'At-Risk','Bil/ESL','CTE','Dyslexia','Foster Care','Gifted','Homeless','Immigrant','Migrant','Military-Connected','Missing At-Risk','Missing Bil/ESL','Missing CTE','Missing Dyslexia','Missing Econ','Missing English Learner','Missing Ethnicity','Missing Foster Care','Missing Gender','Missing Gifted','Missing Homeless','Missing Immigrant','Missing Migrant','Missing Military-Connected','Missing Special Ed','Missing Title1','Not At-Risk','Not Bil/ESL','Not CTE','Not Dyslexia','Not Foster Care','Not Gifted','Not Homeless','Not Immigrant','Not Migrant','Not Military-Connected','Not Title1','Title1')
+		s.transform('rename columns',MultiFieldRenamer,{
+			distname: :district_name,
+			group: :breakdown
+		})
+		.transform('delete unwanted breakdowns',DeleteRows,:breakdown,'At-Risk','Bil/ESL','CTE','Dyslexia','Foster Care','Gifted','Homeless','Immigrant','Migrant','Military-Connected','Missing At-Risk','Missing Bil/ESL','Missing CTE','Missing Dyslexia','Missing Econ','Missing English Learner','Missing Ethnicity','Missing Foster Care','Missing Gender','Missing Gifted','Missing Homeless','Missing Immigrant','Missing Migrant','Missing Military-Connected','Missing Special Ed','Missing Title1','Not At-Risk','Not Bil/ESL','Not CTE','Not Dyslexia','Not Foster Care','Not Gifted','Not Homeless','Not Immigrant','Not Migrant','Not Military-Connected','Not Title1','Title1')
 		.transform('Fill missing default fields', Fill, {
 			grade: 'All',
 			entity_type: 'district',
 	    })
-	    .transform('rename columns',MultiFieldRenamer,{
-			distname: :district_name,
-			group: :breakdown
-		})
 	    .transform('create state_ids',WithBlock) do |row|
 			row[:state_id] = row[:district].rjust(6,'0')
 			row
@@ -164,15 +164,15 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 	end
 
 	source('transposed_ACTCampusFile.txt',[],col_sep:"\t") do |s|
-		s.transform('delete unwanted breakdowns',DeleteRows,:breakdown,'At-Risk','Bil/ESL','CTE','Dyslexia','Foster Care','Gifted','Homeless','Immigrant','Migrant','Military-Connected','Missing At-Risk','Missing Bil/ESL','Missing CTE','Missing Dyslexia','Missing Econ','Missing English Learner','Missing Ethnicity','Missing Foster Care','Missing Gender','Missing Gifted','Missing Homeless','Missing Immigrant','Missing Migrant','Missing Military-Connected','Missing Special Ed','Missing Title1','Not At-Risk','Not Bil/ESL','Not CTE','Not Dyslexia','Not Foster Care','Not Gifted','Not Homeless','Not Immigrant','Not Migrant','Not Military-Connected','Not Title1','Title1')
+		s.transform('rename columns',MultiFieldRenamer,{
+			campname: :school_name,
+			group: :breakdown
+		})
+		.transform('delete unwanted breakdowns',DeleteRows,:breakdown,'At-Risk','Bil/ESL','CTE','Dyslexia','Foster Care','Gifted','Homeless','Immigrant','Migrant','Military-Connected','Missing At-Risk','Missing Bil/ESL','Missing CTE','Missing Dyslexia','Missing Econ','Missing English Learner','Missing Ethnicity','Missing Foster Care','Missing Gender','Missing Gifted','Missing Homeless','Missing Immigrant','Missing Migrant','Missing Military-Connected','Missing Special Ed','Missing Title1','Not At-Risk','Not Bil/ESL','Not CTE','Not Dyslexia','Not Foster Care','Not Gifted','Not Homeless','Not Immigrant','Not Migrant','Not Military-Connected','Not Title1','Title1')
 		.transform('Fill missing default fields', Fill, {
 			grade: 'All',
 			entity_type: 'school',
 	    })
-	    .transform('rename columns',MultiFieldRenamer,{
-			campname: :school_name,
-			group: :breakdown
-		})
 	    .transform('create state_ids',WithBlock) do |row|
 			row[:state_id] = row[:campus].rjust(9,'0')
 			row
@@ -225,15 +225,15 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 	end
 
 	source('transposed_SATDistrictFile.txt',[],col_sep:"\t") do |s|
-		s.transform('delete unwanted breakdowns',DeleteRows,:breakdown,'At-Risk','Bil/ESL','CTE','Dyslexia','Foster Care','Gifted','Homeless','Immigrant','Migrant','Military-Connected','Missing At-Risk','Missing Bil/ESL','Missing CTE','Missing Dyslexia','Missing Econ','Missing English Learner','Missing Ethnicity','Missing Foster Care','Missing Gender','Missing Gifted','Missing Homeless','Missing Immigrant','Missing Migrant','Missing Military-Connected','Missing Special Ed','Missing Title1','Not At-Risk','Not Bil/ESL','Not CTE','Not Dyslexia','Not Foster Care','Not Gifted','Not Homeless','Not Immigrant','Not Migrant','Not Military-Connected','Not Title1','Title1')
+		s.transform('rename columns',MultiFieldRenamer,{
+			distname: :district_name,
+			group: :breakdown
+		})
+		.transform('delete unwanted breakdowns',DeleteRows,:breakdown,'At-Risk','Bil/ESL','CTE','Dyslexia','Foster Care','Gifted','Homeless','Immigrant','Migrant','Military-Connected','Missing At-Risk','Missing Bil/ESL','Missing CTE','Missing Dyslexia','Missing Econ','Missing English Learner','Missing Ethnicity','Missing Foster Care','Missing Gender','Missing Gifted','Missing Homeless','Missing Immigrant','Missing Migrant','Missing Military-Connected','Missing Special Ed','Missing Title1','Not At-Risk','Not Bil/ESL','Not CTE','Not Dyslexia','Not Foster Care','Not Gifted','Not Homeless','Not Immigrant','Not Migrant','Not Military-Connected','Not Title1','Title1')
 		.transform('Fill missing default fields', Fill, {
 			grade: 'All',
 			entity_type: 'district',
 	    })
-	    .transform('rename columns',MultiFieldRenamer,{
-			distname: :district_name,
-			group: :breakdown
-		})
 	    .transform('create state_ids',WithBlock) do |row|
 			row[:state_id] = row[:district].rjust(6,'0')
 			row
@@ -275,15 +275,15 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 	end
 
 	source('transposed_SATCampusFile.txt',[],col_sep:"\t") do |s|
-		s.transform('delete unwanted breakdowns',DeleteRows,:breakdown,'At-Risk','Bil/ESL','CTE','Dyslexia','Foster Care','Gifted','Homeless','Immigrant','Migrant','Military-Connected','Missing At-Risk','Missing Bil/ESL','Missing CTE','Missing Dyslexia','Missing Econ','Missing English Learner','Missing Ethnicity','Missing Foster Care','Missing Gender','Missing Gifted','Missing Homeless','Missing Immigrant','Missing Migrant','Missing Military-Connected','Missing Special Ed','Missing Title1','Not At-Risk','Not Bil/ESL','Not CTE','Not Dyslexia','Not Foster Care','Not Gifted','Not Homeless','Not Immigrant','Not Migrant','Not Military-Connected','Not Title1','Title1')
+		s.transform('rename columns',MultiFieldRenamer,{
+			campname: :school_name,
+			group: :breakdown
+		})
+		.transform('delete unwanted breakdowns',DeleteRows,:breakdown,'At-Risk','Bil/ESL','CTE','Dyslexia','Foster Care','Gifted','Homeless','Immigrant','Migrant','Military-Connected','Missing At-Risk','Missing Bil/ESL','Missing CTE','Missing Dyslexia','Missing Econ','Missing English Learner','Missing Ethnicity','Missing Foster Care','Missing Gender','Missing Gifted','Missing Homeless','Missing Immigrant','Missing Migrant','Missing Military-Connected','Missing Special Ed','Missing Title1','Not At-Risk','Not Bil/ESL','Not CTE','Not Dyslexia','Not Foster Care','Not Gifted','Not Homeless','Not Immigrant','Not Migrant','Not Military-Connected','Not Title1','Title1')
 		.transform('Fill missing default fields', Fill, {
 			grade: 'All',
 			entity_type: 'school',
 	    })
-	    .transform('rename columns',MultiFieldRenamer,{
-			campname: :school_name,
-			group: :breakdown
-		})
 	    .transform('create state_ids',WithBlock) do |row|
 			row[:state_id] = row[:campus].rjust(9,'0')
 			row
@@ -386,7 +386,7 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 		.transform('matching cohort counts',WithBlock) do |row|
 			if row[:breakdown] == 'African American'
 				row[:cohort_count] = row[:dist_aad]
-			elsif row[:breakdown] == 'All'
+			elsif row[:breakdown] == 'All Students'
 				row[:cohort_count] = row[:dist_alld]
 			elsif row[:breakdown] == 'Asian'
 				row[:cohort_count] = row[:dist_asd]
@@ -397,7 +397,7 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 			elsif row[:breakdown] == 'Hispanic'
 				row[:cohort_count] = row[:dist_hsd]
 			elsif row[:breakdown] == 'English Language Learner'
-				row[:cohort_count] = row[:dist_lepshd]
+				row[:cohort_count] = row[:dist_lephsd]
 			elsif row[:breakdown] == 'Male'
 				row[:cohort_count] = row[:dist_mald]
 			elsif row[:breakdown] == 'Two or more races'
@@ -475,7 +475,7 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 		.transform('matching cohort counts',WithBlock) do |row|
 			if row[:breakdown] == 'African American'
 				row[:cohort_count] = row[:camp_aad]
-			elsif row[:breakdown] == 'All'
+			elsif row[:breakdown] == 'All Students'
 				row[:cohort_count] = row[:camp_alld]
 			elsif row[:breakdown] == 'Asian'
 				row[:cohort_count] = row[:camp_asd]
@@ -486,7 +486,7 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 			elsif row[:breakdown] == 'Hispanic'
 				row[:cohort_count] = row[:camp_hsd]
 			elsif row[:breakdown] == 'English Language Learner'
-				row[:cohort_count] = row[:camp_lepshd]
+				row[:cohort_count] = row[:camp_lephsd]
 			elsif row[:breakdown] == 'Male'
 				row[:cohort_count] = row[:camp_mald]
 			elsif row[:breakdown] == 'Two or more races'
@@ -677,13 +677,13 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 			notes: 'DXT-3467: TX CSA'
 		})
 		.transform('fix non-numerical cohort counts and remove commas',WithBlock) do |row|
-			if row[:cohort_count] != nil	
+			if row[:cohort_count] != nil
+				row[:cohort_count] = row[:cohort_count].to_s.gsub(',', '')	
 				if row[:cohort_count].include? '<'
 					row[:cohort_count] = nil
 				elsif row[:cohort_count].include? '-'
 					row[:cohort_count] = nil
 				end
-				row[:cohort_count] = row[:cohort_count].to_s.gsub(',', '')
 			end
 			row
 		end
