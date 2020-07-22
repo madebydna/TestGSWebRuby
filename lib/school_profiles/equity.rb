@@ -8,6 +8,7 @@ module SchoolProfiles
       @school_cache_data_reader = school_cache_data_reader
       @test_source_data = test_source_data
 
+      @growth_data = ::Components::ComponentGroups::GrowthDataComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @graduation_rate = ::Components::ComponentGroups::GraduationRateComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @test_scores = ::Components::ComponentGroups::TestScoresComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @advanced_coursework = ::Components::ComponentGroups::AdvancedCourseworkComponentGroup.new(cache_data_reader: school_cache_data_reader)
@@ -95,9 +96,9 @@ module SchoolProfiles
     def race_ethnicity_props
       @_race_ethnicity_props ||= [
         {
-          title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
-          anchor: 'Test_scores',
-          data: race_ethnicity_test_scores_array
+          title: I18n.t(@school_cache_data_reader.growth_type, scope: 'lib.equity_gsdata'),
+          anchor: @school_cache_data_reader.growth_type,
+          data: @growth_data.to_hash
         },
         {
           title: I18n.t('College readiness', scope:'lib.equity_gsdata'),
@@ -108,6 +109,11 @@ module SchoolProfiles
           title: I18n.t('Advanced coursework', scope:'lib.equity_gsdata'),
           anchor: 'Advanced_coursework',
           data: @advanced_coursework.to_hash
+        },
+        {
+          title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
+          anchor: 'Test_scores',
+          data: race_ethnicity_test_scores_array
         },
         {
           title: I18n.t('Discipline & attendance', scope:'lib.equity_gsdata'),

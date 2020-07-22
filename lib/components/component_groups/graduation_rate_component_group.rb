@@ -16,6 +16,12 @@ module Components
             component.type = 'rating'
             component.narration = I18n.t('RE College readiness narration', scope: 'lib.equity_gsdata')
           end,
+          Components::Metrics::SatScoresComponent.new.tap do |component|
+            component.cache_data_reader = cache_data_reader
+            component.data_type = 'Average SAT score'
+            component.title = 'SAT Scores'
+            component.type = 'bar_custom_range'
+          end,
           Components::GraduationRates::GraduationRateComponent.new.tap do |component|
             component.cache_data_reader = cache_data_reader
             component.data_type = 'Percent of students who meet UC/CSU entrance requirements'

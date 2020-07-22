@@ -4,6 +4,9 @@ en:
       Overview: Overview
       Graduation rates: Graduation rates
       College readiness: College readiness
+      Academic Progress Rating: Academic progress
+      Student Progress Rating: Student progress
+      Test scores: Test scores
       RE Test scores narration: >
         This shows results across different races/ethnicities on %{subject} test given to students once a year. Big
         differences may suggest that some student groups are not getting the support they need to succeed.
@@ -20,6 +23,17 @@ en:
         Not all high school graduates have taken the classes they need to be eligible to apply to University of CA or CA state schools.
         This shows the percentages of graduates from high schools in this district who got a "C" grade or higher in the A-G required classes needed to be eligible for UC and CSU schools.
         <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more about these requirements.</a>
+      RE Student Progress Rating narration: >
+        These ratings reflect how much students at this school improved from one year to the next compared to similar students at other schools in the state. It's a helpful way to measure
+        how well a school is helping kids learn and advance.
+      RE Academic Progress Rating narration: >
+        These ratings reflect how much progress different student groups have made from on year to the next at this school compared to schools with similar proficiency levels across the state.
+        It's a helpful way to measure how well a school is helping kids learn and advance.
+      RE Average SAT score narration: >
+        This reflects the average SAT score for students in different groups at this school compared to the state average. The SAT is a college admissions test with a total of 1600 possible points.
+      RE Average SAT score_old narration: >
+        This score reflects the average SAT score for students in different groups at this school compared to the state average. The SAT is a college admissions test. Note: In 2015, the SAT had 
+        a total of 2400 possible points. Now, the SAT has a total of 1600 possible points.
       LI Test scores overview narration:
         _0_html: >
           This shows Test Score Ratings for low-income students. Big differences may suggest that some student groups
@@ -102,7 +116,6 @@ en:
             <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned</a> with your principal</li></ul></span>
           %{end_more}
           </div>
-      Test scores: Test scores
       'UC/CSU eligibility': 'UC/CSU eligibility'
       courses_title: Advanced coursework
       Advanced coursework: Advanced coursework

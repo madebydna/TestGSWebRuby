@@ -4,6 +4,8 @@ es:
       Overview: Descripción general
       Graduation rates: Índices de Graduación
       College readiness: Preparación universitaria
+      Academic Progress Rating: Progreso académico
+      Student Progress Rating: Progreso estudiantil
       Test scores: Resultados de exámenes
       RE Test scores narration: >
         Esto muestra resultados de diferentes razas y etnicidades en un examen de %{subject} dado a los estudiantes
@@ -24,6 +26,15 @@ es:
         graduados de las escuelas secundarias de este distrito que obtuvieron un grado "C" o superior en las A-G clases requeridas para ser elegible
         para la Universidad de CA y colegios de CA State.
         <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información acerca de estos requisitos.</a>
+      RE Student Progress Rating narration: >
+        Esta calificación mide cuánto los estudiantes de esta escuela mejoraron de un año al siguiente, en comparación con estudiantes con similares niveles de conocimiento en otras escuelas del estado.
+      RE Academic Progress Rating narration: >
+        ¿Cuánto ayudó esta escuela a los estudiantes a mejorar de un año al siguiente? Esta calificación compara las escuelas con similares niveles de conocimiento para medir el progreso del estudiante a lo largo del tiempo.
+      RE Average SAT score narration: >
+        El SAT es una examen de admisión universitaria, cuyo puntaje más alto es de 1600 puntos.  Esta calificación refleja el puntaje promedio de las calificaciones en el SAT entre los estudiantes de esta escuela.
+      RE Average SAT score_old narration: >
+        El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela.
+        En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.
       LI Test scores overview narration:
         _0_html: >
           Esta muestra la Calificación de los Resultados de Exámenes para estudiantes de bajo ingresos. Grandes
