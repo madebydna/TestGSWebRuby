@@ -59,15 +59,21 @@ class SitemapStateGenerator < SitemapXmlWriter
     School.on_db(@state.to_sym).active.order(:id)
   end
 
+  # Needed for specs to override
+  def main_schema
+    'gs_schooldb'
+  end
+
   def schools_to_no_index
-    School.on_db(@state.to_sym).active.joins("JOIN gs_schooldb.reviews r ON r.school_id=school.id AND r.state = '#{@state}'")
-              .select("school.*, count(*) AS num_reviews")
-              .where("r.active=1")
-              .where(type: 'private')
-              .where("r.review_question_id=1")
-              .where("school.manual_edit_date < ?", Time.now - 4.years)
-              .group(:id)
-              .having("num_reviews < 3")
+    # Private schools not modified in past four years, with fewer than 3 reviews, and no test scores cache
+    School.on_db(@state.to_sym).active.joins("LEFT JOIN #{main_schema}.reviews r ON r.school_id=school.id AND r.state = '#{@state}' AND r.active=1 and r.review_question_id=1")
+        .joins("LEFT JOIN #{main_schema}.school_cache sc on sc.state='#{@state}' and sc.school_id=school.id and sc.name='test_scores_gsdata'")
+        .select("school.*, count(*) AS count_all")
+        .where(type: 'private')
+        .where("school.manual_edit_date < ?", Time.now - 4.years)
+        .where("sc.id is null")
+        .group(:id)
+        .having("count_all < 3")
   end
 
   def schools
