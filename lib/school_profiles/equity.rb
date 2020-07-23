@@ -457,9 +457,9 @@ module SchoolProfiles
       content = ''
       content << '<h4>' + I18n.t('label', scope: 'lib.equity.data_point_info_texts.' + @school_cache_data_reader.growth_type) + '</h4>'
       content << '<p>'
-      content << growth_data_rating_description if growth_data_rating_description
+      content << growth_data_label(growth_data_rating_description) if growth_data_rating_description
       content << ' ' if growth_data_rating_description && growth_data_rating_methodology
-      content << growth_data_rating_methodology if growth_data_rating_methodology
+      content << growth_data_label(growth_data_rating_methodology) if growth_data_rating_methodology
       content << '</p>'
       content << '<p><span class="emphasis">' + static_label('source') + '</span>: ' + source + ' | ' + static_label('see more') + '</p>'
       content
@@ -485,6 +485,14 @@ module SchoolProfiles
 
     def growth_data_rating_year
       @school_cache_data_reader.growth_type == 'Student Progress Rating' ? @school_cache_data_reader.student_progress_rating_year : @school_cache_data_reader.academic_progress_rating_year
+    end
+
+    def growth_data_label(key)
+      if @school_cache_data_reader.growth_type == 'Student Progress Rating'
+        I18n.t(key, scope: 'lib.student_progress', default: I18n.db_t(key, default: key))
+      else
+        I18n.t(key, scope: 'lib.academic_progress', default: I18n.db_t(key, default: key))
+      end
     end
 
     def rating_low_income

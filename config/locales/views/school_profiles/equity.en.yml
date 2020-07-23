@@ -4,7 +4,7 @@ en:
       title: Equity
       Race ethnicity: 'Race/ethnicity'
       Race ethnicity subtitle: >
-        <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="These 5 tips" href="/gk/equity-toolkit/">These 5 things</a> to start a conversation at your school about helping all students succeed.
+        <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="These 5 tips" href="/gk/equity-toolkit/">These 5 tips</a> to start a conversation at your school about helping all students succeed.
       Race ethnicity tooltip: >
         This section shows key  measures of student performance across different racial and ethnic groups. <br/><br/> Note: When the size of a student group is too small, that group’s data will not show up in the display. This protects students’ privacy and may result in some groups’ data not being included in some charts within this section.
       Race ethnicity icon: 'icon-pie'
