@@ -15,189 +15,19 @@
     padding: 10px;
   }
 
-  .ratio-viz {
-    color: black;
-    margin: 0;
-  }
-
-  .ratio-viz-state-avg {
-    margin: 0;
-  }
-
-  .ts-row{
-    .info-circle {
-      margin: -6px 0 0 5px;
-    }
-  }
-
-  .score-display {
-    font-size: 18px;
-    font-family: opensans-semibold;
-  }
-
-  .ts-row {
-    margin: 10px 10px 0px;
-    padding: 10px 0;
-    border-bottom: 1px solid #dbe6eb;
-    @include clearfix;
-  }
-
-  .ts-row:last-child {
-    border: none;
-  }
-
-  .ts-row-no-border {
-    padding: 0;
-    border-bottom: none;
-  }
-
-  .ts-row-narrow {
-    padding: 0 20px 10px;
-  }
-
-  .ts-row-full-xs {
-    width: 100%;
-  }
-
-  .ts-row-one-half-xs {
-    float: left;
-    width: 50%;
-  }
-
-  .ts-row-one-quarter-xs {
-    float: left;
-    width: 25%;
-  }
-
-  .ts-row-one-third-xs {
-    float: left;
-    width: 33.33%;
-  }
-
-  .ts-row-two-thirds-xs {
-    float: left;
-    width: 66.66%;
-  }
-
-  .ts-row.other-staff .ts-row-one-quarter-xs {
-    padding-right: 10px;
-  }
-
-  .bar-graph-display .score {
-    text-align: left;
-    width: 40px;
-    padding-right: 0;
-  }
-
-  .bar-graph-display .score-left-align {
-    text-align: left!important;
-  }
-
-  .bar-graph-display .viz {
-    padding: 0 0 0 10px;
-  }
-
-  .stacked-state-average {
-    text-align: right;
-    float: right;
-    font-size: 12px;
-    padding-top: 5px;
-    color: $gray-mute;
-    @media (max-width: 544px){
-      padding: 0;
-    }
-  }
-
-  @media (min-width: 992px){
-    .ts-row-one-half-md {
-      float: left;
-      width: 50%;
-    }
-
-    .ts-row-full-md {
-      float: left;
-      width: 100%;
-    }
-
-    .ts-row-one-quarter-md {
-      float: left;
-      width: 25%;
-    }
-
-    .ts-row-one-third-md {
-      float: left;
-      width: 33.33%;
-    }
-
-    .ts-row-two-thirds-md {
-      float: left;
-      width: 66.66%;
-    }
-
-    .ts-row-three-quarters-md {
-      float: left;
-      width: 75%;
-    }
-
-    .rating-score-item__state-average {
-      text-align: left;
-      padding-left: 7px;
-    }
-
-    .bar-graph-display .score {
-      width: 33.33%;
-      padding-right: 10px;
-      text-align: right;
-    }
-
-    .bar-graph-display .viz {
-      width: 66.66%;
-      padding: 0 0 0 10px;
-    }
-
-    .bar-graph-display {
-      border: none;
-      padding-top: 8px;
-    }
-  }
-
-  .rating-score-item__score {
-    line-height: 1;
-    padding: 0;
-  }
-
-  .rating-score-item__state-average {
-    line-height: 1.9;
-  }
-
-  .rating-score-item__label {
-    padding: 0;
-  }
-
-  .bar-graph-display {
-    border: none;
-    padding-top: 8px;
-  }
-
-  .gray-heading {
-    font-size: 12px;
-    color: $gray-mute;
-  }
-
-  .score-display span.gray-heading {
-    display: block;
-  }
-
-  .other-staff-label span.gray-heading {
-    display: block;
-    padding-top: 4px;
-  }
-
   .module-footer span.source-link {
     padding-top: 8px;
   }
 
   .module-footer .module_feedback a.anchor-button:first-child {
     margin-left: 5px;
+  }
+}
+
+.teachers-staff {
+  .show-more {
+    .ts-row.ts-row-no-border:first-child {
+      padding-bottom: 0;
+    }
   }
 }
