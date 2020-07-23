@@ -782,8 +782,8 @@ svg {
     }
   }
 
-  .bar-graph-display .test-score-container {
-    padding: 15px 10px;
+  .ts-row:last-child {
+    padding-bottom: 0;
   }
 
   .bar-graph-display:last-child {
