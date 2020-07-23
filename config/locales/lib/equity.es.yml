@@ -42,4 +42,10 @@ es:
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
         'Percent of students who meet UC/CSU entrance requirements': 'Este es el porcentaje de estudiantes graduados de esta escuela que completaron los cursos A-G requeridos para ser elegibles para atender a alguna de las escuelas de la Universidad de California y Universidad del Estado de California.'
+        'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
+        'Average ACT score': 'El ACT es un examen de admisión universitaria, cuyo puntaje más alto es de 36 puntos. Esta calificación refleja el puntaje promedio de las calificaciones en el ACT entre los estudiantes de las escuelas secundarias de este distrito.'
+        'SAT percent college ready': 'La clasificación para la preparación universitaria SAT refleja el puntaje mínimo en un SAT subject test necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
+        'ACT percent college ready': 'La clasificación para la preparación universitaria ACT refleja el puntaje mínimo de las pruebas de materia temáticas de ACT necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
       description: Some description
+      Dept of Education: Dept. de Educación
+      see more: '<span class="emphasis">See more:</span> <a href="/gk/como-clasificamos/?lang=es" target="_blank">Infórmese más sobre esta calificación.</a>'

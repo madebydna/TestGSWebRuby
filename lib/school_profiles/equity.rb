@@ -300,6 +300,16 @@ module SchoolProfiles
       content = ''
       content << discipline_attendance_flag_sources if discipline_attendance_flag?
 
+      if ethnicity_growth_data_visible? || low_income_growth_data_visible?
+        content << '<div class="sourcing">'
+        if growth_data_rating_description || growth_data_rating_methodology
+          content << '<div>'
+          content << growth_data_sources_html
+          content << '</div>'
+        end
+        content << '</div>'
+      end
+
       if metrics_low_income_visible?
         content << '<div class="sourcing">'
         content << metrics_sources_low_income.reduce('') do |string, (key, hash)|
@@ -409,8 +419,6 @@ module SchoolProfiles
 
     def metrics
       @school_cache_data_reader.metrics.slice(
-        'Student Progress Rating',
-        'Academic Progress Rating',
         'Average SAT score',
         'Average ACT score',
         'SAT percent college ready',
@@ -433,6 +441,50 @@ module SchoolProfiles
         end
       end
       visible
+    end
+
+    def ethnicity_growth_data_visible?
+      @growth_data.to_hash.present?
+    end
+
+    def low_income_growth_data_visible?
+      @low_income_growth_data.to_hash.present?
+    end
+
+    def growth_data_sources_html
+      source = "#{@school_cache_data_reader.school.state_name.titleize} #{static_label('Dept of Education')}, #{growth_data_rating_year}"
+
+      content = ''
+      content << '<h4>' + I18n.t('label', scope: 'lib.equity.data_point_info_texts.' + @school_cache_data_reader.growth_type) + '</h4>'
+      content << '<p>'
+      content << growth_data_rating_description if growth_data_rating_description
+      content << ' ' if growth_data_rating_description && growth_data_rating_methodology
+      content << growth_data_rating_methodology if growth_data_rating_methodology
+      content << '</p>'
+      content << '<p><span class="emphasis">' + static_label('source') + '</span>: ' + source + ' | ' + static_label('see more') + '</p>'
+      content
+    end
+
+    def growth_data_struct
+      @_growth_data_struct ||=begin
+        if @school_cache_data_reader.growth_type == 'Student Progress Rating'        
+          @school_cache_data_reader.student_progress_rating_hash
+        else
+          @school_cache_data_reader.academic_progress_rating_hash
+        end
+      end
+    end
+
+    def growth_data_rating_description
+      growth_data_struct.try(:description) 
+    end
+
+    def growth_data_rating_methodology
+      growth_data_struct.try(:methodology)
+    end
+
+    def growth_data_rating_year
+      @school_cache_data_reader.growth_type == 'Student Progress Rating' ? @school_cache_data_reader.student_progress_rating_year : @school_cache_data_reader.academic_progress_rating_year
     end
 
     def rating_low_income
