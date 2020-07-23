@@ -409,6 +409,12 @@ module SchoolProfiles
 
     def metrics
       @school_cache_data_reader.metrics.slice(
+        'Student Progress Rating',
+        'Academic Progress Rating',
+        'Average SAT score',
+        'Average ACT score',
+        'SAT percent college ready',
+        'ACT percent college ready',
         '4-year high school graduation rate',
         'Percent of students who meet UC/CSU entrance requirements'
       )
