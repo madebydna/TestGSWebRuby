@@ -133,14 +133,14 @@ module SchoolProfiles
           data: @low_income_growth_data.to_hash
         },
         {
+          title: I18n.t('College readiness', scope:'lib.equity_gsdata'),
+          anchor: 'College_readiness',
+          data: @low_income_graduation_rate.to_hash
+        },
+        {
           title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
           anchor: 'Test_scores',
           data: low_income_test_scores_array
-        },
-        {
-          title: I18n.t('Graduation rates', scope:'lib.equity_gsdata'),
-          anchor: 'Graduation_rates',
-          data: @low_income_graduation_rate.to_hash
         }
       ]
     end
