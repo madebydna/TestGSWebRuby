@@ -35,6 +35,18 @@ es:
       RE Average SAT score_old narration: >
         El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela.
         En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.
+      RE Average ACT score narration: >
+        El ACT es un examen de admisión universitaria, cuyo puntaje más alto es de 36 puntos. Esta calificación refleja el puntaje promedio de las calificaciones en el ACT entre los estudiantes de esta escuela.
+      RE SAT percent college ready narration: >
+        Esto refleja el porcentaje de estudiantes de diferentes grupos que obtuvieron el puntaje mínimo necesario en la prueba de SAT para ser considerados "preparados para la universidad" de acuerdo con los puntos de referencia nacionales.
+      RE SAT percent college ready 11/12th narration: >
+        Esto refleja el porcentaje de estudiantes de 11.° o 12.°  grado de diferentes grupos que obtuvieron el puntaje mínimo necesario en la prueba de SAT para ser considerados "preparados para la universidad" de acuerdo con los puntos de referencia nacionales.
+      RE ACT percent college ready narration: >
+        Esto refleja el porcentaje de estudiantes de diferentes grupos que obtuvieron el puntaje mínimo necesario en la prueba de ACT para ser considerados "preparados para la universidad" de acuerdo con los puntos de referencia nacionales.
+      LI Student Progress Rating narration: >
+        Estas calificaciones miden cuánto mejoraron académicamente los estudiantes de hogares de bajos ingresos de un año a otro, en comparación con estudiantes similares en otras escuelas del estado.
+      LI Academic Progress Rating narration: >
+        Estas calificaciones muestran cuánto mejoraron académicamente los estudiantes de hogares de bajos ingresos de un año a otro, en comparación con las escuelas con similares niveles de habilidades en todo el estado.
       LI Test scores overview narration:
         _0_html: >
           Esta muestra la Calificación de los Resultados de Exámenes para estudiantes de bajo ingresos. Grandes

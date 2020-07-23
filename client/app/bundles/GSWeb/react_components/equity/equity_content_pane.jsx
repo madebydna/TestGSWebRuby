@@ -41,6 +41,9 @@ export default class EquityContentPane extends React.Component {
         'Student Progress Rating',
         'Academic Progress Rating',
         'SAT Scores',
+        'ACT Scores',
+        'SAT % college ready',
+        'ACT % college ready',
         'main',
         undefined
     ].indexOf(this.props.anchor) === -1;

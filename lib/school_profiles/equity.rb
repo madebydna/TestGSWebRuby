@@ -13,6 +13,7 @@ module SchoolProfiles
       @test_scores = ::Components::ComponentGroups::TestScoresComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @advanced_coursework = ::Components::ComponentGroups::AdvancedCourseworkComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @discipline_and_attendance = ::Components::ComponentGroups::DisciplineAndAttendanceComponentGroup.new(cache_data_reader: school_cache_data_reader)
+      @low_income_growth_data = ::Components::ComponentGroups::LowIncomeGrowthDataComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @low_income_test_scores = ::Components::ComponentGroups::LowIncomeTestScoresComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @low_income_graduation_rate = ::Components::ComponentGroups::LowIncomeGraduationRateComponentGroup.new(cache_data_reader: school_cache_data_reader)
 
@@ -126,6 +127,11 @@ module SchoolProfiles
 
     def low_income_section_props
       @_low_income_section_props ||= [
+        {
+          title: I18n.t(@school_cache_data_reader.growth_type, scope: 'lib.equity_gsdata'),
+          anchor: @school_cache_data_reader.growth_type,
+          data: @low_income_growth_data.to_hash
+        },
         {
           title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
           anchor: 'Test_scores',

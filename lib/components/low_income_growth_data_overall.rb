@@ -1,7 +1,7 @@
 # frozen_string_literal: trues
 
 module Components
-  class GrowthDataOverall < Component
+  class LowIncomeGrowthDataOverall < Component
     def normalized_values
       cr_data = cache_data_reader.decorated_school.ratings_by_type[cache_data_reader.growth_type]
       cr_data ? cr_data.having_most_recent_date.map {|h| normalize_rating_value(h)} : []
@@ -17,7 +17,7 @@ module Components
     end
 
     def breakdown_percentage(value)
-      value_to_s(ethnicities_to_percentages[value.breakdown])
+      value_to_s(low_income_to_percentages[value.breakdown])
     end
   end
 end
