@@ -100,6 +100,11 @@ svg {
       }
     }
 
+    .profile-module {
+      background-color: #f6f9fa;
+      padding: 10px;
+    }
+
     .modules-title {
       font-family: 'opensans-bold';
       font-size: 20px;
@@ -375,7 +380,7 @@ svg {
     }
   }
 
-  .profile-module {
+  >div {
     font-size: $font-size;
 
     > h3 {
@@ -818,9 +823,10 @@ svg {
 
 #students{
   .students-module{
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     border: solid 1px $border-color;
     padding: 20px;
+    background-color: #ffffff;
   }
 
   // overwrite margin bottom for section header since this section has

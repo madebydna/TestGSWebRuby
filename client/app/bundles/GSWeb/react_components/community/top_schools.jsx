@@ -125,7 +125,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
 
   return(
     <div id="TopSchools" className="top-school-module">
-      <div className="profile-module">
+      <div>
         { renderTabsContainer() }
         <div className="top-school-info">
           <div>
