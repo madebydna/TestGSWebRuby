@@ -289,7 +289,7 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 			row
 		end
 		.transform('fix Oakridge school state_id',WithBlock) do |row|
-			if row[:state_id] = '220905323'
+			if row[:state_id] == '220905323'
 				row[:state_id] = '220189001'
 			end
 			row
