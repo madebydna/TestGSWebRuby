@@ -91,9 +91,27 @@ describe SitemapStateGenerator do
     end
 
     describe '#schools_to_no_index' do
-      it 'fetches all no index schools in state' do
-        expect(School).to receive_message_chain(:active, :joins, :select, :where, :where, :where, :where, :group, :having)
-        generator.send(:schools_to_no_index)
+      let!(:old_private)                 { FactoryBot.create(:school, type: 'private', manual_edit_date: '2015-01-01 00:00:00', name: 'old_private') }
+      let!(:old_public)                  { FactoryBot.create(:school, type: 'public',  manual_edit_date: '2015-01-01 00:00:00', name: 'old_public') }
+      let!(:recent_private)              { FactoryBot.create(:school, type: 'private', manual_edit_date: "#{Time.now.year}-01-01 00:00:00", name: 'recent_private') }
+      let!(:old_private_with_reviews)    { FactoryBot.create(:school, type: 'private', manual_edit_date: '2015-01-01 00:00:00', name: 'old_private_with_reviews') }
+      let!(:old_private_with_test_cache) { FactoryBot.create(:school, type: 'private', manual_edit_date: '2015-01-01 00:00:00', name: 'old_private_with_test_cache') }
+      let(:state) { 'ca' }
+
+      before do
+        allow(generator).to receive(:main_schema).and_return('gs_schooldb_test')
+        create(:five_star_review, state: school.state, school_id: old_private_with_reviews.id, review_question_id: 1)
+        create(:five_star_review, state: school.state, school_id: old_private_with_reviews.id, review_question_id: 1)
+        create(:five_star_review, state: school.state, school_id: old_private_with_reviews.id, review_question_id: 1)
+        create(:school_cache, state: school.state, school_id: old_private_with_test_cache.id, name: 'test_scores_gsdata', value: {})
+      end
+
+      after do
+        clean_dbs :gs_schooldb
+      end
+
+      it 'should return only the old private school with few reviews and no test data' do
+        expect(generator.send(:schools_to_no_index)).to eq [old_private]
       end
     end
 

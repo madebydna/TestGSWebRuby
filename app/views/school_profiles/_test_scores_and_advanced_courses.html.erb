@@ -1,0 +1,36 @@
+<% if school.includes_highschool? %>
+  <% if school.includes_level_code?(%w[m h]) %>
+    <div class="profile-section-slot">
+      <% if stem_courses.visible? %>
+        <%= render(
+          'stem_courses',
+          stem_courses: stem_courses
+        ) %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if test_scores.visible? %>
+    <div class="profile-section-slot">
+      <%= render 'test_scores', test_scores: test_scores %>
+    </div>
+  <% end %>
+<% else %>
+  <% if test_scores.visible? %>
+    <div class="profile-section-slot">
+      <%= render 'test_scores', test_scores: test_scores %>
+    </div>
+  <% end %>
+
+  <% if @school.includes_level_code?(%w[m h]) %>
+    <div class="profile-section-slot">
+      <% if stem_courses.visible? %>
+        <%= render(
+          'stem_courses',
+          stem_courses: stem_courses
+        ) %>
+      <% end %>
+    </div>
+  <% end %>
+
+<% end %>
