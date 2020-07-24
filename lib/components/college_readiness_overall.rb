@@ -12,8 +12,12 @@ module Components
         breakdown: value.breakdown,
         score: value.school_value,
         state_average: value.state_value,
-        percentage: value_to_s(ethnicities_to_percentages[value.breakdown])
+        percentage: breakdown_percentage(value)
       }
+    end
+
+    def breakdown_percentage(value)
+      value_to_s(ethnicities_to_percentages[value.breakdown])
     end
   end
 end

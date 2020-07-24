@@ -4,6 +4,11 @@ en:
       Overview: Overview
       Graduation rates: Graduation rates
       College readiness: College readiness
+      SAT Scores: SAT scores
+      ACT Scores: ACT scores
+      Academic Progress Rating: Academic progress
+      Student Progress Rating: Student progress
+      Test scores: Test scores
       RE Test scores narration: >
         This shows results across different races/ethnicities on %{subject} test given to students once a year. Big
         differences may suggest that some student groups are not getting the support they need to succeed.
@@ -20,6 +25,43 @@ en:
         Not all high school graduates have taken the classes they need to be eligible to apply to University of CA or CA state schools.
         This shows the percentages of graduates from high schools in this district who got a "C" grade or higher in the A-G required classes needed to be eligible for UC and CSU schools.
         <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more about these requirements.</a>
+      RE Student Progress Rating narration: >
+        These ratings reflect how much students at this school improved from one year to the next compared to similar students at other schools in the state. It's a helpful way to measure
+        how well a school is helping kids learn and advance.
+      RE Academic Progress Rating narration: >
+        These ratings reflect how much progress different student groups have made from on year to the next at this school compared to schools with similar proficiency levels across the state.
+        It's a helpful way to measure how well a school is helping kids learn and advance.
+      RE Average SAT score narration: >
+        This reflects the average SAT score for students in different groups at this school compared to the state average. The SAT is a college admissions test with a total of 1600 possible points.
+      RE Average SAT score_old narration: >
+        This score reflects the average SAT score for students in different groups at this school compared to the state average. The SAT is a college admissions test. Note: In 2015, the SAT had 
+        a total of 2400 possible points. Now, the SAT has a total of 1600 possible points.
+      RE Average ACT score narration: >
+        This reflects the average ACT score for students in different groups compared to the state average. The ACT is a college admissions test with a total of 36 possible points.
+      RE SAT percent college ready narration: >
+        This reflects the % of students in different groups at this school who met the minimum score needed on the SAT test to be considered “college-ready” according to national benchmarks.
+      RE SAT percent college ready 11/12th narration: >
+        This reflects the % of 11th or 12th graders in different groups at this school who met the minimum score needed on the SAT test to be considered “college-ready” according to national benchmarks.
+      RE ACT percent college ready narration: >
+        This reflects the % of students in different groups at this school who met the minimum score needed on the ACT test to be considered “college-ready” according to national benchmarks.
+      LI College readiness narration:
+        This shows College Readiness Ratings for students from different socioeconomic backgrounds at this school. Big differences may suggest that some students are not getting the support they need to succeed.
+      LI Student Progress Rating narration: >
+        These ratings measure how much students from low-income households improved academically from one year to the next, compared to similar students at other schools in the state.
+      LI Academic Progress Rating narration: >
+        These ratings show how much students from low-income households improved academically from one year to the next compared to schools with similar proficiency levels across the state.
+      LI Average SAT score narration: >
+        This reflects the average SAT score for students from low-income households compared to all students at this school and to state averages. The SAT is a college admissions test with a total of 1600 possible points.
+      LI Average SAT score_old narration: >
+        This reflects the average SAT score for students from low-income households compared to all students at this school and to state averages. The SAT is a college admissions test. Note: In 2015, the SAT had a total of 2400 possible points. Now, the SAT has a total of 1600 possible points.
+      LI Average ACT score narration: >
+        This reflects the average ACT score for students from low-income households compared to all students at this school and to the state averages. The ACT is a college admissions test with a total of 36 possible points.
+      LI SAT percent college ready narration: >
+        This reflects the % of students from low-income households who met the minimum score needed on the SAT test to be considered “college-ready” according to national benchmarks.
+      LI SAT percent college ready 11/12th narration: >
+        This reflects the % of 11th or 12th graders from low-income households who met the minimum score needed on the SAT test to be considered “college-ready” according to national benchmarks.
+      LI ACT percent college ready narration: >
+        This reflects the % of students from low-income households at this school who met the minimum score needed on the ACT test to be considered “college-ready” according to national benchmarks.
       LI Test scores overview narration:
         _0_html: >
           This shows Test Score Ratings for low-income students. Big differences may suggest that some student groups
@@ -102,7 +144,6 @@ en:
             <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned</a> with your principal</li></ul></span>
           %{end_more}
           </div>
-      Test scores: Test scores
       'UC/CSU eligibility': 'UC/CSU eligibility'
       courses_title: Advanced coursework
       Advanced coursework: Advanced coursework

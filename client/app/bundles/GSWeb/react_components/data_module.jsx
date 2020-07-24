@@ -189,6 +189,14 @@ export default class DataModule extends React.Component {
           </div>
         } else if (display_type == 'mixed_variety'){
           component = this.createMixedDataComponent(values);
+        } else if (display_type == 'bar_custom_range'){
+          component = <div>
+            {values.map((value, index) =>
+              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                <BarGraphCustomRanges {...value} />
+              </BasicDataModuleRow>)
+            }
+          </div>
         } else {
           component = <div>
             {values.map((value, index) =>
@@ -295,13 +303,13 @@ export default class DataModule extends React.Component {
 
     let subPanes = dataForActiveTab.data.map(({anchor, type, values, narration} = {}) => {
       let explanation = <div dangerouslySetInnerHTML={{__html: narration}} />
-      return (
-        <EquityContentPane
-          anchor={anchor}
-          graph={this.createDataComponent(type, values)}
-          text={explanation}
-        />
-      )
+        return (
+          <EquityContentPane
+            anchor={anchor}
+            graph={this.createDataComponent(type, values)}
+            text={explanation}
+          />
+        );
     })
 
     return (
