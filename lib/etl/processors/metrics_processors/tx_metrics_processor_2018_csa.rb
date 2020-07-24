@@ -291,6 +291,8 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 		.transform('fix Oakridge school state_id',WithBlock) do |row|
 			if row[:state_id] == '220905323'
 				row[:state_id] = '220189001'
+			else
+				row[:state_id] = row[:state_id]
 			end
 			row
 		end
