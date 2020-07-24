@@ -1,0 +1,28 @@
+<% content_for :head do %>
+  <title>GreatSchools.org Public API Registration & Developer Hub</title>
+  <meta name="description" content="Sign up for the GreatSchools public API developer account and get access to over 200,000 public, charter, and private K-12 school information profiles">
+  <script src="https://js.stripe.com/v3/"></script>
+<% end %>
+
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag "commons", defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'admin-tools', defer: true %>
+<% end %>
+
+<%= render 'admin/admin/developer_nav' %>
+
+<div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+  <div class="new-api-account-form">
+    <h3 class="api-form-header">Registration</h3>
+    <h3>Select Your Plan</h3>
+    <div class="col-xs-12 col-md-6">
+      Basic or enterprise, pay what you need, with our tiered plans
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <%#= f.text_field :last_name, class: "api-registration-field", required: true, placeholder: "Last name" %>
+      <%#= error_messages(:last_name, f.object.errors[:last_name])%>
+    </div>
+  </div>
+</div>
