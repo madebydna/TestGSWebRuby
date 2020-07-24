@@ -9,7 +9,7 @@ module SchoolProfiles
     N_TESTED = 'n_tested'
     STRAIGHT_AVG = 'straight_avg'
     N_TESTED_AND_STRAIGHT_AVG = 'n_tested_and_straight_avg'
-    STATES_WITHOUT_HS_STANDARDIZED_TESTS = %w(ct il mt)
+    STATES_WITHOUT_HS_STANDARDIZED_TESTS = %w(al ct de il mt nh pa ri wv)
 
     delegate :college_readiness_rating, :college_readiness_rating_year, :college_readiness_rating_hash, to: :@school_cache_data_reader
 
@@ -203,8 +203,12 @@ module SchoolProfiles
       (hash.present? ? hash['year'] : nil).to_s
     end
 
+    def suppress_module?
+      STATES_WITHOUT_HS_STANDARDIZED_TESTS.include?(@school.state.downcase) && @school.high_school?
+    end
+
     def visible?
-      subject_scores.present?
+      !suppress_module?
     end
 
     def rating_description
