@@ -111,7 +111,7 @@ module StructuredMarkup
   end
 
   def self.state_breadcrumb_text(state)
-    if ['DC', 'dc'].include?(state)
+    if state.downcase == 'dc'
       'District of Columbia'
     else
       States.state_name(state).gs_capitalize_words
@@ -120,7 +120,7 @@ module StructuredMarkup
 
   def self.city_breadcrumb_text(state:, city:)
     text =
-      if ['DC', 'dc'].include?(state)
+      if state.downcase == 'dc'
         'Washington, D.C.'
       else
         city
