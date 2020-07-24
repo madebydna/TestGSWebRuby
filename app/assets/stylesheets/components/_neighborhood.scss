@@ -1,7 +1,6 @@
 .neighborhood-module {
   $link-text-color: #2ba3dc;
   $contact-icon-color: #c1d2d9;
-  $background-color: #f6f9fa;
 
   @include media-breakpoint-up(sm) {
     padding: 0px 15px;
@@ -45,7 +44,7 @@
       text-align: center;
       font-family: "opensans-regular";
       &.nearby-homes{
-        background-color: #FFFFFF;
+        background-color: white;
         color: $midnight-blue;
       }
     }
@@ -72,10 +71,10 @@
       .overlay-container {
         max-width: 400px;
         font-family: "opensans-regular";
-        background-color: $background-color;
+        background-color: $gray-light-blue;
         @include media-breakpoint-up(sm) {
           box-shadow: 0 27px 26px 0 rgba(0, 0, 0, 0.14);
-          background-color: #FFFFFF;
+          background-color: white;
         }
         margin-left: 20px;
         padding: 10px;
