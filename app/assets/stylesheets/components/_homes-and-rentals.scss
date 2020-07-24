@@ -8,7 +8,7 @@
   max-width: 1170px;
 
   @include media-breakpoint-only(xs) {
-    background-color: #f6f9fa;
+    background-color: $gray-light-blue;
     padding: 40px 15px 40px 15px;
   }
 

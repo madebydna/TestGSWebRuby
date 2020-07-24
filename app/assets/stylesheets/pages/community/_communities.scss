@@ -1,4 +1,4 @@
-$active-color: #f6f9fa;
+$active-color: $gray-light-blue;
 $hover-color: $active-color;
 $border-color: #dbe6eb;
 $school-color: #337ab7;
@@ -101,7 +101,7 @@ svg {
     }
 
     .profile-module {
-      background-color: #f6f9fa;
+      background-color: $gray-light-blue;
       padding: 10px;
     }
 
@@ -540,7 +540,7 @@ svg {
       a {
         color: $school-color;
         margin-top: -3px;
-        background-color: #ffffff;
+        background-color: white;
       }
       p {
         color: #999;
@@ -716,7 +716,7 @@ svg {
 
   .speech-bubble, .speech-bubble.left {
     background: #747C83;
-    color: #ffffff;
+    color: white;
   }
 
   .speech-bubble.left:after {
@@ -822,7 +822,7 @@ svg {
     margin-bottom: 5px;
     border: solid 1px $border-color;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: white;
   }
 
   // overwrite margin bottom for section header since this section has
