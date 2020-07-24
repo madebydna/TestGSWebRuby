@@ -24,6 +24,10 @@ module Search
       end
     end
 
+    def response
+      OpenStruct.new(facet_fields: [])
+    end
+
     def valid_sort_names
       ['distance', 'name']
     end

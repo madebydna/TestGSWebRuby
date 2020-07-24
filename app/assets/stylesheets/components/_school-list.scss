@@ -1,6 +1,4 @@
 section.school-list {
-  $active-color: #f6f9fa;
-  $hover-color: #f6f9fa;
   $border-color: #dbe6eb;
   position: relative;
 
@@ -34,10 +32,10 @@ section.school-list {
         font-size: $font-size-l3;
       }
       &:hover {
-        background-color: $hover-color;
+        background-color: $gray-light-blue;
       }
       &.active {
-        background-color: $active-color;
+        background-color: $gray-light-blue;
       }
       > span:first-of-type {
         text-align: center;

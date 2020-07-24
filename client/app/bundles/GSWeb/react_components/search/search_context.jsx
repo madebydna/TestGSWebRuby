@@ -132,6 +132,7 @@ class SearchProvider extends React.Component {
       total: props.total,
       resultSummary: props.resultSummary,
       paginationSummary: props.paginationSummary,
+      searchTableViewHeaders: props.searchTableViewHeaders,
       loadingSchools: false,
       size: viewportSize(),
       currentStateFilter: null,
@@ -202,7 +203,14 @@ class SearchProvider extends React.Component {
       () => {
         const start = Date.now();
         this.findSchoolsWithReactState().done(
-          ({ items: schools, totalPages, paginationSummary, resultSummary, total }) =>
+          ({
+            items: schools,
+            totalPages,
+            paginationSummary,
+            resultSummary,
+            total,
+            tableHeaders,
+          }) =>
             setTimeout(
               () =>
                 this.setState({
@@ -211,7 +219,8 @@ class SearchProvider extends React.Component {
                   paginationSummary,
                   resultSummary,
                   total,
-                  loadingSchools: false
+                  searchTableViewHeaders: tableHeaders,
+                  loadingSchools: false,
                 }),
               500 - (Date.now() - start)
             )
@@ -420,7 +429,7 @@ class SearchProvider extends React.Component {
           refreshAdOnScroll: this.refreshAdOnScroll,
           q: this.props.q,
           locationLabel: this.props.locationLabel,
-          searchTableViewHeaders: this.props.searchTableViewHeaders,
+          searchTableViewHeaders: this.state.searchTableViewHeaders,
           tableView: this.props.tableView,
           tableViewOptions: this.props.tableViewOptions,
           currentStateFilter: this.state.currentStateFilter,
@@ -477,7 +486,7 @@ class SearchProvider extends React.Component {
                     tableView: this.props.tableView,
                     updateTableView: this.props.updateTableView,
                     size: this.state.size,
-                    equitySize: (this.props.searchTableViewHeaders.Equity || {})
+                    equitySize: (this.state.searchTableViewHeaders.Equity || {})
                       .length
                   }}
                 >

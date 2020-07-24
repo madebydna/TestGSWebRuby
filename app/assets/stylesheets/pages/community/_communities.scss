@@ -1,4 +1,4 @@
-$active-color: #f6f9fa;
+$active-color: $gray-light-blue;
 $hover-color: $active-color;
 $border-color: #dbe6eb;
 $school-color: #337ab7;
@@ -98,6 +98,11 @@ svg {
       @include media-breakpoint-up(sm) {
         display: none;
       }
+    }
+
+    .profile-module {
+      background-color: $gray-light-blue;
+      padding: 10px;
     }
 
     .modules-title {
@@ -375,7 +380,7 @@ svg {
     }
   }
 
-  .profile-module {
+  >div {
     font-size: $font-size;
 
     > h3 {
@@ -535,7 +540,7 @@ svg {
       a {
         color: $school-color;
         margin-top: -3px;
-        background-color: #ffffff;
+        background-color: white;
       }
       p {
         color: #999;
@@ -711,7 +716,7 @@ svg {
 
   .speech-bubble, .speech-bubble.left {
     background: #747C83;
-    color: #ffffff;
+    color: white;
   }
 
   .speech-bubble.left:after {
@@ -719,10 +724,6 @@ svg {
   }
 
   .profile-module {
-    border: none;
-    background: #f6f9fa;
-    padding: 10px;
-
     .top-content {
       font-size: 16px;
     }
@@ -782,8 +783,8 @@ svg {
     }
   }
 
-  .bar-graph-display .test-score-container {
-    padding: 15px 10px;
+  .ts-row:last-child {
+    padding-bottom: 0;
   }
 
   .bar-graph-display:last-child {
@@ -818,9 +819,10 @@ svg {
 
 #students{
   .students-module{
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     border: solid 1px $border-color;
     padding: 20px;
+    background-color: white;
   }
 
   // overwrite margin bottom for section header since this section has

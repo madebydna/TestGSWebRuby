@@ -1,5 +1,5 @@
 body {
-  background-color: #f6f9fa;
+  background-color: $gray-light-blue;
 }
 
 #compare-schools{
@@ -281,8 +281,6 @@ body {
       }
 
       td.school {
-        $active-color: #f6f9fa;
-        $hover-color: #f6f9fa;
         $border-color: #dbe6eb;
 
         @include clearfix;
@@ -297,11 +295,11 @@ body {
           font-size: $font-size-l3;
         }
         &:hover {
-          background-color: $hover-color;
+          background-color: $gray-light-blue;
           transition: 0.5s ease;
         }
         &.active {
-          background-color: $active-color;
+          background-color: $gray-light-blue;
         }
         > span:first-of-type {
           text-align: center;
