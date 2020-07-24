@@ -14,6 +14,7 @@ describe SchoolProfiles::Equity do
     allow(school_cache_data_reader).to receive(:test_scores).and_return({values: []})
     allow(school_cache_data_reader).to receive(:discipline_flag?).and_return(false)
     allow(school_cache_data_reader).to receive(:attendance_flag?).and_return(false)
+    allow(school_cache_data_reader).to receive(:growth_type).and_return('Dummy Rating')
   end
 
   describe '#sources_for_view' do
