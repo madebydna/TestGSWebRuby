@@ -3,6 +3,8 @@ es:
     equity:
       'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       '4-year high school graduation rate': 'Índice de graduación de escuelas preparatorias de 4 años'
+      'SAT percent college ready': 'Clasificación para la preparación universitaria SAT Subject Test'
+      'ACT percent college ready': 'Clasificación para la preparación universitaria ACT'
       'Percent of students who meet UC/CSU entrance requirements': 'Porcentaje de alumnos que cumplen con los requisitos de elegibilidad para UC/CSU'
       'source': 'Fuente'
       'Great schools rating': 'La Calificación General de Equidad de GreatSchools'

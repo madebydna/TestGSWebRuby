@@ -3,6 +3,8 @@ en:
     equity:
       'title': 'GreatSchools profile data sources &amp; information'
       '4-year high school graduation rate': '4-year high school graduation rate'
+      'SAT percent college ready': 'SAT percent college ready'
+      'ACT percent college ready': 'ACT percent college ready'
       'Percent of students who meet UC/CSU entrance requirements': 'Percentage of graduates who meet UC/CSU eligibility requirements'
       'source': 'Source'
       'Great schools rating': 'GreatSchools Equity Overview Rating'
