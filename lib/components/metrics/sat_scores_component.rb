@@ -12,7 +12,6 @@ module Components
 
       def narration
         return nil unless state && year
-        return @narration if @narration.present?
 
         if new_sat?(state, year)
           I18n.t('RE Average SAT score narration', scope: 'lib.equity_gsdata')
@@ -22,14 +21,10 @@ module Components
       end
 
       def lower_range
-        return 0 unless normalized_values.present?
-
         sat_score_range.first
       end
 
       def upper_range
-       return 100 unless normalized_values.present?
-
        sat_score_range.last
       end
 
