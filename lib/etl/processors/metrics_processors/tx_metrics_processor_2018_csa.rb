@@ -679,7 +679,7 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 			notes: 'DXT-3467: TX CSA'
 		})
 		.transform('fix non-numerical cohort counts and remove commas',WithBlock) do |row|
-			if row[:cohort_count] != nil
+			unless row[:cohort_count].nil?
 				row[:cohort_count] = row[:cohort_count].to_s.gsub(',', '')	
 				if row[:cohort_count].include? '<'
 					row[:cohort_count] = nil
