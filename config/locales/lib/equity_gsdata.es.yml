@@ -35,12 +35,11 @@ es:
       RE Academic Progress Rating narration: >
         Estas calificaciones reflejan cuánto progreso han hecho diferentes grupos de estudiantes de un año a otro en esta escuela en comparación con las escuelas con niveles de habilidades similares en todo el estado. Es una manera útil de medir qué tan bien una escuela está ayudando a los niños a aprender y avanzar.
       RE Average SAT score narration: >
-        Esto refleja el puntaje promedio en el SAT para los estudiantes de hogares de bajos ingresos en comparación con todos los estudiantes en esta escuela y los promedios estatales. El SAT es una prueba de admisión universitaria con un total de 1600 puntos posibles.
+        Esto refleja el puntaje promedio en el SAT para estudiantes de diferentes grupos en comparación con el promedio estatal. El SAT es una prueba de admisión universitaria con un total de 1600 puntos posibles.
       RE Average SAT score_old narration: >
-        Esto refleja el puntaje promedio en el SAT para los estudiantes de hogares de bajos ingresos en comparación con todos los estudiantes en esta escuela y los promedios estatales. El SAT es una prueba de admisión universitaria.
-        Nota: En el 2015 el SAT tenía un total de 2400 puntos posibles. Ahora el SAT tiene un total de 1600 puntos posibles. 
+        Esto refleja el puntaje promedio en el SAT para estudiantes de diferentes grupos en comparación con el promedio estatal. El SAT es una prueba de admisión universitaria. Nota: En el 2015 el SAT tenía un total de 2400 puntos posibles. Ahora el SAT tiene un total de 1600 puntos posibles.
       RE Average ACT score narration: >
-        Esto refleja el puntaje promedio en el ACT para los estudiantes de hogares de bajos ingresos en comparación con todos los estudiantes en esta escuela y los promedios estatales. El ACT es una prueba de admisión universitaria con un total de 36 puntos posibles.
+        Esto refleja el puntaje promedio en el ACT para los estudiantes de diferentes grupos en comparación con todos los estudiantes en esta escuela y los promedios estatales. El ACT es una prueba de admisión universitaria con un total de 36 puntos posibles.
       RE SAT percent college ready narration: >
         Esto refleja el porcentaje de estudiantes de diferentes grupos que obtuvieron el puntaje mínimo necesario en la prueba de SAT para ser considerados "preparados para la universidad" de acuerdo con los puntos de referencia nacionales.
       RE SAT percent college ready 11/12th narration: >
