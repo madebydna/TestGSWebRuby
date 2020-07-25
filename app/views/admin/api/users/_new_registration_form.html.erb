@@ -1,7 +1,7 @@
 <div class="new-api-account-form">
   <h3 class="api-form-header">Registration</h3>
 
-  <%= form_for @user, url: api_signup_path, method: :post do |f| %>
+  <%= form_for @user, url: api_registration, method: :post do |f| %>
     <div class="col-xs-12 col-md-6">
       <%= f.text_field :first_name, class: "api-registration-field", required: true, placeholder: "First name" %>
       <%= error_messages(:first_name, f.object.errors[:first_name])%>

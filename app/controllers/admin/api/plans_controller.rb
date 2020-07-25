@@ -1,4 +1,4 @@
-class Admin::Api::UsersController < ApplicationController
+class Admin::Api::PlansController < ApplicationController
   include Api::ErrorHelper
 
   layout 'admin'
