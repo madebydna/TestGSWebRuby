@@ -19,10 +19,9 @@
       Basic or enterprise, pay what you need, with our tiered plans
     </div>
 
-    <%= @plans.each do |plan| %>
+    <% @plans.each do |plan| %>
       <div class="col-xs-12 col-md-6">
         <%= plan.name %>
-        <%= "hello" %>
       </div>
     <% end %>
   </div>
