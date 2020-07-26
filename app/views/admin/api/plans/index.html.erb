@@ -27,8 +27,11 @@
         <%= plan.price %>
         <%= plan.calls %>
         <%= plan.private_use? ? "Private Use" : "Public Facing" %>
+        <% plan.endpoints.each do |endpoint| %>
+          <%= endpoint.name %>
+        <% end %>
+        <button> Start Now</button>
       </div>
-
     <% end %>
   </div>
 </div>
