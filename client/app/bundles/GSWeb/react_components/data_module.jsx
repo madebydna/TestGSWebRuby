@@ -296,7 +296,12 @@ export default class DataModule extends React.Component {
 
     let subNav;
     // in case there is a single subTab we should display it unless its title is the same as the main tab's title
-    if (subTabs.length > 1 || subTabs.length == 1 && dataForActiveTab.title !== dataForActiveTab.data[0].title) {
+    if (subTabs.length > 1 ||
+        subTabs.length == 1 &&
+          dataForActiveTab.title &&
+          dataForActiveTab.data[0] &&
+          dataForActiveTab.data[0].title &&
+          dataForActiveTab.title !== dataForActiveTab.data[0].title) {
       subNav = <SectionSubNavigation key={this.state.active}>
         {subTabs}
       </SectionSubNavigation>
