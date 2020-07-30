@@ -275,3 +275,65 @@
     width: 92%;
   }
 }
+
+.plan-selection {
+  h3 {
+    font-family: RobotoSlab-Bold, sans-serif;
+    font-style: normal;
+    font-size: 26px;
+    line-height: 34px;
+  }
+
+  .api-plan-description {
+    font-family: opensans-regular;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .api-plan-name {
+    text-transform: uppercase;
+    font-family: RobotoSlab-Bold, sans-serif;
+    font-size: 20px;
+    line-height: 26px;
+    text-align: center;
+  }
+
+  .api-plans {
+    display: flex;
+    justify-content: space-between;
+  }
+  .api-plan-container {
+    flex-basis: 0;
+    flex-grow: 1;
+    margin-right: 20px;
+  }
+
+  .api-plan-details {
+    border: 1px solid $form-field-border-color;
+    border-radius: 10px;
+  }
+
+  .api-plan-price {
+    border-bottom: 1px solid $form-field-border-color;
+    padding: 20px;
+  }
+
+  .api-plan-datasets {
+    border-bottom: 1px solid $form-field-border-color;
+    padding: 20px;
+  }
+
+  .api-plan-start {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .api-price {
+    font-family: RobotoSlab-Bold, sans-serif;
+    font-size: 48px;
+    line-height: 63px;
+  }
+
+}
+
