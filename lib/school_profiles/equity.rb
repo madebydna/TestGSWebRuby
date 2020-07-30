@@ -324,6 +324,12 @@ module SchoolProfiles
         content << '</div>'
       end
 
+      if @advanced_coursework.sources.present?
+        content << '<div class="sourcing">'
+        content << gsdata_sources_text(@advanced_coursework.sources)
+        content << '</div>'
+      end
+
       if equity_data_sources.present?
         content << '<div class="sourcing">'
         content << gsdata_sources_text(equity_data_sources)

@@ -46,6 +46,12 @@ module Components
         )
         I18n.t(string, options)
       end
+
+      def sources
+        active_components.map(&:source).reject(&:empty?).each_with_object({}) do |child, parent|
+          parent.merge!(child)
+        end
+      end
     end
   end
 end
