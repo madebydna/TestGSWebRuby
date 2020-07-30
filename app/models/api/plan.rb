@@ -7,6 +7,14 @@ module Api
 
     has_many :plan_endpoints
     has_many :endpoints, through: :plan_endpoints
+
+    def demographics_included?
+      %w(premium professional).include? name
+    end
+
+    def subratings_included?
+      %w(premium).include? name
+    end
   end
 
 end
