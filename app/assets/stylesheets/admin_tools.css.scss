@@ -276,7 +276,7 @@
   }
 }
 
-.plan-selection {
+.api-plan-selection {
   h3 {
     font-family: RobotoSlab-Bold, sans-serif;
     font-style: normal;
@@ -289,6 +289,17 @@
     font-weight: normal;
     font-size: 16px;
     line-height: 22px;
+    margin-bottom: 20px;
+  }
+
+  .api-plans-container {
+    display: flex;
+  }
+
+  .api-plan-container {
+    flex: 1;
+    margin-right: 20px;
+    padding: 10px;
   }
 
   .api-plan-name {
@@ -297,16 +308,7 @@
     font-size: 20px;
     line-height: 26px;
     text-align: center;
-  }
-
-  .api-plans {
-    display: flex;
-    justify-content: space-between;
-  }
-  .api-plan-container {
-    flex-basis: 0;
-    flex-grow: 1;
-    margin-right: 20px;
+    margin-bottom: 20px;
   }
 
   .api-plan-details {
@@ -314,9 +316,10 @@
     border-radius: 10px;
   }
 
-  .api-plan-price {
+  .api-plan-subdetails {
     border-bottom: 1px solid $form-field-border-color;
     padding: 20px;
+    text-align: center;
   }
 
   .api-plan-datasets {
@@ -331,8 +334,7 @@
 
   .api-price {
     font-family: RobotoSlab-Bold, sans-serif;
-    font-size: 48px;
-    line-height: 63px;
+    font-size: 2vw;
   }
 
 }

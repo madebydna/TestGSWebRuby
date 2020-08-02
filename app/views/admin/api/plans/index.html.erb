@@ -12,20 +12,19 @@
 
 <%= render 'admin/admin/developer_nav' %>
 
-<div class="col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 plan-selection">
+<div class="col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 api-plan-selection">
   <h3>Select Your Plan</h3>
   <div class="api-plan-description">
     Basic or enterprise, pay what you need, with our tiered plans
   </div>
-
-  <div class="api-plans">
+  <div class="api-plans-container">
     <% @plans.each do |plan| %>
       <div class="api-plan-container">
         <div class="api-plan-name"> <%= plan.name.split("_").join(" ") %> </div>
         <div class="api-plan-details">
-          <div class="api-plan-price">
+          <div class="api-plan-subdetails">
             <div class="api-price">$<%= plan.price %>/mo</div>
-            <div><%= number_with_delimiter(plan.calls, :delimiter => ',') %> Calls</div>
+            <div><%= number_with_delimiter(plan.calls, delimiter: ',') %> Calls</div>
             <div><%= plan.private_use? ? "Private Use" : "Public Facing" %></div>
           </div>
           <div class="api-plan-datasets">
