@@ -35,7 +35,9 @@
             <div> <%= image_tag subratings_icon %> Greatschools Subratings</div>
           </div>
           <div class="api-plan-start">
-            <button>Start Now</button>
+            <%= form_tag("/api/registration", method: "get") do %>
+              <button>Start Now</button>
+            <% end %>
           </div>
         </div>
       </div>
