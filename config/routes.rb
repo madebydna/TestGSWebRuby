@@ -249,8 +249,8 @@ LocalizedProfiles::Application.routes.draw do
 
   # New API routes
   get '/api/signup/', to: 'admin/api/plans#index'
-  get '/api/signup/registration', to: 'admin/api/users#new', as: :api_registration
-  post '/api/signup/', to: 'admin/api/users#create'
+  get '/api/registration', to: 'admin/api/users#new', as: :api_registration
+  post '/api/registration/', to: 'admin/api/users#create'
   patch '/api/billing/:id', to: 'admin/api/users#update', as: :api_billing_update
   get '/api/billing/', to: 'admin/api/users#billing', as: :api_billing
 
