@@ -35,6 +35,15 @@ module CommunityProfiles
       end
     end
 
+    def path_to_yml
+      if ['ca', 'mi'].include?(@state_cache_data_reader.state.downcase)
+        path = 'lib.summary_rating.district_scope_alt'
+      else
+        path = 'lib.summary_rating.district_scope'
+      end
+      path
+    end
+
     def data_values
       return {} if ratings_narration.total_counts.zero?
 
@@ -43,11 +52,11 @@ module CommunityProfiles
         h['title'] = I18n.t('title', scope: "lib.summary_rating.district_scope")
         h['subtext'] = I18n.t('subtext', scope: "lib.summary_rating.district_scope")
         h['narration'] = I18n.t("#{ratings_narration.narration_logic}_html", scope: "lib.summary_rating.district_scope.narrative")
-        h['tooltip'] = I18n.t("tooltip_html", scope: "lib.summary_rating.district_scope")
+        h['tooltip'] = I18n.t("tooltip_html", scope: path_to_yml)
         h['graphic_header'] = I18n.t("graphic_header", scope: "lib.summary_rating.district_scope")
         h['graphic_header_tooltip'] = I18n.t("graphic_header_tooltip", scope: "lib.summary_rating.district_scope")
         h['data'] = data_points
-        h['source'] = I18n.t("source_html", scope: "lib.summary_rating.district_scope", date_in_words: valid_date_in_words)
+        h['source'] = I18n.t("source_html", scope: path_to_yml, date_in_words: valid_date_in_words)
       end
     end
 

@@ -33,7 +33,8 @@ module CommunityProfiles
       content << '<h1>' + I18n.t('source_title', scope: "lib.academic_progress.district_scope") + '</h1>'
       content << rating_source(year: source_info["year"], label: I18n.t('Greatschools rating', scope: "lib.academic_progress"),
                                description: rating_db_label(source_info["description"]), methodology: nil,
-                               more_anchor: 'academicprogressrating')
+                               more_anchor: 'academicprogressrating',
+                               state: @state_cache_data_reader.state.downcase)
       content
     end
 
@@ -45,12 +46,21 @@ module CommunityProfiles
         h['title'] = I18n.t('title', scope: "lib.academic_progress.district_scope")
         h['subtext'] = I18n.t('subtext', scope: "lib.academic_progress.district_scope")
         h['narration'] = I18n.t("#{ratings_narration.narration_logic}_html", scope: "lib.academic_progress.district_scope.narrative")
-        h['tooltip'] = I18n.t("tooltip_html", scope: "lib.academic_progress.district_scope")
+        h['tooltip'] = I18n.t("tooltip_html", scope: path_to_yml)
         h['graphic_header'] = I18n.t("graphic_header", scope: "lib.academic_progress.district_scope")
         h['graphic_header_tooltip'] = I18n.t("graphic_header_tooltip", scope: "lib.academic_progress.district_scope")
         h['data'] = data_points
         h['source'] = sources
       end
+    end
+
+    def path_to_yml
+      if ['ca', 'mi'].include?(@state_cache_data_reader.state.downcase)
+        path = 'lib.academic_progress_alt.district_scope'
+      else
+        path = 'lib.academic_progress.district_scope'
+      end
+      path
     end
 
     # data points for the pie chart

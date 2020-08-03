@@ -1,3 +1,5 @@
+<% path_to_yml = ['ca', 'mi'].include?(@school.state.downcase) ? 'lib.equity_overview_alt' : 'lib.equity_overview' %>
+
 <% content_for(:profile_module_header, flush: true) do %>
   <% useful_url = equity_overview.qualaroo_module_link(:equity_overview_no_data) + '&a=0' %>
   <% useful_link = link_to(I18n.db_t('Yes'), useful_url, class: 'anchor-button', target: '_blank', rel: 'nofollow') %>
@@ -5,9 +7,9 @@
   <% not_useful_link = link_to(I18n.db_t('No'), not_useful_url, class: 'anchor-button', target: '_blank', rel: 'nofollow') %>
   <%= render 'module_header',
     rating: equity_overview.equity_rating,
-    title: t('lib.equity_overview.title'),
-    subtitle: t('lib.equity_overview.subtitle_html', article_path: article_achievement_gap_path),
-    no_data_summary: t('lib.equity_overview.no_data_summary_html', useful_link: useful_link, not_useful_link: not_useful_link),
+    title: t(path_to_yml + '.title'),
+    subtitle: t(path_to_yml + '.subtitle_html', article_path: article_achievement_gap_path),
+    no_data_summary: t(path_to_yml + '.no_data_summary_html', useful_link: useful_link, not_useful_link: not_useful_link),
     share_content: equity_overview.share_content,
     info_text: equity_overview.info_text,
     has_data: equity_overview.has_rating?
