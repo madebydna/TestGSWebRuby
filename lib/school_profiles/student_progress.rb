@@ -32,7 +32,11 @@ module SchoolProfiles
     end
 
     def info_text
-      I18n.t('lib.student_progress.info_text')
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        I18n.t('lib.student_progress_alt.info_text')
+      else
+        I18n.t('lib.student_progress.info_text')
+      end
     end
 
     def narration
@@ -44,7 +48,9 @@ module SchoolProfiles
     def narration_text_segment_by_test_score
       level = narration_level(test_scores_rating.to_i)
       rbq = rating_by_quintile(rating)
-      if level.present? && rbq.present?
+      if level.present? && rbq.present? && ['ca', 'mi'].include?(@school.state.downcase)
+        I18n.t("lib.student_progress_alt.narrative.#{rbq}_#{level}_html")
+      elsif level.present? && rbq.present?
         I18n.t("lib.student_progress.narrative.#{rbq}_#{level}_html")
       else
         ''
@@ -78,15 +84,27 @@ module SchoolProfiles
           10 => 5
       }[rating.to_i]
       return nil unless bucket
-      "lib.student_progress.narrative.#{bucket}_html"
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        "lib.student_progress_alt.narrative.#{bucket}_html"
+      else
+        "lib.student_progress.narrative.#{bucket}_html"
+      end
     end
 
     def label(key)
-      I18n.t(key, scope: 'lib.student_progress', default: key)
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        I18n.t(key, scope: 'lib.student_progress_alt', default: key)
+      else
+        I18n.t(key, scope: 'lib.student_progress', default: key)
+      end
     end
 
     def data_label(key)
-      I18n.t(key, scope: 'lib.student_progress', default: I18n.db_t(key, default: key))
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        I18n.t(key, scope: 'lib.student_progress_alt', default: I18n.db_t(key, default: key))
+      else
+        I18n.t(key, scope: 'lib.student_progress', default: I18n.db_t(key, default: key))
+      end
     end
 
     def sources
@@ -94,7 +112,11 @@ module SchoolProfiles
       description = data_label(description) if description
       methodology = rating_methodology
       methodology = data_label(methodology) if methodology
-      source = "#{@school.state_name.titleize} #{label('Dept of Education')}, #{rating_year}"
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        source = "GreatSchools; #{label('source_calculation')} #{rating_year}."
+      else
+        source = "#{@school.state_name.titleize} #{label('Dept of Education')}, #{rating_year}"
+      end
 
       content = '<div class="sourcing">'
       content << '<h1>' + label('title') + '</h1>'
