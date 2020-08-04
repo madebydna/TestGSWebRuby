@@ -380,6 +380,9 @@ LocalizedProfiles::Application.routes.draw do
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]
   match '/gsr/session/facebook_auth' => 'signin#facebook_auth', :as => :facebook_auth, via: [:get, :post]
   match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation, via: [:get, :post]
+  # Google OAuth2 Routes
+  get '/auth/:provider/callback', to: 'signin#google_auth'
+  get '/auth/failure', to: redirect('/')
   # This route needs to be either merged with authenticate_token, or renamed to be more consistent with that one
   # JIRA: JT-385
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'

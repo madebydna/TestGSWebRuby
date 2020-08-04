@@ -78,6 +78,10 @@ gem 'gon'
 # Tiny facebook library. By http://www.appoxy.com (http://github.com/appoxy/mini_fb/)
 gem 'mini_fb'
 
+# USED: In google authenication
+# placeholder text
+gem 'omniauth-google-oauth2'
+
 # SEO plugin for Ruby on Rails applications.
 # USED: all over the place. Search for set_meta_tags
 # Collection of SEO helpers for Ruby on Rails. (http://github.com/kpumuk/meta-tags)

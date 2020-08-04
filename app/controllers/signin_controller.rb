@@ -171,6 +171,35 @@ class SigninController < ApplicationController
     end
   end
 
+  def google_auth
+    auth = request.env["omniauth.auth"]
+
+    user = User.from_google_auth(auth)
+
+    if user.new_record?
+      user, error = register_user('google', {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email
+      })
+
+      if user && error.nil?
+        send_verification_email(user)
+      end
+    end
+
+    log_user_in(user)
+
+    consistify_saved_schools(user)
+
+    redirect_to manage_account_url
+  end
+
+  def omniuth_failure
+    GSLogger.warn(:misc, nil, message:'Error logging in with OAuth')
+    redirect_to('/auth/failure')
+  end
+
   def authenticate_token_and_redirect
     token = params[:id]
     token = CGI.unescape(token) if token
@@ -218,7 +247,7 @@ class SigninController < ApplicationController
   end
 
   def register
-    user, error = register_user(false, {
+    user, error = register_user(nil, {
       email: params[:email]
     })
 
