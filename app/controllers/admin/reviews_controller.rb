@@ -1,8 +1,20 @@
 class Admin::ReviewsController < ApplicationController
   include ReviewHelper
-  helper_method :sort_column, :sort_direction
+  include AdminSortable
 
   MODERATION_LIST_PAGE_SIZE = 50
+  DEFAULT_DIRECTION = "desc"
+  SORT_OPTIONS = {
+    "comment" => "reviews.comment",
+    "status" => "reviews.active",
+    "school" => "school_name",
+    "state" => "reviews.state",
+    "reviewer" => "list_member.email",
+    "open_flags" => "COUNT(review_flags.review_id)",
+    "reasons" => "review_flags.reason",
+    "created" => "review_flags.created",
+    "default" => "created"
+  }
 
   layout 'deprecated_application_with_webpack'
 
@@ -288,51 +300,51 @@ class Admin::ReviewsController < ApplicationController
       merge(User.verified).
       pluck('reviews.school_id')
   end
-  
+
   def flagged_school_ids_in_all_states_hash
     flagged_school_ids_in_all_states = Hash.new
-    
+
     States.abbreviations.each do |state|
       flagged_within_state = flagged_review_school_ids_by_state(state)
 
       unless flagged_within_state.empty?
         flagged_school_ids_in_all_states[state] = flagged_within_state
-      end 
+      end
     end
-    
-    flagged_school_ids_in_all_states
-  end 
 
-  def school_name_query_string
+    flagged_school_ids_in_all_states
+  end
+
+  def school_name_query_string(states_to_ids)
     select_statement_array = []
-    flagged_school_ids_in_all_states_hash.each do |state, ids|
+    states_to_ids.each do |state, ids|
       id_string = ids.uniq.join(", ")
       select_statement_array << "(SELECT id, name, state FROM _#{state}.school WHERE id in(#{id_string}) )"
     end
 
     select_statement_array.join(' UNION ')
   end
-  
+
   def flagged_reviews_with_school_info
       Review.select("reviews.*, flagged_schools.name AS school_name").
-        joins("JOIN (#{school_name_query_string}) AS flagged_schools ON (reviews.school_id = flagged_schools.id AND reviews.state = flagged_schools.state)").
+        joins("JOIN (#{school_name_query_string(flagged_school_ids_in_all_states_hash)}) AS flagged_schools ON (reviews.school_id = flagged_schools.id AND reviews.state = flagged_schools.state)").
         where(reviews: { id: flagged_review_ids }).includes(:flags)
   end
 
   def flagged_reviews_with_user
-    flagged_reviews_with_user = 
+    flagged_reviews_with_user =
       Review.
         joins(:user).
         where(reviews: { id: flagged_review_ids })
-  end 
+  end
 
   def flag_count_per_review
-    flag_count_per_review = 
+    flag_count_per_review =
       Review.
         joins("JOIN review_flags ON reviews.id = review_flags.review_id").
         where(review_flags: { review_id: flagged_review_ids, active: 1 }).
         group("review_flags.review_id")
-  end 
+  end
 
   def flagged_reviews(query, sort_column, sort_direction)
     # load needs to be called at the end of this chain, otherwise ActiveRecord will perform two extra queries
@@ -346,7 +358,7 @@ class Admin::ReviewsController < ApplicationController
 
       results.extend(SchoolAssociationPreloading).preload_associated_schools!
     end
-  end 
+  end
 
   def sort_table
     query = filtered_flagged_reviews_scope.where(reviews: { id: flagged_review_ids })
@@ -357,28 +369,9 @@ class Admin::ReviewsController < ApplicationController
       query = flagged_reviews_with_user
     elsif sort_column == 'COUNT(review_flags.review_id)'
       query = flag_count_per_review
-    end 
+    end
 
     flagged_reviews(query, sort_column, sort_direction)
-  end
-
-  SORT_OPTIONS = {
-    "comment" => "reviews.comment",
-    "status" => "reviews.active", 
-    "school" => "school_name",
-    "state" => "reviews.state",
-    "reviewer" => "list_member.email",
-    "open_flags" => "COUNT(review_flags.review_id)",
-    "reasons" => "review_flags.reason",
-    "created" => "review_flags.created"
-  }
-
-  def sort_column
-    SORT_OPTIONS.fetch(params[:sort], SORT_OPTIONS["created"])
-  end 
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
   def review_params

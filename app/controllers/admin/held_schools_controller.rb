@@ -1,6 +1,23 @@
-class Admin::HeldSchoolController < ApplicationController
+class Admin::HeldSchoolsController < Admin::AdminController
+  include AdminSortable
 
-  layout 'deprecated_application'
+  layout 'deprecated_application_with_webpack'
+
+  PAGE_SIZE = 50
+  SORT_OPTIONS = {
+    "hold_date" => "placed_on_hold_at",
+    "held_school" => "school_name",
+    "default" => "school_name"
+  }
+  DEFAULT_DIRECTION = "asc"
+
+  def index
+    @held_schools = HeldSchool.all_active_with_school(
+      order_by: sort_column,
+      order_dir: sort_direction,
+      page: params[:page],
+      per_page: PAGE_SIZE)
+  end
 
   def create
     hold = HeldSchool.where(state: params[:held_school][:state], id: params[:held_school][:school_id]).first
