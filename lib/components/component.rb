@@ -182,6 +182,10 @@ module Components
         } if hash
       end
     end
+
+    def source
+      {}
+    end
   end
 end
 
