@@ -45,7 +45,7 @@ module SchoolProfiles
       end
 
       if @school.includes_highschool?
-        if @school.includes_level_code?(%w[m h]) || @stem_courses.visible?
+        if @stem_courses.visible?
           arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: '', anchor: 'Advanced_courses'}
         end
 
@@ -57,7 +57,7 @@ module SchoolProfiles
           arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
         end
 
-        if @school.includes_level_code?(%w[m h]) || @stem_courses.visible?
+        if @school.includes_level_code?(%w[m h]) && @stem_courses.visible?
           arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: '', anchor: 'Advanced_courses'}
         end
       end
