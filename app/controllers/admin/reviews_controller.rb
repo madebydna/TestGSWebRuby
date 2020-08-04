@@ -13,7 +13,7 @@ class Admin::ReviewsController < ApplicationController
     "open_flags" => "COUNT(review_flags.review_id)",
     "reasons" => "review_flags.reason",
     "created" => "review_flags.created",
-    "default" => "created"
+    "default" => "review_flags.created"
   }
 
   layout 'deprecated_application_with_webpack'
