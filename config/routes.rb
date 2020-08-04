@@ -321,7 +321,7 @@ LocalizedProfiles::Application.routes.draw do
 
     get  '/users/search'
 
-    resources :held_school, only: [:create, :update, :destroy] do
+    resources :held_schools, except: [:show] do
       member do
         put 'remove_hold'
       end

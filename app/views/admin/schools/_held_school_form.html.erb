@@ -21,7 +21,7 @@
   <% held_school ||= HeldSchool.new %>
 
   <%= form_for(held_school,
-               url: held_school.new_record? ? admin_held_school_index_path : admin_held_school_path(held_school) ) do |f| %>
+               url: held_school.new_record? ? admin_held_schools_path : admin_held_school_path(held_school) ) do |f| %>
     <%= f.hidden_field :school_id, value: school.id %>
     <%= f.hidden_field :state, value: school.state %>
     <%= f.hidden_field :active, value: 1 %>
