@@ -68,19 +68,19 @@ shared_example 'should have go to school profile button' do
 
 shared_example 'should have go to school profile link' do
   subject.find_link('Go to school profile')
-  end
+end
 
 shared_example 'should have begin writing here link' do
   subject.find_link('Begin writing here.')
-  end
+end
 
-shared_example 'should have write administratro reviews link' do
+shared_example 'should have write administrator reviews link' do
   subject.find_link('Write administrator reviews')
-  end
+end
 
 shared_example 'should have need help link' do
   subject.find_link('Need help?')
-  end
+end
 
 shared_example 'should have save edits link' do
   subject.find_link('Save edits')

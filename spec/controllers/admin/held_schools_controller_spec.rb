@@ -58,7 +58,7 @@ describe Admin::HeldSchoolsController do
           with(
             order_by: "school_name",
             order_dir: "asc",
-            page: 10,
+            page: '10',
             per_page: 50
           )
         get :index, { page: 10 }
