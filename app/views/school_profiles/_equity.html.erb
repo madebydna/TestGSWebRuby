@@ -18,60 +18,7 @@
       </h2>
     </div>
     <div class="col-xs-12 col-lg-9">
-      <% if equity_overview.has_rating? %>
-        <div class="profile-section-slot">
-          <%= render('equity_overview', equity_overview: equity_overview) %>
-        </div>
-      <% end %>
-      <div class="profile-section-slot">
-        <%= react_component('DataModule', props: {
-                          title: t('.Race ethnicity'),
-                          anchor: 'Race_ethnicity',
-                          analytics_id: 'EquityRaceEthnicity',
-                          subtitle: t('.Race ethnicity subtitle'),
-                          info_text: t('.Race ethnicity tooltip'),
-                          icon_classes: t('.Race ethnicity icon'),
-                          sources: equity.race_ethnicity_sources,
-                          share_content: equity.race_ethnicity_share_content,
-                          data: equity.race_ethnicity_props,
-                          faq: equity.faq_race_ethnicity,
-                          no_data_summary: t('.Race ethnicity no data'),
-                          qualaroo_module_link: equity.qualaroo_module_link(:race_ethnicity) })%>
-      </div>
-      <div class="profile-section-slot">
-        <%= react_component('DataModule', props: {
-                          title: t('.Low-income students'),
-                          anchor: 'Low-income_students',
-                          analytics_id: 'EquityLowIncome',
-                          subtitle:  t('.Low income subtitle'),
-                          info_text: t('.Low income tooltip'),
-                          icon_classes: t('.Low income icon'),
-                          sources: equity.low_income_sources,
-                          share_content: equity.low_income_share_content,
-                          rating: equity.rating_low_income,
-                          data: equity.low_income_section_props,
-                          faq: equity.faq_low_income,
-                          no_data_summary: t('.Low income no data'),
-                          qualaroo_module_link: equity.qualaroo_module_link(:low_income_students) })  %>
-      </div>
-      <div class="profile-section-slot">
-        <%= react_component('StudentsWithDisabilities', props: {
-                          title: t('.Students with Disabilities'),
-                          anchor: 'Students_with_Disabilities',
-                          analytics_id: 'EquityDisabilities',
-                          subtitle:  t('.Students with Disabilities subtitle'),
-                          info_text: t('.Student with disabilities tooltip'),
-                          icon_classes: t('.Student with disabilities icon'),
-                          feedback: equity.feedback_data,
-                          feedback_tab_title: t('.Community feedback'),
-                          sources: equity.students_with_disabilities_sources,
-                          share_content: equity.students_with_disabilities_share_content,
-                          data: equity.students_with_disabilities_section_props,
-                          faq: equity.faq_disabilities,
-                          no_data_summary: t('.Disabilities no data'),
-                          qualaroo_module_link: equity.qualaroo_module_link(:students_with_disabilities)})  %>
-
-      </div>
+      <%= render 'subsection_equity', equity_overview: equity_overview, equity: equity %>
     </div>
   </div>
 </div>
