@@ -19,10 +19,12 @@ class ALMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 		s.transform('Fill missing default fields', Fill, {
 			date_valid: '2019-01-01 00:00:00',
 			year: '2019',
-			notes: 'DXT-3467: TX CSA',
+			notes: 'DXT-3603: AL CSA',
 			grade: 'NA',
 			data_type: 'remediation rate',
-			data_type_id: 413
+			data_type_id: 413,
+			breakdown: 'All Students',
+			breakdown_id: 1
 	    })
 	    .transform('rename columns',MultiFieldRenamer,{
 			cohort_count_nocommas: :cohort_count
