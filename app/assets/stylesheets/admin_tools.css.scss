@@ -294,11 +294,30 @@
 
   .api-plans-container {
     display: flex;
+    justify-content: center;
+  }
+
+  .api-plan-best-value {
+    font-family: opensans-semibold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2BA3DC;
   }
 
   .api-plan-col {
-    flex: 1;
+    flex: 1 0;
     padding: 10px;
+  }
+
+  .api-plan-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 50px;
+    padding-bottom: 10px;
   }
 
   .api-plan-name {
@@ -307,33 +326,61 @@
     font-size: 20px;
     line-height: 26px;
     text-align: center;
-    margin-bottom: 20px;
   }
 
   .api-plan-details {
     border: 1px solid $form-field-border-color;
     border-radius: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .api-plan-subdetails {
-    border-bottom: 1px solid $form-field-border-color;
     padding: 20px;
     text-align: center;
   }
 
   .api-plan-datasets {
+    border-top: 1px solid $form-field-border-color;
     border-bottom: 1px solid $form-field-border-color;
-    padding: 20px;
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .api-plan-start {
     padding: 20px;
     text-align: center;
+    min-height: 76px;
+    button {
+      background: #FFFFFF;
+      border: 1px solid #71787E;
+      box-sizing: border-box;
+      border-radius: 5px;
+      width: 136px;
+      height: 40px;
+      left: 1170px;
+      top: 660px;
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
+
+      color: #71787E;
+    }
   }
 
   .api-price {
     font-family: RobotoSlab-Bold, sans-serif;
     font-size: 2vw;
+  }
+
+  img {
+    vertical-align: middle;
   }
 
 }

@@ -19,7 +19,12 @@
   <div class="api-plans-container">
     <% @plans.each do |plan| %>
       <div class="api-plan-col">
-        <div class="api-plan-name"> <%= plan.name.split("_").join(" ") %> </div>
+        <div class="api-plan-header">
+          <% if plan.name == 'premium' %>
+            <div class="api-plan-best-value"> Best Value </div>
+          <% end %>
+          <span class="api-plan-name"> <%= plan.name.split("_").join(" ") %> </span>
+        </div>
         <div class="api-plan-details">
           <div class="api-plan-subdetails">
             <div class="api-price">$<%= plan.price %>/mo</div>
@@ -29,17 +34,30 @@
           <div class="api-plan-datasets">
             <% demo_icon = plan.demographics_included? ? 'icons/blue-check-circle.svg' : 'icons/gray-check-circle.svg' %>
             <% subratings_icon = plan.subratings_included? ? 'icons/blue-check-circle.svg' : 'icons/gray-check-circle.svg' %>
-            <div> <%= image_tag 'icons/blue-check-circle.svg' %> Directory</div>
-            <div> <%= image_tag 'icons/blue-check-circle.svg' %> GreatSchools Rating</div>
-            <div> <%= image_tag demo_icon %> Demographics</div>
-            <div> <%= image_tag subratings_icon %> Greatschools Subratings</div>
-          </div>
-          <div class="api-plan-start">
-            <%= form_tag("/api/registration", method: "get") do %>
-              <button>Start Now</button>
+            <% if plan.name == 'enterprise' %>
+              <div> Additional Data sets:</div>
+              <div> <%= image_tag 'icons/plus.svg' %> Community Reviews</div>
+              <div> <%= image_tag 'icons/plus.svg' %> Academic Performance</div>
+              <br>
+            <% else %>
+              <div> <%= image_tag 'icons/blue-check-circle.svg' %> <span>Directory</span></div>
+              <div> <%= image_tag 'icons/blue-check-circle.svg' %> <span>GreatSchools Rating</span></div>
+              <div> <%= image_tag demo_icon %> Demographics</div>
+              <div> <%= image_tag subratings_icon %> Greatschools Subratings</div>
             <% end %>
           </div>
-        </div>
+          <div class="api-plan-start">
+            <% if plan.name == 'enterprise' %>
+              <%= form_tag("/api/registration", method: "get") do %>
+                <button>Contact us</button>
+              <% end %>
+            <% else %>
+              <%= form_tag("/api/registration", method: "get") do %>
+                <button>Start Now</button>
+              <% end %>
+              </div>
+            <% end %>
+            </div>
       </div>
     <% end %>
   </div>
