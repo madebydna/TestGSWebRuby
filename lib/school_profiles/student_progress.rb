@@ -32,11 +32,7 @@ module SchoolProfiles
     end
 
     def info_text
-      if ['ca', 'mi'].include?(@school.state.downcase)
-        I18n.t('lib.student_progress_alt.info_text')
-      else
-        I18n.t('lib.student_progress.info_text')
-      end
+      I18n.t(path_to_yml + '.info_text')
     end
 
     def narration
@@ -48,9 +44,7 @@ module SchoolProfiles
     def narration_text_segment_by_test_score
       level = narration_level(test_scores_rating.to_i)
       rbq = rating_by_quintile(rating)
-      if level.present? && rbq.present? && ['ca', 'mi'].include?(@school.state.downcase)
-        I18n.t("lib.student_progress_alt.narrative.#{rbq}_#{level}_html")
-      elsif level.present? && rbq.present?
+      if level.present? && rbq.present?
         I18n.t("lib.student_progress.narrative.#{rbq}_#{level}_html")
       else
         ''
@@ -84,27 +78,15 @@ module SchoolProfiles
           10 => 5
       }[rating.to_i]
       return nil unless bucket
-      if ['ca', 'mi'].include?(@school.state.downcase)
-        "lib.student_progress_alt.narrative.#{bucket}_html"
-      else
-        "lib.student_progress.narrative.#{bucket}_html"
-      end
+      "lib.student_progress.narrative.#{bucket}_html"
     end
 
     def label(key)
-      if ['ca', 'mi'].include?(@school.state.downcase)
-        I18n.t(key, scope: 'lib.student_progress_alt', default: key)
-      else
-        I18n.t(key, scope: 'lib.student_progress', default: key)
-      end
+      I18n.t(key, scope: path_to_yml, default: key)
     end
 
     def data_label(key)
-      if ['ca', 'mi'].include?(@school.state.downcase)
-        I18n.t(key, scope: 'lib.student_progress_alt', default: I18n.db_t(key, default: key))
-      else
-        I18n.t(key, scope: 'lib.student_progress', default: I18n.db_t(key, default: key))
-      end
+      I18n.t(key, scope: path_to_yml, default: I18n.db_t(key, default: key))
     end
 
     def sources
@@ -113,7 +95,7 @@ module SchoolProfiles
       methodology = rating_methodology
       methodology = data_label(methodology) if methodology
       if ['ca', 'mi'].include?(@school.state.downcase)
-        source = "GreatSchools; #{label('source_calculation')} #{rating_year}."
+        source = "GreatSchools; #{label('source_calculation')} #{rating_year}"
       else
         source = "#{@school.state_name.titleize} #{label('Dept of Education')}, #{rating_year}"
       end
@@ -145,6 +127,14 @@ module SchoolProfiles
 
     def rating_year
       @school_cache_data_reader.student_progress_rating_year
+    end
+
+    def path_to_yml
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        path_to_yml = 'lib.student_progress_alt'
+      else
+        path_to_yml = 'lib.student_progress'
+      end
     end
 
     def visible?

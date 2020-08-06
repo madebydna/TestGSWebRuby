@@ -21,17 +21,9 @@ module SchoolProfiles
     end
 
     def faq
-      @_faq ||= begin
-        if ['ca', 'mi'].include?(@school_cache_data_reader.school.state.downcase)
-          scope = 'school_profiles.college_readiness_alt.faq'
-        else
-          scope = 'school_profiles.college_readiness.faq'
-        end
-
-        Faq.new(cta: I18n.t(:cta, scope: scope),
-                content: I18n.t(:content_html, scope: scope),
-                element_type: 'faq')
-      end
+      @_faq ||= Faq.new(cta: I18n.t(:cta, scope: path_to_yml + '.faq'),
+                        content: I18n.t(:content_html, scope: path_to_yml + '.faq'),
+                        element_type: 'faq')
     end
 
     def rating
@@ -43,27 +35,15 @@ module SchoolProfiles
     end
 
     def info_text
-      if ['ca', 'mi'].include?(@school_cache_data_reader.school.state.downcase)
-        I18n.t('school_profiles.college_readiness_alt.info_text')
-      else
-        I18n.t('school_profiles.college_readiness.info_text')
-      end
+      I18n.t(path_to_yml + '.info_text')
     end
 
     def data_label(key)
-      if ['ca', 'mi'].include?(@school_cache_data_reader.school.state.downcase)
-        I18n.t(key.to_sym, scope: 'school_profiles.college_readiness_alt', default: I18n.db_t(key, default: key))
-      else
-        I18n.t(key.to_sym, scope: 'school_profiles.college_readiness', default: I18n.db_t(key, default: key))
-      end
+      I18n.t(key.to_sym, scope: path_to_yml, default: I18n.db_t(key, default: key))
     end
 
     def data_label_info_text(key)
-      if ['ca', 'mi'].include?(@school_cache_data_reader.school.state.downcase)
-        I18n.t(key.to_sym, scope: 'school_profiles.college_readiness_alt.data_point_info_texts')
-      else
-        I18n.t(key.to_sym, scope: 'school_profiles.college_readiness.data_point_info_texts')
-      end
+      I18n.t(key.to_sym, scope: path_to_yml + '.data_point_info_texts')
     end
 
     def qualaroo_params
@@ -73,18 +53,11 @@ module SchoolProfiles
     end
 
     def feedback_data
-      @_feedback_data ||= begin
-        if ['ca', 'mi'].include?(@school_cache_data_reader.school.state.downcase)
-          scope = 'school_profiles.college_readiness_alt'
-        else
-          scope = 'school_profiles.college_readiness'
-        end
-        {
-          'feedback_cta' => I18n.t('feedback_cta', scope: scope),
-          'feedback_link' => 'https://s.qualaroo.com/45194/cb0e676f-324a-4a74-bc02-72ddf1a2ddd6' + qualaroo_params,
-          'button_text' =>  I18n.t('Answer', scope: scope)
-        }
-      end
+      @_feedback_data ||= {
+        'feedback_cta' => I18n.t('feedback_cta', scope: path_to_yml),
+        'feedback_link' => 'https://s.qualaroo.com/45194/cb0e676f-324a-4a74-bc02-72ddf1a2ddd6' + qualaroo_params,
+        'button_text' =>  I18n.t('Answer', scope: path_to_yml)
+      }
     end
 
     def sat_score_range(state, year)
@@ -182,6 +155,14 @@ module SchoolProfiles
 
     def props
       @_props ||= components.map {|component| get_props(component)}.reject(&:empty?)
+    end
+
+    def path_to_yml
+      if ['ca', 'mi'].include?(@school_cache_data_reader.school.state.downcase)
+        path_to_yml = 'school_profiles.college_readiness_alt'
+      else
+        path_to_yml = 'school_profiles.college_readiness'
+      end
     end
 
     private
