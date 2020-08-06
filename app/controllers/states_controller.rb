@@ -231,6 +231,8 @@ class StatesController < ApplicationController
           state_abbr: @state[:short],
           trailing_slash: true
         )
+        cp[:ratingsUrlEnglish] = ratings_link_english
+        cp[:ratingsUrlSpanish] = ratings_link_spanish
         cp[:searchResultBrowseUrl] = search_state_browse_path(gs_legacy_url_encode(@state[:long]))
         cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(
           state: gs_legacy_url_encode(@state[:long]),
@@ -257,6 +259,14 @@ class StatesController < ApplicationController
         end
       end
     end
+  end
+
+  def ratings_link_english
+    ['ca', 'mi'].include?(@state[:short].downcase) ? ratings_alt_path(lang: nil, trailing_slash: true) : ratings_path(lang: nil, trailing_slash: true)
+  end
+
+  def ratings_link_spanish
+    ['ca', 'mi'].include?(@state[:short].downcase) ? ratings_alt_path(trailing_slash: true) : ratings_spanish_path(trailing_slash: true)
   end
 
   def default_extras

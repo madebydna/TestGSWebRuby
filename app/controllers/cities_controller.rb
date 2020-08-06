@@ -159,6 +159,8 @@ class CitiesController < ApplicationController
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
+        cp[:ratingsUrlEnglish] = ratings_link_english
+        cp[:ratingsUrlSpanish] = ratings_link_spanish
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
         cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if csa_state_solr_query.present?
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
@@ -211,6 +213,14 @@ class CitiesController < ApplicationController
         end
       end
     end
+  end
+
+  def ratings_link_english
+    ['ca', 'mi'].include?(state.downcase) ? ratings_alt_path(lang: nil, trailing_slash: true) : ratings_path(lang: nil, trailing_slash: true)
+  end
+
+  def ratings_link_spanish
+    ['ca', 'mi'].include?(state.downcase) ? ratings_alt_path(trailing_slash: true) : ratings_spanish_path(trailing_slash: true)
   end
 
   # StructuredMarkup
