@@ -1,4 +1,4 @@
-<%= react_component('DataModule', props: {
+<%= react_component('LowIncomeDataModule', props: {
                   title: t('Low-income students', scope: 'school_profiles.equity'),
                   anchor: 'Low-income_students',
                   analytics_id: 'EquityLowIncome',
@@ -7,7 +7,7 @@
                   icon_classes: t('Low income icon', scope: 'school_profiles.equity'),
                   sources: equity.low_income_sources,
                   share_content: equity.low_income_share_content,
-                  rating: equity.rating_low_income,
+                  rating: nil,
                   data: equity.low_income_section_props,
                   faq: equity.faq_low_income,
                   no_data_summary: t('Low income no data', scope: 'school_profiles.equity'),

@@ -93,7 +93,7 @@ module SchoolProfiles
         arr << {column: 'Equity', label: EQUITY_OVERVIEW, present: true, rating: @equity_overview.equity_rating, anchor: 'Equity_overview'}
       end
       arr << {column: 'Equity', label: RACE_ETHNICITY, present: true, rating: nil, anchor: 'Race_ethnicity'}
-      arr << {column: 'Equity', label: LOW_INCOME, present: true, rating: @equity.rating_low_income.to_f.round, anchor: 'Low-income_students'}
+      arr << {column: 'Equity', label: LOW_INCOME, present: true, rating: nil, anchor: 'Low-income_students'}
       arr << {column: 'Equity', label: DISABILITIES, present: true, rating: nil, anchor: 'Students_with_Disabilities'}
       hash[:equity] = arr
       hash.delete_if{|key, value| value.blank?}
