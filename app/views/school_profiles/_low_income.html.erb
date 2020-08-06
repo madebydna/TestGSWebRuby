@@ -1,4 +1,20 @@
-<%= react_component('LowIncomeDataModule', props: {
+<% if %w(ca mi).include?(@school.state.downcase) %>
+  <%= react_component('LowIncomeDataModule', props: {
+                    title: t('Low-income students', scope: 'school_profiles.equity'),
+                    anchor: 'Low-income_students',
+                    analytics_id: 'EquityLowIncome',
+                    subtitle:  t('Low income subtitle', scope: 'school_profiles.equity'),
+                    info_text: t('Low income tooltip', scope: 'school_profiles.equity'),
+                    icon_classes: t('Low income icon', scope: 'school_profiles.equity'),
+                    sources: equity.low_income_sources,
+                    share_content: equity.low_income_share_content,
+                    rating: nil,
+                    data: equity.low_income_section_props,
+                    faq: equity.faq_low_income,
+                    no_data_summary: t('Low income no data', scope: 'school_profiles.equity'),
+                    qualaroo_module_link: equity.qualaroo_module_link(:low_income_students) })  %>
+<% else %>
+  <%= react_component('DataModule', props: {
                   title: t('Low-income students', scope: 'school_profiles.equity'),
                   anchor: 'Low-income_students',
                   analytics_id: 'EquityLowIncome',
@@ -7,8 +23,9 @@
                   icon_classes: t('Low income icon', scope: 'school_profiles.equity'),
                   sources: equity.low_income_sources,
                   share_content: equity.low_income_share_content,
-                  rating: nil,
+                  rating: equity.rating_low_income,
                   data: equity.low_income_section_props,
                   faq: equity.faq_low_income,
                   no_data_summary: t('Low income no data', scope: 'school_profiles.equity'),
                   qualaroo_module_link: equity.qualaroo_module_link(:low_income_students) })  %>
+<% end %>
