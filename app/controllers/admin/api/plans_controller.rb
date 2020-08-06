@@ -1,5 +1,6 @@
 class Admin::Api::PlansController < ApplicationController
   include Api::ErrorHelper
+  include Api::PlansHelper
 
   layout 'admin'
 

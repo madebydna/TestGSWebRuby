@@ -21,19 +21,24 @@
       <div class="api-plan-col">
         <div class="api-plan-header">
           <% if plan.name == 'premium' %>
-            <div class="api-plan-best-value"> Best Value </div>
+            <div class="api-plan-best-value"> Best Value</div>
           <% end %>
-          <span class="api-plan-name"> <%= plan.name.split("_").join(" ") %> </span>
+          <span class="api-plan-name"> <%= plan_name(plan.name) %> </span>
         </div>
-        <div class="api-plan-details">
+        <div class="api-plan-details <%= plan.name %>">
           <div class="api-plan-subdetails">
-            <div class="api-price">$<%= plan.price %>/mo</div>
+
+            <div class="api-price">
+              <div class="currency_sign">$</div>
+              <div class="price-primary"> <%= price_primary(plan.price) %> </div>
+              <div class="price-secondary"> <%= price_secondary(plan.price) %> </div>
+              <div>/mo</div>
+            </div>
+
             <div><%= number_with_delimiter(plan.calls, delimiter: ',') %> Calls</div>
             <div><%= plan.private_use? ? "Private Use" : "Public Facing" %></div>
           </div>
           <div class="api-plan-datasets">
-            <% demo_icon = plan.demographics_included? ? 'icons/blue-check-circle.svg' : 'icons/gray-check-circle.svg' %>
-            <% subratings_icon = plan.subratings_included? ? 'icons/blue-check-circle.svg' : 'icons/gray-check-circle.svg' %>
             <% if plan.name == 'enterprise' %>
               <div> Additional Data sets:</div>
               <div> <%= image_tag 'icons/plus.svg' %> Community Reviews</div>
@@ -42,22 +47,16 @@
             <% else %>
               <div> <%= image_tag 'icons/blue-check-circle.svg' %> <span>Directory</span></div>
               <div> <%= image_tag 'icons/blue-check-circle.svg' %> <span>GreatSchools Rating</span></div>
-              <div> <%= image_tag demo_icon %> Demographics</div>
-              <div> <%= image_tag subratings_icon %> Greatschools Subratings</div>
+              <div> <%= image_tag demo_icon(plan) %> Demographics</div>
+              <div> <%= image_tag subratings_icon(plan) %> Greatschools Subratings</div>
             <% end %>
           </div>
           <div class="api-plan-start">
-            <% if plan.name == 'enterprise' %>
-              <%= form_tag("/api/registration", method: "get") do %>
-                <button>Contact us</button>
-              <% end %>
-            <% else %>
-              <%= form_tag("/api/registration", method: "get") do %>
-                <button>Start Now</button>
-              <% end %>
-              </div>
+            <%= form_tag(action_url(plan.name), method: "get") do %>
+              <button class="<%= plan.name %>"><%= button_txt(plan.name) %></button>
             <% end %>
-            </div>
+          </div>
+        </div>
       </div>
     <% end %>
   </div>

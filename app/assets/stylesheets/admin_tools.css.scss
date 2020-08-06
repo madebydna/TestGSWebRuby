@@ -336,6 +336,10 @@
     flex-direction: column;
   }
 
+  .api-plan-details.premium {
+    border: 3px solid #5B82EC;
+  }
+
   .api-plan-subdetails {
     padding: 20px;
     text-align: center;
@@ -364,19 +368,42 @@
       height: 40px;
       left: 1170px;
       top: 660px;
-      font-family: Open Sans;
+      font-family: opensans-regular;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
+      color: #71787E;
+    }
+    button.premium {
+      width: 136px;
+      height: 40px;
+      left: 906px;
+      top: 660px;
+
+      background: #2BA3DC;
+      border-radius: 5px;
+      font-family: opensans-regular;
       font-style: normal;
       font-weight: 600;
       font-size: 12px;
       line-height: 16px;
 
-      color: #71787E;
+      color: #FFFFFF;
     }
   }
 
   .api-price {
     font-family: RobotoSlab-Bold, sans-serif;
-    font-size: 2vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .currency_sign {
+      font-size: 20px;
+    }
+    .price-primary{
+      font-size: 48px;
+    }
   }
 
   img {
