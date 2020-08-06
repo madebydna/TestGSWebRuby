@@ -215,14 +215,6 @@ class CitiesController < ApplicationController
     end
   end
 
-  def ratings_link_english
-    ['ca', 'mi'].include?(state.downcase) ? ratings_alt_path(lang: nil, trailing_slash: true) : ratings_path(lang: nil, trailing_slash: true)
-  end
-
-  def ratings_link_spanish
-    ['ca', 'mi'].include?(state.downcase) ? ratings_alt_path(trailing_slash: true) : ratings_spanish_path(trailing_slash: true)
-  end
-
   # StructuredMarkup
   def prepare_json_ld
     breadcrumbs.each { |bc| add_json_ld_breadcrumb(bc) }
