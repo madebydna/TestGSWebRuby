@@ -77,3 +77,78 @@ en:
         Explore the %{sections} below to learn more.%{more}<a href="/gk/equity-toolkit/">These 5 things</a> will help
         you start a conversation at your school about helping <span class='open-sans_i'>all</span>
         students succeed.%{end_more}</p>
+    equity_overview_alt:
+      'title': 'Equity overview'
+      subtitle_html: >
+        Is this school offering opportunity for all its students, or leaving some kids behind?
+        Successful schools are working to
+        <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="close the achievement gap" href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/" target="_blank"> close the achievement
+        gap</a>.
+      no_data_summary_html: >
+        <p>In this section, we publish a rating that reflects how well this school is serving disadvantaged students, compared to other schools in the state, based on college readiness, learning progress, and test score data provided from the state’s Department of Education.</p>
+        <p>The state does not provide enough information for us to calculate an Equity Rating for this school.</p>
+        <p class="module_feedback">Would you find it helpful to have this kind of information for the school? <span class="links">%{useful_link}%{not_useful_link}</span></p>
+      'sources_title': 'GreatSchools profile data sources &amp; information'
+      'source': 'Source'
+      'Great schools rating': 'GreatSchools Equity Rating'
+      section:
+        one: section
+        other: sections
+      race_ethnicity: Race/ethnicity
+      low_income: Low-income
+      and: and
+      section_list: "%{section_names} %{section_word}"
+      info_text: >
+        The Equity Rating looks at how well this school is serving disadvantaged students relative to all students, compared to other schools in the state. based on college readiness metrics, [student/academic progress], and test scores provided from the state’s Department of Education.
+        <br>
+        <a href="/gk/ratings-ca-mi/#equityrating" style="cursor: pointer;" target="_blank">Learn more about this rating.</a>
+      narrative_1_html: >
+        <h3 class="negative">Very concerning:</h3>
+        <p>Disadvantaged students at this school may be falling far behind other students in the state,
+        and this school may have large achievement gaps.</p>
+        <hr>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Look at the %{sections} below to see how different student groups are doing at this school.
+        Are there big gaps?%{more}<a href="/gk/equity-toolkit/">These 5 things</a> will help
+        you start a conversation at your school about helping <span class='open-sans_i'>all</span>
+        students succeed.%{end_more}</p>
+      narrative_2_html: >
+        <h3 class="negative">A worrisome sign:</h3>
+        <p>Disadvantaged students at this school may be falling behind other students in the state, and this school
+        may have significant achievement gaps.</p>
+        <hr>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Look at the %{sections} below to see how different student groups are doing at this school.
+        Are there big gaps?%{more}<a href="/gk/equity-toolkit/">These 5 things</a> will help
+        you start a conversation at your school about helping <span class='open-sans_i'>all</span>
+        students succeed.%{end_more}</p>
+      narrative_3_html: >
+        <h3 class="neutral">Worth a deeper look:</h3>
+        <p>Disadvantaged students at this school are performing about as well as other students in the state, but this
+        school may still have achievement gaps.</p>
+        <hr>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Look at the %{sections} below to see how different student groups are doing at this school.
+        Are there big gaps?%{more}<a href="/gk/equity-toolkit/">These 5 things</a> will help
+        you start a conversation at your school about helping <span class='open-sans_i'>all</span>
+        students succeed.%{end_more}</p>
+      narrative_4_html: >
+        <h3 class="positive">A promising sign:</h3>
+        <p>Disadvantaged students at this school are performing better than other students in the state,
+        though this school may still have achievement gaps.</p>
+        <hr>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Schools that close the gap between different student groups are doing something right!
+        Explore the %{sections} below to learn more.%{more}<a href="/gk/equity-toolkit/">These 5 things</a> will help
+        you start a conversation at your school about helping <span class='open-sans_i'>all</span>
+        students succeed.%{end_more}</p>
+      narrative_5_html: >
+        <h3 class="positive">Good news!</h3>
+        <p>Disadvantaged students at this school are performing far better than other students in the state, and this
+        school is successfully closing the achievement gap.</p>
+        <hr>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Schools that close the gap between different student groups are doing something right!
+        Explore the %{sections} below to learn more.%{more}<a href="/gk/equity-toolkit/">These 5 things</a> will help
+        you start a conversation at your school about helping <span class='open-sans_i'>all</span>
+        students succeed.%{end_more}</p>
