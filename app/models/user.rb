@@ -41,6 +41,14 @@ class User < ActiveRecord::Base
     user
   end
 
+  def self.from_google_auth(auth)
+    where(email: auth.info.email).first_or_initialize do |user|
+      user.email = auth.info.email
+      user.first_name = auth.info.first_name
+      user.last_name = auth.info.last_name
+    end
+  end
+
   def self.with_email(email)
     where(email: email).first
   end

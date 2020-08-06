@@ -112,12 +112,12 @@ module AuthenticationConcerns
   end
 
 
-  def register_user(is_facebook, options)
+  def register_user(registered_from, options)
     email_options = {}
     password = options[:password] || Password.generate_password
 
-    if is_facebook
-      options[:how] = 'facebook'
+    if registered_from.present?
+      options[:how] = registered_from
     else
       email_options[:password] = password
     end

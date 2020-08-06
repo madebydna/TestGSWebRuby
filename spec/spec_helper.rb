@@ -135,6 +135,18 @@ RSpec.configure do |config|
   config.filter_run_when_matching focus: true
   config.filter_run_excluding broken: true
 
+  OmniAuth.config.test_mode = true
+
+  OmniAuth.config.add_mock(:google, {
+    provider: 'google',
+    uid: '123545',
+    info: {
+      email: 'admin@greatschools.org',
+      first_name: 'Joe',
+      last_name: 'Mack'
+    }
+  })
+
   # Capybara::Webkit.configure do |config|
   #   # config.debug = true
   #   config.block_unknown_urls # doesnt seem to block urls in all cases
