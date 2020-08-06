@@ -238,7 +238,7 @@ es:
         tooltip_html: >
           <p>¿Cuánto ayudan las escuelas a los estudiantes crecer cada año?</p>
           <p>Muchos estados publican datos del crecimiento del estudiante para reflejar cuánto progreso estudiantes están haciendo año tras año. Este estado no publica datos del crecimiento del estudiante. En cambio, estimamos con nuestra Calificación del Progreso Académico el progreso del estudiante comparando año tras año en las calificaciones de grado y sujeto en cada escuela frente a todas las escuelas del estado que comenzaron con similares niveles de conocimiento. En esta sección puedes ver un resumen del porcentaje de escuelas en este distrito con Calificaciones de Progreso Académico que están por encima del promedio, por debajo del promedio o aproximadamente el promedio.</p>
-          <a href='/gk/como-clasificamos/?lang=es#academicprogressrating'>Aprende más sobre esta clasificación.</a>
+          <a href='/gk/ratings-ca-mi/?lang=es#academicprogressrating'>Aprende más sobre esta clasificación.</a>
         graphic_header: ¿Cómo se compara este distrito con el resto del estado?
         graphic_header_tooltip: Este cuadro muestra el porcentaje de escuelas en este distrito con Calificaciones del Progreso Académico que están por encima del promedio (7-10), promedio (5-6) o por debajo del promedio (1-4) en comparación con los promedios estatales.
         narrative:

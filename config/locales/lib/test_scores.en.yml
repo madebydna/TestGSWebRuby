@@ -202,7 +202,7 @@ en:
       'source': 'Source'
       note: Note
       Test scores: Test scores
-      info_text: "<p>The Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings-ca-mi/#testscoresrating' target='_blank'>Learn more about this rating.</a></p>"
+      info_text: "<p>The Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings-ca-mi/#testscorerating' target='_blank'>Learn more about this rating.</a></p>"
       'Math': Math
       Science: Science
       Source: Source

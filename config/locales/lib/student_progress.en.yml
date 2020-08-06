@@ -210,7 +210,7 @@ en:
           <p>How much do schools help students grow each year?</p>
           <p>Student progress (also known as “student growth”) is a way of understanding how well schools are helping individual students grow academically year-over-year, and whether these students are on track to meet their full potential, compared to students with similar proficiency levels at other schools in the state.</p>
           <p>The GreatSchools Student Progress Rating compares the academic progress over time for each school to all schools in the state, using student growth data provided by the state Department of Education. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Student Progress Ratings.</p>
-          <a href='/gk/ratings/#studentprogressrating'>Learn more about this rating.</a>
+          <a href='/gk/ratings-ca-mi/#studentprogressrating'>Learn more about this rating.</a>
         graphic_header: How does this district compare with the rest of the state?
         graphic_header_tooltip: This pie chart shows the percentage of schools in this district with Student Progress Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
         narrative:
