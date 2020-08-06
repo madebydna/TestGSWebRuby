@@ -92,15 +92,15 @@ module SchoolProfiles
     end
 
     def data_label(key)
-      I18n.t(key.to_sym, scope: 'lib.academic_progress', default: I18n.db_t(key, default: key))
+      I18n.t(key.to_sym, scope: path_to_yml, default: I18n.db_t(key, default: key))
     end
 
     def static_label(key)
-      I18n.t(key.to_sym, scope: 'lib.academic_progress', default: key)
+      I18n.t(key.to_sym, scope: path_to_yml, default: key)
     end
 
     def info_text
-      I18n.t('lib.academic_progress.info_text')
+      I18n.t(path_to_yml + '.info_text')
     end
 
     def academic_progress_sources
@@ -108,7 +108,8 @@ module SchoolProfiles
       content << '<h1>' + static_label('sources_title') + '</h1>'
       content << rating_source(year: source_year, label: static_label('Greatschools rating'),
                                description: academic_progress_rating_description, methodology: academic_progress_rating_methodology,
-                               more_anchor: 'academicprogressrating')
+                               more_anchor: 'academicprogressrating',
+                               state: @school.state.downcase)
       content
     end
 
@@ -124,6 +125,14 @@ module SchoolProfiles
       return true if (has_data? || @school.includes_level_code?(%w(e m)))
       return true if @school.includes_level_code?(%w(h)) && @school_cache_data_reader.hs_enabled_growth_rating?
       false
+    end
+
+    def path_to_yml
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        path_to_yml = 'lib.academic_progress_alt'
+      else
+        path_to_yml = 'lib.academic_progress'
+      end
     end
 
     protected
