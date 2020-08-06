@@ -131,10 +131,11 @@ module SchoolProfiles
 
     def path_to_yml
       if ['ca', 'mi'].include?(@school.state.downcase)
-        path_to_yml = 'lib.student_progress_alt'
+        path = 'lib.student_progress_alt'
       else
-        path_to_yml = 'lib.student_progress'
+        path = 'lib.student_progress'
       end
+      path
     end
 
     def visible?

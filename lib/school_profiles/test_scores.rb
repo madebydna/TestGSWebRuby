@@ -224,10 +224,11 @@ module SchoolProfiles
 
     def path_to_yml
       if ['ca', 'mi'].include?(@school.state.downcase)
-        path_to_yml = 'lib.test_scores_alt'
+        path = 'lib.test_scores_alt'
       else
-        path_to_yml = 'lib.test_scores'
+        path = 'lib.test_scores'
       end
+      path
     end
   end
 end

@@ -90,10 +90,11 @@ module SchoolProfiles
 
     def path_to_yml
       if ['ca', 'mi'].include?(@school_cache_data_reader.school.state.downcase)
-        path_to_yml = 'lib.equity_overview_alt'
+        path = 'lib.equity_overview_alt'
       else
-        path_to_yml = 'lib.equity_overview'
+        path = 'lib.equity_overview'
       end
+      path
     end
 
     protected

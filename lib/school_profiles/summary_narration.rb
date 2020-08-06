@@ -163,10 +163,11 @@ module SchoolProfiles
 
     def path_to_yml
       if ['ca', 'mi'].include?(@school.state.downcase)
-        path_to_yml = 'school_profiles.summary_narration_alt'
+        path = 'school_profiles.summary_narration_alt'
       else
-        path_to_yml = 'school_profiles.summary_narration'
+        path = 'school_profiles.summary_narration'
       end
+      path
     end
   end
 end
