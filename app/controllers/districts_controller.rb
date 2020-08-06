@@ -3,6 +3,7 @@ class DistrictsController < ApplicationController
   include AdvertisingConcerns
   include PageAnalytics
   include CommunityConcerns
+  include RatingMethodologySelector
 
   CACHE_KEYS_FOR_READER = %w(district_schools_summary metrics test_scores_gsdata crpe)
 
@@ -275,8 +276,7 @@ class DistrictsController < ApplicationController
           trailing_slash: true
         )
         cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if csa_state_solr_query.present?
-        cp[:ratingsUrlEnglish] = ratings_link_english
-        cp[:ratingsUrlSpanish] = ratings_link_spanish
+        cp[:ratingsUrl] = ratings_link
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']
         cp[:calendarURL] = ENV_GLOBAL['calendar_service_url']
         cp[:zipCode] = district_record.mail_zipcode[0..4]
