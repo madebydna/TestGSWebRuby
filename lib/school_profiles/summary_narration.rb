@@ -12,6 +12,11 @@ module SchoolProfiles
 
     SUMMARY_RATING_METHODS_SCHOOL_NAME = %w(summary_rating_school_name test_scores_rating college_readiness_rating student_progress_rating advanced_course_rating sentence_ender discipline_and_attendence)
 
+    # JT-10739: Alt methods = revised order of narration elements for CA & MI schools
+    SUMMARY_RATING_METHODS_ALT = %w(summary_rating student_progress_rating college_readiness_rating equity_rating sentence_ender discipline_and_attendence)
+
+    SUMMARY_RATING_METHODS_SCHOOL_NAME_ALT = %w(summary_rating_school_name student_progress_rating college_readiness_rating advanced_course_rating equity_rating sentence_ender discipline_and_attendence)
+
     SUMMARY_RATING_METHODS_TEST_SCORE_ONLY = %w(test_scores_only_before_more test_scores_only_after_more)
 
     def initialize(sr, school, school_cache_data_reader:)
@@ -22,13 +27,21 @@ module SchoolProfiles
 
     def build_content
       if @src.present? && @school_cache_data_reader.gs_rating.present?
-        SUMMARY_RATING_METHODS.map { |method| send(method) }.compact.delete_if(&:empty?)
+        if ['ca', 'mi'].include?(@school.state.downcase)
+          SUMMARY_RATING_METHODS_ALT.map { |method| send(method) }.compact.delete_if(&:empty?)
+        else
+          SUMMARY_RATING_METHODS.map { |method| send(method) }.compact.delete_if(&:empty?)
+        end
       end
     end
 
     def build_content_with_school_name
       if @src.present? && @school_cache_data_reader.gs_rating.present?
-        SUMMARY_RATING_METHODS_SCHOOL_NAME.map { |method| send(method) }.compact.delete_if(&:empty?)
+        if ['ca', 'mi'].include?(@school.state.downcase)
+          SUMMARY_RATING_METHODS_SCHOOL_NAME_ALT.map { |method| send(method) }.compact.delete_if(&:empty?)
+        else
+          SUMMARY_RATING_METHODS_SCHOOL_NAME.map { |method| send(method) }.compact.delete_if(&:empty?)
+        end
       end
     end
 
@@ -78,36 +91,41 @@ module SchoolProfiles
 
     def standard_rating_by_obj(rating, title)
       rating_string, level = rating_three_levels(rating) if rating.present?
-      (rating.present? && rating.to_s != 'NR') ? I18n.t('school_profiles.summary_narration.'+title+'_html', rating_string: rating_string, level: level ) : ''
+      (rating.present? && rating.to_s != 'NR') ? I18n.t(path_to_yml + '.'+title+'_html', rating_string: rating_string, level: level ) : ''
     end
 
     def summary_rating_school_name
       rating = @school_cache_data_reader.gs_rating
       rating_string, level = rating_three_levels(rating) if rating.present?
       state_name = States.abbr_to_label(@school.state)
-      rating.present? ? I18n.t('school_profiles.summary_narration.Summary Rating_school_name_html', rating_string: rating_string, level: level, school_name: @school.name, state_name: state_name) : ''
+      rating.present? ? I18n.t(path_to_yml + '.Summary Rating_school_name_html', rating_string: rating_string, level: level, school_name: @school.name, state_name: state_name) : ''
     end
 
     def summary_rating
       rating = @school_cache_data_reader.gs_rating
       rating_string, level = rating_three_levels(rating) if rating.present?
       state_name = States.abbr_to_label(@school.state)
-      rating.present? ? I18n.t('school_profiles.summary_narration.Summary Rating_html', rating_string: rating_string, level: level, state_name: state_name) : ''
+      rating.present? ? I18n.t(path_to_yml + '.Summary Rating_html', rating_string: rating_string, level: level, state_name: state_name) : ''
     end
 
     def test_scores_only_before_more
       rating = @school_cache_data_reader.gs_rating
       rating_string, level = rating_three_levels(rating) if rating.present?
-      rating.present? ? I18n.t('school_profiles.summary_narration.Test scores only pre more_html', rating_string: rating_string, level: level ) : ''
+      rating.present? ? I18n.t(path_to_yml + '.Test scores only pre more_html', rating_string: rating_string, level: level ) : ''
     end
 
     def test_scores_only_after_more
       state_name = States.abbr_to_label(@school.state)
-      I18n.t('school_profiles.summary_narration.Test scores only post more_html', ratings_path: ratings_path_for_lang, state_name: state_name)
+      I18n.t(path_to_yml + '.Test scores only post more_html', ratings_path: ratings_path_for_lang, state_name: state_name)
     end
 
     def test_scores_rating
       obj = @src.test_scores
+      standard_rating_by_obj(obj[:rating], obj[:title]) if obj.present?
+    end
+
+    def equity_rating
+      obj = @src.equity_overview
       standard_rating_by_obj(obj[:rating], obj[:title]) if obj.present?
     end
 
@@ -122,11 +140,16 @@ module SchoolProfiles
     end
 
     def sentence_ender
-      obj = @src.equity_overview
-      if obj.present?
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        obj = @src.test_scores
+      else
+        obj = @src.equity_overview
+      end
+
+      if obj.present? && obj[:rating].present?
         standard_rating_by_obj(obj[:rating], obj[:title])
       else
-        I18n.t('school_profiles.summary_narration.sentence_ender_html')
+        I18n.t(path_to_yml + '.sentence_ender_html')
       end
     end
 
@@ -136,6 +159,14 @@ module SchoolProfiles
       flags << I18n.t('school_profiles.summary_narration.discipline') if @school_cache_data_reader.discipline_flag?
       clause = flags.join(' ' + I18n.t('school_profiles.summary_narration.and') + ' ')
       clause.present? ? I18n.t('school_profiles.summary_narration.discipline_and_attendance_html', danda: clause) : ''
+    end
+
+    def path_to_yml
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        path_to_yml = 'school_profiles.summary_narration_alt'
+      else
+        path_to_yml = 'school_profiles.summary_narration'
+      end
     end
   end
 end
