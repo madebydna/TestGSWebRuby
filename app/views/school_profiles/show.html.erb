@@ -42,38 +42,7 @@
               </div>
             </div>
             <div class="col-xs-12 col-lg-9">
-              <%# NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
-                If a school is in a SP state and is a elementary(E) or middle (M) school, it will display the StudentProgress module
-                If a school is in a SP state and is a high(H) school, it will check to see if any other H schools have this rating to display
-                the module or not
-                If a school is in a AP state and is a elementary(E) or middle (M) school, it will display the AcademicProgress module
-                If a school is in a AP state and is a high(H) school, it will check to see if any other H schools have this rating to display
-                the module or not
-                If a school is in a state with NEITHER AP or SP it will display NOTHING
-              %>
-              <% if @school_profile.student_progress.student_progress_state? && @school_profile.student_progress.visible? %>
-                <div class="profile-section-slot">
-                  <%= render 'student_progress', student_progress: @school_profile.student_progress %>
-                </div>
-              <% elsif @school_profile.academic_progress.academic_progress_state? && @school_profile.academic_progress.visible? %>
-                <div class="profile-section-slot">
-                  <%= render 'academic_progress', academic_progress: @school_profile.academic_progress %>
-                </div>
-              <% end %>
-
-              <% if @school_profile.show_high_school_data %>
-                <div class="profile-section-slot">
-                  <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
-                </div>
-
-                <% if @school_profile.college_success.visible? %>
-                    <div class="profile-section-slot">
-                      <%= render 'college_success', college_success: @school_profile.college_success %>
-                    </div>
-                <% end %>
-              <% end %>
-
-              <%= render 'test_scores_and_advanced_courses', school: @school, test_scores: @school_profile.test_scores, stem_courses: @school_profile.stem_courses %>
+              <%= render 'subsection_academics' %>
             </div>
           </div>
         </div>
@@ -101,12 +70,7 @@
               <div class="profile-section-slot">
                 <%= render 'osp_school_info', osp_link: osp_link, osp_school_info: @school_profile.osp_school_info %>
               </div>
-              <div class="profile-section-slot">
-                <%= render 'students', students: @school_profile.students %>
-              </div>
-              <div class="profile-section-slot">
-                <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
-              </div>
+              <%= render 'subsection_environment' %>
             </div>
           </div>
         </div>

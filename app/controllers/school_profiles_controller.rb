@@ -1,4 +1,5 @@
 class SchoolProfilesController < ApplicationController
+  include RatingMethodologySelector
   protect_from_forgery
   before_filter :require_school
   before_action :redirect_to_canonical_url
@@ -76,6 +77,10 @@ class SchoolProfilesController < ApplicationController
   def school
     return @_school if defined?(@_school)
     @_school = School.find_by_state_and_id(get_school_params[:state_abbr], get_school_params[:id])
+  end
+
+  def state
+    @_state ||= school.state
   end
 
   def school_profile

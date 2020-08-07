@@ -1,4 +1,4 @@
-<% nav_on_hash = {moderation_list:'', schools:'', users:'', banned_ips:''} %>
+<% nav_on_hash = { moderation_list:'', schools:'', users:'', banned_ips:'', held_schools: '' } %>
 
 <% if page_name && !page_name.empty? %>
   <% nav_on_hash[page_name] = 'class=active' %>
@@ -11,6 +11,9 @@
       </li>
       <li <%= nav_on_hash[:schools] %>>
         <%= link_to 'Schools', schools_admin_reviews_path %>
+      </li>
+      <li <%= nav_on_hash[:held_schools] %>>
+        <%= link_to 'Held Schools', admin_held_schools_path %>
       </li>
       <li <%= nav_on_hash[:users] %>>
         <%= link_to 'Users', users_admin_reviews_path %>

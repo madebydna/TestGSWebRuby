@@ -19,6 +19,7 @@ import commonPageInit from '../common';
 import { getStore } from '../store/appStore';
 import '../vendor/fastclick';
 import DataModule from '../react_components/data_module';
+import LowIncomeDataModule from '../react_components/school_profiles/low_income_data_module';
 import StudentsWithDisabilities from '../react_components/equity/students_with_disabilities';
 import CollegeReadiness from '../react_components/college_readiness';
 import ReviewDistribution from '../react_components/review_distribution';
@@ -51,6 +52,7 @@ window.store = getStore();
 
 ReactOnRails.register({
   DataModule,
+  LowIncomeDataModule,
   StudentsWithDisabilities,
   CollegeReadiness,
   ReviewDistribution,

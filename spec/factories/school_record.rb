@@ -1,7 +1,18 @@
 FactoryBot.define do
   factory :school_record do
+    # Workaround b/c FactoryBot thinks state and state_id are connected
+    # and denote AR associations
+    transient do
+      state_id { "01611190130229" }
+      state { "CA" }
+    end
+
+    after(:build) do |item, evaluator|
+      item.state_id = evaluator.state_id
+      item.state = evaluator.state
+    end
+
     school_id 1
-    state_id '01611190130229'
     city 'Alameda'
     county 'Alameda'
     FIPScounty 6001
@@ -14,7 +25,6 @@ FactoryBot.define do
     name 'Alameda High School'
     nces_code '060177000041'
     phone '(510) 337-7022'
-    state 'CA'
     geo_state 'CA'
     street '2201 Encinal Avenue'
     type 'public'

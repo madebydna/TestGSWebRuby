@@ -263,8 +263,7 @@ export default class DataModule extends React.Component {
     if (rating && rating != '') {
       let circleClassName = 'circle-rating--medium circle-rating--'+rating;
       rating_html = <div className={circleClassName}>{rating}<span className="rating-circle-small">/10</span></div>;
-    }
-    else {
+    } else {
       if (typeof this.props.icon_classes === 'string') {
         let circleClassName = 'circle-rating--equity-blue';
         rating_html = <div className={circleClassName}><span className={this.props.icon_classes}></span></div>;

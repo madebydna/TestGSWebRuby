@@ -23,16 +23,17 @@ module SchoolProfiles
       content << '<h1>' + static_label('sources_title') + '</h1>'
       content << rating_source(year: source_year, label: static_label('Great schools rating'),
                                description: equity_description, methodology: equity_methodology,
-                               more_anchor: 'equityrating')
+                               more_anchor: 'equityrating',
+                               state: @school_cache_data_reader.school.state.downcase)
       content << '</div>'
     end
 
     def data_label(key)
-      I18n.t(key.to_sym, scope: 'lib.equity_overview', default: I18n.db_t(key, default: key))
+      I18n.t(key.to_sym, scope: path_to_yml, default: I18n.db_t(key, default: key))
     end
 
     def static_label(key)
-      I18n.t(key.to_sym, scope: 'lib.equity_overview', default: key)
+      I18n.t(key.to_sym, scope: path_to_yml, default: key)
     end
 
     def narration
@@ -76,15 +77,29 @@ module SchoolProfiles
         10 => 5
       }[equity_rating.to_i]
       return nil unless bucket
-      "lib.equity_overview.narrative_#{bucket}_html"
+      path_to_yml + ".narrative_#{bucket}_html"
     end
 
     def info_text
-      I18n.t('lib.equity_overview.info_text')
+      if @school_cache_data_reader.growth_type == 'Student Progress Rating'
+        growth_type = I18n.t(path_to_yml + '.student')
+      else
+        growth_type = I18n.t(path_to_yml + '.academic')
+      end
+      I18n.t(path_to_yml + '.info_text', growth_type: growth_type)
     end
 
     def has_rating?
       equity_rating && equity_rating.to_s.downcase != 'nr' && equity_rating.to_i.between?(1, 10)
+    end
+
+    def path_to_yml
+      if ['ca', 'mi'].include?(@school_cache_data_reader.school.state.downcase)
+        path = 'lib.equity_overview_alt'
+      else
+        path = 'lib.equity_overview'
+      end
+      path
     end
 
     protected
@@ -97,9 +112,9 @@ module SchoolProfiles
       if @equity.low_income_visible?
         sections << "<a href=\"#Low-income_students\">#{static_label(:low_income)}</a>"
       end
-      I18n.t(:section_list, scope: 'lib.equity_overview',
+      I18n.t(:section_list, scope: path_to_yml,
              section_names: sections.join(" #{static_label(:and)} "),
-             section_word: I18n.t(:section, scope: 'lib.equity_overview', count: sections.size))
+             section_word: I18n.t(:section, scope: path_to_yml, count: sections.size))
     end
 
     def equity_overview_struct

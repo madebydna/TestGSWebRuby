@@ -1,6 +1,10 @@
 module RatingSourceConcerns
-  def rating_source(year:, label:, description:nil, methodology:nil, more_anchor:nil)
-    ratings_link = (I18n.locale == :es ? ratings_spanish_path(anchor: more_anchor, trailing_slash: true) : ratings_path(anchor: more_anchor, trailing_slash: true))
+  def rating_source(year:, label:, description:nil, methodology:nil, more_anchor:nil, state:nil)
+    if ['ca', 'mi'].include?(state)
+      ratings_link = ratings_alt_path(anchor: more_anchor, trailing_slash: true)
+    else
+      ratings_link = (I18n.locale == :es ? ratings_spanish_path(anchor: more_anchor, trailing_slash: true) : ratings_path(anchor: more_anchor, trailing_slash: true))
+    end
     content = '<div>'
     content << '<h4 >' + label + '</h4>'
 

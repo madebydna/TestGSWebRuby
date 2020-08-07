@@ -1,0 +1,15 @@
+<%= react_component('StudentsWithDisabilities', props: {
+                  title: t('Students with Disabilities', scope: 'school_profiles.equity'),
+                  anchor: 'Students_with_Disabilities',
+                  analytics_id: 'EquityDisabilities',
+                  subtitle:  t('Students with Disabilities subtitle', scope: 'school_profiles.equity'),
+                  info_text: t('Student with disabilities tooltip', scope: 'school_profiles.equity'),
+                  icon_classes: t('Student with disabilities icon', scope: 'school_profiles.equity'),
+                  feedback: equity.feedback_data,
+                  feedback_tab_title: t('Community feedback', scope: 'school_profiles.equity'),
+                  sources: equity.students_with_disabilities_sources,
+                  share_content: equity.students_with_disabilities_share_content,
+                  data: equity.students_with_disabilities_section_props,
+                  faq: equity.faq_disabilities,
+                  no_data_summary: t('Disabilities no data', scope: 'school_profiles.equity'),
+                  qualaroo_module_link: equity.qualaroo_module_link(:students_with_disabilities)})  %>

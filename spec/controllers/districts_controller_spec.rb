@@ -1,11 +1,12 @@
 require 'spec_helper'
 require 'controllers/contexts/ad_shared_contexts'
 require 'controllers/examples/ad_shared_examples'
+require 'controllers/examples/rating_methodology_selector_shared_examples'
 
 describe DistrictsController, type: :controller do
-  before { skip }
   describe '#ad_setTargeting_through_gon' do
     before do
+      skip
       FactoryBot.create(:hub_city_mapping)
       FactoryBot.create(:district)
       # Currently there a (presumably unused) route in the routes file that will match, and always cause
@@ -30,5 +31,7 @@ describe DistrictsController, type: :controller do
       include_example 'does not set any google ad targeting attributes'
     end
   end
+
+  include_examples '#ratings_link', { city: 'Oakland', district: 'Oakland Unified School District' }
 
 end

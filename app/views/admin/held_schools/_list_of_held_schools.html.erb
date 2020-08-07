@@ -1,0 +1,44 @@
+<% held_schools %>
+<% css_class = css_class || '' %>
+
+<% if held_schools.present? %>
+  <table class="table table-striped <%= css_class %>">
+    <thead>
+    <tr class="open-sans">
+      <th><%= create_sort_link("held_school") %></th>
+      <th>State</th>
+      <th>School ID</th>
+      <th style="width: 40%;">Note</th>
+      <th><%= create_sort_link("hold_date") %></th>
+      <th>Remove Hold</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% held_schools.each do |held_school| %>
+      <tr>
+        <td>
+          <%= link_to held_school.school_name, admin_school_moderate_path(state: States.state_path(held_school.state.downcase), school_id: held_school.school_id) %>
+        </td>
+        <td>
+          <%= held_school.state %>
+        </td>
+        <td>
+          <%= held_school.school_id %>
+        </td>
+        <td>
+          <%= held_school.notes %>
+        </td>
+        <td>
+          <%= held_school.placed_on_hold_at.to_s(:db) %>
+        </td>
+        <td>
+          <%= button_to "Remove hold", remove_hold_admin_held_school_path(held_school), method: :put,
+            class: 'btn btn-sm btn-primary mvm', data: { disable_with: 'Removing hold...' } %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  None
+<% end %>

@@ -12,6 +12,8 @@ force_ssl: false
 GOOGLE_MAPS_STATIC_API_KEY: "AIzaSyBv3LfIisMottwdQh3LIZ52KNLKXgoDFas"
 GOOGLE_MAPS_WIDGET_API_KEY: "AIzaSyBjTd2dueHtfNdsOhXvo_3HQJfyYlkEv98"
 GOOGLE_MAPS_STATIC_SIGNING_KEY: "HNQL8P_a2tbC9mcxe6vpxgtkWUg="
+GOOGLE_OAUTH2_CLIENT_ID: "727848296119-ojoa1npjdgv42ro6ni1fmqb7uslf2r8b.apps.googleusercontent.com"
+GOOGLE_OAUTH2_CLIENT_SECRET: "w_2KvoYsoYM3Gpoy1PIaTwMD"
 
 # Facebook API keys
 facebook_app_id: "178930405559082"

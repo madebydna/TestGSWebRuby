@@ -1,7 +1,7 @@
 <% rating_table_rows = @school_profile.summary_rating.content %>
 <% summary_rating = @school_profile.summary_rating.gs_rating %>
 <% last_updated = @school_profile.summary_rating.last_updated %>
-<% ratings_link = params[:lang] == 'es' ? ratings_spanish_path : ratings_path %>
+<% path_to_yml = path_to_yaml('school_profiles.summary_rating') %>
 
 <div class="summary_rating_tooltip">
   <%# tooltip header %>
@@ -12,16 +12,16 @@
       </span>
     </div>
     <div class="header-text">
-      <div><%= t('.header.title')%></div>
-      <div><%= t('.header.subtext_html')%><a href="<%= ratings_link %>"><%= t('.header.Learn more')%></a></div>
+      <div><%= t(path_to_yml + '.header.title')%></div>
+      <div><%= t(path_to_yml + '.header.subtext_html')%><a href="<%= ratings_link %>"><%= t(path_to_yml + '.header.Learn more')%></a></div>
     </div>
   </div>
 
   <%# tooltip table %>
   <div class="table-header gray">
-    <span class="summary-rating-title ib"><%= t('.table_content.Rating components')%></span>
-    <span class="summary-rating-weight ib"><%= t('.table_content.Weight')%></span>
-    <span class="value-column ib"><%= t('.table_content.rating_flag')%></span>
+    <span class="summary-rating-title ib"><%= t(path_to_yml + '.table_content.Rating components')%></span>
+    <span class="summary-rating-weight ib"><%= t(path_to_yml + '.table_content.Weight')%></span>
+    <span class="value-column ib"><%= t(path_to_yml + '.table_content.rating_flag')%></span>
   </div>
   <% rating_table_rows.each do |row| %>
     <% if row[:title] == 'Equity Adjustment Factor' %>
@@ -31,7 +31,7 @@
     <% end %>
     <div class="rating-table-row pad-row">
       <div>
-        <span class="summary-rating-title ib js-rating-details"><%= t(".table_content.#{row[:title]}") %>
+        <span class="summary-rating-title ib js-rating-details"><%= t(path_to_yml + ".table_content.#{row[:title]}") %>
           <span class="icon-caret-down rotate-text-270 move-icon"></span>
         </span>
         <span class="summary-rating-weight ib"><%= @school_profile.summary_rating.to_percent(row[:weight])%></span>
@@ -43,11 +43,11 @@
         <% end %>
       </div>
       <div class="rating-table-description">
-        <%= t(".table_content.#{row[:title]} Description")%>
+        <%= t(path_to_yml + ".table_content.#{row[:title]} Description")%>
       </div>
     </div>
   <% end %>
   <% if last_updated %>
-      <div class="last-updated gray pad-row"><%= t('.header.Last updated') + ':  ' + last_updated %></div>
+      <div class="last-updated gray pad-row"><%= t(path_to_yml + '.header.Last updated') + ':  ' + last_updated %></div>
   <% end %>
 </div>
