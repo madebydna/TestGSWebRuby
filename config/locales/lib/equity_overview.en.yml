@@ -21,6 +21,8 @@ en:
       low_income: Low-income
       and: and
       section_list: "%{section_names} %{section_word}"
+      student: student
+      academic: academic
       info_text: >
         The Equity Overview Rating looks at how well this school is serving the needs of its disadvantaged students
         relative to all its students, compared to other schools in the state, based on test scores provided from the
@@ -98,8 +100,10 @@ en:
       low_income: Low-income
       and: and
       section_list: "%{section_names} %{section_word}"
+      student: student
+      academic: academic
       info_text: >
-        The Equity Rating looks at how well this school is serving disadvantaged students relative to all students, compared to other schools in the state. based on college readiness metrics, [student/academic progress], and test scores provided from the state’s Department of Education.
+        The Equity Rating looks at how well this school is serving disadvantaged students relative to all students, compared to other schools in the state, based on college readiness metrics, %{growth_type} progress, and test scores provided from the state’s Department of Education.
         <br>
         <a href="/gk/ratings-ca-mi/#equityrating" style="cursor: pointer;" target="_blank">Learn more about this rating.</a>
       narrative_1_html: >

@@ -19,6 +19,8 @@ es:
       low_income: Bajos-ingresos
       and: y
       section_list: "%{section_word} %{section_names}"
+      student: estudiantil
+      academic: académico
       info_text: >
         La Calificación General de Equidad mira lo bien que esta escuela está atendiendo las necesidades de sus
         estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado,
@@ -95,8 +97,10 @@ es:
       low_income: Bajos-ingresos
       and: y
       section_list: "%{section_word} %{section_names}"
+      student: estudiantil
+      academic: académico
       info_text: >
-        La Calificación de Equidad mira lo bien que esta escuela está atendiendo las necesidades de sus estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado, basado en métricas de preparación universitaria, [progreso estudiantil/académico], y en los resultados de los exámenes proporcionados por el Departamento de Educación del estado.
+        La Calificación de Equidad mira lo bien que esta escuela está atendiendo las necesidades de sus estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado, basado en métricas de preparación universitaria, progreso %{growth_type}, y en los resultados de los exámenes proporcionados por el Departamento de Educación del estado.
         <br>
         <a href="/gk/ratings-ca-mi/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprende más sobre esta calificación.</a>
       narrative_1_html: >

@@ -81,7 +81,12 @@ module SchoolProfiles
     end
 
     def info_text
-      I18n.t(path_to_yml + '.info_text')
+      if @school_cache_data_reader.growth_type == 'Student Progress Rating'
+        growth_type = I18n.t(path_to_yml + '.student')
+      else
+        growth_type = I18n.t(path_to_yml + '.academic')
+      end
+      I18n.t(path_to_yml + '.info_text', growth_type: growth_type)
     end
 
     def has_rating?
