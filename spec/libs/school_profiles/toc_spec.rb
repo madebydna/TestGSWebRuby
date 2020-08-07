@@ -51,6 +51,80 @@ describe SchoolProfiles::Toc do
 
         it { is_expected.to_not include({column: 'Academics', label: 'advanced_courses', present: true, rating: '', anchor: 'Advanced_courses'})}
       end
+
+      context 'with an Academic Progress state' do
+        before do
+          allow(academic_progress).to receive(:academic_progress_state?).and_return(true)
+          allow(stem_courses).to receive(:visible?).and_return(false)
+        end
+
+        it 'return a module if it has a rating' do
+          allow(academic_progress).to receive(:visible?).and_return(true)
+          allow(academic_progress).to receive(:academic_progress_rating).and_return(7)
+
+          expect(subject).to include({column: 'Academics', label: 'academic_progress', present: true, rating: 7, anchor: 'Academic_progress'})
+        end
+        
+        it 'return a module if it has no rating but other high schools have one' do
+          allow(academic_progress).to receive(:visible?).and_return(true)
+          allow(academic_progress).to receive(:academic_progress_rating).and_return(nil)
+
+          expect(subject).to include({column: 'Academics', label: 'academic_progress', present: true, rating: nil, anchor: 'Academic_progress'})
+        end
+
+        it 'does not return the module if the state doesnt have Academic Progress data' do
+          allow(academic_progress).to receive(:academic_progress_state?).and_return(false)
+
+          expect(subject).to_not include({column: 'Academics', label: 'academic_progress', present: true, rating: nil, anchor: 'Academic_progress'})
+        end
+      end
+
+      context 'with an Student Progress state' do
+        before do
+          allow(student_progress).to receive(:student_progress_state?).and_return(true)
+          allow(stem_courses).to receive(:visible?).and_return(false)
+        end
+
+        it 'return a module if it has a rating' do
+          allow(student_progress).to receive(:visible?).and_return(true)
+          allow(student_progress).to receive(:rating).and_return(7)
+
+          expect(subject).to include({column: 'Academics', label: 'student_progress', present: true, rating: 7, anchor: 'Student_progress'})
+        end
+        
+        it 'return a module if it has no rating but other high schools have one' do
+          allow(student_progress).to receive(:visible?).and_return(true)
+          allow(student_progress).to receive(:rating).and_return(nil)
+
+          expect(subject).to include({column: 'Academics', label: 'student_progress', present: true, rating: nil, anchor: 'Student_progress'})
+        end
+
+        it 'does not return the module if the state doesnt have Student Progress data' do
+          allow(student_progress).to receive(:student_progress_state?).and_return(false)
+
+          expect(subject).to_not include({column: 'Academics', label: 'student_progress', present: true, rating: nil, anchor: 'Student_progress'})
+        end
+      end
+
+      context 'College Readiness and College Success' do
+        before do
+          allow(college_success).to receive(:visible?).and_return(true)
+          allow(college_readiness).to receive(:rating).and_return(5)
+          allow(college_success).to receive(:school_csa_badge?).and_return(false)
+          allow(stem_courses).to receive(:visible?).and_return(true)
+        end
+
+        it "should return the college readiness and college success tabs" do
+          expect(subject).to include({column: 'Academics', label: 'college_readiness', present: true, rating: 5, anchor: 'College_readiness'})
+          expect(subject).to include({column: 'Academics', label: 'college_success', present: true, anchor: 'College_success', badge: false})
+        end
+
+        it 'should only return college readiness if there is no college success data' do
+          allow(college_success).to receive(:visible?).and_return(false)
+          expect(subject).to include({column: 'Academics', label: 'college_readiness', present: true, rating: 5, anchor: 'College_readiness'})
+          expect(subject).to_not include({column: 'Academics', label: 'college_success', present: true, anchor: 'College_success', badge: false})
+        end
+      end
     end
 
     context 'with a middle school' do
@@ -70,6 +144,48 @@ describe SchoolProfiles::Toc do
         before { allow(stem_courses).to receive(:visible?).and_return(false) }
 
         it { is_expected.to be_nil }
+      end
+
+      context 'with an Academic Progress state' do
+        before do
+          allow(academic_progress).to receive(:academic_progress_state?).and_return(true)
+          allow(stem_courses).to receive(:visible?).and_return(false)
+        end
+
+        it 'return a module if it has a rating' do
+          allow(academic_progress).to receive(:visible?).and_return(true)
+          allow(academic_progress).to receive(:academic_progress_rating).and_return(7)
+
+          expect(subject).to include({column: 'Academics', label: 'academic_progress', present: true, rating: 7, anchor: 'Academic_progress'})
+        end
+        
+        it 'return a module if it has no rating but other schools do' do
+          allow(academic_progress).to receive(:visible?).and_return(true)
+          allow(academic_progress).to receive(:academic_progress_rating).and_return(nil)
+
+          expect(subject).to include({column: 'Academics', label: 'academic_progress', present: true, rating: nil, anchor: 'Academic_progress'})
+        end
+      end
+
+      context 'with an Student Progress state' do
+        before do
+          allow(student_progress).to receive(:student_progress_state?).and_return(true)
+          allow(stem_courses).to receive(:visible?).and_return(true)
+        end
+
+        it 'return a module if it has a rating' do
+          allow(student_progress).to receive(:visible?).and_return(true)
+          allow(student_progress).to receive(:rating).and_return(7)
+
+          expect(subject).to include({column: 'Academics', label: 'student_progress', present: true, rating: 7, anchor: 'Student_progress'})
+        end
+        
+        it 'return a module if it has no rating but other school do' do
+          allow(student_progress).to receive(:visible?).and_return(true)
+          allow(student_progress).to receive(:rating).and_return(nil)
+
+          expect(subject).to include({column: 'Academics', label: 'student_progress', present: true, rating: nil, anchor: 'Student_progress'})
+        end
       end
     end
   end
