@@ -1,12 +1,7 @@
 <% rating_table_rows = @school_profile.summary_rating.content %>
 <% summary_rating = @school_profile.summary_rating.gs_rating %>
 <% last_updated = @school_profile.summary_rating.last_updated %>
-<% if ['ca', 'mi'].include?(@school.state.downcase) %>
-  <% ratings_link = ratings_alt_path %>
-<% else %>
-  <% ratings_link = params[:lang] == 'es' ? ratings_spanish_path : ratings_path %>
-<% end %>
-<% path_to_yml = ['ca', 'mi'].include?(@school.state.downcase) ? 'school_profiles.summary_rating_alt' : 'school_profiles.summary_rating' %>
+<% path_to_yml = path_to_yaml('school_profiles.summary_rating') %>
 
 <div class="summary_rating_tooltip">
   <%# tooltip header %>
