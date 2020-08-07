@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SchoolProfiles::SummaryNarration do  
+describe SchoolProfiles::SummaryNarration do
   let(:summary_rating) do
     double('SummaryRating',
       test_scores: { rating: 9, title: 'Test Scores' },
@@ -11,7 +11,7 @@ describe SchoolProfiles::SummaryNarration do
   end
   let(:school) { double('school', state: "CA") }
   let(:school_cache_data_reader) do
-    double('school_cache_data_reader', 
+    double('school_cache_data_reader',
       school: school,
       gs_rating: 10,
       attendance_flag?: true,
