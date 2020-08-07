@@ -51,7 +51,7 @@ describe 'OSP Basic Page' do
       include_example 'should have a save edits button', 1
       include_example 'should have save edits link'
       include_example 'should have go to school profile link'
-      include_example 'should have write administratro reviews link'
+      include_example 'should have write administrator reviews link'
     end
   end
 
