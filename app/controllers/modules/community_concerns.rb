@@ -203,12 +203,4 @@ module CommunityConcerns
     district_content(decorated_city)&.first&.fetch(key, nil)
   end
 
-  def ratings_link_english
-    ['ca', 'mi'].include?(state.downcase) ? ratings_alt_path(lang: nil, trailing_slash: true) : ratings_path(lang: nil, trailing_slash: true)
-  end
-
-  def ratings_link_spanish
-    ['ca', 'mi'].include?(state.downcase) ? ratings_alt_path(trailing_slash: true) : ratings_spanish_path(trailing_slash: true)
-  end
-
 end
