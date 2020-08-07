@@ -1,0 +1,13 @@
+<%= react_component('DataModule', props: {
+                  title: t('Race ethnicity', scope: 'school_profiles.equity'),
+                  anchor: 'Race_ethnicity',
+                  analytics_id: 'EquityRaceEthnicity',
+                  subtitle: t('Race ethnicity subtitle', scope: 'school_profiles.equity'),
+                  info_text: t('Race ethnicity tooltip', scope: 'school_profiles.equity'),
+                  icon_classes: t('Race ethnicity icon', scope: 'school_profiles.equity'),
+                  sources: equity.race_ethnicity_sources,
+                  share_content: equity.race_ethnicity_share_content,
+                  data: equity.race_ethnicity_props,
+                  faq: equity.faq_race_ethnicity,
+                  no_data_summary: t('Race ethnicity no data', scope: 'school_profiles.equity'),
+                  qualaroo_module_link: equity.qualaroo_module_link(:race_ethnicity) })%>
