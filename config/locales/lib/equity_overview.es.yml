@@ -19,12 +19,90 @@ es:
       low_income: Bajos-ingresos
       and: y
       section_list: "%{section_word} %{section_names}"
+      student: estudiantil
+      academic: académico
       info_text: >
         La Calificación General de Equidad mira lo bien que esta escuela está atendiendo las necesidades de sus
         estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado,
         basado en los resultados de los exámenes del Departamento de Educación del estado.
         <br>
         <a href="/gk/como-clasificamos/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprenda más acerca de esta clasificación.</a>
+      narrative_1_html: >
+        <h3 class="negative">Muy preocupante:</h3>
+        <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
+        comparación a otros estudiantes en el estado, y esta escuela puede tener grandes diferencias en logro académico.</p>
+        <hr>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
+        <span class="speech-bubble left">Consejos para padres:</span></p>
+        <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
+        escuela. ¿Hay diferencias grandes?%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
+        iniciar una conversación en tu escuela acerca de cómo ayudar a que todos los estudiantes tengan éxito.%{end_more}</p>
+      narrative_2_html: >
+        <h3 class="negative">Un signo preocupante:</h3>
+        <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
+        comparación a otros estudiantes en el estado, y esta escuela puede tener diferencias significativas en
+        logro académico.</p>
+        <hr>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
+        <span class="speech-bubble left">Consejos para padres:</span></p>
+        <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
+        escuela. ¿Hay diferencias grandes?%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
+        iniciar una conversación en tu escuela acerca de cómo ayudar a que todos los estudiantes tengan éxito.%{end_more}</p>
+      narrative_3_html: >
+        <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
+        <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando tan bien como
+        otros estudiantes en el estado, pero esta escuela todavía puede tener diferencias en logro académico.</p>
+        <hr>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
+        <span class="speech-bubble left">Consejos para padres:</span></p>
+        <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
+        escuela. ¿Hay diferencias grandes?%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
+        iniciar una conversación en tu escuela acerca de cómo ayudar a que todos los estudiantes tengan éxito.%{end_more}</p>
+      narrative_4_html: >
+        <h3 class="positive">Un signo prometedor:</h3>
+        <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mejor que otros
+         estudiantes en el estado, aunque esta escuela todavía puede tener diferencias en logro académico.</p>
+        <hr>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
+        <span class="speech-bubble left">Consejos para padres:</span></p>
+        <p class="footnote">¡Las escuelas que eliminan las diferencias entre distintos grupos de estudiantes están
+        haciendo algo bien! Explore %{sections} para informarse más.%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
+        iniciar una conversación en tu escuela acerca de cómo ayudar a que todos los estudiantes tengan éxito.%{end_more}</p>
+      narrative_5_html: >
+        <h3 class="positive">¡Buenas noticias!:</h3>
+        <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mucho mejor que
+        otros estudiantes en el estado, y esta escuela está eliminando con éxito las diferencias en logro académico.</p>
+        <hr>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
+        <span class="speech-bubble left">Consejos para padres:</span></p>
+        <p class="footnote">¡Las escuelas que eliminan las diferencias entre distintos grupos de estudiantes están
+        haciendo algo bien! Explore %{sections} para informarse más.%{more}<a href="/gk/equity-toolkit/?lang=es">Estas 5 cosas</a> te ayudarán a
+        iniciar una conversación en tu escuela acerca de cómo ayudar a que todos los estudiantes tengan éxito..%{end_more}</p>
+    equity_overview_alt:
+      'title': 'Perspectiva de la equidad'
+      subtitle_html: >
+        ¿Está esta escuela ofreciendo oportunidades a todos sus estudiantes, o está dejando a algunos atrás?
+        Las escuelas exitosas están trabajando para eliminar las diferencias en logros académicos.
+      no_data_summary_html: >
+        <p>En esta sección, publicamos una calificación que refleja qué tan bien esta escuela satisface las necesidades de sus estudiantes en desventaja, en comparación con otras escuelas en el estado, basado en la preparación de la universidad, el progreso académico y en los resultados de los exámenes proporcionados por el Departamento de Educación del estado.</p>
+        <p>Este estado no proporciona suficientes datos para calcular La Calificación de Equidad.</p>
+        <p class="module_feedback">¿Le sería útil tener este tipo de información para esta escuela? <span class="links">%{useful_link}%{not_useful_link}</span></p>
+      'sources_title': 'Las fuentes de los datos y informacion de los perfiles de GreatSchools'
+      'Great schools rating': 'La Calificación de Equidad de GreatSchools'
+      'source': 'Fuente'
+      section:
+        one: la sección
+        other: las secciones
+      race_ethnicity: Raza/etnicidad
+      low_income: Bajos-ingresos
+      and: y
+      section_list: "%{section_word} %{section_names}"
+      student: estudiantil
+      academic: académico
+      info_text: >
+        La Calificación de Equidad mira lo bien que esta escuela está atendiendo las necesidades de sus estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado, basado en métricas de preparación universitaria, progreso %{growth_type}, y en los resultados de los exámenes proporcionados por el Departamento de Educación del estado.
+        <br>
+        <a href="/gk/ratings-ca-mi/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprende más sobre esta calificación.</a>
       narrative_1_html: >
         <h3 class="negative">Muy preocupante:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en

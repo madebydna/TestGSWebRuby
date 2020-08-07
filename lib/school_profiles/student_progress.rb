@@ -32,7 +32,7 @@ module SchoolProfiles
     end
 
     def info_text
-      I18n.t('lib.student_progress.info_text')
+      I18n.t(path_to_yml + '.info_text')
     end
 
     def narration
@@ -82,11 +82,11 @@ module SchoolProfiles
     end
 
     def label(key)
-      I18n.t(key, scope: 'lib.student_progress', default: key)
+      I18n.t(key, scope: path_to_yml, default: key)
     end
 
     def data_label(key)
-      I18n.t(key, scope: 'lib.student_progress', default: I18n.db_t(key, default: key))
+      I18n.t(key, scope: path_to_yml, default: I18n.db_t(key, default: key))
     end
 
     def sources
@@ -94,7 +94,11 @@ module SchoolProfiles
       description = data_label(description) if description
       methodology = rating_methodology
       methodology = data_label(methodology) if methodology
-      source = "#{@school.state_name.titleize} #{label('Dept of Education')}, #{rating_year}"
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        source = "GreatSchools; #{label('source_calculation')} #{rating_year}"
+      else
+        source = "#{@school.state_name.titleize} #{label('Dept of Education')}, #{rating_year}"
+      end
 
       content = '<div class="sourcing">'
       content << '<h1>' + label('title') + '</h1>'
@@ -123,6 +127,15 @@ module SchoolProfiles
 
     def rating_year
       @school_cache_data_reader.student_progress_rating_year
+    end
+
+    def path_to_yml
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        path = 'lib.student_progress_alt'
+      else
+        path = 'lib.student_progress'
+      end
+      path
     end
 
     def visible?

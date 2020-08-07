@@ -39,3 +39,43 @@ es:
         progreso del estudiante, cursos avanzados, y cómo la escuela sirve a estudiantes de todos los grupos raciales,
         étnicos y grupos socioeconómicos. <br/><br/>%{state_name} no tiene información suficiente para generar una Calificación
         General, que es la razón por la que mostramos la Calificación de los Resultados de Exámenes de esta escuela.
+    summary_narration_alt:
+      attendance: ausentismo
+      and: y
+      discipline: suspension
+      about_the_same: o los mismos
+      more: más
+      fewer: menos
+      above: por encima
+      about: a la altura
+      below: por debajo
+      'Summary Rating_html': >
+        <span class="emphasis">Esta escuela está calificada %{rating_string} del promedio</span> en calidad de la escuela en comparación a otras escuelas en %{state_name}.  Los estudiantes aquí
+      Summary Rating_school_name_html: >
+        <span class="emphasis">%{school_name} está calificada %{rating_string} del promedio</span> en la calidad de la escuela en comparación a otras escuelas en %{state_name}. Los estudiantes aquí
+      'Test Scores_html': >
+        se desempeñan <a href="#Test_scores">%{rating_string} del promedio</a> en exámenes estatales,
+      'College Readiness_html': >
+        tienen medidas de preparación a la Universidad <a href="#College_readiness">%{rating_string} del promedio</a>,
+      'Student Progress_html': >
+        están progresando académicamente año tras año <a href="#Student_progress">%{rating_string} del promedio</a>,
+      'Academic Progress_html': >
+        están progresando académicamente año tras año <a href="#Academic_progress">%{rating_string} del promedio</a>,
+      'Advanced Courses_html': >
+        toman <a href="#Advanced_courses">%{rating_string}</a> cursos avanzados por estudiantes que el promedio estatal,
+      'Equity Overview_html': >
+        esta escuela tiene resultados <a href="#Equity_overview">%{rating_string} del promedio</a> en cómo trabaja con los estudiantes más necesitados,
+      'sentence_ender_html': >
+        y abajo se puede encontrar más información sobre esta escuela.
+      'discipline_and_attendance_html': >
+        En esta escuela existen grandes desigualdades en los índices de <a href="#Race_ethnicity*Discipline_and_attendance">%{danda}</a>, lo cual es preocupante.
+      Test scores only pre more_html: >
+        <span class="emphasis">*Esta escuela está clasificada %{rating_string} del promedio</span> basado en cómo sus estudiantes realizan
+      Test scores only post more_html: >
+        en los exámenes del estado en comparación con otras escuelas en %{state_name}. Sin embargo, los resultados de los
+        exámenes son sólo un aspecto de la calidad de la escuela. <br/><br/>En la mayoría de los estados, mostramos una
+        <a href="%{ratings_path}">Calificación General</a> que se basa en varias medidas, incluyendo información como preparación universitaria, el
+        progreso del estudiante, y cómo la escuela sirve a estudiantes de todos los grupos raciales,
+        étnicos y grupos socioeconómicos. <br/><br/>%{state_name} no tiene información suficiente para generar una Calificación
+        General, que es la razón por la que mostramos la Calificación de los Resultados de Exámenes de esta escuela.
+

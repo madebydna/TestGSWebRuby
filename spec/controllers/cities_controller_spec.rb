@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'controllers/examples/rating_methodology_selector_shared_examples'
 
 describe CitiesController do
   before { stub_request(:post, /\/solr\/main\/select/).to_return(status: 200, body: "{}", headers: {}) }
@@ -97,4 +98,6 @@ describe CitiesController do
   describe 'GET show' do
     it_behaves_like 'a cities controller action', :show
   end
+
+  include_examples '#ratings_link', { city: 'Oakland' }
 end
