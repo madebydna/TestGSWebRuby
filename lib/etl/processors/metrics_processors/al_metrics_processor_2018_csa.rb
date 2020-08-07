@@ -57,6 +57,7 @@ class ALMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 			elsif row[:school_code] != '0'
 				row[:entity_type] = 'school'
 				row[:state_id] = row[:system_code].rjust(3,'0') + row[:school_code].rjust(4,'0')
+				row[:school_name] = row[:school_name]
 			else
 				row[:entity_type] = 'Error'
 				row[:state_id] = 'Error'
@@ -146,45 +147,6 @@ class ALMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 			end
 			row
 		end
-	end
-
-	source('CollegeRemediation.txt',[],col_sep:"\t") do |s|
-		s.transform('Fill missing default fields', Fill, {
-			grade: 'NA',
-			date_valid: '2019-01-01 00:00:00',
-			year: '2019',
-			breakdown: 'All Students',
-			breakdown_id: 1,
-			data_type: 'remediation rate',
-			data_type_id: 413
-	    })
-	    .transform('rename columns',MultiFieldRenamer,{
-			cohort_count_nocommas: :cohort_count
-		})
-	    .transform('assign state_id', WithBlock) do |row|
-			if row[:school_name] == 'TOTAL ALL ALABAMA PUBLIC SCHOOLS'
-				row[:entity_type] = 'state'
-				row[:state_id] = 'state'
-			else row[:entity_type] = 'school'
-				row[:state_id] = row[:state_id].rjust(7,'0')
-			end
-			row
-		end
-		.transform('setting subject',WithBlock) do |row|
-			if row[:variable][/math_remed_rate/]
-				row[:subject] = 'Math'
-			elsif row[:variable][/english_remed_rate/]
-				row[:subject] = 'English'
-			elsif row[:variable][/composite_remed_rate/]
-				row[:subject] = 'Composite Subject'
-			elsif row[:variable][/any_remed_rate/]
-				row[:subject] = 'Any Subject'
-			else 
-				row[:subject] = 'Error'
-			end
-			row
-		end
-		.transform('map subject ids',HashLookup,:subject, map_subject_id,to: :subject_id)
 	end
 
 	shared do |s|

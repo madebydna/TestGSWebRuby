@@ -9,7 +9,7 @@ class ALMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 	end
 
 	map_subject_id = {
-		'Composite' => 1,
+		'Composite Subject' => 1,
 		'English' => 17,
 		'Math' => 5,
 		'Any Subject' => 89
@@ -39,16 +39,16 @@ class ALMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 			end
 			row
 		end
-		.transform('assign subject',WithBlock) do |row|
-			if row[:variable][/composite_remed_rate/]
-				row[:subject] = 'Composite'
-			elsif row[:variable][/any_remed_rate/]
-				row[:subject] = 'Any Subject'
+		.transform('setting subject',WithBlock) do |row|
+			if row[:variable][/math_remed_rate/]
+				row[:subject] = 'Math'
 			elsif row[:variable][/english_remed_rate/]
 				row[:subject] = 'English'
-			elsif row[:variable][/math_remed_rate/]
-				row[:subject] = 'Math'
-			else
+			elsif row[:variable][/composite_remed_rate/]
+				row[:subject] = 'Composite Subject'
+			elsif row[:variable][/any_remed_rate/]
+				row[:subject] = 'Any Subject'
+			else 
 				row[:subject] = 'Error'
 			end
 			row
