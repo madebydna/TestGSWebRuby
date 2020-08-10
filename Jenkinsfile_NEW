@@ -19,6 +19,7 @@ def runCommonSteps() {
   sh 'bundle install --local --without development'
   sh 'rbenv rehash'
   unstash 'assets'
+  sh 'rm -Rf coverage'
 }
 
 def runUnitSpecs(groupNum) {
@@ -26,6 +27,7 @@ def runUnitSpecs(groupNum) {
     runCommonSteps()
     sh "script/ci/run_unit_specs.sh --out tmp/rspec-${groupNum}.xml `./script/ci/unit_rspec_group.rb 2 ${groupNum}`"
     junit testResults: 'tmp/*.xml'
+    step([$class: 'RcovPublisher', reportDir: "coverage/rcov"])
   }
 }
 
@@ -34,6 +36,7 @@ def runFeatureSpecs(groupNum) {
     runCommonSteps()
     sh "script/ci/run_feature_specs.sh --out tmp/features_rspec-${groupNum}.xml `./script/ci/feature_rspec_group.rb 2 ${groupNum}`"
     junit testResults: 'tmp/*.xml'
+    step([$class: 'RcovPublisher', reportDir: "coverage/rcov"])
   }
 }
 

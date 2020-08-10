@@ -243,11 +243,11 @@ group :development, :test do
   gem 'rails_best_practices'
 
   # Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites (http://github.com/colszowka/simplecov)
-  gem 'simplecov', '~> 0.8.0'
+  gem 'simplecov', '~> 0.18.5', require: false
   # Default HTML formatter for SimpleCov code coverage tool for ruby 1.9+ (https://github.com/colszowka/simplecov-html)
-  gem 'simplecov-html', '~> 0.8.0'
+  gem 'simplecov-html', '~> 0.11', require: false
   # Rcov style formatter for SimpleCov (http://github.com/fguillen/simplecov-rcov)
-  gem 'simplecov-rcov'
+  gem 'simplecov-rcov', require: false
 
   # Turn off rails assets log. (http://github.com/evrone/quiet_assets)
   gem 'quiet_assets'
