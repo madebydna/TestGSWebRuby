@@ -105,7 +105,7 @@
   .search-mode-homepage{
     // Class added to search box to allow mobile user to have more room to search
     // Overwrites CSS from search-box class
-    @media (max-width: 768px){
+    @include media-breakpoint-down(sm) {
       position: fixed;
       margin: 10px;
     }
@@ -118,6 +118,12 @@
     z-index: 5;
     margin-left: -10px;
     width: 93%;
+
+    .search-results-list{
+      @include media-breakpoint-down(sm) {
+        width: 120%;
+      }
+    }
     input{
       border: 1px solid #b8b8b8;
       font-size: 16px;
@@ -143,7 +149,6 @@
     @include media-breakpoint-down(sm) {
       border: 1px solid $form-field-border-color;
       height: auto;
-      width: 120%;
     }
   }
 }
