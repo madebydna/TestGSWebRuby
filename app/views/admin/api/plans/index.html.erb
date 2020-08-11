@@ -1,0 +1,63 @@
+<% content_for :head do %>
+  <title>GreatSchools.org Public API Registration & Developer Hub</title>
+  <meta name="description" content="Sign up for the GreatSchools public API developer account and get access to over 200,000 public, charter, and private K-12 school information profiles">
+  <script src="https://js.stripe.com/v3/"></script>
+<% end %>
+
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag "commons", defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+<% end %>
+
+<%= render 'admin/admin/developer_nav' %>
+
+<div class="col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 api-plan-selection">
+  <h3>Select Your Plan</h3>
+  <div class="api-plan-description">
+    Basic or enterprise, pay what you need <br> with our tiered plans.
+  </div>
+  <div class="api-plans-container">
+    <% @plans.each do |plan| %>
+      <div class="api-plan-col">
+        <div class="api-plan-header">
+          <% if plan.name == 'premium' %>
+            <div class="api-plan-best-value"> Best Value</div>
+          <% end %>
+          <span class="api-plan-name"> <%= plan_name(plan.name) %> </span>
+        </div>
+        <div class="api-plan-details <%= plan.name %>">
+          <div class="api-plan-subdetails">
+
+            <div class="api-price">
+              <div class="currency_sign">$</div>
+              <div class="price-primary"> <%= price_primary(plan.price) %> </div>
+              <div class="price-secondary"> <%= price_secondary(plan.price) %> </div>
+              <div>/mo</div>
+            </div>
+
+            <div><%= number_with_delimiter(plan.calls, delimiter: ',') %> Calls</div>
+            <div><%= plan.private_use? ? "Private Use" : "Public Facing" %></div>
+          </div>
+          <div class="api-plan-datasets">
+            <% if plan.name == 'enterprise' %>
+              <div> Additional Data sets:</div>
+              <div> <%= image_tag 'icons/plus.svg' %> Community Reviews</div>
+              <div> <%= image_tag 'icons/plus.svg' %> Academic Performance</div>
+              <br>
+            <% else %>
+              <div> <%= image_tag 'icons/blue-check-circle.svg' %> <span>Directory</span></div>
+              <div> <%= image_tag 'icons/blue-check-circle.svg' %> <span>GreatSchools Rating</span></div>
+              <div> <%= image_tag demo_icon(plan) %> Demographics</div>
+              <div> <%= image_tag subratings_icon(plan) %> Greatschools Subratings</div>
+            <% end %>
+          </div>
+          <div class="api-plan-start">
+            <%= form_tag(action_url(plan.name), method: "get") do %>
+              <button class="<%= plan.name %>"><%= button_txt(plan.name) %></button>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
