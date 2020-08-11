@@ -20,6 +20,10 @@
     list-style-type: none;
     padding: 0;
     margin-bottom: 0;
+    @include media-breakpoint-down(sm) {
+      overflow-y: scroll;
+      max-height: 600px;
+    }
     li {
       padding: 9px 19px;
       color: black;
