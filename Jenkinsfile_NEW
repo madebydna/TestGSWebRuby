@@ -26,8 +26,6 @@ def runUnitSpecs(groupNum) {
     runCommonSteps()
     sh "script/ci/run_unit_specs.sh --out tmp/rspec-${groupNum}.xml `./script/ci/unit_rspec_group.rb 2 ${groupNum}`"
     junit testResults: 'tmp/*.xml'
-    echo 'Debugging rcov issues'
-    sh 'ls -la coverage/rcov'
     stash name: "rcov_unit_${groupNum}", includes: "coverage/.resultset.json"
   }
 }
@@ -57,8 +55,8 @@ pipeline {
         withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
           sh 'rm -rf vendor/cache'
           retry(7) {
-                     sh 'bundle install --deployment --without development'
-                   }
+            sh 'bundle install --deployment --without development'
+          }
           sh 'bundle package > /dev/null'
           stash includes: 'vendor/cache/*', name: 'bundle'
           sh 'rm -rf app/assets/webpack'
@@ -126,22 +124,28 @@ pipeline {
         label 'jenkins-slave-permanent'
       }
       steps {
-        sh 'rm -rf coverage'
-        sh 'mkdir -p coverage/simplecov-resultset-{1,2,3,4}'
-        dir("coverage/simplecov-resultset-1") {
-          unstash "rcov_unit_1"
+        withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
+          sh 'rm -rf coverage'
+          sh 'mkdir -p coverage/simplecov-resultset-{1,2,3,4}'
+          dir("coverage/simplecov-resultset-1") {
+            unstash "rcov_unit_1"
+          }
+          dir("coverage/simplecov-resultset-2") {
+            unstash "rcov_unit_2"
+          }
+          dir("coverage/simplecov-resultset-3") {
+            unstash "rcov_feature_1"
+          }
+          dir("coverage/simplecov-resultset-4") {
+            unstash "rcov_feature_2"
+          }
+          echo 'Debugging rcov issues'
+          sh 'ls -la coverage/simplecov-resultset*/*'
+          sh 'which ruby'
+          sh 'pwd'
+          sh "./script/ci/collate_rcov_files.rb"
+          step([$class: 'RcovPublisher', reportDir: "coverage/rcov"])
         }
-        dir("coverage/simplecov-resultset-2") {
-          unstash "rcov_unit_2"
-        }
-        dir("coverage/simplecov-resultset-3") {
-          unstash "rcov_feature_1"
-        }
-        dir("coverage/simplecov-resultset-4") {
-          unstash "rcov_feature_2"
-        }
-        sh "./script/ci/collate_rcov_files.rb"
-        step([$class: 'RcovPublisher', reportDir: "coverage/rcov"])
       }
 
     }
