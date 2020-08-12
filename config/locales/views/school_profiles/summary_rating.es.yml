@@ -61,3 +61,59 @@ es:
         Attendance Flag Description: >
           Esta advertencia indica que hay grandes diferencias en los niveles de ausentismo crónico entre distintos
           grupos de estudiantes en esta escuela, lo cual es muy preocupante.
+    summary_rating_alt:
+      Top rated: Mejor calificadas
+      Above average: Por encima del promedio
+      Average: Promedio
+      Below average: Por debajo del promedio
+      header:
+        title: La Calificación General de GreatSchools
+        subtext_html: >
+          GreatSchools es una organización nacional sin fines de lucro. Nuestra Calificación General de
+          GreatSchools es una reflexión de múltiples medidas sobre la calidad de la escuela en base a los
+          componentes de calificación que ve aquí.
+        Learn more: Infórmate más sobre las Calificaciones de GreatSchools.
+        Last updated: Última actualización
+      table_content:
+        Rating components: Elementos de las calificaciones
+        Weight: Peso
+        rating_flag: Calificaciones
+        Test Scores: Resultados de Exámenes
+        Test Scores Description: >
+          La Calificación de los Resultados de Exámenes reflejan los resultados de los exámenes estatales para esta escuela en comparación con los puntajes a nivel estatal.
+        Student Progress: Progreso del Estudiante
+        Student Progress Description: >
+          La Calificación de GreatSchools de el Progreso del Estudiante es
+          una forma de medir si las escuelas están ayudando a los estudiantes a avanzar académicamente año
+          tras año, y si estos estudiantes están en camino a lograr su máximo potencial, en comparación con
+          otras escuelas en el estado.
+        Academic Progress: Progreso Académico
+        Academic Progress Description: >
+          La Calificación del Progreso Académico ayuda a medir cuánto lo
+          que los estudiantes aprenden en un año, en comparación con sus
+          compañeros de todo el estado.
+        College Readiness: Preparación Universitaria
+        College Readiness Description: >
+          Esta calificación muestra si los estudiantes de esta escuela están preparados para la universidad en comparación a los estudiantes en otras escuelas en este estado, en base a medidas como índices de graduación, pruebas de ingreso universitario y cursos de AP (cuando están disponibles).
+        Advanced Courses: Cursos Avanzados
+        Advanced Courses Description: >
+          Las Calificaciones de Cursos Avanzados reflejan el número de cursos tomados por estudiantes de esta
+          escuela en inglés, STEM, ciencias sociales e idiomas extranjeros, en comparación al promedio estatal.
+        Equity Overview: Equidad
+        Equity Overview Description: >
+          La Calificación de Equidad indica cómo esta escuela está atendiendo estudiantes en desventaja en comparación a otras escuelas en el estado.
+        Equity Adjustment Factor: Factor de ajuste por equidad
+        Equity Adjustment Factor Description: >
+          Las escuelas que no tienen una población de estudiantes necesitados lo suficientemente grande para
+          calcular la Calificación por Equidad (escuelas homogéneas) reciben la Calificación por Equidad promedio
+          de las escuelas con los mismos Resultados de Exámenes. Esta estimación, conocida como factor de ajuste
+          por equidad, permite que los Resúmenes de Calificaciones de las escuelas con y sin Calificaciones por
+          Equidad se puedan comparar más fácilmente.
+        Discipline Flag: Advertencia sobre Disciplina
+        Discipline Flag Description: >
+          Esta advertencia indica que hay grandes diferencias en índices de suspensión entre distintos grupos de
+          estudiantes en esta escuela, lo cual es muy preocupante.
+        Attendance Flag: Advertencia sobre Asistencia
+        Attendance Flag Description: >
+          Esta advertencia indica que hay grandes diferencias en los niveles de ausentismo crónico entre distintos
+          grupos de estudiantes en esta escuela, lo cual es muy preocupante.

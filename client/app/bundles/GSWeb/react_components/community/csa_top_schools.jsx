@@ -33,7 +33,7 @@ const CsaTopSchools = ({ schools, renderTabsContainer, size, locality, community
 
 	return (
     <div className="top-school-module">
-      <div className="profile-module">
+      <div>
         { community === "state" ?
           <h3>{t('award_winning_high_schools')}</h3> : 
           renderTabsContainer()

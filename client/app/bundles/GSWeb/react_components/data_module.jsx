@@ -189,6 +189,14 @@ export default class DataModule extends React.Component {
           </div>
         } else if (display_type == 'mixed_variety'){
           component = this.createMixedDataComponent(values);
+        } else if (display_type == 'bar_custom_range'){
+          component = <div>
+            {values.map((value, index) =>
+              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+                <BarGraphCustomRanges {...value} />
+              </BasicDataModuleRow>)
+            }
+          </div>
         } else {
           component = <div>
             {values.map((value, index) =>
@@ -255,8 +263,7 @@ export default class DataModule extends React.Component {
     if (rating && rating != '') {
       let circleClassName = 'circle-rating--medium circle-rating--'+rating;
       rating_html = <div className={circleClassName}>{rating}<span className="rating-circle-small">/10</span></div>;
-    }
-    else {
+    } else {
       if (typeof this.props.icon_classes === 'string') {
         let circleClassName = 'circle-rating--equity-blue';
         rating_html = <div className={circleClassName}><span className={this.props.icon_classes}></span></div>;
@@ -287,7 +294,13 @@ export default class DataModule extends React.Component {
     });
 
     let subNav;
-    if (subTabs.length > 1) {
+    // in case there is a single subTab we should display it unless its title is the same as the main tab's title
+    if (subTabs.length > 1 ||
+        subTabs.length == 1 &&
+          dataForActiveTab.title &&
+          dataForActiveTab.data[0] &&
+          dataForActiveTab.data[0].title &&
+          dataForActiveTab.title !== dataForActiveTab.data[0].title) {
       subNav = <SectionSubNavigation key={this.state.active}>
         {subTabs}
       </SectionSubNavigation>
@@ -295,13 +308,13 @@ export default class DataModule extends React.Component {
 
     let subPanes = dataForActiveTab.data.map(({anchor, type, values, narration} = {}) => {
       let explanation = <div dangerouslySetInnerHTML={{__html: narration}} />
-      return (
-        <EquityContentPane
-          anchor={anchor}
-          graph={this.createDataComponent(type, values)}
-          text={explanation}
-        />
-      )
+        return (
+          <EquityContentPane
+            anchor={anchor}
+            graph={this.createDataComponent(type, values)}
+            text={explanation}
+          />
+        );
     })
 
     return (

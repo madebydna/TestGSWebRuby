@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'controllers/contexts/ad_shared_contexts'
 require 'controllers/examples/ad_shared_examples'
+require 'controllers/examples/rating_methodology_selector_shared_examples'
 
 describe StatesController do
   before(:each) do
@@ -38,4 +39,6 @@ describe StatesController do
       include_example 'does not set any google ad targeting attributes'
     end
   end
+
+  include_examples '#ratings_link'
 end

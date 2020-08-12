@@ -29,13 +29,15 @@ const translate = function(key, options, dictionary = {}) {
 const translateWithDictionary = dictionary => (key, options) =>
   translate(key, options, dictionary);
 
-const replaceParameters = function(tv, p) {
-  Object.entries(p).forEach(([k, v]) => {
-    tv = tv.replace(`%{${k}}`, v);
-    tv = tv.replace(`{${k}}`, v);
-  });
-  return tv;
-};
+  const replaceParameters = function(tv, p) {
+    Object.entries(p).forEach(([k, v]) => {
+      const pattern_1 = `%\{${k}\}`;
+      const pattern_2 = `\{${k}\}`;
+      tv = tv.replace(new RegExp(pattern_1, 'g'), v);
+      tv = tv.replace(new RegExp(pattern_2, 'g'), v);
+    });
+    return tv;
+  };
 
 // used in tests
 const setTranslationsHash = function(hash) {

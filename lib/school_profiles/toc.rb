@@ -7,6 +7,26 @@ module SchoolProfiles
 
     DEEP_LINK_HASH_SEPARATOR = '*'
 
+    # Academics Constants
+    STUDENT_PROGRESS = 'student_progress'
+    ACADEMIC_PROGRESS = 'academic_progress'
+    COLLEGE_READINESS = 'college_readiness'
+    COLLEGE_SUCCESS = 'college_success'
+    ADVANCED_COURSES = 'advanced_courses'
+    TEST_SCORES = 'test_scores'
+
+    # Equity Constants
+    EQUITY_OVERVIEW = 'equity_overview'
+    RACE_ETHNICITY = 'race_ethnicity'
+    LOW_INCOME = 'low_income'
+    DISABILITIES = 'disabilities'
+    
+    # Environment Constants
+    STUDENTS_DEMOGRAPHICS = 'students'
+    DISCIPLINE_AND_ATTENDANCE = 'discipline_and_attendance'
+    TEACHER_STAFF = 'teachers_staff_html'
+    NEIGHBORHOOD = 'neighborhood'
+
     def initialize(test_scores:, college_readiness:, college_success:, student_progress:, equity:, equity_overview:,
                    students:, teachers_staff:, stem_courses:, academic_progress:, school:)
       @test_scores = test_scores
@@ -25,13 +45,6 @@ module SchoolProfiles
     def academics
       hash = {}
       arr = []
-      if @school.level_code =~ /h/
-        arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
-        arr << {column: 'Academics', label: 'college_success', present: true, anchor: 'College_success', badge: @college_success.school_csa_badge?} if @college_success.visible?
-      end
-
-      arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
-
       # NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
       # If a school is in a SP state and is a elementary(E) or middle (M) school, it will display the StudentProgress module 
       # If a school is in a SP state and is a high(H) school, it will check to see if any other H schools have this rating to display
@@ -41,14 +54,34 @@ module SchoolProfiles
       # the module or not
       # If a school is in a state with NEITHER AP or SP it will display NOTHING
       if @student_progress.student_progress_state? && @student_progress.visible?
-        arr << {column: 'Academics', label: 'student_progress', present: true, rating: @student_progress.rating, anchor: 'Student_progress'}
+        arr << {column: 'Academics', label: STUDENT_PROGRESS, present: true, rating: @student_progress.rating, anchor: 'Student_progress'}
       elsif @academic_progress.academic_progress_state? && @academic_progress.visible?
-        arr << {column: 'Academics', label: 'academic_progress', present: true, rating: @academic_progress.academic_progress_rating, anchor: 'Academic_progress'}
+        arr << {column: 'Academics', label: ACADEMIC_PROGRESS, present: true, rating: @academic_progress.academic_progress_rating, anchor: 'Academic_progress'}
       end
 
-      if @school.includes_level_code?(%w[m h]) || @stem_courses.visible?
-        arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: '', anchor: 'Advanced_courses'}
+      if @school.level_code =~ /h/
+        arr << {column: 'Academics', label: COLLEGE_READINESS, present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
+        arr << {column: 'Academics', label: COLLEGE_SUCCESS, present: true, anchor: 'College_success', badge: @college_success.school_csa_badge?} if @college_success.visible?
       end
+
+      if @school.includes_highschool?
+        if @stem_courses.visible?
+          arr << {column: 'Academics', label: ADVANCED_COURSES, present: true, rating: '', anchor: 'Advanced_courses'}
+        end
+
+        if @test_scores.visible?
+          arr << {column: 'Academics', label: TEST_SCORES, present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
+        end
+      else
+        if @test_scores.visible?
+          arr << {column: 'Academics', label: TEST_SCORES, present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
+        end
+
+        if @school.level_code =~ /m/ && @stem_courses.visible?
+          arr << {column: 'Academics', label: ADVANCED_COURSES, present: true, rating: '', anchor: 'Advanced_courses'}
+        end
+      end
+
       hash[:academics] = arr
       hash.delete_if{|key, value| value.blank?}
     end
@@ -57,11 +90,16 @@ module SchoolProfiles
       hash = {}
       arr = []
       if @equity_overview.has_rating?
-        arr << {column: 'Equity', label: 'equity_overview', present: true, rating: @equity_overview.equity_rating, anchor: 'Equity_overview'}
+        arr << {column: 'Equity', label: EQUITY_OVERVIEW, present: true, rating: @equity_overview.equity_rating, anchor: 'Equity_overview'}
       end
-      arr << {column: 'Equity', label: 'race_ethnicity', present: true, rating: nil, anchor: 'Race_ethnicity'}
-      arr << {column: 'Equity', label: 'low_income', present: true, rating: @equity.rating_low_income.to_f.round, anchor: 'Low-income_students'}
-      arr << {column: 'Equity', label: 'disabilities', present: true, rating: nil, anchor: 'Students_with_Disabilities'}
+      arr << {column: 'Equity', label: RACE_ETHNICITY, present: true, rating: nil, anchor: 'Race_ethnicity'}
+      # !TODO: Remove this after nation wide rating rollout r412
+      if %w(mi ca).include?(school.state.downcase)
+        arr << {column: 'Equity', label: LOW_INCOME, present: true, rating: nil, anchor: 'Low-income_students'}
+      else
+        arr << {column: 'Equity', label: LOW_INCOME, present: true, rating: @equity.rating_low_income.to_f.round, anchor: 'Low-income_students'}
+      end
+      arr << {column: 'Equity', label: DISABILITIES, present: true, rating: nil, anchor: 'Students_with_Disabilities'}
       hash[:equity] = arr
       hash.delete_if{|key, value| value.blank?}
     end
@@ -69,16 +107,16 @@ module SchoolProfiles
     def environment
       hash = {}
       arr = []
-      arr << {column: 'Environment', label: 'students', present: true, rating: nil, anchor: 'Students'}
+      arr << {column: 'Environment', label: STUDENTS_DEMOGRAPHICS, present: true, rating: nil, anchor: 'Students'}
 
       if @equity.race_ethnicity_discipline_and_attendance_visible?
-        arr << {column: 'Environment', label: 'discipline_and_attendance', present: true, rating: nil,
+        arr << {column: 'Environment', label: DISCIPLINE_AND_ATTENDANCE, present: true, rating: nil,
                 anchor: 'Race_ethnicity'+DEEP_LINK_HASH_SEPARATOR+'Discipline_and_attendance',
                 flagged: @equity.discipline_attendance_flag? }
       end
 
-      arr << {column: 'Environment', label: 'teachers_staff_html', present: true, rating: nil, anchor: 'Teachers_staff'}
-      arr << {column: 'Environment', label: 'neighborhood', present: true, rating: nil, anchor: 'Neighborhood'}
+      arr << {column: 'Environment', label: TEACHER_STAFF, present: true, rating: nil, anchor: 'Teachers_staff'}
+      arr << {column: 'Environment', label: NEIGHBORHOOD, present: true, rating: nil, anchor: 'Neighborhood'}
       hash[:environment] = arr
       hash.delete_if{|key, value| value.blank?}
     end

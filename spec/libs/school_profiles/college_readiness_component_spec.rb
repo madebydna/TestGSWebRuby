@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe 'CollegeReadinessComponent' do
-  let(:school) { double("school") }
-  let(:school_cache_data_reader) { double("school_cache_data_reader") }
+  let(:school) { double("school", state: "CA") }
+  let(:school_cache_data_reader) { double("school_cache_data_reader", school: school) }
   subject(:college_readiness) do
     ::SchoolProfiles::CollegeReadinessComponent.new(
       'college_readiness', school_cache_data_reader

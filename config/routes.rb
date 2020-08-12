@@ -237,6 +237,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
     get '/gk/ratings/',  as: :ratings
     get '/gk/como-clasificamos/',  as: :ratings_spanish
+    get '/gk/ratings-ca-mi/',  as: :ratings_alt
     get '/gk/csa-winners/', as: :csa_winners
     get '/gk/coronavirus-school-closure-support/', as: :coronavirus
     get '/status/error404.page'
@@ -328,7 +329,7 @@ LocalizedProfiles::Application.routes.draw do
 
     get  '/users/search'
 
-    resources :held_school, only: [:create, :update, :destroy] do
+    resources :held_schools, except: [:show] do
       member do
         put 'remove_hold'
       end
@@ -387,6 +388,9 @@ LocalizedProfiles::Application.routes.draw do
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]
   match '/gsr/session/facebook_auth' => 'signin#facebook_auth', :as => :facebook_auth, via: [:get, :post]
   match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation, via: [:get, :post]
+  # Google OAuth2 Routes
+  get '/auth/:provider/callback', to: 'signin#google_auth'
+  get '/auth/failure', to: redirect('/')
   # This route needs to be either merged with authenticate_token, or renamed to be more consistent with that one
   # JIRA: JT-385
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'

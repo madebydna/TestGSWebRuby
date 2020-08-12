@@ -48,7 +48,7 @@ module SchoolProfiles
     # Data growth type. Either a Data Growth Type (Student Progress Rating)
     # or Data Growth Proxy Type (Academic Progress Rating)
     def growth_type
-      state_attributes.fetch('growth_type',nil)
+      @_growth_type ||= state_attributes.fetch('growth_type',nil)
     end
 
     def hs_enabled_growth_rating?

@@ -1,12 +1,8 @@
 module SchoolProfiles
   class EquityGsdata
-    COURSES_DATA_TYPES = {
-        'Percentage AP enrolled grades 9-12' => {type: :person},
-        'Percentage of students enrolled in Dual Enrollment classes grade 9-12' => {type: :person},
-        'Percentage of students enrolled in IB grades 9-12' => {type: :person},
-        'Number of Advanced Courses Taken per Student' => {type: :plain, precision: 1}
-    }
-
+    # TODO: This class used to be a data/display class. Now it only serves up sources, and the data was migrated to the
+    #       ComponentGroup architecture. Need to migrate these sources over there so the sources logic is consistent
+    #       with display.
     DISCIPLINE_DATA_TYPES = {
         'Percentage of students suspended out of school' => {type: :person_reversed},
         'Percentage of students chronically absent (15+ days)' => {type: :person_reversed}
@@ -17,8 +13,7 @@ module SchoolProfiles
     end
 
     def sources
-      generate_hash(COURSES_DATA_TYPES)
-        .merge(generate_hash(DISCIPLINE_DATA_TYPES))
+      generate_hash(DISCIPLINE_DATA_TYPES)
         .merge(students_with_disabilities_hash)
     end
 

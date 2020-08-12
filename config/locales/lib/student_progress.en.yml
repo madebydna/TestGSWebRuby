@@ -114,3 +114,115 @@ en:
           even_distribution_html: >
             <span class="emphasis" style="color:#8a720a;">Worth a deeper look:</span>
             <p>This district has <span class="emphasis">a mixed record</span> of helping students improve over time. Look below to see what percentage of schools in this district are making <span class="emphasis">more, less, or about the same</span> progress as other schools in the state.</p>
+    student_progress_alt:
+      info_text: >
+        <p style='text-align:left'>Student progress (also known as “student growth”) is a way to measure how well individual students grow academically year over year at a given school compared to students with similar proficiency levels at other schools in the state.</p>
+        <p style='text-align:left'>The Student Progress Rating compares progress made by students at this school to other schools in the state, using student growth data provided by the state Department of Education. It’s a helpful way to measure how well a school is helping kids learn and advance.
+        <a href='/gk/ratings-ca-mi/#studentprogressrating' target='_blank'>Learn more about this rating</a>.</p>
+      'title': 'GreatSchools profile data sources &amp; information'
+      'GreatSchools Rating': 'GreatSchools Student Progress Rating'
+      'Rating text': The Student Progress Rating measures whether students at this school are making academic progress over time based on student growth data provided by the state’s Department of Education. Specifically, this rating looks at how much progress individual students have made on state assessments during the past year or more, how this performance aligns with expected progress based on a student growth model established by the state Department of Education, and how this school's growth data compares to other schools in the state.
+      'source': 'Source'
+      source_calculation: this rating was calculated in
+      'Dept of Education': 'Dept. of Education'
+      'see more': 'See more: <a href="/gk/ratings-ca-mi/#studentprogressrating" target="_blank">About this rating</a>'
+      narrative:
+        1_low_html: >
+          <p><span class="emphasis">Very low progress with low test scores</span> means students are starting
+          at a low point and falling even farther behind their peers.</p>
+        1_high_html: >
+          <p><span class="emphasis">Very low progress with high test scores</span> means students have strong academic
+          skills but that students in this school are making smaller gains than similar students in other schools.</p>
+        1_html: >
+          <h3 class="negative">Very concerning:</h3>
+          <p>Students at this school are making <span class="emphasis">far less</span>
+          academic progress given where they were last year, compared to similar students in the state.</p>
+          %{test_score_dependent_content}
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
+        2_low_html: >
+          <p><span class="emphasis">Low progress with low test scores</span> means... that students are starting at a
+          low point and falling farther behind their peers.</p>
+        2_high_html: >
+          <p><span class="emphasis">Low progress with high test scores</span> means students have strong academic skills
+          but that students in this school are making smaller gains than similar students in other schools. </p>
+        2_html: >
+          <h3 class="negative">A worrisome sign:</h3>
+          <p>Students at this school are making <span class="emphasis">less</span>
+          academic progress given where they were last year, compared to similar students in the state.</p>
+          %{test_score_dependent_content}
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
+        3_low_html: >
+          <p><span class="emphasis">Average progress with low test scores</span> means... that students are starting at
+          a low point but keeping up with their peers.</p>
+        3_high_html: >
+          <p><span class="emphasis">Average progress with high test scores</span> means students have strong academic
+          skills and students in this school are learning at the same rate as similar students in other schools.</p>
+        3_html: >
+          <h3 class="neutral">Worth a deeper look:</h3>
+          <p>Students at this school are making <span class="emphasis">average</span>
+          academic progress given where they were last year, compared to similar students in the state.</p>
+          %{test_score_dependent_content}
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school how it interprets this rating and how it might use this information to help
+          students grow and reach their full potential.</p>
+        4_low_html: >
+          <p><span class="emphasis">Strong progress with low test scores</span> means... that students are starting at a
+          low point but the school is doing a better job at supporting their academic growth than most other schools.</p>
+        4_high_html: >
+          <p><span class="emphasis">Strong progress with high test scores</span> means students have strong academic
+          skills and the school is a doing a better job at supporting academic growth than most other schools.</p>
+        4_html: >
+          <h3 class="positive">A promising sign</h3>
+          <p>Students at this school are making <span class="emphasis">more</span>
+          academic progress given where they were last year, compared to similar students in the state.</p>
+          %{test_score_dependent_content}
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school's continued success.</p>
+        5_low_html: >
+          <p><span class="emphasis">High progress with low test scores</span> means... that students are starting at a
+          low point but the school is doing a great job at supporting their academic growth compared to most other schools.</p>
+        5_high_html: >
+          <p><span class="emphasis">High progress with high test scores</span> means students have strong academic
+          skills and the school is a doing an excellent job at supporting academic growth compared to most other schools.</p>
+        5_html: >
+          <h3 class="positive">Good news!</h3>
+          <p>Students at this school are making <span class="emphasis">far more</span>
+          academic progress given where they were last year, compared to similar students in the state.</p>
+          %{test_score_dependent_content}
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school's success.</p>
+      javascript:
+        toc_item: Student progress
+      district_scope:
+        title: 'District student progress'
+        source_title: GreatSchools district data sources & information
+        subtext: 'How much are students learning in this district compared to the rest of the state?'
+        toc_item: 'Student progress'
+        data_point_label: 'District'
+        tooltip_html: >
+          <p>How much do schools help students grow each year?</p>
+          <p>Student progress (also known as “student growth”) is a way of understanding how well schools are helping individual students grow academically year-over-year, and whether these students are on track to meet their full potential, compared to students with similar proficiency levels at other schools in the state.</p>
+          <p>The GreatSchools Student Progress Rating compares the academic progress over time for each school to all schools in the state, using student growth data provided by the state Department of Education. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Student Progress Ratings.</p>
+          <a href='/gk/ratings-ca-mi/#studentprogressrating'>Learn more about this rating.</a>
+        graphic_header: How does this district compare with the rest of the state?
+        graphic_header_tooltip: This pie chart shows the percentage of schools in this district with Student Progress Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
+        narrative:
+          below_average_html: >
+            <span class="emphasis" style="color:#CB5C35;">A worrisome sign:</span>
+            <p>This district has a larger number of schools whose students are making <span class="emphasis">less</span> academic progress than their peers at other schools in the state.</p>
+          average_html: >
+            <span class="emphasis" style="color:#8a720a;">Worth a deeper look:</span>
+            <p>Students at many of the schools in this district are making <span class="emphasis">about the same</span> academic progress as the state average.</p>
+          above_average_html: >
+            <span class="emphasis" style="color:#367A1E;">A promising sign:</span>
+            <p>A larger number of schools in this district have students who are making <span class="emphasis">more</span> academic progress than their peers at other schools in the state.</p>
+          even_distribution_html: >
+            <span class="emphasis" style="color:#8a720a;">Worth a deeper look:</span>
+            <p>This district has <span class="emphasis">a mixed record</span> of helping students improve over time. Look below to see what percentage of schools in this district are making <span class="emphasis">more, less, or about the same</span> progress as other schools in the state.</p>

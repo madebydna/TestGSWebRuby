@@ -59,7 +59,7 @@ $border-color: #dbe6eb;
 
     .xq_school_board_module_mobile {
       border: 1px solid $border-color;
-      background-color: $light-gray;
+      background-color: $gray-light-blue;
       padding: 10px;
       margin: 5px 0;
       font-size: $font-size-small;
@@ -86,7 +86,7 @@ $border-color: #dbe6eb;
   }
 
   .profile-module {
-    background: $light-gray;
+    background: $gray-light-blue;
     padding: 10px;
     @include media-breakpoint-only(xs) {
       padding-left: 0px;

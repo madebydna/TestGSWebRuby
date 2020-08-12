@@ -38,13 +38,13 @@ const Circle = (props) => {
     }
   };
 
-  return <div className="row bar-graph-display">
+  return <div className="ts-row bar-graph-display">
     <div className="test-score-container clearfix circle-viz-row-container">
-      <div className="col-xs-9 col-sm-6 subject">
-        {breakdown}&nbsp;{tooltip_html && <QuestionMarkTooltip content={tooltip_html} className="tooltip" element_type="datatooltip" />}
+      <div className="ts-row-three-quarters-xs ts-row-one-half-sm subject">
+        {breakdown}{tooltip_html && <QuestionMarkTooltip content={tooltip_html} className="tooltip" element_type="datatooltip" />}
       </div>
-      <div className="col-xs-1 col-sm-1" />
-      <div className="col-xs-2 col-sm-5">
+      <div className="ts-row-one-twelfth-xs" />
+      <div className="ts-row-one-sixth-xs ts-row-five-twelfths-sm">
         {renderCircle()}
       </div>
     </div>

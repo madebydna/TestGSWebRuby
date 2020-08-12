@@ -9,7 +9,7 @@ module SchoolProfiles
     N_TESTED = 'n_tested'
     STRAIGHT_AVG = 'straight_avg'
     N_TESTED_AND_STRAIGHT_AVG = 'n_tested_and_straight_avg'
-    STATES_WITHOUT_HS_STANDARDIZED_TESTS = %w(ct il mt)
+    STATES_WITHOUT_HS_STANDARDIZED_TESTS = %w(al ct de il mt nh pa ri wv)
 
     delegate :college_readiness_rating, :college_readiness_rating_year, :college_readiness_rating_hash, to: :@school_cache_data_reader
 
@@ -23,8 +23,8 @@ module SchoolProfiles
     end
 
     def faq
-      @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.test_scores.faq'),
-                        content: I18n.t(:content_html, scope: 'lib.test_scores.faq',
+      @_faq ||= Faq.new(cta: I18n.t(:cta, scope: path_to_yml + '.faq'),
+                        content: I18n.t(:content_html, scope: path_to_yml + '.faq',
                         standardized_tests_note: standardized_tests_clarification_note),
                         element_type: 'faq')
     end
@@ -56,16 +56,17 @@ module SchoolProfiles
     def narration
       return nil unless rating.present? && (1..10).cover?(rating.to_i)
       key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
-      I18n.t(key, scope: 'lib.test_scores.narration', more: SchoolProfilesController.show_more('Test scores'),
+      I18n.t(key, scope: path_to_yml + '.narration', more: SchoolProfilesController.show_more('Test scores'),
              end_more: SchoolProfilesController.show_more_end).html_safe
     end
 
     def info_text
-      I18n.t('lib.test_scores.info_text')
+      I18n.t(path_to_yml + '.info_text')
     end
 
     def data_label(key, scope: 'lib.test_scores')
-      I18n.t(key, scope: scope, default: I18n.db_t(key, default: key))
+      label_scope = scope || path_to_yml
+      I18n.t(key, scope: label_scope, default: I18n.db_t(key, default: key))
     end
 
     def subject_scores
@@ -203,8 +204,12 @@ module SchoolProfiles
       (hash.present? ? hash['year'] : nil).to_s
     end
 
+    def suppress_module?
+      STATES_WITHOUT_HS_STANDARDIZED_TESTS.include?(@school.state.downcase) && @school.high_school?
+    end
+
     def visible?
-      subject_scores.present?
+      !suppress_module?
     end
 
     def rating_description
@@ -215,6 +220,15 @@ module SchoolProfiles
     def rating_methodology
       hash = @school_cache_data_reader.test_scores_rating_hash
       hash['methodology'] if hash
+    end
+
+    def path_to_yml
+      if ['ca', 'mi'].include?(@school.state.downcase)
+        path = 'lib.test_scores_alt'
+      else
+        path = 'lib.test_scores'
+      end
+      path
     end
   end
 end

@@ -1,0 +1,21 @@
+<% environment_order = @school_profile.toc.environment.values.flatten %>
+
+<% #Delete TOC items that aren't in the Environment subsection  %>
+<% environment_order = environment_order.delete_if do |item|
+                          item[:label] == SchoolProfiles::Toc::DISCIPLINE_AND_ATTENDANCE ||
+                          item[:label] == SchoolProfiles::Toc::NEIGHBORHOOD
+                         end 
+%>
+
+<% environment_order.each do |display| %>
+  <div class="profile-section-slot">
+    <%= 
+      case display[:label]
+      when SchoolProfiles::Toc::STUDENTS_DEMOGRAPHICS
+        render 'students', students: @school_profile.students
+      when SchoolProfiles::Toc::TEACHER_STAFF
+        render 'teachers_staff', teachers_staff: @school_profile.teachers_staff
+      end
+    %>
+  </div>
+<% end %>

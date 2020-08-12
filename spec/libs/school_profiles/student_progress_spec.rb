@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SchoolProfiles::StudentProgress do
-  let(:school) { double('school') }
+  let(:school) { double('school', state: "AK") }
   let(:school_cache_data_reader) { double('school_cache_data_reader') }
   subject(:student_progress) do
     SchoolProfiles::StudentProgress.new(

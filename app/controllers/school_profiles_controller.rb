@@ -1,4 +1,5 @@
 class SchoolProfilesController < ApplicationController
+  include RatingMethodologySelector
   protect_from_forgery
   before_filter :require_school
   before_action :redirect_to_canonical_url
@@ -76,6 +77,10 @@ class SchoolProfilesController < ApplicationController
   def school
     return @_school if defined?(@_school)
     @_school = School.find_by_state_and_id(get_school_params[:state_abbr], get_school_params[:id])
+  end
+
+  def state
+    @_state ||= school.state
   end
 
   def school_profile
@@ -383,25 +388,16 @@ class SchoolProfilesController < ApplicationController
     end
   end
 
-  def meta_description
-    if school.state.downcase == 'ca'
-      content = summary_narration.build_content_with_school_name
-      if content.present?
-        c = content.join(' ')
-        ActionView::Base.full_sanitizer.sanitize(c).truncate(155)
-      end
-    end
+  def modified_recently?(school)
+    return true if school.manual_edit_date.nil? && school.modified.nil?
+    (school.manual_edit_date && school.manual_edit_date > (Time.now - 4.years)) ||
+        (school.modified && school.modified > (Time.now - 4.years))
   end
 
   def robots
     return 'noindex' if school.demo_school?
-    if school.manual_edit_date && school.private_school? && (Time.now - 4.years) > school.manual_edit_date && school.reviews.length < 3
-      return 'noindex'
-    end
 
-    if school.modified && school.private_school? && (Time.now - 4.years) > school.modified && school.reviews.length < 3
-      return 'noindex'
-    end
+    return 'noindex' if show_private_school_template? && !modified_recently?(school) && school.reviews.length < 3
 
     'index'
   end
@@ -409,7 +405,7 @@ class SchoolProfilesController < ApplicationController
   def set_seo_meta_tags
     meta_tags = SchoolProfileMetaTags.new(school)
     description = meta_tags.description
-    canonical_url = school_url(school)
+    canonical_url = school_url(school, lang: I18n.current_non_en_locale)
 
     set_meta_tags title: meta_tags.title,
                   robots: robots,

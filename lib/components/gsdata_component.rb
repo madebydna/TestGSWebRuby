@@ -28,6 +28,10 @@ module Components
       return @_normalized_values
     end
 
+    def has_data?
+      !normalized_values.empty?
+    end
+
     def array_contains_any_valid_data?(gs_data_values)
       gs_data_values.having_non_zero_school_value.present?
     end
@@ -60,6 +64,20 @@ module Components
     def breakdown_percentage(dv)
       return if ['All students except 504 category', 'General-Education students'].include?(dv.breakdown)
       value_to_s(ethnicities_to_percentages[dv.breakdown])
+    end
+
+    def subject_name(data_type_name)
+      I18n.t(data_type_name, scope: 'lib.equity_gsdata', default: data_type_name)
+    end
+
+    def source
+      return {} if values.blank?
+      {
+          subject_name(data_type) => {
+              info_text: I18n.t(data_type, scope: 'lib.equity_gsdata.data_point_info_texts', default: ''),
+              sources: values.map { |dv| {name: dv[:test_source], year: dv[:year] }}.uniq
+          }
+      }
     end
 
   end
