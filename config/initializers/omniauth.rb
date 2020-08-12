@@ -3,8 +3,11 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 end
 
 OmniAuth.config.full_host do
-  return 'https://qa.greatschools.org' if ENV_GLOBAL['app_host'] =~ /qa-web/
-  return 'https://www.greatschools.org' if ENV_GLOBAL['app_host'] =~ /prod-web/
-
-  ENV_GLOBAL['app_host']
+  if ENV_GLOBAL['app_host'] =~ /qa-web/
+    'https://qa.greatschools.org'
+  elsif ENV_GLOBAL['app_host'] =~ /prod-web/
+    'https://www.greatschools.org'
+  else
+    ENV_GLOBAL['app_host']
+  end
 end
