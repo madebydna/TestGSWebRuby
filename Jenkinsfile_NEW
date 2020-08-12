@@ -28,7 +28,7 @@ def runUnitSpecs(groupNum) {
     junit testResults: 'tmp/*.xml'
     echo 'Debugging rcov issues'
     sh 'ls -la coverage/rcov'
-    stash name: "rcov_unit_${groupNum}", includes: "coverage/rcov/.resultset.json"
+    stash name: "rcov_unit_${groupNum}", includes: "coverage/.resultset.json"
   }
 }
 
@@ -37,7 +37,7 @@ def runFeatureSpecs(groupNum) {
     runCommonSteps()
     sh "script/ci/run_feature_specs.sh --out tmp/features_rspec-${groupNum}.xml `./script/ci/feature_rspec_group.rb 2 ${groupNum}`"
     junit testResults: 'tmp/*.xml'
-    stash name: "rcov_feature_${groupNum}", includes: "coverage/rcov/.resultset.json"
+    stash name: "rcov_feature_${groupNum}", includes: "coverage/.resultset.json"
   }
 }
 
@@ -97,7 +97,7 @@ pipeline {
             runUnitSpecs(2)
           }
         }
-        /* stage('Feature tests #1') {
+        stage('Feature tests #1') {
           agent {
             label 'jenkins-slave-ondemand'
           }
@@ -118,7 +118,7 @@ pipeline {
           steps {
             runFeatureSpecs(2)
           }
-        }*/
+        }
       }
     }
     stage('Publish coverage report'){
