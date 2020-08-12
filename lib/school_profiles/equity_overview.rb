@@ -43,6 +43,10 @@ module SchoolProfiles
              end_more: SchoolProfilesController.show_more_end).html_safe if key
     end
 
+    def state_equity_rating?
+      @school_cache_data_reader.state_equity_rating?
+    end
+
     def equity_rating
       equity_overview_struct.try(:school_value_as_int)
     end
