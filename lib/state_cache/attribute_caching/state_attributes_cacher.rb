@@ -46,6 +46,7 @@ module AttributeCaching
                   .where(data_sets: {data_type_id: EQUITY_RATING, state: state})
                   .school_entity
                   .active
+                  .pluck(:gs_id)
                   .length > 0
     end
 
