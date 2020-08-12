@@ -26,7 +26,7 @@ def runUnitSpecs(groupNum) {
     runCommonSteps()
     sh "script/ci/run_unit_specs.sh --out tmp/rspec-${groupNum}.xml `./script/ci/unit_rspec_group.rb 2 ${groupNum}`"
     junit testResults: 'tmp/*.xml'
-    stash name: "rcov_unit_#{groupNum}", includes: "coverage/rcov/.resultset.json"
+    stash name: "rcov_unit_${groupNum}", includes: "coverage/rcov/.resultset.json"
   }
 }
 
@@ -35,7 +35,7 @@ def runFeatureSpecs(groupNum) {
     runCommonSteps()
     sh "script/ci/run_feature_specs.sh --out tmp/features_rspec-${groupNum}.xml `./script/ci/feature_rspec_group.rb 2 ${groupNum}`"
     junit testResults: 'tmp/*.xml'
-    stash name: "rcov_feature_#{groupNum}", includes: "coverage/rcov/.resultset.json"
+    stash name: "rcov_feature_${groupNum}", includes: "coverage/rcov/.resultset.json"
   }
 }
 
