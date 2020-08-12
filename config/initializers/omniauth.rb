@@ -3,9 +3,9 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 end
 
 OmniAuth.config.full_host = 
-  if ENV_GLOBAL['app_host'] =~ /qa-web/
+  if ENV_GLOBAL['app_host'] =~ /qa-web/ || ENV_GLOBAL['app_host'] =~ /qa-admin/
     'https://qa.greatschools.org'
-  elsif ENV_GLOBAL['app_host'] =~ /prod-web/
+  elsif ENV_GLOBAL['app_host'] =~ /prod-web/ || ENV_GLOBAL['app_host'] =~ /prod-admin/
     'https://www.greatschools.org'
   elsif ENV_GLOBAL['app_port']
     "http://#{ENV_GLOBAL['app_host']}"
