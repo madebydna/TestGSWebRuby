@@ -2,4 +2,4 @@
 
 require 'simplecov'
 
-SimpleCov.collate Dir["coverage/simplecov-resultset-*/.resultset.json"]
+SimpleCov.collate Dir["coverage/simplecov-resultset-*/coverage/.resultset.json"]
