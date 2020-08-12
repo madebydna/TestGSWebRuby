@@ -94,7 +94,7 @@ module SchoolProfiles
     end
 
     def has_rating?
-      equity_rating && equity_rating.to_s.downcase != 'nr' && equity_rating.to_i.between?(1, 10)
+      @_has_rating ||= equity_rating && equity_rating.to_s.downcase != 'nr' && equity_rating.to_i.between?(1, 10)
     end
 
     def path_to_yml
