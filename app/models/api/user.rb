@@ -6,7 +6,7 @@ module Api
 
     validates :first_name, :last_name, :organization, :website, :email, :phone, :city, :state, presence: true
     validates :organization_description, :role, :intended_use, presence: true
-    validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }, uniqueness: true
+    validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
 
     INDUSTRIES = [
       'Real Estate',
