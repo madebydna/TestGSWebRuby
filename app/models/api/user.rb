@@ -8,6 +8,8 @@ module Api
     validates :organization_description, :role, :intended_use, presence: true
     validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
 
+    has_one :subscription, class_name: 'Api::Subscription'
+
     INDUSTRIES = [
       'Real Estate',
       'Journalism & Media',
