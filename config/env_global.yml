@@ -126,3 +126,7 @@ profiling_output_path: /tmp
 # generate key by running "bundle exec rake secret"
 # We should have different keys on each server so logging in only will work for single environment
 secret_key_base:
+
+# Sidekiq and Redis
+redis_url: redis://localhost:6379
+redis_db: 0
