@@ -266,6 +266,9 @@ module GS
         end     
         node = node.transform 'Check cohort/breakdown_id/subject_id/grade', WithBlock do |row|
           row[:cohort_count] = 'NULL' if row[:cohort_count].nil?
+          row[:cohort_count] = 'NULL' if row[:cohort_count] == 'NA'
+          row[:cohort_count] = 'NULL' if row[:cohort_count].include? '>'
+          row[:cohort_count] = 'NULL' if row[:cohort_count].include? '<'
           row[:breakdown_id] = 0 if row[:breakdown_id].nil?
           row[:subject_id] = 0 if row[:subject_id].nil?
           if row[:grade].nil?
@@ -305,6 +308,9 @@ module GS
         end
         node = node.transform 'Check cohort/breakdown_id/subject_id/grade', WithBlock do |row|
           row[:cohort_count] = 'NULL' if row[:cohort_count].nil?
+          row[:cohort_count] = 'NULL' if row[:cohort_count] == 'NA'
+          row[:cohort_count] = 'NULL' if row[:cohort_count].include? '>'
+          row[:cohort_count] = 'NULL' if row[:cohort_count].include? '<'
           row[:breakdown_id] = 0 if row[:breakdown_id].nil?
           row[:subject_id] = 0 if row[:subject_id].nil?
           if row[:grade].nil?
@@ -346,6 +352,9 @@ module GS
         end
         node = node.transform 'Check cohort/breakdown_id/subject_id/grade', WithBlock do |row|
           row[:cohort_count] = 'NULL' if row[:cohort_count].nil?
+          row[:cohort_count] = 'NULL' if row[:cohort_count] == 'NA'
+          row[:cohort_count] = 'NULL' if row[:cohort_count].include? '>'
+          row[:cohort_count] = 'NULL' if row[:cohort_count].include? '<'
           row[:breakdown_id] = 0 if row[:breakdown_id].nil?
           row[:subject_id] = 0 if row[:subject_id].nil?
           if row[:grade].nil?
