@@ -7,7 +7,7 @@ OmniAuth.config.full_host =
     'https://qa.greatschools.org'
   elsif ENV_GLOBAL['app_host'] == "greatschools.org"
     'https://www.greatschools.org'
-  elsif ENV_GLOBAL['app_port']
+  elsif ENV_GLOBAL['app_port'].present?
     "http://#{ENV_GLOBAL['app_host']}:#{ENV_GLOBAL['app_port']}"
   else
     "http://#{ENV_GLOBAL['app_host']}"
