@@ -15,6 +15,10 @@ module Api
     def subratings_included?
       %w(premium).include? name
     end
+
+    def enterprise?
+      name == 'enterprise'
+    end
   end
 
 end

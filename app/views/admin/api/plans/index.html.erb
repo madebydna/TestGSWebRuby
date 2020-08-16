@@ -37,11 +37,7 @@
             <div><%= plan.private_use? ? "Private Use" : "Public Facing" %></div>
           </div>
           <div class="api-plan-datasets">
-            <% if plan.name == 'enterprise' %>
-              <%= render 'enterprise_dataset' %>
-            <% else %>
-              <%= render 'dataset', plan: plan %>
-            <% end %>
+            <%= render dataset_partial(plan), plan: plan %>
           </div>
           <div class="api-plan-start">
             <%= form_tag(action_url(plan.name), method: "get") do %>

@@ -33,5 +33,9 @@ module Api
       price.divmod(1).first
     end
 
+    def dataset_partial(plan)
+      plan.enterprise? ? 'enterprise_dataset' : 'dataset'
+    end
+
   end
 end
