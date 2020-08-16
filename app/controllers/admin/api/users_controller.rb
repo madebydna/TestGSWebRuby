@@ -10,6 +10,7 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def new
+    session[:plan_id] = params[:plan_id]
     @user = ::Api::User.new
   end
 
@@ -17,7 +18,7 @@ class Admin::Api::UsersController < ApplicationController
     @user = Api::User.new(user_params)
     if @user.save
       Api::StripeCustomerCreator.new(@user).call
-      Api::SubscriptionCreator.new(@user, 1).call
+      Api::SubscriptionCreator.new(@user, session[:plan_id]).call
       redirect_to action: 'billing', user_id: @user.id
     else
       render :new

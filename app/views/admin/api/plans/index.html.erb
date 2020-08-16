@@ -41,6 +41,7 @@
           </div>
           <div class="api-plan-start">
             <%= form_tag(action_url(plan.name), method: "get") do %>
+              <%= hidden_field_tag :plan_id , plan.id %>
               <button class="<%= plan.name %>"><%= button_txt(plan.name) %></button>
             <% end %>
           </div>

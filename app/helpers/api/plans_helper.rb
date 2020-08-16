@@ -7,7 +7,7 @@ module Api
 
     def action_url(plan_name)
       return '/api/signup/#' if plan_name == 'enterprise'
-      '/api/registration'
+      api_registration_path
     end
 
     def button_txt(plan_name)
