@@ -4,7 +4,7 @@ class Admin::Api::UsersController < ApplicationController
 
   layout 'admin'
 
-  before_action :require_user, only: [:billing, :update, :confirmation]
+  before_action :require_user, only: [:billing, :update, :confirmation, :receipt]
 
   def index
     @users = Api::User.all
@@ -65,8 +65,7 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def receipt
-    @user = Api::User.find(29)
-    # email biz
+    # email biz here
     session[:billing_details] = nil
     session[:card] = nil
     session[:user_id] = nil
