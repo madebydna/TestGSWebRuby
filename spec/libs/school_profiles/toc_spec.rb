@@ -216,7 +216,7 @@ describe SchoolProfiles::Toc do
       before { allow(equity_overview).to receive(:state_equity_rating?).and_return(false) }
 
       it 'does not returns a equity module' do
-        expect(subject).not_to include({column: 'Equity', label: 'equity_overview', present: true, rating: nil, anchor: 'Equity_overview'})
+        expect(subject.map {|x| x[:label]}).not_to include('equity_overview')
       end
     end
   end
