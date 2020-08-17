@@ -39,10 +39,9 @@
             <%= image_tag 'icons/credit-card-3.svg' %>
           </div>
         </div>
-        <div class="api-registration-submit col-xs-12">
-          <button type="button" class="api-registration-back-button mr-3" onclick="window.location.href='/api/signup'">Go Back</button>
-          <%= button_tag "Continue", class: "api-registration-button", data: { secret: intent.client_secret }, id: "card-button" %>
-        </div>
+          <div class="api-registration-submit col-xs-12">
+            <%= button_tag "Continue", class: "api-registration-button", data: { secret: intent.client_secret }, id: "card-button" %>
+          </div>
       </div>
     </div>
   <% end %>

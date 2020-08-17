@@ -19,7 +19,8 @@ class Admin::Api::UsersController < ApplicationController
     if @user.save
       Api::StripeCustomerCreator.new(@user).call
       Api::SubscriptionCreator.new(@user, 1).call
-      redirect_to action: 'billing', user_id: @user.id
+      session[:user_id] = @user.id
+      redirect_to action: 'billing'
     else
       render :new
     end
@@ -106,7 +107,7 @@ class Admin::Api::UsersController < ApplicationController
   private
 
   def user
-    @user ||= Api::User.find_by_id(params['user_id'] || session[:user_id])
+    @user ||= Api::User.find_by_id(session[:user_id])
   end
 
   def require_user
