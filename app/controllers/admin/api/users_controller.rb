@@ -50,14 +50,7 @@ class Admin::Api::UsersController < ApplicationController
     card_details ||= session[:card]
     billing_details ||= session[:billing_details]
 
-    @card_details = OpenStruct.new({
-      last_four: card_details[:last4],
-      brand: card_details[:brand],
-      name: billing_details[:name],
-      address: [billing_details[:address][:line1], billing_details[:address][:line2]].compact.join(' ')&.strip,
-      locality: "#{billing_details[:address][:city]&.capitalize}, #{billing_details[:address][:state]&.upcase}",
-      zipcode: billing_details[:address][:postal_code]
-    })
+    @card_details = Api::CreditCardDetails.call(session[:card], session[:billing_details])
 
     # @subscription = Api::Subscription.find('subscription_id').update(status: 'payment_added')
     # notify_user

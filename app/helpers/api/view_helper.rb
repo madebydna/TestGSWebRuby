@@ -20,7 +20,7 @@ module Api
         'discover' => 'icons/credit-card-3.svg',
       }
 
-      image_tag cards[card_details[:brand]]
+      image_tag cards[card_details.brand]
     end
 
     def display_card_information(card_details)
