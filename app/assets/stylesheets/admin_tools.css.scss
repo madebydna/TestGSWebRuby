@@ -85,6 +85,29 @@
       border-radius: 4px;
     }
 
+    // overwrite standard hr
+    hr {
+      margin-left: 12px;
+      margin-top:10px;
+      margin-bottom: 10px;
+    }
+
+    .api-text-field {
+      font-family: 'opensans-regular';
+      margin-left: 12px;
+      color: #707070;
+
+      span {
+        margin-right: 10px;
+      }
+    }
+
+    .api-box-container {
+      border: 1px solid #C1D2D9;
+      border-radius: 3px;
+      padding: 15px;
+    }
+
     .field_with_errors {
       position: relative;
 
@@ -146,6 +169,16 @@
       color: #ffffff;
       border-radius: 4px;
       border: none;
+
+      &:hover{
+        opacity: 0.75;
+        transition: 0.3s;
+      }
+
+      &:disabled{
+        background-color: #d3d3d3;
+        transition: 0.3s;
+      }
     }
 
     .api-registration-back-button {
@@ -205,7 +238,7 @@
         float: right;
         padding: 5px;
         border-radius: 3px;
-        background: #f3f3f3;
+        background: #473f3f;
       }
       label:not('.api_tou') {
         line-height: 30px;

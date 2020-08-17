@@ -1,9 +1,10 @@
 class Admin::Api::UsersController < ApplicationController
   include Api::ErrorHelper
+  include Api::ViewHelper
 
   layout 'admin'
 
-  before_action :require_user, only: [:billing, :update]
+  before_action :require_user, only: [:billing, :update, :confirmation]
 
   def index
     @users = Api::User.all
@@ -25,12 +26,16 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def update
+    # TODO! Do we need to save anything from the results hash coming back from stripe?
     @results = params['result']
+    payment_object ||= Stripe::PaymentMethod.retrieve(@results[:setupIntent][:payment_method])
+    
+    session[:user_id] = user.id
+    session[:billing_details] = payment_object[:billing_details]
+    session[:card] = payment_object[:card]
 
     respond_to do |format|
-      format.js do
-        puts "Hello1"
-      end
+      format.js
     end
   end
 
@@ -39,9 +44,31 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def confirmation
-    @subscription = Api::Subscription.find('subscription_id').update(status: 'payment_added')
-    notify_user
-    notify_admin
+    redirect_to api_registration_path unless session[:billing_details].present? && session[:card].present?
+
+    card_details ||= session[:card]
+    billing_details ||= session[:billing_details]
+
+    @card_details = OpenStruct.new({
+      last_four: card_details[:last4],
+      brand: card_details[:brand],
+      name: billing_details[:name],
+      address: [billing_details[:address][:line1], billing_details[:address][:line2]].compact.join(' ')&.strip,
+      locality: "#{billing_details[:address][:city]&.capitalize}, #{billing_details[:address][:state]&.upcase}",
+      zipcode: billing_details[:address][:postal_code]
+    })
+
+    # @subscription = Api::Subscription.find('subscription_id').update(status: 'payment_added')
+    # notify_user
+    # notify_admin
+  end
+
+  def receipt
+    @user = Api::User.find(29)
+    # email biz
+    session[:billing_details] = nil
+    session[:card] = nil
+    session[:user_id] = nil
   end
 
   def notify_user
@@ -79,7 +106,7 @@ class Admin::Api::UsersController < ApplicationController
   private
 
   def user
-    @user ||= Api::User.find_by_id(params['user_id'])
+    @user ||= Api::User.find_by_id(params['user_id'] || session[:user_id])
   end
 
   def require_user
