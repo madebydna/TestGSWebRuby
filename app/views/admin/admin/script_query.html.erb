@@ -1,7 +1,5 @@
 <% db_host = ActiveRecord::Base.configurations.dig('production','gs_schooldb','host') || '' %>
 
-<a style="margin-left:50px;" class="btn btn-success btn-sm" href="/auth/google_oauth2">Google Signin</a>
-
 <% if @current_running_script.length > 0 %>
   <div style="padding:0px 50px">
     <h3>Current Running Script Log Table</h3>
