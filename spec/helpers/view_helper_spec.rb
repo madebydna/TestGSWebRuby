@@ -6,6 +6,8 @@ describe Api::ViewHelper do
   let(:user) {create(:api_user)}
   let(:subscription) { create(:api_subscription, plan: free_plan, user: user) }
   let(:subscription2) { create(:api_subscription, plan: all_you_can_eat_plan, user: user) }
+  let(:card_details) { OpenStruct.new(brand: 'visa', last_four: '4242') }
+
   describe '#format_text' do
     [
       ['data scientist', 'Data Scientist'],
@@ -28,6 +30,23 @@ describe Api::ViewHelper do
       ].each do |plan, result|
         expect(format_plan(plan)).to eq(result)
       end
+    end
+  end
+
+  describe '#display_credit_card' do
+    it 'returns the right credit card image' do
+      expect(display_credit_card(card_details)).to eq("<img src=\"/images/icons/credit-card-2.svg\" alt=\"Credit card 2\" />")
+      expect(display_credit_card(card_details)).not_to eq("<img src=\"/images/icons/credit-card-1.svg\" alt=\"Credit card 1\" />")
+    end
+  end
+
+  describe '#display_card_information' do
+    it 'should return N/A if details are empty' do
+      expect(display_card_information(nil)).to eq('N/A')
+    end
+
+    it 'should return the correct phrase' do
+      expect(display_card_information(card_details)).to eq('Visa ending in 4242')
     end
   end
 end
