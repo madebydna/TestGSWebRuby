@@ -30,11 +30,21 @@ module Api
     end
 
     def locality
-      "#{billing_details[:address][:city]&.capitalize}, #{billing_details[:address][:state]&.upcase}"
+      [city, state].join(', ')
     end
 
     def zipcode
       billing_details[:address][:postal_code]
+    end
+
+    private
+
+    def city
+      billing_details[:address][:city].split(' ').map(&:capitalize).join(' ')
+    end
+
+    def state
+      billing_details[:address][:state]&.upcase
     end
 
   end
