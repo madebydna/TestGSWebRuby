@@ -36,7 +36,6 @@ describe Api::ViewHelper do
   describe '#display_credit_card' do
     it 'returns the right credit card image' do
       expect(display_credit_card(card_details)).to eq("<img src=\"/images/icons/credit-card-2.svg\" alt=\"Credit card 2\" />")
-      expect(display_credit_card(card_details)).not_to eq("<img src=\"/images/icons/credit-card-1.svg\" alt=\"Credit card 1\" />")
     end
   end
 
