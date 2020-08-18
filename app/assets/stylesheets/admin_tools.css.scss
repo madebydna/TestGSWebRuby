@@ -398,9 +398,17 @@
     justify-content: center;
     .currency_sign {
       font-size: 20px;
+      position: absolute;
+      left: -12px;
+      top: 12px;
     }
     .price-primary{
       font-size: 48px;
+    }
+    .price-secondary{
+      position: absolute;
+      top: 14px;
+      max-width: 50px;
     }
   }
 

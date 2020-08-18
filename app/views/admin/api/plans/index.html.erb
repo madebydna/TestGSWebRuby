@@ -28,10 +28,13 @@
         <div class="api-plan-details <%= plan.name %>">
           <div class="api-plan-subdetails">
             <div class="api-price">
-              <div class="currency_sign">$</div>
-              <div class="price-primary"> <%= price_primary(plan.price) %> </div>
-              <div class="price-secondary"> <%= price_secondary(plan.price) %> </div>
-              <div>/mo</div>
+              <div style="position:relative;">
+                <div class="currency_sign">$</div>
+              </div>
+              <div class="price-primary"> <%= price_primary(plan.price) %></div>
+              <div style="position:relative;">
+                <div class="price-secondary"> <%= price_secondary(plan.price) %> /mo </div>
+              </div>
             </div>
             <div><%= number_with_delimiter(plan.calls, delimiter: ',') %> Calls</div>
             <div><%= plan.private_use? ? "Private Use" : "Public Facing" %></div>

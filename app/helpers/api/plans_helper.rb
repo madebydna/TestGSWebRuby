@@ -26,7 +26,7 @@ module Api
     end
 
     def price_secondary(price)
-      price.divmod(1).second.round(2)
+      price.to_s.split('.').last.rjust(2, '0')
     end
 
     def price_primary(price)
