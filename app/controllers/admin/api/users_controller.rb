@@ -103,7 +103,7 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def require_user
-    redirect_to root_url unless user
+    redirect_to api_signup_path unless user
   end
 
 end
