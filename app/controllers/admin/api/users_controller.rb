@@ -1,9 +1,10 @@
 class Admin::Api::UsersController < ApplicationController
   include Api::ErrorHelper
+  include Api::ViewHelper
 
   layout 'admin'
 
-  before_action :require_user, only: [:billing, :update]
+  before_action :require_user, only: [:billing, :update, :confirmation, :receipt]
 
   def index
     @users = Api::User.all
@@ -26,12 +27,16 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def update
+    # TODO! Do we need to save anything from the results hash coming back from stripe?
     @results = params['result']
+    payment_object ||= Stripe::PaymentMethod.retrieve(@results[:setupIntent][:payment_method])
+    
+    session[:user_id] = user.id
+    session[:billing_details] = payment_object[:billing_details]
+    session[:card] = payment_object[:card]
 
     respond_to do |format|
-      format.js do
-        puts "Hello1"
-      end
+      format.js
     end
   end
 
@@ -40,9 +45,20 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def confirmation
-    @subscription = Api::Subscription.find('subscription_id').update(status: 'payment_added')
-    notify_user
-    notify_admin
+    redirect_to api_billing_path unless session[:billing_details].present? && session[:card].present?
+
+    @card_details = Api::CreditCardDetails.call(session[:card], session[:billing_details])
+
+    # @subscription = Api::Subscription.find('subscription_id').update(status: 'payment_added')
+    # notify_user
+    # notify_admin
+  end
+
+  def receipt
+    # email biz here
+    session[:billing_details] = nil
+    session[:card] = nil
+    session[:user_id] = nil
   end
 
   def notify_user
@@ -84,7 +100,7 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def require_user
-    redirect_to root_url unless user
+    redirect_to api_signup_path unless user
   end
 
 end

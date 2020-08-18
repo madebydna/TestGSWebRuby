@@ -1,6 +1,87 @@
-<div class="new-api-account-form">
-  <h3 class="api-form-header">Confirmation</h3>
-  <div>
-    <h4>Registration</h4>
+<%= render 'admin/admin/developer_nav' %>
+
+<div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+  <div class="new-api-account-form">
+    <h3 class="api-form-header">Confirmation</h3>
+    <div class="col-xs-12 col-md-5">
+      <h4 class="api-form-subtitle">Registration</h4>
+      <hr/>
+      <div class="api-text-field">
+        <%= @user.full_name %>
+      </div>
+      <hr/>
+      <div class="api-text-field">
+        <%= @user.organization%>
+      </div>
+      <hr/>
+      <div class="api-text-field">
+        <%= @user.website%>
+      </div>
+      <hr/>
+      <div class="api-text-field">
+        <%= @user.email%>
+      </div>
+      <hr/>
+      <div class="api-text-field">
+        <%= @user.phone%>
+      </div>
+      <hr/>
+      <div class="api-text-field">
+        <%= @user.locality%>
+      </div>
+      <hr/>
+      <div class="api-text-field">
+        <%= capitalize_words(@user.organization_description) %>
+      </div>
+      <hr/>
+      <div class="api-text-field">
+        <%= capitalize_words(@user.intended_use) %>
+      </div>
+      <hr/>
+      <div class="api-text-field">
+        <%= capitalize_words(@user.role) %>
+      </div>
+      <hr/>
+    </div>
+    <div class="col-xs-12 col-md-5 col-md-offset-1">
+      <h4 class="api-form-subtitle">Plan</h4>
+      <div class="api-text-field">
+        <%= format_plan(@user.subscription) %>
+      </div>
+      <h4 class="api-form-subtitle">Billing Address</h4>
+      <hr/>
+      <div class="api-text-field">
+        <%= @card_details.name %>
+      </div>
+      <hr/>
+      <div class="api-text-field">
+        <%= @card_details.address %>
+      </div>
+      <hr/>
+      <div class="api-text-field">
+        <%= @card_details.locality %>
+      </div>
+      <hr/>
+      <div class="api-text-field">
+        <%= @card_details.zipcode %>
+      </div>
+      <hr/>
+      <h4 class="api-form-subtitle">Credit/Debit Card</h4>
+      <div class="api-text-field">
+        <span><%= display_credit_card(@card_details) %></span>
+        <%= display_card_information(@card_details) %>
+      </div>
+    </div>
+    <div class="api-registration-submit col-xs-12">
+      <% # Some javascript to place subscription %>
+      <button type="button" class="api-registration-button place-order" onclick="window.location.href='/api/receipt'">Place Your Order</button>
+    </div>
   </div>
 </div>
+
+<script>
+  // temp solution until we have a better js system (maybe stimulus)
+  document.querySelector('.place-order').addEventListener('click', (e)=>{
+    e.target.disabled = true;
+  })
+</script>

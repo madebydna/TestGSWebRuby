@@ -5,6 +5,7 @@ module Api
     db_magic :connection => :api_rw
 
     belongs_to :user
+    belongs_to :plan
   end
 
   # plan selected
