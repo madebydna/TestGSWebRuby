@@ -1,6 +1,6 @@
 module Api
   module ViewHelper
-    def format_text(text)
+    def capitalize_words(text)
       return 'N/A' if text.nil?
 
       text.split(' ').map(&:capitalize).join(' ')

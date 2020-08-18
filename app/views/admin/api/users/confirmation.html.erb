@@ -31,15 +31,15 @@
       </div>
       <hr/>
       <div class="api-text-field">
-        <%= format_text(@user.organization_description) %>
+        <%= capitalize_words(@user.organization_description) %>
       </div>
       <hr/>
       <div class="api-text-field">
-        <%= format_text(@user.intended_use) %>
+        <%= capitalize_words(@user.intended_use) %>
       </div>
       <hr/>
       <div class="api-text-field">
-        <%= format_text(@user.role) %>
+        <%= capitalize_words(@user.role) %>
       </div>
       <hr/>
     </div>

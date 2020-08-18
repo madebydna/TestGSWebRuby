@@ -47,9 +47,6 @@ class Admin::Api::UsersController < ApplicationController
   def confirmation
     redirect_to api_registration_path unless session[:billing_details].present? && session[:card].present?
 
-    card_details ||= session[:card]
-    billing_details ||= session[:billing_details]
-
     @card_details = Api::CreditCardDetails.call(session[:card], session[:billing_details])
 
     # @subscription = Api::Subscription.find('subscription_id').update(status: 'payment_added')

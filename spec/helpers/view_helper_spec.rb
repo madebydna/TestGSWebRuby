@@ -8,7 +8,7 @@ describe Api::ViewHelper do
   let(:subscription2) { create(:api_subscription, plan: all_you_can_eat_plan, user: user) }
   let(:card_details) { OpenStruct.new(brand: 'visa', last_four: '4242') }
 
-  describe '#format_text' do
+  describe '#capitalize_words' do
     [
       ['data scientist', 'Data Scientist'],
       ['software engineer', 'Software Engineer'],
@@ -16,7 +16,7 @@ describe Api::ViewHelper do
       [nil, 'N/A'],
     ].each do |text, result|
       it "return the formatted form of #{text}" do
-        expect(format_text(text)).to eq(result)
+        expect(capitalize_words(text)).to eq(result)
       end
     end
   end
