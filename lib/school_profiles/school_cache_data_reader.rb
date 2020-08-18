@@ -119,6 +119,10 @@ module SchoolProfiles
       decorated_school.test_scores_all_rating_hash
     end
 
+    def state_equity_rating?
+      state_attributes.fetch('equity_rating', nil)
+    end
+
     def equity_overview_rating
       decorated_school.equity_overview_rating
     end
