@@ -45,7 +45,7 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def confirmation
-    redirect_to api_registration_path unless session[:billing_details].present? && session[:card].present?
+    redirect_to api_billing_path unless session[:billing_details].present? && session[:card].present?
 
     @card_details = Api::CreditCardDetails.call(session[:card], session[:billing_details])
 
