@@ -1,4 +1,4 @@
-redis_url = "redis://#{ENV['REDIS_URL']}/#{ENV['REDIS_DB']}"
+redis_url = "redis://#{ENV_GLOBAL['REDIS_URL']}/#{ENV_GLOBAL['REDIS_DB']}"
 
 Sidekiq.configure_server do |config|
   config.redis = { url: redis_url }
