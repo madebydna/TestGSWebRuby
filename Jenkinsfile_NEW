@@ -139,10 +139,6 @@ pipeline {
           dir("coverage/simplecov-resultset-4") {
             unstash "rcov_feature_2"
           }
-          echo 'Debugging rcov issues'
-          sh 'ls -la coverage/simplecov-resultset*/*'
-          sh 'which ruby'
-          sh 'pwd'
           sh "bundle exec ./script/ci/collate_rcov_files.rb"
           step([$class: 'RcovPublisher', reportDir: "coverage/rcov"])
         }
