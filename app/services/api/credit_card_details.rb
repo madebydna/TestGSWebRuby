@@ -2,31 +2,31 @@ module Api
   # This class organizes the credit card details for the front end
   class CreditCardDetails
 
-    attr_reader :card_details, :billing_details
+    attr_reader :card, :billing
 
-    def self.call(card_details, billing_details)
-      new(card_details, billing_details)
+    def self.call(card, billing)
+      new(card, billing)
     end
 
-    def initialize(card_details, billing_details)
-      @card_details = card_details
-      @billing_details = billing_details
+    def initialize(card, billing)
+      @card = card
+      @billing = billing
     end
 
     def last_four
-      card_details[:last4]
+      card[:last4]
     end
 
     def brand
-      card_details[:brand]
+      card[:brand]
     end
 
     def name
-      billing_details[:name]
+      billing[:name]
     end
 
     def address
-      [billing_details[:address][:line1], billing_details[:address][:line2]].compact.join(' ')&.strip
+      [billing[:address][:line1], billing[:address][:line2]].compact.join(' ')&.strip
     end
 
     def locality
@@ -34,17 +34,17 @@ module Api
     end
 
     def zipcode
-      billing_details[:address][:postal_code]
+      billing[:address][:postal_code]
     end
 
     private
 
     def city
-      billing_details[:address][:city].split(' ').map(&:capitalize).join(' ')
+      billing[:address][:city].split(' ').map(&:capitalize).join(' ')
     end
 
     def state
-      billing_details[:address][:state]&.upcase
+      billing[:address][:state]&.upcase
     end
 
   end
