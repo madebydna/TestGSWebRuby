@@ -53,14 +53,14 @@ module Feeds
       end
 
       def school_ids
-        @schools.map(&:id)
+        @schools.map(&:school_id)
       end
 
       def ratings_hashes
         @_ratings_hashes ||= begin
           ratings_caches.map do |school|
             {
-                'universal-id' => school_uid(school.id),
+                'universal-id' => school_uid(school.school_id),
                 'test-rating-id' => test_type_to_id,
                 'rating' => school_rating(school),
                 'url' => school_url(school)

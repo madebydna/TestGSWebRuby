@@ -48,14 +48,14 @@ module Feeds
       end
 
       def school_ids
-        @schools.map(&:id)
+        @schools.map(&:school_id)
       end
 
       def ratings_hashes
         @_ratings_hashed ||= begin
           ratings_caches.map do |school|
             {
-                id: school.id,
+                id: school.school_id,
                 url: school_url(school),
                 ratings: {}.tap do |hash|
                   hash['Test Scores'] = school.gsdata_test_scores_rating_hash if school.gsdata_test_scores_rating_hash
