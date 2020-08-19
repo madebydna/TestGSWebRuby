@@ -7,4 +7,7 @@ en:
         <br></br>
       source: 'Source'
       sources: Sources
-      subtitle_html: 'Parents often value small class sizes, but the <a href="/gk/articles/class-size/">truth is more complicated</a>.'
+      subtitle_html: What makes a great teacher? <a href="/gk/videos/how-to-make-better-teachers/">The truth may surprise you.</a>
+      parent_tip_html: >
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">What’s <a href="/gk/videos/the-value-of-student-staff-connections-in-high-school/">the most important thing</a> to look for in the staff at a school?</p><hr />
