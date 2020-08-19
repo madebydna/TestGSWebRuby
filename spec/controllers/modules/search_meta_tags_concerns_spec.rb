@@ -104,6 +104,7 @@ describe SearchMetaTagsConcerns do
     end
   end
 
+  after(:all) { Object.send :remove_const, :FakeController }
 
   let(:controller) { FakeController.new }
 
