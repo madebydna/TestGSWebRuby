@@ -4,6 +4,11 @@ RSpec.shared_examples "#ratings_link" do |extra_params|
   describe '#ratings_link method' do
     before do
       RSpec::Mocks.space.proxy_for(subject).reset
+      @old_locale = I18n.locale
+    end
+
+    after do
+      I18n.locale = @old_locale
     end
 
     context 'with new ratings state and English' do
