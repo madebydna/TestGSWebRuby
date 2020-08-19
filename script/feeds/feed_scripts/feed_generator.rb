@@ -130,9 +130,9 @@ module Feeds
 
     def schools(state)
       if school_ids.present?
-        School.find_by_state_and_ids(state, school_ids)
+        SchoolRecord.find_by_state_and_ids(state, school_ids)
       else
-        School.on_db(state.downcase.to_sym).active.not_preschool_only.order(:id)
+        SchoolRecord.where("unique_id like ?", "#{state.downcase}-%").not_preschool_only.order(:school_id)
       end
     end
 
