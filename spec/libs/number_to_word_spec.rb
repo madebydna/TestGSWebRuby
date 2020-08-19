@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe NumberToWord do
 
+  before { I18n.locale = :en }
+
   describe '.human_readable_number' do
     context 'returns the correct word' do
       it 'can output thouands' do
