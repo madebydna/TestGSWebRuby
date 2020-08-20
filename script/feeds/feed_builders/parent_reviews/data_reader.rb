@@ -16,7 +16,7 @@ module Feeds
       end
 
       def school_ids
-        @schools.map(&:id)
+        @schools.map(&:school_id)
       end
 
       def rating_summaries
