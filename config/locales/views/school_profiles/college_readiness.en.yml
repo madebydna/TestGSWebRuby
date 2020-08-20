@@ -240,7 +240,7 @@ en:
     college_success:
       title: College success
       subtitle_html: >
-        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a href="/gk/csa-winners/">best practices of award-winning schools.</a>
+        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a href="/gk/csa-winners/" target="_blank">best practices of award-winning schools.</a>
     college_readiness_alt:
       no_data: >
         This section includes information about this school’s graduation rates, SAT/ACT tests, and AP coursework.
@@ -479,4 +479,4 @@ en:
     college_success_alt:
       title: College success
       subtitle_html: >
-        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a href="/gk/csa-winners/">best practices of award-winning schools.</a>
+        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a href="/gk/csa-winners/" target="_blank">best practices of award-winning schools.</a>

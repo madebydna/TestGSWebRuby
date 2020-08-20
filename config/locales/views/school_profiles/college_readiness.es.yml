@@ -239,7 +239,7 @@ es:
     college_success:
       title: Éxito universitario
       subtitle_html: >
-        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a href="/gk/csa-winners/">las mejores prácticas de escuelas premiadas.</a>
+        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a href="/gk/csa-winners/" target="_blank">las mejores prácticas de escuelas premiadas.</a>
     college_readiness_alt:
       no_data: >
         Esta sección incluye información sobre los índices de graduación, los exámenes SAT/ACT y los cursos AP de esta escuela.
@@ -474,4 +474,4 @@ es:
     college_success_alt:
       title: Éxito universitario
       subtitle_html: >
-        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a href="/gk/csa-winners/">las mejores prácticas de escuelas premiadas.</a>
+        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a href="/gk/csa-winners/" target="_blank">las mejores prácticas de escuelas premiadas.</a>
