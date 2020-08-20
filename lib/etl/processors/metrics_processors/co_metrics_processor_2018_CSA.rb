@@ -1,6 +1,6 @@
 require_relative '../../metrics_processor'
 
-class COMetricsProcessor2018CollegeReadiness < GS::ETL::MetricsProcessor
+class COMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 
 	def initialize(*args)
 		super
@@ -272,4 +272,4 @@ class COMetricsProcessor2018CollegeReadiness < GS::ETL::MetricsProcessor
 	end
 end
 
-COMetricsProcessor2018CollegeReadiness.new(ARGV[0],max:nil).run
+COMetricsProcessor2018CSA.new(ARGV[0],max:nil).run
