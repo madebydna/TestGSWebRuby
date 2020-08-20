@@ -1,8 +1,10 @@
-<div class="js-featured un dn" style="">
-  <div class="tc" style="text-align:left; width:1200px">
-    <ul class="featured menu hidden-xs" style="">
-      <li class="title"><span style="text-transform: uppercase"><%= t('nav.header.navigation.featured.title') %></span></li>
-      <%= render 'nav/header/featured_links' %>
-    </ul>
+<% if controller_name == 'header' || controller_name == 'school_profiles' %>
+  <div class="js-featured un">
+    <div class="tc" style="text-align:left; width:1200px">
+      <ul class="featured menu hidden-xs" style="">
+        <li class="title"><span style="text-transform: uppercase"><%= t('nav.header.navigation.featured.title') %></span></li>
+        <%= render 'nav/header/featured_links' %>
+      </ul>
+    </div>
   </div>
-</div>
+<% end %>
