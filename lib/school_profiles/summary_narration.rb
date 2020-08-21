@@ -10,12 +10,8 @@ module SchoolProfiles
 
     SUMMARY_RATING_METHODS = %w(summary_rating test_scores_rating college_readiness_rating student_progress_rating sentence_ender discipline_and_attendence)
 
-    SUMMARY_RATING_METHODS_SCHOOL_NAME = %w(summary_rating_school_name test_scores_rating college_readiness_rating student_progress_rating advanced_course_rating sentence_ender discipline_and_attendence)
-
     # JT-10739: Alt methods = revised order of narration elements for CA & MI schools
     SUMMARY_RATING_METHODS_ALT = %w(summary_rating student_progress_rating college_readiness_rating equity_rating sentence_ender discipline_and_attendence)
-
-    SUMMARY_RATING_METHODS_SCHOOL_NAME_ALT = %w(summary_rating_school_name student_progress_rating college_readiness_rating advanced_course_rating equity_rating sentence_ender discipline_and_attendence)
 
     SUMMARY_RATING_METHODS_TEST_SCORE_ONLY = %w(test_scores_only_before_more test_scores_only_after_more)
 
@@ -31,16 +27,6 @@ module SchoolProfiles
           SUMMARY_RATING_METHODS_ALT.map { |method| send(method) }.compact.delete_if(&:empty?)
         else
           SUMMARY_RATING_METHODS.map { |method| send(method) }.compact.delete_if(&:empty?)
-        end
-      end
-    end
-
-    def build_content_with_school_name
-      if @src.present? && @school_cache_data_reader.gs_rating.present?
-        if ['ca', 'mi'].include?(@school.state.downcase)
-          SUMMARY_RATING_METHODS_SCHOOL_NAME_ALT.map { |method| send(method) }.compact.delete_if(&:empty?)
-        else
-          SUMMARY_RATING_METHODS_SCHOOL_NAME.map { |method| send(method) }.compact.delete_if(&:empty?)
         end
       end
     end

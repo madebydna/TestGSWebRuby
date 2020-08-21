@@ -35,7 +35,7 @@
   }
 
   .private-school-info-container {
-    background-color: #f6f9fa;
+    background-color: $gray-light-blue;
     display: inline-block;
   }
 
@@ -54,7 +54,7 @@
     margin-top: 10px;
     font-family: opensans-semibold;
     font-size: 18px;
-    background-color: #f6f9fa;
+    background-color: $gray-light-blue;
     padding: 20px 10px;
 
     .icon-users{

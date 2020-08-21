@@ -18,7 +18,7 @@ import OpenableCloseable from './openable_closeable';
 import CaptureOutsideClick from './search/capture_outside_click';
 import SearchResultsList from './search_results_list';
 import { name as stateName } from 'util/states';
-import CancelCircle from './icons/cancel_circle';
+import CancelCircle from 'react_components/icons/cancel_circle';
 
 // Matches only 5 digits
 // Todo currently 3-4 schools would match this regex,

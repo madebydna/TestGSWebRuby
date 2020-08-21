@@ -4,14 +4,14 @@ en:
       title: Equity
       Race ethnicity: 'Race/ethnicity'
       Race ethnicity subtitle: >
-        <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="These 5 tips" href="/gk/equity-toolkit/">These 5 tips</a> to start a conversation at your school about helping all students succeed.
+        <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="These 5 tips" href="/gk/equity-toolkit/" target="_blank">These 5 tips</a> to start a conversation at your school about helping all students succeed.
       Race ethnicity tooltip: >
         This section shows key  measures of student performance across different racial and ethnic groups. <br/><br/> Note: When the size of a student group is too small, that group’s data will not show up in the display. This protects students’ privacy and may result in some groups’ data not being included in some charts within this section.
       Race ethnicity icon: 'icon-pie'
       Race ethnicity no data: This section reflects how well this school serves students from different races and ethnicities.
       'Low-income students': 'Low-income students'
       Low income subtitle: >
-        Want low-income kids to get a fair shake? These <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="5 simple things" href="/gk/equity-toolkit/">5 simple things</a> will help you advocate for all students.
+        How a <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="school’s approach to at-risk students affects your child" href="/gk/videos/supporting-at-risk-students-every-student-gets-a-chance/" target="_blank">school’s approach to at-risk students affects your child</a>.
       Low income tooltip: >
         This section reflects important measures for low-income students at this school. <br/><br/> Note: When the size of a student group is too small, that group’s data will not show up in the display. This protects students’ privacy and may result in some groups’ data not being included in some charts within this section.
       Low income icon: 'icon-pie'

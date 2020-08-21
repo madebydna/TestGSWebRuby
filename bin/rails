@@ -2,3 +2,13 @@
 APP_PATH = File.expand_path('../../config/application',  __FILE__)
 require_relative '../config/boot'
 require 'rails/commands'
+
+if ENV['RAILS_ENV'] == 'test' && (ENV['JENKINS_URL'] || ENV['coverage'] == 'true')
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    add_filter '/spec/'
+    add_filter '/config/'
+    add_filter '/lib/test_connection_management.rb'
+    add_filter '/lib/etl/'
+  end
+end

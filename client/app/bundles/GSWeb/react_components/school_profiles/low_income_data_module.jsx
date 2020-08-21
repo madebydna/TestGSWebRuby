@@ -7,7 +7,7 @@ class LowIncomeDataModule extends DataModule {
   icon(){
     return (
       <div className="circle-rating--equity-blue">
-        <Spending />
+        <Spending innerCircleColor={"#cae3f3"} />
       </div>
     );
   }

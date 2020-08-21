@@ -4,9 +4,10 @@ module AttributeCaching
     #157 is Growth Data (Student Progress Rating) and 159 is Growth Proxy Data (Academic Progress Rating)
     GROWTH_DATA_TYPES = [157, 159]
     SUMMARY_RATING_DATA_TYPE_ID = 160
+    EQUITY_RATING = 158
 
     def attributes
-      %w(growth_type hs_enabled_growth_rating summary_rating_type)
+      %w(growth_type hs_enabled_growth_rating summary_rating_type equity_rating)
     end
 
     def growth_type_rating
@@ -40,6 +41,15 @@ module AttributeCaching
       (schools_ids_with_growth_ratings & high_schools_ids).length > 0
     end
 
+    def equity_rating?
+      Omni::Rating.joins(data_set: :data_type)
+                  .where(data_sets: {data_type_id: EQUITY_RATING, state: state})
+                  .school_entity
+                  .active
+                  .pluck(:gs_id)
+                  .length > 0
+    end
+
     def build_hash_for_cache
       attributes.each_with_object({}) do |key, hash|
         case key
@@ -49,6 +59,8 @@ module AttributeCaching
           hash[key] = hs_enabled_growth_rating?
         when 'summary_rating_type'
           hash[key] = summary_rating_type
+        when 'equity_rating'
+          hash[key] = equity_rating?
         end
       end
     end

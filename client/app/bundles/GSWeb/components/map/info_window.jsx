@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { capitalize, t } from 'util/i18n';
-import BrownOwl from '../../react_components/icons/brown_owl';
+import BrownOwl from 'react_components/icons/brown_owl';
 import {
   getHomesForSaleHref,
   studentsPhrase,

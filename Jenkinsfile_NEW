@@ -1,3 +1,5 @@
+rspecSeed = Math.abs(new Random().nextInt() % 1000) + 1
+
 def reportOnAssetSizes() {
   sh 'script/ci/asset_sizes.rb > tmp/asset_sizes'
   archiveArtifacts allowEmptyArchive: true, artifacts: 'tmp/asset_sizes'
@@ -24,8 +26,9 @@ def runCommonSteps() {
 def runUnitSpecs(groupNum) {
   withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
     runCommonSteps()
-    sh "script/ci/run_unit_specs.sh --out tmp/rspec-${groupNum}.xml `./script/ci/unit_rspec_group.rb 2 ${groupNum}`"
+    sh "script/ci/run_unit_specs.sh --out tmp/rspec-${groupNum}.xml --seed ${rspecSeed} `./script/ci/unit_rspec_group.rb 2 ${groupNum}`"
     junit testResults: 'tmp/*.xml'
+    stash name: "rcov_unit_${groupNum}", includes: "coverage/.resultset.json"
   }
 }
 
@@ -34,6 +37,7 @@ def runFeatureSpecs(groupNum) {
     runCommonSteps()
     sh "script/ci/run_feature_specs.sh --out tmp/features_rspec-${groupNum}.xml `./script/ci/feature_rspec_group.rb 2 ${groupNum}`"
     junit testResults: 'tmp/*.xml'
+    stash name: "rcov_feature_${groupNum}", includes: "coverage/.resultset.json"
   }
 }
 
@@ -53,8 +57,8 @@ pipeline {
         withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
           sh 'rm -rf vendor/cache'
           retry(7) {
-                     sh 'bundle install --deployment --without development'
-                   }
+            sh 'bundle install --deployment --without development'
+          }
           sh 'bundle package > /dev/null'
           stash includes: 'vendor/cache/*', name: 'bundle'
           sh 'rm -rf app/assets/webpack'
@@ -116,6 +120,32 @@ pipeline {
           }
         }
       }
+    }
+    stage('Publish coverage report'){
+      agent {
+        label 'jenkins-slave-permanent'
+      }
+      steps {
+        withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
+          sh 'rm -rf coverage'
+          sh 'mkdir -p coverage/simplecov-resultset-{1,2,3,4}'
+          dir("coverage/simplecov-resultset-1") {
+            unstash "rcov_unit_1"
+          }
+          dir("coverage/simplecov-resultset-2") {
+            unstash "rcov_unit_2"
+          }
+          dir("coverage/simplecov-resultset-3") {
+            unstash "rcov_feature_1"
+          }
+          dir("coverage/simplecov-resultset-4") {
+            unstash "rcov_feature_2"
+          }
+          sh "bundle exec ./script/ci/collate_rcov_files.rb"
+          step([$class: 'RcovPublisher', reportDir: "coverage/rcov"])
+        }
+      }
+
     }
   }
   post {
