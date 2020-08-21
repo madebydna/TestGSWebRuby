@@ -89,7 +89,7 @@ module SchoolProfiles
     def equity
       hash = {}
       arr = []
-      if @equity_overview.has_rating?
+      if @equity_overview.state_equity_rating?
         arr << {column: 'Equity', label: EQUITY_OVERVIEW, present: true, rating: @equity_overview.equity_rating, anchor: 'Equity_overview'}
       end
       arr << {column: 'Equity', label: RACE_ETHNICITY, present: true, rating: nil, anchor: 'Race_ethnicity'}

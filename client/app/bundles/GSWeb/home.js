@@ -37,7 +37,7 @@ $(function() {
     }
   });
 
-  commonPageInit({includeFeatured: false});
+  commonPageInit();
   setupImages(
     {
       selector: '.is-scaled',

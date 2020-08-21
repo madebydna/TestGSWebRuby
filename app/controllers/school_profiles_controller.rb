@@ -388,16 +388,6 @@ class SchoolProfilesController < ApplicationController
     end
   end
 
-  def meta_description
-    if school.state.downcase == 'ca'
-      content = summary_narration.build_content_with_school_name
-      if content.present?
-        c = content.join(' ')
-        ActionView::Base.full_sanitizer.sanitize(c).truncate(155)
-      end
-    end
-  end
-
   def modified_recently?(school)
     return true if school.manual_edit_date.nil? && school.modified.nil?
     (school.manual_edit_date && school.manual_edit_date > (Time.now - 4.years)) ||

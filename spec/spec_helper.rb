@@ -38,6 +38,7 @@ if ENV['JENKINS_URL'] || ENV['coverage'] == 'true'
     add_filter '/spec/'
     add_filter '/config/'
     add_filter 'lib/test_connection_management.rb'
+    add_filter '/lib/etl/'
   end
 end
 
