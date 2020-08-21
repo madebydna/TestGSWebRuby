@@ -60,7 +60,7 @@ module Feeds
         @_ratings_hashes ||= begin
           ratings_caches.map do |school|
             {
-                'universal-id' => school_uid(school.id),
+                'universal-id' => school_uid(school.school_id),
                 'test-rating-id' => test_type_to_id,
                 'rating' => school_rating(school),
                 'url' => school_url(school)
@@ -71,9 +71,9 @@ module Feeds
 
       def ratings_caches
         @_ratings_caches ||= begin
-          query = SchoolCacheQuery.new.include_cache_keys('ratings').include_schools(@state, school_ids)
+          query = SchoolCacheQuery.new(true).include_cache_keys('ratings').include_schools(@state, school_ids)
           query_results = query.query_and_use_cache_keys
-          school_cache_results = SchoolCacheResults.new('ratings', query_results)
+          school_cache_results = SchoolCacheResults.new('ratings', query_results, true)
           school_cache_results.decorate_schools(schools)
         end
       end
