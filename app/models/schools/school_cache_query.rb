@@ -14,17 +14,29 @@ class SchoolCacheQuery
     school_cache_results.decorate_schools(schools)
   end
 
+  def id(school)
+    is_school_record? ? school.school_id : school.id
+  end
+
+  def is_school_record?
+    school.school_id.present?
+  end
+
   def self.for_school(school)
     raise ArgumentError.new('School must not be nil') if school.nil?
     new.tap do |cache_query|
-      cache_query.include_schools(school.state, school.id)
+      cache_query.include_schools(school.state, id(school))
     end
   end
 
   def include_objects(objects)
     objects_by_state = objects.group_by(&:state)
     objects_by_state.each_pair do |state, objects_for_state|
-      include_schools(state, objects_for_state.map(&:id))
+      if is_school_record?
+        include_schools(state, objects_for_state.map(&:school_id))
+      else
+        include_schools(state, objects_for_state.map(&:id))
+      end
     end
     self
   end

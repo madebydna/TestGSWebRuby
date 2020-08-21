@@ -15,9 +15,17 @@ class SchoolCacheResults
     @school_data
   end
 
+  def id(school)
+    is_school_record? ? school.school_id : school.id
+  end
+
+  def is_school_record?
+    school.school_id.present?
+  end
+
   def decorate_schools(schools)
     [*schools].map do |school|
-      decorated = SchoolCacheDecorator.new(school, @school_data[[school.state.upcase, school.id]] || {})
+      decorated = SchoolCacheDecorator.new(school, @school_data[[school.state.upcase, id(school)]] || {})
       @cache_keys.each do |key|
         if module_for_key(key)
           decorated.send(:extend, (module_for_key(key)))
