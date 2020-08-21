@@ -13,6 +13,8 @@
       </div>
     </div>
   </div>
-  <%= render 'nav/header/featured' if I18n.locale == I18n.default_locale %>
+  <% if I18n.locale == I18n.default_locale && %w(header school_profiles).includes?(controller_name) %>
+    <%= render 'nav/header/featured' %>
+  <% end %>
 </div>
 <div class="nav-padding"></div>
