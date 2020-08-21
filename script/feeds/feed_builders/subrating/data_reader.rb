@@ -55,7 +55,7 @@ module Feeds
         @_ratings_hashed ||= begin
           ratings_caches.map do |school|
             {
-                id: school.id,
+                id: school.school_id,
                 url: school_url(school),
                 ratings: {}.tap do |hash|
                   hash['Test Scores'] = school.gsdata_test_scores_rating_hash if school.gsdata_test_scores_rating_hash
@@ -74,9 +74,9 @@ module Feeds
 
       def ratings_caches
         @_ratings_caches ||= begin
-          query = SchoolCacheQuery.new.include_cache_keys('ratings').include_schools(@state, school_ids)
+          query = SchoolCacheQuery.new(true).include_cache_keys('ratings').include_schools(@state, school_ids)
           query_results = query.query_and_use_cache_keys
-          school_cache_results = SchoolCacheResults.new('ratings', query_results)
+          school_cache_results = SchoolCacheResults.new('ratings', query_results, true)
           school_cache_results.decorate_schools(schools)
         end
       end
