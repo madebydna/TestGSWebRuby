@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-  <% if I18n.locale == I18n.default_locale && %w(header school_profiles).includes?(controller_name) %>
+  <% if I18n.locale == I18n.default_locale && %w(header school_profiles).include?(controller_name) %>
     <%= render 'nav/header/featured' %>
   <% end %>
 </div>
