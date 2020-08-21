@@ -76,7 +76,7 @@ module Feeds
         @_ratings_caches ||= begin
           query = SchoolCacheQuery.new(true).include_cache_keys('ratings').include_schools(@state, school_ids)
           query_results = query.query_and_use_cache_keys
-          school_cache_results = SchoolCacheResults.new('ratings', query_results, is_using_school_record)
+          school_cache_results = SchoolCacheResults.new('ratings', query_results, true)
           school_cache_results.decorate_schools(schools)
         end
       end
