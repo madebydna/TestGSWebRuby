@@ -9,7 +9,7 @@ en:
         schools in this state, based on key measures, like graduation rates, college entrance tests and advanced coursework
         when available.</p><p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this
         rating.</a></p>
-      subtitle_html: Learn more about how to help your child graduate ready for college. <a href="/gk/articles/jump-start-college-planning/" target="_blank">See how.</a>
+      subtitle_html: <a href="/gk/videos/why-college-counseling-matters/" target="_blank">One key thing</a> all successful schools do to help students enroll in college.
       source: Source
       sources: Sources
       feedback_cta: Did you find the information about college success useful? What can we do better?
@@ -183,8 +183,7 @@ en:
           <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _2_html: >
           <div class="auto-narration">
@@ -193,8 +192,7 @@ en:
           <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _3_html: >
           <div class="auto-narration">
@@ -205,8 +203,7 @@ en:
           without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _4_html: >
           <div class="auto-narration">
@@ -216,8 +213,7 @@ en:
           the opportunities they need to succeed.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _5_html: >
           <div class="auto-narration">
@@ -227,8 +223,7 @@ en:
           the opportunities they need to succeed.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _college_success: >
           <div class="auto-narration">
@@ -237,16 +232,15 @@ en:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Students who are unprepared for college-level work may find themselves in <a href="/gk/articles/high-achiever-remedial-college/">costly remedial classes</a>
           and are more likely to <a href="/gk/articles/dropping-out-of-college-record-numbers/">drop out of college</a>.
-          Use this data to start a conversation with someone in your community about how essential it is that high schools prepare students for success after graduation.</p>
+          Successful high schools <a href="/gk/videos/the-importance-of-real-life-learning-career-pathways/">help kids find their passions</a> and succeed after graduation.</p>
           </div>
         _parent_tip_html: >
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
     college_success:
       title: College success
       subtitle_html: >
-        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a href="/gk/csa-winners/">best practices of award-winning schools.</a>
+        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a href="/gk/csa-winners/" target="_blank">best practices of award-winning schools.</a>
     college_readiness_alt:
       no_data: >
         This section includes information about this school’s graduation rates, SAT/ACT tests, and AP coursework.
@@ -254,7 +248,7 @@ en:
       tooltip_html: >
         <p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on graduation rates, college entrance tests, and other available data such as advanced coursework.</p><p><a href="/gk/ratings-ca-mi/#collegereadinessrating" target="_blank">Learn more about this
         rating.</a></p>
-      subtitle_html: Learn more about how to help your child graduate ready for college. <a href="/gk/articles/jump-start-college-planning/" target="_blank">See how.</a>
+      subtitle_html: <a href="/gk/videos/why-college-counseling-matters/" target="_blank">One key thing</a> all successful schools do to help students enroll in college.
       source: Source
       sources: Sources
       feedback_cta: Did you find the information about college success useful? What can we do better?
@@ -428,8 +422,7 @@ en:
           <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _2_html: >
           <div class="auto-narration">
@@ -438,8 +431,7 @@ en:
           <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _3_html: >
           <div class="auto-narration">
@@ -450,8 +442,7 @@ en:
           without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _4_html: >
           <div class="auto-narration">
@@ -461,8 +452,7 @@ en:
           the opportunities they need to succeed.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _5_html: >
           <div class="auto-narration">
@@ -472,8 +462,7 @@ en:
           the opportunities they need to succeed.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _college_success: >
           <div class="auto-narration">
@@ -482,13 +471,12 @@ en:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Students who are unprepared for college-level work may find themselves in <a href="/gk/articles/high-achiever-remedial-college/">costly remedial classes</a>
           and are more likely to <a href="/gk/articles/dropping-out-of-college-record-numbers/">drop out of college</a>.
-          Use this data to start a conversation with someone in your community about how essential it is that high schools prepare students for success after graduation.</p>
+          Successful high schools <a href="/gk/videos/the-importance-of-real-life-learning-career-pathways/">help kids find their passions</a> and succeed after graduation.</p>
           </div>
         _parent_tip_html: >
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
-          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/">offer advanced courses to all students</a>, not a select few.</p>
     college_success_alt:
       title: College success
       subtitle_html: >
-        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a href="/gk/csa-winners/">best practices of award-winning schools.</a>
+        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a href="/gk/csa-winners/" target="_blank">best practices of award-winning schools.</a>

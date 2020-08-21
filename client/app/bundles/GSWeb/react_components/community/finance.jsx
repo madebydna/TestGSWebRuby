@@ -1,6 +1,6 @@
 import React from 'react';
 import { t } from "util/i18n";
-import Spending from '../icons/spending';
+import Spending from 'react_components/icons/spending';
 import ParentTip from '../school_profiles/parent_tip';
 import BasicDataModuleLayout from '../school_profiles/basic_data_module_layout';
 import InfoBox from 'react_components/school_profiles/info_box';
