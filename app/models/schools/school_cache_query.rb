@@ -1,8 +1,9 @@
 class SchoolCacheQuery
 
-  def initialize
+  def initialize(is_using_school_record = false)
     @cache_keys = []
     @school_ids_per_state = {}
+    @is_school_record = is_using_school_record
   end
 
   def self.decorate_schools(schools, *cache_names)
@@ -17,14 +18,19 @@ class SchoolCacheQuery
   def self.for_school(school)
     raise ArgumentError.new('School must not be nil') if school.nil?
     new.tap do |cache_query|
-      cache_query.include_schools(school.state, school.id)
+      id = @is_school_record ? school.school_id : school.id
+      cache_query.include_schools(school.state, id)
     end
   end
 
   def include_objects(objects)
     objects_by_state = objects.group_by(&:state)
     objects_by_state.each_pair do |state, objects_for_state|
-      include_schools(state, objects_for_state.map(&:id))
+      if @is_school_record
+        include_schools(state, objects_for_state.map(&:school_id))
+      else
+        include_schools(state, objects_for_state.map(&:id))
+      end
     end
     self
   end

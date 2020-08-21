@@ -1,9 +1,10 @@
 class SchoolCacheResults
 
-  def initialize(cache_keys, query_results)
+  def initialize(cache_keys, query_results, is_using_school_record = false)
     @cache_keys = Array.wrap(cache_keys)
     @query_results = query_results
     @school_data = {}
+    @is_using_school_record = is_using_school_record
     build_school_data_hash
   end
 
@@ -17,7 +18,8 @@ class SchoolCacheResults
 
   def decorate_schools(schools)
     [*schools].map do |school|
-      decorated = SchoolCacheDecorator.new(school, @school_data[[school.state.upcase, school.id]] || {})
+      id = @is_using_school_record ? school.school_id : school.id
+      decorated = SchoolCacheDecorator.new(school, @school_data[[school.state.upcase, id]] || {})
       @cache_keys.each do |key|
         if module_for_key(key)
           decorated.send(:extend, (module_for_key(key)))
