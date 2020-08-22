@@ -16,7 +16,7 @@ module Feeds
       end
 
       def school_ids
-        @schools.map(&:id)
+        @schools.map(&:school_id)
       end
 
       def rating_summaries
@@ -88,7 +88,7 @@ module Feeds
       def schools_hash
         @_schools_hash ||=begin
           schools.each_with_object({}) do |school, hash|
-            hash[school.id] = school
+            hash[school.school_id] = school
           end
         end
       end

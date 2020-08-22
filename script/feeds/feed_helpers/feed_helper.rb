@@ -47,7 +47,8 @@ module Feeds
         entity_id = entity.is_a?(DistrictRecord) ? entity.district_id : entity.id
         '1' + state_fips[state.upcase] + entity_id.to_s.rjust(5, '0')
       elsif entity_level == ENTITY_TYPE_SCHOOL
-        state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
+        entity_id = entity.is_a?(SchoolRecord) ? entity.school_id : entity.id
+        state_fips[state.upcase] + entity_id.to_s.rjust(5, '0')
       else
         state_fips[state.upcase]
       end
