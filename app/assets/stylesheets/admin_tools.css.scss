@@ -274,6 +274,10 @@
   .container {
     width: 92%;
   }
+
+  .api-plans-container-carousel {
+    visibility: hidden;
+  }
 }
 
 .api-plan-selection {
@@ -418,3 +422,17 @@
 
 }
 
+@media only screen and (max-width: 550px) {
+  .api-plans-container {
+    display: none;
+    visibility: hidden;
+  }
+
+  .api-plans-container-carousel {
+    display: block;
+    visibility: visible;
+  }
+  body {
+    background-color: lightblue;
+  }
+}
