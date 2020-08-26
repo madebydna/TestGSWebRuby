@@ -5,6 +5,7 @@ module Api
 
     validates :name, presence: true
 
+    has_many :subscriptions
     has_many :plan_endpoints
     has_many :endpoints, through: :plan_endpoints
 

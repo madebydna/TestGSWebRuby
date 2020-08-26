@@ -22,6 +22,8 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const submitBtn = e.target.querySelector('button[type=submit]');
+      submitBtn.disabled = true;
       const formData = new FormData(form);
       const name = formData.get('billing[name]');
       const address1 = formData.get('billing[address_line_1]');
@@ -50,6 +52,7 @@
       ).then(function (result) {
         if (result.error) {
           // Display error.message in your UI.
+          submitBtn.disabled = false;
           const errorElement = document.getElementById('card-errors');
           errorElement.style.display='block';
           errorElement.textContent = result.error.message;

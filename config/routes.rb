@@ -254,6 +254,8 @@ LocalizedProfiles::Application.routes.draw do
   post '/api/registration/', to: 'admin/api/users#create'
   patch '/api/billing/:id', to: 'admin/api/users#update', as: :api_billing_update
   get '/api/billing/', to: 'admin/api/users#billing', as: :api_billing
+  get '/api/confirmation/', to: 'admin/api/users#confirmation'
+  get '/api/receipt/', to: 'admin/api/users#receipt'
 
 
   namespace :api, controller: 'api', path:'/gsr/api' do
