@@ -27,8 +27,8 @@ describe Api::ViewHelper do
         [subscription, 'Free Trial $0.00/month'],
         [subscription2, 'Extreme Plan $1,000.00/month'],
         [nil, 'No Plan Selected'],
-      ].each do |plan, result|
-        expect(format_plan(plan)).to eq(result)
+      ].each do |subscription, result|
+        expect(format_plan(subscription&.plan)).to eq(result)
       end
     end
   end

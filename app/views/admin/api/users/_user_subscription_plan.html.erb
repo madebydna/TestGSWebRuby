@@ -1,9 +1,9 @@
 <div id="subscription-plan" >
   <div class="api-text-field subscription">
-    <%= format_plan(user.subscription) %>
+    <%= format_plan(user.subscription&.plan) %>
   </div>
   <div class="api-registration-select-container dn">
-    <%= select :plan, :placeholder, options_for_select(Api::Plan.all.map {|plan| [formatted_plan_name(plan), plan.id]}, user.subscription.plan_id), {}, class: "api-registration-select"  %>
+    <%= select :plan, :placeholder, options_for_select(Api::Plan.all.map {|plan| [format_plan(plan), plan.id]}, user.subscription.plan_id), {}, class: "api-registration-select"  %>
   </div>
 </div>
 
