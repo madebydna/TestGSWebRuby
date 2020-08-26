@@ -7,7 +7,7 @@ module Api
 
     def action_url(plan_name)
       return '/api/signup/#' if plan_name == 'enterprise'
-      '/api/registration'
+      api_registration_path
     end
 
     def button_txt(plan_name)
@@ -26,11 +26,15 @@ module Api
     end
 
     def price_secondary(price)
-      price.divmod(1).second.round(2)
+      price.to_s.split('.').last.rjust(2, '0')
     end
 
     def price_primary(price)
       price.divmod(1).first
+    end
+
+    def dataset_partial(plan)
+      plan.enterprise? ? 'enterprise_dataset' : 'dataset'
     end
 
   end
