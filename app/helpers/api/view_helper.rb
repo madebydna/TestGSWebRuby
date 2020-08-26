@@ -13,6 +13,10 @@ module Api
       "#{plan.name.split('_').map(&:capitalize).join(' ')} #{number_to_currency(plan.price)}/month"
     end
 
+    def formatted_plan_name(plan)
+      "#{plan.name.split('_').map(&:capitalize).join(' ')} #{number_to_currency(plan.price)}/month"
+    end
+
     def display_credit_card(card_details)
       cards = {
         'mastercard' => 'icons/credit-card-1.svg',

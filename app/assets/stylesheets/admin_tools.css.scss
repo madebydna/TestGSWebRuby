@@ -210,6 +210,16 @@
       border: none;
     }
 
+    .api-text-field.subscription{
+      cursor: pointer;
+
+      &:hover{
+        color: #2ba3dc;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+    }
+
   }
 
   .api_account_form {
