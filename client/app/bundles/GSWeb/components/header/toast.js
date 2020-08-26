@@ -77,8 +77,12 @@ const readjustToastHeight = throttle(() => {
     if (headerBoundingBox.bottom > 0){
       toast.style.top = `${headerBoundingBox.bottom}px`;
     } else if(gon && gon.ad_set_targeting && gon.ad_set_targeting.page_name === "GS:SchoolP"){
-      toast.style.top = '50px';
       toast.style.zIndex = 14;
+      if(window.scrollY < 755){
+        toast.style.top = 0;
+      }else{
+        toast.style.top = '50px';
+      }
     }else{
       toast.style.top = 0;
     }

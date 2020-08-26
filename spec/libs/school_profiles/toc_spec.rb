@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SchoolProfiles::Toc do
   ##will want to make a school that is missing some data
-  let(:school) { double('school') }
+  let(:school) { double('school', state: 'ca') }
   let(:school_cache_data_reader) { double('school_cache_data_reader') }
   let(:test_scores) {double('test_scores')}
   let(:student_progress) {double('student_progress')}
@@ -186,6 +186,37 @@ describe SchoolProfiles::Toc do
 
           expect(subject).to include({column: 'Academics', label: 'student_progress', present: true, rating: nil, anchor: 'Student_progress'})
         end
+      end
+    end
+  end
+
+  describe '#equity' do
+    subject { toc.equity[:equity] }
+    before do
+      allow(equity).to receive(:rating_low_income).and_return(7)
+    end
+
+    context 'in a state that has equity rating' do
+      before { allow(equity_overview).to receive(:state_equity_rating?).and_return(true) }
+
+      it 'returns a equity rating for the toc' do
+        allow(equity_overview).to receive(:equity_rating).and_return(7)
+        expect(subject).to include({column: 'Equity', label: 'equity_overview', present: true, rating: 7, anchor: 'Equity_overview'})
+        expect(subject).not_to include({column: 'Equity', label: 'equity_overview', present: true, rating: nil, anchor: 'Equity_overview'})
+      end
+      
+      it 'does not display the rating in the toc' do
+        allow(equity_overview).to receive(:equity_rating).and_return(nil)
+        expect(subject).to include({column: 'Equity', label: 'equity_overview', present: true, rating: nil, anchor: 'Equity_overview'})
+        expect(subject).not_to include({column: 'Equity', label: 'equity_overview', present: true, rating: 7, anchor: 'Equity_overview'})
+      end
+    end
+
+    context 'in a state that does has equity rating' do
+      before { allow(equity_overview).to receive(:state_equity_rating?).and_return(false) }
+
+      it 'does not returns a equity module' do
+        expect(subject.map {|x| x[:label]}).not_to include('equity_overview')
       end
     end
   end

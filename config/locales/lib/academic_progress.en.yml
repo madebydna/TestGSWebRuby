@@ -26,7 +26,7 @@ en:
            compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
-          <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
         2_low_html: >
           <p class="side-bar"><span class="emphasis">Low progress with low test scores</span> means students are
           starting at a low point and are falling even farther behind their peers at other schools in the state.</p>
@@ -39,7 +39,7 @@ en:
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
-          <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
         3_low_html: >
           <p class="side-bar"><span class="emphasis">Average progress with low test scores</span> means students are
           starting at a low point but are progressing at about the same rate as their peers at other schools in the state.</p>
@@ -52,8 +52,7 @@ en:
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
-          <p class="footnote">Ask the school how it interprets this rating and how it might use this information to help students
-          grow and reach their full potential.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
         4_low_html: >
           <p class="side-bar"><span class="emphasis">Above average progress with low test scores</span> means students
           are starting at a low point but are making larger gains than their peers at other schools in the state.</p>
@@ -66,7 +65,7 @@ en:
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
-          <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s continued success.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
         5_low_html: >
           <p class="side-bar"><span class="emphasis">Very strong progress with low test scores</span> means students are
           starting at a low point, but compared to most other schools in the state, this school is doing a great job of supporting students’ academic growth.</p>
@@ -79,7 +78,7 @@ en:
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
-          <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s success.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
       javascript:
         toc_item: 'Academic progress'
       district_scope:
@@ -132,7 +131,7 @@ en:
            compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
-          <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
         2_low_html: >
           <p class="side-bar"><span class="emphasis">Low progress with low test scores</span> means students are
           starting at a low point and are falling even farther behind their peers at other schools in the state.</p>
@@ -145,7 +144,7 @@ en:
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
-          <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
         3_low_html: >
           <p class="side-bar"><span class="emphasis">Average progress with low test scores</span> means students are
           starting at a low point but are progressing at about the same rate as their peers at other schools in the state.</p>
@@ -158,8 +157,7 @@ en:
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
-          <p class="footnote">Ask the school how it interprets this rating and how it might use this information to help students
-          grow and reach their full potential.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
         4_low_html: >
           <p class="side-bar"><span class="emphasis">Above average progress with low test scores</span> means students
           are starting at a low point but are making larger gains than their peers at other schools in the state.</p>
@@ -172,7 +170,7 @@ en:
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
-          <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s continued success.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
         5_low_html: >
           <p class="side-bar"><span class="emphasis">Very strong progress with low test scores</span> means students are
           starting at a low point, but compared to most other schools in the state, this school is doing a great job of supporting students’ academic growth.</p>
@@ -185,7 +183,7 @@ en:
           compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
-          <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s success.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
       javascript:
         toc_item: 'Academic progress'
       district_scope:

@@ -9,10 +9,6 @@ $subtle-gray: #647981;
 @import 'components/search-autosuggest';
 @import 'components/five-stars';
 
-.featured {
-  display: none; // TODO: dont put this here
-}
-
 body {
   background-color: $gray-light-blue;
 }

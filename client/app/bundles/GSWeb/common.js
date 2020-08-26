@@ -7,7 +7,7 @@ import { init as initHeader } from './header';
 import * as footer from 'components/footer';
 
 const commonPageInit = ({includeFeatured} = {}) => {
-  initHeader({includeFeatured});
+  initHeader();
   ReactOnRails.reactOnRailsPageLoaded();
   tooltips.initialize();
   remodal.init();
