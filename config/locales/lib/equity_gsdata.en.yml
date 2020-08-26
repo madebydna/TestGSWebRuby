@@ -71,7 +71,7 @@ en:
           <p class="narrative-content">Test scores for low income students at this school fall <span class="emphasis">far below</span>
           the state average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <div class="footnote">Low-income kids are really being left behind at this school. But some schools are doing an excellent job of serving all students.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
           <ul>
@@ -87,7 +87,7 @@ en:
           <p class="narrative-content">Test scores for low income students at this school fall <span class="emphasis">below</span> the state
           average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <div class="footnote">Low-income kids are being left behind at this school. But some schools are doing an excellent job of serving all students.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<ul>
             <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
@@ -102,7 +102,7 @@ en:
           <p class="narrative-content">Test scores for low income students at this school are <span class="emphasis">about the same as</span> the
           state average, though still below the scores for all students at top-performing schools in the state.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <div class="footnote">Most schools struggle to support low-income students.  But some schools are succeeding.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
           <span><ul>
@@ -118,7 +118,7 @@ en:
           <p class="narrative-content">Test scores for low income students at this school are <span class="emphasis">above</span> the state
           average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <div class="footnote">This school is doing better than most schools when it comes to supporting low-income
           students. But some schools are doing an excellent job at serving all students.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<span><ul>
@@ -134,7 +134,7 @@ en:
           <p class="narrative-content">Test scores for low income students at this school <span class="emphasis">are far above</span> the state
           average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <div class="footnote">This school is doing a much better job than most schools when it comes to supporting low-income students.
           <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you advocate for all kids.%{more}<span><ul>
             <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>

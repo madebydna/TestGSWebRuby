@@ -44,7 +44,7 @@ en:
           <p>Test scores at this school fall <span class="emphasis">far below</span> the state average.
           This suggests that students at this school are likely not performing at grade level.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Test scores are important to look at because they indicate where students are performing compared to
           grade-level standards. Ask the school what%{more}it's doing to help students who are behind. Understand what
           <a href="/gk/milestones/">on-track learning looks like</a>, and explore higher-performing
@@ -55,7 +55,7 @@ en:
           <p>Test scores at this school fall <span class="emphasis">below</span> the state average.
           This suggests that most students at this school may not be performing at grade level.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what
           <a href="/gk/milestones/">on-track learning looks like</a>,%{more}and explore higher-performing
           schools in your area to find the best opportunities for your child to succeed.%{end_more}</p>
@@ -64,7 +64,7 @@ en:
           <h3 class="neutral">Worth a deeper look:</h3>
           <p>Test scores at this school are <span class="emphasis">about the same as</span> the state average, though still below the top-performing schools in the state. Because test scores in some states are so low, many students at this school may not be performing at grade level. </p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what
           <a href="/gk/milestones/">on-track learning looks like</a>, and ask the school what it’s doing to accelerate
           progress for students.</p>
@@ -73,7 +73,7 @@ en:
           <h3 class="positive">A promising sign:</h3>
           <p>Test scores at this school are <span class="emphasis">above</span> the state average. Because test scores in some states are so low, some students at this school may still not be performing at grade level</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Even high-performing schools can have disparities between student groups.
           To understand how well this school%{more}serves all its students, <a href="#Equity">review the information below in the Equity section</a>.
           Understand what
@@ -83,7 +83,7 @@ en:
           <h3 class="positive">Good news!</h3>
           <p>Test scores at this school are <span class="emphasis">far above</span> the state average, suggesting that most students at this school are performing at or above grade level.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Even high-performing schools can have disparities between student groups.
           To understand how well this school%{more}serves all its students,
           <a href="#Equity">review the information below in the Equity section</a>.
@@ -231,7 +231,7 @@ en:
           <p>Test scores at this school fall <span class="emphasis">far below</span> the state average.
           This suggests that students at this school are likely not performing at grade level.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Test scores are important to look at because they indicate where students are performing compared to
           grade-level standards. Ask the school what%{more}it's doing to help students who are behind. Understand what
           <a href="/gk/milestones/">on-track learning looks like</a>, and explore higher-performing
@@ -242,7 +242,7 @@ en:
           <p>Test scores at this school fall <span class="emphasis">below</span> the state average.
           This suggests that most students at this school may not be performing at grade level.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what
           <a href="/gk/milestones/">on-track learning looks like</a>,%{more}and explore higher-performing
           schools in your area to find the best opportunities for your child to succeed.%{end_more}</p>
@@ -251,7 +251,7 @@ en:
           <h3 class="neutral">Worth a deeper look:</h3>
           <p>Test scores at this school are <span class="emphasis">about the same as</span> the state average, though still below the top-performing schools in the state. Because test scores in some states are so low, many students at this school may not be performing at grade level. </p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what
           <a href="/gk/milestones/">on-track learning looks like</a>, and ask the school what it’s doing to accelerate
           progress for students.</p>
@@ -260,7 +260,7 @@ en:
           <h3 class="positive">A promising sign:</h3>
           <p>Test scores at this school are <span class="emphasis">above</span> the state average. Because test scores in some states are so low, some students at this school may still not be performing at grade level</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Even high-performing schools can have disparities between student groups.
           To understand how well this school%{more}serves all its students, <a href="#Equity">review the information below in the Equity section</a>.
           Understand what
@@ -270,7 +270,7 @@ en:
           <h3 class="positive">Good news!</h3>
           <p>Test scores at this school are <span class="emphasis">far above</span> the state average, suggesting that most students at this school are performing at or above grade level.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Even high-performing schools can have disparities between student groups.
           To understand how well this school%{more}serves all its students,
           <a href="#Equity">review the information below in the Equity section</a>.

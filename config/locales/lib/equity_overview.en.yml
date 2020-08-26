@@ -31,35 +31,35 @@ en:
         <p>Disadvantaged students at this school may be falling far behind other students in the state,
         and this school may have large achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">close the achievement gap</a>.</p>
       narrative_2_html: >
         <h3 class="negative">A worrisome sign:</h3>
         <p>Disadvantaged students at this school may be falling behind other students in the state, and this school
         may have significant achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">close the achievement gap</a>.</p>
       narrative_3_html: >
         <h3 class="neutral">Worth a deeper look:</h3>
         <p>Disadvantaged students at this school are performing about as well as other students in the state, but this
         school may still have achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">close the achievement gap</a>.</p>
       narrative_4_html: >
         <h3 class="positive">A promising sign:</h3>
         <p>Disadvantaged students at this school are performing better than other students in the state,
         though this school may still have achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">close the achievement gap</a>.</p>
       narrative_5_html: >
         <h3 class="positive">Good news!</h3>
         <p>Disadvantaged students at this school are performing far better than other students in the state, and this
         school is successfully closing the achievement gap.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">close the achievement gap</a>.</p>
     equity_overview_alt:
       'title': 'Equity overview'
@@ -90,33 +90,33 @@ en:
         <p>Disadvantaged students at this school may be falling far behind other students in the state,
         and this school may have large achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">close the achievement gap</a>.</p>
       narrative_2_html: >
         <h3 class="negative">A worrisome sign:</h3>
         <p>Disadvantaged students at this school may be falling behind other students in the state, and this school
         may have significant achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">close the achievement gap</a>.</p>
       narrative_3_html: >
         <h3 class="neutral">Worth a deeper look:</h3>
         <p>Disadvantaged students at this school are performing about as well as other students in the state, but this
         school may still have achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">close the achievement gap</a>.</p>
       narrative_4_html: >
         <h3 class="positive">A promising sign:</h3>
         <p>Disadvantaged students at this school are performing better than other students in the state,
         though this school may still have achievement gaps.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">close the achievement gap</a>.</p>
       narrative_5_html: >
         <h3 class="positive">Good news!</h3>
         <p>Disadvantaged students at this school are performing far better than other students in the state, and this
         school is successfully closing the achievement gap.</p>
         <hr>
-        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">close the achievement gap</a>.</p>

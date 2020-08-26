@@ -29,7 +29,7 @@ es:
           académicamente en comparación a otros estudiantes en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
+          para padres</span></p>
           <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">dándoles una voz y opciones</a>.</p>
         2_low_html: >
           <p class="side-bar"><span class="emphasis">Poco progreso con bajas calificaciones en los exámenes</span>
@@ -45,7 +45,7 @@ es:
           grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
+          para padres</span></p>
           <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">dándoles una voz y opciones</a>.</p>
         3_low_html: >
           <p class="side-bar"><span class="emphasis">Progreso promedio con bajas calificaciones en los exámenes</span>
@@ -61,7 +61,7 @@ es:
           académico de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
+          para padres</span></p>
           <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">dándoles una voz y opciones</a>.</p>
         4_low_html: >
           <p class="side-bar"><span class="emphasis">Grande progreso con bajas calificaciones en los exámenes </span>
@@ -77,7 +77,7 @@ es:
           grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
+          para padres</span></p>
           <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">dándoles una voz y opciones</a>.</p>
         5_low_html: >
           <p class="side-bar"><span class="emphasis">Alto progreso con bajas calificaciones en los exámenes</span>
@@ -94,7 +94,7 @@ es:
           de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
+          para padres</span></p>
           <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">dándoles una voz y opciones</a>.</p>
       javascript:
         toc_item: 'Progreso académico'
@@ -151,7 +151,7 @@ es:
           académicamente en comparación a otros estudiantes en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
+          para padres</span></p>
           <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">dándoles una voz y opciones</a>.</p>
         2_low_html: >
           <p class="side-bar"><span class="emphasis">Poco progreso con bajas calificaciones en los exámenes</span>
@@ -167,7 +167,7 @@ es:
           grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
+          para padres</span></p>
           <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">dándoles una voz y opciones</a>.</p>
         3_low_html: >
           <p class="side-bar"><span class="emphasis">Progreso promedio con bajas calificaciones en los exámenes</span>
@@ -183,7 +183,7 @@ es:
           académico de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
+          para padres</span></p>
           <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">dándoles una voz y opciones</a>.</p>
         4_low_html: >
           <p class="side-bar"><span class="emphasis">Grande progreso con bajas calificaciones en los exámenes </span>
@@ -199,7 +199,7 @@ es:
           grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
+          para padres</span></p>
           <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">dándoles una voz y opciones</a>.</p>
         5_low_html: >
           <p class="side-bar"><span class="emphasis">Alto progreso con bajas calificaciones en los exámenes</span>
@@ -216,7 +216,7 @@ es:
           de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
+          para padres</span></p>
           <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">dándoles una voz y opciones</a>.</p>
       javascript:
         toc_item: 'Progreso académico'
