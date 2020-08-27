@@ -11,6 +11,7 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def new
+    session[:plan_id] = params[:plan_id]
     @user = ::Api::User.new
   end
 
@@ -18,7 +19,7 @@ class Admin::Api::UsersController < ApplicationController
     @user = Api::User.new(user_params)
     if @user.save
       Api::StripeCustomerCreator.new(@user).call
-      Api::SubscriptionCreator.new(@user, 1).call
+      Api::SubscriptionCreator.new(@user, session[:plan_id]).call
       session[:user_id] = @user.id
       redirect_to action: 'billing'
     else
@@ -30,7 +31,7 @@ class Admin::Api::UsersController < ApplicationController
     # TODO! Do we need to save anything from the results hash coming back from stripe?
     @results = params['result']
     payment_object ||= Stripe::PaymentMethod.retrieve(@results[:setupIntent][:payment_method])
-    
+
     session[:user_id] = user.id
     session[:billing_details] = payment_object[:billing_details]
     session[:card] = payment_object[:card]

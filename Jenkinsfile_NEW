@@ -9,7 +9,12 @@ def reportRubocopOffenses() {
 }
 
 def runCommonSteps() {
-  sh 'sudo /sbin/route add default gw 192.168.111.81'
+  def res = sh(script: 'sudo /sbin/route add default gw 192.168.111.81', returnStatus: true)
+  if (res !=0 ) {
+    println("Default gateway not added ... returnStatus ${res}")
+  } else {
+    println("Default gateway added ... returnStatus ${res}")
+  }
   sh 'sudo /sbin/route add -net 172.16.0.0 netmask 255.240.0.0 gw 192.168.111.187'
   sh 'sudo /sbin/route add -net 192.168.121.0 netmask 255.255.255.0  gw 192.168.111.187'
   checkout scm
@@ -52,9 +57,9 @@ pipeline {
         sh 'script/ci/build_env.sh'
         withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
           sh 'rm -rf vendor/cache'
-          retry(7) {
-                     sh 'bundle install --deployment --without development'
-                   }
+          retry(15) {
+            sh 'bundle install --deployment --without development'
+          }
           sh 'bundle package > /dev/null'
           stash includes: 'vendor/cache/*', name: 'bundle'
           sh 'rm -rf app/assets/webpack'
